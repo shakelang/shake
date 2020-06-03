@@ -1,6 +1,6 @@
 package com.github.nsc.de.compiler.parser.node;
 
-public class VariableUsageNode implements Node {
+public class VariableUsageNode implements ValuedNode {
     private final String name;
 
     public VariableUsageNode(String name) {

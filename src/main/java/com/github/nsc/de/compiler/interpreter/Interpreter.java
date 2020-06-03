@@ -2,6 +2,7 @@ package com.github.nsc.de.compiler.interpreter;
 
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
+import com.github.nsc.de.compiler.parser.node.logical.*;
 
 
 public class Interpreter {
@@ -9,6 +10,7 @@ public class Interpreter {
     private final VariableList variables = new VariableList();
 
     public InterpreterResult<Object> visit(Node n) {
+
         if(n instanceof Tree) return visitTree((Tree) n);
         if(n instanceof NumberNode) return visitNumberNode((NumberNode) n);
         if(n instanceof AddNode) return visitAddNode((AddNode) n);
@@ -19,8 +21,14 @@ public class Interpreter {
         if(n instanceof VariableDeclarationNode) return visitVariableDeclarationNode((VariableDeclarationNode) n);
         if(n instanceof VariableAssignmentNode) return visitVariableAssignmentNode((VariableAssignmentNode) n);
         if(n instanceof VariableUsageNode) return visitVariableUsageNode((VariableUsageNode) n);
+        if(n instanceof EqEqualsNode) return visitEqEqualsNode((EqEqualsNode) n);
+        if(n instanceof BiggerEqualsNode) return visitBiggerEqualsNode((BiggerEqualsNode) n);
+        if(n instanceof SmallerEqualsNode) return visitSmallerEqualsNode((SmallerEqualsNode) n);
+        if(n instanceof BiggerNode) return visitBiggerNode((BiggerNode) n);
+        if(n instanceof SmallerNode) return visitSmallerNode((SmallerNode) n);
         if(n == null) return new InterpreterResult<>(null);
         throw new Error("It looks like that Node is not implemented in the Interpreter");
+
     }
 
     public InterpreterResult<Object> visitTree(Tree t) {
@@ -70,5 +78,25 @@ public class Interpreter {
         Variable variable = this.variables.get(n.getName());
         if(variable == null) throw new Error("Variable is not declared");
         else return new InterpreterResult<>(variable.getValue());
+    }
+
+    public InterpreterResult<Object> visitEqEqualsNode(EqEqualsNode n) {
+        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() == (double) visit(n.getRight()).getValue());
+    }
+
+    public InterpreterResult<Object> visitBiggerEqualsNode(BiggerEqualsNode n) {
+        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() >= (double) visit(n.getRight()).getValue());
+    }
+
+    public InterpreterResult<Object> visitSmallerEqualsNode(SmallerEqualsNode n) {
+        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() <= (double) visit(n.getRight()).getValue());
+    }
+
+    public InterpreterResult<Object> visitBiggerNode(BiggerNode n) {
+        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() > (double) visit(n.getRight()).getValue());
+    }
+
+    public InterpreterResult<Object> visitSmallerNode(SmallerNode n) {
+        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() < (double) visit(n.getRight()).getValue());
     }
 }

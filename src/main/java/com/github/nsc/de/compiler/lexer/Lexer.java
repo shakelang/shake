@@ -33,7 +33,7 @@ public class Lexer {
             if(WHITESPACE.contains(next)) continue;
 
             // Linebreaks
-            if(next == '\n') tokens.add(new Token(TokenType.LINE_SEPERATOR));
+            if(next == '\n') tokens.add(new Token(TokenType.LINE_SEPARATOR));
 
             // Semicolon
             else if(next == ';') tokens.add(new Token(TokenType.SEMICOLON));
@@ -48,12 +48,19 @@ public class Lexer {
             else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier());
 
             // Math operators
-            else if (next == '*' && in.hasNext() && in.peek() == '*') { tokens.add(new Token(TokenType.POW, "**")); in.skip(); }
+            else if (next == '*' && this.in.hasNext() && in.peek() == '*') { tokens.add(new Token(TokenType.POW, "**")); in.skip(); }
             else if (next == '^') tokens.add(new Token(TokenType.POW));
             else if (next == '/') tokens.add(new Token(TokenType.DIV));
             else if (next == '*') tokens.add(new Token(TokenType.MUL));
             else if (next == '-') tokens.add(new Token(TokenType.SUB));
             else if (next == '+') tokens.add(new Token(TokenType.ADD));
+
+            // Logical operators
+            else if (next == '=' && this.in.hasNext() && in.peek() == '=') { tokens.add(new Token(TokenType.EQ_EQUALS)); in.skip(); }
+            else if (next == '>' && this.in.hasNext() && in.peek() == '=') { tokens.add(new Token(TokenType.BIGGER_EQUALS)); in.skip(); }
+            else if (next == '<' && this.in.hasNext() && in.peek() == '=') { tokens.add(new Token(TokenType.SMALLER_EQUALS)); in.skip(); }
+            else if (next == '>') tokens.add(new Token(TokenType.BIGGER));
+            else if (next == '<') tokens.add(new Token(TokenType.SMALLER));
 
             // Assign
             else if (next == '=') tokens.add(new Token(TokenType.ASSIGN));

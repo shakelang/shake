@@ -1,9 +1,9 @@
 package com.github.nsc.de.compiler.parser.node.expression;
 
-import com.github.nsc.de.compiler.parser.node.Node;
+import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 public class PowNode extends ExpressionNode {
-    public PowNode(Node left, Node right) {
+    public PowNode(ValuedNode left, ValuedNode right) {
         super(left, right);
     }
 

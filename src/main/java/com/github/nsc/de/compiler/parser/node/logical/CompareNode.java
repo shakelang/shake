@@ -1,18 +1,17 @@
-package com.github.nsc.de.compiler.parser.node.expression;
+package com.github.nsc.de.compiler.parser.node.logical;
 
 import com.github.nsc.de.compiler.parser.node.Node;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
+import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 
-public abstract class ExpressionNode implements ValuedNode {
+public abstract class CompareNode implements LogicalNode {
     private final ValuedNode left;
     private final ValuedNode right;
 
-    public ExpressionNode(ValuedNode left, ValuedNode right) {
+    public CompareNode(ValuedNode left, ValuedNode right) {
         this.left = left;
         this.right = right;
     }
-
-    public abstract char getOperator();
 
     public Node getLeft() {
         return left;

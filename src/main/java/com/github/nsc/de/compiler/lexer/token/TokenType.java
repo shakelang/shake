@@ -6,18 +6,25 @@ public enum TokenType {
     INTEGER,
     DOUBLE,
 
-    // Operators
+    // Math Operators
     ADD,
     SUB,
     MUL,
     DIV,
     POW,
 
-    // Seperators
-    LINE_SEPERATOR,
+    // Logical Operators
+    EQ_EQUALS,
+    BIGGER_EQUALS,
+    SMALLER_EQUALS,
+    BIGGER,
+    SMALLER,
+
+    // Separators
+    LINE_SEPARATOR,
     SEMICOLON,
 
-    // Assign
+    // Variables
     ASSIGN,
 
     // Brackets

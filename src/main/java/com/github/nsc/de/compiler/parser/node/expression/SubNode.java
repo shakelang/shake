@@ -1,15 +1,15 @@
 package com.github.nsc.de.compiler.parser.node.expression;
 
-import com.github.nsc.de.compiler.parser.node.Node;
+import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 public class SubNode extends ExpressionNode {
-    public SubNode(Node left, Node right) {
+    public SubNode(ValuedNode left, ValuedNode right) {
         super(left, right);
     }
-    public SubNode(int left, Node right) {
+    public SubNode(int left, ValuedNode right) {
         this(new NumberNode(left), right);
     }
-    public SubNode(Node left, int right) {
+    public SubNode(ValuedNode left, int right) {
         this(left, new NumberNode(right));
     }
     public SubNode(int left, int right) {

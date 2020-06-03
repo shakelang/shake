@@ -1,8 +1,8 @@
 package com.github.nsc.de.compiler.parser.node.expression;
 
-import com.github.nsc.de.compiler.parser.node.Node;
+import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
-public class NumberNode implements Node {
+public class NumberNode implements ValuedNode {
 
     private final double number;
 

@@ -1,9 +1,9 @@
 package com.github.nsc.de.compiler.parser.node.expression;
 
-import com.github.nsc.de.compiler.parser.node.Node;
+import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 public class MulNode extends ExpressionNode {
-    public MulNode(Node left, Node right) {
+    public MulNode(ValuedNode left, ValuedNode right) {
         super(left, right);
     }
 
