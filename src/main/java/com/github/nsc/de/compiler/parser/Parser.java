@@ -90,7 +90,7 @@ public class Parser {
     private ValuedNode statement() {
         Token peek = this.in.peek(2);
         if(peek == null) return factor();
-        if(COMPARE.contains(peek.getType())) return this.logical();
+        if(COMPARE.contains(peek.getType())) return this.logicalOr();
         return this.expr();
     }
 
@@ -130,25 +130,41 @@ public class Parser {
     private ValuedNode pow() {
         ValuedNode result = this.factor();
 
-        while(this.in.hasNext() && (this.in.peek().getType() == TokenType.POW)) {
+        while(this.in.hasNext() && this.in.peek().getType() == TokenType.POW) {
             this.in.skip();
             result = new PowNode(result, this.factor());
         }
         return result;
     }
 
-    private LogicalNode logical() {
-        return compare();
+    private LogicalNode logicalOr() {
+        LogicalNode result = this.logicalAnd();
+
+        while(this.in.hasNext() && this.in.peek().getType() == TokenType.LOGICAL_OR) {
+            this.in.skip();
+            result = new LogicalOrNode(result, this.logicalAnd());
+        }
+        return result;
+    }
+
+    private LogicalNode logicalAnd() {
+        LogicalNode result = this.compare();
+
+        while(this.in.hasNext() && this.in.peek().getType() == TokenType.LOGICAL_AND) {
+            this.in.skip();
+            result = new LogicalAndNode(result, this.compare());
+        }
+        return result;
     }
 
     private LogicalNode compare() {
         ValuedNode left = this.factor();
         Token comparer = this.in.next();
-        if(comparer.getType() == TokenType.EQ_EQUALS) return new EqEqualsNode(left, this.factor());
-        else if(comparer.getType() == TokenType.BIGGER_EQUALS) return new BiggerEqualsNode(left, this.factor());
-        else if(comparer.getType() == TokenType.SMALLER_EQUALS) return new SmallerEqualsNode(left, this.factor());
-        else if(comparer.getType() == TokenType.BIGGER) return new BiggerNode(left, this.factor());
-        else if(comparer.getType() == TokenType.SMALLER) return new SmallerNode(left, this.factor());
+        if(comparer.getType() == TokenType.EQ_EQUALS) return new EqEqualsNodeLogical(left, this.factor());
+        else if(comparer.getType() == TokenType.BIGGER_EQUALS) return new BiggerEqualsNodeLogical(left, this.factor());
+        else if(comparer.getType() == TokenType.SMALLER_EQUALS) return new SmallerEqualsNodeLogical(left, this.factor());
+        else if(comparer.getType() == TokenType.BIGGER) return new BiggerNodeLogical(left, this.factor());
+        else if(comparer.getType() == TokenType.SMALLER) return new SmallerNodeLogical(left, this.factor());
         else throw new Error("Expecting comparison operator");
     }
 

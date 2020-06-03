@@ -56,6 +56,9 @@ public class Lexer {
             else if (next == '+') tokens.add(new Token(TokenType.ADD));
 
             // Logical operators
+            else if (next == '|' && this.in.hasNext() && in.peek() == '|') { tokens.add(new Token(TokenType.LOGICAL_OR)); in.skip(); }
+            else if (next == '&' && this.in.hasNext() && in.peek() == '&') { tokens.add(new Token(TokenType.LOGICAL_AND)); in.skip(); }
+
             else if (next == '=' && this.in.hasNext() && in.peek() == '=') { tokens.add(new Token(TokenType.EQ_EQUALS)); in.skip(); }
             else if (next == '>' && this.in.hasNext() && in.peek() == '=') { tokens.add(new Token(TokenType.BIGGER_EQUALS)); in.skip(); }
             else if (next == '<' && this.in.hasNext() && in.peek() == '=') { tokens.add(new Token(TokenType.SMALLER_EQUALS)); in.skip(); }

@@ -4,11 +4,11 @@ import com.github.nsc.de.compiler.parser.node.Node;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
 import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 
-public abstract class CompareNode implements LogicalNode {
+public abstract class LogicalConcatinationNode implements LogicalNode {
     private final ValuedNode left;
     private final ValuedNode right;
 
-    public CompareNode(ValuedNode left, ValuedNode right) {
+    public LogicalConcatinationNode(LogicalNode left, LogicalNode right) {
         this.left = left;
         this.right = right;
     }

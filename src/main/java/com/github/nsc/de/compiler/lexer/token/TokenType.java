@@ -20,6 +20,9 @@ public enum TokenType {
     BIGGER,
     SMALLER,
 
+    LOGICAL_OR,
+    LOGICAL_AND,
+
     // Separators
     LINE_SEPARATOR,
     SEMICOLON,

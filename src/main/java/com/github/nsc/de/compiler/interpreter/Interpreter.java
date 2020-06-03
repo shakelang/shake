@@ -21,11 +21,13 @@ public class Interpreter {
         if(n instanceof VariableDeclarationNode) return visitVariableDeclarationNode((VariableDeclarationNode) n);
         if(n instanceof VariableAssignmentNode) return visitVariableAssignmentNode((VariableAssignmentNode) n);
         if(n instanceof VariableUsageNode) return visitVariableUsageNode((VariableUsageNode) n);
-        if(n instanceof EqEqualsNode) return visitEqEqualsNode((EqEqualsNode) n);
-        if(n instanceof BiggerEqualsNode) return visitBiggerEqualsNode((BiggerEqualsNode) n);
-        if(n instanceof SmallerEqualsNode) return visitSmallerEqualsNode((SmallerEqualsNode) n);
-        if(n instanceof BiggerNode) return visitBiggerNode((BiggerNode) n);
-        if(n instanceof SmallerNode) return visitSmallerNode((SmallerNode) n);
+        if(n instanceof EqEqualsNodeLogical) return visitEqEqualsNode((EqEqualsNodeLogical) n);
+        if(n instanceof BiggerEqualsNodeLogical) return visitBiggerEqualsNode((BiggerEqualsNodeLogical) n);
+        if(n instanceof SmallerEqualsNodeLogical) return visitSmallerEqualsNode((SmallerEqualsNodeLogical) n);
+        if(n instanceof BiggerNodeLogical) return visitBiggerNode((BiggerNodeLogical) n);
+        if(n instanceof SmallerNodeLogical) return visitSmallerNode((SmallerNodeLogical) n);
+        if(n instanceof LogicalAndNode) return visitLogicalAndNode((LogicalAndNode) n);
+        if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n);
         if(n == null) return new InterpreterResult<>(null);
         throw new Error("It looks like that Node is not implemented in the Interpreter");
 
@@ -80,23 +82,31 @@ public class Interpreter {
         else return new InterpreterResult<>(variable.getValue());
     }
 
-    public InterpreterResult<Object> visitEqEqualsNode(EqEqualsNode n) {
+    public InterpreterResult<Object> visitEqEqualsNode(EqEqualsNodeLogical n) {
         return new InterpreterResult<>((double) visit(n.getLeft()).getValue() == (double) visit(n.getRight()).getValue());
     }
 
-    public InterpreterResult<Object> visitBiggerEqualsNode(BiggerEqualsNode n) {
+    public InterpreterResult<Object> visitBiggerEqualsNode(BiggerEqualsNodeLogical n) {
         return new InterpreterResult<>((double) visit(n.getLeft()).getValue() >= (double) visit(n.getRight()).getValue());
     }
 
-    public InterpreterResult<Object> visitSmallerEqualsNode(SmallerEqualsNode n) {
+    public InterpreterResult<Object> visitSmallerEqualsNode(SmallerEqualsNodeLogical n) {
         return new InterpreterResult<>((double) visit(n.getLeft()).getValue() <= (double) visit(n.getRight()).getValue());
     }
 
-    public InterpreterResult<Object> visitBiggerNode(BiggerNode n) {
+    public InterpreterResult<Object> visitBiggerNode(BiggerNodeLogical n) {
         return new InterpreterResult<>((double) visit(n.getLeft()).getValue() > (double) visit(n.getRight()).getValue());
     }
 
-    public InterpreterResult<Object> visitSmallerNode(SmallerNode n) {
+    public InterpreterResult<Object> visitSmallerNode(SmallerNodeLogical n) {
         return new InterpreterResult<>((double) visit(n.getLeft()).getValue() < (double) visit(n.getRight()).getValue());
+    }
+
+    public InterpreterResult<Object> visitLogicalAndNode(LogicalAndNode n) {
+        return new InterpreterResult<>((boolean) visit(n.getLeft()).getValue() && (boolean) visit(n.getRight()).getValue());
+    }
+
+    public InterpreterResult<Object> visitLogicalOrNode(LogicalOrNode n) {
+        return new InterpreterResult<>((boolean) visit(n.getLeft()).getValue() || (boolean) visit(n.getRight()).getValue());
     }
 }
