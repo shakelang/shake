@@ -1,6 +1,5 @@
 package com.github.nsc.de.compiler.parser.node.expression;
 
-import com.github.nsc.de.compiler.parser.node.Node;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 public abstract class ExpressionNode implements ValuedNode {
@@ -14,10 +13,10 @@ public abstract class ExpressionNode implements ValuedNode {
 
     public abstract char getOperator();
 
-    public Node getLeft() {
+    public ValuedNode getLeft() {
         return left;
     }
-    public Node getRight() {
+    public ValuedNode getRight() {
         return right;
     }
 

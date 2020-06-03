@@ -35,6 +35,8 @@ public enum TokenType {
     RPAREN,
 
     // Keyword
+    KEYWORD_TRUE,
+    KEYWORD_FALSE,
     KEYWORD_VAR,
 
     // Identifier

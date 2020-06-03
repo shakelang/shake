@@ -16,7 +16,11 @@ public class Parser {
     private static final List<TokenType> EXPR = Arrays.asList(TokenType.ADD, TokenType.SUB);
     private static final List<TokenType> TERM = Arrays.asList(TokenType.MUL, TokenType.DIV);
     private static final List<TokenType> NUMBER = Arrays.asList(TokenType.INTEGER, TokenType.DOUBLE);
-    private static final List<TokenType> COMPARE = Arrays.asList(TokenType.BIGGER, TokenType.BIGGER_EQUALS, TokenType.SMALLER, TokenType.SMALLER_EQUALS, TokenType.EQ_EQUALS);
+    private static final List<TokenType> COMPARE = Arrays.asList(TokenType.BIGGER, TokenType.BIGGER_EQUALS,
+            TokenType.SMALLER, TokenType.SMALLER_EQUALS, TokenType.EQ_EQUALS);
+    private static final List<TokenType> LOGICAL = Arrays.asList(TokenType.BIGGER, TokenType.BIGGER_EQUALS,
+            TokenType.SMALLER, TokenType.SMALLER_EQUALS, TokenType.EQ_EQUALS, TokenType.LOGICAL_OR,
+            TokenType.LOGICAL_AND);
 
     private final TokenInputStream in;
 
@@ -58,7 +62,11 @@ public class Parser {
         if(token.getType() == TokenType.IDENTIFIER && token2 != null && token2.getType() == TokenType.ASSIGN) return this.varAssignment();
 
         // Expression
-        if(NUMBER.contains(this.in.peek().getType()) || token.getType() == TokenType.IDENTIFIER) return this.statement();
+        if(NUMBER.contains(token.getType()) ||
+                token.getType() == TokenType.IDENTIFIER ||
+                token.getType() == TokenType.KEYWORD_TRUE ||
+                token.getType() == TokenType.KEYWORD_FALSE )
+            return this.statement();
 
         throw new Error("Unparsable Token: " + token + " in " + this.in);
     }
@@ -90,7 +98,7 @@ public class Parser {
     private ValuedNode statement() {
         Token peek = this.in.peek(2);
         if(peek == null) return factor();
-        if(COMPARE.contains(peek.getType())) return this.logicalOr();
+        if(LOGICAL.contains(peek.getType())) return this.logicalOr();
         return this.expr();
     }
 
@@ -137,8 +145,8 @@ public class Parser {
         return result;
     }
 
-    private LogicalNode logicalOr() {
-        LogicalNode result = this.logicalAnd();
+    private ValuedNode logicalOr() {
+        ValuedNode result = this.logicalAnd();
 
         while(this.in.hasNext() && this.in.peek().getType() == TokenType.LOGICAL_OR) {
             this.in.skip();
@@ -147,8 +155,8 @@ public class Parser {
         return result;
     }
 
-    private LogicalNode logicalAnd() {
-        LogicalNode result = this.compare();
+    private ValuedNode logicalAnd() {
+        ValuedNode result = this.compare();
 
         while(this.in.hasNext() && this.in.peek().getType() == TokenType.LOGICAL_AND) {
             this.in.skip();
@@ -157,15 +165,20 @@ public class Parser {
         return result;
     }
 
-    private LogicalNode compare() {
+    private ValuedNode compare() {
         ValuedNode left = this.factor();
-        Token comparer = this.in.next();
-        if(comparer.getType() == TokenType.EQ_EQUALS) return new EqEqualsNodeLogical(left, this.factor());
-        else if(comparer.getType() == TokenType.BIGGER_EQUALS) return new BiggerEqualsNodeLogical(left, this.factor());
-        else if(comparer.getType() == TokenType.SMALLER_EQUALS) return new SmallerEqualsNodeLogical(left, this.factor());
-        else if(comparer.getType() == TokenType.BIGGER) return new BiggerNodeLogical(left, this.factor());
-        else if(comparer.getType() == TokenType.SMALLER) return new SmallerNodeLogical(left, this.factor());
-        else throw new Error("Expecting comparison operator");
+
+        while(this.in.hasNext() && COMPARE.contains(this.in.peek().getType())) {
+
+            Token comparer = this.in.next();
+            if(comparer.getType() == TokenType.EQ_EQUALS) return new LogicalEqEqualsNode(left, this.statement());
+            else if(comparer.getType() == TokenType.BIGGER_EQUALS) left = new LogicalBiggerEqualsNode(left, this.statement());
+            else if(comparer.getType() == TokenType.SMALLER_EQUALS) left = new LogicalSmallerEqualsNode(left, this.statement());
+            else if(comparer.getType() == TokenType.BIGGER) left = new LogicalBiggerNode(left, this.statement());
+            else left = new LogicalSmallerNode(left, this.statement());
+
+        }
+        return left;
     }
 
     private ValuedNode factor() {
@@ -173,9 +186,19 @@ public class Parser {
 
         if(token.getType() == TokenType.LPAREN) {
             in.skip();
-            ValuedNode result = this.expr();
+            ValuedNode result = this.statement();
             if(this.in.next().getType() != TokenType.RPAREN) throw new Error("Expecting ')'");
             return result;
+        }
+
+        if(token.getType() == TokenType.KEYWORD_TRUE) {
+            in.skip();
+            return new LogicalTrueNode();
+        }
+
+        if(token.getType() == TokenType.KEYWORD_FALSE) {
+            in.skip();
+            return new LogicalFalseNode();
         }
 
         if(token.getType() == TokenType.INTEGER || token.getType() == TokenType.DOUBLE) {
@@ -198,7 +221,7 @@ public class Parser {
             return new SubNode(0, this.factor());
         }
 
-        throw new Error();
+        throw new Error(this.in.toString());
     }
 
 }

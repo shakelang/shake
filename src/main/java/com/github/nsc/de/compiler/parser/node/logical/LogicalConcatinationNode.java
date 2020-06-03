@@ -1,6 +1,5 @@
 package com.github.nsc.de.compiler.parser.node.logical;
 
-import com.github.nsc.de.compiler.parser.node.Node;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
 import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 
@@ -8,15 +7,15 @@ public abstract class LogicalConcatinationNode implements LogicalNode {
     private final ValuedNode left;
     private final ValuedNode right;
 
-    public LogicalConcatinationNode(LogicalNode left, LogicalNode right) {
+    public LogicalConcatinationNode(ValuedNode left, ValuedNode right) {
         this.left = left;
         this.right = right;
     }
 
-    public Node getLeft() {
+    public ValuedNode getLeft() {
         return left;
     }
-    public Node getRight() {
+    public ValuedNode getRight() {
         return right;
     }
 

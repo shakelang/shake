@@ -1,6 +1,5 @@
 package com.github.nsc.de.compiler.parser.node.logical;
 
-import com.github.nsc.de.compiler.parser.node.Node;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
 import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 
@@ -13,10 +12,10 @@ public abstract class LogicalCompareNode implements LogicalNode {
         this.right = right;
     }
 
-    public Node getLeft() {
+    public ValuedNode getLeft() {
         return left;
     }
-    public Node getRight() {
+    public ValuedNode getRight() {
         return right;
     }
 
