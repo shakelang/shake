@@ -45,6 +45,7 @@ public class Lexer {
             else if(this.in.peek(0,2).equals("var")) { tokens.add(new Token(TokenType.KEYWORD_VAR)); in.skip(2);}
             else if(this.in.peek(0,3).equals("true")) { tokens.add(new Token(TokenType.KEYWORD_TRUE)); in.skip(3);}
             else if(this.in.peek(0,4).equals("false")) { tokens.add(new Token(TokenType.KEYWORD_FALSE)); in.skip(4);}
+            else if(this.in.peek(0,4).equals("while")) { tokens.add(new Token(TokenType.KEYWORD_WHILE)); in.skip(4);}
 
             // Identifiers
             else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier());
@@ -73,6 +74,9 @@ public class Lexer {
             // Brackets
             else if (next == '(') tokens.add(new Token(TokenType.LPAREN));
             else if (next == ')') tokens.add(new Token(TokenType.RPAREN));
+
+            else if (next == '{') tokens.add(new Token(TokenType.LCURL));
+            else if (next == '}') tokens.add(new Token(TokenType.RCURL));
             else throw new UnrecognisedTokenError("Unrecognised Token: " + next, this.in.getPosition(), this.in.getPosition());
         }
         return new TokenInputStream(this.in.getSource(), tokens);

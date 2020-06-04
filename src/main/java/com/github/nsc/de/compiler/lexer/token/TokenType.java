@@ -33,8 +33,11 @@ public enum TokenType {
     // Brackets
     LPAREN,
     RPAREN,
+    LCURL,
+    RCURL,
 
     // Keyword
+    KEYWORD_WHILE,
     KEYWORD_TRUE,
     KEYWORD_FALSE,
     KEYWORD_VAR,

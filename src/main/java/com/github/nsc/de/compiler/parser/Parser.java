@@ -33,7 +33,7 @@ public class Parser {
 
         Tree result = this.prog();
 
-        if(this.in.hasNext()) throw new Error("Input did not end: "+in);
+        if(this.in.hasNext()) throw this.error("Input did not end: "+in);
         return result;
 
     }
@@ -41,10 +41,21 @@ public class Parser {
     private Tree prog() {
 
         List<Node> nodes = new ArrayList<>();
+        int position = -2;
         while (in.hasNext()) {
+
+            if(position >= this.in.getPosition()) break;
+            position = this.in.getPosition();
+
             while (this.in.hasNext() && (this.in.peek().getType() == TokenType.SEMICOLON || this.in.peek().getType() == TokenType.LINE_SEPARATOR)) this.in.skip();
-            if(this.in.hasNext()) nodes.add(operation());
+
+            if(this.in.hasNext()) {
+                Node result = operation();
+                if(result != null) nodes.add(result);
+            }
+
             if(!in.hasNext() || (in.peek().getType() == TokenType.SEMICOLON && in.peek().getType() == TokenType.LINE_SEPARATOR)) break;
+
         }
         return new Tree(nodes);
 
@@ -57,6 +68,7 @@ public class Parser {
 
         // Keywords
         if(token.getType() == TokenType.KEYWORD_VAR) return this.varDeclaration();
+        if(token.getType() == TokenType.KEYWORD_WHILE) return this.whileLoop();
 
         // Assignments
         if(token.getType() == TokenType.IDENTIFIER && token2 != null && token2.getType() == TokenType.ASSIGN) return this.varAssignment();
@@ -68,12 +80,12 @@ public class Parser {
                 token.getType() == TokenType.KEYWORD_FALSE )
             return this.statement();
 
-        throw new Error("Unparsable Token: " + token + " in " + this.in);
+        else return null;
     }
 
     private VariableDeclarationNode varDeclaration() {
-        if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_VAR) throw new Error("Expecting var keyword");
-        if(!this.in.hasNext() || this.in.peek().getType() != TokenType.IDENTIFIER) throw new Error("Expecting identifier");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_VAR) throw this.error("Expecting var keyword");
+        if(!this.in.hasNext() || this.in.peek().getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         if(this.in.peek(2) != null && this.in.peek(2).getType() == TokenType.ASSIGN) {
             return new VariableDeclarationNode((String) this.in.peek().getValue(), this.varAssignment());
         } else {
@@ -84,14 +96,14 @@ public class Parser {
 
     private VariableAssignmentNode varAssignment() {
         Token identifier = this.in.next();
-        if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw new Error("Expecting identifier");
-        if(!this.in.hasNext() || this.in.next().getType() != TokenType.ASSIGN) throw new Error("Expecting '='");
+        if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.ASSIGN) throw this.error("Expecting '='");
         Node value = operation();
         return new VariableAssignmentNode((String) identifier.getValue(), value);
     }
 
     private VariableUsageNode varUsage() {
-        if(this.in.next().getType() != TokenType.IDENTIFIER) throw new Error("Expecting identifier");
+        if(this.in.next().getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         return new VariableUsageNode((String) this.in.actual().getValue());
     }
 
@@ -187,7 +199,7 @@ public class Parser {
         if(token.getType() == TokenType.LPAREN) {
             in.skip();
             ValuedNode result = this.statement();
-            if(this.in.next().getType() != TokenType.RPAREN) throw new Error("Expecting ')'");
+            if(this.in.next().getType() != TokenType.RPAREN) throw this.error("Expecting ')'");
             return result;
         }
 
@@ -221,7 +233,22 @@ public class Parser {
             return new SubNode(0, this.factor());
         }
 
-        throw new Error(this.in.toString());
+        throw this.error(this.in.toString());
+    }
+
+    private Node whileLoop() {
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_WHILE) throw this.error("Expecting while keyword");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.LPAREN) throw this.error("Expecting '('");
+        ValuedNode condition = logicalOr();
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.RPAREN) throw this.error("Expecting ')'");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.LCURL) throw this.error("Expecting '{'");
+        Tree body = prog();
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.RCURL) throw this.error("Expecting '}'");
+        return new WhileNode(body, condition);
+    }
+    
+    private Error error(String error) {
+        throw new Error(error + " at " + this.in.peek() + " in " + this.in);
     }
 
 }
