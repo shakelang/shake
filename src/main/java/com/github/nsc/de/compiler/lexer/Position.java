@@ -17,7 +17,7 @@ public class Position {
     }
 
     public Position(String file, String content) {
-        this(file, content, -1, 0, -1);
+        this(file, content, -1, 1, 1);
     }
 
 
@@ -90,7 +90,7 @@ public class Position {
     }
 
     public Position nextLine() {
-        return this.increaseIndex().setColumn(-1).increaseLine();
+        return this.increaseIndex().setColumn(1).increaseLine();
     }
 
     // Copy
