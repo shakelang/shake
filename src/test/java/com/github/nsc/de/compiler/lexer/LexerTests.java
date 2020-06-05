@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class LexerTests {
 
     @Test
-    public void testTokens() {
+    public void testMakeTokens() {
 
         String input;
         Token token;
