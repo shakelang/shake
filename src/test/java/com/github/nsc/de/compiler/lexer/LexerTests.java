@@ -1,12 +1,13 @@
 package com.github.nsc.de.compiler.lexer;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.github.nsc.de.compiler.lexer.characterinputstream.CharacterInputStream;
 import com.github.nsc.de.compiler.lexer.characterinputstream.StringCharacterInputStream;
 import com.github.nsc.de.compiler.lexer.token.Token;
 import com.github.nsc.de.compiler.lexer.token.TokenInputStream;
 import com.github.nsc.de.compiler.lexer.token.TokenType;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 
 
 public class LexerTests {
@@ -46,59 +47,59 @@ public class LexerTests {
         TokenInputStream tokens = lexer.makeTokens();
 
         // assign
-        Assertions.assertSame(TokenType.ASSIGN, tokens.next().getType()); // '='
+        assertSame(TokenType.ASSIGN, tokens.next().getType()); // '='
 
         // math operators
-        Assertions.assertSame(TokenType.ADD, tokens.next().getType()); // '+'
-        Assertions.assertSame(TokenType.SUB, tokens.next().getType()); // '-'
-        Assertions.assertSame(TokenType.MUL, tokens.next().getType()); // '*'
-        Assertions.assertSame(TokenType.DIV, tokens.next().getType()); // '/'
-        Assertions.assertSame(TokenType.POW, tokens.next().getType()); // '^'
-        Assertions.assertSame(TokenType.POW, tokens.next().getType()); // "**"
+        assertSame(TokenType.ADD, tokens.next().getType()); // '+'
+        assertSame(TokenType.SUB, tokens.next().getType()); // '-'
+        assertSame(TokenType.MUL, tokens.next().getType()); // '*'
+        assertSame(TokenType.DIV, tokens.next().getType()); // '/'
+        assertSame(TokenType.POW, tokens.next().getType()); // '^'
+        assertSame(TokenType.POW, tokens.next().getType()); // "**"
 
 
         // logical comparison
-        Assertions.assertSame(TokenType.EQ_EQUALS, tokens.next().getType());      // "=="
-        Assertions.assertSame(TokenType.BIGGER_EQUALS, tokens.next().getType());  // ">="
-        Assertions.assertSame(TokenType.SMALLER_EQUALS, tokens.next().getType()); // "<="
-        Assertions.assertSame(TokenType.BIGGER, tokens.next().getType());         // '>'
-        Assertions.assertSame(TokenType.SMALLER, tokens.next().getType());        // '<'
+        assertSame(TokenType.EQ_EQUALS, tokens.next().getType());      // "=="
+        assertSame(TokenType.BIGGER_EQUALS, tokens.next().getType());  // ">="
+        assertSame(TokenType.SMALLER_EQUALS, tokens.next().getType()); // "<="
+        assertSame(TokenType.BIGGER, tokens.next().getType());         // '>'
+        assertSame(TokenType.SMALLER, tokens.next().getType());        // '<'
 
         // logical concatenation
-        Assertions.assertSame(TokenType.LOGICAL_OR, tokens.next().getType());     // "||"
-        Assertions.assertSame(TokenType.LOGICAL_AND, tokens.next().getType());    // "&&"
+        assertSame(TokenType.LOGICAL_OR, tokens.next().getType());     // "||"
+        assertSame(TokenType.LOGICAL_AND, tokens.next().getType());    // "&&"
 
         // brackets
-        Assertions.assertSame(TokenType.LPAREN, tokens.next().getType()); // '('
-        Assertions.assertSame(TokenType.RPAREN, tokens.next().getType()); // ')'
-        Assertions.assertSame(TokenType.LCURL, tokens.next().getType());  // '{'
-        Assertions.assertSame(TokenType.RCURL, tokens.next().getType());  // '}'
+        assertSame(TokenType.LPAREN, tokens.next().getType()); // '('
+        assertSame(TokenType.RPAREN, tokens.next().getType()); // ')'
+        assertSame(TokenType.LCURL, tokens.next().getType());  // '{'
+        assertSame(TokenType.RCURL, tokens.next().getType());  // '}'
 
         // keywords
-        Assertions.assertSame(TokenType.KEYWORD_VAR, tokens.next().getType());   // "var"
-        Assertions.assertSame(TokenType.KEYWORD_WHILE, tokens.next().getType()); // "while"
-        Assertions.assertSame(TokenType.KEYWORD_TRUE, tokens.next().getType());  // "true"
-        Assertions.assertSame(TokenType.KEYWORD_FALSE, tokens.next().getType()); // "false"
+        assertSame(TokenType.KEYWORD_VAR, tokens.next().getType());   // "var"
+        assertSame(TokenType.KEYWORD_WHILE, tokens.next().getType()); // "while"
+        assertSame(TokenType.KEYWORD_TRUE, tokens.next().getType());  // "true"
+        assertSame(TokenType.KEYWORD_FALSE, tokens.next().getType()); // "false"
 
 
         // identifiers
         token = tokens.next(); // simple identifier
-        Assertions.assertSame(TokenType.IDENTIFIER, token.getType());
-        Assertions.assertEquals("hello", token.getValue());
+        assertSame(TokenType.IDENTIFIER, token.getType());
+        assertEquals("hello", token.getValue());
 
         token = tokens.next(); // identifier using number, uppercase letters and '_'
-        Assertions.assertSame(TokenType.IDENTIFIER, token.getType());
-        Assertions.assertEquals("world0A_", token.getValue());
+        assertSame(TokenType.IDENTIFIER, token.getType());
+        assertEquals("world0A_", token.getValue());
 
 
         // numbers
         token = tokens.next(); // integer number
-        Assertions.assertSame(TokenType.INTEGER, token.getType());
-        Assertions.assertEquals(149, token.getValue());
+        assertSame(TokenType.INTEGER, token.getType());
+        assertEquals(149, token.getValue());
 
         token = tokens.next(); // double number
-        Assertions.assertSame(TokenType.DOUBLE, token.getType());
-        Assertions.assertEquals(0.01, token.getValue());
+        assertSame(TokenType.DOUBLE, token.getType());
+        assertEquals(0.01, token.getValue());
     }
 
 }
