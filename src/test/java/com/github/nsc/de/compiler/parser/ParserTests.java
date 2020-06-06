@@ -79,6 +79,14 @@ public class ParserTests {
 
         assertType(LogicalTrueNode.class, node.getCondition());
         assertType(Tree.class, node.getBody());
+
+
+        node = parseSingle("<WhileTest>", "while(true) i;", WhileNode.class);
+        assertNotNull(node.getCondition());
+        assertNotNull(node.getBody());
+
+        assertType(LogicalTrueNode.class, node.getCondition());
+        assertType(Tree.class, node.getBody());
     }
 
 }

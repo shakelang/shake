@@ -241,10 +241,16 @@ public class Parser {
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.LPAREN) throw this.error("Expecting '('");
         ValuedNode condition = logicalOr();
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.RPAREN) throw this.error("Expecting ')'");
-        if(!this.in.hasNext() || this.in.next().getType() != TokenType.LCURL) throw this.error("Expecting '{'");
-        Tree body = prog();
-        if(!this.in.hasNext() || this.in.next().getType() != TokenType.RCURL) throw this.error("Expecting '}'");
-        return new WhileNode(body, condition);
+        if(!this.in.hasNext()) throw this.error("Expecting while body");
+        if(this.in.next().getType() == TokenType.LCURL) {
+            Tree body = prog();
+            if(!this.in.hasNext() || this.in.next().getType() != TokenType.RCURL) throw this.error("Expecting '}'");
+            return new WhileNode(body, condition);
+        }
+        else {
+            Tree body = new Tree(new Node[] { operation() });
+            return new WhileNode(body, condition);
+        }
     }
     
     private Error error(String error) {
