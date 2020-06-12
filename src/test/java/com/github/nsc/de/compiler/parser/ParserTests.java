@@ -7,6 +7,7 @@ import static com.github.nsc.de.compiler.TestUtil.*;
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
+import com.github.nsc.de.compiler.parser.node.variables.*;
 import org.junit.jupiter.api.Test;
 
 public class ParserTests {
@@ -28,6 +29,61 @@ public class ParserTests {
         assertEquals("i", node.getName());
         assertNotNull(node.getValue());
         assertType(LogicalTrueNode.class, node.getValue());
+
+    }
+
+    @Test
+    public void testVariableAddAssignment() {
+
+        VariableAddAssignmentNode node = parseSingle("<VariableAddAssignmentTest>", "i += 0", VariableAddAssignmentNode.class);
+        assertEquals("i", node.getName());
+        assertNotNull(node.getValue());
+        assertType(NumberNode.class, node.getValue());
+
+    }
+
+    @Test
+    public void testVariableSubAssignment() {
+
+        VariableSubAssignmentNode node = parseSingle("<VariableSubAssignmentTest>", "i -= 0", VariableSubAssignmentNode.class);
+        assertEquals("i", node.getName());
+        assertNotNull(node.getValue());
+        assertType(NumberNode.class, node.getValue());
+
+    }
+
+    @Test
+    public void testVariableMulAssignment() {
+
+        VariableMulAssignmentNode node = parseSingle("<VariableSubAssignmentTest>", "i *= 0", VariableMulAssignmentNode.class);
+        assertEquals("i", node.getName());
+        assertNotNull(node.getValue());
+        assertType(NumberNode.class, node.getValue());
+
+    }
+
+    @Test
+    public void testVariableDivAssignment() {
+
+        VariableDivAssignmentNode node = parseSingle("<VariableDivAssignmentTest>", "i /= 0", VariableDivAssignmentNode.class);
+        assertEquals("i", node.getName());
+        assertNotNull(node.getValue());
+        assertType(NumberNode.class, node.getValue());
+
+    }
+
+    @Test
+    public void testVariablePowAssignment() {
+
+        VariablePowAssignmentNode node = parseSingle("<VariableDivAssignmentTest>", "i ^= 0", VariablePowAssignmentNode.class);
+        assertEquals("i", node.getName());
+        assertNotNull(node.getValue());
+        assertType(NumberNode.class, node.getValue());
+
+        node = parseSingle("<VariableDivAssignmentTest>", "i **= 0", VariablePowAssignmentNode.class);
+        assertEquals("i", node.getName());
+        assertNotNull(node.getValue());
+        assertType(NumberNode.class, node.getValue());
 
     }
 

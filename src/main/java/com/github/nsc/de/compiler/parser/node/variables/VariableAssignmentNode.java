@@ -1,4 +1,7 @@
-package com.github.nsc.de.compiler.parser.node;
+package com.github.nsc.de.compiler.parser.node.variables;
+
+import com.github.nsc.de.compiler.parser.node.Node;
+import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 public class VariableAssignmentNode implements ValuedNode {
 

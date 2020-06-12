@@ -6,6 +6,7 @@ import com.github.nsc.de.compiler.lexer.token.TokenType;
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.logical.*;
+import com.github.nsc.de.compiler.parser.node.variables.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,7 +76,14 @@ public class Parser {
         if(token.getType() == TokenType.KEYWORD_IF) return this.ifStatement();
 
         // Assignments
-        if(token.getType() == TokenType.IDENTIFIER && token2 != null && token2.getType() == TokenType.ASSIGN) return this.varAssignment();
+        if(token.getType() == TokenType.IDENTIFIER && token2 != null) {
+            if(token2.getType() == TokenType.ASSIGN) return this.varAssignment();
+            if(token2.getType() == TokenType.ADD_ASSIGN) return this.varAddAssignment();
+            if(token2.getType() == TokenType.SUB_ASSIGN) return this.varSubAssignment();
+            if(token2.getType() == TokenType.MUL_ASSIGN) return this.varMulAssignment();
+            if(token2.getType() == TokenType.DIV_ASSIGN) return this.varDivAssignment();
+            if(token2.getType() == TokenType.POW_ASSIGN) return this.varPowAssignment();
+        }
 
         // Expression
         if(NUMBER.contains(token.getType()) ||
@@ -104,6 +112,46 @@ public class Parser {
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.ASSIGN) throw this.error("Expecting '='");
         Node value = operation();
         return new VariableAssignmentNode((String) identifier.getValue(), value);
+    }
+
+    private VariableAddAssignmentNode varAddAssignment() {
+        Token identifier = this.in.next();
+        if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.ADD_ASSIGN) throw this.error("Expecting '+='");
+        Node value = operation();
+        return new VariableAddAssignmentNode((String) identifier.getValue(), value);
+    }
+
+    private VariableSubAssignmentNode varSubAssignment() {
+        Token identifier = this.in.next();
+        if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.SUB_ASSIGN) throw this.error("Expecting '-='");
+        Node value = operation();
+        return new VariableSubAssignmentNode((String) identifier.getValue(), value);
+    }
+
+    private VariableMulAssignmentNode varMulAssignment() {
+        Token identifier = this.in.next();
+        if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.MUL_ASSIGN) throw this.error("Expecting '*='");
+        Node value = operation();
+        return new VariableMulAssignmentNode((String) identifier.getValue(), value);
+    }
+
+    private VariableDivAssignmentNode varDivAssignment() {
+        Token identifier = this.in.next();
+        if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.DIV_ASSIGN) throw this.error("Expecting '/='");
+        Node value = operation();
+        return new VariableDivAssignmentNode((String) identifier.getValue(), value);
+    }
+
+    private VariablePowAssignmentNode varPowAssignment() {
+        Token identifier = this.in.next();
+        if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.POW_ASSIGN) throw this.error("Expecting '^='");
+        Node value = operation();
+        return new VariablePowAssignmentNode((String) identifier.getValue(), value);
     }
 
     private VariableUsageNode varUsage() {

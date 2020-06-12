@@ -3,6 +3,7 @@ package com.github.nsc.de.compiler.interpreter;
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.logical.*;
+import com.github.nsc.de.compiler.parser.node.variables.*;
 
 
 public class Interpreter {
@@ -19,6 +20,11 @@ public class Interpreter {
         if(n instanceof DivNode) return visitDivNode((DivNode) n);
         if(n instanceof PowNode) return visitPowNode((PowNode) n);
         if(n instanceof VariableDeclarationNode) return visitVariableDeclarationNode((VariableDeclarationNode) n);
+        if(n instanceof VariableAddAssignmentNode) return visitVariableAddAssignmentNode((VariableAddAssignmentNode) n);
+        if(n instanceof VariableSubAssignmentNode) return visitVariableSubAssignmentNode((VariableSubAssignmentNode) n);
+        if(n instanceof VariableMulAssignmentNode) return visitVariableMulAssignmentNode((VariableMulAssignmentNode) n);
+        if(n instanceof VariableDivAssignmentNode) return visitVariableDivAssignmentNode((VariableDivAssignmentNode) n);
+        if(n instanceof VariablePowAssignmentNode) return visitVariablePowAssignmentNode((VariablePowAssignmentNode) n);
         if(n instanceof VariableAssignmentNode) return visitVariableAssignmentNode((VariableAssignmentNode) n);
         if(n instanceof VariableUsageNode) return visitVariableUsageNode((VariableUsageNode) n);
         if(n instanceof LogicalEqEqualsNode) return visitEqEqualsNode((LogicalEqEqualsNode) n);
@@ -78,6 +84,46 @@ public class Interpreter {
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue(value.getValue());
         return value;
+    }
+
+    public InterpreterResult<Object> visitVariableAddAssignmentNode(VariableAddAssignmentNode n) {
+        Variable variable = this.variables.get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue());
+        if(variable == null) throw new Error("Variable is not declared");
+        else variable.setValue((double) variable.getValue() + (double) value.getValue());
+        return new InterpreterResult(variable.getValue());
+    }
+
+    public InterpreterResult<Object> visitVariableSubAssignmentNode(VariableSubAssignmentNode n) {
+        Variable variable = this.variables.get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue());
+        if(variable == null) throw new Error("Variable is not declared");
+        else variable.setValue((double) variable.getValue() - (double) value.getValue());
+        return new InterpreterResult(variable.getValue());
+    }
+
+    public InterpreterResult<Object> visitVariableMulAssignmentNode(VariableMulAssignmentNode n) {
+        Variable variable = this.variables.get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue());
+        if(variable == null) throw new Error("Variable is not declared");
+        else variable.setValue((double) variable.getValue() * (double) value.getValue());
+        return new InterpreterResult(variable.getValue());
+    }
+
+    public InterpreterResult<Object> visitVariableDivAssignmentNode(VariableDivAssignmentNode n) {
+        Variable variable = this.variables.get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue());
+        if(variable == null) throw new Error("Variable is not declared");
+        else variable.setValue((double) variable.getValue() / (double) value.getValue());
+        return new InterpreterResult(variable.getValue());
+    }
+
+    public InterpreterResult<Object> visitVariablePowAssignmentNode(VariablePowAssignmentNode n) {
+        Variable variable = this.variables.get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue());
+        if(variable == null) throw new Error("Variable is not declared");
+        else variable.setValue(Math.pow((double) variable.getValue(), (double) value.getValue()));
+        return new InterpreterResult(variable.getValue());
     }
 
     public InterpreterResult<Object> visitVariableUsageNode(VariableUsageNode n) {

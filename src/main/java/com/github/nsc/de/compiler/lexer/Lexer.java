@@ -52,6 +52,14 @@ public class Lexer {
             // Identifiers
             else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier());
 
+            // Operator assign
+            else if (this.in.peek(0,2).equals("**=")) { tokens.add(new Token(TokenType.POW_ASSIGN, "**=")); in.skip(2); }
+            else if (this.in.peek(0,1).equals("^=")) { tokens.add(new Token(TokenType.POW_ASSIGN, "^=")); in.skip(); }
+            else if (this.in.peek(0,1).equals("/=")) { tokens.add(new Token(TokenType.DIV_ASSIGN, "/=")); in.skip(); }
+            else if (this.in.peek(0,1).equals("*=")) { tokens.add(new Token(TokenType.MUL_ASSIGN, "*=")); in.skip(); }
+            else if (this.in.peek(0,1).equals("-=")) { tokens.add(new Token(TokenType.SUB_ASSIGN, "-=")); in.skip(); }
+            else if (this.in.peek(0,1).equals("+=")) { tokens.add(new Token(TokenType.ADD_ASSIGN, "+=")); in.skip(); }
+
             // Math operators
             else if (next == '*' && this.in.hasNext() && in.peek() == '*') { tokens.add(new Token(TokenType.POW, "**")); in.skip(); }
             else if (next == '^') tokens.add(new Token(TokenType.POW));

@@ -27,8 +27,13 @@ public enum TokenType {
     LINE_SEPARATOR,
     SEMICOLON,
 
-    // Variables
+    // Assign
     ASSIGN,
+    ADD_ASSIGN,
+    SUB_ASSIGN,
+    MUL_ASSIGN,
+    DIV_ASSIGN,
+    POW_ASSIGN,
 
     // Brackets
     LPAREN,
