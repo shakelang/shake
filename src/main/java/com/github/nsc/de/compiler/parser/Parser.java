@@ -33,7 +33,7 @@ public class Parser {
 
         Tree result = this.prog();
 
-        if(this.in.hasNext()) throw this.error("Input did not end: "+in);
+        if(this.in.hasNext()) throw this.error("Input did not end: ");
         return result;
 
     }
@@ -69,6 +69,7 @@ public class Parser {
         // Keywords
         if(token.getType() == TokenType.KEYWORD_VAR) return this.varDeclaration();
         if(token.getType() == TokenType.KEYWORD_WHILE) return this.whileLoop();
+        if(token.getType() == TokenType.KEYWORD_IF) return this.ifStatement();
 
         // Assignments
         if(token.getType() == TokenType.IDENTIFIER && token2 != null && token2.getType() == TokenType.ASSIGN) return this.varAssignment();
@@ -238,18 +239,36 @@ public class Parser {
 
     private Node whileLoop() {
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_WHILE) throw this.error("Expecting while keyword");
+        ValuedNode condition = parseConditionStatement();
+        if(!this.in.hasNext()) throw this.error("Expecting while body");
+        Tree body = parseBodyStatement();
+        return new WhileNode(body, condition);
+    }
+
+    private Node ifStatement() {
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_IF) throw this.error("Expecting if keyword");
+        ValuedNode condition = parseConditionStatement();
+        if(!this.in.hasNext()) throw this.error("Expecting if body");
+        Tree body = parseBodyStatement();
+        return new IfNode(body, condition);
+    }
+
+    private ValuedNode parseConditionStatement() {
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.LPAREN) throw this.error("Expecting '('");
         ValuedNode condition = logicalOr();
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.RPAREN) throw this.error("Expecting ')'");
-        if(!this.in.hasNext()) throw this.error("Expecting while body");
-        if(this.in.next().getType() == TokenType.LCURL) {
+        return condition;
+    }
+
+    private Tree parseBodyStatement() {
+        if(this.in.peek().getType() == TokenType.LCURL) {
+            in.skip();
             Tree body = prog();
             if(!this.in.hasNext() || this.in.next().getType() != TokenType.RCURL) throw this.error("Expecting '}'");
-            return new WhileNode(body, condition);
+            return body;
         }
         else {
-            Tree body = new Tree(new Node[] { operation() });
-            return new WhileNode(body, condition);
+            return new Tree(new Node[] { this.operation() });
         }
     }
     

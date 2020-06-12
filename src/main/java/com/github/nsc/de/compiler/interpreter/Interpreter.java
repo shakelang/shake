@@ -29,6 +29,7 @@ public class Interpreter {
         if(n instanceof LogicalAndNode) return visitLogicalAndNode((LogicalAndNode) n);
         if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n);
         if(n instanceof WhileNode) return visitWhileNode((WhileNode) n);
+        if(n instanceof IfNode) return visitIfNode((IfNode) n);
         if(n instanceof LogicalTrueNode) return new InterpreterResult<>(true);
         if(n instanceof LogicalFalseNode) return new InterpreterResult<>(false);
         if(n == null) return new InterpreterResult<>(null);
@@ -122,6 +123,13 @@ public class Interpreter {
 
     public InterpreterResult<Object> visitWhileNode(WhileNode n) {
         while((boolean) visit(n.getCondition()).getValue()) {
+            visit(n.getBody());
+        }
+        return new InterpreterResult<>(null);
+    }
+
+    public InterpreterResult<Object> visitIfNode(IfNode n) {
+        if((boolean) visit(n.getCondition()).getValue()) {
             visit(n.getBody());
         }
         return new InterpreterResult<>(null);

@@ -73,7 +73,7 @@ public class ParserTests {
 
     @Test
     public void testWhile() {
-        WhileNode node = parseSingle("<WhileTest>", "while(true) { i }", WhileNode.class);
+        WhileNode node = parseSingle("<WhileTest>", "while (true) { i }", WhileNode.class);
         assertNotNull(node.getCondition());
         assertNotNull(node.getBody());
 
@@ -81,7 +81,25 @@ public class ParserTests {
         assertType(Tree.class, node.getBody());
 
 
-        node = parseSingle("<WhileTest>", "while(true) i;", WhileNode.class);
+        node = parseSingle("<WhileTest>", "while (true) i;", WhileNode.class);
+        assertNotNull(node.getCondition());
+        assertNotNull(node.getBody());
+
+        assertType(LogicalTrueNode.class, node.getCondition());
+        assertType(Tree.class, node.getBody());
+    }
+
+    @Test
+    public void testIf() {
+        IfNode node = parseSingle("<IfTest>", "if (true) { i }", IfNode.class);
+        assertNotNull(node.getCondition());
+        assertNotNull(node.getBody());
+
+        assertType(LogicalTrueNode.class, node.getCondition());
+        assertType(Tree.class, node.getBody());
+
+
+        node = parseSingle("<IfTest>", "if (true) i;", IfNode.class);
         assertNotNull(node.getCondition());
         assertNotNull(node.getBody());
 
