@@ -39,6 +39,7 @@ public enum TokenType {
     // Keyword
     KEYWORD_WHILE,
     KEYWORD_IF,
+    KEYWORD_ELSE,
     KEYWORD_TRUE,
     KEYWORD_FALSE,
     KEYWORD_VAR,

@@ -47,6 +47,7 @@ public class Lexer {
             else if(this.in.peek(0,4).equals("false")) { tokens.add(new Token(TokenType.KEYWORD_FALSE)); in.skip(4);}
             else if(this.in.peek(0,4).equals("while")) { tokens.add(new Token(TokenType.KEYWORD_WHILE)); in.skip(4);}
             else if(this.in.peek(0,1).equals("if")) { tokens.add(new Token(TokenType.KEYWORD_IF)); in.skip(1);}
+            else if(this.in.peek(0,3).equals("else")) { tokens.add(new Token(TokenType.KEYWORD_ELSE)); in.skip(3);}
 
             // Identifiers
             else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier());

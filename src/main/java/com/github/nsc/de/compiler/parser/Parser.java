@@ -42,19 +42,22 @@ public class Parser {
 
         List<Node> nodes = new ArrayList<>();
         int position = -2;
+        skipSeparators();
+        boolean separator = true;
+
         while (in.hasNext()) {
 
+            if(!separator) break; //throw this.error("Awaited separator at this point");
+            separator = false;
             if(position >= this.in.getPosition()) break;
             position = this.in.getPosition();
-
-            while (this.in.hasNext() && (this.in.peek().getType() == TokenType.SEMICOLON || this.in.peek().getType() == TokenType.LINE_SEPARATOR)) this.in.skip();
 
             if(this.in.hasNext()) {
                 Node result = operation();
                 if(result != null) nodes.add(result);
             }
 
-            if(!in.hasNext() || (in.peek().getType() == TokenType.SEMICOLON && in.peek().getType() == TokenType.LINE_SEPARATOR)) break;
+            if(this.skipSeparators() > 0) separator = true;
 
         }
         return new Tree(nodes);
@@ -250,6 +253,13 @@ public class Parser {
         ValuedNode condition = parseConditionStatement();
         if(!this.in.hasNext()) throw this.error("Expecting if body");
         Tree body = parseBodyStatement();
+        boolean separator = skipSeparators()>0;
+        if(this.in.hasNext() && this.in.next().getType() == TokenType.KEYWORD_ELSE) {
+            if(!separator) throw this.error("Awaited separator at this point");
+            this.in.skip();
+            Tree elseBody = parseBodyStatement();
+            return new IfNode(body, elseBody, condition);
+        }
         return new IfNode(body, condition);
     }
 
@@ -270,6 +280,17 @@ public class Parser {
         else {
             return new Tree(new Node[] { this.operation() });
         }
+    }
+
+    private int skipSeparators() {
+
+        int number = 0;
+        while(in.hasNext() && (in.peek().getType() == TokenType.SEMICOLON || in.peek().getType() == TokenType.LINE_SEPARATOR)) {
+            number++;
+            in.skip();
+        }
+        return number;
+
     }
     
     private Error error(String error) {

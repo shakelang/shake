@@ -129,9 +129,9 @@ public class Interpreter {
     }
 
     public InterpreterResult<Object> visitIfNode(IfNode n) {
-        if((boolean) visit(n.getCondition()).getValue()) {
-            visit(n.getBody());
-        }
+        boolean result = (boolean) visit(n.getCondition()).getValue();
+        if(result) visit(n.getBody());
+        else if(n.getElseBody() != null) visit(n.getElseBody());
         return new InterpreterResult<>(null);
     }
 }

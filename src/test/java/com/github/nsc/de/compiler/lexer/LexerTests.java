@@ -34,7 +34,7 @@ public class LexerTests {
         input += "(){} ";
 
         // keywords
-        input += "var while true false ";
+        input += "var while if else true false ";
 
         // identifiers
         input += "hello world0A_ ";
@@ -78,6 +78,8 @@ public class LexerTests {
         // keywords
         assertSame(TokenType.KEYWORD_VAR, tokens.next().getType());   // "var"
         assertSame(TokenType.KEYWORD_WHILE, tokens.next().getType()); // "while"
+        assertSame(TokenType.KEYWORD_IF, tokens.next().getType()); // "if"
+        assertSame(TokenType.KEYWORD_ELSE, tokens.next().getType()); // "else"
         assertSame(TokenType.KEYWORD_TRUE, tokens.next().getType());  // "true"
         assertSame(TokenType.KEYWORD_FALSE, tokens.next().getType()); // "false"
 
