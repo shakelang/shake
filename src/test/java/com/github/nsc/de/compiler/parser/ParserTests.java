@@ -55,7 +55,7 @@ public class ParserTests {
     @Test
     public void testVariableMulAssignment() {
 
-        VariableMulAssignmentNode node = parseSingle("<VariableSubAssignmentTest>", "i *= 0", VariableMulAssignmentNode.class);
+        VariableMulAssignmentNode node = parseSingle("<VariableMulAssignmentTest>", "i *= 0", VariableMulAssignmentNode.class);
         assertEquals("i", node.getName());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
@@ -75,15 +75,31 @@ public class ParserTests {
     @Test
     public void testVariablePowAssignment() {
 
-        VariablePowAssignmentNode node = parseSingle("<VariableDivAssignmentTest>", "i ^= 0", VariablePowAssignmentNode.class);
+        VariablePowAssignmentNode node = parseSingle("<VariablePowAssignmentTest>", "i ^= 0", VariablePowAssignmentNode.class);
         assertEquals("i", node.getName());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
 
-        node = parseSingle("<VariableDivAssignmentTest>", "i **= 0", VariablePowAssignmentNode.class);
+        node = parseSingle("<VariablePowAssignmentTest>", "i **= 0", VariablePowAssignmentNode.class);
         assertEquals("i", node.getName());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
+
+    }
+
+    @Test
+    public void testVariableIncrease() {
+
+        VariableIncreaseNode node = parseSingle("<VariableIncreaseTest>", "i ++", VariableIncreaseNode.class);
+        assertEquals("i", node.getName());
+
+    }
+
+    @Test
+    public void testVariableDecrease() {
+
+        VariableDecreaseNode node = parseSingle("<VariableDecreaseTest>", "i --", VariableDecreaseNode.class);
+        assertEquals("i", node.getName());
 
     }
 

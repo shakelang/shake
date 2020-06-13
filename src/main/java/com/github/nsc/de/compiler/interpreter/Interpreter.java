@@ -25,6 +25,8 @@ public class Interpreter {
         if(n instanceof VariableMulAssignmentNode) return visitVariableMulAssignmentNode((VariableMulAssignmentNode) n);
         if(n instanceof VariableDivAssignmentNode) return visitVariableDivAssignmentNode((VariableDivAssignmentNode) n);
         if(n instanceof VariablePowAssignmentNode) return visitVariablePowAssignmentNode((VariablePowAssignmentNode) n);
+        if(n instanceof VariableIncreaseNode) return visitVariableIncreaseNode((VariableIncreaseNode) n);
+        if(n instanceof VariableDecreaseNode) return visitVariableDecreaseNode((VariableDecreaseNode) n);
         if(n instanceof VariableAssignmentNode) return visitVariableAssignmentNode((VariableAssignmentNode) n);
         if(n instanceof VariableUsageNode) return visitVariableUsageNode((VariableUsageNode) n);
         if(n instanceof LogicalEqEqualsNode) return visitEqEqualsNode((LogicalEqEqualsNode) n);
@@ -123,6 +125,20 @@ public class Interpreter {
         InterpreterResult<Object> value = visit(n.getValue());
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue(Math.pow((double) variable.getValue(), (double) value.getValue()));
+        return new InterpreterResult(variable.getValue());
+    }
+
+    public InterpreterResult<Object> visitVariableIncreaseNode(VariableIncreaseNode n) {
+        Variable variable = this.variables.get(n.getName());
+        if(variable == null) throw new Error("Variable is not declared");
+        else variable.setValue((double) variable.getValue() + 1);
+        return new InterpreterResult(variable.getValue());
+    }
+
+    public InterpreterResult<Object> visitVariableDecreaseNode(VariableDecreaseNode n) {
+        Variable variable = this.variables.get(n.getName());
+        if(variable == null) throw new Error("Variable is not declared");
+        else variable.setValue((double) variable.getValue() - 1);
         return new InterpreterResult(variable.getValue());
     }
 

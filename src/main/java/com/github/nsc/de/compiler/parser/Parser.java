@@ -83,6 +83,8 @@ public class Parser {
             if(token2.getType() == TokenType.MUL_ASSIGN) return this.varMulAssignment();
             if(token2.getType() == TokenType.DIV_ASSIGN) return this.varDivAssignment();
             if(token2.getType() == TokenType.POW_ASSIGN) return this.varPowAssignment();
+            if(token2.getType() == TokenType.INCR) return this.varIncrease();
+            if(token2.getType() == TokenType.DECR) return this.varDecrease();
         }
 
         // Expression
@@ -152,6 +154,22 @@ public class Parser {
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.POW_ASSIGN) throw this.error("Expecting '^='");
         Node value = operation();
         return new VariablePowAssignmentNode((String) identifier.getValue(), value);
+    }
+
+
+    private VariableIncreaseNode varIncrease() {
+        Token identifier = this.in.next();
+        if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.INCR) throw this.error("Expecting '++'");
+        return new VariableIncreaseNode((String) identifier.getValue());
+    }
+
+
+    private VariableDecreaseNode varDecrease() {
+        Token identifier = this.in.next();
+        if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.DECR) throw this.error("Expecting '--'");
+        return new VariableDecreaseNode((String) identifier.getValue());
     }
 
     private VariableUsageNode varUsage() {

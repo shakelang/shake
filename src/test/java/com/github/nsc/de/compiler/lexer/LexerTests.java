@@ -28,6 +28,9 @@ public class LexerTests {
         generateToken("**", TokenType.POW); // "**"
 
         // math assign operators
+        generateToken("++", TokenType.INCR); // '++'
+        generateToken("--", TokenType.DECR); // '--'
+
         generateToken("+=", TokenType.ADD_ASSIGN); // '+='
         generateToken("-=", TokenType.SUB_ASSIGN); // '-='
         generateToken("*=", TokenType.MUL_ASSIGN); // '*='

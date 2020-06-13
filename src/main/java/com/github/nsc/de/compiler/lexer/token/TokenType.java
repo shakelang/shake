@@ -29,6 +29,8 @@ public enum TokenType {
 
     // Assign
     ASSIGN,
+    INCR,
+    DECR,
     ADD_ASSIGN,
     SUB_ASSIGN,
     MUL_ASSIGN,
