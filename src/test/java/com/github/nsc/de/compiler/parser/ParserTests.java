@@ -186,6 +186,25 @@ public class ParserTests {
         assertType(LogicalTrueNode.class, node.getCondition());
         assertType(Tree.class, node.getBody());
         assertType(Tree.class, node.getElseBody());
+
+
+        node = parseSingle("<IfTest>", "if (true) i; else if (true) i; else i;", IfNode.class);
+        assertNotNull(node.getCondition());
+        assertNotNull(node.getBody());
+        assertNotNull(node.getElseBody());
+        assertType(LogicalTrueNode.class, node.getCondition());
+        assertType(Tree.class, node.getBody());
+        assertType(Tree.class, node.getElseBody());
+
+        Tree elseBody = node.getElseBody();
+        assertSame(1, elseBody.getChildren().length);
+        assertType(IfNode.class, elseBody.getChildren()[0]);
+
+        IfNode if2 = (IfNode) elseBody.getChildren()[0];
+        assertType(Tree.class, if2.getBody());
+        assertType(Tree.class, if2.getElseBody());
+
+
     }
 
 }

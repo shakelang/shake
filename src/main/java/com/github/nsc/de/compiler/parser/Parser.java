@@ -320,10 +320,11 @@ public class Parser {
         if(!this.in.hasNext()) throw this.error("Expecting if body");
         Tree body = parseBodyStatement();
         boolean separator = skipSeparators()>0;
-        if(this.in.hasNext() && this.in.next().getType() == TokenType.KEYWORD_ELSE) {
+        if(this.in.hasNext() && this.in.peek().getType() == TokenType.KEYWORD_ELSE) {
             if(!separator) throw this.error("Awaited separator at this point");
             this.in.skip();
             Tree elseBody = parseBodyStatement();
+            System.out.println(elseBody);
             return new IfNode(body, elseBody, condition);
         }
         return new IfNode(body, condition);
@@ -337,6 +338,7 @@ public class Parser {
     }
 
     private Tree parseBodyStatement() {
+        skipSeparators();
         if(this.in.peek().getType() == TokenType.LCURL) {
             in.skip();
             Tree body = prog();
