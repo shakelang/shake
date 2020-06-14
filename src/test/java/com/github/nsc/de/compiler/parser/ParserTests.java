@@ -6,8 +6,10 @@ import static com.github.nsc.de.compiler.TestUtil.*;
 
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
+import com.github.nsc.de.compiler.parser.node.logical.LogicalSmallerNode;
 import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
+import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 import org.junit.jupiter.api.Test;
@@ -178,6 +180,32 @@ public class ParserTests {
         assertNotNull(node.getBody());
 
         assertType(LogicalTrueNode.class, node.getCondition());
+        assertType(Tree.class, node.getBody());
+    }
+
+    @Test
+    public void testFor() {
+        ForNode node = parseSingle("<ForTest>", "for(var i = 0; i < 100; i++) { i; }", ForNode.class);
+        assertNotNull(node.getDeclaration());
+        assertNotNull(node.getCondition());
+        assertNotNull(node.getRound());
+        assertNotNull(node.getBody());
+
+        assertType(VariableDeclarationNode.class, node.getDeclaration());
+        assertType(LogicalSmallerNode.class, node.getCondition());
+        assertType(VariableIncreaseNode.class, node.getRound());
+        assertType(Tree.class, node.getBody());
+
+
+        node = parseSingle("<ForTest>", "for(var i = 0; i < 100; i++) i;", ForNode.class);
+        assertNotNull(node.getDeclaration());
+        assertNotNull(node.getCondition());
+        assertNotNull(node.getRound());
+        assertNotNull(node.getBody());
+
+        assertType(VariableDeclarationNode.class, node.getDeclaration());
+        assertType(LogicalSmallerNode.class, node.getCondition());
+        assertType(VariableIncreaseNode.class, node.getRound());
         assertType(Tree.class, node.getBody());
     }
 

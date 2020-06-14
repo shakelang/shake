@@ -44,13 +44,14 @@ public enum TokenType {
     RCURL,
 
     // Keyword
+    KEYWORD_DO,
     KEYWORD_WHILE,
+    KEYWORD_FOR,
     KEYWORD_IF,
     KEYWORD_ELSE,
     KEYWORD_TRUE,
     KEYWORD_FALSE,
     KEYWORD_VAR,
-    KEYWORD_DO,
 
     // Identifier
     IDENTIFIER,

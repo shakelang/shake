@@ -31,7 +31,7 @@ public class Main {
 
     }
 
-    private static Object run(String source,String code) {
+    private static Object run(String source, String code) {
         CharacterInputStream in = new StringCharacterInputStream(source, code);
         Lexer lexer = new Lexer(in);
         TokenInputStream tokens = lexer.makeTokens();

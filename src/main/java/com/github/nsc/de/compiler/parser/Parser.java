@@ -7,6 +7,7 @@ import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.logical.*;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
+import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
@@ -76,6 +77,7 @@ public class Parser {
         if(token.getType() == TokenType.KEYWORD_VAR) return this.varDeclaration();
         if(token.getType() == TokenType.KEYWORD_WHILE) return this.whileLoop();
         if(token.getType() == TokenType.KEYWORD_DO) return this.doWhileLoop();
+        if(token.getType() == TokenType.KEYWORD_FOR) return this.forLoop();
         if(token.getType() == TokenType.KEYWORD_IF) return this.ifStatement();
 
         // Assignments
@@ -325,6 +327,19 @@ public class Parser {
         return new DoWhileNode(body, condition);
     }
 
+    private Node forLoop() {
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_FOR) throw this.error("Expecting for keyword");
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.LPAREN) throw this.error("Expecting '('");
+        Node declaration = operation();
+        awaitSemicolon();
+        ValuedNode condition = logicalOr();
+        awaitSemicolon();
+        Node round = operation();
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.RPAREN) throw this.error("Expecting ')'");
+        Tree body = parseBodyStatement();
+        return new ForNode(body, declaration, condition, round);
+    }
+
     private Node ifStatement() {
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_IF) throw this.error("Expecting if keyword");
         ValuedNode condition = parseConditionStatement();
@@ -368,6 +383,12 @@ public class Parser {
             in.skip();
         }
         return number;
+
+    }
+
+    private void awaitSemicolon() {
+
+        if(this.in.next().getType() != TokenType.SEMICOLON) throw this.error("Expecting semicolon at this point");
 
     }
     

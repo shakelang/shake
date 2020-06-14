@@ -4,6 +4,7 @@ import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.logical.*;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
+import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
@@ -40,6 +41,7 @@ public class Interpreter {
         if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n);
         if(n instanceof WhileNode) return visitWhileNode((WhileNode) n);
         if(n instanceof DoWhileNode) return visitDoWhileNode((DoWhileNode) n);
+        if(n instanceof ForNode) return visitForNode((ForNode) n);
         if(n instanceof IfNode) return visitIfNode((IfNode) n);
         if(n instanceof LogicalTrueNode) return new InterpreterResult<>(true);
         if(n instanceof LogicalFalseNode) return new InterpreterResult<>(false);
@@ -187,7 +189,7 @@ public class Interpreter {
     }
 
     public InterpreterResult<Object> visitWhileNode(WhileNode n) {
-        while((boolean) visit(n.getCondition()).getValue()) {
+        while(this.toBoolean(visit(n.getCondition()).getValue())) {
             visit(n.getBody());
         }
         return new InterpreterResult<>(null);
@@ -196,7 +198,16 @@ public class Interpreter {
     public InterpreterResult<Object> visitDoWhileNode(DoWhileNode n) {
         do {
             visit(n.getBody());
-        } while((boolean) visit(n.getCondition()).getValue());
+        } while(this.toBoolean(visit(n.getCondition())));
+        return new InterpreterResult<>(null);
+    }
+
+    public InterpreterResult<Object> visitForNode(ForNode n) {
+        visit(n.getDeclaration());
+        while(toBoolean(visit(n.getCondition()))) {
+            visit(n.getBody());
+            visit(n.getRound());
+        }
         return new InterpreterResult<>(null);
     }
 
@@ -205,5 +216,18 @@ public class Interpreter {
         if(result) visit(n.getBody());
         else if(n.getElseBody() != null) visit(n.getElseBody());
         return new InterpreterResult<>(null);
+    }
+
+    private boolean toBoolean(Object o) {
+
+        if(o instanceof InterpreterResult) return toBoolean(((InterpreterResult) o).getValue());
+        if(o instanceof Boolean) return (boolean) o;
+        if(o instanceof Integer) return ((int) o) != 0;
+        if(o instanceof Float) return ((float) o) != 0.0f;
+        if(o instanceof Double) return ((double) o) != 0.0;
+        if(o instanceof Long) return ((long) o) != 0;
+        if(o instanceof Byte) return ((byte) o) != 0;
+        return o != null;
+
     }
 }
