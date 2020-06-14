@@ -1,12 +1,16 @@
-package com.github.nsc.de.compiler.parser.node;
+package com.github.nsc.de.compiler.parser.node.loops;
 
-public class WhileNode implements Node {
+import com.github.nsc.de.compiler.parser.node.Node;
+import com.github.nsc.de.compiler.parser.node.Tree;
+import com.github.nsc.de.compiler.parser.node.ValuedNode;
+
+public class DoWhileNode implements Node {
 
     private final Tree body;
     private final ValuedNode condition;
 
 
-    public WhileNode(Tree body, ValuedNode condition) {
+    public DoWhileNode(Tree body, ValuedNode condition) {
         this.body = body;
         this.condition = condition;
     }

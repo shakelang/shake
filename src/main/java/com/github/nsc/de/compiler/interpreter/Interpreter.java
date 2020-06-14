@@ -3,6 +3,8 @@ package com.github.nsc.de.compiler.interpreter;
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.logical.*;
+import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
+import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
 
@@ -37,6 +39,7 @@ public class Interpreter {
         if(n instanceof LogicalAndNode) return visitLogicalAndNode((LogicalAndNode) n);
         if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n);
         if(n instanceof WhileNode) return visitWhileNode((WhileNode) n);
+        if(n instanceof DoWhileNode) return visitDoWhileNode((DoWhileNode) n);
         if(n instanceof IfNode) return visitIfNode((IfNode) n);
         if(n instanceof LogicalTrueNode) return new InterpreterResult<>(true);
         if(n instanceof LogicalFalseNode) return new InterpreterResult<>(false);
@@ -187,6 +190,13 @@ public class Interpreter {
         while((boolean) visit(n.getCondition()).getValue()) {
             visit(n.getBody());
         }
+        return new InterpreterResult<>(null);
+    }
+
+    public InterpreterResult<Object> visitDoWhileNode(DoWhileNode n) {
+        do {
+            visit(n.getBody());
+        } while((boolean) visit(n.getCondition()).getValue());
         return new InterpreterResult<>(null);
     }
 

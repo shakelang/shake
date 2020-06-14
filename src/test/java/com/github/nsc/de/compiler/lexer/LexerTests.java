@@ -59,6 +59,7 @@ public class LexerTests {
         // keywords
         generateToken("var", TokenType.KEYWORD_VAR); // "var"
         generateToken("while", TokenType.KEYWORD_WHILE); // "while"
+        generateToken("do", TokenType.KEYWORD_DO); // "do"
         generateToken("if", TokenType.KEYWORD_IF); // "if"
         generateToken("else", TokenType.KEYWORD_ELSE); // "else"
         generateToken("true", TokenType.KEYWORD_TRUE);  // "true"

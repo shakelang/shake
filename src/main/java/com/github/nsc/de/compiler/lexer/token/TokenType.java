@@ -50,6 +50,7 @@ public enum TokenType {
     KEYWORD_TRUE,
     KEYWORD_FALSE,
     KEYWORD_VAR,
+    KEYWORD_DO,
 
     // Identifier
     IDENTIFIER,

@@ -6,6 +6,8 @@ import com.github.nsc.de.compiler.lexer.token.TokenType;
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.logical.*;
+import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
+import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
 import java.util.ArrayList;
@@ -73,6 +75,7 @@ public class Parser {
         // Keywords
         if(token.getType() == TokenType.KEYWORD_VAR) return this.varDeclaration();
         if(token.getType() == TokenType.KEYWORD_WHILE) return this.whileLoop();
+        if(token.getType() == TokenType.KEYWORD_DO) return this.doWhileLoop();
         if(token.getType() == TokenType.KEYWORD_IF) return this.ifStatement();
 
         // Assignments
@@ -309,15 +312,22 @@ public class Parser {
     private Node whileLoop() {
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_WHILE) throw this.error("Expecting while keyword");
         ValuedNode condition = parseConditionStatement();
-        if(!this.in.hasNext()) throw this.error("Expecting while body");
         Tree body = parseBodyStatement();
         return new WhileNode(body, condition);
+    }
+
+    private Node doWhileLoop() {
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_DO) throw this.error("Expecting do keyword");
+        Tree body = parseBodyStatement();
+        skipSeparators();
+        if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_WHILE) throw this.error("Expecting while keyword");
+        ValuedNode condition = parseConditionStatement();
+        return new DoWhileNode(body, condition);
     }
 
     private Node ifStatement() {
         if(!this.in.hasNext() || this.in.next().getType() != TokenType.KEYWORD_IF) throw this.error("Expecting if keyword");
         ValuedNode condition = parseConditionStatement();
-        if(!this.in.hasNext()) throw this.error("Expecting if body");
         Tree body = parseBodyStatement();
         boolean separator = skipSeparators()>0;
         if(this.in.hasNext() && this.in.peek().getType() == TokenType.KEYWORD_ELSE) {
