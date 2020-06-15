@@ -11,38 +11,42 @@ import com.github.nsc.de.compiler.parser.node.variables.*;
 
 public class Interpreter {
 
-    private final VariableList variables = new VariableList();
+    private final Scope global = new Scope();
 
     public InterpreterResult<Object> visit(Node n) {
+        return visit(n, this.global);
+    }
 
-        if(n instanceof Tree) return visitTree((Tree) n);
-        if(n instanceof NumberNode) return visitNumberNode((NumberNode) n);
-        if(n instanceof AddNode) return visitAddNode((AddNode) n);
-        if(n instanceof SubNode) return visitSubNode((SubNode) n);
-        if(n instanceof MulNode) return visitMulNode((MulNode) n);
-        if(n instanceof DivNode) return visitDivNode((DivNode) n);
-        if(n instanceof PowNode) return visitPowNode((PowNode) n);
-        if(n instanceof VariableDeclarationNode) return visitVariableDeclarationNode((VariableDeclarationNode) n);
-        if(n instanceof VariableAddAssignmentNode) return visitVariableAddAssignmentNode((VariableAddAssignmentNode) n);
-        if(n instanceof VariableSubAssignmentNode) return visitVariableSubAssignmentNode((VariableSubAssignmentNode) n);
-        if(n instanceof VariableMulAssignmentNode) return visitVariableMulAssignmentNode((VariableMulAssignmentNode) n);
-        if(n instanceof VariableDivAssignmentNode) return visitVariableDivAssignmentNode((VariableDivAssignmentNode) n);
-        if(n instanceof VariablePowAssignmentNode) return visitVariablePowAssignmentNode((VariablePowAssignmentNode) n);
-        if(n instanceof VariableIncreaseNode) return visitVariableIncreaseNode((VariableIncreaseNode) n);
-        if(n instanceof VariableDecreaseNode) return visitVariableDecreaseNode((VariableDecreaseNode) n);
-        if(n instanceof VariableAssignmentNode) return visitVariableAssignmentNode((VariableAssignmentNode) n);
-        if(n instanceof VariableUsageNode) return visitVariableUsageNode((VariableUsageNode) n);
-        if(n instanceof LogicalEqEqualsNode) return visitEqEqualsNode((LogicalEqEqualsNode) n);
-        if(n instanceof LogicalBiggerEqualsNode) return visitBiggerEqualsNode((LogicalBiggerEqualsNode) n);
-        if(n instanceof LogicalSmallerEqualsNode) return visitSmallerEqualsNode((LogicalSmallerEqualsNode) n);
-        if(n instanceof LogicalBiggerNode) return visitBiggerNode((LogicalBiggerNode) n);
-        if(n instanceof LogicalSmallerNode) return visitSmallerNode((LogicalSmallerNode) n);
-        if(n instanceof LogicalAndNode) return visitLogicalAndNode((LogicalAndNode) n);
-        if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n);
-        if(n instanceof WhileNode) return visitWhileNode((WhileNode) n);
-        if(n instanceof DoWhileNode) return visitDoWhileNode((DoWhileNode) n);
-        if(n instanceof ForNode) return visitForNode((ForNode) n);
-        if(n instanceof IfNode) return visitIfNode((IfNode) n);
+    public InterpreterResult<Object> visit(Node n, Scope scope) {
+
+        if(n instanceof Tree) return visitTree((Tree) n, scope);
+        if(n instanceof NumberNode) return visitNumberNode((NumberNode) n, scope);
+        if(n instanceof AddNode) return visitAddNode((AddNode) n, scope);
+        if(n instanceof SubNode) return visitSubNode((SubNode) n, scope);
+        if(n instanceof MulNode) return visitMulNode((MulNode) n, scope);
+        if(n instanceof DivNode) return visitDivNode((DivNode) n, scope);
+        if(n instanceof PowNode) return visitPowNode((PowNode) n, scope);
+        if(n instanceof VariableDeclarationNode) return visitVariableDeclarationNode((VariableDeclarationNode) n, scope);
+        if(n instanceof VariableAddAssignmentNode) return visitVariableAddAssignmentNode((VariableAddAssignmentNode) n, scope);
+        if(n instanceof VariableSubAssignmentNode) return visitVariableSubAssignmentNode((VariableSubAssignmentNode) n, scope);
+        if(n instanceof VariableMulAssignmentNode) return visitVariableMulAssignmentNode((VariableMulAssignmentNode) n, scope);
+        if(n instanceof VariableDivAssignmentNode) return visitVariableDivAssignmentNode((VariableDivAssignmentNode) n, scope);
+        if(n instanceof VariablePowAssignmentNode) return visitVariablePowAssignmentNode((VariablePowAssignmentNode) n, scope);
+        if(n instanceof VariableIncreaseNode) return visitVariableIncreaseNode((VariableIncreaseNode) n, scope);
+        if(n instanceof VariableDecreaseNode) return visitVariableDecreaseNode((VariableDecreaseNode) n, scope);
+        if(n instanceof VariableAssignmentNode) return visitVariableAssignmentNode((VariableAssignmentNode) n, scope);
+        if(n instanceof VariableUsageNode) return visitVariableUsageNode((VariableUsageNode) n, scope);
+        if(n instanceof LogicalEqEqualsNode) return visitEqEqualsNode((LogicalEqEqualsNode) n, scope);
+        if(n instanceof LogicalBiggerEqualsNode) return visitBiggerEqualsNode((LogicalBiggerEqualsNode) n, scope);
+        if(n instanceof LogicalSmallerEqualsNode) return visitSmallerEqualsNode((LogicalSmallerEqualsNode) n, scope);
+        if(n instanceof LogicalBiggerNode) return visitBiggerNode((LogicalBiggerNode) n, scope);
+        if(n instanceof LogicalSmallerNode) return visitSmallerNode((LogicalSmallerNode) n, scope);
+        if(n instanceof LogicalAndNode) return visitLogicalAndNode((LogicalAndNode) n, scope);
+        if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n, scope);
+        if(n instanceof WhileNode) return visitWhileNode((WhileNode) n, scope);
+        if(n instanceof DoWhileNode) return visitDoWhileNode((DoWhileNode) n, scope);
+        if(n instanceof ForNode) return visitForNode((ForNode) n, scope);
+        if(n instanceof IfNode) return visitIfNode((IfNode) n, scope);
         if(n instanceof LogicalTrueNode) return new InterpreterResult<>(true);
         if(n instanceof LogicalFalseNode) return new InterpreterResult<>(false);
         if(n == null) return new InterpreterResult<>(null);
@@ -50,171 +54,187 @@ public class Interpreter {
 
     }
 
-    public InterpreterResult<Object> visitTree(Tree t) {
-        for (int i = 0; i < t.getChildren().length - 1; i++) visit(t.getChildren()[i]);
-        return visit(t.getChildren()[t.getChildren().length-1]);
+    public InterpreterResult<Object> visitTree(Tree t, Scope scope) {
+        for (int i = 0; i < t.getChildren().length - 1; i++) visit(t.getChildren()[i], scope);
+        return visit(t.getChildren()[t.getChildren().length-1], scope);
     }
 
-    public InterpreterResult<Object> visitNumberNode(NumberNode n) {
+    public InterpreterResult<Object> visitNumberNode(NumberNode n, Scope scope) {
         return new InterpreterResult<>(n.getNumber());
     }
 
-    public InterpreterResult<Object> visitAddNode(AddNode n) {
-        return new InterpreterResult<>(((double) visit(n.getLeft()).getValue()) + ((double)visit(n.getRight()).getValue()));
+    public InterpreterResult<Object> visitAddNode(AddNode n, Scope scope) {
+        return new InterpreterResult<>(((double) visit(n.getLeft(), scope).getValue()) + ((double)visit(n.getRight(), scope).getValue()));
     }
 
-    public InterpreterResult<Object> visitSubNode(SubNode n) {
-        return new InterpreterResult<>(((double)visit(n.getLeft()).getValue()) - ((double)visit(n.getRight()).getValue()));
+    public InterpreterResult<Object> visitSubNode(SubNode n, Scope scope) {
+        return new InterpreterResult<>(((double)visit(n.getLeft(), scope).getValue()) - ((double)visit(n.getRight(), scope).getValue()));
     }
 
-    public InterpreterResult<Object> visitMulNode(MulNode n) {
-        return new InterpreterResult<>(((double)visit(n.getLeft()).getValue()) * ((double)visit(n.getRight()).getValue()));
+    public InterpreterResult<Object> visitMulNode(MulNode n, Scope scope) {
+        return new InterpreterResult<>(((double)visit(n.getLeft(), scope).getValue()) * ((double)visit(n.getRight(), scope).getValue()));
     }
 
-    public InterpreterResult<Object> visitDivNode(DivNode n) {
-        return new InterpreterResult<>(((double)visit(n.getLeft()).getValue()) - ((double)visit(n.getRight()).getValue()));
+    public InterpreterResult<Object> visitDivNode(DivNode n, Scope scope) {
+        return new InterpreterResult<>(((double)visit(n.getLeft(), scope).getValue()) - ((double)visit(n.getRight(), scope).getValue()));
     }
 
-    public InterpreterResult<Object> visitPowNode(PowNode n) {
-        return new InterpreterResult<>(Math.pow((double)visit(n.getLeft()).getValue(), (double)visit(n.getRight()).getValue()));
+    public InterpreterResult<Object> visitPowNode(PowNode n, Scope scope) {
+        return new InterpreterResult<>(Math.pow((double)visit(n.getLeft(), scope).getValue(), (double)visit(n.getRight(), scope).getValue()));
     }
 
-    public InterpreterResult<Object> visitVariableDeclarationNode(VariableDeclarationNode n) {
-        if(!this.variables.declare(n.getName(), VariableType.ANY)) throw new Error("Variable is already defined");
-        if(n.getAssignment() != null) return visitVariableAssignmentNode(n.getAssignment());
+    public InterpreterResult<Object> visitVariableDeclarationNode(VariableDeclarationNode n, Scope scope) {
+        if(!scope.getScopeVariables().declare(n.getName(), VariableType.ANY)) throw new Error("Variable is already defined");
+        if(n.getAssignment() != null) return visitVariableAssignmentNode(n.getAssignment(), scope);
         else return new InterpreterResult<>(null);
     }
 
-    public InterpreterResult<Object> visitVariableAssignmentNode(VariableAssignmentNode n) {
-        Variable variable = this.variables.get(n.getName());
-        InterpreterResult<Object> value = visit(n.getValue());
+    public InterpreterResult<Object> visitVariableAssignmentNode(VariableAssignmentNode n, Scope scope) {
+        Variable variable = scope.getVariables().get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue(value.getValue());
         return value;
     }
 
-    public InterpreterResult<Object> visitVariableAddAssignmentNode(VariableAddAssignmentNode n) {
-        Variable variable = this.variables.get(n.getName());
-        InterpreterResult<Object> value = visit(n.getValue());
+    public InterpreterResult<Object> visitVariableAddAssignmentNode(VariableAddAssignmentNode n, Scope scope) {
+        Variable variable = scope.getVariables().get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue((double) variable.getValue() + (double) value.getValue());
         return new InterpreterResult(variable.getValue());
     }
 
-    public InterpreterResult<Object> visitVariableSubAssignmentNode(VariableSubAssignmentNode n) {
-        Variable variable = this.variables.get(n.getName());
-        InterpreterResult<Object> value = visit(n.getValue());
+    public InterpreterResult<Object> visitVariableSubAssignmentNode(VariableSubAssignmentNode n, Scope scope) {
+        Variable variable = scope.getVariables().get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue((double) variable.getValue() - (double) value.getValue());
         return new InterpreterResult(variable.getValue());
     }
 
-    public InterpreterResult<Object> visitVariableMulAssignmentNode(VariableMulAssignmentNode n) {
-        Variable variable = this.variables.get(n.getName());
-        InterpreterResult<Object> value = visit(n.getValue());
+    public InterpreterResult<Object> visitVariableMulAssignmentNode(VariableMulAssignmentNode n, Scope scope) {
+        Variable variable = scope.getVariables().get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue((double) variable.getValue() * (double) value.getValue());
         return new InterpreterResult(variable.getValue());
     }
 
-    public InterpreterResult<Object> visitVariableDivAssignmentNode(VariableDivAssignmentNode n) {
-        Variable variable = this.variables.get(n.getName());
-        InterpreterResult<Object> value = visit(n.getValue());
+    public InterpreterResult<Object> visitVariableDivAssignmentNode(VariableDivAssignmentNode n, Scope scope) {
+        Variable variable = scope.getVariables().get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue((double) variable.getValue() / (double) value.getValue());
         return new InterpreterResult(variable.getValue());
     }
 
-    public InterpreterResult<Object> visitVariablePowAssignmentNode(VariablePowAssignmentNode n) {
-        Variable variable = this.variables.get(n.getName());
-        InterpreterResult<Object> value = visit(n.getValue());
+    public InterpreterResult<Object> visitVariablePowAssignmentNode(VariablePowAssignmentNode n, Scope scope) {
+        Variable variable = scope.getVariables().get(n.getName());
+        InterpreterResult<Object> value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue(Math.pow((double) variable.getValue(), (double) value.getValue()));
         return new InterpreterResult(variable.getValue());
     }
 
-    public InterpreterResult<Object> visitVariableIncreaseNode(VariableIncreaseNode n) {
-        Variable variable = this.variables.get(n.getName());
+    public InterpreterResult<Object> visitVariableIncreaseNode(VariableIncreaseNode n, Scope scope) {
+        Variable variable = scope.getVariables().get(n.getName());
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue((double) variable.getValue() + 1);
         return new InterpreterResult(variable.getValue());
     }
 
-    public InterpreterResult<Object> visitVariableDecreaseNode(VariableDecreaseNode n) {
-        Variable variable = this.variables.get(n.getName());
+    public InterpreterResult<Object> visitVariableDecreaseNode(VariableDecreaseNode n, Scope scope) {
+        Variable variable = scope.getVariables().get(n.getName());
         if(variable == null) throw new Error("Variable is not declared");
         else variable.setValue((double) variable.getValue() - 1);
         return new InterpreterResult(variable.getValue());
     }
 
-    public InterpreterResult<Object> visitVariableUsageNode(VariableUsageNode n) {
-        Variable variable = this.variables.get(n.getName());
+    public InterpreterResult<Object> visitVariableUsageNode(VariableUsageNode n, Scope scope) {
+        Variable variable = scope.getVariables().get(n.getName());
         if(variable == null) throw new Error("Variable is not declared");
         else return new InterpreterResult<>(variable.getValue());
     }
 
-    public InterpreterResult<Object> visitEqEqualsNode(LogicalEqEqualsNode n) {
-        Object left = visit(n.getLeft()).getValue();
-        Object right = visit(n.getRight()).getValue();
+    public InterpreterResult<Object> visitEqEqualsNode(LogicalEqEqualsNode n, Scope scope) {
+        Object left = visit(n.getLeft(), scope).getValue();
+        Object right = visit(n.getRight(), scope).getValue();
         if(left instanceof Boolean) {
             if(right instanceof Boolean) return new InterpreterResult<>((boolean) left == (boolean) right);
             return new InterpreterResult<>((boolean) left == ((double) right == 0));
         }
         if(right instanceof Boolean) return new InterpreterResult<>(((double) left == 0) == ((boolean) right));
-        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() == (double) visit(n.getRight()).getValue());
+        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() == (double) visit(n.getRight(), scope).getValue());
     }
 
-    public InterpreterResult<Object> visitBiggerEqualsNode(LogicalBiggerEqualsNode n) {
-        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() >= (double) visit(n.getRight()).getValue());
+    public InterpreterResult<Object> visitBiggerEqualsNode(LogicalBiggerEqualsNode n, Scope scope) {
+        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() >= (double) visit(n.getRight(), scope).getValue());
     }
 
-    public InterpreterResult<Object> visitSmallerEqualsNode(LogicalSmallerEqualsNode n) {
-        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() <= (double) visit(n.getRight()).getValue());
+    public InterpreterResult<Object> visitSmallerEqualsNode(LogicalSmallerEqualsNode n, Scope scope) {
+        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() <= (double) visit(n.getRight(), scope).getValue());
     }
 
-    public InterpreterResult<Object> visitBiggerNode(LogicalBiggerNode n) {
-        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() > (double) visit(n.getRight()).getValue());
+    public InterpreterResult<Object> visitBiggerNode(LogicalBiggerNode n, Scope scope) {
+        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() > (double) visit(n.getRight(), scope).getValue());
     }
 
-    public InterpreterResult<Object> visitSmallerNode(LogicalSmallerNode n) {
-        return new InterpreterResult<>((double) visit(n.getLeft()).getValue() < (double) visit(n.getRight()).getValue());
+    public InterpreterResult<Object> visitSmallerNode(LogicalSmallerNode n, Scope scope) {
+        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() < (double) visit(n.getRight(), scope).getValue());
     }
 
-    public InterpreterResult<Object> visitLogicalAndNode(LogicalAndNode n) {
-        return new InterpreterResult<>((boolean) visit(n.getLeft()).getValue() && (boolean) visit(n.getRight()).getValue());
+    public InterpreterResult<Object> visitLogicalAndNode(LogicalAndNode n, Scope scope) {
+        return new InterpreterResult<>((boolean) visit(n.getLeft(), scope).getValue() && (boolean) visit(n.getRight(), scope).getValue());
     }
 
-    public InterpreterResult<Object> visitLogicalOrNode(LogicalOrNode n) {
-        return new InterpreterResult<>((boolean) visit(n.getLeft()).getValue() || (boolean) visit(n.getRight()).getValue());
+    public InterpreterResult<Object> visitLogicalOrNode(LogicalOrNode n, Scope scope) {
+        return new InterpreterResult<>((boolean) visit(n.getLeft(), scope).getValue() || (boolean) visit(n.getRight(), scope).getValue());
     }
 
-    public InterpreterResult<Object> visitWhileNode(WhileNode n) {
-        while(this.toBoolean(visit(n.getCondition()).getValue())) {
-            visit(n.getBody());
+    public InterpreterResult<Object> visitWhileNode(WhileNode n, Scope scope) {
+
+        while(this.toBoolean(visit(n.getCondition(), scope).getValue())) {
+
+            Scope whileScope = new Scope(scope);
+            visit(n.getBody(), whileScope);
+
         }
         return new InterpreterResult<>(null);
     }
 
-    public InterpreterResult<Object> visitDoWhileNode(DoWhileNode n) {
+    public InterpreterResult<Object> visitDoWhileNode(DoWhileNode n, Scope scope) {
+
         do {
-            visit(n.getBody());
-        } while(this.toBoolean(visit(n.getCondition())));
+
+            Scope doWhileScope = new Scope(scope);
+            visit(n.getBody(), doWhileScope);
+
+        } while(this.toBoolean(visit(n.getCondition(), scope)));
+
         return new InterpreterResult<>(null);
     }
 
-    public InterpreterResult<Object> visitForNode(ForNode n) {
-        visit(n.getDeclaration());
-        while(toBoolean(visit(n.getCondition()))) {
-            visit(n.getBody());
-            visit(n.getRound());
+    public InterpreterResult<Object> visitForNode(ForNode n, Scope scope) {
+
+        Scope forOuterScope = new Scope(scope);
+
+        visit(n.getDeclaration(), forOuterScope);
+        while(toBoolean(visit(n.getCondition(), forOuterScope))) {
+            Scope forInnerScope = new Scope(forOuterScope);
+            visit(n.getBody(), forInnerScope);
+            visit(n.getRound(), forOuterScope);
         }
         return new InterpreterResult<>(null);
     }
 
-    public InterpreterResult<Object> visitIfNode(IfNode n) {
-        boolean result = (boolean) visit(n.getCondition()).getValue();
-        if(result) visit(n.getBody());
-        else if(n.getElseBody() != null) visit(n.getElseBody());
+    public InterpreterResult<Object> visitIfNode(IfNode n, Scope scope) {
+
+        Scope ifScope = new Scope(scope);
+
+        boolean result = (boolean) visit(n.getCondition(), ifScope).getValue();
+        if(result) visit(n.getBody(), ifScope);
+        else if(n.getElseBody() != null) visit(n.getElseBody(), ifScope);
         return new InterpreterResult<>(null);
     }
 
