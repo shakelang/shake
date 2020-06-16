@@ -18,11 +18,19 @@ public class Scope {
         this(null);
     }
 
+    public Scope getParent() {
+        return parent;
+    }
+
     public VariableList getScopeVariables() {
         return variables;
     }
 
     public VariableList getVariables() {
         return this.parent != null ? this.parent.getVariables().concat(variables) : variables;
+    }
+
+    public Scope copy() {
+        return new Scope(this.parent, this.getScopeVariables().copy());
     }
 }

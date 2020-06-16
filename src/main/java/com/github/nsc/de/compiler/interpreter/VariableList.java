@@ -44,6 +44,10 @@ public class VariableList {
         return Collections.unmodifiableMap(variables);
     }
 
+    VariableList copy() {
+        return new VariableList(new HashMap<>(this.variables));
+    }
+
     VariableList concat(VariableList list) {
         HashMap<String, Variable> variables = new HashMap<>(this.variables);
         for(Map.Entry<String, Variable> entry : list.getVariables().entrySet()) variables.put(entry.getKey(), entry.getValue());

@@ -196,7 +196,7 @@ public class Interpreter {
 
         while(this.toBoolean(visit(n.getCondition(), scope).getValue())) {
 
-            Scope whileScope = new Scope(scope);
+            Scope whileScope = scope.copy();
             visit(n.getBody(), whileScope);
 
         }
@@ -207,7 +207,7 @@ public class Interpreter {
 
         do {
 
-            Scope doWhileScope = new Scope(scope);
+            Scope doWhileScope = scope.copy();
             visit(n.getBody(), doWhileScope);
 
         } while(this.toBoolean(visit(n.getCondition(), scope)));
@@ -217,20 +217,22 @@ public class Interpreter {
 
     public InterpreterResult<Object> visitForNode(ForNode n, Scope scope) {
 
-        Scope forOuterScope = new Scope(scope);
+        Scope forOuterScope = scope.copy();
 
         visit(n.getDeclaration(), forOuterScope);
         while(toBoolean(visit(n.getCondition(), forOuterScope))) {
-            Scope forInnerScope = new Scope(forOuterScope);
+
+            Scope forInnerScope = forOuterScope.copy();
             visit(n.getBody(), forInnerScope);
             visit(n.getRound(), forOuterScope);
+
         }
         return new InterpreterResult<>(null);
     }
 
     public InterpreterResult<Object> visitIfNode(IfNode n, Scope scope) {
 
-        Scope ifScope = new Scope(scope);
+        Scope ifScope = scope.copy();
 
         boolean result = (boolean) visit(n.getCondition(), ifScope).getValue();
         if(result) visit(n.getBody(), ifScope);
