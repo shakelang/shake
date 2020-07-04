@@ -6,6 +6,11 @@ public enum TokenType {
     INTEGER,
     DOUBLE,
 
+    // Punctuation
+    COMMA,
+    DOT,
+    SEMICOLON,
+
     // Math Operators
     ADD,
     SUB,
@@ -25,7 +30,6 @@ public enum TokenType {
 
     // Separators
     LINE_SEPARATOR,
-    SEMICOLON,
 
     // Assign
     ASSIGN,
@@ -52,6 +56,7 @@ public enum TokenType {
     KEYWORD_TRUE,
     KEYWORD_FALSE,
     KEYWORD_VAR,
+    KEYWORD_FUNCTION,
 
     // Identifier
     IDENTIFIER,

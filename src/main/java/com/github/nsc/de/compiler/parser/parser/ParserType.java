@@ -4,12 +4,16 @@ import com.github.nsc.de.compiler.lexer.token.TokenInputStream;
 import com.github.nsc.de.compiler.parser.node.Node;
 import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
+import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
+import com.github.nsc.de.compiler.parser.node.functions.FunctionDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
 public interface ParserType {
 
     Tree prog();
     Node operation();
+    ValuedNode valuedOperation();
+    ValuedNode statement();
 
     VariableDeclarationNode varDeclaration();
 
@@ -30,8 +34,6 @@ public interface ParserType {
     VariableDecreaseNode varDecrease();
 
     VariableUsageNode varUsage();
-
-    ValuedNode statement();
 
     ValuedNode expr();
 
@@ -54,6 +56,10 @@ public interface ParserType {
     Node forLoop();
 
     Node ifStatement();
+
+    FunctionDeclarationNode function();
+
+    FunctionCallNode functionCall();
     
     Error error(String error);
 

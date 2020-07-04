@@ -4,6 +4,7 @@ import com.github.nsc.de.compiler.lexer.token.Token;
 import com.github.nsc.de.compiler.lexer.token.TokenType;
 import com.github.nsc.de.compiler.parser.node.Node;
 import com.github.nsc.de.compiler.parser.node.Tree;
+import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,8 +52,21 @@ public interface ProgramParser extends ParserType, ParseUtils {
         if(token.getType() == TokenType.KEYWORD_FOR) return this.forLoop();
         if(token.getType() == TokenType.KEYWORD_IF) return this.ifStatement();
 
+        else return this.valuedOperation();
+    }
+
+    @Override
+    default ValuedNode valuedOperation() {
+
+        Token token = this.getInput().peek();
+        Token token2 = this.getInput().peek(2);
+
+
+        if(token.getType() == TokenType.KEYWORD_FUNCTION) return this.function();
+
         // Assignments
         if(token.getType() == TokenType.IDENTIFIER && token2 != null) {
+            if(token2.getType() == TokenType.LPAREN) return this.functionCall();
             if(token2.getType() == TokenType.ASSIGN) return this.varAssignment();
             if(token2.getType() == TokenType.ADD_ASSIGN) return this.varAddAssignment();
             if(token2.getType() == TokenType.SUB_ASSIGN) return this.varSubAssignment();
@@ -67,10 +81,11 @@ public interface ProgramParser extends ParserType, ParseUtils {
         if(NUMBER.contains(token.getType()) ||
                 token.getType() == TokenType.IDENTIFIER ||
                 token.getType() == TokenType.KEYWORD_TRUE ||
-                token.getType() == TokenType.KEYWORD_FALSE )
+                token.getType() == TokenType.KEYWORD_FALSE)
             return this.statement();
 
-        else return null;
-    }
+        return null;
 
+
+    }
 }

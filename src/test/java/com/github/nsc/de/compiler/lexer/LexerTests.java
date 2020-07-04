@@ -16,6 +16,15 @@ public class LexerTests {
     @Test
     public void testMakeTokens() {
 
+        // punctuation
+        generateToken(";", TokenType.SEMICOLON); // ';'
+        generateToken(",", TokenType.COMMA); // ','
+        generateToken(".", TokenType.DOT); // '.'
+
+        // line separator
+        generateToken("\n", TokenType.LINE_SEPARATOR); // '\n'
+        generateToken("\r\n", TokenType.LINE_SEPARATOR); // '\r\n'
+
         // assign
         generateToken("=", TokenType.ASSIGN); // '='
 
@@ -58,6 +67,7 @@ public class LexerTests {
 
         // keywords
         generateToken("var", TokenType.KEYWORD_VAR); // "var"
+        generateToken("function", TokenType.KEYWORD_FUNCTION); // "function"
         generateToken("do", TokenType.KEYWORD_DO); // "do"
         generateToken("while", TokenType.KEYWORD_WHILE); // "while"
         generateToken("for", TokenType.KEYWORD_FOR); // "for"

@@ -35,14 +35,17 @@ public class Lexer {
             // Linebreaks
             if(next == '\n') tokens.add(new Token(TokenType.LINE_SEPARATOR));
 
-            // Semicolon
+            // Punctuation
             else if(next == ';') tokens.add(new Token(TokenType.SEMICOLON));
+            else if(next == ',') tokens.add(new Token(TokenType.COMMA));
+            else if(next == '.') tokens.add(new Token(TokenType.DOT));
 
             // Numbers
             else if(NUMBERS.contains(next)) tokens.add(makeNumber());
 
             // Keywords
             else if(this.in.peek(0,2).equals("var")) { tokens.add(new Token(TokenType.KEYWORD_VAR)); in.skip(2);}
+            else if(this.in.peek(0,7).equals("function")) { tokens.add(new Token(TokenType.KEYWORD_FUNCTION)); in.skip(7);}
             else if(this.in.peek(0,3).equals("true")) { tokens.add(new Token(TokenType.KEYWORD_TRUE)); in.skip(3);}
             else if(this.in.peek(0,4).equals("false")) { tokens.add(new Token(TokenType.KEYWORD_FALSE)); in.skip(4);}
             else if(this.in.peek(0,1).equals("do")) { tokens.add(new Token(TokenType.KEYWORD_DO)); in.skip(1);}

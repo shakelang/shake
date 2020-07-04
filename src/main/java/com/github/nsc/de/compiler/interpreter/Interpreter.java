@@ -2,6 +2,8 @@ package com.github.nsc.de.compiler.interpreter;
 
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
+import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
+import com.github.nsc.de.compiler.parser.node.functions.FunctionDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.logical.*;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
@@ -11,7 +13,11 @@ import com.github.nsc.de.compiler.parser.node.variables.*;
 
 public class Interpreter {
 
-    private final Scope global = new Scope();
+    private final Scope global;
+
+    public Interpreter() {
+        this.global = new Scope(null, DefaultFunctions.getFunctions(this));
+    }
 
     public InterpreterResult<Object> visit(Node n) {
         return visit(n, this.global);
@@ -47,6 +53,8 @@ public class Interpreter {
         if(n instanceof DoWhileNode) return visitDoWhileNode((DoWhileNode) n, scope);
         if(n instanceof ForNode) return visitForNode((ForNode) n, scope);
         if(n instanceof IfNode) return visitIfNode((IfNode) n, scope);
+        if(n instanceof FunctionDeclarationNode) return visitFunctionDeclarationNode((FunctionDeclarationNode) n, scope);
+        if(n instanceof FunctionCallNode) return visitFunctionCallNode((FunctionCallNode) n, scope);
         if(n instanceof LogicalTrueNode) return new InterpreterResult<>(true);
         if(n instanceof LogicalFalseNode) return new InterpreterResult<>(false);
         if(n == null) return new InterpreterResult<>(null);
@@ -56,7 +64,8 @@ public class Interpreter {
 
     public InterpreterResult<Object> visitTree(Tree t, Scope scope) {
         for (int i = 0; i < t.getChildren().length - 1; i++) visit(t.getChildren()[i], scope);
-        return visit(t.getChildren()[t.getChildren().length-1], scope);
+        if(t.getChildren().length > 0) return visit(t.getChildren()[t.getChildren().length-1], scope);
+        else return new InterpreterResult<>(null);
     }
 
     public InterpreterResult<Object> visitNumberNode(NumberNode n, Scope scope) {
@@ -237,6 +246,23 @@ public class Interpreter {
         boolean result = (boolean) visit(n.getCondition(), ifScope).getValue();
         if(result) visit(n.getBody(), ifScope);
         else if(n.getElseBody() != null) visit(n.getElseBody(), ifScope);
+        return new InterpreterResult<>(null);
+    }
+
+    public InterpreterResult<Object> visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
+
+        if(!scope.getVariables().declare(node.getName(), VariableType.FUNCTION)) throw new Error("'" + node.getName() + "' is already declared!");
+        Function f = new Function(node.getArgs(), node.getBody(), scope, this);
+        scope.getVariables().get(node.getName()).setValue(f);
+        return new InterpreterResult<>(f);
+
+    }
+
+    public InterpreterResult<Object> visitFunctionCallNode(FunctionCallNode node, Scope scope) {
+        Variable variable = scope.getVariables().get(node.getName());
+        if(variable == null) throw new Error("Function '" + node.getName() + "' is not declared");
+        else if(variable.getType() != VariableType.FUNCTION) throw new Error("Function '" + node.getName() + "' is not a function");
+        else ((Function) variable.getValue()).call(node, scope);
         return new InterpreterResult<>(null);
     }
 
