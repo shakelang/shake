@@ -1,12 +1,12 @@
 package com.github.nsc.de.compiler.lexer;
 
+import static com.github.nsc.de.compiler.util.HelpFunctions.asList;
 import com.github.nsc.de.compiler.lexer.characterinputstream.CharacterInputStream;
 import com.github.nsc.de.compiler.lexer.token.Token;
 import com.github.nsc.de.compiler.lexer.token.TokenInputStream;
 import com.github.nsc.de.compiler.lexer.token.TokenType;
 import com.github.nsc.de.compiler.util.CompilerError;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,17 +42,6 @@ public class Lexer {
 
             // Numbers
             else if(NUMBERS.contains(next)) tokens.add(makeNumber());
-
-            // Keywords
-            else if(this.in.peek(0,2).equals("var")) { tokens.add(new Token(TokenType.KEYWORD_VAR)); in.skip(2);}
-            else if(this.in.peek(0,7).equals("function")) { tokens.add(new Token(TokenType.KEYWORD_FUNCTION)); in.skip(7);}
-            else if(this.in.peek(0,3).equals("true")) { tokens.add(new Token(TokenType.KEYWORD_TRUE)); in.skip(3);}
-            else if(this.in.peek(0,4).equals("false")) { tokens.add(new Token(TokenType.KEYWORD_FALSE)); in.skip(4);}
-            else if(this.in.peek(0,1).equals("do")) { tokens.add(new Token(TokenType.KEYWORD_DO)); in.skip(1);}
-            else if(this.in.peek(0,4).equals("while")) { tokens.add(new Token(TokenType.KEYWORD_WHILE)); in.skip(4);}
-            else if(this.in.peek(0,2).equals("for")) { tokens.add(new Token(TokenType.KEYWORD_FOR)); in.skip(2);}
-            else if(this.in.peek(0,1).equals("if")) { tokens.add(new Token(TokenType.KEYWORD_IF)); in.skip(1);}
-            else if(this.in.peek(0,3).equals("else")) { tokens.add(new Token(TokenType.KEYWORD_ELSE)); in.skip(3);}
 
             // Identifiers
             else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier());
@@ -121,6 +110,37 @@ public class Lexer {
         while(in.hasNext() && IDENTIFIER.contains(in.peek())) {
             identifier.append(in.next());
         }
+
+        String result = identifier.toString();
+        // Keywords
+        switch (result) {
+            case "int":
+                return new Token(TokenType.KEYWORD_INT);
+            case "double":
+                return new Token(TokenType.KEYWORD_DOUBLE);
+            case "char":
+                return new Token(TokenType.KEYWORD_CHAR);
+            case "boolean":
+                return new Token(TokenType.KEYWORD_BOOLEAN);
+            case "var":
+                return new Token(TokenType.KEYWORD_VAR);
+            case "function":
+                return new Token(TokenType.KEYWORD_FUNCTION);
+            case "true":
+                return new Token(TokenType.KEYWORD_TRUE);
+            case "false":
+                return new Token(TokenType.KEYWORD_FALSE);
+            case "do":
+                return new Token(TokenType.KEYWORD_DO);
+            case "while":
+                return new Token(TokenType.KEYWORD_WHILE);
+            case "for":
+                return new Token(TokenType.KEYWORD_FOR);
+            case "if":
+                return new Token(TokenType.KEYWORD_IF);
+            case "else":
+                return new Token(TokenType.KEYWORD_ELSE);
+        }
         return new Token(TokenType.IDENTIFIER, identifier.toString());
 
     }
@@ -143,12 +163,5 @@ public class Lexer {
         public UnrecognisedTokenError (String details, Position start, Position end) {
             super("UnrecognisedTokenError", details, start, end);
         }
-    }
-
-    private static List<Character> asList(final String string) {
-        return new AbstractList<Character>() {
-            public int size() { return string.length(); }
-            public Character get(int index) { return string.charAt(index); }
-        };
     }
 }

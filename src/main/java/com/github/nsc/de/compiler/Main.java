@@ -35,9 +35,10 @@ public class Main {
         CharacterInputStream in = new StringCharacterInputStream(source, code);
         Lexer lexer = new Lexer(in);
         TokenInputStream tokens = lexer.makeTokens();
+        System.out.printf("[DEBUG] Lexer Tokens: %s%n", tokens.toString());
         Parser parser = new Parser(tokens);
         Node tree = parser.parse();
-        System.out.println(tree);
+        System.out.printf("[DEBUG] Parser Tree: %s%n", tree.toString());
         return interpreter.visit(tree).getValue();
     }
 }

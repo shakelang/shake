@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.github.nsc.de.compiler.lexer.characterinputstream.CharacterInputStream;
 import com.github.nsc.de.compiler.lexer.characterinputstream.StringCharacterInputStream;
 import com.github.nsc.de.compiler.lexer.token.Token;
-import com.github.nsc.de.compiler.lexer.token.TokenInputStream;
 import com.github.nsc.de.compiler.lexer.token.TokenType;
-import jdk.nashorn.internal.ir.Assignment;
 import org.junit.jupiter.api.Test;
 
 
@@ -66,7 +64,12 @@ public class LexerTests {
         generateToken("}", TokenType.RCURL); // '}'
 
         // keywords
+        generateToken("int", TokenType.KEYWORD_INT); // "int"
+        generateToken("double", TokenType.KEYWORD_DOUBLE); // "double"
+        generateToken("char", TokenType.KEYWORD_CHAR); // "char"
+        generateToken("boolean", TokenType.KEYWORD_BOOLEAN); // "boolean"
         generateToken("var", TokenType.KEYWORD_VAR); // "var"
+
         generateToken("function", TokenType.KEYWORD_FUNCTION); // "function"
         generateToken("do", TokenType.KEYWORD_DO); // "do"
         generateToken("while", TokenType.KEYWORD_WHILE); // "while"

@@ -7,7 +7,6 @@ public interface CharacterInputStream {
     String getSource();
     char[] getContent();
     Position getPosition();
-
     boolean hasNext();
     Character next();
     void skip(int number);

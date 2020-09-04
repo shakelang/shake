@@ -55,8 +55,14 @@ public enum TokenType {
     KEYWORD_ELSE,
     KEYWORD_TRUE,
     KEYWORD_FALSE,
-    KEYWORD_VAR,
     KEYWORD_FUNCTION,
+
+    // Variable Declaration
+    KEYWORD_VAR,
+    KEYWORD_INT,
+    KEYWORD_DOUBLE,
+    KEYWORD_CHAR,
+    KEYWORD_BOOLEAN,
 
     // Identifier
     IDENTIFIER,
