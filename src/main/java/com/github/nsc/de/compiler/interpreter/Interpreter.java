@@ -162,7 +162,7 @@ public class Interpreter {
 
     public InterpreterResult<Object> visitVariableUsageNode(VariableUsageNode n, Scope scope) {
         Variable variable = scope.getVariables().get(n.getName());
-        if(variable == null) throw new Error("Variable is not declared");
+        if(variable == null) throw new Error("Variable '" + n.getName() + "' s not declared");
         else return new InterpreterResult<>(variable.getValue());
     }
 
