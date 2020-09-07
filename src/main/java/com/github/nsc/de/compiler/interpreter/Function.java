@@ -35,13 +35,16 @@ public class Function {
     }
 
     public void call(FunctionCallNode node, Scope scope) {
+
         Scope function_scope = new Scope(this.getScope());
+
         for(int i = 0; i < this.getArgs().length; i++) {
 
             function_scope.getScopeVariables().declare(this.getArgs()[i].getName(), VariableType.ANY);
             function_scope.getScopeVariables().get(this.getArgs()[i].getName()).setValue(interpreter.visit(node.getArgs()[i], scope).getValue());
 
         }
+
         this.getInterpreter().visit(this.getBody(), function_scope);
     }
 
