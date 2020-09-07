@@ -93,7 +93,7 @@ public class Interpreter {
     }
 
     public InterpreterResult<Object> visitVariableDeclarationNode(VariableDeclarationNode n, Scope scope) {
-        if(!scope.getScopeVariables().declare(n.getName(), VariableType.ANY)) throw new Error("Variable is already defined");
+        if(!scope.getScopeVariables().declare(n.getName(), VariableType.valueOf(n.getType()))) throw new Error("Variable is already defined");
         if(n.getAssignment() != null) return visitVariableAssignmentNode(n.getAssignment(), scope);
         else return new InterpreterResult<>(null);
     }

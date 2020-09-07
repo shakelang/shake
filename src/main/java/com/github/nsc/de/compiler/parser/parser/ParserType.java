@@ -15,7 +15,8 @@ public interface ParserType {
     ValuedNode valuedOperation();
     ValuedNode statement();
 
-    VariableDeclarationNode varDeclaration();
+    VariableDeclarationNode varDeclaration1();
+    VariableDeclarationNode varDeclaration2();
 
     VariableAssignmentNode varAssignment();
 

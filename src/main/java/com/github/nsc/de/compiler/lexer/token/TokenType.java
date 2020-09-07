@@ -59,7 +59,12 @@ public enum TokenType {
 
     // Variable Declaration
     KEYWORD_VAR,
+    KEYWORD_DYNAMIC,
+    KEYWORD_BYTE,
+    KEYWORD_SHORT,
     KEYWORD_INT,
+    KEYWORD_LONG,
+    KEYWORD_FLOAT,
     KEYWORD_DOUBLE,
     KEYWORD_CHAR,
     KEYWORD_BOOLEAN,

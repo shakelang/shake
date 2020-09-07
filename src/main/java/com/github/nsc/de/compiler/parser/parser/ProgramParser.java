@@ -46,7 +46,16 @@ public interface ProgramParser extends ParserType, ParseUtils {
         Token token2 = this.getInput().peek(2);
 
         // Keywords
-        if(token.getType() == TokenType.KEYWORD_VAR) return this.varDeclaration();
+        if(token.getType() == TokenType.KEYWORD_VAR) return this.varDeclaration1();
+        if(token.getType() == TokenType.KEYWORD_DYNAMIC
+                || token.getType() == TokenType.KEYWORD_BYTE
+                || token.getType() == TokenType.KEYWORD_SHORT
+                || token.getType() == TokenType.KEYWORD_INT
+                || token.getType() == TokenType.KEYWORD_LONG
+                || token.getType() == TokenType.KEYWORD_FLOAT
+                || token.getType() == TokenType.KEYWORD_DOUBLE
+                || token.getType() == TokenType.KEYWORD_CHAR
+                || token.getType() == TokenType.KEYWORD_BOOLEAN) return this.varDeclaration2();
         if(token.getType() == TokenType.KEYWORD_WHILE) return this.whileLoop();
         if(token.getType() == TokenType.KEYWORD_DO) return this.doWhileLoop();
         if(token.getType() == TokenType.KEYWORD_FOR) return this.forLoop();

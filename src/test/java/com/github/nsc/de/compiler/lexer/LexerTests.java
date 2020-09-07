@@ -12,19 +12,45 @@ import org.junit.jupiter.api.Test;
 public class LexerTests {
 
     @Test
-    public void testMakeTokens() {
+    public void testPunctuation() {
 
         // punctuation
         generateToken(";", TokenType.SEMICOLON); // ';'
         generateToken(",", TokenType.COMMA); // ','
         generateToken(".", TokenType.DOT); // '.'
 
+    }
+
+    @Test
+    public void testLineSeparator() {
+
         // line separator
         generateToken("\n", TokenType.LINE_SEPARATOR); // '\n'
         generateToken("\r\n", TokenType.LINE_SEPARATOR); // '\r\n'
 
+    }
+
+    @Test
+    public void testAssign() {
+
         // assign
         generateToken("=", TokenType.ASSIGN); // '='
+
+        // math assign operators
+        generateToken("+=", TokenType.ADD_ASSIGN); // '+='
+        generateToken("-=", TokenType.SUB_ASSIGN); // '-='
+        generateToken("*=", TokenType.MUL_ASSIGN); // '*='
+        generateToken("/=", TokenType.DIV_ASSIGN); // '/='
+        generateToken("^=", TokenType.POW_ASSIGN); // '^='
+        generateToken("**=", TokenType.POW_ASSIGN); // "**="
+
+        generateToken("++", TokenType.INCR); // '++'
+        generateToken("--", TokenType.DECR); // '--'
+
+    }
+
+    @Test
+    public void testMathOperators() {
 
         // math operators
         generateToken("+", TokenType.ADD); // '+'
@@ -34,17 +60,10 @@ public class LexerTests {
         generateToken("^", TokenType.POW); // '^'
         generateToken("**", TokenType.POW); // "**"
 
-        // math assign operators
-        generateToken("++", TokenType.INCR); // '++'
-        generateToken("--", TokenType.DECR); // '--'
+    }
 
-        generateToken("+=", TokenType.ADD_ASSIGN); // '+='
-        generateToken("-=", TokenType.SUB_ASSIGN); // '-='
-        generateToken("*=", TokenType.MUL_ASSIGN); // '*='
-        generateToken("/=", TokenType.DIV_ASSIGN); // '/='
-        generateToken("^=", TokenType.POW_ASSIGN); // '^='
-        generateToken("**=", TokenType.POW_ASSIGN); // "**="
-
+    @Test
+    public void testLogicalComparison() {
 
         // logical comparison
         generateToken("==", TokenType.EQ_EQUALS); // "=="
@@ -53,9 +72,19 @@ public class LexerTests {
         generateToken(">", TokenType.BIGGER); // '>'
         generateToken("<", TokenType.SMALLER); // '<'
 
+    }
+
+    @Test
+    public void testLogicalConcatenation() {
+
         // logical concatenation
         generateToken("||", TokenType.LOGICAL_OR); // "||"
         generateToken("&&", TokenType.LOGICAL_AND); // "&&"
+
+    }
+
+    @Test
+    public void testBrackets() {
 
         // brackets
         generateToken("(", TokenType.LPAREN); // '('
@@ -63,8 +92,18 @@ public class LexerTests {
         generateToken("{", TokenType.LCURL); // '{'
         generateToken("}", TokenType.RCURL); // '}'
 
+    }
+
+    @Test
+    public void testKeywords() {
+
         // keywords
+        generateToken("dynamic", TokenType.KEYWORD_DYNAMIC); // "byte"
+        generateToken("byte", TokenType.KEYWORD_BYTE); // "byte"
+        generateToken("short", TokenType.KEYWORD_SHORT); // "short"
         generateToken("int", TokenType.KEYWORD_INT); // "int"
+        generateToken("long", TokenType.KEYWORD_LONG); // "long"
+        generateToken("float", TokenType.KEYWORD_FLOAT); // "float"
         generateToken("double", TokenType.KEYWORD_DOUBLE); // "double"
         generateToken("char", TokenType.KEYWORD_CHAR); // "char"
         generateToken("boolean", TokenType.KEYWORD_BOOLEAN); // "boolean"
@@ -79,15 +118,24 @@ public class LexerTests {
         generateToken("true", TokenType.KEYWORD_TRUE);  // "true"
         generateToken("false", TokenType.KEYWORD_FALSE); // "false"
 
+    }
+
+    @Test
+    public void testNumbers() {
+
+        // numbers
+        assertEquals(149, generateToken("149", TokenType.INTEGER).getValue());
+        assertEquals(0.01, generateToken("0.01", TokenType.DOUBLE).getValue());
+
+    }
+
+    @Test
+    public void testIdentifiers() {
 
         // identifiers
         assertEquals("hello", generateToken("hello", TokenType.IDENTIFIER).getValue());
         assertEquals("world0A_", generateToken("world0A_", TokenType.IDENTIFIER).getValue());
 
-
-        // numbers
-        assertEquals(149, generateToken("149", TokenType.INTEGER).getValue());
-        assertEquals(0.01, generateToken("0.01", TokenType.DOUBLE).getValue());
     }
 
     private Token generateToken(String input, TokenType tt) {

@@ -114,16 +114,26 @@ public class Lexer {
         String result = identifier.toString();
         // Keywords
         switch (result) {
+            case "var":
+                return new Token(TokenType.KEYWORD_VAR);
+            case "dynamic":
+                return new Token(TokenType.KEYWORD_DYNAMIC);
+            case "byte":
+                return new Token(TokenType.KEYWORD_BYTE);
+            case "short":
+                return new Token(TokenType.KEYWORD_SHORT);
             case "int":
                 return new Token(TokenType.KEYWORD_INT);
+            case "long":
+                return new Token(TokenType.KEYWORD_LONG);
+            case "float":
+                return new Token(TokenType.KEYWORD_FLOAT);
             case "double":
                 return new Token(TokenType.KEYWORD_DOUBLE);
             case "char":
                 return new Token(TokenType.KEYWORD_CHAR);
             case "boolean":
                 return new Token(TokenType.KEYWORD_BOOLEAN);
-            case "var":
-                return new Token(TokenType.KEYWORD_VAR);
             case "function":
                 return new Token(TokenType.KEYWORD_FUNCTION);
             case "true":
