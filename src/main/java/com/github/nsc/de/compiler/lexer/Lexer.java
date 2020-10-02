@@ -17,6 +17,7 @@ public class Lexer {
     private static final List<Character> WHITESPACE = asList(" \t");
     private static final List<Character> IDENTIFIER = asList("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789");
     private static final List<Character> IDENTIFIER_START = asList("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_");
+    private static final List<Character> HEX_CHARS = asList("0123456789ABCDEFabcdef");
 
     private final CharacterInputStream in;
 
@@ -45,6 +46,8 @@ public class Lexer {
 
             // Identifiers
             else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier());
+
+            else if(next == '"') tokens.add(makeString());
 
             // Operator assign
             else if (this.in.peek(0,2).equals("**=")) { tokens.add(new Token(TokenType.POW_ASSIGN, "**=")); in.skip(2); }
@@ -150,9 +153,60 @@ public class Lexer {
                 return new Token(TokenType.KEYWORD_IF);
             case "else":
                 return new Token(TokenType.KEYWORD_ELSE);
+            case "class":
+                return new Token(TokenType.KEYWORD_CLASS);
+            case "extends":
+                return new Token(TokenType.KEYWORD_EXTENDS);
+            case "implements":
+                return new Token(TokenType.KEYWORD_IMPLEMENTS);
+            case "static":
+                return new Token(TokenType.KEYWORD_STATIC);
+            case "final":
+                return new Token(TokenType.KEYWORD_FINAL);
+            case "public":
+                return new Token(TokenType.KEYWORD_PUBLIC);
+            case "protected":
+                return new Token(TokenType.KEYWORD_PROTECTED);
+            case "private":
+                return new Token(TokenType.KEYWORD_PRIVATE);
         }
         return new Token(TokenType.IDENTIFIER, identifier.toString());
 
+    }
+
+    private Token makeString() {
+        StringBuilder string = new StringBuilder();
+        if(in.actual() == '"') {
+            while(in.hasNext() && in.next() != '"') {
+                if(in.actual() == '\\') {
+                    switch(in.next()) {
+                        case 't': string.append('\t'); break;
+                        case 'b': string.append('\b'); break;
+                        case 'n': string.append('\n'); break;
+                        case 'r': string.append('\r'); break;
+                        case 'f': string.append('\f'); break;
+                        case '\'': string.append('\''); break;
+                        case '"': string.append('"'); break;
+                        case '\\': string.append('\\'); break;
+                        case 'u':
+                            StringBuilder s = new StringBuilder();
+                            for(int i = 0; i < 4; i++) {
+                                char c = in.next();
+                                if(!HEX_CHARS.contains(c)) throw new Error("Expecting hex char in string");
+                                s.append(HEX_CHARS);
+                            }
+                            string.append((char) Integer.parseInt(s.toString(), 16));
+                            break;
+                        default:
+                            throw new Error("Unknown escape sequence");
+
+                    }
+                }
+                else string.append(in.actual());
+            }
+            if(in.actual() != '"') throw new Error("String must end with a '\"'");
+        }
+        return new Token(TokenType.STRING, string.toString());
     }
 
     public static class LexerError extends CompilerError {

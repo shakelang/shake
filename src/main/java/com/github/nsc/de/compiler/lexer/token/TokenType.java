@@ -2,9 +2,11 @@ package com.github.nsc.de.compiler.lexer.token;
 
 public enum TokenType {
 
-    // Numbers
+    // Assign-Types
     INTEGER,
     DOUBLE,
+
+    STRING,
 
     // Punctuation
     COMMA,
@@ -56,6 +58,17 @@ public enum TokenType {
     KEYWORD_TRUE,
     KEYWORD_FALSE,
     KEYWORD_FUNCTION,
+
+    // Object-Orientation
+    KEYWORD_CLASS,
+    KEYWORD_EXTENDS,
+    KEYWORD_IMPLEMENTS,
+    KEYWORD_STATIC,
+    KEYWORD_FINAL,
+
+    KEYWORD_PUBLIC,
+    KEYWORD_PROTECTED,
+    KEYWORD_PRIVATE,
 
     // Variable Declaration
     KEYWORD_VAR,

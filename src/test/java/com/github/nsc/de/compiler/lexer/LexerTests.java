@@ -12,6 +12,16 @@ import org.junit.jupiter.api.Test;
 public class LexerTests {
 
     @Test
+    public void testString() {
+
+        // strings
+        assertEquals("", generateToken("\"\"", TokenType.STRING).getValue());
+        assertEquals("afvne9214 ro", generateToken("\"afvne9214 ro\"", TokenType.STRING).getValue());
+        generateToken("\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\"", TokenType.STRING);
+
+    }
+
+    @Test
     public void testPunctuation() {
 
         // punctuation
@@ -117,6 +127,17 @@ public class LexerTests {
         generateToken("else", TokenType.KEYWORD_ELSE); // "else"
         generateToken("true", TokenType.KEYWORD_TRUE);  // "true"
         generateToken("false", TokenType.KEYWORD_FALSE); // "false"
+
+        generateToken("class", TokenType.KEYWORD_CLASS); // "class"
+        generateToken("extends", TokenType.KEYWORD_EXTENDS); // "extends"
+        generateToken("implements", TokenType.KEYWORD_IMPLEMENTS); // "implements"
+        generateToken("static", TokenType.KEYWORD_STATIC); // "static"
+        generateToken("final", TokenType.KEYWORD_FINAL); // "final"
+
+        generateToken("public", TokenType.KEYWORD_PUBLIC); // "public"
+        generateToken("protected", TokenType.KEYWORD_PROTECTED); // "protected"
+        generateToken("private", TokenType.KEYWORD_PRIVATE); // "private"
+
 
     }
 
