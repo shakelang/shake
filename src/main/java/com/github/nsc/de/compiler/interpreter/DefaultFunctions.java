@@ -17,6 +17,7 @@ public class DefaultFunctions {
 
         functions.put("print", new Variable("print", VariableType.FUNCTION, new Print(interpreter)));
         functions.put("println", new Variable("println", VariableType.FUNCTION, new Println(interpreter)));
+        functions.put("exit", new Variable("println", VariableType.FUNCTION, new Exit(interpreter)));
 
         return new VariableList(functions);
     }
@@ -54,6 +55,29 @@ public class DefaultFunctions {
 
 
     /**
+     * Exits the program with a given exit code
+     */
+    private static class Exit extends Function {
+
+        public Exit(Interpreter interpreter) {
+            super(new FunctionArgumentNode[] {}, null, null, interpreter);
+        }
+
+        @Override
+        public void call(FunctionCallNode node, Scope scope) {
+            if(node.getArgs().length > 1) throw new Error("Expecting 0-1 args for the exit function");
+            else if(node.getArgs().length == 0) System.exit(0);
+            else {
+                Object i = getInterpreter().visit(node.getArgs()[0], scope).getValue();
+                if(i instanceof Integer) System.exit((Integer) i);
+                else if(i instanceof Double) System.exit((int)(double)(Double) i);
+                else throw new Error("Expecting an integer as argument for the exit function");
+            }
+        }
+    }
+
+
+    /**
      * Formatter for the Arguments to print out
      * @param node the node that called the print function
      * @param interpreter the executing interpreter instance to process arguments
@@ -63,7 +87,7 @@ public class DefaultFunctions {
     private static String formatPrintArgs(FunctionCallNode node, Interpreter interpreter, Scope scope) {
         StringBuilder out = new StringBuilder();
         for(int i = 0; i < node.getArgs().length-1; i++) {
-            out.append(interpreter.visit(node.getArgs()[i], scope).getValue() + ", ");
+            out.append(interpreter.visit(node.getArgs()[i], scope).getValue()).append(", ");
         }
         if(node.getArgs().length > 0) out.append(interpreter.visit(node.getArgs()[node.getArgs().length - 1], scope).getValue());
         return out.toString();
