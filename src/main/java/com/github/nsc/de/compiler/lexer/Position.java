@@ -17,7 +17,7 @@ public class Position {
     }
 
     public Position(String file, String content) {
-        this(file, content, -1, 1, 1);
+        this(file, content, -1, 0, 1);
     }
 
 
@@ -25,19 +25,15 @@ public class Position {
     public String getSource() {
         return source;
     }
-
     public String getContent() {
         return content;
     }
-
     public int getIndex() {
         return index;
     }
-
     public int getColumn() {
         return column;
     }
-
     public int getLine() {
         return line;
     }

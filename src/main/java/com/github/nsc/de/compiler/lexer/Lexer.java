@@ -29,70 +29,71 @@ public class Lexer {
         List<Token> tokens = new ArrayList<>();
         while(this.in.hasNext()) {
             char next = this.in.next();
+            Position start = in.getPosition().copy();
 
             // Whitespace
             if(WHITESPACE.contains(next)) continue;
 
             // Linebreaks
-            if(next == '\n') tokens.add(new Token(TokenType.LINE_SEPARATOR));
+            if(next == '\n') tokens.add(new Token(TokenType.LINE_SEPARATOR, start));
 
             // Punctuation
-            else if(next == ';') tokens.add(new Token(TokenType.SEMICOLON));
-            else if(next == ',') tokens.add(new Token(TokenType.COMMA));
-            else if(next == '.') tokens.add(new Token(TokenType.DOT));
+            else if(next == ';') tokens.add(new Token(TokenType.SEMICOLON, start));
+            else if(next == ',') tokens.add(new Token(TokenType.COMMA, start));
+            else if(next == '.') tokens.add(new Token(TokenType.DOT, start));
 
             // Numbers
-            else if(NUMBERS.contains(next)) tokens.add(makeNumber());
+            else if(NUMBERS.contains(next)) tokens.add(makeNumber(start));
 
             // Identifiers
-            else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier());
+            else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier(start));
 
-            else if(next == '"') tokens.add(makeString());
+            else if(next == '"') tokens.add(makeString(start));
 
             // Operator assign
-            else if (this.in.peek(0,2).equals("**=")) { tokens.add(new Token(TokenType.POW_ASSIGN, "**=")); in.skip(2); }
-            else if (this.in.peek(0,1).equals("^=")) { tokens.add(new Token(TokenType.POW_ASSIGN, "^=")); in.skip(); }
-            else if (this.in.peek(0,1).equals("/=")) { tokens.add(new Token(TokenType.DIV_ASSIGN)); in.skip(); }
-            else if (this.in.peek(0,1).equals("*=")) { tokens.add(new Token(TokenType.MUL_ASSIGN)); in.skip(); }
-            else if (this.in.peek(0,1).equals("-=")) { tokens.add(new Token(TokenType.SUB_ASSIGN)); in.skip(); }
-            else if (this.in.peek(0,1).equals("+=")) { tokens.add(new Token(TokenType.ADD_ASSIGN)); in.skip(); }
+            else if (this.in.peek(0,2).equals("**=")) { in.skip(2);  tokens.add(new Token(TokenType.POW_ASSIGN, "**=", start, in.getPosition().copy())); }
+            else if (this.in.peek(0,1).equals("^=")) { in.skip(); tokens.add(new Token(TokenType.POW_ASSIGN, "^=", start, in.getPosition().copy())); }
+            else if (this.in.peek(0,1).equals("/=")) { in.skip(); tokens.add(new Token(TokenType.DIV_ASSIGN, start, in.getPosition().copy())); }
+            else if (this.in.peek(0,1).equals("*=")) { in.skip(); tokens.add(new Token(TokenType.MUL_ASSIGN, start, in.getPosition().copy())); }
+            else if (this.in.peek(0,1).equals("-=")) { in.skip(); tokens.add(new Token(TokenType.SUB_ASSIGN, start, in.getPosition().copy())); }
+            else if (this.in.peek(0,1).equals("+=")) { in.skip(); tokens.add(new Token(TokenType.ADD_ASSIGN, start, in.getPosition().copy())); }
 
-            else if (this.in.peek(0,1).equals("++")) { tokens.add(new Token(TokenType.INCR)); in.skip(); }
-            else if (this.in.peek(0,1).equals("--")) { tokens.add(new Token(TokenType.DECR)); in.skip(); }
+            else if (this.in.peek(0,1).equals("++")) { in.skip(); tokens.add(new Token(TokenType.INCR, in.getPosition().copy())); }
+            else if (this.in.peek(0,1).equals("--")) { in.skip(); tokens.add(new Token(TokenType.DECR, in.getPosition().copy())); }
 
             // Math operators
-            else if (next == '*' && this.in.hasNext() && in.peek() == '*') { tokens.add(new Token(TokenType.POW, "**")); in.skip(); }
-            else if (next == '^') tokens.add(new Token(TokenType.POW));
-            else if (next == '/') tokens.add(new Token(TokenType.DIV));
-            else if (next == '*') tokens.add(new Token(TokenType.MUL));
-            else if (next == '-') tokens.add(new Token(TokenType.SUB));
-            else if (next == '+') tokens.add(new Token(TokenType.ADD));
+            else if (next == '*' && this.in.hasNext() && in.peek() == '*') { in.skip(); tokens.add(new Token(TokenType.POW, "**", in.getPosition().copy())); }
+            else if (next == '^') tokens.add(new Token(TokenType.POW, start));
+            else if (next == '/') tokens.add(new Token(TokenType.DIV, start));
+            else if (next == '*') tokens.add(new Token(TokenType.MUL, start));
+            else if (next == '-') tokens.add(new Token(TokenType.SUB, start));
+            else if (next == '+') tokens.add(new Token(TokenType.ADD, start));
 
             // Logical operators
-            else if (next == '|' && this.in.hasNext() && in.peek() == '|') { tokens.add(new Token(TokenType.LOGICAL_OR)); in.skip(); }
-            else if (next == '&' && this.in.hasNext() && in.peek() == '&') { tokens.add(new Token(TokenType.LOGICAL_AND)); in.skip(); }
+            else if (next == '|' && this.in.hasNext() && in.peek() == '|') { in.skip(); tokens.add(new Token(TokenType.LOGICAL_OR, start, in.getPosition().copy())); }
+            else if (next == '&' && this.in.hasNext() && in.peek() == '&') { in.skip(); tokens.add(new Token(TokenType.LOGICAL_AND, start, in.getPosition().copy())); }
 
-            else if (next == '=' && this.in.hasNext() && in.peek() == '=') { tokens.add(new Token(TokenType.EQ_EQUALS)); in.skip(); }
-            else if (next == '>' && this.in.hasNext() && in.peek() == '=') { tokens.add(new Token(TokenType.BIGGER_EQUALS)); in.skip(); }
-            else if (next == '<' && this.in.hasNext() && in.peek() == '=') { tokens.add(new Token(TokenType.SMALLER_EQUALS)); in.skip(); }
-            else if (next == '>') tokens.add(new Token(TokenType.BIGGER));
-            else if (next == '<') tokens.add(new Token(TokenType.SMALLER));
+            else if (next == '=' && this.in.hasNext() && in.peek() == '=') { in.skip(); tokens.add(new Token(TokenType.EQ_EQUALS, start, in.getPosition().copy())); }
+            else if (next == '>' && this.in.hasNext() && in.peek() == '=') { in.skip(); tokens.add(new Token(TokenType.BIGGER_EQUALS, start, in.getPosition().copy())); }
+            else if (next == '<' && this.in.hasNext() && in.peek() == '=') { in.skip(); tokens.add(new Token(TokenType.SMALLER_EQUALS, start, in.getPosition().copy())); }
+            else if (next == '>') tokens.add(new Token(TokenType.BIGGER, start));
+            else if (next == '<') tokens.add(new Token(TokenType.SMALLER, start));
 
             // Assign
-            else if (next == '=') tokens.add(new Token(TokenType.ASSIGN));
+            else if (next == '=') tokens.add(new Token(TokenType.ASSIGN, start));
 
             // Brackets
-            else if (next == '(') tokens.add(new Token(TokenType.LPAREN));
-            else if (next == ')') tokens.add(new Token(TokenType.RPAREN));
+            else if (next == '(') tokens.add(new Token(TokenType.LPAREN, start));
+            else if (next == ')') tokens.add(new Token(TokenType.RPAREN, start));
 
-            else if (next == '{') tokens.add(new Token(TokenType.LCURL));
-            else if (next == '}') tokens.add(new Token(TokenType.RCURL));
+            else if (next == '{') tokens.add(new Token(TokenType.LCURL, start));
+            else if (next == '}') tokens.add(new Token(TokenType.RCURL, start));
             else throw new UnrecognisedTokenError("Unrecognised Token: " + next, this.in.getPosition(), this.in.getPosition());
         }
         return new TokenInputStream(this.in.getSource(), tokens);
     }
 
-    private Token makeNumber() {
+    private Token makeNumber(Position start) {
         StringBuilder numStr = new StringBuilder();
         boolean dot = false;
         numStr.append(in.actual());
@@ -103,11 +104,13 @@ public class Lexer {
             }
             numStr.append(in.next());
         }
-        return dot ? new Token(TokenType.DOUBLE, Double.parseDouble(numStr.toString())) : new Token(TokenType.INTEGER, Integer.parseInt(numStr.toString()));
+        return dot ?
+                new Token(TokenType.DOUBLE, numStr.toString(), start, in.getPosition().copy()) :
+                new Token(TokenType.INTEGER, numStr.toString(), start, in.getPosition().copy());
 
     }
 
-    private Token makeIdentifier() {
+    private Token makeIdentifier(Position start) {
         StringBuilder identifier = new StringBuilder();
         identifier.append(in.actual());
         while(in.hasNext() && IDENTIFIER.contains(in.peek())) {
@@ -115,66 +118,68 @@ public class Lexer {
         }
 
         String result = identifier.toString();
+        Position end = in.getPosition().copy();
+
         // Keywords
         switch (result) {
             case "var":
-                return new Token(TokenType.KEYWORD_VAR);
+                return new Token(TokenType.KEYWORD_VAR, start, end);
             case "dynamic":
-                return new Token(TokenType.KEYWORD_DYNAMIC);
+                return new Token(TokenType.KEYWORD_DYNAMIC, start, end);
             case "byte":
-                return new Token(TokenType.KEYWORD_BYTE);
+                return new Token(TokenType.KEYWORD_BYTE, start, end);
             case "short":
-                return new Token(TokenType.KEYWORD_SHORT);
+                return new Token(TokenType.KEYWORD_SHORT, start, end);
             case "int":
-                return new Token(TokenType.KEYWORD_INT);
+                return new Token(TokenType.KEYWORD_INT, start, end);
             case "long":
-                return new Token(TokenType.KEYWORD_LONG);
+                return new Token(TokenType.KEYWORD_LONG, start, end);
             case "float":
-                return new Token(TokenType.KEYWORD_FLOAT);
+                return new Token(TokenType.KEYWORD_FLOAT, start, end);
             case "double":
-                return new Token(TokenType.KEYWORD_DOUBLE);
+                return new Token(TokenType.KEYWORD_DOUBLE, start, end);
             case "char":
-                return new Token(TokenType.KEYWORD_CHAR);
+                return new Token(TokenType.KEYWORD_CHAR, start, end);
             case "boolean":
-                return new Token(TokenType.KEYWORD_BOOLEAN);
+                return new Token(TokenType.KEYWORD_BOOLEAN, start, end);
             case "function":
-                return new Token(TokenType.KEYWORD_FUNCTION);
+                return new Token(TokenType.KEYWORD_FUNCTION, start, end);
             case "true":
-                return new Token(TokenType.KEYWORD_TRUE);
+                return new Token(TokenType.KEYWORD_TRUE, start, end);
             case "false":
-                return new Token(TokenType.KEYWORD_FALSE);
+                return new Token(TokenType.KEYWORD_FALSE, start, end);
             case "do":
-                return new Token(TokenType.KEYWORD_DO);
+                return new Token(TokenType.KEYWORD_DO, start, end);
             case "while":
-                return new Token(TokenType.KEYWORD_WHILE);
+                return new Token(TokenType.KEYWORD_WHILE, start, end);
             case "for":
-                return new Token(TokenType.KEYWORD_FOR);
+                return new Token(TokenType.KEYWORD_FOR, start, end);
             case "if":
-                return new Token(TokenType.KEYWORD_IF);
+                return new Token(TokenType.KEYWORD_IF, start, end);
             case "else":
-                return new Token(TokenType.KEYWORD_ELSE);
+                return new Token(TokenType.KEYWORD_ELSE, start, end);
             case "class":
-                return new Token(TokenType.KEYWORD_CLASS);
+                return new Token(TokenType.KEYWORD_CLASS, start, end);
             case "extends":
-                return new Token(TokenType.KEYWORD_EXTENDS);
+                return new Token(TokenType.KEYWORD_EXTENDS, start, end);
             case "implements":
-                return new Token(TokenType.KEYWORD_IMPLEMENTS);
+                return new Token(TokenType.KEYWORD_IMPLEMENTS, start, end);
             case "static":
-                return new Token(TokenType.KEYWORD_STATIC);
+                return new Token(TokenType.KEYWORD_STATIC, start, end);
             case "final":
-                return new Token(TokenType.KEYWORD_FINAL);
+                return new Token(TokenType.KEYWORD_FINAL, start, end);
             case "public":
-                return new Token(TokenType.KEYWORD_PUBLIC);
+                return new Token(TokenType.KEYWORD_PUBLIC, start, end);
             case "protected":
-                return new Token(TokenType.KEYWORD_PROTECTED);
+                return new Token(TokenType.KEYWORD_PROTECTED, start, end);
             case "private":
-                return new Token(TokenType.KEYWORD_PRIVATE);
+                return new Token(TokenType.KEYWORD_PRIVATE, start, end);
         }
-        return new Token(TokenType.IDENTIFIER, identifier.toString());
+        return new Token(TokenType.IDENTIFIER, identifier.toString(), start, end);
 
     }
 
-    private Token makeString() {
+    private Token makeString(Position start) {
         StringBuilder string = new StringBuilder();
         if(in.actual() == '"') {
             while(in.hasNext() && in.next() != '"') {
@@ -206,7 +211,7 @@ public class Lexer {
             }
             if(in.actual() != '"') throw new Error("String must end with a '\"'");
         }
-        return new Token(TokenType.STRING, string.toString());
+        return new Token(TokenType.STRING, string.toString(), start, in.getPosition().copy());
     }
 
     public static class LexerError extends CompilerError {

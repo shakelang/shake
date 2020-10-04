@@ -145,8 +145,8 @@ public class LexerTests {
     public void testNumbers() {
 
         // numbers
-        assertEquals(149, generateToken("149", TokenType.INTEGER).getValue());
-        assertEquals(0.01, generateToken("0.01", TokenType.DOUBLE).getValue());
+        assertEquals("149", generateToken("149", TokenType.INTEGER).getValue());
+        assertEquals("0.01", generateToken("0.01", TokenType.DOUBLE).getValue());
 
     }
 
