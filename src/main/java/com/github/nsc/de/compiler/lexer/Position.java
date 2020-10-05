@@ -93,4 +93,9 @@ public class Position {
     public Position copy() {
         return new Position(this.getSource(), this.getContent(), this.getIndex(), this.getColumn(), this.getLine());
     }
+
+    @Override
+    public String toString() {
+        return source  + ":" + line + ":" + column;
+    }
 }
