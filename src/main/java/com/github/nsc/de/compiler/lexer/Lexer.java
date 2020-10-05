@@ -88,7 +88,7 @@ public class Lexer {
 
             else if (next == '{') tokens.add(new Token(TokenType.LCURL, start));
             else if (next == '}') tokens.add(new Token(TokenType.RCURL, start));
-            else throw new UnrecognisedTokenError("Unrecognised Token: " + next, this.in.getPosition(), this.in.getPosition());
+            else throw new LexerError("UnexpectedTokenError", "Unrecognised Token: '" + next + '\'');
         }
         return new TokenInputStream(this.in.getSource(), tokens);
     }
@@ -197,40 +197,46 @@ public class Lexer {
                             StringBuilder s = new StringBuilder();
                             for(int i = 0; i < 4; i++) {
                                 char c = in.next();
-                                if(!HEX_CHARS.contains(c)) throw new Error("Expecting hex char in string");
+                                if(!HEX_CHARS.contains(c)) throw new LexerError("Expecting hex char");
                                 s.append(HEX_CHARS);
                             }
                             string.append((char) Integer.parseInt(s.toString(), 16));
                             break;
                         default:
-                            throw new Error("Unknown escape sequence");
+                            throw new LexerError("Unknown escape sequence '\\"+in.actual()+"'");
 
                     }
                 }
                 else string.append(in.actual());
             }
-            if(in.actual() != '"') throw new Error("String must end with a '\"'");
+            if(in.actual() != '"') throw new LexerError("String must end with a '\"'");
         }
         return new Token(TokenType.STRING, string.toString(), start, in.getPosition().copy());
     }
 
-    public static class LexerError extends CompilerError {
+    public class LexerError extends CompilerError {
+
         public LexerError (String message, String name, String details, Position start, Position end) {
             super(message, name, details, start, end);
         }
+
         public LexerError (String name, String details, Position start, Position end) {
-            super("Error occurred in lexer: " + name + ", " + details + " in " + start.getSource() + ":" + start.getLine() + ":" + start.getColumn(),name, details, start, end);
+            this("Error occurred in lexer: " + name + ", " + details + " in " + start.getSource() + ":" + start.getLine() + ":" + start.getColumn(),name, details, start, end);
         }
+
+        public LexerError (String details, Position start, Position end) {
+            this("Error occurred in lexer: " + details + " in " + start.getSource() + ":" + start.getLine() + ":" + start.getColumn(), "LexerError", details, start, end);
+        }
+
+        public LexerError (String name, String details, Position start) { this(name, details, start, start); }
+        public LexerError (String details, Position start) { this(details, start, start); }
+
+        public LexerError (String name, String details) { this(name, details, in.getPosition()); }
+        public LexerError (String details) { this(details, in.getPosition()); }
 
         @Override
         public String toString() {
             return "Error occurred in lexer: " + getName() + ", " + getDetails() + " in " + getStart().getSource() + ":" + getStart().getLine() + ":" + getStart().getColumn();
-        }
-    }
-
-    public static class UnrecognisedTokenError extends LexerError {
-        public UnrecognisedTokenError (String details, Position start, Position end) {
-            super("UnrecognisedTokenError", details, start, end);
         }
     }
 }

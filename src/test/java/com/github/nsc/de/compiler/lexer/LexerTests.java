@@ -1,12 +1,12 @@
 package com.github.nsc.de.compiler.lexer;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.github.nsc.de.compiler.lexer.characterinputstream.CharacterInputStream;
 import com.github.nsc.de.compiler.lexer.characterinputstream.StringCharacterInputStream;
 import com.github.nsc.de.compiler.lexer.token.Token;
 import com.github.nsc.de.compiler.lexer.token.TokenType;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class LexerTests {
