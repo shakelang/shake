@@ -34,10 +34,14 @@ public interface FactorParser extends ParserType {
             return new LogicalFalseNode();
         }
 
-        if(token.getType() == TokenType.INTEGER || token.getType() == TokenType.DOUBLE) {
+        if(token.getType() == TokenType.INTEGER) {
             getInput().skip();
-            if(token.getValue() instanceof Integer) return new NumberNode((int) token.getValue());
-            return new NumberNode((double) token.getValue());
+            return new NumberNode(Integer.parseInt(token.getValue()));
+        }
+
+        if(token.getType() == TokenType.DOUBLE) {
+            getInput().skip();
+            return new NumberNode(Double.parseDouble(token.getValue()));
         }
 
         if(token.getType() == TokenType.IDENTIFIER) {

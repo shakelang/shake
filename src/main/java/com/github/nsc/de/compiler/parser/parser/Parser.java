@@ -12,7 +12,8 @@ import com.github.nsc.de.compiler.parser.parser.variables.*;
 public class Parser implements ProgramParser, ErrorGenerator,
         VariableDeclarationParser, VariableAssignmentParser, VariableUsageParser,
         StatementParser, CalculationParser, LogicalParser, FactorParser,
-        WhileLoopParser, DoWhileLoopParser, ForLoopParser, IfParser, FunctionParser {
+        WhileLoopParser, DoWhileLoopParser, ForLoopParser, IfParser, FunctionParser,
+        ClassParser {
 
     private final TokenInputStream in;
 
@@ -25,9 +26,8 @@ public class Parser implements ProgramParser, ErrorGenerator,
 
         Tree result = this.prog();
 
-        if(this.in.hasNext()) throw this.error("Input did not end: ");
+        if(this.in.hasNext()) throw this.error("Input did not end");
         return result;
-
     }
 
     @Override

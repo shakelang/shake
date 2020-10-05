@@ -23,7 +23,7 @@ public class Token {
     public Token(TokenType type, Position start) { this(type, null, start, start); }
 
     public TokenType getType() { return type; }
-    public Object getValue() { return value; }
+    public String getValue() { return value; }
     public Position getStart() { return start; }
     public Position getEnd() { return end; }
     public int getBefore() { return start.getIndex(); }

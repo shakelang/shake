@@ -1,6 +1,8 @@
 package com.github.nsc.de.compiler.parser.parser;
 
+import com.github.nsc.de.compiler.lexer.token.TokenInputStream;
 import com.github.nsc.de.compiler.lexer.token.TokenType;
+import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.Node;
 import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
@@ -42,5 +44,45 @@ public interface ParseUtils extends ParserType {
 
         if(this.getInput().next().getType() != TokenType.SEMICOLON) throw this.error("Expecting semicolon at this point");
 
+    }
+
+    default ValuedNode parseDeclaration(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+
+        TokenInputStream input = getInput();
+
+        switch(input.peek().getType()) {
+            case KEYWORD_PUBLIC: input.skip(); return parseDeclaration(AccessDescriber.PUBLIC, isInClass, isStatic, isFinal);
+            case KEYWORD_PROTECTED: input.skip(); return parseDeclaration(AccessDescriber.PROTECTED, isInClass, isStatic, isFinal);
+            case KEYWORD_PRIVATE: input.skip(); return parseDeclaration(AccessDescriber.PRIVATE, isInClass, isStatic, isFinal);
+            case KEYWORD_STATIC:
+                if(!isInClass) throw new Error("Static keyword is only for objects in classes");
+                input.skip();
+                return parseDeclaration(access, true, true, isFinal);
+            case KEYWORD_FINAL: input.skip(); return parseDeclaration(access, isInClass, isStatic, true);
+            case KEYWORD_FUNCTION: return function(access, isInClass, isStatic, isFinal);
+            case KEYWORD_CLASS: return classDeclaration(access, isInClass, isStatic, isFinal);
+            case KEYWORD_VAR: return varDeclaration1(access, isInClass, isStatic, isFinal);
+            case KEYWORD_DYNAMIC:
+            case KEYWORD_BOOLEAN:
+            case KEYWORD_CHAR:
+            case KEYWORD_BYTE:
+            case KEYWORD_SHORT:
+            case KEYWORD_INT:
+            case KEYWORD_LONG:
+            case KEYWORD_FLOAT:
+            case KEYWORD_DOUBLE:
+                return varDeclaration2(access, isInClass, isStatic, isFinal);
+            default:
+                throw new Error("Unexpected token "+ getInput().peek());
+        }
+
+    }
+
+    default ValuedNode parseDeclaration(boolean isInClass) {
+        return parseDeclaration(AccessDescriber.PACKAGE, isInClass, false, false);
+    }
+
+    default ValuedNode parseDeclaration() {
+        return parseDeclaration(false);
     }
 }

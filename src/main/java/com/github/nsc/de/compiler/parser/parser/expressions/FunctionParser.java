@@ -1,6 +1,7 @@
 package com.github.nsc.de.compiler.parser.parser.expressions;
 
 import com.github.nsc.de.compiler.lexer.token.TokenType;
+import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;
@@ -15,11 +16,12 @@ import java.util.List;
 public interface FunctionParser extends ParserType, ParseUtils {
 
     @Override
-    default FunctionDeclarationNode function() {
+    default FunctionDeclarationNode function(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+
         List<FunctionArgumentNode> args = new ArrayList<>();
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.KEYWORD_FUNCTION) throw this.error("Expecting function keyword");
         if(!this.getInput().hasNext() || this.getInput().peek().getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
-        String name = (String) this.getInput().next().getValue();
+        String name = this.getInput().next().getValue();
 
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.LPAREN) throw this.error("Expecting '('");
 
@@ -35,14 +37,14 @@ public interface FunctionParser extends ParserType, ParseUtils {
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.RPAREN) throw this.error("Expecting ')'");
 
         Tree body = this.parseBodyStatement();
-        return new FunctionDeclarationNode(name, body, args.toArray(new FunctionArgumentNode[0]));
+        return new FunctionDeclarationNode(name, body, args.toArray(new FunctionArgumentNode[0]), access, isInClass, isStatic, isFinal);
     }
 
     @Override
     default FunctionCallNode functionCall() {
         List<ValuedNode> args = new ArrayList<>();
         if(!this.getInput().hasNext() || this.getInput().peek().getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
-        String name = (String) this.getInput().next().getValue();
+        String name = this.getInput().next().getValue();
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.LPAREN) throw this.error("Expecting '('");
         if(this.getInput().peek().getType() != TokenType.RPAREN) {
             args.add(this.valuedOperation());
@@ -57,15 +59,15 @@ public interface FunctionParser extends ParserType, ParseUtils {
         return new FunctionCallNode(name, args.toArray(new ValuedNode[0]));
     }
 
-    default boolean checkArgument() {
-        return this.getInput().hasNext() && this.getInput().peek().getType() == TokenType.IDENTIFIER;
-    }
-
     default FunctionArgumentNode parseArgument() {
         if(this.getInput().peek().getType() == TokenType.IDENTIFIER) {
-            return new FunctionArgumentNode((String) this.getInput().next().getValue());
+            return new FunctionArgumentNode(this.getInput().next().getValue());
         }
         else throw this.error("Expecting identifier");
+    }
+
+    default boolean checkArgument() {
+        return this.getInput().hasNext() && this.getInput().peek().getType() == TokenType.IDENTIFIER;
     }
 
 }

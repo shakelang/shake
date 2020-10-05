@@ -1,4 +1,4 @@
-package com.github.nsc.de.compiler.parser.node.objects;
+package com.github.nsc.de.compiler.parser.node;
 
 public enum AccessDescriber {
 

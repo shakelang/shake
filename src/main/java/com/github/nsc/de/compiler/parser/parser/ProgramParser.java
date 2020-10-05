@@ -12,8 +12,6 @@ import java.util.List;
 
 public interface ProgramParser extends ParserType, ParseUtils {
 
-    List<TokenType> NUMBER = Arrays.asList(TokenType.INTEGER, TokenType.DOUBLE);
-
     @Override
     default Tree prog() {
         List<Node> nodes = new ArrayList<>();
@@ -43,25 +41,12 @@ public interface ProgramParser extends ParserType, ParseUtils {
     default Node operation() {
 
         Token token = this.getInput().peek();
-        Token token2 = this.getInput().peek(2);
-
-        // Keywords
-        if(token.getType() == TokenType.KEYWORD_VAR) return this.varDeclaration1();
-        if(token.getType() == TokenType.KEYWORD_DYNAMIC
-                || token.getType() == TokenType.KEYWORD_BYTE
-                || token.getType() == TokenType.KEYWORD_SHORT
-                || token.getType() == TokenType.KEYWORD_INT
-                || token.getType() == TokenType.KEYWORD_LONG
-                || token.getType() == TokenType.KEYWORD_FLOAT
-                || token.getType() == TokenType.KEYWORD_DOUBLE
-                || token.getType() == TokenType.KEYWORD_CHAR
-                || token.getType() == TokenType.KEYWORD_BOOLEAN) return this.varDeclaration2();
         if(token.getType() == TokenType.KEYWORD_WHILE) return this.whileLoop();
         if(token.getType() == TokenType.KEYWORD_DO) return this.doWhileLoop();
         if(token.getType() == TokenType.KEYWORD_FOR) return this.forLoop();
         if(token.getType() == TokenType.KEYWORD_IF) return this.ifStatement();
 
-        else return this.valuedOperation();
+        return this.valuedOperation();
     }
 
     @Override
@@ -71,7 +56,23 @@ public interface ProgramParser extends ParserType, ParseUtils {
         Token token2 = this.getInput().peek(2);
 
 
-        if(token.getType() == TokenType.KEYWORD_FUNCTION) return this.function();
+        if(token.getType() == TokenType.KEYWORD_FUNCTION
+                || token.getType() == TokenType.KEYWORD_VAR
+                || token.getType() == TokenType.KEYWORD_CLASS
+                || token.getType() == TokenType.KEYWORD_PUBLIC
+                || token.getType() == TokenType.KEYWORD_PROTECTED
+                || token.getType() == TokenType.KEYWORD_PRIVATE
+                || token.getType() == TokenType.KEYWORD_FINAL
+                || token.getType() == TokenType.KEYWORD_STATIC
+                || token.getType() == TokenType.KEYWORD_DYNAMIC
+                || token.getType() == TokenType.KEYWORD_BYTE
+                || token.getType() == TokenType.KEYWORD_SHORT
+                || token.getType() == TokenType.KEYWORD_INT
+                || token.getType() == TokenType.KEYWORD_LONG
+                || token.getType() == TokenType.KEYWORD_FLOAT
+                || token.getType() == TokenType.KEYWORD_DOUBLE
+                || token.getType() == TokenType.KEYWORD_BOOLEAN
+                || token.getType() == TokenType.KEYWORD_CHAR) return parseDeclaration();
 
         // Assignments
         if(token.getType() == TokenType.IDENTIFIER && token2 != null) {
@@ -87,7 +88,8 @@ public interface ProgramParser extends ParserType, ParseUtils {
         }
 
         // Expression
-        if(NUMBER.contains(token.getType()) ||
+        if(token.getType() == TokenType.INTEGER ||
+                token.getType() == TokenType.DOUBLE ||
                 token.getType() == TokenType.IDENTIFIER ||
                 token.getType() == TokenType.KEYWORD_TRUE ||
                 token.getType() == TokenType.KEYWORD_FALSE)
