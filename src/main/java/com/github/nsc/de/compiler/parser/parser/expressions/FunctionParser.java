@@ -16,7 +16,7 @@ import java.util.List;
 public interface FunctionParser extends ParserType, ParseUtils {
 
     @Override
-    default FunctionDeclarationNode function(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+    default FunctionDeclarationNode functionDeclaration(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
 
         List<FunctionArgumentNode> args = new ArrayList<>();
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.KEYWORD_FUNCTION) throw this.error("Expecting function keyword");

@@ -36,7 +36,7 @@ public class ClassDeclarationNode implements ValuedNode {
         this.access = access;
         this.isInClass = isInClass;
         this.isStatic = isStatic;
-        this.isFinal = isStatic;
+        this.isFinal = isFinal;
 
     }
 

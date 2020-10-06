@@ -1,7 +1,5 @@
 package com.github.nsc.de.compiler.interpreter;
 
-import com.github.nsc.de.compiler.parser.node.variables.VariableDeclarationNode;
-
 public enum VariableType {
 
     ANY,
@@ -18,7 +16,7 @@ public enum VariableType {
     FUNCTION
     ;
 
-    public static VariableType valueOf(VariableDeclarationNode.VariableType type) {
+    public static VariableType valueOf(com.github.nsc.de.compiler.parser.node.VariableType type) {
         switch (type.getType()) {
             case BYTE: return BYTE;
             case SHORT: return SHORT;

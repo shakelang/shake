@@ -27,14 +27,20 @@ public interface ClassParser extends ParserType, FunctionParser, ParseUtils {
         // TODO: extends, implements
         if(this.getInput().next().getType() != TokenType.LCURL) throw this.error("Expecting class-body");
 
-        while(this.getInput().hasNext() && this.getInput().next().getType() != TokenType.RCURL) {
+        while(this.getInput().hasNext() && this.getInput().peek().getType() != TokenType.RCURL) {
 
-            ValuedNode node = parseDeclaration();
+            skipSeparators();
+
+            ValuedNode node = parseDeclaration(true);
             if(node instanceof ClassDeclarationNode) classes.add((ClassDeclarationNode) node);
             else if(node instanceof FunctionDeclarationNode) methods.add((FunctionDeclarationNode) node);
             else if(node instanceof VariableDeclarationNode) fields.add((VariableDeclarationNode) node);
 
+            skipSeparators();
+
         }
+
+        if(this.getInput().next().getType() != TokenType.RCURL) throw this.error("Expecting class-body to end");
 
         return new ClassDeclarationNode(name, fields, methods, classes, access, isInClass, isStatic, isFinal);
     }

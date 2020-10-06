@@ -59,7 +59,7 @@ public interface ParseUtils extends ParserType {
                 input.skip();
                 return parseDeclaration(access, true, true, isFinal);
             case KEYWORD_FINAL: input.skip(); return parseDeclaration(access, isInClass, isStatic, true);
-            case KEYWORD_FUNCTION: return function(access, isInClass, isStatic, isFinal);
+            case KEYWORD_FUNCTION: return functionDeclaration(access, isInClass, isStatic, isFinal);
             case KEYWORD_CLASS: return classDeclaration(access, isInClass, isStatic, isFinal);
             case KEYWORD_VAR: return varDeclaration1(access, isInClass, isStatic, isFinal);
             case KEYWORD_DYNAMIC:
@@ -73,7 +73,7 @@ public interface ParseUtils extends ParserType {
             case KEYWORD_DOUBLE:
                 return varDeclaration2(access, isInClass, isStatic, isFinal);
             default:
-                throw new Error("Unexpected token "+ getInput().peek());
+                throw this.error("Unexpected token (" + input.peek().getType() + ')');
         }
 
     }

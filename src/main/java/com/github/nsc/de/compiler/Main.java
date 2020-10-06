@@ -24,6 +24,7 @@ public class Main {
                 System.out.println(" >> " + run("<stdin>", code));
             } catch (Error e) {
                 System.err.println(" >> Error occurred while running your code: ");
+                System.err.println(e.getMessage());
                 e.printStackTrace();
             }
 

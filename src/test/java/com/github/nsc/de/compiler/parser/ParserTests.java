@@ -5,12 +5,12 @@ import static com.github.nsc.de.compiler.parser.ParserTestUtil.*;
 import static com.github.nsc.de.compiler.TestUtil.*;
 
 import com.github.nsc.de.compiler.parser.node.*;
-import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 import com.github.nsc.de.compiler.parser.node.logical.LogicalSmallerNode;
 import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
+import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 import org.junit.jupiter.api.Test;
 

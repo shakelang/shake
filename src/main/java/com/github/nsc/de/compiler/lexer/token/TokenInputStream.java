@@ -43,6 +43,7 @@ public class TokenInputStream {
         this.position = position;
     }
 
+    public Token get(int position) { return this.tokens[position]; }
 
     public boolean hasNext() {
         return this.peek() != null;
