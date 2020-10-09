@@ -10,9 +10,9 @@ import com.github.nsc.de.compiler.parser.node.ValuedNode;
 public interface ParseUtils extends ParserType {
 
     default ValuedNode parseConditionStatement() {
-        if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.LPAREN) throw this.error("Expecting '('");
+        if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.LPAREN) throw this.error("Expecting '('", getInput().getPosition());
         ValuedNode condition = logicalOr();
-        if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.RPAREN) throw this.error("Expecting ')'");
+        if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.RPAREN) throw this.error("Expecting ')'", getInput().getPosition());
         return condition;
     }
 
@@ -21,7 +21,7 @@ public interface ParseUtils extends ParserType {
         if(this.getInput().peek().getType() == TokenType.LCURL) {
             this.getInput().skip();
             Tree body = prog();
-            if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.RCURL) throw this.error("Expecting '}'");
+            if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.RCURL) throw this.error("Expecting '}'", getInput().getPosition());
             return body;
         }
         else {
@@ -42,7 +42,7 @@ public interface ParseUtils extends ParserType {
 
     default void awaitSemicolon() {
 
-        if(this.getInput().next().getType() != TokenType.SEMICOLON) throw this.error("Expecting semicolon at this point");
+        if(this.getInput().next().getType() != TokenType.SEMICOLON) throw this.error("Expecting semicolon at this point", this.getInput().getPosition());
 
     }
 
@@ -55,7 +55,7 @@ public interface ParseUtils extends ParserType {
             case KEYWORD_PROTECTED: input.skip(); return parseDeclaration(AccessDescriber.PROTECTED, isInClass, isStatic, isFinal);
             case KEYWORD_PRIVATE: input.skip(); return parseDeclaration(AccessDescriber.PRIVATE, isInClass, isStatic, isFinal);
             case KEYWORD_STATIC:
-                if(!isInClass) throw new Error("Static keyword is only for objects in classes");
+                if(!isInClass) throw this.error("Static keyword is only for objects in classes");
                 input.skip();
                 return parseDeclaration(access, true, true, isFinal);
             case KEYWORD_FINAL: input.skip(); return parseDeclaration(access, isInClass, isStatic, true);

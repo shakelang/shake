@@ -73,7 +73,7 @@ public class Parser implements ProgramParser,
         return error(name, error, getInput().peek().getStart(), getInput().peek().getEnd());
     }
 
-    class ParserError extends CompilerError {
+    public class ParserError extends CompilerError {
 
         public ParserError (String message, String name, String details, Position start, Position end) {
             super(message, name, details, start, end);
@@ -85,11 +85,6 @@ public class Parser implements ProgramParser,
 
         public ParserError (String details, Position start, Position end) {
             this("ParserError", details, start, end);
-        }
-
-        @Override
-        public String toString() {
-            return "Error occurred in parser: " + getName() + ", " + getDetails() + " in " + getStart().getSource() + ":" + getStart().getLine() + ":" + getStart().getColumn();
         }
     }
 

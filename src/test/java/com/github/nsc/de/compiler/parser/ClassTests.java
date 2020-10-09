@@ -1,24 +1,15 @@
 package com.github.nsc.de.compiler.parser;
 
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
-import com.github.nsc.de.compiler.parser.node.IfNode;
 import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.VariableType;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionDeclarationNode;
-import com.github.nsc.de.compiler.parser.node.logical.LogicalSmallerNode;
-import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
-import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
-import com.github.nsc.de.compiler.parser.node.loops.ForNode;
-import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
 import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.VariableDeclarationNode;
-import com.github.nsc.de.compiler.parser.node.variables.VariableIncreaseNode;
-import com.github.nsc.de.compiler.parser.node.variables.VariableUsageNode;
 import org.junit.jupiter.api.Test;
 
 import static com.github.nsc.de.compiler.TestUtil.assertType;
 import static com.github.nsc.de.compiler.parser.ParserTestUtil.parse;
-import static com.github.nsc.de.compiler.parser.ParserTestUtil.parseSingle;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClassTests {

@@ -7,7 +7,6 @@ import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public interface ProgramParser extends ParserType, ParseUtils {
@@ -21,7 +20,7 @@ public interface ProgramParser extends ParserType, ParseUtils {
 
         while (this.getInput().hasNext()) {
 
-            if(!separator) break; //throw this.error("Awaited separator at this point");
+            // if(!separator) throw this.error("AwaitSeparatorError", "Awaited separator at this point");
             separator = false;
             if(position >= this.getInput().getPosition()) break;
             position = this.getInput().getPosition();

@@ -1,5 +1,6 @@
 package com.github.nsc.de.compiler.lexer;
 
+import com.github.nsc.de.compiler.util.Formatting;
 import com.github.nsc.de.compiler.lexer.characterinputstream.CharacterInputStream;
 import com.github.nsc.de.compiler.lexer.characterinputstream.StringCharacterInputStream;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,16 @@ public class TestErrors {
 
         });
 
-        System.err.println(error.toString());
+        System.out.println(error.toString());
 
         assertSame(4, error.getStart().getIndex());
         assertSame(4, error.getEnd().getIndex());
         assertEquals("String must end with a '\"'", error.getDetails());
+        assertEquals("<tests>:1:5", error.getMarker().getSource());
+        assertEquals("1  \"test", error.getMarker().getPreview());
+        assertEquals("       ^", error.getMarker().getMarker());
 
-        System.out.println("\u2705 Correct error was thrown");
+        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
 
     }
 
@@ -42,13 +46,16 @@ public class TestErrors {
 
         });
 
-        System.err.println(error.toString());
+        System.out.println(error.toString());
 
         assertSame(2, error.getStart().getIndex());
         assertSame(2, error.getEnd().getIndex());
         assertEquals("Unknown escape sequence '\\a'", error.getDetails());
+        assertEquals("<tests>:1:3", error.getMarker().getSource());
+        assertEquals("1  \"\\a\"", error.getMarker().getPreview());
+        assertEquals("     ^", error.getMarker().getMarker());
 
-        System.out.println("\u2705 Correct error was thrown");
+        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
 
     }
 
@@ -64,13 +71,16 @@ public class TestErrors {
 
         });
 
-        System.err.println(error.toString());
+        System.out.println(error.toString());
 
         assertSame(4, error.getStart().getIndex());
         assertSame(4, error.getEnd().getIndex());
         assertEquals("Expecting hex char", error.getDetails());
+        assertEquals("<tests>:1:5", error.getMarker().getSource());
+        assertEquals("1  \"\\uatea\"", error.getMarker().getPreview());
+        assertEquals("       ^", error.getMarker().getMarker());
 
-        System.out.println("\u2705 Correct error was thrown");
+        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
 
     }
 
@@ -86,14 +96,17 @@ public class TestErrors {
 
         });
 
-        System.err.println(error.toString());
+        System.out.println(error.toString());
 
         assertSame(0, error.getStart().getIndex());
         assertSame(0, error.getEnd().getIndex());
         assertEquals("Unrecognised Token: 'ü'", error.getDetails());
         assertEquals("UnexpectedTokenError", error.getName());
+        assertEquals("<tests>:1:1", error.getMarker().getSource());
+        assertEquals("1  ü", error.getMarker().getPreview());
+        assertEquals("   ^", error.getMarker().getMarker());
 
-        System.out.println("\u2705 Correct error was thrown");
+        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
 
     }
 

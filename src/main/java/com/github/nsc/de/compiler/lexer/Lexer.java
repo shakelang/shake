@@ -233,10 +233,5 @@ public class Lexer {
 
         public LexerError (String name, String details) { this(name, details, in.getPosition()); }
         public LexerError (String details) { this(details, in.getPosition()); }
-
-        @Override
-        public String toString() {
-            return "Error occurred in lexer: " + getName() + ", " + getDetails() + " in " + getStart().getSource() + ":" + getStart().getLine() + ":" + getStart().getColumn();
-        }
     }
 }

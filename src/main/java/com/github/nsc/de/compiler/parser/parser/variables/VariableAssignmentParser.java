@@ -14,7 +14,7 @@ public interface VariableAssignmentParser extends ParserType {
         if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.ASSIGN) throw this.error("Expecting '='");
         Node value = operation();
-        return new VariableAssignmentNode((String) identifier.getValue(), value);
+        return new VariableAssignmentNode(identifier.getValue(), value);
     }
 
     @Override
@@ -23,7 +23,7 @@ public interface VariableAssignmentParser extends ParserType {
         if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.ADD_ASSIGN) throw this.error("Expecting '+='");
         Node value = operation();
-        return new VariableAddAssignmentNode((String) identifier.getValue(), value);
+        return new VariableAddAssignmentNode(identifier.getValue(), value);
     }
 
     @Override
@@ -32,7 +32,7 @@ public interface VariableAssignmentParser extends ParserType {
         if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.SUB_ASSIGN) throw this.error("Expecting '-='");
         Node value = operation();
-        return new VariableSubAssignmentNode((String) identifier.getValue(), value);
+        return new VariableSubAssignmentNode(identifier.getValue(), value);
     }
 
     @Override
@@ -41,7 +41,7 @@ public interface VariableAssignmentParser extends ParserType {
         if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.MUL_ASSIGN) throw this.error("Expecting '*='");
         Node value = operation();
-        return new VariableMulAssignmentNode((String) identifier.getValue(), value);
+        return new VariableMulAssignmentNode(identifier.getValue(), value);
     }
 
     @Override
@@ -50,7 +50,7 @@ public interface VariableAssignmentParser extends ParserType {
         if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.DIV_ASSIGN) throw this.error("Expecting '/='");
         Node value = operation();
-        return new VariableDivAssignmentNode((String) identifier.getValue(), value);
+        return new VariableDivAssignmentNode(identifier.getValue(), value);
     }
 
     @Override
@@ -59,7 +59,7 @@ public interface VariableAssignmentParser extends ParserType {
         if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.POW_ASSIGN) throw this.error("Expecting '^='");
         Node value = operation();
-        return new VariablePowAssignmentNode((String) identifier.getValue(), value);
+        return new VariablePowAssignmentNode(identifier.getValue(), value);
     }
 
     @Override
@@ -67,7 +67,7 @@ public interface VariableAssignmentParser extends ParserType {
         Token identifier = this.getInput().next();
         if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.INCR) throw this.error("Expecting '++'");
-        return new VariableIncreaseNode((String) identifier.getValue());
+        return new VariableIncreaseNode(identifier.getValue());
     }
 
     @Override
@@ -75,6 +75,6 @@ public interface VariableAssignmentParser extends ParserType {
         Token identifier = this.getInput().next();
         if(identifier == null || identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.DECR) throw this.error("Expecting '--'");
-        return new VariableDecreaseNode((String) identifier.getValue());
+        return new VariableDecreaseNode(identifier.getValue());
     }
 }

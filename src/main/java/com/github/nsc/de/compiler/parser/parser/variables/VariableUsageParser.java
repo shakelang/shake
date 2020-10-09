@@ -9,6 +9,6 @@ public interface VariableUsageParser extends ParserType {
     @Override
     default VariableUsageNode varUsage() {
         if(this.getInput().next().getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
-        return new VariableUsageNode((String) this.getInput().actual().getValue());
+        return new VariableUsageNode(this.getInput().actual().getValue());
     }
 }

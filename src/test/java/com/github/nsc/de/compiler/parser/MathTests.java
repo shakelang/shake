@@ -1,10 +1,6 @@
 package com.github.nsc.de.compiler.parser;
 
 import com.github.nsc.de.compiler.parser.node.expression.*;
-import com.github.nsc.de.compiler.parser.node.logical.LogicalAndNode;
-import com.github.nsc.de.compiler.parser.node.logical.LogicalFalseNode;
-import com.github.nsc.de.compiler.parser.node.logical.LogicalOrNode;
-import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
