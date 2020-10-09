@@ -31,9 +31,13 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public TokenInputStream(String source, Token[] tokens, int position) {
+        // set all the fields
         this.source = source;
         this.tokens = tokens;
         this.position = position;
+
+        if(this.position >= this.tokens.length) throw new Error("The position mustn't be out of the given tokens");
+        if(position < -1) throw new Error("The position must not be smaller than -1");
     }
 
     /**
@@ -45,7 +49,10 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public TokenInputStream(String source, Token[] tokens) {
-        this(source, tokens, -1);
+        // set all the fields (position default value: -1)
+        this.source = source;
+        this.tokens = tokens;
+        this.position = -1;
     }
 
     /**
@@ -59,6 +66,7 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public TokenInputStream(String source, List<Token> tokens, int position) {
+        // call other constructor with converted list
         this(source, tokens.toArray(new Token[0]), position);
     }
 
@@ -71,6 +79,7 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public TokenInputStream(String source, List<Token> tokens) {
+        // call other constructor with converted list
         this(source, tokens.toArray(new Token[0]));
     }
 
@@ -82,6 +91,7 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public String getSource() {
+        // just return the source
         return source;
     }
 
@@ -93,6 +103,7 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public int getPosition() {
+        // just return the position
         return position;
     }
 
@@ -104,6 +115,7 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public Token[] getTokens() {
+        // just return the tokens
         return tokens;
     }
 
@@ -115,6 +127,8 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public void setPosition(int position) {
+        // test the position (throw error if a wrong position is provided)
+        // and set the position if no error is thrown
         testPosition(position);
         this.position = position;
     }
@@ -128,6 +142,8 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public Token get(int position) {
+        // test the position (throw error if a wrong position is provided)
+        // and return the token at the position if no error is thrown
         testPosition(position);
         return this.tokens[position];
     }
@@ -141,6 +157,8 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public boolean has(int num) {
+        // When the number to check is smaller than 0 throw an error
+        // in other case just check if the required tokens are left
         if(num < 1) throw new Error("You should only give positive numbers to this function");
         return this.position + num < this.tokens.length;
     }
@@ -166,6 +184,7 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public Token next() {
+        // skip to next token and then return the actual token
         skip();
         return actual();
     }
@@ -178,6 +197,7 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public TokenInputStream skip() {
+        // Check if the input has a next token. If so then increase the position. If not throw an error
         if (hasNext()) this.position++;
         else throw new Error("Input already finished");
         return this;
@@ -192,7 +212,15 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public TokenInputStream skipIgnorable() {
-        while(this.hasNext() && this.peek().getType() == TokenType.LINE_SEPARATOR) this.skip();
+        // As long as the next token is a line-separator execute skip
+        while(this.hasNext() && this.peek().getType() == TokenType.LINE_SEPARATOR) {
+
+            // We could also use skip here, but for performance-reasons
+            // that here should be better
+            // This is possible because i already checked if there is a next
+            // token before in the while statement.
+            this.position++;
+        }
         return this;
     }
 
@@ -204,6 +232,9 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public Token actual() {
+        // Just return the actual token
+        // That is possible, because the position should never get
+        // bigger than the token length.
         return this.tokens[this.position];
     }
 
@@ -215,6 +246,8 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public Token peek() {
+        // We could also use peek(1) here, but for performance-reasons
+        // that here should be better
         if (this.position + 1 < this.tokens.length) return this.tokens[position + 1];
         else throw new Error("Not enough tokens left");
     }
@@ -227,13 +260,23 @@ public class TokenInputStream {
      * @author Nicolas Schmidt
      */
     public Token peek(int num) {
+        // Throw an error, if the number is smaller than 1
+        // Return the asked position if it exists, if not throw an error
         if(num < 1) throw new Error("The argument for the peek function should be a number that is bigger than 0.");
         if (this.position + num < this.tokens.length) return this.tokens[position + num];
         else throw new Error("Not enough tokens left");
     }
 
+    /**
+     * Returns a string-representation of the {@link TokenInputStream}
+     *
+     * @return the string-representation of the {@link TokenInputStream}
+     *
+     * @author Nicolas Schmidt
+     */
     @Override
     public String toString() {
+        // Return a string-representation of the input just showing all the sub-elements
         return "TokenInputStream{" +
                 "source='" + source + '\'' +
                 ", tokens=" + Arrays.toString(tokens) +
@@ -241,7 +284,16 @@ public class TokenInputStream {
                 '}';
     }
 
+    /**
+     * This function checks if the given position is a valid position for the {@link TokenInputStream#tokens}-array
+     * throws an error if the position is a wrong one
+     *
+     * @param position the position to check
+     *
+     * @author Nicolas Schmidt
+     */
     private void testPosition(int position) {
+        // If the position is out of range of the tokens array throw an error
         if(position < 0) throw new Error("Position mustn't be smaller than 0.");
         if(position >= this.getTokens().length)
             throw new Error(String.format("The given position is to high. The maximum value is %d, but given was %d", this.getTokens().length - 1, position));
