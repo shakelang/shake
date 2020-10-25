@@ -227,13 +227,14 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author Nicolas Schmidt
      *
      * @see CharacterInputStream#peek()
+     * @see StringCharacterInputStream#peek(int from, int to)
      * @see StringCharacterInputStream#peek(int num)
      */
     @Override
     public char peek() {
         // we could also use peek(1) here, but for performance reasons a direct implementation is better
         // throw an error if the StringCharacterInputStream has not enough tokens left
-        if(!hasNext()) throw new Error("Not enough characters left");
+        if(!this.hasNext()) throw new Error("Not enough characters left");
 
         // return the content at the required position
         return this.content[this.position.getIndex() + 1];
@@ -245,9 +246,11 @@ public class StringCharacterInputStream implements CharacterInputStream {
      *
      * @return the next character
      *
+     * @param num the position to get
      * @author Nicolas Schmidt
      *
      * @see CharacterInputStream#peek(int num)
+     * @see StringCharacterInputStream#peek(int from, int to)
      * @see StringCharacterInputStream#peek()
      */
     @Override
@@ -255,9 +258,34 @@ public class StringCharacterInputStream implements CharacterInputStream {
         // throw an error if the StringCharacterInputStream has not enough tokens left
         // (this will also automatically throw an error, if a number that is smaller than 1 is given as input, because
         // of the implementation in the has method)
-        if(!has(num)) throw new Error("Not enough characters left");
+        if(!this.has(num)) throw new Error("Not enough characters left");
 
         // return the content at the required position
         return this.content[this.position.getIndex() + num];
+    }
+
+
+    /**
+     * Gives back a part of the {@link CharacterInputStream} as string
+     * (relative to the actual position)
+     *
+     * @param from the starting position of the string to get
+     * @param to the end position of the string to get
+     * @return the character at the requested position
+     *
+     * @author Nicolas Schmidt
+     *
+     * @see CharacterInputStream#peek(int from, int to)
+     * @see StringCharacterInputStream#peek(int num)
+     * @see StringCharacterInputStream#peek()
+     */
+    @Override
+    public String peek(int from, int to) {
+        if(from < 0) throw new Error("Peek argument must not be smaller than 0");
+        if(to <= from) throw new Error("To-argument must be bigger than from-argument");
+        if(!this.has(to)) throw new Error("Not enough characters left");
+
+        return this.position.getIndex() + from < this.content.length && this.position.getIndex() + to < this.content.length ?
+                new String(this.content).substring(this.position.getIndex() + from, this.position.getIndex() + to + 1) : "";
     }
 }

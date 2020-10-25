@@ -97,10 +97,23 @@ public interface CharacterInputStream {
      * Gives back a character of the {@link CharacterInputStream}
      * (relative to the actual position)
      *
+     * @param num the position to get
      * @return the character at the requested position
      *
      * @author Nicolas Schmidt
      */
     char peek(int num);
+
+    /**
+     * Gives back a part of the {@link CharacterInputStream} as string
+     * (relative to the actual position)
+     *
+     * @param from the starting position of the string to get
+     * @param to the end position of the string to get
+     * @return the character at the requested position
+     *
+     * @author Nicolas Schmidt
+     */
+    String peek(int from, int to);
 
 }
