@@ -41,10 +41,8 @@ public interface FunctionParser extends ParserType, ParseUtils {
     }
 
     @Override
-    default FunctionCallNode functionCall() {
+    default FunctionCallNode functionCall(ValuedNode function) {
         List<ValuedNode> args = new ArrayList<>();
-        if(!this.getInput().hasNext() || this.getInput().peek().getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
-        String name = this.getInput().next().getValue();
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.LPAREN) throw this.error("Expecting '('");
         if(this.getInput().peek().getType() != TokenType.RPAREN) {
             args.add(this.valuedOperation());
@@ -56,7 +54,7 @@ public interface FunctionParser extends ParserType, ParseUtils {
             }
         }
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.RPAREN) throw this.error("Expecting ')'");
-        return new FunctionCallNode(name, args.toArray(new ValuedNode[0]));
+        return new FunctionCallNode(function, args.toArray(new ValuedNode[0]));
     }
 
     default FunctionArgumentNode parseArgument() {

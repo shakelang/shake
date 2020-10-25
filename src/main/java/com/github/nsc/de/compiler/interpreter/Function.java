@@ -1,5 +1,6 @@
 package com.github.nsc.de.compiler.interpreter;
 
+import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
@@ -12,13 +13,21 @@ public class Function {
     private final Tree body;
     private final Scope scope;
     private final Interpreter interpreter;
+    private final AccessDescriber access;
+    private final boolean isInClass;
+    private final boolean isStatic;
+    private final boolean isFinal;
 
-
-    public Function(FunctionArgumentNode[] args, Tree body, Scope scope, Interpreter interpreter) {
+    public Function(FunctionArgumentNode[] args, Tree body, Scope scope, Interpreter interpreter,
+                    AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
         this.args = args;
         this.body = body;
         this.scope = scope;
         this.interpreter = interpreter;
+        this.access = access;
+        this.isInClass = isInClass;
+        this.isStatic = isStatic;
+        this.isFinal = isFinal;
     }
 
     public FunctionArgumentNode[] getArgs() {
@@ -33,6 +42,10 @@ public class Function {
     public Scope getScope() {
         return scope;
     }
+    public AccessDescriber getAccess() { return access; }
+    public boolean isInClass() { return isInClass; }
+    public boolean isStatic() { return isStatic; }
+    public boolean isFinal() { return isFinal; }
 
     public void call(FunctionCallNode node, Scope scope) {
 

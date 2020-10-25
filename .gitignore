@@ -1,2 +1,12 @@
+# Eclipse
+/.classpath
+/Compiler.eml
+/.settings/org.eclipse.jdt.core.prefs
+
+# IntelliJ
 /.idea/
+
+# Compilation results
 /target/
+Compiler.userlibraries
+.project

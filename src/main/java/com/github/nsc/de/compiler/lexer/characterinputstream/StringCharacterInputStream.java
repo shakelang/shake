@@ -283,7 +283,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
     public String peek(int from, int to) {
         if(from < 0) throw new Error("Peek argument must not be smaller than 0");
         if(to <= from) throw new Error("To-argument must be bigger than from-argument");
-        if(!this.has(to)) throw new Error("Not enough characters left");
+        //if(!this.has(from)) throw new Error("Not enough characters left");
 
         return this.position.getIndex() + from < this.content.length && this.position.getIndex() + to < this.content.length ?
                 new String(this.content).substring(this.position.getIndex() + from, this.position.getIndex() + to + 1) : "";

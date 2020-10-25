@@ -8,9 +8,10 @@ import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 import com.github.nsc.de.compiler.parser.node.expression.SubNode;
 import com.github.nsc.de.compiler.parser.node.logical.LogicalFalseNode;
 import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
+import com.github.nsc.de.compiler.parser.parser.ParseUtils;
 import com.github.nsc.de.compiler.parser.parser.ParserType;
 
-public interface FactorParser extends ParserType {
+public interface FactorParser extends ParserType, ParseUtils {
 
     @Override
     default ValuedNode factor() {
@@ -45,7 +46,7 @@ public interface FactorParser extends ParserType {
         }
 
         if(token.getType() == TokenType.IDENTIFIER) {
-            return varUsage();
+            return parseIdentifier(null);
         }
 
         if(token.getType() == TokenType.ADD) {

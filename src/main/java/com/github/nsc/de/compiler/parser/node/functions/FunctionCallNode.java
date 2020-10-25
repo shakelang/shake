@@ -1,24 +1,23 @@
 package com.github.nsc.de.compiler.parser.node.functions;
 
-import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 import java.util.Arrays;
 
 public class FunctionCallNode implements ValuedNode {
 
-    private final String name;
+    private final ValuedNode function;
     private final ValuedNode[] args;
 
 
-    public FunctionCallNode(String name, ValuedNode[] args) {
-        this.name = name;
+    public FunctionCallNode(ValuedNode function, ValuedNode[] args) {
+        this.function = function;
         this.args = args;
     }
 
-    public String getName() {
-        return name;
-    }
+    public ValuedNode getFunction() {
+		return function;
+	}
 
     public ValuedNode[] getArgs() {
         return args;
@@ -27,7 +26,7 @@ public class FunctionCallNode implements ValuedNode {
     @Override
     public String toString() {
         return "FunctionCallNode{" +
-                "name='" + name + '\'' +
+                "function='" + getFunction() + '\'' +
                 ", args=" + Arrays.toString(args) +
                 '}';
     }

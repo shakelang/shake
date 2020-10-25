@@ -1,11 +1,10 @@
 package com.github.nsc.de.compiler.parser.parser;
 
+import com.github.nsc.de.compiler.lexer.token.Token;
 import com.github.nsc.de.compiler.lexer.token.TokenInputStream;
 import com.github.nsc.de.compiler.lexer.token.TokenType;
-import com.github.nsc.de.compiler.parser.node.AccessDescriber;
-import com.github.nsc.de.compiler.parser.node.Node;
-import com.github.nsc.de.compiler.parser.node.Tree;
-import com.github.nsc.de.compiler.parser.node.ValuedNode;
+import com.github.nsc.de.compiler.parser.node.*;
+import com.github.nsc.de.compiler.parser.node.variables.VariableUsageNode;
 
 public interface ParseUtils extends ParserType {
 
@@ -27,6 +26,17 @@ public interface ParseUtils extends ParserType {
         else {
             return new Tree(new Node[] { this.operation() });
         }
+    }
+
+    default int skipSkipables() {
+
+        int number = 0;
+        while(this.getInput().hasNext() && this.getInput().peek().getType() == TokenType.LINE_SEPARATOR) {
+            number++;
+            this.getInput().skip();
+        }
+        return number;
+
     }
 
     default int skipSeparators() {
@@ -84,5 +94,36 @@ public interface ParseUtils extends ParserType {
 
     default ValuedNode parseDeclaration() {
         return parseDeclaration(false);
+    }
+
+    default ValuedNode parseIdentifier(ValuedNode parent) {
+        Token identifier = getInput().next();
+        if(identifier.getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
+
+        IdentifierNode identifierNode = new IdentifierNode(parent, identifier.getValue());
+        ValuedNode ret = null;
+
+        // Assignments
+        if(this.getInput().hasNext()) {
+
+            Token token2 = getInput().skipIgnorable().peek();
+            if(token2.getType() == TokenType.LPAREN) ret = this.functionCall(identifierNode);
+            if(token2.getType() == TokenType.ASSIGN) ret = this.varAssignment(identifierNode);
+            if(token2.getType() == TokenType.ADD_ASSIGN) ret = this.varAddAssignment(identifierNode);
+            if(token2.getType() == TokenType.SUB_ASSIGN) ret = this.varSubAssignment(identifierNode);
+            if(token2.getType() == TokenType.MUL_ASSIGN) ret = this.varMulAssignment(identifierNode);
+            if(token2.getType() == TokenType.DIV_ASSIGN) ret = this.varDivAssignment(identifierNode);
+            if(token2.getType() == TokenType.POW_ASSIGN) ret = this.varPowAssignment(identifierNode);
+            if(token2.getType() == TokenType.INCR) ret = this.varIncrease(identifierNode);
+            if(token2.getType() == TokenType.DECR) ret = this.varDecrease(identifierNode);
+            if(getInput().skipIgnorable().peek().getType() == TokenType.DOT) {
+                getInput().skip().skipIgnorable();
+                return this.parseIdentifier(ret != null ? ret : new VariableUsageNode(identifierNode));
+            }
+            if(ret != null) return ret;
+
+        }
+        return new VariableUsageNode(identifierNode);
+
     }
 }

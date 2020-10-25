@@ -16,12 +16,13 @@ public interface ProgramParser extends ParserType, ParseUtils {
         List<Node> nodes = new ArrayList<>();
         int position = -2;
         skipSeparators();
-        boolean separator = true;
+        // TODO Require Separator
+        // boolean separator = true;
 
         while (this.getInput().hasNext()) {
 
             // if(!separator) throw this.error("AwaitSeparatorError", "Awaited separator at this point");
-            separator = false;
+            // separator = false;
             if(position >= this.getInput().getPosition()) break;
             position = this.getInput().getPosition();
 
@@ -30,7 +31,7 @@ public interface ProgramParser extends ParserType, ParseUtils {
                 if(result != null) nodes.add(result);
             }
 
-            if(this.skipSeparators() > 0) separator = true;
+            // if(this.skipSeparators() > 0) separator = true;
 
         }
         return new Tree(nodes);
@@ -52,7 +53,6 @@ public interface ProgramParser extends ParserType, ParseUtils {
     default ValuedNode valuedOperation() {
 
         Token token = this.getInput().peek();
-        Token token2 = this.getInput().peek(2);
 
 
         if(token.getType() == TokenType.KEYWORD_FUNCTION
@@ -73,23 +73,14 @@ public interface ProgramParser extends ParserType, ParseUtils {
                 || token.getType() == TokenType.KEYWORD_BOOLEAN
                 || token.getType() == TokenType.KEYWORD_CHAR) return parseDeclaration();
 
-        // Assignments
-        if(token.getType() == TokenType.IDENTIFIER && token2 != null) {
-            if(token2.getType() == TokenType.LPAREN) return this.functionCall();
-            if(token2.getType() == TokenType.ASSIGN) return this.varAssignment();
-            if(token2.getType() == TokenType.ADD_ASSIGN) return this.varAddAssignment();
-            if(token2.getType() == TokenType.SUB_ASSIGN) return this.varSubAssignment();
-            if(token2.getType() == TokenType.MUL_ASSIGN) return this.varMulAssignment();
-            if(token2.getType() == TokenType.DIV_ASSIGN) return this.varDivAssignment();
-            if(token2.getType() == TokenType.POW_ASSIGN) return this.varPowAssignment();
-            if(token2.getType() == TokenType.INCR) return this.varIncrease();
-            if(token2.getType() == TokenType.DECR) return this.varDecrease();
-        }
+        // Identifier
+        if(token.getType() == TokenType.IDENTIFIER) return parseIdentifier(null);
+
+        // FIXME fix statements starting with identifier! (critical)
 
         // Expression
         if(token.getType() == TokenType.INTEGER ||
                 token.getType() == TokenType.DOUBLE ||
-                token.getType() == TokenType.IDENTIFIER ||
                 token.getType() == TokenType.KEYWORD_TRUE ||
                 token.getType() == TokenType.KEYWORD_FALSE)
             return this.statement();

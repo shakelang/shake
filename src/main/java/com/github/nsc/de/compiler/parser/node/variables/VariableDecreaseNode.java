@@ -4,18 +4,18 @@ import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 public class VariableDecreaseNode implements ValuedNode {
 
-    private final String name;
+    private final ValuedNode variable;
 
-    public VariableDecreaseNode(String name) {
-        this.name = name;
+    public VariableDecreaseNode(ValuedNode variable) {
+        this.variable = variable;
     }
 
-    public String getName() {
-        return name;
-    }
+    public ValuedNode getVariable() {
+		return variable;
+	}
 
     @Override
     public String toString() {
-        return this.getName() + "--";
+        return '{' + this.getVariable().toString() + "--}";
     }
 }

@@ -1,20 +1,21 @@
 package com.github.nsc.de.compiler.parser.node.variables;
 
+import com.github.nsc.de.compiler.parser.node.IdentifierNode;
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 public class VariableUsageNode implements ValuedNode {
-    private final String name;
 
-    public VariableUsageNode(String name) {
-        this.name = name;
+    private final IdentifierNode variable;
+
+    public VariableUsageNode(IdentifierNode variable) {
+        this.variable = variable;
     }
+    
+    public IdentifierNode getVariable() {
+		return variable;
+	}
 
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
-        return name;
+    public String getNames() {
+        return "{variable="  + this.variable + '}';
     }
 }

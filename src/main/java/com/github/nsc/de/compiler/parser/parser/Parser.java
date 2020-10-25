@@ -10,10 +10,9 @@ import com.github.nsc.de.compiler.parser.parser.statements.LogicalParser;
 import com.github.nsc.de.compiler.parser.parser.statements.StatementParser;
 import com.github.nsc.de.compiler.parser.parser.variables.*;
 import com.github.nsc.de.compiler.util.CompilerError;
-import sun.nio.cs.ext.MacTurkish;
 
 public class Parser implements ProgramParser,
-        VariableDeclarationParser, VariableAssignmentParser, VariableUsageParser,
+        VariableDeclarationParser, VariableAssignmentParser,
         StatementParser, CalculationParser, LogicalParser, FactorParser,
         WhileLoopParser, DoWhileLoopParser, ForLoopParser, IfParser, FunctionParser,
         ClassParser, ParserType {

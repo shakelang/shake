@@ -1,5 +1,6 @@
 package com.github.nsc.de.compiler.interpreter;
 
+import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
 
@@ -28,7 +29,7 @@ public class DefaultFunctions {
     private static class Print extends Function {
 
         public Print(Interpreter interpreter) {
-            super(new FunctionArgumentNode[] {}, null, null, interpreter);
+            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, false, false, true);
         }
 
         @Override
@@ -44,7 +45,7 @@ public class DefaultFunctions {
     private static class Println extends Function {
 
         public Println(Interpreter interpreter) {
-            super(new FunctionArgumentNode[] {}, null, null, interpreter);
+            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, false, false, true);
         }
 
         @Override
@@ -60,7 +61,7 @@ public class DefaultFunctions {
     private static class Exit extends Function {
 
         public Exit(Interpreter interpreter) {
-            super(new FunctionArgumentNode[] {}, null, null, interpreter);
+            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, false, false, true);
         }
 
         @Override

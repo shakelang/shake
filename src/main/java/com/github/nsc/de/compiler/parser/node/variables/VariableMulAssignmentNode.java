@@ -5,17 +5,17 @@ import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
 public class VariableMulAssignmentNode implements ValuedNode {
 
-    private final String name;
+    private final ValuedNode variable;
     private final Node value;
 
-    public VariableMulAssignmentNode(String name, Node value) {
-        this.name = name;
+    public VariableMulAssignmentNode(ValuedNode variable, Node value) {
+        this.variable = variable;
         this.value = value;
     }
 
-    public String getName() {
-        return name;
-    }
+    public ValuedNode getVariable() {
+		return variable;
+	}
 
     public Node getValue() {
         return value;
@@ -23,6 +23,6 @@ public class VariableMulAssignmentNode implements ValuedNode {
 
     @Override
     public String toString() {
-        return this.getName() + " *= " + this.getValue();
+        return '{' + getValue().toString() + "*=" + this.getValue().toString() + '}';
     }
 }
