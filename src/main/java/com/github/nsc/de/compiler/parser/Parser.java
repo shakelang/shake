@@ -64,6 +64,7 @@ public class Parser {
             }
 
             // if(this.skipSeparators() > 0) separator = true;
+            skipSeparators();
 
         }
         return new Tree(nodes);
@@ -199,7 +200,7 @@ public class Parser {
             if(token2.getType() == TokenType.POW_ASSIGN) ret = this.varPowAssignment(identifierNode);
             if(token2.getType() == TokenType.INCR) ret = this.varIncrease(identifierNode);
             if(token2.getType() == TokenType.DECR) ret = this.varDecrease(identifierNode);
-            if(getInput().skipIgnorable().peek().getType() == TokenType.DOT) {
+            if(getInput().skipIgnorable().hasNext() && getInput().peek().getType() == TokenType.DOT) {
                 getInput().skip().skipIgnorable();
                 return this.parseIdentifier(ret != null ? ret : new VariableUsageNode(identifierNode));
             }
@@ -362,11 +363,9 @@ public class Parser {
 
         String identifier = this.getInput().next().getValue();
 
-
-        if(this.getInput().skipIgnorable().peek() != null && this.getInput().peek().getType() == TokenType.ASSIGN) {
+        if(this.getInput().skipIgnorable().hasNext() && this.getInput().peek().getType() == TokenType.ASSIGN) {
             return new VariableDeclarationNode(identifier, VariableType.DYNAMIC, this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
         } else {
-            this.getInput().skip();
             return new VariableDeclarationNode(this.getInput().actual().getValue(), VariableType.DYNAMIC, null, access, isInClass, isStatic, isFinal);
         }
 
@@ -390,10 +389,9 @@ public class Parser {
 
         String identifier = this.getInput().next().getValue();
 
-        if(this.getInput().skipIgnorable().peek() != null && this.getInput().peek().getType() == TokenType.ASSIGN) {
+        if(this.getInput().skipIgnorable().hasNext() && this.getInput().peek().getType() == TokenType.ASSIGN) {
             return new VariableDeclarationNode(identifier, declarationNode, this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
         } else {
-            this.getInput().skip();
             return new VariableDeclarationNode(this.getInput().actual().getValue(), declarationNode, null, access, isInClass, isStatic, isFinal);
         }
     }
@@ -483,8 +481,10 @@ public class Parser {
             TokenType.LOGICAL_AND);
 
     private ValuedNode statement() {
+
+        // TODO skip-ables
+        if(!getInput().has(2)) return factor();
         Token peek = this.getInput().peek(2);
-        if(peek == null) return factor();
         if(LOGICAL.contains(peek.getType())) return this.logicalOr();
         return this.expr();
     }
