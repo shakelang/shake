@@ -16,8 +16,8 @@ public class FunctionCallNode implements ValuedNode {
     }
 
     public ValuedNode getFunction() {
-		return function;
-	}
+        return function;
+    }
 
     public ValuedNode[] getArgs() {
         return args;

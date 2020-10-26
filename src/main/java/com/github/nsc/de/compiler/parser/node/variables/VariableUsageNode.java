@@ -12,8 +12,8 @@ public class VariableUsageNode implements ValuedNode {
     }
     
     public IdentifierNode getVariable() {
-		return variable;
-	}
+        return variable;
+    }
 
     public String getNames() {
         return "{variable="  + this.variable + '}';

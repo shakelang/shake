@@ -16,9 +16,9 @@ public interface VariableDeclarationParser extends ParserType {
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.KEYWORD_VAR) throw this.error("Expecting var keyword");
         if(!this.getInput().skipIgnorable().hasNext() || this.getInput().peek().getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         
-    	String identifier = this.getInput().next().getValue();
-    	
-    	
+        String identifier = this.getInput().next().getValue();
+        
+        
         if(this.getInput().skipIgnorable().peek() != null && this.getInput().peek().getType() == TokenType.ASSIGN) {
             return new VariableDeclarationNode(identifier, VariableType.DYNAMIC, this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
         } else {
@@ -45,8 +45,8 @@ public interface VariableDeclarationParser extends ParserType {
 
         if(!this.getInput().skipIgnorable().hasNext() || this.getInput().peek().getType() != TokenType.IDENTIFIER) throw this.error("Expecting identifier");
         
-    	String identifier = this.getInput().next().getValue();
-    	
+        String identifier = this.getInput().next().getValue();
+        
         if(this.getInput().skipIgnorable().peek() != null && this.getInput().peek().getType() == TokenType.ASSIGN) {
             return new VariableDeclarationNode(identifier, declarationNode, this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
         } else {

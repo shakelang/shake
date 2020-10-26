@@ -14,8 +14,8 @@ public class VariableDivAssignmentNode implements ValuedNode {
     }
 
     public ValuedNode getVariable() {
-		return variable;
-	}
+        return variable;
+    }
 
     public Node getValue() {
         return value;

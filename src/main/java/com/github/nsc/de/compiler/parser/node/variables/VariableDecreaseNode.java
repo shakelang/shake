@@ -11,8 +11,8 @@ public class VariableDecreaseNode implements ValuedNode {
     }
 
     public ValuedNode getVariable() {
-		return variable;
-	}
+        return variable;
+    }
 
     @Override
     public String toString() {
