@@ -2,7 +2,6 @@ package com.github.nsc.de.compiler.parser;
 
 import com.github.nsc.de.compiler.util.Formatting;
 import com.github.nsc.de.compiler.parser.node.IfNode;
-import com.github.nsc.de.compiler.parser.parser.Parser;
 import org.junit.jupiter.api.Test;
 
 import static com.github.nsc.de.compiler.parser.ParserTestUtil.parseSingle;

@@ -6,7 +6,7 @@ import com.github.nsc.de.compiler.lexer.characterinputstream.CharacterInputStrea
 import com.github.nsc.de.compiler.lexer.characterinputstream.StringCharacterInputStream;
 import com.github.nsc.de.compiler.lexer.token.TokenInputStream;
 import com.github.nsc.de.compiler.parser.node.Tree;
-import com.github.nsc.de.compiler.parser.parser.Parser;
+import com.github.nsc.de.compiler.parser.Parser;
 import org.json.JSONArray;
 
 import java.util.Scanner;
