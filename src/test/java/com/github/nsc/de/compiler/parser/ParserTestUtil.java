@@ -6,7 +6,6 @@ import com.github.nsc.de.compiler.lexer.characterinputstream.StringCharacterInpu
 import com.github.nsc.de.compiler.lexer.token.TokenInputStream;
 import com.github.nsc.de.compiler.parser.node.Node;
 import com.github.nsc.de.compiler.parser.node.Tree;
-import com.github.nsc.de.compiler.parser.parser.Parser;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static com.github.nsc.de.compiler.TestUtil.*;

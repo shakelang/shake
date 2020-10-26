@@ -1,6 +1,7 @@
 package com.github.nsc.de.compiler.parser;
 
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
+import com.github.nsc.de.compiler.parser.node.IdentifierNode;
 import com.github.nsc.de.compiler.parser.node.VariableType;
 import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
@@ -25,17 +26,23 @@ public class VariableTests {
     public void testVariableAssignment() {
 
         VariableAssignmentNode node = parseSingle("<VariableAssignmentTest>", "i = 0", VariableAssignmentNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
 
         node = parseSingle("<VariableAssignmentTest>", "i = 0.1", VariableAssignmentNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
 
         node = parseSingle("<VariableAssignmentTest>", "i = true", VariableAssignmentNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
         assertType(LogicalTrueNode.class, node.getValue());
 
@@ -45,7 +52,9 @@ public class VariableTests {
     public void testVariableAddAssignment() {
 
         VariableAddAssignmentNode node = parseSingle("<VariableAddAssignmentTest>", "i += 0", VariableAddAssignmentNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
 
@@ -55,7 +64,9 @@ public class VariableTests {
     public void testVariableSubAssignment() {
 
         VariableSubAssignmentNode node = parseSingle("<VariableSubAssignmentTest>", "i -= 0", VariableSubAssignmentNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
 
@@ -65,7 +76,9 @@ public class VariableTests {
     public void testVariableMulAssignment() {
 
         VariableMulAssignmentNode node = parseSingle("<VariableMulAssignmentTest>", "i *= 0", VariableMulAssignmentNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
 
@@ -75,7 +88,9 @@ public class VariableTests {
     public void testVariableDivAssignment() {
 
         VariableDivAssignmentNode node = parseSingle("<VariableDivAssignmentTest>", "i /= 0", VariableDivAssignmentNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
 
@@ -85,12 +100,16 @@ public class VariableTests {
     public void testVariablePowAssignment() {
 
         VariablePowAssignmentNode node = parseSingle("<VariablePowAssignmentTest>", "i ^= 0", VariablePowAssignmentNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
 
         node = parseSingle("<VariablePowAssignmentTest>", "i **= 0", VariablePowAssignmentNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
         assertType(NumberNode.class, node.getValue());
 
@@ -100,7 +119,9 @@ public class VariableTests {
     public void testVariableIncrease() {
 
         VariableIncreaseNode node = parseSingle("<VariableIncreaseTest>", "i ++", VariableIncreaseNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
 
     }
 
@@ -108,7 +129,9 @@ public class VariableTests {
     public void testVariableDecrease() {
 
         VariableDecreaseNode node = parseSingle("<VariableDecreaseTest>", "i --", VariableDecreaseNode.class);
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
 
     }
 
@@ -1266,7 +1289,9 @@ public class VariableTests {
         VariableUsageNode node = parseSingle("<VariableUsageTest>", "i", VariableUsageNode.class);
 
         // Variable names
-        assertEquals("i", node.getName());
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", node.getVariable().getName());
+        assertNull(node.getVariable().getParent());
 
     }
 
