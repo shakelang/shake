@@ -11,6 +11,7 @@ public class Variable {
 
 
     public Variable(String identifier, VariableType type, AccessDescriber access, Object value) {
+        if(type == null) throw new Error();
         this.identifier = identifier;
         this.type = type;
         this.access = access;
@@ -19,6 +20,7 @@ public class Variable {
 
 
     public Variable(String identifier, VariableType type, Object value) {
+        if(type == null) throw new Error();
         this.identifier = identifier;
         this.type = type;
         this.access = AccessDescriber.PACKAGE;

@@ -55,6 +55,7 @@ public class Interpreter {
         if(n instanceof IfNode) return visitIfNode((IfNode) n, scope);
         if(n instanceof FunctionDeclarationNode) return visitFunctionDeclarationNode((FunctionDeclarationNode) n, scope);
         if(n instanceof FunctionCallNode) return visitFunctionCallNode((FunctionCallNode) n, scope);
+        if(n instanceof IdentifierNode) return visitIdentifier((IdentifierNode) n, scope);
         if(n instanceof LogicalTrueNode) return new InterpreterResult<>(true);
         if(n instanceof LogicalFalseNode) return new InterpreterResult<>(false);
         if(n == null) return new InterpreterResult<>(null);
@@ -99,70 +100,70 @@ public class Interpreter {
     }
 
     public InterpreterResult<Object> visitVariableAssignmentNode(VariableAssignmentNode n, Scope scope) {
-        Variable variable = scope.getVariables().get(n.getName());
+        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
         InterpreterResult<Object> value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared");
+        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
         else variable.setValue(value.getValue());
         return value;
     }
 
     public InterpreterResult<Object> visitVariableAddAssignmentNode(VariableAddAssignmentNode n, Scope scope) {
-        Variable variable = scope.getVariables().get(n.getName());
+        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
         InterpreterResult<Object> value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared");
+        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
         else variable.setValue((double) variable.getValue() + (double) value.getValue());
         return new InterpreterResult(variable.getValue());
     }
 
     public InterpreterResult<Object> visitVariableSubAssignmentNode(VariableSubAssignmentNode n, Scope scope) {
-        Variable variable = scope.getVariables().get(n.getName());
+        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
         InterpreterResult<Object> value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared");
+        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
         else variable.setValue((double) variable.getValue() - (double) value.getValue());
         return new InterpreterResult(variable.getValue());
     }
 
     public InterpreterResult<Object> visitVariableMulAssignmentNode(VariableMulAssignmentNode n, Scope scope) {
-        Variable variable = scope.getVariables().get(n.getName());
+        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
         InterpreterResult<Object> value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared");
+        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
         else variable.setValue((double) variable.getValue() * (double) value.getValue());
         return new InterpreterResult(variable.getValue());
     }
 
     public InterpreterResult<Object> visitVariableDivAssignmentNode(VariableDivAssignmentNode n, Scope scope) {
-        Variable variable = scope.getVariables().get(n.getName());
+        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
         InterpreterResult<Object> value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared");
+        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
         else variable.setValue((double) variable.getValue() / (double) value.getValue());
         return new InterpreterResult(variable.getValue());
     }
 
     public InterpreterResult<Object> visitVariablePowAssignmentNode(VariablePowAssignmentNode n, Scope scope) {
-        Variable variable = scope.getVariables().get(n.getName());
+        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
         InterpreterResult<Object> value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared");
+        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
         else variable.setValue(Math.pow((double) variable.getValue(), (double) value.getValue()));
         return new InterpreterResult(variable.getValue());
     }
 
     public InterpreterResult<Object> visitVariableIncreaseNode(VariableIncreaseNode n, Scope scope) {
-        Variable variable = scope.getVariables().get(n.getName());
-        if(variable == null) throw new Error("Variable is not declared");
+        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
+        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
         else variable.setValue((double) variable.getValue() + 1);
         return new InterpreterResult(variable.getValue());
     }
 
     public InterpreterResult<Object> visitVariableDecreaseNode(VariableDecreaseNode n, Scope scope) {
-        Variable variable = scope.getVariables().get(n.getName());
-        if(variable == null) throw new Error("Variable is not declared");
+        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
+        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
         else variable.setValue((double) variable.getValue() - 1);
         return new InterpreterResult(variable.getValue());
     }
 
     public InterpreterResult<Object> visitVariableUsageNode(VariableUsageNode n, Scope scope) {
-        Variable variable = scope.getVariables().get(n.getName());
-        if(variable == null) throw new Error("Variable '" + n.getName() + "' s not declared");
+        Variable variable = (Variable) visitIdentifier(n.getVariable(), scope).getValue();
+        if(variable == null) throw new Error("Variable not declared"); // TODO display variable name
         else return new InterpreterResult<>(variable.getValue());
     }
 
@@ -252,23 +253,34 @@ public class Interpreter {
     public InterpreterResult<Object> visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
 
         if(!scope.getVariables().declare(node.getName(), VariableType.FUNCTION)) throw new Error("'" + node.getName() + "' is already declared!");
-        Function f = new Function(node.getArgs(), node.getBody(), scope, this);
+        Function f = new Function(node.getArgs(), node.getBody(), scope, this, node.getAccess(), node.isInClass(), node.isStatic(), node.isFinal());
         scope.getVariables().get(node.getName()).setValue(f);
         return new InterpreterResult<>(f);
 
     }
 
     public InterpreterResult<Object> visitFunctionCallNode(FunctionCallNode node, Scope scope) {
-        Variable variable = scope.getVariables().get(node.getName());
-        if(variable == null) throw new Error("Function '" + node.getName() + "' is not declared");
-        else if(variable.getType() != VariableType.FUNCTION) throw new Error("Function '" + node.getName() + "' is not a function");
+        Variable variable = (Variable) visit(node.getFunction()).getValue();
+        if(variable == null) throw new Error("Function is not declared"); // TODO Display function name
+        else if(variable.getType() != VariableType.FUNCTION) throw new Error("Function is not a function");
         else ((Function) variable.getValue()).call(node, scope);
         return new InterpreterResult<>(null);
     }
 
+    public InterpreterResult<Object> visitIdentifier(IdentifierNode node, Scope scope) {
+        if(node.getParent() != null) {
+            throw new Error("Not implemented yet!");
+        }
+        else {
+           return new InterpreterResult<>(scope.getVariables().get(node.getName()));
+        }
+    }
+
+    //public InterpreterResult<Class>
+
     private boolean toBoolean(Object o) {
 
-        if(o instanceof InterpreterResult) return toBoolean(((InterpreterResult) o).getValue());
+        if(o instanceof InterpreterResult) return toBoolean(((InterpreterResult<?>) o).getValue());
         if(o instanceof Boolean) return (boolean) o;
         if(o instanceof Integer) return ((int) o) != 0;
         if(o instanceof Float) return ((float) o) != 0.0f;
