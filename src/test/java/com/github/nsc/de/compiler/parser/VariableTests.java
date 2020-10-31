@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import static com.github.nsc.de.compiler.TestUtil.assertType;
 import static com.github.nsc.de.compiler.parser.ParserTestUtil.parseSingle;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class VariableTests {
 
