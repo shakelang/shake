@@ -23,6 +23,7 @@ import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
+import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.VariableAddAssignmentNode;
 import com.github.nsc.de.compiler.parser.node.variables.VariableAssignmentNode;
 import com.github.nsc.de.compiler.parser.node.variables.VariableDeclarationNode;
@@ -71,6 +72,7 @@ public class JsonGenerator {
         if(n instanceof FunctionDeclarationNode) return visitFunctionDeclarationNode((FunctionDeclarationNode) n);
         if(n instanceof FunctionCallNode) return visitFunctionCallNode((FunctionCallNode) n);
         if(n instanceof IdentifierNode) return visitIdentifierNode((IdentifierNode) n);
+        if(n instanceof ClassDeclarationNode) return visitClassDeclarationNode((ClassDeclarationNode) n);
         if(n instanceof LogicalTrueNode) return true;
         if(n instanceof LogicalFalseNode) return false;
         if(n == null) return new InterpreterResult<>(null);
@@ -246,6 +248,28 @@ public class JsonGenerator {
                 .put("args", args)
                 .put("body", visit(n.getBody()));
 
+    }
+
+    public JSONObject visitClassDeclarationNode(ClassDeclarationNode n) {
+
+        JSONArray methods = new JSONArray();
+        JSONArray classes = new JSONArray();
+        JSONArray fields = new JSONArray();
+
+        for(int i = 0; i < n.getMethods().length; i++) methods.put(this.visit(n.getMethods()[i]));
+        for(int i = 0; i < n.getClasses().length; i++) classes.put(this.visit(n.getFields()[i]));
+        for(int i = 0; i < n.getFields().length; i++) fields.put(this.visit(n.getFields()[i]));
+
+
+        return new JSONObject().put("type", "class_declaration")
+                .put("name", n.getName())
+                .put("access", n.getAccess().toString())
+                .put("in_class", n.isInClass())
+                .put("static", n.isStatic())
+                .put("final", n.isFinal())
+                .put("methods", methods)
+                .put("classes", classes)
+                .put("fields", fields);
     }
 
     public JSONObject visitFunctionCallNode(FunctionCallNode n) {
