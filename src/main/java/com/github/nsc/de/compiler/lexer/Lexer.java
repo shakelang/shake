@@ -221,7 +221,7 @@ public class Lexer {
     public void singleLineComment() {
 
         this.in.skip(2);
-        while(this.in.hasNext() && this.in.next() != '\n');
+        while(this.in.hasNext() && this.in.peek() != '\n') this.in.skip();
 
     }
 
