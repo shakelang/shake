@@ -23,6 +23,7 @@ import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
+import com.github.nsc.de.compiler.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.VariableAddAssignmentNode;
 import com.github.nsc.de.compiler.parser.node.variables.VariableAssignmentNode;
@@ -70,6 +71,7 @@ public class JsonGenerator {
         if(n instanceof ForNode) return visitForNode((ForNode) n);
         if(n instanceof IfNode) return visitIfNode((IfNode) n);
         if(n instanceof FunctionDeclarationNode) return visitFunctionDeclarationNode((FunctionDeclarationNode) n);
+        if(n instanceof ClassConstructionNode) return visitClassConstruction((ClassConstructionNode) n);
         if(n instanceof FunctionCallNode) return visitFunctionCallNode((FunctionCallNode) n);
         if(n instanceof IdentifierNode) return visitIdentifierNode((IdentifierNode) n);
         if(n instanceof ClassDeclarationNode) return visitClassDeclarationNode((ClassDeclarationNode) n);
@@ -272,6 +274,20 @@ public class JsonGenerator {
                 .put("fields", fields);
     }
 
+    public JSONObject visitClassConstruction(ClassConstructionNode n) {
+
+        JSONArray args = new JSONArray();
+        for(ValuedNode arg : n.getArgs()) {
+            args.put(visit(arg));
+        }
+
+        return new JSONObject()
+                .put("type", "class_construction")
+                .put("class", visit(n.getType()))
+                .put("args", args);
+
+    }
+
     public JSONObject visitFunctionCallNode(FunctionCallNode n) {
 
         JSONArray args = new JSONArray();
@@ -280,9 +296,9 @@ public class JsonGenerator {
         }
 
         return new JSONObject()
-            .put("type", "function_call")
-            .put("function", visit(n.getFunction()))
-            .put("args", args);
+                .put("type", "function_call")
+                .put("function", visit(n.getFunction()))
+                .put("args", args);
 
     }
 
