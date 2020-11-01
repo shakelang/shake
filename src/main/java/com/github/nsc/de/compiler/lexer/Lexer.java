@@ -50,6 +50,10 @@ public class Lexer {
 
             else if(next == '"') tokens.add(makeString(start));
 
+            // Comments
+            else if (this.in.peek(0,1).equals("//")) this.singleLineComment();
+            else if (this.in.peek(0,1).equals("/*")) this.multiLineComment();
+
             // Operator assign
             else if (this.in.peek(0,2).equals("**=")) { in.skip(2);  tokens.add(new Token(TokenType.POW_ASSIGN, "**=", start, in.getPosition().copy())); }
             else if (this.in.peek(0,1).equals("^=")) { in.skip(); tokens.add(new Token(TokenType.POW_ASSIGN, "^=", start, in.getPosition().copy())); }
@@ -212,6 +216,22 @@ public class Lexer {
             if(in.actual() != '"') throw new LexerError("String must end with a '\"'");
         }
         return new Token(TokenType.STRING, string.toString(), start, in.getPosition().copy());
+    }
+
+    public void singleLineComment() {
+
+        this.in.skip(2);
+        while(this.in.hasNext() && this.in.next() != '\n');
+
+    }
+
+    public void multiLineComment() {
+
+        this.in.skip(2);
+        while(this.in.hasNext() && this.in.peek() != '*' && this.in.peek(2) != '/') this.in.skip();
+        if(!this.in.hasNext()) throw new LexerError("Multi-Line-Comment did not end");
+        this.in.skip(2);
+
     }
 
     public class LexerError extends CompilerError {
