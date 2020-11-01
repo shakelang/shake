@@ -70,6 +70,8 @@ public enum TokenType {
     KEYWORD_PROTECTED,
     KEYWORD_PRIVATE,
 
+    KEYWORD_NEW,
+
     // Variable Declaration
     KEYWORD_VAR,
     KEYWORD_DYNAMIC,

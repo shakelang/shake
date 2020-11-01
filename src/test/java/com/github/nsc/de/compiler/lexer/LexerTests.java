@@ -137,6 +137,7 @@ public class LexerTests {
         generateToken("public", TokenType.KEYWORD_PUBLIC); // "public"
         generateToken("protected", TokenType.KEYWORD_PROTECTED); // "protected"
         generateToken("private", TokenType.KEYWORD_PRIVATE); // "private"
+        generateToken("new", TokenType.KEYWORD_NEW); // "new"
 
 
     }

@@ -178,6 +178,8 @@ public class Lexer {
                 return new Token(TokenType.KEYWORD_PROTECTED, start, end);
             case "private":
                 return new Token(TokenType.KEYWORD_PRIVATE, start, end);
+            case "new":
+                return new Token(TokenType.KEYWORD_NEW, start, end);
         }
         return new Token(TokenType.IDENTIFIER, identifier.toString(), start, end);
 
