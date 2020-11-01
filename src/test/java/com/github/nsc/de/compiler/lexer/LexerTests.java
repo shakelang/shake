@@ -159,6 +159,20 @@ public class LexerTests {
 
     }
 
+    @Test
+    public void testSingleLineComments() {
+
+        generateToken("// test\n", TokenType.LINE_SEPARATOR);
+
+    }
+
+    @Test
+    public void testMultiLineComments() {
+
+        generateToken("/* test */\n", TokenType.LINE_SEPARATOR);
+
+    }
+
     private Token generateToken(String input, TokenType tt) {
         CharacterInputStream in = new StringCharacterInputStream("<tests>", input);
         Lexer lexer = new Lexer(in);
