@@ -13,6 +13,7 @@ import com.github.nsc.de.compiler.parser.node.logical.*;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
+import com.github.nsc.de.compiler.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 import com.github.nsc.de.compiler.util.CompilerError;
@@ -105,6 +106,7 @@ public class Parser {
 
         // Identifier
         if(token.getType() == TokenType.IDENTIFIER) return parseIdentifier(null);
+        if(token.getType() == TokenType.KEYWORD_NEW) return parseClassConstruction();
 
         // FIXME fix statements starting with identifier! (critical)
 
@@ -209,6 +211,16 @@ public class Parser {
         }
         return new VariableUsageNode(identifierNode);
 
+    }
+
+    private ClassConstructionNode parseClassConstruction() {
+        this.getInput().skip().skipIgnorable();
+        Position start = getInput().actual().getStart();
+        ValuedNode node = parseIdentifier(null);
+        if(!(node instanceof FunctionCallNode))
+            throw new ParserError("Expecting a call after keyword new",
+                    start, getInput().actual().getEnd());
+        return new ClassConstructionNode(((FunctionCallNode) node).getFunction(), ((FunctionCallNode) node).getArgs());
     }
 
 

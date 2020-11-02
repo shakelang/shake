@@ -288,6 +288,11 @@ public enum TokenType {
      */
     KEYWORD_PRIVATE,
 
+    /**
+     * Keyword "new" for creating new instances of a class
+     */
+    KEYWORD_NEW,
+
 
 
     /**
@@ -296,6 +301,8 @@ public enum TokenType {
     KEYWORD_FUNCTION,
 
 
+
+    // Variable Declaration
 
     /**
      * Keyword "var" for declaring variables

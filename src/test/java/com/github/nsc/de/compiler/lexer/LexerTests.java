@@ -137,6 +137,7 @@ public class LexerTests {
         generateToken("public", TokenType.KEYWORD_PUBLIC); // "public"
         generateToken("protected", TokenType.KEYWORD_PROTECTED); // "protected"
         generateToken("private", TokenType.KEYWORD_PRIVATE); // "private"
+        generateToken("new", TokenType.KEYWORD_NEW); // "new"
 
 
     }
@@ -156,6 +157,20 @@ public class LexerTests {
         // identifiers
         assertEquals("hello", generateToken("hello", TokenType.IDENTIFIER).getValue());
         assertEquals("world0A_", generateToken("world0A_", TokenType.IDENTIFIER).getValue());
+
+    }
+
+    @Test
+    public void testSingleLineComments() {
+
+        generateToken("// test\n", TokenType.LINE_SEPARATOR);
+
+    }
+
+    @Test
+    public void testMultiLineComments() {
+
+        generateToken("/* test */\n", TokenType.LINE_SEPARATOR);
 
     }
 
