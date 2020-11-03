@@ -4,6 +4,7 @@ import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 
 public class Class {
 
+    private final String name;
     private final VariableList prototype;
     private final Scope scope;
     private final Interpreter interpreter;
@@ -13,8 +14,9 @@ public class Class {
     private final boolean isFinal;
 
 
-    public Class(Scope scope, Interpreter interpreter, VariableList prototype,
+    public Class(String name, Scope scope, Interpreter interpreter, VariableList prototype,
                  AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+        this.name = name;
         this.scope = scope;
         this.interpreter = interpreter;
         this.prototype = prototype;
@@ -24,6 +26,7 @@ public class Class {
         this.isFinal = isFinal;
     }
 
+    public String getName() { return name; }
     public VariableList getPrototype() { return prototype; }
     public Interpreter getInterpreter() {
         return interpreter;

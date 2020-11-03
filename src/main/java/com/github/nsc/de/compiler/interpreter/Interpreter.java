@@ -26,7 +26,8 @@ public class Interpreter {
     public InterpreterResult<Object> visit(Node n, Scope scope) {
 
         if(n instanceof Tree) return visitTree((Tree) n, scope);
-        if(n instanceof NumberNode) return visitNumberNode((NumberNode) n, scope);
+        if(n instanceof DoubleNode) return visitDoubleNode((DoubleNode) n, scope);
+        if(n instanceof IntegerNode) return visitIntegerNode((IntegerNode) n, scope);
         if(n instanceof AddNode) return visitAddNode((AddNode) n, scope);
         if(n instanceof SubNode) return visitSubNode((SubNode) n, scope);
         if(n instanceof MulNode) return visitMulNode((MulNode) n, scope);
@@ -69,7 +70,11 @@ public class Interpreter {
         else return new InterpreterResult<>(null);
     }
 
-    public InterpreterResult<Object> visitNumberNode(NumberNode n, Scope scope) {
+    public InterpreterResult<Object> visitIntegerNode(IntegerNode n, Scope scope) {
+        return new InterpreterResult<>(n.getNumber());
+    }
+
+    public InterpreterResult<Object> visitDoubleNode(DoubleNode n, Scope scope) {
         return new InterpreterResult<>(n.getNumber());
     }
 
@@ -275,6 +280,30 @@ public class Interpreter {
            return new InterpreterResult<>(scope.getVariables().get(node.getName()));
         }
     }
+
+    /**
+    public InterpreterResult<Object> visitClassDeclarationNode(ClassDeclarationNode n, Scope scope) {
+
+        VariableList prototype = new VariableList();
+        Variable
+
+        // TODO 2 Declarations with the same name
+
+        for(VariableDeclarationNode node : n.getFields()) {
+            prototype.declare(node.getName(), VariableType.valueOf(node.getType()));
+            prototype.get(node.getName()).setValue(visit());
+        }
+
+        Class cls = new Class(n.getName(), scope, this, prototype,
+                n.getAccess(), n.isInClass(), n.isStatic(), n.isFinal());
+
+        scope.getVariables().declare(n.getName(), VariableType.OBJECT);
+        scope.getVariables().get(n.getName()).setValue(cls);
+
+        return new InterpreterResult<>(cls);
+
+    }
+    */
 
     //public InterpreterResult<Class>
 

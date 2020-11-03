@@ -3,7 +3,8 @@ package com.github.nsc.de.compiler.parser;
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.IdentifierNode;
 import com.github.nsc.de.compiler.parser.node.VariableType;
-import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
+import com.github.nsc.de.compiler.parser.node.expression.DoubleNode;
+import com.github.nsc.de.compiler.parser.node.expression.IntegerNode;
 import com.github.nsc.de.compiler.parser.node.logical.LogicalTrueNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 import org.junit.jupiter.api.Test;
@@ -29,14 +30,14 @@ public class VariableTests {
         assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
         assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
-        assertType(NumberNode.class, node.getValue());
+        assertType(IntegerNode.class, node.getValue());
 
         node = parseSingle("<VariableAssignmentTest>", "i = 0.1", VariableAssignmentNode.class);
         assertType(IdentifierNode.class, node.getVariable());
         assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
         assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
-        assertType(NumberNode.class, node.getValue());
+        assertType(DoubleNode.class, node.getValue());
 
         node = parseSingle("<VariableAssignmentTest>", "i = true", VariableAssignmentNode.class);
         assertType(IdentifierNode.class, node.getVariable());
@@ -55,7 +56,7 @@ public class VariableTests {
         assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
         assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
-        assertType(NumberNode.class, node.getValue());
+        assertType(IntegerNode.class, node.getValue());
 
     }
 
@@ -67,7 +68,7 @@ public class VariableTests {
         assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
         assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
-        assertType(NumberNode.class, node.getValue());
+        assertType(IntegerNode.class, node.getValue());
 
     }
 
@@ -79,19 +80,19 @@ public class VariableTests {
         assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
         assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
-        assertType(NumberNode.class, node.getValue());
+        assertType(IntegerNode.class, node.getValue());
 
     }
 
     @Test
     public void testVariableDivAssignment() {
 
-        VariableDivAssignmentNode node = parseSingle("<VariableDivAssignmentTest>", "i /= 0", VariableDivAssignmentNode.class);
+        VariableDivAssignmentNode node = parseSingle("<VariableDivAssignmentTest>", "i /= 1", VariableDivAssignmentNode.class);
         assertType(IdentifierNode.class, node.getVariable());
         assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
         assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
-        assertType(NumberNode.class, node.getValue());
+        assertType(IntegerNode.class, node.getValue());
 
     }
 
@@ -103,14 +104,14 @@ public class VariableTests {
         assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
         assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
-        assertType(NumberNode.class, node.getValue());
+        assertType(IntegerNode.class, node.getValue());
 
         node = parseSingle("<VariablePowAssignmentTest>", "i **= 0", VariablePowAssignmentNode.class);
         assertType(IdentifierNode.class, node.getVariable());
         assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
         assertNull(((IdentifierNode) node.getVariable()).getParent());
         assertNotNull(node.getValue());
-        assertType(NumberNode.class, node.getValue());
+        assertType(IntegerNode.class, node.getValue());
 
     }
 

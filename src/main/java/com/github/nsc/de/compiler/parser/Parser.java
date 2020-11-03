@@ -527,12 +527,12 @@ public class Parser {
 
         if(token.getType() == TokenType.INTEGER) {
             getInput().skip();
-            return new NumberNode(Integer.parseInt(token.getValue()));
+            return new IntegerNode(Integer.parseInt(token.getValue()));
         }
 
         if(token.getType() == TokenType.DOUBLE) {
             getInput().skip();
-            return new NumberNode(Double.parseDouble(token.getValue()));
+            return new DoubleNode(Double.parseDouble(token.getValue()));
         }
 
         if(token.getType() == TokenType.IDENTIFIER) {

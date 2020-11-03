@@ -1,8 +1,9 @@
 package com.github.nsc.de.compiler.parser;
 
 import com.github.nsc.de.compiler.parser.node.expression.AddNode;
+import com.github.nsc.de.compiler.parser.node.expression.DoubleNode;
+import com.github.nsc.de.compiler.parser.node.expression.IntegerNode;
 import com.github.nsc.de.compiler.parser.node.expression.MulNode;
-import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 import com.github.nsc.de.compiler.parser.node.logical.*;
 import org.junit.jupiter.api.Test;
 
@@ -92,25 +93,25 @@ public class LogicalTests {
 
         LogicalBiggerEqualsNode node = parseSingle("<LogicalExpressionTest>", "10 >= 5 + 9 * 2", LogicalBiggerEqualsNode.class);
         assertNotNull(node.getLeft());
-        assertType(NumberNode.class, node.getLeft());
-        assertEquals(10, ((NumberNode) node.getLeft()).getNumber());
+        assertType(IntegerNode.class, node.getLeft());
+        assertEquals(10, ((IntegerNode) node.getLeft()).getNumber());
         assertNotNull(node.getRight());
         assertType(AddNode.class, node.getRight());
 
         AddNode add = (AddNode) node.getRight();
         assertNotNull(add.getLeft());
-        assertType(NumberNode.class, add.getLeft());
-        assertEquals(5, ((NumberNode) add.getLeft()).getNumber());
+        assertType(IntegerNode.class, add.getLeft());
+        assertEquals(5, ((IntegerNode) add.getLeft()).getNumber());
         assertNotNull(add.getRight());
         assertType(MulNode.class, add.getRight());
 
         MulNode mul = (MulNode) add.getRight();
         assertNotNull(mul.getLeft());
-        assertType(NumberNode.class, mul.getLeft());
-        assertEquals(9, ((NumberNode) mul.getLeft()).getNumber());
+        assertType(IntegerNode.class, mul.getLeft());
+        assertEquals(9, ((IntegerNode) mul.getLeft()).getNumber());
         assertNotNull(mul.getRight());
-        assertType(NumberNode.class, mul.getRight());
-        assertEquals(2, ((NumberNode) mul.getRight()).getNumber());
+        assertType(IntegerNode.class, mul.getRight());
+        assertEquals(2, ((IntegerNode) mul.getRight()).getNumber());
 
     }
 
@@ -120,11 +121,13 @@ public class LogicalTests {
 
         T node = parseSingle('<'+type.getSimpleName().substring(type.getSimpleName().length() - 4)+"Test>", input, type);
         assertNotNull(node.getLeft());
-        assertType(NumberNode.class, node.getLeft());
-        assertEquals(left, ((NumberNode) node.getLeft()).getNumber());
+        assertTrue(node.getLeft() instanceof DoubleNode || node.getLeft() instanceof IntegerNode);
+        if(node.getLeft() instanceof DoubleNode) assertEquals(left, ((DoubleNode) node.getLeft()).getNumber());
+        else assertEquals(left, ((IntegerNode) node.getLeft()).getNumber());
         assertNotNull(node.getRight());
-        assertType(NumberNode.class, node.getRight());
-        assertEquals(right, ((NumberNode) node.getRight()).getNumber());
+        assertTrue(node.getRight() instanceof DoubleNode || node.getRight() instanceof IntegerNode);
+        if(node.getRight() instanceof DoubleNode) assertEquals(right, ((DoubleNode) node.getRight()).getNumber());
+        else assertEquals(right, ((IntegerNode) node.getRight()).getNumber());
 
     }
 }

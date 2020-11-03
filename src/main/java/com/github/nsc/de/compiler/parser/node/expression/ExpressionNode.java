@@ -22,6 +22,9 @@ public abstract class ExpressionNode implements ValuedNode {
 
     @Override
     public String toString() {
-        return "("+(getLeft() != null && !(getLeft() instanceof NumberNode && ((NumberNode)getLeft()).getNumber() == 0) ? getLeft() : "")+getOperator()+getRight()+")";
+        return "ExpressionNode{" +
+                "left=" + left +
+                ", right=" + right +
+                '}';
     }
 }
