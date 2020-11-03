@@ -11,7 +11,7 @@ public class Variable {
 
 
     public Variable(String identifier, VariableType type, AccessDescriber access, Object value) {
-        if(type == null) throw new Error();
+        if(type == null) throw new Error("Variable type must not be null!");
         this.identifier = identifier;
         this.type = type;
         this.access = access;

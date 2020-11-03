@@ -29,7 +29,7 @@ public enum VariableType {
             case OBJECT: return OBJECT;
             case ARRAY: return ARRAY;
         }
-        return null;
+        return ANY;
     }
 
 
