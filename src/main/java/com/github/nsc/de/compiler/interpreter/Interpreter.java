@@ -8,7 +8,9 @@ import com.github.nsc.de.compiler.parser.node.logical.*;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
+import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
+import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
 
 public class Interpreter {
@@ -275,6 +277,30 @@ public class Interpreter {
            return new InterpreterResult<>(scope.getVariables().get(node.getName()));
         }
     }
+
+    /**
+    public InterpreterResult<Object> visitClassDeclarationNode(ClassDeclarationNode n, Scope scope) {
+
+        VariableList prototype = new VariableList();
+        Variable
+
+        // TODO 2 Declarations with the same name
+
+        for(VariableDeclarationNode node : n.getFields()) {
+            prototype.declare(node.getName(), VariableType.valueOf(node.getType()));
+            prototype.get(node.getName()).setValue(visit());
+        }
+
+        Class cls = new Class(n.getName(), scope, this, prototype,
+                n.getAccess(), n.isInClass(), n.isStatic(), n.isFinal());
+
+        scope.getVariables().declare(n.getName(), VariableType.OBJECT);
+        scope.getVariables().get(n.getName()).setValue(cls);
+
+        return new InterpreterResult<>(cls);
+
+    }
+    */
 
     //public InterpreterResult<Class>
 
