@@ -12,7 +12,7 @@ public class MathTests {
     @Test
     public void testBasicNumber() {
 
-        NumberNode node = parseSingle("<VariableUsageTest>", "10", NumberNode.class);
+        IntegerNode node = parseSingle("<VariableUsageTest>", "10", IntegerNode.class);
         assertEquals(10, node.getNumber());
 
     }
@@ -44,25 +44,25 @@ public class MathTests {
 
         AddNode add = parseSingle("<PointBeforeLineTest>", "1 + 2 * 3 ^ 4", AddNode.class);
         assertNotNull(add.getLeft());
-        assertType(NumberNode.class, add.getLeft());
-        assertEquals(1, ((NumberNode) add.getLeft()).getNumber());
+        assertType(IntegerNode.class, add.getLeft());
+        assertEquals(1, ((IntegerNode) add.getLeft()).getNumber());
         assertNotNull(add.getRight());
         assertType(MulNode.class, add.getRight());
 
         MulNode mul = (MulNode) add.getRight();
         assertNotNull(mul.getLeft());
-        assertType(NumberNode.class, mul.getLeft());
-        assertEquals(2, ((NumberNode) mul.getLeft()).getNumber());
+        assertType(IntegerNode.class, mul.getLeft());
+        assertEquals(2, ((IntegerNode) mul.getLeft()).getNumber());
         assertNotNull(mul.getRight());
         assertType(PowNode.class, mul.getRight());
 
         PowNode pow = (PowNode) mul.getRight();
         assertNotNull(pow.getLeft());
-        assertType(NumberNode.class, pow.getLeft());
-        assertEquals(3, ((NumberNode) pow.getLeft()).getNumber());
+        assertType(IntegerNode.class, pow.getLeft());
+        assertEquals(3, ((IntegerNode) pow.getLeft()).getNumber());
         assertNotNull(pow.getRight());
-        assertType(NumberNode.class, pow.getRight());
-        assertEquals(4, ((NumberNode) pow.getRight()).getNumber());
+        assertType(IntegerNode.class, pow.getRight());
+        assertEquals(4, ((IntegerNode) pow.getRight()).getNumber());
 
     }
 
@@ -71,18 +71,18 @@ public class MathTests {
 
         MulNode node = parseSingle("<BracketTest>", "2 * (4 + 3)", MulNode.class);
         assertNotNull(node.getLeft());
-        assertType(NumberNode.class, node.getLeft());
-        assertEquals(2, ((NumberNode) node.getLeft()).getNumber());
+        assertType(IntegerNode.class, node.getLeft());
+        assertEquals(2, ((IntegerNode) node.getLeft()).getNumber());
         assertNotNull(node.getRight());
         assertType(AddNode.class, node.getRight());
 
         AddNode add = (AddNode) node.getRight();
         assertNotNull(add.getLeft());
-        assertType(NumberNode.class, add.getLeft());
-        assertEquals(4, ((NumberNode) add.getLeft()).getNumber());
+        assertType(IntegerNode.class, add.getLeft());
+        assertEquals(4, ((IntegerNode) add.getLeft()).getNumber());
         assertNotNull(add.getRight());
-        assertType(NumberNode.class, add.getRight());
-        assertEquals(3, ((NumberNode) add.getRight()).getNumber());
+        assertType(IntegerNode.class, add.getRight());
+        assertEquals(3, ((IntegerNode) add.getRight()).getNumber());
 
     }
 
@@ -90,11 +90,13 @@ public class MathTests {
 
         T node = parseSingle('<'+type.getSimpleName().substring(type.getSimpleName().length() - 4)+"Test>", input, type);
         assertNotNull(node.getLeft());
-        assertType(NumberNode.class, node.getLeft());
-        assertEquals(left, ((NumberNode) node.getLeft()).getNumber());
+        assertTrue(node.getLeft() instanceof DoubleNode || node.getLeft() instanceof IntegerNode);
+        if(node.getLeft() instanceof DoubleNode) assertEquals(left, ((DoubleNode) node.getLeft()).getNumber());
+        else assertEquals(left, ((IntegerNode) node.getLeft()).getNumber());
         assertNotNull(node.getRight());
-        assertType(NumberNode.class, node.getRight());
-        assertEquals(right, ((NumberNode) node.getRight()).getNumber());
+        assertTrue(node.getRight() instanceof DoubleNode || node.getRight() instanceof IntegerNode);
+        if(node.getRight() instanceof DoubleNode) assertEquals(right, ((DoubleNode) node.getRight()).getNumber());
+        else assertEquals(right, ((IntegerNode) node.getRight()).getNumber());
 
     }
 }

@@ -8,9 +8,7 @@ import com.github.nsc.de.compiler.parser.node.logical.*;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
-import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
-import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
 
 public class Interpreter {
@@ -28,7 +26,8 @@ public class Interpreter {
     public InterpreterResult<Object> visit(Node n, Scope scope) {
 
         if(n instanceof Tree) return visitTree((Tree) n, scope);
-        if(n instanceof NumberNode) return visitNumberNode((NumberNode) n, scope);
+        if(n instanceof DoubleNode) return visitDoubleNode((DoubleNode) n, scope);
+        if(n instanceof IntegerNode) return visitIntegerNode((IntegerNode) n, scope);
         if(n instanceof AddNode) return visitAddNode((AddNode) n, scope);
         if(n instanceof SubNode) return visitSubNode((SubNode) n, scope);
         if(n instanceof MulNode) return visitMulNode((MulNode) n, scope);
@@ -71,7 +70,11 @@ public class Interpreter {
         else return new InterpreterResult<>(null);
     }
 
-    public InterpreterResult<Object> visitNumberNode(NumberNode n, Scope scope) {
+    public InterpreterResult<Object> visitIntegerNode(IntegerNode n, Scope scope) {
+        return new InterpreterResult<>(n.getNumber());
+    }
+
+    public InterpreterResult<Object> visitDoubleNode(DoubleNode n, Scope scope) {
         return new InterpreterResult<>(n.getNumber());
     }
 

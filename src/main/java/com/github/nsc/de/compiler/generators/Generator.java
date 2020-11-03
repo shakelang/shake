@@ -17,7 +17,8 @@ public abstract class Generator<T> {
     public T visit(Node n) {
 
         if(n instanceof Tree) return visitTree((Tree) n);
-        if(n instanceof NumberNode) return visitNumberNode((NumberNode) n);
+        if(n instanceof DoubleNode) return visitDoubleNode((DoubleNode) n);
+        if(n instanceof IntegerNode) return visitIntegerNode((IntegerNode) n);
         if(n instanceof AddNode) return visitAddNode((AddNode) n);
         if(n instanceof SubNode) return visitSubNode((SubNode) n);
         if(n instanceof MulNode) return visitMulNode((MulNode) n);
@@ -56,7 +57,8 @@ public abstract class Generator<T> {
     }
 
     public abstract T visitTree(Tree t);
-    public abstract T visitNumberNode(NumberNode n);
+    public abstract T visitDoubleNode(DoubleNode n);
+    public abstract T visitIntegerNode(IntegerNode n);
     public abstract T visitAddNode(AddNode n);
     public abstract T visitSubNode(SubNode n);
     public abstract T visitMulNode(MulNode n);

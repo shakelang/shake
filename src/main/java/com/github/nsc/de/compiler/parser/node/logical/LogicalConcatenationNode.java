@@ -1,13 +1,12 @@
 package com.github.nsc.de.compiler.parser.node.logical;
 
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
-import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
 
-public abstract class LogicalConcatinationNode implements LogicalNode {
+public abstract class LogicalConcatenationNode implements LogicalNode {
     private final ValuedNode left;
     private final ValuedNode right;
 
-    public LogicalConcatinationNode(ValuedNode left, ValuedNode right) {
+    public LogicalConcatenationNode(ValuedNode left, ValuedNode right) {
         this.left = left;
         this.right = right;
     }
@@ -21,6 +20,9 @@ public abstract class LogicalConcatinationNode implements LogicalNode {
 
     @Override
     public String toString() {
-        return "("+(getLeft() != null && !(getLeft() instanceof NumberNode && ((NumberNode)getLeft()).getNumber() == 0) ? getLeft() : "")+getOperator()+getRight()+")";
+        return "LogicalConcatenationNode{" +
+                "left=" + left +
+                ", right=" + right +
+                '}';
     }
 }

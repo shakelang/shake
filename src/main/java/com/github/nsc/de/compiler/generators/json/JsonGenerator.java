@@ -2,12 +2,7 @@ package com.github.nsc.de.compiler.generators.json;
 
 import com.github.nsc.de.compiler.generators.Generator;
 import com.github.nsc.de.compiler.parser.node.*;
-import com.github.nsc.de.compiler.parser.node.expression.AddNode;
-import com.github.nsc.de.compiler.parser.node.expression.DivNode;
-import com.github.nsc.de.compiler.parser.node.expression.MulNode;
-import com.github.nsc.de.compiler.parser.node.expression.NumberNode;
-import com.github.nsc.de.compiler.parser.node.expression.PowNode;
-import com.github.nsc.de.compiler.parser.node.expression.SubNode;
+import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionDeclarationNode;
@@ -46,7 +41,13 @@ public class JsonGenerator extends Generator<Object> {
         return array;
     }
 
-    public Double visitNumberNode(NumberNode n) {
+    @Override
+    public Double visitDoubleNode(DoubleNode n) {
+        return n.getNumber();
+    }
+
+    @Override
+    public Integer visitIntegerNode(IntegerNode n) {
         return n.getNumber();
     }
 

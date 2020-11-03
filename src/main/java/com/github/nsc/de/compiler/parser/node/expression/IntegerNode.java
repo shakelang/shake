@@ -2,20 +2,20 @@ package com.github.nsc.de.compiler.parser.node.expression;
 
 import com.github.nsc.de.compiler.parser.node.ValuedNode;
 
-public class NumberNode implements ValuedNode {
+public class IntegerNode implements ValuedNode {
 
-    private final double number;
+    private final int number;
 
-    public NumberNode(double number) {
+    public IntegerNode(int number) {
         this.number = number;
     }
 
-    public double getNumber() {
+    public int getNumber() {
         return number;
     }
 
     @Override
     public String toString() {
-        return number+"";
+        return String.valueOf(number);
     }
 }
