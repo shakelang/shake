@@ -1,6 +1,6 @@
 package com.github.nsc.de.compiler;
 
-import com.github.nsc.de.compiler.generators.java.JavaGenerator;
+import com.github.nsc.de.compiler.generators.java.SimpleJavaGenerator;
 import com.github.nsc.de.compiler.lexer.Lexer;
 import com.github.nsc.de.compiler.lexer.characterinputstream.CharacterInputStream;
 import com.github.nsc.de.compiler.lexer.characterinputstream.StringCharacterInputStream;
@@ -39,6 +39,6 @@ public class JavaMain {
         Parser parser = new Parser(tokens);
         Tree tree = parser.parse();
         System.out.printf("[DEBUG] Parser Tree: %s%n", tree.toString());
-        return new JavaGenerator().visitTree(tree);
+        return new SimpleJavaGenerator().visitTree(tree);
     }
 }

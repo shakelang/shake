@@ -13,7 +13,7 @@ import com.github.nsc.de.compiler.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
-public class JavaGenerator extends Generator<String> {
+public class SimpleJavaGenerator extends Generator<String> {
 
 
     @Override
