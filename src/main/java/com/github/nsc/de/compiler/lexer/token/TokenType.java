@@ -305,9 +305,14 @@ public enum TokenType {
     // Variable Declaration
 
     /**
-     * Keyword "var" for declaring variables
+     * Keyword "var" or "let" for declaring variables
      */
     KEYWORD_VAR,
+
+    /**
+     * Keyword "const" for declaring final variables
+     */
+    KEYWORD_CONST,
 
 
 
