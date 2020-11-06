@@ -147,11 +147,65 @@ public class VariableTests {
         assertEquals("i", node.getName());
         assertSame(VariableType.Type.DYNAMIC, node.getType().getType());
         assertNull(node.getAssignment());
+        assertSame(AccessDescriber.PACKAGE, node.getAccess());
+        assertFalse(node.isFinal());
+        assertFalse(node.isInClass());
+        assertFalse(node.isStatic());
 
         node = parseSingle("<VariableDeclarationTest>", "var i = 0", VariableDeclarationNode.class);
         assertEquals("i", node.getName());
         assertSame(VariableType.Type.DYNAMIC, node.getType().getType());
         assertNotNull(node.getAssignment());
+        assertSame(AccessDescriber.PACKAGE, node.getAccess());
+        assertFalse(node.isFinal());
+        assertFalse(node.isInClass());
+        assertFalse(node.isStatic());
+
+    }
+
+    @Test
+    public void testVariableLetDeclaration() {
+
+        VariableDeclarationNode node = parseSingle("<VariableLetDeclarationTest>", "let i", VariableDeclarationNode.class);
+        assertEquals("i", node.getName());
+        assertSame(VariableType.Type.DYNAMIC, node.getType().getType());
+        assertNull(node.getAssignment());
+        assertSame(AccessDescriber.PACKAGE, node.getAccess());
+        assertFalse(node.isFinal());
+        assertFalse(node.isInClass());
+        assertFalse(node.isStatic());
+
+        node = parseSingle("<VariableLetDeclarationTest>", "let i = 0", VariableDeclarationNode.class);
+        assertEquals("i", node.getName());
+        assertSame(VariableType.Type.DYNAMIC, node.getType().getType());
+        assertNotNull(node.getAssignment());
+        assertSame(AccessDescriber.PACKAGE, node.getAccess());
+        assertFalse(node.isFinal());
+        assertFalse(node.isInClass());
+        assertFalse(node.isStatic());
+
+    }
+
+    @Test
+    public void testVariableConstDeclaration() {
+
+        VariableDeclarationNode node = parseSingle("<VariableConstDeclarationTest>", "const i", VariableDeclarationNode.class);
+        assertEquals("i", node.getName());
+        assertSame(VariableType.Type.DYNAMIC, node.getType().getType());
+        assertNull(node.getAssignment());
+        assertSame(AccessDescriber.PACKAGE, node.getAccess());
+        assertTrue(node.isFinal());
+        assertFalse(node.isInClass());
+        assertFalse(node.isStatic());
+
+        node = parseSingle("<VariableConstDeclarationTest>", "const i = 0", VariableDeclarationNode.class);
+        assertEquals("i", node.getName());
+        assertSame(VariableType.Type.DYNAMIC, node.getType().getType());
+        assertNotNull(node.getAssignment());
+        assertSame(AccessDescriber.PACKAGE, node.getAccess());
+        assertTrue(node.isFinal());
+        assertFalse(node.isInClass());
+        assertFalse(node.isStatic());
 
     }
 

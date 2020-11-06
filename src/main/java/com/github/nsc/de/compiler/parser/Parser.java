@@ -88,6 +88,7 @@ public class Parser {
 
         if(token.getType() == TokenType.KEYWORD_FUNCTION
                 || token.getType() == TokenType.KEYWORD_VAR
+                || token.getType() == TokenType.KEYWORD_CONST
                 || token.getType() == TokenType.KEYWORD_CLASS
                 || token.getType() == TokenType.KEYWORD_PUBLIC
                 || token.getType() == TokenType.KEYWORD_PROTECTED
@@ -157,7 +158,9 @@ public class Parser {
             case KEYWORD_FINAL: input.skip(); return parseDeclaration(access, isInClass, isStatic, true);
             case KEYWORD_FUNCTION: return functionDeclaration(access, isInClass, isStatic, isFinal);
             case KEYWORD_CLASS: return classDeclaration(access, isInClass, isStatic, isFinal);
-            case KEYWORD_VAR: return varDeclaration1(access, isInClass, isStatic, isFinal);
+            case KEYWORD_CONST:
+            case KEYWORD_VAR:
+                return varDeclaration1(access, isInClass, isStatic, isFinal);
             case KEYWORD_DYNAMIC:
             case KEYWORD_BOOLEAN:
             case KEYWORD_CHAR:
@@ -370,7 +373,12 @@ public class Parser {
 
     private VariableDeclarationNode varDeclaration1(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
 
-        if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.KEYWORD_VAR) throw new ParserError("Expecting var keyword");
+        if(!getInput().hasNext()) throw new ParserError("Expecting var or const keyword");
+        if(this.getInput().next().getType() == TokenType.KEYWORD_CONST) {
+            if(isFinal) throw new ParserError("A constant is always final, must not have \"final\" attribute!");
+            isFinal = true;
+        }
+        else if(this.getInput().actual().getType() != TokenType.KEYWORD_VAR) throw new ParserError("Expecting var or const keyword");
         if(!this.getInput().skipIgnorable().hasNext() || this.getInput().peek().getType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
 
         String identifier = this.getInput().next().getValue();

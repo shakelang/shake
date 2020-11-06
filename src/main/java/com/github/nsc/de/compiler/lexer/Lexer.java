@@ -127,7 +127,10 @@ public class Lexer {
         // Keywords
         switch (result) {
             case "var":
+            case "let":
                 return new Token(TokenType.KEYWORD_VAR, start, end);
+            case "const":
+                return new Token(TokenType.KEYWORD_CONST, start, end);
             case "dynamic":
                 return new Token(TokenType.KEYWORD_DYNAMIC, start, end);
             case "byte":

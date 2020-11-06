@@ -118,6 +118,8 @@ public class LexerTests {
         generateToken("char", TokenType.KEYWORD_CHAR); // "char"
         generateToken("boolean", TokenType.KEYWORD_BOOLEAN); // "boolean"
         generateToken("var", TokenType.KEYWORD_VAR); // "var"
+        generateToken("let", TokenType.KEYWORD_VAR); // "let"
+        generateToken("const", TokenType.KEYWORD_CONST); // "const"
 
         generateToken("function", TokenType.KEYWORD_FUNCTION); // "function"
         generateToken("do", TokenType.KEYWORD_DO); // "do"
