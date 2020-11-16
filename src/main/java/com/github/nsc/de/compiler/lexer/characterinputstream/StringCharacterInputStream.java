@@ -2,6 +2,12 @@ package com.github.nsc.de.compiler.lexer.characterinputstream;
 
 import com.github.nsc.de.compiler.lexer.Position;
 
+
+/**
+ * An implementation of {@link CharacterInputStream} using just a string as argument
+ *
+ * @author Nicolas Schmidt
+ */
 public class StringCharacterInputStream implements CharacterInputStream {
 
     /**

@@ -3,6 +3,13 @@ package com.github.nsc.de.compiler.lexer.token;
 import java.util.Arrays;
 import java.util.List;
 
+
+/**
+ * A {@link TokenInputStream} provides the {@link Token}s for a {@link com.github.nsc.de.compiler.parser.Parser}. It is
+ * created by the {@link com.github.nsc.de.compiler.lexer.Lexer}
+ *
+ * @author Nicolas Schmidt
+ */
 public class TokenInputStream {
 
     /**

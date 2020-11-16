@@ -2,6 +2,13 @@ package com.github.nsc.de.compiler.lexer.characterinputstream;
 
 import com.github.nsc.de.compiler.lexer.Position;
 
+/**
+ * A {@link CharacterInputStream} provides the characters for the {@link com.github.nsc.de.compiler.lexer.Lexer}
+ *
+ * @author Nicolas Schmidt
+ *
+ * @see StringCharacterInputStream
+ */
 public interface CharacterInputStream {
 
     /**
