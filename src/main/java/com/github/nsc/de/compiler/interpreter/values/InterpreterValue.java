@@ -4,22 +4,58 @@ package com.github.nsc.de.compiler.interpreter.values;
 public interface InterpreterValue {
 
     // number-operators
-    InterpreterValue add(InterpreterValue v);
-    InterpreterValue sub(InterpreterValue v);
-    InterpreterValue mul(InterpreterValue v);
-    InterpreterValue div(InterpreterValue v);
-    InterpreterValue pow(InterpreterValue v);
+    default InterpreterValue add(InterpreterValue v) {
+        throw new Error("Operator '+' is not defined for type " + getName());
+    }
+
+    default InterpreterValue sub(InterpreterValue v) {
+        throw new Error("Operator '+' is not defined for type " + getName());
+    }
+
+    default InterpreterValue mul(InterpreterValue v) {
+        throw new Error("Operator '*' is not defined for type " + getName());
+    }
+
+    default InterpreterValue div(InterpreterValue v) {
+        throw new Error("Operator '/' is not defined for type " + getName());
+    }
+
+    default InterpreterValue pow(InterpreterValue v) {
+        throw new Error("Operator '**' is not defined for type " + getName());
+    }
+
+
 
     // boolean-operators
-    InterpreterValue or(InterpreterValue v);
-    InterpreterValue and(InterpreterValue v);
+    default InterpreterValue or(InterpreterValue v) {
+        throw new Error("Operator '||' is not defined for type " + getName());
+    }
+
+    default InterpreterValue and(InterpreterValue v) {
+        throw new Error("Operator '&&' is not defined for type " + getName());
+    }
+
+
 
     // comparison
-    InterpreterValue equals_equals(InterpreterValue v);
-    InterpreterValue bigger_equals(InterpreterValue v);
-    InterpreterValue smaller_equals(InterpreterValue v);
-    InterpreterValue bigger(InterpreterValue v);
-    InterpreterValue smaller(InterpreterValue v);
+    default InterpreterValue equals_equals(InterpreterValue v) {
+        throw new Error("Operator '==' is not defined for type " + getName());
+    }
+
+    default InterpreterValue bigger_equals(InterpreterValue v) {
+        throw new Error("Operator '&&' is not defined for type " + getName());
+    }
+
+    default InterpreterValue smaller_equals(InterpreterValue v) {
+        throw new Error("Operator '&&' is not defined for type " + getName());
+    }
+
+    default InterpreterValue bigger(InterpreterValue v) {
+        throw new Error("Operator '&&' is not defined for type " + getName());
+    }
+    default InterpreterValue smaller(InterpreterValue v) {
+        throw new Error("Operator '&&' is not defined for type " + getName());
+    }
 
     String getName();
 
