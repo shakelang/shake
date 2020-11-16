@@ -23,7 +23,7 @@ public class VariableList {
         this(new HashMap<>());
     }
 
-    boolean declare(String name, VariableType type) {
+    public boolean declare(String name, VariableType type) {
         if(this.parentList == null) {
             if (this.variables.containsKey(name)) return false;
             this.variables.put(name, new Variable(name, type));
@@ -36,7 +36,7 @@ public class VariableList {
 
     }
 
-    Variable get(String name) {
+    public Variable get(String name) {
         return variables.get(name);
     }
 

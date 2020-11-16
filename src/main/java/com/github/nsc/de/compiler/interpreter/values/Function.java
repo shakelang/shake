@@ -1,5 +1,9 @@
-package com.github.nsc.de.compiler.interpreter;
+package com.github.nsc.de.compiler.interpreter.values;
 
+import com.github.nsc.de.compiler.interpreter.Interpreter;
+import com.github.nsc.de.compiler.interpreter.Scope;
+import com.github.nsc.de.compiler.interpreter.VariableType;
+import com.github.nsc.de.compiler.interpreter.values.InterpreterValue;
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;
@@ -7,7 +11,7 @@ import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
 
 import java.util.Arrays;
 
-public class Function {
+public class Function implements InterpreterValue {
 
     private final FunctionArgumentNode[] args;
     private final Tree body;
@@ -54,7 +58,7 @@ public class Function {
         for(int i = 0; i < this.getArgs().length; i++) {
 
             function_scope.getScopeVariables().declare(this.getArgs()[i].getName(), VariableType.ANY);
-            function_scope.getScopeVariables().get(this.getArgs()[i].getName()).setValue(interpreter.visit(node.getArgs()[i], scope).getValue());
+            function_scope.getScopeVariables().get(this.getArgs()[i].getName()).setValue(interpreter.visit(node.getArgs()[i], scope));
 
         }
 
@@ -63,4 +67,9 @@ public class Function {
 
     @Override
     public String toString() { return "Function{" + "args=" + Arrays.toString(args) + ", body=" + body + '}'; }
+
+    @Override
+    public String getName() {
+        return null;
+    }
 }
