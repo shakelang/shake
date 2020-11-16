@@ -4,7 +4,7 @@ import com.github.nsc.de.compiler.interpreter.values.InterpreterValue;
 import com.github.nsc.de.compiler.interpreter.values.NullValue;
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 
-public class Variable {
+public class Variable implements InterpreterValue {
 
     private final String identifier;
     private final VariableType type;
@@ -52,5 +52,70 @@ public class Variable {
 
     public void setValue(InterpreterValue value) {
         this.value = value;
+    }
+
+    @Override
+    public InterpreterValue add(InterpreterValue v) {
+        return this.getValue().add(v);
+    }
+
+    @Override
+    public InterpreterValue sub(InterpreterValue v) {
+        return this.getValue().sub(v);
+    }
+
+    @Override
+    public InterpreterValue mul(InterpreterValue v) {
+        return this.getValue().mul(v);
+    }
+
+    @Override
+    public InterpreterValue div(InterpreterValue v) {
+        return this.getValue().div(v);
+    }
+
+    @Override
+    public InterpreterValue pow(InterpreterValue v) {
+        return this.getValue().pow(v);
+    }
+
+    @Override
+    public InterpreterValue or(InterpreterValue v) {
+        return this.getValue().or(v);
+    }
+
+    @Override
+    public InterpreterValue and(InterpreterValue v) {
+        return this.getValue().and(v);
+    }
+
+    @Override
+    public InterpreterValue equals_equals(InterpreterValue v) {
+        return this.getValue().equals_equals(v);
+    }
+
+    @Override
+    public InterpreterValue bigger_equals(InterpreterValue v) {
+        return this.getValue().bigger_equals(v);
+    }
+
+    @Override
+    public InterpreterValue smaller_equals(InterpreterValue v) {
+        return this.getValue().smaller_equals(v);
+    }
+
+    @Override
+    public InterpreterValue bigger(InterpreterValue v) {
+        return this.getValue().bigger(v);
+    }
+
+    @Override
+    public InterpreterValue smaller(InterpreterValue v) {
+        return this.getValue().smaller(v);
+    }
+
+    @Override
+    public String getName() {
+        return this.getValue().getName();
     }
 }
