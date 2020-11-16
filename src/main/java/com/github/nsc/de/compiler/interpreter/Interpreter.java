@@ -1,5 +1,6 @@
 package com.github.nsc.de.compiler.interpreter;
 
+import com.github.nsc.de.compiler.interpreter.values.*;
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
@@ -19,11 +20,11 @@ public class Interpreter {
         this.global = new Scope(null, DefaultFunctions.getFunctions(this));
     }
 
-    public InterpreterResult<Object> visit(Node n) {
+    public InterpreterValue visit(Node n) {
         return visit(n, this.global);
     }
 
-    public InterpreterResult<Object> visit(Node n, Scope scope) {
+    public InterpreterValue visit(Node n, Scope scope) {
 
         if(n instanceof Tree) return visitTree((Tree) n, scope);
         if(n instanceof DoubleNode) return visitDoubleNode((DoubleNode) n, scope);
@@ -57,266 +58,241 @@ public class Interpreter {
         if(n instanceof FunctionDeclarationNode) return visitFunctionDeclarationNode((FunctionDeclarationNode) n, scope);
         if(n instanceof FunctionCallNode) return visitFunctionCallNode((FunctionCallNode) n, scope);
         if(n instanceof IdentifierNode) return visitIdentifier((IdentifierNode) n, scope);
-        if(n instanceof LogicalTrueNode) return new InterpreterResult<>(true);
-        if(n instanceof LogicalFalseNode) return new InterpreterResult<>(false);
-        if(n == null) return new InterpreterResult<>(null);
+        if(n instanceof LogicalTrueNode) return BooleanValue.TRUE;
+        if(n instanceof LogicalFalseNode) return BooleanValue.FALSE;
+        if(n == null) return NullValue.NULL;
         throw new Error("It looks like that Node is not implemented in the Interpreter");
 
     }
 
-    public InterpreterResult<Object> visitTree(Tree t, Scope scope) {
+    public InterpreterValue visitTree(Tree t, Scope scope) {
         for (int i = 0; i < t.getChildren().length - 1; i++) visit(t.getChildren()[i], scope);
         if(t.getChildren().length > 0) return visit(t.getChildren()[t.getChildren().length-1], scope);
-        else return new InterpreterResult<>(null);
+        else return NullValue.NULL;
     }
 
-    public InterpreterResult<Object> visitIntegerNode(IntegerNode n, Scope scope) {
-        return new InterpreterResult<>(n.getNumber());
+    public InterpreterValue visitIntegerNode(IntegerNode n, Scope scope) {
+        return new IntegerValue(n.getNumber());
     }
 
-    public InterpreterResult<Object> visitDoubleNode(DoubleNode n, Scope scope) {
-        return new InterpreterResult<>(n.getNumber());
+    public InterpreterValue visitDoubleNode(DoubleNode n, Scope scope) {
+        return new DoubleValue(n.getNumber());
     }
 
-    public InterpreterResult<Object> visitAddNode(AddNode n, Scope scope) {
-        return new InterpreterResult<>(((double) visit(n.getLeft(), scope).getValue()) + ((double)visit(n.getRight(), scope).getValue()));
+
+
+
+    public InterpreterValue visitAddNode(AddNode n, Scope scope) {
+        return visit(n.getLeft(), scope).add(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitSubNode(SubNode n, Scope scope) {
-        return new InterpreterResult<>(((double)visit(n.getLeft(), scope).getValue()) - ((double)visit(n.getRight(), scope).getValue()));
+    public InterpreterValue visitSubNode(SubNode n, Scope scope) {
+        return visit(n.getLeft(), scope).sub(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitMulNode(MulNode n, Scope scope) {
-        return new InterpreterResult<>(((double)visit(n.getLeft(), scope).getValue()) * ((double)visit(n.getRight(), scope).getValue()));
+    public InterpreterValue visitMulNode(MulNode n, Scope scope) {
+        return visit(n.getLeft(), scope).mul(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitDivNode(DivNode n, Scope scope) {
-        return new InterpreterResult<>(((double)visit(n.getLeft(), scope).getValue()) - ((double)visit(n.getRight(), scope).getValue()));
+    public InterpreterValue visitDivNode(DivNode n, Scope scope) {
+        return visit(n.getLeft(), scope).div(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitPowNode(PowNode n, Scope scope) {
-        return new InterpreterResult<>(Math.pow((double)visit(n.getLeft(), scope).getValue(), (double)visit(n.getRight(), scope).getValue()));
+    public InterpreterValue visitPowNode(PowNode n, Scope scope) {
+        return visit(n.getLeft(), scope).pow(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitVariableDeclarationNode(VariableDeclarationNode n, Scope scope) {
+
+
+
+    public InterpreterValue visitVariableDeclarationNode(VariableDeclarationNode n, Scope scope) {
         if(!scope.getScopeVariables().declare(n.getName(), VariableType.valueOf(n.getType()))) throw new Error("Variable is already defined");
         if(n.getAssignment() != null) return visitVariableAssignmentNode(n.getAssignment(), scope);
-        else return new InterpreterResult<>(null);
+        else return NullValue.NULL;
     }
 
-    public InterpreterResult<Object> visitVariableAssignmentNode(VariableAssignmentNode n, Scope scope) {
-        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
-        InterpreterResult<Object> value = visit(n.getValue(), scope);
+    public InterpreterValue visitVariableAssignmentNode(VariableAssignmentNode n, Scope scope) {
+        Variable variable = (Variable) visit(n.getVariable(), scope);
+        InterpreterValue value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(value.getValue());
+        else variable.setValue(value);
         return value;
     }
 
-    public InterpreterResult<Object> visitVariableAddAssignmentNode(VariableAddAssignmentNode n, Scope scope) {
-        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
-        InterpreterResult<Object> value = visit(n.getValue(), scope);
+    public InterpreterValue visitVariableAddAssignmentNode(VariableAddAssignmentNode n, Scope scope) {
+        Variable variable = (Variable) visit(n.getVariable(), scope);
+        InterpreterValue value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue((double) variable.getValue() + (double) value.getValue());
-        return new InterpreterResult(variable.getValue());
+        else variable.setValue(variable.getValue().add(value));
+        return variable.getValue();
     }
 
-    public InterpreterResult<Object> visitVariableSubAssignmentNode(VariableSubAssignmentNode n, Scope scope) {
-        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
-        InterpreterResult<Object> value = visit(n.getValue(), scope);
+    public InterpreterValue visitVariableSubAssignmentNode(VariableSubAssignmentNode n, Scope scope) {
+        Variable variable = (Variable) visit(n.getVariable(), scope);
+        InterpreterValue value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue((double) variable.getValue() - (double) value.getValue());
-        return new InterpreterResult(variable.getValue());
+        else variable.setValue(variable.getValue().sub(value));
+        return variable.getValue();
     }
 
-    public InterpreterResult<Object> visitVariableMulAssignmentNode(VariableMulAssignmentNode n, Scope scope) {
-        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
-        InterpreterResult<Object> value = visit(n.getValue(), scope);
+    public InterpreterValue visitVariableMulAssignmentNode(VariableMulAssignmentNode n, Scope scope) {
+        Variable variable = (Variable) visit(n.getVariable(), scope);
+        InterpreterValue value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue((double) variable.getValue() * (double) value.getValue());
-        return new InterpreterResult(variable.getValue());
+        else variable.setValue(variable.getValue().mul(value));
+        return variable.getValue();
     }
 
-    public InterpreterResult<Object> visitVariableDivAssignmentNode(VariableDivAssignmentNode n, Scope scope) {
-        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
-        InterpreterResult<Object> value = visit(n.getValue(), scope);
+    public InterpreterValue visitVariableDivAssignmentNode(VariableDivAssignmentNode n, Scope scope) {
+        Variable variable = (Variable) visit(n.getVariable(), scope);
+        InterpreterValue value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue((double) variable.getValue() / (double) value.getValue());
-        return new InterpreterResult(variable.getValue());
+        else variable.setValue(variable.getValue().div(value));
+        return variable.getValue();
     }
 
-    public InterpreterResult<Object> visitVariablePowAssignmentNode(VariablePowAssignmentNode n, Scope scope) {
-        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
-        InterpreterResult<Object> value = visit(n.getValue(), scope);
+    public InterpreterValue visitVariablePowAssignmentNode(VariablePowAssignmentNode n, Scope scope) {
+        Variable variable = (Variable) visit(n.getVariable(), scope);
+        InterpreterValue value = visit(n.getValue(), scope);
         if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(Math.pow((double) variable.getValue(), (double) value.getValue()));
-        return new InterpreterResult(variable.getValue());
+        else variable.setValue(variable.getValue().pow(value));
+        return variable.getValue();
     }
 
-    public InterpreterResult<Object> visitVariableIncreaseNode(VariableIncreaseNode n, Scope scope) {
-        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
+    public InterpreterValue visitVariableIncreaseNode(VariableIncreaseNode n, Scope scope) {
+        Variable variable = (Variable) visit(n.getVariable(), scope);
         if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue((double) variable.getValue() + 1);
-        return new InterpreterResult(variable.getValue());
+        else variable.setValue(variable.getValue().add(IntegerValue.ONE));
+        return variable.getValue();
     }
 
-    public InterpreterResult<Object> visitVariableDecreaseNode(VariableDecreaseNode n, Scope scope) {
-        Variable variable = (Variable) visit(n.getVariable(), scope).getValue();
+    public InterpreterValue visitVariableDecreaseNode(VariableDecreaseNode n, Scope scope) {
+        Variable variable = (Variable) visit(n.getVariable(), scope);
         if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue((double) variable.getValue() - 1);
-        return new InterpreterResult(variable.getValue());
+        else variable.setValue(variable.getValue().sub(IntegerValue.ONE));
+        return variable.getValue();
     }
 
-    public InterpreterResult<Object> visitVariableUsageNode(VariableUsageNode n, Scope scope) {
-        Variable variable = (Variable) visitIdentifier(n.getVariable(), scope).getValue();
-        if(variable == null) throw new Error("Variable not declared"); // TODO display variable name
-        else return new InterpreterResult<>(variable.getValue());
+    public InterpreterValue visitVariableUsageNode(VariableUsageNode n, Scope scope) {
+        return (visitIdentifier(n.getVariable(), scope)).getValue();
     }
 
-    public InterpreterResult<Object> visitEqEqualsNode(LogicalEqEqualsNode n, Scope scope) {
-        Object left = visit(n.getLeft(), scope).getValue();
-        Object right = visit(n.getRight(), scope).getValue();
-        if(left instanceof Boolean) {
-            if(right instanceof Boolean) return new InterpreterResult<>((boolean) left == (boolean) right);
-            return new InterpreterResult<>((boolean) left == ((double) right == 0));
-        }
-        if(right instanceof Boolean) return new InterpreterResult<>(((double) left == 0) == ((boolean) right));
-        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() == (double) visit(n.getRight(), scope).getValue());
+    public InterpreterValue visitEqEqualsNode(LogicalEqEqualsNode n, Scope scope) {
+        return visit(n.getLeft(), scope).equals_equals(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitBiggerEqualsNode(LogicalBiggerEqualsNode n, Scope scope) {
-        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() >= (double) visit(n.getRight(), scope).getValue());
+    public InterpreterValue visitBiggerEqualsNode(LogicalBiggerEqualsNode n, Scope scope) {
+        return visit(n.getLeft(), scope).bigger_equals(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitSmallerEqualsNode(LogicalSmallerEqualsNode n, Scope scope) {
-        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() <= (double) visit(n.getRight(), scope).getValue());
+    public InterpreterValue visitSmallerEqualsNode(LogicalSmallerEqualsNode n, Scope scope) {
+        return visit(n.getLeft(), scope).smaller_equals(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitBiggerNode(LogicalBiggerNode n, Scope scope) {
-        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() > (double) visit(n.getRight(), scope).getValue());
+    public InterpreterValue visitBiggerNode(LogicalBiggerNode n, Scope scope) {
+        return visit(n.getLeft(), scope).bigger(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitSmallerNode(LogicalSmallerNode n, Scope scope) {
-        return new InterpreterResult<>((double) visit(n.getLeft(), scope).getValue() < (double) visit(n.getRight(), scope).getValue());
+    public InterpreterValue visitSmallerNode(LogicalSmallerNode n, Scope scope) {
+        return visit(n.getLeft(), scope).smaller(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitLogicalAndNode(LogicalAndNode n, Scope scope) {
-        return new InterpreterResult<>((boolean) visit(n.getLeft(), scope).getValue() && (boolean) visit(n.getRight(), scope).getValue());
+    public InterpreterValue visitLogicalAndNode(LogicalAndNode n, Scope scope) {
+        return visit(n.getLeft(), scope).and(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitLogicalOrNode(LogicalOrNode n, Scope scope) {
-        return new InterpreterResult<>((boolean) visit(n.getLeft(), scope).getValue() || (boolean) visit(n.getRight(), scope).getValue());
+    public InterpreterValue visitLogicalOrNode(LogicalOrNode n, Scope scope) {
+        return visit(n.getLeft(), scope).or(visit(n.getRight(), scope));
     }
 
-    public InterpreterResult<Object> visitWhileNode(WhileNode n, Scope scope) {
+    public InterpreterValue visitWhileNode(WhileNode n, Scope scope) {
 
-        while(this.toBoolean(visit(n.getCondition(), scope).getValue())) {
+        // TODO check if result is boolean
+        while(((BooleanValue) visit(n.getCondition(), scope)).getValue()) {
 
             Scope whileScope = scope.copy();
             visit(n.getBody(), whileScope);
 
         }
-        return new InterpreterResult<>(null);
+        return NullValue.NULL;
     }
 
-    public InterpreterResult<Object> visitDoWhileNode(DoWhileNode n, Scope scope) {
+    public InterpreterValue visitDoWhileNode(DoWhileNode n, Scope scope) {
 
         do {
 
             Scope doWhileScope = scope.copy();
             visit(n.getBody(), doWhileScope);
 
-        } while(this.toBoolean(visit(n.getCondition(), scope)));
+            // TODO check if result is boolean
+        } while(((BooleanValue) visit(n.getCondition(), scope)).getValue());
 
-        return new InterpreterResult<>(null);
+        return NullValue.NULL;
     }
 
-    public InterpreterResult<Object> visitForNode(ForNode n, Scope scope) {
+    public InterpreterValue visitForNode(ForNode n, Scope scope) {
 
         Scope forOuterScope = scope.copy();
 
         visit(n.getDeclaration(), forOuterScope);
-        while(toBoolean(visit(n.getCondition(), forOuterScope))) {
+        // TODO check if result is boolean
+        while(((BooleanValue) visit(n.getCondition(), forOuterScope)).getValue()) {
 
             Scope forInnerScope = forOuterScope.copy();
             visit(n.getBody(), forInnerScope);
             visit(n.getRound(), forOuterScope);
 
         }
-        return new InterpreterResult<>(null);
+
+        return NullValue.NULL;
     }
 
-    public InterpreterResult<Object> visitIfNode(IfNode n, Scope scope) {
+    public InterpreterValue visitIfNode(IfNode n, Scope scope) {
 
         Scope ifScope = scope.copy();
 
-        boolean result = (boolean) visit(n.getCondition(), ifScope).getValue();
-        if(result) visit(n.getBody(), ifScope);
-        else if(n.getElseBody() != null) visit(n.getElseBody(), ifScope);
-        return new InterpreterResult<>(null);
+        // TODO check if result is boolean
+        if(((BooleanValue) visit(n.getCondition(), ifScope)).getValue()) return visit(n.getBody(), ifScope);
+        else if(n.getElseBody() != null) return visit(n.getElseBody(), ifScope);
+
+        return NullValue.NULL;
+
     }
 
-    public InterpreterResult<Object> visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
+    public Function visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
 
         if(!scope.getVariables().declare(node.getName(), VariableType.FUNCTION)) throw new Error("'" + node.getName() + "' is already declared!");
         Function f = new Function(node.getArgs(), node.getBody(), scope, this, node.getAccess(), node.isInClass(), node.isStatic(), node.isFinal());
         scope.getVariables().get(node.getName()).setValue(f);
-        return new InterpreterResult<>(f);
+        return f;
 
     }
 
-    public InterpreterResult<Object> visitFunctionCallNode(FunctionCallNode node, Scope scope) {
-        Variable variable = (Variable) visit(node.getFunction()).getValue();
-        if(variable == null) throw new Error("Function is not declared"); // TODO Display function name
-        else if(variable.getType() != VariableType.FUNCTION) throw new Error("Function is not a function");
-        else ((Function) variable.getValue()).call(node, scope);
-        return new InterpreterResult<>(null);
+    public InterpreterValue visitFunctionCallNode(FunctionCallNode node, Scope scope) {
+
+        // TODO Type check (function)
+        // TODO Return values
+
+        Function f;
+        InterpreterValue v = visit(node.getFunction());
+        if(v instanceof Function) f = (Function) v;
+        else if(v instanceof Variable) f = (Function) ((Variable) v).getValue();
+        else throw new Error("Wrong function call");
+
+        f.call(node, scope);
+        return NullValue.NULL;
+
     }
 
-    public InterpreterResult<Object> visitIdentifier(IdentifierNode node, Scope scope) {
+    public Variable visitIdentifier(IdentifierNode node, Scope scope) {
+
         if(node.getParent() != null) {
+            // TODO implement parents
             throw new Error("Not implemented yet!");
         }
         else {
-           return new InterpreterResult<>(scope.getVariables().get(node.getName()));
+           return scope.getVariables().get(node.getName());
         }
-    }
-
-    /**
-    public InterpreterResult<Object> visitClassDeclarationNode(ClassDeclarationNode n, Scope scope) {
-
-        VariableList prototype = new VariableList();
-        Variable
-
-        // TODO 2 Declarations with the same name
-
-        for(VariableDeclarationNode node : n.getFields()) {
-            prototype.declare(node.getName(), VariableType.valueOf(node.getType()));
-            prototype.get(node.getName()).setValue(visit());
-        }
-
-        Class cls = new Class(n.getName(), scope, this, prototype,
-                n.getAccess(), n.isInClass(), n.isStatic(), n.isFinal());
-
-        scope.getVariables().declare(n.getName(), VariableType.OBJECT);
-        scope.getVariables().get(n.getName()).setValue(cls);
-
-        return new InterpreterResult<>(cls);
-
-    }
-    */
-
-    //public InterpreterResult<Class>
-
-    private boolean toBoolean(Object o) {
-
-        if(o instanceof InterpreterResult) return toBoolean(((InterpreterResult<?>) o).getValue());
-        if(o instanceof Boolean) return (boolean) o;
-        if(o instanceof Integer) return ((int) o) != 0;
-        if(o instanceof Float) return ((float) o) != 0.0f;
-        if(o instanceof Double) return ((double) o) != 0.0;
-        if(o instanceof Long) return ((long) o) != 0;
-        if(o instanceof Byte) return ((byte) o) != 0;
-        return o != null;
 
     }
 }

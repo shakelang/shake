@@ -40,6 +40,6 @@ public class Main {
         Parser parser = new Parser(tokens);
         Node tree = parser.parse();
         System.out.printf("[DEBUG] Parser Tree: %s%n", tree.toString());
-        return interpreter.visit(tree).getValue();
+        return interpreter.visit(tree);
     }
 }
