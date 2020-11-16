@@ -2,6 +2,12 @@ package com.github.nsc.de.compiler.interpreter.values;
 
 public class IntegerValue implements InterpreterValue {
 
+    public static final IntegerValue ONE = new IntegerValue(1);
+
+
+    // *****************************
+
+
     private final int value;
 
     public IntegerValue(int value) {
