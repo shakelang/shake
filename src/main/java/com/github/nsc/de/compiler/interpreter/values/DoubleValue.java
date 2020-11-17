@@ -44,16 +44,6 @@ public class DoubleValue implements InterpreterValue {
     }
 
     @Override
-    public InterpreterValue or(InterpreterValue v) {
-        throw new Error("Operator '||' is not defined for type double");
-    }
-
-    @Override
-    public InterpreterValue and(InterpreterValue v) {
-        throw new Error("Operator '&&' is not defined for type double");
-    }
-
-    @Override
     public BooleanValue equals_equals(InterpreterValue v) {
         if(v instanceof IntegerValue) return BooleanValue.from(getValue() == ((IntegerValue) v).getValue());
         if(v instanceof DoubleValue) return BooleanValue.from(getValue() == ((DoubleValue) v).getValue());
