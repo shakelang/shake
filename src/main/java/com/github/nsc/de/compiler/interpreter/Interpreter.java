@@ -11,6 +11,7 @@ import com.github.nsc.de.compiler.parser.node.logical.*;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
+
 import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
@@ -63,7 +64,7 @@ public class Interpreter {
         if(n instanceof IdentifierNode) return visitIdentifier((IdentifierNode) n, scope);
         if(n instanceof LogicalTrueNode) return BooleanValue.TRUE;
         if(n instanceof LogicalFalseNode) return BooleanValue.FALSE;
-        if(n instanceof ClassDeclarationNode) return visitClassDeclaration((ClassDeclarationNode) n, scope);
+        if(n instanceof ClassDeclarationNode) return visitClassDeclarationNode((ClassDeclarationNode) n, scope);
         if(n == null) return NullValue.NULL;
         throw new Error("It looks like that Node is not implemented in the Interpreter");
 
@@ -254,12 +255,22 @@ public class Interpreter {
 
     public Function visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
 
-        if(!scope.getVariables().declare(node.getName(), Function.class)) throw new Error("'" + node.getName() + "' is already declared!");
-        Function f = new Function(node.getArgs(), node.getBody(), scope, this, node.getAccess(), node.isInClass(), node.isStatic(), node.isFinal());
+        if(!scope.getVariables().declare(node.getName(), Function.class))
+            throw new Error("'" + node.getName() + "' is already declared!");
+        Function f = createFunctionDeclaration(node, scope);
         scope.getVariables().get(node.getName()).setValue(f);
         return f;
 
     }
+
+    public Function createFunctionDeclaration(FunctionDeclarationNode node, Scope scope) {
+
+        return new Function(node.getArgs(), node.getBody(), scope, this, node.getAccess(),
+                node.isInClass(), node.isStatic(), node.isFinal());
+
+    }
+
+
 
     public InterpreterValue visitFunctionCallNode(FunctionCallNode node, Scope scope) {
 
@@ -290,22 +301,34 @@ public class Interpreter {
         }
 
     }
-    public Class visitClassDeclaration(ClassDeclarationNode n, Scope scope) {
+
+    public Class visitClassDeclarationNode(ClassDeclarationNode node, Scope scope) {
+
+        if(!scope.getVariables().declare(node.getName(), Function.class))
+            throw new Error("'" + node.getName() + "' is already declared!");
+        Class f = createClassDeclaration(node, scope);
+        scope.getVariables().get(node.getName()).setValue(f);
+        return f;
+
+    }
+
+    public Class createClassDeclaration(ClassDeclarationNode n, Scope scope) {
 
         VariableList prototype = new VariableList();
 
         // TODO 2 Declarations with the same name
         for(FunctionDeclarationNode node : n.getMethods()) {
             prototype.declare(node.getName(), Function.class);
-            prototype.get(node.getName()).setValue(visitFunctionDeclarationNode(node, scope));
+            prototype.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
         }
         for(ClassDeclarationNode node : n.getClasses()) {
             prototype.declare(node.getName(), Class.class);
-            prototype.get(node.getName()).setValue(visitClassDeclaration(node, scope));
+            prototype.get(node.getName()).setValue(createClassDeclaration(node, scope));
         }
 
         Class cls = new Class(n.getName(), n.getFields(), scope, this, prototype,
                 n.getAccess(), n.isInClass(), n.isStatic(), n.isFinal());
+
         scope.getVariables().declare(n.getName(), Class.class);
         scope.getVariables().get(n.getName()).setValue(cls);
 

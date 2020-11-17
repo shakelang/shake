@@ -39,6 +39,8 @@ public class Class implements InterpreterValue {
 
     public String getClassName() { return name; }
     public VariableList getPrototype() { return prototype; }
+
+    public VariableDeclarationNode[] getFields() { return fields; }
     public Interpreter getInterpreter() {
         return interpreter;
     }
