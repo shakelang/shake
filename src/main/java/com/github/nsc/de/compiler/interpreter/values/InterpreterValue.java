@@ -9,7 +9,7 @@ public interface InterpreterValue {
     }
 
     default InterpreterValue sub(InterpreterValue v) {
-        throw new Error("Operator '+' is not defined for type " + getName());
+        throw new Error("Operator '-' is not defined for type " + getName());
     }
 
     default InterpreterValue mul(InterpreterValue v) {
@@ -43,18 +43,18 @@ public interface InterpreterValue {
     }
 
     default InterpreterValue bigger_equals(InterpreterValue v) {
-        throw new Error("Operator '&&' is not defined for type " + getName());
+        throw new Error("Operator '>=' is not defined for type " + getName());
     }
 
     default InterpreterValue smaller_equals(InterpreterValue v) {
-        throw new Error("Operator '&&' is not defined for type " + getName());
+        throw new Error("Operator '<=' is not defined for type " + getName());
     }
 
     default InterpreterValue bigger(InterpreterValue v) {
-        throw new Error("Operator '&&' is not defined for type " + getName());
+        throw new Error("Operator '>' is not defined for type " + getName());
     }
     default InterpreterValue smaller(InterpreterValue v) {
-        throw new Error("Operator '&&' is not defined for type " + getName());
+        throw new Error("Operator '<' is not defined for type " + getName());
     }
 
     String getName();
