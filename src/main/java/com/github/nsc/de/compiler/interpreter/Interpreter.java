@@ -114,62 +114,54 @@ public class Interpreter {
     public InterpreterValue visitVariableAssignmentNode(VariableAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(value);
+        variable.setValue(value);
         return value;
     }
 
     public InterpreterValue visitVariableAddAssignmentNode(VariableAddAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(variable.getValue().add(value));
+        variable.setValue(variable.getValue().add(value));
         return variable.getValue();
     }
 
     public InterpreterValue visitVariableSubAssignmentNode(VariableSubAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(variable.getValue().sub(value));
+        variable.setValue(variable.getValue().sub(value));
         return variable.getValue();
     }
 
     public InterpreterValue visitVariableMulAssignmentNode(VariableMulAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(variable.getValue().mul(value));
+        variable.setValue(variable.getValue().mul(value));
         return variable.getValue();
     }
 
     public InterpreterValue visitVariableDivAssignmentNode(VariableDivAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(variable.getValue().div(value));
+        variable.setValue(variable.getValue().div(value));
         return variable.getValue();
     }
 
     public InterpreterValue visitVariablePowAssignmentNode(VariablePowAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
-        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(variable.getValue().pow(value));
+        variable.setValue(variable.getValue().pow(value));
         return variable.getValue();
     }
 
     public InterpreterValue visitVariableIncreaseNode(VariableIncreaseNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
-        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(variable.getValue().add(IntegerValue.ONE));
+        variable.setValue(variable.getValue().add(IntegerValue.ONE));
         return variable.getValue();
     }
 
     public InterpreterValue visitVariableDecreaseNode(VariableDecreaseNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
-        if(variable == null) throw new Error("Variable is not declared"); // TODO display variable name
-        else variable.setValue(variable.getValue().sub(IntegerValue.ONE));
+        variable.setValue(variable.getValue().sub(IntegerValue.ONE));
         return variable.getValue();
     }
 
@@ -288,7 +280,9 @@ public class Interpreter {
             throw new Error("Not implemented yet!");
         }
         else {
-           return scope.getVariables().get(node.getName());
+           Variable v = scope.getVariables().get(node.getName());
+           if(v == null) throw new Error(String.format("Variable with name \"%s\" is not declared", node.getName()));
+           return v;
         }
 
     }
