@@ -170,7 +170,7 @@ public class Interpreter {
     }
 
     public InterpreterValue visitEqEqualsNode(LogicalEqEqualsNode n, Scope scope) {
-        return visit(n.getLeft(), scope).equals_equals(visit(n.getRight(), scope));
+        return visit(n.getLeft(), scope).equals(visit(n.getRight(), scope));
     }
 
     public InterpreterValue visitBiggerEqualsNode(LogicalBiggerEqualsNode n, Scope scope) {

@@ -7,7 +7,7 @@ public class NullValue implements InterpreterValue {
     private NullValue() {}
 
     @Override
-    public InterpreterValue equals_equals(InterpreterValue v) {
+    public InterpreterValue equals(InterpreterValue v) {
         // TODO compare null with object
         if(v instanceof NullValue) return BooleanValue.TRUE;
         throw new Error("Operator '==' is not defined for null and " + v.getName());

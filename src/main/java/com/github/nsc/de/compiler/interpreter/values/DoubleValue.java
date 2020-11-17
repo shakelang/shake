@@ -44,7 +44,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     @Override
-    public BooleanValue equals_equals(InterpreterValue v) {
+    public BooleanValue equals(InterpreterValue v) {
         if(v instanceof IntegerValue) return BooleanValue.from(getValue() == ((IntegerValue) v).getValue());
         if(v instanceof DoubleValue) return BooleanValue.from(getValue() == ((DoubleValue) v).getValue());
         throw new Error("Operator '==' is not defined for type integer and " + v.getName());

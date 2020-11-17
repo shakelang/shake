@@ -38,7 +38,7 @@ public interface InterpreterValue {
 
 
     // comparison
-    default InterpreterValue equals_equals(InterpreterValue v) {
+    default InterpreterValue equals(InterpreterValue v) {
         throw new Error("Operator '==' is not defined for type " + getName());
     }
 

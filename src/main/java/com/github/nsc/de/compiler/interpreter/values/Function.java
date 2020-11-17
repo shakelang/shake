@@ -3,7 +3,6 @@ package com.github.nsc.de.compiler.interpreter.values;
 import com.github.nsc.de.compiler.interpreter.Interpreter;
 import com.github.nsc.de.compiler.interpreter.Scope;
 import com.github.nsc.de.compiler.interpreter.VariableType;
-import com.github.nsc.de.compiler.interpreter.values.InterpreterValue;
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;

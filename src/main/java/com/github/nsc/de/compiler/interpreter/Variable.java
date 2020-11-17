@@ -90,8 +90,8 @@ public class Variable implements InterpreterValue {
     }
 
     @Override
-    public InterpreterValue equals_equals(InterpreterValue v) {
-        return this.getValue().equals_equals(v);
+    public InterpreterValue equals(InterpreterValue v) {
+        return this.getValue().equals(v);
     }
 
     @Override

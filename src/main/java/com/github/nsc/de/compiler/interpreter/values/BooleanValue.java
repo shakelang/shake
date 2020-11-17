@@ -21,6 +21,7 @@ public class BooleanValue implements InterpreterValue {
             return TRUE;
         }
         if(v instanceof NullValue) return FALSE;
+        if(v instanceof Function) return TRUE;
         throw new Error("Could not create boolean from " + v.getName());
     }
 
@@ -51,7 +52,7 @@ public class BooleanValue implements InterpreterValue {
     }
 
     @Override
-    public InterpreterValue equals_equals(InterpreterValue v) {
+    public InterpreterValue equals(InterpreterValue v) {
         if(v instanceof BooleanValue) {
             return BooleanValue.from(this.value == ((BooleanValue) v).value);
         }
