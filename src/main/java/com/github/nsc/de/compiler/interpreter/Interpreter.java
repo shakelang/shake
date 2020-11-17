@@ -27,8 +27,8 @@ public class Interpreter {
     public InterpreterValue visit(Node n, Scope scope) {
 
         if(n instanceof Tree) return visitTree((Tree) n, scope);
-        if(n instanceof DoubleNode) return visitDoubleNode((DoubleNode) n, scope);
-        if(n instanceof IntegerNode) return visitIntegerNode((IntegerNode) n, scope);
+        if(n instanceof DoubleNode) return visitDoubleNode((DoubleNode) n);
+        if(n instanceof IntegerNode) return visitIntegerNode((IntegerNode) n);
         if(n instanceof AddNode) return visitAddNode((AddNode) n, scope);
         if(n instanceof SubNode) return visitSubNode((SubNode) n, scope);
         if(n instanceof MulNode) return visitMulNode((MulNode) n, scope);
@@ -71,11 +71,11 @@ public class Interpreter {
         else return NullValue.NULL;
     }
 
-    public InterpreterValue visitIntegerNode(IntegerNode n, Scope scope) {
+    public IntegerValue visitIntegerNode(IntegerNode n) {
         return new IntegerValue(n.getNumber());
     }
 
-    public InterpreterValue visitDoubleNode(DoubleNode n, Scope scope) {
+    public DoubleValue visitDoubleNode(DoubleNode n) {
         return new DoubleValue(n.getNumber());
     }
 
@@ -207,8 +207,7 @@ public class Interpreter {
 
     public InterpreterValue visitWhileNode(WhileNode n, Scope scope) {
 
-        // TODO check if result is boolean
-        while(((BooleanValue) visit(n.getCondition(), scope)).getValue()) {
+        while(BooleanValue.from(visit(n.getCondition(), scope)).getValue()) {
 
             Scope whileScope = scope.copy();
             visit(n.getBody(), whileScope);
@@ -224,8 +223,7 @@ public class Interpreter {
             Scope doWhileScope = scope.copy();
             visit(n.getBody(), doWhileScope);
 
-            // TODO check if result is boolean
-        } while(((BooleanValue) visit(n.getCondition(), scope)).getValue());
+        } while(BooleanValue.from(visit(n.getCondition(), scope)).getValue());
 
         return NullValue.NULL;
     }
@@ -235,8 +233,8 @@ public class Interpreter {
         Scope forOuterScope = scope.copy();
 
         visit(n.getDeclaration(), forOuterScope);
-        // TODO check if result is boolean
-        while(((BooleanValue) visit(n.getCondition(), forOuterScope)).getValue()) {
+
+        while(BooleanValue.from(visit(n.getCondition(), forOuterScope)).getValue()) {
 
             Scope forInnerScope = forOuterScope.copy();
             visit(n.getBody(), forInnerScope);
@@ -251,8 +249,7 @@ public class Interpreter {
 
         Scope ifScope = scope.copy();
 
-        // TODO check if result is boolean
-        if(((BooleanValue) visit(n.getCondition(), ifScope)).getValue()) return visit(n.getBody(), ifScope);
+        if(BooleanValue.from(visit(n.getCondition(), ifScope)).getValue()) return visit(n.getBody(), ifScope);
         else if(n.getElseBody() != null) return visit(n.getElseBody(), ifScope);
 
         return NullValue.NULL;
@@ -295,4 +292,7 @@ public class Interpreter {
         }
 
     }
+
+
+    // TODO implement classes
 }
