@@ -10,6 +10,20 @@ public class BooleanValue implements InterpreterValue {
         else return FALSE;
     }
 
+    public static BooleanValue from(InterpreterValue v) {
+        if(v instanceof BooleanValue) return (BooleanValue) v;
+        if(v instanceof IntegerValue) {
+            if(((IntegerValue) v).getValue() == 0) return FALSE;
+            return TRUE;
+        }
+        if(v instanceof DoubleValue) {
+            if(((DoubleValue) v).getValue() == 0) return FALSE;
+            return TRUE;
+        }
+        if(v instanceof NullValue) return FALSE;
+        throw new Error("Could not create boolean from " + v.getName());
+    }
+
 
     // *******************************
 
