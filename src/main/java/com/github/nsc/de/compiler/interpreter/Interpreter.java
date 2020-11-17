@@ -12,6 +12,7 @@ import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
 
+import com.github.nsc.de.compiler.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
@@ -62,6 +63,7 @@ public class Interpreter {
         if(n instanceof FunctionDeclarationNode) return visitFunctionDeclarationNode((FunctionDeclarationNode) n, scope);
         if(n instanceof FunctionCallNode) return visitFunctionCallNode((FunctionCallNode) n, scope);
         if(n instanceof IdentifierNode) return visitIdentifier((IdentifierNode) n, scope);
+        if(n instanceof ClassConstructionNode) return visitClassConstruction((ClassConstructionNode) n, scope);
         if(n instanceof LogicalTrueNode) return BooleanValue.TRUE;
         if(n instanceof LogicalFalseNode) return BooleanValue.FALSE;
         if(n instanceof ClassDeclarationNode) return visitClassDeclarationNode((ClassDeclarationNode) n, scope);
@@ -333,6 +335,19 @@ public class Interpreter {
         scope.getVariables().get(n.getName()).setValue(cls);
 
         return cls;
+
+    }
+
+    public ObjectValue visitClassConstruction(ClassConstructionNode n, Scope scope) {
+
+        // TODO type check (is really a class?)
+        // TODO Arguments for constructor
+        InterpreterValue v = visit(n.getType(), scope);
+        Class cls;
+        if(v instanceof Class) cls = (Class) v;
+        else if(v instanceof Variable) cls = (Class) ((Variable) v).getValue();
+        else throw new Error("Seems to be not a class");
+        return new ObjectValue(cls, scope);
 
     }
 
