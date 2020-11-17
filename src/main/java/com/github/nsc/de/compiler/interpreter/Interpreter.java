@@ -1,6 +1,8 @@
 package com.github.nsc.de.compiler.interpreter;
 
 import com.github.nsc.de.compiler.interpreter.values.*;
+import com.github.nsc.de.compiler.interpreter.values.Class;
+import com.github.nsc.de.compiler.interpreter.values.VariableType;
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
@@ -9,6 +11,7 @@ import com.github.nsc.de.compiler.parser.node.logical.*;
 import com.github.nsc.de.compiler.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.compiler.parser.node.loops.ForNode;
 import com.github.nsc.de.compiler.parser.node.loops.WhileNode;
+import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
 
@@ -60,6 +63,7 @@ public class Interpreter {
         if(n instanceof IdentifierNode) return visitIdentifier((IdentifierNode) n, scope);
         if(n instanceof LogicalTrueNode) return BooleanValue.TRUE;
         if(n instanceof LogicalFalseNode) return BooleanValue.FALSE;
+        if(n instanceof ClassDeclarationNode) return visitClassDeclaration((ClassDeclarationNode) n, scope);
         if(n == null) return NullValue.NULL;
         throw new Error("It looks like that Node is not implemented in the Interpreter");
 
@@ -250,7 +254,7 @@ public class Interpreter {
 
     public Function visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
 
-        if(!scope.getVariables().declare(node.getName(), VariableType.FUNCTION)) throw new Error("'" + node.getName() + "' is already declared!");
+        if(!scope.getVariables().declare(node.getName(), Function.class)) throw new Error("'" + node.getName() + "' is already declared!");
         Function f = new Function(node.getArgs(), node.getBody(), scope, this, node.getAccess(), node.isInClass(), node.isStatic(), node.isFinal());
         scope.getVariables().get(node.getName()).setValue(f);
         return f;
@@ -286,7 +290,29 @@ public class Interpreter {
         }
 
     }
+    public Class visitClassDeclaration(ClassDeclarationNode n, Scope scope) {
+
+        VariableList prototype = new VariableList();
+
+        // TODO 2 Declarations with the same name
+        for(FunctionDeclarationNode node : n.getMethods()) {
+            prototype.declare(node.getName(), Function.class);
+            prototype.get(node.getName()).setValue(visitFunctionDeclarationNode(node, scope));
+        }
+        for(ClassDeclarationNode node : n.getClasses()) {
+            prototype.declare(node.getName(), Class.class);
+            prototype.get(node.getName()).setValue(visitClassDeclaration(node, scope));
+        }
+
+        Class cls = new Class(n.getName(), n.getFields(), scope, this, prototype,
+                n.getAccess(), n.isInClass(), n.isStatic(), n.isFinal());
+        scope.getVariables().declare(n.getName(), Class.class);
+        scope.getVariables().get(n.getName()).setValue(cls);
+
+        return cls;
+
+    }
 
 
-    // TODO implement classes
+    // TODO implement class usage
 }

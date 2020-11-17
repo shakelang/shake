@@ -1,9 +1,6 @@
 package com.github.nsc.de.compiler.interpreter;
 
-import com.github.nsc.de.compiler.interpreter.values.DoubleValue;
-import com.github.nsc.de.compiler.interpreter.values.Function;
-import com.github.nsc.de.compiler.interpreter.values.IntegerValue;
-import com.github.nsc.de.compiler.interpreter.values.InterpreterValue;
+import com.github.nsc.de.compiler.interpreter.values.*;
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
@@ -20,9 +17,9 @@ public class DefaultFunctions {
     public static VariableList getFunctions(Interpreter interpreter) {
         HashMap<String, Variable> functions = new HashMap<>();
 
-        functions.put("print", new Variable("print", VariableType.FUNCTION, new Print(interpreter)));
-        functions.put("println", new Variable("println", VariableType.FUNCTION, new Println(interpreter)));
-        functions.put("exit", new Variable("println", VariableType.FUNCTION, new Exit(interpreter)));
+        functions.put("print", new Variable("print", Function.class, new Print(interpreter)));
+        functions.put("println", new Variable("println", Function.class, new Println(interpreter)));
+        functions.put("exit", new Variable("println", Function.class, new Exit(interpreter)));
 
         return new VariableList(functions);
     }

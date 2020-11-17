@@ -2,7 +2,6 @@ package com.github.nsc.de.compiler.interpreter.values;
 
 import com.github.nsc.de.compiler.interpreter.Interpreter;
 import com.github.nsc.de.compiler.interpreter.Scope;
-import com.github.nsc.de.compiler.interpreter.VariableType;
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;
@@ -56,7 +55,7 @@ public class Function implements InterpreterValue {
 
         for(int i = 0; i < this.getArgs().length; i++) {
 
-            function_scope.getScopeVariables().declare(this.getArgs()[i].getName(), VariableType.ANY);
+            function_scope.getScopeVariables().declare(this.getArgs()[i].getName(), InterpreterValue.class);
             function_scope.getScopeVariables().get(this.getArgs()[i].getName()).setValue(interpreter.visit(node.getArgs()[i], scope));
 
         }

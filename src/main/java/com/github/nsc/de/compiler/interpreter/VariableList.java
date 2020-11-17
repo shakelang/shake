@@ -1,5 +1,7 @@
 package com.github.nsc.de.compiler.interpreter;
 
+import com.github.nsc.de.compiler.interpreter.values.InterpreterValue;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +25,7 @@ public class VariableList {
         this(new HashMap<>());
     }
 
-    public boolean declare(String name, VariableType type) {
+    public boolean declare(String name, Class<? extends InterpreterValue> type) {
         if(this.parentList == null) {
             if (this.variables.containsKey(name)) return false;
             this.variables.put(name, new Variable(name, type));

@@ -7,11 +7,11 @@ import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 public class Variable implements InterpreterValue {
 
     private final String identifier;
-    private final VariableType type;
+    private final Class<? extends InterpreterValue> type;
     private final AccessDescriber access;
     private InterpreterValue value;
 
-    public Variable(String identifier, VariableType type, AccessDescriber access, InterpreterValue value) {
+    public Variable(String identifier, Class<? extends InterpreterValue> type, AccessDescriber access, InterpreterValue value) {
         if(type == null) throw new Error("Variable type must not be null!");
         this.identifier = identifier;
         this.type = type;
@@ -20,7 +20,7 @@ public class Variable implements InterpreterValue {
     }
 
 
-    public Variable(String identifier, VariableType type, InterpreterValue value) {
+    public Variable(String identifier, Class<? extends InterpreterValue> type, InterpreterValue value) {
         if(type == null) throw new Error();
         this.identifier = identifier;
         this.type = type;
@@ -28,15 +28,15 @@ public class Variable implements InterpreterValue {
         this.value = value;
     }
 
-    public Variable(String identifier, VariableType type, AccessDescriber access) {
+    public Variable(String identifier, Class<? extends InterpreterValue> type, AccessDescriber access) {
         this(identifier, type, access, NullValue.NULL);
     }
 
-    public Variable(String identifier, VariableType type) {
+    public Variable(String identifier, Class<? extends InterpreterValue> type) {
         this(identifier, type, NullValue.NULL);
     }
 
-    public VariableType getType() {
+    public Class<? extends InterpreterValue> getType() {
         return type;
     }
 
