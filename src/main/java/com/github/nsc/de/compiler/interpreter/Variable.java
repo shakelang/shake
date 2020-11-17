@@ -118,4 +118,8 @@ public class Variable implements InterpreterValue {
     public String getName() {
         return this.getValue().getName();
     }
+
+    public Variable copy() {
+        return new Variable(this.identifier, this.type, this.access, this.value);
+    }
 }

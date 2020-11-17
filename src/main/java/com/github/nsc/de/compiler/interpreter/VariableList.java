@@ -46,14 +46,29 @@ public class VariableList {
         return Collections.unmodifiableMap(variables);
     }
 
-    VariableList copy() {
-        return new VariableList(new HashMap<>(this.variables));
-    }
-
     VariableList concat(VariableList list) {
         HashMap<String, Variable> variables = new HashMap<>(this.variables);
         for(Map.Entry<String, Variable> entry : list.getVariables().entrySet()) variables.put(entry.getKey(), entry.getValue());
         return new VariableList(variables);
+    }
+
+    public VariableList copy() {
+
+        HashMap<String, Variable> vars = new HashMap<>();
+        this.variables.forEach((k, v) -> vars.put(k, v.copy()));
+
+        return new VariableList(vars, this.parentList);
+
+    }
+
+    public VariableList deepCopy() {
+
+        HashMap<String, Variable> vars = new HashMap<>();
+        this.variables.forEach((k, v) -> vars.put(k, v.copy()));
+
+        if(this.parentList != null) return new VariableList(vars, this.parentList.copy());
+        else return new VariableList(vars);
+
     }
 
 }
