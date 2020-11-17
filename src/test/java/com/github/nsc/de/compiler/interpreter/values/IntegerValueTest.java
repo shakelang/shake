@@ -12,18 +12,24 @@ public class IntegerValueTest {
     public void testAdd() {
         assertEquals(2, ((IntegerValue) ONE.add(ONE)).getValue());
         assertEquals(0, ((IntegerValue) new IntegerValue(100).add(new IntegerValue(-100))).getValue());
+        assertEquals(2, ((DoubleValue) ONE.add(new DoubleValue(1))).getValue());
+        assertEquals(0, ((DoubleValue) new IntegerValue(100).add(new DoubleValue(-100))).getValue());
     }
 
     @Test
     public void testSub() {
         assertEquals(0, ((IntegerValue) ONE.sub(ONE)).getValue());
         assertEquals(200, ((IntegerValue) new IntegerValue(100).sub(new IntegerValue(-100))).getValue());
+        assertEquals(0, ((DoubleValue) ONE.sub(new DoubleValue(1))).getValue());
+        assertEquals(200, ((DoubleValue) new IntegerValue(100).sub(new DoubleValue(-100))).getValue());
     }
 
     @Test
     public void testMul() {
         assertEquals(1, ((IntegerValue) ONE.mul(ONE)).getValue());
         assertEquals(-10_000, ((IntegerValue) new IntegerValue(100).mul(new IntegerValue(-100))).getValue());
+        assertEquals(1, ((DoubleValue) ONE.mul(new DoubleValue(1))).getValue());
+        assertEquals(-10_000, ((DoubleValue) new IntegerValue(100).mul(new DoubleValue(-100))).getValue());
     }
 
     @Test
