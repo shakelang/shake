@@ -45,6 +45,7 @@ public class Interpreter {
         if(n instanceof VariableSubAssignmentNode) return visitVariableSubAssignmentNode((VariableSubAssignmentNode) n, scope);
         if(n instanceof VariableMulAssignmentNode) return visitVariableMulAssignmentNode((VariableMulAssignmentNode) n, scope);
         if(n instanceof VariableDivAssignmentNode) return visitVariableDivAssignmentNode((VariableDivAssignmentNode) n, scope);
+        if(n instanceof VariableModAssignmentNode) return visitVariableModAssignmentNode((VariableModAssignmentNode) n, scope);
         if(n instanceof VariablePowAssignmentNode) return visitVariablePowAssignmentNode((VariablePowAssignmentNode) n, scope);
         if(n instanceof VariableIncreaseNode) return visitVariableIncreaseNode((VariableIncreaseNode) n, scope);
         if(n instanceof VariableDecreaseNode) return visitVariableDecreaseNode((VariableDecreaseNode) n, scope);
@@ -155,6 +156,13 @@ public class Interpreter {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
         variable.setValue(variable.getValue().div(value));
+        return variable.getValue();
+    }
+
+    public InterpreterValue visitVariableModAssignmentNode(VariableModAssignmentNode n, Scope scope) {
+        Variable variable = (Variable) visit(n.getVariable(), scope);
+        InterpreterValue value = visit(n.getValue(), scope);
+        variable.setValue(variable.getValue().mod(value));
         return variable.getValue();
     }
 
