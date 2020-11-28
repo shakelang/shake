@@ -61,27 +61,32 @@ public enum TokenType {
     // Math Operators
 
     /**
-     * Token '+'
+     * Token '+' for adding values
      */
     ADD,
 
     /**
-     * Token '-'
+     * Token '-' for subtracting values
      */
     SUB,
 
     /**
-     * Token '*'
+     * Token '*' for multiplying values
      */
     MUL,
 
     /**
-     * Token '/'
+     * Token '/' for dividing values
      */
     DIV,
 
     /**
-     * Token '**' or '**'
+     * Token '%' for modulo operations
+     */
+    MOD,
+
+    /**
+     * Token '**' for pow operations
      */
     POW,
 

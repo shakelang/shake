@@ -68,6 +68,7 @@ public class Lexer {
             // Math operators
             else if (next == '*' && this.in.hasNext() && in.peek() == '*') { in.skip(); tokens.add(new Token(TokenType.POW, "**", in.getPosition().copy())); }
             else if (next == '^') tokens.add(new Token(TokenType.POW, start));
+            else if (next == '%') tokens.add(new Token(TokenType.MOD, start));
             else if (next == '/') tokens.add(new Token(TokenType.DIV, start));
             else if (next == '*') tokens.add(new Token(TokenType.MUL, start));
             else if (next == '-') tokens.add(new Token(TokenType.SUB, start));
