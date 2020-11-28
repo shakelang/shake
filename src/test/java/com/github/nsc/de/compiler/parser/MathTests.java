@@ -29,6 +29,7 @@ public class MathTests {
 
         testBasic("10 * 3", 10, 3, MulNode.class);
         testBasic("10 / 3", 10, 3, DivNode.class);
+        testBasic("10 % 3", 10, 3, ModNode.class);
     }
 
     @Test
