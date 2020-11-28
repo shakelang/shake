@@ -181,6 +181,11 @@ public enum TokenType {
     DIV_ASSIGN,
 
     /**
+     * Token '%=' for modulo-assigning values to a variable
+     */
+    MOD_ASSIGN,
+
+    /**
      * Token '^=' or '**=' for divide-assigning values to a variable
      */
     POW_ASSIGN,

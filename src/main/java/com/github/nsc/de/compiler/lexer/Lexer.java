@@ -57,6 +57,7 @@ public class Lexer {
             // Operator assign
             else if (this.in.peek(0,2).equals("**=")) { in.skip(2);  tokens.add(new Token(TokenType.POW_ASSIGN, "**=", start, in.getPosition().copy())); }
             else if (this.in.peek(0,1).equals("^=")) { in.skip(); tokens.add(new Token(TokenType.POW_ASSIGN, "^=", start, in.getPosition().copy())); }
+            else if (this.in.peek(0,1).equals("%=")) { in.skip(); tokens.add(new Token(TokenType.MOD_ASSIGN, start, in.getPosition().copy())); }
             else if (this.in.peek(0,1).equals("/=")) { in.skip(); tokens.add(new Token(TokenType.DIV_ASSIGN, start, in.getPosition().copy())); }
             else if (this.in.peek(0,1).equals("*=")) { in.skip(); tokens.add(new Token(TokenType.MUL_ASSIGN, start, in.getPosition().copy())); }
             else if (this.in.peek(0,1).equals("-=")) { in.skip(); tokens.add(new Token(TokenType.SUB_ASSIGN, start, in.getPosition().copy())); }
