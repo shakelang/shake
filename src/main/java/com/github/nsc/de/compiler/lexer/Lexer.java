@@ -57,6 +57,7 @@ public class Lexer {
             // Operator assign
             else if (this.in.peek(0,2).equals("**=")) { in.skip(2);  tokens.add(new Token(TokenType.POW_ASSIGN, "**=", start, in.getPosition().copy())); }
             else if (this.in.peek(0,1).equals("^=")) { in.skip(); tokens.add(new Token(TokenType.POW_ASSIGN, "^=", start, in.getPosition().copy())); }
+            else if (this.in.peek(0,1).equals("%=")) { in.skip(); tokens.add(new Token(TokenType.MOD_ASSIGN, start, in.getPosition().copy())); }
             else if (this.in.peek(0,1).equals("/=")) { in.skip(); tokens.add(new Token(TokenType.DIV_ASSIGN, start, in.getPosition().copy())); }
             else if (this.in.peek(0,1).equals("*=")) { in.skip(); tokens.add(new Token(TokenType.MUL_ASSIGN, start, in.getPosition().copy())); }
             else if (this.in.peek(0,1).equals("-=")) { in.skip(); tokens.add(new Token(TokenType.SUB_ASSIGN, start, in.getPosition().copy())); }
@@ -68,6 +69,7 @@ public class Lexer {
             // Math operators
             else if (next == '*' && this.in.hasNext() && in.peek() == '*') { in.skip(); tokens.add(new Token(TokenType.POW, "**", in.getPosition().copy())); }
             else if (next == '^') tokens.add(new Token(TokenType.POW, start));
+            else if (next == '%') tokens.add(new Token(TokenType.MOD, start));
             else if (next == '/') tokens.add(new Token(TokenType.DIV, start));
             else if (next == '*') tokens.add(new Token(TokenType.MUL, start));
             else if (next == '-') tokens.add(new Token(TokenType.SUB, start));

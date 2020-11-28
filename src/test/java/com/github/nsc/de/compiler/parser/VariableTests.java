@@ -97,6 +97,18 @@ public class VariableTests {
     }
 
     @Test
+    public void testVariableModAssignment() {
+
+        VariableModAssignmentNode node = parseSingle("<VariableModAssignmentTest>", "i %= 1", VariableModAssignmentNode.class);
+        assertType(IdentifierNode.class, node.getVariable());
+        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
+        assertNull(((IdentifierNode) node.getVariable()).getParent());
+        assertNotNull(node.getValue());
+        assertType(IntegerNode.class, node.getValue());
+
+    }
+
+    @Test
     public void testVariablePowAssignment() {
 
         VariablePowAssignmentNode node = parseSingle("<VariablePowAssignmentTest>", "i ^= 0", VariablePowAssignmentNode.class);

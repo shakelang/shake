@@ -51,6 +51,7 @@ public class LexerTests {
         generateToken("-=", TokenType.SUB_ASSIGN); // '-='
         generateToken("*=", TokenType.MUL_ASSIGN); // '*='
         generateToken("/=", TokenType.DIV_ASSIGN); // '/='
+        generateToken("%=", TokenType.MOD_ASSIGN); // '%='
         generateToken("^=", TokenType.POW_ASSIGN); // '^='
         generateToken("**=", TokenType.POW_ASSIGN); // "**="
 
@@ -67,6 +68,7 @@ public class LexerTests {
         generateToken("-", TokenType.SUB); // '-'
         generateToken("*", TokenType.MUL); // '*'
         generateToken("/", TokenType.DIV); // '/'
+        generateToken("%", TokenType.MOD); // '%'
         generateToken("^", TokenType.POW); // '^'
         generateToken("**", TokenType.POW); // "**"
 
