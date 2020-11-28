@@ -649,7 +649,7 @@ public class Parser {
 
 
     private ValuedNode compare() {
-        ValuedNode left = this.factor();
+        ValuedNode left = this.statement();
 
         while(this.getInput().hasNext() && COMPARE.contains(this.getInput().peek().getType())) {
 
