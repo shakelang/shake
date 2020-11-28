@@ -20,6 +20,10 @@ public interface InterpreterValue {
         throw new Error("Operator '/' is not defined for type " + getName());
     }
 
+    default InterpreterValue mod(InterpreterValue v) {
+        throw new Error("Operator '%' is not defined for type " + getName());
+    }
+
     default InterpreterValue pow(InterpreterValue v) {
         throw new Error("Operator '**' is not defined for type " + getName());
     }

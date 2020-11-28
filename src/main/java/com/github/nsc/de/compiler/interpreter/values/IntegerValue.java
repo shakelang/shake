@@ -43,6 +43,13 @@ public class IntegerValue implements InterpreterValue {
     }
 
     @Override
+    public InterpreterValue mod(InterpreterValue v) {
+        if(v instanceof IntegerValue) return new IntegerValue(getValue() % ((IntegerValue) v).getValue());
+        if(v instanceof DoubleValue) return new DoubleValue(getValue() % ((DoubleValue) v).getValue());
+        throw new Error("Operator '%' is not defined for type integer and " + v.getName());
+    }
+
+    @Override
     public InterpreterValue pow(InterpreterValue v) {
         if(v instanceof IntegerValue) return new IntegerValue((int) Math.pow(getValue(), ((IntegerValue) v).getValue()));
         if(v instanceof DoubleValue) return new DoubleValue(Math.pow(getValue(), ((DoubleValue) v).getValue()));

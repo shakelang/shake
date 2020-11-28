@@ -37,6 +37,13 @@ public class DoubleValue implements InterpreterValue {
     }
 
     @Override
+    public InterpreterValue mod(InterpreterValue v) {
+        if(v instanceof IntegerValue) return new DoubleValue(getValue() % ((IntegerValue) v).getValue());
+        if(v instanceof DoubleValue) return new DoubleValue(getValue() % ((DoubleValue) v).getValue());
+        throw new Error("Operator '%' is not defined for type double and " + v.getName());
+    }
+
+    @Override
     public InterpreterValue pow(InterpreterValue v) {
         if(v instanceof IntegerValue) return new DoubleValue(Math.pow(getValue(), ((IntegerValue) v).getValue()));
         if(v instanceof DoubleValue) return new DoubleValue(Math.pow(getValue(), ((DoubleValue) v).getValue()));

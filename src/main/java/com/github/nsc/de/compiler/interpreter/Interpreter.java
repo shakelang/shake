@@ -38,6 +38,7 @@ public class Interpreter {
         if(n instanceof SubNode) return visitSubNode((SubNode) n, scope);
         if(n instanceof MulNode) return visitMulNode((MulNode) n, scope);
         if(n instanceof DivNode) return visitDivNode((DivNode) n, scope);
+        if(n instanceof ModNode) return visitModNode((ModNode) n, scope);
         if(n instanceof PowNode) return visitPowNode((PowNode) n, scope);
         if(n instanceof VariableDeclarationNode) return visitVariableDeclarationNode((VariableDeclarationNode) n, scope);
         if(n instanceof VariableAddAssignmentNode) return visitVariableAddAssignmentNode((VariableAddAssignmentNode) n, scope);
@@ -103,6 +104,10 @@ public class Interpreter {
 
     public InterpreterValue visitDivNode(DivNode n, Scope scope) {
         return visit(n.getLeft(), scope).div(visit(n.getRight(), scope));
+    }
+
+    public InterpreterValue visitModNode(ModNode n, Scope scope) {
+        return visit(n.getLeft(), scope).mod(visit(n.getRight(), scope));
     }
 
     public InterpreterValue visitPowNode(PowNode n, Scope scope) {
