@@ -202,6 +202,7 @@ public class Parser {
             if(token2.getType() == TokenType.SUB_ASSIGN) ret = this.varSubAssignment(identifierNode);
             if(token2.getType() == TokenType.MUL_ASSIGN) ret = this.varMulAssignment(identifierNode);
             if(token2.getType() == TokenType.DIV_ASSIGN) ret = this.varDivAssignment(identifierNode);
+            if(token2.getType() == TokenType.MOD_ASSIGN) ret = this.varModAssignment(identifierNode);
             if(token2.getType() == TokenType.POW_ASSIGN) ret = this.varPowAssignment(identifierNode);
             if(token2.getType() == TokenType.INCR) ret = this.varIncrease(identifierNode);
             if(token2.getType() == TokenType.DECR) ret = this.varDecrease(identifierNode);
@@ -353,6 +354,12 @@ public class Parser {
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.DIV_ASSIGN) throw new ParserError("Expecting '/='");
         Node value = operation();
         return new VariableDivAssignmentNode(variable, value);
+    }
+
+    private VariableModAssignmentNode varModAssignment(ValuedNode variable) {
+        if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.MOD_ASSIGN) throw new ParserError("Expecting '%='");
+        Node value = operation();
+        return new VariableModAssignmentNode(variable, value);
     }
 
     private VariablePowAssignmentNode varPowAssignment(ValuedNode variable) {
@@ -564,7 +571,7 @@ public class Parser {
     // (Calculations)
 
     List<TokenType> EXPR = Arrays.asList(TokenType.ADD, TokenType.SUB);
-    List<TokenType> TERM = Arrays.asList(TokenType.MUL, TokenType.DIV);
+    List<TokenType> TERM = Arrays.asList(TokenType.MUL, TokenType.DIV, TokenType.MOD);
 
     private ValuedNode expr() {
         ValuedNode result = this.term();
@@ -594,6 +601,10 @@ public class Parser {
             else if(this.getInput().peek().getType() == TokenType.DIV) {
                 this.getInput().skip();
                 result = new DivNode(result, this.pow());
+            }
+            else if(this.getInput().peek().getType() == TokenType.MOD) {
+                this.getInput().skip();
+                result = new ModNode(result, this.pow());
             }
         }
         return result;
