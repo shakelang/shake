@@ -33,6 +33,12 @@ public class NullValueTest {
     }
 
     @Test
+    public void testMod() {
+        Error error = assertThrows(Error.class, () -> NULL.mod(NULL));
+        assertEquals("Operator '%' is not defined for type null", error.getMessage());
+    }
+
+    @Test
     public void testPow() {
         Error error = assertThrows(Error.class, () -> NULL.pow(NULL));
         assertEquals("Operator '**' is not defined for type null", error.getMessage());

@@ -68,6 +68,12 @@ public class BooleanValueTest {
     }
 
     @Test
+    public void testMod() {
+        Error error = assertThrows(Error.class, () -> TRUE.mod(TRUE));
+        assertEquals("Operator '%' is not defined for type boolean", error.getMessage());
+    }
+
+    @Test
     public void testPow() {
         Error error = assertThrows(Error.class, () -> TRUE.pow(TRUE));
         assertEquals("Operator '**' is not defined for type boolean", error.getMessage());

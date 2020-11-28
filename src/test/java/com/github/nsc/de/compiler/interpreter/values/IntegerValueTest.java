@@ -40,6 +40,13 @@ public class IntegerValueTest {
     }
 
     @Test
+    public void testMod() {
+        assertEquals(0, ((IntegerValue) new IntegerValue(10).mod(new IntegerValue(2))).getValue());
+        assertEquals(6, ((IntegerValue) new IntegerValue(48).mod(new IntegerValue(7))).getValue());
+        assertEquals(1, ((DoubleValue) new IntegerValue(11).mod(new DoubleValue(5))).getValue());
+    }
+
+    @Test
     public void testPow() {
         assertEquals(4, ((IntegerValue) new IntegerValue(2).pow(new IntegerValue(2))).getValue());
         assertEquals(0, ((IntegerValue) new IntegerValue(5).pow(new IntegerValue(-2))).getValue());

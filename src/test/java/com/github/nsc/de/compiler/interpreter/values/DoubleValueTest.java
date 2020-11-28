@@ -42,6 +42,13 @@ public class DoubleValueTest {
     }
 
     @Test
+    public void testMod() {
+        assertEquals(0, ((DoubleValue) new DoubleValue(10).mod(new IntegerValue(2))).getValue());
+        assertEquals(3, ((DoubleValue) new DoubleValue(48).mod(new IntegerValue(5))).getValue());
+        assertEquals(1, ((DoubleValue) new DoubleValue(11).mod(new DoubleValue(5))).getValue());
+    }
+
+    @Test
     public void testPow() {
         assertEquals(4, ((DoubleValue) new DoubleValue(2).pow(new IntegerValue(2))).getValue());
         assertEquals(0.04, ((DoubleValue) new DoubleValue(5).pow(new IntegerValue(-2))).getValue());
