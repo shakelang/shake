@@ -16,6 +16,10 @@ import com.github.nsc.de.compiler.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.compiler.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.compiler.parser.node.variables.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class Interpreter {
 
@@ -333,19 +337,43 @@ public class Interpreter {
 
     public Class createClassDeclaration(ClassDeclarationNode n, Scope scope) {
 
+        List<VariableDeclarationNode> fields = new ArrayList<>(Arrays.asList(n.getFields()));
         VariableList prototype = new VariableList();
+        VariableList statics = new VariableList();
 
         // TODO 2 Declarations with the same name
         for(FunctionDeclarationNode node : n.getMethods()) {
-            prototype.declare(node.getName(), Function.class);
-            prototype.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
-        }
-        for(ClassDeclarationNode node : n.getClasses()) {
-            prototype.declare(node.getName(), Class.class);
-            prototype.get(node.getName()).setValue(createClassDeclaration(node, scope));
+            if(n.isStatic()) {
+                statics.declare(node.getName(), Function.class);
+                statics.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
+            }
+            else {
+                prototype.declare(node.getName(), Function.class);
+                prototype.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
+            }
         }
 
-        Class cls = new Class(n.getName(), n.getFields(), scope, this, prototype,
+        for(ClassDeclarationNode node : n.getClasses()) {
+            if(n.isStatic()) {
+                statics.declare(node.getName(), Class.class);
+                statics.get(node.getName()).setValue(createClassDeclaration(node, scope));
+            } else {
+                prototype.declare(node.getName(), Class.class);
+                prototype.get(node.getName()).setValue(createClassDeclaration(node, scope));
+            }
+        }
+
+        for(int i = 0; i < fields.size(); i++) {
+            VariableDeclarationNode node = fields.get(i);
+            if(node.isStatic()) {
+                statics.declare(node.getName(), VariableType.valueOf(node.getType()));
+                statics.get(node.getName()).setValue(visit(node.getAssignment().getValue(), scope)); // TODO Use Class Scope
+                fields.remove(i);
+                i--;
+            }
+        }
+
+        Class cls = new Class(n.getName(), statics, fields.toArray(new VariableDeclarationNode[] {}), scope, this, prototype,
                 n.getAccess(), n.isInClass(), n.isStatic(), n.isFinal());
 
         scope.getVariables().declare(n.getName(), Class.class);
