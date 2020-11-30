@@ -31,6 +31,7 @@ public class ObjectValue implements InterpreterValue {
 
     @Override
     public Variable getChild(String name) {
+        if(getThisObject().get(name).hasValue()) throw new Error(String.format("Object has no property called %s", name));
         return getThisObject().get(name);
     }
 
