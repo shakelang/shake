@@ -18,8 +18,10 @@ public class VariableType {
             case OBJECT:
             case ARRAY:
                 throw new Error("Not implemented yet");
+            case DYNAMIC:
+                return InterpreterValue.class;
         }
-        throw new Error("Wrong input");
+        throw new Error(String.format("Wrong input: %s", type.getType()));
     }
 
 
