@@ -1,6 +1,7 @@
 package com.github.nsc.de.compiler.interpreter.values;
 
 import com.github.nsc.de.compiler.interpreter.Scope;
+import com.github.nsc.de.compiler.interpreter.Variable;
 import com.github.nsc.de.compiler.interpreter.VariableList;
 import com.github.nsc.de.compiler.parser.node.variables.VariableDeclarationNode;
 
@@ -26,6 +27,11 @@ public class ObjectValue implements InterpreterValue {
 
     public VariableList getThisObject() {
         return this_object;
+    }
+
+    @Override
+    public Variable getChild(String name) {
+        return getThisObject().get(name);
     }
 
     @Override

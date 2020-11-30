@@ -1,6 +1,8 @@
 package com.github.nsc.de.compiler.interpreter.values;
 
 
+import com.github.nsc.de.compiler.interpreter.Variable;
+
 public interface InterpreterValue {
 
     // number-operators
@@ -59,6 +61,11 @@ public interface InterpreterValue {
     }
     default InterpreterValue smaller(InterpreterValue v) {
         throw new Error("Operator '<' is not defined for type " + getName());
+    }
+
+    // Children
+    default Variable getChild(String s) {
+        throw new Error("Can't get child values of type " + getName());
     }
 
     String getName();

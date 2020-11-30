@@ -306,13 +306,17 @@ public class Interpreter {
     public Variable visitIdentifier(IdentifierNode node, Scope scope) {
 
         if(node.getParent() != null) {
-            // TODO implement parents
-            throw new Error("Not implemented yet!");
+
+            InterpreterValue parent = visit(node.getParent(), scope);
+            return parent.getChild(node.getName());
+
         }
         else {
+
            Variable v = scope.getVariables().get(node.getName());
            if(v == null) throw new Error(String.format("Variable with name \"%s\" is not declared", node.getName()));
            return v;
+
         }
 
     }
