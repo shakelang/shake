@@ -25,7 +25,7 @@ public class BooleanValueTest {
         // Integers
         assertSame(TRUE, from(IntegerValue.ONE));
         assertSame(TRUE, from(new IntegerValue(Integer.MAX_VALUE)));
-        assertSame(TRUE, from(new IntegerValue(Integer.MIN_VALUE)));
+        assertSame(FALSE, from(new IntegerValue(Integer.MIN_VALUE)));
         assertSame(FALSE, from(new IntegerValue(0)));
 
         // Double
@@ -33,7 +33,7 @@ public class BooleanValueTest {
         assertSame(TRUE, from(new DoubleValue(Double.MAX_VALUE)));
         assertSame(TRUE, from(new DoubleValue(Double.MIN_VALUE)));
         assertSame(TRUE, from(new DoubleValue(0.1)));
-        assertSame(TRUE, from(new DoubleValue(-0.1)));
+        assertSame(FALSE, from(new DoubleValue(-0.1)));
         assertSame(FALSE, from(new IntegerValue(0)));
 
         // Null
