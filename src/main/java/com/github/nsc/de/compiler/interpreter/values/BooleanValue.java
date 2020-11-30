@@ -37,6 +37,8 @@ public enum BooleanValue implements InterpreterValue {
      * @author Nicolas Schmidt
      */
     public static BooleanValue from(boolean b) {
+        // if b ist true return TRUE
+        // in other case return FALSE
         if(b) return TRUE;
         else return FALSE;
     }
@@ -50,17 +52,26 @@ public enum BooleanValue implements InterpreterValue {
      * @author Nicolas Schmidt
      */
     public static BooleanValue from(InterpreterValue v) {
+        // If v is a BooleanValue just return v
         if(v instanceof BooleanValue) return (BooleanValue) v;
+
+        // if v is m IntegerValue return FALSE if v is <= 0
         if(v instanceof IntegerValue) {
-            if(((IntegerValue) v).getValue() == 0) return FALSE;
+            if(((IntegerValue) v).getValue() <= 0) return FALSE;
             return TRUE;
         }
+
+        // if v is DoubleValue return FALSE if v is <= 0
         if(v instanceof DoubleValue) {
-            if(((DoubleValue) v).getValue() == 0) return FALSE;
+            if(((DoubleValue) v).getValue() <= 0) return FALSE;
             return TRUE;
         }
+
+        // if v is a NullValue just return FALSE
         if(v instanceof NullValue) return FALSE;
-        if(v instanceof Function) return TRUE;
+
+        // if v is a Function just return TRUE
+        if(v instanceof Function || v instanceof Class || v instanceof ObjectValue) return TRUE;
         throw new Error("Could not create boolean from " + v.getName());
     }
 
@@ -83,6 +94,7 @@ public enum BooleanValue implements InterpreterValue {
      * @author Nicolas Schmidt
      */
     BooleanValue(boolean value) {
+        // just set the value field
         this.value = value;
     }
 
@@ -94,6 +106,7 @@ public enum BooleanValue implements InterpreterValue {
      * @author Nicolas Schmidt
      */
     public boolean getValue() {
+        // just return the value
         return value;
     }
 
@@ -112,6 +125,8 @@ public enum BooleanValue implements InterpreterValue {
      */
     @Override
     public InterpreterValue or(InterpreterValue v) {
+        // if the given value is a BooleanValue check if at least one of the values is true and return a BooleanValue again
+        // if not just throw an error
         if(v instanceof BooleanValue) {
             return BooleanValue.from(this.value || ((BooleanValue) v).value);
         }
@@ -128,6 +143,8 @@ public enum BooleanValue implements InterpreterValue {
      */
     @Override
     public InterpreterValue and(InterpreterValue v) {
+        // if the given value is a BooleanValue check if the values are both true and return a BooleanValue again
+        // if not just throw an error
         if(v instanceof BooleanValue) {
             return BooleanValue.from(this.value && ((BooleanValue) v).value);
         }
@@ -144,6 +161,8 @@ public enum BooleanValue implements InterpreterValue {
      */
     @Override
     public InterpreterValue equals(InterpreterValue v) {
+        // if the given value is a BooleanValue check if the values are the same and return a BooleanValue again
+        // if not just throw an error
         if(v instanceof BooleanValue) {
             return BooleanValue.from(this.value == ((BooleanValue) v).value);
         }
@@ -159,6 +178,7 @@ public enum BooleanValue implements InterpreterValue {
      */
     @Override
     public String getName() {
+        // just return "boolean"
         return "boolean";
     }
 
@@ -176,6 +196,7 @@ public enum BooleanValue implements InterpreterValue {
      */
     @Override
     public String toString() {
+        // just return the string representation of this.value (either "true" or "false")
         return String.valueOf(this.value);
     }
 }
