@@ -45,7 +45,7 @@ public class Variable implements InterpreterValue {
     }
 
     public InterpreterValue getValue() {
-        return value;
+        return value != null ? value : NullValue.NULL;
     }
 
     public AccessDescriber getAccess() { return access; }
@@ -113,6 +113,9 @@ public class Variable implements InterpreterValue {
     public InterpreterValue smaller(InterpreterValue v) {
         return this.getValue().smaller(v);
     }
+
+    @Override
+    public Variable getChild(String s) { return this.getValue().getChild(s); }
 
     @Override
     public String getName() {
