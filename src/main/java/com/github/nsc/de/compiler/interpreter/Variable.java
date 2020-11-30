@@ -39,20 +39,17 @@ public class Variable implements InterpreterValue {
     public Class<? extends InterpreterValue> getType() {
         return type;
     }
-
     public String getIdentifier() {
         return identifier;
     }
-
     public InterpreterValue getValue() {
         return value != null ? value : NullValue.NULL;
     }
-
     public AccessDescriber getAccess() { return access; }
-
     public void setValue(InterpreterValue value) {
         this.value = value;
     }
+    public boolean hasValue() { return this.value == null; }
 
     @Override
     public InterpreterValue add(InterpreterValue v) {
