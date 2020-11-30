@@ -1,9 +1,11 @@
 package com.github.nsc.de.compiler.interpreter.values;
 
-public class BooleanValue implements InterpreterValue {
+public enum BooleanValue implements InterpreterValue {
 
-    public static final BooleanValue TRUE = new BooleanValue(true);
-    public static final BooleanValue FALSE = new BooleanValue(false);
+    TRUE(true), FALSE(false);
+
+    // *******************************
+    // statics
 
     public static BooleanValue from(boolean b) {
         if(b) return TRUE;
@@ -27,11 +29,11 @@ public class BooleanValue implements InterpreterValue {
 
 
     // *******************************
-
+    // boolean functionality
 
     private final boolean value;
 
-    private BooleanValue(boolean value) {
+    BooleanValue(boolean value) {
         this.value = value;
     }
 
