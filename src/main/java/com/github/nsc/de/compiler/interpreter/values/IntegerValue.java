@@ -62,12 +62,11 @@ public class IntegerValue implements InterpreterValue {
     // implementations for extended InterpreterValue
     // >> number-operations
 
-
     /**
      * This function gets executed when the operator '+' is used on the integer
      *
-     * @param v The Value to add to this value
-     * @return The Calculation-Result
+     * @param v The value to add to this value
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -85,14 +84,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '+' is not defined for type integer and " + v.getName());
-    }
 
+    }
 
     /**
      * This function gets executed when the operator '-' is used on the integer
      *
-     * @param v The Value to sub from this value
-     * @return The Calculation-Result
+     * @param v The value to sub from this value
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -110,14 +109,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '-' is not defined for type integer and " + v.getName());
-    }
 
+    }
 
     /**
      * This function gets executed when the operator '*' is used on the integer
      *
-     * @param v The Value to multiply with this value
-     * @return The Calculation-Result
+     * @param v The value to multiply with this value
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -135,13 +134,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '*' is not defined for type integer and " + v.getName());
+
     }
 
     /**
      * This function gets executed when the operator '/' is used on the integer
      *
      * @param v The divisor-value
-     * @return The Calculation-Result
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -159,13 +159,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '/' is not defined for type integer and " + v.getName());
+
     }
 
     /**
      * This function gets executed when the operator '%' is used on the integer
      *
      * @param v The divisor-value
-     * @return The Calculation-Result
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -183,13 +184,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '%' is not defined for type integer and " + v.getName());
+
     }
 
     /**
      * This function gets executed when the operator '**' is used on the integer
      *
      * @param v The exponent value
-     * @return The Calculation-Result
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -207,6 +209,7 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '**' is not defined for type integer and " + v.getName());
+
     }
 
 
@@ -219,7 +222,7 @@ public class IntegerValue implements InterpreterValue {
      * This function gets executed when the operator '==' is used on the integer
      *
      * @param v The value that should be the same
-     * @return The Calculation-Result
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -236,13 +239,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '==' is not defined for type integer and " + v.getName());
+
     }
 
     /**
      * This function gets executed when the operator '>=' is used on the integer
      *
      * @param v The value that should be smaller
-     * @return The Calculation-Result
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -259,13 +263,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '>=' is not defined for type integer and " + v.getName());
+
     }
 
     /**
      * This function gets executed when the operator '<=' is used on the integer
      *
      * @param v The value that should be bigger
-     * @return The Calculation-Result
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -282,13 +287,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '<=' is not defined for type integer and " + v.getName());
+
     }
 
     /**
      * This function gets executed when the operator '>' is used on the integer
      *
      * @param v The value that should be smaller or equal
-     * @return The Calculation-Result
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -305,13 +311,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '>' is not defined for type integer and " + v.getName());
+
     }
 
     /**
      * This function gets executed when the operator '<' is used on the integer
      *
      * @param v The value that should be bigger or equal
-     * @return The Calculation-Result
+     * @return The calculation-result
      *
      * @author Nicolas Schmidt
      */
@@ -328,13 +335,14 @@ public class IntegerValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '<' is not defined for type integer and " + v.getName());
+
     }
 
 
 
     // *******************************
     // implementations for extended InterpreterValue
-    // >> get-normal
+    // >> get-name
 
     /**
      * Returns the name of the type of {@link InterpreterValue} (To identify the type of value)
@@ -356,9 +364,9 @@ public class IntegerValue implements InterpreterValue {
     // Override toString()
 
     /**
-     * Returns the string representation of the {@link BooleanValue}
+     * Returns the string representation of the {@link IntegerValue}
      *
-     * @return the string representation of the {@link BooleanValue}
+     * @return the string representation of the {@link IntegerValue}
      *
      * @author Nicolas Schmidt
      */
