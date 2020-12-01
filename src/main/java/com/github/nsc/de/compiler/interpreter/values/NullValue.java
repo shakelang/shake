@@ -1,25 +1,74 @@
 package com.github.nsc.de.compiler.interpreter.values;
 
-public class NullValue implements InterpreterValue {
+/**
+ * null / undefined variable {@link InterpreterValue} for variables
+ *
+ * @author Nicolas Schmidt
+ */
+public enum NullValue implements InterpreterValue {
 
-    public static final NullValue NULL = new NullValue();
-    
-    private NullValue() {}
 
+
+    // *******************************
+    // Values
+
+    /**
+     * NULL (null / undefined)
+     */
+    NULL();
+
+    /**
+     * This function gets executed when the operator '==' is used on the value
+     *
+     * @param v The value that should be the same
+     * @return The Calculation-Result
+     *
+     * @author Nicolas Schmidt
+     */
     @Override
     public InterpreterValue equals(InterpreterValue v) {
-        // TODO compare null with object
+        // If the given value to compare is equal to null than return true
+        // if not return false
         if(v instanceof NullValue) return BooleanValue.TRUE;
-        throw new Error("Operator '==' is not defined for null and " + v.getName());
+        return BooleanValue.FALSE;
     }
 
+
+
+    // *******************************
+    // implementations for extended InterpreterValue
+    // >> get-name
+
+    /**
+     * Returns the name of the type of {@link InterpreterValue} (To identify the type of value)
+     * For {@link NullValue} it just always returns "null"
+     *
+     * @return "null"
+     *
+     * @author Nicolas Schmidt
+     */
     @Override
     public String getName() {
+        // just return "null"
         return "null";
     }
 
+
+
+    // *******************************
+    // Override toString()
+
+    /**
+     * Returns the string representation of the {@link NullValue}
+     * For {@link NullValue} it just always returns "null"
+     *
+     * @return "null"
+     *
+     * @author Nicolas Schmidt
+     */
     @Override
     public String toString() {
+        // just return "null"
         return "null";
     }
 }
