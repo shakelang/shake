@@ -61,10 +61,9 @@ public class NullValueTest {
 
 
     @Test
-    public void testEqualsEquals() {
+    public void testEquals() {
         assertEquals(TRUE, NULL.equals(NULL));
-        Error error = assertThrows(Error.class, () -> NULL. equals(FALSE));
-        assertEquals("Operator '==' is not defined for null and boolean", error.getMessage());
+        assertEquals(FALSE, NULL.equals(FALSE));
     }
 
     @Test
