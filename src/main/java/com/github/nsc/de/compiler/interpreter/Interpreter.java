@@ -374,7 +374,7 @@ public class Interpreter {
         }
 
         Class cls = new Class(n.getName(), statics, fields.toArray(new VariableDeclarationNode[] {}), scope, this, prototype,
-                n.getAccess(), n.isInClass(), n.isStatic(), n.isFinal());
+                n.getAccess(), n.isFinal());
 
         scope.getVariables().declare(n.getName(), Class.class);
         scope.getVariables().get(n.getName()).setValue(cls);

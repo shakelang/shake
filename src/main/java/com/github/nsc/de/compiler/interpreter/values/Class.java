@@ -16,13 +16,11 @@ public class Class implements InterpreterValue {
     private final Scope scope;
     private final Interpreter interpreter;
     private final AccessDescriber access;
-    private final boolean isInClass;
-    private final boolean isStatic;
     private final boolean isFinal;
 
 
     public Class(String name, VariableList statics, VariableDeclarationNode[] fields, Scope scope, Interpreter interpreter,
-                 VariableList prototype, AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+                 VariableList prototype, AccessDescriber access, boolean isFinal) {
         this.name = name;
         this.statics = statics;
         this.fields = fields;
@@ -30,8 +28,6 @@ public class Class implements InterpreterValue {
         this.interpreter = interpreter;
         this.prototype = prototype;
         this.access = access;
-        this.isInClass = isInClass;
-        this.isStatic = isStatic;
         this.isFinal = isFinal;
     }
 
@@ -50,8 +46,6 @@ public class Class implements InterpreterValue {
     public Scope getScope() {
         return scope;
     }
-    public boolean isInClass() { return isInClass; }
-    public boolean isStatic() { return isStatic; }
     public boolean isFinal() { return isFinal; }
 
     @Override
@@ -64,7 +58,6 @@ public class Class implements InterpreterValue {
     public String toString() {
         return "Class{" +
                 "access=" + access +
-                ", isStatic=" + isStatic +
                 ", isFinal=" + isFinal +
                 '}';
     }
