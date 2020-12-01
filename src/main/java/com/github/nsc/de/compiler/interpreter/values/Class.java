@@ -9,6 +9,8 @@ import com.github.nsc.de.compiler.parser.node.variables.VariableDeclarationNode;
 
 import java.util.Arrays;
 
+
+
 /**
  * An {@link InterpreterValue} to store class-declarations
  *
@@ -178,7 +180,7 @@ public class Class implements InterpreterValue {
      * @author Nicolas Schmidt
      */
     public boolean isFinal() {
-        // just return the isFinal boolean
+        // just return isFinal
         return this.isFinal;
     }
 
