@@ -49,7 +49,7 @@ public class Variable implements InterpreterValue {
     public void setValue(InterpreterValue value) {
         this.value = value;
     }
-    public boolean hasValue() { return this.value == null; }
+    public boolean hasValue() { return this.value != null; }
 
     @Override
     public InterpreterValue add(InterpreterValue v) {
