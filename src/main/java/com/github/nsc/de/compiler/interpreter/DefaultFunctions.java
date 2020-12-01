@@ -30,7 +30,7 @@ public class DefaultFunctions {
     private static class Print extends Function {
 
         public Print(Interpreter interpreter) {
-            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, false, false, true);
+            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, true);
         }
 
         @Override
@@ -46,7 +46,7 @@ public class DefaultFunctions {
     private static class Println extends Function {
 
         public Println(Interpreter interpreter) {
-            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, false, false, true);
+            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, true);
         }
 
         @Override
@@ -62,7 +62,7 @@ public class DefaultFunctions {
     private static class Exit extends Function {
 
         public Exit(Interpreter interpreter) {
-            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, false, false, true);
+            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, true);
         }
 
         @Override
