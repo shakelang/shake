@@ -284,8 +284,7 @@ public class Interpreter {
 
     public Function createFunctionDeclaration(FunctionDeclarationNode node, Scope scope) {
 
-        return new Function(node.getArgs(), node.getBody(), scope, this, node.getAccess(),
-                node.isInClass(), node.isStatic(), node.isFinal());
+        return new Function(node.getArgs(), node.getBody(), scope, this, node.getAccess(), node.isFinal());
 
     }
 
@@ -373,8 +372,8 @@ public class Interpreter {
             }
         }
 
-        Class cls = new Class(n.getName(), statics, fields.toArray(new VariableDeclarationNode[] {}), scope, this, prototype,
-                n.getAccess(), n.isFinal());
+        Class cls = new Class(n.getName(), statics, fields.toArray(new VariableDeclarationNode[] {}), scope,
+                this, prototype, n.getAccess(), n.isFinal());
 
         scope.getVariables().declare(n.getName(), Class.class);
         scope.getVariables().get(n.getName()).setValue(cls);
