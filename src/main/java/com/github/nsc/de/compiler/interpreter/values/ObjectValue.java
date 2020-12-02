@@ -60,10 +60,15 @@ public class ObjectValue implements InterpreterValue {
         for(VariableDeclarationNode node : parent.getFields()) {
 
             // declare the field inside of the this_object
-            this.this_object.declare(node.getName(), Function.class);
+            this.this_object.declare(node.getName(), VariableType.valueOf(node.getType()));
 
-            // set the field value
-            this.this_object.get(node.getName()).setValue(parent.getInterpreter().visit(node, scope));
+            // set the field value (if given)
+            if(node.getAssignment() != null)
+                this.this_object.get(node.getName())
+                    .setValue(parent.getInterpreter().visit(
+                            node.getAssignment().getValue(), // << the value that is assigned to the variable
+                            scope // << The class-scope
+                    ));
 
         }
     }
@@ -124,7 +129,6 @@ public class ObjectValue implements InterpreterValue {
     // *******************************
     // implementations for extended InterpreterValue
     // >> get-name
-
 
     /**
      * Returns the name of the type of {@link InterpreterValue} (To identify the type of value)

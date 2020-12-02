@@ -1,8 +1,5 @@
 package com.github.nsc.de.compiler.interpreter;
 
-import com.github.nsc.de.compiler.interpreter.values.DoubleValue;
-import com.github.nsc.de.compiler.interpreter.values.Function;
-import com.github.nsc.de.compiler.interpreter.values.IntegerValue;
 import com.github.nsc.de.compiler.interpreter.values.InterpreterValue;
 
 import java.util.Collections;
@@ -29,15 +26,10 @@ public class VariableList implements InterpreterValue {
     }
 
     public boolean declare(String name, Class<? extends InterpreterValue> type) {
-        if(this.parentList == null) {
-            if (this.variables.containsKey(name)) return false;
-            this.variables.put(name, new Variable(name, type));
-            return true;
-        } else {
-            boolean answer = this.parentList.declare(name, type);
-            if(answer) this.variables.put(name, this.parentList.get(name));
-            return answer;
-        }
+
+        if (this.variables.containsKey(name)) return false;
+        this.variables.put(name, new Variable(name, type));
+        return true;
 
     }
 
