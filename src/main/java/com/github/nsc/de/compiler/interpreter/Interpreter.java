@@ -391,7 +391,7 @@ public class Interpreter {
         if(v instanceof Class) cls = (Class) v;
         else if(v instanceof Variable) cls = (Class) ((Variable) v).getValue();
         else throw new Error("Seems to be not a class");
-        return new ObjectValue(cls, scope);
+        return new ObjectValue(cls);
 
     }
 
