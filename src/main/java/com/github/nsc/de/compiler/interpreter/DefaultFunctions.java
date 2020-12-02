@@ -1,5 +1,6 @@
 package com.github.nsc.de.compiler.interpreter;
 
+import com.github.nsc.de.compiler.interpreter.values.*;
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
@@ -16,9 +17,9 @@ public class DefaultFunctions {
     public static VariableList getFunctions(Interpreter interpreter) {
         HashMap<String, Variable> functions = new HashMap<>();
 
-        functions.put("print", new Variable("print", VariableType.FUNCTION, new Print(interpreter)));
-        functions.put("println", new Variable("println", VariableType.FUNCTION, new Println(interpreter)));
-        functions.put("exit", new Variable("println", VariableType.FUNCTION, new Exit(interpreter)));
+        functions.put("print", new Variable("print", Function.class, new Print(interpreter)));
+        functions.put("println", new Variable("println", Function.class, new Println(interpreter)));
+        functions.put("exit", new Variable("println", Function.class, new Exit(interpreter)));
 
         return new VariableList(functions);
     }
@@ -29,7 +30,7 @@ public class DefaultFunctions {
     private static class Print extends Function {
 
         public Print(Interpreter interpreter) {
-            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, false, false, true);
+            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, true);
         }
 
         @Override
@@ -45,7 +46,7 @@ public class DefaultFunctions {
     private static class Println extends Function {
 
         public Println(Interpreter interpreter) {
-            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, false, false, true);
+            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, true);
         }
 
         @Override
@@ -61,7 +62,7 @@ public class DefaultFunctions {
     private static class Exit extends Function {
 
         public Exit(Interpreter interpreter) {
-            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, false, false, true);
+            super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, true);
         }
 
         @Override
@@ -69,9 +70,9 @@ public class DefaultFunctions {
             if(node.getArgs().length > 1) throw new Error("Expecting 0-1 args for the exit function");
             else if(node.getArgs().length == 0) System.exit(0);
             else {
-                Object i = getInterpreter().visit(node.getArgs()[0], scope).getValue();
-                if(i instanceof Integer) System.exit((Integer) i);
-                else if(i instanceof Double) System.exit((int)(double)(Double) i);
+                InterpreterValue i = getInterpreter().visit(node.getArgs()[0], scope);
+                if(i instanceof IntegerValue) System.exit(((IntegerValue) i).getValue());
+                else if(i instanceof DoubleValue) System.exit((int)((DoubleValue) i).getValue());
                 else throw new Error("Expecting an integer as argument for the exit function");
             }
         }
@@ -88,9 +89,9 @@ public class DefaultFunctions {
     private static String formatPrintArgs(FunctionCallNode node, Interpreter interpreter, Scope scope) {
         StringBuilder out = new StringBuilder();
         for(int i = 0; i < node.getArgs().length-1; i++) {
-            out.append(interpreter.visit(node.getArgs()[i], scope).getValue()).append(", ");
+            out.append(interpreter.visit(node.getArgs()[i], scope).toString()).append(", ");
         }
-        if(node.getArgs().length > 0) out.append(interpreter.visit(node.getArgs()[node.getArgs().length - 1], scope).getValue());
+        if(node.getArgs().length > 0) out.append(interpreter.visit(node.getArgs()[node.getArgs().length - 1], scope).toString());
         return out.toString();
     }
 }

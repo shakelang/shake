@@ -1,0 +1,3 @@
+// test basic variable-type integer
+int i = 0;
+i;

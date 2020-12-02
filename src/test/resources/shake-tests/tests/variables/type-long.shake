@@ -1,0 +1,3 @@
+// test basic variable-type long
+long l = 0;
+l;

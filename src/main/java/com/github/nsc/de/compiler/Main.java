@@ -22,7 +22,7 @@ public class Main {
             String code = s.nextLine();
             try {
                 System.out.println(" >> " + run("<stdin>", code));
-            } catch (Error e) {
+            } catch (Exception | Error e) {
                 System.err.println(" >> Error occurred while running your code: ");
                 System.err.println(e.getMessage());
                 e.printStackTrace();
@@ -40,6 +40,6 @@ public class Main {
         Parser parser = new Parser(tokens);
         Node tree = parser.parse();
         System.out.printf("[DEBUG] Parser Tree: %s%n", tree.toString());
-        return interpreter.visit(tree).getValue();
+        return interpreter.visit(tree);
     }
 }

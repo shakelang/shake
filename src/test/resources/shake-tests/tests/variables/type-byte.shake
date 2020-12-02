@@ -1,0 +1,3 @@
+// test basic variable-type byte
+byte b = 0;
+b;
