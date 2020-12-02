@@ -15,3 +15,9 @@ variables/type-double
 variables/type-boolean
 variables/incr
 variables/decr
+variables/assign
+variables/assign-add
+variables/assign-sub
+variables/assign-mul
+variables/assign-div
+variables/assign-pow
