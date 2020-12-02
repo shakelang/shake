@@ -1,12 +1,15 @@
 package com.github.nsc.de.compiler.interpreter;
 
+import com.github.nsc.de.compiler.interpreter.values.DoubleValue;
+import com.github.nsc.de.compiler.interpreter.values.Function;
+import com.github.nsc.de.compiler.interpreter.values.IntegerValue;
 import com.github.nsc.de.compiler.interpreter.values.InterpreterValue;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VariableList {
+public class VariableList implements InterpreterValue {
 
     private final HashMap<String, Variable> variables;
     private final VariableList parentList;
@@ -71,4 +74,47 @@ public class VariableList {
 
     }
 
+    /**
+     * This function gets executed when getting a child (variable.child)
+     *
+     * @param c the child to get
+     * @return the child variable
+     * @author Nicolas Schmidt
+     */
+    @Override
+    public Variable getChild(String c) {
+        // just get the child
+        return this.get(c);
+    }
+
+    /**
+     * Returns the name of the type of {@link InterpreterValue} (To identify the type of value)
+     * For {@link VariableList} it just always returns "variable_list"
+     *
+     * @return the name of the {@link InterpreterValue}
+     * @author Nicolas Schmidt
+     */
+    @Override
+    public String getName() {
+        // just return "variable_list"
+        return "variable_list";
+    }
+
+
+
+    // *******************************
+    // Override toString()
+
+    /**
+     * Returns the string representation of the {@link VariableList}
+     *
+     * @return the string representation of the {@link VariableList}
+     *
+     * @author Nicolas Schmidt
+     */
+    @Override
+    public String toString() {
+        // just create a string out of the properties of the VariableList
+        return String.format("{variables=%s,parentList=%s}", this.variables, this.parentList);
+    }
 }
