@@ -1,1 +1,2 @@
-simple-calc
+calc-int
+calc-double

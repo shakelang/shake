@@ -24,7 +24,7 @@ public class ShakeTests {
     @ParameterizedTest
     @MethodSource("testStream")
     public void interpreterTests(ShakeTest test) {
-        System.out.println("Running test \"%s\"...");
+        System.out.println(String.format("Running test \"%s\"...", test.getName()));
         assertEquals(test.getResult(), run(test.getSourceFile(), test.getCode()).toString());
     }
 
@@ -35,7 +35,7 @@ public class ShakeTests {
             list.add(new ShakeTest(reader.nextLine()));
 
         }
-        return Stream.of(new ShakeTest("simple-calc"));
+        return Stream.of(list.toArray(new ShakeTest[] {}));
     }
 
     public InterpreterValue run(String source, String code) {
@@ -91,6 +91,10 @@ public class ShakeTests {
             return ret.toString();
         }
 
+        @Override
+        public String toString() {
+            return getName();
+        }
     }
 
 }
