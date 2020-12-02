@@ -87,7 +87,7 @@ public class ShakeTests {
             while (reader.hasNextLine()) {
                 ret.append(reader.nextLine()).append('\n');
             }
-            ret.setLength(ret.length() - 1);
+            if(ret.length() > 0) ret.setLength(ret.length() - 1);
 
             reader.close();
             return ret.toString();

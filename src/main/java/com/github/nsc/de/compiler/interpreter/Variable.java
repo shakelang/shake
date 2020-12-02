@@ -126,12 +126,18 @@ public class Variable implements InterpreterValue {
 
     @Override
     public String toString() {
+
+        // TODO This is a quick-fix to not create a stack-overflow when converting an object to a string
+        return this.getName();
+
+        /*
         return "Variable{" +
                 "identifier='" + identifier + '\'' +
                 ", type=" + type +
                 ", access=" + access +
                 ", value=" + value +
                 '}';
+         */
     }
 
     /**

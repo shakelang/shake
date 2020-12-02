@@ -1,0 +1,5 @@
+// Declare some class and use it
+
+class TestClass { int x = 10 }
+const test = new TestClass();
+test.x;

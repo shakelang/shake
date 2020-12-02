@@ -21,3 +21,6 @@ variables/assign-sub
 variables/assign-mul
 variables/assign-div
 variables/assign-pow
+classes/class-declaration
+classes/class-field-use
+classes/class-initialisation

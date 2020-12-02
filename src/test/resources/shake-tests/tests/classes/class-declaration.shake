@@ -1,0 +1,14 @@
+// Declare some class
+
+class TestClass {
+
+  int i = 0;
+  static int stat = 21;
+
+  function testFunction() {
+    i++;
+  }
+
+}
+
+TestClass.stat;
