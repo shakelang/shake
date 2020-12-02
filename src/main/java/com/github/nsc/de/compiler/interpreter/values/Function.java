@@ -74,6 +74,19 @@ public class Function implements InterpreterValue {
         this.isFinal = isFinal;
     }
 
+    /**
+     * Returns the same function, but you can declare what {@link Scope} ({@link #scope}) to use (for class declarations)
+     *
+     * @param scope the scope to use
+     * @return the {@link Function} using the specified {@link Scope} ({@link #scope})
+     *
+     * @author Nicolas Schmidt
+     */
+    public Function withScope(Scope scope) {
+        // Return a new Function with the same argument as this one, just replace the scope
+        return new Function(args, body, scope, interpreter, access, isFinal);
+    }
+
 
 
     // *******************************

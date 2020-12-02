@@ -34,11 +34,17 @@ public class VariableList implements InterpreterValue {
     }
 
     public Variable get(String name) {
-        return variables.get(name);
+        if(variables.containsKey(name)) return variables.get(name);
+        else if (this.getParentList() != null) return this.getParentList().get(name);
+        return null; // << The variable is not declared
     }
 
     public Map<String, Variable> getVariables() {
         return Collections.unmodifiableMap(variables);
+    }
+
+    public VariableList getParentList() {
+        return parentList;
     }
 
     VariableList concat(VariableList list) {
@@ -108,5 +114,39 @@ public class VariableList implements InterpreterValue {
     public String toString() {
         // just create a string out of the properties of the VariableList
         return String.format("{variables=%s,parentList=%s}", this.variables, this.parentList);
+    }
+
+    public VariableList withScope(Scope scope) {
+        return new ScopeVariableList(this.variables, this.parentList, scope);
+    }
+
+    public static class ScopeVariableList extends VariableList {
+
+        private Scope scope;
+
+        public ScopeVariableList(HashMap<String, Variable> variables, VariableList parentList, Scope scope) {
+            super(variables, parentList);
+            this.scope = scope;
+        }
+
+        @Override
+        public Variable get(String name) {
+            return super.getVariables().get(name).withScope(this.scope);
+        }
+
+        @Override
+        public Map<String, Variable> getVariables() {
+            Map<String, Variable> variableMap = new HashMap<>();
+            super.getVariables().forEach((String key, Variable value) -> variableMap.put(key, value.withScope(this.scope)));
+            return variableMap;
+        }
+
+        public Scope getScope() {
+            return scope;
+        }
+
+        public void setScope(Scope scope) {
+            this.scope = scope;
+        }
     }
 }

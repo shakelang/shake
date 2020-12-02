@@ -19,6 +19,11 @@ public class ObjectValue implements InterpreterValue {
     // fields
 
     /**
+     * The parent class of the object
+     */
+    private final Class parent;
+
+    /**
      * The scope inside of the class (for functions in the class)
      */
     private Scope scope;
@@ -42,12 +47,21 @@ public class ObjectValue implements InterpreterValue {
      */
     public ObjectValue(Class parent) {
 
+        // set the parent
+        this.parent = parent;
+
         // Create this_object (extending the prototype from the parent)
-        this.this_object = new VariableList(new HashMap<>(), parent.getPrototype());
+        //
+        // We use null as withScope parameter, this will be replaced later,
+        // but we don't have the scope at this point of the code.
+        this.this_object = new VariableList(new HashMap<>(), parent.getPrototype().withScope(null));
 
         // Create scope for inside of the class
         this.scope = new Scope(parent.getScope(), this_object);
 
+        // replace the "withScope" scope
+        // we do this here because the scope was not declared when we declared the this_object
+        ((VariableList.ScopeVariableList) this_object.getParentList()).setScope(scope);
 
         // Declare this keyword inside of the this_object
         this.this_object.declare("this", VariableList.class);
@@ -77,6 +91,17 @@ public class ObjectValue implements InterpreterValue {
 
     // *******************************
     // getters
+
+    /**
+     * Getter for {@link #parent} (the parent class)
+     *
+     * @return the parent class (this.{@link #parent})
+     *
+     * @author Nicolas Schmidt
+     */
+    public Class getParent() {
+        return parent;
+    }
 
     /**
      * Getter for {@link #scope} (the scope inside of the class)
@@ -120,7 +145,7 @@ public class ObjectValue implements InterpreterValue {
     public Variable getChild(String c) {
         // it the required value does not exist throw an error
         // in other case return the required value
-        if(!getThisObject().get(c).hasValue()) throw new Error(String.format("Object has no property called %s", c));
+        if(getThisObject().get(c) == null || !getThisObject().get(c).hasValue()) throw new Error(String.format("Object has no property called \"%s\"", c));
         return getThisObject().get(c);
     }
 
@@ -142,5 +167,14 @@ public class ObjectValue implements InterpreterValue {
     public String getName() {
         // just return "object"
         return "object";
+    }
+
+    @Override
+    public String toString() {
+        return "ObjectValue{" +
+                "parent=" + parent +
+                ", scope=" + scope +
+                ", this_object=" + this_object +
+                '}';
     }
 }

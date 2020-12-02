@@ -95,6 +95,19 @@ public class Class implements InterpreterValue {
         this.isFinal = isFinal;
     }
 
+    /**
+     * Returns the same class, but you can declare what {@link Scope} ({@link #scope}) to use (for class declarations)
+     *
+     * @param scope the scope to use
+     * @return the {@link Class} using the specified {@link Scope} ({@link #scope})
+     *
+     * @author Nicolas Schmidt
+     */
+    public Class withScope(Scope scope) {
+        // Return a new Function with the same argument as this one, just replace the scope
+        return new Class(name, statics, fields, scope, interpreter, prototype, access, isFinal);
+    }
+
 
 
     // *******************************
@@ -202,7 +215,7 @@ public class Class implements InterpreterValue {
     public Variable getChild(String c) {
         // If the child does not exist throw an error
         // in other case return the child
-        if(!getStatics().get(c).hasValue()) throw new Error(String.format("Class \"%s\" has no property called %s", getClassName(), c));
+        if(getStatics().get(c) == null || !getStatics().get(c).hasValue()) throw new Error(String.format("Class \"%s\" has no property called %s", getClassName(), c));
         return getStatics().get(c);
     }
 

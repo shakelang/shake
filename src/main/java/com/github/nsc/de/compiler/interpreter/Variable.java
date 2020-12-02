@@ -1,5 +1,6 @@
 package com.github.nsc.de.compiler.interpreter;
 
+import com.github.nsc.de.compiler.interpreter.values.Function;
 import com.github.nsc.de.compiler.interpreter.values.InterpreterValue;
 import com.github.nsc.de.compiler.interpreter.values.NullValue;
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
@@ -121,5 +122,26 @@ public class Variable implements InterpreterValue {
 
     public Variable copy() {
         return new Variable(this.identifier, this.type, this.access, this.value);
+    }
+
+    /**
+     * Returns the same variable, but you can declare what {@link Scope} to use (for class declarations)
+     *
+     * @param scope the scope to use
+     * @return the {@link Function} using the specified {@link Scope}
+     *
+     * @author Nicolas Schmidt
+     */
+    public Variable withScope(Scope scope) {
+        return new Variable(identifier, type, access, useScope(value, scope));
+    }
+
+    private static InterpreterValue useScope(InterpreterValue v, Scope scope) {
+        if(v instanceof Variable) return ((Variable) v).withScope(scope);
+        if(v instanceof VariableList) return ((VariableList) v).withScope(scope);
+        if(v instanceof Function) return ((Function) v).withScope(scope);
+        if(v instanceof com.github.nsc.de.compiler.interpreter.values.Class)
+            return ((com.github.nsc.de.compiler.interpreter.values.Class) v).withScope(scope);
+        return v;
     }
 }
