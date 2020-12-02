@@ -13,3 +13,5 @@ variables/type-long
 variables/type-float
 variables/type-double
 variables/type-boolean
+variables/incr
+variables/decr

@@ -1,0 +1,3 @@
+// test basic variable increase
+var i = 0;
+i++;

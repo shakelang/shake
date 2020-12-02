@@ -1,2 +1,3 @@
-dynamic i = 0;
-i;
+// test basic variable-type dynamic
+dynamic d = 0;
+d;

@@ -1,2 +1,3 @@
+// test basic variable-type var
 var i = 0;
 i;
