@@ -2,3 +2,14 @@ math/calc-int
 math/calc-double
 functions/simple-function
 functions/argument-function
+variables/type-let
+variables/type-dynamic
+variables/type-var
+variables/type-const
+variables/type-byte
+variables/type-short
+variables/type-int
+variables/type-long
+variables/type-float
+variables/type-double
+variables/type-boolean
