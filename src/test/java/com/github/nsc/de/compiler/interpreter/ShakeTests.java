@@ -24,7 +24,7 @@ public class ShakeTests {
     @ParameterizedTest
     @MethodSource("testStream")
     public void interpreterTests(ShakeTest test) {
-        System.out.println(String.format("Running test \"%s\"...", test.getName()));
+        System.out.printf("Running test \"%s\"...%n", test.getName());
         assertEquals(test.getResult(), run(test.getSourceFile(), test.getCode()).toString());
     }
 
@@ -84,9 +84,11 @@ public class ShakeTests {
         private static String readFile(File f) throws FileNotFoundException {
             Scanner reader = new Scanner(f);
             StringBuilder ret = new StringBuilder();
-            while (reader.hasNext()) {
-                ret.append(reader.next());
+            while (reader.hasNextLine()) {
+                ret.append(reader.nextLine()).append('\n');
             }
+            ret.setLength(ret.length() - 1);
+
             reader.close();
             return ret.toString();
         }
