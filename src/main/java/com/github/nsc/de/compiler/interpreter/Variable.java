@@ -124,6 +124,16 @@ public class Variable implements InterpreterValue {
         return new Variable(this.identifier, this.type, this.access, this.value);
     }
 
+    @Override
+    public String toString() {
+        return "Variable{" +
+                "identifier='" + identifier + '\'' +
+                ", type=" + type +
+                ", access=" + access +
+                ", value=" + value +
+                '}';
+    }
+
     /**
      * Returns the same variable, but you can declare what {@link Scope} to use (for class declarations)
      *
