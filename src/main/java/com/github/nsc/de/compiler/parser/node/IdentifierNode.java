@@ -22,4 +22,12 @@ public class IdentifierNode implements ValuedNode {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "IdentifierNode{" +
+                "parent=" + parent +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
