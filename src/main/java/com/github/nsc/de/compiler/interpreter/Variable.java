@@ -12,6 +12,8 @@ public class Variable implements InterpreterValue {
     private final AccessDescriber access;
     private InterpreterValue value;
 
+    private boolean toString = false;
+
     public Variable(String identifier, Class<? extends InterpreterValue> type, AccessDescriber access, InterpreterValue value) {
         if(type == null) throw new Error("Variable type must not be null!");
         this.identifier = identifier;
@@ -127,17 +129,25 @@ public class Variable implements InterpreterValue {
     @Override
     public String toString() {
 
-        // TODO This is a quick-fix to not create a stack-overflow when converting an object to a string
-        return this.getName();
+        // Prevent infinite recursion
+        if(!toString) {
 
-        /*
-        return "Variable{" +
-                "identifier='" + identifier + '\'' +
-                ", type=" + type +
-                ", access=" + access +
-                ", value=" + value +
-                '}';
-         */
+            toString = true;
+
+            String ret =  "Variable{" +
+                    "identifier='" + identifier + '\'' +
+                    ", type=" + type +
+                    ", access=" + access +
+                    ", value=" + value +
+                    '}';
+
+            toString = false;
+            return ret;
+
+        }
+        else {
+            return "Variable{identifier='" + identifier + "', ...}";
+        }
     }
 
     /**
