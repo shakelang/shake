@@ -17,9 +17,9 @@ public class DefaultFunctions {
     public static VariableList getFunctions(Interpreter interpreter) {
         HashMap<String, Variable> functions = new HashMap<>();
 
-        functions.put("print", new Variable("print", Function.class, new Print(interpreter)));
-        functions.put("println", new Variable("println", Function.class, new Println(interpreter)));
-        functions.put("exit", new Variable("println", Function.class, new Exit(interpreter)));
+        functions.put("print", new Variable<Function>("print", new Print(interpreter)));
+        functions.put("println", new Variable<Function>("println", new Println(interpreter)));
+        functions.put("exit", new Variable<Function>("println", new Exit(interpreter)));
 
         return new VariableList(functions);
     }

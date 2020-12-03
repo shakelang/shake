@@ -2,6 +2,7 @@ package com.github.nsc.de.compiler.interpreter.values;
 
 import com.github.nsc.de.compiler.interpreter.Interpreter;
 import com.github.nsc.de.compiler.interpreter.Scope;
+import com.github.nsc.de.compiler.interpreter.Variable;
 import com.github.nsc.de.compiler.parser.node.AccessDescriber;
 import com.github.nsc.de.compiler.parser.node.Tree;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionArgumentNode;
@@ -200,7 +201,7 @@ public class Function implements InterpreterValue {
             // [Example]
             // >> function( i ) { ... } // will work
             //
-            function_scope.getScopeVariables().declare(this.getArgs()[i].getName(), InterpreterValue.class);
+            function_scope.getScopeVariables().declare(new Variable(this.getArgs()[i].getName()));
 
             // Set the variable to the value that is given (we use the interpreter to visit the given argument)
             //

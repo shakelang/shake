@@ -2,7 +2,6 @@ package com.github.nsc.de.compiler.interpreter;
 
 import com.github.nsc.de.compiler.interpreter.values.*;
 import com.github.nsc.de.compiler.interpreter.values.Class;
-import com.github.nsc.de.compiler.interpreter.values.VariableType;
 import com.github.nsc.de.compiler.parser.node.*;
 import com.github.nsc.de.compiler.parser.node.expression.*;
 import com.github.nsc.de.compiler.parser.node.functions.FunctionCallNode;
@@ -123,7 +122,7 @@ public class Interpreter {
 
 
     public InterpreterValue visitVariableDeclarationNode(VariableDeclarationNode n, Scope scope) {
-        if(!scope.getScopeVariables().declare(n.getName(), VariableType.valueOf(n.getType()))) throw new Error("Variable is already defined");
+        if(!scope.getScopeVariables().declare(Variable.valueOf(n.getName(), n.getType()))) throw new Error("Variable is already defined");
         if(n.getAssignment() != null) return visitVariableAssignmentNode(n.getAssignment(), scope);
         else return NullValue.NULL;
     }
@@ -274,7 +273,7 @@ public class Interpreter {
 
     public Function visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
 
-        if(!scope.getVariables().declare(node.getName(), Function.class))
+        if(!scope.getVariables().declare(new Variable<Function>(node.getName())))
             throw new Error("'" + node.getName() + "' is already declared!");
         Function f = createFunctionDeclaration(node, scope);
         scope.getVariables().get(node.getName()).setValue(f);
@@ -326,7 +325,7 @@ public class Interpreter {
 
     public Class visitClassDeclarationNode(ClassDeclarationNode node, Scope scope) {
 
-        if(!scope.getVariables().declare(node.getName(), Function.class))
+        if(!scope.getVariables().declare(new Variable<Function>(node.getName())))
             throw new Error("'" + node.getName() + "' is already declared!");
         Class f = createClassDeclaration(node, scope);
         scope.getVariables().get(node.getName()).setValue(f);
@@ -343,21 +342,21 @@ public class Interpreter {
         // TODO 2 Declarations with the same name
         for(FunctionDeclarationNode node : n.getMethods()) {
             if(n.isStatic()) {
-                statics.declare(node.getName(), Function.class);
+                statics.declare(new Variable<Function>(node.getName()));
                 statics.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
             }
             else {
-                prototype.declare(node.getName(), Function.class);
+                prototype.declare(new Variable<Function>(node.getName()));
                 prototype.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
             }
         }
 
         for(ClassDeclarationNode node : n.getClasses()) {
             if(n.isStatic()) {
-                statics.declare(node.getName(), Class.class);
+                statics.declare(new Variable<Class>(node.getName()));
                 statics.get(node.getName()).setValue(createClassDeclaration(node, scope));
             } else {
-                prototype.declare(node.getName(), Class.class);
+                prototype.declare(new Variable<Class>(node.getName()));
                 prototype.get(node.getName()).setValue(createClassDeclaration(node, scope));
             }
         }
@@ -365,7 +364,7 @@ public class Interpreter {
         for(int i = 0; i < fields.size(); i++) {
             VariableDeclarationNode node = fields.get(i);
             if(node.isStatic()) {
-                statics.declare(node.getName(), VariableType.valueOf(node.getType()));
+                statics.declare(Variable.valueOf(node.getName(), node.getType()));
                 statics.get(node.getName()).setValue(visit(node.getAssignment().getValue(), scope)); // TODO Use Class Scope
                 fields.remove(i);
                 i--;
@@ -375,7 +374,7 @@ public class Interpreter {
         Class cls = new Class(n.getName(), statics, fields.toArray(new VariableDeclarationNode[] {}), scope,
                 this, prototype, n.getAccess(), n.isFinal());
 
-        scope.getVariables().declare(n.getName(), Class.class);
+        scope.getVariables().declare(new Variable<Class>(n.getName()));
         scope.getVariables().get(n.getName()).setValue(cls);
 
         return cls;

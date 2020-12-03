@@ -25,10 +25,10 @@ public class VariableList implements InterpreterValue {
         this(new HashMap<>());
     }
 
-    public boolean declare(String name, Class<? extends InterpreterValue> type) {
+    public boolean declare(Variable v) {
 
-        if (this.variables.containsKey(name)) return false;
-        this.variables.put(name, new Variable(name, type));
+        if (this.variables.containsKey(v.getIdentifier())) return false;
+        this.variables.put(v.getIdentifier(), v);
         return true;
 
     }
