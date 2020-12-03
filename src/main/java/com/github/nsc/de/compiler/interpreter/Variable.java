@@ -530,6 +530,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      */
     public static Variable<?> valueOf(String name, VariableType type) {
         switch (type.getType()) {
+
             // Return for all number-value types without decimal places the IntegerValue class
             case BYTE:
             case SHORT:
@@ -540,22 +541,26 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
             // Return for all number-value types with decimal places the DoubleValue class
             case FLOAT:
             case DOUBLE:
-                new Variable<DoubleValue>(name);
+                return new Variable<DoubleValue>(name);
 
             // For booleans just return the BooleanValue class
             case BOOLEAN:
-                new Variable<BooleanValue>(name);
+                return new Variable<BooleanValue>(name);
+
             // For Objects return the ObjectValue class
             case OBJECT:
-                new Variable<ObjectValue>(name); // TODO object-subtypes
+                return new Variable<ObjectValue>(name); // TODO object-subtypes
+
             // For Dynamic return the InterpreterValue class (as super-class of all
             // interpreter-values it can hold all of them)
             case DYNAMIC:
-                new Variable<>(name);
+                return new Variable<>(name);
+
             // TODO Char & Array are not implemented at the moment
             case CHAR:
             case ARRAY:
                 throw new Error("Not implemented yet");
+
         }
         throw new Error(String.format("Wrong input: %s", type.getType()));
     }

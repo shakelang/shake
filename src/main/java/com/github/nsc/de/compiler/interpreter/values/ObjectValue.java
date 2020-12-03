@@ -64,7 +64,7 @@ public class ObjectValue implements InterpreterValue {
         ((VariableList.ScopeVariableList) this_object.getParentList()).setScope(scope);
 
         // Declare this keyword inside of the this_object
-        this.this_object.declare("this", VariableList.class);
+        this.this_object.declare(new Variable<VariableList>("this"));
 
         // Set value of this keyword
         this.this_object.get("this").setValue(this_object);
@@ -74,7 +74,7 @@ public class ObjectValue implements InterpreterValue {
         for(VariableDeclarationNode node : parent.getFields()) {
 
             // declare the field inside of the this_object
-            this.this_object.declare(node.getName(), VariableType.valueOf(node.getType()));
+            this.this_object.declare(Variable.valueOf(node.getName(), node.getType()));
 
             // set the field value (if given)
             if(node.getAssignment() != null)
@@ -142,7 +142,7 @@ public class ObjectValue implements InterpreterValue {
      * @author Nicolas Schmidt
      */
     @Override
-    public Variable getChild(String c) {
+    public Variable<?> getChild(String c) {
         // it the required value does not exist throw an error
         // in other case return the required value
         if(getThisObject().get(c) == null || !getThisObject().get(c).hasValue()) throw new Error(String.format("Object has no property called \"%s\"", c));
