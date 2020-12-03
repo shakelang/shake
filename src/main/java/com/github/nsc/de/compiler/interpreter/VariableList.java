@@ -6,71 +6,211 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
+/**
+ * A list that contains variables
+ *
+ * @author Nicolas Schmidt
+ */
 public class VariableList implements InterpreterValue {
 
-    private final HashMap<String, Variable> variables;
+    /**
+     * The variables
+     */
+    private final Map<String, Variable> variables;
+
+    /**
+     * The parent list (or null, if the list hast no parent list)
+     */
     private final VariableList parentList;
 
-    public VariableList(HashMap<String, Variable> variables, VariableList parentList) {
+
+
+    // *******************************
+    // Constructors
+
+    /**
+     * Constructor for {@link VariableList}
+     *
+     * @param variables a map of the variables ({@link #variables})
+     * @param parentList the parent list
+     *
+     * @author Nicolas Schmidt
+     */
+    public VariableList(Map<String, Variable> variables, VariableList parentList) {
+        // apply values to fields
         this.variables = variables;
         this.parentList = parentList;
     }
 
+    /**
+     * Constructor for {@link VariableList}
+     *
+     * @param parentList the parent list
+     *
+     * @author Nicolas Schmidt
+     */
+    public VariableList(VariableList parentList) {
+        // apply values to fields
+        this.variables = new HashMap<>();
+        this.parentList = parentList;
+    }
+
+    /**
+     * Constructor for {@link VariableList}
+     *
+     * @param variables a map of the variables ({@link #variables})
+     *
+     * @author Nicolas Schmidt
+     */
     public VariableList(HashMap<String, Variable> variables) {
+        // apply given values to fields
         this.variables = variables;
         this.parentList = null;
     }
 
+    /**
+     * Constructor for {@link VariableList}
+     *
+     * @author Nicolas Schmidt
+     */
     public VariableList() {
-        this(new HashMap<>());
+        // apply values to fields
+        this.variables = new HashMap<>();
+        this.parentList = null;
     }
 
-    public boolean declare(Variable v) {
 
-        if (this.variables.containsKey(v.getIdentifier())) return false;
-        this.variables.put(v.getIdentifier(), v);
-        return true;
 
-    }
+    // *******************************
+    // getters
 
-    public Variable get(String name) {
-        if(variables.containsKey(name)) return variables.get(name);
-        else if (this.getParentList() != null) return this.getParentList().get(name);
-        return null; // << The variable is not declared
-    }
-
+    /**
+     * Getter for {@link #variables} (the variable map)
+     *
+     * @return the variable map (this.{@link #variables})
+     *
+     * @author Nicolas Schmidt
+     */
     public Map<String, Variable> getVariables() {
-        return Collections.unmodifiableMap(variables);
+        // just return the variables field
+        return variables;
     }
 
+    /**
+     * Getter for {@link #parentList} (the parent-list)
+     *
+     * @return the parent-list (this.{@link #parentList})
+     *
+     * @author Nicolas Schmidt
+     */
     public VariableList getParentList() {
+        // just return the parentList field
         return parentList;
     }
 
-    VariableList concat(VariableList list) {
-        HashMap<String, Variable> variables = new HashMap<>(this.variables);
-        for(Map.Entry<String, Variable> entry : list.getVariables().entrySet()) variables.put(entry.getKey(), entry.getValue());
-        return new VariableList(variables);
+
+
+    // *******************************
+    // VariableList functionality
+
+    /**
+     * Declare a {@link Variable}
+     *
+     * @param v the variable
+     * @return true, if the operation was successful, false if a with this name variable is already declared
+     *
+     * @author Nicolas Schmidt
+     */
+    public boolean declare(Variable v) {
+        // Check if the variable-map already contains a Variable with this name (if so return false).
+        // In other case put the variable into the map using the identifier as key and return true
+        if (this.variables.containsKey(v.getIdentifier())) return false;
+        this.variables.put(v.getIdentifier(), v);
+        return true;
     }
 
+    /**
+     * Get a variable from the {@link VariableList}
+     *
+     * @param name the name of the {@link Variable} to get
+     * @return the {@link Variable} (or null if the {@link Variable} is not declared)
+     *
+     * @author Nicolas Schmidt
+     */
+    public Variable get(String name) {
+
+        // If the variable map contains the variable then return it.
+        if(variables.containsKey(name)) return variables.get(name);
+
+        // In other case if the VariableList has a parent-list try to get the Variable from the parentList.s
+        else if (this.getParentList() != null) return this.getParentList().get(name);
+
+        // In other case just return null (the variable is not declared)
+        return null;
+
+    }
+
+    /**
+     * Puts together this {@link VariableList} with another given one (ignores the {@link #parentList} of the
+     * {@link VariableList} that is given as argument)
+     *
+     * @param list the {@link VariableList} to put together with this one
+     * @return the two merged {@link VariableList}s
+     *
+     * @author Nicolas Schmidt
+     */
+    VariableList concat(VariableList list) {
+
+        // Create a new HashMap from the variables of the VariableList
+        HashMap<String, Variable> variables = new HashMap<>(this.variables);
+
+        // Loop over the given list and put the variables into the variables map
+        list.getVariables().forEach(variables::put);
+
+        // return the variable map
+        return new VariableList(variables, parentList);
+    }
+
+    /**
+     * Copies the {@link VariableList}
+     *
+     * @return the copy of the {@link VariableList}
+     *
+     * @author Nicolas Schmidt
+     */
     public VariableList copy() {
 
-        HashMap<String, Variable> vars = new HashMap<>();
+        // Create a new HashMap for the variables
+        Map<String, Variable> vars = new HashMap<>();
+
+        // Loop over the variables and put a copy of the variable into the vars Map
         this.variables.forEach((k, v) -> vars.put(k, v.copy()));
 
+        // Return a new VariableList created using the created vars map
         return new VariableList(vars, this.parentList);
 
     }
 
-    public VariableList deepCopy() {
-
-        HashMap<String, Variable> vars = new HashMap<>();
-        this.variables.forEach((k, v) -> vars.put(k, v.copy()));
-
-        if(this.parentList != null) return new VariableList(vars, this.parentList.copy());
-        else return new VariableList(vars);
-
+    /**
+     * Let's all the children of the {@link VariableList} use the given scope
+     *
+     * @param scope the scope to use
+     * @return the {@link VariableList} using the scope
+     *
+     * @author Nicolas Schmidt
+     */
+    public VariableList withScope(Scope scope) {
+        // Create a new ScopeVariableList from the fields of this VariableList and the given Scope.
+        return new ScopeVariableList(this.variables, this.parentList, scope);
     }
+
+
+
+    // ****************************
+    // implementations for extended InterpreterValue
+    // Children
 
     /**
      * This function gets executed when getting a child (variable.child)
@@ -84,6 +224,12 @@ public class VariableList implements InterpreterValue {
         // just get the child
         return this.get(c);
     }
+
+
+
+    // ****************************
+    // implementations for extended InterpreterValue
+    // get-name
 
     /**
      * Returns the name of the type of {@link InterpreterValue} (To identify the type of value)
@@ -116,36 +262,94 @@ public class VariableList implements InterpreterValue {
         return String.format("{variables=%s,parentList=%s}", this.variables, this.parentList);
     }
 
-    public VariableList withScope(Scope scope) {
-        return new ScopeVariableList(this.variables, this.parentList, scope);
-    }
-
+    /**
+     * This is a VariableList that forces all of its children to use a scope, it is required for the implementation
+     * of {@link VariableList#withScope(Scope)}
+     *
+     * @author Nicolas Schmidt
+     */
     public static class ScopeVariableList extends VariableList {
 
+        /**
+         * The scope to use for the children
+         */
         private Scope scope;
 
-        public ScopeVariableList(HashMap<String, Variable> variables, VariableList parentList, Scope scope) {
+        /**
+         * Constructor for {@link ScopeVariableList}
+         *
+         * @param variables the variables
+         * @param parentList the parent-list
+         * @param scope the scope to use
+         *
+         * @author Nicolas Schmidt
+         *
+         * @see VariableList#VariableList(Map, VariableList)
+         */
+        public ScopeVariableList(Map<String, Variable> variables, VariableList parentList, Scope scope) {
+
+            // call super constructor with specified arguments
             super(variables, parentList);
+
+            // set scope field
             this.scope = scope;
+
         }
 
+        /**
+         * Get a variable from the {@link VariableList}
+         *
+         * @param name the name of the {@link Variable} to get
+         * @return the {@link Variable} (or null if the {@link Variable} is not declared)
+         *
+         * @author Nicolas Schmidt
+         */
         @Override
         public Variable get(String name) {
-            return super.getVariables().get(name).withScope(this.scope);
+            // Get the Variable from the parent and call the withScope function on it
+            return super.get(name).withScope(this.scope);
         }
 
+        /**
+         * Getter for {@link #variables} (the variable map)
+         *
+         * @return the variable map (this.{@link #variables})
+         *
+         * @author Nicolas Schmidt
+         */
         @Override
         public Map<String, Variable> getVariables() {
+            // Create a new map
             Map<String, Variable> variableMap = new HashMap<>();
-            super.getVariables().forEach((String key, Variable value) -> variableMap.put(key, value.withScope(this.scope)));
+
+            // Copy all the variables to the variable-map, but always calling the #withScope function on them
+            super.getVariables().forEach((String key, Variable variable) -> variableMap.put(key, variable.withScope(this.scope)));
+
+            // return the variable-map
             return variableMap;
         }
 
+        /**
+         * Getter for {@link #scope} (the scope to use for all variables)
+         *
+         * @return the scope to use for all variables (this.{@link #scope})
+         *
+         * @author Nicolas Schmidt
+         */
         public Scope getScope() {
+            // just return the scope field
             return scope;
         }
 
+        /**
+         * Setter for {@link #scope} (the scope to use for all variables)
+         *
+         * @param scope the scope to use for all variables (this.{@link #scope})
+         *
+         * @author Nicolas Schmidt
+         */
         public void setScope(Scope scope) {
+            // just set the scope field
             this.scope = scope;
         }
     }

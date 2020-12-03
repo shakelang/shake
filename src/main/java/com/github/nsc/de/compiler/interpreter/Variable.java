@@ -413,7 +413,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
 
     // ****************************
     // implementations for extended InterpreterValue
-    // getName
+    // get-name
 
     /**
      * Returns the name of the type of {@link InterpreterValue} (To identify the type of value)
