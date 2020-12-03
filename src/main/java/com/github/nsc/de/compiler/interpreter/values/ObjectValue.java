@@ -169,8 +169,21 @@ public class ObjectValue implements InterpreterValue {
         return "object";
     }
 
+
+
+    // *******************************
+    // Override toString()
+
+    /**
+     * Returns the string representation of the {@link ObjectValue}
+     *
+     * @return the string representation of the {@link ObjectValue}
+     *
+     * @author Nicolas Schmidt
+     */
     @Override
     public String toString() {
+        // Just create a string out of all the children of the ObjectValue
         return "ObjectValue{" +
                 "parent=" + parent +
                 ", scope=" + scope +
