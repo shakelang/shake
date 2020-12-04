@@ -248,7 +248,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '<=' is used on the doubles
+     * This function gets executed when the operator '&lt;=' is used on the doubles
      *
      * @param v The value that should be bigger
      * @return The calculation-result
@@ -296,7 +296,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '<' is used on the double
+     * This function gets executed when the operator '&lt;' is used on the double
      *
      * @param v The value that should be bigger or equal
      * @return The calculation-result

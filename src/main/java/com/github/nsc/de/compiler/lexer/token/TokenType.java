@@ -101,22 +101,22 @@ public enum TokenType {
     EQ_EQUALS,
 
     /**
-     * Token '>=' for comparison
+     * Token '&gt;=' for comparison
      */
     BIGGER_EQUALS,
 
     /**
-     * Token '<=' for comparison
+     * Token '&lt;=' for comparison
      */
     SMALLER_EQUALS,
 
     /**
-     * Token '>' for comparison
+     * Token '&gt;' for comparison
      */
     BIGGER,
 
     /**
-     * Token '<' for comparison
+     * Token '&lt;' for comparison
      */
     SMALLER,
 
@@ -126,7 +126,7 @@ public enum TokenType {
     LOGICAL_OR,
 
     /**
-     * Token '&&' (logical and operator)
+     * Token '&amp;&amp;' (logical and operator)
      */
     LOGICAL_AND,
 

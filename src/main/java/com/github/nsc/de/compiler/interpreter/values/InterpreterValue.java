@@ -121,7 +121,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&&' is used on the value
+     * This function gets executed when the operator '&amp;&amp;' is used on the value
      *
      * @param v The other value for the and operator
      * @return The Calculation-Result
@@ -168,7 +168,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '<=' is used on the value
+     * This function gets executed when the operator '&lt;=' is used on the value
      *
      * @param v The value that should be bigger
      * @return The Calculation-Result
@@ -182,7 +182,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '>' is used on the value
+     * This function gets executed when the operator '&gt;' is used on the value
      *
      * @param v The value that should be smaller or equal
      * @return The Calculation-Result
@@ -196,7 +196,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '<' is used on the value
+     * This function gets executed when the operator '&lt;' is used on the value
      *
      * @param v The value that should be bigger or equal
      * @return The Calculation-Result

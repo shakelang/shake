@@ -134,7 +134,7 @@ public enum BooleanValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&&' is used on the value
+     * This function gets executed when the operator '&amp;&amp;' is used on the value
      *
      * @param v The other value for the and operator
      * @return The Calculation-Result
