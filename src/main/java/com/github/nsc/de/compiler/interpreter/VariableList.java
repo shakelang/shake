@@ -170,7 +170,7 @@ public class VariableList implements InterpreterValue {
         list.getVariables().forEach(variables::put);
 
         // return the variable map
-        return new VariableList(variables, parentList);
+        return new VariableList(variables, list.getParentList());
     }
 
     /**
