@@ -3,7 +3,7 @@ package com.github.nsc.de.compiler.interpreter.values;
 
 
 /**
- * {@link InterpreterValue}s for booleans ({@link BooleanValue#TRUE} & {@link BooleanValue#FALSE}
+ * {@link InterpreterValue}s for booleans ({@link BooleanValue#TRUE} &amp; {@link BooleanValue#FALSE}
  *
  * @author Nicolas Schmidt
  */
