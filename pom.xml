@@ -44,7 +44,6 @@
           <source>8</source>
           <show>protected</show>
           <nohelp>true</nohelp>
-          <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
         </configuration>
       </plugin>
     </plugins>
