@@ -20,20 +20,80 @@ import java.util.Arrays;
 import java.util.List;
 
 
+
+/**
+ * {@link Interpreter} for executing the code directly
+ */
 public class Interpreter {
 
+
+
+    // *******************************
+    // fields
+
+    /**
+     * The global {@link Scope} of the interpreter (if you call visit without giving a {@link Scope} as
+     * parameter this {@link Scope} will be used
+     */
     private final Scope global;
 
+
+
+    // *******************************
+    // constructors
+
+    /**
+     * Constructor for {@link Interpreter}
+     *
+     * @param global the global {@link Scope} ({@link #global})
+     *
+     * @author Nicolas Schmidt
+     */
+    public Interpreter(Scope global) {
+        // set the global field
+        this.global = global;
+    }
+
+    /**
+     * Constructor for {@link Interpreter}
+     *
+     * @author Nicolas Schmidt
+     */
     public Interpreter() {
+        // set the global scope to a new scope
         this.global = new Scope(null, DefaultFunctions.getFunctions(this));
     }
 
+
+
+    // *******************************
+    // visit function
+
+    /**
+     * Visit a {@link Node} (using the {@link #global} {@link Scope})
+     *
+     * @param n the {@link Node} to visit
+     * @return the resulting {@link InterpreterValue} of the operation
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visit(Node n) {
+        // return visit with global as scope argument
         return visit(n, this.global);
     }
 
+    /**
+     * Visits the given {@link Node} using the specified {@link Scope}
+     *
+     * @param n the {@link Node} to visit
+     * @param scope the {@link Scope} to use
+     * @return the resulting {@link InterpreterValue} of the operation
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visit(Node n, Scope scope) {
 
+        // Check all the node-types and call the function to process it
         if(n instanceof Tree) return visitTree((Tree) n, scope);
         if(n instanceof DoubleNode) return visitDoubleNode((DoubleNode) n);
         if(n instanceof IntegerNode) return visitIntegerNode((IntegerNode) n);
@@ -69,64 +129,209 @@ public class Interpreter {
         if(n instanceof FunctionCallNode) return visitFunctionCallNode((FunctionCallNode) n, scope);
         if(n instanceof IdentifierNode) return visitIdentifier((IdentifierNode) n, scope);
         if(n instanceof ClassConstructionNode) return visitClassConstruction((ClassConstructionNode) n, scope);
+        if(n instanceof ClassDeclarationNode) return visitClassDeclarationNode((ClassDeclarationNode) n, scope);
+
+        // if the node a LogicalTrueNode return TRUE, if it is a LogicalFalseNode return false
         if(n instanceof LogicalTrueNode) return BooleanValue.TRUE;
         if(n instanceof LogicalFalseNode) return BooleanValue.FALSE;
-        if(n instanceof ClassDeclarationNode) return visitClassDeclarationNode((ClassDeclarationNode) n, scope);
+
+        // if the node is null return NullValue.NULL
         if(n == null) return NullValue.NULL;
+
+        // Throw an error if the node could not be processed
         throw new Error("It looks like that Node is not implemented in the Interpreter");
 
     }
 
+
+
+    // *******************************
+    // visit function
+
+    /**
+     * Visit a {@link Tree}
+     *
+     * @param t the {@link Tree} to visit
+     * @param scope the scope to use for visiting the {@link Tree}
+     * @return the latest {@link InterpreterValue} of the tree
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitTree(Tree t, Scope scope) {
+
+        // Visit all the children but the last one
         for (int i = 0; i < t.getChildren().length - 1; i++) visit(t.getChildren()[i], scope);
+
+        // Visit the last children (if the amount of children is bigger than 0)
         if(t.getChildren().length > 0) return visit(t.getChildren()[t.getChildren().length-1], scope);
-        else return NullValue.NULL;
+
+        // This is just reached when the Tree has no children
+        // If the number of children is 0 we just return NullValue.NULL
+        // as there are no children to process
+        return NullValue.NULL;
     }
 
+
+
+    // *******************************
+    // number nodes
+
+    /**
+     * Visit an {@link IntegerNode}
+     *
+     * @param n the {@link IntegerNode} to process
+     * @return the {@link IntegerValue} that is created
+     *
+     * @author Nicolas Schmidt
+     */
     public IntegerValue visitIntegerNode(IntegerNode n) {
+        // Just create a IntegerValue from the IntegerNode value and return it
         return new IntegerValue(n.getNumber());
     }
 
+    /**
+     * Visit a {@link DoubleNode}
+     *
+     * @param n the {@link DoubleNode} to process
+     * @return the {@link DoubleValue} that is created
+     *
+     * @author Nicolas Schmidt
+     */
     public DoubleValue visitDoubleNode(DoubleNode n) {
+        // Just create a DoubleValue from the DoubleNode value and return it
         return new DoubleValue(n.getNumber());
     }
 
 
 
+    // *******************************
+    // calculations
 
+    /**
+     * Visit an {@link AddNode} (Addition)
+     *
+     * @param n the {@link AddNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link AddNode}
+     * @return the addition-result
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitAddNode(AddNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method add() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).add(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit a {@link SubNode} (Subtraction)
+     *
+     * @param n the {@link SubNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link SubNode}
+     * @return the subtraction-result
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitSubNode(SubNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method sub() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).sub(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit a {@link MulNode} (Multiplication)
+     *
+     * @param n the {@link MulNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link MulNode}
+     * @return the multiplication-result
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitMulNode(MulNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method mul() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).mul(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit a {@link DivNode} (Division)
+     *
+     * @param n the {@link DivNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link DivNode}
+     * @return the division-result
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitDivNode(DivNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method div() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).div(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit a {@link ModNode} (Modulo)
+     *
+     * @param n the {@link ModNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link ModNode}
+     * @return the modulo-result
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitModNode(ModNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method mod() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).mod(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit a {@link PowNode} (Modulo)
+     *
+     * @param n the {@link PowNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link PowNode}
+     * @return the power-result
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitPowNode(PowNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method pow() on the result of the left InterpreterValue and
+        // give the right result one as argument.
         return visit(n.getLeft(), scope).pow(visit(n.getRight(), scope));
     }
 
 
 
+    // *******************************
+    // variables
 
+    /**
+     * Visit a {@link VariableDeclarationNode}
+     *
+     * @param n the {@link VariableDeclarationNode} to process
+     * @param scope the {@link Scope} for visiting the {@link VariableDeclarationNode}
+     * @return If the {@link Variable} gets a value assigned the value that is assigned, if not NULL
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableDeclarationNode(VariableDeclarationNode n, Scope scope) {
         if(!scope.getScopeVariables().declare(Variable.valueOf(n.getName(), n.getType()))) throw new Error("Variable is already defined");
         if(n.getAssignment() != null) return visitVariableAssignmentNode(n.getAssignment(), scope);
         else return NullValue.NULL;
     }
 
+    /**
+     * Visit a {@link VariableAssignmentNode}
+     *
+     * @param n the {@link VariableAssignmentNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariableAssignmentNode}
+     * @return The value that is assigned to the variable
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableAssignmentNode(VariableAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
@@ -134,6 +339,15 @@ public class Interpreter {
         return value;
     }
 
+    /**
+     * Visit a {@link VariableAddAssignmentNode}
+     *
+     * @param n the {@link VariableAddAssignmentNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariableAddAssignmentNode}
+     * @return The value that is assigned to the variable (So the old variable value plus the value given.)
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableAddAssignmentNode(VariableAddAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
@@ -141,6 +355,15 @@ public class Interpreter {
         return variable.getValue();
     }
 
+    /**
+     * Visit a {@link VariableSubAssignmentNode}
+     *
+     * @param n the {@link VariableSubAssignmentNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariableSubAssignmentNode}
+     * @return The value that is assigned to the variable (So the old variable value minus the value given.)
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableSubAssignmentNode(VariableSubAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
@@ -148,6 +371,15 @@ public class Interpreter {
         return variable.getValue();
     }
 
+    /**
+     * Visit a {@link VariableMulAssignmentNode}
+     *
+     * @param n the {@link VariableMulAssignmentNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariableMulAssignmentNode}
+     * @return The value that is assigned to the variable (So the old variable value times the value given.)
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableMulAssignmentNode(VariableMulAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
@@ -155,6 +387,15 @@ public class Interpreter {
         return variable.getValue();
     }
 
+    /**
+     * Visit a {@link VariableDivAssignmentNode}
+     *
+     * @param n the {@link VariableDivAssignmentNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariableDivAssignmentNode}
+     * @return The value that is assigned to the variable (So the old variable value by the value given.)
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableDivAssignmentNode(VariableDivAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
@@ -162,6 +403,15 @@ public class Interpreter {
         return variable.getValue();
     }
 
+    /**
+     * Visit a {@link VariableModAssignmentNode}
+     *
+     * @param n the {@link VariableModAssignmentNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariableModAssignmentNode}
+     * @return The value that is assigned to the variable (So the old variable value modulo the value given.)
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableModAssignmentNode(VariableModAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
@@ -169,6 +419,15 @@ public class Interpreter {
         return variable.getValue();
     }
 
+    /**
+     * Visit a {@link VariablePowAssignmentNode}
+     *
+     * @param n the {@link VariablePowAssignmentNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariablePowAssignmentNode}
+     * @return The value that is assigned to the variable (So the old variable value power the value given.)
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariablePowAssignmentNode(VariablePowAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
         InterpreterValue value = visit(n.getValue(), scope);
@@ -176,46 +435,163 @@ public class Interpreter {
         return variable.getValue();
     }
 
+    /**
+     * Visit a {@link VariableIncreaseNode}
+     *
+     * @param n the {@link VariableIncreaseNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariableIncreaseNode}
+     * @return The old value of the Variable
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableIncreaseNode(VariableIncreaseNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
-        variable.setValue(variable.getValue().add(IntegerValue.ONE));
-        return variable.getValue();
+        InterpreterValue v = variable.getValue();
+        variable.setValue(v.add(IntegerValue.ONE));
+        return v;
     }
 
+    /**
+     * Visit a {@link VariableDecreaseNode}
+     *
+     * @param n the {@link VariableDecreaseNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariableDecreaseNode}
+     * @return The old value of the Variable
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableDecreaseNode(VariableDecreaseNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
-        variable.setValue(variable.getValue().sub(IntegerValue.ONE));
-        return variable.getValue();
+        InterpreterValue v = variable.getValue();
+        variable.setValue(v.sub(IntegerValue.ONE));
+        return v;
     }
 
+    /**
+     * Visit a {@link VariableUsageNode}
+     *
+     * @param n the {@link VariableUsageNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link VariableUsageNode}
+     * @return The value of the {@link Variable}
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitVariableUsageNode(VariableUsageNode n, Scope scope) {
         return (visitIdentifier(n.getVariable(), scope)).getValue();
     }
 
+
+
+    // *******************************
+    // variables
+
+    /**
+     * Visit an {@link LogicalEqEqualsNode}
+     *
+     * @param n the {@link LogicalEqEqualsNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link LogicalEqEqualsNode}
+     * @return are the two sides of the {@link LogicalEqEqualsNode} the same?
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitEqEqualsNode(LogicalEqEqualsNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method equals() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).equals(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit an {@link LogicalBiggerEqualsNode}
+     *
+     * @param n the {@link LogicalBiggerEqualsNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link LogicalBiggerEqualsNode}
+     * @return is the left side of the {@link LogicalBiggerEqualsNode} bigger or equal to the right side
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitBiggerEqualsNode(LogicalBiggerEqualsNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method bigger_equals() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).bigger_equals(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit an {@link LogicalSmallerEqualsNode}
+     *
+     * @param n the {@link LogicalSmallerEqualsNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link LogicalSmallerEqualsNode}
+     * @return is the left side of the {@link LogicalSmallerEqualsNode} smaller or equal to the right side
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitSmallerEqualsNode(LogicalSmallerEqualsNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method smaller_equals() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).smaller_equals(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit an {@link LogicalBiggerEqualsNode}
+     *
+     * @param n the {@link LogicalBiggerEqualsNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link LogicalBiggerEqualsNode}
+     * @return is the left side of the {@link LogicalBiggerEqualsNode} bigger than the right side
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitBiggerNode(LogicalBiggerNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method bigger() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).bigger(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit an {@link LogicalSmallerEqualsNode}
+     *
+     * @param n the {@link LogicalSmallerEqualsNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link LogicalSmallerEqualsNode}
+     * @return is the left side of the {@link LogicalSmallerEqualsNode} bigger than the right side
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitSmallerNode(LogicalSmallerNode n, Scope scope) {
+        // visit both sides of the term
+        // call the method smaller() on the result of the left InterpreterValue and
+        // give the right result as argument.
         return visit(n.getLeft(), scope).smaller(visit(n.getRight(), scope));
     }
 
+
+
+    // *******************************
+    // logical concatenation
+
+    /**
+     * Visit an {@link LogicalAndNode}
+     *
+     * @param n the {@link LogicalAndNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link LogicalAndNode}
+     * @return is at least one of the two sides true
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitLogicalAndNode(LogicalAndNode n, Scope scope) {
         return visit(n.getLeft(), scope).and(visit(n.getRight(), scope));
     }
 
+    /**
+     * Visit an {@link LogicalOrNode}
+     *
+     * @param n the {@link LogicalOrNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link LogicalOrNode}
+     * @return are both sides true
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitLogicalOrNode(LogicalOrNode n, Scope scope) {
         return visit(n.getLeft(), scope).or(visit(n.getRight(), scope));
     }
