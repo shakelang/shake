@@ -243,7 +243,7 @@ public class IntegerValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '>=' is used on the integer
+     * This function gets executed when the operator '&gt;=' is used on the integer
      *
      * @param v The value that should be smaller
      * @return The calculation-result
@@ -291,7 +291,7 @@ public class IntegerValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '>' is used on the integer
+     * This function gets executed when the operator '&gt;' is used on the integer
      *
      * @param v The value that should be smaller or equal
      * @return The calculation-result
