@@ -3,7 +3,7 @@ package com.github.nsc.de.compiler.interpreter;
 /**
  * A scope to keep all the variables inside
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  *
  * @see VariableList
  */
@@ -35,7 +35,7 @@ public class Scope {
      * @param parent the parent of the scope (value for {@link #parent})
      * @param variables the variables of the scope (value for {@link #variables})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Scope(Scope parent, VariableList variables) {
         // just set the fields
@@ -48,7 +48,7 @@ public class Scope {
      *
      * @param parent the parent of the scope (value for {@link #parent})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Scope(Scope parent) {
         // Use other constructor with an empty VariableList
@@ -65,7 +65,7 @@ public class Scope {
      *
      * @return the parent-scope (this.{@link #parent})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Scope getParent() {
         return parent;
@@ -76,7 +76,7 @@ public class Scope {
      *
      * @return the scope's variables (this.{@link #variables})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList getScopeVariables() {
         return variables;
@@ -87,7 +87,7 @@ public class Scope {
      *
      * @return the scope's variables (this.{@link #variables})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList getVariables() {
         return this.parent != null ? this.parent.getVariables().concat(variables) : variables;
@@ -98,7 +98,7 @@ public class Scope {
      *
      * @return the copy of the scope
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Scope copy() {
         return new Scope(this.parent, this.getScopeVariables().copy());

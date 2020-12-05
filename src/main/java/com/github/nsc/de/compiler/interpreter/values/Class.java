@@ -14,7 +14,7 @@ import java.util.Arrays;
 /**
  * An {@link InterpreterValue} to store class-declarations
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public class Class implements InterpreterValue {
 
@@ -80,7 +80,7 @@ public class Class implements InterpreterValue {
      * @param access the {@link #access} of the class
      * @param isFinal is this class {@link #isFinal}?
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Class(String name, VariableList statics, VariableDeclarationNode[] fields, Scope scope, Interpreter interpreter,
                  VariableList prototype, AccessDescriber access, boolean isFinal) {
@@ -101,7 +101,7 @@ public class Class implements InterpreterValue {
      * @param scope the scope to use
      * @return the {@link Class} using the specified {@link Scope} ({@link #scope})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Class withScope(Scope scope) {
         // Return a new Function with the same argument as this one, just replace the scope
@@ -118,7 +118,7 @@ public class Class implements InterpreterValue {
      *
      * @return the class name (this.{@link #name})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public String getClassName() {
         // just return the class-name
@@ -130,7 +130,7 @@ public class Class implements InterpreterValue {
      *
      * @return the statics of the class (this.{@link #statics})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList getStatics() {
         // just return the statics
@@ -142,7 +142,7 @@ public class Class implements InterpreterValue {
      *
      * @return the prototype of the class (this.{@link #prototype})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList getPrototype() {
         // just return the prototype
@@ -154,7 +154,7 @@ public class Class implements InterpreterValue {
      *
      * @return the fields of the class (this.{@link #fields})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableDeclarationNode[] getFields() {
         // just return the fields
@@ -166,7 +166,7 @@ public class Class implements InterpreterValue {
      *
      * @return the interpreter of the class (this.{@link #interpreter})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Interpreter getInterpreter() {
         // just return the interpreter
@@ -178,7 +178,7 @@ public class Class implements InterpreterValue {
      *
      * @return the scope the class is located in (this.{@link #scope})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Scope getScope() {
         // just return the scope
@@ -190,7 +190,7 @@ public class Class implements InterpreterValue {
      *
      * @return is this class final? (this.{@link #isFinal})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public boolean isFinal() {
         // just return isFinal
@@ -209,7 +209,7 @@ public class Class implements InterpreterValue {
      * @param c the child to get
      * @return the child variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public Variable getChild(String c) {
@@ -232,7 +232,7 @@ public class Class implements InterpreterValue {
      *
      * @return "class"
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String getName() {
@@ -250,7 +250,7 @@ public class Class implements InterpreterValue {
      *
      * @return the string representation of the {@link Class}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {

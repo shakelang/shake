@@ -5,7 +5,7 @@ package com.github.nsc.de.compiler.interpreter.values;
 /**
  * {@link InterpreterValue}s for booleans ({@link BooleanValue#TRUE} &amp; {@link BooleanValue#FALSE}
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public enum BooleanValue implements InterpreterValue {
 
@@ -34,7 +34,7 @@ public enum BooleanValue implements InterpreterValue {
      * @param b the boolean to create the {@link BooleanValue}  from
      * @return the {@link BooleanValue} representation of the boolean
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public static BooleanValue from(boolean b) {
         // if b ist true return TRUE
@@ -49,7 +49,7 @@ public enum BooleanValue implements InterpreterValue {
      * @param v the {@link InterpreterValue} to create the {@link BooleanValue}  from
      * @return the {@link BooleanValue} representation of the boolean
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public static BooleanValue from(InterpreterValue v) {
         // If v is a BooleanValue just return v
@@ -91,7 +91,7 @@ public enum BooleanValue implements InterpreterValue {
      *
      * @param value the value of the boolean
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     BooleanValue(boolean value) {
         // just set the value field
@@ -103,7 +103,7 @@ public enum BooleanValue implements InterpreterValue {
      *
      * @return the boolean representation of the {@link BooleanValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public boolean getValue() {
         // just return the value
@@ -121,7 +121,7 @@ public enum BooleanValue implements InterpreterValue {
      * @param v The other value for the or operator
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue or(InterpreterValue v) {
@@ -139,7 +139,7 @@ public enum BooleanValue implements InterpreterValue {
      * @param v The other value for the and operator
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue and(InterpreterValue v) {
@@ -157,7 +157,7 @@ public enum BooleanValue implements InterpreterValue {
      * @param v The value that should be the same
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue equals(InterpreterValue v) {
@@ -174,7 +174,7 @@ public enum BooleanValue implements InterpreterValue {
      *
      * @return the name of the {@link InterpreterValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String getName() {
@@ -192,7 +192,7 @@ public enum BooleanValue implements InterpreterValue {
      *
      * @return the string representation of the {@link BooleanValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {

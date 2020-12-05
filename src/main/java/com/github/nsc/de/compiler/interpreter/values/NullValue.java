@@ -3,7 +3,7 @@ package com.github.nsc.de.compiler.interpreter.values;
 /**
  * null / undefined variable {@link InterpreterValue} for variables
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public enum NullValue implements InterpreterValue {
 
@@ -23,7 +23,7 @@ public enum NullValue implements InterpreterValue {
      * @param v The value that should be the same
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue equals(InterpreterValue v) {
@@ -45,7 +45,7 @@ public enum NullValue implements InterpreterValue {
      *
      * @return "null"
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String getName() {
@@ -64,7 +64,7 @@ public enum NullValue implements InterpreterValue {
      *
      * @return "null"
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {

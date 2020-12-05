@@ -12,7 +12,7 @@ import java.lang.reflect.ParameterizedType;
  * Variable class to keep all {@link InterpreterValue}s in variables
  * Type argument is the type of value that
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public class Variable<V extends InterpreterValue> implements InterpreterValue {
 
@@ -59,7 +59,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param access the access type of the variable
      * @param value the value of the variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Variable(String identifier, AccessDescriber access, V value) {
         // apply the given values
@@ -74,7 +74,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param identifier the identifier of the variable
      * @param value the value of the variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Variable(String identifier, V value) {
         // call other constructor using default AccessDescriber: PACKAGE
@@ -87,7 +87,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param identifier the identifier of the variable
      * @param access the access of the
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Variable(String identifier, AccessDescriber access) {
         // call other constructor using default value: null
@@ -99,7 +99,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @param identifier the identifier of the variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Variable(String identifier) {
         // call other constructor using default AccessDescriber: PACKAGE
@@ -116,7 +116,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @return the type-argument class (The variable-type)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Class<V> getType() {
         // return the class of the generic type V
@@ -128,7 +128,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @return the variable identifier (this.{@link #identifier})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public String getIdentifier() {
         // return the identifier field
@@ -140,7 +140,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @return the variable value (this.{@link #value})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue getValue() {
         // if the value field is not null return it
@@ -153,7 +153,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @return the variable access (this.{@link #access})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public AccessDescriber getAccess() {
         // return the access field
@@ -170,7 +170,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @param value the value to set (value for {@link #value}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public void setValue(V value) {
         // set the value of the value field to the given value variable
@@ -182,7 +182,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @return has the {@link Variable} a value?
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public boolean hasValue() {
         // check if the field value is not null
@@ -201,7 +201,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The Value to add to this value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue add(InterpreterValue v) {
@@ -215,7 +215,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The Value to sub from this value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue sub(InterpreterValue v) {
@@ -229,7 +229,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The Value to multiply with this value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue mul(InterpreterValue v) {
@@ -243,7 +243,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The divisor-value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue div(InterpreterValue v) {
@@ -257,7 +257,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The divisor-value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue mod(InterpreterValue v) {
@@ -271,7 +271,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The exponent value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue pow(InterpreterValue v) {
@@ -291,7 +291,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The other value for the or operator
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue or(InterpreterValue v) {
@@ -305,7 +305,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The other value for the and operator
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue and(InterpreterValue v) {
@@ -325,7 +325,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The value that should be the same
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue equals(InterpreterValue v) {
@@ -339,7 +339,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The value that should be smaller
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue bigger_equals(InterpreterValue v) {
@@ -353,7 +353,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The value that should be bigger
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue smaller_equals(InterpreterValue v) {
@@ -367,7 +367,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The value that should be smaller or equal
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue bigger(InterpreterValue v) {
@@ -381,7 +381,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param v The value that should be bigger or equal
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue smaller(InterpreterValue v) {
@@ -401,7 +401,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param c the child to get
      * @return the child variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public Variable getChild(String c) {
@@ -420,7 +420,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @return the name of the {@link InterpreterValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String getName() {
@@ -438,7 +438,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @return the copied {@link Variable}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Variable<V> copy() {
         // return a new Variable using the same values
@@ -455,7 +455,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @return the string representation of the {@link Variable}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {
@@ -493,7 +493,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param scope the scope to use
      * @return the {@link Function} using the specified {@link Scope}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Variable<V> withScope(Scope scope) {
         return new Variable<V>(identifier, access, useScope(value, scope));
@@ -507,7 +507,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param <V> the type of {@link InterpreterValue} that is given as argument
      * @return the given {@link InterpreterValue}, but it now uses the given {@link Scope}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     private static <V extends InterpreterValue> V useScope(V v, Scope scope) {
         if(v instanceof Variable) return (V) ((Variable) v).withScope(scope);
@@ -526,7 +526,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param type the type to convert
      * @return the converted type
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public static Variable<?> valueOf(String name, VariableType type) {
         switch (type.getType()) {

@@ -47,7 +47,7 @@ public class Interpreter {
      *
      * @param global the global {@link Scope} ({@link #global})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Interpreter(Scope global) {
         // set the global field
@@ -57,7 +57,7 @@ public class Interpreter {
     /**
      * Constructor for {@link Interpreter}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Interpreter() {
         // set the global scope to a new scope
@@ -75,7 +75,7 @@ public class Interpreter {
      * @param n the {@link Node} to visit
      * @return the resulting {@link InterpreterValue} of the operation
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visit(Node n) {
         // return visit with global as scope argument
@@ -89,7 +89,7 @@ public class Interpreter {
      * @param scope the {@link Scope} to use
      * @return the resulting {@link InterpreterValue} of the operation
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visit(Node n, Scope scope) {
 
@@ -155,7 +155,7 @@ public class Interpreter {
      * @param scope the scope to use for visiting the {@link Tree}
      * @return the latest {@link InterpreterValue} of the tree
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitTree(Tree t, Scope scope) {
 
@@ -182,7 +182,7 @@ public class Interpreter {
      * @param n the {@link IntegerNode} to process
      * @return the {@link IntegerValue} that is created
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public IntegerValue visitIntegerNode(IntegerNode n) {
         // Just create a IntegerValue from the IntegerNode value and return it
@@ -195,7 +195,7 @@ public class Interpreter {
      * @param n the {@link DoubleNode} to process
      * @return the {@link DoubleValue} that is created
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public DoubleValue visitDoubleNode(DoubleNode n) {
         // Just create a DoubleValue from the DoubleNode value and return it
@@ -214,7 +214,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link AddNode}
      * @return the addition-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitAddNode(AddNode n, Scope scope) {
         // visit both sides of the term
@@ -230,7 +230,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link SubNode}
      * @return the subtraction-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitSubNode(SubNode n, Scope scope) {
         // visit both sides of the term
@@ -246,7 +246,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link MulNode}
      * @return the multiplication-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitMulNode(MulNode n, Scope scope) {
         // visit both sides of the term
@@ -262,7 +262,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link DivNode}
      * @return the division-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitDivNode(DivNode n, Scope scope) {
         // visit both sides of the term
@@ -278,7 +278,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link ModNode}
      * @return the modulo-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitModNode(ModNode n, Scope scope) {
         // visit both sides of the term
@@ -294,7 +294,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link PowNode}
      * @return the power-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitPowNode(PowNode n, Scope scope) {
         // visit both sides of the term
@@ -315,7 +315,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableDeclarationNode}
      * @return If the {@link Variable} gets a value assigned the value that is assigned, if not NULL
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableDeclarationNode(VariableDeclarationNode n, Scope scope) {
         if(!scope.getScopeVariables().declare(Variable.valueOf(n.getName(), n.getType()))) throw new Error("Variable is already defined");
@@ -330,7 +330,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableAssignmentNode}
      * @return The value that is assigned to the variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableAssignmentNode(VariableAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
@@ -346,7 +346,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableAddAssignmentNode}
      * @return The value that is assigned to the variable (So the old variable value plus the value given.)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableAddAssignmentNode(VariableAddAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
@@ -362,7 +362,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableSubAssignmentNode}
      * @return The value that is assigned to the variable (So the old variable value minus the value given.)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableSubAssignmentNode(VariableSubAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
@@ -378,7 +378,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableMulAssignmentNode}
      * @return The value that is assigned to the variable (So the old variable value times the value given.)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableMulAssignmentNode(VariableMulAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
@@ -394,7 +394,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableDivAssignmentNode}
      * @return The value that is assigned to the variable (So the old variable value by the value given.)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableDivAssignmentNode(VariableDivAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
@@ -410,7 +410,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableModAssignmentNode}
      * @return The value that is assigned to the variable (So the old variable value modulo the value given.)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableModAssignmentNode(VariableModAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
@@ -426,7 +426,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariablePowAssignmentNode}
      * @return The value that is assigned to the variable (So the old variable value power the value given.)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariablePowAssignmentNode(VariablePowAssignmentNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
@@ -442,7 +442,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableIncreaseNode}
      * @return The old value of the Variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableIncreaseNode(VariableIncreaseNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
@@ -458,7 +458,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableDecreaseNode}
      * @return The old value of the Variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableDecreaseNode(VariableDecreaseNode n, Scope scope) {
         Variable variable = (Variable) visit(n.getVariable(), scope);
@@ -474,7 +474,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link VariableUsageNode}
      * @return The value of the {@link Variable}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableUsageNode(VariableUsageNode n, Scope scope) {
         return (visitIdentifier(n.getVariable(), scope)).getValue();
@@ -492,7 +492,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link LogicalEqEqualsNode}
      * @return are the two sides of the {@link LogicalEqEqualsNode} the same?
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitEqEqualsNode(LogicalEqEqualsNode n, Scope scope) {
         // visit both sides of the term
@@ -508,7 +508,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link LogicalBiggerEqualsNode}
      * @return is the left side of the {@link LogicalBiggerEqualsNode} bigger or equal to the right side
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitBiggerEqualsNode(LogicalBiggerEqualsNode n, Scope scope) {
         // visit both sides of the term
@@ -524,7 +524,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link LogicalSmallerEqualsNode}
      * @return is the left side of the {@link LogicalSmallerEqualsNode} smaller or equal to the right side
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitSmallerEqualsNode(LogicalSmallerEqualsNode n, Scope scope) {
         // visit both sides of the term
@@ -540,7 +540,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link LogicalBiggerEqualsNode}
      * @return is the left side of the {@link LogicalBiggerEqualsNode} bigger than the right side
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitBiggerNode(LogicalBiggerNode n, Scope scope) {
         // visit both sides of the term
@@ -556,7 +556,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link LogicalSmallerEqualsNode}
      * @return is the left side of the {@link LogicalSmallerEqualsNode} bigger than the right side
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitSmallerNode(LogicalSmallerNode n, Scope scope) {
         // visit both sides of the term
@@ -577,7 +577,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link LogicalAndNode}
      * @return is at least one of the two sides true
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitLogicalAndNode(LogicalAndNode n, Scope scope) {
         return visit(n.getLeft(), scope).and(visit(n.getRight(), scope));
@@ -590,7 +590,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link LogicalOrNode}
      * @return are both sides true
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitLogicalOrNode(LogicalOrNode n, Scope scope) {
         return visit(n.getLeft(), scope).or(visit(n.getRight(), scope));
@@ -608,7 +608,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link WhileNode}
      * @return NullValue.NULL (a while loop does not return a value)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitWhileNode(WhileNode n, Scope scope) {
 
@@ -640,7 +640,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link DoWhileNode}
      * @return NullValue.NULL (a do-while loop does not return a value)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitDoWhileNode(DoWhileNode n, Scope scope) {
 
@@ -671,7 +671,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link ForNode}
      * @return NullValue.NULL (a for loop does not return a value)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitForNode(ForNode n, Scope scope) {
 
@@ -720,7 +720,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link IfNode}
      * @return the last operation-result of the executed block
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitIfNode(IfNode n, Scope scope) {
 
@@ -750,7 +750,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link FunctionDeclarationNode}
      * @return the {@link Function}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Function visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
 
@@ -776,7 +776,7 @@ public class Interpreter {
      * @param scope the {@link Scope} to create the {@link FunctionDeclarationNode}
      * @return the created {@link Function}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Function createFunctionDeclaration(FunctionDeclarationNode node, Scope scope) {
 
@@ -792,7 +792,7 @@ public class Interpreter {
      * @param scope the {@link Scope} for visiting the {@link FunctionCallNode}
      * @return the return {@link InterpreterValue} of the function-call
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitFunctionCallNode(FunctionCallNode node, Scope scope) {
 
@@ -834,7 +834,7 @@ public class Interpreter {
      * @param scope the {@link Scope} to visit the {@link ClassDeclarationNode}
      * @return the created {@link Class}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Class visitClassDeclarationNode(ClassDeclarationNode node, Scope scope) {
 
@@ -860,7 +860,7 @@ public class Interpreter {
      * @param scope the {@link Scope} to create the {@link ClassDeclarationNode}
      * @return the created {@link Class}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Class createClassDeclaration(ClassDeclarationNode n, Scope scope) {
 
@@ -954,7 +954,7 @@ public class Interpreter {
      * @param scope the {@link Scope} to create the {@link ClassDeclarationNode}
      * @return the created {@link Class}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public ObjectValue visitClassConstruction(ClassConstructionNode n, Scope scope) {
 

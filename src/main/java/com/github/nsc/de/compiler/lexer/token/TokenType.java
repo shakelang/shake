@@ -3,7 +3,7 @@ package com.github.nsc.de.compiler.lexer.token;
 /**
  * These are the different types of tokens, that the lexer creates
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public enum TokenType {
 

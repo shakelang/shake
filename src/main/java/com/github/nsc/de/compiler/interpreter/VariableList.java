@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * A list that contains variables
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public class VariableList implements InterpreterValue {
 
@@ -36,7 +36,7 @@ public class VariableList implements InterpreterValue {
      * @param variables a map of the variables ({@link #variables})
      * @param parentList the parent list
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList(Map<String, Variable> variables, VariableList parentList) {
         // apply values to fields
@@ -49,7 +49,7 @@ public class VariableList implements InterpreterValue {
      *
      * @param parentList the parent list
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList(VariableList parentList) {
         // apply values to fields
@@ -62,7 +62,7 @@ public class VariableList implements InterpreterValue {
      *
      * @param variables a map of the variables ({@link #variables})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList(HashMap<String, Variable> variables) {
         // apply given values to fields
@@ -73,7 +73,7 @@ public class VariableList implements InterpreterValue {
     /**
      * Constructor for {@link VariableList}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList() {
         // apply values to fields
@@ -91,7 +91,7 @@ public class VariableList implements InterpreterValue {
      *
      * @return the variable map (this.{@link #variables})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Map<String, Variable> getVariables() {
         // just return the variables field
@@ -103,7 +103,7 @@ public class VariableList implements InterpreterValue {
      *
      * @return the parent-list (this.{@link #parentList})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList getParentList() {
         // just return the parentList field
@@ -121,7 +121,7 @@ public class VariableList implements InterpreterValue {
      * @param v the variable
      * @return true, if the operation was successful, false if a with this name variable is already declared
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public boolean declare(Variable v) {
         // Check if the variable-map already contains a Variable with this name (if so return false).
@@ -137,7 +137,7 @@ public class VariableList implements InterpreterValue {
      * @param name the name of the {@link Variable} to get
      * @return the {@link Variable} (or null if the {@link Variable} is not declared)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Variable get(String name) {
 
@@ -159,7 +159,7 @@ public class VariableList implements InterpreterValue {
      * @param list the {@link VariableList} to put together with this one
      * @return the two merged {@link VariableList}s
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     VariableList concat(VariableList list) {
 
@@ -178,7 +178,7 @@ public class VariableList implements InterpreterValue {
      *
      * @return the copy of the {@link VariableList}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList copy() {
 
@@ -199,7 +199,7 @@ public class VariableList implements InterpreterValue {
      * @param scope the scope to use
      * @return the {@link VariableList} using the scope
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList withScope(Scope scope) {
         // Create a new ScopeVariableList from the fields of this VariableList and the given Scope.
@@ -217,7 +217,7 @@ public class VariableList implements InterpreterValue {
      *
      * @param c the child to get
      * @return the child variable
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public Variable getChild(String c) {
@@ -236,7 +236,7 @@ public class VariableList implements InterpreterValue {
      * For {@link VariableList} it just always returns "variable_list"
      *
      * @return the name of the {@link InterpreterValue}
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String getName() {
@@ -254,7 +254,7 @@ public class VariableList implements InterpreterValue {
      *
      * @return the string representation of the {@link VariableList}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {
@@ -266,7 +266,7 @@ public class VariableList implements InterpreterValue {
      * This is a VariableList that forces all of its children to use a scope, it is required for the implementation
      * of {@link VariableList#withScope(Scope)}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public static class ScopeVariableList extends VariableList {
 
@@ -282,7 +282,7 @@ public class VariableList implements InterpreterValue {
          * @param parentList the parent-list
          * @param scope the scope to use
          *
-         * @author Nicolas Schmidt
+         * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
          *
          * @see VariableList#VariableList(Map, VariableList)
          */
@@ -302,7 +302,7 @@ public class VariableList implements InterpreterValue {
          * @param name the name of the {@link Variable} to get
          * @return the {@link Variable} (or null if the {@link Variable} is not declared)
          *
-         * @author Nicolas Schmidt
+         * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
          */
         @Override
         public Variable get(String name) {
@@ -315,7 +315,7 @@ public class VariableList implements InterpreterValue {
          *
          * @return the variable map (this.{@link #variables})
          *
-         * @author Nicolas Schmidt
+         * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
          */
         @Override
         public Map<String, Variable> getVariables() {
@@ -334,7 +334,7 @@ public class VariableList implements InterpreterValue {
          *
          * @return the scope to use for all variables (this.{@link #scope})
          *
-         * @author Nicolas Schmidt
+         * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
          */
         public Scope getScope() {
             // just return the scope field
@@ -346,7 +346,7 @@ public class VariableList implements InterpreterValue {
          *
          * @param scope the scope to use for all variables (this.{@link #scope})
          *
-         * @author Nicolas Schmidt
+         * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
          */
         public void setScope(Scope scope) {
             // just set the scope field

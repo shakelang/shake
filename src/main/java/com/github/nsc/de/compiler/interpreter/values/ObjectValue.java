@@ -43,7 +43,7 @@ public class ObjectValue implements InterpreterValue {
      *
      * @param parent the parent {@link Class} of the {@link ObjectValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public ObjectValue(Class parent) {
 
@@ -97,7 +97,7 @@ public class ObjectValue implements InterpreterValue {
      *
      * @return the parent class (this.{@link #parent})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Class getParent() {
         return parent;
@@ -108,7 +108,7 @@ public class ObjectValue implements InterpreterValue {
      *
      * @return the scope inside of the class (this.{@link #scope})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Scope getScope() {
         // just return the scope variable
@@ -120,7 +120,7 @@ public class ObjectValue implements InterpreterValue {
      *
      * @return all the fields, functions and subclasses of the object (this.{@link #this_object})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public VariableList getThisObject() {
         // just return the this_object variable
@@ -139,7 +139,7 @@ public class ObjectValue implements InterpreterValue {
      * @param c the child to get
      * @return the child variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public Variable<?> getChild(String c) {
@@ -161,7 +161,7 @@ public class ObjectValue implements InterpreterValue {
      *
      * @return "class"
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String getName() {
@@ -179,7 +179,7 @@ public class ObjectValue implements InterpreterValue {
      *
      * @return the string representation of the {@link ObjectValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {

@@ -3,7 +3,7 @@ package com.github.nsc.de.compiler.interpreter.values;
 /**
  * {@link InterpreterValue}s for integers
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  *
  * @see IntegerValue#ONE
  */
@@ -37,7 +37,7 @@ public class IntegerValue implements InterpreterValue {
      *
      * @param value the value of the {@link IntegerValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public IntegerValue(int value) {
         // Apply the value to the IntegerValue
@@ -49,7 +49,7 @@ public class IntegerValue implements InterpreterValue {
      *
      * @return the {@link #value} of the {@link IntegerValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public int getValue() {
         // just return the value
@@ -68,7 +68,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The value to add to this value
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue add(InterpreterValue v) {
@@ -93,7 +93,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The value to sub from this value
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue sub(InterpreterValue v) {
@@ -118,7 +118,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The value to multiply with this value
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue mul(InterpreterValue v) {
@@ -143,7 +143,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The divisor-value
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue div(InterpreterValue v) {
@@ -168,7 +168,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The divisor-value
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue mod(InterpreterValue v) {
@@ -193,7 +193,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The exponent value
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue pow(InterpreterValue v) {
@@ -224,7 +224,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The value that should be the same
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public BooleanValue equals(InterpreterValue v) {
@@ -248,7 +248,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The value that should be smaller
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue bigger_equals(InterpreterValue v) {
@@ -272,7 +272,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The value that should be bigger
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue smaller_equals(InterpreterValue v) {
@@ -296,7 +296,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The value that should be smaller or equal
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue bigger(InterpreterValue v) {
@@ -320,7 +320,7 @@ public class IntegerValue implements InterpreterValue {
      * @param v The value that should be bigger or equal
      * @return The calculation-result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public InterpreterValue smaller(InterpreterValue v) {
@@ -350,7 +350,7 @@ public class IntegerValue implements InterpreterValue {
      *
      * @return "integer"
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String getName() {
@@ -368,7 +368,7 @@ public class IntegerValue implements InterpreterValue {
      *
      * @return the string representation of the {@link IntegerValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {

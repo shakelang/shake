@@ -63,7 +63,7 @@ public class Function implements InterpreterValue {
      * @param access the {@link #access} of the function
      * @param isFinal is this class {@link #isFinal}?
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Function(FunctionArgumentNode[] args, Tree body, Scope scope, Interpreter interpreter,
                     AccessDescriber access, boolean isFinal) {
@@ -81,7 +81,7 @@ public class Function implements InterpreterValue {
      * @param scope the scope to use
      * @return the {@link Function} using the specified {@link Scope} ({@link #scope})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Function withScope(Scope scope) {
         // Return a new Function with the same argument as this one, just replace the scope
@@ -98,7 +98,7 @@ public class Function implements InterpreterValue {
      *
      * @return the function arguments (this.{@link #args})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public FunctionArgumentNode[] getArgs() {
         // just return the function arguments
@@ -110,7 +110,7 @@ public class Function implements InterpreterValue {
      *
      * @return the function body (this.{@link #body})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Tree getBody() {
         // just return the function body
@@ -122,7 +122,7 @@ public class Function implements InterpreterValue {
      *
      * @return the function interpreter (this.{@link #interpreter})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Interpreter getInterpreter() {
         // just return the function access
@@ -134,7 +134,7 @@ public class Function implements InterpreterValue {
      *
      * @return the scope the function is declared in (for accessing variables in the function) (this.{@link #scope})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Scope getScope() {
         // just return the function scope
@@ -146,7 +146,7 @@ public class Function implements InterpreterValue {
      *
      * @return the function access (this.{@link #access})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public AccessDescriber getAccess() {
         // just return the function access
@@ -158,7 +158,7 @@ public class Function implements InterpreterValue {
      *
      * @return is the function final? (this.{@link #isFinal})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public boolean isFinal() {
         // just return isFinal
@@ -171,7 +171,7 @@ public class Function implements InterpreterValue {
      * @param node the node that called the function
      * @param scope the scope the call was made in (to process the arguments)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public void call(FunctionCallNode node, Scope scope) {
         // TODO return statements
@@ -229,7 +229,7 @@ public class Function implements InterpreterValue {
      *
      * @return "function"
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String getName() {
@@ -247,7 +247,7 @@ public class Function implements InterpreterValue {
      *
      * @return the string representation of the {@link Function}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {

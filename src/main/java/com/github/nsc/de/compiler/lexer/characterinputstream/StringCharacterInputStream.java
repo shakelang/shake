@@ -6,7 +6,7 @@ import com.github.nsc.de.compiler.lexer.Position;
 /**
  * An implementation of {@link CharacterInputStream} using just a string as argument
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public class StringCharacterInputStream implements CharacterInputStream {
 
@@ -33,7 +33,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @param content the content characters
      * @param position the starting position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public StringCharacterInputStream(String source, String content, Position position) {
         // Set fields
@@ -55,7 +55,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @param source the source (mostly file) of the characters
      * @param content the content characters
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public StringCharacterInputStream(String source, String content) {
 
@@ -74,7 +74,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      *
      * @return the source (mostly file) of the {@link CharacterInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#getSource()
      * @see StringCharacterInputStream#getContent()
@@ -92,7 +92,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      *
      * @return the chars of the {@link CharacterInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#getContent()
      * @see StringCharacterInputStream#getSource()
@@ -110,7 +110,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      *
      * @return the actual position of the {@link CharacterInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#getPosition()
      * @see StringCharacterInputStream#getContent()
@@ -128,7 +128,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      *
      * @return if the {@link CharacterInputStream} has a next character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#hasNext()
      * @see StringCharacterInputStream#has(int number)
@@ -146,7 +146,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @param number the num of characters to check
      * @return if the {@link CharacterInputStream} has a given number of characters left
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#has(int number)
      * @see StringCharacterInputStream#hasNext()
@@ -164,7 +164,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      *
      * @return the next character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#next()
      */
@@ -181,7 +181,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      *
      * @param number the number of characters to skip
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#skip(int number)
      * @see StringCharacterInputStream#skip()
@@ -196,7 +196,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
     /**
      * Skips the next character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#skip()
      * @see StringCharacterInputStream#skip(int number)
@@ -214,7 +214,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      *
      * @return the actual character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#actual()
      */
@@ -230,7 +230,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      *
      * @return the next character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#peek()
      * @see StringCharacterInputStream#peek(int from, int to)
@@ -253,7 +253,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @return the next character
      *
      * @param num the position to get
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#peek(int num)
      * @see StringCharacterInputStream#peek(int from, int to)
@@ -279,7 +279,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @param to the end position of the string to get
      * @return the character at the requested position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#peek(int from, int to)
      * @see StringCharacterInputStream#peek(int num)

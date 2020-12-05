@@ -3,7 +3,7 @@ package com.github.nsc.de.compiler.lexer;
 /**
  * The {@link Position} marks a position in the source-code.
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public class Position {
 
@@ -41,7 +41,7 @@ public class Position {
      * @param column The {@link Position#column} of the position
      * @param line The {@link Position#line} of the position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Position(String source, String content, int index, int column, int line) {
         this.source = source;
@@ -58,7 +58,7 @@ public class Position {
      * @param source The {@link Position#source} (mostly file) of the content
      * @param content The {@link Position#content} of the position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Position(String source, String content) {
         this(source, content, -1, 0, 1);
@@ -73,7 +73,7 @@ public class Position {
      *
      * @return The {@link Position#source} (mostly file) of the content
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public String getSource() {
         return source;
@@ -84,7 +84,7 @@ public class Position {
      *
      * @return The {@link Position#content} of the position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public String getContent() {
         return content;
@@ -95,7 +95,7 @@ public class Position {
      *
      * @return The {@link Position#index} of the position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public int getIndex() {
         return index;
@@ -106,7 +106,7 @@ public class Position {
      *
      * @return The {@link Position#column} of the position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public int getColumn() {
         return column;
@@ -117,7 +117,7 @@ public class Position {
      *
      * @return The {@link Position#line} of the position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public int getLine() {
         return line;
@@ -133,7 +133,7 @@ public class Position {
      *
      * @return The position itself, so you can chain these expressions
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Position nextColumn() {
         this.index++;
@@ -146,7 +146,7 @@ public class Position {
      *
      * @return The position itself, so you can chain these expressions
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Position nextLine() {
         this.index++;
@@ -160,7 +160,7 @@ public class Position {
      *
      * @return a copy of the position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Position copy() {
         return new Position(this.getSource(), this.getContent(), this.getIndex(), this.getColumn(), this.getLine());
@@ -171,7 +171,7 @@ public class Position {
      *
      * @return A string-representation of the string
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {

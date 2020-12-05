@@ -8,7 +8,7 @@ import java.util.List;
  * A {@link TokenInputStream} provides the {@link Token}s for a {@link com.github.nsc.de.compiler.parser.Parser}. It is
  * created by the {@link com.github.nsc.de.compiler.lexer.Lexer}
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public class TokenInputStream {
 
@@ -35,7 +35,7 @@ public class TokenInputStream {
      * @param tokens value for field {@link TokenInputStream#tokens} (The tokens that the {@link TokenInputStream} should give)
      * @param position value for field {@link TokenInputStream#position} (The starting position of the {@link TokenInputStream})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public TokenInputStream(String source, Token[] tokens, int position) {
         // set all the fields
@@ -53,7 +53,7 @@ public class TokenInputStream {
      * @param source value for field {@link TokenInputStream#source} (The source (mostly file) of the tokens)
      * @param tokens value for field {@link TokenInputStream#tokens} (The tokens that the {@link TokenInputStream} should give)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public TokenInputStream(String source, Token[] tokens) {
         // set all the fields (position default value: -1)
@@ -70,7 +70,7 @@ public class TokenInputStream {
      * @param tokens value for field {@link TokenInputStream#tokens} (The tokens that the {@link TokenInputStream} should give)
      * @param position value for field {@link TokenInputStream#position} (The starting position of the {@link TokenInputStream})
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public TokenInputStream(String source, List<Token> tokens, int position) {
         // call other constructor with converted list
@@ -83,7 +83,7 @@ public class TokenInputStream {
      * @param source value for field {@link TokenInputStream#source} (The source (mostly file) of the tokens)
      * @param tokens value for field {@link TokenInputStream#tokens} (The tokens that the {@link TokenInputStream} should give)
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public TokenInputStream(String source, List<Token> tokens) {
         // call other constructor with converted list
@@ -95,7 +95,7 @@ public class TokenInputStream {
      *
      * @return the source (mostly file) of the {@link TokenInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public String getSource() {
         // just return the source
@@ -107,7 +107,7 @@ public class TokenInputStream {
      *
      * @return the actual position of the {@link TokenInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public int getPosition() {
         // just return the position
@@ -119,7 +119,7 @@ public class TokenInputStream {
      *
      * @return The {@link Token}s of the {@link TokenInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Token[] getTokens() {
         // just return the tokens
@@ -131,7 +131,7 @@ public class TokenInputStream {
      *
      * @param position the new position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public void setPosition(int position) {
         // test the position (throw error if a wrong position is provided)
@@ -146,7 +146,7 @@ public class TokenInputStream {
      * @param position the position to get
      * @return the token at the given position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Token get(int position) {
         // test the position (throw error if a wrong position is provided)
@@ -161,7 +161,7 @@ public class TokenInputStream {
      * @param num the number of tokens to check
      * @return has the {@link TokenInputStream} left the given amount of {@link Token}s?
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public boolean has(int num) {
         // When the number to check is smaller than 0 throw an error
@@ -175,7 +175,7 @@ public class TokenInputStream {
      *
      * @return has the {@link TokenInputStream} another {@link Token} left?
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public boolean hasNext() {
         // We could also use has(1) here, but for performance-reasons
@@ -188,7 +188,7 @@ public class TokenInputStream {
      *
      * @return the next token
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Token next() {
         // skip to next token and then return the actual token
@@ -201,7 +201,7 @@ public class TokenInputStream {
      *
      * @return The {@link TokenInputStream} itself so you can do an operation directly after the call
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public TokenInputStream skip() {
         // Check if the input has a next token. If so then increase the position. If not throw an error
@@ -216,7 +216,7 @@ public class TokenInputStream {
      *
      * @return The {@link TokenInputStream} itself so you can do an operation directly after the call
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public TokenInputStream skipIgnorable() {
         // As long as the next token is a line-separator execute skip
@@ -236,7 +236,7 @@ public class TokenInputStream {
      *
      * @return The actual {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Token actual() {
         // Just return the actual token
@@ -250,7 +250,7 @@ public class TokenInputStream {
      *
      * @return The next {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Token peek() {
         // We could also use peek(1) here, but for performance-reasons
@@ -264,7 +264,7 @@ public class TokenInputStream {
      *
      * @return The expected {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Token peek(int num) {
         // Throw an error, if the number is smaller than 1
@@ -279,7 +279,7 @@ public class TokenInputStream {
      *
      * @return the string-representation of the {@link TokenInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
     public String toString() {
@@ -297,7 +297,7 @@ public class TokenInputStream {
      *
      * @param position the position to check
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     private void testPosition(int position) {
         // If the position is out of range of the tokens array throw an error

@@ -8,7 +8,7 @@ import com.github.nsc.de.compiler.interpreter.Variable;
 /**
  * A Value for the Interpreter, any type of value will implement this interface
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public interface InterpreterValue {
 
@@ -23,7 +23,7 @@ public interface InterpreterValue {
      * @param v The Value to add to this value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue add(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -37,7 +37,7 @@ public interface InterpreterValue {
      * @param v The Value to sub from this value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue sub(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -51,7 +51,7 @@ public interface InterpreterValue {
      * @param v The Value to multiply with this value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue mul(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -65,7 +65,7 @@ public interface InterpreterValue {
      * @param v The divisor-value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue div(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -79,7 +79,7 @@ public interface InterpreterValue {
      * @param v The divisor-value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue mod(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -93,7 +93,7 @@ public interface InterpreterValue {
      * @param v The exponent value
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue pow(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -112,7 +112,7 @@ public interface InterpreterValue {
      * @param v The other value for the or operator
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue or(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -126,7 +126,7 @@ public interface InterpreterValue {
      * @param v The other value for the and operator
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue and(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -145,7 +145,7 @@ public interface InterpreterValue {
      * @param v The value that should be the same
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue equals(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -159,7 +159,7 @@ public interface InterpreterValue {
      * @param v The value that should be smaller
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue bigger_equals(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -173,7 +173,7 @@ public interface InterpreterValue {
      * @param v The value that should be bigger
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue smaller_equals(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -187,7 +187,7 @@ public interface InterpreterValue {
      * @param v The value that should be smaller or equal
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue bigger(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -201,7 +201,7 @@ public interface InterpreterValue {
      * @param v The value that should be bigger or equal
      * @return The Calculation-Result
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue smaller(InterpreterValue v) {
         // Throw an error when the operator is not implemented
@@ -220,7 +220,7 @@ public interface InterpreterValue {
      * @param c the child to get
      * @return the child variable
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default Variable getChild(String c) {
         // Throw an error when the operator is not implemented
@@ -238,7 +238,7 @@ public interface InterpreterValue {
      *
      * @return the name of the {@link InterpreterValue}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     String getName();
 

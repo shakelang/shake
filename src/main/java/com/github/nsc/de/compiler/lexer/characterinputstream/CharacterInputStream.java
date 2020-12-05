@@ -5,7 +5,7 @@ import com.github.nsc.de.compiler.lexer.Position;
 /**
  * A {@link CharacterInputStream} provides the characters for the {@link com.github.nsc.de.compiler.lexer.Lexer}
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  *
  * @see StringCharacterInputStream
  */
@@ -16,7 +16,7 @@ public interface CharacterInputStream {
      *
      * @return the source (mostly file) of the {@link CharacterInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     String getSource();
 
@@ -25,7 +25,7 @@ public interface CharacterInputStream {
      *
      * @return the chars of the {@link CharacterInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     char[] getContent();
 
@@ -34,7 +34,7 @@ public interface CharacterInputStream {
      *
      * @return the actual position of the {@link CharacterInputStream}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     Position getPosition();
 
@@ -43,7 +43,7 @@ public interface CharacterInputStream {
      *
      * @return if the {@link CharacterInputStream} has a next character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     boolean hasNext();
 
@@ -53,7 +53,7 @@ public interface CharacterInputStream {
      * @param number the num of characters to check
      * @return if the {@link CharacterInputStream} has a given number of characters left
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     boolean has(int number);
 
@@ -62,7 +62,7 @@ public interface CharacterInputStream {
      *
      * @return the next character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     char next();
 
@@ -71,14 +71,14 @@ public interface CharacterInputStream {
      *
      * @param number the number of characters to skip
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     void skip(int number);
 
     /**
      * Skips the next character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     void skip();
 
@@ -87,7 +87,7 @@ public interface CharacterInputStream {
      *
      * @return the actual character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     char actual();
 
@@ -96,7 +96,7 @@ public interface CharacterInputStream {
      *
      * @return the next character
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default char peek() { return peek(1); }
 
@@ -107,7 +107,7 @@ public interface CharacterInputStream {
      * @param num the position to get
      * @return the character at the requested position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     char peek(int num);
 
@@ -119,7 +119,7 @@ public interface CharacterInputStream {
      * @param to the end position of the string to get
      * @return the character at the requested position
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     String peek(int from, int to);
 

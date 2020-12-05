@@ -9,7 +9,7 @@ import java.util.Objects;
  * The input of the {@link com.github.nsc.de.compiler.lexer.Lexer} gets converted into {@link Token}s. These get parsed
  * by the parser
  *
- * @author Nicolas Schmidt
+ * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
 public class Token {
 
@@ -51,7 +51,7 @@ public class Token {
      * @param start the {@link Token#start} of the {@link Token}
      * @param end the {@link Token#end} of the {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see Token
      * @see Token#type
@@ -73,7 +73,7 @@ public class Token {
      * @param value the {@link Token#value} of the {@link Token}
      * @param position the {@link Token#start} and {@link Token#end} and of the {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see Token
      * @see Token#type
@@ -90,7 +90,7 @@ public class Token {
      * @param start the {@link Token#start} of the {@link Token}
      * @param end the {@link Token#end} of the {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see Token
      * @see Token#type
@@ -105,7 +105,7 @@ public class Token {
      * @param type the {@link Token#type} of the {@link Token}
      * @param position the {@link Token#start} and {@link Token#end} and of the {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see Token
      * @see Token#type
@@ -119,7 +119,7 @@ public class Token {
      *
      * @return the {@link Token#type} of the {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see Token
      * @see Token#type
@@ -132,7 +132,7 @@ public class Token {
      *
      * @return the {@link Token#type} of the {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see Token
      * @see Token#type
@@ -145,7 +145,7 @@ public class Token {
      *
      * @return the {@link Token#start} of the {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see Token
      * @see Token#start
@@ -158,7 +158,7 @@ public class Token {
      *
      * @return the {@link Token#end} of the {@link Token}
      *
-     * @author Nicolas Schmidt
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see Token
      * @see Token#end
