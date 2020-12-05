@@ -486,7 +486,7 @@ public class Interpreter {
     // variables
 
     /**
-     * Visit an {@link LogicalEqEqualsNode}
+     * Visit a {@link LogicalEqEqualsNode}
      *
      * @param n the {@link LogicalEqEqualsNode} to visit
      * @param scope the {@link Scope} for visiting the {@link LogicalEqEqualsNode}
@@ -502,7 +502,7 @@ public class Interpreter {
     }
 
     /**
-     * Visit an {@link LogicalBiggerEqualsNode}
+     * Visit a {@link LogicalBiggerEqualsNode}
      *
      * @param n the {@link LogicalBiggerEqualsNode} to visit
      * @param scope the {@link Scope} for visiting the {@link LogicalBiggerEqualsNode}
@@ -518,7 +518,7 @@ public class Interpreter {
     }
 
     /**
-     * Visit an {@link LogicalSmallerEqualsNode}
+     * Visit a {@link LogicalSmallerEqualsNode}
      *
      * @param n the {@link LogicalSmallerEqualsNode} to visit
      * @param scope the {@link Scope} for visiting the {@link LogicalSmallerEqualsNode}
@@ -534,7 +534,7 @@ public class Interpreter {
     }
 
     /**
-     * Visit an {@link LogicalBiggerEqualsNode}
+     * Visit a {@link LogicalBiggerEqualsNode}
      *
      * @param n the {@link LogicalBiggerEqualsNode} to visit
      * @param scope the {@link Scope} for visiting the {@link LogicalBiggerEqualsNode}
@@ -550,7 +550,7 @@ public class Interpreter {
     }
 
     /**
-     * Visit an {@link LogicalSmallerEqualsNode}
+     * Visit a {@link LogicalSmallerEqualsNode}
      *
      * @param n the {@link LogicalSmallerEqualsNode} to visit
      * @param scope the {@link Scope} for visiting the {@link LogicalSmallerEqualsNode}
@@ -571,7 +571,7 @@ public class Interpreter {
     // logical concatenation
 
     /**
-     * Visit an {@link LogicalAndNode}
+     * Visit a {@link LogicalAndNode}
      *
      * @param n the {@link LogicalAndNode} to visit
      * @param scope the {@link Scope} for visiting the {@link LogicalAndNode}
@@ -584,7 +584,7 @@ public class Interpreter {
     }
 
     /**
-     * Visit an {@link LogicalOrNode}
+     * Visit a {@link LogicalOrNode}
      *
      * @param n the {@link LogicalOrNode} to visit
      * @param scope the {@link Scope} for visiting the {@link LogicalOrNode}
@@ -596,180 +596,433 @@ public class Interpreter {
         return visit(n.getLeft(), scope).or(visit(n.getRight(), scope));
     }
 
+
+
+    // *******************************
+    // loops
+
+    /**
+     * Visit a {@link WhileNode}
+     *
+     * @param n the {@link WhileNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link WhileNode}
+     * @return NullValue.NULL (a while loop does not return a value)
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitWhileNode(WhileNode n, Scope scope) {
 
+        // Visit the condition. As long as it is true we will execute this while-loop
         while(BooleanValue.from(visit(n.getCondition(), scope)).getValue()) {
 
+            // Copy the scope for inside the while loop
+            // When we don't create a copy of the scope for
+            // each round it would not be possible to declare
+            // variables inside of the scope because there
+            // would be an error thrown in the second run of
+            // the loop
             Scope whileScope = scope.copy();
+
+            // Visit the body using the copied scope
             visit(n.getBody(), whileScope);
 
         }
+
+        // Return NULL, because a while-loop has nothing to return
         return NullValue.NULL;
+
     }
 
+    /**
+     * Visit a {@link DoWhileNode}
+     *
+     * @param n the {@link DoWhileNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link DoWhileNode}
+     * @return NullValue.NULL (a do-while loop does not return a value)
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitDoWhileNode(DoWhileNode n, Scope scope) {
 
+        // Visit the condition. As long as it is true we will execute this do-while-loop
         do {
 
+            // Copy the scope for inside the while loop
+            // When we don't create a copy of the scope for
+            // each round it would not be possible to declare
+            // variables inside of the scope because there
+            // would be an error thrown in the second run of
+            // the loop
             Scope doWhileScope = scope.copy();
+
+            // Visit the body using the copied scope
             visit(n.getBody(), doWhileScope);
 
         } while(BooleanValue.from(visit(n.getCondition(), scope)).getValue());
 
+        // Return NULL, because a do-while-loop has nothing to return
         return NullValue.NULL;
     }
 
+    /**
+     * Visit a {@link ForNode}
+     *
+     * @param n the {@link ForNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link ForNode}
+     * @return NullValue.NULL (a for loop does not return a value)
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitForNode(ForNode n, Scope scope) {
 
+        // copy the scope as outer scope, so the
+        // counter-variable is deleted after the
+        // for-loop-execution
         Scope forOuterScope = scope.copy();
 
+        // visit the declaration (first statement) of the for-loop
         visit(n.getDeclaration(), forOuterScope);
 
+        // Visit the condition. As long as it is true we will execute this for
         while(BooleanValue.from(visit(n.getCondition(), forOuterScope)).getValue()) {
 
+
+            // Copy the outer-scope for inside the while loop
+            // When we don't create a copy of the scope for
+            // each round it would not be possible to declare
+            // variables inside of the scope because there
+            // would be an error thrown in the second run of
+            // the loop
             Scope forInnerScope = forOuterScope.copy();
+
+            // Visit the body using the copied scope
             visit(n.getBody(), forInnerScope);
+
+            // Execute the round statement (the third statement inside the for-loop)
+            // We are using the forOuterScope as scope argument here
             visit(n.getRound(), forOuterScope);
 
         }
 
+        // Return NULL, because a do-while-loop has nothing to return
         return NullValue.NULL;
     }
 
+
+
+    // *******************************
+    // if-else
+
+    /**
+     * Visit a if-else statement ({@link IfNode})
+     *
+     * @param n the {@link IfNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link IfNode}
+     * @return the last operation-result of the executed block
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitIfNode(IfNode n, Scope scope) {
 
+        // Create a copy of the scope for executing the if-block
+        // so the variables declared inside of the if-block do
+        // not exist outside of it
         Scope ifScope = scope.copy();
 
+        // Visit the condition. If it is true then visit the body, if not visit the else-body
         if(BooleanValue.from(visit(n.getCondition(), ifScope)).getValue()) return visit(n.getBody(), ifScope);
         else if(n.getElseBody() != null) return visit(n.getElseBody(), ifScope);
 
+        // If we had nothing to return then we will just return NullValue.NULL
         return NullValue.NULL;
 
     }
 
+
+
+    // *******************************
+    // functions
+
+    /**
+     * Visit a {@link FunctionDeclarationNode}
+     *
+     * @param node the {@link FunctionDeclarationNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link FunctionDeclarationNode}
+     * @return the {@link Function}
+     *
+     * @author Nicolas Schmidt
+     */
     public Function visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
 
+        // Declare the variable that contains the function
         if(!scope.getVariables().declare(new Variable<Function>(node.getName())))
             throw new Error("'" + node.getName() + "' is already declared!");
+
+        // Create the function
         Function f = createFunctionDeclaration(node, scope);
+
+        // Apply the function as value to the variable
         scope.getVariables().get(node.getName()).setValue(f);
+
+        // return the function
         return f;
 
     }
 
+    /**
+     * Create a {@link FunctionDeclarationNode}
+     *
+     * @param node the {@link FunctionDeclarationNode} to create
+     * @param scope the {@link Scope} to create the {@link FunctionDeclarationNode}
+     * @return the created {@link Function}
+     *
+     * @author Nicolas Schmidt
+     */
     public Function createFunctionDeclaration(FunctionDeclarationNode node, Scope scope) {
 
+        // return a new function from the node and the scope
         return new Function(node.getArgs(), node.getBody(), scope, this, node.getAccess(), node.isFinal());
 
     }
 
-
-
+    /**
+     * Visit a {@link FunctionCallNode}
+     *
+     * @param node the {@link FunctionCallNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link FunctionCallNode}
+     * @return the return {@link InterpreterValue} of the function-call
+     *
+     * @author Nicolas Schmidt
+     */
     public InterpreterValue visitFunctionCallNode(FunctionCallNode node, Scope scope) {
 
-        // TODO Type check (function)
-        // TODO Return values
+        // TODO return values
 
+        // Create a variable to contain the function
         Function f;
+
+        // get the function
         InterpreterValue v = visit(node.getFunction());
+
+        // set the value of f to v (if v is a function)
         if(v instanceof Function) f = (Function) v;
-        else if(v instanceof Variable) f = (Function) ((Variable) v).getValue();
+
+        // when v is a variable then get it's value and apply it to f
+        else if(v instanceof Variable && ((Variable) v).getValue() instanceof Function)
+            f = (Function) ((Variable) v).getValue();
+
+        // throw an error if the value is no function
         else throw new Error("Wrong function call");
 
+        // call the function
         f.call(node, scope);
+
+        // return null
         return NullValue.NULL;
 
     }
 
-    public Variable visitIdentifier(IdentifierNode node, Scope scope) {
 
-        if(node.getParent() != null) {
 
-            InterpreterValue parent = visit(node.getParent(), scope);
-            return parent.getChild(node.getName());
+    // *******************************
+    // classes
 
-        }
-        else {
-
-           Variable v = scope.getVariables().get(node.getName());
-           if(v == null) throw new Error(String.format("Variable with name \"%s\" is not declared", node.getName()));
-           return v;
-
-        }
-
-    }
-
+    /**
+     * Visit a {@link ClassDeclarationNode}
+     *
+     * @param node the {@link ClassDeclarationNode} to visit
+     * @param scope the {@link Scope} to visit the {@link ClassDeclarationNode}
+     * @return the created {@link Class}
+     *
+     * @author Nicolas Schmidt
+     */
     public Class visitClassDeclarationNode(ClassDeclarationNode node, Scope scope) {
 
+        // Declare the variable that contains the class
         if(!scope.getVariables().declare(new Variable<Function>(node.getName())))
             throw new Error("'" + node.getName() + "' is already declared!");
-        Class f = createClassDeclaration(node, scope);
-        scope.getVariables().get(node.getName()).setValue(f);
-        return f;
+
+        // Create the class
+        Class c = createClassDeclaration(node, scope);
+
+        // Set the variable value to the class
+        scope.getVariables().get(node.getName()).setValue(c);
+
+        // return the class
+        return c;
 
     }
 
+    /**
+     * Create a class-declaration ({@link ClassDeclarationNode})
+     *
+     * @param n the {@link ClassDeclarationNode} to create
+     * @param scope the {@link Scope} to create the {@link ClassDeclarationNode}
+     * @return the created {@link Class}
+     *
+     * @author Nicolas Schmidt
+     */
     public Class createClassDeclaration(ClassDeclarationNode n, Scope scope) {
 
+
+        // Create a list for the fields of the class
+        // They will not be created in the declaration
+        // So we save the VariableDeclarationNodes inside
+        // of the class to create them when creating the
+        // object
+        // We take all the fields from the class-declaration
+        // here and delete the static fields from it later
         List<VariableDeclarationNode> fields = new ArrayList<>(Arrays.asList(n.getFields()));
+
+        // Create VariableLists for the prototype
+        // (containing functions and child-classes)
         VariableList prototype = new VariableList();
         VariableList statics = new VariableList();
 
         // TODO 2 Declarations with the same name
+
+        // loop over all methods of the class
         for(FunctionDeclarationNode node : n.getMethods()) {
+
+            // if the method is static
             if(n.isStatic()) {
+                // declare a new static variable for the function
                 statics.declare(new Variable<Function>(node.getName()));
+                // create the function and apply it to the variable
                 statics.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
             }
             else {
+                // declare a new prototype-variable for the function
                 prototype.declare(new Variable<Function>(node.getName()));
+                // create the function and apply it to the variable
                 prototype.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
             }
         }
 
+        // loop over all sub-classes of the class
         for(ClassDeclarationNode node : n.getClasses()) {
             if(n.isStatic()) {
+                // declare a new static variable for the class
                 statics.declare(new Variable<Class>(node.getName()));
+                // create the class and apply it to the variable
                 statics.get(node.getName()).setValue(createClassDeclaration(node, scope));
             } else {
+                // declare a new prototype-variable for the class
                 prototype.declare(new Variable<Class>(node.getName()));
+                // create the class and apply it to the variable
                 prototype.get(node.getName()).setValue(createClassDeclaration(node, scope));
             }
         }
 
+        // loop over the fields
         for(int i = 0; i < fields.size(); i++) {
+
+            // get the VariableDeclarationNode from the fields list
             VariableDeclarationNode node = fields.get(i);
+
+            // if the field is static...
             if(node.isStatic()) {
+                // declare a new static field for it
                 statics.declare(Variable.valueOf(node.getName(), node.getType()));
-                statics.get(node.getName()).setValue(visit(node.getAssignment().getValue(), scope)); // TODO Use Class Scope
-                fields.remove(i);
-                i--;
+
+                // ...and apply the value (visit it's value)
+                // TODO Use Class Scope
+                statics.get(node.getName()).setValue(visit(node.getAssignment().getValue(), scope));
+
+                // remove the field from the fields list
+                //
+                // (as we have one field less in the list
+                // we have to decrease the counter-variable
+                // by one)
+                fields.remove(i--);
             }
         }
 
+        // create a new class
         Class cls = new Class(n.getName(), statics, fields.toArray(new VariableDeclarationNode[] {}), scope,
                 this, prototype, n.getAccess(), n.isFinal());
 
-        scope.getVariables().declare(new Variable<Class>(n.getName()));
-        scope.getVariables().get(n.getName()).setValue(cls);
-
+        // return the class
         return cls;
 
     }
 
+    /**
+     * Visit a {@link ClassConstructionNode}
+     *
+     * @param n the {@link ClassConstructionNode} to create
+     * @param scope the {@link Scope} to create the {@link ClassDeclarationNode}
+     * @return the created {@link Class}
+     *
+     * @author Nicolas Schmidt
+     */
     public ObjectValue visitClassConstruction(ClassConstructionNode n, Scope scope) {
 
-        // TODO type check (is really a class?)
-        // TODO Arguments for constructor
-        InterpreterValue v = visit(n.getType(), scope);
+        // TODO Arguments for constructor and constructor in variable
+
+        // Declare empty Variable for the class
         Class cls;
+
+        // Get the class
+        InterpreterValue v = visit(n.getType(), scope);
+
+        // if v is a class then set cls to it's value
         if(v instanceof Class) cls = (Class) v;
-        else if(v instanceof Variable) cls = (Class) ((Variable) v).getValue();
-        else throw new Error("Seems to be not a class");
+
+        // if v is a variable containing a class then apply it's value to cls
+        else if(v instanceof Variable && ((Variable) v).getValue() instanceof Class)
+            cls = (Class) ((Variable) v).getValue();
+
+        // in other case throw an error
+        else throw new Error("Seems not to be a class");
+
+        // create a new ObjectValue from the class
         return new ObjectValue(cls);
 
     }
 
 
-    // TODO implement class usage
+
+    // *******************************
+    // identifiers
+
+    /**
+     * Visit an {@link IdentifierNode}
+     *
+     * @param node the {@link IdentifierNode} to visit
+     * @param scope the {@link Scope} to visit the {@link IdentifierNode}
+     * @return
+     */
+    public Variable visitIdentifier(IdentifierNode node, Scope scope) {
+
+        // if the IdentifierNode
+        if(node.getParent() != null) {
+
+            // visit the parent
+            InterpreterValue parent = visit(node.getParent(), scope);
+
+            // get the child from the parent
+            Variable v = parent.getChild(node.getName());
+
+            // if the variable not declared throw an error
+            if(v == null) throw new Error(String.format("Child \"%s\" is not defined", node.getName()));
+
+            // return the variable
+            return v;
+
+        }
+        else {
+
+            // get the variable from the scope
+            Variable v = scope.getVariables().get(node.getName());
+
+            // if the variable is not declared throw an error
+            if(v == null) throw new Error(String.format("Variable with name \"%s\" is not declared", node.getName()));
+
+            // return the variable
+            return v;
+
+        }
+
+    }
 }
