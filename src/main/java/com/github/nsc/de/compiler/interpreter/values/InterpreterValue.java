@@ -18,7 +18,7 @@ public interface InterpreterValue {
     // number-operators
 
     /**
-     * This function gets executed when the operator '+' is used on the value
+     * This function will be executed when the operator '+' is used on the value
      *
      * @param v The Value to add to this value
      * @return The Calculation-Result
@@ -32,7 +32,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '-' is used on the value
+     * This function will be executed when the operator '-' is used on the value
      *
      * @param v The Value to sub from this value
      * @return The Calculation-Result
@@ -46,7 +46,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '*' is used on the value
+     * This function will be executed when the operator '*' is used on the value
      *
      * @param v The Value to multiply with this value
      * @return The Calculation-Result
@@ -60,7 +60,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '/' is used on the value
+     * This function will be executed when the operator '/' is used on the value
      *
      * @param v The divisor-value
      * @return The Calculation-Result
@@ -74,7 +74,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '%' is used on the value
+     * This function will be executed when the operator '%' is used on the value
      *
      * @param v The divisor-value
      * @return The Calculation-Result
@@ -88,7 +88,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '**' is used on the value
+     * This function will be executed when the operator '**' is used on the value
      *
      * @param v The exponent value
      * @return The Calculation-Result
@@ -107,7 +107,7 @@ public interface InterpreterValue {
     // boolean-operators
 
     /**
-     * This function gets executed when the operator '||' is used on the value
+     * This function will be executed when the operator '||' is used on the value
      *
      * @param v The other value for the or operator
      * @return The Calculation-Result
@@ -121,7 +121,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&amp;&amp;' is used on the value
+     * This function will be executed when the operator '&amp;&amp;' is used on the value
      *
      * @param v The other value for the and operator
      * @return The Calculation-Result
@@ -140,7 +140,7 @@ public interface InterpreterValue {
     // comparison
 
     /**
-     * This function gets executed when the operator '==' is used on the value
+     * This function will be executed when the operator '==' is used on the value
      *
      * @param v The value that should be the same
      * @return The Calculation-Result
@@ -154,7 +154,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&gt;=' is used on the value
+     * This function will be executed when the operator '&gt;=' is used on the value
      *
      * @param v The value that should be smaller
      * @return The Calculation-Result
@@ -168,7 +168,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&lt;=' is used on the value
+     * This function will be executed when the operator '&lt;=' is used on the value
      *
      * @param v The value that should be bigger
      * @return The Calculation-Result
@@ -182,7 +182,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&gt;' is used on the value
+     * This function will be executed when the operator '&gt;' is used on the value
      *
      * @param v The value that should be smaller or equal
      * @return The Calculation-Result
@@ -196,7 +196,7 @@ public interface InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&lt;' is used on the value
+     * This function will be executed when the operator '&lt;' is used on the value
      *
      * @param v The value that should be bigger or equal
      * @return The Calculation-Result
@@ -215,7 +215,7 @@ public interface InterpreterValue {
     // Children
 
     /**
-     * This function gets executed when getting a child (variable.child)
+     * This function will be executed when getting a child (variable.child)
      *
      * @param c the child to get
      * @return the child variable

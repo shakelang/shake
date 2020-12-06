@@ -134,7 +134,7 @@ public class ObjectValue implements InterpreterValue {
     // >> children
 
     /**
-     * This function gets executed when getting a child (variable.child)
+     * This function will be executed when getting a child (variable.child)
      *
      * @param c the child to get
      * @return the child variable

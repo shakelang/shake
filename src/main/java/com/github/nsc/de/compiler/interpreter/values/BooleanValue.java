@@ -116,7 +116,7 @@ public enum BooleanValue implements InterpreterValue {
     // implementations for extended InterpreterValue
 
     /**
-     * This function gets executed when the operator '||' is used on the value
+     * This function will be executed when the operator '||' is used on the value
      *
      * @param v The other value for the or operator
      * @return The Calculation-Result
@@ -134,7 +134,7 @@ public enum BooleanValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&amp;&amp;' is used on the value
+     * This function will be executed when the operator '&amp;&amp;' is used on the value
      *
      * @param v The other value for the and operator
      * @return The Calculation-Result
@@ -152,7 +152,7 @@ public enum BooleanValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '==' is used on the value
+     * This function will be executed when the operator '==' is used on the value
      *
      * @param v The value that should be the same
      * @return The Calculation-Result

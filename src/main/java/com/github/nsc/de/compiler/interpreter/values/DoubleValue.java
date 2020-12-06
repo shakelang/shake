@@ -50,7 +50,7 @@ public class DoubleValue implements InterpreterValue {
     // >> number-operations
 
     /**
-     * This function gets executed when the operator '+' is used on the double
+     * This function will be executed when the operator '+' is used on the double
      *
      * @param v The value to add to this value
      * @return The calculation-result
@@ -74,7 +74,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '-' is used on the double
+     * This function will be executed when the operator '-' is used on the double
      *
      * @param v The value to sub from this value
      * @return The calculation-result
@@ -98,7 +98,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '*' is used on the double
+     * This function will be executed when the operator '*' is used on the double
      *
      * @param v The value to multiply with this value
      * @return The calculation-result
@@ -122,7 +122,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '/' is used on the double
+     * This function will be executed when the operator '/' is used on the double
      *
      * @param v The divisor-value
      * @return The calculation-result
@@ -146,7 +146,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '%' is used on the double
+     * This function will be executed when the operator '%' is used on the double
      *
      * @param v The divisor-value
      * @return The calculation-result
@@ -170,7 +170,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '**' is used on the double
+     * This function will be executed when the operator '**' is used on the double
      *
      * @param v The exponent value
      * @return The calculation-result
@@ -200,7 +200,7 @@ public class DoubleValue implements InterpreterValue {
     // >> comparison
 
     /**
-     * This function gets executed when the operator '==' is used on the double
+     * This function will be executed when the operator '==' is used on the double
      *
      * @param v The value that should be the same
      * @return The calculation-result
@@ -224,7 +224,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '$gt;=' is used on the double
+     * This function will be executed when the operator '$gt;=' is used on the double
      *
      * @param v The value that should be smaller
      * @return The calculation-result
@@ -248,7 +248,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&lt;=' is used on the doubles
+     * This function will be executed when the operator '&lt;=' is used on the doubles
      *
      * @param v The value that should be bigger
      * @return The calculation-result
@@ -272,7 +272,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&gt;' is used on the double
+     * This function will be executed when the operator '&gt;' is used on the double
      *
      * @param v The value that should be smaller or equal
      * @return The calculation-result
@@ -296,7 +296,7 @@ public class DoubleValue implements InterpreterValue {
     }
 
     /**
-     * This function gets executed when the operator '&lt;' is used on the double
+     * This function will be executed when the operator '&lt;' is used on the double
      *
      * @param v The value that should be bigger or equal
      * @return The calculation-result

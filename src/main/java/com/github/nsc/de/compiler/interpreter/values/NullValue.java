@@ -18,7 +18,7 @@ public enum NullValue implements InterpreterValue {
     NULL();
 
     /**
-     * This function gets executed when the operator '==' is used on the value
+     * This function will be executed when the operator '==' is used on the value
      *
      * @param v The value that should be the same
      * @return The Calculation-Result
