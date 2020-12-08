@@ -186,7 +186,7 @@ public class VariableList implements InterpreterValue {
         Map<String, Variable> vars = new HashMap<>();
 
         // Loop over the variables and put a copy of the variable into the vars Map
-        this.variables.forEach((k, v) -> vars.put(k, v.copy()));
+        this.variables.forEach((k, v) -> vars.put(k, v));
 
         // Return a new VariableList created using the created vars map
         return new VariableList(vars, this.parentList);
