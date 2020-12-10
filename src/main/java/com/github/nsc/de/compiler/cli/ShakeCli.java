@@ -9,6 +9,9 @@ import com.github.nsc.de.compiler.lexer.token.TokenInputStream;
 import com.github.nsc.de.compiler.parser.Parser;
 import com.github.nsc.de.compiler.parser.node.Tree;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class ShakeCli {
@@ -18,7 +21,7 @@ public class ShakeCli {
     public static boolean DEBUG;
     public static final String VERSION = "0.1.0";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         CliArgumentParser argumentParser = new CliArgumentParser();
         argumentParser
@@ -59,7 +62,11 @@ public class ShakeCli {
         }
         else if(arguments.getArguments().size() == 1) {
             // Execute file
-            // TODO implement visit file
+            String file = new String(Files.readAllBytes(Paths.get(arguments.getArguments().get(0))));
+            StringCharacterInputStream chars = new StringCharacterInputStream(
+                    "<File: " + arguments.getArguments().get(0) + ">", file);
+            Tree t = parse(chars);
+            execute(t, generator);
         }
         else throw new Error("There are only 0-1 arguments allowed");
 
