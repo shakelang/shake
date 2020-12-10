@@ -106,17 +106,15 @@ public class Parser {
                 || token.getType() == TokenType.KEYWORD_CHAR) return parseDeclaration();
 
         // Identifier
-        if(token.getType() == TokenType.IDENTIFIER) return parseIdentifier(null);
         if(token.getType() == TokenType.KEYWORD_NEW) return parseClassConstruction();
-
-        // FIXME fix statements starting with identifier! (critical)
 
         // Expression
         if(token.getType() == TokenType.INTEGER ||
                 token.getType() == TokenType.DOUBLE ||
                 token.getType() == TokenType.KEYWORD_TRUE ||
-                token.getType() == TokenType.KEYWORD_FALSE)
-            return this.statement();
+                token.getType() == TokenType.KEYWORD_FALSE ||
+                token.getType() == TokenType.IDENTIFIER)
+            return this.logicalOr();
 
         return null;
 
@@ -437,7 +435,7 @@ public class Parser {
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.LPAREN) throw new ParserError("Expecting '('");
         Node declaration = operation();
         awaitSemicolon();
-        ValuedNode condition = logicalOr();
+        ValuedNode condition = valuedOperation();
         awaitSemicolon();
         Node round = operation();
         if(!this.getInput().hasNext() || this.getInput().next().getType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
@@ -507,15 +505,6 @@ public class Parser {
             TokenType.SMALLER, TokenType.SMALLER_EQUALS, TokenType.EQ_EQUALS, TokenType.LOGICAL_OR,
             TokenType.LOGICAL_AND);
 
-    private ValuedNode statement() {
-
-        // TODO skip-ables
-        if(!getInput().has(2)) return factor();
-        Token peek = this.getInput().peek(2);
-        if(LOGICAL.contains(peek.getType())) return this.logicalOr();
-        return this.expr();
-    }
-
 
     // (Factor)
 
@@ -525,7 +514,7 @@ public class Parser {
 
         if(token.getType() == TokenType.LPAREN) {
             getInput().skip();
-            ValuedNode result = this.statement();
+            ValuedNode result = this.logicalOr();
             if(this.getInput().next().getType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
             return result;
         }
@@ -654,11 +643,11 @@ public class Parser {
         while(this.getInput().hasNext() && COMPARE.contains(this.getInput().peek().getType())) {
 
             Token comparer = this.getInput().next();
-            if(comparer.getType() == TokenType.EQ_EQUALS) return new LogicalEqEqualsNode(left, this.statement());
-            else if(comparer.getType() == TokenType.BIGGER_EQUALS) left = new LogicalBiggerEqualsNode(left, this.statement());
-            else if(comparer.getType() == TokenType.SMALLER_EQUALS) left = new LogicalSmallerEqualsNode(left, this.statement());
-            else if(comparer.getType() == TokenType.BIGGER) left = new LogicalBiggerNode(left, this.statement());
-            else left = new LogicalSmallerNode(left, this.statement());
+            if(comparer.getType() == TokenType.EQ_EQUALS) return new LogicalEqEqualsNode(left, this.logicalOr());
+            else if(comparer.getType() == TokenType.BIGGER_EQUALS) left = new LogicalBiggerEqualsNode(left, this.logicalOr());
+            else if(comparer.getType() == TokenType.SMALLER_EQUALS) left = new LogicalSmallerEqualsNode(left, this.logicalOr());
+            else if(comparer.getType() == TokenType.BIGGER) left = new LogicalBiggerNode(left, this.logicalOr());
+            else left = new LogicalSmallerNode(left, this.logicalOr());
 
         }
         return left;
