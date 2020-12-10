@@ -105,15 +105,13 @@ public class Parser {
                 || token.getType() == TokenType.KEYWORD_BOOLEAN
                 || token.getType() == TokenType.KEYWORD_CHAR) return parseDeclaration();
 
-        // Identifier
-        if(token.getType() == TokenType.KEYWORD_NEW) return parseClassConstruction();
-
         // Expression
         if(token.getType() == TokenType.INTEGER ||
                 token.getType() == TokenType.DOUBLE ||
                 token.getType() == TokenType.KEYWORD_TRUE ||
                 token.getType() == TokenType.KEYWORD_FALSE ||
-                token.getType() == TokenType.IDENTIFIER)
+                token.getType() == TokenType.IDENTIFIER ||
+                token.getType() == TokenType.KEYWORD_NEW)
             return this.logicalOr();
 
         return null;
@@ -541,6 +539,10 @@ public class Parser {
 
         if(token.getType() == TokenType.IDENTIFIER) {
             return parseIdentifier(null);
+        }
+
+        if(token.getType() == TokenType.KEYWORD_NEW) {
+            return parseClassConstruction();
         }
 
         if(token.getType() == TokenType.ADD) {

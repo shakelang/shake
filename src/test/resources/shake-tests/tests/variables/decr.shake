@@ -1,3 +1,4 @@
 // test basic variable decrease
 var i = 0;
 i--;
+i

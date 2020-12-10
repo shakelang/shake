@@ -22,9 +22,9 @@ public class DefaultFunctions {
         HashMap<String, Variable> functions = new HashMap<>();
 
         // put instances of all default functions inside of the function-list
-        functions.put("print", new Variable<Function>("print", new Print(interpreter)));
-        functions.put("println", new Variable<Function>("println", new Println(interpreter)));
-        functions.put("exit", new Variable<Function>("println", new Exit(interpreter)));
+        functions.put("print", new Variable<>("print", Function.class, new Print(interpreter)));
+        functions.put("println", new Variable<>("println", Function.class, new Println(interpreter)));
+        functions.put("exit", new Variable<>("println", Function.class, new Exit(interpreter)));
 
         // Create a new VariableList from the default functions and return it
         return new VariableList(functions);

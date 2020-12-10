@@ -64,7 +64,7 @@ public class ObjectValue implements InterpreterValue {
         ((VariableList.ScopeVariableList) this_object.getParentList()).setScope(scope);
 
         // Declare this keyword inside of the this_object
-        this.this_object.declare(new Variable<VariableList>("this"));
+        this.this_object.declare(new Variable<>("this", VariableList.class));
 
         // Set value of this keyword
         this.this_object.get("this").setValue(this_object);

@@ -24,7 +24,7 @@ public class ShakeTests {
     @ParameterizedTest
     @MethodSource("testStream")
     public void interpreterTests(ShakeTest test) {
-        System.out.printf("Running test \"%s\"...%n", test.getName());
+        System.out.printf("Running test \"%s\"... in \"%s\"%n", test.getName(), test.getSourceFile());
         assertEquals(test.getResult(), run(test.getSourceFile(), test.getCode()).toString());
     }
 

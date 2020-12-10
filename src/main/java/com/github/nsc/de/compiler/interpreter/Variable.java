@@ -32,6 +32,11 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
     private final AccessDescriber access;
 
     /**
+     * The type of the variable
+     */
+    private final Class<V> type;
+
+    /**
      * The value of the variable
      */
     private V value;
@@ -61,11 +66,12 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Variable(String identifier, AccessDescriber access, V value) {
+    public Variable(String identifier, AccessDescriber access, Class<V> type, V value) {
         // apply the given values
         this.identifier = identifier;
         this.access = access;
         this.value = value;
+        this.type = type;
     }
 
     /**
@@ -76,9 +82,9 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Variable(String identifier, V value) {
+    public Variable(String identifier, Class<V> type, V value) {
         // call other constructor using default AccessDescriber: PACKAGE
-        this(identifier, AccessDescriber.PACKAGE, value);
+        this(identifier, AccessDescriber.PACKAGE, type, value);
     }
 
     /**
@@ -89,9 +95,9 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Variable(String identifier, AccessDescriber access) {
+    public Variable(String identifier, AccessDescriber access, Class<V> type) {
         // call other constructor using default value: null
-        this(identifier, access, null);
+        this(identifier, access, type, null);
     }
 
     /**
@@ -101,9 +107,9 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Variable(String identifier) {
+    public Variable(String identifier, Class<V> type) {
         // call other constructor using default AccessDescriber: PACKAGE
-        this(identifier, AccessDescriber.PACKAGE);
+        this(identifier, AccessDescriber.PACKAGE, type);
     }
 
 
@@ -112,15 +118,15 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
     // getters
 
     /**
-     * Getter for the type-argument class (The variable-type)
+     * Getter for the variable-type ({@link #type})
      *
-     * @return the type-argument class (The variable-type)
+     * @return {@link #type} (the variable-type)
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Class<V> getType() {
-        // return the class of the generic type V
-        return (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        // return the variable type
+        return this.type;
     }
 
     /**
@@ -442,7 +448,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      */
     public Variable<V> copy() {
         // return a new Variable using the same values
-        return new Variable<V>(this.identifier, this.access, this.value);
+        return new Variable<V>(this.identifier, this.access, this.type, this.value);
     }
 
 
@@ -496,7 +502,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Variable<V> withScope(Scope scope) {
-        return new Variable<V>(identifier, access, useScope(value, scope));
+        return new Variable<V>(identifier, access, type, useScope(value, scope));
     }
 
     /**
@@ -536,25 +542,25 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
             case SHORT:
             case INTEGER:
             case LONG:
-                new Variable<IntegerValue>(name);
+                new Variable<IntegerValue>(name, IntegerValue.class);
 
             // Return for all number-value types with decimal places the DoubleValue class
             case FLOAT:
             case DOUBLE:
-                return new Variable<DoubleValue>(name);
+                return new Variable<DoubleValue>(name, DoubleValue.class);
 
             // For booleans just return the BooleanValue class
             case BOOLEAN:
-                return new Variable<BooleanValue>(name);
+                return new Variable<BooleanValue>(name, BooleanValue.class);
 
             // For Objects return the ObjectValue class
             case OBJECT:
-                return new Variable<ObjectValue>(name); // TODO object-subtypes
+                return new Variable<ObjectValue>(name, ObjectValue.class); // TODO object-subtypes
 
             // For Dynamic return the InterpreterValue class (as super-class of all
             // interpreter-values it can hold all of them)
             case DYNAMIC:
-                return new Variable<>(name);
+                return new Variable<>(name, InterpreterValue.class);
 
             // TODO Char & Array are not implemented at the moment
             case CHAR:

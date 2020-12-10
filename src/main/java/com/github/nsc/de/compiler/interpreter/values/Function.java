@@ -201,7 +201,7 @@ public class Function implements InterpreterValue {
             // [Example]
             // >> function( i ) { ... } // will work
             //
-            function_scope.getScopeVariables().declare(new Variable(this.getArgs()[i].getName()));
+            function_scope.getScopeVariables().declare(new Variable<>(this.getArgs()[i].getName(), InterpreterValue.class));
 
             // Set the variable to the value that is given (we use the interpreter to visit the given argument)
             //
