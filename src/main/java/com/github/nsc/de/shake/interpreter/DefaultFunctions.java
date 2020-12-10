@@ -106,6 +106,8 @@ public class DefaultFunctions {
 
     /**
      * Exits the program with a given exit code
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     private static class Exit extends Function {
 
