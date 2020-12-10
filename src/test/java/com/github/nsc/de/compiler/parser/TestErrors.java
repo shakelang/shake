@@ -16,7 +16,7 @@ public class TestErrors {
                 parseSingle("<TestLPAREN>", "if test", IfNode.class)
         );
 
-        System.out.println(error.toString());
+        // System.out.println(error.toString());
 
         assertSame(3, error.getStart().getIndex());
         assertSame(6, error.getEnd().getIndex());
@@ -25,7 +25,7 @@ public class TestErrors {
         assertEquals("1  if test", error.getMarker().getPreview());
         assertEquals("      ^^^^", error.getMarker().getMarker());
 
-        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
+        // System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class TestErrors {
             parseSingle("<TestRPAREN>", "if(test{", IfNode.class)
         );
 
-        System.out.println(error.toString());
+        // System.out.println(error.toString());
 
         assertSame(7, error.getStart().getIndex());
         assertSame(7, error.getEnd().getIndex());
@@ -43,7 +43,7 @@ public class TestErrors {
         assertEquals("1  if(test{", error.getMarker().getPreview());
         assertEquals("          ^", error.getMarker().getMarker());
 
-        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
+        // System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class TestErrors {
             parseSingle("<TestLCURL>", "if(test) {", IfNode.class)
         );
 
-        System.out.println(error.toString());
+        // System.out.println(error.toString());
 
         assertSame(9, error.getStart().getIndex());
         assertSame(9, error.getEnd().getIndex());
@@ -61,7 +61,7 @@ public class TestErrors {
         assertEquals("1  if(test) {", error.getMarker().getPreview());
         assertEquals("            ^", error.getMarker().getMarker());
 
-        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
+        // System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class TestErrors {
             parseSingle("<TestAwaitSemicolonError>", "for(var i = 0 i<10) {", IfNode.class)
         );
 
-        System.out.println(error.toString());
+        // System.out.println(error.toString());
 
         assertSame(14, error.getStart().getIndex());
         assertSame(14, error.getEnd().getIndex());
@@ -79,7 +79,7 @@ public class TestErrors {
         assertEquals("1  for(var i = 0 i<10) {", error.getMarker().getPreview());
         assertEquals("                 ^", error.getMarker().getMarker());
 
-        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
+        // System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
     }
 
 

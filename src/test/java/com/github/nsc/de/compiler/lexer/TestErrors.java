@@ -21,7 +21,7 @@ public class TestErrors {
 
         });
 
-        System.out.println(error.toString());
+        // System.out.println(error.toString());
 
         assertSame(4, error.getStart().getIndex());
         assertSame(4, error.getEnd().getIndex());
@@ -30,7 +30,7 @@ public class TestErrors {
         assertEquals("1  \"test", error.getMarker().getPreview());
         assertEquals("       ^", error.getMarker().getMarker());
 
-        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
+        // System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
 
     }
 
@@ -46,7 +46,7 @@ public class TestErrors {
 
         });
 
-        System.out.println(error.toString());
+        // System.out.println(error.toString());
 
         assertSame(2, error.getStart().getIndex());
         assertSame(2, error.getEnd().getIndex());
@@ -55,7 +55,8 @@ public class TestErrors {
         assertEquals("1  \"\\a\"", error.getMarker().getPreview());
         assertEquals("     ^", error.getMarker().getMarker());
 
-        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
+
+        // System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
 
     }
 
@@ -71,7 +72,7 @@ public class TestErrors {
 
         });
 
-        System.out.println(error.toString());
+        // System.out.println(error.toString());
 
         assertSame(4, error.getStart().getIndex());
         assertSame(4, error.getEnd().getIndex());
@@ -80,7 +81,7 @@ public class TestErrors {
         assertEquals("1  \"\\uatea\"", error.getMarker().getPreview());
         assertEquals("       ^", error.getMarker().getMarker());
 
-        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
+        // System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
 
     }
 
@@ -96,7 +97,7 @@ public class TestErrors {
 
         });
 
-        System.out.println(error.toString());
+        // System.out.println(error.toString());
 
         assertSame(0, error.getStart().getIndex());
         assertSame(0, error.getEnd().getIndex());
@@ -106,7 +107,7 @@ public class TestErrors {
         assertEquals("1  \u00dc", error.getMarker().getPreview());
         assertEquals("   ^", error.getMarker().getMarker());
 
-        System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
+        // System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
 
     }
 
