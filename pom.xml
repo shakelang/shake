@@ -75,7 +75,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>com.github.nsc.de.compiler.cli.ShakeCli</mainClass>
+              <mainClass>com.github.nsc.de.shake.cli.ShakeCli</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -94,10 +94,10 @@
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
-          <archive>
+           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>com.github.nsc.de.compiler.cli.ShakeCli</mainClass>
+              <mainClass>com.github.nsc.de.shake.cli.ShakeCli</mainClass>
             </manifest>
           </archive>
         </configuration>
