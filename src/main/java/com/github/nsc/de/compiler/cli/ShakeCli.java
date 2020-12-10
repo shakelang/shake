@@ -16,6 +16,7 @@ public class ShakeCli {
     public static final Interpreter interpreter = new Interpreter();
     public static final JsonGenerator json = new JsonGenerator();
     public static boolean DEBUG;
+    public static final String VERSION = "0.1.0";
 
     public static void main(String[] args) {
 
@@ -35,9 +36,12 @@ public class ShakeCli {
         if(arguments.getArguments().size() == 0) {
 
             // Info message for Shake console
-            System.out.printf("# Shake v0.1.0 %s%n" +
+            System.out.printf("# Shake version %s %s%n" +
                     "# Enter Shake code below to execute!%n" +
-                    "# Using %s to execute code%n", ShakeCli.DEBUG ? "in debug mode " : "", generator);
+                    "# Using %s to execute code%n",
+                    ShakeCli.VERSION,
+                    ShakeCli.DEBUG ? "in debug mode " : "",
+                    generator);
 
             // Open input console
             Scanner s = new Scanner(System.in);
