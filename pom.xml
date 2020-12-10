@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.github.nsc.de</groupId>
+  <groupId>com.github.nsc.de.shake</groupId>
   <artifactId>Compiler</artifactId>
   <version>0.1.0</version>
+  <packaging>jar</packaging>
 
   <properties>
     <junit.jupiter.version>5.6.2</junit.jupiter.version>
@@ -45,6 +46,38 @@
           <show>protected</show>
           <nohelp>true</nohelp>
           <notimestamp>true</notimestamp>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.github.nsc.de.compiler.cli.ShakeCli</mainClass>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
