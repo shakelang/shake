@@ -68,8 +68,11 @@ public class ShakeCli {
     private static Tree parse(CharacterInputStream in) {
         Lexer lexer = new Lexer(in);
         TokenInputStream tokens = lexer.makeTokens();
+        if(DEBUG) System.out.printf("[DEBUG] Lexer-Tokens: %s%n", tokens.toString());
         Parser parser = new Parser(tokens);
-        return parser.parse();
+        Tree tree = parser.parse();
+        if(DEBUG) System.out.printf("[DEBUG] Parsed Tree: %s%n", tree.toString());
+        return tree;
     }
 
     private static void execute(Tree t, String generator) {
