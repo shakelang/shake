@@ -1,7 +1,7 @@
 # Eclipse
 /.classpath
 /Compiler.eml
-/.settings/org.eclipse.jdt.core.prefs
+/.settings
 
 # IntelliJ
 /.idea/
