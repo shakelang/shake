@@ -1,5 +1,7 @@
 package com.github.nsc.de.shake.lexer.token;
 
+import com.github.nsc.de.shake.lexer.characterinputstream.position.PositionMap;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,20 +30,27 @@ public class TokenInputStream {
     private int position;
 
     /**
+     * The map for the token-positions
+     */
+    private final PositionMap map;
+
+    /**
      * Create a {@link TokenInputStream} giving the {@link TokenInputStream#source}, {@link TokenInputStream#tokens}
      * and {@link TokenInputStream#position}
      *
      * @param source value for field {@link TokenInputStream#source} (The source (mostly file) of the tokens)
      * @param tokens value for field {@link TokenInputStream#tokens} (The tokens that the {@link TokenInputStream} should give)
      * @param position value for field {@link TokenInputStream#position} (The starting position of the {@link TokenInputStream})
+     * @param map  value for field {@link TokenInputStream#map} (The position map of the {@link TokenInputStream})
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public TokenInputStream(String source, Token[] tokens, int position) {
+    public TokenInputStream(String source, Token[] tokens, int position, PositionMap map) {
         // set all the fields
         this.source = source;
         this.tokens = tokens;
         this.position = position;
+        this.map = map;
 
         if(this.position >= this.tokens.length) throw new Error("The position mustn't be out of the given tokens");
         if(position < -1) throw new Error("The position must not be smaller than -1");
@@ -52,13 +61,15 @@ public class TokenInputStream {
      *
      * @param source value for field {@link TokenInputStream#source} (The source (mostly file) of the tokens)
      * @param tokens value for field {@link TokenInputStream#tokens} (The tokens that the {@link TokenInputStream} should give)
+     * @param map  value for field {@link TokenInputStream#map} (The position map of the {@link TokenInputStream})
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public TokenInputStream(String source, Token[] tokens) {
+    public TokenInputStream(String source, Token[] tokens, PositionMap map) {
         // set all the fields (position default value: -1)
         this.source = source;
         this.tokens = tokens;
+        this.map = map;
         this.position = -1;
     }
 
@@ -69,12 +80,13 @@ public class TokenInputStream {
      * @param source value for field {@link TokenInputStream#source} (The source (mostly file) of the tokens)
      * @param tokens value for field {@link TokenInputStream#tokens} (The tokens that the {@link TokenInputStream} should give)
      * @param position value for field {@link TokenInputStream#position} (The starting position of the {@link TokenInputStream})
+     * @param map  value for field {@link TokenInputStream#map} (The position map of the {@link TokenInputStream})
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public TokenInputStream(String source, List<Token> tokens, int position) {
+    public TokenInputStream(String source, List<Token> tokens, int position, PositionMap map) {
         // call other constructor with converted list
-        this(source, tokens.toArray(new Token[0]), position);
+        this(source, tokens.toArray(new Token[0]), position, map);
     }
 
     /**
@@ -85,9 +97,9 @@ public class TokenInputStream {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public TokenInputStream(String source, List<Token> tokens) {
+    public TokenInputStream(String source, List<Token> tokens, PositionMap map) {
         // call other constructor with converted list
-        this(source, tokens.toArray(new Token[0]));
+        this(source, tokens.toArray(new Token[0]), map);
     }
 
     /**
@@ -124,6 +136,18 @@ public class TokenInputStream {
     public Token[] getTokens() {
         // just return the tokens
         return tokens;
+    }
+
+    /**
+     * Getter for {@link TokenInputStream#map} (Gives back the map for the positions)
+     *
+     * @return The {@link PositionMap} of the {@link TokenInputStream} (for resolving the token-positions
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public PositionMap getMap() {
+        // just return the position-map
+        return map;
     }
 
     /**

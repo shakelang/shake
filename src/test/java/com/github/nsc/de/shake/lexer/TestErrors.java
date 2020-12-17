@@ -1,7 +1,7 @@
 package com.github.nsc.de.shake.lexer;
 
 import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.StringCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinputstream.SourceCharacterInputStream;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +14,7 @@ public class TestErrors {
         // String type 1 not finished
         Lexer.LexerError error = assertThrows(Lexer.LexerError.class, () -> {
 
-            CharacterInputStream chars = new StringCharacterInputStream("<tests>", "\"test");
+            CharacterInputStream chars = new SourceCharacterInputStream("<tests>", "\"test");
             Lexer lexer = new Lexer(chars);
             lexer.makeTokens();
 
@@ -39,7 +39,7 @@ public class TestErrors {
         // Unknown escape sequence (using \a here)
         Lexer.LexerError error = assertThrows(Lexer.LexerError.class, () -> {
 
-            CharacterInputStream chars = new StringCharacterInputStream("<tests>", "\"\\a\"");
+            CharacterInputStream chars = new SourceCharacterInputStream("<tests>", "\"\\a\"");
             Lexer lexer = new Lexer(chars);
             lexer.makeTokens();
 
@@ -65,7 +65,7 @@ public class TestErrors {
         // Wrong input to unicode character
         Lexer.LexerError error = assertThrows(Lexer.LexerError.class, () -> {
 
-            CharacterInputStream chars = new StringCharacterInputStream("<tests>", "\"\\uatea\"");
+            CharacterInputStream chars = new SourceCharacterInputStream("<tests>", "\"\\uatea\"");
             Lexer lexer = new Lexer(chars);
             lexer.makeTokens();
 
@@ -90,7 +90,7 @@ public class TestErrors {
         // Unexpected Token
         Lexer.LexerError error = assertThrows(Lexer.LexerError.class, () -> {
 
-            CharacterInputStream chars = new StringCharacterInputStream("<tests>", "\u00dc");
+            CharacterInputStream chars = new SourceCharacterInputStream("<tests>", "\u00dc");
             Lexer lexer = new Lexer(chars);
             lexer.makeTokens();
 

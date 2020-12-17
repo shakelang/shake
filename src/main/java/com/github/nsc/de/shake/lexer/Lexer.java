@@ -2,6 +2,7 @@ package com.github.nsc.de.shake.lexer;
 
 import static com.github.nsc.de.shake.util.HelpFunctions.asList;
 import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinputstream.position.Position;
 import com.github.nsc.de.shake.lexer.token.Token;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;
@@ -29,12 +30,13 @@ public class Lexer {
         List<Token> tokens = new ArrayList<>();
         while(this.in.hasNext()) {
             char next = this.in.next();
-            Position start = in.getPosition().copy();
+            int start = in.getPosition();
 
             // Whitespace
             if(WHITESPACE.contains(next)) continue;
 
             // Linebreaks
+            if(next == '\r') continue;
             if(next == '\n') tokens.add(new Token(TokenType.LINE_SEPARATOR, start));
 
             // Punctuation
@@ -55,19 +57,19 @@ public class Lexer {
             else if (this.in.peek(0,1).equals("/*")) this.multiLineComment();
 
             // Operator assign
-            else if (this.in.peek(0,2).equals("**=")) { in.skip(2);  tokens.add(new Token(TokenType.POW_ASSIGN, "**=", start, in.getPosition().copy())); }
-            else if (this.in.peek(0,1).equals("^=")) { in.skip(); tokens.add(new Token(TokenType.POW_ASSIGN, "^=", start, in.getPosition().copy())); }
-            else if (this.in.peek(0,1).equals("%=")) { in.skip(); tokens.add(new Token(TokenType.MOD_ASSIGN, start, in.getPosition().copy())); }
-            else if (this.in.peek(0,1).equals("/=")) { in.skip(); tokens.add(new Token(TokenType.DIV_ASSIGN, start, in.getPosition().copy())); }
-            else if (this.in.peek(0,1).equals("*=")) { in.skip(); tokens.add(new Token(TokenType.MUL_ASSIGN, start, in.getPosition().copy())); }
-            else if (this.in.peek(0,1).equals("-=")) { in.skip(); tokens.add(new Token(TokenType.SUB_ASSIGN, start, in.getPosition().copy())); }
-            else if (this.in.peek(0,1).equals("+=")) { in.skip(); tokens.add(new Token(TokenType.ADD_ASSIGN, start, in.getPosition().copy())); }
+            else if (this.in.peek(0,2).equals("**=")) { in.skip(2);  tokens.add(new Token(TokenType.POW_ASSIGN, "**=", start, in.getPosition())); }
+            else if (this.in.peek(0,1).equals("^=")) { in.skip(); tokens.add(new Token(TokenType.POW_ASSIGN, "^=", start, in.getPosition())); }
+            else if (this.in.peek(0,1).equals("%=")) { in.skip(); tokens.add(new Token(TokenType.MOD_ASSIGN, start, in.getPosition())); }
+            else if (this.in.peek(0,1).equals("/=")) { in.skip(); tokens.add(new Token(TokenType.DIV_ASSIGN, start, in.getPosition())); }
+            else if (this.in.peek(0,1).equals("*=")) { in.skip(); tokens.add(new Token(TokenType.MUL_ASSIGN, start, in.getPosition())); }
+            else if (this.in.peek(0,1).equals("-=")) { in.skip(); tokens.add(new Token(TokenType.SUB_ASSIGN, start, in.getPosition())); }
+            else if (this.in.peek(0,1).equals("+=")) { in.skip(); tokens.add(new Token(TokenType.ADD_ASSIGN, start, in.getPosition())); }
 
-            else if (this.in.peek(0,1).equals("++")) { in.skip(); tokens.add(new Token(TokenType.INCR, in.getPosition().copy())); }
-            else if (this.in.peek(0,1).equals("--")) { in.skip(); tokens.add(new Token(TokenType.DECR, in.getPosition().copy())); }
+            else if (this.in.peek(0,1).equals("++")) { in.skip(); tokens.add(new Token(TokenType.INCR, in.getPosition())); }
+            else if (this.in.peek(0,1).equals("--")) { in.skip(); tokens.add(new Token(TokenType.DECR, in.getPosition())); }
 
             // Math operators
-            else if (next == '*' && this.in.hasNext() && in.peek() == '*') { in.skip(); tokens.add(new Token(TokenType.POW, "**", in.getPosition().copy())); }
+            else if (next == '*' && this.in.hasNext() && in.peek() == '*') { in.skip(); tokens.add(new Token(TokenType.POW, "**", in.getPosition())); }
             else if (next == '^') tokens.add(new Token(TokenType.POW, start));
             else if (next == '%') tokens.add(new Token(TokenType.MOD, start));
             else if (next == '/') tokens.add(new Token(TokenType.DIV, start));
@@ -76,12 +78,12 @@ public class Lexer {
             else if (next == '+') tokens.add(new Token(TokenType.ADD, start));
 
             // Logical operators
-            else if (next == '|' && this.in.hasNext() && in.peek() == '|') { in.skip(); tokens.add(new Token(TokenType.LOGICAL_OR, start, in.getPosition().copy())); }
-            else if (next == '&' && this.in.hasNext() && in.peek() == '&') { in.skip(); tokens.add(new Token(TokenType.LOGICAL_AND, start, in.getPosition().copy())); }
+            else if (next == '|' && this.in.hasNext() && in.peek() == '|') { in.skip(); tokens.add(new Token(TokenType.LOGICAL_OR, start, in.getPosition())); }
+            else if (next == '&' && this.in.hasNext() && in.peek() == '&') { in.skip(); tokens.add(new Token(TokenType.LOGICAL_AND, start, in.getPosition())); }
 
-            else if (next == '=' && this.in.hasNext() && in.peek() == '=') { in.skip(); tokens.add(new Token(TokenType.EQ_EQUALS, start, in.getPosition().copy())); }
-            else if (next == '>' && this.in.hasNext() && in.peek() == '=') { in.skip(); tokens.add(new Token(TokenType.BIGGER_EQUALS, start, in.getPosition().copy())); }
-            else if (next == '<' && this.in.hasNext() && in.peek() == '=') { in.skip(); tokens.add(new Token(TokenType.SMALLER_EQUALS, start, in.getPosition().copy())); }
+            else if (next == '=' && this.in.hasNext() && in.peek() == '=') { in.skip(); tokens.add(new Token(TokenType.EQ_EQUALS, start, in.getPosition())); }
+            else if (next == '>' && this.in.hasNext() && in.peek() == '=') { in.skip(); tokens.add(new Token(TokenType.BIGGER_EQUALS, start, in.getPosition())); }
+            else if (next == '<' && this.in.hasNext() && in.peek() == '=') { in.skip(); tokens.add(new Token(TokenType.SMALLER_EQUALS, start, in.getPosition())); }
             else if (next == '>') tokens.add(new Token(TokenType.BIGGER, start));
             else if (next == '<') tokens.add(new Token(TokenType.SMALLER, start));
 
@@ -96,10 +98,11 @@ public class Lexer {
             else if (next == '}') tokens.add(new Token(TokenType.RCURL, start));
             else throw new LexerError("UnexpectedTokenError", "Unrecognised Token: '" + next + '\'');
         }
-        return new TokenInputStream(this.in.getSource(), tokens);
+
+        return new TokenInputStream(this.in.getSource().getLocation(), tokens, in.getPositionMaker().createPositionMap());
     }
 
-    private Token makeNumber(Position start) {
+    private Token makeNumber(int start) {
         StringBuilder numStr = new StringBuilder();
         boolean dot = false;
         numStr.append(in.actual());
@@ -111,12 +114,12 @@ public class Lexer {
             numStr.append(in.next());
         }
         return dot ?
-                new Token(TokenType.DOUBLE, numStr.toString(), start, in.getPosition().copy()) :
-                new Token(TokenType.INTEGER, numStr.toString(), start, in.getPosition().copy());
+                new Token(TokenType.DOUBLE, numStr.toString(), start, in.getPosition()) :
+                new Token(TokenType.INTEGER, numStr.toString(), start, in.getPosition());
 
     }
 
-    private Token makeIdentifier(Position start) {
+    private Token makeIdentifier(int start) {
         StringBuilder identifier = new StringBuilder();
         identifier.append(in.actual());
         while(in.hasNext() && IDENTIFIER.contains(in.peek())) {
@@ -124,7 +127,7 @@ public class Lexer {
         }
 
         String result = identifier.toString();
-        Position end = in.getPosition().copy();
+        int end = in.getPosition();
 
         // Keywords
         switch (result) {
@@ -190,7 +193,7 @@ public class Lexer {
 
     }
 
-    private Token makeString(Position start) {
+    private Token makeString(int start) {
         StringBuilder string = new StringBuilder();
         if(in.actual() == '"') {
             while(in.hasNext() && in.next() != '"') {
@@ -222,7 +225,7 @@ public class Lexer {
             }
             if(in.actual() != '"') throw new LexerError("String must end with a '\"'");
         }
-        return new Token(TokenType.STRING, string.toString(), start, in.getPosition().copy());
+        return new Token(TokenType.STRING, string.toString(), start, in.getPosition());
     }
 
     public void singleLineComment() {
@@ -258,7 +261,7 @@ public class Lexer {
         public LexerError (String name, String details, Position start) { this(name, details, start, start); }
         public LexerError (String details, Position start) { this(details, start, start); }
 
-        public LexerError (String name, String details) { this(name, details, in.getPosition()); }
-        public LexerError (String details) { this(details, in.getPosition()); }
+        public LexerError (String name, String details) { this(name, details, in.getPositionMaker().createPositionAtLocation()); }
+        public LexerError (String details) { this(details, in.getPositionMaker().createPositionAtLocation()); }
     }
 }

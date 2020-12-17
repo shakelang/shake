@@ -1,7 +1,7 @@
 package com.github.nsc.de.shake.lexer;
 
 import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.StringCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinputstream.SourceCharacterInputStream;
 import com.github.nsc.de.shake.lexer.token.Token;
 import com.github.nsc.de.shake.lexer.token.TokenType;
 import org.junit.jupiter.api.Test;
@@ -110,7 +110,7 @@ public class LexerTests {
     public void testKeywords() {
 
         // keywords
-        generateToken("dynamic", TokenType.KEYWORD_DYNAMIC); // "byte"
+        generateToken("dynamic", TokenType.KEYWORD_DYNAMIC); // "dynamic"
         generateToken("byte", TokenType.KEYWORD_BYTE); // "byte"
         generateToken("short", TokenType.KEYWORD_SHORT); // "short"
         generateToken("int", TokenType.KEYWORD_INT); // "int"
@@ -179,7 +179,7 @@ public class LexerTests {
     }
 
     private Token generateToken(String input, TokenType tt) {
-        CharacterInputStream in = new StringCharacterInputStream("<tests>", input);
+        CharacterInputStream in = new SourceCharacterInputStream("<tests>", input);
         Lexer lexer = new Lexer(in);
         Token t = lexer.makeTokens().next();
         assertSame(tt, t.getType());

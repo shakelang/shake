@@ -1,6 +1,6 @@
 package com.github.nsc.de.shake.lexer.token;
 
-import com.github.nsc.de.shake.lexer.Position;
+import com.github.nsc.de.shake.lexer.characterinputstream.position.Position;
 
 import java.util.Objects;
 
@@ -31,17 +31,15 @@ public class Token {
      * The starting {@link Position} of the {@link Token}
      *
      * @see Token
-     * @see Position
      */
-    private final Position start;
+    private final int start;
 
     /**
      * The ending {@link Position} of the {@link Token}
      *
      * @see Token
-     * @see Position
      */
-    private final Position end;
+    private final int end;
 
     /**
      * Constructor for {@link Token}
@@ -59,7 +57,7 @@ public class Token {
      * @see Token#start
      * @see Token#end
      */
-    public Token(TokenType type, String value, Position start, Position end) {
+    public Token(TokenType type, String value, int start, int end) {
         this.type = type;
         this.value = value;
         this.start = start;
@@ -81,7 +79,7 @@ public class Token {
      * @see Token#start
      * @see Token#end
      */
-    public Token(TokenType type, String value, Position position) { this(type, value, position, position); }
+    public Token(TokenType type, String value, int position) { this(type, value, position, position); }
 
     /**
      * Constructor for {@link Token}
@@ -97,7 +95,7 @@ public class Token {
      * @see Token#start
      * @see Token#end
      */
-    public Token(TokenType type, Position start, Position end) { this(type, null, start, end); }
+    public Token(TokenType type, int start, int end) { this(type, null, start, end); }
 
     /**
      * Constructor for {@link Token}
@@ -112,7 +110,7 @@ public class Token {
      * @see Token#start
      * @see Token#end
      */
-    public Token(TokenType type, Position position) { this(type, null, position, position); }
+    public Token(TokenType type, int position) { this(type, null, position, position); }
 
     /**
      * Returns the {@link Token#type} of the {@link Token}
@@ -149,9 +147,8 @@ public class Token {
      *
      * @see Token
      * @see Token#start
-     * @see Position
      */
-    public Position getStart() { return start; }
+    public int getStart() { return start; }
 
     /**
      * Returns the {@link Token#end} of the {@link Token}
@@ -162,35 +159,8 @@ public class Token {
      *
      * @see Token
      * @see Token#end
-     * @see Position
      */
-    public Position getEnd() { return end; }
-
-    /**
-     * Returns the starting index of the {@link Token}
-     *
-     * @return the the starting index of the {@link Token}
-     *
-     * @author Nicolas
-     *
-     * @see Token
-     * @see Token#start
-     * @see Token#getStart()
-     */
-    public int getBefore() { return start.getIndex(); }
-
-    /**
-     * Returns the ending index of the {@link Token}
-     *
-     * @return the the ending index of the {@link Token}
-     *
-     * @author Nicolas
-     *
-     * @see Token
-     * @see Token#end
-     * @see Token#getEnd()
-     */
-    public int getAfter() { return end.getIndex() + 1; }
+    public int getEnd() { return end; }
 
     @Override
     public String toString() {

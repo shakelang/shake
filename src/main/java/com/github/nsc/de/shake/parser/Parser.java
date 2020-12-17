@@ -1,6 +1,6 @@
 package com.github.nsc.de.shake.parser;
 
-import com.github.nsc.de.shake.lexer.Position;
+import com.github.nsc.de.shake.lexer.characterinputstream.position.Position;
 import com.github.nsc.de.shake.lexer.token.Token;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;
@@ -215,7 +215,7 @@ public class Parser {
 
     private ClassConstructionNode parseClassConstruction() {
         this.getInput().skip().skipIgnorable();
-        Position start = getInput().actual().getStart();
+        int start = getInput().actual().getStart();
         ValuedNode node = parseIdentifier(null);
         if(!(node instanceof FunctionCallNode))
             throw new ParserError("Expecting a call after keyword new",
@@ -675,12 +675,20 @@ public class Parser {
             this("ParserError", details, start, end);
         }
 
+        public ParserError (String details, int start, int end) {
+            this("ParserError", details, getInput().getMap().resolve(start), getInput().getMap().resolve(end));
+        }
+
         public ParserError (String error, int position) {
-            this(error, getInput().get(position).getStart(), getInput().get(position).getEnd());
+            this(error,
+                    getInput().getMap().resolve(getInput().get(position).getStart()),
+                    getInput().getMap().resolve(getInput().get(position).getEnd()));
         }
 
         public ParserError (String error) {
-            this(error, getInput().peek().getStart(), getInput().peek().getEnd());
+            this(error,
+                    getInput().getMap().resolve(getInput().peek().getStart()),
+                    getInput().getMap().resolve(getInput().peek().getEnd()));
         }
 
     }

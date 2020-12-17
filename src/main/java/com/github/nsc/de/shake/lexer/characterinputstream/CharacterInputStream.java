@@ -1,24 +1,25 @@
 package com.github.nsc.de.shake.lexer.characterinputstream;
 
-import com.github.nsc.de.shake.lexer.Position;
+import com.github.nsc.de.shake.lexer.characterinputstream.charactersource.CharacterSource;
+import com.github.nsc.de.shake.lexer.characterinputstream.position.PositionMaker;
 
 /**
  * A {@link CharacterInputStream} provides the characters for the {@link com.github.nsc.de.shake.lexer.Lexer}
  *
  * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  *
- * @see StringCharacterInputStream
+ * @see SourceCharacterInputStream
  */
 public interface CharacterInputStream {
 
     /**
-     * Returns the source (mostly file) of the {@link CharacterInputStream}
+     * Returns the source of the {@link CharacterInputStream}
      *
      * @return the source (mostly file) of the {@link CharacterInputStream}
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    String getSource();
+    CharacterSource getSource();
 
     /**
      * Returns the chars of the {@link CharacterInputStream}
@@ -36,7 +37,16 @@ public interface CharacterInputStream {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    Position getPosition();
+    int getPosition();
+
+    /**
+     * Returns the actual position-maker of the {@link CharacterInputStream}
+     *
+     * @return the actual position-maker of the {@link CharacterInputStream}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    PositionMaker getPositionMaker();
 
     /**
      * Checks if the {@link CharacterInputStream} has a next character left

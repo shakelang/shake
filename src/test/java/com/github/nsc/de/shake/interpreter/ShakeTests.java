@@ -3,7 +3,7 @@ package com.github.nsc.de.shake.interpreter;
 import com.github.nsc.de.shake.interpreter.values.InterpreterValue;
 import com.github.nsc.de.shake.lexer.Lexer;
 import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.StringCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinputstream.SourceCharacterInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.parser.Parser;
 import com.github.nsc.de.shake.parser.node.Node;
@@ -40,7 +40,7 @@ public class ShakeTests {
 
     public InterpreterValue run(String source, String code) {
 
-        CharacterInputStream in = new StringCharacterInputStream(source, code);
+        CharacterInputStream in = new SourceCharacterInputStream(source, code);
         Lexer lexer = new Lexer(in);
         TokenInputStream tokens = lexer.makeTokens();
 

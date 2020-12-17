@@ -4,7 +4,7 @@ import com.github.nsc.de.shake.generators.json.JsonGenerator;
 import com.github.nsc.de.shake.interpreter.Interpreter;
 import com.github.nsc.de.shake.lexer.Lexer;
 import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.StringCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinputstream.SourceCharacterInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.parser.Parser;
 import com.github.nsc.de.shake.parser.node.Tree;
@@ -93,7 +93,7 @@ public class ShakeCli {
                     System.out.printf("%n$ > ");
 
                     // request the input from the console and create a StringCharacterInputStream from it
-                    CharacterInputStream chars = new StringCharacterInputStream("<Console>", s.nextLine());
+                    CharacterInputStream chars = new SourceCharacterInputStream("<Console>", s.nextLine());
 
                     // parse the CharacterInputStream into a Tree
                     Tree t = parse(chars);
@@ -115,7 +115,7 @@ public class ShakeCli {
             String file = new String(Files.readAllBytes(Paths.get(arguments.getArguments().get(0))));
 
             // Create a new StringCharacterInputStream from the file's contents
-            CharacterInputStream chars = new StringCharacterInputStream(
+            CharacterInputStream chars = new SourceCharacterInputStream(
                     "<File: " + arguments.getArguments().get(0) + ">", file);
 
             // Parse the CharacterInputStream

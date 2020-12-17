@@ -1,6 +1,7 @@
 package com.github.nsc.de.shake.util;
 
-import com.github.nsc.de.shake.lexer.Position;
+import com.github.nsc.de.shake.lexer.characterinputstream.position.Position;
+import com.github.nsc.de.shake.lexer.characterinputstream.position.PositionMap;
 
 public class CompilerError extends Error {
 
@@ -10,6 +11,8 @@ public class CompilerError extends Error {
     private final Position end;
     private final ErrorMarker marker;
     public static int maxLength = 60;
+    private static Position start_zw;
+    private static Position end_zw;
 
     private CompilerError(String message, ErrorMarker marker, String name, String details, Position start, Position end) {
         super(message + "\n\n" + marker + "\n");
@@ -20,8 +23,22 @@ public class CompilerError extends Error {
         this.marker = marker;
     }
 
+    private CompilerError(String message, ErrorMarker marker, String name, String details, PositionMap map, int start, int end) {
+        super(message + "\n\n" + marker + "\n");
+        this.name = name;
+        this.details = details;
+        this.start = map.resolve(start);
+        this.end = map.resolve(end);
+        this.marker = marker;
+    }
+
     public CompilerError(String message, String name, String details, Position start, Position end) {
         this(message, createPositionMarker(CompilerError.maxLength, start, end), name, details, start, end);
+    }
+
+    public CompilerError(String message, String name, String details, PositionMap map, int start, int end) {
+        this(message, createPositionMarker(CompilerError.maxLength, start_zw = map.resolve(start), end_zw = map.resolve(end)), name, details, start_zw, end_zw);
+        start_zw = end_zw = null;
     }
 
     public String getName() {
@@ -51,7 +68,7 @@ public class CompilerError extends Error {
     private static ErrorMarker createPositionMarker(int maxLength, Position pos1, Position pos2) {
 
         // Check requirements
-        if(!pos1.getSource().equals(pos2.getSource()) || !pos1.getContent().equals(pos2.getContent())) throw new Error("The two have to be located in the same source");
+        if(pos1.getSource() != pos2.getSource()) throw new Error("The two have to be located in the same source");
         if(pos1.getLine() != pos2.getLine()) throw new Error("The two positions that should be marked have to be in the same line");
         if(pos1.getColumn() > pos2.getColumn()) throw new Error("Position 1 must be before Position 2");
 
@@ -75,9 +92,7 @@ public class CompilerError extends Error {
         int before2 = pos1.getColumn() - 1;
 
         // The available tokens after the highlighted section
-        int after2 = pos2.getIndex();
-        for(;pos2.getContent().length() > after2 + 1 && pos2.getContent().charAt(after2) != '\n'; after2++);
-        after2 -= pos2.getIndex();
+        int after2 = pos2.getSource().getAfterInLine(pos2);
 
         // Take the smallest value and use it
         int real_before = smallest(before, before2);
@@ -107,17 +122,18 @@ public class CompilerError extends Error {
         // The start of the line
         String start = line_str
                 + (before_dif > 0 ? ("+" + before_dif + "...") : "")
-                + pos1.getContent().substring(pos1.getIndex() - real_before, pos1.getIndex());
+                + String.valueOf(pos1.getSource().getSource().get(pos1.getIndex() - real_before, pos1.getIndex()));
 
         // The end of the line
-        String end = pos1.getContent().substring(pos2.getIndex()+1, pos2.getIndex() + real_after)
+        String end = String.valueOf(pos1.getSource().getSource().get(pos2.getIndex()+1, pos2.getIndex() + real_after))
                 + (after_dif > 0 ? ("...+" + after_dif) : "");
 
         // Generate end-string
         return new ErrorMarker(
-                pos1.getSource() + ':' + pos1.getLine() + ':' + pos1.getColumn(),
-                start + Formatting.INVERT + Formatting.FGColor.RED + pos1.getContent().substring(pos1.getIndex(), pos2.getIndex()+1) + Formatting.RESET + end,
-                start + pos1.getContent().substring(pos1.getIndex(), pos2.getIndex()+1) + end,
+                pos1.getSource().getLocation() + ':' + pos1.getLine() + ':' + pos1.getColumn(),
+                start + Formatting.INVERT + Formatting.FGColor.RED +
+                        String.valueOf(pos1.getSource().getSource().get(pos1.getIndex(), pos2.getIndex()+1)) + Formatting.RESET + end,
+                start + String.valueOf(pos1.getSource().getSource().get(pos1.getIndex(), pos2.getIndex()+1)) + end,
                 strRepeat(' ', start.length())  + strRepeat('^', highlighted));
 
     }

@@ -1,71 +1,93 @@
 package com.github.nsc.de.shake.lexer.characterinputstream;
 
-import com.github.nsc.de.shake.lexer.Position;
 
+import com.github.nsc.de.shake.lexer.characterinputstream.charactersource.CharacterSource;
+import com.github.nsc.de.shake.lexer.characterinputstream.position.PositionMaker;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * An implementation of {@link CharacterInputStream} using just a string as argument
  *
  * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
-public class StringCharacterInputStream implements CharacterInputStream {
+public class SourceCharacterInputStream implements CharacterInputStream {
 
     /**
-     * The source (mostly file) of the {@link StringCharacterInputStream}
+     * The source (mostly file) of the {@link SourceCharacterInputStream}
      */
-    private final String source;
+    private final CharacterSource source;
 
     /**
-     * The characters of the {@link StringCharacterInputStream}
+     * The actual position of the {@link SourceCharacterInputStream}
      */
-    private final char[] content;
-
-    /**
-     * The actual position of the {@link StringCharacterInputStream}
-     */
-    private final Position position;
+    private final PositionMaker position;
 
 
     /**
-     * Constructor for {@link StringCharacterInputStream} with given position
+     * Constructor for {@link SourceCharacterInputStream} with given position
      *
-     * @param source the source (mostly file) of the characters
-     * @param content the content characters
+     * @param content the characters
+     * @param source the source of the characters
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public SourceCharacterInputStream( String source, char[] content) {
+        this(CharacterSource.from(content, source));
+    }
+
+
+    /**
+     * Constructor for {@link SourceCharacterInputStream} with given position
+     *
+     * @param content the characters
+     * @param source the source of the characters
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public SourceCharacterInputStream(String source, String content) {
+        this(CharacterSource.from(content, source));
+    }
+
+
+    /**
+     * Constructor for {@link SourceCharacterInputStream} with given position
+     *
+     * @param file the file source
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public SourceCharacterInputStream(File file) throws IOException {
+        this(CharacterSource.from(file, '<' + file.getPath() + '>'));
+    }
+
+
+    /**
+     * Constructor for {@link SourceCharacterInputStream} with given position
+     *
+     * @param source the source of the characters
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public SourceCharacterInputStream(CharacterSource source) {
+        // Set fields
+        this.source = source;
+        this.position = new PositionMaker(source);
+    }
+
+
+    /**
+     * Constructor for {@link SourceCharacterInputStream} with given position
+     *
      * @param position the starting position
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public StringCharacterInputStream(String source, String content, Position position) {
+    public SourceCharacterInputStream(PositionMaker position) {
         // Set fields
-        this.source = source;
-        this.content = content.toCharArray();
+        this.source = position.getSource();
         this.position = position;
-
-        // Throw an error if the input content contains a dos-style line-separator
-        if(content.contains("\r\n")) throw new Error("Using this constructor you must not give a string that contains \"\\r\\n\" as line-separator");
-
-        // Throw an error if the given source and content are not equal to the values of the position
-        if(!source.equals(position.getSource())) throw new Error("The source of the given position and the given source should be the same");
-        if(!content.equals(position.getContent())) throw new Error("The content of the given position and the given content should be the same");
-    }
-
-    /**
-     * Constructor for {@link StringCharacterInputStream} with default position (starting from the start)
-     *
-     * @param source the source (mostly file) of the characters
-     * @param content the content characters
-     *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
-     */
-    public StringCharacterInputStream(String source, String content) {
-
-        // Replace windows line-separators with linux line-separators
-        content = content.replaceAll("\r\n", "\n");
-
-        // Set fields
-        this.source = source;
-        this.content = content.toCharArray();
-        this.position = new Position(this.source, content);
     }
 
 
@@ -77,11 +99,11 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#getSource()
-     * @see StringCharacterInputStream#getContent()
-     * @see StringCharacterInputStream#getPosition()
+     * @see SourceCharacterInputStream#getContent()
+     * @see SourceCharacterInputStream#getPosition()
      */
     @Override
-    public String getSource() {
+    public CharacterSource getSource() {
         // Return the source of the StringCharacterInputStream
         return source;
     }
@@ -95,13 +117,13 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#getContent()
-     * @see StringCharacterInputStream#getSource()
-     * @see StringCharacterInputStream#getPosition()
+     * @see SourceCharacterInputStream#getSource()
+     * @see SourceCharacterInputStream#getPosition()
      */
     @Override
     public char[] getContent() {
         // Return the content of the StringCharacterInputStream
-        return content;
+        return source.getAll();
     }
 
 
@@ -113,13 +135,25 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#getPosition()
-     * @see StringCharacterInputStream#getContent()
-     * @see StringCharacterInputStream#getSource()
+     * @see SourceCharacterInputStream#getContent()
+     * @see SourceCharacterInputStream#getSource()
      */
     @Override
-    public Position getPosition() {
-        // Return the actual position of the StringCharacterInputStream
-        return this.position.copy();
+    public int getPosition() {
+        // Return the actual position-index of the StringCharacterInputStream
+        return this.position.getIndex();
+    }
+
+    /**
+     * Returns the actual position-maker of the {@link CharacterInputStream}
+     *
+     * @return the actual position-maker of the {@link CharacterInputStream}
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public PositionMaker getPositionMaker() {
+        // return the position of the StringCharacterInputStream
+        return this.position;
     }
 
 
@@ -131,12 +165,12 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#hasNext()
-     * @see StringCharacterInputStream#has(int number)
+     * @see SourceCharacterInputStream#has(int number)
      */
     @Override
     public boolean hasNext() {
         // We could also use has(1) here, but for performance reasons that should be better
-        return this.position.getIndex() + 1 < this.content.length;
+        return this.position.getIndex() + 1 < this.getSource().getLength();
     }
 
 
@@ -149,13 +183,13 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#has(int number)
-     * @see StringCharacterInputStream#hasNext()
+     * @see SourceCharacterInputStream#hasNext()
      */
     @Override
     public boolean has(int number) {
         // throw an error, if the given number is smaller than 1
         if(number < 1) throw new Error("The given number must be 1 or bigger");
-        return this.position.getIndex() + number < this.content.length;
+        return this.position.getIndex() + number < this.getSource().getLength();
     }
 
 
@@ -184,7 +218,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#skip(int number)
-     * @see StringCharacterInputStream#skip()
+     * @see SourceCharacterInputStream#skip()
      */
     @Override
     public void skip(int number) {
@@ -199,7 +233,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#skip()
-     * @see StringCharacterInputStream#skip(int number)
+     * @see SourceCharacterInputStream#skip(int number)
      */
     @Override
     public void skip() {
@@ -221,7 +255,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
     @Override
     public char actual() {
         // return the character at the actual position
-        return this.content[this.position.getIndex()];
+        return this.getContent()[this.position.getIndex()];
     }
 
 
@@ -233,8 +267,8 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#peek()
-     * @see StringCharacterInputStream#peek(int from, int to)
-     * @see StringCharacterInputStream#peek(int num)
+     * @see SourceCharacterInputStream#peek(int from, int to)
+     * @see SourceCharacterInputStream#peek(int num)
      */
     @Override
     public char peek() {
@@ -243,7 +277,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
         if(!this.hasNext()) throw new Error("Not enough characters left");
 
         // return the content at the required position
-        return this.content[this.position.getIndex() + 1];
+        return this.getContent()[this.position.getIndex() + 1];
     }
 
 
@@ -256,8 +290,8 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#peek(int num)
-     * @see StringCharacterInputStream#peek(int from, int to)
-     * @see StringCharacterInputStream#peek()
+     * @see SourceCharacterInputStream#peek(int from, int to)
+     * @see SourceCharacterInputStream#peek()
      */
     @Override
     public char peek(int num) {
@@ -267,7 +301,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
         if(!this.has(num)) throw new Error("Not enough characters left");
 
         // return the content at the required position
-        return this.content[this.position.getIndex() + num];
+        return this.getContent()[this.position.getIndex() + num];
     }
 
 
@@ -282,8 +316,8 @@ public class StringCharacterInputStream implements CharacterInputStream {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      *
      * @see CharacterInputStream#peek(int from, int to)
-     * @see StringCharacterInputStream#peek(int num)
-     * @see StringCharacterInputStream#peek()
+     * @see SourceCharacterInputStream#peek(int num)
+     * @see SourceCharacterInputStream#peek()
      */
     @Override
     public String peek(int from, int to) {
@@ -291,7 +325,7 @@ public class StringCharacterInputStream implements CharacterInputStream {
         if(to <= from) throw new Error("To-argument must be bigger than from-argument");
         //if(!this.has(from)) throw new Error("Not enough characters left");
 
-        return this.position.getIndex() + from < this.content.length && this.position.getIndex() + to < this.content.length ?
-                new String(this.content).substring(this.position.getIndex() + from, this.position.getIndex() + to + 1) : "";
+        return this.position.getIndex() + from < this.getSource().getLength() && this.position.getIndex() + to < this.getSource().getLength() ?
+                new String(this.getContent()).substring(this.position.getIndex() + from, this.position.getIndex() + to + 1) : "";
     }
 }

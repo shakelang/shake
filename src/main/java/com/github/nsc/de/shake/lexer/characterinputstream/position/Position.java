@@ -1,51 +1,44 @@
-package com.github.nsc.de.shake.lexer;
+package com.github.nsc.de.shake.lexer.characterinputstream.position;
 
 /**
  * The {@link Position} marks a position in the source-code.
  *
  * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
-public class Position {
+public class Position implements PositionMarker {
 
     /**
-     * The source (mostly file) of the content
+     * The source
      */
-    private String source;
-
-    /**
-     * The source content
-     */
-    private String content;
+    private final PositionMap source;
 
     /**
      * The index of the position
      */
-    private int index;
+    private final int index;
 
     /**
      * The column of the position
      */
-    private int column;
+    private final int column;
 
     /**
      * The line of the position
      */
-    private int line;
+    private final int line;
 
     /**
      * Constructor for the position
      *
      * @param source The {@link Position#source} (mostly file) of the content
-     * @param content The {@link Position#content} of the position
      * @param index The {@link Position#index} of the position
      * @param column The {@link Position#column} of the position
      * @param line The {@link Position#line} of the position
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Position(String source, String content, int index, int column, int line) {
+    public Position(PositionMap source, int index, int column, int line) {
         this.source = source;
-        this.content = content;
         this.index = index;
         this.column = column;
         this.line = line;
@@ -56,12 +49,11 @@ public class Position {
      * Constructor for the position
      *
      * @param source The {@link Position#source} (mostly file) of the content
-     * @param content The {@link Position#content} of the position
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Position(String source, String content) {
-        this(source, content, -1, 0, 1);
+    public Position(PositionMap source) {
+        this(source, -1, 0, 1);
     }
 
 
@@ -75,19 +67,8 @@ public class Position {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public String getSource() {
+    public PositionMap getSource() {
         return source;
-    }
-
-    /**
-     * Getter for {@link Position#content}
-     *
-     * @return The {@link Position#content} of the position
-     *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
-     */
-    public String getContent() {
-        return content;
     }
 
     /**
@@ -97,6 +78,7 @@ public class Position {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
+    @Override
     public int getIndex() {
         return index;
     }
@@ -108,6 +90,7 @@ public class Position {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
+    @Override
     public int getColumn() {
         return column;
     }
@@ -119,40 +102,9 @@ public class Position {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
+    @Override
     public int getLine() {
         return line;
-    }
-
-
-
-    // ***********************************************
-    // Others
-
-    /**
-     * Increases the {@link Position#index} and {@link Position#column}
-     *
-     * @return The position itself, so you can chain these expressions
-     *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
-     */
-    public Position nextColumn() {
-        this.index++;
-        this.column++;
-        return this;
-    }
-
-    /**
-     * Increases the {@link Position#index} and {@link Position#line} and sets the {@link Position#column} to 1
-     *
-     * @return The position itself, so you can chain these expressions
-     *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
-     */
-    public Position nextLine() {
-        this.index++;
-        this.line++;
-        this.column = 1;
-        return this;
     }
 
     /**
@@ -163,7 +115,7 @@ public class Position {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Position copy() {
-        return new Position(this.getSource(), this.getContent(), this.getIndex(), this.getColumn(), this.getLine());
+        return new Position(this.getSource(), this.getIndex(), this.getColumn(), this.getLine());
     }
 
     /**
