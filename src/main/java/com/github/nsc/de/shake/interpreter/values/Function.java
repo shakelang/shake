@@ -228,7 +228,7 @@ public class Function implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    @Deprecated(forRemoval = true)
+    @Deprecated
     public void call(FunctionCallNode node, Scope scope) {
         this.invoke(node, scope);
     }
