@@ -24,4 +24,11 @@ public interface CharacterSource {
         return from(chars, source);
     }
 
+    static CharacterSource from(InputStream s, String source) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(s));
+        char[] chars = new char[(int) s.available()]; // FIXME files that are longer than 2^31 (integer limit)
+        for(int i = 0; i < chars.length; i++) chars[i] = (char) reader.read();
+        return from(chars, source);
+    }
+
 }

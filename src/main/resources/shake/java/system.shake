@@ -1,0 +1,40 @@
+private const System = java.java.lang.System;
+private const output_stream = System.out;
+
+private class ConsoleOutput {
+
+  function write ( e ) {
+    output_stream.print ( e );
+  }
+
+}
+
+const stdout = new ConsoleOutput();
+
+public class Console {
+
+  function log ( e ) {
+    stdout.write ( e );
+  }
+
+}
+
+public const console = new Console();
+
+public function print ( content ) {
+
+  stdout.write ( content );
+
+}
+
+public function println ( content ) {
+
+  stdout.write ( content );
+
+}
+
+public function exit ( ) {
+
+  System.exit(0);
+
+}

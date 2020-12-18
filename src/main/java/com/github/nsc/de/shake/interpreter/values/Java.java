@@ -125,7 +125,7 @@ public class Java implements InterpreterValue {
             Method[] methods = this.javaClass.getMethods();
             for(int i = 0; i < methods.length; i++)
                 if(methods[i].getName().equals(c) && Modifier.isStatic(methods[i].getModifiers()))
-                    return Variable.finalOf(c, new JavaMethod(javaClass, c));
+                    return Variable.finalOf(c, new JavaMethod(c, javaClass));
 
             Class[] classes = this.javaClass.getClasses();
             for(int i = 0; i < classes.length; i++)
@@ -159,19 +159,16 @@ public class Java implements InterpreterValue {
 
     public static class JavaMethod implements InterpreterValue {
 
-        private final Class type;
         private final String name;
         private final Object object;
 
-        public JavaMethod(Class type, String name, Object object) {
+        public JavaMethod(String name, Object object) {
             super();
-            this.type = type;
             this.name = name;
             this.object = object;
         }
 
-        public JavaMethod(Class type, String name) {
-            this.type = type;
+        public JavaMethod(String name) {
             this.name = name;
             this.object = null;
         }
@@ -208,8 +205,7 @@ public class Java implements InterpreterValue {
         @Override
         public String toString() {
             return "JavaMethod{" +
-                    "type=" + type +
-                    ", name='" + name + '\'' +
+                    "name='" + name + '\'' +
                     ", object=" + object +
                     '}';
         }
@@ -253,7 +249,7 @@ public class Java implements InterpreterValue {
                 Method[] methods = this.type.getMethods();
                 for(int i = 0; i < methods.length; i++) {
                     if (methods[i].getName().equals(c) && !Modifier.isStatic(methods[i].getModifiers()))
-                        return Variable.finalOf(c, new JavaMethod(type, c, object));
+                        return Variable.finalOf(c, new JavaMethod(c, object));
                 }
 
                 Class[] classes = this.type.getClasses();

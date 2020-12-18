@@ -2,6 +2,12 @@ package com.github.nsc.de.shake.interpreter;
 
 import com.github.nsc.de.shake.interpreter.values.*;
 import com.github.nsc.de.shake.interpreter.values.ClassValue;
+import com.github.nsc.de.shake.lexer.Lexer;
+import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinputstream.SourceCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinputstream.charactersource.CharacterSource;
+import com.github.nsc.de.shake.lexer.token.TokenInputStream;
+import com.github.nsc.de.shake.parser.Parser;
 import com.github.nsc.de.shake.parser.node.*;
 import com.github.nsc.de.shake.parser.node.expression.*;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
@@ -15,8 +21,10 @@ import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -52,6 +60,11 @@ public class Interpreter {
     public Interpreter(Scope global) {
         // set the global field
         this.global = global;
+        try {
+            getDefaults();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -61,7 +74,25 @@ public class Interpreter {
      */
     public Interpreter() {
         // set the global scope to a new scope
-        this.global = new Scope(null, DefaultFunctions.getFunctions(this), this);
+        this.global = new Scope(null, this);
+        global.getVariables().declare(new Variable<>("java", Java.class, new Java()));
+
+        try {
+            getDefaults();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getDefaults() throws IOException {
+        CharacterSource source = CharacterSource.from(
+                getClass().getResourceAsStream("/shake/java/system.shake"), "shake/system.shake");
+        CharacterInputStream inputStream = new SourceCharacterInputStream(source);
+        Lexer lexer = new Lexer(inputStream);
+        TokenInputStream tokens = lexer.makeTokens();
+        Parser parser = new Parser(tokens);
+        Tree tree = parser.parse();
+        this.visit(tree);
     }
 
 
