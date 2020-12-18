@@ -21,7 +21,7 @@ public class ObjectValue implements InterpreterValue {
     /**
      * The parent class of the object
      */
-    private final Class parent;
+    private final ClassValue parent;
 
     /**
      * The scope inside of the class (for functions in the class)
@@ -41,11 +41,11 @@ public class ObjectValue implements InterpreterValue {
     /**
      * Constructor for {@link ObjectValue}
      *
-     * @param parent the parent {@link Class} of the {@link ObjectValue}
+     * @param parent the parent {@link ClassValue} of the {@link ObjectValue}
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public ObjectValue(Class parent) {
+    public ObjectValue(ClassValue parent) {
 
         // set the parent
         this.parent = parent;
@@ -57,7 +57,7 @@ public class ObjectValue implements InterpreterValue {
         this.this_object = new VariableList(new HashMap<>(), parent.getPrototype().withScope(null));
 
         // Create scope for inside of the class
-        this.scope = new Scope(parent.getScope(), this_object);
+        this.scope = new Scope(parent.getScope(), this_object, parent.getInterpreter());
 
         // replace the "withScope" scope
         // we do this here because the scope was not declared when we declared the this_object
@@ -99,7 +99,7 @@ public class ObjectValue implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Class getParent() {
+    public ClassValue getParent() {
         return parent;
     }
 

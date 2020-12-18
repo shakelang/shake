@@ -71,7 +71,7 @@ public enum BooleanValue implements InterpreterValue {
         if(v instanceof NullValue) return FALSE;
 
         // if v is a Function just return TRUE
-        if(v instanceof Function || v instanceof Class || v instanceof ObjectValue) return TRUE;
+        if(v instanceof Function || v instanceof ClassValue || v instanceof ObjectValue) return TRUE;
         throw new Error("Could not create boolean from " + v.getName());
     }
 
@@ -167,6 +167,24 @@ public enum BooleanValue implements InterpreterValue {
             return BooleanValue.from(this.value == ((BooleanValue) v).value);
         }
         throw new Error("Operator '==' is not defined for type boolean and " + v.getName());
+    }
+
+
+
+    // ****************************
+    // implementations for extended InterpreterValue
+    // >> create a java-representation of the InterpreterValue
+
+    /**
+     * Get the java-representation of the {@link BooleanValue}
+     *
+     * @return the java-representation of the {@link BooleanValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public Object toJava() {
+        return getValue();
     }
 
     /**

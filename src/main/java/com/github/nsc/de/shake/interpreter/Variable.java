@@ -1,8 +1,10 @@
 package com.github.nsc.de.shake.interpreter;
 
 import com.github.nsc.de.shake.interpreter.values.*;
+import com.github.nsc.de.shake.interpreter.values.ClassValue;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.VariableType;
+import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 
 import java.lang.Class;
 
@@ -410,11 +412,23 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      */
     @Override
     public Variable getChild(String c) {
-        // redirect operator to the value
+        // redirect to the value
         return this.getValue().getChild(c);
     }
 
-
+    /**
+     * Invoke a value
+     *
+     * @param node the node that called the function
+     * @param scope the scope the call was made in (to process the arguments)
+     *
+     * @return
+     */
+    @Override
+    public InterpreterValue invoke(FunctionCallNode node, Scope scope) {
+        // redirect operator to the value
+        return this.getValue().invoke(node, scope);
+    }
 
     // ****************************
     // implementations for extended InterpreterValue
@@ -518,8 +532,8 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
         if(v instanceof Variable) return (V) ((Variable) v).withScope(scope);
         if(v instanceof VariableList) return (V) ((VariableList) v).withScope(scope);
         if(v instanceof Function) return (V) ((Function) v).withScope(scope);
-        if(v instanceof com.github.nsc.de.shake.interpreter.values.Class)
-            return (V) ((com.github.nsc.de.shake.interpreter.values.Class) v).withScope(scope);
+        if(v instanceof ClassValue)
+            return (V) ((ClassValue) v).withScope(scope);
         return v;
     }
 
@@ -568,5 +582,9 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
 
         }
         throw new Error(String.format("Wrong input: %s", type.getType()));
+    }
+
+    public static final <T extends InterpreterValue> Variable<T> finalOf(String name, T v) {
+        return new Variable<T>(name, AccessDescriber.PUBLIC, (Class<T>) v.getClass(), v);
     }
 }

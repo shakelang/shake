@@ -1,7 +1,7 @@
 package com.github.nsc.de.shake.interpreter;
 
 import com.github.nsc.de.shake.interpreter.values.*;
-import com.github.nsc.de.shake.interpreter.values.Class;
+import com.github.nsc.de.shake.interpreter.values.ClassValue;
 import com.github.nsc.de.shake.parser.node.*;
 import com.github.nsc.de.shake.parser.node.expression.*;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
@@ -61,7 +61,7 @@ public class Interpreter {
      */
     public Interpreter() {
         // set the global scope to a new scope
-        this.global = new Scope(null, DefaultFunctions.getFunctions(this));
+        this.global = new Scope(null, DefaultFunctions.getFunctions(this), this);
     }
 
 
@@ -804,18 +804,8 @@ public class Interpreter {
         // get the function
         InterpreterValue v = visit(node.getFunction());
 
-        // set the value of f to v (if v is a function)
-        if(v instanceof Function) f = (Function) v;
-
-        // when v is a variable then get it's value and apply it to f
-        else if(v instanceof Variable && ((Variable) v).getValue() instanceof Function)
-            f = (Function) ((Variable) v).getValue();
-
-        // throw an error if the value is no function
-        else throw new Error("Wrong function call");
-
         // call the function
-        f.call(node, scope);
+        v.invoke(node, scope);
 
         // return null
         return NullValue.NULL;
@@ -832,18 +822,18 @@ public class Interpreter {
      *
      * @param node the {@link ClassDeclarationNode} to visit
      * @param scope the {@link Scope} to visit the {@link ClassDeclarationNode}
-     * @return the created {@link Class}
+     * @return the created {@link ClassValue}
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Class visitClassDeclarationNode(ClassDeclarationNode node, Scope scope) {
+    public ClassValue visitClassDeclarationNode(ClassDeclarationNode node, Scope scope) {
 
         // Declare the variable that contains the class
         if(!scope.getVariables().declare(new Variable<>(node.getName(), Function.class)))
             throw new Error("'" + node.getName() + "' is already declared!");
 
         // Create the class
-        Class c = createClassDeclaration(node, scope);
+        ClassValue c = createClassDeclaration(node, scope);
 
         // Set the variable value to the class
         scope.getVariables().get(node.getName()).setValue(c);
@@ -858,11 +848,11 @@ public class Interpreter {
      *
      * @param n the {@link ClassDeclarationNode} to create
      * @param scope the {@link Scope} to create the {@link ClassDeclarationNode}
-     * @return the created {@link Class}
+     * @return the created {@link ClassValue}
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Class createClassDeclaration(ClassDeclarationNode n, Scope scope) {
+    public ClassValue createClassDeclaration(ClassDeclarationNode n, Scope scope) {
 
 
         // Create a list for the fields of the class
@@ -903,12 +893,12 @@ public class Interpreter {
         for(ClassDeclarationNode node : n.getClasses()) {
             if(n.isStatic()) {
                 // declare a new static variable for the class
-                statics.declare(new Variable<>(node.getName(), Class.class));
+                statics.declare(new Variable<>(node.getName(), ClassValue.class));
                 // create the class and apply it to the variable
                 statics.get(node.getName()).setValue(createClassDeclaration(node, scope));
             } else {
                 // declare a new prototype-variable for the class
-                prototype.declare(new Variable<>(node.getName(), Class.class));
+                prototype.declare(new Variable<>(node.getName(), ClassValue.class));
                 // create the class and apply it to the variable
                 prototype.get(node.getName()).setValue(createClassDeclaration(node, scope));
             }
@@ -939,7 +929,7 @@ public class Interpreter {
         }
 
         // create a new class
-        Class cls = new Class(n.getName(), statics, fields.toArray(new VariableDeclarationNode[] {}), scope,
+        ClassValue cls = new ClassValue(n.getName(), statics, fields.toArray(new VariableDeclarationNode[] {}), scope,
                 this, prototype, n.getAccess(), n.isFinal());
 
         // return the class
@@ -952,7 +942,7 @@ public class Interpreter {
      *
      * @param n the {@link ClassConstructionNode} to create
      * @param scope the {@link Scope} to create the {@link ClassDeclarationNode}
-     * @return the created {@link Class}
+     * @return the created {@link ClassValue}
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
@@ -961,17 +951,17 @@ public class Interpreter {
         // TODO Arguments for constructor and constructor in variable
 
         // Declare empty Variable for the class
-        Class cls;
+        ClassValue cls;
 
         // Get the class
         InterpreterValue v = visit(n.getType(), scope);
 
         // if v is a class then set cls to it's value
-        if(v instanceof Class) cls = (Class) v;
+        if(v instanceof ClassValue) cls = (ClassValue) v;
 
         // if v is a variable containing a class then apply it's value to cls
-        else if(v instanceof Variable && ((Variable) v).getValue() instanceof Class)
-            cls = (Class) ((Variable) v).getValue();
+        else if(v instanceof Variable && ((Variable) v).getValue() instanceof ClassValue)
+            cls = (ClassValue) ((Variable) v).getValue();
 
         // in other case throw an error
         else throw new Error("Seems not to be a class");

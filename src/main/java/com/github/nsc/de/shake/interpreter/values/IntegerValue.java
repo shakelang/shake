@@ -340,6 +340,24 @@ public class IntegerValue implements InterpreterValue {
 
 
 
+    // ****************************
+    // implementations for extended InterpreterValue
+    // >> create a java-representation of the InterpreterValue
+
+    /**
+     * Get the java-representation of the {@link IntegerValue}
+     *
+     * @return the java-representation of the {@link IntegerValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public Object toJava() {
+        return getValue();
+    }
+
+
+
     // *******************************
     // implementations for extended InterpreterValue
     // >> get-name

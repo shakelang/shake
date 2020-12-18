@@ -25,6 +25,7 @@ public class DefaultFunctions {
         functions.put("print", new Variable<>("print", Function.class, new Print(interpreter)));
         functions.put("println", new Variable<>("println", Function.class, new Println(interpreter)));
         functions.put("exit", new Variable<>("println", Function.class, new Exit(interpreter)));
+        functions.put("java", new Variable<>("java", Java.class, new Java()));
 
         // Create a new VariableList from the default functions and return it
         return new VariableList(functions);
@@ -51,18 +52,10 @@ public class DefaultFunctions {
             super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, true);
         }
 
-        /**
-         * Call the {@link Function} (Overrides {@link Function#call(FunctionCallNode, Scope)})
-         *
-         * @param node the node that called the function
-         * @param scope the scope the call was made in (to process the arguments)
-         *
-         * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
-         */
         @Override
-        public void call(FunctionCallNode node, Scope scope) {
-            // just format the arguments and print them
+        public InterpreterValue invoke(FunctionCallNode node, Scope scope) {
             System.out.print(formatPrintArgs(node, this.getInterpreter(), scope));
+            return NullValue.NULL;
         }
     }
 
@@ -88,18 +81,10 @@ public class DefaultFunctions {
             super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, true);
         }
 
-        /**
-         * Call the {@link Function} (Overrides {@link Function#call(FunctionCallNode, Scope)})
-         *
-         * @param node the node that called the function
-         * @param scope the scope the call was made in (to process the arguments)
-         *
-         * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
-         */
         @Override
-        public void call(FunctionCallNode node, Scope scope) {
-            // just format the arguments and print them
+        public InterpreterValue invoke(FunctionCallNode node, Scope scope) {
             System.out.println(formatPrintArgs(node, this.getInterpreter(), scope));
+            return NullValue.NULL;
         }
     }
 
@@ -115,24 +100,16 @@ public class DefaultFunctions {
             super(new FunctionArgumentNode[] {}, null, null, interpreter, AccessDescriber.PUBLIC, true);
         }
 
-
-        /**
-         * Call the {@link Function} (Overrides {@link Function#call(FunctionCallNode, Scope)})
-         *
-         * @param node the node that called the function
-         * @param scope the scope the call was made in (to process the arguments)
-         *
-         * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
-         */
         @Override
-        public void call(FunctionCallNode node, Scope scope) {
+        public InterpreterValue invoke(FunctionCallNode node, Scope scope) {
+
             // check the number of arguments. If it is bigger than 1 then just throw an error
             if(node.getArgs().length > 1) throw new Error("Expecting 0-1 args for the exit function");
 
-            // if no arguments are given, then just exit with code 0
+                // if no arguments are given, then just exit with code 0
             else if(node.getArgs().length == 0) System.exit(0);
 
-            // called, if the function has one argument
+                // called, if the function has one argument
             else {
                 // visit the given argument
                 InterpreterValue i = getInterpreter().visit(node.getArgs()[0], scope);
@@ -140,12 +117,14 @@ public class DefaultFunctions {
                 // if the argument is an integer, then give it as exit-code
                 if(i instanceof IntegerValue) System.exit(((IntegerValue) i).getValue());
 
-                // if the argument is a double, cast it to an integer and give it as exit-code
+                    // if the argument is a double, cast it to an integer and give it as exit-code
                 else if(i instanceof DoubleValue) System.exit((int)((DoubleValue) i).getValue());
 
-                // in other case throw an error
+                    // in other case throw an error
                 else throw new Error("Expecting an integer as argument for the exit function");
             }
+
+            return NullValue.NULL;
         }
     }
 

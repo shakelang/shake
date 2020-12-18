@@ -166,14 +166,15 @@ public class Function implements InterpreterValue {
     }
 
     /**
-     * Function call method
+     * Invoke a function
      *
      * @param node the node that called the function
      * @param scope the scope the call was made in (to process the arguments)
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public void call(FunctionCallNode node, Scope scope) {
+    @Override
+    public InterpreterValue invoke(FunctionCallNode node, Scope scope) {
         // TODO return statements
 
         // Create function scope (for the function execution)
@@ -186,7 +187,7 @@ public class Function implements InterpreterValue {
         // >>   println(i); // >> 0
         // >> }
         //
-        Scope function_scope = new Scope(this.getScope());
+        Scope function_scope = new Scope(this.getScope(), scope.getInterpreter());
 
         // loop over args (prepare function_scope)
         for(int i = 0; i < this.getArgs().length; i++) {
@@ -214,6 +215,22 @@ public class Function implements InterpreterValue {
         // Visits the function body using the function scope so we can use all
         // the parameters that are given to the function
         this.getInterpreter().visit(this.getBody(), function_scope);
+        return NullValue.NULL;
+    }
+
+    /**
+     * Function call method
+     *
+     * @deprecated Moved to {@link Function#invoke(FunctionCallNode, Scope)}. Will be removed in the future
+     *
+     * @param node the node that called the function
+     * @param scope the scope the call was made in (to process the arguments)
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Deprecated(forRemoval = true)
+    public void call(FunctionCallNode node, Scope scope) {
+        this.invoke(node, scope);
     }
 
 

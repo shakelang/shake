@@ -24,6 +24,11 @@ public class Scope {
      */
     private final Scope parent;
 
+    /**
+     * The interpreter of the {@link Scope}
+     */
+    private final Interpreter interpreter;
+
 
 
     // *******************************
@@ -35,12 +40,14 @@ public class Scope {
      * @param parent the parent of the scope (value for {@link #parent})
      * @param variables the variables of the scope (value for {@link #variables})
      *
+     * @param interpreter
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Scope(Scope parent, VariableList variables) {
+    public Scope(Scope parent, VariableList variables, Interpreter interpreter) {
         // just set the fields
         this.parent = parent;
         this.variables = variables;
+        this.interpreter = interpreter;
     }
 
     /**
@@ -50,9 +57,9 @@ public class Scope {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Scope(Scope parent) {
+    public Scope(Scope parent, Interpreter interpreter) {
         // Use other constructor with an empty VariableList
-        this(parent, new VariableList());
+        this(parent, new VariableList(), interpreter);
     }
 
 
@@ -94,6 +101,17 @@ public class Scope {
     }
 
     /**
+     * Getter for the {@link Interpreter} of the {@link Scope}
+     *
+     * @return the {@link Interpreter} of the {@link Scope}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public Interpreter getInterpreter() {
+        return interpreter;
+    }
+
+    /**
      * Copies the scope
      *
      * @return the copy of the scope
@@ -101,6 +119,6 @@ public class Scope {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Scope copy() {
-        return new Scope(this.parent, this.getScopeVariables().copy());
+        return new Scope(this.parent, this.getScopeVariables().copy(), interpreter);
     }
 }

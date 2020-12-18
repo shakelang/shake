@@ -321,6 +321,24 @@ public class DoubleValue implements InterpreterValue {
 
 
 
+    // ****************************
+    // implementations for extended InterpreterValue
+    // >> create a java-representation of the InterpreterValue
+
+    /**
+     * Get the java-representation of the {@link DoubleValue}
+     *
+     * @return the java-representation of the {@link DoubleValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public Object toJava() {
+        return getValue();
+    }
+
+
+
     // *******************************
     // implementations for extended InterpreterValue
     // >> get-name

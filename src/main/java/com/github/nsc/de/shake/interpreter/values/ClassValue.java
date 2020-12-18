@@ -16,7 +16,7 @@ import java.util.Arrays;
  *
  * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
  */
-public class Class implements InterpreterValue {
+public class ClassValue implements InterpreterValue {
 
 
 
@@ -69,7 +69,7 @@ public class Class implements InterpreterValue {
     // Constructor
 
     /**
-     * The Constructor for {@link Class}
+     * The Constructor for {@link ClassValue}
      *
      * @param name the {@link #name} of the class
      * @param statics the {@link #statics} of the class
@@ -82,8 +82,8 @@ public class Class implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Class(String name, VariableList statics, VariableDeclarationNode[] fields, Scope scope, Interpreter interpreter,
-                 VariableList prototype, AccessDescriber access, boolean isFinal) {
+    public ClassValue(String name, VariableList statics, VariableDeclarationNode[] fields, Scope scope, Interpreter interpreter,
+                      VariableList prototype, AccessDescriber access, boolean isFinal) {
         // Set all the given values
         this.name = name;
         this.statics = statics;
@@ -99,13 +99,13 @@ public class Class implements InterpreterValue {
      * Returns the same class, but you can declare what {@link Scope} ({@link #scope}) to use (for class declarations)
      *
      * @param scope the scope to use
-     * @return the {@link Class} using the specified {@link Scope} ({@link #scope})
+     * @return the {@link ClassValue} using the specified {@link Scope} ({@link #scope})
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Class withScope(Scope scope) {
+    public ClassValue withScope(Scope scope) {
         // Return a new Function with the same argument as this one, just replace the scope
-        return new Class(name, statics, fields, scope, interpreter, prototype, access, isFinal);
+        return new ClassValue(name, statics, fields, scope, interpreter, prototype, access, isFinal);
     }
 
 
@@ -228,7 +228,7 @@ public class Class implements InterpreterValue {
 
     /**
      * Returns the name of the type of {@link InterpreterValue} (To identify the type of value)
-     * For {@link Class} it just always returns "class"
+     * For {@link ClassValue} it just always returns "class"
      *
      * @return "class"
      *
@@ -246,9 +246,9 @@ public class Class implements InterpreterValue {
     // Override toString()
 
     /**
-     * Returns the string representation of the {@link Class}
+     * Returns the string representation of the {@link ClassValue}
      *
-     * @return the string representation of the {@link Class}
+     * @return the string representation of the {@link ClassValue}
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */

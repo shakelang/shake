@@ -1,8 +1,9 @@
 package com.github.nsc.de.shake.interpreter.values;
 
 
+import com.github.nsc.de.shake.interpreter.Scope;
 import com.github.nsc.de.shake.interpreter.Variable;
-
+import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 
 
 /**
@@ -226,6 +227,42 @@ public interface InterpreterValue {
         // Throw an error when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
         throw new Error("Can't get child values of type " + getName());
+    }
+
+
+
+    // ****************************
+    // Invoking
+
+    /**
+     * Invoke a value
+     *
+     * @param node the node that called the function
+     * @param scope the scope the call was made in (to process the arguments)
+     * @return the value of the function
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    default InterpreterValue invoke(FunctionCallNode node, Scope scope) {
+        // Throw an error when the operator is not implemented
+        // This function will be overridden by all InterpreterValues that do support this operation
+        throw new Error("Can't invoke type " + getName());
+    }
+
+
+
+    // ****************************
+    // create a java-representation of the InterpreterValue
+
+    /**
+     * Get the java-representation of the {@link InterpreterValue}
+     *
+     * @return the java-representation of the {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    default Object toJava() {
+        return getName();
     }
 
 

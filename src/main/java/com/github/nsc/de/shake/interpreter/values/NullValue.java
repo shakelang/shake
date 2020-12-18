@@ -55,6 +55,24 @@ public enum NullValue implements InterpreterValue {
 
 
 
+    // ****************************
+    // implementations for extended InterpreterValue
+    // >> create a java-representation of the InterpreterValue
+
+    /**
+     * Get the java-representation of the {@link NullValue}
+     *
+     * @return the java-representation of the {@link NullValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public Object toJava() {
+        return null;
+    }
+
+
+
     // *******************************
     // Override toString()
 

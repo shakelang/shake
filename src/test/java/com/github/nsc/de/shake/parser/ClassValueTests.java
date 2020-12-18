@@ -12,7 +12,7 @@ import static com.github.nsc.de.shake.TestUtil.assertType;
 import static com.github.nsc.de.shake.parser.ParserTestUtil.parse;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ClassTests {
+public class ClassValueTests {
 
     @Test
     public void testFinalClass() {
