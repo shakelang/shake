@@ -3,9 +3,9 @@ package com.github.nsc.de.shake.interpreter;
 import com.github.nsc.de.shake.interpreter.values.*;
 import com.github.nsc.de.shake.interpreter.values.ClassValue;
 import com.github.nsc.de.shake.lexer.Lexer;
-import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.SourceCharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.charactersource.CharacterSource;
+import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.charactersource.CharacterSource;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.parser.Parser;
 import com.github.nsc.de.shake.parser.node.*;
@@ -24,7 +24,6 @@ import com.github.nsc.de.shake.parser.node.variables.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 

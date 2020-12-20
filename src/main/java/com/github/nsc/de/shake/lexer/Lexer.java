@@ -1,8 +1,8 @@
 package com.github.nsc.de.shake.lexer;
 
 import static com.github.nsc.de.shake.util.HelpFunctions.asList;
-import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.position.Position;
+import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.position.Position;
 import com.github.nsc.de.shake.lexer.token.Token;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;

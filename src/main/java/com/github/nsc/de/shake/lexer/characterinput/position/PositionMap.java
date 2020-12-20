@@ -1,6 +1,6 @@
-package com.github.nsc.de.shake.lexer.characterinputstream.position;
+package com.github.nsc.de.shake.lexer.characterinput.position;
 
-import com.github.nsc.de.shake.lexer.characterinputstream.charactersource.CharacterSource;
+import com.github.nsc.de.shake.lexer.characterinput.charactersource.CharacterSource;
 
 public class PositionMap {
 

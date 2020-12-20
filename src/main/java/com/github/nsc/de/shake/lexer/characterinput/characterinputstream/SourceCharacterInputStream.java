@@ -1,8 +1,8 @@
-package com.github.nsc.de.shake.lexer.characterinputstream;
+package com.github.nsc.de.shake.lexer.characterinput.characterinputstream;
 
 
-import com.github.nsc.de.shake.lexer.characterinputstream.charactersource.CharacterSource;
-import com.github.nsc.de.shake.lexer.characterinputstream.position.PositionMaker;
+import com.github.nsc.de.shake.lexer.characterinput.charactersource.CharacterSource;
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMaker;
 
 import java.io.File;
 import java.io.IOException;

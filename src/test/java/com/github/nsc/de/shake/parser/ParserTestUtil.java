@@ -1,8 +1,8 @@
 package com.github.nsc.de.shake.parser;
 
 import com.github.nsc.de.shake.lexer.Lexer;
-import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.SourceCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceCharacterInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.parser.node.Node;
 import com.github.nsc.de.shake.parser.node.Tree;

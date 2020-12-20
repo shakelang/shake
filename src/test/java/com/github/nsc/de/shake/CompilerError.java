@@ -1,8 +1,8 @@
 package com.github.nsc.de.shake;
 
-import com.github.nsc.de.shake.lexer.characterinputstream.charactersource.CharacterSource;
-import com.github.nsc.de.shake.lexer.characterinputstream.position.Position;
-import com.github.nsc.de.shake.lexer.characterinputstream.position.PositionMap;
+import com.github.nsc.de.shake.lexer.characterinput.charactersource.CharacterSource;
+import com.github.nsc.de.shake.lexer.characterinput.position.Position;
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.util.Formatting;
 import org.junit.jupiter.api.Test;
 

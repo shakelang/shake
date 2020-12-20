@@ -1,4 +1,4 @@
-package com.github.nsc.de.shake.lexer.characterinputstream.position;
+package com.github.nsc.de.shake.lexer.characterinput.position;
 
 /**
  * The {@link Position} marks a position in the source-code.

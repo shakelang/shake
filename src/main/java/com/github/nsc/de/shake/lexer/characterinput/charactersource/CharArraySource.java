@@ -1,4 +1,4 @@
-package com.github.nsc.de.shake.lexer.characterinputstream.charactersource;
+package com.github.nsc.de.shake.lexer.characterinput.charactersource;
 
 class CharArraySource implements CharacterSource {
 

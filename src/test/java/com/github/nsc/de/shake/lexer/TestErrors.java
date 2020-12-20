@@ -1,7 +1,7 @@
 package com.github.nsc.de.shake.lexer;
 
-import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.SourceCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceCharacterInputStream;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

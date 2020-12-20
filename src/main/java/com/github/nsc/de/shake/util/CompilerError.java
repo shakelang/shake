@@ -1,7 +1,7 @@
 package com.github.nsc.de.shake.util;
 
-import com.github.nsc.de.shake.lexer.characterinputstream.position.Position;
-import com.github.nsc.de.shake.lexer.characterinputstream.position.PositionMap;
+import com.github.nsc.de.shake.lexer.characterinput.position.Position;
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 
 public class CompilerError extends Error {
 

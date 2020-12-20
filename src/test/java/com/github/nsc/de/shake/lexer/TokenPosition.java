@@ -1,8 +1,8 @@
 package com.github.nsc.de.shake.lexer;
 
-import com.github.nsc.de.shake.lexer.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.SourceCharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinputstream.position.Position;
+import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.position.Position;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;
 import org.junit.jupiter.api.Test;
