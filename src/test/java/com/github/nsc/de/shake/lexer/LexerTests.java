@@ -175,6 +175,8 @@ public class LexerTests {
     public void testMultiLineComments() {
 
         generateToken("/* test */\n", TokenType.LINE_SEPARATOR);
+        generateToken("/*\ntest\ntest2*/\n", TokenType.LINE_SEPARATOR);
+        generateToken("/*\n * test\n *  test2\n */\n", TokenType.LINE_SEPARATOR);
 
     }
 
