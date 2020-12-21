@@ -310,6 +310,11 @@ public enum TokenType {
      */
     KEYWORD_FUNCTION,
 
+    /**
+     * Keyword "return" for returning function-results
+     */
+    KEYWORD_RETURN,
+
 
 
     // Variable Declaration

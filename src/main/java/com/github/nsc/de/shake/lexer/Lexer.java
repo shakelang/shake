@@ -157,6 +157,8 @@ public class Lexer {
                 return new Token(TokenType.KEYWORD_BOOLEAN, start, end);
             case "function":
                 return new Token(TokenType.KEYWORD_FUNCTION, start, end);
+            case "return":
+                return new Token(TokenType.KEYWORD_RETURN, start, end);
             case "true":
                 return new Token(TokenType.KEYWORD_TRUE, start, end);
             case "false":
