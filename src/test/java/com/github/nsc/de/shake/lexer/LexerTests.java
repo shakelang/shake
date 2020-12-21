@@ -5,6 +5,8 @@ import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceC
 import com.github.nsc.de.shake.lexer.token.Token;
 import com.github.nsc.de.shake.lexer.token.TokenType;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -106,44 +108,10 @@ public class LexerTests {
 
     }
 
-    @Test
-    public void testKeywords() {
-
-        // keywords
-        generateToken("dynamic", TokenType.KEYWORD_DYNAMIC); // "dynamic"
-        generateToken("byte", TokenType.KEYWORD_BYTE); // "byte"
-        generateToken("short", TokenType.KEYWORD_SHORT); // "short"
-        generateToken("int", TokenType.KEYWORD_INT); // "int"
-        generateToken("long", TokenType.KEYWORD_LONG); // "long"
-        generateToken("float", TokenType.KEYWORD_FLOAT); // "float"
-        generateToken("double", TokenType.KEYWORD_DOUBLE); // "double"
-        generateToken("char", TokenType.KEYWORD_CHAR); // "char"
-        generateToken("boolean", TokenType.KEYWORD_BOOLEAN); // "boolean"
-        generateToken("var", TokenType.KEYWORD_VAR); // "var"
-        generateToken("let", TokenType.KEYWORD_VAR); // "let"
-        generateToken("const", TokenType.KEYWORD_CONST); // "const"
-
-        generateToken("function", TokenType.KEYWORD_FUNCTION); // "function"
-        generateToken("do", TokenType.KEYWORD_DO); // "do"
-        generateToken("while", TokenType.KEYWORD_WHILE); // "while"
-        generateToken("for", TokenType.KEYWORD_FOR); // "for"
-        generateToken("if", TokenType.KEYWORD_IF); // "if"
-        generateToken("else", TokenType.KEYWORD_ELSE); // "else"
-        generateToken("true", TokenType.KEYWORD_TRUE);  // "true"
-        generateToken("false", TokenType.KEYWORD_FALSE); // "false"
-
-        generateToken("class", TokenType.KEYWORD_CLASS); // "class"
-        generateToken("extends", TokenType.KEYWORD_EXTENDS); // "extends"
-        generateToken("implements", TokenType.KEYWORD_IMPLEMENTS); // "implements"
-        generateToken("static", TokenType.KEYWORD_STATIC); // "static"
-        generateToken("final", TokenType.KEYWORD_FINAL); // "final"
-
-        generateToken("public", TokenType.KEYWORD_PUBLIC); // "public"
-        generateToken("protected", TokenType.KEYWORD_PROTECTED); // "protected"
-        generateToken("private", TokenType.KEYWORD_PRIVATE); // "private"
-        generateToken("new", TokenType.KEYWORD_NEW); // "new"
-
-
+    @ParameterizedTest
+    @EnumSource(KeywordTest.class)
+    public void testKeyword(KeywordTest test) {
+        generateToken(test.input, test.output);
     }
 
     @Test
@@ -180,13 +148,63 @@ public class LexerTests {
 
     }
 
-    private Token generateToken(String input, TokenType tt) {
+    public static Token generateToken(String input, TokenType tt) {
         CharacterInputStream in = new SourceCharacterInputStream("<tests>", input);
         Lexer lexer = new Lexer(in);
         Token t = lexer.makeTokens().next();
         assertSame(tt, t.getType());
         assertFalse(in.hasNext());
         return t;
+    }
+
+    private enum KeywordTest {
+
+        DYNAMIC ("dynamic", TokenType.KEYWORD_DYNAMIC),
+        BYTE ("byte", TokenType.KEYWORD_BYTE),
+        SHORT ("short", TokenType.KEYWORD_SHORT),
+        INT ("int", TokenType.KEYWORD_INT),
+        LONG ("long", TokenType.KEYWORD_LONG),
+        FLOAT ("float", TokenType.KEYWORD_FLOAT),
+        DOUBLE ("double", TokenType.KEYWORD_DOUBLE),
+        CHAR ("char", TokenType.KEYWORD_CHAR),
+        BOOLEAN ("boolean", TokenType.KEYWORD_BOOLEAN),
+        VAR ("var", TokenType.KEYWORD_VAR),
+        LET ("let", TokenType.KEYWORD_VAR),
+        CONST ("const", TokenType.KEYWORD_CONST),
+
+        FUNCTION ("function", TokenType.KEYWORD_FUNCTION),
+        RETURN ("return", TokenType.KEYWORD_RETURN),
+        DO ("do", TokenType.KEYWORD_DO),
+        WHILE ("while", TokenType.KEYWORD_WHILE),
+        FOR ("for", TokenType.KEYWORD_FOR),
+        IF ("if", TokenType.KEYWORD_IF),
+        ELSE ("else", TokenType.KEYWORD_ELSE),
+        TRUE ("true", TokenType.KEYWORD_TRUE),
+        FALSE ("false", TokenType.KEYWORD_FALSE),
+
+        CLASS ("class", TokenType.KEYWORD_CLASS),
+        EXTENDS ("extends", TokenType.KEYWORD_EXTENDS),
+        IMPLEMENTS ("implements", TokenType.KEYWORD_IMPLEMENTS),
+        STATIC ("static", TokenType.KEYWORD_STATIC),
+        FINAL ("final", TokenType.KEYWORD_FINAL),
+
+        PUBLIC ("public", TokenType.KEYWORD_PUBLIC),
+        PROTECTED("protected", TokenType.KEYWORD_PROTECTED),
+        PRIVATE ("private", TokenType.KEYWORD_PRIVATE),
+        NEW ("new", TokenType.KEYWORD_NEW),
+        ;
+        private final String input;
+        private final TokenType output;
+
+        KeywordTest(String input, TokenType output) {
+            this.input = input;
+            this.output = output;
+        }
+
+        @Override
+        public String toString() {
+            return "Keyword '" + input + '\'';
+        }
     }
 
 }
