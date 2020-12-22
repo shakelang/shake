@@ -3,6 +3,8 @@ package com.github.nsc.de.shake.generators.java;
 import com.github.nsc.de.shake.generators.Generator;
 import com.github.nsc.de.shake.parser.node.*;
 import com.github.nsc.de.shake.parser.node.expression.*;
+import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
+import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
 import com.github.nsc.de.shake.parser.node.logical.*;

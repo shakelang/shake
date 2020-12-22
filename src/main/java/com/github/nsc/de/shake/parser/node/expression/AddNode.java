@@ -1,6 +1,8 @@
 package com.github.nsc.de.shake.parser.node.expression;
 
 import com.github.nsc.de.shake.parser.node.ValuedNode;
+import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
+import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
 
 public class AddNode extends ExpressionNode {
     public AddNode(ValuedNode left, ValuedNode right) {

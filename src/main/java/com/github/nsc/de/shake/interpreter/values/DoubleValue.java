@@ -68,6 +68,13 @@ public class DoubleValue implements InterpreterValue {
         // the addition-result
         if(v instanceof DoubleValue) return new DoubleValue(getValue() + ((DoubleValue) v).getValue());
 
+        // If the given value is a CharacterValue create a new DoubleValue from
+        // the addition-result
+        if(v instanceof CharacterValue) return new DoubleValue(getValue() + ((CharacterValue) v).getValue());
+
+        // If the given value is a StringValue create a String concatenation
+        if(v instanceof StringValue) return new StringValue(this.value + ((StringValue) v).getValue());
+
         // In other case just throw an error
         throw new Error("Operator '+' is not defined for type double and " + v.getName());
 
@@ -91,6 +98,10 @@ public class DoubleValue implements InterpreterValue {
         // If the given value is a DoubleValue create a new DoubleValue from
         // the subtraction-result
         if(v instanceof DoubleValue) return new DoubleValue(getValue() - ((DoubleValue) v).getValue());
+
+        // If the given value is a CharacterValue create a new DoubleValue from
+        // the subtraction-result
+        if(v instanceof CharacterValue) return new DoubleValue(getValue() - ((CharacterValue) v).getValue());
 
         // In other case just throw an error
         throw new Error("Operator '-' is not defined for type double and " + v.getName());
@@ -116,6 +127,10 @@ public class DoubleValue implements InterpreterValue {
         // the multiplication-result
         if(v instanceof DoubleValue) return new DoubleValue(getValue() * ((DoubleValue) v).getValue());
 
+        // If the given value is a CharacterValue create a new DoubleValue from
+        // the multiplication-result
+        if(v instanceof CharacterValue) return new DoubleValue(getValue() * ((CharacterValue) v).getValue());
+
         // In other case just throw an error
         throw new Error("Operator '*' is not defined for type double and " + v.getName());
 
@@ -139,6 +154,10 @@ public class DoubleValue implements InterpreterValue {
         // If the given value is a DoubleValue create a new DoubleValue from
         // the division-result
         if(v instanceof DoubleValue) return new DoubleValue(getValue() / ((DoubleValue) v).getValue());
+
+        // If the given value is a CharacterValue create a new DoubleValue from
+        // the division-result
+        if(v instanceof CharacterValue) return new DoubleValue(getValue() / ((CharacterValue) v).getValue());
 
         // In other case just throw an error
         throw new Error("Operator '/' is not defined for type double and " + v.getName());
@@ -164,6 +183,10 @@ public class DoubleValue implements InterpreterValue {
         // the modulo-result
         if(v instanceof DoubleValue) return new DoubleValue(getValue() % ((DoubleValue) v).getValue());
 
+        // If the given value is a CharacterValue create a new DoubleValue from
+        // the modulo-result
+        if(v instanceof CharacterValue) return new DoubleValue(getValue() % ((CharacterValue) v).getValue());
+
         // In other case just throw an error
         throw new Error("Operator '%' is not defined for type double and " + v.getName());
 
@@ -187,6 +210,10 @@ public class DoubleValue implements InterpreterValue {
         // If the given value is a DoubleValue create a new DoubleValue from
         // the power-result
         if(v instanceof DoubleValue) return new DoubleValue(Math.pow(getValue(), ((DoubleValue) v).getValue()));
+
+        // If the given value is a CharacterValue create a new DoubleValue from
+        // the pow-result
+        if(v instanceof CharacterValue) return new DoubleValue(Math.pow(getValue(), ((CharacterValue) v).getValue()));
 
         // In other case just throw an error
         throw new Error("Operator '**' is not defined for type double and " + v.getName());

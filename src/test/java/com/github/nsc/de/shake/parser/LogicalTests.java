@@ -1,8 +1,8 @@
 package com.github.nsc.de.shake.parser;
 
 import com.github.nsc.de.shake.parser.node.expression.AddNode;
-import com.github.nsc.de.shake.parser.node.expression.DoubleNode;
-import com.github.nsc.de.shake.parser.node.expression.IntegerNode;
+import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
+import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
 import com.github.nsc.de.shake.parser.node.expression.MulNode;
 import com.github.nsc.de.shake.parser.node.logical.*;
 import org.junit.jupiter.api.Test;

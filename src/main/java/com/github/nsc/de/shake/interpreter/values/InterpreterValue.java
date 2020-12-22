@@ -283,15 +283,17 @@ public interface InterpreterValue {
 
     static InterpreterValue of(Object value) {
 
-        if(value instanceof Byte) return new IntegerValue((((Byte) value).byteValue()));
+        if(value == null) return NullValue.NULL;
+        if(value instanceof Byte) return new IntegerValue(((Byte) value));
         if(value instanceof Short) return new IntegerValue((((Short) value).byteValue()));
-        if(value instanceof Integer) return new IntegerValue((((Integer) value).intValue()));
+        if(value instanceof Integer) return new IntegerValue(((Integer) value));
         if(value instanceof Long) return new IntegerValue((((Long) value).intValue()));
 
         if(value instanceof Float) return new DoubleValue((((Float) value).doubleValue()));
-        if(value instanceof Double) return new DoubleValue((((Double) value).doubleValue()));
+        if(value instanceof Double) return new DoubleValue(((Double) value));
 
-        if(value instanceof Boolean) return BooleanValue.from(((Boolean) value).booleanValue());
+        if(value instanceof Boolean) return BooleanValue.from((Boolean) value);
+        if(value instanceof Character) return new CharacterValue((Character) value);
 
         if(value instanceof Class) return new Java.JavaClass((Class) value);
 

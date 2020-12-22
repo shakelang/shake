@@ -10,6 +10,10 @@ import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.parser.Parser;
 import com.github.nsc.de.shake.parser.node.*;
 import com.github.nsc.de.shake.parser.node.expression.*;
+import com.github.nsc.de.shake.parser.node.factor.CharacterNode;
+import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
+import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
+import com.github.nsc.de.shake.parser.node.factor.StringNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
 import com.github.nsc.de.shake.parser.node.functions.ReturnNode;
@@ -127,6 +131,8 @@ public class Interpreter {
         if(n instanceof Tree) return visitTree((Tree) n, scope);
         if(n instanceof DoubleNode) return visitDoubleNode((DoubleNode) n);
         if(n instanceof IntegerNode) return visitIntegerNode((IntegerNode) n);
+        if(n instanceof StringNode) return visitStringNode((StringNode) n);
+        if(n instanceof CharacterNode) return visitCharacterNode((CharacterNode) n);
         if(n instanceof AddNode) return visitAddNode((AddNode) n, scope);
         if(n instanceof SubNode) return visitSubNode((SubNode) n, scope);
         if(n instanceof MulNode) return visitMulNode((MulNode) n, scope);
@@ -211,7 +217,15 @@ public class Interpreter {
 
 
     // *******************************
-    // number nodes
+    // factor nodes
+
+    private InterpreterValue visitCharacterNode(CharacterNode n) {
+        return new CharacterValue(n.getValue());
+    }
+
+    private InterpreterValue visitStringNode(StringNode n) {
+        return new StringValue(n.getValue());
+    }
 
     /**
      * Visit an {@link IntegerNode}

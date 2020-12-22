@@ -1,4 +1,4 @@
-package com.github.nsc.de.shake.parser.node.expression;
+package com.github.nsc.de.shake.parser.node.factor;
 
 import com.github.nsc.de.shake.parser.node.ValuedNode;
 

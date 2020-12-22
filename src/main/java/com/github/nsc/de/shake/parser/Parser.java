@@ -6,6 +6,10 @@ import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;
 import com.github.nsc.de.shake.parser.node.*;
 import com.github.nsc.de.shake.parser.node.expression.*;
+import com.github.nsc.de.shake.parser.node.factor.CharacterNode;
+import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
+import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
+import com.github.nsc.de.shake.parser.node.factor.StringNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionArgumentNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
@@ -113,7 +117,9 @@ public class Parser {
                 token.getType() == TokenType.KEYWORD_TRUE ||
                 token.getType() == TokenType.KEYWORD_FALSE ||
                 token.getType() == TokenType.IDENTIFIER ||
-                token.getType() == TokenType.KEYWORD_NEW)
+                token.getType() == TokenType.KEYWORD_NEW ||
+                token.getType() == TokenType.STRING ||
+                token.getType() == TokenType.CHARACTER)
             return this.logicalOr();
 
         return null;
@@ -561,6 +567,16 @@ public class Parser {
         if(token.getType() == TokenType.SUB) {
             getInput().skip();
             return new SubNode(0, this.factor());
+        }
+
+        if(token.getType() == TokenType.STRING) {
+            getInput().skip();
+            return new StringNode(token.getValue());
+        }
+
+        if(token.getType() == TokenType.CHARACTER) {
+            getInput().skip();
+            return new CharacterNode(token.getValue().charAt(0));
         }
 
         throw new ParserError(this.getInput().toString());

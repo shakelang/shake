@@ -7,6 +7,11 @@ private class ConsoleOutput {
     output_stream.print ( e );
   }
 
+  function writeLine ( e ) {
+    output_stream.println ( e );
+  }
+
+
 }
 
 const stdout = new ConsoleOutput();
@@ -29,7 +34,7 @@ public function print ( content ) {
 
 public function println ( content ) {
 
-  stdout.write ( content );
+  stdout.writeLine ( content );
 
 }
 

@@ -2,7 +2,7 @@ package com.github.nsc.de.shake.parser;
 
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.Tree;
-import com.github.nsc.de.shake.parser.node.expression.IntegerNode;
+import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
 import com.github.nsc.de.shake.parser.node.functions.ReturnNode;
 import org.junit.jupiter.api.Test;
