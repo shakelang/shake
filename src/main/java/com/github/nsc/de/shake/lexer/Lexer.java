@@ -52,6 +52,7 @@ public class Lexer {
             else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier(start));
 
             else if(next == '"') tokens.add(makeString(start));
+            else if(next == '\'') tokens.add(makeCharacter(start));
 
             // Comments
             else if (next == '/' && peek == '/') this.singleLineComment();
@@ -215,7 +216,7 @@ public class Lexer {
                             for(int i = 0; i < 4; i++) {
                                 char c = in.next();
                                 if(!HEX_CHARS.contains(c)) throw new LexerError("Expecting hex char");
-                                s.append(HEX_CHARS);
+                                s.append(c);
                             }
                             string.append((char) Integer.parseInt(s.toString(), 16));
                             break;
@@ -229,6 +230,37 @@ public class Lexer {
             if(in.actual() != '"') throw new LexerError("String must end with a '\"'");
         }
         return new Token(TokenType.STRING, string.toString(), start, in.getPosition());
+    }
+
+    private Token makeCharacter(int start) {
+        String c;
+        if(in.next() == '\\') {
+            switch(in.next()) {
+                case 't': c = "\t"; break;
+                case 'b': c = "\b"; break;
+                case 'n': c = "\n"; break;
+                case 'r': c = "\r"; break;
+                case 'f': c = "\f"; break;
+                case '\'': c = "'"; break;
+                case '"': c = "\""; break;
+                case '\\': c = "\\"; break;
+                case 'u':
+                    StringBuilder s = new StringBuilder();
+                    for(int i = 0; i < 4; i++) {
+                        char ch = in.next();
+                        if(!HEX_CHARS.contains(ch)) throw new LexerError("Expecting hex char");
+                        s.append(ch);
+                    }
+                    c = String.valueOf((char) Integer.parseInt(s.toString(), 16));
+                    break;
+                default:
+                    throw new LexerError("Unknown escape sequence '\\"+in.actual()+"'");
+
+            }
+        }
+        else c = String.valueOf(in.actual());
+        if(in.next() != '\'') throw new LexerError("Char must end with a \"'\"");
+        return new Token(TokenType.CHARACTER, c, start, in.getPosition());
     }
 
     public void singleLineComment() {

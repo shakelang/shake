@@ -18,14 +18,19 @@ public enum TokenType {
     // Assign-Types
 
     /**
-     * A number hat does not contain decimal places
+     * A number that does not contain decimal places
      */
     INTEGER,
 
     /**
-     * A number hat does contain decimal places
+     * A number that does contain decimal places
      */
     DOUBLE,
+
+    /**
+     * A character
+     */
+    CHARACTER,
 
     /**
      * A string ("a string")

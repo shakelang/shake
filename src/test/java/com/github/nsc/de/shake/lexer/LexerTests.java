@@ -19,7 +19,23 @@ public class LexerTests {
         // strings
         assertEquals("", generateToken("\"\"", TokenType.STRING).getValue());
         assertEquals("afvne9214 ro", generateToken("\"afvne9214 ro\"", TokenType.STRING).getValue());
-        generateToken("\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\"", TokenType.STRING);
+        assertEquals("\t\b\n\r\f'\"\\a\u0000", generateToken("\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\"", TokenType.STRING).getValue());
+
+    }
+
+    @Test
+    public void testCharacter() {
+
+        // characters
+        assertEquals(" ", generateToken("' '", TokenType.CHARACTER).getValue());
+        assertEquals("a", generateToken("'a'", TokenType.CHARACTER).getValue());
+        assertEquals("\r", generateToken("'\\r'", TokenType.CHARACTER).getValue());
+        assertEquals("\n", generateToken("'\\n'", TokenType.CHARACTER).getValue());
+        assertEquals("\b", generateToken("'\\b'", TokenType.CHARACTER).getValue());
+        assertEquals("\t", generateToken("'\\t'", TokenType.CHARACTER).getValue());
+        assertEquals("\f", generateToken("'\\f'", TokenType.CHARACTER).getValue());
+        assertEquals("\'", generateToken("'\\''", TokenType.CHARACTER).getValue());
+        assertEquals("\u0000", generateToken("'\\u0000'", TokenType.CHARACTER).getValue());
 
     }
 
