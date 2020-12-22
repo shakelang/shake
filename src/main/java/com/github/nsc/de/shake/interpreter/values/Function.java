@@ -215,7 +215,8 @@ public class Function implements InterpreterValue {
         // Visits the function body using the function scope so we can use all
         // the parameters that are given to the function
         this.getInterpreter().visit(this.getBody(), function_scope);
-        return function_scope.getReturnValue();
+        InterpreterValue value = function_scope.getReturnValue();
+        return value != null ? value : NullValue.NULL;
     }
 
     /**

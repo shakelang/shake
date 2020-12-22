@@ -4,12 +4,10 @@ import com.github.nsc.de.shake.interpreter.Scope;
 import com.github.nsc.de.shake.interpreter.Variable;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 
-import java.beans.Statement;
+import java.beans.Expression;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
 
 public class Java implements InterpreterValue {
 
@@ -88,11 +86,11 @@ public class Java implements InterpreterValue {
         }
     }
 
-    private static class JavaClass implements InterpreterValue {
+    public static class JavaClass implements InterpreterValue {
 
         private final Class javaClass;
 
-        private JavaClass(Class<?> javaClass) {
+        public JavaClass(Class<?> javaClass) {
             this.javaClass = javaClass;
         }
 
@@ -183,9 +181,9 @@ public class Java implements InterpreterValue {
             }
 
             try {
-                Statement s = new Statement(this.object, this.name, args);
+                Expression s = new Expression(this.object, this.name, args);
                 s.execute();
-                return NullValue.NULL;
+                return InterpreterValue.of(s.getValue());
             } catch (Exception e) {
                 throw new Error(e);
             }
