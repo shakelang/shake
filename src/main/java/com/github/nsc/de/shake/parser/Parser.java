@@ -9,6 +9,7 @@ import com.github.nsc.de.shake.parser.node.expression.*;
 import com.github.nsc.de.shake.parser.node.functions.FunctionArgumentNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
+import com.github.nsc.de.shake.parser.node.functions.ReturnNode;
 import com.github.nsc.de.shake.parser.node.logical.*;
 import com.github.nsc.de.shake.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.shake.parser.node.loops.ForNode;
@@ -78,6 +79,7 @@ public class Parser {
         if(token.getType() == TokenType.KEYWORD_DO) return this.doWhileLoop();
         if(token.getType() == TokenType.KEYWORD_FOR) return this.forLoop();
         if(token.getType() == TokenType.KEYWORD_IF) return this.ifStatement();
+        if(token.getType() == TokenType.KEYWORD_RETURN) return this.returnStatement();
 
         return this.valuedOperation();
     }
@@ -314,6 +316,12 @@ public class Parser {
 
     private boolean checkArgument() {
         return this.getInput().hasNext() && this.getInput().peek().getType() == TokenType.IDENTIFIER;
+    }
+
+
+    private ReturnNode returnStatement() {
+        this.in.skip();
+        return new ReturnNode(valuedOperation());
     }
 
 

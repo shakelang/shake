@@ -2,7 +2,9 @@ package com.github.nsc.de.shake.parser;
 
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.Tree;
+import com.github.nsc.de.shake.parser.node.expression.IntegerNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
+import com.github.nsc.de.shake.parser.node.functions.ReturnNode;
 import org.junit.jupiter.api.Test;
 
 import static com.github.nsc.de.shake.TestUtil.assertType;
@@ -170,6 +172,19 @@ public class FunctionTests {
         assertFalse(node.isInClass());
         assertFalse(node.isStatic());
         assertTrue(node.isFinal());
+
+    }
+
+    @Test
+    public void testReturn() {
+
+        Tree tree = parse("<FunctionTest>", "return 10;");
+
+        assertEquals(1, tree.getChildren().length);
+        assertType(ReturnNode.class, tree.getChildren()[0]);
+
+        ReturnNode node = (ReturnNode) tree.getChildren()[0];
+        assertType(IntegerNode.class, node.getValue());
 
     }
 
