@@ -5,6 +5,7 @@ import com.github.nsc.de.shake.interpreter.Scope;
 import com.github.nsc.de.shake.interpreter.Variable;
 import com.github.nsc.de.shake.interpreter.VariableList;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
+import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode;
 
 import java.util.Arrays;
@@ -221,6 +222,26 @@ public class ClassValue implements InterpreterValue {
 
 
 
+    // ****************************
+    // implementations for extended InterpreterValue
+    // >> invoking
+
+    /**
+     * Create a new instance of a class
+     *
+     * @param node the node that created the instance
+     * @param scope the scope the creation was made in (to process the arguments)
+     * @return the created {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
+        return new ObjectValue(this);
+    }
+
+
+
     // *******************************
     // implementations for extended InterpreterValue
     // >> get-name
@@ -239,7 +260,6 @@ public class ClassValue implements InterpreterValue {
         // just return "class"
         return "class";
     }
-
 
 
     // *******************************

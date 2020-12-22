@@ -4,6 +4,7 @@ package com.github.nsc.de.shake.interpreter.values;
 import com.github.nsc.de.shake.interpreter.Scope;
 import com.github.nsc.de.shake.interpreter.Variable;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
+import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 
 
 /**
@@ -223,7 +224,7 @@ public interface InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    default Variable getChild(String c) {
+    default Variable<?> getChild(String c) {
         // Throw an error when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
         throw new Error("Can't get child values of type " + getName());
@@ -232,7 +233,7 @@ public interface InterpreterValue {
 
 
     // ****************************
-    // Invoking
+    // invoking
 
     /**
      * Invoke a value
@@ -248,6 +249,28 @@ public interface InterpreterValue {
         // This function will be overridden by all InterpreterValues that do support this operation
         throw new Error("Can't invoke type " + getName());
     }
+
+    /**
+     * Create a new instance of a class
+     *
+     * @param node the node that created the instance
+     * @param scope the scope the creation was made in (to process the arguments)
+     * @return the created {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    default InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
+        // Throw an error when the operator is not implemented
+        // This function will be overridden by all InterpreterValues that do support this operation
+        throw new Error("Can't create a new instance of type " + getName());
+    }
+
+
+
+    // ****************************
+    // converting & casting
+
+
 
 
 
@@ -295,7 +318,7 @@ public interface InterpreterValue {
         if(value instanceof Boolean) return BooleanValue.from((Boolean) value);
         if(value instanceof Character) return new CharacterValue((Character) value);
 
-        if(value instanceof Class) return new Java.JavaClass((Class) value);
+        if(value instanceof Class) return new Java.JavaClass((Class<?>) value);
 
         return new Java.JavaValue(value.getClass(), value);
 

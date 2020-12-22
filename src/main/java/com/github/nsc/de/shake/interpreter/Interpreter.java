@@ -996,28 +996,15 @@ public class Interpreter {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public ObjectValue visitClassConstruction(ClassConstructionNode n, Scope scope) {
+    public InterpreterValue visitClassConstruction(ClassConstructionNode n, Scope scope) {
 
         // TODO Arguments for constructor and constructor in variable
-
-        // Declare empty Variable for the class
-        ClassValue cls;
 
         // Get the class
         InterpreterValue v = visit(n.getType(), scope);
 
-        // if v is a class then set cls to it's value
-        if(v instanceof ClassValue) cls = (ClassValue) v;
-
-        // if v is a variable containing a class then apply it's value to cls
-        else if(v instanceof Variable && ((Variable) v).getValue() instanceof ClassValue)
-            cls = (ClassValue) ((Variable) v).getValue();
-
-        // in other case throw an error
-        else throw new Error("Seems not to be a class");
-
         // create a new ObjectValue from the class
-        return new ObjectValue(cls);
+        return v.newInstance(n, scope);
 
     }
 

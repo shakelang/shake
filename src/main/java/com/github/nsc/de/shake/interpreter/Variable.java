@@ -5,6 +5,7 @@ import com.github.nsc.de.shake.interpreter.values.ClassValue;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.VariableType;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
+import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 
 import java.lang.Class;
 
@@ -422,12 +423,26 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @param node the node that called the function
      * @param scope the scope the call was made in (to process the arguments)
      *
-     * @return
+     * @return the function result
      */
     @Override
     public InterpreterValue invoke(FunctionCallNode node, Scope scope) {
         // redirect operator to the value
         return this.getValue().invoke(node, scope);
+    }
+
+    /**
+     * Create a new instance of a class
+     *
+     * @param node the node that created the instance
+     * @param scope the scope the creation was made in (to process the arguments)
+     * @return the created {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
+        return this.getValue().newInstance(node, scope);
     }
 
     // ****************************
