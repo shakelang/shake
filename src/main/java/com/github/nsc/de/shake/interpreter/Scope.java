@@ -1,5 +1,7 @@
 package com.github.nsc.de.shake.interpreter;
 
+import com.github.nsc.de.shake.interpreter.values.InterpreterValue;
+
 /**
  * A scope to keep all the variables inside
  *
@@ -28,6 +30,8 @@ public class Scope {
      * The interpreter of the {@link Scope}
      */
     private final Interpreter interpreter;
+
+    private InterpreterValue returnValue = null;
 
 
 
@@ -120,5 +124,29 @@ public class Scope {
      */
     public Scope copy() {
         return new Scope(this.parent, this.getScopeVariables().copy(), interpreter);
+    }
+
+    /**
+     * Setter for the {@link #returnValue} field
+     *
+     * @param returnValue the {@link #returnValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public void setReturnValue(InterpreterValue returnValue) {
+        // just set the returnValue field
+        this.returnValue = returnValue;
+    }
+
+    /**
+     * Getter for the {@link #returnValue} field
+     *
+     * @return the {@link #returnValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public InterpreterValue getReturnValue() {
+        // just return the returnValue field
+        return returnValue;
     }
 }

@@ -12,6 +12,7 @@ import com.github.nsc.de.shake.parser.node.*;
 import com.github.nsc.de.shake.parser.node.expression.*;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
+import com.github.nsc.de.shake.parser.node.functions.ReturnNode;
 import com.github.nsc.de.shake.parser.node.logical.*;
 import com.github.nsc.de.shake.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.shake.parser.node.loops.ForNode;
@@ -122,7 +123,6 @@ public class Interpreter {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visit(Node n, Scope scope) {
-
         // Check all the node-types and call the function to process it
         if(n instanceof Tree) return visitTree((Tree) n, scope);
         if(n instanceof DoubleNode) return visitDoubleNode((DoubleNode) n);
@@ -157,6 +157,7 @@ public class Interpreter {
         if(n instanceof IfNode) return visitIfNode((IfNode) n, scope);
         if(n instanceof FunctionDeclarationNode) return visitFunctionDeclarationNode((FunctionDeclarationNode) n, scope);
         if(n instanceof FunctionCallNode) return visitFunctionCallNode((FunctionCallNode) n, scope);
+        if(n instanceof ReturnNode) return visitReturnNode((ReturnNode) n, scope);
         if(n instanceof IdentifierNode) return visitIdentifier((IdentifierNode) n, scope);
         if(n instanceof ClassConstructionNode) return visitClassConstruction((ClassConstructionNode) n, scope);
         if(n instanceof ClassDeclarationNode) return visitClassDeclarationNode((ClassDeclarationNode) n, scope);
@@ -190,7 +191,12 @@ public class Interpreter {
     public InterpreterValue visitTree(Tree t, Scope scope) {
 
         // Visit all the children but the last one
-        for (int i = 0; i < t.getChildren().length - 1; i++) visit(t.getChildren()[i], scope);
+        for (int i = 0; i < t.getChildren().length - 1; i++) {
+            visit(t.getChildren()[i], scope);
+
+            // When there was a return statement we exit this tree
+            if(scope.getReturnValue() != null) return NullValue.NULL;
+        }
 
         // Visit the last children (if the amount of children is bigger than 0)
         if(t.getChildren().length > 0) return visit(t.getChildren()[t.getChildren().length-1], scope);
@@ -199,6 +205,7 @@ public class Interpreter {
         // If the number of children is 0 we just return NullValue.NULL
         // as there are no children to process
         return NullValue.NULL;
+
     }
 
 
@@ -826,18 +833,17 @@ public class Interpreter {
      */
     public InterpreterValue visitFunctionCallNode(FunctionCallNode node, Scope scope) {
 
-        // TODO return values
-
-        // Create a variable to contain the function
-        Function f;
-
         // get the function
         InterpreterValue v = visit(node.getFunction());
 
-        // call the function
-        v.invoke(node, scope);
+        // call the function & return it's result
+        return v.invoke(node, scope);
 
-        // return null
+    }
+
+    public InterpreterValue visitReturnNode(ReturnNode node, Scope scope) {
+
+        scope.setReturnValue(visit(node.getValue(), scope));
         return NullValue.NULL;
 
     }
