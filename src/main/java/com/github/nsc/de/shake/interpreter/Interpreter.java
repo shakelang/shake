@@ -879,7 +879,7 @@ public class Interpreter {
     public ClassValue visitClassDeclarationNode(ClassDeclarationNode node, Scope scope) {
 
         // Declare the variable that contains the class
-        if(!scope.getVariables().declare(new Variable<>(node.getName(), Function.class)))
+        if(!scope.getVariables().declare(new Variable<>(node.getName(), ClassValue.class)))
             throw new Error("'" + node.getName() + "' is already declared!");
 
         // Create the class

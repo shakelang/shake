@@ -72,8 +72,8 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
         // apply the given values
         this.identifier = identifier;
         this.access = access;
-        this.value = value;
         this.type = type;
+        this.setValue(value);
     }
 
     /**
@@ -182,7 +182,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      */
     public void setValue(V value) {
         // set the value of the value field to the given value variable
-        this.value = value;
+        this.value = value != null ? value.to(this.getType()) : null;
     }
 
     /**
@@ -401,7 +401,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
 
     // ****************************
     // implementations for extended InterpreterValue
-    // Children
+    // children
 
     /**
      * This function will be executed when getting a child (variable.child)
@@ -416,6 +416,12 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
         // redirect to the value
         return this.getValue().getChild(c);
     }
+
+
+
+    // ****************************
+    // implementations for extended InterpreterValue
+    // invoke
 
     /**
      * Invoke a value
@@ -442,6 +448,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      */
     @Override
     public InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
+        // redirect operator to the value
         return this.getValue().newInstance(node, scope);
     }
 
@@ -564,26 +571,25 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      */
     public static Variable<?> valueOf(String name, VariableType type) {
         switch (type.getType()) {
-
             // Return for all number-value types without decimal places the IntegerValue class
             case BYTE:
             case SHORT:
             case INTEGER:
             case LONG:
-                new Variable<IntegerValue>(name, IntegerValue.class);
+                return new Variable<>(name, IntegerValue.class);
 
             // Return for all number-value types with decimal places the DoubleValue class
             case FLOAT:
             case DOUBLE:
-                return new Variable<DoubleValue>(name, DoubleValue.class);
+                return new Variable<>(name, DoubleValue.class);
 
             // For booleans just return the BooleanValue class
             case BOOLEAN:
-                return new Variable<BooleanValue>(name, BooleanValue.class);
+                return new Variable<>(name, BooleanValue.class);
 
             // For Objects return the ObjectValue class
             case OBJECT:
-                return new Variable<ObjectValue>(name, ObjectValue.class); // TODO object-subtypes
+                return new Variable<>(name, ObjectValue.class); // TODO object-subtypes
 
             // For Dynamic return the InterpreterValue class (as super-class of all
             // interpreter-values it can hold all of them)

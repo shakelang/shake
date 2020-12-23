@@ -47,6 +47,6 @@ public class VariableDeclarationNode implements ValuedNode {
 
     @Override
     public String toString() {
-        return this.getAssignment() != null ? "var " + this.getAssignment() : "var " + this.getName();
+        return this.getAssignment() != null ? this.getType() + " " + this.getAssignment() : this.getType() + " " + this.getName();
     }
 }

@@ -385,6 +385,46 @@ public class IntegerValue implements InterpreterValue {
 
 
 
+    // ****************************
+    // implementations for extended InterpreterValue
+    // converting & casting
+
+    /**
+     * Converts this value to another value
+     *
+     * @param type the type to convert to
+     * @param <T> the type to convert to
+     * @return the converted {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends InterpreterValue> T to(Class<T> type) {
+        if(type.isInstance(this)) return (T) this;
+        if(type == DoubleValue.class) return (T) new DoubleValue(this.getValue());
+        return InterpreterValue.super.to(type);
+    }
+
+    /**
+     * Casts this value to another value
+     *
+     * @param type the type to cast to
+     * @param <T> the type to cast to
+     * @return the converted {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends InterpreterValue> T castTo(Class<T> type) {
+        if(type.isInstance(this)) return (T) this;
+        if(type == DoubleValue.class) return (T) new DoubleValue(this.getValue());
+        if(type == CharacterValue.class) return (T) new CharacterValue((char) this.getValue());
+        if(type == BooleanValue.class) return (T) BooleanValue.from(this);
+        return InterpreterValue.super.castTo(type);
+    }
+
+
+
     // *******************************
     // implementations for extended InterpreterValue
     // >> get-name

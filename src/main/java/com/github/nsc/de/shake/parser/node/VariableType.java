@@ -1,5 +1,7 @@
 package com.github.nsc.de.shake.parser.node;
 
+import java.util.Locale;
+
 public class VariableType {
 
     public static VariableType DYNAMIC = new VariableType(Type.DYNAMIC);
@@ -35,6 +37,14 @@ public class VariableType {
         return subtype;
     }
 
+    @Override
+    public String toString() {
+        return "VariableType{" +
+                "type=" + type +
+                ", subtype='" + subtype + '\'' +
+                '}';
+    }
+
     public enum Type {
         DYNAMIC,
         BYTE,
@@ -46,6 +56,11 @@ public class VariableType {
         BOOLEAN,
         CHAR,
         ARRAY,
-        OBJECT,
+        OBJECT;
+
+        @Override
+        public String toString() {
+            return this.name().toLowerCase();
+        }
     }
 }

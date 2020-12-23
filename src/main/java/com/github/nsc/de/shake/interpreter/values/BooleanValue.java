@@ -72,6 +72,9 @@ public enum BooleanValue implements InterpreterValue {
 
         // if v is a Function just return TRUE
         if(v instanceof Function || v instanceof ClassValue || v instanceof ObjectValue) return TRUE;
+
+        // if v is null return null
+        if(v == null) return FALSE;
         throw new Error("Could not create boolean from " + v.getName());
     }
 
@@ -185,6 +188,30 @@ public enum BooleanValue implements InterpreterValue {
     @Override
     public Object toJava() {
         return getValue();
+    }
+
+
+
+    // ****************************
+    // implementations for extended InterpreterValue
+    // converting & casting
+
+    /**
+     * Casts this value to another value
+     *
+     * @param type the type to cast to
+     * @param <T> the type to cast to
+     * @return the converted {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends InterpreterValue> T castTo(Class<T> type) {
+        if(type.isInstance(this)) return (T) this;
+        if(type == DoubleValue.class) return (T) new DoubleValue(this.getValue() ? 1 : 0);
+        if(type == IntegerValue.class) return (T) new IntegerValue(this.getValue() ? 1 : 0);
+        if(type == CharacterValue.class) return (T) new CharacterValue((char) (this.getValue() ? 1 : 0));
+        return InterpreterValue.super.to(type);
     }
 
     /**

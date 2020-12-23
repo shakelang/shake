@@ -23,6 +23,6 @@ public class VariableAssignmentNode implements ValuedNode {
 
     @Override
     public String toString() {
-        return '{' + getValue().toString() + '=' + this.getValue().toString() + '}';
+        return '{' + getVariable().toString() + '=' + this.getValue().toString() + '}';
     }
 }

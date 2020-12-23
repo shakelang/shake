@@ -270,7 +270,33 @@ public interface InterpreterValue {
     // ****************************
     // converting & casting
 
+    /**
+     * Converts this value to another value
+     *
+     * @param type the type to convert to
+     * @param <T> the type to convert to
+     * @return the converted {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    default <T extends InterpreterValue> T to(Class<T> type) {
+        if(type.isInstance(this)) return (T) this;
+        throw new Error("Can't convert " + getName() + " to type " + type.getName());
+    }
 
+    /**
+     * Casts this value to another value
+     *
+     * @param type the type to cast to
+     * @param <T> the type to cast to
+     * @return the converted {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    default <T extends InterpreterValue> T castTo(Class<T> type) {
+        if(type.isInstance(this)) return (T) this;
+        throw new Error("Can't convert " + getName() + " to type " + type.getName());
+    }
 
 
 
