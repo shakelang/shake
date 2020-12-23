@@ -369,8 +369,8 @@ public class Interpreter {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public InterpreterValue visitVariableDeclarationNode(VariableDeclarationNode n, Scope scope) {
-        if(!scope.getScopeVariables().declare(Variable.valueOf(n.getName(), n.getType()))) throw new Error("Variable is already defined");
-        if(n.getAssignment() != null) return visitVariableAssignmentNode(n.getAssignment(), scope);
+        InterpreterValue value = n.getAssignment() != null ? visit(n.getAssignment().getValue(), scope) : null;
+        if(!scope.getScopeVariables().declare(Variable.create(n.getName(), n.getType(), n.isFinal(), value))) throw new Error("Variable is already defined");
         else return NullValue.NULL;
     }
 
@@ -963,7 +963,7 @@ public class Interpreter {
             // if the field is static...
             if(node.isStatic()) {
                 // declare a new static field for it
-                statics.declare(Variable.valueOf(node.getName(), node.getType()));
+                statics.declare(Variable.create(node.getName(), node.getType(), node.isFinal()));
 
                 // ...and apply the value (visit it's value)
                 // TODO Use Class Scope

@@ -39,6 +39,11 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
     private final Class<V> type;
 
     /**
+     * Is the variable final
+     */
+    private boolean finalVariable;
+
+    /**
      * The value of the variable
      */
     private V value;
@@ -52,7 +57,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * just returns the {@link #identifier} instead of all the children. At the end
      * of {@link #toString()} this boolean will be set to false again.
      */
-    private boolean toString = false;
+    private boolean toString;
 
 
 
@@ -68,12 +73,26 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public Variable(String identifier, AccessDescriber access, Class<V> type, V value) {
+    public Variable(String identifier, AccessDescriber access, Class<V> type, V value, boolean finalVariable) {
         // apply the given values
         this.identifier = identifier;
         this.access = access;
         this.type = type;
         this.setValue(value);
+        this.finalVariable = finalVariable;
+    }
+
+    /**
+     * Constructor for {@link Variable}
+     *
+     * @param identifier the identifier of the variable
+     * @param access the access type of the variable
+     * @param value the value of the variable
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public Variable(String identifier, AccessDescriber access, Class<V> type, V value) {
+        this(identifier, access, type, value, false);
     }
 
     /**
@@ -100,6 +119,19 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
     public Variable(String identifier, AccessDescriber access, Class<V> type) {
         // call other constructor using default value: null
         this(identifier, access, type, null);
+    }
+
+    /**
+     * Constructor for {@link Variable}
+     *
+     * @param identifier the identifier of the variable
+     * @param access the access of the
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public Variable(String identifier, AccessDescriber access, Class<V> type, boolean finalVariable) {
+        // call other constructor using default value: null
+        this(identifier, access, type, null, finalVariable);
     }
 
     /**
@@ -168,6 +200,10 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
         return access;
     }
 
+    public boolean isFinalVariable() {
+        return finalVariable;
+    }
+
 
 
     // *******************************
@@ -182,7 +218,19 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      */
     public void setValue(V value) {
         // set the value of the value field to the given value variable
+        if(isFinalVariable()) throw new Error("Can't set the value of a final variable!");
         this.value = value != null ? value.to(this.getType()) : null;
+    }
+
+    /**
+     * Should the variable be final (setter for field {@link #finalVariable})
+     *
+     * @param finalVariable Should the variable be final
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public void setFinal(boolean finalVariable) {
+        this.finalVariable = finalVariable;
     }
 
     /**
@@ -550,6 +598,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
+    @SuppressWarnings("unchecked")
     private static <V extends InterpreterValue> V useScope(V v, Scope scope) {
         if(v instanceof Variable) return (V) ((Variable) v).withScope(scope);
         if(v instanceof VariableList) return (V) ((VariableList) v).withScope(scope);
@@ -562,42 +611,45 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
 
 
     /**
-     * This function just converts a {@link VariableType} into a {@link Variable}
+     * This function just creates a {@link Variable}
      *
+     * @param name the name of the variable
      * @param type the type to convert
-     * @return the converted type
+     * @return the created variable
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public static Variable<?> valueOf(String name, VariableType type) {
+    public static Variable<?> create(String name, VariableType type, AccessDescriber access, boolean finalVariable, InterpreterValue value) {
         switch (type.getType()) {
             // Return for all number-value types without decimal places the IntegerValue class
             case BYTE:
             case SHORT:
             case INTEGER:
             case LONG:
-                return new Variable<>(name, IntegerValue.class);
+                return new Variable<>(name, access, IntegerValue.class, value != null ? value.to(IntegerValue.class) : null, finalVariable);
 
             // Return for all number-value types with decimal places the DoubleValue class
             case FLOAT:
             case DOUBLE:
-                return new Variable<>(name, DoubleValue.class);
+                return new Variable<>(name, access, DoubleValue.class, value != null ? value.to(DoubleValue.class) : null, finalVariable);
 
             // For booleans just return the BooleanValue class
             case BOOLEAN:
-                return new Variable<>(name, BooleanValue.class);
+                return new Variable<>(name, access, BooleanValue.class, value != null ? value.to(BooleanValue.class) : null, finalVariable);
 
             // For Objects return the ObjectValue class
             case OBJECT:
-                return new Variable<>(name, ObjectValue.class); // TODO object-subtypes
+                return new Variable<>(name, access, ObjectValue.class, value != null ? value.to(ObjectValue.class) : null, finalVariable); // TODO object-subtypes
 
             // For Dynamic return the InterpreterValue class (as super-class of all
             // interpreter-values it can hold all of them)
             case DYNAMIC:
-                return new Variable<>(name, InterpreterValue.class);
+                return new Variable<>(name, access, InterpreterValue.class, value != null ? value.to(InterpreterValue.class) : null, finalVariable);
 
-            // TODO Char & Array are not implemented at the moment
             case CHAR:
+                return new Variable<>(name, access, CharacterValue.class, value != null ? value.to(CharacterValue.class) : null, finalVariable);
+
+            // TODO Array is not implemented at the moment
             case ARRAY:
                 throw new Error("Not implemented yet");
 
@@ -605,7 +657,34 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
         throw new Error(String.format("Wrong input: %s", type.getType()));
     }
 
-    public static final <T extends InterpreterValue> Variable<T> finalOf(String name, T v) {
-        return new Variable<T>(name, AccessDescriber.PUBLIC, (Class<T>) v.getClass(), v);
+    /**
+     * This function just creates a {@link Variable}
+     *
+     * @param name the name of the variable
+     * @param type the type to convert
+     * @return the created variable
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public static Variable<?> create(String name, VariableType type, boolean finalVariable, InterpreterValue value) {
+        return create(name, type, AccessDescriber.PACKAGE, finalVariable, value);
+    }
+
+    /**
+     * This function just creates a {@link Variable}
+     *
+     * @param name the name of the variable
+     * @param type the type to convert
+     * @return the created variable
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public static Variable<?> create(String name, VariableType type, boolean finalVariable) {
+        return create(name, type, finalVariable, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends InterpreterValue> Variable<T> finalOf(String name, T v) {
+        return new Variable<>(name, AccessDescriber.PUBLIC, (Class<T>) v.getClass(), v);
     }
 }
