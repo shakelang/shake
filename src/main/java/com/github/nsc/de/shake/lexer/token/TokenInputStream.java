@@ -30,7 +30,7 @@ public class TokenInputStream {
 
     /**
      * The positions of the tokens of the {@link TokenInputStream}
-     * (We just store the end-indexes of each token. We can calculate the start-index out of the token type & value)
+     * (We just store the end-indexes of each token. We can calculate the start-index out of the token type &amp; value)
      */
     private final int[] positions;
 
@@ -59,7 +59,7 @@ public class TokenInputStream {
      * @param tokens value for field {@link TokenInputStream#tokens} (The tokens that the {@link TokenInputStream} should give)
      * @param values The values for the tokens that have values in the {@link TokenInputStream}
      * @param positions The positions of the tokens of the {@link TokenInputStream}
-     *                  (We just store the end-indexes of each token. We can calculate the start-index out of the token type & value)
+     *                  (We just store the end-indexes of each token. We can calculate the start-index out of the token type &amp; value)
      * @param map  value for field {@link TokenInputStream#map} (The position map of the {@link TokenInputStream})
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
@@ -298,7 +298,7 @@ public class TokenInputStream {
      * Returns the next token of the {@link TokenInputStream} (and skips)
      *
      * @return the next token
-     * @deprecated If you don't need a {@link Token}, it is advised to use {@link #nextType()} & {@link #nextValue()}
+     * @deprecated If you don't need a {@link Token}, it is advised to use {@link #nextType()} &amp; {@link #nextValue()}
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
@@ -377,7 +377,7 @@ public class TokenInputStream {
      *
      * @return The actual {@link Token}
      * @deprecated Only use, if you need a complete {@link Token}. Use {@link #actualType()}, {@link #actualStart()},
-     * {@link #actualEnd()}, {@link #actualValue()} & {@link #actualHasValue()} instead, if you just need one of these!
+     * {@link #actualEnd()}, {@link #actualValue()} &amp; {@link #actualHasValue()} instead, if you just need one of these!
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
@@ -464,7 +464,7 @@ public class TokenInputStream {
      *
      * @return The next {@link Token}
      * @deprecated Only use, if you need a complete {@link Token}. Use {@link #peekType()}, {@link #peekStart()},
-     * {@link #peekEnd()}, {@link #peekValue()} & {@link #peekHasValue()} instead, if you just need one of these!
+     * {@link #peekEnd()}, {@link #peekValue()} &amp; {@link #peekHasValue()} instead, if you just need one of these!
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
