@@ -3,7 +3,6 @@ package com.github.nsc.de.shake.lexer;
 import static com.github.nsc.de.shake.util.HelpFunctions.asList;
 import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
 import com.github.nsc.de.shake.lexer.characterinput.position.Position;
-import com.github.nsc.de.shake.lexer.token.Token;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;
 import com.github.nsc.de.shake.util.CompilerError;
@@ -21,13 +20,15 @@ public class Lexer {
     private static final List<Character> HEX_CHARS = asList("0123456789ABCDEFabcdef");
 
     private final CharacterInputStream in;
+    private final List<Byte> tokens = new ArrayList<>();
+    private final List<Integer> positions = new ArrayList<>();
+    private final List<String> values = new ArrayList<>();
 
     public Lexer(CharacterInputStream in) {
         this.in = in;
     }
 
     public TokenInputStream makeTokens() {
-        List<Token> tokens = new ArrayList<>();
         while(this.in.hasNext()) {
             char next = this.in.next();
             char peek = in.hasNext() ? in.peek() : 0;
@@ -37,74 +38,102 @@ public class Lexer {
             if(WHITESPACE.contains(next)) continue;
 
             // Linebreaks
-            if(next == '\r') continue;
-            if(next == '\n') tokens.add(new Token(TokenType.LINE_SEPARATOR, start));
+            if(next == '\r')  continue;
+            if(next == '\n') addPosition(TokenType.LINE_SEPARATOR, start);
 
             // Punctuation
-            else if(next == ';') tokens.add(new Token(TokenType.SEMICOLON, start));
-            else if(next == ',') tokens.add(new Token(TokenType.COMMA, start));
-            else if(next == '.') tokens.add(new Token(TokenType.DOT, start));
+            else if(next == ';') addPosition(TokenType.SEMICOLON, start);
+            else if(next == ',') addPosition(TokenType.COMMA, start);
+            else if(next == '.') addPosition(TokenType.DOT, start);
 
             // Numbers
-            else if(NUMBERS.contains(next)) tokens.add(makeNumber(start));
+            else if(NUMBERS.contains(next)) makeNumber();
 
             // Identifiers
-            else if(IDENTIFIER_START.contains(next)) tokens.add(makeIdentifier(start));
+            else if(IDENTIFIER_START.contains(next)) makeIdentifier();
 
-            else if(next == '"') tokens.add(makeString(start));
-            else if(next == '\'') tokens.add(makeCharacter(start));
+            else if(next == '"') makeString();
+            else if(next == '\'') makeCharacter();
 
             // Comments
             else if (next == '/' && peek == '/') this.singleLineComment();
             else if (next == '/' && peek == '*') this.multiLineComment();
 
             // Operator assign
-            else if (this.in.has(2) && next == '*' && peek == '*' && this.in.peek(2) == '=') { in.skip(2);  tokens.add(new Token(TokenType.POW_ASSIGN, "**=", start, in.getPosition())); }
-            else if (next == '^' && peek == '=') { in.skip(); tokens.add(new Token(TokenType.POW_ASSIGN, "^=", start, in.getPosition())); }
-            else if (next == '%' && peek == '=') { in.skip(); tokens.add(new Token(TokenType.MOD_ASSIGN, start, in.getPosition())); }
-            else if (next == '/' && peek == '=') { in.skip(); tokens.add(new Token(TokenType.DIV_ASSIGN, start, in.getPosition())); }
-            else if (next == '*' && peek == '=') { in.skip(); tokens.add(new Token(TokenType.MUL_ASSIGN, start, in.getPosition())); }
-            else if (next == '-' && peek == '=') { in.skip(); tokens.add(new Token(TokenType.SUB_ASSIGN, start, in.getPosition())); }
-            else if (next == '+' && peek == '=') { in.skip(); tokens.add(new Token(TokenType.ADD_ASSIGN, start, in.getPosition())); }
+            else if (this.in.has(2) && next == '*' && peek == '*' && this.in.peek(2) == '=')
+                { in.skip(2); addPosition(TokenType.POW_ASSIGN, in.getPosition()); }
+            else if (next == '%' && peek == '=') { in.skip(); addPosition(TokenType.MOD_ASSIGN, in.getPosition()); }
+            else if (next == '/' && peek == '=') { in.skip(); addPosition(TokenType.DIV_ASSIGN, in.getPosition()); }
+            else if (next == '*' && peek == '=') { in.skip(); addPosition(TokenType.MUL_ASSIGN, in.getPosition()); }
+            else if (next == '-' && peek == '=') { in.skip(); addPosition(TokenType.SUB_ASSIGN, in.getPosition()); }
+            else if (next == '+' && peek == '=') { in.skip(); addPosition(TokenType.ADD_ASSIGN, in.getPosition()); }
 
-            else if (next == '+' && peek == '+') { in.skip(); tokens.add(new Token(TokenType.INCR, in.getPosition())); }
-            else if (next == '-' && peek == '-') { in.skip(); tokens.add(new Token(TokenType.DECR, in.getPosition())); }
+            else if (next == '+' && peek == '+') { in.skip(); addPosition(TokenType.INCR, in.getPosition()); }
+            else if (next == '-' && peek == '-') { in.skip(); addPosition(TokenType.DECR, in.getPosition()); }
 
             // Math operators
-            else if (next == '*' && this.in.hasNext() && in.peek() == '*') { in.skip(); tokens.add(new Token(TokenType.POW, "**", in.getPosition())); }
-            else if (next == '^') tokens.add(new Token(TokenType.POW, start));
-            else if (next == '%') tokens.add(new Token(TokenType.MOD, start));
-            else if (next == '/') tokens.add(new Token(TokenType.DIV, start));
-            else if (next == '*') tokens.add(new Token(TokenType.MUL, start));
-            else if (next == '-') tokens.add(new Token(TokenType.SUB, start));
-            else if (next == '+') tokens.add(new Token(TokenType.ADD, start));
+            else if (next == '*' && peek == '*') { in.skip(); addPosition(TokenType.POW, in.getPosition()); }
+            else if (next == '%') addPosition(TokenType.MOD, in.getPosition());
+            else if (next == '/') addPosition(TokenType.DIV, in.getPosition());
+            else if (next == '*') addPosition(TokenType.MUL, in.getPosition());
+            else if (next == '-') addPosition(TokenType.SUB, in.getPosition());
+            else if (next == '+') addPosition(TokenType.ADD, in.getPosition());
 
             // Logical operators
-            else if (next == '|' && this.in.hasNext() && in.peek() == '|') { in.skip(); tokens.add(new Token(TokenType.LOGICAL_OR, start, in.getPosition())); }
-            else if (next == '&' && this.in.hasNext() && in.peek() == '&') { in.skip(); tokens.add(new Token(TokenType.LOGICAL_AND, start, in.getPosition())); }
+            else if (next == '|' && peek == '|') { in.skip(); addPosition(TokenType.LOGICAL_OR, in.getPosition()); }
+            else if (next == '&' && peek == '&') { in.skip(); addPosition(TokenType.LOGICAL_AND, in.getPosition()); }
 
-            else if (next == '=' && peek == '=') { in.skip(); tokens.add(new Token(TokenType.EQ_EQUALS, start, in.getPosition())); }
-            else if (next == '>' && peek == '=') { in.skip(); tokens.add(new Token(TokenType.BIGGER_EQUALS, start, in.getPosition())); }
-            else if (next == '<' && peek == '=') { in.skip(); tokens.add(new Token(TokenType.SMALLER_EQUALS, start, in.getPosition())); }
-            else if (next == '>') tokens.add(new Token(TokenType.BIGGER, start));
-            else if (next == '<') tokens.add(new Token(TokenType.SMALLER, start));
+            else if (next == '=' && peek == '=') { in.skip(); addPosition(TokenType.EQ_EQUALS, in.getPosition()); }
+            else if (next == '>' && peek == '=') { in.skip(); addPosition(TokenType.BIGGER_EQUALS, in.getPosition()); }
+            else if (next == '<' && peek == '=') { in.skip(); addPosition(TokenType.SMALLER_EQUALS, in.getPosition()); }
+            else if (next == '>') addPosition(TokenType.BIGGER, in.getPosition());
+            else if (next == '<') addPosition(TokenType.SMALLER, in.getPosition());
 
             // Assign
-            else if (next == '=') tokens.add(new Token(TokenType.ASSIGN, start));
+            else if (next == '=')  addPosition(TokenType.ASSIGN, in.getPosition());
 
             // Brackets
-            else if (next == '(') tokens.add(new Token(TokenType.LPAREN, start));
-            else if (next == ')') tokens.add(new Token(TokenType.RPAREN, start));
+            else if (next == '(') addPosition(TokenType.LPAREN, in.getPosition());
+            else if (next == ')') addPosition(TokenType.RPAREN, in.getPosition());
 
-            else if (next == '{') tokens.add(new Token(TokenType.LCURL, start));
-            else if (next == '}') tokens.add(new Token(TokenType.RCURL, start));
+            else if (next == '{') addPosition(TokenType.LCURL, in.getPosition());
+            else if (next == '}') addPosition(TokenType.RCURL, in.getPosition());
             else throw new LexerError("UnexpectedTokenError", "Unrecognised Token: '" + next + '\'');
         }
 
-        return new TokenInputStream(this.in.getSource().getLocation(), tokens, in.getPositionMaker().createPositionMap());
+        return new TokenInputStream(this.in.getSource().getLocation(),
+                createPrimitiveByteArray(tokens),
+                values.toArray(new String[] {}),
+                createPrimitiveIntArray(positions),
+                in.getPositionMaker().createPositionMap());
     }
 
-    private Token makeNumber(int start) {
+    public int[] createPrimitiveIntArray(List<Integer> list) {
+        int size = list.size();
+        int[] arr = new int[size];
+        for(int i = 0; i < size; i++) arr[i] = list.get(i);
+        return arr;
+    }
+
+    public byte[] createPrimitiveByteArray(List<Byte> list) {
+        int size = list.size();
+        byte[] arr = new byte[size];
+        for(int i = 0; i < size; i++) arr[i] = list.get(i);
+        return arr;
+    }
+
+    private void addPosition(byte type, int end) {
+        this.tokens.add(type);
+        this.positions.add(end);
+    }
+
+    private void addPosition(byte type, int end, String value) {
+        this.tokens.add(type);
+        this.positions.add(end);
+        this.values.add(value);
+    }
+
+    private void makeNumber() {
         StringBuilder numStr = new StringBuilder();
         boolean dot = false;
         numStr.append(in.actual());
@@ -115,13 +144,12 @@ public class Lexer {
             }
             numStr.append(in.next());
         }
-        return dot ?
-                new Token(TokenType.DOUBLE, numStr.toString(), start, in.getPosition()) :
-                new Token(TokenType.INTEGER, numStr.toString(), start, in.getPosition());
 
+        if(dot) addPosition(TokenType.DOUBLE, in.getPosition(), numStr.toString());
+        else addPosition(TokenType.INTEGER, in.getPosition(), numStr.toString());
     }
 
-    private Token makeIdentifier(int start) {
+    private void makeIdentifier() {
         StringBuilder identifier = new StringBuilder();
         identifier.append(in.actual());
         while(in.hasNext() && IDENTIFIER.contains(in.peek())) {
@@ -135,90 +163,118 @@ public class Lexer {
         switch (result) {
             case "var":
             case "let":
-                return new Token(TokenType.KEYWORD_VAR, start, end);
+                addPosition(TokenType.KEYWORD_VAR, end);
+                return;
             case "const":
-                return new Token(TokenType.KEYWORD_CONST, start, end);
+                addPosition(TokenType.KEYWORD_CONST, end);
+                return;
             case "dynamic":
-                return new Token(TokenType.KEYWORD_DYNAMIC, start, end);
+                addPosition(TokenType.KEYWORD_DYNAMIC, end);
+                return;
             case "byte":
-                return new Token(TokenType.KEYWORD_BYTE, start, end);
+                addPosition(TokenType.KEYWORD_BYTE, end);
+                return;
             case "short":
-                return new Token(TokenType.KEYWORD_SHORT, start, end);
+                addPosition(TokenType.KEYWORD_SHORT, end);
+                return;
             case "int":
-                return new Token(TokenType.KEYWORD_INT, start, end);
+                addPosition(TokenType.KEYWORD_INT, end);
+                return;
             case "long":
-                return new Token(TokenType.KEYWORD_LONG, start, end);
+                addPosition(TokenType.KEYWORD_LONG, end);
+                return;
             case "float":
-                return new Token(TokenType.KEYWORD_FLOAT, start, end);
+                addPosition(TokenType.KEYWORD_FLOAT, end);
+                return;
             case "double":
-                return new Token(TokenType.KEYWORD_DOUBLE, start, end);
+                addPosition(TokenType.KEYWORD_DOUBLE, end);
+                return;
             case "char":
-                return new Token(TokenType.KEYWORD_CHAR, start, end);
+                addPosition(TokenType.KEYWORD_CHAR, end);
+                return;
             case "boolean":
-                return new Token(TokenType.KEYWORD_BOOLEAN, start, end);
+                addPosition(TokenType.KEYWORD_BOOLEAN, end);
+                return;
             case "function":
-                return new Token(TokenType.KEYWORD_FUNCTION, start, end);
+                addPosition(TokenType.KEYWORD_FUNCTION, end);
+                return;
             case "return":
-                return new Token(TokenType.KEYWORD_RETURN, start, end);
+                addPosition(TokenType.KEYWORD_RETURN, end);
+                return;
             case "true":
-                return new Token(TokenType.KEYWORD_TRUE, start, end);
+                addPosition(TokenType.KEYWORD_TRUE, end);
+                return;
             case "false":
-                return new Token(TokenType.KEYWORD_FALSE, start, end);
+                addPosition(TokenType.KEYWORD_FALSE, end);
+                return;
             case "do":
-                return new Token(TokenType.KEYWORD_DO, start, end);
+                addPosition(TokenType.KEYWORD_DO, end);
+                return;
             case "while":
-                return new Token(TokenType.KEYWORD_WHILE, start, end);
+                addPosition(TokenType.KEYWORD_WHILE, end);
+                return;
             case "for":
-                return new Token(TokenType.KEYWORD_FOR, start, end);
+                addPosition(TokenType.KEYWORD_FOR, end);
+                return;
             case "if":
-                return new Token(TokenType.KEYWORD_IF, start, end);
+                addPosition(TokenType.KEYWORD_IF, end);
+                return;
             case "else":
-                return new Token(TokenType.KEYWORD_ELSE, start, end);
+                addPosition(TokenType.KEYWORD_ELSE, end);
+                return;
             case "class":
-                return new Token(TokenType.KEYWORD_CLASS, start, end);
+                addPosition(TokenType.KEYWORD_CLASS, end);
+                return;
             case "extends":
-                return new Token(TokenType.KEYWORD_EXTENDS, start, end);
+                addPosition(TokenType.KEYWORD_EXTENDS, end);
+                return;
             case "implements":
-                return new Token(TokenType.KEYWORD_IMPLEMENTS, start, end);
+                addPosition(TokenType.KEYWORD_IMPLEMENTS, end);
+                return;
             case "static":
-                return new Token(TokenType.KEYWORD_STATIC, start, end);
+                addPosition(TokenType.KEYWORD_STATIC, end);
+                return;
             case "final":
-                return new Token(TokenType.KEYWORD_FINAL, start, end);
+                addPosition(TokenType.KEYWORD_FINAL, end);
+                return;
             case "public":
-                return new Token(TokenType.KEYWORD_PUBLIC, start, end);
+                addPosition(TokenType.KEYWORD_PUBLIC, end);
+                return;
             case "protected":
-                return new Token(TokenType.KEYWORD_PROTECTED, start, end);
+                addPosition(TokenType.KEYWORD_PROTECTED, end);
+                return;
             case "private":
-                return new Token(TokenType.KEYWORD_PRIVATE, start, end);
+                addPosition(TokenType.KEYWORD_PRIVATE, end);
+                return;
             case "new":
-                return new Token(TokenType.KEYWORD_NEW, start, end);
+                addPosition(TokenType.KEYWORD_NEW, end);
+                return;
         }
-        return new Token(TokenType.IDENTIFIER, identifier.toString(), start, end);
+        addPosition(TokenType.IDENTIFIER, end, identifier.toString());
 
     }
 
-    private Token makeString(int start) {
+    private void makeString() {
         StringBuilder string = new StringBuilder();
         if(in.actual() == '"') {
             while(in.hasNext() && in.next() != '"') {
                 if(in.actual() == '\\') {
                     switch(in.next()) {
-                        case 't': string.append('\t'); break;
-                        case 'b': string.append('\b'); break;
-                        case 'n': string.append('\n'); break;
-                        case 'r': string.append('\r'); break;
-                        case 'f': string.append('\f'); break;
-                        case '\'': string.append('\''); break;
-                        case '"': string.append('"'); break;
-                        case '\\': string.append('\\'); break;
+                        case 't': string.append("\\t"); break;
+                        case 'b': string.append("\\b"); break;
+                        case 'n': string.append("\\n"); break;
+                        case 'r': string.append("\\r"); break;
+                        case 'f': string.append("\\f"); break;
+                        case '\'': string.append("\\'"); break;
+                        case '"': string.append("\\\""); break;
+                        case '\\': string.append("\\\\"); break;
                         case 'u':
-                            StringBuilder s = new StringBuilder();
+                            string.append("\\u");
                             for(int i = 0; i < 4; i++) {
                                 char c = in.next();
                                 if(!HEX_CHARS.contains(c)) throw new LexerError("Expecting hex char");
-                                s.append(c);
+                                string.append(c);
                             }
-                            string.append((char) Integer.parseInt(s.toString(), 16));
                             break;
                         default:
                             throw new LexerError("Unknown escape sequence '\\"+in.actual()+"'");
@@ -229,29 +285,30 @@ public class Lexer {
             }
             if(in.actual() != '"') throw new LexerError("String must end with a '\"'");
         }
-        return new Token(TokenType.STRING, string.toString(), start, in.getPosition());
+
+        addPosition(TokenType.STRING, in.getPosition(), string.toString());
     }
 
-    private Token makeCharacter(int start) {
+    private void makeCharacter() {
         String c;
         if(in.next() == '\\') {
             switch(in.next()) {
-                case 't': c = "\t"; break;
-                case 'b': c = "\b"; break;
-                case 'n': c = "\n"; break;
-                case 'r': c = "\r"; break;
-                case 'f': c = "\f"; break;
-                case '\'': c = "'"; break;
-                case '"': c = "\""; break;
-                case '\\': c = "\\"; break;
+                case 't': c = "\\t"; break;
+                case 'b': c = "\\b"; break;
+                case 'n': c = "\\n"; break;
+                case 'r': c = "\\r"; break;
+                case 'f': c = "\\f"; break;
+                case '\'': c = "\\'"; break;
+                case '"': c = "\\\""; break;
+                case '\\': c = "\\\\"; break;
                 case 'u':
-                    StringBuilder s = new StringBuilder();
+                    StringBuilder s = new StringBuilder().append("\\u");
                     for(int i = 0; i < 4; i++) {
                         char ch = in.next();
                         if(!HEX_CHARS.contains(ch)) throw new LexerError("Expecting hex char");
                         s.append(ch);
                     }
-                    c = String.valueOf((char) Integer.parseInt(s.toString(), 16));
+                    c = s.toString();
                     break;
                 default:
                     throw new LexerError("Unknown escape sequence '\\"+in.actual()+"'");
@@ -260,7 +317,8 @@ public class Lexer {
         }
         else c = String.valueOf(in.actual());
         if(in.next() != '\'') throw new LexerError("Char must end with a \"'\"");
-        return new Token(TokenType.CHARACTER, c, start, in.getPosition());
+
+        addPosition(TokenType.CHARACTER, in.getPosition(), c);
     }
 
     public void singleLineComment() {

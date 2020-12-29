@@ -37,7 +37,6 @@ public class MathTests {
     @Test
     public void testBasicPow() {
 
-        testBasic("10 ^ 3", 10, 3, PowNode.class);
         testBasic("10 ** 3", 10, 3, PowNode.class);
 
     }
@@ -45,7 +44,7 @@ public class MathTests {
     @Test
     public void testPointBeforeLine() {
 
-        AddNode add = parseSingle("<PointBeforeLineTest>", "1 + 2 * 3 ^ 4", AddNode.class);
+        AddNode add = parseSingle("<PointBeforeLineTest>", "1 + 2 * 3 ** 4", AddNode.class);
         assertNotNull(add.getLeft());
         assertType(IntegerNode.class, add.getLeft());
         assertEquals(1, ((IntegerNode) add.getLeft()).getNumber());

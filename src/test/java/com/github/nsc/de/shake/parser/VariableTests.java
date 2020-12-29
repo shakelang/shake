@@ -111,14 +111,7 @@ public class VariableTests {
     @Test
     public void testVariablePowAssignment() {
 
-        VariablePowAssignmentNode node = parseSingle("<VariablePowAssignmentTest>", "i ^= 0", VariablePowAssignmentNode.class);
-        assertType(IdentifierNode.class, node.getVariable());
-        assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
-        assertNull(((IdentifierNode) node.getVariable()).getParent());
-        assertNotNull(node.getValue());
-        assertType(IntegerNode.class, node.getValue());
-
-        node = parseSingle("<VariablePowAssignmentTest>", "i **= 0", VariablePowAssignmentNode.class);
+        VariablePowAssignmentNode node = parseSingle("<VariablePowAssignmentTest>", "i **= 0", VariablePowAssignmentNode.class);
         assertType(IdentifierNode.class, node.getVariable());
         assertEquals("i", ((IdentifierNode) node.getVariable()).getName());
         assertNull(((IdentifierNode) node.getVariable()).getParent());

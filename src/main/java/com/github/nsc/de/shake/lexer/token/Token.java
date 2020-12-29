@@ -18,7 +18,7 @@ public class Token {
      *
      * @see Token
      */
-    private final TokenType type;
+    private final byte type;
 
     /**
      * The value of the {@link Token} (This is for identifiers, strings or numbers. If not necessary this is null)
@@ -57,7 +57,7 @@ public class Token {
      * @see Token#start
      * @see Token#end
      */
-    public Token(TokenType type, String value, int start, int end) {
+    public Token(byte type, String value, int start, int end) {
         this.type = type;
         this.value = value;
         this.start = start;
@@ -79,7 +79,7 @@ public class Token {
      * @see Token#start
      * @see Token#end
      */
-    public Token(TokenType type, String value, int position) { this(type, value, position, position); }
+    public Token(byte type, String value, int position) { this(type, value, position, position); }
 
     /**
      * Constructor for {@link Token}
@@ -95,7 +95,7 @@ public class Token {
      * @see Token#start
      * @see Token#end
      */
-    public Token(TokenType type, int start, int end) { this(type, null, start, end); }
+    public Token(byte type, int start, int end) { this(type, null, start, end); }
 
     /**
      * Constructor for {@link Token}
@@ -110,7 +110,7 @@ public class Token {
      * @see Token#start
      * @see Token#end
      */
-    public Token(TokenType type, int position) { this(type, null, position, position); }
+    public Token(byte type, int position) { this(type, null, position, position); }
 
     /**
      * Returns the {@link Token#type} of the {@link Token}
@@ -123,7 +123,7 @@ public class Token {
      * @see Token#type
      * @see TokenType
      */
-    public TokenType getType() { return type; }
+    public byte getType() { return type; }
 
     /**
      * Returns the {@link Token#type} of the {@link Token}
