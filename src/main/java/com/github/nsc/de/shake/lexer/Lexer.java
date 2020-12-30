@@ -5,6 +5,7 @@ import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.Charact
 import com.github.nsc.de.shake.lexer.characterinput.position.Position;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;
+import com.github.nsc.de.shake.util.Characters;
 import com.github.nsc.de.shake.util.CompilerError;
 
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ public class Lexer {
     private static final List<Character> WHITESPACE = asList(" \t");
     private static final List<Character> IDENTIFIER = asList("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789");
     private static final List<Character> IDENTIFIER_START = asList("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_");
-    private static final List<Character> HEX_CHARS = asList("0123456789ABCDEFabcdef");
 
     private final CharacterInputStream in;
     private final List<Byte> tokens = new ArrayList<>();
@@ -272,7 +272,7 @@ public class Lexer {
                             string.append("\\u");
                             for(int i = 0; i < 4; i++) {
                                 char c = in.next();
-                                if(!HEX_CHARS.contains(c)) throw new LexerError("Expecting hex char");
+                                if(!Characters.isHexCharacter(c)) throw new LexerError("Expecting hex char");
                                 string.append(c);
                             }
                             break;
@@ -305,7 +305,7 @@ public class Lexer {
                     StringBuilder s = new StringBuilder().append("\\u");
                     for(int i = 0; i < 4; i++) {
                         char ch = in.next();
-                        if(!HEX_CHARS.contains(ch)) throw new LexerError("Expecting hex char");
+                        if(!Characters.isHexCharacter(ch)) throw new LexerError("Expecting hex char");
                         s.append(ch);
                     }
                     c = s.toString();

@@ -1,5 +1,6 @@
 package com.github.nsc.de.shake.parser;
 
+import com.github.nsc.de.shake.lexer.Lexer;
 import com.github.nsc.de.shake.lexer.characterinput.position.Position;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;
@@ -20,6 +21,7 @@ import com.github.nsc.de.shake.parser.node.loops.WhileNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
+import com.github.nsc.de.shake.util.Characters;
 import com.github.nsc.de.shake.util.CompilerError;
 
 import java.util.ArrayList;
@@ -575,12 +577,12 @@ public class Parser {
 
         if(token == TokenType.STRING) {
             getInput().skip();
-            return new StringNode(getInput().actualValue());
+            return new StringNode(Characters.parseString(getInput().actualValue()));
         }
 
         if(token == TokenType.CHARACTER) {
             getInput().skip();
-            return new CharacterNode(getInput().actualValue().charAt(0));
+            return new CharacterNode(Characters.parseString(getInput().actualValue()).charAt(0));
         }
 
         throw new ParserError(this.getInput().toString());
