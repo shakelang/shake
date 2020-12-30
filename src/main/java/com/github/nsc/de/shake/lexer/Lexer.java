@@ -151,96 +151,215 @@ public class Lexer {
         String result = identifier.toString();
         int end = in.getPosition();
 
+        char[] chars = result.toCharArray();
+
         // Keywords
-        switch (result) {
-            case "var":
-            case "let":
-                addPosition(TokenType.KEYWORD_VAR, end);
-                return;
-            case "const":
-                addPosition(TokenType.KEYWORD_CONST, end);
-                return;
-            case "dynamic":
-                addPosition(TokenType.KEYWORD_DYNAMIC, end);
-                return;
-            case "byte":
-                addPosition(TokenType.KEYWORD_BYTE, end);
-                return;
-            case "short":
-                addPosition(TokenType.KEYWORD_SHORT, end);
-                return;
-            case "int":
-                addPosition(TokenType.KEYWORD_INT, end);
-                return;
-            case "long":
-                addPosition(TokenType.KEYWORD_LONG, end);
-                return;
-            case "float":
-                addPosition(TokenType.KEYWORD_FLOAT, end);
-                return;
-            case "double":
-                addPosition(TokenType.KEYWORD_DOUBLE, end);
-                return;
-            case "char":
-                addPosition(TokenType.KEYWORD_CHAR, end);
-                return;
-            case "boolean":
-                addPosition(TokenType.KEYWORD_BOOLEAN, end);
-                return;
-            case "function":
-                addPosition(TokenType.KEYWORD_FUNCTION, end);
-                return;
-            case "return":
-                addPosition(TokenType.KEYWORD_RETURN, end);
-                return;
-            case "true":
-                addPosition(TokenType.KEYWORD_TRUE, end);
-                return;
-            case "false":
-                addPosition(TokenType.KEYWORD_FALSE, end);
-                return;
-            case "do":
-                addPosition(TokenType.KEYWORD_DO, end);
-                return;
-            case "while":
-                addPosition(TokenType.KEYWORD_WHILE, end);
-                return;
-            case "for":
-                addPosition(TokenType.KEYWORD_FOR, end);
-                return;
-            case "if":
-                addPosition(TokenType.KEYWORD_IF, end);
-                return;
-            case "else":
-                addPosition(TokenType.KEYWORD_ELSE, end);
-                return;
-            case "class":
-                addPosition(TokenType.KEYWORD_CLASS, end);
-                return;
-            case "extends":
-                addPosition(TokenType.KEYWORD_EXTENDS, end);
-                return;
-            case "implements":
-                addPosition(TokenType.KEYWORD_IMPLEMENTS, end);
-                return;
-            case "static":
-                addPosition(TokenType.KEYWORD_STATIC, end);
-                return;
-            case "final":
-                addPosition(TokenType.KEYWORD_FINAL, end);
-                return;
-            case "public":
-                addPosition(TokenType.KEYWORD_PUBLIC, end);
-                return;
-            case "protected":
-                addPosition(TokenType.KEYWORD_PROTECTED, end);
-                return;
-            case "private":
-                addPosition(TokenType.KEYWORD_PRIVATE, end);
-                return;
-            case "new":
-                addPosition(TokenType.KEYWORD_NEW, end);
-                return;
+        switch (result.length()) {
+            case 2:
+                // do keyword
+                if(chars[0] == 'd') {
+                    if(chars[1] == 'o') {
+                        addPosition(TokenType.KEYWORD_DO, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'i' && chars[1] == 'f') {
+                    addPosition(TokenType.KEYWORD_IF, end);
+                    return;
+                }
+                break;
+
+            case 3:
+                if(chars[0] == 'v') {
+                    if(chars[1] == 'a' && chars[2] == 'r') {
+                        addPosition(TokenType.KEYWORD_VAR, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'l') {
+                    if(chars[1] == 'e' && chars[2] == 't') {
+                        addPosition(TokenType.KEYWORD_VAR, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'i') {
+                    if(chars[1] == 'n' && chars[2] == 't') {
+                        addPosition(TokenType.KEYWORD_INT, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'n') {
+                    if(chars[1] == 'e' && chars[2] == 'w') {
+                        addPosition(TokenType.KEYWORD_NEW, end);
+                        return;
+                    }
+                }
+                if(chars[0] == 'f' && chars[1] == 'o' && chars[2] == 'r') {
+                    addPosition(TokenType.KEYWORD_FOR, end);
+                    return;
+                }
+                break;
+
+            case 4:
+                if(chars[0] == 'b') {
+                    if(chars[1] == 'y' && chars[2] == 't' && chars[3] == 'e') {
+                        addPosition(TokenType.KEYWORD_BYTE, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'l') {
+                    if(chars[1] == 'o' && chars[2] == 'n' && chars[3] == 'g') {
+                        addPosition(TokenType.KEYWORD_LONG, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'c') {
+                    if(chars[1] == 'h' && chars[2] == 'a' && chars[3] == 'r') {
+                        addPosition(TokenType.KEYWORD_CHAR, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 't') {
+                    if(chars[1] == 'r' && chars[2] == 'u' && chars[3] == 'e') {
+                        addPosition(TokenType.KEYWORD_TRUE, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'e' && chars[1] == 'l' && chars[2] == 's' && chars[3] == 'e') {
+                    addPosition(TokenType.KEYWORD_ELSE, end);
+                    return;
+                }
+                break;
+
+            case 5:
+                if(chars[0] == 'f') {
+                    if(chars[1] == 'a' && chars[2] == 'l' && chars[3] == 's' && chars[4] == 'e') {
+                        addPosition(TokenType.KEYWORD_FALSE, end);
+                        return;
+                    }
+                    if(chars[1] == 'l' && chars[2] == 'o' && chars[3] == 'a' && chars[4] == 't') {
+                        addPosition(TokenType.KEYWORD_FLOAT, end);
+                        return;
+                    }
+                    if(chars[1] == 'i' && chars[2] == 'n' && chars[3] == 'a' && chars[4] == 'l') {
+                        addPosition(TokenType.KEYWORD_FINAL, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'c') {
+                    if(chars[1] == 'o' && chars[2] == 'n' && chars[3] == 's' && chars[4] == 't') {
+                        addPosition(TokenType.KEYWORD_CONST, end);
+                        return;
+                    }
+                    if(chars[1] == 'l' && chars[2] == 'a' && chars[3] == 's' && chars[4] == 's') {
+                        addPosition(TokenType.KEYWORD_CLASS, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 's') {
+                    if(chars[1] == 'h' && chars[2] == 'o' && chars[3] == 'r' && chars[4] == 't') {
+                        addPosition(TokenType.KEYWORD_SHORT, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'w' && chars[1] == 'h' && chars[2] == 'i' && chars[3] == 'l' && chars[4] == 'e') {
+                    addPosition(TokenType.KEYWORD_WHILE, end);
+                    return;
+                }
+                break;
+            case 6:
+                if(chars[0] == 'd') {
+                    if(chars[1] == 'o' && chars[2] == 'u' && chars[3] == 'b' && chars[4] == 'l' && chars[5] == 'e') {
+                        addPosition(TokenType.KEYWORD_DOUBLE, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'r') {
+                    if(chars[1] == 'e' && chars[2] == 't' && chars[3] == 'u' && chars[4] == 'r' && chars[5] == 'n') {
+                        addPosition(TokenType.KEYWORD_RETURN, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 's') {
+                    if(chars[1] == 't' && chars[2] == 'a' && chars[3] == 't' && chars[4] == 'i' && chars[5] == 'c') {
+                        addPosition(TokenType.KEYWORD_STATIC, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'p' && chars[1] == 'u' && chars[2] == 'b' && chars[3] == 'l'
+                        && chars[4] == 'i' && chars[5] == 'c') {
+                    addPosition(TokenType.KEYWORD_PUBLIC, end);
+                    return;
+                }
+                break;
+            case 7:
+                if(chars[0] == 'd') {
+                    if(chars[1] == 'y' && chars[2] == 'n' && chars[3] == 'a' && chars[4] == 'm'
+                            && chars[5] == 'i' && chars[6] == 'c') {
+                        addPosition(TokenType.KEYWORD_DYNAMIC, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'b') {
+                    if(chars[1] == 'o' && chars[2] == 'o' && chars[3] == 'l' && chars[4] == 'e'
+                            && chars[5] == 'a' && chars[6] == 'n') {
+                        addPosition(TokenType.KEYWORD_BOOLEAN, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'e') {
+                    if(chars[1] == 'x' && chars[2] == 't' && chars[3] == 'e' && chars[4] == 'n'
+                            && chars[5] == 'd' && chars[6] == 's') {
+                        addPosition(TokenType.KEYWORD_EXTENDS, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'p' && chars[1] == 'r' && chars[2] == 'i' && chars[3] == 'v' && chars[4] == 'a'
+                            && chars[5] == 't' && chars[6] == 'e') {
+                    addPosition(TokenType.KEYWORD_PRIVATE, end);
+                    return;
+                }
+                break;
+            case 8:
+                if(chars[0] == 'f') {
+                    if(chars[1] == 'u' && chars[2] == 'n' && chars[3] == 'c' && chars[4] == 't'
+                            && chars[5] == 'i' && chars[6] == 'o' && chars[7] == 'n') {
+                        addPosition(TokenType.KEYWORD_FUNCTION, end);
+                        return;
+                    }
+                }
+                break;
+            case 9:
+                if(chars[0] == 'p' && chars[1] == 'r' && chars[2] == 'o' && chars[3] == 't' && chars[4] == 'e'
+                        && chars[5] == 'c' && chars[6] == 't' && chars[7] == 'e' && chars[8] == 'd') {
+                    addPosition(TokenType.KEYWORD_PROTECTED, end);
+                    return;
+                }
+                break;
+            case 10:
+                if(chars[0] == 'i' && chars[1] == 'm' && chars[2] == 'p' && chars[3] == 'l' && chars[4] == 'e'
+                        && chars[5] == 'm' && chars[6] == 'e' && chars[7] == 'n' && chars[8] == 't' && chars[9] == 's') {
+                    addPosition(TokenType.KEYWORD_IMPLEMENTS, end);
+                    return;
+                }
+                break;
         }
         addPosition(TokenType.IDENTIFIER, end, identifier.toString());
 
