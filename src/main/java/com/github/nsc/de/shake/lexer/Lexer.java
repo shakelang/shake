@@ -1,6 +1,5 @@
 package com.github.nsc.de.shake.lexer;
 
-import static com.github.nsc.de.shake.util.HelpFunctions.asList;
 import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
 import com.github.nsc.de.shake.lexer.characterinput.position.Position;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
@@ -12,12 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lexer {
-
-    private static final List<Character> NUMBERS = asList("0123456789");
-    private static final List<Character> NUMBERS_DOT = asList("0123456789.");
-    private static final List<Character> WHITESPACE = asList(" \t");
-    private static final List<Character> IDENTIFIER = asList("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789");
-    private static final List<Character> IDENTIFIER_START = asList("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_");
 
     private final CharacterInputStream in;
     private final List<Byte> tokens = new ArrayList<>();
@@ -35,10 +28,9 @@ public class Lexer {
             int start = in.getPosition();
 
             // Whitespace
-            if(WHITESPACE.contains(next)) continue;
+            if(Characters.isWhitespaceCharacter(next)) continue;
 
             // Linebreaks
-            if(next == '\r')  continue;
             if(next == '\n') addPosition(TokenType.LINE_SEPARATOR, start);
 
             // Punctuation
@@ -47,10 +39,10 @@ public class Lexer {
             else if(next == '.') addPosition(TokenType.DOT, start);
 
             // Numbers
-            else if(NUMBERS.contains(next)) makeNumber();
+            else if(Characters.isNumberCharacter(next)) makeNumber();
 
             // Identifiers
-            else if(IDENTIFIER_START.contains(next)) makeIdentifier();
+            else if(Characters.isIdentifierStartCharacter(next)) makeIdentifier();
 
             else if(next == '"') makeString();
             else if(next == '\'') makeCharacter();
@@ -137,7 +129,7 @@ public class Lexer {
         StringBuilder numStr = new StringBuilder();
         boolean dot = false;
         numStr.append(in.actual());
-        while(in.hasNext() && NUMBERS_DOT.contains(in.peek())) {
+        while(in.hasNext() && Characters.isNumberOrDotCharacter(in.peek())) {
             if(in.peek() == '.') {
                 if(dot) break;
                 dot = true;
@@ -152,7 +144,7 @@ public class Lexer {
     private void makeIdentifier() {
         StringBuilder identifier = new StringBuilder();
         identifier.append(in.actual());
-        while(in.hasNext() && IDENTIFIER.contains(in.peek())) {
+        while(in.hasNext() && Characters.isIdentifierCharacter(in.peek())) {
             identifier.append(in.next());
         }
 
