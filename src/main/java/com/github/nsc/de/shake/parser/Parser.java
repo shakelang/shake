@@ -1,6 +1,5 @@
 package com.github.nsc.de.shake.parser;
 
-import com.github.nsc.de.shake.lexer.Lexer;
 import com.github.nsc.de.shake.lexer.characterinput.position.Position;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;
@@ -59,14 +58,14 @@ public class Parser {
         // TODO Require Separator
         // boolean separator = true;
 
-        while (this.getInput().hasNext()) {
+        while (this.in.hasNext()) {
 
             // if(!separator) throw new ParserError("AwaitSeparatorError", "Awaited separator at this point");
             // separator = false;
-            if(position >= this.getInput().getPosition()) break;
-            position = this.getInput().getPosition();
+            if(position >= this.in.getPosition()) break;
+            position = this.in.getPosition();
 
-            if(this.getInput().hasNext()) {
+            if(this.in.hasNext()) {
                 Node result = operation();
                 if(result != null) nodes.add(result);
             }
@@ -80,7 +79,7 @@ public class Parser {
 
     private Node operation() {
 
-        byte token = this.getInput().peekType();
+        byte token = this.in.peekType();
         if(token == TokenType.KEYWORD_WHILE) return this.whileLoop();
         if(token == TokenType.KEYWORD_DO) return this.doWhileLoop();
         if(token == TokenType.KEYWORD_FOR) return this.forLoop();
@@ -92,7 +91,7 @@ public class Parser {
 
     private ValuedNode valuedOperation() {
 
-        byte token = this.getInput().peekType();
+        byte token = this.in.peekType();
 
         if(token == TokenType.KEYWORD_FUNCTION
                 || token == TokenType.KEYWORD_VAR
@@ -135,10 +134,10 @@ public class Parser {
     private int skipSeparators() {
 
         int number = 0;
-        while(this.getInput().hasNext() && (this.getInput().peekType() == TokenType.SEMICOLON
-                || this.getInput().peekType() == TokenType.LINE_SEPARATOR)) {
+        while(this.in.hasNext() && (this.in.peekType() == TokenType.SEMICOLON
+                || this.in.peekType() == TokenType.LINE_SEPARATOR)) {
             number++;
-            this.getInput().skip();
+            this.in.skip();
         }
         return number;
 
@@ -146,7 +145,7 @@ public class Parser {
 
     private void awaitSemicolon() {
 
-        if(this.getInput().skipIgnorable().nextType() != TokenType.SEMICOLON) throw new ParserError("Expecting semicolon at this point", this.getInput().getPosition());
+        if(this.in.skipIgnorable().nextType() != TokenType.SEMICOLON) throw new ParserError("Expecting semicolon at this point", this.in.getPosition());
 
     }
 
@@ -193,16 +192,16 @@ public class Parser {
     }
 
     private ValuedNode parseIdentifier(ValuedNode parent) {
-        if(getInput().nextType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
-        String identifier = getInput().actualValue();
+        if(in.nextType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
+        String identifier = in.actualValue();
 
         IdentifierNode identifierNode = new IdentifierNode(parent, identifier);
         ValuedNode ret = null;
 
         // Assignments
-        if(this.getInput().hasNext()) {
+        if(this.in.hasNext()) {
 
-            byte token2 = getInput().skipIgnorable().peekType();
+            byte token2 = in.skipIgnorable().peekType();
             if(token2 == TokenType.LPAREN) ret = this.functionCall(identifierNode);
             if(token2 == TokenType.ASSIGN) ret = this.varAssignment(identifierNode);
             if(token2 == TokenType.ADD_ASSIGN) ret = this.varAddAssignment(identifierNode);
@@ -213,9 +212,9 @@ public class Parser {
             if(token2 == TokenType.POW_ASSIGN) ret = this.varPowAssignment(identifierNode);
             if(token2 == TokenType.INCR) ret = this.varIncrease(identifierNode);
             if(token2 == TokenType.DECR) ret = this.varDecrease(identifierNode);
-            if(getInput().skipIgnorable().hasNext() && getInput().peekType() == TokenType.DOT) {
-                this.getInput().skip();
-                this.getInput().skipIgnorable();
+            if(in.skipIgnorable().hasNext() && in.peekType() == TokenType.DOT) {
+                this.in.skip();
+                this.in.skipIgnorable();
                 return this.parseIdentifier(ret != null ? ret : new VariableUsageNode(identifierNode));
             }
             if(ret != null) return ret;
@@ -226,13 +225,13 @@ public class Parser {
     }
 
     private ClassConstructionNode parseClassConstruction() {
-        this.getInput().skip();
-        this.getInput().skipIgnorable();
-        int start = getInput().actualStart();
+        this.in.skip();
+        this.in.skipIgnorable();
+        int start = in.actualStart();
         ValuedNode node = parseIdentifier(null);
         if(!(node instanceof FunctionCallNode))
             throw new ParserError("Expecting a call after keyword new",
-                    start, getInput().actualEnd());
+                    start, in.actualEnd());
         return new ClassConstructionNode(((FunctionCallNode) node).getFunction(), ((FunctionCallNode) node).getArgs());
     }
 
@@ -243,18 +242,18 @@ public class Parser {
 
 
     private ClassDeclarationNode classDeclaration(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.KEYWORD_CLASS) throw new ParserError("Expecting class keyword");
-        if(!this.getInput().hasNext() || this.getInput().peekType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
-        String name = this.getInput().nextValue();
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.KEYWORD_CLASS) throw new ParserError("Expecting class keyword");
+        if(!this.in.hasNext() || this.in.peekType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
+        String name = this.in.nextValue();
 
         List<VariableDeclarationNode> fields = new ArrayList<>();
         List<FunctionDeclarationNode> methods = new ArrayList<>();
         List<ClassDeclarationNode> classes = new ArrayList<>();
 
         // TODO: extends, implements
-        if(this.getInput().nextType() != TokenType.LCURL) throw new ParserError("Expecting class-body");
+        if(this.in.nextType() != TokenType.LCURL) throw new ParserError("Expecting class-body");
 
-        while(this.getInput().hasNext() && this.getInput().peekType() != TokenType.RCURL) {
+        while(this.in.hasNext() && this.in.peekType() != TokenType.RCURL) {
 
             skipSeparators();
 
@@ -267,7 +266,7 @@ public class Parser {
 
         }
 
-        if(this.getInput().nextType() != TokenType.RCURL) throw new ParserError("Expecting class-body to end");
+        if(this.in.nextType() != TokenType.RCURL) throw new ParserError("Expecting class-body to end");
 
         return new ClassDeclarationNode(name, fields, methods, classes, access, isInClass, isStatic, isFinal);
     }
@@ -281,22 +280,22 @@ public class Parser {
     private FunctionDeclarationNode functionDeclaration(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
 
         List<FunctionArgumentNode> args = new ArrayList<>();
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.KEYWORD_FUNCTION) throw new ParserError("Expecting function keyword");
-        if(!this.getInput().hasNext() || this.getInput().peekType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
-        String name = this.getInput().nextValue();
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.KEYWORD_FUNCTION) throw new ParserError("Expecting function keyword");
+        if(!this.in.hasNext() || this.in.peekType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
+        String name = this.in.nextValue();
 
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.LPAREN) throw new ParserError("Expecting '('");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.LPAREN) throw new ParserError("Expecting '('");
 
         if(this.checkArgument()) {
             args.add(this.parseArgument());
-            while(this.getInput().hasNext() && this.getInput().peekType() == TokenType.COMMA) {
-                this.getInput().skip();
+            while(this.in.hasNext() && this.in.peekType() == TokenType.COMMA) {
+                this.in.skip();
                 if(this.checkArgument()) args.add(this.parseArgument());
                 else break;
             }
         }
 
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
 
         Tree body = this.parseBodyStatement();
         return new FunctionDeclarationNode(name, body, args.toArray(new FunctionArgumentNode[0]), access, isInClass, isStatic, isFinal);
@@ -304,29 +303,29 @@ public class Parser {
 
     private FunctionCallNode functionCall(ValuedNode function) {
         List<ValuedNode> args = new ArrayList<>();
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.LPAREN) throw new ParserError("Expecting '('");
-        if(this.getInput().peekType() != TokenType.RPAREN) {
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.LPAREN) throw new ParserError("Expecting '('");
+        if(this.in.peekType() != TokenType.RPAREN) {
             args.add(this.valuedOperation());
-            while(this.getInput().hasNext() && this.getInput().peekType() == TokenType.COMMA) {
-                this.getInput().skip();
+            while(this.in.hasNext() && this.in.peekType() == TokenType.COMMA) {
+                this.in.skip();
                 ValuedNode operation = this.valuedOperation();
                 if(operation != null) args.add(operation);
                 else break;
             }
         }
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
         return new FunctionCallNode(function, args.toArray(new ValuedNode[0]));
     }
 
     private FunctionArgumentNode parseArgument() {
-        if(this.getInput().peekType() == TokenType.IDENTIFIER) {
-            return new FunctionArgumentNode(this.getInput().nextValue());
+        if(this.in.peekType() == TokenType.IDENTIFIER) {
+            return new FunctionArgumentNode(this.in.nextValue());
         }
         else throw new ParserError("Expecting identifier");
     }
 
     private boolean checkArgument() {
-        return this.getInput().hasNext() && this.getInput().peekType() == TokenType.IDENTIFIER;
+        return this.in.hasNext() && this.in.peekType() == TokenType.IDENTIFIER;
     }
 
 
@@ -342,80 +341,80 @@ public class Parser {
 
 
     private VariableAssignmentNode varAssignment(ValuedNode variable) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.ASSIGN) throw new ParserError("Expecting '='");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.ASSIGN) throw new ParserError("Expecting '='");
         Node value = operation();
         return new VariableAssignmentNode(variable, value);
     }
 
     private VariableAddAssignmentNode varAddAssignment(ValuedNode variable) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.ADD_ASSIGN) throw new ParserError("Expecting '+='");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.ADD_ASSIGN) throw new ParserError("Expecting '+='");
         Node value = operation();
         return new VariableAddAssignmentNode(variable, value);
     }
 
     private VariableSubAssignmentNode varSubAssignment(ValuedNode variable) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.SUB_ASSIGN) throw new ParserError("Expecting '-='");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.SUB_ASSIGN) throw new ParserError("Expecting '-='");
         Node value = operation();
         return new VariableSubAssignmentNode(variable, value);
     }
 
     private VariableMulAssignmentNode varMulAssignment(ValuedNode variable) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.MUL_ASSIGN) throw new ParserError("Expecting '*='");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.MUL_ASSIGN) throw new ParserError("Expecting '*='");
         Node value = operation();
         return new VariableMulAssignmentNode(variable, value);
     }
 
     private VariableDivAssignmentNode varDivAssignment(ValuedNode variable) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.DIV_ASSIGN) throw new ParserError("Expecting '/='");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.DIV_ASSIGN) throw new ParserError("Expecting '/='");
         Node value = operation();
         return new VariableDivAssignmentNode(variable, value);
     }
 
     private VariableModAssignmentNode varModAssignment(ValuedNode variable) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.MOD_ASSIGN) throw new ParserError("Expecting '%='");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.MOD_ASSIGN) throw new ParserError("Expecting '%='");
         Node value = operation();
         return new VariableModAssignmentNode(variable, value);
     }
 
     private VariablePowAssignmentNode varPowAssignment(ValuedNode variable) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.POW_ASSIGN) throw new ParserError("Expecting '^='");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.POW_ASSIGN) throw new ParserError("Expecting '^='");
         Node value = operation();
         return new VariablePowAssignmentNode(variable, value);
     }
 
     private VariableIncreaseNode varIncrease(ValuedNode variable) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.INCR) throw new ParserError("Expecting '++'");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.INCR) throw new ParserError("Expecting '++'");
         return new VariableIncreaseNode(variable);
     }
 
     private VariableDecreaseNode varDecrease(ValuedNode variable) {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.DECR) throw new ParserError("Expecting '--'");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.DECR) throw new ParserError("Expecting '--'");
         return new VariableDecreaseNode(variable);
     }
 
     private VariableDeclarationNode varDeclaration1(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
 
-        if(!getInput().hasNext()) throw new ParserError("Expecting var or const keyword");
-        if(this.getInput().nextType() == TokenType.KEYWORD_CONST) {
+        if(!in.hasNext()) throw new ParserError("Expecting var or const keyword");
+        if(this.in.nextType() == TokenType.KEYWORD_CONST) {
             if(isFinal) throw new ParserError("A constant is always final, must not have \"final\" attribute!");
             isFinal = true;
         }
-        else if(this.getInput().actualType() != TokenType.KEYWORD_VAR) throw new ParserError("Expecting var or const keyword");
-        if(!this.getInput().skipIgnorable().hasNext() || this.getInput().peekType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
+        else if(this.in.actualType() != TokenType.KEYWORD_VAR) throw new ParserError("Expecting var or const keyword");
+        if(!this.in.skipIgnorable().hasNext() || this.in.peekType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
 
-        String identifier = this.getInput().nextValue();
+        String identifier = this.in.nextValue();
 
-        if(this.getInput().skipIgnorable().hasNext() && this.getInput().peekType() == TokenType.ASSIGN) {
+        if(this.in.skipIgnorable().hasNext() && this.in.peekType() == TokenType.ASSIGN) {
             return new VariableDeclarationNode(identifier, VariableType.DYNAMIC, this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
         } else {
-            return new VariableDeclarationNode(this.getInput().actualValue(), VariableType.DYNAMIC, null, access, isInClass, isStatic, isFinal);
+            return new VariableDeclarationNode(this.in.actualValue(), VariableType.DYNAMIC, null, access, isInClass, isStatic, isFinal);
         }
 
     }
 
     private VariableDeclarationNode varDeclaration2(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
 
-        byte t = this.getInput().nextType();
+        byte t = this.in.nextType();
         VariableType declarationNode =
                 t == TokenType.KEYWORD_DYNAMIC ? VariableType.DYNAMIC :
                 t == TokenType.KEYWORD_BYTE ? VariableType.BYTE :
@@ -427,15 +426,15 @@ public class Parser {
                 t == TokenType.KEYWORD_BOOLEAN ? VariableType.BOOLEAN :
                 t == TokenType.KEYWORD_CHAR ? VariableType.CHAR : null;
 
-        if(!this.getInput().skipIgnorable().hasNext() || this.getInput().peekType() != TokenType.IDENTIFIER)
+        if(!this.in.skipIgnorable().hasNext() || this.in.peekType() != TokenType.IDENTIFIER)
             throw new ParserError("Expecting identifier");
 
-        String identifier = this.getInput().nextValue();
+        String identifier = this.in.nextValue();
 
-        if(this.getInput().skipIgnorable().hasNext() && this.getInput().peekType() == TokenType.ASSIGN) {
+        if(this.in.skipIgnorable().hasNext() && this.in.peekType() == TokenType.ASSIGN) {
             return new VariableDeclarationNode(identifier, declarationNode, this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
         } else {
-            return new VariableDeclarationNode(this.getInput().actualValue(), declarationNode, null, access, isInClass, isStatic, isFinal);
+            return new VariableDeclarationNode(this.in.actualValue(), declarationNode, null, access, isInClass, isStatic, isFinal);
         }
     }
 
@@ -449,25 +448,25 @@ public class Parser {
 
 
     private Node forLoop() {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.KEYWORD_FOR) throw new ParserError("Expecting for keyword");
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.LPAREN) throw new ParserError("Expecting '('");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.KEYWORD_FOR) throw new ParserError("Expecting for keyword");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.LPAREN) throw new ParserError("Expecting '('");
         Node declaration = operation();
         awaitSemicolon();
         ValuedNode condition = valuedOperation();
         awaitSemicolon();
         Node round = operation();
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
         Tree body = parseBodyStatement();
         return new ForNode(body, declaration, condition, round);
     }
 
 
     private Node doWhileLoop() {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.KEYWORD_DO)
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.KEYWORD_DO)
             throw new ParserError("Expecting do keyword");
         Tree body = parseBodyStatement();
         skipSeparators();
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.KEYWORD_WHILE)
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.KEYWORD_WHILE)
             throw new ParserError("Expecting while keyword");
         ValuedNode condition = parseConditionStatement();
         return new DoWhileNode(body, condition);
@@ -475,7 +474,7 @@ public class Parser {
 
 
     private Node whileLoop() {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.KEYWORD_WHILE)
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.KEYWORD_WHILE)
             throw new ParserError("Expecting while keyword");
         ValuedNode condition = parseConditionStatement();
         Tree body = parseBodyStatement();
@@ -484,14 +483,14 @@ public class Parser {
 
 
     private Node ifStatement() {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.KEYWORD_IF)
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.KEYWORD_IF)
             throw new ParserError("Expecting if keyword");
         ValuedNode condition = parseConditionStatement();
         Tree body = parseBodyStatement();
         boolean separator = skipSeparators()>0;
-        if(this.getInput().hasNext() && this.getInput().peekType() == TokenType.KEYWORD_ELSE) {
+        if(this.in.hasNext() && this.in.peekType() == TokenType.KEYWORD_ELSE) {
             if(!separator) throw new ParserError("Awaited separator at this point");
-            this.getInput().skip();
+            this.in.skip();
             Tree elseBody = parseBodyStatement();
             return new IfNode(body, elseBody, condition);
         }
@@ -499,18 +498,18 @@ public class Parser {
     }
 
     private ValuedNode parseConditionStatement() {
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.LPAREN) throw new ParserError("Expecting '('", getInput().getPosition());
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.LPAREN) throw new ParserError("Expecting '('", in.getPosition());
         ValuedNode condition = logicalOr();
-        if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'", getInput().getPosition());
+        if(!this.in.hasNext() || this.in.nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'", in.getPosition());
         return condition;
     }
 
     private Tree parseBodyStatement() {
         skipSeparators();
-        if(this.getInput().peekType() == TokenType.LCURL) {
-            this.getInput().skip();
+        if(this.in.peekType() == TokenType.LCURL) {
+            this.in.skip();
             Tree body = prog();
-            if(!this.getInput().hasNext() || this.getInput().nextType() != TokenType.RCURL) throw new ParserError("Expecting '}'", getInput().getPosition());
+            if(!this.in.hasNext() || this.in.nextType() != TokenType.RCURL) throw new ParserError("Expecting '}'", in.getPosition());
             return body;
         }
         else {
@@ -528,33 +527,33 @@ public class Parser {
 
     private ValuedNode factor() {
 
-        byte token = this.getInput().peekType();
+        byte token = this.in.peekType();
 
         if(token == TokenType.LPAREN) {
-            getInput().skip();
+            in.skip();
             ValuedNode result = this.logicalOr();
-            if(this.getInput().nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
+            if(this.in.nextType() != TokenType.RPAREN) throw new ParserError("Expecting ')'");
             return result;
         }
 
         if(token == TokenType.KEYWORD_TRUE) {
-            getInput().skip();
+            in.skip();
             return new LogicalTrueNode();
         }
 
         if(token == TokenType.KEYWORD_FALSE) {
-            getInput().skip();
+            in.skip();
             return new LogicalFalseNode();
         }
 
         if(token == TokenType.INTEGER) {
-            getInput().skip();
-            return new IntegerNode(Integer.parseInt(getInput().actualValue()));
+            in.skip();
+            return new IntegerNode(Integer.parseInt(in.actualValue()));
         }
 
         if(token == TokenType.DOUBLE) {
-            getInput().skip();
-            return new DoubleNode(Double.parseDouble(getInput().actualValue()));
+            in.skip();
+            return new DoubleNode(Double.parseDouble(in.actualValue()));
         }
 
         if(token == TokenType.IDENTIFIER) {
@@ -566,26 +565,26 @@ public class Parser {
         }
 
         if(token == TokenType.ADD) {
-            getInput().skip();
+            in.skip();
             return new AddNode(0, this.factor());
         }
 
         if(token == TokenType.SUB) {
-            getInput().skip();
+            in.skip();
             return new SubNode(0, this.factor());
         }
 
         if(token == TokenType.STRING) {
-            getInput().skip();
-            return new StringNode(Characters.parseString(getInput().actualValue()));
+            in.skip();
+            return new StringNode(Characters.parseString(in.actualValue()));
         }
 
         if(token == TokenType.CHARACTER) {
-            getInput().skip();
-            return new CharacterNode(Characters.parseString(getInput().actualValue()).charAt(0));
+            in.skip();
+            return new CharacterNode(Characters.parseString(in.actualValue()).charAt(0));
         }
 
-        throw new ParserError(this.getInput().toString());
+        throw new ParserError(this.in.toString());
     }
 
 
@@ -594,16 +593,16 @@ public class Parser {
     private ValuedNode expr() {
         ValuedNode result = this.term();
         byte tmp_type;
-        while(this.getInput().hasNext() &&
-                ((tmp_type = this.getInput().peekType()) == ADD || tmp_type == TokenType.SUB)) {
+        while(this.in.hasNext() &&
+                ((tmp_type = this.in.peekType()) == ADD || tmp_type == TokenType.SUB)) {
 
             if(tmp_type == TokenType.ADD) {
-                this.getInput().skip();
+                this.in.skip();
                 result = new AddNode(result, this.term());
             }
 
             else {
-                this.getInput().skip();
+                this.in.skip();
                 result = new SubNode(result, this.term());
             }
 
@@ -616,19 +615,19 @@ public class Parser {
         ValuedNode result = this.pow();
 
         byte tmp_type;
-        while(this.getInput().hasNext() &&
-                ((tmp_type = this.getInput().peekType()) == MUL || tmp_type == TokenType.DIV || tmp_type == TokenType.MOD)) {
+        while(this.in.hasNext() &&
+                ((tmp_type = this.in.peekType()) == MUL || tmp_type == TokenType.DIV || tmp_type == TokenType.MOD)) {
 
             if(tmp_type == TokenType.MUL) {
-                this.getInput().skip();
+                this.in.skip();
                 result = new MulNode(result, this.pow());
             }
             else if(tmp_type == TokenType.DIV) {
-                this.getInput().skip();
+                this.in.skip();
                 result = new DivNode(result, this.pow());
             }
             else {
-                this.getInput().skip();
+                this.in.skip();
                 result = new ModNode(result, this.pow());
             }
         }
@@ -638,8 +637,8 @@ public class Parser {
     private ValuedNode pow() {
         ValuedNode result = this.factor();
 
-        while(this.getInput().hasNext() && this.getInput().peekType() == TokenType.POW) {
-            this.getInput().skip();
+        while(this.in.hasNext() && this.in.peekType() == TokenType.POW) {
+            this.in.skip();
             result = new PowNode(result, this.factor());
         }
         return result;
@@ -651,8 +650,8 @@ public class Parser {
     private ValuedNode logicalOr() {
         ValuedNode result = this.logicalAnd();
 
-        while(this.getInput().hasNext() && this.getInput().peekType() == TokenType.LOGICAL_OR) {
-            this.getInput().skip();
+        while(this.in.hasNext() && this.in.peekType() == TokenType.LOGICAL_OR) {
+            this.in.skip();
             result = new LogicalOrNode(result, this.logicalAnd());
         }
         return result;
@@ -662,8 +661,8 @@ public class Parser {
     private ValuedNode logicalAnd() {
         ValuedNode result = this.compare();
 
-        while(this.getInput().hasNext() && this.getInput().peekType() == TokenType.LOGICAL_AND) {
-            this.getInput().skip();
+        while(this.in.hasNext() && this.in.peekType() == TokenType.LOGICAL_AND) {
+            this.in.skip();
             result = new LogicalAndNode(result, this.compare());
         }
         return result;
@@ -674,11 +673,11 @@ public class Parser {
         ValuedNode left = this.expr();
 
         byte tmp_type;
-        while(this.getInput().hasNext()
-                && ((tmp_type = this.getInput().peekType()) == EQ_EQUALS || tmp_type == BIGGER_EQUALS
+        while(this.in.hasNext()
+                && ((tmp_type = this.in.peekType()) == EQ_EQUALS || tmp_type == BIGGER_EQUALS
                     || tmp_type == SMALLER_EQUALS || tmp_type == BIGGER || tmp_type == SMALLER)) {
 
-            this.getInput().skip();
+            this.in.skip();
             if(tmp_type == TokenType.EQ_EQUALS) return new LogicalEqEqualsNode(left, this.logicalOr());
             else if(tmp_type == TokenType.BIGGER_EQUALS) left = new LogicalBiggerEqualsNode(left, this.logicalOr());
             else if(tmp_type == TokenType.SMALLER_EQUALS) left = new LogicalSmallerEqualsNode(left, this.logicalOr());
@@ -710,19 +709,19 @@ public class Parser {
         }
 
         public ParserError (String details, int start, int end) {
-            this("ParserError", details, getInput().getMap().resolve(start), getInput().getMap().resolve(end));
+            this("ParserError", details, in.getMap().resolve(start), in.getMap().resolve(end));
         }
 
         public ParserError (String error, int position) {
             this(error,
-                    getInput().getMap().resolve(getInput().getStart(position)),
-                    getInput().getMap().resolve(getInput().getEnd(position)));
+                    in.getMap().resolve(in.getStart(position)),
+                    in.getMap().resolve(in.getEnd(position)));
         }
 
         public ParserError (String error) {
             this(error,
-                    getInput().getMap().resolve(getInput().peekStart()),
-                    getInput().getMap().resolve(getInput().peekEnd()));
+                    in.getMap().resolve(in.peekStart()),
+                    in.getMap().resolve(in.peekEnd()));
         }
 
     }
