@@ -1,7 +1,5 @@
 package com.github.nsc.de.shake.parser.node;
 
-import java.util.Locale;
-
 public class VariableType {
 
     public static VariableType DYNAMIC = new VariableType(Type.DYNAMIC);
@@ -17,10 +15,10 @@ public class VariableType {
     public static VariableType OBJECT = new VariableType(Type.OBJECT);
 
     private final Type type;
-    private final String subtype;
+    private final IdentifierNode subtype;
 
-    public VariableType(Type type, String subtype) {
-        this.type = type;
+    public VariableType(IdentifierNode subtype) {
+        this.type = Type.OBJECT;
         this.subtype = subtype;
     }
 
@@ -33,7 +31,7 @@ public class VariableType {
         return type;
     }
 
-    public String getSubtype() {
+    public IdentifierNode getSubtype() {
         return subtype;
     }
 

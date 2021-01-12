@@ -131,7 +131,7 @@ public class JavaGenerator {
     }
 
     public JavaNode visitVariableDeclarationNode(VariableDeclarationNode n, JavaGenerationContext context) {
-        JavaVariableType type = JavaVariableType.from(n.getType());
+        JavaVariableType type = JavaVariableType.from(n.getType(), this, context);
         if(context.isInRoot()) {
             context.getActualClass().getFields().add(new JavaVariableDeclaration(type, n.getName()));
             if(n.getAssignment() != null) return visit(n.getAssignment(), context);

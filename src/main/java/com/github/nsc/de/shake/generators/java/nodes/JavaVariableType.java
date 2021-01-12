@@ -1,5 +1,7 @@
 package com.github.nsc.de.shake.generators.java.nodes;
 
+import com.github.nsc.de.shake.generators.java.JavaGenerationContext;
+import com.github.nsc.de.shake.generators.java.JavaGenerator;
 import com.github.nsc.de.shake.parser.node.VariableType;
 
 public class JavaVariableType {
@@ -8,6 +10,10 @@ public class JavaVariableType {
 
     public JavaVariableType(String type) {
         this.type = type;
+    }
+
+    public JavaVariableType(JavaIdentifier type) {
+        this.type = type.toString("", "");
     }
 
     @Override
@@ -28,7 +34,7 @@ public class JavaVariableType {
     public static final JavaVariableType OBJECT = new JavaVariableType("Object");
     public static final JavaVariableType VOID = new JavaVariableType("void");
 
-    public static JavaVariableType from(VariableType type) {
+    public static JavaVariableType from(VariableType type, JavaGenerator gen, JavaGenerationContext ctx) {
         switch (type.getType()) {
             case BYTE: return BYTE;
             case SHORT: return SHORT;
@@ -38,7 +44,7 @@ public class JavaVariableType {
             case DOUBLE: return DOUBLE;
             case BOOLEAN: return BOOLEAN;
             case CHAR: return CHAR;
-            case OBJECT: return new JavaVariableType(type.getSubtype());
+            case OBJECT: return new JavaVariableType(gen.visitIdentifierNode(type.getSubtype(), ctx));
             case ARRAY: throw new Error("Not implemented yet!"); // TODO
             case DYNAMIC: return OBJECT;
         }
