@@ -11,4 +11,11 @@ public class ArrayUtil {
         for(int i = 0 ; i < array.length; i++) target[i] = fun.apply(array[i]);
         return target;
     }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T[] map(byte[] array, T[] target, Function<Byte, T> fun) {
+        if(target.length < array.length) target = (T[]) Array.newInstance(target.getClass().getComponentType(), array.length);
+        for(int i = 0 ; i < array.length; i++) target[i] = fun.apply(array[i]);
+        return target;
+    }
 }

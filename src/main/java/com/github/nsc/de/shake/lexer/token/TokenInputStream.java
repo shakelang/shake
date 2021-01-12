@@ -1,6 +1,7 @@
 package com.github.nsc.de.shake.lexer.token;
 
 import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
+import com.github.nsc.de.shake.util.ArrayUtil;
 
 import java.util.Arrays;
 
@@ -554,7 +555,7 @@ public class TokenInputStream {
         // Return a string-representation of the input just showing all the sub-elements
         return "TokenInputStream{" +
                 "source='" + source + '\'' +
-                ", tokens=" + Arrays.toString(tokens) +
+                ", tokens=" + Arrays.toString(ArrayUtil.map(tokens, new String[tokens.length], TokenType::getName)) +
                 ", position=" + position +
                 '}';
     }
