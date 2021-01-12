@@ -19,4 +19,6 @@ public interface JavaNode {
     interface JavaOperation extends JavaNode {  }
     interface JavaValuedOperation extends JavaOperation {  }
     interface JavaType extends JavaNode { }
+
+
 }

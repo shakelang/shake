@@ -109,7 +109,29 @@ public class JavaValued {
                 str.append(args[i].toString(indent, add));
                 if(i < args.length - 1) str.append(", ");
             }
-            return str.append(") ").toString();
+            return str.append(")").toString();
+        }
+
+    }
+
+    public static class JavaConstruction implements JavaNode.JavaValuedOperation {
+
+        private final JavaIdentifier function;
+        private final JavaValuedOperation[] args;
+
+        public JavaConstruction(JavaIdentifier function, JavaValuedOperation[] args) {
+            this.function = function;
+            this.args = args;
+        }
+
+        @Override
+        public String toString(String indent, String add) {
+            StringBuilder str = new StringBuilder("new ").append(this.function.toString(indent, add)).append('(');
+            for(int i = 0; i < args.length; i++) {
+                str.append(args[i].toString(indent, add));
+                if(i < args.length - 1) str.append(", ");
+            }
+            return str.append(")").toString();
         }
 
     }

@@ -13,7 +13,8 @@ public class JavaTree implements JavaNode {
         StringBuilder str = new StringBuilder("{\n");
         String indent2 = indent + add;
         for(JavaOperation o : operations) {
-            str.append(indent2).append(o.toString(indent2, add)).append('\n');
+            if(o == null) continue;
+            str.append(indent2).append(o.toString(indent2, add)).append(";\n");
         }
         return str.append(indent).append('}').toString();
     }

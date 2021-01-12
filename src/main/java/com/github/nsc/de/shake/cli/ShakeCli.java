@@ -1,5 +1,7 @@
 package com.github.nsc.de.shake.cli;
 
+import com.github.nsc.de.shake.generators.java.JavaGenerationContext;
+import com.github.nsc.de.shake.generators.java.JavaGenerator;
 import com.github.nsc.de.shake.generators.json.JsonGenerator;
 import com.github.nsc.de.shake.interpreter.Interpreter;
 import com.github.nsc.de.shake.lexer.Lexer;
@@ -29,6 +31,11 @@ public class ShakeCli {
      * The json-generator for generating json form the input code
      */
     public static final JsonGenerator json = new JsonGenerator();
+
+    /**
+     * The java-generator for generating java form the input code
+     */
+    public static final JavaGenerator java = new JavaGenerator();
 
     /**
      * Is the program in debug mode?
@@ -185,6 +192,11 @@ public class ShakeCli {
             // and print it'S results to the console
             case "json":
                 System.out.printf(">> %s%n", ShakeCli.json.visit(t).toString());
+                break;
+            // if the generator argument is "java" then use the java-generator to visit the Tree
+            // and print it'S results to the console
+            case "java":
+                System.out.printf(">> %s%n", ShakeCli.java.visitProgram(t, "CliInput").toString("", "  "));
                 break;
 
         }

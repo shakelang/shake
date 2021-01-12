@@ -26,6 +26,7 @@ public class JavaVariableType {
     public static final JavaVariableType CHAR = new JavaVariableType("char");
     public static final JavaVariableType BOOLEAN = new JavaVariableType("boolean");
     public static final JavaVariableType OBJECT = new JavaVariableType("Object");
+    public static final JavaVariableType VOID = new JavaVariableType("void");
 
     public static JavaVariableType from(VariableType type) {
         switch (type.getType()) {
