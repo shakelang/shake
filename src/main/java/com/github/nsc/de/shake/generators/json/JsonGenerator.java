@@ -280,4 +280,14 @@ public class JsonGenerator extends Generator<Object> {
     public Boolean visitLogicalFalseNode(LogicalFalseNode n) {
         return false;
     }
+
+    @Override
+    public String getExtension() {
+        return ".json";
+    }
+
+    @Override
+    public String getName() {
+        return "json";
+    }
 }

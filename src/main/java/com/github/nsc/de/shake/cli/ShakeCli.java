@@ -105,7 +105,7 @@ public class ShakeCli {
                     Tree t = parse(chars);
 
                     // execute the tree using the specified generator
-                    execute(t, generator);
+                    execute(t, generator, null);
 
                 } catch(Throwable t) {
                     // When an error occurs while executing the code, just print it's stack and continue
@@ -117,8 +117,10 @@ public class ShakeCli {
         // When we get one argument we will execute a file
         else if(arguments.getArguments().size() == 1) {
 
+            String src = arguments.getArguments().get(0);
+
             // read the contents of the file
-            String file = new String(Files.readAllBytes(Paths.get(arguments.getArguments().get(0))));
+            String file = new String(Files.readAllBytes(Paths.get(src)));
 
             // Create a new StringCharacterInputStream from the file's contents
             CharacterInputStream chars = new SourceCharacterInputStream(
@@ -128,7 +130,7 @@ public class ShakeCli {
             Tree t = parse(chars);
 
             // Execute the Tree using the specified generator
-            execute(t, generator);
+            execute(t, generator, src);
 
         }
 
@@ -175,10 +177,15 @@ public class ShakeCli {
      *
      * @param t the {@link Tree} to execute
      * @param generator the generator to use (just give the name of it)
+     * @param src the source file of the program
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    private static void execute(Tree t, String generator) {
+    private static void execute(Tree t, String generator, String src) throws IOException {
+
+        if(!src.endsWith(".shake")) throw new Error("Shake file names have to end with extension \".shake\"");
+        String targetFile = src != null ? src.substring(0, src.length() - 6) : null;
+        String baseName = src != null ? targetFile.split("[\\\\/](?=[^\\\\/]+$)")[1] : null;
 
         switch (generator) {
 
@@ -190,12 +197,22 @@ public class ShakeCli {
             // if the generator argument is "json" then use the json-generator to visit the Tree
             // and print it'S results to the console
             case "json":
-                System.out.printf(">> %s%n", ShakeCli.json.visit(t).toString());
+                if(src == null) System.out.printf(">> %s%n", ShakeCli.json.visit(t).toString());
+                else {
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(targetFile + ShakeCli.json.getExtension()));
+                    writer.write(ShakeCli.json.visit(t).toString());
+                    writer.close();
+                }
                 break;
             // if the generator argument is "java" then use the java-generator to visit the Tree
             // and print it'S results to the console
             case "java":
-                System.out.printf(">> %s%n", ShakeCli.java.visitProgram(t, "CliInput").toString("", "  "));
+                if(src == null) System.out.printf(">> %s%n", ShakeCli.java.visitProgram(t, "CliInput").toString("", "  "));
+                else {
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(targetFile + ShakeCli.java.getExtension()));
+                    writer.write(ShakeCli.java.visitProgram(t, baseName).toString("", "  "));
+                    writer.close();
+                }
                 break;
 
         }

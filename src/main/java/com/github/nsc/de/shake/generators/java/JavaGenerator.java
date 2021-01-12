@@ -1,5 +1,6 @@
 package com.github.nsc.de.shake.generators.java;
 
+import com.github.nsc.de.shake.generators.ShakeGenerator;
 import com.github.nsc.de.shake.generators.java.nodes.*;
 import com.github.nsc.de.shake.parser.node.*;
 import com.github.nsc.de.shake.parser.node.expression.*;
@@ -18,13 +19,13 @@ import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
 import com.github.nsc.de.shake.util.ArrayUtil;
 
-public class JavaGenerator {
+public class JavaGenerator implements ShakeGenerator {
 
     public JavaClass visitProgram(Tree t, String filename) {
         JavaClass cls = new JavaClass(filename, JavaAccessDescriptor.PUBLIC, false, false);
         cls.getFunctions().add(new JavaFunction("main", JavaVariableType.VOID,
                 new JavaFunction.JavaFunctionArgument[] { new JavaFunction.JavaFunctionArgument("String[]", "args") },
-                visitTree(t, new JavaGenerationContext(cls, true)), JavaAccessDescriptor.PUBLIC, false, false));
+                visitTree(t, new JavaGenerationContext(cls, true)), JavaAccessDescriptor.PUBLIC, true, false));
         return cls;
     }
 
@@ -133,14 +134,15 @@ public class JavaGenerator {
     public JavaNode visitVariableDeclarationNode(VariableDeclarationNode n, JavaGenerationContext context) {
         JavaVariableType type = JavaVariableType.from(n.getType(), this, context);
         if(context.isInRoot()) {
-            context.getActualClass().getFields().add(new JavaVariableDeclaration(type, n.getName()));
+            context.getActualClass().getFields().add(new JavaVariableDeclaration(type, n.getName(), true, false, JavaAccessDescriptor.PUBLIC));
             if(n.getAssignment() != null) return visit(n.getAssignment(), context);
             else return null;
         }
         else {
             if(n.getAssignment() != null)
-                return new JavaVariableDeclaration(type, n.getName(), (JavaNode.JavaValuedOperation) visit(n.getAssignment().getValue(), context));
-            return new JavaVariableDeclaration(type, n.getName());
+                return new JavaVariableDeclaration(type, n.getName(), (JavaNode.JavaValuedOperation)
+                        visit(n.getAssignment().getValue(), context), false, n.isFinal(), JavaAccessDescriptor.PACKAGE);
+            return new JavaVariableDeclaration(type, n.getName(), n.isStatic(), n.isFinal(), JavaAccessDescriptor.PACKAGE);
         }
     }
 
@@ -332,5 +334,15 @@ public class JavaGenerator {
     public JavaIdentifier visitIdentifierNode(IdentifierNode n, JavaGenerationContext context) {
         return n.getParent() == null ? new JavaIdentifier(n.getName())
                 : new JavaIdentifier(n.getName(), (JavaNode.JavaValuedOperation) visit(n.getParent(), context));
+    }
+
+    @Override
+    public String getExtension() {
+        return ".java";
+    }
+
+    @Override
+    public String getName() {
+        return "java";
     }
 }

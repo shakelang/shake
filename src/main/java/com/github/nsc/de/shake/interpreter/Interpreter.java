@@ -1,5 +1,6 @@
 package com.github.nsc.de.shake.interpreter;
 
+import com.github.nsc.de.shake.generators.ShakeGenerator;
 import com.github.nsc.de.shake.interpreter.values.*;
 import com.github.nsc.de.shake.interpreter.values.ClassValue;
 import com.github.nsc.de.shake.lexer.Lexer;
@@ -36,7 +37,7 @@ import java.util.List;
 /**
  * {@link Interpreter} for executing the code directly
  */
-public class Interpreter {
+public class Interpreter implements ShakeGenerator {
 
 
 
@@ -1051,5 +1052,15 @@ public class Interpreter {
 
         }
 
+    }
+
+    @Override
+    public String getExtension() {
+        return "";
+    }
+
+    @Override
+    public String getName() {
+        return "interpreter";
     }
 }
