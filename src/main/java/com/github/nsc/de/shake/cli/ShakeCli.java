@@ -1,6 +1,5 @@
 package com.github.nsc.de.shake.cli;
 
-import com.github.nsc.de.shake.generators.java.JavaGenerationContext;
 import com.github.nsc.de.shake.generators.java.JavaGenerator;
 import com.github.nsc.de.shake.generators.json.JsonGenerator;
 import com.github.nsc.de.shake.interpreter.Interpreter;
