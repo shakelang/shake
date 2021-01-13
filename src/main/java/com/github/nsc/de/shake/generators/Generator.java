@@ -25,12 +25,14 @@ public abstract class Generator<T> implements ShakeGenerator {
         if(n instanceof SubNode) return visitSubNode((SubNode) n);
         if(n instanceof MulNode) return visitMulNode((MulNode) n);
         if(n instanceof DivNode) return visitDivNode((DivNode) n);
+        if(n instanceof ModNode) return visitModNode((ModNode) n);
         if(n instanceof PowNode) return visitPowNode((PowNode) n);
         if(n instanceof VariableDeclarationNode) return visitVariableDeclarationNode((VariableDeclarationNode) n);
         if(n instanceof VariableAddAssignmentNode) return visitVariableAddAssignmentNode((VariableAddAssignmentNode) n);
         if(n instanceof VariableSubAssignmentNode) return visitVariableSubAssignmentNode((VariableSubAssignmentNode) n);
         if(n instanceof VariableMulAssignmentNode) return visitVariableMulAssignmentNode((VariableMulAssignmentNode) n);
         if(n instanceof VariableDivAssignmentNode) return visitVariableDivAssignmentNode((VariableDivAssignmentNode) n);
+        if(n instanceof VariableModAssignmentNode) return visitVariableModAssignmentNode((VariableModAssignmentNode) n);
         if(n instanceof VariablePowAssignmentNode) return visitVariablePowAssignmentNode((VariablePowAssignmentNode) n);
         if(n instanceof VariableIncreaseNode) return visitVariableIncreaseNode((VariableIncreaseNode) n);
         if(n instanceof VariableDecreaseNode) return visitVariableDecreaseNode((VariableDecreaseNode) n);
@@ -65,6 +67,7 @@ public abstract class Generator<T> implements ShakeGenerator {
     public abstract T visitSubNode(SubNode n);
     public abstract T visitMulNode(MulNode n);
     public abstract T visitDivNode(DivNode n);
+    public abstract T visitModNode(ModNode n);
     public abstract T visitPowNode(PowNode n);
     public abstract T visitVariableDeclarationNode(VariableDeclarationNode n);
     public abstract T visitVariableAssignmentNode(VariableAssignmentNode n);
@@ -72,6 +75,7 @@ public abstract class Generator<T> implements ShakeGenerator {
     public abstract T visitVariableSubAssignmentNode(VariableSubAssignmentNode n);
     public abstract T visitVariableMulAssignmentNode(VariableMulAssignmentNode n);
     public abstract T visitVariableDivAssignmentNode(VariableDivAssignmentNode n);
+    public abstract T visitVariableModAssignmentNode(VariableModAssignmentNode n);
     public abstract T visitVariablePowAssignmentNode(VariablePowAssignmentNode n);
     public abstract T visitVariableIncreaseNode(VariableIncreaseNode n);
     public abstract T visitVariableDecreaseNode(VariableDecreaseNode n);

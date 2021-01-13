@@ -22,16 +22,7 @@ import com.github.nsc.de.shake.parser.node.loops.ForNode;
 import com.github.nsc.de.shake.parser.node.loops.WhileNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
-import com.github.nsc.de.shake.parser.node.variables.VariableAddAssignmentNode;
-import com.github.nsc.de.shake.parser.node.variables.VariableAssignmentNode;
-import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode;
-import com.github.nsc.de.shake.parser.node.variables.VariableDecreaseNode;
-import com.github.nsc.de.shake.parser.node.variables.VariableDivAssignmentNode;
-import com.github.nsc.de.shake.parser.node.variables.VariableIncreaseNode;
-import com.github.nsc.de.shake.parser.node.variables.VariableMulAssignmentNode;
-import com.github.nsc.de.shake.parser.node.variables.VariablePowAssignmentNode;
-import com.github.nsc.de.shake.parser.node.variables.VariableSubAssignmentNode;
-import com.github.nsc.de.shake.parser.node.variables.VariableUsageNode;
+import com.github.nsc.de.shake.parser.node.variables.*;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
@@ -67,6 +58,10 @@ public class JsonGenerator extends Generator<Object> {
 
     public JSONObject visitDivNode(DivNode n) {
         return new JSONObject().put("type", "div").put("left", visit(n.getLeft())).put("right", visit(n.getRight()));
+    }
+
+    public JSONObject visitModNode(ModNode n) {
+        return new JSONObject().put("type", "mod").put("left", visit(n.getLeft())).put("right", visit(n.getRight()));
     }
 
     public JSONObject visitPowNode(PowNode n) {
@@ -117,6 +112,13 @@ public class JsonGenerator extends Generator<Object> {
     public JSONObject visitVariableDivAssignmentNode(VariableDivAssignmentNode n) {
         return new JSONObject()
                 .put("type", "variable_div_assignment")
+                .put("variable", visit(n.getVariable()))
+                .put("value", visit(n.getValue()));
+    }
+
+    public JSONObject visitVariableModAssignmentNode(VariableModAssignmentNode n) {
+        return new JSONObject()
+                .put("type", "variable_mod_assignment")
                 .put("variable", visit(n.getVariable()))
                 .put("value", visit(n.getValue()));
     }

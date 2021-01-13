@@ -62,7 +62,8 @@ public class ShakeCli {
         // Define the options for the argumentParser
         argumentParser
                 .option("generator", "g", 1, new String[] { "interpreter" })
-                .option("debug", "d");
+                .option("debug", "d")
+                .option("target", "t", 1, new String[] { null });
 
 
         // Parse the arguments given to the main-method
@@ -105,7 +106,7 @@ public class ShakeCli {
                     Tree t = parse(chars);
 
                     // execute the tree using the specified generator
-                    execute(t, generator, null);
+                    execute(t, generator, null, arguments.getOption("target").getValues()[0]);
 
                 } catch(Throwable t) {
                     // When an error occurs while executing the code, just print it's stack and continue
@@ -130,7 +131,7 @@ public class ShakeCli {
             Tree t = parse(chars);
 
             // Execute the Tree using the specified generator
-            execute(t, generator, src);
+            execute(t, generator, src, arguments.getOption("target").getValues()[0]);
 
         }
 
@@ -181,7 +182,7 @@ public class ShakeCli {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    private static void execute(Tree t, String generator, String src) throws IOException {
+    private static void execute(Tree t, String generator, String src, String target) throws IOException {
 
         if(!src.endsWith(".shake")) throw new Error("Shake file names have to end with extension \".shake\"");
         String targetFile = src != null ? src.substring(0, src.length() - 6) : null;
@@ -198,24 +199,28 @@ public class ShakeCli {
             // and print it'S results to the console
             case "json":
                 if(src == null) System.out.printf(">> %s%n", ShakeCli.json.visit(t).toString());
-                else {
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(targetFile + ShakeCli.json.getExtension()));
-                    writer.write(ShakeCli.json.visit(t).toString());
-                    writer.close();
-                }
+                else
+                    writeFile(new File(target != null ? target : targetFile + ShakeCli.json.getExtension()),
+                        ShakeCli.json.visit(t).toString());
                 break;
             // if the generator argument is "java" then use the java-generator to visit the Tree
             // and print it'S results to the console
             case "java":
                 if(src == null) System.out.printf(">> %s%n", ShakeCli.java.visitProgram(t, "CliInput").toString("", "  "));
-                else {
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(targetFile + ShakeCli.java.getExtension()));
-                    writer.write(ShakeCli.java.visitProgram(t, baseName).toString("", "  "));
-                    writer.close();
-                }
+                else
+                    writeFile(new File(target != null ? target : targetFile + ShakeCli.java.getExtension()),
+                            ShakeCli.java.visitProgram(t, baseName).toString("", "  "));
                 break;
 
         }
+    }
+
+    private static void writeFile(File f, String content) throws IOException {
+        System.out.printf("Generating file \"%s\"...%n", f.getAbsolutePath());
+        f.getParentFile().mkdirs();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+        writer.write(content);
+        writer.close();
     }
 
 }
