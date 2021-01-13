@@ -201,7 +201,14 @@ public class ShakeCli {
                 if(src == null) System.out.printf(">> %s%n", ShakeCli.json.visit(t).toString());
                 else
                     writeFile(new File(target != null ? target : targetFile + ShakeCli.json.getExtension()),
-                        ShakeCli.json.visit(t).toString());
+                            ShakeCli.json.visit(t).toString());
+                break;
+            case "beauty-json":
+            case "bjson":
+                if(src == null) System.out.printf(">> %s%n", ShakeCli.json.visitTree(t).toString(2));
+                else
+                    writeFile(new File(target != null ? target : targetFile + ShakeCli.json.getExtension()),
+                            ShakeCli.json.visitTree(t).toString(2));
                 break;
             // if the generator argument is "java" then use the java-generator to visit the Tree
             // and print it'S results to the console
@@ -211,6 +218,8 @@ public class ShakeCli {
                     writeFile(new File(target != null ? target : targetFile + ShakeCli.java.getExtension()),
                             ShakeCli.java.visitProgram(t, baseName).toString("", "  "));
                 break;
+            default:
+                throw new Error("Unknown generator!");
 
         }
     }
