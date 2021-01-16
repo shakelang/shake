@@ -17,7 +17,6 @@ public interface JavaNode {
     String toString(String indent, String add);
 
     interface JavaOperation extends JavaNode {  }
-    interface JavaValuedOperation extends JavaOperation {  }
     interface JavaType extends JavaNode { }
 
 

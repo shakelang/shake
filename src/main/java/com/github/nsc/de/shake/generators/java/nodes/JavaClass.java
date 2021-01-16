@@ -5,7 +5,7 @@ import com.github.nsc.de.shake.util.Characters;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JavaClass implements JavaNode.JavaOperation {
+public class JavaClass implements JavaNode {
 
     private final String name;
     private final List<JavaVariableDeclaration> fields;
@@ -15,16 +15,6 @@ public class JavaClass implements JavaNode.JavaOperation {
     private final boolean isStatic;
     private final boolean isFinal;
 
-    public JavaClass(String name, List<JavaVariableDeclaration> fields, List<JavaFunction> functions,
-                     List<JavaClass> subClasses, JavaAccessDescriptor access, boolean isStatic, boolean isFinal) {
-        this.name = reformatClassName(name);
-        this.fields = fields;
-        this.functions = functions;
-        this.subClasses = subClasses;
-        this.access = access;
-        this.isStatic = isStatic;
-        this.isFinal = isFinal;
-    }
 
     public JavaClass(String name,  JavaAccessDescriptor access, boolean isStatic, boolean isFinal) {
         this.name = reformatClassName(name);
@@ -99,8 +89,9 @@ public class JavaClass implements JavaNode.JavaOperation {
         StringBuilder sb = new StringBuilder();
         for(int i = 0 ; i < s.length(); i++) {
             if(s.charAt(i) == '-') {
-                do i++; while(!Characters.isIdentifierStartCharacter(s.charAt(i)) && i < s.length());
+                do i++; while(i < s.length() && !Characters.isIdentifierStartCharacter(s.charAt(i)));
                 if(i < s.length()) sb.append(Character.toUpperCase(s.charAt(i)));
+                else break;
             }
             else if(Characters.isIdentifierCharacter(s.charAt(i))) sb.append(s.charAt(i));
         }
