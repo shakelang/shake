@@ -86,4 +86,9 @@ public class JavaClass implements JavaNode.JavaOperation {
         }
         return str.append(indent).append('}').toString();
     }
+
+    @Override
+    public String toString() {
+        return this.toString("", "    ");
+    }
 }
