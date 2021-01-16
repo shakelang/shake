@@ -26,22 +26,27 @@ import com.github.nsc.de.shake.parser.node.variables.*;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-public class JsonGenerator extends Generator<Object> {
+public class JsonGenerator extends Generator<JSONObject> {
 
-    public JSONArray visitTree(Tree t) {
+    public JSONObject visitTree(Tree t) {
         JSONArray array = new JSONArray();
         for (int i = 0; i < t.getChildren().length; i++) array.put(visit(t.getChildren()[i]));
-        return array;
+        return new JSONObject().put("type", "tree").put("children", array);
     }
 
     @Override
-    public Double visitDoubleNode(DoubleNode n) {
-        return n.getNumber();
+    public JSONObject visitDoubleNode(DoubleNode n) {
+        JSONObject obj =  new JSONObject().put("type", "double_value");
+        if(n.getNumber() == ((int) n.getNumber())) obj.put("value", (int) n.getNumber());
+        else obj.put("type", n.getNumber());
+        return obj;
     }
 
     @Override
-    public Integer visitIntegerNode(IntegerNode n) {
-        return n.getNumber();
+    public JSONObject visitIntegerNode(IntegerNode n) {
+        return new JSONObject()
+                .put("type", "integer_value")
+                .put("value", n.getNumber());
     }
 
     public JSONObject visitAddNode(AddNode n) {
@@ -274,13 +279,13 @@ public class JsonGenerator extends Generator<Object> {
     }
 
     @Override
-    public Boolean visitLogicalTrueNode(LogicalTrueNode n) {
-        return true;
+    public JSONObject visitLogicalTrueNode(LogicalTrueNode n) {
+        return new JSONObject().put("type", "logical_true");
     }
 
     @Override
-    public Boolean visitLogicalFalseNode(LogicalFalseNode n) {
-        return false;
+    public JSONObject visitLogicalFalseNode(LogicalFalseNode n) {
+        return new JSONObject().put("type", "logical_false");
     }
 
     @Override
