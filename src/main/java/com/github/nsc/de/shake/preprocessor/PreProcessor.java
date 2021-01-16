@@ -4,8 +4,10 @@ import com.github.nsc.de.shake.parser.node.Node;
 import com.github.nsc.de.shake.parser.node.Tree;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
 import com.github.nsc.de.shake.parser.node.expression.*;
+import com.github.nsc.de.shake.parser.node.factor.CharacterNode;
 import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
 import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
+import com.github.nsc.de.shake.parser.node.factor.StringNode;
 
 public class PreProcessor {
 
@@ -19,16 +21,23 @@ public class PreProcessor {
         this.settings = settings;
     }
 
-    private Node process(Node t, PreProcessorContext ctx) {
-        if(t instanceof Tree) return process((Tree) t, ctx);
-        if(t instanceof IntegerNode) return process((IntegerNode) t);
-        if(t instanceof DoubleNode) return process((DoubleNode) t);
-        if(t instanceof AddNode) return process((AddNode) t, ctx);
-        if(t instanceof SubNode) return process((SubNode) t, ctx);
-        if(t instanceof MulNode) return process((MulNode) t, ctx);
-        if(t instanceof DivNode) return process((DivNode) t, ctx);
-        if(t instanceof ModNode) return process((ModNode) t, ctx);
-        if(t instanceof PowNode) return process((PowNode) t, ctx);
+    private Node process(Node n, PreProcessorContext ctx) {
+        if(n instanceof IntegerNode || n instanceof DoubleNode || n instanceof CharacterNode ||
+                n instanceof StringNode) return n;
+        if(n instanceof ValuedNode) return process((ValuedNode) n, ctx);
+        if(n instanceof Tree) return process((Tree) n, ctx);
+        throw new Error();
+    }
+
+    private ValuedNode process(ValuedNode n, PreProcessorContext ctx) {
+        if(n instanceof IntegerNode || n instanceof DoubleNode || n instanceof CharacterNode ||
+                n instanceof StringNode) return n;
+        if(n instanceof AddNode) return process((AddNode) n, ctx);
+        if(n instanceof SubNode) return process((SubNode) n, ctx);
+        if(n instanceof MulNode) return process((MulNode) n, ctx);
+        if(n instanceof DivNode) return process((DivNode) n, ctx);
+        if(n instanceof ModNode) return process((ModNode) n, ctx);
+        if(n instanceof PowNode) return process((PowNode) n, ctx);
         throw new Error();
     }
 
@@ -43,14 +52,6 @@ public class PreProcessor {
 
         return new Tree(children);
 
-    }
-
-    private IntegerNode process(IntegerNode node) {
-        return node;
-    }
-
-    private DoubleNode process(DoubleNode node) {
-        return node;
     }
 
     private ValuedNode process(AddNode node, PreProcessorContext ctx) {
