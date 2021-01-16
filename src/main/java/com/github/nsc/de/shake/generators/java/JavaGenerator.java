@@ -38,12 +38,14 @@ public class JavaGenerator implements ShakeGenerator {
         if(n instanceof SubNode) return visitSubNode((SubNode) n, context);
         if(n instanceof MulNode) return visitMulNode((MulNode) n, context);
         if(n instanceof DivNode) return visitDivNode((DivNode) n, context);
+        if(n instanceof ModNode) return visitModNode((ModNode) n, context);
         if(n instanceof PowNode) return visitPowNode((PowNode) n, context);
         if(n instanceof VariableDeclarationNode) return visitVariableDeclarationNode((VariableDeclarationNode) n, context);
         if(n instanceof VariableAddAssignmentNode) return visitVariableAddAssignmentNode((VariableAddAssignmentNode) n, context);
         if(n instanceof VariableSubAssignmentNode) return visitVariableSubAssignmentNode((VariableSubAssignmentNode) n, context);
         if(n instanceof VariableMulAssignmentNode) return visitVariableMulAssignmentNode((VariableMulAssignmentNode) n, context);
         if(n instanceof VariableDivAssignmentNode) return visitVariableDivAssignmentNode((VariableDivAssignmentNode) n, context);
+        if(n instanceof VariableModAssignmentNode) return visitVariableModAssignmentNode((VariableModAssignmentNode) n, context);
         if(n instanceof VariablePowAssignmentNode) return visitVariablePowAssignmentNode((VariablePowAssignmentNode) n, context);
         if(n instanceof VariableIncreaseNode) return visitVariableIncreaseNode((VariableIncreaseNode) n, context);
         if(n instanceof VariableDecreaseNode) return visitVariableDecreaseNode((VariableDecreaseNode) n, context);
@@ -125,6 +127,11 @@ public class JavaGenerator implements ShakeGenerator {
     }
 
 
+    public JavaValued.JavaExpression visitModNode(ModNode n, JavaGenerationContext context) {
+        return new JavaValued.JavaExpression((JavaNode.JavaValuedOperation) visit(n.getLeft(), context), (JavaNode.JavaValuedOperation) visit(n.getRight(), context), "%");
+    }
+
+
     public JavaValued.JavaFunctionCall visitPowNode(PowNode n, JavaGenerationContext context) {
         return new JavaValued.JavaFunctionCall(
                 new JavaIdentifier("pow", "Math"),
@@ -174,6 +181,12 @@ public class JavaGenerator implements ShakeGenerator {
     public JavaNode visitVariableDivAssignmentNode(VariableDivAssignmentNode n, JavaGenerationContext context) {
         return new JavaValued.JavaVariableExpressionAssignment((JavaIdentifier) visit(n.getVariable(), context),
                 (JavaNode.JavaValuedOperation) visit(n.getValue(), context), '/');
+    }
+
+
+    public JavaNode visitVariableModAssignmentNode(VariableModAssignmentNode n, JavaGenerationContext context) {
+        return new JavaValued.JavaVariableExpressionAssignment((JavaIdentifier) visit(n.getVariable(), context),
+                (JavaNode.JavaValuedOperation) visit(n.getValue(), context), '%');
     }
 
 
