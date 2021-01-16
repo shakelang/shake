@@ -1,0 +1,68 @@
+{
+  "children": [
+    {
+      "access": "PACKAGE",
+      "static": false,
+      "in_class": false,
+      "assignment": {
+        "variable": {
+          "name": "i",
+          "type": "identifier"
+        },
+        "type": "variable_assignment",
+        "value": {
+          "type": "integer_value",
+          "value": 0
+        }
+      },
+      "name": "i",
+      "final": false,
+      "type": "integer"
+    },
+    {
+      "args": [{"name": "num"}],
+      "access": "PACKAGE",
+      "static": false,
+      "in_class": false,
+      "name": "f",
+      "final": false,
+      "type": "dynamic",
+      "body": {
+        "children": [{
+          "variable": {
+            "name": "i",
+            "type": "identifier"
+          },
+          "type": "variable_add_assignment",
+          "value": {
+            "variable": {
+              "name": "num",
+              "type": "identifier"
+            },
+            "type": "variable_usage"
+          }
+        }],
+        "type": "tree"
+      }
+    },
+    {
+      "args": [{
+        "type": "integer_value",
+        "value": 10
+      }],
+      "function": {
+        "name": "f",
+        "type": "identifier"
+      },
+      "type": "function_call"
+    },
+    {
+      "variable": {
+        "name": "i",
+        "type": "identifier"
+      },
+      "type": "variable_usage"
+    }
+  ],
+  "type": "tree"
+}

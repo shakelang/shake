@@ -1,0 +1,70 @@
+{
+  "children": [{
+    "left": {
+      "left": {
+        "type": "integer_value",
+        "value": 11
+      },
+      "right": {
+        "type": "integer_value",
+        "value": 22
+      },
+      "type": "add"
+    },
+    "right": {
+      "left": {
+        "left": {
+          "left": {
+            "left": {
+              "type": "integer_value",
+              "value": 2
+            },
+            "right": {
+              "type": "integer_value",
+              "value": 4
+            },
+            "type": "mul"
+          },
+          "right": {
+            "left": {
+              "type": "integer_value",
+              "value": 4
+            },
+            "right": {
+              "type": "integer_value",
+              "value": 2
+            },
+            "type": "sub"
+          },
+          "type": "mul"
+        },
+        "right": {
+          "left": {
+            "type": "integer_value",
+            "value": 3
+          },
+          "right": {
+            "type": "double_value",
+            "value": 3
+          },
+          "type": "mul"
+        },
+        "type": "div"
+      },
+      "right": {
+        "left": {
+          "type": "integer_value",
+          "value": 8
+        },
+        "right": {
+          "type": "integer_value",
+          "value": 3
+        },
+        "type": "mod"
+      },
+      "type": "pow"
+    },
+    "type": "add"
+  }],
+  "type": "tree"
+}

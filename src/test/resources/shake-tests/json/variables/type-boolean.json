@@ -1,0 +1,28 @@
+{
+  "children": [
+    {
+      "access": "PACKAGE",
+      "static": false,
+      "in_class": false,
+      "assignment": {
+        "variable": {
+          "name": "b",
+          "type": "identifier"
+        },
+        "type": "variable_assignment",
+        "value": {"type": "logical_true"}
+      },
+      "name": "b",
+      "final": false,
+      "type": "boolean"
+    },
+    {
+      "variable": {
+        "name": "b",
+        "type": "identifier"
+      },
+      "type": "variable_usage"
+    }
+  ],
+  "type": "tree"
+}

@@ -1,0 +1,42 @@
+{
+  "children": [
+    {
+      "access": "PACKAGE",
+      "static": false,
+      "in_class": false,
+      "assignment": {
+        "variable": {
+          "name": "i",
+          "type": "identifier"
+        },
+        "type": "variable_assignment",
+        "value": {
+          "type": "integer_value",
+          "value": 2
+        }
+      },
+      "name": "i",
+      "final": false,
+      "type": "integer"
+    },
+    {
+      "variable": {
+        "name": "i",
+        "type": "identifier"
+      },
+      "type": "variable_mul_assignment",
+      "value": {
+        "type": "integer_value",
+        "value": 10
+      }
+    },
+    {
+      "variable": {
+        "name": "i",
+        "type": "identifier"
+      },
+      "type": "variable_usage"
+    }
+  ],
+  "type": "tree"
+}

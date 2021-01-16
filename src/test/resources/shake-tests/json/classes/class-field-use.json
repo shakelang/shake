@@ -1,0 +1,139 @@
+{
+  "children": [
+    {
+      "access": "PACKAGE",
+      "static": false,
+      "in_class": false,
+      "methods": [{
+        "args": [{"name": "amount"}],
+        "access": "PACKAGE",
+        "static": false,
+        "in_class": true,
+        "name": "increase_field",
+        "final": false,
+        "type": "dynamic",
+        "body": {
+          "children": [{
+            "variable": {
+              "parent": {
+                "variable": {
+                  "name": "this",
+                  "type": "identifier"
+                },
+                "type": "variable_usage"
+              },
+              "name": "field",
+              "type": "identifier"
+            },
+            "type": "variable_add_assignment",
+            "value": {
+              "variable": {
+                "name": "amount",
+                "type": "identifier"
+              },
+              "type": "variable_usage"
+            }
+          }],
+          "type": "tree"
+        }
+      }],
+      "classes": [],
+      "name": "TestClass",
+      "final": false,
+      "type": "class_declaration",
+      "fields": [{
+        "access": "PACKAGE",
+        "static": false,
+        "in_class": true,
+        "assignment": {
+          "variable": {
+            "name": "field",
+            "type": "identifier"
+          },
+          "type": "variable_assignment",
+          "value": {
+            "type": "integer_value",
+            "value": 0
+          }
+        },
+        "name": "field",
+        "final": false,
+        "type": "integer"
+      }]
+    },
+    {
+      "access": "PACKAGE",
+      "static": false,
+      "in_class": false,
+      "assignment": {
+        "variable": {
+          "name": "test",
+          "type": "identifier"
+        },
+        "type": "variable_assignment",
+        "value": {
+          "args": [],
+          "type": "class_construction",
+          "class": {
+            "name": "TestClass",
+            "type": "identifier"
+          }
+        }
+      },
+      "name": "test",
+      "final": false,
+      "type": "dynamic"
+    },
+    {
+      "args": [{
+        "type": "integer_value",
+        "value": 10
+      }],
+      "function": {
+        "parent": {
+          "variable": {
+            "name": "test",
+            "type": "identifier"
+          },
+          "type": "variable_usage"
+        },
+        "name": "increase_field",
+        "type": "identifier"
+      },
+      "type": "function_call"
+    },
+    {
+      "args": [{
+        "type": "integer_value",
+        "value": 13
+      }],
+      "function": {
+        "parent": {
+          "variable": {
+            "name": "test",
+            "type": "identifier"
+          },
+          "type": "variable_usage"
+        },
+        "name": "increase_field",
+        "type": "identifier"
+      },
+      "type": "function_call"
+    },
+    {
+      "variable": {
+        "parent": {
+          "variable": {
+            "name": "test",
+            "type": "identifier"
+          },
+          "type": "variable_usage"
+        },
+        "name": "field",
+        "type": "identifier"
+      },
+      "type": "variable_usage"
+    }
+  ],
+  "type": "tree"
+}

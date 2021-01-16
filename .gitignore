@@ -10,3 +10,6 @@
 /target/
 Compiler.userlibraries
 .project
+
+*.bat
+*.jar
