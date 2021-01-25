@@ -33,27 +33,6 @@ public class ShakeTests {
     @ParameterizedTest
     @MethodSource("testStream")
     public void jsonTests(ShakeTest test) {
-        System.out.println(test.getCode());
-        JSONObject arr1 = test.getJson(), arr2 = generateJson(test.getSourceFile(), test.getCode());
-        System.out.println(arr1);
-        System.out.println(arr2);
-        System.out.println(arr1.similar(arr2));
-        System.out.println(arr1
-                .getJSONArray("children")
-                .getJSONObject(0)
-                .getJSONObject("right")
-                .getJSONObject("left")
-                .getJSONObject("right")
-                .getJSONObject("right")
-                .getNumber("value").getClass());
-        System.out.println(arr2
-                .getJSONArray("children")
-                .getJSONObject(0)
-                .getJSONObject("right")
-                .getJSONObject("left")
-                .getJSONObject("right")
-                .getJSONObject("right")
-                .getNumber("value").getClass());
         assertTrue(test.getJson().similar(generateJson(test.getSourceFile(), test.getCode())));
     }
 
