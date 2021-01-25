@@ -80,11 +80,12 @@ public class Parser {
     private Node operation() {
 
         byte token = this.in.peekType();
-        if(token == TokenType.KEYWORD_WHILE) return this.whileLoop();
-        if(token == TokenType.KEYWORD_DO) return this.doWhileLoop();
-        if(token == TokenType.KEYWORD_FOR) return this.forLoop();
-        if(token == TokenType.KEYWORD_IF) return this.ifStatement();
-        if(token == TokenType.KEYWORD_RETURN) return this.returnStatement();
+        if(token == KEYWORD_WHILE) return this.whileLoop();
+        if(token == KEYWORD_DO) return this.doWhileLoop();
+        if(token == KEYWORD_FOR) return this.forLoop();
+        if(token == KEYWORD_IF) return this.ifStatement();
+        if(token == KEYWORD_RETURN) return this.returnStatement();
+        if(token == KEYWORD_IMPORT) return this.parseImport();
 
         return this.valuedOperation();
     }
@@ -93,34 +94,34 @@ public class Parser {
 
         byte token = this.in.peekType();
 
-        if(token == TokenType.KEYWORD_FUNCTION
-                || token == TokenType.KEYWORD_VAR
-                || token == TokenType.KEYWORD_CONST
-                || token == TokenType.KEYWORD_CLASS
-                || token == TokenType.KEYWORD_PUBLIC
-                || token == TokenType.KEYWORD_PROTECTED
-                || token == TokenType.KEYWORD_PRIVATE
-                || token == TokenType.KEYWORD_FINAL
-                || token == TokenType.KEYWORD_STATIC
-                || token == TokenType.KEYWORD_DYNAMIC
-                || token == TokenType.KEYWORD_BYTE
-                || token == TokenType.KEYWORD_SHORT
-                || token == TokenType.KEYWORD_INT
-                || token == TokenType.KEYWORD_LONG
-                || token == TokenType.KEYWORD_FLOAT
-                || token == TokenType.KEYWORD_DOUBLE
-                || token == TokenType.KEYWORD_BOOLEAN
-                || token == TokenType.KEYWORD_CHAR) return parseDeclaration();
+        if(token == KEYWORD_FUNCTION
+                || token == KEYWORD_VAR
+                || token == KEYWORD_CONST
+                || token == KEYWORD_CLASS
+                || token == KEYWORD_PUBLIC
+                || token == KEYWORD_PROTECTED
+                || token == KEYWORD_PRIVATE
+                || token == KEYWORD_FINAL
+                || token == KEYWORD_STATIC
+                || token == KEYWORD_DYNAMIC
+                || token == KEYWORD_BYTE
+                || token == KEYWORD_SHORT
+                || token == KEYWORD_INT
+                || token == KEYWORD_LONG
+                || token == KEYWORD_FLOAT
+                || token == KEYWORD_DOUBLE
+                || token == KEYWORD_BOOLEAN
+                || token == KEYWORD_CHAR) return parseDeclaration();
 
         // Expression
-        if(token == TokenType.INTEGER ||
-                token == TokenType.DOUBLE ||
-                token == TokenType.KEYWORD_TRUE ||
-                token == TokenType.KEYWORD_FALSE ||
-                token == TokenType.IDENTIFIER ||
-                token == TokenType.KEYWORD_NEW ||
-                token == TokenType.STRING ||
-                token == TokenType.CHARACTER)
+        if(token == INTEGER ||
+                token == DOUBLE ||
+                token == KEYWORD_TRUE ||
+                token == KEYWORD_FALSE ||
+                token == IDENTIFIER ||
+                token == KEYWORD_NEW ||
+                token == STRING ||
+                token == CHARACTER)
             return this.logicalOr();
 
         return null;
@@ -234,6 +235,35 @@ public class Parser {
             throw new ParserError("Expecting a call after keyword new",
                     start, in.actualEnd());
         return new ClassConstructionNode(((FunctionCallNode) node).getFunction(), ((FunctionCallNode) node).getArgs());
+    }
+
+
+
+    // ****************************************************************************
+    // Imports
+
+    public static final String EVERY_STRING = "*";
+
+    private ImportNode parseImport() {
+        if(!this.in.hasNext() || this.in.nextType() != KEYWORD_IMPORT) throw new ParserError("Expecting import keyword");
+
+        ArrayList list = new ArrayList();
+
+        do {
+
+            if(in.skipIgnorable().nextType() == MUL) {
+
+                list.add(EVERY_STRING);
+                break;
+
+            }
+            if(in.actualType() != IDENTIFIER) throw new ParserError("Expecting identifier");
+            list.add(in.actualValue());
+
+        } while(in.skipIgnorable().nextType() == DOT);
+
+
+        return new ImportNode((String[]) list.toArray(new String[] {}));
     }
 
 
