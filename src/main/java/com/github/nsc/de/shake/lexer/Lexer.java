@@ -300,6 +300,13 @@ public class Lexer {
                     }
                     break;
                 }
+                if(chars[0] == 'i') {
+                    if(chars[1] == 'm' && chars[2] == 'p' && chars[3] == 'o' && chars[4] == 'r' && chars[5] == 't') {
+                        addPosition(TokenType.KEYWORD_IMPORT, end);
+                        return;
+                    }
+                    break;
+                }
                 if(chars[0] == 'p' && chars[1] == 'u' && chars[2] == 'b' && chars[3] == 'l'
                         && chars[4] == 'i' && chars[5] == 'c') {
                     addPosition(TokenType.KEYWORD_PUBLIC, end);
