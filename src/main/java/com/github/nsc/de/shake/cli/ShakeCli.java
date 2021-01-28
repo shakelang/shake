@@ -184,7 +184,7 @@ public class ShakeCli {
      */
     private static void execute(Tree t, String generator, String src, String target) throws IOException {
 
-        if(!src.endsWith(".shake")) throw new Error("Shake file names have to end with extension \".shake\"");
+        if(src != null && !src.endsWith(".shake")) throw new Error("Shake file names have to end with extension \".shake\"");
         String targetFile = src != null ? src.substring(0, src.length() - 6) : null;
         String baseName = src != null ? targetFile.split("[\\\\/](?=[^\\\\/]+$)")[1] : null;
 
