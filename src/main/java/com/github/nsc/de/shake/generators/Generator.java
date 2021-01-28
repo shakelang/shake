@@ -98,4 +98,6 @@ public abstract class Generator<T> implements ShakeGenerator {
     public abstract T visitIdentifierNode(IdentifierNode n);
     public abstract T visitLogicalTrueNode(LogicalTrueNode n);
     public abstract T visitLogicalFalseNode(LogicalFalseNode n);
+    public abstract T visitImportNode(ImportNode n);
+
 }
