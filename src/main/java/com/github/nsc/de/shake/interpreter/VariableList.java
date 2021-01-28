@@ -351,5 +351,15 @@ public class VariableList implements InterpreterValue {
             // just set the scope field
             this.scope = scope;
         }
+
+        @Override
+        public String[] getChildren() {
+            return getVariables().keySet().toArray(new String[0]);
+        }
+
+        @Override
+        public Variable getChild(String c) {
+            return this.get(c);
+        }
     }
 }

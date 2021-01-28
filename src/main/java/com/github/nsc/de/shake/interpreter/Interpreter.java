@@ -168,6 +168,7 @@ public class Interpreter implements ShakeGenerator {
         if(n instanceof IdentifierNode) return visitIdentifier((IdentifierNode) n, scope);
         if(n instanceof ClassConstructionNode) return visitClassConstruction((ClassConstructionNode) n, scope);
         if(n instanceof ClassDeclarationNode) return visitClassDeclarationNode((ClassDeclarationNode) n, scope);
+        if(n instanceof ImportNode) return visitImportNode((ImportNode) n, scope);
 
         // if the node a LogicalTrueNode return TRUE, if it is a LogicalFalseNode return false
         if(n instanceof LogicalTrueNode) return BooleanValue.TRUE;
@@ -373,7 +374,7 @@ public class Interpreter implements ShakeGenerator {
         InterpreterValue value = n.getAssignment() != null ? visit(n.getAssignment().getValue(), scope) : null;
         if(!scope.getScopeVariables().declare(Variable.create(n.getName(), n.getType(), n.isFinal(), value))) throw new Error("Variable is already defined");
         else return NullValue.NULL;
-    }
+}
 
     /**
      * Visit a {@link VariableAssignmentNode}
@@ -1052,6 +1053,30 @@ public class Interpreter implements ShakeGenerator {
 
         }
 
+    }
+
+    public InterpreterValue visitImportNode(ImportNode node, Scope scope) {
+
+        InterpreterValue actual = scope.getVariables();
+        String[] imported = node.getImport();
+        int lastIndex = imported.length - 1;
+
+        for(int i = 0; i < imported.length; i++) {
+            if(imported[i].equals(ImportNode.EVERYTHING)) {
+
+                String[] children = actual.getChildren();
+
+                for(int c = 0; c < children.length; c++)
+                    scope.getVariables().declare(Variable.finalOf(children[c], actual.getChild(children[c])));
+
+            }
+            else {
+                actual = actual.getChild(imported[i]);
+                if(i == lastIndex) scope.getVariables().declare(Variable.finalOf(imported[i], actual));
+            }
+        }
+
+        return NullValue.NULL;
     }
 
     @Override
