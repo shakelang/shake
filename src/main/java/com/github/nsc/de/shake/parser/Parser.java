@@ -242,25 +242,25 @@ public class Parser {
     // ****************************************************************************
     // Imports
 
-    public static final String EVERY_STRING = "*";
-
     private ImportNode parseImport() {
-        if(!this.in.hasNext() || this.in.nextType() != KEYWORD_IMPORT) throw new ParserError("Expecting import keyword");
+        if(!this.in.hasNext() || this.in.peekType() != KEYWORD_IMPORT) throw new ParserError("Expecting import keyword");
 
         ArrayList list = new ArrayList();
 
         do {
 
+            this.in.skip();
+
             if(in.skipIgnorable().nextType() == MUL) {
 
-                list.add(EVERY_STRING);
+                list.add(ImportNode.EVERYTHING);
                 break;
 
             }
             if(in.actualType() != IDENTIFIER) throw new ParserError("Expecting identifier");
             list.add(in.actualValue());
 
-        } while(in.skipIgnorable().nextType() == DOT);
+        } while(getInput().hasNext() && in.skipIgnorable().peekType() == DOT);
 
 
         return new ImportNode((String[]) list.toArray(new String[] {}));
