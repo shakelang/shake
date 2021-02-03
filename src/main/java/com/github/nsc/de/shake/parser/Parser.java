@@ -19,6 +19,7 @@ import com.github.nsc.de.shake.parser.node.loops.ForNode;
 import com.github.nsc.de.shake.parser.node.loops.WhileNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
+import com.github.nsc.de.shake.parser.node.objects.ConstructorDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
 import com.github.nsc.de.shake.util.Characters;
 import com.github.nsc.de.shake.util.CompilerError;
@@ -165,6 +166,7 @@ public class Parser {
             case KEYWORD_FINAL: input.skip(); return parseDeclaration(access, isInClass, isStatic, true);
             case KEYWORD_FUNCTION: return functionDeclaration(access, isInClass, isStatic, isFinal);
             case KEYWORD_CLASS: return classDeclaration(access, isInClass, isStatic, isFinal);
+            case KEYWORD_CONSTRUCTOR: return constructorDeclaration(access, isInClass, isStatic, isFinal);
             case KEYWORD_CONST:
             case KEYWORD_VAR:
                 return varDeclaration1(access, isInClass, isStatic, isFinal);
@@ -245,7 +247,7 @@ public class Parser {
     private ImportNode parseImport() {
         if(!this.in.hasNext() || this.in.peekType() != KEYWORD_IMPORT) throw new ParserError("Expecting import keyword");
 
-        ArrayList list = new ArrayList();
+        ArrayList<String> list = new ArrayList<>();
 
         do {
 
@@ -263,7 +265,7 @@ public class Parser {
         } while(getInput().hasNext() && in.skipIgnorable().peekType() == DOT);
 
 
-        return new ImportNode((String[]) list.toArray(new String[] {}));
+        return new ImportNode(list.toArray(new String[] {}));
     }
 
 
@@ -280,6 +282,7 @@ public class Parser {
         List<VariableDeclarationNode> fields = new ArrayList<>();
         List<FunctionDeclarationNode> methods = new ArrayList<>();
         List<ClassDeclarationNode> classes = new ArrayList<>();
+        List<ConstructorDeclarationNode> constructors = new ArrayList<>();
 
         // TODO: extends, implements
         if(this.in.nextType() != LCURL) throw new ParserError("Expecting class-body");
@@ -292,6 +295,7 @@ public class Parser {
             if(node instanceof ClassDeclarationNode) classes.add((ClassDeclarationNode) node);
             else if(node instanceof FunctionDeclarationNode) methods.add((FunctionDeclarationNode) node);
             else if(node instanceof VariableDeclarationNode) fields.add((VariableDeclarationNode) node);
+            else if(node instanceof ConstructorDeclarationNode) constructors.add((ConstructorDeclarationNode) node);
 
             skipSeparators();
 
@@ -299,7 +303,7 @@ public class Parser {
 
         if(this.in.nextType() != RCURL) throw new ParserError("Expecting class-body to end");
 
-        return new ClassDeclarationNode(name, fields, methods, classes, access, isInClass, isStatic, isFinal);
+        return new ClassDeclarationNode(name, fields, methods, classes, constructors, access, isInClass, isStatic, isFinal);
     }
 
 
@@ -363,6 +367,41 @@ public class Parser {
     private ReturnNode returnStatement() {
         this.in.skip();
         return new ReturnNode(valuedOperation());
+    }
+
+
+
+    // ****************************************************************************
+    // Constructors
+
+
+    private ConstructorDeclarationNode constructorDeclaration(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+
+        List<FunctionArgumentNode> args = new ArrayList<>();
+        if(!this.in.hasNext() || this.in.nextType() != KEYWORD_CONSTRUCTOR) throw new ParserError("Expecting function keyword");
+        if(!isInClass) throw new ParserError("A constructor must be inside of a class");
+        if(isFinal) throw new ParserError("A constructor must not be final");
+        if(isStatic) throw new ParserError("A constructor must not be static");
+        /*
+        if(!this.in.hasNext() || this.in.peekType() != IDENTIFIER) throw new ParserError("Expecting identifier");
+        String name = this.in.nextValue();
+        */
+
+        if(!this.in.hasNext() || this.in.nextType() != LPAREN) throw new ParserError("Expecting '('");
+
+        if(this.checkArgument()) {
+            args.add(this.parseArgument());
+            while(this.in.hasNext() && this.in.peekType() == COMMA) {
+                this.in.skip();
+                if(this.checkArgument()) args.add(this.parseArgument());
+                else break;
+            }
+        }
+
+        if(!this.in.hasNext() || this.in.nextType() != RPAREN) throw new ParserError("Expecting ')'");
+
+        Tree body = this.parseBodyStatement();
+        return new ConstructorDeclarationNode(body, args.toArray(new FunctionArgumentNode[0]), access);
     }
 
 
