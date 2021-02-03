@@ -145,6 +145,19 @@ public class ObjectValue implements InterpreterValue {
         return getThisObject().get(c);
     }
 
+    /**
+     * This function will be executed when getting all child keys
+     *
+     * @return the keys of all children
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public String[] getChildren() {
+        // Just return the this-object keys
+        return getThisObject().getChildren();
+    }
+
 
 
     // *******************************

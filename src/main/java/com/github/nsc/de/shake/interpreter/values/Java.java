@@ -3,11 +3,15 @@ package com.github.nsc.de.shake.interpreter.values;
 import com.github.nsc.de.shake.interpreter.Scope;
 import com.github.nsc.de.shake.interpreter.Variable;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
+import org.reflections.Reflections;
 
 import java.beans.Expression;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class Java implements InterpreterValue {
 
@@ -64,6 +68,29 @@ public class Java implements InterpreterValue {
             } catch (ClassNotFoundException e) {
                 return Variable.finalOf(c, new JavaUnknown(name));
             }
+        }
+
+        /**
+         * This function will be executed when getting all child keys
+         *
+         * @return the keys of all children
+         *
+         * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+         */
+        @Override
+        public String[] getChildren() {
+
+            // Get names of all classes in this package using reflections
+
+            Reflections reflections = new Reflections(this.unknownName);
+            Class<? extends Object>[] allClasses =
+                    reflections.getSubTypesOf(Object.class).toArray(new Class[0]);
+            String[] children = new String[allClasses.length];
+
+            for(int i = 0; i < allClasses.length; i++)
+                children[i] = allClasses[i].getSimpleName();
+
+            return children;
         }
 
         /**
@@ -133,6 +160,31 @@ public class Java implements InterpreterValue {
 
             return Variable.finalOf(c, NullValue.NULL);
 
+        }
+
+        @Override
+        public String[] getChildren() {
+            List<String> children = new ArrayList<>();
+            Field[] fields = this.javaClass.getFields();
+
+            for(int i = 0; i < fields.length; i++)
+                if(!containsString(children, fields[i].getName()))
+                    children.add(fields[i].getName());
+
+            for(int i = 0; i < javaClass.getMethods().length; i++)
+                if(!containsString(children, fields[i].getName()))
+                    children.add(fields[i].getName());
+
+            for(int i = 0; i < javaClass.getClasses().length; i++)
+                if(!containsString(children, fields[i].getName()))
+                    children.add(fields[i].getName());
+
+            return children.toArray(new String[0]);
+
+        }
+
+        private static final boolean containsString(List<String> l, String s) {
+            return l.stream().filter(str -> str.equals(s)).findFirst().isPresent();
         }
 
         /**
@@ -259,6 +311,11 @@ public class Java implements InterpreterValue {
                 e.printStackTrace();
             }
             return Variable.finalOf(c, NullValue.NULL);
+        }
+
+        @Override
+        public String[] getChildren() {
+            return new JavaClass(this.getClass()).getChildren();
         }
 
         /**

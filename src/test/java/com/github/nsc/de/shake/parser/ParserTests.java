@@ -16,6 +16,29 @@ import org.junit.jupiter.api.Test;
 public class ParserTests {
 
     @Test
+    public void testImport() {
+
+        Tree node = parse("<ImportTest>", "import com;");
+
+        assertEquals(1, node.getChildren().length);
+        assertType(ImportNode.class, node.getChildren()[0]);
+        assertArrayEquals(new String[] { "com" }, ((ImportNode) node.getChildren()[0]).getImport());
+
+        node = parse("<ImportTest>", "import com.github.nsc.de.shake;");
+
+        assertEquals(1, node.getChildren().length);
+        assertType(ImportNode.class, node.getChildren()[0]);
+        assertArrayEquals(new String[] { "com", "github", "nsc", "de", "shake" }, ((ImportNode) node.getChildren()[0]).getImport());
+
+        node = parse("<ImportTest>", "import com.github.nsc.de.shake.*;");
+
+        assertEquals(1, node.getChildren().length);
+        assertType(ImportNode.class, node.getChildren()[0]);
+        assertArrayEquals(new String[] { "com", "github", "nsc", "de", "shake", "*" }, ((ImportNode) node.getChildren()[0]).getImport());
+
+    }
+
+    @Test
     public void testMultiStatement() {
 
         Tree node = parse("<MultiStatementTest>", "var i; i");
