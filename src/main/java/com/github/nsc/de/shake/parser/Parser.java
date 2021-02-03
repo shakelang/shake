@@ -321,18 +321,7 @@ public class Parser {
 
         if(!this.in.hasNext() || this.in.nextType() != LPAREN) throw new ParserError("Expecting '('");
 
-        if(this.checkArgument()) {
-            args.add(this.parseArgument());
-            while(this.in.hasNext() && this.in.peekType() == COMMA) {
-                this.in.skip();
-                if(this.checkArgument()) args.add(this.parseArgument());
-                else break;
-            }
-        }
-
-        if(!this.in.hasNext() || this.in.nextType() != RPAREN) throw new ParserError("Expecting ')'");
-
-        Tree body = this.parseBodyStatement();
+        Tree body = parseMethodContent(args);
         return new FunctionDeclarationNode(name, body, args.toArray(new FunctionArgumentNode[0]), access, isInClass, isStatic, isFinal);
     }
 
@@ -369,12 +358,6 @@ public class Parser {
         return new ReturnNode(valuedOperation());
     }
 
-
-
-    // ****************************************************************************
-    // Constructors
-
-
     private ConstructorDeclarationNode constructorDeclaration(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
 
         List<FunctionArgumentNode> args = new ArrayList<>();
@@ -382,13 +365,16 @@ public class Parser {
         if(!isInClass) throw new ParserError("A constructor must be inside of a class");
         if(isFinal) throw new ParserError("A constructor must not be final");
         if(isStatic) throw new ParserError("A constructor must not be static");
-        /*
-        if(!this.in.hasNext() || this.in.peekType() != IDENTIFIER) throw new ParserError("Expecting identifier");
-        String name = this.in.nextValue();
-        */
 
-        if(!this.in.hasNext() || this.in.nextType() != LPAREN) throw new ParserError("Expecting '('");
+        String name = this.in.skipIgnorable().peekType() == IDENTIFIER ? this.in.nextValue() : null;
 
+        if(!this.in.skipIgnorable().hasNext() || this.in.nextType() != LPAREN) throw new ParserError("Expecting '('");
+
+        Tree body = parseMethodContent(args);
+        return new ConstructorDeclarationNode(name, body, args.toArray(new FunctionArgumentNode[0]), access);
+    }
+
+    private Tree parseMethodContent(List<FunctionArgumentNode> args) {
         if(this.checkArgument()) {
             args.add(this.parseArgument());
             while(this.in.hasNext() && this.in.peekType() == COMMA) {
@@ -400,8 +386,7 @@ public class Parser {
 
         if(!this.in.hasNext() || this.in.nextType() != RPAREN) throw new ParserError("Expecting ')'");
 
-        Tree body = this.parseBodyStatement();
-        return new ConstructorDeclarationNode(body, args.toArray(new FunctionArgumentNode[0]), access);
+        return this.parseBodyStatement();
     }
 
 
