@@ -177,7 +177,8 @@ public class Parser {
             case KEYWORD_LONG:
             case KEYWORD_FLOAT:
             case KEYWORD_DOUBLE:
-                return varDeclaration2(access, isInClass, isStatic, isFinal);
+            case IDENTIFIER:
+                return cStyleDeclaration(access, isInClass, isStatic, isFinal);
             default:
                 throw new ParserError("Unexpected token (" + input.peekType() + ')');
         }
@@ -204,16 +205,17 @@ public class Parser {
 
             byte token2 = in.skipIgnorable().peekType();
             if(token2 == LPAREN) ret = this.functionCall(identifierNode);
-            if(token2 == ASSIGN) ret = this.varAssignment(identifierNode);
-            if(token2 == IDENTIFIER) ret = this.varDeclaration2(identifierNode, AccessDescriber.PRIVATE, false, false, false);
-            if(token2 == ADD_ASSIGN) ret = this.varAddAssignment(identifierNode);
-            if(token2 == SUB_ASSIGN) ret = this.varSubAssignment(identifierNode);
-            if(token2 == MUL_ASSIGN) ret = this.varMulAssignment(identifierNode);
-            if(token2 == DIV_ASSIGN) ret = this.varDivAssignment(identifierNode);
-            if(token2 == MOD_ASSIGN) ret = this.varModAssignment(identifierNode);
-            if(token2 == POW_ASSIGN) ret = this.varPowAssignment(identifierNode);
-            if(token2 == INCR) ret = this.varIncrease(identifierNode);
-            if(token2 == DECR) ret = this.varDecrease(identifierNode);
+            else if(token2 == ASSIGN) ret = this.varAssignment(identifierNode);
+            else if(token2 == IDENTIFIER) ret = this.cStyleDeclaration(new VariableType(identifierNode),
+                    AccessDescriber.PRIVATE, false, false, false);
+            else if(token2 == ADD_ASSIGN) ret = this.varAddAssignment(identifierNode);
+            else if(token2 == SUB_ASSIGN) ret = this.varSubAssignment(identifierNode);
+            else if(token2 == MUL_ASSIGN) ret = this.varMulAssignment(identifierNode);
+            else if(token2 == DIV_ASSIGN) ret = this.varDivAssignment(identifierNode);
+            else if(token2 == MOD_ASSIGN) ret = this.varModAssignment(identifierNode);
+            else if(token2 == POW_ASSIGN) ret = this.varPowAssignment(identifierNode);
+            else if(token2 == INCR) ret = this.varIncrease(identifierNode);
+            else if(token2 == DECR) ret = this.varDecrease(identifierNode);
             if(in.skipIgnorable().hasNext() && in.peekType() == DOT) {
                 this.in.skip();
                 this.in.skipIgnorable();
@@ -332,6 +334,30 @@ public class Parser {
         return new FunctionDeclarationNode(name, body, args.toArray(new FunctionArgumentNode[0]), access, isInClass, isStatic, isFinal);
     }
 
+
+    private FunctionDeclarationNode cStyleFunctionDeclaration(VariableType type, String identifier, AccessDescriber access,
+                                                              boolean isInClass, boolean isStatic, boolean isFinal) {
+
+        List<FunctionArgumentNode> args = new ArrayList<>();
+
+        if(!this.in.hasNext() || this.in.nextType() != LPAREN) throw new ParserError("Expecting '('");
+
+        if(this.checkArgument()) {
+            args.add(this.parseArgument());
+            while(this.in.hasNext() && this.in.peekType() == COMMA) {
+                this.in.skip();
+                if(this.checkArgument()) args.add(this.parseArgument());
+                else break;
+            }
+        }
+
+        if(!this.in.hasNext() || this.in.nextType() != RPAREN) throw new ParserError("Expecting ')'");
+
+        Tree body = this.parseBodyStatement();
+        return new FunctionDeclarationNode(identifier, body, args.toArray(new FunctionArgumentNode[0]), type,
+                access, isInClass, isStatic, isFinal);
+    }
+
     private FunctionCallNode functionCall(ValuedNode function) {
         List<ValuedNode> args = new ArrayList<>();
         if(!this.in.hasNext() || this.in.nextType() != LPAREN) throw new ParserError("Expecting '('");
@@ -443,7 +469,7 @@ public class Parser {
 
     }
 
-    private VariableDeclarationNode varDeclaration2(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+    private ValuedNode cStyleDeclaration(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
 
         byte t = this.in.nextType();
         VariableType declarationNode =
@@ -458,34 +484,26 @@ public class Parser {
                 t == KEYWORD_CHAR ? VariableType.CHAR :
                 t == IDENTIFIER ? VariableType.OBJECT : null;
 
-        if(!this.in.skipIgnorable().hasNext() || this.in.peekType() != IDENTIFIER)
-            throw new ParserError("Expecting identifier");
-
-        String identifier = this.in.nextValue();
-
-        if(this.in.skipIgnorable().hasNext() && this.in.peekType() == ASSIGN) {
-            return new VariableDeclarationNode(identifier, declarationNode,
-                    this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
-        } else {
-            return new VariableDeclarationNode(this.in.actualValue(), declarationNode, null, access, isInClass, isStatic, isFinal);
-        }
+        return cStyleDeclaration(declarationNode, access, isInClass, isStatic, isFinal);
     }
 
-    private VariableDeclarationNode varDeclaration2(IdentifierNode node, AccessDescriber access,
-                                                    boolean isInClass, boolean isStatic, boolean isFinal) {
+
+
+    private ValuedNode cStyleDeclaration(VariableType type, AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
 
         if(!this.in.skipIgnorable().hasNext() || this.in.peekType() != IDENTIFIER)
             throw new ParserError("Expecting identifier");
 
         String identifier = this.in.nextValue();
 
-        if(this.in.skipIgnorable().hasNext() && this.in.peekType() == ASSIGN) {
-            return new VariableDeclarationNode(identifier, new VariableType(node),
+        boolean hasNext = this.in.skipIgnorable().hasNext();
+        if(hasNext && this.in.peekType() == ASSIGN) {
+            return new VariableDeclarationNode(identifier, type,
                     this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
-        } else {
-            return new VariableDeclarationNode(this.in.actualValue(), new VariableType(node),
-                    null, access, isInClass, isStatic, isFinal);
+        } else if(hasNext && this.in.peekType() == LPAREN) {
+            return cStyleFunctionDeclaration(type, identifier, access, isInClass, isStatic, isFinal);
         }
+        else return new VariableDeclarationNode(this.in.actualValue(), type, null, access, isInClass, isStatic, isFinal);
     }
 
 
