@@ -335,15 +335,15 @@ public class Parser {
 
     private FunctionArgumentNode[] parseFunctionArguments() {
 
-        ArrayList<FunctionArgumentNode> args = new ArrayList();
+        ArrayList<FunctionArgumentNode> args = new ArrayList<>();
 
         if(!this.in.hasNext() || this.in.nextType() != LPAREN) throw new ParserError("Expecting '('");
 
-        if(this.checkArgument()) {
+        if(this.in.hasNext() && this.in.peekType() != RPAREN) {
             args.add(this.parseArgument());
             while(this.in.hasNext() && this.in.peekType() == COMMA) {
                 this.in.skip();
-                if(this.checkArgument()) args.add(this.parseArgument());
+                if(this.in.hasNext() && this.in.peekType() != RPAREN) args.add(this.parseArgument());
                 else break;
             }
         }
@@ -370,14 +370,48 @@ public class Parser {
     }
 
     private FunctionArgumentNode parseArgument() {
-        if(this.in.peekType() == IDENTIFIER) {
-            return new FunctionArgumentNode(this.in.nextValue());
+
+        byte next = this.in.nextType();
+        this.in.skipIgnorable();
+
+        if(next == IDENTIFIER && (!this.in.hasNext() || this.in.peekType() != IDENTIFIER || this.in.peekType() != DOT))
+            return new FunctionArgumentNode(this.in.actualValue());
+
+        VariableType type;
+
+        switch(next) {
+            case KEYWORD_DYNAMIC: type = VariableType.DYNAMIC; break;
+            case KEYWORD_BOOLEAN: type = VariableType.BOOLEAN; break;
+            case KEYWORD_CHAR: type = VariableType.CHAR; break;
+            case KEYWORD_BYTE: type = VariableType.BYTE; break;
+            case KEYWORD_SHORT: type = VariableType.SHORT; break;
+            case KEYWORD_INT: type = VariableType.INTEGER; break;
+            case KEYWORD_LONG: type = VariableType.LONG; break;
+            case KEYWORD_FLOAT: type = VariableType.FLOAT; break;
+            case KEYWORD_DOUBLE: type = VariableType.DOUBLE; break;
+            case IDENTIFIER:
+                IdentifierNode node = new IdentifierNode(this.getInput().actualValue());
+                while(this.in.peekType() == DOT) {
+                    this.in.skip();
+                    this.in.skipIgnorable();
+                    if(this.getInput().nextType() != IDENTIFIER) throw new ParserError("Expecting identifier");
+                    node = new IdentifierNode(this.in.actualValue());
+                }
+                type = new VariableType(node);
+                break;
+            default:
+                throw new ParserError("Unknown variable-type token: " + TokenType.getName(next));
+        }
+
+
+        if(this.in.hasNext() && this.in.peekType() == IDENTIFIER) {
+
+            String identifier = this.in.nextValue();
+            this.in.skipIgnorable();
+            return new FunctionArgumentNode(identifier, type);
+
         }
         else throw new ParserError("Expecting identifier");
-    }
-
-    private boolean checkArgument() {
-        return this.in.hasNext() && this.in.peekType() == IDENTIFIER;
     }
 
 
