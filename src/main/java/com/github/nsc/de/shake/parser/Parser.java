@@ -312,33 +312,30 @@ public class Parser {
 
     private FunctionDeclarationNode functionDeclaration(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
 
-        List<FunctionArgumentNode> args = new ArrayList<>();
         if(!this.in.hasNext() || this.in.nextType() != KEYWORD_FUNCTION) throw new ParserError("Expecting function keyword");
         if(!this.in.hasNext() || this.in.peekType() != IDENTIFIER) throw new ParserError("Expecting identifier");
         String name = this.in.nextValue();
 
-        if(!this.in.hasNext() || this.in.nextType() != LPAREN) throw new ParserError("Expecting '('");
-
-        if(this.checkArgument()) {
-            args.add(this.parseArgument());
-            while(this.in.hasNext() && this.in.peekType() == COMMA) {
-                this.in.skip();
-                if(this.checkArgument()) args.add(this.parseArgument());
-                else break;
-            }
-        }
-
-        if(!this.in.hasNext() || this.in.nextType() != RPAREN) throw new ParserError("Expecting ')'");
-
+        FunctionArgumentNode[] args = parseFunctionArguments();
         Tree body = this.parseBodyStatement();
-        return new FunctionDeclarationNode(name, body, args.toArray(new FunctionArgumentNode[0]), access, isInClass, isStatic, isFinal);
+
+        return new FunctionDeclarationNode(name, body, args, access, isInClass, isStatic, isFinal);
     }
 
 
     private FunctionDeclarationNode cStyleFunctionDeclaration(VariableType type, String identifier, AccessDescriber access,
                                                               boolean isInClass, boolean isStatic, boolean isFinal) {
 
-        List<FunctionArgumentNode> args = new ArrayList<>();
+        FunctionArgumentNode[] args = parseFunctionArguments();
+        Tree body = this.parseBodyStatement();
+
+        return new FunctionDeclarationNode(identifier, body, args, type,
+                access, isInClass, isStatic, isFinal);
+    }
+
+    private FunctionArgumentNode[] parseFunctionArguments() {
+
+        ArrayList<FunctionArgumentNode> args = new ArrayList();
 
         if(!this.in.hasNext() || this.in.nextType() != LPAREN) throw new ParserError("Expecting '('");
 
@@ -352,10 +349,8 @@ public class Parser {
         }
 
         if(!this.in.hasNext() || this.in.nextType() != RPAREN) throw new ParserError("Expecting ')'");
+        return args.toArray(new FunctionArgumentNode[0]);
 
-        Tree body = this.parseBodyStatement();
-        return new FunctionDeclarationNode(identifier, body, args.toArray(new FunctionArgumentNode[0]), type,
-                access, isInClass, isStatic, isFinal);
     }
 
     private FunctionCallNode functionCall(ValuedNode function) {
