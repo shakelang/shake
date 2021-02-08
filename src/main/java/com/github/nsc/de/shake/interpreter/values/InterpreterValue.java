@@ -230,6 +230,19 @@ public interface InterpreterValue {
         throw new Error("Can't get child values of type " + getName());
     }
 
+    /**
+     * This function will be executed when getting all child keys
+     *
+     * @return the keys of all children
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    default String[] getChildren() {
+        // Throw an error when the operator is not implemented
+        // This function will be overridden by all InterpreterValues that do support this operation
+        throw new Error("Can't get child values of type " + getName());
+    }
+
 
 
     // ****************************

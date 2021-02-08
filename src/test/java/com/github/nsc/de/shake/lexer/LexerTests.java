@@ -206,6 +206,9 @@ public class LexerTests {
         PROTECTED("protected", TokenType.KEYWORD_PROTECTED),
         PRIVATE ("private", TokenType.KEYWORD_PRIVATE),
         NEW ("new", TokenType.KEYWORD_NEW),
+
+        IMPORT ("import", TokenType.KEYWORD_IMPORT),
+        VOID ("void", TokenType.KEYWORD_VOID),
         ;
         private final String input;
         private final byte output;

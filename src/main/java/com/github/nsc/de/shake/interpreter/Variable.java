@@ -466,6 +466,19 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
     }
 
 
+    /**
+     * This function will be executed when getting all child keys
+     *
+     * @return the keys of all children
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public String[] getChildren() {
+        // redirect to the value
+        return getValue().getChildren();
+    }
+
 
     // ****************************
     // implementations for extended InterpreterValue

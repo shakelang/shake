@@ -72,6 +72,8 @@ public class TokenType {
             "KEYWORD_DOUBLE",       // 61
             "KEYWORD_CHAR",         // 62
             "KEYWORD_BOOLEAN",      // 63
+            "KEYWORD_IMPORT",       // 64
+            "KEYWORD_VOID",         // 65
     };
 
     private static final byte[] TOKEN_LENGTH = new byte[] {
@@ -142,6 +144,8 @@ public class TokenType {
             6,      //  KEYWORD_DOUBLE       61
             4,      //  KEYWORD_CHAR         62
             7,      //  KEYWORD_BOOLEAN      63
+            6,      //  KEYWORD_IMPORT       64
+            4,      //  KEYWORD_VOID         65
     };
     
     /**
@@ -517,6 +521,16 @@ public class TokenType {
      * Keyword "boolean" as return type for functions or for declaring variables
      */
     public static final byte KEYWORD_BOOLEAN = 63;
+
+    /**
+     * Keyword "import" for import statements
+     */
+    public static final byte KEYWORD_IMPORT = 64;
+
+    /**
+     * Keyword "void" for functions returning nothing
+     */
+    public static final byte KEYWORD_VOID = 65;
 
     public static String getName(byte b) {
         return NAMES[b];

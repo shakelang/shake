@@ -212,6 +212,13 @@ public class Lexer {
                     }
                     break;
                 }
+                if(chars[0] == 'v') {
+                    if(chars[1] == 'o' && chars[2] == 'i' && chars[3] == 'd') {
+                        addPosition(TokenType.KEYWORD_VOID, end);
+                        return;
+                    }
+                    break;
+                }
                 if(chars[0] == 'l') {
                     if(chars[1] == 'o' && chars[2] == 'n' && chars[3] == 'g') {
                         addPosition(TokenType.KEYWORD_LONG, end);
@@ -296,6 +303,13 @@ public class Lexer {
                 if(chars[0] == 's') {
                     if(chars[1] == 't' && chars[2] == 'a' && chars[3] == 't' && chars[4] == 'i' && chars[5] == 'c') {
                         addPosition(TokenType.KEYWORD_STATIC, end);
+                        return;
+                    }
+                    break;
+                }
+                if(chars[0] == 'i') {
+                    if(chars[1] == 'm' && chars[2] == 'p' && chars[3] == 'o' && chars[4] == 'r' && chars[5] == 't') {
+                        addPosition(TokenType.KEYWORD_IMPORT, end);
                         return;
                     }
                     break;
