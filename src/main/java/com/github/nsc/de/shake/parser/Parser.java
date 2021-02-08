@@ -111,7 +111,8 @@ public class Parser {
                 || token == KEYWORD_FLOAT
                 || token == KEYWORD_DOUBLE
                 || token == KEYWORD_BOOLEAN
-                || token == KEYWORD_CHAR) return parseDeclaration();
+                || token == KEYWORD_CHAR
+                || token == KEYWORD_VOID) return parseDeclaration();
 
         // Expression
         if(token == INTEGER ||
@@ -177,6 +178,7 @@ public class Parser {
             case KEYWORD_LONG:
             case KEYWORD_FLOAT:
             case KEYWORD_DOUBLE:
+            case KEYWORD_VOID:
             case IDENTIFIER:
                 return cStyleDeclaration(access, isInClass, isStatic, isFinal);
             default:
@@ -512,6 +514,7 @@ public class Parser {
                 t == KEYWORD_DOUBLE ? VariableType.DOUBLE :
                 t == KEYWORD_BOOLEAN ? VariableType.BOOLEAN :
                 t == KEYWORD_CHAR ? VariableType.CHAR :
+                t == KEYWORD_VOID ? VariableType.VOID :
                 t == IDENTIFIER ? VariableType.OBJECT : null;
 
         return cStyleDeclaration(declarationNode, access, isInClass, isStatic, isFinal);
@@ -519,7 +522,10 @@ public class Parser {
 
 
 
-    private ValuedNode cStyleDeclaration(VariableType type, AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+    private ValuedNode cStyleDeclaration(VariableType type, AccessDescriber access, boolean isInClass, boolean isStatic,
+                                         boolean isFinal) {
+
+        // TODO error on void variable type
 
         if(!this.in.skipIgnorable().hasNext() || this.in.peekType() != IDENTIFIER)
             throw new ParserError("Expecting identifier");
@@ -530,10 +536,10 @@ public class Parser {
         if(hasNext && this.in.peekType() == ASSIGN) {
             return new VariableDeclarationNode(identifier, type,
                     this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
-        } else if(hasNext && this.in.peekType() == LPAREN) {
+        } else if(hasNext && this.in.peekType() == LPAREN)
             return cStyleFunctionDeclaration(type, identifier, access, isInClass, isStatic, isFinal);
-        }
-        else return new VariableDeclarationNode(this.in.actualValue(), type, null, access, isInClass, isStatic, isFinal);
+        else return new VariableDeclarationNode(this.in.actualValue(), type, null, access, isInClass,
+                    isStatic, isFinal);
     }
 
 
