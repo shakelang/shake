@@ -212,13 +212,6 @@ public class Lexer {
                     }
                     break;
                 }
-                if(chars[0] == 'v') {
-                    if(chars[1] == 'o' && chars[2] == 'i' && chars[3] == 'd') {
-                        addPosition(TokenType.KEYWORD_VOID, end);
-                        return;
-                    }
-                    break;
-                }
                 if(chars[0] == 'l') {
                     if(chars[1] == 'o' && chars[2] == 'n' && chars[3] == 'g') {
                         addPosition(TokenType.KEYWORD_LONG, end);

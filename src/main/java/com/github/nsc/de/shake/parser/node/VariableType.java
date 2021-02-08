@@ -13,7 +13,6 @@ public class VariableType {
     public static VariableType CHAR = new VariableType(Type.CHAR);
     public static VariableType ARRAY = new VariableType(Type.ARRAY);
     public static VariableType OBJECT = new VariableType(Type.OBJECT);
-    public static VariableType VOID = new VariableType(Type.VOID);
 
     private final Type type;
     private final IdentifierNode subtype;
@@ -55,8 +54,7 @@ public class VariableType {
         BOOLEAN,
         CHAR,
         ARRAY,
-        OBJECT,
-        VOID;
+        OBJECT;
 
         @Override
         public String toString() {
