@@ -157,6 +157,7 @@ public class Interpreter implements ShakeGenerator {
         if(n instanceof LogicalBiggerNode) return visitBiggerNode((LogicalBiggerNode) n, scope);
         if(n instanceof LogicalSmallerNode) return visitSmallerNode((LogicalSmallerNode) n, scope);
         if(n instanceof LogicalAndNode) return visitLogicalAndNode((LogicalAndNode) n, scope);
+        if(n instanceof LogicalXOrNode) return visitLogicalXOrNode((LogicalXOrNode) n, scope);
         if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n, scope);
         if(n instanceof WhileNode) return visitWhileNode((WhileNode) n, scope);
         if(n instanceof DoWhileNode) return visitDoWhileNode((DoWhileNode) n, scope);
@@ -647,6 +648,19 @@ public class Interpreter implements ShakeGenerator {
      */
     public InterpreterValue visitLogicalOrNode(LogicalOrNode n, Scope scope) {
         return visit(n.getLeft(), scope).or(visit(n.getRight(), scope));
+    }
+
+    /**
+     * Visit a {@link LogicalXOrNode}
+     *
+     * @param n the {@link LogicalXOrNode} to visit
+     * @param scope the {@link Scope} for visiting the {@link LogicalOrNode}
+     * @return are both sides true
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    public InterpreterValue visitLogicalXOrNode(LogicalXOrNode n, Scope scope) {
+        return visit(n.getLeft(), scope).xor(visit(n.getRight(), scope));
     }
 
 

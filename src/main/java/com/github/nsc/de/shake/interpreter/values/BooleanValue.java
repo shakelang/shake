@@ -137,6 +137,24 @@ public enum BooleanValue implements InterpreterValue {
     }
 
     /**
+     * This function will be executed when the operator '^' is used on the value
+     *
+     * @param v The other value for the or operator
+     * @return The Calculation-Result
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @Override
+    public InterpreterValue xor(InterpreterValue v) {
+        // if the given value is a BooleanValue check if at least one of the values is true and return a BooleanValue
+        // again if not just throw an error
+        if(v instanceof BooleanValue) {
+            return BooleanValue.from(this.value ^ ((BooleanValue) v).value);
+        }
+        throw new Error("Operator '^' is not defined for type boolean and " + v.getName());
+    }
+
+    /**
      * This function will be executed when the operator '&amp;&amp;' is used on the value
      *
      * @param v The other value for the and operator

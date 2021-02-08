@@ -8,15 +8,7 @@ import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionArgumentNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalAndNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalBiggerEqualsNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalBiggerNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalEqEqualsNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalFalseNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalOrNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalSmallerEqualsNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalSmallerNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalTrueNode;
+import com.github.nsc.de.shake.parser.node.logical.*;
 import com.github.nsc.de.shake.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.shake.parser.node.loops.ForNode;
 import com.github.nsc.de.shake.parser.node.loops.WhileNode;
@@ -198,6 +190,11 @@ public class JsonGenerator extends Generator<JSONObject> {
     @Override
     public JSONObject visitLogicalOrNode(LogicalOrNode n) {
         return new JSONObject().put("type", "logical_or").put("left", visit(n.getLeft())).put("right", visit(n.getRight()));
+    }
+
+    @Override
+    public JSONObject visitLogicalXOrNode(LogicalXOrNode n) {
+        return new JSONObject().put("type", "logical_xor").put("left", visit(n.getLeft())).put("right", visit(n.getRight()));
     }
 
     @Override

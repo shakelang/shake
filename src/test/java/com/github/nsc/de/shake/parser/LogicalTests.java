@@ -71,6 +71,17 @@ public class LogicalTests {
     }
 
     @Test
+    public void testXOr() {
+
+        LogicalXOrNode node = parseSingle("<LogicalXOrTest>", "true ^ false", LogicalXOrNode.class);
+        assertNotNull(node.getLeft());
+        assertType(LogicalTrueNode.class, node.getLeft());
+        assertNotNull(node.getRight());
+        assertType(LogicalFalseNode.class, node.getRight());
+
+    }
+
+    @Test
     public void testBrackets() {
 
         LogicalAndNode node = parseSingle("<LogicalBracketTest>", "true && (false || true)", LogicalAndNode.class);

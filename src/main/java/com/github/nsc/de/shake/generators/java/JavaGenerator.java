@@ -58,6 +58,7 @@ public class JavaGenerator implements ShakeGenerator {
         if(n instanceof LogicalSmallerNode) return visitSmallerNode((LogicalSmallerNode) n, context);
         if(n instanceof LogicalAndNode) return visitLogicalAndNode((LogicalAndNode) n, context);
         if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n, context);
+        if(n instanceof LogicalXOrNode) return visitLogicalXOrNode((LogicalXOrNode) n, context);
         if(n instanceof WhileNode) return visitWhileNode((WhileNode) n, context);
         if(n instanceof DoWhileNode) return visitDoWhileNode((DoWhileNode) n, context);
         if(n instanceof ForNode) return visitForNode((ForNode) n, context);
@@ -270,6 +271,14 @@ public class JavaGenerator implements ShakeGenerator {
                 (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
                 (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
                 "||");
+    }
+
+
+    public JavaValued.JavaExpression visitLogicalXOrNode(LogicalXOrNode n, JavaGenerationContext context) {
+        return new JavaValued.JavaExpression(
+                (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
+                (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
+                "^");
     }
 
 

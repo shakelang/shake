@@ -107,6 +107,7 @@ public class LexerTests {
 
         // logical concatenation
         generateToken("||", TokenType.LOGICAL_OR); // "||"
+        generateToken("^", TokenType.LOGICAL_XOR); // "^"
         generateToken("&&", TokenType.LOGICAL_AND); // "&&"
 
     }
