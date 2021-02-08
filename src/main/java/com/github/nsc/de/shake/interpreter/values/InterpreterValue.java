@@ -123,6 +123,20 @@ public interface InterpreterValue {
     }
 
     /**
+     * This function will be executed when the operator '^' is used on the value
+     *
+     * @param v The other value for the or operator
+     * @return The Calculation-Result
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    default InterpreterValue xor(InterpreterValue v) {
+        // Throw an error when the operator is not implemented
+        // This function will be overridden by all InterpreterValues that do support this operation
+        throw new Error("Operator '^' is not defined for type " + getName());
+    }
+
+    /**
      * This function will be executed when the operator '&amp;&amp;' is used on the value
      *
      * @param v The other value for the and operator
@@ -292,6 +306,7 @@ public interface InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
+    @SuppressWarnings("unchecked")
     default <T extends InterpreterValue> T to(Class<T> type) {
         if(type.isInstance(this)) return (T) this;
         throw new Error("Can't convert " + getName() + " to type " + type.getName());
@@ -306,6 +321,7 @@ public interface InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
+    @SuppressWarnings("unchecked")
     default <T extends InterpreterValue> T castTo(Class<T> type) {
         if(type.isInstance(this)) return (T) this;
         throw new Error("Can't convert " + getName() + " to type " + type.getName());
@@ -340,7 +356,6 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     String getName();
-
 
 
     static InterpreterValue of(Object value) {
