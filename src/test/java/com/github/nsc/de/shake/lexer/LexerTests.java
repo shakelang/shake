@@ -209,6 +209,7 @@ public class LexerTests {
 
         IMPORT ("import", TokenType.KEYWORD_IMPORT),
         VOID ("void", TokenType.KEYWORD_VOID),
+        CONSTRUCTOR ("constructor", TokenType.KEYWORD_CONSTRUCTOR),
         ;
         private final String input;
         private final byte output;

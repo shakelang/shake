@@ -14,6 +14,7 @@ public class ClassDeclarationNode implements ValuedNode {
     private final VariableDeclarationNode[] fields;
     private final FunctionDeclarationNode[] methods;
     private final ClassDeclarationNode[] classes;
+    private final ConstructorDeclarationNode[] constructors;
     private final AccessDescriber access;
     private final boolean isInClass;
     private final boolean isStatic;
@@ -24,6 +25,7 @@ public class ClassDeclarationNode implements ValuedNode {
             VariableDeclarationNode[] fields,
             FunctionDeclarationNode[] methods,
             ClassDeclarationNode[] classes,
+            ConstructorDeclarationNode[] constructors,
             AccessDescriber access,
             boolean isInClass,
             boolean isStatic,
@@ -33,6 +35,7 @@ public class ClassDeclarationNode implements ValuedNode {
         this.fields = fields;
         this.methods = methods;
         this.classes = classes;
+        this.constructors = constructors;
         this.access = access;
         this.isInClass = isInClass;
         this.isStatic = isStatic;
@@ -44,9 +47,10 @@ public class ClassDeclarationNode implements ValuedNode {
             String name,
             VariableDeclarationNode[] fields,
             FunctionDeclarationNode[] methods,
-            ClassDeclarationNode[] classes) {
+            ClassDeclarationNode[] classes,
+            ConstructorDeclarationNode[] constructors) {
 
-        this(name, fields, methods, classes, AccessDescriber.PACKAGE, false, false, false);
+        this(name, fields, methods, classes, constructors, AccessDescriber.PACKAGE, false, false, false);
 
     }
 
@@ -55,13 +59,15 @@ public class ClassDeclarationNode implements ValuedNode {
             List<VariableDeclarationNode> fields,
             List<FunctionDeclarationNode> methods,
             List<ClassDeclarationNode> classes,
+            List<ConstructorDeclarationNode> constructors,
             AccessDescriber access,
             boolean isInClass,
             boolean isStatic,
             boolean isFinal) {
 
-        this(name, fields.toArray(new VariableDeclarationNode[fields.size()]), methods.toArray(new FunctionDeclarationNode[methods.size()]),
-                classes.toArray(new ClassDeclarationNode[classes.size()]), access, isInClass, isStatic, isFinal);
+        this(name, fields.toArray(new VariableDeclarationNode[] {}), methods.toArray(new FunctionDeclarationNode[] {}),
+                classes.toArray(new ClassDeclarationNode[] {}), constructors.toArray(new ConstructorDeclarationNode[] {}),
+                access, isInClass, isStatic, isFinal);
 
     }
 
@@ -69,10 +75,11 @@ public class ClassDeclarationNode implements ValuedNode {
             String name,
             List<VariableDeclarationNode> fields,
             List<FunctionDeclarationNode> methods,
-            List<ClassDeclarationNode> classes) {
+            List<ClassDeclarationNode> classes,
+            List<ConstructorDeclarationNode> constructors) {
 
-        this(name, fields.toArray(new VariableDeclarationNode[fields.size()]), methods.toArray(new FunctionDeclarationNode[methods.size()]),
-                classes.toArray(new ClassDeclarationNode[classes.size()]));
+        this(name, fields.toArray(new VariableDeclarationNode[] {}), methods.toArray(new FunctionDeclarationNode[] {}),
+                classes.toArray(new ClassDeclarationNode[] {}), constructors.toArray(new ConstructorDeclarationNode[] {}));
 
     }
 
@@ -86,6 +93,9 @@ public class ClassDeclarationNode implements ValuedNode {
     public ClassDeclarationNode[] getClasses() {
         return classes;
     }
+    public ConstructorDeclarationNode[] getConstructors() {
+        return constructors;
+    }
     public AccessDescriber getAccess() { return access; }
     public boolean isStatic() { return isStatic; }
     public boolean isInClass() { return isInClass; }
@@ -96,6 +106,8 @@ public class ClassDeclarationNode implements ValuedNode {
         return "ClassDeclarationNode{" +
                 "fields=" + Arrays.toString(fields) +
                 ", methods=" + Arrays.toString(methods) +
+                ", classes=" + Arrays.toString(classes) +
+                ", constructors=" + Arrays.toString(constructors) +
                 '}';
     }
 }

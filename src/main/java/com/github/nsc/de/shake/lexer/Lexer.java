@@ -374,6 +374,14 @@ public class Lexer {
                     return;
                 }
                 break;
+            case 11:
+                if(chars[0] == 'c' && chars[1] == 'o' && chars[2] == 'n' && chars[3] == 's' && chars[4] == 't'
+                        && chars[5] == 'r' && chars[6] == 'u' && chars[7] == 'c' && chars[8] == 't'
+                        && chars[9] == 'o' && chars[10] == 'r') {
+                    addPosition(TokenType.KEYWORD_CONSTRUCTOR, end);
+                    return;
+                }
+                break;
         }
         addPosition(TokenType.IDENTIFIER, end, identifier.toString());
 
