@@ -45,6 +45,7 @@ public abstract class Generator<T> implements ShakeGenerator {
         if(n instanceof LogicalSmallerNode) return visitSmallerNode((LogicalSmallerNode) n);
         if(n instanceof LogicalAndNode) return visitLogicalAndNode((LogicalAndNode) n);
         if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n);
+        if(n instanceof LogicalXOrNode) return visitLogicalXOrNode((LogicalXOrNode) n);
         if(n instanceof WhileNode) return visitWhileNode((WhileNode) n);
         if(n instanceof DoWhileNode) return visitDoWhileNode((DoWhileNode) n);
         if(n instanceof ForNode) return visitForNode((ForNode) n);
@@ -88,6 +89,7 @@ public abstract class Generator<T> implements ShakeGenerator {
     public abstract T visitSmallerNode(LogicalSmallerNode n);
     public abstract T visitLogicalAndNode(LogicalAndNode n);
     public abstract T visitLogicalOrNode(LogicalOrNode n);
+    public abstract T visitLogicalXOrNode(LogicalXOrNode n);
     public abstract T visitWhileNode(WhileNode n);
     public abstract T visitDoWhileNode(DoWhileNode n);
     public abstract T visitForNode(ForNode n);
