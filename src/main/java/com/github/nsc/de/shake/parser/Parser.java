@@ -348,7 +348,7 @@ public class Parser {
             }
         }
 
-        if(!this.in.hasNext() || this.in.nextType() != RPAREN) throw new ParserError("Expecting ')'");
+        if(!this.in.hasNext() || this.in.nextType() != RPAREN) throw new ParserError("Expecting ')'", getInput().getPosition());
         return args.toArray(new FunctionArgumentNode[0]);
 
     }
@@ -374,7 +374,8 @@ public class Parser {
         byte next = this.in.nextType();
         this.in.skipIgnorable();
 
-        if(next == IDENTIFIER && (!this.in.hasNext() || this.in.peekType() != IDENTIFIER || this.in.peekType() != DOT))
+        byte peek;
+        if(next == IDENTIFIER && (!this.in.hasNext() || (peek = this.in.peekType()) != IDENTIFIER && peek != DOT))
             return new FunctionArgumentNode(this.in.actualValue());
 
         VariableType type;
