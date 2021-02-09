@@ -450,54 +450,61 @@ public class Parser {
 
     private VariableAssignmentNode varAssignment(ValuedNode variable) {
         if(!this.in.hasNext() || this.in.nextType() != ASSIGN) throw new ParserError("Expecting '='");
+        int operatorPosition = this.in.actualStart();
         Node value = operation();
-        return new VariableAssignmentNode(variable, value);
+        return new VariableAssignmentNode(variable, value, operatorPosition);
     }
 
     private VariableAddAssignmentNode varAddAssignment(ValuedNode variable) {
         if(!this.in.hasNext() || this.in.nextType() != ADD_ASSIGN) throw new ParserError("Expecting '+='");
+        int operatorPosition = this.in.actualStart();
         Node value = operation();
-        return new VariableAddAssignmentNode(variable, value);
+        return new VariableAddAssignmentNode(variable, value, operatorPosition);
     }
 
     private VariableSubAssignmentNode varSubAssignment(ValuedNode variable) {
         if(!this.in.hasNext() || this.in.nextType() != SUB_ASSIGN) throw new ParserError("Expecting '-='");
+        int operatorPosition = this.in.actualStart();
         Node value = operation();
-        return new VariableSubAssignmentNode(variable, value);
+        return new VariableSubAssignmentNode(variable, value, operatorPosition);
     }
 
     private VariableMulAssignmentNode varMulAssignment(ValuedNode variable) {
         if(!this.in.hasNext() || this.in.nextType() != MUL_ASSIGN) throw new ParserError("Expecting '*='");
+        int operatorPosition = this.in.actualStart();
         Node value = operation();
-        return new VariableMulAssignmentNode(variable, value);
+        return new VariableMulAssignmentNode(variable, value, operatorPosition);
     }
 
     private VariableDivAssignmentNode varDivAssignment(ValuedNode variable) {
         if(!this.in.hasNext() || this.in.nextType() != DIV_ASSIGN) throw new ParserError("Expecting '/='");
+        int operatorPosition = this.in.actualStart();
         Node value = operation();
-        return new VariableDivAssignmentNode(variable, value);
+        return new VariableDivAssignmentNode(variable, value, operatorPosition);
     }
 
     private VariableModAssignmentNode varModAssignment(ValuedNode variable) {
         if(!this.in.hasNext() || this.in.nextType() != MOD_ASSIGN) throw new ParserError("Expecting '%='");
+        int operatorPosition = this.in.actualStart();
         Node value = operation();
-        return new VariableModAssignmentNode(variable, value);
+        return new VariableModAssignmentNode(variable, value, operatorPosition);
     }
 
     private VariablePowAssignmentNode varPowAssignment(ValuedNode variable) {
-        if(!this.in.hasNext() || this.in.nextType() != POW_ASSIGN) throw new ParserError("Expecting '^='");
+        if(!this.in.hasNext() || this.in.nextType() != POW_ASSIGN) throw new ParserError("Expecting '**='");
+        int operatorPosition = this.in.actualStart();
         Node value = operation();
-        return new VariablePowAssignmentNode(variable, value);
+        return new VariablePowAssignmentNode(variable, value, operatorPosition);
     }
 
     private VariableIncreaseNode varIncrease(ValuedNode variable) {
         if(!this.in.hasNext() || this.in.nextType() != INCR) throw new ParserError("Expecting '++'");
-        return new VariableIncreaseNode(variable);
+        return new VariableIncreaseNode(variable, this.in.actualStart());
     }
 
     private VariableDecreaseNode varDecrease(ValuedNode variable) {
         if(!this.in.hasNext() || this.in.nextType() != DECR) throw new ParserError("Expecting '--'");
-        return new VariableDecreaseNode(variable);
+        return new VariableDecreaseNode(variable, this.in.actualStart());
     }
 
     private VariableDeclarationNode varDeclaration1(AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {

@@ -7,18 +7,22 @@ public class VariableAddAssignmentNode implements ValuedNode {
 
     private final ValuedNode variable;
     private final Node value;
+    private final int operatorPosition;
 
-    public VariableAddAssignmentNode(ValuedNode variable, Node value) {
+    public VariableAddAssignmentNode(ValuedNode variable, Node value, int operatorPosition) {
         this.variable = variable;
         this.value = value;
+        this.operatorPosition = operatorPosition;
     }
 
     public ValuedNode getVariable() {
         return variable;
     }
-
     public Node getValue() {
         return value;
+    }
+    public int getOperatorPosition() {
+        return operatorPosition;
     }
 
     @Override

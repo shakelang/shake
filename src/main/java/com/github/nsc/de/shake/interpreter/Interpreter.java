@@ -291,7 +291,7 @@ public class Interpreter implements ShakeGenerator {
         try {
             return visit(n.getLeft(), scope, tools).add(visit(n.getRight(), scope, tools));
         } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorIndex());
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
         }
     }
 
@@ -311,7 +311,7 @@ public class Interpreter implements ShakeGenerator {
         try {
             return visit(n.getLeft(), scope, tools).sub(visit(n.getRight(), scope, tools));
         } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorIndex());
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
         }
     }
 
@@ -331,7 +331,7 @@ public class Interpreter implements ShakeGenerator {
         try {
             return visit(n.getLeft(), scope, tools).mul(visit(n.getRight(), scope, tools));
         } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorIndex());
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
         }
     }
 
@@ -351,7 +351,7 @@ public class Interpreter implements ShakeGenerator {
         try {
             return visit(n.getLeft(), scope, tools).div(visit(n.getRight(), scope, tools));
         } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorIndex());
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
         }
     }
 
@@ -371,7 +371,7 @@ public class Interpreter implements ShakeGenerator {
         try {
             return visit(n.getLeft(), scope, tools).mod(visit(n.getRight(), scope, tools));
         } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorIndex());
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
         }
     }
 
@@ -391,7 +391,7 @@ public class Interpreter implements ShakeGenerator {
         try {
             return visit(n.getLeft(), scope, tools).pow(visit(n.getRight(), scope, tools));
         } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorIndex(), n.getOperatorIndex() + 1);
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition(), n.getOperatorPosition() + 1);
         }
     }
 
@@ -443,8 +443,17 @@ public class Interpreter implements ShakeGenerator {
     public InterpreterValue visitVariableAddAssignmentNode(VariableAddAssignmentNode n, Scope scope, InterpretationTools tools) {
         Variable variable = (Variable) visit(n.getVariable(), scope, tools);
         InterpreterValue value = visit(n.getValue(), scope, tools);
-        variable.setValue(variable.getValue().add(value));
-        return variable.getValue();
+
+        InterpreterValue newValue;
+        try {
+            newValue = variable.getValue().add(value);
+        } catch(Error error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+        }
+
+        variable.setValue(newValue);
+        return newValue;
     }
 
     /**
@@ -459,8 +468,17 @@ public class Interpreter implements ShakeGenerator {
     public InterpreterValue visitVariableSubAssignmentNode(VariableSubAssignmentNode n, Scope scope, InterpretationTools tools) {
         Variable variable = (Variable) visit(n.getVariable(), scope, tools);
         InterpreterValue value = visit(n.getValue(), scope, tools);
-        variable.setValue(variable.getValue().sub(value));
-        return variable.getValue();
+
+        InterpreterValue newValue;
+        try {
+            newValue = variable.getValue().sub(value);
+        } catch(Error error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+        }
+
+        variable.setValue(newValue);
+        return newValue;
     }
 
     /**
@@ -475,8 +493,17 @@ public class Interpreter implements ShakeGenerator {
     public InterpreterValue visitVariableMulAssignmentNode(VariableMulAssignmentNode n, Scope scope, InterpretationTools tools) {
         Variable variable = (Variable) visit(n.getVariable(), scope, tools);
         InterpreterValue value = visit(n.getValue(), scope, tools);
-        variable.setValue(variable.getValue().mul(value));
-        return variable.getValue();
+
+        InterpreterValue newValue;
+        try {
+            newValue = variable.getValue().mul(value);
+        } catch(Error error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+        }
+
+        variable.setValue(newValue);
+        return newValue;
     }
 
     /**
@@ -491,8 +518,17 @@ public class Interpreter implements ShakeGenerator {
     public InterpreterValue visitVariableDivAssignmentNode(VariableDivAssignmentNode n, Scope scope, InterpretationTools tools) {
         Variable variable = (Variable) visit(n.getVariable(), scope, tools);
         InterpreterValue value = visit(n.getValue(), scope, tools);
-        variable.setValue(variable.getValue().div(value));
-        return variable.getValue();
+
+        InterpreterValue newValue;
+        try {
+            newValue = variable.getValue().div(value);
+        } catch(Error error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+        }
+
+        variable.setValue(newValue);
+        return newValue;
     }
 
     /**
@@ -507,8 +543,17 @@ public class Interpreter implements ShakeGenerator {
     public InterpreterValue visitVariableModAssignmentNode(VariableModAssignmentNode n, Scope scope, InterpretationTools tools) {
         Variable variable = (Variable) visit(n.getVariable(), scope, tools);
         InterpreterValue value = visit(n.getValue(), scope, tools);
-        variable.setValue(variable.getValue().mod(value));
-        return variable.getValue();
+
+        InterpreterValue newValue;
+        try {
+            newValue = variable.getValue().mod(value);
+        } catch(Error error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+        }
+
+        variable.setValue(newValue);
+        return newValue;
     }
 
     /**
@@ -523,8 +568,17 @@ public class Interpreter implements ShakeGenerator {
     public InterpreterValue visitVariablePowAssignmentNode(VariablePowAssignmentNode n, Scope scope, InterpretationTools tools) {
         Variable variable = (Variable) visit(n.getVariable(), scope, tools);
         InterpreterValue value = visit(n.getValue(), scope, tools);
-        variable.setValue(variable.getValue().pow(value));
-        return variable.getValue();
+
+        InterpreterValue newValue;
+        try {
+            newValue = variable.getValue().pow(value);
+        } catch(Error error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
+                    n.getOperatorPosition(), n.getOperatorPosition() + 2);
+        }
+
+        variable.setValue(newValue);
+        return newValue;
     }
 
     /**

@@ -7,18 +7,22 @@ public class VariableMulAssignmentNode implements ValuedNode {
 
     private final ValuedNode variable;
     private final Node value;
+    private final int operatorPosition;
 
-    public VariableMulAssignmentNode(ValuedNode variable, Node value) {
+    public VariableMulAssignmentNode(ValuedNode variable, Node value, int operatorPosition) {
         this.variable = variable;
         this.value = value;
+        this.operatorPosition = operatorPosition;
     }
 
     public ValuedNode getVariable() {
         return variable;
     }
-
     public Node getValue() {
         return value;
+    }
+    public int getOperatorPosition() {
+        return operatorPosition;
     }
 
     @Override

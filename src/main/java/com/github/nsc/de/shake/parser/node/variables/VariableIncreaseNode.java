@@ -5,13 +5,18 @@ import com.github.nsc.de.shake.parser.node.ValuedNode;
 public class VariableIncreaseNode implements ValuedNode {
 
     private final ValuedNode variable;
+    private final int operatorPosition;
 
-    public VariableIncreaseNode(ValuedNode variable) {
+    public VariableIncreaseNode(ValuedNode variable, int operatorPosition) {
         this.variable = variable;
+        this.operatorPosition = operatorPosition;
     }
 
     public ValuedNode getVariable() {
         return variable;
+    }
+    public int getOperatorPosition() {
+        return operatorPosition;
     }
 
     @Override
