@@ -1,14 +1,15 @@
-private const System = java.java.lang.System;
-private const output_stream = System.out;
+import java.java.lang.System;
+import java.com.github.nsc.de.shake.cli.ShakeCli;
+
 
 private class ConsoleOutput {
 
-  function write ( e ) {
-    output_stream.print ( e );
+  void write ( e ) {
+    System.out.print ( e );
   }
 
-  function writeLine ( e ) {
-    output_stream.println ( e );
+  void writeLine ( e ) {
+    System.out.println ( e );
   }
 
 
@@ -19,27 +20,43 @@ const stdout = new ConsoleOutput();
 public class Console {
 
   function log ( e ) {
-    stdout.write ( e );
+    stdout.writeLine ( e );
   }
 
 }
 
 public const console = new Console();
 
-public function print ( content ) {
+public void print ( content ) {
 
   stdout.write ( content );
 
 }
 
-public function println ( content ) {
+public void println ( content ) {
 
   stdout.writeLine ( content );
 
 }
 
-public function exit ( ) {
+public void exit ( ) {
 
   System.exit(0);
 
+}
+
+private class ShakeInterpreterAPI {
+	
+	public void reset() {
+		
+		ShakeCli.interpreter.resetGlobals();
+		
+	}
+	
+}
+
+public class Shake {
+	
+	public static ShakeInterpreterAPI interpreter = new ShakeInterpreterAPI();
+	
 }

@@ -43,8 +43,8 @@ public class Scope {
      *
      * @param parent the parent of the scope (value for {@link #parent})
      * @param variables the variables of the scope (value for {@link #variables})
+     * @param interpreter the interpreter of the scope
      *
-     * @param interpreter
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     public Scope(Scope parent, VariableList variables, Interpreter interpreter) {
@@ -148,5 +148,9 @@ public class Scope {
     public InterpreterValue getReturnValue() {
         // just return the returnValue field
         return returnValue;
+    }
+
+    public void reset() {
+        this.getVariables().reset();
     }
 }

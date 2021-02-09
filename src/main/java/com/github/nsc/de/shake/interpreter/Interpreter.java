@@ -65,11 +65,6 @@ public class Interpreter implements ShakeGenerator {
     public Interpreter(Scope global) {
         // set the global field
         this.global = global;
-        try {
-            getDefaults();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -80,7 +75,6 @@ public class Interpreter implements ShakeGenerator {
     public Interpreter() {
         // set the global scope to a new scope
         this.global = new Scope(null, this);
-        global.getVariables().declare(new Variable<>("java", Java.class, new Java()));
 
         try {
             getDefaults();
@@ -90,6 +84,9 @@ public class Interpreter implements ShakeGenerator {
     }
 
     private void getDefaults() throws IOException {
+
+        global.getVariables().declare(new Variable<>("java", Java.class, new Java()));
+
         CharacterSource source = CharacterSource.from(
                 getClass().getResourceAsStream("/shake/java/system.shake"), "shake/system.shake");
         CharacterInputStream inputStream = new SourceCharacterInputStream(source);
@@ -98,6 +95,18 @@ public class Interpreter implements ShakeGenerator {
         Parser parser = new Parser(tokens);
         Tree tree = parser.parse();
         this.visit(tree);
+    }
+
+    public void resetGlobals() {
+
+        this.global.reset();
+
+        try {
+            this.getDefaults();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
