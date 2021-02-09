@@ -957,7 +957,7 @@ public class Interpreter implements ShakeGenerator {
     public InterpreterValue visitFunctionCallNode(FunctionCallNode node, Scope scope) {
 
         // get the function
-        InterpreterValue v = visit(node.getFunction());
+        InterpreterValue v = visit(node.getFunction(), scope);
 
         // call the function & return it's result
         return v.invoke(node, scope);
