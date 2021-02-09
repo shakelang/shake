@@ -1,9 +1,6 @@
 package com.github.nsc.de.shake.interpreter.values;
 
-import com.github.nsc.de.shake.interpreter.Interpreter;
-import com.github.nsc.de.shake.interpreter.Scope;
-import com.github.nsc.de.shake.interpreter.Variable;
-import com.github.nsc.de.shake.interpreter.VariableList;
+import com.github.nsc.de.shake.interpreter.*;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode;
@@ -247,8 +244,8 @@ public class ClassValue implements InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
-    public InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
-        return new ObjectValue(this);
+    public InterpreterValue newInstance(ClassConstructionNode node, Scope scope, InterpretationTools tools) {
+        return new ObjectValue(this, tools);
     }
 
 

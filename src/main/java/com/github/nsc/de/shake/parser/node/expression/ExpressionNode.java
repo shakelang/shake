@@ -5,10 +5,12 @@ import com.github.nsc.de.shake.parser.node.ValuedNode;
 public abstract class ExpressionNode implements ValuedNode {
     private final ValuedNode left;
     private final ValuedNode right;
+    private final int operatorIndex;
 
-    public ExpressionNode(ValuedNode left, ValuedNode right) {
+    public ExpressionNode(ValuedNode left, ValuedNode right, int operatorIndex) {
         this.left = left;
         this.right = right;
+        this.operatorIndex = operatorIndex;
     }
 
     public abstract char getOperator();
@@ -18,6 +20,9 @@ public abstract class ExpressionNode implements ValuedNode {
     }
     public ValuedNode getRight() {
         return right;
+    }
+    public int getOperatorIndex() {
+        return operatorIndex;
     }
 
     @Override

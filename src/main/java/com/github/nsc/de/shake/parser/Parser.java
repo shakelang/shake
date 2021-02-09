@@ -689,12 +689,12 @@ public class Parser {
 
         if(token == ADD) {
             in.skip();
-            return new AddNode(0, this.factor());
+            return new AddNode(0, this.factor(), in.getPosition());
         }
 
         if(token == SUB) {
             in.skip();
-            return new SubNode(0, this.factor());
+            return new SubNode(0, this.factor(), in.getPosition());
         }
 
         if(token == STRING) {
@@ -719,14 +719,15 @@ public class Parser {
         while(this.in.hasNext() &&
                 ((tmp_type = this.in.peekType()) == ADD || tmp_type == SUB)) {
 
+            this.in.skip();
+            int pos = this.in.actualStart();
+
             if(tmp_type == ADD) {
-                this.in.skip();
-                result = new AddNode(result, this.term());
+                result = new AddNode(result, this.term(), pos);
             }
 
             else {
-                this.in.skip();
-                result = new SubNode(result, this.term());
+                result = new SubNode(result, this.term(), pos);
             }
 
         }
@@ -741,17 +742,17 @@ public class Parser {
         while(this.in.hasNext() &&
                 ((tmp_type = this.in.peekType()) == MUL || tmp_type == DIV || tmp_type == MOD)) {
 
+            this.in.skip();
+            int pos = this.in.actualStart();
+
             if(tmp_type == MUL) {
-                this.in.skip();
-                result = new MulNode(result, this.pow());
+                result = new MulNode(result, this.pow(), pos);
             }
             else if(tmp_type == DIV) {
-                this.in.skip();
-                result = new DivNode(result, this.pow());
+                result = new DivNode(result, this.pow(), pos);
             }
             else {
-                this.in.skip();
-                result = new ModNode(result, this.pow());
+                result = new ModNode(result, this.pow(), pos);
             }
         }
         return result;
@@ -762,7 +763,8 @@ public class Parser {
 
         while(this.in.hasNext() && this.in.peekType() == POW) {
             this.in.skip();
-            result = new PowNode(result, this.factor());
+            int pos = this.in.actualStart();
+            result = new PowNode(result, this.factor(), pos);
         }
         return result;
     }

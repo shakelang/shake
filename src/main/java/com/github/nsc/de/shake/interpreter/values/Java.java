@@ -1,5 +1,6 @@
 package com.github.nsc.de.shake.interpreter.values;
 
+import com.github.nsc.de.shake.interpreter.InterpretationTools;
 import com.github.nsc.de.shake.interpreter.Scope;
 import com.github.nsc.de.shake.interpreter.Variable;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
@@ -190,12 +191,12 @@ public class Java implements InterpreterValue {
         }
 
         @Override
-        public InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
+        public InterpreterValue newInstance(ClassConstructionNode node, Scope scope, InterpretationTools tools) {
 
             Object[] args = new Object[node.getArgs().length];
 
             for(int i = 0; i < node.getArgs().length; i++) {
-                args[i] = scope.getInterpreter().visit(node.getArgs()[i], scope).toJava();
+                args[i] = scope.getInterpreter().visit(node.getArgs()[i], scope, tools).toJava();
             }
 
             try {
@@ -275,12 +276,12 @@ public class Java implements InterpreterValue {
         }
 
         @Override
-        public InterpreterValue invoke(FunctionCallNode node, Scope scope) {
+        public InterpreterValue invoke(FunctionCallNode node, Scope scope, InterpretationTools tools) {
 
             Object[] args = new Object[node.getArgs().length];
 
             for(int i = 0; i < node.getArgs().length; i++) {
-                args[i] = scope.getInterpreter().visit(node.getArgs()[i], scope).toJava();
+                args[i] = scope.getInterpreter().visit(node.getArgs()[i], scope, tools).toJava();
             }
 
             try {

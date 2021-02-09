@@ -5,26 +5,27 @@ import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
 import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
 
 public class AddNode extends ExpressionNode {
-    public AddNode(ValuedNode left, ValuedNode right) {
-        super(left, right);
+
+    public AddNode(ValuedNode left, ValuedNode right, int operatorIndex) {
+        super(left, right, operatorIndex);
     }
-    public AddNode(int left, ValuedNode right) {
-        this(new IntegerNode(left), right);
+    public AddNode(int left, ValuedNode right, int operatorIndex) {
+        this(new IntegerNode(left), right, operatorIndex);
     }
-    public AddNode(ValuedNode left, int right) {
-        this(left, new IntegerNode(right));
+    public AddNode(ValuedNode left, int right, int operatorIndex) {
+        this(left, new IntegerNode(right), operatorIndex);
     }
-    public AddNode(int left, int right) {
-        this(new IntegerNode(left), new IntegerNode(right));
+    public AddNode(int left, int right, int operatorIndex) {
+        this(new IntegerNode(left), new IntegerNode(right), operatorIndex);
     }
-    public AddNode(double left, ValuedNode right) {
-        this(new DoubleNode(left), right);
+    public AddNode(double left, ValuedNode right, int operatorIndex) {
+        this(new DoubleNode(left), right, operatorIndex);
     }
-    public AddNode(ValuedNode left, double right) {
-        this(left, new DoubleNode(right));
+    public AddNode(ValuedNode left, double right, int operatorIndex) {
+        this(left, new DoubleNode(right), operatorIndex);
     }
-    public AddNode(double left, double right) {
-        this(new DoubleNode(left), new DoubleNode(right));
+    public AddNode(double left, double right, int operatorIndex) {
+        this(new DoubleNode(left), new DoubleNode(right), operatorIndex);
     }
 
     @Override

@@ -76,7 +76,7 @@ public class PreProcessor {
 
         }
 
-        return new AddNode(left, right);
+        return new AddNode(left, right, node.getOperatorIndex());
     }
 
     private ValuedNode process(SubNode node, PreProcessorContext ctx) {
@@ -101,7 +101,7 @@ public class PreProcessor {
 
         }
 
-        return new SubNode(left, right);
+        return new SubNode(left, right, node.getOperatorIndex());
     }
 
     private ValuedNode process(MulNode node, PreProcessorContext ctx) {
@@ -126,7 +126,7 @@ public class PreProcessor {
 
         }
 
-        return new MulNode(left, right);
+        return new MulNode(left, right, node.getOperatorIndex());
     }
 
     private ValuedNode process(DivNode node, PreProcessorContext ctx) {
@@ -151,7 +151,7 @@ public class PreProcessor {
 
         }
 
-        return new DivNode(left, right);
+        return new DivNode(left, right, node.getOperatorIndex());
     }
 
     private ValuedNode process(ModNode node, PreProcessorContext ctx) {
@@ -176,7 +176,7 @@ public class PreProcessor {
 
         }
 
-        return new ModNode(left, right);
+        return new ModNode(left, right, node.getOperatorIndex());
     }
 
     private ValuedNode process(PowNode node, PreProcessorContext ctx) {
@@ -201,7 +201,7 @@ public class PreProcessor {
 
         }
 
-        return new PowNode(left, right);
+        return new PowNode(left, right, node.getOperatorIndex());
     }
 
 

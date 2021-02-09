@@ -2,10 +2,12 @@ package com.github.nsc.de.shake.cli;
 
 import com.github.nsc.de.shake.generators.java.JavaGenerator;
 import com.github.nsc.de.shake.generators.json.JsonGenerator;
+import com.github.nsc.de.shake.interpreter.InterpretationTools;
 import com.github.nsc.de.shake.interpreter.Interpreter;
 import com.github.nsc.de.shake.lexer.Lexer;
 import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
 import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceCharacterInputStream;
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.parser.Parser;
 import com.github.nsc.de.shake.parser.node.Tree;
@@ -103,10 +105,10 @@ public class ShakeCli {
                     CharacterInputStream chars = new SourceCharacterInputStream("<Console>", s.nextLine());
 
                     // parse the CharacterInputStream into a Tree
-                    Tree t = parse(chars);
+                    ParseResult pr = parse(chars);
 
                     // execute the tree using the specified generator
-                    execute(t, generator, null, arguments.getOption("target").getValues()[0]);
+                    execute(pr, generator, null, arguments.getOption("target").getValues()[0]);
 
                 } catch(Throwable t) {
                     // When an error occurs while executing the code, just print it's stack and continue
@@ -128,10 +130,10 @@ public class ShakeCli {
                     "<File: " + arguments.getArguments().get(0) + ">", file);
 
             // Parse the CharacterInputStream
-            Tree t = parse(chars);
+            ParseResult pr = parse(chars);
 
             // Execute the Tree using the specified generator
-            execute(t, generator, src, arguments.getOption("target").getValues()[0]);
+            execute(pr, generator, src, arguments.getOption("target").getValues()[0]);
 
         }
 
@@ -149,7 +151,7 @@ public class ShakeCli {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    private static Tree parse(CharacterInputStream in) {
+    private static ParseResult parse(CharacterInputStream in) {
 
         // Create a new Lexer from the CharacterInputStream
         Lexer lexer = new Lexer(in);
@@ -170,19 +172,19 @@ public class ShakeCli {
         if(DEBUG) System.out.printf("[DEBUG] Parsed Tree: %s%n", tree.toString());
 
         // return the Tree
-        return tree;
+        return new ParseResult(tree, tokens.getMap());
     }
 
     /**
      * This function executes a {@link Tree} using a specified generator
      *
-     * @param t the {@link Tree} to execute
+     * @param pr the {@link ParseResult} to execute
      * @param generator the generator to use (just give the name of it)
      * @param src the source file of the program
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    private static void execute(Tree t, String generator, String src, String target) throws IOException {
+    private static void execute(ParseResult pr, String generator, String src, String target) throws IOException {
 
         if(src != null && !src.endsWith(".shake")) throw new Error("Shake file names have to end with extension \".shake\"");
         String targetFile = src != null ? src.substring(0, src.length() - 6) : null;
@@ -193,30 +195,30 @@ public class ShakeCli {
             // if the generator argument is "interpreter" then use the interpreter to visit the Tree
             // and print it'S results to the console
             case "interpreter":
-                System.out.printf(">> %s%n", ShakeCli.interpreter.visit(t).toString());
+                System.out.printf(">> %s%n", ShakeCli.interpreter.visit(pr.getTree(), new InterpretationTools(pr.getMap())).toString());
                 break;
             // if the generator argument is "json" then use the json-generator to visit the Tree
             // and print it'S results to the console
             case "json":
-                if(src == null) System.out.printf(">> %s%n", ShakeCli.json.visit(t).toString());
+                if(src == null) System.out.printf(">> %s%n", ShakeCli.json.visit(pr.getTree()).toString());
                 else
                     writeFile(new File(target != null ? target : targetFile + ShakeCli.json.getExtension()),
-                            ShakeCli.json.visit(t).toString());
+                            ShakeCli.json.visit(pr.getTree()).toString());
                 break;
             case "beauty-json":
             case "bjson":
-                if(src == null) System.out.printf(">> %s%n", ShakeCli.json.visitTree(t).toString(2));
+                if(src == null) System.out.printf(">> %s%n", ShakeCli.json.visitTree(pr.getTree()).toString(2));
                 else
                     writeFile(new File(target != null ? target : targetFile + ShakeCli.json.getExtension()),
-                            ShakeCli.json.visitTree(t).toString(2));
+                            ShakeCli.json.visitTree(pr.getTree()).toString(2));
                 break;
             // if the generator argument is "java" then use the java-generator to visit the Tree
             // and print it'S results to the console
             case "java":
-                if(src == null) System.out.printf(">> %s%n", ShakeCli.java.visitProgram(t, "CliInput").toString("", "  "));
+                if(src == null) System.out.printf(">> %s%n", ShakeCli.java.visitProgram(pr.getTree(), "CliInput").toString("", "  "));
                 else
                     writeFile(new File(target != null ? target : targetFile + ShakeCli.java.getExtension()),
-                            ShakeCli.java.visitProgram(t, baseName).toString("", "  "));
+                            ShakeCli.java.visitProgram(pr.getTree(), baseName).toString("", "  "));
                 break;
             default:
                 throw new Error("Unknown generator!");
@@ -230,6 +232,25 @@ public class ShakeCli {
         BufferedWriter writer = new BufferedWriter(new FileWriter(f));
         writer.write(content);
         writer.close();
+    }
+
+    private static class ParseResult {
+
+        private final Tree tree;
+        private final PositionMap map;
+
+        private ParseResult(Tree tree, PositionMap map) {
+            this.tree = tree;
+            this.map = map;
+        }
+
+        public Tree getTree() {
+            return tree;
+        }
+
+        public PositionMap getMap() {
+            return map;
+        }
     }
 
 }

@@ -15,7 +15,7 @@ public class CompilerError extends Error {
     private static Position end_zw;
 
     private CompilerError(String message, ErrorMarker marker, String name, String details, Position start, Position end) {
-        super(message + "\n\n" + marker + "\n");
+        super(String.format("%s: %s%n%n%s%n", message, details, marker));
         this.name = name;
         this.details = details;
         this.start = start;
@@ -24,7 +24,7 @@ public class CompilerError extends Error {
     }
 
     private CompilerError(String message, ErrorMarker marker, String name, String details, PositionMap map, int start, int end) {
-        super(message + "\n\n" + marker + "\n");
+        super(String.format("%s: %s%n%n%s%n", message, details, marker));
         this.name = name;
         this.details = details;
         this.start = map.resolve(start);

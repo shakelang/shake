@@ -1,5 +1,6 @@
 package com.github.nsc.de.shake.interpreter.values;
 
+import com.github.nsc.de.shake.interpreter.InterpretationTools;
 import com.github.nsc.de.shake.interpreter.Interpreter;
 import com.github.nsc.de.shake.interpreter.Scope;
 import com.github.nsc.de.shake.interpreter.Variable;
@@ -174,7 +175,7 @@ public class Function implements InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
-    public InterpreterValue invoke(FunctionCallNode node, Scope scope) {
+    public InterpreterValue invoke(FunctionCallNode node, Scope scope, InterpretationTools tools) {
         // TODO return statements
 
         // Create function scope (for the function execution)
@@ -208,30 +209,15 @@ public class Function implements InterpreterValue {
             //
             // also we use the scope argument here as scope because we want to use variables at the location of
             // the function call and not at the location of the function declaration
-            function_scope.getScopeVariables().get(this.getArgs()[i].getName()).setValue(interpreter.visit(node.getArgs()[i], scope));
+            function_scope.getScopeVariables().get(this.getArgs()[i].getName()).setValue(interpreter.visit(node.getArgs()[i], scope, tools));
 
         }
 
         // Visits the function body using the function scope so we can use all
         // the parameters that are given to the function
-        this.getInterpreter().visit(this.getBody(), function_scope);
+        this.getInterpreter().visit(this.getBody(), function_scope, tools);
         InterpreterValue value = function_scope.getReturnValue();
         return value != null ? value : NullValue.NULL;
-    }
-
-    /**
-     * Function call method
-     *
-     * @deprecated Moved to {@link Function#invoke(FunctionCallNode, Scope)}. Will be removed in the future
-     *
-     * @param node the node that called the function
-     * @param scope the scope the call was made in (to process the arguments)
-     *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
-     */
-    @Deprecated
-    public void call(FunctionCallNode node, Scope scope) {
-        this.invoke(node, scope);
     }
 
 
