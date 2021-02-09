@@ -1,5 +1,7 @@
 package com.github.nsc.de.shake.interpreter.values;
 
+import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError;
+
 /**
  * {@link InterpreterValue}s for integers
  *
@@ -90,7 +92,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof StringValue) return new StringValue(this.value + ((StringValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '+' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '+' is not defined for type integer and " + v.getName());
 
     }
 
@@ -119,7 +121,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof CharacterValue) return new IntegerValue(getValue() - ((CharacterValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '-' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '-' is not defined for type integer and " + v.getName());
 
     }
 
@@ -148,7 +150,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof CharacterValue) return new IntegerValue(getValue() * ((CharacterValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '*' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '*' is not defined for type integer and " + v.getName());
 
     }
 
@@ -177,7 +179,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof CharacterValue) return new IntegerValue(getValue() / ((CharacterValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '/' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '/' is not defined for type integer and " + v.getName());
 
     }
 
@@ -206,7 +208,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof CharacterValue) return new IntegerValue(getValue() % ((CharacterValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '%' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '%' is not defined for type integer and " + v.getName());
 
     }
 
@@ -235,7 +237,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof CharacterValue) return new IntegerValue((int) Math.pow(getValue(), ((CharacterValue) v).getValue()));
 
         // In other case just throw an error
-        throw new Error("Operator '**' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '**' is not defined for type integer and " + v.getName());
 
     }
 
@@ -265,7 +267,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof DoubleValue) return BooleanValue.from(getValue() == ((DoubleValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '==' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '==' is not defined for type integer and " + v.getName());
 
     }
 
@@ -289,7 +291,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof DoubleValue) return BooleanValue.from(getValue() >= ((DoubleValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '>=' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '>=' is not defined for type integer and " + v.getName());
 
     }
 
@@ -313,7 +315,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof DoubleValue) return BooleanValue.from(getValue() <= ((DoubleValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '<=' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '<=' is not defined for type integer and " + v.getName());
 
     }
 
@@ -337,7 +339,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof DoubleValue) return BooleanValue.from(getValue() > ((DoubleValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '>' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '>' is not defined for type integer and " + v.getName());
 
     }
 
@@ -361,7 +363,7 @@ public class IntegerValue implements InterpreterValue {
         if(v instanceof DoubleValue) return BooleanValue.from(getValue() < ((DoubleValue) v).getValue());
 
         // In other case just throw an error
-        throw new Error("Operator '<' is not defined for type integer and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '<' is not defined for type integer and " + v.getName());
 
     }
 

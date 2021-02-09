@@ -2,6 +2,7 @@ package com.github.nsc.de.shake.interpreter.values;
 
 import com.github.nsc.de.shake.interpreter.InterpretationTools;
 import com.github.nsc.de.shake.interpreter.Scope;
+import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError;
 import com.github.nsc.de.shake.interpreter.Variable;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
@@ -146,7 +147,7 @@ public class Java implements InterpreterValue {
                         return Variable.finalOf(c, new JavaValue(fields[i].getType(), fields[i].get(null)));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
-                        throw new Error(e);
+                        throw new UnformattedInterpreterError(e);
                     }
                 }
 
@@ -224,12 +225,12 @@ public class Java implements InterpreterValue {
 
                 }
 
-                throw new Error(String.format("No constructor of class %s for arguments %s found",
+                throw new UnformattedInterpreterError(String.format("No constructor of class %s for arguments %s found",
                         this.getJavaClass().getName(), Arrays.toString(Arrays.stream(args)
                                 .map(arg -> arg.getClass()).toArray())));
 
             } catch (Exception e) {
-                throw new Error(e);
+                throw new UnformattedInterpreterError(e);
             }
 
         }
@@ -289,7 +290,7 @@ public class Java implements InterpreterValue {
                 s.execute();
                 return InterpreterValue.of(s.getValue());
             } catch (Exception e) {
-                throw new Error(e);
+                throw new UnformattedInterpreterError(e);
             }
         }
 
@@ -357,7 +358,7 @@ public class Java implements InterpreterValue {
                 Class[] classes = this.type.getClasses();
                 for(int i = 0; i < classes.length; i++)
                     if(classes[i].getSimpleName().equals(c) && !Modifier.isStatic(classes[i].getModifiers()))
-                        throw new Error("Can't get non-static inner classes");
+                        throw new UnformattedInterpreterError("Can't get non-static inner classes");
 
             } catch (IllegalAccessException e) {
                 e.printStackTrace();

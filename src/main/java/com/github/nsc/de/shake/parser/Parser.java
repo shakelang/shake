@@ -199,9 +199,8 @@ public class Parser {
 
     private ValuedNode parseIdentifier(ValuedNode parent) {
         if(in.nextType() != TokenType.IDENTIFIER) throw new ParserError("Expecting identifier");
-        String identifier = in.actualValue();
 
-        IdentifierNode identifierNode = new IdentifierNode(parent, identifier);
+        IdentifierNode identifierNode = new IdentifierNode(parent, in.actualValue(), in.actualStart());
         ValuedNode ret = null;
 
         // Assignments
@@ -397,12 +396,12 @@ public class Parser {
             case KEYWORD_FLOAT: type = VariableType.FLOAT; break;
             case KEYWORD_DOUBLE: type = VariableType.DOUBLE; break;
             case IDENTIFIER:
-                IdentifierNode node = new IdentifierNode(this.getInput().actualValue());
+                IdentifierNode node = new IdentifierNode(this.getInput().actualValue(), this.getInput().getPosition());
                 while(this.in.peekType() == DOT) {
                     this.in.skip();
                     this.in.skipIgnorable();
                     if(this.getInput().nextType() != IDENTIFIER) throw new ParserError("Expecting identifier");
-                    node = new IdentifierNode(this.in.actualValue());
+                    node = new IdentifierNode(this.in.actualValue(), this.in.actualStart());
                 }
                 type = new VariableType(node);
                 break;
@@ -518,9 +517,12 @@ public class Parser {
         if(!this.in.skipIgnorable().hasNext() || this.in.peekType() != IDENTIFIER) throw new ParserError("Expecting identifier");
 
         String identifier = this.in.nextValue();
+        int pos = in.actualStart();
 
         if(this.in.skipIgnorable().hasNext() && this.in.peekType() == ASSIGN) {
-            return new VariableDeclarationNode(identifier, VariableType.DYNAMIC, this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
+            return new VariableDeclarationNode(identifier, VariableType.DYNAMIC,
+                    this.varAssignment(new IdentifierNode(identifier, pos)),
+                    access, isInClass, isStatic, isFinal);
         } else {
             return new VariableDeclarationNode(this.in.actualValue(), VariableType.DYNAMIC, null, access, isInClass, isStatic, isFinal);
         }
@@ -557,11 +559,12 @@ public class Parser {
             throw new ParserError("Expecting identifier");
 
         String identifier = this.in.nextValue();
+        int position = in.actualStart();
 
         boolean hasNext = this.in.skipIgnorable().hasNext();
         if(hasNext && this.in.peekType() == ASSIGN) {
             return new VariableDeclarationNode(identifier, type,
-                    this.varAssignment(new IdentifierNode(identifier)), access, isInClass, isStatic, isFinal);
+                    this.varAssignment(new IdentifierNode(identifier, position)), access, isInClass, isStatic, isFinal);
         } else if(hasNext && this.in.peekType() == LPAREN)
             return cStyleFunctionDeclaration(type, identifier, access, isInClass, isStatic, isFinal);
         else return new VariableDeclarationNode(this.in.actualValue(), type, null, access, isInClass,

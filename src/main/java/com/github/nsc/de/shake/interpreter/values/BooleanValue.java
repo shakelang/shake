@@ -1,6 +1,7 @@
 package com.github.nsc.de.shake.interpreter.values;
 
 
+import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError;
 
 /**
  * {@link InterpreterValue}s for booleans ({@link BooleanValue#TRUE} &amp; {@link BooleanValue#FALSE}
@@ -75,7 +76,7 @@ public enum BooleanValue implements InterpreterValue {
 
         // if v is null return null
         if(v == null) return FALSE;
-        throw new Error("Could not create boolean from " + v.getName());
+        throw new UnformattedInterpreterError("Could not create boolean from " + v.getName());
     }
 
 
@@ -133,7 +134,7 @@ public enum BooleanValue implements InterpreterValue {
         if(v instanceof BooleanValue) {
             return BooleanValue.from(this.value || ((BooleanValue) v).value);
         }
-        throw new Error("Operator '||' is not defined for type boolean and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '||' is not defined for type boolean and " + v.getName());
     }
 
     /**
@@ -151,7 +152,7 @@ public enum BooleanValue implements InterpreterValue {
         if(v instanceof BooleanValue) {
             return BooleanValue.from(this.value ^ ((BooleanValue) v).value);
         }
-        throw new Error("Operator '^' is not defined for type boolean and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '^' is not defined for type boolean and " + v.getName());
     }
 
     /**
@@ -169,7 +170,7 @@ public enum BooleanValue implements InterpreterValue {
         if(v instanceof BooleanValue) {
             return BooleanValue.from(this.value && ((BooleanValue) v).value);
         }
-        throw new Error("Operator '&&' is not defined for type boolean and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '&&' is not defined for type boolean and " + v.getName());
     }
 
     /**
@@ -187,7 +188,7 @@ public enum BooleanValue implements InterpreterValue {
         if(v instanceof BooleanValue) {
             return BooleanValue.from(this.value == ((BooleanValue) v).value);
         }
-        throw new Error("Operator '==' is not defined for type boolean and " + v.getName());
+        throw new UnformattedInterpreterError("Operator '==' is not defined for type boolean and " + v.getName());
     }
 
 

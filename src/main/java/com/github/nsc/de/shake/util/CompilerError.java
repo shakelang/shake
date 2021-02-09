@@ -14,6 +14,38 @@ public class CompilerError extends Error {
     private static Position start_zw;
     private static Position end_zw;
 
+    private CompilerError(String message, ErrorMarker marker, String name, String details, Position start, Position end,
+                          Throwable cause) {
+        super(String.format("%s: %s%n%n%s%n", message, details, marker), cause);
+        this.name = name;
+        this.details = details;
+        this.start = start;
+        this.end = end;
+        this.marker = marker;
+    }
+
+    private CompilerError(String message, ErrorMarker marker, String name, String details, PositionMap map, int start, int end,
+                          Throwable cause) {
+        super(String.format("%s: %s%n%n%s%n", message, details, marker), cause);
+        this.name = name;
+        this.details = details;
+        this.start = map.resolve(start);
+        this.end = map.resolve(end);
+        this.marker = marker;
+    }
+
+    public CompilerError(String message, String name, String details, Position start, Position end,
+                         Throwable cause) {
+        this(message, createPositionMarker(CompilerError.maxLength, start, end), name, details, start, end, cause);
+    }
+
+    public CompilerError(String message, String name, String details, PositionMap map, int start, int end,
+                         Throwable cause) {
+        this(message, createPositionMarker(CompilerError.maxLength, start_zw = map.resolve(start),
+                end_zw = map.resolve(end)), name, details, start_zw, end_zw, cause);
+        start_zw = end_zw = null;
+    }
+
     private CompilerError(String message, ErrorMarker marker, String name, String details, Position start, Position end) {
         super(String.format("%s: %s%n%n%s%n", message, details, marker));
         this.name = name;
@@ -37,7 +69,8 @@ public class CompilerError extends Error {
     }
 
     public CompilerError(String message, String name, String details, PositionMap map, int start, int end) {
-        this(message, createPositionMarker(CompilerError.maxLength, start_zw = map.resolve(start), end_zw = map.resolve(end)), name, details, start_zw, end_zw);
+        this(message, createPositionMarker(CompilerError.maxLength, start_zw = map.resolve(start),
+                end_zw = map.resolve(end)), name, details, start_zw, end_zw);
         start_zw = end_zw = null;
     }
 

@@ -213,7 +213,7 @@ public class ClassValue implements InterpreterValue {
     public Variable getChild(String c) {
         // If the child does not exist throw an error
         // in other case return the child
-        if(getStatics().get(c) == null || !getStatics().get(c).hasValue()) throw new Error(String.format("Class \"%s\" has no property called %s", getClassName(), c));
+        if(getStatics().get(c) == null || !getStatics().get(c).hasValue()) throw new UnformattedInterpreterError(String.format("Class \"%s\" has no property called %s", getClassName(), c));
         return getStatics().get(c);
     }
 

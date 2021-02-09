@@ -3,6 +3,7 @@ package com.github.nsc.de.shake.interpreter.values;
 
 import com.github.nsc.de.shake.interpreter.InterpretationTools;
 import com.github.nsc.de.shake.interpreter.Scope;
+import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError;
 import com.github.nsc.de.shake.interpreter.Variable;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
@@ -29,9 +30,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue add(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '+' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '+' is not defined for type " + getName());
     }
 
     /**
@@ -43,9 +44,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue sub(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '-' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '-' is not defined for type " + getName());
     }
 
     /**
@@ -57,9 +58,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue mul(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '*' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '*' is not defined for type " + getName());
     }
 
     /**
@@ -71,9 +72,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue div(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '/' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '/' is not defined for type " + getName());
     }
 
     /**
@@ -85,9 +86,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue mod(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '%' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '%' is not defined for type " + getName());
     }
 
     /**
@@ -99,9 +100,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue pow(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '**' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '**' is not defined for type " + getName());
     }
 
 
@@ -118,9 +119,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue or(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '||' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '||' is not defined for type " + getName());
     }
 
     /**
@@ -132,9 +133,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue xor(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '^' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '^' is not defined for type " + getName());
     }
 
     /**
@@ -146,9 +147,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue and(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '&&' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '&&' is not defined for type " + getName());
     }
 
 
@@ -165,9 +166,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue equals(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '==' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '==' is not defined for type " + getName());
     }
 
     /**
@@ -179,9 +180,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue bigger_equals(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '>=' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '>=' is not defined for type " + getName());
     }
 
     /**
@@ -193,9 +194,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue smaller_equals(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '<=' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '<=' is not defined for type " + getName());
     }
 
     /**
@@ -207,9 +208,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue bigger(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '>' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '>' is not defined for type " + getName());
     }
 
     /**
@@ -221,9 +222,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue smaller(InterpreterValue v) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Operator '<' is not defined for type " + getName());
+        throw new UnformattedInterpreterError("Operator '<' is not defined for type " + getName());
     }
 
 
@@ -240,9 +241,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default Variable<?> getChild(String c) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Can't get child values of type " + getName());
+        throw new UnformattedInterpreterError("Can't get child values of type " + getName());
     }
 
     /**
@@ -253,9 +254,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default String[] getChildren() {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Can't get child values of type " + getName());
+        throw new UnformattedInterpreterError("Can't get child values of type " + getName());
     }
 
 
@@ -273,9 +274,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue invoke(FunctionCallNode node, Scope scope, InterpretationTools tools) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Can't invoke type " + getName());
+        throw new UnformattedInterpreterError("Can't invoke type " + getName());
     }
 
     /**
@@ -288,9 +289,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     default InterpreterValue newInstance(ClassConstructionNode node, Scope scope, InterpretationTools tools) {
-        // Throw an error when the operator is not implemented
+        // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new Error("Can't create a new instance of type " + getName());
+        throw new UnformattedInterpreterError("Can't create a new instance of type " + getName());
     }
 
 
@@ -310,7 +311,7 @@ public interface InterpreterValue {
     @SuppressWarnings("unchecked")
     default <T extends InterpreterValue> T to(Class<T> type) {
         if(type.isInstance(this)) return (T) this;
-        throw new Error("Can't convert " + getName() + " to type " + type.getName());
+        throw new UnformattedInterpreterError("Can't convert " + getName() + " to type " + type.getName());
     }
 
     /**
@@ -325,7 +326,7 @@ public interface InterpreterValue {
     @SuppressWarnings("unchecked")
     default <T extends InterpreterValue> T castTo(Class<T> type) {
         if(type.isInstance(this)) return (T) this;
-        throw new Error("Can't convert " + getName() + " to type " + type.getName());
+        throw new UnformattedInterpreterError("Can't convert " + getName() + " to type " + type.getName());
     }
 
 

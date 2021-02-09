@@ -4,13 +4,16 @@ public class IdentifierNode implements ValuedNode {
 
     private final ValuedNode parent;
     private final String name;
+    private final int position;
 
-    public IdentifierNode(ValuedNode parent, String name) {
+    public IdentifierNode(ValuedNode parent, String name, int position) {
         this.parent = parent;
         this.name = name;
+        this.position = position;
     }
 
-    public IdentifierNode(String name) {
+    public IdentifierNode(String name, int position) {
+        this.position = position;
         this.parent = null;
         this.name = name;
     }
@@ -18,9 +21,11 @@ public class IdentifierNode implements ValuedNode {
     public ValuedNode getParent() {
         return parent;
     }
-
     public String getName() {
         return name;
+    }
+    public int getPosition() {
+        return position;
     }
 
     @Override

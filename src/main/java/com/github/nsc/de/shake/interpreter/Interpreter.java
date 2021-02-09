@@ -290,8 +290,8 @@ public class Interpreter implements ShakeGenerator {
         // give the right result as argument.
         try {
             return visit(n.getLeft(), scope, tools).add(visit(n.getRight(), scope, tools));
-        } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
+        } catch(UnformattedInterpreterError error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition(), error);
         }
     }
 
@@ -310,8 +310,8 @@ public class Interpreter implements ShakeGenerator {
         // give the right result as argument.
         try {
             return visit(n.getLeft(), scope, tools).sub(visit(n.getRight(), scope, tools));
-        } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
+        } catch(UnformattedInterpreterError error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition(), error);
         }
     }
 
@@ -330,8 +330,8 @@ public class Interpreter implements ShakeGenerator {
         // give the right result as argument.
         try {
             return visit(n.getLeft(), scope, tools).mul(visit(n.getRight(), scope, tools));
-        } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
+        } catch(UnformattedInterpreterError error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition(), error);
         }
     }
 
@@ -350,8 +350,8 @@ public class Interpreter implements ShakeGenerator {
         // give the right result as argument.
         try {
             return visit(n.getLeft(), scope, tools).div(visit(n.getRight(), scope, tools));
-        } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
+        } catch(UnformattedInterpreterError error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition(), error);
         }
     }
 
@@ -370,8 +370,8 @@ public class Interpreter implements ShakeGenerator {
         // give the right result as argument.
         try {
             return visit(n.getLeft(), scope, tools).mod(visit(n.getRight(), scope, tools));
-        } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition());
+        } catch(UnformattedInterpreterError error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition(), error);
         }
     }
 
@@ -390,8 +390,9 @@ public class Interpreter implements ShakeGenerator {
         // give the right result one as argument.
         try {
             return visit(n.getLeft(), scope, tools).pow(visit(n.getRight(), scope, tools));
-        } catch(Error error) {
-            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition(), n.getOperatorPosition() + 1);
+        } catch(UnformattedInterpreterError error) {
+            throw new InterpreterError(error.getMessage(), tools.getPositionMap(), n.getOperatorPosition(),
+                    n.getOperatorPosition() + 1, error);
         }
     }
 
@@ -447,9 +448,9 @@ public class Interpreter implements ShakeGenerator {
         InterpreterValue newValue;
         try {
             newValue = variable.getValue().add(value);
-        } catch(Error error) {
+        } catch(UnformattedInterpreterError error) {
             throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
-                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1, error);
         }
 
         variable.setValue(newValue);
@@ -472,9 +473,9 @@ public class Interpreter implements ShakeGenerator {
         InterpreterValue newValue;
         try {
             newValue = variable.getValue().sub(value);
-        } catch(Error error) {
+        } catch(UnformattedInterpreterError error) {
             throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
-                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1, error);
         }
 
         variable.setValue(newValue);
@@ -497,9 +498,9 @@ public class Interpreter implements ShakeGenerator {
         InterpreterValue newValue;
         try {
             newValue = variable.getValue().mul(value);
-        } catch(Error error) {
+        } catch(UnformattedInterpreterError error) {
             throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
-                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1, error);
         }
 
         variable.setValue(newValue);
@@ -522,9 +523,9 @@ public class Interpreter implements ShakeGenerator {
         InterpreterValue newValue;
         try {
             newValue = variable.getValue().div(value);
-        } catch(Error error) {
+        } catch(UnformattedInterpreterError error) {
             throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
-                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1, error);
         }
 
         variable.setValue(newValue);
@@ -547,9 +548,9 @@ public class Interpreter implements ShakeGenerator {
         InterpreterValue newValue;
         try {
             newValue = variable.getValue().mod(value);
-        } catch(Error error) {
+        } catch(UnformattedInterpreterError error) {
             throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
-                    n.getOperatorPosition(), n.getOperatorPosition() + 1);
+                    n.getOperatorPosition(), n.getOperatorPosition() + 1, error);
         }
 
         variable.setValue(newValue);
@@ -572,9 +573,9 @@ public class Interpreter implements ShakeGenerator {
         InterpreterValue newValue;
         try {
             newValue = variable.getValue().pow(value);
-        } catch(Error error) {
+        } catch(UnformattedInterpreterError error) {
             throw new InterpreterError(error.getMessage(), tools.getPositionMap(),
-                    n.getOperatorPosition(), n.getOperatorPosition() + 2);
+                    n.getOperatorPosition(), n.getOperatorPosition() + 2, error);
         }
 
         variable.setValue(newValue);
@@ -1137,10 +1138,17 @@ public class Interpreter implements ShakeGenerator {
             InterpreterValue parent = visit(node.getParent(), scope, tools);
 
             // get the child from the parent
-            Variable v = parent.getChild(node.getName());
+            Variable v;
+            try {
+                v = parent.getChild(node.getName());
+            } catch (UnformattedInterpreterError e) {
+                throw new InterpreterError(e.getMessage(), tools.getPositionMap(), node.getPosition(),
+                        node.getPosition() + node.getName().length() - 1, e);
+            }
 
             // if the variable not declared throw an error
-            if(v == null) throw new Error(String.format("Child \"%s\" is not defined", node.getName()));
+            if(v == null) throw new InterpreterError(String.format("Child \"%s\" is not defined", node.getName()),
+                    tools.getPositionMap(), node.getPosition(), node.getPosition() + node.getName().length() - 1);
 
             // return the variable
             return v;
@@ -1152,7 +1160,8 @@ public class Interpreter implements ShakeGenerator {
             Variable v = scope.getVariables().get(node.getName());
 
             // if the variable is not declared throw an error
-            if(v == null) throw new Error(String.format("Variable with name \"%s\" is not declared", node.getName()));
+            if(v == null) throw new InterpreterError(String.format("Variable with name \"%s\" is not declared", node.getName()),
+                    tools.getPositionMap(), node.getPosition(), node.getPosition() + node.getName().length() - 1);
 
             // return the variable
             return v;

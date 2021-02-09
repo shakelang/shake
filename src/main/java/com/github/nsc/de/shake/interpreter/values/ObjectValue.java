@@ -1,9 +1,6 @@
 package com.github.nsc.de.shake.interpreter.values;
 
-import com.github.nsc.de.shake.interpreter.InterpretationTools;
-import com.github.nsc.de.shake.interpreter.Scope;
-import com.github.nsc.de.shake.interpreter.Variable;
-import com.github.nsc.de.shake.interpreter.VariableList;
+import com.github.nsc.de.shake.interpreter.*;
 import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode;
 
 import java.util.HashMap;
@@ -143,7 +140,7 @@ public class ObjectValue implements InterpreterValue {
     public Variable<?> getChild(String c) {
         // it the required value does not exist throw an error
         // in other case return the required value
-        if(getThisObject().get(c) == null || !getThisObject().get(c).hasValue()) throw new Error(String.format("Object has no property called \"%s\"", c));
+        if(getThisObject().get(c) == null || !getThisObject().get(c).hasValue()) throw new UnformattedInterpreterError(String.format("Object has no property called \"%s\"", c));
         return getThisObject().get(c);
     }
 
