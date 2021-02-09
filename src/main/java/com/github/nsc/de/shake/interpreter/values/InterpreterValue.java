@@ -358,6 +358,7 @@ public interface InterpreterValue {
     String getName();
 
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     static InterpreterValue of(Object value) {
 
         if(value == null) return NullValue.NULL;
@@ -373,6 +374,7 @@ public interface InterpreterValue {
         if(value instanceof Character) return new CharacterValue((Character) value);
 
         if(value instanceof Class) return new Java.JavaClass((Class<?>) value);
+        if(value instanceof String) return new StringValue((String) value);
 
         return new Java.JavaValue(value.getClass(), value);
 
