@@ -125,7 +125,7 @@ public class CompilerError extends Error {
         int before2 = pos1.getColumn() - 1;
 
         // The available tokens after the highlighted section
-        int after2 = pos2.getSource().getAfterInLine(pos2);
+        int after2 = pos2.getSource().getAfterInLine(pos2) - 1;
 
         // Take the smallest value and use it
         int real_before = smallest(before, before2);
@@ -155,10 +155,12 @@ public class CompilerError extends Error {
         // The start of the line
         String start = line_str
                 + (before_dif > 0 ? ("+" + before_dif + "...") : "")
-                + String.valueOf(pos1.getSource().getSource().get(pos1.getIndex() - real_before, pos1.getIndex()));
+                + String.valueOf(pos1.getSource().getSource().get(pos1.getIndex() - real_before, pos1.getIndex()))
+                    .replaceAll("\t", " ");
 
         // The end of the line
         String end = String.valueOf(pos1.getSource().getSource().get(pos2.getIndex()+1, pos2.getIndex() + real_after))
+                    .replaceAll("\t", " ")
                 + (after_dif > 0 ? ("...+" + after_dif) : "");
 
         // Generate end-string
