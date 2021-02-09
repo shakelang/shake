@@ -56,8 +56,8 @@ public class PreProcessor {
 
     private ValuedNode process(AddNode node, PreProcessorContext ctx) {
 
-        ValuedNode left = (ValuedNode) process(node.getLeft(), ctx);
-        ValuedNode right = (ValuedNode) process(node.getRight(), ctx);
+        ValuedNode left = process(node.getLeft(), ctx);
+        ValuedNode right = process(node.getRight(), ctx);
 
         if(this.getSettings().shortenCalculations()
                 && (left instanceof DoubleNode || left instanceof IntegerNode)
@@ -76,13 +76,13 @@ public class PreProcessor {
 
         }
 
-        return new AddNode(left, right, node.getOperatorIndex());
+        return new AddNode(left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(SubNode node, PreProcessorContext ctx) {
 
-        ValuedNode left = (ValuedNode) process(node.getLeft(), ctx);
-        ValuedNode right = (ValuedNode) process(node.getRight(), ctx);
+        ValuedNode left = process(node.getLeft(), ctx);
+        ValuedNode right = process(node.getRight(), ctx);
 
         if(this.getSettings().shortenCalculations()
                 && (left instanceof DoubleNode || left instanceof IntegerNode)
@@ -101,13 +101,13 @@ public class PreProcessor {
 
         }
 
-        return new SubNode(left, right, node.getOperatorIndex());
+        return new SubNode(left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(MulNode node, PreProcessorContext ctx) {
 
-        ValuedNode left = (ValuedNode) process(node.getLeft(), ctx);
-        ValuedNode right = (ValuedNode) process(node.getRight(), ctx);
+        ValuedNode left = process(node.getLeft(), ctx);
+        ValuedNode right = process(node.getRight(), ctx);
 
         if(this.getSettings().shortenCalculations()
                 && (left instanceof DoubleNode || left instanceof IntegerNode)
@@ -126,13 +126,13 @@ public class PreProcessor {
 
         }
 
-        return new MulNode(left, right, node.getOperatorIndex());
+        return new MulNode(left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(DivNode node, PreProcessorContext ctx) {
 
-        ValuedNode left = (ValuedNode) process(node.getLeft(), ctx);
-        ValuedNode right = (ValuedNode) process(node.getRight(), ctx);
+        ValuedNode left = process(node.getLeft(), ctx);
+        ValuedNode right = process(node.getRight(), ctx);
 
         if(this.getSettings().shortenCalculations()
                 && (left instanceof DoubleNode || left instanceof IntegerNode)
@@ -151,13 +151,13 @@ public class PreProcessor {
 
         }
 
-        return new DivNode(left, right, node.getOperatorIndex());
+        return new DivNode(left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(ModNode node, PreProcessorContext ctx) {
 
-        ValuedNode left = (ValuedNode) process(node.getLeft(), ctx);
-        ValuedNode right = (ValuedNode) process(node.getRight(), ctx);
+        ValuedNode left = process(node.getLeft(), ctx);
+        ValuedNode right = process(node.getRight(), ctx);
 
         if(this.getSettings().shortenCalculations()
                 && (left instanceof DoubleNode || left instanceof IntegerNode)
@@ -176,13 +176,13 @@ public class PreProcessor {
 
         }
 
-        return new ModNode(left, right, node.getOperatorIndex());
+        return new ModNode(left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(PowNode node, PreProcessorContext ctx) {
 
-        ValuedNode left = (ValuedNode) process(node.getLeft(), ctx);
-        ValuedNode right = (ValuedNode) process(node.getRight(), ctx);
+        ValuedNode left = process(node.getLeft(), ctx);
+        ValuedNode right = process(node.getRight(), ctx);
 
         if(this.getSettings().shortenCalculations()
                 && (left instanceof DoubleNode || left instanceof IntegerNode)
@@ -201,7 +201,7 @@ public class PreProcessor {
 
         }
 
-        return new PowNode(left, right, node.getOperatorIndex());
+        return new PowNode(left, right, node.getOperatorPosition());
     }
 
 
