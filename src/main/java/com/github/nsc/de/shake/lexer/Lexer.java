@@ -72,6 +72,7 @@ public class Lexer {
             else if (next == '+') addPosition(TokenType.ADD, in.getPosition());
 
             // Logical operators
+            else if (next == '^') { addPosition(TokenType.LOGICAL_XOR, in.getPosition()); }
             else if (next == '|' && peek == '|') { in.skip(); addPosition(TokenType.LOGICAL_OR, in.getPosition()); }
             else if (next == '&' && peek == '&') { in.skip(); addPosition(TokenType.LOGICAL_AND, in.getPosition()); }
 

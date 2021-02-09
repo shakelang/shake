@@ -771,11 +771,22 @@ public class Parser {
     // (Logical)
 
     private ValuedNode logicalOr() {
-        ValuedNode result = this.logicalAnd();
+        ValuedNode result = this.logicalXOr();
 
         while(this.in.hasNext() && this.in.peekType() == LOGICAL_OR) {
             this.in.skip();
-            result = new LogicalOrNode(result, this.logicalAnd());
+            result = new LogicalOrNode(result, this.logicalXOr());
+        }
+        return result;
+    }
+
+
+    private ValuedNode logicalXOr() {
+        ValuedNode result = this.logicalAnd();
+
+        while(this.in.hasNext() && this.in.peekType() == LOGICAL_XOR) {
+            this.in.skip();
+            result = new LogicalXOrNode(result, this.logicalAnd());
         }
         return result;
     }

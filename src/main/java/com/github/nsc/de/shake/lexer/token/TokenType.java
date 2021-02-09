@@ -28,53 +28,54 @@ public class TokenType {
             "BIGGER",               // 17
             "SMALLER",              // 18
             "LOGICAL_OR",           // 19
-            "LOGICAL_AND",          // 20
-            "LINE_SEPARATOR",       // 21
-            "ASSIGN",               // 22
-            "INCR",                 // 23
-            "DECR",                 // 24
-            "ADD_ASSIGN",           // 25
-            "SUB_ASSIGN",           // 26
-            "MUL_ASSIGN",           // 27
-            "DIV_ASSIGN",           // 28
-            "MOD_ASSIGN",           // 29
-            "POW_ASSIGN",           // 30
-            "LPAREN",               // 31
-            "RPAREN",               // 32
-            "LCURL",                // 33
-            "RCURL",                // 34
-            "KEYWORD_DO",           // 35
-            "KEYWORD_WHILE",        // 36
-            "KEYWORD_FOR",          // 37
-            "KEYWORD_IF",           // 38
-            "KEYWORD_ELSE",         // 39
-            "KEYWORD_TRUE",         // 40
-            "KEYWORD_FALSE",        // 41
-            "KEYWORD_CLASS",        // 42
-            "KEYWORD_EXTENDS",      // 43
-            "KEYWORD_IMPLEMENTS",   // 44
-            "KEYWORD_STATIC",       // 45
-            "KEYWORD_FINAL",        // 46
-            "KEYWORD_PUBLIC",       // 47
-            "KEYWORD_PROTECTED",    // 48
-            "KEYWORD_PRIVATE",      // 49
-            "KEYWORD_NEW",          // 50
-            "KEYWORD_FUNCTION",     // 51
-            "KEYWORD_RETURN",       // 52
-            "KEYWORD_VAR",          // 53
-            "KEYWORD_CONST",        // 54
-            "KEYWORD_DYNAMIC",      // 55
-            "KEYWORD_BYTE",         // 56
-            "KEYWORD_SHORT",        // 57
-            "KEYWORD_INT",          // 58
-            "KEYWORD_LONG",         // 59
-            "KEYWORD_FLOAT",        // 60
-            "KEYWORD_DOUBLE",       // 61
-            "KEYWORD_CHAR",         // 62
-            "KEYWORD_BOOLEAN",      // 63
-            "KEYWORD_IMPORT",       // 64
-            "KEYWORD_VOID",         // 65
-            "KEYWORD_CONSTRUCTOR",  // 66
+            "LOGICAL_XOR",          // 20
+            "LOGICAL_AND",          // 21
+            "LINE_SEPARATOR",       // 22
+            "ASSIGN",               // 23
+            "INCR",                 // 24
+            "DECR",                 // 25
+            "ADD_ASSIGN",           // 26
+            "SUB_ASSIGN",           // 27
+            "MUL_ASSIGN",           // 28
+            "DIV_ASSIGN",           // 29
+            "MOD_ASSIGN",           // 30
+            "POW_ASSIGN",           // 31
+            "LPAREN",               // 32
+            "RPAREN",               // 33
+            "LCURL",                // 34
+            "RCURL",                // 35
+            "KEYWORD_DO",           // 36
+            "KEYWORD_WHILE",        // 37
+            "KEYWORD_FOR",          // 38
+            "KEYWORD_IF",           // 39
+            "KEYWORD_ELSE",         // 40
+            "KEYWORD_TRUE",         // 41
+            "KEYWORD_FALSE",        // 42
+            "KEYWORD_CLASS",        // 43
+            "KEYWORD_EXTENDS",      // 44
+            "KEYWORD_IMPLEMENTS",   // 45
+            "KEYWORD_STATIC",       // 46
+            "KEYWORD_FINAL",        // 47
+            "KEYWORD_PUBLIC",       // 48
+            "KEYWORD_PROTECTED",    // 49
+            "KEYWORD_PRIVATE",      // 50
+            "KEYWORD_NEW",          // 51
+            "KEYWORD_FUNCTION",     // 52
+            "KEYWORD_RETURN",       // 53
+            "KEYWORD_VAR",          // 54
+            "KEYWORD_CONST",        // 55
+            "KEYWORD_DYNAMIC",      // 56
+            "KEYWORD_BYTE",         // 57
+            "KEYWORD_SHORT",        // 58
+            "KEYWORD_INT",          // 59
+            "KEYWORD_LONG",         // 60
+            "KEYWORD_FLOAT",        // 61
+            "KEYWORD_DOUBLE",       // 62
+            "KEYWORD_CHAR",         // 63
+            "KEYWORD_BOOLEAN",      // 64
+            "KEYWORD_IMPORT",       // 65
+            "KEYWORD_VOID",         // 66
+            "KEYWORD_CONSTRUCTOR",  // 67
     };
 
     private static final byte[] TOKEN_LENGTH = new byte[] {
@@ -101,53 +102,54 @@ public class TokenType {
             1,      //  BIGGER               17
             1,      //  SMALLER              18
             2,      //  LOGICAL_OR           19
-            2,      //  LOGICAL_AND          20
-            1,      //  LINE_SEPARATOR       21
-            1,      //  ASSIGN               22
-            2,      //  INCR                 23
-            2,      //  DECR                 24
-            2,      //  ADD_ASSIGN           25
-            2,      //  SUB_ASSIGN           26
-            2,      //  MUL_ASSIGN           27
-            2,      //  DIV_ASSIGN           28
-            2,      //  MOD_ASSIGN           29
-            3,      //  POW_ASSIGN           30
-            1,      //  LPAREN               31
-            1,      //  RPAREN               32
-            1,      //  LCURL                33
-            1,      //  RCURL                34
-            2,      //  KEYWORD_DO           35
-            5,      //  KEYWORD_WHILE        36
-            3,      //  KEYWORD_FOR          37
-            2,      //  KEYWORD_IF           38
-            4,      //  KEYWORD_ELSE         39
-            4,      //  KEYWORD_TRUE         40
-            5,      //  KEYWORD_FALSE        41
-            5,      //  KEYWORD_CLASS        42
-            7,      //  KEYWORD_EXTENDS      43
-            10,     //  KEYWORD_IMPLEMENTS   44
-            6,      //  KEYWORD_STATIC       45
-            5,      //  KEYWORD_FINAL        46
-            6,      //  KEYWORD_PUBLIC       47
-            9,      //  KEYWORD_PROTECTED    48
-            7,      //  KEYWORD_PRIVATE      49
-            3,      //  KEYWORD_NEW          50
-            8,      //  KEYWORD_FUNCTION     51
-            6,      //  KEYWORD_RETURN       52
-            3,      //  KEYWORD_VAR          53
-            5,      //  KEYWORD_CONST        54
-            7,      //  KEYWORD_DYNAMIC      55
-            4,      //  KEYWORD_BYTE         56
-            5,      //  KEYWORD_SHORT        57
-            3,      //  KEYWORD_INT          58
-            4,      //  KEYWORD_LONG         59
-            5,      //  KEYWORD_FLOAT        60
-            6,      //  KEYWORD_DOUBLE       61
-            4,      //  KEYWORD_CHAR         62
-            7,      //  KEYWORD_BOOLEAN      63
-            6,      //  KEYWORD_IMPORT       64
-            4,      //  KEYWORD_VOID         65
-            11,     //  KEYWORD_CONSTRUCTOR  66
+            2,      //  LOGICAL_XOR          20
+            2,      //  LOGICAL_AND          21
+            1,      //  LINE_SEPARATOR       22
+            1,      //  ASSIGN               23
+            2,      //  INCR                 24
+            2,      //  DECR                 25
+            2,      //  ADD_ASSIGN           26
+            2,      //  SUB_ASSIGN           27
+            2,      //  MUL_ASSIGN           28
+            2,      //  DIV_ASSIGN           29
+            2,      //  MOD_ASSIGN           30
+            3,      //  POW_ASSIGN           31
+            1,      //  LPAREN               32
+            1,      //  RPAREN               33
+            1,      //  LCURL                34
+            1,      //  RCURL                35
+            2,      //  KEYWORD_DO           36
+            5,      //  KEYWORD_WHILE        37
+            3,      //  KEYWORD_FOR          38
+            2,      //  KEYWORD_IF           39
+            4,      //  KEYWORD_ELSE         40
+            4,      //  KEYWORD_TRUE         41
+            5,      //  KEYWORD_FALSE        42
+            5,      //  KEYWORD_CLASS        43
+            7,      //  KEYWORD_EXTENDS      44
+            10,     //  KEYWORD_IMPLEMENTS   45
+            6,      //  KEYWORD_STATIC       46
+            5,      //  KEYWORD_FINAL        47
+            6,      //  KEYWORD_PUBLIC       48
+            9,      //  KEYWORD_PROTECTED    49
+            7,      //  KEYWORD_PRIVATE      50
+            3,      //  KEYWORD_NEW          51
+            8,      //  KEYWORD_FUNCTION     52
+            6,      //  KEYWORD_RETURN       53
+            3,      //  KEYWORD_VAR          54
+            5,      //  KEYWORD_CONST        55
+            7,      //  KEYWORD_DYNAMIC      56
+            4,      //  KEYWORD_BYTE         57
+            5,      //  KEYWORD_SHORT        58
+            3,      //  KEYWORD_INT          59
+            4,      //  KEYWORD_LONG         60
+            5,      //  KEYWORD_FLOAT        61
+            6,      //  KEYWORD_DOUBLE       62
+            4,      //  KEYWORD_CHAR         63
+            7,      //  KEYWORD_BOOLEAN      64
+            6,      //  KEYWORD_IMPORT       65
+            4,      //  KEYWORD_VOID         66
+            11,     //  KEYWORD_CONSTRUCTOR  67
     };
 
     /**
@@ -274,9 +276,14 @@ public class TokenType {
     public static final byte LOGICAL_OR = 19;
 
     /**
+     * Token '||' (logical or operator)
+     */
+    public static final byte LOGICAL_XOR = 20;
+
+    /**
      * Token '&amp;&amp;' (logical and operator)
      */
-    public static final byte LOGICAL_AND = 20;
+    public static final byte LOGICAL_AND = 21;
 
 
 
@@ -286,7 +293,7 @@ public class TokenType {
     /**
      * Token '\n' (separator that can be used instead of a semicolon or that will be ignored)
      */
-    public static final byte LINE_SEPARATOR = 21;
+    public static final byte LINE_SEPARATOR = 22;
 
 
 
@@ -296,47 +303,47 @@ public class TokenType {
     /**
      * Token '=' for assigning values to variable
      */
-    public static final byte ASSIGN = 22;
+    public static final byte ASSIGN = 23;
 
     /**
      * Token '++' for increasing variable values
      */
-    public static final byte INCR = 23;
+    public static final byte INCR = 24;
 
     /**
      * Token '--' for decreasing variable values
      */
-    public static final byte DECR = 24;
+    public static final byte DECR = 25;
 
     /**
      * Token '+=' for add-assigning values to a variable
      */
-    public static final byte ADD_ASSIGN = 25;
+    public static final byte ADD_ASSIGN = 26;
 
     /**
      * Token '-=' for subtract-assigning values to a variable
      */
-    public static final byte SUB_ASSIGN = 26;
+    public static final byte SUB_ASSIGN = 27;
 
     /**
      * Token '*=' for multiply-assigning values to a variable
      */
-    public static final byte MUL_ASSIGN = 27;
+    public static final byte MUL_ASSIGN = 28;
 
     /**
      * Token '/=' for divide-assigning values to a variable
      */
-    public static final byte DIV_ASSIGN = 28;
+    public static final byte DIV_ASSIGN = 29;
 
     /**
      * Token '%=' for modulo-assigning values to a variable
      */
-    public static final byte MOD_ASSIGN = 29;
+    public static final byte MOD_ASSIGN = 30;
 
     /**
      * Token '^=' or '**=' for divide-assigning values to a variable
      */
-    public static final byte POW_ASSIGN = 30;
+    public static final byte POW_ASSIGN = 31;
 
 
 
@@ -346,22 +353,22 @@ public class TokenType {
     /**
      * Token '('
      */
-    public static final byte LPAREN = 31;
+    public static final byte LPAREN = 32;
 
     /**
      * Token ')'
      */
-    public static final byte RPAREN = 32;
+    public static final byte RPAREN = 33;
 
     /**
      * Token '{'
      */
-    public static final byte LCURL = 33;
+    public static final byte LCURL = 34;
 
     /**
      * Token '}'
      */
-    public static final byte RCURL = 34;
+    public static final byte RCURL = 35;
 
 
 
@@ -372,96 +379,96 @@ public class TokenType {
     /**
      * Keyword "do" for do-while-loops
      */
-    public static final byte KEYWORD_DO = 35;
+    public static final byte KEYWORD_DO = 36;
 
     /**
      * Keyword "while" for while-loops and do-while-loops
      */
-    public static final byte KEYWORD_WHILE = 36;
+    public static final byte KEYWORD_WHILE = 37;
 
     /**
      * Keyword "for" for for-loops
      */
-    public static final byte KEYWORD_FOR = 37;
+    public static final byte KEYWORD_FOR = 38;
 
     /**
      * Keyword "if" for if-clauses
      */
-    public static final byte KEYWORD_IF = 38;
+    public static final byte KEYWORD_IF = 39;
 
     /**
      * Keyword "else" for if-else-clauses
      */
-    public static final byte KEYWORD_ELSE = 39;
+    public static final byte KEYWORD_ELSE = 40;
 
     /**
      * Keyword "true" for boolean-true-values
      */
-    public static final byte KEYWORD_TRUE = 40;
+    public static final byte KEYWORD_TRUE = 41;
 
     /**
      * Keyword "false" for boolean-false-values
      */
-    public static final byte KEYWORD_FALSE = 41;
+    public static final byte KEYWORD_FALSE = 42;
 
     // Declarations
 
     /**
      * Keyword "class" for declaring classes
      */
-    public static final byte KEYWORD_CLASS = 42;
+    public static final byte KEYWORD_CLASS = 43;
 
     /**
      * Keyword "extends" for setting a super-class in a class-declaration
      */
-    public static final byte KEYWORD_EXTENDS = 43;
+    public static final byte KEYWORD_EXTENDS = 44;
 
     /**
      * Keyword "implements" for implementing interfaces in a class-declaration
      */
-    public static final byte KEYWORD_IMPLEMENTS = 44;
+    public static final byte KEYWORD_IMPLEMENTS = 45;
 
     /**
-     * Keyword "static" for creating statics instide of a classes
+     * Keyword "static" for creating statics inside of classes
      */
-    public static final byte KEYWORD_STATIC = 45;
+    public static final byte KEYWORD_STATIC = 46;
 
     /**
      * Keyword "final" for creating a constant function, variable or class
      */
-    public static final byte KEYWORD_FINAL = 46;
+    public static final byte KEYWORD_FINAL = 47;
 
     /**
      * Keyword "public" for defining public functions, variables and classes
      */
-    public static final byte KEYWORD_PUBLIC = 47;
+    public static final byte KEYWORD_PUBLIC = 48;
 
     /**
      * Keyword "protected" for defining protected functions, variables and classes
      */
-    public static final byte KEYWORD_PROTECTED = 48;
+    public static final byte KEYWORD_PROTECTED = 49;
 
     /**
      * Keyword "private" for defining private functions, variables and classes
      */
-    public static final byte KEYWORD_PRIVATE = 49;
+    public static final byte KEYWORD_PRIVATE = 50;
 
     /**
      * Keyword "new" for creating new instances of a class
      */
-    public static final byte KEYWORD_NEW = 50;
+    public static final byte KEYWORD_NEW = 51;
 
 
 
     /**
      * Keyword "function" for declaring functions
      */
-    public static final byte KEYWORD_FUNCTION = 51;
+    public static final byte KEYWORD_FUNCTION = 52;
 
     /**
      * Keyword "return" for returning function-results
      */
-    public static final byte KEYWORD_RETURN = 52;
+    public static final byte KEYWORD_RETURN = 53;
 
 
 
@@ -470,74 +477,74 @@ public class TokenType {
     /**
      * Keyword "var" or "let" for declaring variables
      */
-    public static final byte KEYWORD_VAR = 53;
+    public static final byte KEYWORD_VAR = 54;
 
     /**
      * Keyword "const" for declaring final variables
      */
-    public static final byte KEYWORD_CONST = 54;
+    public static final byte KEYWORD_CONST = 55;
 
 
 
     /**
      * Keyword "dynamic" as return type for functions or for declaring variables
      */
-    public static final byte KEYWORD_DYNAMIC = 55;
+    public static final byte KEYWORD_DYNAMIC = 56;
 
     /**
      * Keyword "byte" as return type for functions or for declaring variables
      */
-    public static final byte KEYWORD_BYTE = 56;
+    public static final byte KEYWORD_BYTE = 57;
 
     /**
      * Keyword "short" as return type for functions or for declaring variables
      */
-    public static final byte KEYWORD_SHORT = 57;
+    public static final byte KEYWORD_SHORT = 58;
 
     /**
      * Keyword "int" as return type for functions or for declaring variables
      */
-    public static final byte KEYWORD_INT = 58;
+    public static final byte KEYWORD_INT = 59;
 
     /**
      * Keyword "long" as return type for functions or for declaring variables
      */
-    public static final byte KEYWORD_LONG = 59;
+    public static final byte KEYWORD_LONG = 60;
 
     /**
      * Keyword "float" as return type for functions or for declaring variables
      */
-    public static final byte KEYWORD_FLOAT = 60;
+    public static final byte KEYWORD_FLOAT = 61;
 
     /**
      * Keyword "double" as return type for functions or for declaring variables
      */
-    public static final byte KEYWORD_DOUBLE = 61;
+    public static final byte KEYWORD_DOUBLE = 62;
 
     /**
      * Keyword "char" as return type for functions or for declaring variables
      */
-    public static final byte KEYWORD_CHAR = 62;
+    public static final byte KEYWORD_CHAR = 63;
 
     /**
      * Keyword "boolean" as return type for functions or for declaring variables
      */
-    public static final byte KEYWORD_BOOLEAN = 63;
+    public static final byte KEYWORD_BOOLEAN = 64;
 
     /**
      * Keyword "import" for import statements
      */
-    public static final byte KEYWORD_IMPORT = 64;
+    public static final byte KEYWORD_IMPORT = 65;
 
     /**
      * Keyword "void" for functions returning nothing
      */
-    public static final byte KEYWORD_VOID = 65;
+    public static final byte KEYWORD_VOID = 66;
     
-    /*
+    /**
      * Keyword "constructor" for constructor style 1
      */
-    public static final byte KEYWORD_CONSTRUCTOR = 66;
+    public static final byte KEYWORD_CONSTRUCTOR = 67;
 
     public static String getName(byte b) {
         return NAMES[b];
