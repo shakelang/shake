@@ -1,18 +1,22 @@
 package com.github.nsc.de.shake.parser.node;
 
-public class IdentifierNode implements ValuedNode {
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
+
+public class IdentifierNode extends ValuedNode {
 
     private final ValuedNode parent;
     private final String name;
     private final int position;
 
-    public IdentifierNode(ValuedNode parent, String name, int position) {
+    public IdentifierNode(PositionMap map, ValuedNode parent, String name, int position) {
+        super(map);
         this.parent = parent;
         this.name = name;
         this.position = position;
     }
 
-    public IdentifierNode(String name, int position) {
+    public IdentifierNode(PositionMap map, String name, int position) {
+        super(map);
         this.position = position;
         this.parent = null;
         this.name = name;

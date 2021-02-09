@@ -50,7 +50,7 @@ public class PreProcessor {
             children[i] = process(toProcess[i], ctx);
         }
 
-        return new Tree(children);
+        return new Tree(tree.getMap(), children);
 
     }
 
@@ -64,19 +64,19 @@ public class PreProcessor {
                 && (right instanceof DoubleNode || right instanceof IntegerNode)) {
 
             if(left instanceof DoubleNode && right instanceof DoubleNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() + ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() + ((DoubleNode) right).getNumber());
 
             if(left instanceof DoubleNode && right instanceof IntegerNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() + ((IntegerNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() + ((IntegerNode) right).getNumber());
 
             if(right instanceof DoubleNode)
-                return new DoubleNode(((IntegerNode) left).getNumber() + ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((IntegerNode) left).getNumber() + ((DoubleNode) right).getNumber());
 
-            return new IntegerNode(((IntegerNode) left).getNumber() + ((IntegerNode) right).getNumber());
+            return new IntegerNode(node.getMap(), ((IntegerNode) left).getNumber() + ((IntegerNode) right).getNumber());
 
         }
 
-        return new AddNode(left, right, node.getOperatorPosition());
+        return new AddNode(node.getMap(), left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(SubNode node, PreProcessorContext ctx) {
@@ -89,19 +89,19 @@ public class PreProcessor {
                 && (right instanceof DoubleNode || right instanceof IntegerNode)) {
 
             if(left instanceof DoubleNode && right instanceof DoubleNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() - ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() - ((DoubleNode) right).getNumber());
 
             if(left instanceof DoubleNode && right instanceof IntegerNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() - ((IntegerNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() - ((IntegerNode) right).getNumber());
 
             if(right instanceof DoubleNode)
-                return new DoubleNode(((IntegerNode) left).getNumber() - ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((IntegerNode) left).getNumber() - ((DoubleNode) right).getNumber());
 
-            return new IntegerNode(((IntegerNode) left).getNumber() - ((IntegerNode) right).getNumber());
+            return new IntegerNode(node.getMap(), ((IntegerNode) left).getNumber() - ((IntegerNode) right).getNumber());
 
         }
 
-        return new SubNode(left, right, node.getOperatorPosition());
+        return new SubNode(node.getMap(), left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(MulNode node, PreProcessorContext ctx) {
@@ -114,19 +114,19 @@ public class PreProcessor {
                 && (right instanceof DoubleNode || right instanceof IntegerNode)) {
 
             if(left instanceof DoubleNode && right instanceof DoubleNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() * ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() * ((DoubleNode) right).getNumber());
 
             if(left instanceof DoubleNode && right instanceof IntegerNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() * ((IntegerNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() * ((IntegerNode) right).getNumber());
 
             if(right instanceof DoubleNode)
-                return new DoubleNode(((IntegerNode) left).getNumber() * ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((IntegerNode) left).getNumber() * ((DoubleNode) right).getNumber());
 
-            return new IntegerNode(((IntegerNode) left).getNumber() * ((IntegerNode) right).getNumber());
+            return new IntegerNode(node.getMap(), ((IntegerNode) left).getNumber() * ((IntegerNode) right).getNumber());
 
         }
 
-        return new MulNode(left, right, node.getOperatorPosition());
+        return new MulNode(node.getMap(), left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(DivNode node, PreProcessorContext ctx) {
@@ -139,19 +139,19 @@ public class PreProcessor {
                 && (right instanceof DoubleNode || right instanceof IntegerNode)) {
 
             if(left instanceof DoubleNode && right instanceof DoubleNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() / ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() / ((DoubleNode) right).getNumber());
 
             if(left instanceof DoubleNode && right instanceof IntegerNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() / ((IntegerNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() / ((IntegerNode) right).getNumber());
 
             if(right instanceof DoubleNode)
-                return new DoubleNode(((IntegerNode) left).getNumber() / ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((IntegerNode) left).getNumber() / ((DoubleNode) right).getNumber());
 
-            return new IntegerNode(((IntegerNode) left).getNumber() / ((IntegerNode) right).getNumber());
+            return new IntegerNode(node.getMap(), ((IntegerNode) left).getNumber() / ((IntegerNode) right).getNumber());
 
         }
 
-        return new DivNode(left, right, node.getOperatorPosition());
+        return new DivNode(node.getMap(), left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(ModNode node, PreProcessorContext ctx) {
@@ -164,19 +164,19 @@ public class PreProcessor {
                 && (right instanceof DoubleNode || right instanceof IntegerNode)) {
 
             if(left instanceof DoubleNode && right instanceof DoubleNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() % ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() % ((DoubleNode) right).getNumber());
 
             if(left instanceof DoubleNode && right instanceof IntegerNode)
-                return new DoubleNode(((DoubleNode) left).getNumber() % ((IntegerNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((DoubleNode) left).getNumber() % ((IntegerNode) right).getNumber());
 
             if(right instanceof DoubleNode)
-                return new DoubleNode(((IntegerNode) left).getNumber() % ((DoubleNode) right).getNumber());
+                return new DoubleNode(node.getMap(), ((IntegerNode) left).getNumber() % ((DoubleNode) right).getNumber());
 
-            return new IntegerNode(((IntegerNode) left).getNumber() % ((IntegerNode) right).getNumber());
+            return new IntegerNode(node.getMap(), ((IntegerNode) left).getNumber() % ((IntegerNode) right).getNumber());
 
         }
 
-        return new ModNode(left, right, node.getOperatorPosition());
+        return new ModNode(node.getMap(), left, right, node.getOperatorPosition());
     }
 
     private ValuedNode process(PowNode node, PreProcessorContext ctx) {
@@ -189,19 +189,19 @@ public class PreProcessor {
                 && (right instanceof DoubleNode || right instanceof IntegerNode)) {
 
             if(left instanceof DoubleNode && right instanceof DoubleNode)
-                return new DoubleNode(Math.pow(((DoubleNode) left).getNumber(),  ((DoubleNode) right).getNumber()));
+                return new DoubleNode(node.getMap(), Math.pow(((DoubleNode) left).getNumber(),  ((DoubleNode) right).getNumber()));
 
             if(left instanceof DoubleNode && right instanceof IntegerNode)
-                return new DoubleNode(Math.pow(((DoubleNode) left).getNumber(), ((IntegerNode) right).getNumber()));
+                return new DoubleNode(node.getMap(), Math.pow(((DoubleNode) left).getNumber(), ((IntegerNode) right).getNumber()));
 
             if(right instanceof DoubleNode)
-                return new DoubleNode(Math.pow(((IntegerNode) left).getNumber(), ((DoubleNode) right).getNumber()));
+                return new DoubleNode(node.getMap(), Math.pow(((IntegerNode) left).getNumber(), ((DoubleNode) right).getNumber()));
 
-            return new IntegerNode((int) Math.pow(((IntegerNode) left).getNumber(), ((IntegerNode) right).getNumber()));
+            return new IntegerNode(node.getMap(), (int) Math.pow(((IntegerNode) left).getNumber(), ((IntegerNode) right).getNumber()));
 
         }
 
-        return new PowNode(left, right, node.getOperatorPosition());
+        return new PowNode(node.getMap(), left, right, node.getOperatorPosition());
     }
 
 

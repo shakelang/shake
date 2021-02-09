@@ -1,5 +1,6 @@
 package com.github.nsc.de.shake.parser.node.functions;
 
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.Tree;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
@@ -7,7 +8,7 @@ import com.github.nsc.de.shake.parser.node.VariableType;
 
 import java.util.Arrays;
 
-public class FunctionDeclarationNode implements ValuedNode {
+public class FunctionDeclarationNode extends ValuedNode {
 
     private final String name;
     private final Tree body;
@@ -18,21 +19,24 @@ public class FunctionDeclarationNode implements ValuedNode {
     private final boolean isStatic;
     private final boolean isFinal;
 
-    public FunctionDeclarationNode(String name, Tree body, FunctionArgumentNode[] args, VariableType type) {
-        this(name, body, args, type, AccessDescriber.PACKAGE, false, false, false);
+    public FunctionDeclarationNode(PositionMap map, String name, Tree body, FunctionArgumentNode[] args, VariableType type) {
+        this(map, name, body, args, type, AccessDescriber.PACKAGE, false, false, false);
     }
 
-    public FunctionDeclarationNode(String name, Tree body, FunctionArgumentNode[] args) {
-        this(name, body, args, VariableType.DYNAMIC);
-    }
-
-
-    public FunctionDeclarationNode(String name, Tree body, FunctionArgumentNode[] args, AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
-        this(name, body, args, VariableType.DYNAMIC, access, isInClass, isStatic, isFinal);
+    public FunctionDeclarationNode(PositionMap map, String name, Tree body, FunctionArgumentNode[] args) {
+        this(map, name, body, args, VariableType.DYNAMIC);
     }
 
 
-    public FunctionDeclarationNode(String name, Tree body, FunctionArgumentNode[] args, VariableType type, AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+    public FunctionDeclarationNode(PositionMap map, String name, Tree body, FunctionArgumentNode[] args,
+                                   AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+        this(map, name, body, args, VariableType.DYNAMIC, access, isInClass, isStatic, isFinal);
+    }
+
+
+    public FunctionDeclarationNode(PositionMap map, String name, Tree body, FunctionArgumentNode[] args, VariableType type,
+                                   AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+        super(map);
         this.name = name;
         this.body = body;
         this.args = args;

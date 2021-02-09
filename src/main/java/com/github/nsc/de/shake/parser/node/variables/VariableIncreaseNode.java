@@ -1,13 +1,15 @@
 package com.github.nsc.de.shake.parser.node.variables;
 
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
 
-public class VariableIncreaseNode implements ValuedNode {
+public class VariableIncreaseNode extends ValuedNode {
 
     private final ValuedNode variable;
     private final int operatorPosition;
 
-    public VariableIncreaseNode(ValuedNode variable, int operatorPosition) {
+    public VariableIncreaseNode(PositionMap map, ValuedNode variable, int operatorPosition) {
+        super(map);
         this.variable = variable;
         this.operatorPosition = operatorPosition;
     }

@@ -1,12 +1,14 @@
 package com.github.nsc.de.shake.parser.node.factor;
 
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
 
-public class DoubleNode implements ValuedNode {
+public class DoubleNode extends ValuedNode {
 
     private final double number;
 
-    public DoubleNode(double number) {
+    public DoubleNode(PositionMap map, double number) {
+        super(map);
         this.number = number;
     }
 

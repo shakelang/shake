@@ -1,5 +1,6 @@
 package com.github.nsc.de.shake.parser.node.objects;
 
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
@@ -8,7 +9,7 @@ import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode;
 import java.util.Arrays;
 import java.util.List;
 
-public class ClassDeclarationNode implements ValuedNode {
+public class ClassDeclarationNode extends ValuedNode {
 
     private final String name;
     private final VariableDeclarationNode[] fields;
@@ -21,6 +22,7 @@ public class ClassDeclarationNode implements ValuedNode {
     private final boolean isFinal;
 
     public ClassDeclarationNode(
+            PositionMap map,
             String name,
             VariableDeclarationNode[] fields,
             FunctionDeclarationNode[] methods,
@@ -31,6 +33,7 @@ public class ClassDeclarationNode implements ValuedNode {
             boolean isStatic,
             boolean isFinal) {
 
+        super(map);
         this.name = name;
         this.fields = fields;
         this.methods = methods;
@@ -44,17 +47,20 @@ public class ClassDeclarationNode implements ValuedNode {
     }
 
     public ClassDeclarationNode(
+            PositionMap map,
             String name,
             VariableDeclarationNode[] fields,
             FunctionDeclarationNode[] methods,
             ClassDeclarationNode[] classes,
             ConstructorDeclarationNode[] constructors) {
 
-        this(name, fields, methods, classes, constructors, AccessDescriber.PACKAGE, false, false, false);
+        this(map, name, fields, methods, classes, constructors, AccessDescriber.PACKAGE,
+                false, false, false);
 
     }
 
     public ClassDeclarationNode(
+            PositionMap map,
             String name,
             List<VariableDeclarationNode> fields,
             List<FunctionDeclarationNode> methods,
@@ -65,20 +71,21 @@ public class ClassDeclarationNode implements ValuedNode {
             boolean isStatic,
             boolean isFinal) {
 
-        this(name, fields.toArray(new VariableDeclarationNode[] {}), methods.toArray(new FunctionDeclarationNode[] {}),
+        this(map, name, fields.toArray(new VariableDeclarationNode[] {}), methods.toArray(new FunctionDeclarationNode[] {}),
                 classes.toArray(new ClassDeclarationNode[] {}), constructors.toArray(new ConstructorDeclarationNode[] {}),
                 access, isInClass, isStatic, isFinal);
 
     }
 
     public ClassDeclarationNode(
+            PositionMap map,
             String name,
             List<VariableDeclarationNode> fields,
             List<FunctionDeclarationNode> methods,
             List<ClassDeclarationNode> classes,
             List<ConstructorDeclarationNode> constructors) {
 
-        this(name, fields.toArray(new VariableDeclarationNode[] {}), methods.toArray(new FunctionDeclarationNode[] {}),
+        this(map, name, fields.toArray(new VariableDeclarationNode[] {}), methods.toArray(new FunctionDeclarationNode[] {}),
                 classes.toArray(new ClassDeclarationNode[] {}), constructors.toArray(new ConstructorDeclarationNode[] {}));
 
     }

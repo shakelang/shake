@@ -244,8 +244,8 @@ public class ClassValue implements InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
-    public InterpreterValue newInstance(ClassConstructionNode node, Scope scope, InterpretationTools tools) {
-        return new ObjectValue(this, tools);
+    public InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
+        return new ObjectValue(this);
     }
 
 

@@ -1,16 +1,18 @@
 package com.github.nsc.de.shake.parser.node.loops;
 
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.Node;
 import com.github.nsc.de.shake.parser.node.Tree;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
 
-public class DoWhileNode implements Node {
+public class DoWhileNode extends Node {
 
     private final Tree body;
     private final ValuedNode condition;
 
 
-    public DoWhileNode(Tree body, ValuedNode condition) {
+    public DoWhileNode(PositionMap map, Tree body, ValuedNode condition) {
+        super(map);
         this.body = body;
         this.condition = condition;
     }

@@ -1,7 +1,6 @@
 package com.github.nsc.de.shake;
 
 import com.github.nsc.de.shake.generators.json.JsonGenerator;
-import com.github.nsc.de.shake.interpreter.InterpretationTools;
 import com.github.nsc.de.shake.interpreter.Interpreter;
 import com.github.nsc.de.shake.interpreter.values.InterpreterValue;
 import com.github.nsc.de.shake.lexer.Lexer;
@@ -55,7 +54,7 @@ public class ShakeTests {
 
     public InterpreterValue run(ParseResult parsed) {
 
-        return new Interpreter().visit(parsed.getTree(), new InterpretationTools(parsed.getMap()));
+        return new Interpreter().visit(parsed.getTree());
 
     }
 

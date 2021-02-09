@@ -1,7 +1,5 @@
 package com.github.nsc.de.shake.interpreter.values;
 
-
-import com.github.nsc.de.shake.interpreter.InterpretationTools;
 import com.github.nsc.de.shake.interpreter.Scope;
 import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError;
 import com.github.nsc.de.shake.interpreter.Variable;
@@ -273,7 +271,7 @@ public interface InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    default InterpreterValue invoke(FunctionCallNode node, Scope scope, InterpretationTools tools) {
+    default InterpreterValue invoke(FunctionCallNode node, Scope scope) {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
         throw new UnformattedInterpreterError("Can't invoke type " + getName());
@@ -288,7 +286,7 @@ public interface InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    default InterpreterValue newInstance(ClassConstructionNode node, Scope scope, InterpretationTools tools) {
+    default InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
         throw new UnformattedInterpreterError("Can't create a new instance of type " + getName());

@@ -1,12 +1,15 @@
 package com.github.nsc.de.shake.parser.node;
 
-public class ImportNode implements Node {
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
+
+public class ImportNode extends Node {
 
     public static final String EVERYTHING = "*";
 
     private final String[] imported;
 
-    public ImportNode(String[] imported) {
+    public ImportNode(PositionMap map, String[] imported) {
+        super(map);
         this.imported = imported;
     }
 

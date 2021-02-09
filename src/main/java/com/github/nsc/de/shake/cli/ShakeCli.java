@@ -2,7 +2,6 @@ package com.github.nsc.de.shake.cli;
 
 import com.github.nsc.de.shake.generators.java.JavaGenerator;
 import com.github.nsc.de.shake.generators.json.JsonGenerator;
-import com.github.nsc.de.shake.interpreter.InterpretationTools;
 import com.github.nsc.de.shake.interpreter.Interpreter;
 import com.github.nsc.de.shake.lexer.Lexer;
 import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
@@ -195,7 +194,7 @@ public class ShakeCli {
             // if the generator argument is "interpreter" then use the interpreter to visit the Tree
             // and print it'S results to the console
             case "interpreter":
-                System.out.printf(">> %s%n", ShakeCli.interpreter.visit(pr.getTree(), new InterpretationTools(pr.getMap())).toString());
+                System.out.printf(">> %s%n", ShakeCli.interpreter.visit(pr.getTree()).toString());
                 break;
             // if the generator argument is "json" then use the json-generator to visit the Tree
             // and print it'S results to the console

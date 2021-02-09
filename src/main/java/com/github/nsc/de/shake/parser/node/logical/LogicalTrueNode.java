@@ -1,6 +1,12 @@
 package com.github.nsc.de.shake.parser.node.logical;
 
-public class LogicalTrueNode implements LogicalNode {
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
+
+public class LogicalTrueNode extends LogicalNode {
+
+    public LogicalTrueNode(PositionMap map) {
+        super(map);
+    }
 
     @Override
     public String getOperator() {

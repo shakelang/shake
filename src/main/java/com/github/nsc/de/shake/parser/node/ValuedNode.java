@@ -1,4 +1,9 @@
 package com.github.nsc.de.shake.parser.node;
 
-public interface ValuedNode extends Node {
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
+
+public abstract class ValuedNode extends Node {
+    public ValuedNode(PositionMap map) {
+        super(map);
+    }
 }

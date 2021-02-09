@@ -1,13 +1,15 @@
 package com.github.nsc.de.shake.parser.node.variables;
 
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.IdentifierNode;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
 
-public class VariableUsageNode implements ValuedNode {
+public class VariableUsageNode extends ValuedNode {
 
     private final IdentifierNode variable;
 
-    public VariableUsageNode(IdentifierNode variable) {
+    public VariableUsageNode(PositionMap map, IdentifierNode variable) {
+        super(map);
         this.variable = variable;
     }
     

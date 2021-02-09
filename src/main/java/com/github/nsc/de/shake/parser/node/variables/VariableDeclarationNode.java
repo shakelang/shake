@@ -1,10 +1,11 @@
 package com.github.nsc.de.shake.parser.node.variables;
 
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
 import com.github.nsc.de.shake.parser.node.VariableType;
 
-public class VariableDeclarationNode implements ValuedNode {
+public class VariableDeclarationNode extends ValuedNode {
 
     private final String name;
     private final VariableType type;
@@ -14,12 +15,13 @@ public class VariableDeclarationNode implements ValuedNode {
     private final boolean isStatic;
     private final boolean isFinal;
 
-    public VariableDeclarationNode(String name, VariableType type, VariableAssignmentNode assignment) {
-        this(name, type, assignment, AccessDescriber.PACKAGE, false, false, false);
+    public VariableDeclarationNode(PositionMap map, String name, VariableType type, VariableAssignmentNode assignment) {
+        this(map, name, type, assignment, AccessDescriber.PACKAGE, false, false, false);
     }
 
-    public VariableDeclarationNode(String name, VariableType type, VariableAssignmentNode assignment,
+    public VariableDeclarationNode(PositionMap map, String name, VariableType type, VariableAssignmentNode assignment,
                                    AccessDescriber access, boolean isInClass, boolean isStatic, boolean isFinal) {
+        super(map);
         this.name = name;
         this.type = type;
         this.assignment = assignment;
@@ -29,11 +31,17 @@ public class VariableDeclarationNode implements ValuedNode {
         this.isFinal = isFinal;
     }
 
-    public VariableDeclarationNode(String name, VariableType type) { this(name, type, null); }
+    public VariableDeclarationNode(PositionMap map, String name, VariableType type) {
+        this(map, name, type, null);
+    }
 
-    public VariableDeclarationNode(String name, VariableAssignmentNode assignment) { this(name, VariableType.DYNAMIC, assignment); }
+    public VariableDeclarationNode(PositionMap map, String name, VariableAssignmentNode assignment) {
+        this(map, name, VariableType.DYNAMIC, assignment);
+    }
 
-    public VariableDeclarationNode(String name) { this(name, VariableType.DYNAMIC, null); }
+    public VariableDeclarationNode(PositionMap map, String name) {
+        this(map, name, VariableType.DYNAMIC, null);
+    }
 
     public String getName() {
         return name;

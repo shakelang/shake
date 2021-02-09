@@ -1,5 +1,6 @@
 package com.github.nsc.de.shake.parser.node.objects;
 
+import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.Tree;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
@@ -7,19 +8,21 @@ import com.github.nsc.de.shake.parser.node.functions.FunctionArgumentNode;
 
 import java.util.Arrays;
 
-public class ConstructorDeclarationNode implements ValuedNode {
+public class ConstructorDeclarationNode extends ValuedNode {
 
     private final String name;
     private final Tree body;
     private final FunctionArgumentNode[] args;
     private final AccessDescriber access;
 
-    public ConstructorDeclarationNode(String name, Tree body, FunctionArgumentNode[] args) {
-        this(name, body, args, AccessDescriber.PACKAGE);
+    public ConstructorDeclarationNode(PositionMap map, String name, Tree body, FunctionArgumentNode[] args) {
+        this(map, name, body, args, AccessDescriber.PACKAGE);
     }
 
 
-    public ConstructorDeclarationNode(String name, Tree body, FunctionArgumentNode[] args, AccessDescriber access) {
+    public ConstructorDeclarationNode(PositionMap map, String name, Tree body, FunctionArgumentNode[] args,
+                                      AccessDescriber access) {
+        super(map);
         this.name = name;
         this.body = body;
         this.args = args;
@@ -27,13 +30,13 @@ public class ConstructorDeclarationNode implements ValuedNode {
     }
 
 
-    public ConstructorDeclarationNode(Tree body, FunctionArgumentNode[] args) {
-        this(body, args, AccessDescriber.PACKAGE);
+    public ConstructorDeclarationNode(PositionMap map, Tree body, FunctionArgumentNode[] args) {
+        this(map, body, args, AccessDescriber.PACKAGE);
     }
 
 
-    public ConstructorDeclarationNode(Tree body, FunctionArgumentNode[] args, AccessDescriber access) {
-        this(null, body, args, access);
+    public ConstructorDeclarationNode(PositionMap map, Tree body, FunctionArgumentNode[] args, AccessDescriber access) {
+        this(map, null, body, args, access);
     }
 
     public String getName() {

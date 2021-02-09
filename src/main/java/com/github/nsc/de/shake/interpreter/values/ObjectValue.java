@@ -43,7 +43,7 @@ public class ObjectValue implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    public ObjectValue(ClassValue parent, InterpretationTools tools) {
+    public ObjectValue(ClassValue parent) {
 
         // set the parent
         this.parent = parent;
@@ -75,8 +75,7 @@ public class ObjectValue implements InterpreterValue {
             this.this_object.declare(Variable.create(node.getName(), node.getType(), node.isFinal(),
                     node.getAssignment() != null ? parent.getInterpreter().visit(
                             node.getAssignment().getValue(), // << the value that is assigned to the variable
-                            scope, // << The class-scope
-                            tools
+                            scope // << The class-scope
                     ) : null));
 
         }

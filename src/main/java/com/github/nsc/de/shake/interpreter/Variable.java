@@ -493,9 +493,9 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @return the function result
      */
     @Override
-    public InterpreterValue invoke(FunctionCallNode node, Scope scope, InterpretationTools tools) {
+    public InterpreterValue invoke(FunctionCallNode node, Scope scope) {
         // redirect operator to the value
-        return this.getValue().invoke(node, scope, tools);
+        return this.getValue().invoke(node, scope);
     }
 
     /**
@@ -508,9 +508,9 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @Override
-    public InterpreterValue newInstance(ClassConstructionNode node, Scope scope, InterpretationTools tools) {
+    public InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
         // redirect operator to the value
-        return this.getValue().newInstance(node, scope, tools);
+        return this.getValue().newInstance(node, scope);
     }
 
     // ****************************
