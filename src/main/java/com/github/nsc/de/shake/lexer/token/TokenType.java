@@ -76,6 +76,7 @@ public class TokenType {
             "KEYWORD_IMPORT",       // 65
             "KEYWORD_VOID",         // 66
             "KEYWORD_CONSTRUCTOR",  // 67
+            "KEYWORD_AS",           // 68
     };
 
     private static final byte[] TOKEN_LENGTH = new byte[] {
@@ -150,6 +151,7 @@ public class TokenType {
             6,      //  KEYWORD_IMPORT       65
             4,      //  KEYWORD_VOID         66
             11,     //  KEYWORD_CONSTRUCTOR  67
+            2,      //  KEYWORD_AS           68
     };
 
     /**
@@ -540,11 +542,16 @@ public class TokenType {
      * Keyword "void" for functions returning nothing
      */
     public static final byte KEYWORD_VOID = 66;
-    
+
     /**
      * Keyword "constructor" for constructor style 1
      */
     public static final byte KEYWORD_CONSTRUCTOR = 67;
+
+    /**
+     * Keyword "as" for casting
+     */
+    public static final byte KEYWORD_AS = 68;
 
     public static String getName(byte b) {
         return NAMES[b];

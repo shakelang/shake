@@ -165,6 +165,14 @@ public class Lexer {
                     }
                     break;
                 }
+                if(chars[0] == 'a') {
+                    if(chars[1] == 's') {
+                        addPosition(TokenType.KEYWORD_AS, end);
+                        return;
+                    }
+                    break;
+                }
+                // if keyword
                 if(chars[0] == 'i' && chars[1] == 'f') {
                     addPosition(TokenType.KEYWORD_IF, end);
                     return;
