@@ -86,9 +86,14 @@ public class Interpreter implements ShakeGenerator {
     private void getDefaults() throws IOException {
 
         global.getVariables().declare(new Variable<>("java", Java.class, new Java()));
+        load("/shake/java/system.shake", "shake/system.shake");
+        load("/shake/java/io.shake", "shake/io.shake");
 
+    }
+
+    private void load(String src, String src_name) throws IOException {
         CharacterSource source = CharacterSource.from(
-                getClass().getResourceAsStream("/shake/java/system.shake"), "shake/system.shake");
+                getClass().getResourceAsStream(src), src_name);
         CharacterInputStream inputStream = new SourceCharacterInputStream(source);
         Lexer lexer = new Lexer(inputStream);
         TokenInputStream tokens = lexer.makeTokens();
