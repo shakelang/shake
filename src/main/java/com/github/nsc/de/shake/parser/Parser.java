@@ -729,6 +729,46 @@ public class Parser {
     }
 
 
+    // Casting
+
+    private ValuedNode cast() {
+        ValuedNode result = this.factor();
+        while(this.in.skipIgnorable().hasNext() && this.in.peekType() == KEYWORD_AS) {
+            this.in.skip();
+
+            CastNode.CastTarget target;
+            switch (this.in.skipIgnorable().peekType()) {
+                case KEYWORD_BYTE: target = CastNode.CastTarget.BYTE; this.in.skip(); break;
+                case KEYWORD_SHORT: target = CastNode.CastTarget.SHORT; this.in.skip(); break;
+                case KEYWORD_INT: target = CastNode.CastTarget.INTEGER; this.in.skip(); break;
+                case KEYWORD_LONG: target = CastNode.CastTarget.LONG; this.in.skip(); break;
+                case KEYWORD_FLOAT: target = CastNode.CastTarget.FLOAT; this.in.skip(); break;
+                case KEYWORD_DOUBLE: target = CastNode.CastTarget.DOUBLE; this.in.skip(); break;
+                case KEYWORD_BOOLEAN: target = CastNode.CastTarget.BOOLEAN; this.in.skip(); break;
+                case KEYWORD_CHAR: target = CastNode.CastTarget.CHAR; this.in.skip(); break;
+                case IDENTIFIER:
+                    IdentifierNode node = null;
+                    do {
+                        if(node != null) this.in.skip();
+                        if(!this.in.skipIgnorable().hasNext() && this.in.nextType() != IDENTIFIER)
+                            throw new ParserError("Expecting identifier");
+                        node = new IdentifierNode(map, node, this.in.actualValue(), this.in.actualStart());
+                    } while(this.in.skipIgnorable().hasNext() && in.peekType() == DOT);
+                    target = new CastNode.CastTarget(node);
+                    break;
+                default:
+                    throw new ParserError("Expecting cast-target");
+            }
+
+
+            result = new CastNode(map, result, target);
+
+        }
+
+        return result;
+    }
+
+
     // (Calculations)
 
     private ValuedNode expr() {
@@ -777,12 +817,12 @@ public class Parser {
     }
 
     private ValuedNode pow() {
-        ValuedNode result = this.factor();
+        ValuedNode result = this.cast();
 
         while(this.in.hasNext() && this.in.peekType() == POW) {
             this.in.skip();
             int pos = this.in.actualStart();
-            result = new PowNode(map, result, this.factor(), pos);
+            result = new PowNode(map, result, this.cast(), pos);
         }
         return result;
     }
