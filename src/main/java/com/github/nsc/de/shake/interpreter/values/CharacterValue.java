@@ -1,5 +1,7 @@
 package com.github.nsc.de.shake.interpreter.values;
 
+import com.github.nsc.de.shake.parser.node.CastNode;
+
 public class CharacterValue implements InterpreterValue {
 
     private final char value;
@@ -133,6 +135,30 @@ public class CharacterValue implements InterpreterValue {
 
         // In other case just throw an error
         throw new Error("Operator '**' is not defined for type char and " + v.getName());
+    }
+
+    /**
+     * Casts this value to another value
+     *
+     * @param type the type to cast to
+     * @param <T> the type to cast to
+     * @return the converted {@link InterpreterValue}
+     *
+     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends InterpreterValue> T castTo(CastNode.CastTarget type) {
+        if(type == CastNode.CastTarget.BYTE) return (T) new IntegerValue((byte) this.getValue());
+        if(type == CastNode.CastTarget.SHORT) return (T) new IntegerValue((short) this.getValue());
+        if(type == CastNode.CastTarget.INTEGER) return (T) new IntegerValue(this.getValue());
+        if(type == CastNode.CastTarget.LONG) return (T) new IntegerValue(this.getValue());
+        if(type == CastNode.CastTarget.FLOAT) return (T) new DoubleValue((float) this.getValue());
+        if(type == CastNode.CastTarget.DOUBLE) return (T) new DoubleValue(this.getValue());
+        if(type == CastNode.CastTarget.CHAR) return (T) this;
+        if(type == CastNode.CastTarget.BOOLEAN) return (T) BooleanValue.from(this);
+        if(type == CastNode.CastTarget.STRING) return (T) new StringValue(String.valueOf(this.getValue()));
+        return InterpreterValue.super.castTo(type);
     }
 
     /**

@@ -3,6 +3,7 @@ package com.github.nsc.de.shake.interpreter.values;
 import com.github.nsc.de.shake.interpreter.Scope;
 import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError;
 import com.github.nsc.de.shake.interpreter.Variable;
+import com.github.nsc.de.shake.parser.node.CastNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 
@@ -322,9 +323,9 @@ public interface InterpreterValue {
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
     @SuppressWarnings("unchecked")
-    default <T extends InterpreterValue> T castTo(Class<T> type) {
-        if(type.isInstance(this)) return (T) this;
-        throw new UnformattedInterpreterError("Can't convert " + getName() + " to type " + type.getName());
+    default <T extends InterpreterValue> T castTo(CastNode.CastTarget type) {
+        // if(type.isInstance(this)) return (T) this;
+        throw new UnformattedInterpreterError("Can't convert " + getName() + " to type " + type.toString());
     }
 
 

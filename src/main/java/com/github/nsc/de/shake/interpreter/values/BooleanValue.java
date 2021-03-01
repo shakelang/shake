@@ -2,6 +2,7 @@ package com.github.nsc.de.shake.interpreter.values;
 
 
 import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError;
+import com.github.nsc.de.shake.parser.node.CastNode;
 
 /**
  * {@link InterpreterValue}s for booleans ({@link BooleanValue#TRUE} &amp; {@link BooleanValue#FALSE}
@@ -224,13 +225,16 @@ public enum BooleanValue implements InterpreterValue {
      *
      * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
      */
-    @SuppressWarnings("unchecked")
-    public <T extends InterpreterValue> T castTo(Class<T> type) {
-        if(type.isInstance(this)) return (T) this;
-        if(type == DoubleValue.class) return (T) new DoubleValue(this.getValue() ? 1 : 0);
-        if(type == IntegerValue.class) return (T) new IntegerValue(this.getValue() ? 1 : 0);
-        if(type == CharacterValue.class) return (T) new CharacterValue((char) (this.getValue() ? 1 : 0));
-        return InterpreterValue.super.to(type);
+    public <T extends InterpreterValue> T castTo(CastNode.CastTarget type) {
+        if(type == CastNode.CastTarget.BYTE) return (T) new IntegerValue(this.value ? 1 : 0);
+        if(type == CastNode.CastTarget.SHORT) return (T) new IntegerValue(this.value ? 1 : 0);
+        if(type == CastNode.CastTarget.INTEGER) return (T) new IntegerValue(this.value ? 1 : 0);
+        if(type == CastNode.CastTarget.LONG) return (T) new IntegerValue(this.value ? 1 : 0);
+        if(type == CastNode.CastTarget.FLOAT) return (T) new DoubleValue(this.value ? 1 : 0);
+        if(type == CastNode.CastTarget.DOUBLE) return (T) new DoubleValue(this.value ? 1 : 0);
+        if(type == CastNode.CastTarget.BOOLEAN) return (T) this;
+        if(type == CastNode.CastTarget.STRING) return (T) new StringValue(String.valueOf(this.getValue()));
+        return InterpreterValue.super.castTo(type);
     }
 
     /**

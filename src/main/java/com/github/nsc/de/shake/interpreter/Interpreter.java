@@ -184,6 +184,7 @@ public class Interpreter implements ShakeGenerator {
         if(n instanceof ClassConstructionNode) return visitClassConstruction((ClassConstructionNode) n, scope);
         if(n instanceof ClassDeclarationNode) return visitClassDeclarationNode((ClassDeclarationNode) n, scope);
         if(n instanceof ImportNode) return visitImportNode((ImportNode) n, scope);
+        if(n instanceof CastNode) return visitCastNode((CastNode) n, scope);
 
         // if the node a LogicalTrueNode return TRUE, if it is a LogicalFalseNode return false
         if(n instanceof LogicalTrueNode) return BooleanValue.TRUE;
@@ -1197,6 +1198,13 @@ public class Interpreter implements ShakeGenerator {
         }
 
         return NullValue.NULL;
+    }
+
+    public InterpreterValue visitCastNode(CastNode node, Scope scope) {
+
+        InterpreterValue v = visit(node.getValue(), scope);
+        return v.castTo(node.getCastTarget());
+
     }
 
     @Override

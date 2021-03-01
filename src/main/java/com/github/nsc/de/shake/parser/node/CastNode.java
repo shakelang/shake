@@ -25,7 +25,7 @@ public class CastNode extends ValuedNode {
 
         public static final CastTarget BYTE = new CastTarget(CastTargetType.BYTE);
         public static final CastTarget SHORT = new CastTarget(CastTargetType.SHORT);
-        public static final CastTarget INTEGER = new CastTarget(CastTargetType.INTEGER);
+        public static final CastTarget INTEGER = new CastTarget(CastTargetType.INT);
         public static final CastTarget LONG = new CastTarget(CastTargetType.LONG);
         public static final CastTarget FLOAT = new CastTarget(CastTargetType.FLOAT);
         public static final CastTarget DOUBLE = new CastTarget(CastTargetType.DOUBLE);
@@ -58,9 +58,13 @@ public class CastNode extends ValuedNode {
         }
 
         public enum CastTargetType {
-            BYTE, SHORT, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, CHAR, STRING, OBJECT
+            BYTE, SHORT, INT, LONG, FLOAT, DOUBLE, BOOLEAN, CHAR, STRING, OBJECT
         }
 
+        @Override
+        public String toString() {
+            return subtype != null ? String.valueOf(subtype) : String.valueOf(type);
+        }
     }
 
 }
