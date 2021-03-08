@@ -327,6 +327,20 @@ public class JsonGenerator extends Generator<JSONObject> {
     }
 
     @Override
+    public JSONObject visitCastNode(CastNode n) {
+        return new JSONObject().put("type", "cast")
+                .put("target", visitCastTarget(n.getCastTarget()))
+                .put("value", n.getValue());
+    }
+
+    public JSONObject visitCastTarget(CastNode.CastTarget target) {
+        JSONObject result = new JSONObject().put("type", target.getType().toString());
+        if(target.getType() == CastNode.CastTarget.CastTargetType.OBJECT)
+            result.put("subtype", visit(target.getSubtype()));
+        return result;
+    }
+
+    @Override
     public String getExtension() {
         return ".json";
     }

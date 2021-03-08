@@ -58,6 +58,7 @@ public abstract class Generator<T> implements ShakeGenerator {
         if(n instanceof LogicalTrueNode) return visitLogicalTrueNode((LogicalTrueNode) n);
         if(n instanceof LogicalFalseNode) return visitLogicalFalseNode((LogicalFalseNode) n);
         if(n instanceof ImportNode) return visitImportNode((ImportNode) n);
+        if(n instanceof CastNode) return visitCastNode((CastNode) n);
         throw new Error(String.format("It looks like that node is not implemented in the Interpreter: %s", n.getClass().toString()));
 
     }
@@ -102,5 +103,6 @@ public abstract class Generator<T> implements ShakeGenerator {
     public abstract T visitLogicalTrueNode(LogicalTrueNode n);
     public abstract T visitLogicalFalseNode(LogicalFalseNode n);
     public abstract T visitImportNode(ImportNode n);
+    public abstract T visitCastNode(CastNode n);
 
 }
