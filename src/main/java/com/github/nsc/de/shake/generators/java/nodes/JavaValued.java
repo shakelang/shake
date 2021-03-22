@@ -1,19 +1,18 @@
 package com.github.nsc.de.shake.generators.java.nodes;
 
-public class JavaValued {
+public interface JavaValued extends JavaNode {
 
-    public static class JavaExpression implements JavaNode.JavaValuedOperation {
+    class JavaExpression implements JavaValued {
 
-        private final JavaValuedOperation left;
-        private final JavaValuedOperation right;
+        private final JavaValued left;
+        private final JavaValued right;
         private final String operator;
 
-        public JavaExpression(JavaValuedOperation left, JavaValuedOperation right, String operator) {
+        public JavaExpression(JavaValued left, JavaValued right, String operator) {
             this.left = left;
             this.right = right;
             this.operator = operator;
         }
-
 
         @Override
         public String toString(String indent, String add) {
@@ -21,7 +20,7 @@ public class JavaValued {
         }
     }
 
-    public static class JavaValue implements JavaNode.JavaValuedOperation {
+    class JavaValue implements JavaValued {
         private final String value;
 
         public JavaValue(String value) {
@@ -34,11 +33,11 @@ public class JavaValued {
         }
     }
 
-    public static class JavaPriorityPart implements JavaNode.JavaValuedOperation {
+    class JavaPriorityPart implements JavaValued {
 
-        private final JavaValuedOperation operation;
+        private final JavaValued operation;
 
-        public JavaPriorityPart(JavaValuedOperation operation) {
+        public JavaPriorityPart(JavaValued operation) {
             this.operation = operation;
         }
 
@@ -48,7 +47,7 @@ public class JavaValued {
         }
     }
 
-    public static class JavaDoublePart implements JavaNode.JavaValuedOperation {
+    class JavaDoublePart implements JavaValued {
 
         private final double value;
 
@@ -62,7 +61,7 @@ public class JavaValued {
         }
     }
 
-    public static class JavaIntegerPart implements JavaNode.JavaValuedOperation {
+    class JavaIntegerPart implements JavaValued {
 
         private final int value;
 
@@ -77,7 +76,7 @@ public class JavaValued {
 
     }
 
-    public static class JavaVariable implements JavaNode.JavaValuedOperation {
+    class JavaVariable implements JavaValued {
 
         private final JavaIdentifier variable;
 
@@ -91,12 +90,12 @@ public class JavaValued {
         }
     }
 
-    public static class JavaFunctionCall implements JavaNode.JavaValuedOperation {
+    class JavaFunctionCall implements JavaValuedOperation {
 
         private final JavaIdentifier function;
-        private final JavaValuedOperation[] args;
+        private final JavaValued[] args;
 
-        public JavaFunctionCall(JavaIdentifier function, JavaValuedOperation[] args) {
+        public JavaFunctionCall(JavaIdentifier function, JavaValued[] args) {
             this.function = function;
             this.args = args;
         }
@@ -114,12 +113,12 @@ public class JavaValued {
 
     }
 
-    public static class JavaConstruction implements JavaNode.JavaValuedOperation {
+    class JavaConstruction implements JavaValuedOperation {
 
         private final JavaIdentifier function;
-        private final JavaValuedOperation[] args;
+        private final JavaValued[] args;
 
-        public JavaConstruction(JavaIdentifier function, JavaValuedOperation[] args) {
+        public JavaConstruction(JavaIdentifier function, JavaValued[] args) {
             this.function = function;
             this.args = args;
         }
@@ -136,12 +135,12 @@ public class JavaValued {
 
     }
 
-    public static class JavaVariableAssignment implements JavaNode.JavaValuedOperation {
+    class JavaVariableAssignment implements JavaValuedOperation {
 
         private final JavaIdentifier name;
-        private final JavaValuedOperation value;
+        private final JavaValued value;
 
-        public JavaVariableAssignment(JavaIdentifier name, JavaValuedOperation value) {
+        public JavaVariableAssignment(JavaIdentifier name, JavaValued value) {
             this.name = name;
             this.value = value;
         }
@@ -152,13 +151,13 @@ public class JavaValued {
         }
     }
 
-    public static class JavaVariableExpressionAssignment implements JavaNode.JavaValuedOperation {
+    class JavaVariableExpressionAssignment implements JavaValuedOperation {
 
         private final JavaIdentifier name;
-        private final JavaValuedOperation value;
+        private final JavaValued value;
         private final char operator;
 
-        public JavaVariableExpressionAssignment(JavaIdentifier name, JavaValuedOperation value, char operator) {
+        public JavaVariableExpressionAssignment(JavaIdentifier name, JavaValued value, char operator) {
             this.name = name;
             this.value = value;
             this.operator = operator;
@@ -170,7 +169,7 @@ public class JavaValued {
         }
     }
 
-    public static class JavaVariableIncr implements JavaNode.JavaValuedOperation {
+    class JavaVariableIncr implements JavaValuedOperation {
 
         private final JavaIdentifier variable;
 
@@ -184,7 +183,7 @@ public class JavaValued {
         }
     }
 
-    public static class JavaVariableDecr implements JavaNode.JavaValuedOperation {
+    class JavaVariableDecr implements JavaValuedOperation {
 
         private final JavaIdentifier variable;
 
@@ -197,4 +196,6 @@ public class JavaValued {
             return this.variable.toString(indent, add) + "--";
         }
     }
+
+    interface JavaValuedOperation extends JavaOperation, JavaValued {  }
 }

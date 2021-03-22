@@ -2,12 +2,12 @@ package com.github.nsc.de.shake.generators.java.nodes;
 
 import java.util.Arrays;
 
-public class JavaIdentifier implements JavaNode.JavaValuedOperation {
+public class JavaIdentifier implements JavaValued {
 
     private final String identifier;
-    private final JavaValuedOperation parent;
+    private final JavaValued parent;
 
-    public JavaIdentifier(String identifier, JavaValuedOperation parent) {
+    public JavaIdentifier(String identifier, JavaValued parent) {
         this.identifier = identifier;
         this.parent = parent;
     }
