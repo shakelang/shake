@@ -22,7 +22,6 @@ dependencies {
     implementation("org.json:json:20180130")
     implementation("org.reflections:reflections:0.9.12")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
-    testImplementation("org.junit.platform:junit-platform-commons:1.5.2")
 }
 
 group = "com.github.nsc.de.shake"
@@ -31,7 +30,6 @@ description = "Compiler"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 java {
-    withSourcesJar()
     withJavadocJar()
 }
 
