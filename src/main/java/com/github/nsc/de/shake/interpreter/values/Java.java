@@ -389,6 +389,11 @@ public class Java implements InterpreterValue {
         }
 
         @Override
+        public <T extends InterpreterValue> T to(Class<T> type) {
+            return InterpreterValue.of(this.getObject()).to(type);
+        }
+
+        @Override
         public Object toJava() {
             return this.object;
         }
