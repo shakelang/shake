@@ -282,8 +282,8 @@ public class JavaGenerator implements ShakeGenerator {
 
     public JavaValued.JavaExpression visitLogicalXOrNode(LogicalXOrNode n, JavaGenerationContext context) {
         return new JavaValued.JavaExpression(
-                (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
+                (JavaValued) visit(n.getLeft(), context),
+                (JavaValued) visit(n.getRight(), context),
                 "^");
     }
 
