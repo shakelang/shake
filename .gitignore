@@ -5,11 +5,19 @@
 
 # IntelliJ
 /.idea/
+*.iml
 
 # Compilation results
-/target/
+**/target/
+**/build/
+!**/src/**/build/
 Compiler.userlibraries
 .project
 
-*.bat
 *.jar
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
