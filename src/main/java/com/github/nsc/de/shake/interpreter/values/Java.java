@@ -389,7 +389,9 @@ public class Java implements InterpreterValue {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public <T extends InterpreterValue> T to(Class<T> type) {
+            if(type.isInstance(this)) return (T) this;
             return InterpreterValue.of(this.getObject()).to(type);
         }
 
