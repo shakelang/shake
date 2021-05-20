@@ -8,6 +8,7 @@ apply(plugin = "java-library")
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka")
+    id("com.github.nsc.de.shake.java-conventions")
     java
     `maven-publish`
 }
@@ -59,12 +60,6 @@ java {
 tasks.build {
     dependsOn("resourceJar")
     dependsOn("sourceJar")
-}
-
-publishing {
-    publications.create<MavenPublication>("maven") {
-        from(components["java"])
-    }
 }
 
 tasks.test {

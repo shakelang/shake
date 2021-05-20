@@ -1,13 +1,13 @@
 group = "com.github.nsc.de.shake"
 version = "0.1.0"
-description = "Shake"
+description = "lexer"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 apply(plugin = "java-library")
 
 plugins {
-    kotlin("jvm") version "1.5.0"
-    id("org.jetbrains.dokka") version "1.4.32"
+    kotlin("jvm")
+    id("org.jetbrains.dokka")
     id("com.github.nsc.de.shake.java-conventions")
     java
     `maven-publish`
@@ -32,10 +32,9 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":util"))
-    implementation(project(":lexer"))
     implementation("org.json:json:20180130")
     implementation("org.reflections:reflections:0.9.12")
+    implementation(project(":util"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
 }
 
@@ -60,8 +59,6 @@ java {
 }
 
 tasks.build {
-    dependsOn(":util:build")
-    dependsOn(":lexer:build")
     dependsOn("resourceJar")
     dependsOn("sourceJar")
 }
