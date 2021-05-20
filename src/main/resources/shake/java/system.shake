@@ -12,7 +12,6 @@ private class ConsoleOutput {
     System.out.println ( e );
   }
 
-
 }
 
 const stdout = new ConsoleOutput();
