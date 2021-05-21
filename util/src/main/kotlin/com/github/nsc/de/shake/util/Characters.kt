@@ -1,8 +1,5 @@
 package com.github.nsc.de.shake.util
 
-import java.lang.StringBuilder
-import java.lang.Error
-
 object Characters {
 
     @JvmStatic

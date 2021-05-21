@@ -2,7 +2,10 @@ package com.github.nsc.de.shake.generators.java;
 
 import com.github.nsc.de.shake.generators.ShakeGenerator;
 import com.github.nsc.de.shake.generators.java.nodes.*;
-import com.github.nsc.de.shake.parser.node.*;
+import com.github.nsc.de.shake.parser.node.IdentifierNode;
+import com.github.nsc.de.shake.parser.node.IfNode;
+import com.github.nsc.de.shake.parser.node.Node;
+import com.github.nsc.de.shake.parser.node.Tree;
 import com.github.nsc.de.shake.parser.node.expression.*;
 import com.github.nsc.de.shake.parser.node.factor.CharacterNode;
 import com.github.nsc.de.shake.parser.node.factor.DoubleNode;

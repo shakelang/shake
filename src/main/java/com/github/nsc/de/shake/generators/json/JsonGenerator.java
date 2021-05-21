@@ -15,8 +15,8 @@ import com.github.nsc.de.shake.parser.node.loops.WhileNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
-import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class JsonGenerator extends Generator<JSONObject> {
 

@@ -1,13 +1,11 @@
 package com.github.nsc.de.shake.interpreter;
 
-import com.github.nsc.de.shake.interpreter.values.*;
 import com.github.nsc.de.shake.interpreter.values.ClassValue;
+import com.github.nsc.de.shake.interpreter.values.*;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.VariableType;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
-
-import java.lang.Class;
 
 
 /**
