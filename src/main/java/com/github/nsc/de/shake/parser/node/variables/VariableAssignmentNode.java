@@ -1,8 +1,8 @@
 package com.github.nsc.de.shake.parser.node.variables;
 
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.Node;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap;
 
 public class VariableAssignmentNode extends ValuedNode {
 

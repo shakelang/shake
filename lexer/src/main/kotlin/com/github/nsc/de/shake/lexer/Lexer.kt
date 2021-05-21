@@ -1,9 +1,9 @@
 package com.github.nsc.de.shake.lexer
 
-import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
 import com.github.nsc.de.shake.lexer.token.TokenInputStream
 import com.github.nsc.de.shake.lexer.token.TokenType
-import com.github.nsc.de.shake.lexer.characterinput.position.Position
+import com.github.nsc.de.shake.util.characterinput.position.Position
 import com.github.nsc.de.shake.util.Characters
 import com.github.nsc.de.shake.util.CompilerError
 import java.lang.StringBuilder

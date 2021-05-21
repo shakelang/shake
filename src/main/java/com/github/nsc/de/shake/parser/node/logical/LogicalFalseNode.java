@@ -1,6 +1,6 @@
 package com.github.nsc.de.shake.parser.node.logical;
 
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap;
 
 public class LogicalFalseNode extends LogicalNode {
 

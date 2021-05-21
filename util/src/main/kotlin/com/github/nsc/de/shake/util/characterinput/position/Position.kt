@@ -1,6 +1,4 @@
-package com.github.nsc.de.shake.lexer.characterinput.position
-
-import kotlin.jvm.JvmOverloads
+package com.github.nsc.de.shake.util.characterinput.position
 
 /**
  * The [Position] marks a position in the source-code.

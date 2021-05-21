@@ -1,12 +1,9 @@
 package com.github.nsc.de.shake.interpreter;
 
 import com.github.nsc.de.shake.generators.ShakeGenerator;
-import com.github.nsc.de.shake.interpreter.values.*;
 import com.github.nsc.de.shake.interpreter.values.ClassValue;
+import com.github.nsc.de.shake.interpreter.values.*;
 import com.github.nsc.de.shake.lexer.Lexer;
-import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceCharacterInputStream;
-import com.github.nsc.de.shake.lexer.characterinput.charactersource.CharacterSource;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.parser.Parser;
 import com.github.nsc.de.shake.parser.node.*;
@@ -22,10 +19,12 @@ import com.github.nsc.de.shake.parser.node.logical.*;
 import com.github.nsc.de.shake.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.shake.parser.node.loops.ForNode;
 import com.github.nsc.de.shake.parser.node.loops.WhileNode;
-
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream;
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream;
+import com.github.nsc.de.shake.util.characterinput.charactersource.CharacterSource;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test
 import com.github.nsc.de.shake.lexer.token.TokenType
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
-import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream
-import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceCharacterInputStream
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import com.github.nsc.de.shake.lexer.token.Token
 import org.junit.jupiter.api.Assertions
 

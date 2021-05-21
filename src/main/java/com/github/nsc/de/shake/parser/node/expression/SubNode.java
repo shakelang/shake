@@ -1,9 +1,9 @@
 package com.github.nsc.de.shake.parser.node.expression;
 
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
 import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
 import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap;
 
 public class SubNode extends ExpressionNode {
     public SubNode(PositionMap map, ValuedNode left, ValuedNode right, int operatorPosition) {

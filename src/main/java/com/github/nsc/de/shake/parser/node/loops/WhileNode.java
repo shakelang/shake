@@ -1,9 +1,9 @@
 package com.github.nsc.de.shake.parser.node.loops;
 
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.parser.node.Node;
 import com.github.nsc.de.shake.parser.node.Tree;
 import com.github.nsc.de.shake.parser.node.ValuedNode;
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap;
 
 public class WhileNode extends Node {
 

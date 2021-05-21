@@ -1,8 +1,8 @@
 package com.github.nsc.de.shake.interpreter;
 
-import com.github.nsc.de.shake.lexer.characterinput.position.Position;
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.util.CompilerError;
+import com.github.nsc.de.shake.util.characterinput.position.Position;
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap;
 
 public class InterpreterError extends CompilerError {
 

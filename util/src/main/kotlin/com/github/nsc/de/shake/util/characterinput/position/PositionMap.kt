@@ -1,6 +1,6 @@
-package com.github.nsc.de.shake.lexer.characterinput.position
+package com.github.nsc.de.shake.util.characterinput.position
 
-import com.github.nsc.de.shake.lexer.characterinput.charactersource.CharacterSource
+import com.github.nsc.de.shake.util.characterinput.charactersource.CharacterSource
 
 class PositionMap(val source: CharacterSource, val lineSeparators: IntArray) {
     val location: String?

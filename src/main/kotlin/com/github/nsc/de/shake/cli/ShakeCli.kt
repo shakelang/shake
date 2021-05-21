@@ -12,13 +12,13 @@ import kotlin.Throws
 import java.io.IOException
 import com.github.nsc.de.shake.interpreter.Interpreter
 import com.github.nsc.de.shake.lexer.Lexer
-import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream
-import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceCharacterInputStream
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.io.BufferedWriter
 import java.io.FileWriter
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 import com.github.nsc.de.shake.parser.Parser
 import com.github.nsc.de.shake.parser.node.Tree
 import java.io.File

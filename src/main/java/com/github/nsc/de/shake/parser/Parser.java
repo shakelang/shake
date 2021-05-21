@@ -1,7 +1,5 @@
 package com.github.nsc.de.shake.parser;
 
-import com.github.nsc.de.shake.lexer.characterinput.position.Position;
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap;
 import com.github.nsc.de.shake.lexer.token.TokenInputStream;
 import com.github.nsc.de.shake.lexer.token.TokenType;
 import com.github.nsc.de.shake.parser.node.*;
@@ -24,6 +22,8 @@ import com.github.nsc.de.shake.parser.node.objects.ConstructorDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
 import com.github.nsc.de.shake.util.Characters;
 import com.github.nsc.de.shake.util.CompilerError;
+import com.github.nsc.de.shake.util.characterinput.position.Position;
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap;
 
 import java.util.ArrayList;
 import java.util.List;

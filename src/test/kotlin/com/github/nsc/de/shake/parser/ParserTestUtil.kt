@@ -2,8 +2,8 @@ package com.github.nsc.de.shake.parser
 
 import com.github.nsc.de.shake.assertType
 import com.github.nsc.de.shake.lexer.Lexer
-import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.CharacterInputStream
-import com.github.nsc.de.shake.lexer.characterinput.characterinputstream.SourceCharacterInputStream
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import com.github.nsc.de.shake.parser.node.*
 import org.junit.jupiter.api.Assertions
 

@@ -1,6 +1,6 @@
 package com.github.nsc.de.shake.lexer.token
 
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 import com.github.nsc.de.shake.util.ArrayUtil
 import java.lang.Error
 import java.util.Arrays

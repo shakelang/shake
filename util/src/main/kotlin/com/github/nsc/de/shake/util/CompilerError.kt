@@ -1,10 +1,8 @@
 package com.github.nsc.de.shake.util
 
-import com.github.nsc.de.shake.lexer.characterinput.position.Position
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMap
-import java.lang.StringBuilder
 import com.github.nsc.de.shake.util.Formatting.FGColor
-import java.lang.Error
+import com.github.nsc.de.shake.util.characterinput.position.Position
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 
 @Suppress("unused")
 open class CompilerError : Error {

@@ -1,7 +1,7 @@
-package com.github.nsc.de.shake.lexer.characterinput.characterinputstream
+package com.github.nsc.de.shake.util.characterinput.characterinputstream
 
-import com.github.nsc.de.shake.lexer.characterinput.charactersource.CharacterSource
-import com.github.nsc.de.shake.lexer.characterinput.position.PositionMaker
+import com.github.nsc.de.shake.util.characterinput.charactersource.CharacterSource
+import com.github.nsc.de.shake.util.characterinput.position.PositionMaker
 
 /**
  * A [CharacterInputStream] provides the characters for the [com.github.nsc.de.shake.lexer.Lexer]

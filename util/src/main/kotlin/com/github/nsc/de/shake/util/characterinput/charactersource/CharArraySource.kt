@@ -1,4 +1,4 @@
-package com.github.nsc.de.shake.lexer.characterinput.charactersource
+package com.github.nsc.de.shake.util.characterinput.charactersource
 
 internal class CharArraySource(
 
