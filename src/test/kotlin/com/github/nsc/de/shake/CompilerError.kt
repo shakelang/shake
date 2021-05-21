@@ -1,13 +1,12 @@
 package com.github.nsc.de.shake
 
-import org.junit.jupiter.api.Test
+import com.github.nsc.de.shake.util.CompilerError
+import com.github.nsc.de.shake.util.Formatting
 import com.github.nsc.de.shake.util.characterinput.charactersource.CharacterSource
 import com.github.nsc.de.shake.util.characterinput.position.Position
 import com.github.nsc.de.shake.util.characterinput.position.PositionMap
-import com.github.nsc.de.shake.util.CompilerError
-import com.github.nsc.de.shake.util.Formatting
 import org.junit.jupiter.api.Assertions
-import java.lang.StringBuilder
+import org.junit.jupiter.api.Test
 
 class CompilerError {
     @Test

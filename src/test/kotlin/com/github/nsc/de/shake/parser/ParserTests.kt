@@ -1,17 +1,19 @@
 package com.github.nsc.de.shake.parser
 
 import com.github.nsc.de.shake.assertType
-import org.junit.jupiter.api.Test
-import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode
-import com.github.nsc.de.shake.parser.node.variables.VariableUsageNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalTrueNode
+import com.github.nsc.de.shake.parser.node.IfNode
+import com.github.nsc.de.shake.parser.node.ImportNode
+import com.github.nsc.de.shake.parser.node.Tree
 import com.github.nsc.de.shake.parser.node.logical.LogicalSmallerNode
-import com.github.nsc.de.shake.parser.node.loops.WhileNode
+import com.github.nsc.de.shake.parser.node.logical.LogicalTrueNode
 import com.github.nsc.de.shake.parser.node.loops.DoWhileNode
 import com.github.nsc.de.shake.parser.node.loops.ForNode
+import com.github.nsc.de.shake.parser.node.loops.WhileNode
+import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode
 import com.github.nsc.de.shake.parser.node.variables.VariableIncreaseNode
-import com.github.nsc.de.shake.parser.node.*
+import com.github.nsc.de.shake.parser.node.variables.VariableUsageNode
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class ParserTests {
     @Test

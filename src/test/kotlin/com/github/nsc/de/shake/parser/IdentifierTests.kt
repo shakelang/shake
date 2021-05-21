@@ -1,11 +1,11 @@
 package com.github.nsc.de.shake.parser
 
 import com.github.nsc.de.shake.assertType
-import org.junit.jupiter.api.Test
-import com.github.nsc.de.shake.parser.node.variables.VariableUsageNode
-import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode
 import com.github.nsc.de.shake.parser.node.IdentifierNode
+import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode
+import com.github.nsc.de.shake.parser.node.variables.VariableUsageNode
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class IdentifierTests {
     @Test

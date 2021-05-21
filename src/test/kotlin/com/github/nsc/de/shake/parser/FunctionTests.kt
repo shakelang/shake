@@ -1,13 +1,13 @@
 package com.github.nsc.de.shake.parser
 
 import com.github.nsc.de.shake.assertType
-import org.junit.jupiter.api.Test
 import com.github.nsc.de.shake.parser.node.AccessDescriber
 import com.github.nsc.de.shake.parser.node.VariableType
-import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode
 import com.github.nsc.de.shake.parser.node.factor.IntegerNode
+import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode
 import com.github.nsc.de.shake.parser.node.functions.ReturnNode
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class FunctionTests {
     @Test

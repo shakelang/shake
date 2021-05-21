@@ -1,9 +1,7 @@
 package com.github.nsc.de.shake.lexer.token
 
-import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 import com.github.nsc.de.shake.util.ArrayUtil
-import java.lang.Error
-import java.util.Arrays
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 
 /**
  * A [TokenInputStream] provides the [Token]s for a [com.github.nsc.de.shake.parser.Parser]. It is

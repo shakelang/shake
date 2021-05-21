@@ -1,13 +1,13 @@
 package com.github.nsc.de.shake.lexer
 
-import org.junit.jupiter.api.Test
+import com.github.nsc.de.shake.lexer.token.Token
 import com.github.nsc.de.shake.lexer.token.TokenType
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.EnumSource
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
-import com.github.nsc.de.shake.lexer.token.Token
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 
 class LexerTests {
     @Test

@@ -1,8 +1,5 @@
 package com.github.nsc.de.shake.cli
 
-import kotlin.jvm.JvmOverloads
-import java.lang.Error
-
 @Suppress("unused")
 class CliArgumentParser(
     private val options: MutableList<CliOption> = mutableListOf()

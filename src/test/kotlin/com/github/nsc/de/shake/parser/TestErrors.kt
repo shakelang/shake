@@ -1,9 +1,9 @@
 package com.github.nsc.de.shake.parser
 
-import org.junit.jupiter.api.Test
 import com.github.nsc.de.shake.parser.Parser.ParserError
-import com.github.nsc.de.shake.parser.node.*
+import com.github.nsc.de.shake.parser.node.IfNode
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class TestErrors {
     @Test

@@ -6,22 +6,21 @@
 
 package com.github.nsc.de.shake.cli
 
-import com.github.nsc.de.shake.generators.json.JsonGenerator
 import com.github.nsc.de.shake.generators.java.JavaGenerator
-import kotlin.Throws
-import java.io.IOException
+import com.github.nsc.de.shake.generators.json.JsonGenerator
 import com.github.nsc.de.shake.interpreter.Interpreter
 import com.github.nsc.de.shake.lexer.Lexer
-import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
-import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.io.BufferedWriter
-import java.io.FileWriter
-import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 import com.github.nsc.de.shake.parser.Parser
 import com.github.nsc.de.shake.parser.node.Tree
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
+import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
+import com.github.nsc.de.shake.util.characterinput.position.PositionMap
+import java.io.BufferedWriter
 import java.io.File
+import java.io.FileWriter
+import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Paths
 
 /**
  * The interpreter for interpreting the code

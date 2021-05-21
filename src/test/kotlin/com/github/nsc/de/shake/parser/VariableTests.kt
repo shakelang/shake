@@ -4,12 +4,12 @@ import com.github.nsc.de.shake.assertType
 import com.github.nsc.de.shake.parser.node.AccessDescriber
 import com.github.nsc.de.shake.parser.node.IdentifierNode
 import com.github.nsc.de.shake.parser.node.VariableType
-import org.junit.jupiter.api.Test
 import com.github.nsc.de.shake.parser.node.factor.DoubleNode
 import com.github.nsc.de.shake.parser.node.factor.IntegerNode
 import com.github.nsc.de.shake.parser.node.logical.LogicalTrueNode
 import com.github.nsc.de.shake.parser.node.variables.*
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class VariableTests {
     //// *************************************************************

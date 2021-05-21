@@ -1,6 +1,6 @@
 package com.github.nsc.de.shake.lexer.token
 
-import java.util.Objects
+import java.util.*
 
 /**
  * The input of the [com.github.nsc.de.shake.lexer.Lexer] gets converted into [Token]s. These get parsed

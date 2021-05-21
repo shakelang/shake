@@ -1,22 +1,13 @@
 package com.github.nsc.de.shake.parser
 
 import com.github.nsc.de.shake.assertType
-import org.junit.jupiter.api.Test
-import com.github.nsc.de.shake.parser.node.factor.IntegerNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalTrueNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalFalseNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalEqEqualsNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalBiggerEqualsNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalSmallerEqualsNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalBiggerNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalSmallerNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalAndNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalOrNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalXOrNode
-import com.github.nsc.de.shake.parser.node.logical.LogicalCompareNode
+import com.github.nsc.de.shake.parser.node.expression.AddNode
+import com.github.nsc.de.shake.parser.node.expression.MulNode
 import com.github.nsc.de.shake.parser.node.factor.DoubleNode
-import com.github.nsc.de.shake.parser.node.expression.*
+import com.github.nsc.de.shake.parser.node.factor.IntegerNode
+import com.github.nsc.de.shake.parser.node.logical.*
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class LogicalTests {
     @Test

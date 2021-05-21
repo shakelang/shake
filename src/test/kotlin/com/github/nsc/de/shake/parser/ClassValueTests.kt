@@ -1,13 +1,13 @@
 package com.github.nsc.de.shake.parser
 
 import com.github.nsc.de.shake.assertType
-import org.junit.jupiter.api.Test
-import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode
 import com.github.nsc.de.shake.parser.node.AccessDescriber
-import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode
 import com.github.nsc.de.shake.parser.node.VariableType
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode
+import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode
+import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class ClassValueTests {
     @Test

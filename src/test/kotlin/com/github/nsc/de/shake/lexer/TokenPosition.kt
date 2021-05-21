@@ -1,10 +1,10 @@
 package com.github.nsc.de.shake.lexer
 
-import org.junit.jupiter.api.Test
+import com.github.nsc.de.shake.lexer.token.TokenType
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
-import com.github.nsc.de.shake.lexer.token.TokenType
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class TokenPosition {
 

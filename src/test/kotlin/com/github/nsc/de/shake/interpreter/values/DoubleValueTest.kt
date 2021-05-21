@@ -1,8 +1,7 @@
 package com.github.nsc.de.shake.interpreter.values
 
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions
-import java.lang.Error
+import org.junit.jupiter.api.Test
 
 class DoubleValueTest {
     @Test

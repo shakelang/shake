@@ -1,7 +1,6 @@
 package com.github.nsc.de.shake.util.characterinput.position
 
 import com.github.nsc.de.shake.util.characterinput.charactersource.CharacterSource
-import java.util.ArrayList
 
 /**
  * A modifiable [PositionMarker] that stores the positions

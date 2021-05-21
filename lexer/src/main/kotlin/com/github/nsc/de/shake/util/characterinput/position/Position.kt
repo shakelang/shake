@@ -1,7 +1,5 @@
 package com.github.nsc.de.shake.util.characterinput.position
 
-import kotlin.jvm.JvmOverloads
-
 /**
  * The [Position] marks a position in the source-code.
  *
