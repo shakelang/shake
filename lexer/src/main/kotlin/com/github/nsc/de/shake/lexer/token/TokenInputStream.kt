@@ -538,10 +538,11 @@ class TokenInputStream
      */
     override fun toString(): String {
         // Return a string-representation of the input just showing all the sub-elements
-        return "TokenInputStream{source='$source', tokens=${Arrays.toString(
-                    ArrayUtil.map(tokens, arrayOfNulls<String>(tokens.size)) {
-                        TokenType.getName(it)
-                    })}, position=$position}"
+        return "TokenInputStream{source='$source', tokens=${
+            ArrayUtil.map(tokens, arrayOfNulls(tokens.size)) {
+                TokenType.getName(it!!)
+            }.contentToString()
+        }, position=$position}"
     }
 
     /**

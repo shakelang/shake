@@ -435,14 +435,14 @@ class Lexer(
         `in`.skip(2)
     }
 
-    inner class LexerError(message: String?, name: String?, details: String?, start: Position?, end: Position?) :
+    inner class LexerError(message: String, name: String, details: String, start: Position, end: Position) :
         CompilerError(message, name, details, start, end) {
         @JvmOverloads
         constructor(
             name: String,
             details: String,
             start: Position = `in`.positionMaker.createPositionAtLocation(),
-            end: Position? = start
+            end: Position = start
         ) : this(
             "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             name,
@@ -456,7 +456,7 @@ class Lexer(
         constructor(
             details: String,
             start: Position = `in`.positionMaker.createPositionAtLocation(),
-            end: Position? = start
+            end: Position = start
         ) : this(
             "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             "LexerError",
