@@ -1,4 +1,5 @@
 rootProject.name = "Shake"
 
-include(":lexer")
 include(":util")
+include(":lexer")
+include(":parser")
