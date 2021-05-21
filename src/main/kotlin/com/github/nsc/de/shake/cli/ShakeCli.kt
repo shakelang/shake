@@ -138,15 +138,15 @@ fun main(args: Array<String>) {
 /**
  * This function parses a [CharacterInputStream] into a Tree
  *
- * @param in the [CharacterInputStream] to parse
+ * @param input the [CharacterInputStream] to parse
  * @return the parsed [Tree]
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-private fun parse(`in`: CharacterInputStream): ParseResult {
+private fun parse(input: CharacterInputStream): ParseResult {
 
     // Create a new Lexer from the CharacterInputStream
-    val lexer = Lexer(`in`)
+    val lexer = Lexer(input)
 
     // Generate the tokens using the lexer
     val tokens = lexer.makeTokens()

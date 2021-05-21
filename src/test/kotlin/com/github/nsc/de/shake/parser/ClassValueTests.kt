@@ -105,14 +105,14 @@ class ClassValueTests {
         Assertions.assertSame(0, node.methods.size)
         Assertions.assertSame(0, node.classes.size)
         assertType(VariableDeclarationNode::class.java, node.fields[0])
-        val `var` = node.fields[0]
-        Assertions.assertSame(VariableType.Type.DYNAMIC, `var`.type.type)
-        Assertions.assertSame(AccessDescriber.PACKAGE, `var`.access)
-        Assertions.assertNotNull(`var`.assignment)
-        Assertions.assertEquals("i", `var`.name)
-        Assertions.assertTrue(`var`.isInClass)
-        Assertions.assertFalse(`var`.isStatic)
-        Assertions.assertFalse(`var`.isFinal)
+        val variable = node.fields[0]
+        Assertions.assertSame(VariableType.Type.DYNAMIC, variable.type.type)
+        Assertions.assertSame(AccessDescriber.PACKAGE, variable.access)
+        Assertions.assertNotNull(variable.assignment)
+        Assertions.assertEquals("i", variable.name)
+        Assertions.assertTrue(variable.isInClass)
+        Assertions.assertFalse(variable.isStatic)
+        Assertions.assertFalse(variable.isFinal)
     }
 
     @Test
@@ -130,14 +130,14 @@ class ClassValueTests {
         Assertions.assertSame(0, node.methods.size)
         Assertions.assertSame(0, node.classes.size)
         assertType(VariableDeclarationNode::class.java, node.fields[0])
-        val `var` = node.fields[0]
-        Assertions.assertSame(VariableType.Type.INTEGER, `var`.type.type)
-        Assertions.assertSame(AccessDescriber.PACKAGE, `var`.access)
-        Assertions.assertNotNull(`var`.assignment)
-        Assertions.assertEquals("i", `var`.name)
-        Assertions.assertTrue(`var`.isInClass)
-        Assertions.assertFalse(`var`.isStatic)
-        Assertions.assertFalse(`var`.isFinal)
+        val variable = node.fields[0]
+        Assertions.assertSame(VariableType.Type.INTEGER, variable.type.type)
+        Assertions.assertSame(AccessDescriber.PACKAGE, variable.access)
+        Assertions.assertNotNull(variable.assignment)
+        Assertions.assertEquals("i", variable.name)
+        Assertions.assertTrue(variable.isInClass)
+        Assertions.assertFalse(variable.isStatic)
+        Assertions.assertFalse(variable.isFinal)
     }
 
     @Test
@@ -155,23 +155,23 @@ class ClassValueTests {
         Assertions.assertSame(0, node.methods.size)
         Assertions.assertSame(0, node.classes.size)
         assertType(VariableDeclarationNode::class.java, node.fields[0])
-        var `var` = node.fields[0]
-        Assertions.assertSame(VariableType.Type.INTEGER, `var`.type.type)
-        Assertions.assertSame(AccessDescriber.PACKAGE, `var`.access)
-        Assertions.assertNotNull(`var`.assignment)
-        Assertions.assertEquals("i", `var`.name)
-        Assertions.assertTrue(`var`.isInClass)
-        Assertions.assertFalse(`var`.isStatic)
-        Assertions.assertFalse(`var`.isFinal)
+        var variable = node.fields[0]
+        Assertions.assertSame(VariableType.Type.INTEGER, variable.type.type)
+        Assertions.assertSame(AccessDescriber.PACKAGE, variable.access)
+        Assertions.assertNotNull(variable.assignment)
+        Assertions.assertEquals("i", variable.name)
+        Assertions.assertTrue(variable.isInClass)
+        Assertions.assertFalse(variable.isStatic)
+        Assertions.assertFalse(variable.isFinal)
         assertType(VariableDeclarationNode::class.java, node.fields[0])
-        `var` = node.fields[1]
-        Assertions.assertSame(VariableType.Type.INTEGER, `var`.type.type)
-        Assertions.assertSame(AccessDescriber.PACKAGE, `var`.access)
-        Assertions.assertNotNull(`var`.assignment)
-        Assertions.assertEquals("i2", `var`.name)
-        Assertions.assertTrue(`var`.isInClass)
-        Assertions.assertFalse(`var`.isStatic)
-        Assertions.assertFalse(`var`.isFinal)
+        variable = node.fields[1]
+        Assertions.assertSame(VariableType.Type.INTEGER, variable.type.type)
+        Assertions.assertSame(AccessDescriber.PACKAGE, variable.access)
+        Assertions.assertNotNull(variable.assignment)
+        Assertions.assertEquals("i2", variable.name)
+        Assertions.assertTrue(variable.isInClass)
+        Assertions.assertFalse(variable.isStatic)
+        Assertions.assertFalse(variable.isFinal)
     }
 
     @Test
@@ -189,14 +189,14 @@ class ClassValueTests {
         Assertions.assertSame(0, node.methods.size)
         Assertions.assertSame(0, node.classes.size)
         assertType(VariableDeclarationNode::class.java, node.fields[0])
-        val `var` = node.fields[0]
-        Assertions.assertSame(VariableType.Type.INTEGER, `var`.type.type)
-        Assertions.assertSame(AccessDescriber.PACKAGE, `var`.access)
-        Assertions.assertNotNull(`var`.assignment)
-        Assertions.assertEquals("i", `var`.name)
-        Assertions.assertTrue(`var`.isInClass)
-        Assertions.assertTrue(`var`.isStatic)
-        Assertions.assertFalse(`var`.isFinal)
+        val variable = node.fields[0]
+        Assertions.assertSame(VariableType.Type.INTEGER, variable.type.type)
+        Assertions.assertSame(AccessDescriber.PACKAGE, variable.access)
+        Assertions.assertNotNull(variable.assignment)
+        Assertions.assertEquals("i", variable.name)
+        Assertions.assertTrue(variable.isInClass)
+        Assertions.assertTrue(variable.isStatic)
+        Assertions.assertFalse(variable.isFinal)
     }
 
     @Test
@@ -214,14 +214,14 @@ class ClassValueTests {
         Assertions.assertSame(0, node.methods.size)
         Assertions.assertSame(0, node.classes.size)
         assertType(VariableDeclarationNode::class.java, node.fields[0])
-        val `var` = node.fields[0]
-        Assertions.assertSame(VariableType.Type.INTEGER, `var`.type.type)
-        Assertions.assertSame(AccessDescriber.PACKAGE, `var`.access)
-        Assertions.assertNotNull(`var`.assignment)
-        Assertions.assertEquals("i", `var`.name)
-        Assertions.assertTrue(`var`.isInClass)
-        Assertions.assertFalse(`var`.isStatic)
-        Assertions.assertTrue(`var`.isFinal)
+        val variable = node.fields[0]
+        Assertions.assertSame(VariableType.Type.INTEGER, variable.type.type)
+        Assertions.assertSame(AccessDescriber.PACKAGE, variable.access)
+        Assertions.assertNotNull(variable.assignment)
+        Assertions.assertEquals("i", variable.name)
+        Assertions.assertTrue(variable.isInClass)
+        Assertions.assertFalse(variable.isStatic)
+        Assertions.assertTrue(variable.isFinal)
     }
 
     @Test
@@ -239,14 +239,14 @@ class ClassValueTests {
         Assertions.assertSame(0, node.methods.size)
         Assertions.assertSame(0, node.classes.size)
         assertType(VariableDeclarationNode::class.java, node.fields[0])
-        val `var` = node.fields[0]
-        Assertions.assertSame(VariableType.Type.INTEGER, `var`.type.type)
-        Assertions.assertSame(AccessDescriber.PACKAGE, `var`.access)
-        Assertions.assertNotNull(`var`.assignment)
-        Assertions.assertEquals("i", `var`.name)
-        Assertions.assertTrue(`var`.isInClass)
-        Assertions.assertTrue(`var`.isStatic)
-        Assertions.assertTrue(`var`.isFinal)
+        val variable = node.fields[0]
+        Assertions.assertSame(VariableType.Type.INTEGER, variable.type.type)
+        Assertions.assertSame(AccessDescriber.PACKAGE, variable.access)
+        Assertions.assertNotNull(variable.assignment)
+        Assertions.assertEquals("i", variable.name)
+        Assertions.assertTrue(variable.isInClass)
+        Assertions.assertTrue(variable.isStatic)
+        Assertions.assertTrue(variable.isFinal)
     }
 
     @Test

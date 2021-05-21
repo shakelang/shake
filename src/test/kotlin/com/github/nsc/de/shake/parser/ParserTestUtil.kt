@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Assertions
 
 object ParserTestUtil {
     fun parse(source: String?, input: String?): Tree {
-        val `in`: CharacterInputStream = SourceCharacterInputStream(source, input)
-        val lexer = Lexer(`in`)
+        val input: CharacterInputStream = SourceCharacterInputStream(source, input)
+        val lexer = Lexer(input)
         val tokens = lexer.makeTokens()
         val parser = Parser(tokens)
         return parser.parse()

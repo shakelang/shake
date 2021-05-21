@@ -203,11 +203,11 @@ class LexerTests {
     companion object {
         @Suppress("deprecation")
         fun generateToken(input: String?, tt: Byte): Token {
-            val `in`: CharacterInputStream = SourceCharacterInputStream("<tests>", input)
-            val lexer = Lexer(`in`)
+            val input: CharacterInputStream = SourceCharacterInputStream("<tests>", input)
+            val lexer = Lexer(input)
             val t = lexer.makeTokens().next()
             Assertions.assertSame(tt, t.type)
-            Assertions.assertFalse(`in`.hasNext())
+            Assertions.assertFalse(input.hasNext())
             return t
         }
     }

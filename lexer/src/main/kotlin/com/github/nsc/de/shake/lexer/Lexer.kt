@@ -8,16 +8,16 @@ import com.github.nsc.de.shake.util.characterinput.characterinputstream.Characte
 import com.github.nsc.de.shake.util.characterinput.position.Position
 
 class Lexer(
-    private val `in`: CharacterInputStream
+    private val input: CharacterInputStream
 ) {
     private val tokens: MutableList<Byte> = ArrayList()
     private val positions: MutableList<Int> = ArrayList()
     private val values: MutableList<String> = ArrayList()
     fun makeTokens(): TokenInputStream {
-        while (`in`.hasNext()) {
-            val next = `in`.next()
-            val peek: Char = if (`in`.hasNext()) `in`.peek() else (0).toChar()
-            val start = `in`.position
+        while (input.hasNext()) {
+            val next = input.next()
+            val peek: Char = if (input.hasNext()) input.peek() else (0).toChar()
+            val start = input.position
 
             // Whitespace
             if (Characters.isWhitespaceCharacter(next)) continue
@@ -33,74 +33,74 @@ class Lexer(
             else if (next == '\'') makeCharacter()
             else if (next == '/' && peek == '/') singleLineComment()
             else if (next == '/' && peek == '*') multiLineComment()
-            else if (`in`.has(2) && next == '*' && peek == '*' && `in`.peek(2) == '=') {
-                `in`.skip(2)
-                addPosition(TokenType.POW_ASSIGN, `in`.position)
+            else if (input.has(2) && next == '*' && peek == '*' && input.peek(2) == '=') {
+                input.skip(2)
+                addPosition(TokenType.POW_ASSIGN, input.position)
             } else if (next == '%' && peek == '=') {
-                `in`.skip()
-                addPosition(TokenType.MOD_ASSIGN, `in`.position)
+                input.skip()
+                addPosition(TokenType.MOD_ASSIGN, input.position)
             } else if (next == '/' && peek == '=') {
-                `in`.skip()
-                addPosition(TokenType.DIV_ASSIGN, `in`.position)
+                input.skip()
+                addPosition(TokenType.DIV_ASSIGN, input.position)
             } else if (next == '*' && peek == '=') {
-                `in`.skip()
-                addPosition(TokenType.MUL_ASSIGN, `in`.position)
+                input.skip()
+                addPosition(TokenType.MUL_ASSIGN, input.position)
             } else if (next == '-' && peek == '=') {
-                `in`.skip()
-                addPosition(TokenType.SUB_ASSIGN, `in`.position)
+                input.skip()
+                addPosition(TokenType.SUB_ASSIGN, input.position)
             } else if (next == '+' && peek == '=') {
-                `in`.skip()
-                addPosition(TokenType.ADD_ASSIGN, `in`.position)
+                input.skip()
+                addPosition(TokenType.ADD_ASSIGN, input.position)
             } else if (next == '+' && peek == '+') {
-                `in`.skip()
-                addPosition(TokenType.INCR, `in`.position)
+                input.skip()
+                addPosition(TokenType.INCR, input.position)
             } else if (next == '-' && peek == '-') {
-                `in`.skip()
-                addPosition(TokenType.DECR, `in`.position)
+                input.skip()
+                addPosition(TokenType.DECR, input.position)
             } else if (next == '*' && peek == '*') {
-                `in`.skip()
-                addPosition(TokenType.POW, `in`.position)
-            } else if (next == '%') addPosition(TokenType.MOD, `in`.position)
-            else if (next == '/') addPosition(TokenType.DIV,`in`.position)
-            else if (next == '*') addPosition(TokenType.MUL, `in`.position)
-            else if (next == '-') addPosition(TokenType.SUB,`in`.position)
-            else if (next == '+') addPosition(TokenType.ADD, `in`.position)
-            else if (next == '^') addPosition(TokenType.LOGICAL_XOR, `in`.position)
+                input.skip()
+                addPosition(TokenType.POW, input.position)
+            } else if (next == '%') addPosition(TokenType.MOD, input.position)
+            else if (next == '/') addPosition(TokenType.DIV,input.position)
+            else if (next == '*') addPosition(TokenType.MUL, input.position)
+            else if (next == '-') addPosition(TokenType.SUB,input.position)
+            else if (next == '+') addPosition(TokenType.ADD, input.position)
+            else if (next == '^') addPosition(TokenType.LOGICAL_XOR, input.position)
             else if (next == '|' && peek == '|') {
-                `in`.skip()
-                addPosition(TokenType.LOGICAL_OR, `in`.position)
+                input.skip()
+                addPosition(TokenType.LOGICAL_OR, input.position)
             } else if (next == '&' && peek == '&') {
-                `in`.skip()
-                addPosition(TokenType.LOGICAL_AND, `in`.position)
+                input.skip()
+                addPosition(TokenType.LOGICAL_AND, input.position)
             } else if (next == '=' && peek == '=') {
-                `in`.skip()
-                addPosition(TokenType.EQ_EQUALS, `in`.position)
+                input.skip()
+                addPosition(TokenType.EQ_EQUALS, input.position)
             } else if (next == '>' && peek == '=') {
-                `in`.skip()
-                addPosition(TokenType.BIGGER_EQUALS, `in`.position)
+                input.skip()
+                addPosition(TokenType.BIGGER_EQUALS, input.position)
             } else if (next == '<' && peek == '=') {
-                `in`.skip()
-                addPosition(TokenType.SMALLER_EQUALS, `in`.position)
-            } else if (next == '>') addPosition(TokenType.BIGGER, `in`.position) else if (next == '<') addPosition(
+                input.skip()
+                addPosition(TokenType.SMALLER_EQUALS, input.position)
+            } else if (next == '>') addPosition(TokenType.BIGGER, input.position) else if (next == '<') addPosition(
                 TokenType.SMALLER,
-                `in`.position
-            ) else if (next == '=') addPosition(TokenType.ASSIGN, `in`.position) else if (next == '(') addPosition(
+                input.position
+            ) else if (next == '=') addPosition(TokenType.ASSIGN, input.position) else if (next == '(') addPosition(
                 TokenType.LPAREN,
-                `in`.position
-            ) else if (next == ')') addPosition(TokenType.RPAREN, `in`.position) else if (next == '{') addPosition(
+                input.position
+            ) else if (next == ')') addPosition(TokenType.RPAREN, input.position) else if (next == '{') addPosition(
                 TokenType.LCURL,
-                `in`.position
+                input.position
             ) else if (next == '}') addPosition(
                 TokenType.RCURL,
-                `in`.position
+                input.position
             ) else throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
         }
         return TokenInputStream(
-            `in`.source.location!!,
+            input.source.location!!,
             createPrimitiveByteArray(tokens),
             values.toTypedArray(),
             createPrimitiveIntArray(positions),
-            `in`.positionMaker.createPositionMap()
+            input.positionMaker.createPositionMap()
         )
     }
 
@@ -132,29 +132,29 @@ class Lexer(
     private fun makeNumber() {
         val numStr = StringBuilder()
         var dot = false
-        numStr.append(`in`.actual())
-        while (`in`.hasNext() && Characters.isNumberOrDotCharacter(`in`.peek())) {
-            if (`in`.peek() == '.') {
+        numStr.append(input.actual())
+        while (input.hasNext() && Characters.isNumberOrDotCharacter(input.peek())) {
+            if (input.peek() == '.') {
                 if (dot) break
                 dot = true
             }
-            numStr.append(`in`.next())
+            numStr.append(input.next())
         }
-        if (dot) addPosition(TokenType.DOUBLE, `in`.position, numStr.toString()) else addPosition(
+        if (dot) addPosition(TokenType.DOUBLE, input.position, numStr.toString()) else addPosition(
             TokenType.INTEGER,
-            `in`.position,
+            input.position,
             numStr.toString()
         )
     }
 
     private fun makeIdentifier() {
         val identifier = StringBuilder()
-        identifier.append(`in`.actual())
-        while (`in`.hasNext() && Characters.isIdentifierCharacter(`in`.peek())) {
-            identifier.append(`in`.next())
+        identifier.append(input.actual())
+        while (input.hasNext() && Characters.isIdentifierCharacter(input.peek())) {
+            identifier.append(input.next())
         }
         val result = identifier.toString()
-        val end = `in`.position
+        val end = input.position
         val chars = result.toCharArray()
         when (result.length) {
             2 -> {
@@ -357,10 +357,10 @@ class Lexer(
 
     private fun makeString() {
         val string = StringBuilder()
-        if (`in`.actual() == '"') {
-            while (`in`.hasNext() && `in`.next() != '"') {
-                if (`in`.actual() == '\\') {
-                    when (`in`.next()) {
+        if (input.actual() == '"') {
+            while (input.hasNext() && input.next() != '"') {
+                if (input.actual() == '\\') {
+                    when (input.next()) {
                         't' -> string.append("\\t")
                         'b' -> string.append("\\b")
                         'n' -> string.append("\\n")
@@ -373,25 +373,25 @@ class Lexer(
                             string.append("\\u")
                             var i = 0
                             while (i < 4) {
-                                val c = `in`.next()
+                                val c = input.next()
                                 if (!Characters.isHexCharacter(c)) throw LexerError("Expecting hex char")
                                 string.append(c)
                                 i++
                             }
                         }
-                        else -> throw LexerError("Unknown escape sequence '\\" + `in`.actual() + "'")
+                        else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
                     }
-                } else string.append(`in`.actual())
+                } else string.append(input.actual())
             }
-            if (`in`.actual() != '"') throw LexerError("String must end with a '\"'")
+            if (input.actual() != '"') throw LexerError("String must end with a '\"'")
         }
-        addPosition(TokenType.STRING, `in`.position, string.toString())
+        addPosition(TokenType.STRING, input.position, string.toString())
     }
 
     private fun makeCharacter() {
         val c: String
-        c = if (`in`.next() == '\\') {
-            when (`in`.next()) {
+        c = if (input.next() == '\\') {
+            when (input.next()) {
                 't' -> "\\t"
                 'b' -> "\\b"
                 'n' -> "\\n"
@@ -404,32 +404,32 @@ class Lexer(
                     val s = StringBuilder().append("\\u")
                     var i = 0
                     while (i < 4) {
-                        val ch = `in`.next()
+                        val ch = input.next()
                         if (!Characters.isHexCharacter(ch)) throw LexerError("Expecting hex char")
                         s.append(ch)
                         i++
                     }
                     s.toString()
                 }
-                else -> throw LexerError("Unknown escape sequence '\\" + `in`.actual() + "'")
+                else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
             }
-        } else `in`.actual().toString()
-        if (`in`.next() != '\'') throw LexerError("Char must end with a \"'\"")
-        addPosition(TokenType.CHARACTER, `in`.position, c)
+        } else input.actual().toString()
+        if (input.next() != '\'') throw LexerError("Char must end with a \"'\"")
+        addPosition(TokenType.CHARACTER, input.position, c)
     }
 
     private fun singleLineComment() {
-        `in`.skip(2)
-        while (`in`.hasNext() && `in`.peek() != '\n') `in`.skip()
+        input.skip(2)
+        while (input.hasNext() && input.peek() != '\n') input.skip()
     }
 
     private fun multiLineComment() {
-        `in`.skip()
-        while (`in`.has(2) && !(`in`.peek() == '*' && `in`.peek(2) == '/')) {
-            `in`.skip()
+        input.skip()
+        while (input.has(2) && !(input.peek() == '*' && input.peek(2) == '/')) {
+            input.skip()
         }
-        if (!`in`.has(2)) throw LexerError("Multi-Line-Comment did not end")
-        `in`.skip(2)
+        if (!input.has(2)) throw LexerError("Multi-Line-Comment did not end")
+        input.skip(2)
     }
 
     inner class LexerError(message: String, name: String, details: String, start: Position, end: Position) :
@@ -438,7 +438,7 @@ class Lexer(
         constructor(
             name: String,
             details: String,
-            start: Position = `in`.positionMaker.createPositionAtLocation(),
+            start: Position = input.positionMaker.createPositionAtLocation(),
             end: Position = start
         ) : this(
             "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
@@ -452,7 +452,7 @@ class Lexer(
         @JvmOverloads
         constructor(
             details: String,
-            start: Position = `in`.positionMaker.createPositionAtLocation(),
+            start: Position = input.positionMaker.createPositionAtLocation(),
             end: Position = start
         ) : this(
             "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
