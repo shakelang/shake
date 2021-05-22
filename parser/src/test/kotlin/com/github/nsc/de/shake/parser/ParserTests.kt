@@ -119,19 +119,19 @@ class ParserTests {
         Assertions.assertNotNull(node.elseBody)
         assertType(LogicalTrueNode::class.java, node.condition)
         assertType(Tree::class.java, node.body)
-        assertType(Tree::class.java, node.elseBody)
+        assertType(Tree::class.java, node.elseBody!!)
         node = ParserTestUtil.parseSingle("<IfTest>", "if (true) i; else if (true) i; else i;", IfNode::class.java)
         Assertions.assertNotNull(node.condition)
         Assertions.assertNotNull(node.body)
         Assertions.assertNotNull(node.elseBody)
         assertType(LogicalTrueNode::class.java, node.condition)
         assertType(Tree::class.java, node.body)
-        assertType(Tree::class.java, node.elseBody)
-        val elseBody = node.elseBody
+        assertType(Tree::class.java, node.elseBody!!)
+        val elseBody = node.elseBody!!
         Assertions.assertSame(1, elseBody.children.size)
         assertType(IfNode::class.java, elseBody.children[0])
         val if2 = elseBody.children[0] as IfNode
         assertType(Tree::class.java, if2.body)
-        assertType(Tree::class.java, if2.elseBody)
+        assertType(Tree::class.java, if2.elseBody!!)
     }
 }

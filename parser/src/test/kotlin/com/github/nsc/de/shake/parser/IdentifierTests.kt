@@ -26,7 +26,7 @@ class IdentifierTests {
         var node = tree.children[0] as VariableUsageNode
         Assertions.assertEquals("test2", node.variable.name)
         Assertions.assertNotNull(node.variable.parent)
-        assertType(VariableUsageNode::class.java, node.variable.parent)
+        assertType(VariableUsageNode::class.java, node.variable.parent!!)
         node = node.variable.parent as VariableUsageNode
         Assertions.assertEquals("test", node.variable.name)
         Assertions.assertNull(node.variable.parent)
@@ -40,12 +40,12 @@ class IdentifierTests {
         var node = tree.children[0] as VariableUsageNode
         Assertions.assertEquals("test2", node.variable.name)
         Assertions.assertNotNull(node.variable.parent)
-        assertType(FunctionCallNode::class.java, node.variable.parent)
+        assertType(FunctionCallNode::class.java, node.variable.parent!!)
         val node2 = node.variable.parent as FunctionCallNode
         Assertions.assertNotNull(node.variable.parent)
         assertType(IdentifierNode::class.java, node2.function)
         Assertions.assertEquals("test", (node2.function as IdentifierNode).name)
-        assertType(VariableUsageNode::class.java, (node2.function as IdentifierNode).parent)
+        assertType(VariableUsageNode::class.java, (node2.function as IdentifierNode).parent!!)
         node = (node2.function as IdentifierNode).parent as VariableUsageNode
         Assertions.assertEquals("aaa", node.variable.name)
         Assertions.assertNull(node.variable.parent)
