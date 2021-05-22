@@ -1,4 +1,4 @@
-package com.github.nsc.de.shake.generators;
+package com.github.nsc.de.shake.generation;
 
 import com.github.nsc.de.shake.parser.node.*;
 import com.github.nsc.de.shake.parser.node.expression.*;
@@ -14,7 +14,7 @@ import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
 
-public abstract class Generator<T> implements ShakeGenerator {
+public abstract class ShakeGenerator<T> implements ShakeGeneratorBase {
     
     public T visit(Node n) {
 
