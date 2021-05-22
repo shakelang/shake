@@ -61,9 +61,6 @@ java {
 }
 
 tasks.build {
-    dependsOn(":util:build")
-    dependsOn(":lexer:build")
-    dependsOn(":parser:build")
     dependsOn("resourceJar")
     dependsOn("sourceJar")
 }
