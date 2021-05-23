@@ -1,13 +1,13 @@
 group = "com.github.nsc.de.shake"
 version = "0.1.0"
-description = "Shake"
+description = "interpreter"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 apply(plugin = "java-library")
 
 plugins {
-    kotlin("jvm") version "1.5.0"
-    id("org.jetbrains.dokka") version "1.4.32"
+    kotlin("jvm")
+    id("org.jetbrains.dokka")
     id("com.github.nsc.de.shake.java-conventions")
     java
     `maven-publish`
@@ -35,7 +35,6 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":lexer"))
     implementation(project(":parser"))
-    implementation(project(":interpreter"))
     implementation("org.json:json:20180130")
     implementation("org.reflections:reflections:0.9.12")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")

@@ -1,7 +1,7 @@
 package com.github.nsc.de.shake.interpreter;
 
-import com.github.nsc.de.shake.interpreter.values.ClassValue;
 import com.github.nsc.de.shake.interpreter.values.*;
+import com.github.nsc.de.shake.interpreter.values.ClassValue;
 import com.github.nsc.de.shake.parser.node.AccessDescriber;
 import com.github.nsc.de.shake.parser.node.VariableType;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
@@ -614,7 +614,7 @@ public class Variable<V extends InterpreterValue> implements InterpreterValue {
         if(v instanceof Variable) return (V) ((Variable) v).withScope(scope);
         if(v instanceof VariableList) return (V) ((VariableList) v).withScope(scope);
         if(v instanceof Function) return (V) ((Function) v).withScope(scope);
-        if(v instanceof ClassValue)
+        if(v instanceof com.github.nsc.de.shake.interpreter.values.ClassValue)
             return (V) ((ClassValue) v).withScope(scope);
         return v;
     }
