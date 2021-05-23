@@ -68,7 +68,7 @@ tasks.test {
 
     testLogging.showExceptions = true
     maxHeapSize = "1G"
-    ignoreFailures = true
+    // ignoreFailures = true
     filter {
         includeTestsMatching("com.github.nsc.de.shake.*")
     }
