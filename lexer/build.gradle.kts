@@ -14,7 +14,7 @@ plugins {
 }
 
 val srcDirs = arrayOf("src/main/java", "src/main/kotlin")
-val testDirs = arrayOf("src/main/java", "src/main/kotlin")
+val testDirs = arrayOf("src/test/java", "src/test/kotlin")
 
 
 sourceSets {
