@@ -261,11 +261,11 @@ public class IntegerValue implements InterpreterValue {
 
         // If the given value is a IntegerValue then check if the value is equal
         // to the own value and return a BooleanValue
-        if(v instanceof IntegerValue) return BooleanValue.from(getValue() == ((IntegerValue) v).getValue());
+        if(v instanceof IntegerValue) return BooleanValue.Companion.from(getValue() == ((IntegerValue) v).getValue());
 
         // If the given value is a DoubleValue then check if the value is equal
         // to the own value and return a BooleanValue
-        if(v instanceof DoubleValue) return BooleanValue.from(getValue() == ((DoubleValue) v).getValue());
+        if(v instanceof DoubleValue) return BooleanValue.Companion.from(getValue() == ((DoubleValue) v).getValue());
 
         // In other case just throw an error
         throw new UnformattedInterpreterError("Operator '==' is not defined for type integer and " + v.getName());
@@ -285,11 +285,11 @@ public class IntegerValue implements InterpreterValue {
 
         // If the given value is a IntegerValue then check if the value is bigger than
         // or equal to the own value and return a BooleanValue
-        if(v instanceof IntegerValue) return BooleanValue.from(getValue() >= ((IntegerValue) v).getValue());
+        if(v instanceof IntegerValue) return BooleanValue.Companion.from(getValue() >= ((IntegerValue) v).getValue());
 
         // If the given value is a DoubleValue then check if the value is bigger than
         // or equal to the own value and return a BooleanValue
-        if(v instanceof DoubleValue) return BooleanValue.from(getValue() >= ((DoubleValue) v).getValue());
+        if(v instanceof DoubleValue) return BooleanValue.Companion.from(getValue() >= ((DoubleValue) v).getValue());
 
         // In other case just throw an error
         throw new UnformattedInterpreterError("Operator '>=' is not defined for type integer and " + v.getName());
@@ -309,11 +309,11 @@ public class IntegerValue implements InterpreterValue {
 
         // If the given value is a IntegerValue then check if the value is smaller than
         // or equal to the own value and return a BooleanValue
-        if(v instanceof IntegerValue) return BooleanValue.from(getValue() <= ((IntegerValue) v).getValue());
+        if(v instanceof IntegerValue) return BooleanValue.Companion.from(getValue() <= ((IntegerValue) v).getValue());
 
         // If the given value is a DoubleValue then check if the value is smaller than
         // or equal to the own value and return a BooleanValue
-        if(v instanceof DoubleValue) return BooleanValue.from(getValue() <= ((DoubleValue) v).getValue());
+        if(v instanceof DoubleValue) return BooleanValue.Companion.from(getValue() <= ((DoubleValue) v).getValue());
 
         // In other case just throw an error
         throw new UnformattedInterpreterError("Operator '<=' is not defined for type integer and " + v.getName());
@@ -333,11 +333,11 @@ public class IntegerValue implements InterpreterValue {
 
         // If the given value is a IntegerValue then check if the value is bigger than
         // the own value and return a BooleanValue
-        if(v instanceof IntegerValue) return BooleanValue.from(getValue() > ((IntegerValue) v).getValue());
+        if(v instanceof IntegerValue) return BooleanValue.Companion.from(getValue() > ((IntegerValue) v).getValue());
 
         // If the given value is a DoubleValue then check if the value is bigger than
         // the own value and return a BooleanValue
-        if(v instanceof DoubleValue) return BooleanValue.from(getValue() > ((DoubleValue) v).getValue());
+        if(v instanceof DoubleValue) return BooleanValue.Companion.from(getValue() > ((DoubleValue) v).getValue());
 
         // In other case just throw an error
         throw new UnformattedInterpreterError("Operator '>' is not defined for type integer and " + v.getName());
@@ -357,11 +357,11 @@ public class IntegerValue implements InterpreterValue {
 
         // If the given value is a IntegerValue then check if the value is smaller than
         // the own value and return a BooleanValue
-        if(v instanceof IntegerValue) return BooleanValue.from(getValue() < ((IntegerValue) v).getValue());
+        if(v instanceof IntegerValue) return BooleanValue.Companion.from(getValue() < ((IntegerValue) v).getValue());
 
         // If the given value is a DoubleValue then check if the value is smaller than
         // the own value and return a BooleanValue
-        if(v instanceof DoubleValue) return BooleanValue.from(getValue() < ((DoubleValue) v).getValue());
+        if(v instanceof DoubleValue) return BooleanValue.Companion.from(getValue() < ((DoubleValue) v).getValue());
 
         // In other case just throw an error
         throw new UnformattedInterpreterError("Operator '<' is not defined for type integer and " + v.getName());
@@ -427,7 +427,7 @@ public class IntegerValue implements InterpreterValue {
         if(type == CastNode.CastTarget.FLOAT) return (T) new DoubleValue((float) this.getValue());
         if(type == CastNode.CastTarget.DOUBLE) return (T) new DoubleValue(this.getValue());
         if(type == CastNode.CastTarget.CHAR) return (T) new CharacterValue((char) this.getValue());
-        if(type == CastNode.CastTarget.BOOLEAN) return (T) BooleanValue.from(this);
+        if(type == CastNode.CastTarget.BOOLEAN) return (T) BooleanValue.Companion.from(this);
         if(type == CastNode.CastTarget.STRING) return (T) new StringValue(String.valueOf(this.getValue()));
         return InterpreterValue.super.castTo(type);
     }

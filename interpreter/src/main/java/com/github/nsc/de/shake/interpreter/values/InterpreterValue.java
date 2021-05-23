@@ -371,7 +371,7 @@ public interface InterpreterValue {
         if(value instanceof Float) return new DoubleValue((((Float) value).doubleValue()));
         if(value instanceof Double) return new DoubleValue(((Double) value));
 
-        if(value instanceof Boolean) return BooleanValue.from((Boolean) value);
+        if(value instanceof Boolean) return BooleanValue.Companion.from((Boolean) value);
         if(value instanceof Character) return new CharacterValue((Character) value);
 
         if(value instanceof Class) return new Java.JavaClass((Class<?>) value);

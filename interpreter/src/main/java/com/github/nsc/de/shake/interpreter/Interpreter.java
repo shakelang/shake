@@ -773,7 +773,7 @@ public class Interpreter implements ShakeGeneratorBase {
     public InterpreterValue visitWhileNode(WhileNode n, Scope scope) {
 
         // Visit the condition. As long as it is true we will execute this while-loop
-        while(BooleanValue.from(visit(n.getCondition(), scope)).getValue()) {
+        while(BooleanValue.Companion.from(visit(n.getCondition(), scope)).getValue()) {
 
             // Copy the scope for inside the while loop
             // When we don't create a copy of the scope for
@@ -818,7 +818,7 @@ public class Interpreter implements ShakeGeneratorBase {
             // Visit the body using the copied scope
             visit(n.getBody(), doWhileScope);
 
-        } while(BooleanValue.from(visit(n.getCondition(), scope)).getValue());
+        } while(BooleanValue.Companion.from(visit(n.getCondition(), scope)).getValue());
 
         // Return NULL, because a do-while-loop has nothing to return
         return NullValue.NULL;
@@ -844,7 +844,7 @@ public class Interpreter implements ShakeGeneratorBase {
         visit(n.getDeclaration(), forOuterScope);
 
         // Visit the condition. As long as it is true we will execute this for
-        while(BooleanValue.from(visit(n.getCondition(), forOuterScope)).getValue()) {
+        while(BooleanValue.Companion.from(visit(n.getCondition(), forOuterScope)).getValue()) {
 
 
             // Copy the outer-scope for inside the while loop
@@ -890,7 +890,7 @@ public class Interpreter implements ShakeGeneratorBase {
         Scope ifScope = scope.copy();
 
         // Visit the condition. If it is true then visit the body, if not visit the else-body
-        if(BooleanValue.from(visit(n.getCondition(), ifScope)).getValue()) return visit(n.getBody(), ifScope);
+        if(BooleanValue.Companion.from(visit(n.getCondition(), ifScope)).getValue()) return visit(n.getBody(), ifScope);
         else if(n.getElseBody() != null) return visit(n.getElseBody(), ifScope);
 
         // If we had nothing to return then we will just return NullValue.NULL

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 class BooleanValueTest {
     @Test
     fun testFromBoolean() {
-        Assertions.assertSame(com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(true))
-        Assertions.assertSame(com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(false))
+        Assertions.assertSame(BooleanValue.TRUE, BooleanValue.from(true))
+        Assertions.assertSame(BooleanValue.FALSE, BooleanValue.from(false))
     }
 
     @Test
@@ -15,178 +15,178 @@ class BooleanValueTest {
 
         // Boolean-values
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE))
+            BooleanValue.TRUE, BooleanValue.from(
+                BooleanValue.TRUE))
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE))
+            BooleanValue.FALSE, BooleanValue.from(
+                BooleanValue.FALSE))
 
         // Integers
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE))
+            BooleanValue.TRUE, BooleanValue.from(
+                IntegerValue.ONE))
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.IntegerValue(Int.MAX_VALUE)
+            BooleanValue.TRUE, BooleanValue.from(
+                IntegerValue(Int.MAX_VALUE)
             ))
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.IntegerValue(Int.MIN_VALUE)
+            BooleanValue.FALSE, BooleanValue.from(
+                IntegerValue(Int.MIN_VALUE)
             ))
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.IntegerValue(0)
+            BooleanValue.FALSE, BooleanValue.from(
+                IntegerValue(0)
             ))
 
         // Double
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.DoubleValue(1.0)
+            BooleanValue.TRUE, BooleanValue.from(
+                DoubleValue(1.0)
             ))
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.DoubleValue(Double.MAX_VALUE)
+            BooleanValue.TRUE, BooleanValue.from(
+                DoubleValue(Double.MAX_VALUE)
             ))
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.DoubleValue(Double.MIN_VALUE)
+            BooleanValue.TRUE, BooleanValue.from(
+                DoubleValue(Double.MIN_VALUE)
             ))
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.DoubleValue(0.1)
+            BooleanValue.TRUE, BooleanValue.from(
+                DoubleValue(0.1)
             ))
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.DoubleValue(-0.1)
+            BooleanValue.FALSE, BooleanValue.from(
+                DoubleValue(-0.1)
             ))
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.IntegerValue(0)
+            BooleanValue.FALSE, BooleanValue.from(
+                IntegerValue(0)
             ))
 
         // Null
         Assertions.assertSame(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.from(
-                com.github.nsc.de.shake.interpreter.values.NullValue.NULL))
+            BooleanValue.FALSE, BooleanValue.from(
+                NullValue.NULL))
 
         // TODO Function test
     }
 
     @Test
     fun testAdd() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.add(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.add(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '+' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testSub() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.sub(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.sub(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '-' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testMul() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.mul(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.mul(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '*' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testDiv() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.div(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.div(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '/' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testMod() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.mod(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.mod(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '%' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testPow() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.pow(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.pow(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '**' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testOr() {
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.or(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE))
+            BooleanValue.TRUE, BooleanValue.TRUE.or(
+                BooleanValue.TRUE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE.or(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE))
+            BooleanValue.TRUE, BooleanValue.FALSE.or(
+                BooleanValue.TRUE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.or(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE))
+            BooleanValue.TRUE, BooleanValue.TRUE.or(
+                BooleanValue.FALSE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE.or(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE))
+            BooleanValue.FALSE, BooleanValue.FALSE.or(
+                BooleanValue.FALSE))
     }
 
     @Test
     fun testAnd() {
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.and(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE))
+            BooleanValue.TRUE, BooleanValue.TRUE.and(
+                BooleanValue.TRUE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE.and(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE))
+            BooleanValue.FALSE, BooleanValue.FALSE.and(
+                BooleanValue.TRUE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.and(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE))
+            BooleanValue.FALSE, BooleanValue.TRUE.and(
+                BooleanValue.FALSE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE.and(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE))
+            BooleanValue.FALSE, BooleanValue.FALSE.and(
+                BooleanValue.FALSE))
     }
 
     @Test
     fun testEqualsEquals() {
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.equals(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE))
+            BooleanValue.TRUE, BooleanValue.TRUE.equals(
+                BooleanValue.TRUE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE.equals(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE))
+            BooleanValue.FALSE, BooleanValue.FALSE.equals(
+                BooleanValue.TRUE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.equals(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE))
+            BooleanValue.FALSE, BooleanValue.TRUE.equals(
+                BooleanValue.FALSE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE.equals(
-                com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE))
+            BooleanValue.TRUE, BooleanValue.FALSE.equals(
+                BooleanValue.FALSE))
     }
 
     @Test
     fun testBiggerEquals() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.bigger_equals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.bigger_equals(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '>=' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testSmallerEquals() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.smaller_equals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.smaller_equals(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '<=' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testBigger() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.bigger(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.bigger(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '>' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testSmaller() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE.smaller(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE) }
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.smaller(
+            BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '<' is not defined for type boolean", error.message)
     }
 }
