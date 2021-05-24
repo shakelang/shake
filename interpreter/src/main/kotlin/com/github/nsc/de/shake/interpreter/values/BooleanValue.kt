@@ -134,7 +134,7 @@ enum class BooleanValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @Suppress("unchecked")
+    @Suppress("UNCHECKED_CAST")
     override fun <T : InterpreterValue?> castTo(type: CastTarget): T {
         if (type == CastTarget.BYTE) return IntegerValue(if (this.value) 1 else 0) as T
         if (type == CastTarget.SHORT) return IntegerValue(if (this.value) 1 else 0) as T

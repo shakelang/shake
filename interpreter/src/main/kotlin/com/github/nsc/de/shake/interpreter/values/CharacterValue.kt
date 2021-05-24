@@ -135,7 +135,7 @@ class CharacterValue(val value: Char) : InterpreterValue {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @Suppress("unchecked")
+    @Suppress("UNCHECKED_CAST")
     override fun <T : InterpreterValue?> castTo(type: CastTarget): T {
         if (type == CastTarget.BYTE) return IntegerValue(value.code) as T
         if (type == CastTarget.SHORT) return IntegerValue(value.code) as T
