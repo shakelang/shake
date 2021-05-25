@@ -1,7 +1,6 @@
 package com.github.nsc.de.shake.interpreter.values
 
 import com.github.nsc.de.shake.parser.node.CastNode.CastTarget
-import java.lang.Error
 import kotlin.math.pow
 
 class CharacterValue(val value: Char) : InterpreterValue {

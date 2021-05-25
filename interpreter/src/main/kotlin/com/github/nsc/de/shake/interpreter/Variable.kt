@@ -1,12 +1,11 @@
 package com.github.nsc.de.shake.interpreter
 
-import com.github.nsc.de.shake.parser.node.AccessDescriber
-import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode
-import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode
 import com.github.nsc.de.shake.interpreter.values.*
 import com.github.nsc.de.shake.interpreter.values.Function
+import com.github.nsc.de.shake.parser.node.AccessDescriber
 import com.github.nsc.de.shake.parser.node.VariableType
-import java.lang.Error
+import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode
+import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode
 
 /**
  * Variable class to keep all [InterpreterValue]s in variables

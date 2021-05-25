@@ -1,15 +1,12 @@
 package com.github.nsc.de.shake.interpreter.values
 
 import com.github.nsc.de.shake.interpreter.Scope
-import java.lang.ClassNotFoundException
-import org.reflections.Reflections
-import java.lang.IllegalAccessException
 import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError
 import com.github.nsc.de.shake.interpreter.Variable
-import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode
+import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode
+import org.reflections.Reflections
 import java.beans.Expression
-import java.lang.Exception
 import java.lang.reflect.Modifier
 import java.util.*
 

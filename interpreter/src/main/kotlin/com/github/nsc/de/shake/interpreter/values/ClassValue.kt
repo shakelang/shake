@@ -1,9 +1,9 @@
 package com.github.nsc.de.shake.interpreter.values
 
 import com.github.nsc.de.shake.interpreter.*
-import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode
 import com.github.nsc.de.shake.parser.node.AccessDescriber
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode
+import com.github.nsc.de.shake.parser.node.variables.VariableDeclarationNode
 
 /**
  * An [InterpreterValue] to store class-declarations

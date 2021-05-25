@@ -1,7 +1,6 @@
 package com.github.nsc.de.shake.interpreter
 
 import com.github.nsc.de.shake.interpreter.values.InterpreterValue
-import java.util.HashMap
 
 /**
  * A list that contains variables

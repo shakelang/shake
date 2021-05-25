@@ -1,10 +1,9 @@
 package com.github.nsc.de.shake.interpreter.values
 
 import com.github.nsc.de.shake.interpreter.Scope
-import com.github.nsc.de.shake.interpreter.VariableList
 import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError
 import com.github.nsc.de.shake.interpreter.Variable
-import java.util.HashMap
+import com.github.nsc.de.shake.interpreter.VariableList
 import com.github.nsc.de.shake.interpreter.VariableList.ScopeVariableList
 
 /**

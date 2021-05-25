@@ -1,12 +1,12 @@
 package com.github.nsc.de.shake.interpreter.values
 
 import com.github.nsc.de.shake.interpreter.Scope
-import com.github.nsc.de.shake.interpreter.values.BooleanValue.Companion.from
 import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError
 import com.github.nsc.de.shake.interpreter.Variable
+import com.github.nsc.de.shake.interpreter.values.BooleanValue.Companion.from
+import com.github.nsc.de.shake.parser.node.CastNode.CastTarget
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode
-import com.github.nsc.de.shake.parser.node.CastNode.CastTarget
 
 /**
  * A Value for the Interpreter, any type of value will implement this interface

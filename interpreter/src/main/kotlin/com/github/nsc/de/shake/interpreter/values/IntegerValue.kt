@@ -1,7 +1,7 @@
 package com.github.nsc.de.shake.interpreter.values
 
-import com.github.nsc.de.shake.interpreter.values.BooleanValue.Companion.from
 import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError
+import com.github.nsc.de.shake.interpreter.values.BooleanValue.Companion.from
 import com.github.nsc.de.shake.parser.node.CastNode.CastTarget
 import kotlin.math.pow
 
