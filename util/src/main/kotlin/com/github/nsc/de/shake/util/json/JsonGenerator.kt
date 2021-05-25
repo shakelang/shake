@@ -1,4 +1,4 @@
-package com.github.shakelang.shakemc.nbt
+package com.github.nsc.de.shake.util.json
 
 import com.github.nsc.de.shake.util.Characters
 

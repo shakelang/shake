@@ -13,48 +13,48 @@ class JsonLexer(
     private val chars: CharacterInputStream
 ) {
 
-    fun makeTokens(): NBTTokenInputStream {
+    fun makeTokens(): JSONTokenInputStream {
 
-        val tokens = mutableSetOf<NBTToken>()
+        val tokens = mutableSetOf<JSONToken>()
 
         while (this.chars.hasNext()) {
             val next = this.chars.next()
             if(next == ' ' || next == '\t' || next == '\r' || next == '\n') continue
             if(next == '{') {
-                tokens.add(NBTToken(NBTTokenType.LCURL, this.chars.position))
+                tokens.add(JSONToken(JSONTokenType.LCURL, this.chars.position))
                 continue
             }
             if(next == '}') {
-                tokens.add(NBTToken(NBTTokenType.RCURL, this.chars.position))
+                tokens.add(JSONToken(JSONTokenType.RCURL, this.chars.position))
                 continue
             }
             if(next == '[') {
-                tokens.add(NBTToken(NBTTokenType.LSQUARE, this.chars.position))
+                tokens.add(JSONToken(JSONTokenType.LSQUARE, this.chars.position))
                 continue
             }
             if(next == ']') {
-                tokens.add(NBTToken(NBTTokenType.RSQUARE, this.chars.position))
+                tokens.add(JSONToken(JSONTokenType.RSQUARE, this.chars.position))
                 continue
             }
             if(next == ':') {
-                tokens.add(NBTToken(NBTTokenType.COLON, this.chars.position))
+                tokens.add(JSONToken(JSONTokenType.COLON, this.chars.position))
                 continue
             }
             if(next == ',') {
-                tokens.add(NBTToken(NBTTokenType.COMMA, this.chars.position))
+                tokens.add(JSONToken(JSONTokenType.COMMA, this.chars.position))
                 continue
             }
             if(next == '"' || next == '\'') tokens.add(makeString())
             else if(isIdentifierStartCharacter(next)) tokens.add(makeIdentifier())
             else if(isNumberOrDotCharacter(next) || next == '-') tokens.add(makeNumber())
-            else throw NBTTokenLexerError("Unknown symbol '$next'")
+            else throw JSONTokenLexerError("Unknown symbol '$next'")
         }
 
-        return NBTTokenInputStream(chars.source.location, tokens.toTypedArray(), chars.positionMaker.createPositionMap())
+        return JSONTokenInputStream(chars.source.location, tokens.toTypedArray(), chars.positionMaker.createPositionMap())
 
     }
 
-    private fun makeIdentifier(): NBTToken {
+    private fun makeIdentifier(): JSONToken {
 
         val start = this.chars.position
         var identifier = chars.actual().toString()
@@ -62,10 +62,10 @@ class JsonLexer(
             identifier += chars.next()
         }
 
-        return NBTToken(NBTTokenType.STRING, start, this.chars.position - 1, identifier)
+        return JSONToken(JSONTokenType.STRING, start, this.chars.position - 1, identifier)
     }
 
-    private fun makeString(): NBTToken {
+    private fun makeString(): JSONToken {
 
         val start = this.chars.position
         val end = this.chars.actual()
@@ -85,24 +85,24 @@ class JsonLexer(
                         var s = ""
                         for (i in 0..3) {
                             val c: Char = this.chars.next()
-                            if (!isHexCharacter(c)) throw NBTTokenLexerError("Expecting hex char")
+                            if (!isHexCharacter(c)) throw JSONTokenLexerError("Expecting hex char")
                             s += c
                         }
                         str += s.toInt(radix = 16).toChar()
                     }
-                    else -> throw NBTTokenLexerError("Unknown escape sequence '\\" + this.chars.actual() + "'")
+                    else -> throw JSONTokenLexerError("Unknown escape sequence '\\" + this.chars.actual() + "'")
                 }
             }
             else str += this.chars.actual()
         }
         
-        if(this.chars.actual() != end) throw  NBTTokenLexerError("Unexpected End")
+        if(this.chars.actual() != end) throw  JSONTokenLexerError("Unexpected End")
         
-        return NBTToken(NBTTokenType.STRING, start, this.chars.position, str)
+        return JSONToken(JSONTokenType.STRING, start, this.chars.position, str)
 
     }
 
-    private fun makeNumber(): NBTToken {
+    private fun makeNumber(): JSONToken {
 
         val start = this.chars.position
         var foundDot = false
@@ -111,18 +111,18 @@ class JsonLexer(
         while (this.chars.hasNext() && isNumberOrDotCharacter(this.chars.peek())) {
 
             if (this.chars.next() == '.') {
-                if (foundDot) throw NBTTokenLexerError("Number must not contain two dots")
+                if (foundDot) throw JSONTokenLexerError("Number must not contain two dots")
                 else foundDot = true
             }
             number += this.chars.actual()
 
         }
 
-        return NBTToken(if(foundDot) NBTTokenType.DOUBLE else NBTTokenType.INT, start, this.chars.position, number)
+        return JSONToken(if(foundDot) JSONTokenType.DOUBLE else JSONTokenType.INT, start, this.chars.position, number)
 
     }
 
-    private inner class NBTTokenLexerError(message: String, name: String, details: String, start: Position, end: Position) :
+    private inner class JSONTokenLexerError(message: String, name: String, details: String, start: Position, end: Position) :
         CompilerError(message, name, details, start, end) {
 
         @JvmOverloads

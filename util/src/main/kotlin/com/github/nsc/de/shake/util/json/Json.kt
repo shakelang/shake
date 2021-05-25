@@ -2,11 +2,11 @@ package com.github.nsc.de.shake.util.json
 
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import com.github.nsc.de.shake.util.characterinput.charactersource.CharacterSource
-import com.github.shakelang.shakemc.nbt.JsonGenerator
 
-object NBT {
+@Suppress("unused")
+object JSON {
     fun parse(code: String, createSets: Boolean = false): Any {
-        val source = CharacterSource.from(code, "NBT.parse")
+        val source = CharacterSource.from(code, "JSOn.parse")
         val chars = SourceCharacterInputStream(source)
         val lexer = JsonLexer(chars)
         val tokens = lexer.makeTokens()
@@ -24,5 +24,4 @@ object NBT {
         )
     }
 }
-
-typealias nbt = NBT
+typealias json = JSON

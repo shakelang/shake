@@ -3,11 +3,11 @@ package com.github.nsc.de.shake.util.json
 import com.github.nsc.de.shake.util.Characters
 import com.github.nsc.de.shake.util.CompilerError
 import com.github.nsc.de.shake.util.characterinput.position.Position
-import com.github.nsc.de.shake.util.json.NBTTokenType.*
+import com.github.nsc.de.shake.util.json.JSONTokenType.*
 
 @Suppress("unused")
 class JsonParser(
-    val tokens: NBTTokenInputStream,
+    val tokens: JSONTokenInputStream,
     private val createSets: Boolean = false
 ) {
 

@@ -3,25 +3,25 @@ package com.github.nsc.de.shake.util.json
 import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 
 @Suppress("unused")
-class NBTToken(
-    val type: NBTTokenType,
+class JSONToken(
+    val type: JSONTokenType,
     val start: Int,
     val end: Int = start,
     val value: String? = null
 ) {
-    constructor(type: NBTTokenType, start: Int, value: String? = null) : this(type, start, start, value)
+    constructor(type: JSONTokenType, start: Int, value: String? = null) : this(type, start, start, value)
 
     /**
-     * Has the [NBTToken] a value?
+     * Has the [JSONToken] a value?
      */
     val hasValue: Boolean
         get() = this.value != null
 
-    override fun toString() = "NBTToken{type=$type,start=$start,end=$end,value=$value}"
+    override fun toString() = "JSONToken{type=$type,start=$start,end=$end,value=$value}"
 
 }
 
-enum class NBTTokenType {
+enum class JSONTokenType {
 
     LCURL,              // '{'
     RCURL,              // '}'
@@ -38,26 +38,26 @@ enum class NBTTokenType {
 }
 
 /**
- * A [NBTTokenInputStream] provides the [NBTToken]s for a Parser. It is
+ * A [JSONTokenInputStream] provides the [JSONToken]s for a Parser. It is
  * created by the [com.github.nsc.de.shake.util.json.JsonLexer]
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-class NBTTokenInputStream(
+class JSONTokenInputStream(
 
     /**
-     * The source (mostly filename) of the [NBTTokenInputStream]
+     * The source (mostly filename) of the [JSONTokenInputStream]
      */
     val source: String,
 
     /**
-     * The tokens that are contained in the [NBTTokenInputStream]
+     * The tokens that are contained in the [JSONTokenInputStream]
      */
-    private val tokens: Array<NBTToken>,
+    private val tokens: Array<JSONToken>,
 
     /**
      * The PositionMap to resolve the [com.github.nsc.de.shake.util.characterinput.position.Position]s
-     * of the [NBTToken]s
+     * of the [JSONToken]s
      */
     val map: PositionMap,
 
@@ -69,9 +69,9 @@ class NBTTokenInputStream(
 ) {
 
     /**
-     * Get the size of the [NBTTokenInputStream]
+     * Get the size of the [JSONTokenInputStream]
      *
-     * @return the length of the [NBTTokenInputStream.tokens] array
+     * @return the length of the [JSONTokenInputStream.tokens] array
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
@@ -79,23 +79,23 @@ class NBTTokenInputStream(
         get() = this.tokens.size
 
     /**
-     * Get a specific token from the [NBTTokenInputStream]
+     * Get a specific token from the [JSONTokenInputStream]
      *
      * @param position the position to get
      * @return the token at the given position
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    operator fun get(position: Int): NBTToken {
+    operator fun get(position: Int): JSONToken {
         testPosition(position)
         return this.tokens[position]
     }
 
     /**
-     * Checks if the [NBTTokenInputStream] has left a given number of tokens
+     * Checks if the [JSONTokenInputStream] has left a given number of tokens
      *
      * @param num the number of tokens to check
-     * @return has the [NBTTokenInputStream] left the given amount of [NBTToken]s?
+     * @return has the [JSONTokenInputStream] left the given amount of [JSONToken]s?
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
@@ -107,9 +107,9 @@ class NBTTokenInputStream(
     }
 
     /**
-     * Checks if the [NBTTokenInputStream] has a token left
+     * Checks if the [JSONTokenInputStream] has a token left
      *
-     * @return has the [NBTTokenInputStream] another [NBTToken] left?
+     * @return has the [JSONTokenInputStream] another [JSONToken] left?
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
@@ -120,20 +120,20 @@ class NBTTokenInputStream(
     }
 
     /**
-     * Returns the next token of the [NBTTokenInputStream] (and skips)
+     * Returns the next token of the [JSONTokenInputStream] (and skips)
      *
      * @return the next token
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    operator fun next(): NBTToken {
+    operator fun next(): JSONToken {
         // skip to next token and then return the actual token
         skip()
         return actual()
     }
 
     /**
-     * Skips the next token of the [NBTTokenInputStream]
+     * Skips the next token of the [JSONTokenInputStream]
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
@@ -144,12 +144,12 @@ class NBTTokenInputStream(
     }
 
     /**
-     * Returns the actual [NBTToken] of the [NBTTokenInputStream]
+     * Returns the actual [JSONToken] of the [JSONTokenInputStream]
      *
-     * @return The actual [NBTToken]
+     * @return The actual [JSONToken]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun actual(): NBTToken {
+    fun actual(): JSONToken {
         // Just return the actual token
         // That is possible, because the position should never get
         // bigger than the token length.
@@ -157,19 +157,19 @@ class NBTTokenInputStream(
     }
 
     /**
-     * Returns the next [NBTToken] of the [NBTTokenInputStream] without skipping
+     * Returns the next [JSONToken] of the [JSONTokenInputStream] without skipping
      *
-     * @return The next [NBTToken]
+     * @return The next [JSONToken]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun peek(): NBTToken {
+    fun peek(): JSONToken {
         return if (position + 1 < tokens.size) this[position + 1] else throw Error("Not enough tokens left")
     }
 
     /**
-     * Returns a string-representation of the [NBTTokenInputStream]
+     * Returns a string-representation of the [JSONTokenInputStream]
      *
-     * @return the string-representation of the [NBTTokenInputStream]
+     * @return the string-representation of the [JSONTokenInputStream]
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
