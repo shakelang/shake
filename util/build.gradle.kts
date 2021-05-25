@@ -13,8 +13,8 @@ plugins {
     `maven-publish`
 }
 
-val srcDirs = arrayOf("src/main/java", "src/main/kotlin")
-val testDirs = arrayOf("src/test/java", "src/test/kotlin")
+val srcDirs = arrayOf("src/main/kotlin")
+val testDirs = arrayOf("src/test/kotlin")
 
 
 sourceSets {
@@ -37,13 +37,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
 }
 
-tasks.register<Jar>("resourceJar") {
-    this.archiveFileName.set("${project.name}-${project.version}-resources.jar")
-    from("src/main/resources") {
-        include("**")
-    }
-}
-
 tasks.register<Jar>("sourceJar") {
     this.archiveFileName.set("${project.name}-${project.version}-sources.jar")
     srcDirs.forEach {
@@ -53,12 +46,14 @@ tasks.register<Jar>("sourceJar") {
     }
 }
 
+kotlin {
+}
+
 java {
     withJavadocJar()
 }
 
 tasks.build {
-    dependsOn("resourceJar")
     dependsOn("sourceJar")
 }
 

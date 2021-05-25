@@ -202,7 +202,7 @@ class LexerTests {
 
     companion object {
         @Suppress("deprecation")
-        fun generateToken(input: String?, tt: Byte): Token {
+        fun generateToken(input: String, tt: Byte): Token {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", input)
             val lexer = Lexer(chars)
             val t = lexer.makeTokens().next()

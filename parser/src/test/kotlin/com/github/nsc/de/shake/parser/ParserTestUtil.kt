@@ -9,7 +9,7 @@ import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCh
 import org.junit.jupiter.api.Assertions
 
 object ParserTestUtil {
-    fun parse(source: String?, input: String?): Tree {
+    fun parse(source: String, input: String): Tree {
         val input: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = Lexer(input)
         val tokens = lexer.makeTokens()
@@ -18,7 +18,7 @@ object ParserTestUtil {
     }
 
     @Suppress("unchecked")
-    fun <T : Node?> parseSingle(source: String?, input: String?, type: Class<T>?): T {
+    fun <T : Node?> parseSingle(source: String, input: String, type: Class<T>?): T {
         val tree = parse(source, input)
         val nodes = tree.children
 

@@ -61,7 +61,7 @@ class SourceCharacterInputStream(
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    constructor(source: String?, content: CharArray?) : this(from(content!!, source))
+    constructor(source: String, content: CharArray) : this(from(content, source))
 
     /**
      * Constructor for [SourceCharacterInputStream] with given position
@@ -71,7 +71,7 @@ class SourceCharacterInputStream(
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    constructor(source: String?, content: String?) : this(from(content!!, source))
+    constructor(source: String, content: String) : this(from(content, source))
 
     /**
      * Constructor for [SourceCharacterInputStream] with given position

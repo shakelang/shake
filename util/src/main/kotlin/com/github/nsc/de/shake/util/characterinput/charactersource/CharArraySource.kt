@@ -3,7 +3,7 @@ package com.github.nsc.de.shake.util.characterinput.charactersource
 internal class CharArraySource(
 
     override val all: CharArray,
-    override val location: String?
+    override val location: String
 
 ) : CharacterSource {
 
