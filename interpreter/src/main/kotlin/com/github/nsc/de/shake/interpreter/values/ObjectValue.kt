@@ -52,16 +52,16 @@ class ObjectValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getChild(c: String): Variable<*> {
+    override fun getChild(c: String): Variable {
         // it the required value does not exist throw an error
         // in other case return the required value
-        if (thisObject[c] == null || !thisObject[c].hasValue()) throw UnformattedInterpreterError(
+        if (thisObject[c] == null || !thisObject[c]!!.hasValue()) throw UnformattedInterpreterError(
             String.format(
                 "Object has no property called \"%s\"",
                 c
             )
         )
-        return thisObject[c]
+        return thisObject[c]!!
     }
 
     /**
@@ -71,10 +71,7 @@ class ObjectValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getChildren(): Array<String> {
-        // Just return the this-object keys
-        return thisObject.children
-    }
+    override val children: Array<String> get() = thisObject.children
 
 
     // *******************************
@@ -89,10 +86,7 @@ class ObjectValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String {
-        // just return "object"
-        return "object"
-    }
+    override val name: String get() = "object"
 
 
     // *******************************
@@ -132,7 +126,7 @@ class ObjectValue
         thisObject.declare(Variable("this", VariableList::class.java))
 
         // Set value of this keyword
-        thisObject["this"].setValue(thisObject)
+        thisObject["this"]!!.value = thisObject
 
         // TODO 2 Declarations with the same name
         // loop over the fields of the class

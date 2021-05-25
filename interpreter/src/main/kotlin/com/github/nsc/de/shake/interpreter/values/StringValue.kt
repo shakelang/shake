@@ -18,7 +18,7 @@ class StringValue(val value: String) : InterpreterValue {
      * @return the name of the [InterpreterValue]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String = "string"
+    override val name: String get() = "string"
 
     override fun toString(): String = "\"$value\""
 }

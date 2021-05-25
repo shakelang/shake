@@ -1,20 +1,19 @@
-package com.github.nsc.de.shake.interpreter.values;
+package com.github.nsc.de.shake.interpreter.values
 
-import com.github.nsc.de.shake.interpreter.Scope;
-import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError;
-import com.github.nsc.de.shake.interpreter.Variable;
-import com.github.nsc.de.shake.parser.node.CastNode;
-import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
-import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
-
+import com.github.nsc.de.shake.interpreter.Scope
+import com.github.nsc.de.shake.interpreter.values.BooleanValue.Companion.from
+import com.github.nsc.de.shake.interpreter.UnformattedInterpreterError
+import com.github.nsc.de.shake.interpreter.Variable
+import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode
+import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode
+import com.github.nsc.de.shake.parser.node.CastNode.CastTarget
 
 /**
  * A Value for the Interpreter, any type of value will implement this interface
  *
- * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-public interface InterpreterValue {
-
+interface InterpreterValue {
 
 
     // ****************************
@@ -26,12 +25,12 @@ public interface InterpreterValue {
      * @param v The Value to add to this value
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue add(InterpreterValue v) {
+    fun add(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '+' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '+' is not defined for type $name")
     }
 
     /**
@@ -40,12 +39,12 @@ public interface InterpreterValue {
      * @param v The Value to sub from this value
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue sub(InterpreterValue v) {
+    fun sub(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '-' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '-' is not defined for type $name")
     }
 
     /**
@@ -54,12 +53,12 @@ public interface InterpreterValue {
      * @param v The Value to multiply with this value
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue mul(InterpreterValue v) {
+    fun mul(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '*' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '*' is not defined for type $name")
     }
 
     /**
@@ -68,12 +67,12 @@ public interface InterpreterValue {
      * @param v The divisor-value
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue div(InterpreterValue v) {
+    operator fun div(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '/' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '/' is not defined for type $name")
     }
 
     /**
@@ -82,13 +81,23 @@ public interface InterpreterValue {
      * @param v The divisor-value
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue mod(InterpreterValue v) {
+    fun mod(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '%' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '%' is not defined for type $name")
     }
+
+    /**
+     * This function will be executed when the operator '%' is used on the value
+     *
+     * @param v The divisor-value
+     * @return The Calculation-Result
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
+    operator fun rem(v: InterpreterValue): InterpreterValue = this.mod(v)
 
     /**
      * This function will be executed when the operator '**' is used on the value
@@ -96,14 +105,13 @@ public interface InterpreterValue {
      * @param v The exponent value
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue pow(InterpreterValue v) {
+    fun pow(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '**' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '**' is not defined for type $name")
     }
-
 
 
     // ****************************
@@ -115,12 +123,12 @@ public interface InterpreterValue {
      * @param v The other value for the or operator
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue or(InterpreterValue v) {
+    fun or(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '||' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '||' is not defined for type $name")
     }
 
     /**
@@ -129,12 +137,12 @@ public interface InterpreterValue {
      * @param v The other value for the or operator
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue xor(InterpreterValue v) {
+    fun xor(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '^' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '^' is not defined for type $name")
     }
 
     /**
@@ -143,14 +151,13 @@ public interface InterpreterValue {
      * @param v The other value for the and operator
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue and(InterpreterValue v) {
+    fun and(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '&&' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '&&' is not defined for type $name")
     }
-
 
 
     // ****************************
@@ -162,12 +169,12 @@ public interface InterpreterValue {
      * @param v The value that should be the same
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue equals(InterpreterValue v) {
+    fun equals(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '==' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '==' is not defined for type $name")
     }
 
     /**
@@ -176,12 +183,12 @@ public interface InterpreterValue {
      * @param v The value that should be smaller
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue bigger_equals(InterpreterValue v) {
+    fun biggerEquals(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '>=' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '>=' is not defined for type $name")
     }
 
     /**
@@ -190,12 +197,12 @@ public interface InterpreterValue {
      * @param v The value that should be bigger
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue smaller_equals(InterpreterValue v) {
+    fun smallerEquals(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '<=' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '<=' is not defined for type $name")
     }
 
     /**
@@ -204,12 +211,12 @@ public interface InterpreterValue {
      * @param v The value that should be smaller or equal
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue bigger(InterpreterValue v) {
+    fun bigger(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '>' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '>' is not defined for type $name")
     }
 
     /**
@@ -218,14 +225,13 @@ public interface InterpreterValue {
      * @param v The value that should be bigger or equal
      * @return The Calculation-Result
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue smaller(InterpreterValue v) {
+    fun smaller(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Operator '<' is not defined for type " + getName());
+        throw UnformattedInterpreterError("Operator '<' is not defined for type $name")
     }
-
 
 
     // ****************************
@@ -237,12 +243,12 @@ public interface InterpreterValue {
      * @param c the child to get
      * @return the child variable
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default Variable<?> getChild(String c) {
+    fun getChild(c: String): Variable? {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Can't get child values of type " + getName());
+        throw UnformattedInterpreterError("Can't get child values of type $name")
     }
 
     /**
@@ -250,14 +256,14 @@ public interface InterpreterValue {
      *
      * @return the keys of all children
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default String[] getChildren() {
-        // Throw an UnformattedInterpreterError when the operator is not implemented
-        // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Can't get child values of type " + getName());
-    }
-
+    val children: Array<String>
+        get() {
+            // Throw an UnformattedInterpreterError when the operator is not implemented
+            // This function will be overridden by all InterpreterValues that do support this operation
+            throw UnformattedInterpreterError("Can't get child values of type $name")
+        }
 
 
     // ****************************
@@ -270,12 +276,12 @@ public interface InterpreterValue {
      * @param scope the scope the call was made in (to process the arguments)
      * @return the value of the function
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue invoke(FunctionCallNode node, Scope scope) {
+    operator fun invoke(node: FunctionCallNode, scope: Scope): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Can't invoke type " + getName());
+        throw UnformattedInterpreterError("Can't invoke type $name")
     }
 
     /**
@@ -283,16 +289,15 @@ public interface InterpreterValue {
      *
      * @param node the node that created the instance
      * @param scope the scope the creation was made in (to process the arguments)
-     * @return the created {@link InterpreterValue}
+     * @return the created [InterpreterValue]
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default InterpreterValue newInstance(ClassConstructionNode node, Scope scope) {
+    fun newInstance(node: ClassConstructionNode, scope: Scope): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
-        throw new UnformattedInterpreterError("Can't create a new instance of type " + getName());
+        throw UnformattedInterpreterError("Can't create a new instance of type $name")
     }
-
 
 
     // ****************************
@@ -303,14 +308,14 @@ public interface InterpreterValue {
      *
      * @param type the type to convert to
      * @param <T> the type to convert to
-     * @return the converted {@link InterpreterValue}
+     * @return the converted [InterpreterValue]
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @SuppressWarnings("unchecked")
-    default <T extends InterpreterValue> T to(Class<T> type) {
-        if(type.isInstance(this)) return (T) this;
-        throw new UnformattedInterpreterError("Can't convert " + getName() + " to type " + type.getName());
+    @Suppress("UNCHECKED_CAST")
+    fun <T : InterpreterValue> to(type: Class<T>): T {
+        if (type.isInstance(this)) return this as T
+        throw UnformattedInterpreterError("Can't convert " + name + " to type " + type.name)
     }
 
     /**
@@ -318,67 +323,59 @@ public interface InterpreterValue {
      *
      * @param type the type to cast to
      * @param <T> the type to cast to
-     * @return the converted {@link InterpreterValue}
+     * @return the converted [InterpreterValue]
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @SuppressWarnings("unchecked")
-    default <T extends InterpreterValue> T castTo(CastNode.CastTarget type) {
+    fun <T : InterpreterValue> castTo(type: CastTarget): T {
         // if(type.isInstance(this)) return (T) this;
-        throw new UnformattedInterpreterError("Can't convert " + getName() + " to type " + type.toString());
+        throw UnformattedInterpreterError("Can't convert $name to type $type")
     }
-
 
 
     // ****************************
     // create a java-representation of the InterpreterValue
 
     /**
-     * Get the java-representation of the {@link InterpreterValue}
+     * Get the java-representation of the [InterpreterValue]
      *
-     * @return the java-representation of the {@link InterpreterValue}
+     * @return the java-representation of the [InterpreterValue]
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    default Object toJava() {
-        return getName();
+    fun toJava(): Any? {
+        return name
     }
-
 
 
     // ****************************
-    // getName
+    // name
 
     /**
-     * Returns the name of the type of {@link InterpreterValue} (To identify the type of value)
+     * Returns the name of the type of [InterpreterValue] (To identify the type of value)
      *
-     * @return the name of the {@link InterpreterValue}
+     * @return the name of the [InterpreterValue]
      *
-     * @author <a href="https://github.com/nsc-de">Nicolas Schmidt &lt;@nsc-de&gt;</a>
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    String getName();
+    val name: String
 
-
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    static InterpreterValue of(Object value) {
-
-        if(value == null) return NullValue.NULL;
-        if(value instanceof Byte) return new IntegerValue(((Byte) value));
-        if(value instanceof Short) return new IntegerValue((((Short) value).byteValue()));
-        if(value instanceof Integer) return new IntegerValue(((Integer) value));
-        if(value instanceof Long) return new IntegerValue((((Long) value).intValue()));
-
-        if(value instanceof Float) return new DoubleValue((((Float) value).doubleValue()));
-        if(value instanceof Double) return new DoubleValue(((Double) value));
-
-        if(value instanceof Boolean) return BooleanValue.Companion.from((Boolean) value);
-        if(value instanceof Character) return new CharacterValue((Character) value);
-
-        if(value instanceof Class) return new Java.JavaClass((Class<?>) value);
-        if(value instanceof String) return new StringValue((String) value);
-
-        return new Java.JavaValue(value.getClass(), value);
-
+    companion object {
+        fun of(value: Any?): InterpreterValue {
+            if (value == null) return NullValue.NULL
+            if (value is Byte) return IntegerValue(value.toInt())
+            if (value is Short) return IntegerValue(value.toByte().toInt())
+            if (value is Int) return IntegerValue((value as Int?)!!)
+            if (value is Long) return IntegerValue(value.toInt())
+            if (value is Float) return DoubleValue(value.toDouble())
+            if (value is Double) return DoubleValue((value as Double?)!!)
+            if (value is Boolean) return from((value as Boolean?)!!)
+            if (value is Char) return CharacterValue((value as Char?)!!)
+            if (value is Class<*>) return Java.JavaClass((value as Class<*>?)!!)
+            return if (value is String) StringValue((value as String?)!!) else Java.JavaValue<Any?>(
+                value.javaClass,
+                value
+            )
+        }
     }
-
 }

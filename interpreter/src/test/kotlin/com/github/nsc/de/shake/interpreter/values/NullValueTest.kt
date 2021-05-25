@@ -72,14 +72,14 @@ class NullValueTest {
 
     @Test
     fun testBiggerEquals() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.NullValue.NULL.bigger_equals(
+        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.NullValue.NULL.biggerEquals(
             com.github.nsc.de.shake.interpreter.values.NullValue.NULL) }
         Assertions.assertEquals("Operator '>=' is not defined for type null", error.message)
     }
 
     @Test
     fun testSmallerEquals() {
-        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.NullValue.NULL.smaller_equals(
+        val error = Assertions.assertThrows(Error::class.java) { com.github.nsc.de.shake.interpreter.values.NullValue.NULL.smallerEquals(
             com.github.nsc.de.shake.interpreter.values.NullValue.NULL) }
         Assertions.assertEquals("Operator '<=' is not defined for type null", error.message)
     }

@@ -5,16 +5,7 @@ package com.github.nsc.de.shake.interpreter.values
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-enum class NullValue : InterpreterValue {
-
-
-    // *******************************
-    // Values
-
-    /**
-     * NULL (null / undefined)
-     */
-    NULL;
+class NullValue : InterpreterValue {
 
     /**
      * This function will be executed when the operator '==' is used on the value
@@ -43,10 +34,7 @@ enum class NullValue : InterpreterValue {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String {
-        // just return "null"
-        return "null"
-    }
+    override val name: String get() = "null"
 
 
     // ****************************
@@ -75,4 +63,15 @@ enum class NullValue : InterpreterValue {
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString(): String = "null"
+
+
+    companion object {
+
+        /**
+         * NULL (null / undefined)
+         */
+        @JvmField
+        val NULL = NullValue()
+
+    }
 }

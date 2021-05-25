@@ -8,7 +8,7 @@ import com.github.nsc.de.shake.parser.node.CastNode.CastTarget
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-enum class BooleanValue
+class BooleanValue
 
 /**
  * Constructor for [BooleanValue]
@@ -25,20 +25,6 @@ enum class BooleanValue
     val value: Boolean
 
 ) : InterpreterValue {
-
-
-    // *******************************
-    // Values
-
-    /**
-     * TRUE (true value for boolean)
-     */
-    TRUE(true),
-
-    /**
-     * FALSE (false value for boolean)
-     */
-    FALSE(false);
 
 
     // *******************************
@@ -135,7 +121,7 @@ enum class BooleanValue
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
-    override fun <T : InterpreterValue?> castTo(type: CastTarget): T {
+    override fun <T : InterpreterValue> castTo(type: CastTarget): T {
         if (type == CastTarget.BYTE) return IntegerValue(if (this.value) 1 else 0) as T
         if (type == CastTarget.SHORT) return IntegerValue(if (this.value) 1 else 0) as T
         if (type == CastTarget.INTEGER) return IntegerValue(if (this.value) 1 else 0) as T
@@ -153,7 +139,7 @@ enum class BooleanValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String = "boolean"
+    override val name: String get() = "boolean"
 
 
     // *******************************
@@ -171,9 +157,17 @@ enum class BooleanValue
 
     companion object {
 
+        /**
+         * TRUE (true value for boolean)
+         */
+        @JvmField
+        val TRUE = BooleanValue(true)
 
-        // *******************************
-        // statics
+        /**
+         * FALSE (false value for boolean)
+         */
+        @JvmField
+        val FALSE = BooleanValue(false)
 
         /**
          * Create a [BooleanValue] from a boolean

@@ -22,7 +22,7 @@ class Java : InterpreterValue {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getChild(c: String): Variable<*> {
+    override fun getChild(c: String): Variable {
         return Variable.finalOf(c, JavaUnknown(c))
     }
 
@@ -33,9 +33,7 @@ class Java : InterpreterValue {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String {
-        return "java"
-    }
+    override val name: String = "java"
 
     class JavaUnknown(val unknownName: String) : InterpreterValue {
 
@@ -47,7 +45,7 @@ class Java : InterpreterValue {
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        override fun getChild(c: String): Variable<*> {
+        override fun getChild(c: String): Variable {
             val name = "$unknownName.$c"
             return try {
                 Variable.finalOf(c, JavaClass(Class.forName(name)))
@@ -63,7 +61,7 @@ class Java : InterpreterValue {
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        override fun getChildren(): Array<String> {
+        override val children: Array<String> get() {
             // Get names of all classes in this package using reflections
             val reflections = Reflections(unknownName)
             val allClasses = reflections.getSubTypesOf(
@@ -80,9 +78,7 @@ class Java : InterpreterValue {
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        override fun getName(): String {
-            return "java-unknown"
-        }
+        override val name: String get() = "java-unknown"
 
         override fun toString(): String {
             return "JavaUnknown{unknownName='$unknownName'}"
@@ -99,11 +95,11 @@ class Java : InterpreterValue {
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        override fun getChild(c: String): Variable<*> {
+        override fun getChild(c: String): Variable {
             val fields = this.javaClass.fields
             for (i in fields.indices) if (fields[i].name == c && Modifier.isStatic(fields[i].modifiers)) {
                 return try {
-                    Variable.finalOf<JavaValue<*>>(c, JavaValue(fields[i].type, fields[i][null]))
+                    Variable.finalOf(c, JavaValue(fields[i].type, fields[i][null]))
                 } catch (e: IllegalAccessException) {
                     e.printStackTrace()
                     throw UnformattedInterpreterError(e)
@@ -118,7 +114,7 @@ class Java : InterpreterValue {
             return Variable.finalOf(c, NullValue.NULL)
         }
 
-        override fun getChildren(): Array<String> {
+        override val children: Array<String> get() {
             val children: MutableList<String> = ArrayList()
             val fields = this.javaClass.fields
             for (i in fields.indices) if (!containsString(children, fields[i].name)) children.add(
@@ -175,14 +171,10 @@ class Java : InterpreterValue {
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        override fun getName(): String {
-            return "java-class"
-        }
+        override val name: String get() = "java-class"
 
         override fun toString(): String {
-            return "JavaClass{" +
-                    "javaClass=" + javaClass +
-                    '}'
+            return "JavaClass{javaClass=$javaClass}"
         }
 
         override fun toJava(): Any {
@@ -196,17 +188,18 @@ class Java : InterpreterValue {
         }
     }
 
+    @Suppress("unused")
     class JavaMethod : InterpreterValue {
-        private val name: String
+        private val methodName: String
         private val obj: Any?
 
         constructor(name: String, `object`: Any?) : super() {
-            this.name = name
+            this.methodName = name
             this.obj = `object`
         }
 
         constructor(name: String) {
-            this.name = name
+            this.methodName = name
             obj = null
         }
 
@@ -216,7 +209,7 @@ class Java : InterpreterValue {
                 args[i] = scope.interpreter.visit(node.args[i], scope).toJava()
             }
             return try {
-                val s = Expression(obj, name, args)
+                val s = Expression(obj, methodName, args)
                 s.execute()
                 InterpreterValue.of(s.value)
             } catch (e: Exception) {
@@ -230,16 +223,9 @@ class Java : InterpreterValue {
          * @return the name of the [InterpreterValue]
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        override fun getName(): String {
-            return "java-method"
-        }
+        override val name: String get() = "java-method"
 
-        override fun toString(): String {
-            return "JavaMethod{" +
-                    "name='" + name + '\'' +
-                    ", object=" + obj +
-                    '}'
-        }
+        override fun toString(): String = "JavaMethod{name='$methodName, object=$obj}"
     }
 
     class JavaValue<T>(val type: Class<*>, val obj: T) : InterpreterValue {
@@ -251,10 +237,10 @@ class Java : InterpreterValue {
          * @return the child variable
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        override fun getChild(c: String): Variable<*> {
+        override fun getChild(c: String): Variable {
             try {
                 val fields = type.fields
-                for (i in fields.indices) if (fields[i].name == c && !Modifier.isStatic(fields[i].modifiers)) return Variable.finalOf<JavaValue<*>>(
+                for (i in fields.indices) if (fields[i].name == c && !Modifier.isStatic(fields[i].modifiers)) return Variable.finalOf(
                     c, JavaValue(fields[i].type, fields[i][obj])
                 )
                 val methods = type.methods
@@ -275,9 +261,7 @@ class Java : InterpreterValue {
             return Variable.finalOf(c, NullValue.NULL)
         }
 
-        override fun getChildren(): Array<String> {
-            return JavaClass(this.javaClass).children
-        }
+        override val children: Array<String> get() = JavaClass(this.javaClass).children
 
         /**
          * Returns the name of the type of [InterpreterValue] (To identify the type of value)
@@ -285,12 +269,12 @@ class Java : InterpreterValue {
          * @return the name of the [InterpreterValue]
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        override fun getName(): String = "java-value"
+        override val name: String get() = "java-value"
 
         override fun toString(): String = "JavaValue{value=$obj}"
 
         @Suppress("UNCHECKED_CAST")
-        override fun <T : InterpreterValue?> to(type: Class<T>): T {
+        override fun <T : InterpreterValue> to(type: Class<T>): T {
             return if (type.isInstance(this)) this as T else InterpreterValue.of(obj).to(type)
         }
 

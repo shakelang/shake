@@ -119,31 +119,31 @@ class DoubleValueTest {
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).bigger_equals(com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE))
+            ).biggerEquals(com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).bigger_equals(com.github.nsc.de.shake.interpreter.values.DoubleValue(1.0)))
+            ).biggerEquals(com.github.nsc.de.shake.interpreter.values.DoubleValue(1.0)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).bigger_equals(com.github.nsc.de.shake.interpreter.values.IntegerValue(1)))
+            ).biggerEquals(com.github.nsc.de.shake.interpreter.values.IntegerValue(1)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).bigger_equals(com.github.nsc.de.shake.interpreter.values.IntegerValue(-10)))
+            ).biggerEquals(com.github.nsc.de.shake.interpreter.values.IntegerValue(-10)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).bigger_equals(com.github.nsc.de.shake.interpreter.values.DoubleValue(-10.0)))
+            ).biggerEquals(com.github.nsc.de.shake.interpreter.values.DoubleValue(-10.0)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).bigger_equals(com.github.nsc.de.shake.interpreter.values.IntegerValue(10)))
+            ).biggerEquals(com.github.nsc.de.shake.interpreter.values.IntegerValue(10)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).bigger_equals(com.github.nsc.de.shake.interpreter.values.DoubleValue(10.0)))
+            ).biggerEquals(com.github.nsc.de.shake.interpreter.values.DoubleValue(10.0)))
     }
 
     @Test
@@ -151,31 +151,31 @@ class DoubleValueTest {
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).smaller_equals(com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE))
+            ).smallerEquals(com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).smaller_equals(com.github.nsc.de.shake.interpreter.values.DoubleValue(1.0)))
+            ).smallerEquals(com.github.nsc.de.shake.interpreter.values.DoubleValue(1.0)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).smaller_equals(com.github.nsc.de.shake.interpreter.values.IntegerValue(1)))
+            ).smallerEquals(com.github.nsc.de.shake.interpreter.values.IntegerValue(1)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).smaller_equals(com.github.nsc.de.shake.interpreter.values.IntegerValue(10)))
+            ).smallerEquals(com.github.nsc.de.shake.interpreter.values.IntegerValue(10)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).smaller_equals(com.github.nsc.de.shake.interpreter.values.DoubleValue(10.0)))
+            ).smallerEquals(com.github.nsc.de.shake.interpreter.values.DoubleValue(10.0)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).smaller_equals(com.github.nsc.de.shake.interpreter.values.IntegerValue(-10)))
+            ).smallerEquals(com.github.nsc.de.shake.interpreter.values.IntegerValue(-10)))
         Assertions.assertEquals(
             com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.DoubleValue(
                 1.0
-            ).smaller_equals(com.github.nsc.de.shake.interpreter.values.DoubleValue(-10.0)))
+            ).smallerEquals(com.github.nsc.de.shake.interpreter.values.DoubleValue(-10.0)))
     }
 
     @Test

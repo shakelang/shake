@@ -115,30 +115,30 @@ class IntegerValueTest {
     @Test
     fun testBiggerEquals() {
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.bigger_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.biggerEquals(
                 com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.bigger_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.biggerEquals(
                 com.github.nsc.de.shake.interpreter.values.DoubleValue(1.0)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.bigger_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.biggerEquals(
                 com.github.nsc.de.shake.interpreter.values.IntegerValue(1)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.bigger_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.biggerEquals(
                 com.github.nsc.de.shake.interpreter.values.IntegerValue(-10)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.bigger_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.biggerEquals(
                 com.github.nsc.de.shake.interpreter.values.DoubleValue(-10.0)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.bigger_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.biggerEquals(
                 com.github.nsc.de.shake.interpreter.values.IntegerValue(10)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.bigger_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.biggerEquals(
                 com.github.nsc.de.shake.interpreter.values.DoubleValue(10.0)
             ))
     }
@@ -146,30 +146,30 @@ class IntegerValueTest {
     @Test
     fun testSmallerEquals() {
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smaller_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smallerEquals(
                 com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smaller_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smallerEquals(
                 com.github.nsc.de.shake.interpreter.values.DoubleValue(1.0)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smaller_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smallerEquals(
                 com.github.nsc.de.shake.interpreter.values.IntegerValue(1)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smaller_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smallerEquals(
                 com.github.nsc.de.shake.interpreter.values.IntegerValue(10)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smaller_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.TRUE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smallerEquals(
                 com.github.nsc.de.shake.interpreter.values.DoubleValue(10.0)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smaller_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smallerEquals(
                 com.github.nsc.de.shake.interpreter.values.IntegerValue(-10)
             ))
         Assertions.assertEquals(
-            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smaller_equals(
+            com.github.nsc.de.shake.interpreter.values.BooleanValue.FALSE, com.github.nsc.de.shake.interpreter.values.IntegerValue.ONE.smallerEquals(
                 com.github.nsc.de.shake.interpreter.values.DoubleValue(-10.0)
             ))
     }

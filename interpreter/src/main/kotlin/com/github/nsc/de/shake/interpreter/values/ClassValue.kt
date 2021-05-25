@@ -11,6 +11,8 @@ import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 class ClassValue
+
+
 /**
  * The Constructor for [ClassValue]
  *
@@ -110,17 +112,17 @@ val isFinal: Boolean
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getChild(c: String): Variable<*> {
+    override fun getChild(c: String): Variable {
         // If the child does not exist throw an error
         // in other case return the child
-        if (statics[c] == null || !statics[c].hasValue()) throw UnformattedInterpreterError(
+        if (statics[c] == null || !statics[c]!!.hasValue()) throw UnformattedInterpreterError(
             String.format(
                 "Class \"%s\" has no property called %s",
                 className,
                 c
             )
         )
-        return statics[c]
+        return statics[c]!!
     }
 
     /**
@@ -130,10 +132,7 @@ val isFinal: Boolean
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getChildren(): Array<String> {
-        // Just return the static keys
-        return statics.children
-    }
+    override val children: Array<String> get() = statics.children
 
 
     // ****************************
@@ -149,9 +148,7 @@ val isFinal: Boolean
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun newInstance(node: ClassConstructionNode, scope: Scope): InterpreterValue {
-        return ObjectValue(this)
-    }
+    override fun newInstance(node: ClassConstructionNode, scope: Scope): InterpreterValue = ObjectValue(this)
 
 
     // *******************************
@@ -166,10 +163,7 @@ val isFinal: Boolean
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String {
-        // just return "class"
-        return "class"
-    }
+    override val name: String get() = "class"
 
 
     // *******************************

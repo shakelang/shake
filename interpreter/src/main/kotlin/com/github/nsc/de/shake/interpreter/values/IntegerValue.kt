@@ -192,9 +192,12 @@ class IntegerValue
         )
         throw UnformattedInterpreterError("Operator '**' is not defined for type integer and " + v.name)
     }
+
+
     // *******************************
     // implementations for extended InterpreterValue
     // >> comparison
+
     /**
      * This function will be executed when the operator '==' is used on the integer
      *
@@ -223,7 +226,7 @@ class IntegerValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun bigger_equals(v: InterpreterValue): InterpreterValue {
+    override fun biggerEquals(v: InterpreterValue): InterpreterValue {
 
         // If the given value is a IntegerValue then check if the value is bigger than
         // or equal to the own value and return a BooleanValue
@@ -243,7 +246,7 @@ class IntegerValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun smaller_equals(v: InterpreterValue): InterpreterValue {
+    override fun smallerEquals(v: InterpreterValue): InterpreterValue {
 
         // If the given value is a IntegerValue then check if the value is smaller than
         // or equal to the own value and return a BooleanValue
@@ -294,9 +297,12 @@ class IntegerValue
         if (v is DoubleValue) return from(value < v.value)
         throw UnformattedInterpreterError("Operator '<' is not defined for type integer and " + v.name)
     }
+
+
     // ****************************
     // implementations for extended InterpreterValue
     // >> create a java-representation of the InterpreterValue
+
     /**
      * Get the java-representation of the [IntegerValue]
      *
@@ -307,9 +313,12 @@ class IntegerValue
     override fun toJava(): Any {
         return value
     }
+
+
     // ****************************
     // implementations for extended InterpreterValue
     // converting & casting
+
     /**
      * Converts this value to another value
      *
@@ -320,7 +329,7 @@ class IntegerValue
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
-    override fun <T : InterpreterValue?> to(type: Class<T>): T {
+    override fun <T : InterpreterValue> to(type: Class<T>): T {
         if (type.isInstance(this)) return this as T
         return if (type == DoubleValue::class.java) DoubleValue(this.value.toDouble()) as T else super.to(type)
     }
@@ -335,7 +344,7 @@ class IntegerValue
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
-    override fun <T : InterpreterValue?> castTo(type: CastTarget): T {
+    override fun <T : InterpreterValue> castTo(type: CastTarget): T {
         if (type == CastTarget.BYTE) return IntegerValue(this.value) as T
         if (type == CastTarget.SHORT) return IntegerValue(this.value) as T
         if (type == CastTarget.INTEGER) return this as T
@@ -360,7 +369,7 @@ class IntegerValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String = "integer"
+    override val name: String get() = "integer"
 
 
     // *******************************

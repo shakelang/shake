@@ -84,7 +84,7 @@ public class Interpreter implements ShakeGeneratorBase {
 
     private void getDefaults() throws IOException {
 
-        global.getVariables().declare(new Variable<>("java", Java.class, new Java()));
+        global.getVariables().declare(new Variable("java", Java.class, new Java()));
         load("/shake/java/system.shake", "shake/system.shake");
         load("/shake/java/io.shake", "shake/io.shake");
 
@@ -661,7 +661,7 @@ public class Interpreter implements ShakeGeneratorBase {
         // visit both sides of the term
         // call the method bigger_equals() on the result of the left InterpreterValue and
         // give the right result as argument.
-        return visit(n.getLeft(), scope).bigger_equals(visit(n.getRight(), scope));
+        return visit(n.getLeft(), scope).biggerEquals(visit(n.getRight(), scope));
     }
 
     /**
@@ -677,7 +677,7 @@ public class Interpreter implements ShakeGeneratorBase {
         // visit both sides of the term
         // call the method smaller_equals() on the result of the left InterpreterValue and
         // give the right result as argument.
-        return visit(n.getLeft(), scope).smaller_equals(visit(n.getRight(), scope));
+        return visit(n.getLeft(), scope).smallerEquals(visit(n.getRight(), scope));
     }
 
     /**
@@ -915,7 +915,7 @@ public class Interpreter implements ShakeGeneratorBase {
     public Function visitFunctionDeclarationNode(FunctionDeclarationNode node, Scope scope) {
 
         // Declare the variable that contains the function
-        if(!scope.getVariables().declare(new Variable<>(node.getName(), Function.class)))
+        if(!scope.getVariables().declare(new Variable(node.getName(), Function.class)))
             throw new Error("'" + node.getName() + "' is already declared!");
 
         // Create the function
@@ -988,7 +988,7 @@ public class Interpreter implements ShakeGeneratorBase {
     public ClassValue visitClassDeclarationNode(ClassDeclarationNode node, Scope scope) {
 
         // Declare the variable that contains the class
-        if(!scope.getVariables().declare(new Variable<>(node.getName(), ClassValue.class)))
+        if(!scope.getVariables().declare(new Variable(node.getName(), ClassValue.class)))
             throw new Error("'" + node.getName() + "' is already declared!");
 
         // Create the class
@@ -1036,13 +1036,13 @@ public class Interpreter implements ShakeGeneratorBase {
             // if the method is static
             if(n.isStatic()) {
                 // declare a new static variable for the function
-                statics.declare(new Variable<>(node.getName(), Function.class));
+                statics.declare(new Variable(node.getName(), Function.class));
                 // create the function and apply it to the variable
                 statics.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
             }
             else {
                 // declare a new prototype-variable for the function
-                prototype.declare(new Variable<>(node.getName(), Function.class));
+                prototype.declare(new Variable(node.getName(), Function.class));
                 // create the function and apply it to the variable
                 prototype.get(node.getName()).setValue(createFunctionDeclaration(node, scope));
             }
@@ -1052,12 +1052,12 @@ public class Interpreter implements ShakeGeneratorBase {
         for(ClassDeclarationNode node : n.getClasses()) {
             if(n.isStatic()) {
                 // declare a new static variable for the class
-                statics.declare(new Variable<>(node.getName(), ClassValue.class));
+                statics.declare(new Variable(node.getName(), ClassValue.class));
                 // create the class and apply it to the variable
                 statics.get(node.getName()).setValue(createClassDeclaration(node, scope));
             } else {
                 // declare a new prototype-variable for the class
-                prototype.declare(new Variable<>(node.getName(), ClassValue.class));
+                prototype.declare(new Variable(node.getName(), ClassValue.class));
                 // create the class and apply it to the variable
                 prototype.get(node.getName()).setValue(createClassDeclaration(node, scope));
             }

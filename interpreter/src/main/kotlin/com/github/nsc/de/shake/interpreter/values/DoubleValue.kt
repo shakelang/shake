@@ -217,7 +217,7 @@ class DoubleValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun bigger_equals(v: InterpreterValue): InterpreterValue {
+    override fun biggerEquals(v: InterpreterValue): InterpreterValue {
 
         // If the given value is a IntegerValue then check if the value is bigger than
         // or equal to the own value and return a BooleanValue
@@ -237,7 +237,7 @@ class DoubleValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun smaller_equals(v: InterpreterValue): InterpreterValue {
+    override fun smallerEquals(v: InterpreterValue): InterpreterValue {
 
         // If the given value is a IntegerValue then check if the value is smaller than
         // or equal to the own value and return a BooleanValue
@@ -320,7 +320,7 @@ class DoubleValue
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
-    override fun <T : InterpreterValue?> to(type: Class<T>): T {
+    override fun <T : InterpreterValue> to(type: Class<T>): T {
         return if (type.isInstance(this)) this as T else super.to(type)
     }
 
@@ -334,7 +334,7 @@ class DoubleValue
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
-    override fun <T : InterpreterValue?> castTo(type: CastTarget): T {
+    override fun <T : InterpreterValue> castTo(type: CastTarget): T {
         if (type == CastTarget.BYTE) return IntegerValue(this.value.toInt()) as T
         if (type == CastTarget.SHORT) return IntegerValue(this.value.toInt()) as T
         if (type == CastTarget.INTEGER) return IntegerValue(this.value.toInt()) as T
@@ -360,7 +360,7 @@ class DoubleValue
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String = "double"
+    override val name: String get() = "double"
 
 
     // *******************************

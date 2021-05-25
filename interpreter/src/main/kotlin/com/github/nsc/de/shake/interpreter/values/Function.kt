@@ -114,7 +114,7 @@ class Function
             //
             // also we use the scope argument here as scope because we want to use variables at the location of
             // the function call and not at the location of the function declaration
-            functionScope.scopeVariables[args[i].name].setValue(interpreter.visit(node.args[i], scope))
+            functionScope.scopeVariables[args[i].name]!!.value = interpreter.visit(node.args[i], scope)
         }
 
         // Visits the function body using the function scope so we can use all
@@ -137,10 +137,7 @@ class Function
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String {
-        // just return "function"
-        return "function"
-    }
+    override val name: String get() = "function"
 
 
     // *******************************

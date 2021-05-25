@@ -136,7 +136,7 @@ class CharacterValue(val value: Char) : InterpreterValue {
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
-    override fun <T : InterpreterValue?> castTo(type: CastTarget): T {
+    override fun <T : InterpreterValue> castTo(type: CastTarget): T {
         if (type == CastTarget.BYTE) return IntegerValue(value.code) as T
         if (type == CastTarget.SHORT) return IntegerValue(value.code) as T
         if (type == CastTarget.INTEGER) return IntegerValue(value.code) as T
@@ -164,11 +164,7 @@ class CharacterValue(val value: Char) : InterpreterValue {
      * @return the name of the [InterpreterValue]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun getName(): String {
-        return "char"
-    }
+    override val name: String get() = "char"
 
-    override fun toString(): String {
-        return String.format("'%s'", value)
-    }
+    override fun toString(): String = String.format("'%s'", value)
 }

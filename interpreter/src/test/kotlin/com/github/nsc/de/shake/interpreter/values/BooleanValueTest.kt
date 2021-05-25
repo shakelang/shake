@@ -164,14 +164,14 @@ class BooleanValueTest {
 
     @Test
     fun testBiggerEquals() {
-        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.bigger_equals(
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.biggerEquals(
             BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '>=' is not defined for type boolean", error.message)
     }
 
     @Test
     fun testSmallerEquals() {
-        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.smaller_equals(
+        val error = Assertions.assertThrows(Error::class.java) { BooleanValue.TRUE.smallerEquals(
             BooleanValue.TRUE) }
         Assertions.assertEquals("Operator '<=' is not defined for type boolean", error.message)
     }
