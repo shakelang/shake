@@ -6,7 +6,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 apply(plugin = "java-library")
 
 plugins {
-    kotlin("jvm")
+    kotlin("jvm") version "1.5.10"
     id("org.jetbrains.dokka")
     id("com.github.nsc.de.shake.java-conventions")
     java

@@ -1,6 +1,5 @@
 package com.github.nsc.de.shake.lexer.token
 
-import com.github.nsc.de.shake.util.ArrayUtil
 import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 
 /**
@@ -536,11 +535,7 @@ class TokenInputStream
      */
     override fun toString(): String {
         // Return a string-representation of the input just showing all the sub-elements
-        return "TokenInputStream{source='$source', tokens=${
-            ArrayUtil.map(tokens, arrayOfNulls(tokens.size)) {
-                TokenType.getName(it!!)
-            }.contentToString()
-        }, position=$position}"
+        return "TokenInputStream{source='$source', tokens=${tokens.map { TokenType.getName(it) }}, position=$position}"
     }
 
     /**

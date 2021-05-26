@@ -27,7 +27,9 @@ import com.github.nsc.de.shake.parser.node.variables.*
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import com.github.nsc.de.shake.util.characterinput.charactersource.CharacterSource.Companion.from
+import java.io.BufferedReader
 import java.io.IOException
+import java.io.InputStreamReader
 import java.util.*
 import kotlin.Error
 import kotlin.String
@@ -92,9 +94,11 @@ class Interpreter : ShakeGeneratorBase {
 
     @Throws(IOException::class)
     private fun load(src: String, src_name: String) {
-        val source = from(
-            javaClass.getResourceAsStream(src)!!, src_name
-        )
+        val s = javaClass.getResourceAsStream(src)!!
+        val reader = BufferedReader(InputStreamReader(s))
+        val chars = CharArray(s.available())
+        for (i in chars.indices) chars[i] = reader.read().toChar()
+        val source = from(chars, src_name)
         val inputStream: CharacterInputStream = SourceCharacterInputStream(source)
         val lexer = Lexer(inputStream)
         val tokens = lexer.makeTokens()

@@ -6,24 +6,10 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 apply(plugin = "java-library")
 
 plugins {
-    kotlin("jvm") version "1.5.0"
     id("org.jetbrains.dokka") version "1.4.32"
     id("com.github.nsc.de.shake.java-conventions")
     java
     `maven-publish`
-}
-
-val srcDirs = arrayOf("src/main/java", "src/main/kotlin")
-val testDirs = arrayOf("src/test/java", "src/test/kotlin")
-
-
-sourceSets {
-    main {
-        java.srcDirs(*srcDirs)
-    }
-    test {
-        java.srcDirs(*testDirs)
-    }
 }
 
 repositories {
@@ -40,32 +26,7 @@ dependencies {
     implementation("org.reflections:reflections:0.9.12")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
 }
-
-tasks.register<Jar>("resourceJar") {
-    this.archiveFileName.set("${project.name}-${project.version}-resources.jar")
-    from("src/main/resources") {
-        include("**")
-    }
-}
-
-tasks.register<Jar>("sourceJar") {
-    this.archiveFileName.set("${project.name}-${project.version}-sources.jar")
-    srcDirs.forEach {
-        from(it) {
-            include("**")
-        }
-    }
-}
-
-java {
-    withJavadocJar()
-}
-
-tasks.build {
-    dependsOn("resourceJar")
-    dependsOn("sourceJar")
-}
-
+/*
 tasks.test {
     useJUnitPlatform()
 
@@ -76,3 +37,4 @@ tasks.test {
         includeTestsMatching("com.github.nsc.de.shake.*")
     }
 }
+ */

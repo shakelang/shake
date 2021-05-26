@@ -20,7 +20,8 @@ import com.github.nsc.de.shake.parser.node.loops.WhileNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
-import com.github.nsc.de.shake.util.ArrayUtil;
+
+import java.util.Arrays;
 
 public class JavaGenerator implements ShakeGeneratorBase {
 
@@ -323,9 +324,9 @@ public class JavaGenerator implements ShakeGeneratorBase {
         context.getActualClass().getFunctions().add(new JavaFunction(
                 n.getName(),
                 JavaVariableType.VOID,
-                ArrayUtil.map(n.getArgs(), new JavaFunction.JavaFunctionArgument[]{}, (arg) ->
+                Arrays.stream(n.getArgs()).map((arg) ->
                     new JavaFunction.JavaFunctionArgument("Object", arg.getName())
-                ),
+                ).toArray(JavaFunction.JavaFunctionArgument[]::new),
                 visitTree(n.getBody(), context),
                 JavaAccessDescriptor.from(n.getAccess()),
                 n.isStatic(),
