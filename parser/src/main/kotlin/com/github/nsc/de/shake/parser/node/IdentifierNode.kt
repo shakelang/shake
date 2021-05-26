@@ -19,10 +19,10 @@ class IdentifierNode : ValuedNode {
         this.name = name
     }
 
-    override fun toString(): String {
-        return "IdentifierNode{" +
-                "parent=" + parent +
-                ", name='" + name + '\'' +
-                '}'
-    }
+    override fun toJson(): Map<String, *> =
+        mapOf(
+            "name" to "IdentifierNode",
+            "parent" to (parent?.json),
+            "name" to name
+        )
 }

@@ -7,4 +7,7 @@ class LogicalBiggerEqualsNode(map: PositionMap, left: ValuedNode, right: ValuedN
     LogicalCompareNode(map, left, right) {
     override val operator: String
         get() = ">="
+
+    override fun toJson(): Map<String, *> =
+        mapOf("name" to "LogicalBiggerEqualsNode", "left" to left, "right" to right)
 }

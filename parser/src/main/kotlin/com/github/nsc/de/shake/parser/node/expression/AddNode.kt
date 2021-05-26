@@ -52,4 +52,6 @@ class AddNode(map: PositionMap, left: ValuedNode, right: ValuedNode, operatorPos
 
     override val operator: Char
         get() = '+'
+
+    override fun toJson(): Map<String, *> = mapOf("name" to "AddNode", "left" to left, "right" to right)
 }

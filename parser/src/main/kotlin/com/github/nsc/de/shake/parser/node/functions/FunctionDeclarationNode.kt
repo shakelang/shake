@@ -23,7 +23,16 @@ class FunctionDeclarationNode @JvmOverloads constructor(
         access: AccessDescriber?, isInClass: Boolean, isStatic: Boolean, isFinal: Boolean
     ) : this(map, name, body, args, VariableType.DYNAMIC, access, isInClass, isStatic, isFinal)
 
-    override fun toString(): String {
-        return "FunctionDeclarationNode{name='$name', body=$body, args=${args.contentToString()}, type=$type"
-    }
+    override fun toJson(): Map<String, *> =
+        mapOf(
+            "name" to "FunctionDeclarationNode",
+            "function_name" to name,
+            "args" to args.map { it.json },
+            "body" to body.json,
+            "type" to type.toString(),
+            "access" to access.toString(),
+            "is_in_class" to isInClass,
+            "is_static" to isStatic,
+            "is_final" to isFinal
+        )
 }

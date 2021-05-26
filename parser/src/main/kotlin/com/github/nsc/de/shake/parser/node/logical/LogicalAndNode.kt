@@ -7,4 +7,6 @@ class LogicalAndNode(map: PositionMap, left: ValuedNode, right: ValuedNode) :
     LogicalConcatenationNode(map, left, right) {
     override val operator: String
         get() = "&&"
+
+    override fun toJson(): Map<String, *> = mapOf("name" to "LogicalAndNode", "left" to left, "right" to right)
 }

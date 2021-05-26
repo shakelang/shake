@@ -7,4 +7,6 @@ class PowNode(map: PositionMap, left: ValuedNode, right: ValuedNode, operatorPos
     ExpressionNode(map, left, right, operatorPosition) {
     override val operator: Char
         get() = '^'
+
+    override fun toJson(): Map<String, *> = mapOf("name" to "PowNode", "left" to left, "right" to right)
 }

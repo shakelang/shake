@@ -11,5 +11,4 @@ abstract class ExpressionNode(
     val operatorPosition: Int
 ) : ValuedNode(map) {
     abstract val operator: Char
-    override fun toString(): String = "ExpressionNode{left=$left, right=$right, operator=$operator"
 }

@@ -1,5 +1,6 @@
 package com.github.nsc.de.shake.parser.node
 
+import com.github.nsc.de.shake.util.json.JSON
 import java.util.*
 
 @Suppress("unused")
@@ -17,12 +18,17 @@ class VariableType {
         subtype = null
     }
 
-    override fun toString(): String {
-        return "VariableType{" +
-                "type=" + type +
-                ", subtype='" + subtype + '\'' +
-                '}'
-    }
+    override fun toString(): String = JSON.stringify(this.json)
+
+    val json: Map<String, *>
+        get() = toJson()
+
+    fun toJson(): Map<String, *> =
+        mapOf(
+            "name" to "VariableType",
+            "type" to type,
+            "subtype" to subtype,
+        )
 
     enum class Type {
         DYNAMIC, BYTE, SHORT, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, CHAR, ARRAY, OBJECT, VOID;

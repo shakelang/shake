@@ -52,4 +52,6 @@ class SubNode(map: PositionMap, left: ValuedNode, right: ValuedNode, operatorPos
 
     override val operator: Char
         get() = '-'
+
+    override fun toJson(): Map<String, *> = mapOf("name" to "SubNode", "left" to left, "right" to right)
 }

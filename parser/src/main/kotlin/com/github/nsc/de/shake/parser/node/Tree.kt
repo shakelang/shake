@@ -6,5 +6,9 @@ class Tree(map: PositionMap, val children: Array<Node>) : Node(map) {
 
     constructor(map: PositionMap, children: List<Node>) : this(map, children.toTypedArray())
 
-    override fun toString(): String = "Tree{children=${ children.contentToString() }}"
+    override fun toJson(): Map<String, *> =
+        mapOf(
+            "name" to "Tree",
+            "children" to children.map { it.json }
+        )
 }

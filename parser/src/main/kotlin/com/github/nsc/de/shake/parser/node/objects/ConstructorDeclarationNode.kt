@@ -7,9 +7,15 @@ import com.github.nsc.de.shake.parser.node.functions.FunctionArgumentNode
 import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 
 @Suppress("unused")
-class ConstructorDeclarationNode @JvmOverloads constructor(
-    map: PositionMap, val name: String?, val body: Tree, val args: Array<FunctionArgumentNode>,
+class ConstructorDeclarationNode
+@JvmOverloads constructor(
+
+    map: PositionMap,
+    val name: String?,
+    val body: Tree,
+    val args: Array<FunctionArgumentNode>,
     val access: AccessDescriber? = AccessDescriber.PACKAGE
+
 ) : ValuedNode(map) {
 
     @JvmOverloads
@@ -20,7 +26,12 @@ class ConstructorDeclarationNode @JvmOverloads constructor(
         access: AccessDescriber? = AccessDescriber.PACKAGE
     ) : this(map, null, body, args, access)
 
-    override fun toString(): String {
-        return "FunctionDeclarationNode{name='$name', body=$body, args=${args.contentToString()}}"
-    }
+    override fun toJson(): Map<String, *> =
+        mapOf(
+            "name" to "ConstructorDeclarationNode",
+            "function_name" to name,
+            "args" to args.map { it.json },
+            "body" to body.json,
+            "access" to access.toString(),
+        )
 }

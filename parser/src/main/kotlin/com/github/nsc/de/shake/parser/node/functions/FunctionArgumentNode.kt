@@ -9,5 +9,8 @@ class FunctionArgumentNode @JvmOverloads constructor(
     val name: String,
     private val type: VariableType = VariableType.DYNAMIC
 ) : Node(map) {
-    override fun toString(): String = "FunctionArgumentNode{name='$name', type='$type'}"
+
+    override fun toJson(): Map<String, *> =
+        mapOf("name" to "FunctionArgumentNode", "argument_name" to name, "type" to type.toString())
+
 }

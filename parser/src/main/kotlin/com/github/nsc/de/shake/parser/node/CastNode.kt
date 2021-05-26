@@ -38,4 +38,11 @@ class CastNode(map: PositionMap, val value: ValuedNode, val castTarget: CastTarg
             val STRING = CastTarget(CastTargetType.STRING)
         }
     }
+
+    override fun toJson(): Map<String, *> =
+        mapOf(
+            "name" to "CastNode",
+            "value" to value.json,
+            "cast_target" to castTarget.toString()
+        )
 }

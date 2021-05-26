@@ -9,5 +9,11 @@ class VariableModAssignmentNode(
     val value: Node,
     val operatorPosition: Int
 ) : ValuedNode(map) {
-    override fun toString(): String = "{$value%=$value}"
+
+    override fun toJson(): Map<String, *> = mapOf(
+        "name" to "VariableModAssignmentNode",
+        "variable" to variable.json,
+        "value" to value.json
+    )
+
 }

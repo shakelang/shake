@@ -7,5 +7,13 @@ import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 
 class ForNode(map: PositionMap, val body: Tree, val declaration: Node, val condition: ValuedNode, val round: Node) :
     Node(map) {
-    override fun toString(): String = "ForNode{body=$body, declaration=$declaration, condition=$condition, round=$round}"
+
+    override fun toJson(): Map<String, *> =
+        mapOf(
+            "name" to "ForNode",
+            "body" to body.json,
+            "declaration" to declaration.json,
+            "condition" to condition.json,
+            "round" to round.json
+        )
 }

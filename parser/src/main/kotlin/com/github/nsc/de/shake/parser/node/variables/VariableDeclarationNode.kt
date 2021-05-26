@@ -23,5 +23,16 @@ class VariableDeclarationNode @JvmOverloads constructor(
         assignment
     )
 
-    override fun toString(): String = if (assignment != null) "$type $assignment" else "$type $name"
+    override fun toJson(): Map<String, *> =
+        mapOf(
+            "name" to "VariableDivAssignmentNode",
+            "variable_name" to name,
+            "type" to type.toString(),
+            "access" to access.toString(),
+            "assignment" to this.assignment?.toJson(),
+            "is_in_class" to isInClass,
+            "is_static" to isStatic,
+            "is_final" to isFinal
+        )
+
 }

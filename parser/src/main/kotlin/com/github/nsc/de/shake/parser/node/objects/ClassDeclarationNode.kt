@@ -60,7 +60,16 @@ class ClassDeclarationNode @JvmOverloads constructor(
         constructors.toTypedArray()
     )
 
-    override fun toString(): String = "ClassDeclarationNode{" +
-            "fields=${ fields.contentToString() }, methods=${ methods.contentToString() }, " +
-            "classes=${ classes.contentToString() }, constructors=${ constructors.contentToString() }}"
+    override fun toJson(): Map<String, *> =
+        mapOf(
+            "name" to "ClassDeclarationNode",
+            "is_in_class" to isInClass,
+            "is_static" to isStatic,
+            "is_final" to isFinal,
+            "access" to access.toString(),
+            "fields" to fields.map { it.json },
+            "methods" to methods.map { it.json },
+            "classes" to classes.map { it.json },
+            "constructors" to constructors.map { it.json }
+        )
 }

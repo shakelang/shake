@@ -6,7 +6,5 @@ class LogicalTrueNode(map: PositionMap) : LogicalNode(map) {
     override val operator: String?
         get() = null
 
-    override fun toString(): String {
-        return "true"
-    }
+    override fun toJson(): Map<String, *> = mapOf("name" to "LogicalTrueNode")
 }

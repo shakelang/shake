@@ -7,4 +7,6 @@ class MulNode(map: PositionMap, left: ValuedNode, right: ValuedNode, operatorPos
     ExpressionNode(map, left, right, operatorPosition) {
     override val operator: Char
         get() = '*'
+
+    override fun toJson(): Map<String, *> = mapOf("name" to "MulNode", "left" to left, "right" to right)
 }
