@@ -1,6 +1,6 @@
 package com.github.nsc.de.shake.generators.json;
 
-import com.github.nsc.de.shake.generators.Generator;
+import com.github.nsc.de.shake.generation.ShakeGenerator;
 import com.github.nsc.de.shake.parser.node.*;
 import com.github.nsc.de.shake.parser.node.expression.*;
 import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
@@ -8,25 +8,17 @@ import com.github.nsc.de.shake.parser.node.factor.IntegerNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionArgumentNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionCallNode;
 import com.github.nsc.de.shake.parser.node.functions.FunctionDeclarationNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalAndNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalBiggerEqualsNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalBiggerNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalEqEqualsNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalFalseNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalOrNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalSmallerEqualsNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalSmallerNode;
-import com.github.nsc.de.shake.parser.node.logical.LogicalTrueNode;
+import com.github.nsc.de.shake.parser.node.logical.*;
 import com.github.nsc.de.shake.parser.node.loops.DoWhileNode;
 import com.github.nsc.de.shake.parser.node.loops.ForNode;
 import com.github.nsc.de.shake.parser.node.loops.WhileNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassConstructionNode;
 import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
-import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class JsonGenerator extends Generator<JSONObject> {
+public class JsonGenerator extends ShakeGenerator<JSONObject> {
 
     @Override
     public JSONObject visitTree(Tree t) {
@@ -201,6 +193,11 @@ public class JsonGenerator extends Generator<JSONObject> {
     }
 
     @Override
+    public JSONObject visitLogicalXOrNode(LogicalXOrNode n) {
+        return new JSONObject().put("type", "logical_xor").put("left", visit(n.getLeft())).put("right", visit(n.getRight()));
+    }
+
+    @Override
     public JSONObject visitWhileNode(WhileNode n) {
         return new JSONObject().put("type", "while").put("condition", visit(n.getCondition())).put("body", visit(n.getBody()));
     }
@@ -327,6 +324,20 @@ public class JsonGenerator extends Generator<JSONObject> {
 
         return new JSONObject().put("type", "import").put("import", n.getImport());
 
+    }
+
+    @Override
+    public JSONObject visitCastNode(CastNode n) {
+        return new JSONObject().put("type", "cast")
+                .put("target", visitCastTarget(n.getCastTarget()))
+                .put("value", n.getValue());
+    }
+
+    public JSONObject visitCastTarget(CastNode.CastTarget target) {
+        JSONObject result = new JSONObject().put("type", target.getType().toString());
+        if(target.getType() == CastNode.CastTarget.CastTargetType.OBJECT)
+            result.put("subtype", visit(target.getSubtype()));
+        return result;
     }
 
     @Override

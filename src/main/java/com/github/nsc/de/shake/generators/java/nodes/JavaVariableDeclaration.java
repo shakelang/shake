@@ -4,12 +4,12 @@ public class JavaVariableDeclaration implements JavaNode.JavaOperation {
 
     private final String name;
     private final JavaVariableType type;
-    private final JavaValuedOperation assignment;
+    private final JavaValued assignment;
     private final boolean isStatic;
     private final boolean isFinal;
     private final JavaAccessDescriptor access;
 
-    public JavaVariableDeclaration(JavaVariableType type, String name, JavaValuedOperation assignment, boolean isStatic, boolean isFinal, JavaAccessDescriptor access) {
+    public JavaVariableDeclaration(JavaVariableType type, String name, JavaValued assignment, boolean isStatic, boolean isFinal, JavaAccessDescriptor access) {
 
         this.type = type;
         this.name = name;

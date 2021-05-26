@@ -1,0 +1,69 @@
+group = "com.github.nsc.de.shake"
+version = "0.1.0"
+description = "lexer"
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+apply(plugin = "java-library")
+
+plugins {
+    kotlin("jvm")
+    id("org.jetbrains.dokka")
+    id("com.github.nsc.de.shake.java-conventions")
+    java
+    `maven-publish`
+}
+
+val srcDirs = arrayOf("src/main/kotlin")
+val testDirs = arrayOf("src/test/kotlin")
+
+
+sourceSets {
+    main {
+        java.srcDirs(*srcDirs)
+    }
+    test {
+        java.srcDirs(*testDirs)
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.json:json:20180130")
+    implementation("org.reflections:reflections:0.9.12")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
+}
+
+tasks.register<Jar>("sourceJar") {
+    this.archiveFileName.set("${project.name}-${project.version}-sources.jar")
+    srcDirs.forEach {
+        from(it) {
+            include("**")
+        }
+    }
+}
+
+kotlin {
+}
+
+java {
+    withJavadocJar()
+}
+
+tasks.build {
+    dependsOn("sourceJar")
+}
+
+tasks.test {
+    useJUnitPlatform()
+
+    testLogging.showExceptions = true
+    maxHeapSize = "1G"
+    // ignoreFailures = true
+    filter {
+        includeTestsMatching("com.github.nsc.de.shake.*")
+    }
+}

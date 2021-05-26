@@ -2,10 +2,10 @@ package com.github.nsc.de.shake.generators.java.nodes;
 
 public class JavaDoWhileLoop implements JavaNode.JavaOperation {
     
-    private final JavaValuedOperation condition;
+    private final JavaValued condition;
     private final JavaTree body;
 
-    public JavaDoWhileLoop(JavaValuedOperation condition, JavaTree body) {
+    public JavaDoWhileLoop(JavaValued condition, JavaTree body) {
         this.condition = condition;
         this.body = body;
     }

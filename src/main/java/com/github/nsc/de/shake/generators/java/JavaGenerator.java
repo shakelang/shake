@@ -1,8 +1,11 @@
 package com.github.nsc.de.shake.generators.java;
 
-import com.github.nsc.de.shake.generators.ShakeGenerator;
+import com.github.nsc.de.shake.generation.ShakeGeneratorBase;
 import com.github.nsc.de.shake.generators.java.nodes.*;
-import com.github.nsc.de.shake.parser.node.*;
+import com.github.nsc.de.shake.parser.node.IdentifierNode;
+import com.github.nsc.de.shake.parser.node.IfNode;
+import com.github.nsc.de.shake.parser.node.Node;
+import com.github.nsc.de.shake.parser.node.Tree;
 import com.github.nsc.de.shake.parser.node.expression.*;
 import com.github.nsc.de.shake.parser.node.factor.CharacterNode;
 import com.github.nsc.de.shake.parser.node.factor.DoubleNode;
@@ -19,7 +22,7 @@ import com.github.nsc.de.shake.parser.node.objects.ClassDeclarationNode;
 import com.github.nsc.de.shake.parser.node.variables.*;
 import com.github.nsc.de.shake.util.ArrayUtil;
 
-public class JavaGenerator implements ShakeGenerator {
+public class JavaGenerator implements ShakeGeneratorBase {
 
     public JavaClass visitProgram(Tree t, String filename) {
         JavaClass cls = new JavaClass(filename, JavaAccessDescriptor.PUBLIC, false, false);
@@ -58,6 +61,7 @@ public class JavaGenerator implements ShakeGenerator {
         if(n instanceof LogicalSmallerNode) return visitSmallerNode((LogicalSmallerNode) n, context);
         if(n instanceof LogicalAndNode) return visitLogicalAndNode((LogicalAndNode) n, context);
         if(n instanceof LogicalOrNode) return visitLogicalOrNode((LogicalOrNode) n, context);
+        if(n instanceof LogicalXOrNode) return visitLogicalXOrNode((LogicalXOrNode) n, context);
         if(n instanceof WhileNode) return visitWhileNode((WhileNode) n, context);
         if(n instanceof DoWhileNode) return visitDoWhileNode((DoWhileNode) n, context);
         if(n instanceof ForNode) return visitForNode((ForNode) n, context);
@@ -80,7 +84,13 @@ public class JavaGenerator implements ShakeGenerator {
         JavaNode.JavaOperation[] children = new JavaNode.JavaOperation[t.getChildren().length];
 
         for(int i = 0; i < t.getChildren().length; i++) {
-            children[i] = (JavaNode.JavaOperation) visit(t.getChildren()[i], context);
+            JavaNode n = visit(t.getChildren()[i], context);
+            if(n instanceof JavaNode.JavaOperation) children[i] = (JavaNode.JavaOperation) n;
+            else if(n instanceof JavaValued) {
+                children[i] = new JavaValued.JavaFunctionCall(
+                        new JavaIdentifier("println", new JavaIdentifier("out", new JavaIdentifier("System"))),
+                        new JavaValued[] { (JavaValued) n });
+            }
         }
 
         return new JavaTree(children);
@@ -108,34 +118,34 @@ public class JavaGenerator implements ShakeGenerator {
 
 
     public JavaValued.JavaExpression visitAddNode(AddNode n, JavaGenerationContext context) {
-        return new JavaValued.JavaExpression((JavaNode.JavaValuedOperation) visit(n.getLeft(), context), (JavaNode.JavaValuedOperation) visit(n.getRight(), context), "+");
+        return new JavaValued.JavaExpression((JavaValued) visit(n.getLeft(), context), (JavaValued) visit(n.getRight(), context), "+");
     }
 
 
     public JavaValued.JavaExpression visitSubNode(SubNode n, JavaGenerationContext context) {
-        return new JavaValued.JavaExpression((JavaNode.JavaValuedOperation) visit(n.getLeft(), context), (JavaNode.JavaValuedOperation) visit(n.getRight(), context), "-");
+        return new JavaValued.JavaExpression((JavaValued) visit(n.getLeft(), context), (JavaValued) visit(n.getRight(), context), "-");
     }
 
 
     public JavaValued.JavaExpression visitMulNode(MulNode n, JavaGenerationContext context) {
-        return new JavaValued.JavaExpression((JavaNode.JavaValuedOperation) visit(n.getLeft(), context), (JavaNode.JavaValuedOperation) visit(n.getRight(), context), "*");
+        return new JavaValued.JavaExpression((JavaValued) visit(n.getLeft(), context), (JavaValued) visit(n.getRight(), context), "*");
     }
 
 
     public JavaValued.JavaExpression visitDivNode(DivNode n, JavaGenerationContext context) {
-        return new JavaValued.JavaExpression((JavaNode.JavaValuedOperation) visit(n.getLeft(), context), (JavaNode.JavaValuedOperation) visit(n.getRight(), context), "/");
+        return new JavaValued.JavaExpression((JavaValued) visit(n.getLeft(), context), (JavaValued) visit(n.getRight(), context), "/");
     }
 
 
     public JavaValued.JavaExpression visitModNode(ModNode n, JavaGenerationContext context) {
-        return new JavaValued.JavaExpression((JavaNode.JavaValuedOperation) visit(n.getLeft(), context), (JavaNode.JavaValuedOperation) visit(n.getRight(), context), "%");
+        return new JavaValued.JavaExpression((JavaValued) visit(n.getLeft(), context), (JavaValued) visit(n.getRight(), context), "%");
     }
 
 
     public JavaValued.JavaFunctionCall visitPowNode(PowNode n, JavaGenerationContext context) {
         return new JavaValued.JavaFunctionCall(
                 new JavaIdentifier("pow", "Math"),
-                new JavaNode.JavaValuedOperation[]{ (JavaNode.JavaValuedOperation) visit(n.getLeft(), context), (JavaNode.JavaValuedOperation) visit(n.getRight(), context) });
+                new JavaValued[]{ (JavaValued) visit(n.getLeft(), context), (JavaValued) visit(n.getRight(), context) });
     }
 
     public JavaNode visitVariableDeclarationNode(VariableDeclarationNode n, JavaGenerationContext context) {
@@ -147,8 +157,8 @@ public class JavaGenerator implements ShakeGenerator {
         }
         else {
             if(n.getAssignment() != null)
-                return new JavaVariableDeclaration(type, n.getName(), (JavaNode.JavaValuedOperation)
-                        visit(n.getAssignment().getValue(), context), false, n.isFinal(), JavaAccessDescriptor.PACKAGE);
+                return new JavaVariableDeclaration(type, n.getName(),
+                        (JavaValued) visit(n.getAssignment().getValue(), context), false, n.isFinal(), JavaAccessDescriptor.PACKAGE);
             return new JavaVariableDeclaration(type, n.getName(), n.isStatic(), n.isFinal(), JavaAccessDescriptor.PACKAGE);
         }
     }
@@ -156,37 +166,37 @@ public class JavaGenerator implements ShakeGenerator {
 
     public JavaValued.JavaVariableAssignment visitVariableAssignmentNode(VariableAssignmentNode n, JavaGenerationContext context) {
         return new JavaValued.JavaVariableAssignment((JavaIdentifier) visit(n.getVariable(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getValue(), context));
+                (JavaValued) visit(n.getValue(), context));
     }
 
 
     public JavaNode visitVariableAddAssignmentNode(VariableAddAssignmentNode n, JavaGenerationContext context) {
         return new JavaValued.JavaVariableExpressionAssignment((JavaIdentifier) visit(n.getVariable(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getValue(), context), '+');
+                (JavaValued) visit(n.getValue(), context), '+');
     }
 
 
     public JavaNode visitVariableSubAssignmentNode(VariableSubAssignmentNode n, JavaGenerationContext context) {
         return new JavaValued.JavaVariableExpressionAssignment((JavaIdentifier) visit(n.getVariable(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getValue(), context), '-');
+                (JavaValued) visit(n.getValue(), context), '-');
     }
 
 
     public JavaNode visitVariableMulAssignmentNode(VariableMulAssignmentNode n, JavaGenerationContext context) {
         return new JavaValued.JavaVariableExpressionAssignment((JavaIdentifier) visit(n.getVariable(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getValue(), context), '*');
+                (JavaValued) visit(n.getValue(), context), '*');
     }
 
 
     public JavaNode visitVariableDivAssignmentNode(VariableDivAssignmentNode n, JavaGenerationContext context) {
         return new JavaValued.JavaVariableExpressionAssignment((JavaIdentifier) visit(n.getVariable(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getValue(), context), '/');
+                (JavaValued) visit(n.getValue(), context), '/');
     }
 
 
     public JavaNode visitVariableModAssignmentNode(VariableModAssignmentNode n, JavaGenerationContext context) {
         return new JavaValued.JavaVariableExpressionAssignment((JavaIdentifier) visit(n.getVariable(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getValue(), context), '%');
+                (JavaValued) visit(n.getValue(), context), '%');
     }
 
 
@@ -195,9 +205,9 @@ public class JavaGenerator implements ShakeGenerator {
         return new JavaValued.JavaVariableAssignment(left,
                 new JavaValued.JavaFunctionCall(
                         new JavaIdentifier("pow", "Math"),
-                        new JavaNode.JavaValuedOperation[]{
-                                (left),
-                                (JavaNode.JavaValuedOperation) visit(n.getValue(), context)
+                        new JavaValued[]{
+                                left,
+                                (JavaValued) visit(n.getValue(), context)
                         }));
     }
 
@@ -219,74 +229,82 @@ public class JavaGenerator implements ShakeGenerator {
 
     public JavaValued.JavaExpression visitEqEqualsNode(LogicalEqEqualsNode n, JavaGenerationContext context) {
         return new JavaValued.JavaExpression(
-                (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
+                (JavaValued) visit(n.getLeft(), context),
+                (JavaValued) visit(n.getRight(), context),
                 "==");
     }
 
 
     public JavaValued.JavaExpression visitBiggerEqualsNode(LogicalBiggerEqualsNode n, JavaGenerationContext context) {
         return new JavaValued.JavaExpression(
-                (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
+                (JavaValued) visit(n.getLeft(), context),
+                (JavaValued) visit(n.getRight(), context),
                 ">=");
     }
 
 
     public JavaValued.JavaExpression visitSmallerEqualsNode(LogicalSmallerEqualsNode n, JavaGenerationContext context) {
         return new JavaValued.JavaExpression(
-                (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
+                (JavaValued) visit(n.getLeft(), context),
+                (JavaValued) visit(n.getRight(), context),
                 "<=");
     }
 
 
     public JavaValued.JavaExpression visitBiggerNode(LogicalBiggerNode n, JavaGenerationContext context) {
         return new JavaValued.JavaExpression(
-                (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
+                (JavaValued) visit(n.getLeft(), context),
+                (JavaValued) visit(n.getRight(), context),
                 ">");
     }
 
 
     public JavaValued.JavaExpression visitSmallerNode(LogicalSmallerNode n, JavaGenerationContext context) {
         return new JavaValued.JavaExpression(
-                (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
+                (JavaValued) visit(n.getLeft(), context),
+                (JavaValued) visit(n.getRight(), context),
                 "<");
     }
 
 
     public JavaValued.JavaExpression visitLogicalAndNode(LogicalAndNode n, JavaGenerationContext context) {
         return new JavaValued.JavaExpression(
-                (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
+                (JavaValued) visit(n.getLeft(), context),
+                (JavaValued) visit(n.getRight(), context),
                 "&&");
     }
 
 
     public JavaValued.JavaExpression visitLogicalOrNode(LogicalOrNode n, JavaGenerationContext context) {
         return new JavaValued.JavaExpression(
-                (JavaNode.JavaValuedOperation) visit(n.getLeft(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getRight(), context),
+                (JavaValued) visit(n.getLeft(), context),
+                (JavaValued) visit(n.getRight(), context),
                 "||");
     }
 
 
+    public JavaValued.JavaExpression visitLogicalXOrNode(LogicalXOrNode n, JavaGenerationContext context) {
+        return new JavaValued.JavaExpression(
+                (JavaValued) visit(n.getLeft(), context),
+                (JavaValued) visit(n.getRight(), context),
+                "^");
+    }
+
+
     public JavaWhileLoop visitWhileNode(WhileNode n, JavaGenerationContext context) {
-        return new JavaWhileLoop((JavaNode.JavaValuedOperation) visit(n.getCondition(), context), visitTree(n.getBody(), context));
+        return new JavaWhileLoop((JavaValued) visit(n.getCondition(), context), visitTree(n.getBody(), context));
     }
 
 
     public JavaDoWhileLoop visitDoWhileNode(DoWhileNode n, JavaGenerationContext context) {
-        return new JavaDoWhileLoop((JavaNode.JavaValuedOperation) visit(n.getCondition(), context), visitTree(n.getBody(), context));
+        return new JavaDoWhileLoop((JavaValued) visit(n.getCondition(), context), visitTree(n.getBody(), context));
     }
 
 
     public JavaForLoop visitForNode(ForNode n, JavaGenerationContext context) {
         return new JavaForLoop(
                 (JavaNode.JavaOperation) visit(n.getDeclaration(), context),
-                (JavaNode.JavaValuedOperation) visit(n.getCondition(), context),
+                (JavaValued) visit(n.getCondition(), context),
                 (JavaNode.JavaOperation) visit(n.getRound(), context),
                 visitTree(n.getBody(), context));
     }
@@ -294,8 +312,8 @@ public class JavaGenerator implements ShakeGenerator {
 
     public JavaIfCondition visitIfNode(IfNode n, JavaGenerationContext context) {
         return n.getElseBody() != null ?
-                new JavaIfCondition((JavaNode.JavaValuedOperation) visit(n.getCondition(), context), visitTree(n.getBody(), context)) :
-                new JavaIfCondition((JavaNode.JavaValuedOperation) visit(n.getCondition(), context), visitTree(n.getBody(), context),
+                new JavaIfCondition((JavaValued) visit(n.getCondition(), context), visitTree(n.getBody(), context)) :
+                new JavaIfCondition((JavaValued) visit(n.getCondition(), context), visitTree(n.getBody(), context),
                         visitTree(n.getElseBody(), context));
     }
 
@@ -331,22 +349,22 @@ public class JavaGenerator implements ShakeGenerator {
 
 
     public JavaValued.JavaConstruction visitClassConstruction(ClassConstructionNode n, JavaGenerationContext context) {
-        JavaNode.JavaValuedOperation[] values = new JavaNode.JavaValuedOperation[n.getArgs().length];
-        for(int i = 0; i < values.length; i++) values[i] = (JavaNode.JavaValuedOperation) visit(n.getArgs()[i], context);
+        JavaValued[] values = new JavaValued[n.getArgs().length];
+        for(int i = 0; i < values.length; i++) values[i] = (JavaValued) visit(n.getArgs()[i], context);
         return new JavaValued.JavaConstruction((JavaIdentifier) visit(n.getType(), context), values);
     }
 
 
     public JavaValued.JavaFunctionCall visitFunctionCallNode(FunctionCallNode n, JavaGenerationContext context) {
-        JavaNode.JavaValuedOperation[] values = new JavaNode.JavaValuedOperation[n.getArgs().length];
-        for(int i = 0; i < values.length; i++) values[i] = (JavaNode.JavaValuedOperation) visit(n.getArgs()[i], context);
+        JavaValued[] values = new JavaValued[n.getArgs().length];
+        for(int i = 0; i < values.length; i++) values[i] = (JavaValued) visit(n.getArgs()[i], context);
         return new JavaValued.JavaFunctionCall((JavaIdentifier) visit(n.getFunction(), context), values);
     }
 
 
     public JavaIdentifier visitIdentifierNode(IdentifierNode n, JavaGenerationContext context) {
         return n.getParent() == null ? new JavaIdentifier(n.getName())
-                : new JavaIdentifier(n.getName(), (JavaNode.JavaValuedOperation) visit(n.getParent(), context));
+                : new JavaIdentifier(n.getName(), (JavaValued) visit(n.getParent(), context));
     }
 
     @Override
