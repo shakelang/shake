@@ -1,12 +1,14 @@
 package com.github.nsc.de.shake.util
 
+import com.github.nsc.de.shake.util.environment.Environment
+
 external fun require(name: String): dynamic
 external val process: dynamic
 
-inline fun jsTypeOf(o: dynamic): String = js("typeof o") as String
+val available = Environment.getEnvironment().isJavaScriptNode
 
-val node_fs = if(jsTypeOf(process) == "object") require("fs") else null
-val node_path = if(jsTypeOf(process) == "object") require("path") else null
+val node_fs = if(available) require("fs") else null
+val node_path = if(available) require("path") else null
 
 @Suppress("unused")
 actual class File(
