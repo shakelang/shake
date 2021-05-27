@@ -1,5 +1,7 @@
 package com.github.nsc.de.shake.lexer.token
 
+import kotlin.jvm.JvmStatic
+
 /**
  * These are the different types of tokens, that the lexer creates
  *
@@ -159,6 +161,7 @@ object TokenType {
 
     // *****************************************************
     // Assign-Types
+    
     /**
      * A number that does not contain decimal places
      */
@@ -519,19 +522,23 @@ object TokenType {
      * Keyword "as" for casting
      */
     const val KEYWORD_AS: Byte = 68
+    
     @JvmStatic
     fun getName(b: Byte): String {
         return NAMES[b.toInt()]
     }
 
+    @JvmStatic
     fun hasValue(b: Byte): Boolean {
         return b < 5
     }
 
+    @JvmStatic
     fun getTokenLength(b: Byte): Byte {
         return TOKEN_LENGTH[b.toInt()]
     }
-
+    
+    @JvmStatic
     fun getTokenLength(b: Byte, value: String?): Int {
         if (TOKEN_LENGTH[b.toInt()] != (-1).toByte()) return TOKEN_LENGTH[b.toInt()]
             .toInt() else if (b == STRING || b == CHARACTER) return value!!.length + 2

@@ -1,6 +1,5 @@
 package com.github.nsc.de.shake.lexer.token
 
-import java.util.*
 
 /**
  * The input of the [com.github.nsc.de.shake.lexer.Lexer] gets converted into [Token]s. These get parsed
@@ -40,13 +39,13 @@ class Token
      */
     val value: String?,
     /**
-     * The starting [com.github.nsc.de.shake.lexer.characterinput.position.Position] of the [Token]
+     * The starting [com.github.nsc.de.shake.util.characterinput.position.Position] of the [Token]
      *
      * @see Token
      */
     val start: Int,
     /**
-     * The ending [com.github.nsc.de.shake.lexer.characterinput.position.Position] of the [Token]
+     * The ending [com.github.nsc.de.shake.util.characterinput.position.Position] of the [Token]
      *
      * @see Token
      */
@@ -68,7 +67,7 @@ class Token
      * @see start
      * @see end
      */
-    constructor(type: Byte, value: String?, position: Int) : this(type, value, position, position) {}
+    constructor(type: Byte, value: String?, position: Int) : this(type, value, position, position)
 
     /**
      * Constructor for [Token]
@@ -84,7 +83,7 @@ class Token
      * @see start
      * @see end
      */
-    constructor(type: Byte, start: Int, end: Int) : this(type, null, start, end) {}
+    constructor(type: Byte, start: Int, end: Int) : this(type, null, start, end)
 
     /**
      * Constructor for [Token]
@@ -99,7 +98,7 @@ class Token
      * @see start
      * @see end
      */
-    constructor(type: Byte, position: Int) : this(type, null, position, position) {}
+    constructor(type: Byte, position: Int) : this(type, null, position, position)
 
     override fun toString(): String {
         return if (start == end) if (value != null) "" +
@@ -109,13 +108,21 @@ class Token
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other == null || javaClass != other.javaClass) return false
-        val token = other as Token
-        return type == token.type &&
-                value == token.value
+        if(other is Byte) return other == this.type
+        if (other == null || other !is Token) return false
+        return type == other.type &&
+                value == other.value
     }
 
-    override fun hashCode(): Int {
-        return Objects.hash(type, value)
+    override fun hashCode(): Int = hashAll(type, value)
+
+    private fun hashAll(vararg vals: Any?): Int {
+        var res = 0
+        for (v in vals) {
+            res += v.hashCode()
+            res *= 31
+        }
+        return res
     }
+
 }

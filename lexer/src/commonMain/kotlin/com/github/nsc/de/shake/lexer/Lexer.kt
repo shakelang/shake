@@ -6,13 +6,16 @@ import com.github.nsc.de.shake.util.Characters
 import com.github.nsc.de.shake.util.CompilerError
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
 import com.github.nsc.de.shake.util.characterinput.position.Position
+import kotlin.jvm.JvmOverloads
 
 class Lexer(
     private val input: CharacterInputStream
 ) {
-    private val tokens: MutableList<Byte> = ArrayList()
-    private val positions: MutableList<Int> = ArrayList()
-    private val values: MutableList<String> = ArrayList()
+
+    private val tokens = mutableListOf<Byte>()
+    private val positions = mutableListOf<Int>()
+    private val values =  mutableListOf<String>()
+
     fun makeTokens(): TokenInputStream {
         while (input.hasNext()) {
             val next = input.next()
@@ -96,7 +99,7 @@ class Lexer(
             ) else throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
         }
         return TokenInputStream(
-            input.source.location!!,
+            input.source.location,
             createPrimitiveByteArray(tokens),
             values.toTypedArray(),
             createPrimitiveIntArray(positions),
@@ -389,8 +392,7 @@ class Lexer(
     }
 
     private fun makeCharacter() {
-        val c: String
-        c = if (input.next() == '\\') {
+        val c: String = if (input.next() == '\\') {
             when (input.next()) {
                 't' -> "\\t"
                 'b' -> "\\b"
@@ -446,8 +448,7 @@ class Lexer(
             details,
             start,
             end
-        ) {
-        }
+        )
 
         @JvmOverloads
         constructor(
@@ -460,7 +461,6 @@ class Lexer(
             details,
             start,
             end
-        ) {
-        }
+        )
     }
 }

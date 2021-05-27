@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.targets.js.npm.packageJson
-
 group = "com.github.nsc.de.shake"
 version = "0.1.0"
 description = "lexer"
@@ -15,37 +13,13 @@ plugins {
     `maven-publish`
 }
 
-val srcDirs = arrayOf("src/main/kotlin")
-val testDirs = arrayOf("src/test/kotlin")
-
-
-sourceSets {
-    main {
-        java.srcDirs(*srcDirs)
-    }
-    test {
-        java.srcDirs(*testDirs)
-    }
-}
-
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
 dependencies {
-    implementation("org.json:json:20180130")
-    implementation("org.reflections:reflections:0.9.12")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
-}
-
-tasks.register<Jar>("sourceJar") {
-    this.archiveFileName.set("${project.name}-${project.version}-sources.jar")
-    srcDirs.forEach {
-        from(it) {
-            include("**")
-        }
-    }
 }
 
 kotlin {
@@ -82,7 +56,9 @@ kotlin {
 
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -94,20 +70,5 @@ kotlin {
         val jsTest by getting
         // val nativeMain by getting
         // val nativeTest by getting
-    }
-}
-
-tasks.build {
-    dependsOn("sourceJar")
-}
-
-tasks.test {
-    useJUnitPlatform()
-
-    testLogging.showExceptions = true
-    maxHeapSize = "1G"
-    // ignoreFailures = true
-    filter {
-        includeTestsMatching("com.github.nsc.de.shake.*")
     }
 }

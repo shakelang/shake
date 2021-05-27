@@ -3,7 +3,7 @@ package com.github.nsc.de.shake.lexer.token
 import com.github.nsc.de.shake.util.characterinput.position.PositionMap
 
 /**
- * A [TokenInputStream] provides the [Token]s for a [com.github.nsc.de.shake.parser.Parser]. It is
+ * A [TokenInputStream] provides the [Token]s for a Parser. It is
  * created by the [com.github.nsc.de.shake.lexer.Lexer]
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
@@ -550,11 +550,7 @@ class TokenInputStream
         // If the position is out of range of the tokens array throw an error
         if (position < 0) throw Error("Position mustn't be smaller than 0.")
         if (position >= getTokens().size) throw Error(
-            String.format(
-                "The given position is to high. The maximum value is %d, but given was %d",
-                getTokens().size - 1,
-                position
-            )
+                "The given position is to high. The maximum value is ${getTokens().size - 1}, but given was $position"
         )
     }
 }
