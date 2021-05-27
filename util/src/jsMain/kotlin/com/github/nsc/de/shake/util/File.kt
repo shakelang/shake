@@ -3,9 +3,7 @@ package com.github.nsc.de.shake.util
 external fun require(name: String): dynamic
 external val process: dynamic
 
-fun jsTypeOf(o: dynamic): String {
-    return js("typeof o") as String
-}
+inline fun jsTypeOf(o: dynamic): String = js("typeof o") as String
 
 val node_fs = if(jsTypeOf(process) == "object") require("fs") else null
 val node_path = if(jsTypeOf(process) == "object") require("path") else null
