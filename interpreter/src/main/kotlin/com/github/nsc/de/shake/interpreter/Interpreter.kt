@@ -30,7 +30,6 @@ import com.github.nsc.de.shake.util.characterinput.charactersource.CharacterSour
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.util.*
 import kotlin.Error
 import kotlin.String
 import kotlin.Suppress
@@ -115,16 +114,6 @@ class Interpreter : ShakeGeneratorBase {
             e.printStackTrace()
         }
     }
-    /**
-     * Visits the given [Node] using the specified [Scope]
-     *
-     * @param n the [Node] to visit
-     * @param scope the [Scope] to use
-     * @return the resulting [InterpreterValue] of the operation
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
-
 
     // *******************************
     // visit function
@@ -1216,11 +1205,6 @@ class Interpreter : ShakeGeneratorBase {
         return v.castTo(node.castTarget)
     }
 
-    override fun getExtension(): String {
-        return ""
-    }
-
-    override fun getName(): String {
-        return "interpreter"
-    }
+    override val extension: String get() = ""
+    override val name: String get() = "interpreter"
 }
