@@ -1,6 +1,6 @@
 group = "com.github.nsc.de.shake"
 version = "0.1.0"
-description = "lexer"
+description = "parser"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 apply(plugin = "java-library")
