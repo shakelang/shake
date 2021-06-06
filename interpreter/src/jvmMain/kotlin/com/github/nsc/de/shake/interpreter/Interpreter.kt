@@ -12,7 +12,7 @@ import java.io.InputStreamReader
 
 @Throws(Error::class)
 actual fun applyDefaults(interpreter: Interpreter) {
-    interpreter.global.getVariables().declare(Variable("java", Java::class, Java()))
+    interpreter.global.getVariables().declare(Variable.finalOf("java", Java()))
     load(interpreter, "/shake/java/system.shake", "shake/system.shake")
     load(interpreter, "/shake/java/io.shake", "shake/io.shake")
 }

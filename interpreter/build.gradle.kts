@@ -31,8 +31,17 @@ kotlin {
         nodejs {
         }
         browser {
-            compilations["main"].packageJson {
-                customField("browser", mapOf( "fs" to false, "path" to false, "os" to false))
+            compilations {
+                "main" {
+                    packageJson {
+                        customField("browser", mapOf( "fs" to false, "path" to false, "os" to false))
+                    }
+                    kotlinOptions {
+                        moduleKind = "commonjs"
+                        sourceMap = true
+                        sourceMapEmbedSources = "always"
+                    }
+                }
             }
             commonWebpackConfig {
                 cssSupport.enabled = true
