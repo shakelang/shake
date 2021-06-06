@@ -1,5 +1,7 @@
 package com.github.nsc.de.shake.cli
 
+import kotlin.jvm.JvmOverloads
+
 @Suppress("unused")
 class CliArgumentParser(
     private val options: MutableList<CliOption> = mutableListOf()
@@ -21,12 +23,8 @@ class CliArgumentParser(
                     val optionName = args[i].substring(2)
 
                     // check if this option is already set (throw error if so)
-                    for (o in options.indices) if (options[o].name == optionName) throw Error(
-                        String.format(
-                            "Option \"%s\" already defined!",
-                            optionName
-                        )
-                    )
+                    for (o in options.indices) if (options[o].name == optionName)
+                        throw Error("Option \"$optionName\" already defined!")
 
                     // find specified option
                     for (o in this.options.indices) {
@@ -45,12 +43,8 @@ class CliArgumentParser(
                     val optionName = args[i].substring(1)
 
                     // check if this option is already set (throw error if so)
-                    for (o in options.indices) if (options[o].name == optionName) throw Error(
-                        String.format(
-                            "Option \"%s\" already defined!",
-                            optionName
-                        )
-                    )
+                    for (o in options.indices) if (options[o].name == optionName)
+                        throw Error("Option \"$optionName\" already defined!")
 
                     // find specified option
                     for (o in this.options.indices) {
@@ -115,12 +109,7 @@ class CliArgumentParser(
             val index = c + i + 1
 
             // check if the index exists, throw an error if not
-            if (args.size <= index) throw Error(
-                String.format(
-                    "Not enough arguments given for option \"--%s\"",
-                    optionName
-                )
-            )
+            if (args.size <= index) throw Error("Not enough arguments given for option \"--$optionName\"")
             optionArguments[c] = args[index]
         }
         options.add(option.valued(optionArguments))

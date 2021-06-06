@@ -6,36 +6,30 @@
 
 package com.github.nsc.de.shake.cli
 
-import com.github.nsc.de.shake.generators.java.JavaGenerator
-import com.github.nsc.de.shake.generators.json.JsonGenerator
 import com.github.nsc.de.shake.interpreter.Interpreter
 import com.github.nsc.de.shake.lexer.Lexer
 import com.github.nsc.de.shake.parser.Parser
 import com.github.nsc.de.shake.parser.node.Tree
+import com.github.nsc.de.shake.util.File
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
 import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import com.github.nsc.de.shake.util.characterinput.position.PositionMap
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
-import java.io.IOException
-import java.nio.file.Files
-import java.nio.file.Paths
+import com.github.nsc.de.shake.util.json.json
+import com.github.nsc.de.shake.util.recursiveWhile
+import kotlin.jvm.JvmName
 
 /**
  * The interpreter for interpreting the code
  */
 val interpreter = Interpreter()
 
-/**
- * The json-generator for generating json form the input code
- */
-val json = JsonGenerator()
-
-/**
- * The java-generator for generating java form the input code
- */
-val java = JavaGenerator()
+// ----------------------------------------------------------------
+//  Java Generator is not implemented yet
+//
+// /**
+//  * The java-generator for generating java form the input code
+//  */
+// val java = JavaGenerator()
 
 /**
  * Is the program in debug mode?
@@ -51,11 +45,9 @@ const val VERSION = "0.1.0"
  * The Main-Method for the ShakeCli
  *
  * @param args The arguments for the main cli
- * @throws IOException This exception is thrown, when there is a problem with the file given as argument
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-@Throws(IOException::class)
 fun main(args: Array<String>) {
 
     // Create a parser for the arguments
@@ -75,7 +67,7 @@ fun main(args: Array<String>) {
     DEBUG = arguments.getOption("debug")!!.isGiven
 
     // Get the generator ("--generator")
-    val generator = arguments.getOption("generator")!!.values!!.get(0)
+    val generator = arguments.getOption("generator")!!.values!![0]
 
     // If no normal argument is given, then we will open a prompt for entering code
     when(arguments.arguments.size) {
@@ -84,12 +76,13 @@ fun main(args: Array<String>) {
             // Info message for Shake console
             println(
                 "# Shake version $VERSION ${if (DEBUG) "in debug mode " else ""}\n" +
-                        "# Enter Shake code below to execute!\n" +
-                        "# Using $generator to execute code"
+                "# Enter Shake code below to execute!\n" +
+                "# Using $generator to execute code"
             )
 
             // Just create a infinite loop for reading from the console
-            while (true) {
+            recursiveWhile({ true }) { wBreak, wContinue -> run {
+
 
                 // Try & Catch to prevent the console from crashing when
                 // entering wrong code
@@ -98,26 +91,35 @@ fun main(args: Array<String>) {
                     // Print input-request-line-start
                     print("\n$ > ")
 
-                    // request the input from the console and create a StringCharacterInputStream from it
-                    val chars: CharacterInputStream = SourceCharacterInputStream("<Console>", readLine()!!)
+                    readLine().then {
 
-                    // parse the CharacterInputStream into a Tree
-                    val pr = parse(chars)
+                        // request the input from the console and create a StringCharacterInputStream from it
+                        val chars: CharacterInputStream = SourceCharacterInputStream("<Console>", it!!)
 
-                    // execute the tree using the specified generator
-                    execute(pr, generator, null, arguments.getOption("target")!!.values!![0])
+                        // parse the CharacterInputStream into a Tree
+                        val pr = parse(chars)
+
+                        // execute the tree using the specified generator
+                        execute(pr, generator, null, arguments.getOption("target")!!.values!![0])
+
+                        wContinue()
+
+                    }.catch {
+                        it.printStackTrace()
+                        wContinue()
+                    }
                 } catch (t: Throwable) {
                     // When an error occurs while executing the code, just print it's stack and continue
                     t.printStackTrace()
                 }
-            }
+            } }
         }
 
         1 -> {
             val src = arguments.arguments[0]
 
             // read the contents of the file
-            val file = String(Files.readAllBytes(Paths.get(src)))
+            val file = File(src).contents
 
             // Create a new StringCharacterInputStream from the file's contents
             val chars: CharacterInputStream = SourceCharacterInputStream(
@@ -176,33 +178,29 @@ private fun parse(input: CharacterInputStream): ParseResult {
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-@Throws(IOException::class)
 private fun execute(pr: ParseResult, generator: String?, src: String?, target: String?) {
     if (src != null && !src.endsWith(".shake")) throw Error("Shake file names have to end with extension \".shake\"")
     val targetFile = src?.substring(0, src.length - 6)
-    val baseName = if (src != null) targetFile!!.split("[\\\\/](?=[^\\\\/]+$)").toTypedArray()[1] else null
+    // val baseName = if (src != null) targetFile!!.split("[\\\\/](?=[^\\\\/]+$)").toTypedArray()[1] else null
     when (generator) {
         "interpreter" -> println(">> ${interpreter.visit(pr.tree)}")
         "json" ->
-            if (src == null) println(">> ${json.visit(pr.tree)}")
-            else writeFile(File(target ?: targetFile + json.extension), json.visit(pr.tree).toString())
+            if (src == null) println(">> ${pr.tree}")
+            else writeFile(File(target ?: "$targetFile.json"), pr.tree.toString())
         "beauty-json", "bjson" ->
-            if (src == null) println(">> ${json.visitTree(pr.tree).toString(2)}")
-            else writeFile(File(target ?: targetFile + json.extension), json.visitTree(pr.tree).toString(2))
-        "java" ->
-            if (src == null) println(">> ${java.visitProgram(pr.tree, "CliInput").toString("", "  ")}%n")
-            else writeFile(File(target ?: targetFile + java.extension), java.visitProgram(pr.tree, baseName).toString("", "  "))
+            if (src == null) println(">> ${json.stringify(pr.tree, indent = 2)}")
+            else writeFile(File(target ?: "$targetFile.json"), json.stringify(pr.tree, indent = 2))
+        "java" -> throw Error("Java is not available")
+        //     if (src == null) println(">> ${java.visitProgram(pr.tree, "CliInput").toString("", "  ")}%n")
+        //     else writeFile(File(target ?: targetFile + java.extension), java.visitProgram(pr.tree, baseName).toString("", "  "))
         else -> throw Error("Unknown generator!")
     }
 }
 
-@Throws(IOException::class)
 private fun writeFile(f: File, content: String) {
     println("Generating file \"${f.absolutePath}\"...")
-    f.parentFile.mkdirs()
-    val writer = BufferedWriter(FileWriter(f))
-    writer.write(content)
-    writer.close()
+    f.parent.mkdirs()
+    f.write(content)
 }
 
 private class ParseResult(val tree: Tree, val map: PositionMap)

@@ -1,10 +1,12 @@
 package com.github.nsc.de.shake.util
 
 import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.FileReader
+import java.io.FileWriter
 
 @Suppress("unused")
-actual class File(
+actual class File actual constructor(
     actual val path: String
 ) {
 
@@ -41,5 +43,18 @@ actual class File(
 
     actual val contentsString: String
         get() = contents.concatToString()
+
+    actual fun mkdir() { this.file.mkdir() }
+    actual fun mkdirs() { this.file.mkdirs() }
+    actual fun write(content: String) {
+        val writer = BufferedWriter(FileWriter(file))
+        writer.write(content)
+        writer.close()
+    }
+    actual fun write(content: CharArray) {
+        val writer = BufferedWriter(FileWriter(file))
+        writer.write(content)
+        writer.close()
+    }
 
 }

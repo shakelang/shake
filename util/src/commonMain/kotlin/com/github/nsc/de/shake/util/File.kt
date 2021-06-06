@@ -1,6 +1,8 @@
 package com.github.nsc.de.shake.util
 
-expect class File {
+expect class File(
+    path: String
+) {
 
     val path: String
     val name: String
@@ -13,5 +15,9 @@ expect class File {
     val contents: CharArray
     val contentsString: String
 
+    fun mkdir()
+    fun mkdirs()
+    fun write(content: String)
+    fun write(content: CharArray)
 
 }

@@ -3,15 +3,15 @@ package com.github.nsc.de.shake.util
 import com.github.nsc.de.shake.util.environment.Environment
 
 external fun require(name: String): dynamic
+
+val nodeJsAvailable = Environment.getEnvironment().isJavaScriptNode
 external val process: dynamic
 
-val available = Environment.getEnvironment().isJavaScriptNode
-
-val node_fs = if(available) require("fs") else null
-val node_path = if(available) require("path") else null
+val node_fs = if(nodeJsAvailable) require("fs") else null
+val node_path = if(nodeJsAvailable) require("path") else null
 
 @Suppress("unused")
-actual class File(
+actual class File actual constructor(
     actual val path: String
 ) {
 
@@ -49,5 +49,10 @@ actual class File(
         if(node_fs == null || node_path == null) throw Error(
             "Can't use file API because node seems to be not available (you are probably in browser)")
     }
+
+    actual fun mkdir() { node_fs.mkdirSync(path) }
+    actual fun mkdirs() { node_fs.mkdirSync(path, mapOf("recursive" to true)) }
+    actual fun write(content: String) { node_fs.writeFileSync(path, content) }
+    actual fun write(content: CharArray) = this.write(content.concatToString())
 
 }
