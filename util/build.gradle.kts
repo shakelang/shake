@@ -7,7 +7,7 @@ apply(plugin = "java-library")
 
 plugins {
     kotlin("multiplatform") version "1.5.10"
-    id("org.jetbrains.dokka") version "1.4.32"
+    id("org.jetbrains.dokka")
     id("com.github.shakelang.shake.java-conventions")
     java
     `maven-publish`
@@ -22,6 +22,37 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
 }
 
+tasks.dokkaHtml.configure {
+    outputDirectory.set(buildDir.resolve("docs/html"))
+
+    doFirst {
+        dokkaSourceSets.create("common") {
+            sourceRoots.setFrom("src/commonMain")
+        }
+        dokkaSourceSets.create("jvm") {
+            sourceRoots.setFrom("src/jvmMain")
+        }
+        dokkaSourceSets.create("js") {
+            sourceRoots.setFrom("src/jsMain")
+        }
+    }
+}
+
+tasks.dokkaGfm.configure {
+    outputDirectory.set(buildDir.resolve("docs/markdown"))
+
+    doFirst {
+        dokkaSourceSets.create("common") {
+            sourceRoots.setFrom("src/commonMain")
+        }
+        dokkaSourceSets.create("jvm") {
+            sourceRoots.setFrom("src/jvmMain")
+        }
+        dokkaSourceSets.create("js") {
+            sourceRoots.setFrom("src/jsMain")
+        }
+    }
+}
 kotlin {
     jvm {
         compilations.all {
