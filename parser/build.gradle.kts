@@ -7,7 +7,7 @@ apply(plugin = "java-library")
 
 plugins {
     kotlin("multiplatform") version "1.5.10"
-    id("org.jetbrains.dokka")
+    id("org.jetbrains.dokka") version "1.4.32"
     id("com.github.shakelang.shake.java-conventions")
     java
     `maven-publish`

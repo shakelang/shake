@@ -1,3 +1,0 @@
-// test basic variable-type short
-short s = 0;
-s;

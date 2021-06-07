@@ -1,3 +1,0 @@
-// test basic variable-type let (basically the same as var)
-let i = 0;
-i;

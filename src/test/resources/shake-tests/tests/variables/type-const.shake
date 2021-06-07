@@ -1,3 +1,0 @@
-// test basic variable-type const
-const i = 0;
-i;
