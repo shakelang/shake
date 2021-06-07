@@ -1,8 +1,8 @@
-package com.github.nsc.de.shake.lexer
+package com.github.shakelang.shake.lexer
 
-import com.github.nsc.de.shake.lexer.token.TokenType
-import com.github.nsc.de.shake.util.characterinput.characterinputstream.CharacterInputStream
-import com.github.nsc.de.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
+import com.github.shakelang.shake.lexer.token.TokenType
+import com.github.shakelang.shake.util.characterinput.characterinputstream.CharacterInputStream
+import com.github.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

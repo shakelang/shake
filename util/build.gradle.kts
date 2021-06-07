@@ -1,4 +1,4 @@
-group = "com.github.nsc.de.shake"
+group = "com.github.shakelang.shake"
 version = "0.1.0"
 description = "lexer"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
@@ -8,7 +8,7 @@ apply(plugin = "java-library")
 plugins {
     kotlin("multiplatform") version "1.5.10"
     id("org.jetbrains.dokka")
-    id("com.github.nsc.de.shake.java-conventions")
+    id("com.github.shakelang.shake.java-conventions")
     java
     `maven-publish`
 }

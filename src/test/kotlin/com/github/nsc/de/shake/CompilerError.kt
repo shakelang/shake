@@ -1,10 +1,10 @@
-package com.github.nsc.de.shake
+package com.github.shakelang.shake
 
-import com.github.nsc.de.shake.util.CompilerError
-import com.github.nsc.de.shake.util.Formatting
-import com.github.nsc.de.shake.util.characterinput.charactersource.CharacterSource
-import com.github.nsc.de.shake.util.characterinput.position.Position
-import com.github.nsc.de.shake.util.characterinput.position.PositionMap
+import com.github.shakelang.shake.util.CompilerError
+import com.github.shakelang.shake.util.Formatting
+import com.github.shakelang.shake.util.characterinput.charactersource.CharacterSource
+import com.github.shakelang.shake.util.characterinput.position.Position
+import com.github.shakelang.shake.util.characterinput.position.PositionMap
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
