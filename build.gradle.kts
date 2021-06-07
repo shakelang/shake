@@ -1,29 +1,9 @@
-group = "com.github.nsc.de.shake"
+group = "com.github.shakelang.shake"
 version = "0.1.0"
 description = "Shake"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-
-apply(plugin = "java-library")
 
 plugins {
-    kotlin("jvm") version "1.5.0"
     id("org.jetbrains.dokka") version "1.4.32"
-    id("com.github.nsc.de.shake.java-conventions")
-    java
-    `maven-publish`
-}
-
-val srcDirs = arrayOf("src/main/java", "src/main/kotlin")
-val testDirs = arrayOf("src/test/java", "src/test/kotlin")
-
-
-sourceSets {
-    main {
-        java.srcDirs(*srcDirs)
-    }
-    test {
-        java.srcDirs(*testDirs)
-    }
 }
 
 repositories {
@@ -31,48 +11,72 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation(project(":util"))
-    implementation(project(":lexer"))
-    implementation(project(":parser"))
-    implementation(project(":interpreter"))
-    implementation("org.json:json:20180130")
-    implementation("org.reflections:reflections:0.9.12")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
-}
 
-tasks.register<Jar>("resourceJar") {
-    this.archiveFileName.set("${project.name}-${project.version}-resources.jar")
-    from("src/main/resources") {
-        include("**")
+fun findDokkaHtmlProjects(): List<Project> =
+    subprojects.filter {
+        !it.tasks.none { task -> "dokkaHtml" == task.name }
     }
-}
 
-tasks.register<Jar>("sourceJar") {
-    this.archiveFileName.set("${project.name}-${project.version}-sources.jar")
-    srcDirs.forEach {
-        from(it) {
-            include("**")
+fun findDokkaGfmProjects(): List<Project> =
+    subprojects.filter {
+        !it.tasks.none { task -> "dokkaGfm" == task.name }
+    }
+
+tasks.dokkaHtml.configure {
+
+    outputDirectory.set(buildDir.resolve("docs/html"))
+
+    dependsOn (findDokkaHtmlProjects().map { it.tasks.getByName("dokkaHtml") })
+
+    doFirst {
+        val dokkaProjects = findDokkaHtmlProjects()
+
+        dokkaProjects.forEach {
+            println("Copying html documentation of module ${it.name}...")
+            copy {
+                from(fileTree("${it.name}/build/docs/html"))
+                into(layout.buildDirectory.dir("docs/html/modules/${it.name}"))
+            }
+        }
+
+        dokkaSourceSets {
+            dokkaProjects.forEach {
+                dokkaSourceSets.create(it.name) {
+                    sourceRoots.setFrom("${it.name}/src/commonMain")
+                }
+            }
         }
     }
 }
 
-java {
-    withJavadocJar()
-}
+tasks.dokkaGfm.configure {
 
-tasks.build {
-    dependsOn("resourceJar")
-    dependsOn("sourceJar")
-}
+    outputDirectory.set(buildDir.resolve("docs/markdown"))
 
-tasks.test {
-    useJUnitPlatform()
+    dependsOn (findDokkaGfmProjects().map { it.tasks.getByName("dokkaGfm") })
 
-    testLogging.showExceptions = true
-    maxHeapSize = "1G"
-    // ignoreFailures = true
-    filter {
-        includeTestsMatching("com.github.nsc.de.shake.*")
+    doFirst {
+        val dokkaProjects = findDokkaGfmProjects()
+
+        dokkaProjects.forEach {
+            println("Copying markdown documentation of module ${it.name}...")
+            copy {
+                from(fileTree("${it.name}/build/docs/html"))
+                into(layout.buildDirectory.dir("docs/html/modules/${it.name}"))
+            }
+        }
+
+        dokkaSourceSets {
+            dokkaProjects.forEach {
+                dokkaSourceSets.create(it.name) {
+                    sourceRoots.setFrom("${it.name}/src/commonMain")
+                }
+            }
+        }
     }
+}
+
+tasks.register("dokka") {
+    group = "documentation"
+    dependsOn("dokkaHtml", "dokkaGfm")
 }

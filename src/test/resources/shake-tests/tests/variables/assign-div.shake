@@ -1,4 +1,0 @@
-// test '/=' operator
-int i = 9;
-i /= 3;
-i

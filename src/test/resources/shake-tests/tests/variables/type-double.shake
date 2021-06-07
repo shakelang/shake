@@ -1,3 +1,0 @@
-// test basic variable-type double
-double d = 0.0;
-d;

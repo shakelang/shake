@@ -1,3 +1,0 @@
-// test basic variable-type boolean
-boolean b = true;
-b;
