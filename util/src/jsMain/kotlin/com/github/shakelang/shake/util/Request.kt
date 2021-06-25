@@ -11,11 +11,12 @@ object Request {
         return Promise {
             rs, rj ->
             run {
-                var xhttp = XMLHttpRequest()
-                xhttp.open(method.toString(), url, true);
+                val xhttp = XMLHttpRequest()
                 xhttp.onreadystatechange = {
-                    rs(xhttp)
+                    if(xhttp.readyState == 4.toShort()) rs(xhttp)
                 }
+                xhttp.open(method.toString(), url)
+                xhttp.send()
             }
         }
     }
