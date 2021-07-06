@@ -58,7 +58,51 @@ kotlin {
         testRuns["test"].executionTask.configure {
             useJUnit()
         }
+        val main by compilations.getting
+        val jvmFatJar by compilations.creating {
+            defaultSourceSet {
+                dependencies {
+                    implementation(main.compileDependencyFiles + main.output.classesDirs)
+                }
+            }
+
+
+
+            // Create a test task to run the tests produced by this compilation:
+            tasks.register<Jar>("jvmFatJar") {
+                val classpath = compileDependencyFiles + runtimeDependencyFiles
+                // Run only the tests from this compilation's outputs:
+                val testClassesDirs = output.classesDirs
+                manifest {
+                    attributes (mapOf(
+                        "Implementation-Title" to "Gradle Jar File Example",
+                        "Implementation-Version" to archiveVersion,
+                        "Main-Class" to "com.github.shakelang.shake.cli.ShakeCli"
+                    ))
+                }
+
+                archiveAppendix.set("jvm-executable")
+                //println(configurations.asMap.filter { it.key.toLowerCase().contains("jvm") }.keys)
+                //println(configurations.asMap.mapValues { it.value.map { it2 -> it2.path } })
+                from (
+                    classpath.map { if(it.isDirectory) it else zipTree(it) },
+                ) {
+                    exclude("META-INF/DEPENDENCIES")
+                    exclude("META-INF/DEPENDENCIES.txt")
+                    exclude("META-INF/LICENSE")
+                    exclude("META-INF/LICENSE.txt")
+                    exclude("META-INF/license.txt")
+                    exclude("META-INF/NOTICE")
+                    exclude("META-INF/NOTICE.txt")
+                    exclude("META-INF/notice.txt")
+                    exclude("META-INF/INDEX.LIST")
+                    exclude("META-INF/versions")
+                    exclude("META-INF/versions/9/module-info.class")
+                }
+            }
+        }
     }
+
     js(LEGACY) {
         nodejs {
         }
@@ -91,7 +135,6 @@ kotlin {
     }
     */
 
-
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -117,6 +160,10 @@ kotlin {
         // val nativeMain by getting
         // val nativeTest by getting
     }
+}
+
+tasks.jar {
+    dependsOn("jvmFatJar")
 }
 
 tasks.test {
