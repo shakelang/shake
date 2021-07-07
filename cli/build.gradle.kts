@@ -70,6 +70,7 @@ kotlin {
 
             // Create a test task to run the tests produced by this compilation:
             tasks.register<Jar>("jvmFatJar") {
+                dependsOn("jvmJar")
                 val classpath = compileDependencyFiles + runtimeDependencyFiles
                 // Run only the tests from this compilation's outputs:
                 val testClassesDirs = output.classesDirs
