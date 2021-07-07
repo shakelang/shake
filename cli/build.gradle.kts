@@ -58,22 +58,22 @@ kotlin {
         testRuns["test"].executionTask.configure {
             useJUnit()
         }
+
         val main by compilations.getting
-        val jvmFatJar by compilations.creating {
+        val fatJar by compilations.creating {
             defaultSourceSet {
-                dependencies {
-                    implementation(main.compileDependencyFiles + main.output.classesDirs)
-                }
+                /*dependencies {
+                    main.compileDependencyFiles
+                }*/
+                this.dependsOn(sourceSets.commonMain.get())
+                this.dependsOn(sourceSets.getByName("jvmMain"))
             }
 
 
-
-            // Create a test task to run the tests produced by this compilation:
             tasks.register<Jar>("jvmFatJar") {
-                dependsOn("jvmJar")
-                val classpath = compileDependencyFiles + runtimeDependencyFiles
-                // Run only the tests from this compilation's outputs:
-                val testClassesDirs = output.classesDirs
+                dependsOn("jvmFatJarClasses")
+                val classpath = compileDependencyFiles// + main.output.classesDirs
+
                 manifest {
                     attributes (mapOf(
                         "Implementation-Title" to "Gradle Jar File Example",
@@ -83,10 +83,9 @@ kotlin {
                 }
 
                 archiveAppendix.set("jvm-executable")
-                //println(configurations.asMap.filter { it.key.toLowerCase().contains("jvm") }.keys)
-                //println(configurations.asMap.mapValues { it.value.map { it2 -> it2.path } })
-                from (
-                    classpath.map { if(it.isDirectory) it else zipTree(it) },
+
+                from(
+                    classpath.map { if (it.isDirectory) it else zipTree(it) }
                 ) {
                     exclude("META-INF/DEPENDENCIES")
                     exclude("META-INF/DEPENDENCIES.txt")
@@ -100,6 +99,8 @@ kotlin {
                     exclude("META-INF/versions")
                     exclude("META-INF/versions/9/module-info.class")
                 }
+
+                from(output)
             }
         }
     }
