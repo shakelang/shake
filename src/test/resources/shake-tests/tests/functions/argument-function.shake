@@ -1,6 +1,0 @@
-int i = 0;
-function f( num ) {
-  i += num;
-}
-f(10);
-i
