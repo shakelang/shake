@@ -81,38 +81,17 @@ fun main(args: Array<String>) {
             )
 
             // Just create a infinite loop for reading from the console
-            recursiveWhile({ true }) { wBreak, wContinue -> run {
+            mainLoop {
 
+                // request the input from the console and create a StringCharacterInputStream from it
+                val chars: CharacterInputStream = SourceCharacterInputStream("<Console>", it)
 
-                // Try & Catch to prevent the console from crashing when
-                // entering wrong code
-                try {
+                // parse the CharacterInputStream into a Tree
+                val pr = parse(chars)
 
-                    // Print input-request-line-start
-                    print("\n$ > ")
-
-                    readLine().then {
-
-                        // request the input from the console and create a StringCharacterInputStream from it
-                        val chars: CharacterInputStream = SourceCharacterInputStream("<Console>", it!!)
-
-                        // parse the CharacterInputStream into a Tree
-                        val pr = parse(chars)
-
-                        // execute the tree using the specified generator
-                        execute(pr, generator, null, arguments.getOption("target")!!.values!![0])
-
-                        wContinue()
-
-                    }.catch {
-                        it.printStackTrace()
-                        wContinue()
-                    }
-                } catch (t: Throwable) {
-                    // When an error occurs while executing the code, just print it's stack and continue
-                    t.printStackTrace()
-                }
-            } }
+                // execute the tree using the specified generator
+                execute(pr, generator, null, arguments.getOption("target")!!.values!![0])
+            }
         }
 
         1 -> {
