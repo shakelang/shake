@@ -1,0 +1,103 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../parser/0.1.0/parser-0.1.0.module",
+    "group": "com.github.shakelang.shake",
+    "module": "parser",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "parser-jvm-0.1.0.jar",
+          "url": "parser-jvm-0.1.0.jar",
+          "size": 112130,
+          "sha512": "a66e55f2c9c6b8dbb0f7fb0883b7a8d7f403d474652bb0b560e90fdd6a9cccf073f537a3715144b9d8e0b8c39952f89de0a30053b2e0bfb1f1e5014fb3621aaa",
+          "sha256": "d6635301392ab62d4dbd3ee1308d4fbc2238d64905d50d620608d61cca00d0f9",
+          "sha1": "a2b4c409fab50d99c0f09978932e58d9b2b9eaa9",
+          "md5": "2fb89d132bdefe88073673708dd67079"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "util",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "lexer",
+          "version": {
+            "requires": "0.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "parser-jvm-0.1.0.jar",
+          "url": "parser-jvm-0.1.0.jar",
+          "size": 112130,
+          "sha512": "a66e55f2c9c6b8dbb0f7fb0883b7a8d7f403d474652bb0b560e90fdd6a9cccf073f537a3715144b9d8e0b8c39952f89de0a30053b2e0bfb1f1e5014fb3621aaa",
+          "sha256": "d6635301392ab62d4dbd3ee1308d4fbc2238d64905d50d620608d61cca00d0f9",
+          "sha1": "a2b4c409fab50d99c0f09978932e58d9b2b9eaa9",
+          "md5": "2fb89d132bdefe88073673708dd67079"
+        }
+      ]
+    }
+  ]
+}

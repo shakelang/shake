@@ -1,0 +1,124 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../cli/0.1.0/cli-0.1.0.module",
+    "group": "com.github.shakelang.shake",
+    "module": "cli",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "cli-jvm-0.1.0.jar",
+          "url": "cli-jvm-0.1.0.jar",
+          "size": 19868,
+          "sha512": "8dfd5a47e1c1115a98bb3e88f6816755df378e4cb47c5d0975f12b3b9578245c375c021700c4f5eb36d93a640e4468b56061bc21a1293a99063b8382f81dafd3",
+          "sha256": "20760abc30c5470428116ea850646e300d48809d6dd5c7b49325ff0630985c56",
+          "sha1": "7a8f62f867a4ba2192186d448eca7b41caa9b9fe",
+          "md5": "e55f363e323981297ce97f984d366f33"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.reflections",
+          "module": "reflections",
+          "version": {
+            "requires": "0.9.12"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "util",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "lexer",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "parser",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "interpreter",
+          "version": {
+            "requires": "0.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "cli-jvm-0.1.0.jar",
+          "url": "cli-jvm-0.1.0.jar",
+          "size": 19868,
+          "sha512": "8dfd5a47e1c1115a98bb3e88f6816755df378e4cb47c5d0975f12b3b9578245c375c021700c4f5eb36d93a640e4468b56061bc21a1293a99063b8382f81dafd3",
+          "sha256": "20760abc30c5470428116ea850646e300d48809d6dd5c7b49325ff0630985c56",
+          "sha1": "7a8f62f867a4ba2192186d448eca7b41caa9b9fe",
+          "md5": "e55f363e323981297ce97f984d366f33"
+        }
+      ]
+    }
+  ]
+}

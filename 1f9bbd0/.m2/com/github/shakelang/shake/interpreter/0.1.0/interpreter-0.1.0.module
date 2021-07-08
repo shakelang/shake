@@ -1,0 +1,101 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.github.shakelang.shake",
+    "module": "interpreter",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "interpreter-metadata-0.1.0.jar",
+          "url": "interpreter-0.1.0.jar",
+          "size": 13535,
+          "sha512": "a80d518393df21286b56b89a5b780fe21b5d600869564ac640e00eaad0459f6dd906b42d6101632cae46d09151ba81ca451dfe026815bcffe2651f6a4788b36b",
+          "sha256": "ef92ac735ab7332f9b92f25fdd748ec7a2f3d52567739317eca0cc54615b7271",
+          "sha1": "5843faa8017f8db33afb1477dbdc9bc93b726555",
+          "md5": "74b37bc46d7d2d1f984e0a4733f9c6ad"
+        }
+      ]
+    },
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../interpreter-js/0.1.0/interpreter-js-0.1.0.module",
+        "group": "com.github.shakelang.shake",
+        "module": "interpreter-js",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../interpreter-js/0.1.0/interpreter-js-0.1.0.module",
+        "group": "com.github.shakelang.shake",
+        "module": "interpreter-js",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../interpreter-jvm/0.1.0/interpreter-jvm-0.1.0.module",
+        "group": "com.github.shakelang.shake",
+        "module": "interpreter-jvm",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../interpreter-jvm/0.1.0/interpreter-jvm-0.1.0.module",
+        "group": "com.github.shakelang.shake",
+        "module": "interpreter-jvm",
+        "version": "0.1.0"
+      }
+    }
+  ]
+}
