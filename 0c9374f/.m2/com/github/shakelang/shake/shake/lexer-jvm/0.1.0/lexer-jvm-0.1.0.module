@@ -1,0 +1,96 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../lexer/0.1.0/lexer-0.1.0.module",
+    "group": "com.github.shakelang.shake",
+    "module": "lexer",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "lexer-jvm-0.1.0.jar",
+          "url": "lexer-jvm-0.1.0.jar",
+          "size": 20370,
+          "sha512": "5032e7f62d7dae5f932a3800bab3fda3e1dfbf3d2644012a34094298047849222865bed2b78908bcc57c9611377255845009634c82333dde022d28a922f580bf",
+          "sha256": "f9298f4974be418c402b4edf3b0932ae869384178fe9c73089a47a757bca2e26",
+          "sha1": "e8903732c9c3a2e0c2ac3bd6b6c6ead549539097",
+          "md5": "34bc8ba4e07bb11aba4c8748733be50f"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "util",
+          "version": {
+            "requires": "0.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "lexer-jvm-0.1.0.jar",
+          "url": "lexer-jvm-0.1.0.jar",
+          "size": 20370,
+          "sha512": "5032e7f62d7dae5f932a3800bab3fda3e1dfbf3d2644012a34094298047849222865bed2b78908bcc57c9611377255845009634c82333dde022d28a922f580bf",
+          "sha256": "f9298f4974be418c402b4edf3b0932ae869384178fe9c73089a47a757bca2e26",
+          "sha1": "e8903732c9c3a2e0c2ac3bd6b6c6ead549539097",
+          "md5": "34bc8ba4e07bb11aba4c8748733be50f"
+        }
+      ]
+    }
+  ]
+}

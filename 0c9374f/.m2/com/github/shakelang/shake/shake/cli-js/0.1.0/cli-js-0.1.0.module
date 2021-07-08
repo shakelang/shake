@@ -1,0 +1,117 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../cli/0.1.0/cli-0.1.0.module",
+    "group": "com.github.shakelang.shake",
+    "module": "cli",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "cli-js-0.1.0.jar",
+          "url": "cli-js-0.1.0.jar",
+          "size": 20106,
+          "sha512": "57eba6770adc219aae483cee8a1b834f77857b9ca40121ff656defe062e5f3ad1af72a8b8b6c2e855bd27da65050f3c53bf43dbfdd98c1d3373b013b16d06f99",
+          "sha256": "97f6b0bddecf0d6518a11bcb9f0fe91c6838019f4d88ca47f071aa38e380ac3b",
+          "sha1": "ed7e1d7c7d895e00d38eb5ad4ee572b94d4f2bcc",
+          "md5": "6087c02acbc2a12d1cf857e40776c95a"
+        }
+      ]
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "util",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "lexer",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "parser",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "interpreter",
+          "version": {
+            "requires": "0.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "cli-js-0.1.0.jar",
+          "url": "cli-js-0.1.0.jar",
+          "size": 20106,
+          "sha512": "57eba6770adc219aae483cee8a1b834f77857b9ca40121ff656defe062e5f3ad1af72a8b8b6c2e855bd27da65050f3c53bf43dbfdd98c1d3373b013b16d06f99",
+          "sha256": "97f6b0bddecf0d6518a11bcb9f0fe91c6838019f4d88ca47f071aa38e380ac3b",
+          "sha1": "ed7e1d7c7d895e00d38eb5ad4ee572b94d4f2bcc",
+          "md5": "6087c02acbc2a12d1cf857e40776c95a"
+        }
+      ]
+    }
+  ]
+}

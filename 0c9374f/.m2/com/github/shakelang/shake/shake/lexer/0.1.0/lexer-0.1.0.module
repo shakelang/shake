@@ -1,0 +1,101 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.github.shakelang.shake",
+    "module": "lexer",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "lexer-metadata-0.1.0.jar",
+          "url": "lexer-0.1.0.jar",
+          "size": 5191,
+          "sha512": "2a7d88ac73badc245f505de220e6fdcaee4141830db714e2d10ec9b692f74ce7c7ae2a3140430e334871cdaa6a052d4b0ffd08646552ec583aaddad8b9c271f8",
+          "sha256": "24ad3c0fb294701c380b68e7f7282b8f922d5aae9aa799cd582d6d6e3f809088",
+          "sha1": "daee525564996ff18996e22a587785b9f254bf0b",
+          "md5": "c035da5108536c89d13614ef3beffb42"
+        }
+      ]
+    },
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../lexer-js/0.1.0/lexer-js-0.1.0.module",
+        "group": "com.github.shakelang.shake",
+        "module": "lexer-js",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../lexer-js/0.1.0/lexer-js-0.1.0.module",
+        "group": "com.github.shakelang.shake",
+        "module": "lexer-js",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../lexer-jvm/0.1.0/lexer-jvm-0.1.0.module",
+        "group": "com.github.shakelang.shake",
+        "module": "lexer-jvm",
+        "version": "0.1.0"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../lexer-jvm/0.1.0/lexer-jvm-0.1.0.module",
+        "group": "com.github.shakelang.shake",
+        "module": "lexer-jvm",
+        "version": "0.1.0"
+      }
+    }
+  ]
+}
