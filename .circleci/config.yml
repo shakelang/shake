@@ -54,11 +54,11 @@ jobs:
           command: |
             mkdir -p /tmp/generated_artifacts
             cp cli/build/libs/cli-jvm-executable-0.1.0.jar /tmp/generated_artifacts/shake.jar
-            cp util/build/libs/ /tmp/generated_artifacts/util
-            cp lexer/build/libs/ /tmp/generated_artifacts/lexer
-            cp parser/build/libs/ /tmp/generated_artifacts/parser
-            cp interpreter/build/libs/ /tmp/generated_artifacts/interpreter
-            cp cli/build/libs/ /tmp/generated_artifacts/cli
+            cp -avr util/build/libs/ /tmp/generated_artifacts/util
+            cp -avr lexer/build/libs/ /tmp/generated_artifacts/lexer
+            cp -avr parser/build/libs/ /tmp/generated_artifacts/parser
+            cp -avr interpreter/build/libs/ /tmp/generated_artifacts/interpreter
+            cp -avr cli/build/libs/ /tmp/generated_artifacts/cli
           when: on_fail
       - store_artifacts:
-          path: /tmp/generated_artifacts
+          path: /tmp/generated_artifacts/*
