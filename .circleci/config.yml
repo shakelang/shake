@@ -53,12 +53,12 @@ jobs:
       - run:
           command: |
             mkdir -p /tmp/artifacts
-            cp cli/build/libs/* /tmp/artifacts/
-            cp -avr util/build/libs/ /tmp/artifacts/util
-            cp -avr lexer/build/libs/ /tmp/artifacts/lexer
-            cp -avr parser/build/libs/ /tmp/artifacts/parser
-            cp -avr interpreter/build/libs/ /tmp/artifacts/interpreter
-            cp -avr cli/build/libs/ /tmp/artifacts/cli
+            cp cli/build/libs/cli-jvm-executable-0.1.0.jar /tmp/artifacts/
+            cp util/build/libs/* /tmp/artifacts/util/
+            cp lexer/build/libs/* /tmp/artifacts/lexer/
+            cp parser/build/libs/* /tmp/artifacts/parser/
+            cp interpreter/build/libs/* /tmp/artifacts/interpreter/
+            cp cli/build/libs/* /tmp/artifacts/cli/
           when: on_fail
       - store_artifacts:
-          path: /tmp/artifacts/cli-jvm-executable-0.1.0.jar
+          path: /tmp/artifacts/
