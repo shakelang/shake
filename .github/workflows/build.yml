@@ -53,7 +53,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
             
-      - name: Build docs with Gradle 🔨
+      - name: Build with Gradle 🔨
         run: ./gradlew build publishToMavenLocal
 
       - name: Pack commit for build branch 📦
