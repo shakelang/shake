@@ -60,6 +60,6 @@ jobs:
             cp interpreter/build/libs/* /tmp/artifacts/interpreter/
             cp cli/build/libs/* /tmp/artifacts/cli/
             tree /tmp/artifacts/
-          when: on_fail
+          when: on_success
       - store_artifacts:
           path: /tmp/artifacts/
