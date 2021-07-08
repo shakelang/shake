@@ -58,7 +58,7 @@ jobs:
 
       - name: Pack commit for build branch 📦
         run: |
-          mkdirs build/artifacts
+          mkdir build/artifacts
           cp cli/build/libs/cli-jvm-executable-0.1.0.jar build/artifacts/shake.jar
           cp -R util/build/libs build/artifacts/util
           cp -R lexer/build/libs build/artifacts/lexer
