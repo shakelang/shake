@@ -1,0 +1,89 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../util/0.1.0/util-0.1.0.module",
+    "group": "com.github.shakelang.shake",
+    "module": "util",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "util-js-0.1.0.jar",
+          "url": "util-js-0.1.0.jar",
+          "size": 93613,
+          "sha512": "f6f2fcb66bc0590b805b1250a255454c40e1ff643ff4773ec4facfb8a9f0cbc19fb25ed8a66aabea727a379c278d116d646db9e7d2457f09ceeeb09b6a2d0710",
+          "sha256": "4834c1bacb6d3f825a1062b5c370901b515620c7657c1111dffcf93e6ab95569",
+          "sha1": "0e55e5ac6d82205eedf0f1df3aac2003c1fdf37a",
+          "md5": "79122a2d651f9e3c7e10d46db9107d81"
+        }
+      ]
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "util-js-0.1.0.jar",
+          "url": "util-js-0.1.0.jar",
+          "size": 93613,
+          "sha512": "f6f2fcb66bc0590b805b1250a255454c40e1ff643ff4773ec4facfb8a9f0cbc19fb25ed8a66aabea727a379c278d116d646db9e7d2457f09ceeeb09b6a2d0710",
+          "sha256": "4834c1bacb6d3f825a1062b5c370901b515620c7657c1111dffcf93e6ab95569",
+          "sha1": "0e55e5ac6d82205eedf0f1df3aac2003c1fdf37a",
+          "md5": "79122a2d651f9e3c7e10d46db9107d81"
+        }
+      ]
+    }
+  ]
+}

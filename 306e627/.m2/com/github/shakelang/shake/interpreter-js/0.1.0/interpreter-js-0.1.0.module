@@ -1,0 +1,110 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../interpreter/0.1.0/interpreter-0.1.0.module",
+    "group": "com.github.shakelang.shake",
+    "module": "interpreter",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "interpreter-js-0.1.0.jar",
+          "url": "interpreter-js-0.1.0.jar",
+          "size": 115833,
+          "sha512": "e0e3556ff010ba8bd71ec482903ebd275124153685299ffa04521f10a37c32e7b861c498244eff050d97aedb632a505ec4de0c6dccbae39be220c7a424d54cbc",
+          "sha256": "6af6fb32fd87d85b22f302b873c32dd2731e76156605d22b2060b7b7f46bc660",
+          "sha1": "ab26da1bbee7f65f66145ff26dec5c69885e9b0d",
+          "md5": "9fd6558746be29556faa2a46ce4b5d44"
+        }
+      ]
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "util",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "lexer",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "parser",
+          "version": {
+            "requires": "0.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "interpreter-js-0.1.0.jar",
+          "url": "interpreter-js-0.1.0.jar",
+          "size": 115833,
+          "sha512": "e0e3556ff010ba8bd71ec482903ebd275124153685299ffa04521f10a37c32e7b861c498244eff050d97aedb632a505ec4de0c6dccbae39be220c7a424d54cbc",
+          "sha256": "6af6fb32fd87d85b22f302b873c32dd2731e76156605d22b2060b7b7f46bc660",
+          "sha1": "ab26da1bbee7f65f66145ff26dec5c69885e9b0d",
+          "md5": "9fd6558746be29556faa2a46ce4b5d44"
+        }
+      ]
+    }
+  ]
+}

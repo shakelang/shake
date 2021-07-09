@@ -1,0 +1,103 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../parser/0.1.0/parser-0.1.0.module",
+    "group": "com.github.shakelang.shake",
+    "module": "parser",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "parser-js-0.1.0.jar",
+          "url": "parser-js-0.1.0.jar",
+          "size": 87871,
+          "sha512": "418c0f414899ba45b1f0712b707d6d969c3ca6cccd31e0d9e19c76e37f2234090efad85d82ef3afd7246a97c8bb0334d2e67d27485d289f34e3bea6dc0e3ed0d",
+          "sha256": "7dd0c10fb478897f110896019f719f0ae7fba12798164806accc6ca27226e10a",
+          "sha1": "37278872dc394231e99ab606d4652e1cc531c32c",
+          "md5": "aeea26f2215487f97bd67570db741c01"
+        }
+      ]
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "util",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "lexer",
+          "version": {
+            "requires": "0.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "parser-js-0.1.0.jar",
+          "url": "parser-js-0.1.0.jar",
+          "size": 87871,
+          "sha512": "418c0f414899ba45b1f0712b707d6d969c3ca6cccd31e0d9e19c76e37f2234090efad85d82ef3afd7246a97c8bb0334d2e67d27485d289f34e3bea6dc0e3ed0d",
+          "sha256": "7dd0c10fb478897f110896019f719f0ae7fba12798164806accc6ca27226e10a",
+          "sha1": "37278872dc394231e99ab606d4652e1cc531c32c",
+          "md5": "aeea26f2215487f97bd67570db741c01"
+        }
+      ]
+    }
+  ]
+}
