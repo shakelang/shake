@@ -3,15 +3,62 @@ package com.github.shakelang.shake.util
 import com.github.shakelang.shake.util.Formatting.FGColor
 import com.github.shakelang.shake.util.characterinput.position.Position
 import com.github.shakelang.shake.util.characterinput.position.PositionMap
+import kotlin.js.JsName
 
+
+/**
+ * A [CompilerError] is an error thrown by a Compiler. It has functionality for
+ * marking source code locations
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
 @Suppress("unused")
 open class CompilerError : Error {
+
+    /**
+     * The name of the [CompilerError]
+     */
+    @JsName("exceptionName")
     val exceptionName: String
+
+    /**
+     * The details of the [CompilerError]
+     */
+    @JsName("details")
     val details: String
+
+    /**
+     * The start position of the [CompilerError]
+     */
+    @JsName("start")
     val start: Position
+
+    /**
+     * The end position of the [CompilerError]
+     */
+    @JsName("end")
     val end: Position
+
+    /**
+     * The marker of the Error
+     */
+    @JsName("end")
     val marker: ErrorMarker
 
+
+    /**
+     * Constructor for [CompilerError]
+     *
+     * @param message the message of the exception _(Value for [CompilerError.message])_
+     * @param marker the marker of the exception _(Value for [CompilerError.marker])_
+     * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
+     * @param details the details of the exception _(Value for [CompilerError.details])_
+     * @param start the start position of the exception _(Value for [CompilerError.start])_
+     * @param end the end position of the exception _(Value for [CompilerError.end])_
+     * @param cause the cause for the exception
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     private constructor(
         message: String,
         marker: ErrorMarker,
@@ -19,7 +66,7 @@ open class CompilerError : Error {
         details: String,
         start: Position,
         end: Position,
-        cause: Throwable
+        cause: Throwable? = null
     ) : super("$message: $details\n\n$marker\n", cause) {
         this.exceptionName = exceptionName
         this.details = details
@@ -28,9 +75,30 @@ open class CompilerError : Error {
         this.marker = marker
     }
 
+
+    /**
+     * Constructor for [CompilerError]
+     *
+     * @param message the message of the exception _(Value for [CompilerError.message])_
+     * @param marker the marker of the exception _(Value for [CompilerError.marker])_
+     * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
+     * @param details the details of the exception _(Value for [CompilerError.details])_
+     * @param map the position map to resolve start and end _(Value for [CompilerError.start])_
+     * @param start the start position of the exception _(Value for [CompilerError.start])_
+     * @param end the end position of the exception _(Value for [CompilerError.end])_
+     * @param cause the cause for the exception
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     private constructor(
-        message: String, marker: ErrorMarker, exceptionName: String, details: String, map: PositionMap, start: Int, end: Int,
-        cause: Throwable
+        message: String,
+        marker: ErrorMarker,
+        exceptionName: String,
+        details: String,
+        map: PositionMap,
+        start: Int,
+        end: Int,
+        cause: Throwable? = null
     ) : super("$message: $details\n\n$marker\n", cause) {
         this.exceptionName = exceptionName
         this.details = details
@@ -39,15 +107,42 @@ open class CompilerError : Error {
         this.marker = marker
     }
 
+
+    /**
+     * Constructor for [CompilerError]
+     *
+     * @param message the message of the exception _(Value for [CompilerError.message])_
+     * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
+     * @param details the details of the exception _(Value for [CompilerError.details])_
+     * @param start the start position of the exception _(Value for [CompilerError.start])_
+     * @param end the end position of the exception _(Value for [CompilerError.end])_
+     * @param cause the cause for the exception
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     constructor(
         message: String,
         exceptionName: String,
         details: String,
         start: Position,
         end: Position,
-        cause: Throwable
+        cause: Throwable? = null
     ) : this(message, createPositionMarker(maxLength, start, end), exceptionName, details, start, end, cause)
 
+
+    /**
+     * Constructor for [CompilerError]
+     *
+     * @param message the message of the exception _(Value for [CompilerError.message])_
+     * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
+     * @param details the details of the exception _(Value for [CompilerError.details])_
+     * @param map the position map to resolve start and end _(Value for [CompilerError.start])_
+     * @param start the start position of the exception _(Value for [CompilerError.start])_
+     * @param end the end position of the exception _(Value for [CompilerError.end])_
+     * @param cause the cause for the exception
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     constructor(
         message: String,
         exceptionName: String,
@@ -55,78 +150,120 @@ open class CompilerError : Error {
         map: PositionMap,
         start: Int,
         end: Int,
-        cause: Throwable
-    ) : this(message, createPositionMarker(maxLength, map.resolve(start).also { start_zw = it },
-        map.resolve(end).also {
-            end_zw = it
-        }), exceptionName, details, start_zw!!, end_zw!!, cause
+        cause: Throwable? = null
+    ) : this(
+        message,
+        createPositionMarker(
+            maxLength,
+            map.resolve(start).also { start_zw = it },
+            map.resolve(end).also { end_zw = it }
+        ),
+        exceptionName,
+        details,
+        start_zw!!,
+        end_zw!!,
+        cause
     ) {
         end_zw = null
-        start_zw = end_zw
+        start_zw = null
     }
 
-    private constructor(
-        message: String,
-        marker: ErrorMarker,
-        exceptionName: String,
-        details: String,
-        start: Position,
-        end: Position
-    ) : super("$message: $details\n\n$marker\n") {
-        this.exceptionName = exceptionName
-        this.details = details
-        this.start = start
-        this.end = end
-        this.marker = marker
-    }
 
-    private constructor(
-        message: String,
-        marker: ErrorMarker,
-        exceptionName: String,
-        details: String,
-        map: PositionMap,
-        start: Int,
-        end: Int
-    ) : super("$message: $details\n\n$marker\n") {
-        this.exceptionName = exceptionName
-        this.details = details
-        this.start = map.resolve(start)
-        this.end = map.resolve(end)
-        this.marker = marker
-    }
+    /**
+     * Stringify the [CompilerError]
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
+    override fun toString() = message!!
 
-    constructor(message: String, exceptionName: String, details: String, start: Position, end: Position) : this(
-        message, createPositionMarker(
-            maxLength, start, end
-        ), exceptionName, details, start, end
-    )
 
-    constructor(message: String, exceptionName: String, details: String, map: PositionMap, start: Int, end: Int) : this(
-        message, createPositionMarker(maxLength, map.resolve(start).also { start_zw = it },
-            map.resolve(end).also {
-                end_zw = it
-            }), exceptionName, details, start_zw!!, end_zw!!
+    /**
+     * A marker for the position of the [CompilerError]
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
+    class ErrorMarker (
+
+        /**
+         * The source of the [ErrorMarker]
+         */
+        @JsName("source")
+        val source: String,
+
+        /**
+         * The colorPreview of the [ErrorMarker]
+         */
+        @JsName("colorPreview")
+        val colorPreview: String,
+
+        /**
+         * The preview of the [ErrorMarker]
+         */
+        @JsName("preview")
+        val preview: String,
+
+        /**
+         * The marker of the [ErrorMarker]
+         */
+        @JsName("marker")
+        val marker: String
+
     ) {
-        end_zw = null
-        start_zw = end_zw
-    }
 
-    override fun toString(): String {
-        return message!!
-    }
+        /**
+         * Generate the [ErrorMarker] as a string
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
+        @JsName("generateMarker")
+        fun generateMarker() = "at $source\n$preview\n$marker"
 
-    class ErrorMarker(val source: String, val colorPreview: String, val preview: String, val marker: String) {
-        override fun toString(): String {
-            return "at $source\n$colorPreview\n$marker"
-        }
+        /**
+         * Generate the [ErrorMarker] as a string including console colors
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
+        @JsName("generateColoredMarker")
+        fun generateColoredMarker() = "at $source\n$colorPreview\n$marker"
+
+        /**
+         * Stringify the [CompilerError] (just the same as [ErrorMarker.generateMarker]
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
+        override fun toString() = generateMarker()
+
     }
 
     companion object {
+
+        /**
+         * The maxLength for generated [ErrorMarker]s
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
         var maxLength = 60
+
+        /**
+         * This is a temporary variable that is needed for a constructor of the [CompilerError]
+         */
         private var start_zw: Position? = null
+
+        /**
+         * This is a temporary variable that is needed for a constructor of the [CompilerError]
+         */
         private var end_zw: Position? = null
-        private fun createPositionMarker(maxLength: Int, pos1: Position, pos2: Position): ErrorMarker {
+
+        /**
+         * Creates a [ErrorMarker]
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
+        private fun createPositionMarker(
+            maxLength: Int = CompilerError.maxLength,
+            pos1: Position,
+            pos2: Position
+        ): ErrorMarker {
 
             // Check requirements
             if (pos1.source != pos2.source) throw Error("The two have to be located in the same source")
@@ -193,20 +330,20 @@ open class CompilerError : Error {
                 start + Formatting.INVERT + FGColor.RED
                         + pos1.source.source[pos1.index, pos2.index + 1].concatToString() + Formatting.RESET + end,
                 start + pos1.source.source[pos1.index, pos2.index + 1].concatToString() + end,
-                strRepeat(' ', start.length) + strRepeat('^', highlighted)
+                ' '.repeat(start.length) + '^'.repeat(highlighted)
             )
         }
-
-        private fun strRepeat(c: Char, number: Int): String {
-            val string = StringBuilder()
-            for (i in 0 until number) string.append(c)
-            return string.toString()
-        }
-
-        private fun smallest(vararg arr: Int): Int {
-            var smallest = arr[0]
-            for (i in 1 until arr.size) if (arr[i] < smallest) smallest = arr[i]
-            return smallest
-        }
     }
+}
+
+private fun Char.repeat(number: Int): String {
+    val string = StringBuilder()
+    for (i in 0 until number) string.append(this)
+    return string.toString()
+}
+
+private fun smallest(vararg arr: Int): Int {
+    var smallest = arr[0]
+    for (i in 1 until arr.size) if (arr[i] < smallest) smallest = arr[i]
+    return smallest
 }
