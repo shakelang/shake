@@ -1,0 +1,89 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../util/0.1.0/util-0.1.0.module",
+    "group": "com.github.shakelang.shake",
+    "module": "util",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "util-jvm-0.1.0.jar",
+          "url": "util-jvm-0.1.0.jar",
+          "size": 75382,
+          "sha512": "70d89f7fb91a1694acd4a1a362a0a4f70b53ffbed6941133478260ae5b918ada856328bbd3b66a2e934f2910da337fbdd380e7173b1b8057c1046afdea3878df",
+          "sha256": "c52e3c9857c162f29e6963f409215a4312039d051844d6bd30078cc05fcf986f",
+          "sha1": "a39a5ea43473aebb27844e4270e0c57febf6dca2",
+          "md5": "3ef66e652a4ffe3c375880ce63350f28"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "util-jvm-0.1.0.jar",
+          "url": "util-jvm-0.1.0.jar",
+          "size": 75382,
+          "sha512": "70d89f7fb91a1694acd4a1a362a0a4f70b53ffbed6941133478260ae5b918ada856328bbd3b66a2e934f2910da337fbdd380e7173b1b8057c1046afdea3878df",
+          "sha256": "c52e3c9857c162f29e6963f409215a4312039d051844d6bd30078cc05fcf986f",
+          "sha1": "a39a5ea43473aebb27844e4270e0c57febf6dca2",
+          "md5": "3ef66e652a4ffe3c375880ce63350f28"
+        }
+      ]
+    }
+  ]
+}

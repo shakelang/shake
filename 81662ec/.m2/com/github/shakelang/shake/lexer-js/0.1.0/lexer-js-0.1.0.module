@@ -1,0 +1,96 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../lexer/0.1.0/lexer-0.1.0.module",
+    "group": "com.github.shakelang.shake",
+    "module": "lexer",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.0.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "lexer-js-0.1.0.jar",
+          "url": "lexer-js-0.1.0.jar",
+          "size": 60572,
+          "sha512": "2b00a3470c413d8c7636b5a6e07cee0e418e48f26084a4f8504e63206b694e4fa06a2ba43b2e0904db3da0749f2282aaf6af60eb5d88103e617fff05ed8b8b77",
+          "sha256": "a63c3cfa0b94364f22a4c8768ddd98ae84cb20fb7127b59603504a034703a0b1",
+          "sha1": "407e19271b6b4d5c3df0d1ea0569056515b30319",
+          "md5": "1fe0ac8dbbd876be57644c6f7b03b745"
+        }
+      ]
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "legacy",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-js",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "com.github.shakelang.shake",
+          "module": "util",
+          "version": {
+            "requires": "0.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "lexer-js-0.1.0.jar",
+          "url": "lexer-js-0.1.0.jar",
+          "size": 60572,
+          "sha512": "2b00a3470c413d8c7636b5a6e07cee0e418e48f26084a4f8504e63206b694e4fa06a2ba43b2e0904db3da0749f2282aaf6af60eb5d88103e617fff05ed8b8b77",
+          "sha256": "a63c3cfa0b94364f22a4c8768ddd98ae84cb20fb7127b59603504a034703a0b1",
+          "sha1": "407e19271b6b4d5c3df0d1ea0569056515b30319",
+          "md5": "1fe0ac8dbbd876be57644c6f7b03b745"
+        }
+      ]
+    }
+  ]
+}
