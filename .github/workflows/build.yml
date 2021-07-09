@@ -66,7 +66,7 @@ jobs:
           cp -R interpreter/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/interpreter
           cp -R cli/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/cli
           rm build/artifacts/${{ steps.vars.outputs.sha_short }}/cli/cli-jvm-executable-*.jar
-          cp -R ~/.m2/repository/com/github/shakelang/shake build/artifacts/${{ steps.vars.outputs.sha_short }}/.m2/com/github/shakelang/
+          cp -R ~/.m2/repository/com/github/shakelang/shake build/artifacts/${{ steps.vars.outputs.sha_short }}/.m2/repository/com/github/shakelang/
           cd build/artifacts/${{ steps.vars.outputs.sha_short }}
           tar cvzf maven-repository.tar.gz .m2
           rm -r .m2/
