@@ -2,6 +2,7 @@ package com.github.shakelang.shake.util.characterinput.position
 
 import kotlin.jvm.JvmOverloads
 
+
 /**
  * The [Position] marks a position in the source-code.
  *
@@ -9,6 +10,7 @@ import kotlin.jvm.JvmOverloads
  */
 @Suppress("unused")
 class Position
+
 /**
  * Constructor for the position
  *
@@ -20,23 +22,29 @@ class Position
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @JvmOverloads constructor(
+
     /**
      * The source
      */
     val source: PositionMap,
+
     /**
      * The index of the position
      */
     override val index: Int = -1,
+
     /**
      * The column of the position
      */
     override val column: Int = 0,
+
     /**
      * The line of the position
      */
     override val line: Int = 1
+
 ) : PositionMarker {
+
     /**
      * Copies the position
      *
