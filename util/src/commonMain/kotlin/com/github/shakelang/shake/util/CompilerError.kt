@@ -42,7 +42,7 @@ open class CompilerError : Error {
     /**
      * The marker of the Error
      */
-    @JsName("end")
+    @JsName("marker")
     val marker: ErrorMarker
 
 
