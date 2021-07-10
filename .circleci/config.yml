@@ -15,7 +15,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/openjdk:8-jdk-node-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -46,5 +46,24 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle.kts" }}
 
-      # run tests!
-      - run: gradle test
+      # run build
+      - run: gradle build
+
+      # store artifacts
+      - run:
+          command: |
+            mkdir -p /tmp/artifacts
+            mkdir -p /tmp/artifacts/util
+            mkdir -p /tmp/artifacts/lexer
+            mkdir -p /tmp/artifacts/parser
+            mkdir -p /tmp/artifacts/interpreter
+            mkdir -p /tmp/artifacts/cli
+            cp cli/build/libs/cli-jvm-executable-0.1.0.jar /tmp/artifacts/shake.jar
+            cp util/build/libs/* /tmp/artifacts/util/
+            cp lexer/build/libs/* /tmp/artifacts/lexer/
+            cp parser/build/libs/* /tmp/artifacts/parser/
+            cp interpreter/build/libs/* /tmp/artifacts/interpreter/
+            cp cli/build/libs/* /tmp/artifacts/cli/
+          when: on_success
+      - store_artifacts:
+          path: /tmp/artifacts/
