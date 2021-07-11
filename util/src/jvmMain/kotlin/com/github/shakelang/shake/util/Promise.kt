@@ -1,14 +1,14 @@
 package com.github.shakelang.shake.util
 
-@Suppress("ACTUAL_TYPE_ALIAS_TO_CLASS_WITH_DECLARATION_SITE_VARIANCE")
+@Suppress("ACTUAL_TYPE_ALIAS_TO_CLASS_WITH_DECLARATION_SITE_VARIANCE", "unused")
 actual open class Promise<out T> actual constructor(
     private val executor: PromiseExecutor<T>
 ) {
     private var finished: Boolean = false
     private var value: T? = null
     private var error: Throwable? = null
-    private var onFulfilled: FulfilledFunction<T>? = null
-    private var onRejected: RejectedFunction? = null
+    private var onFulfilled: FulfilledFunction<T, *>? = null
+    private var onRejected: RejectedFunction<*>? = null
     private var followResolve: ResolveFunction<*>? = null
     private var followReject: RejectFunction? = null
 
