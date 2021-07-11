@@ -58,20 +58,20 @@ jobs:
 
       - name: Pack commit for build branch 📦
         run: |
-          mkdir -p build/artifacts/${{ steps.vars.outputs.sha_short }}/.m2/repository/com/github/shakelang/shake
-          cp cli/build/libs/cli-jvm-executable-0.1.0.jar build/artifacts/${{ steps.vars.outputs.sha_short }}/shake.jar
-          cp -R util/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/util
-          cp -R lexer/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/lexer
-          cp -R parser/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/parser
-          cp -R interpreter/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/interpreter
-          cp -R cli/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/cli
-          cp -R browser/build/distributions/* build/artifacts/${{ steps.vars.outputs.sha_short }}/
-          rm build/artifacts/${{ steps.vars.outputs.sha_short }}/cli/cli-jvm-executable-*.jar
-          cp -R ~/.m2/repository/com/github/shakelang/shake build/artifacts/${{ steps.vars.outputs.sha_short }}/.m2/repository/com/github/shakelang/
-          cd build/artifacts/${{ steps.vars.outputs.sha_short }}
+          mkdir -p build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/.m2/repository/com/github/shakelang/shake
+          cp cli/build/libs/cli-jvm-executable-0.1.0.jar build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/shake.jar
+          cp -R util/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/util
+          cp -R lexer/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/lexer
+          cp -R parser/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/parser
+          cp -R interpreter/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/interpreter
+          cp -R cli/build/libs build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/cli
+          cp -R browser/build/distributions/* build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/
+          rm build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/cli/cli-jvm-executable-*.jar
+          cp -R ~/.m2/repository/com/github/shakelang/shake build/artifacts/${{ steps.vars.outputs.sha_short }}/commits/.m2/repository/com/github/shakelang/
+          cd build/artifacts/${{ steps.vars.outputs.sha_short }}/commits
           tar cvzf maven-repository.tar.gz .m2
           rm -r .m2/
-          cd ../../..
+          cd ../../../..
         
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
