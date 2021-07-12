@@ -9,18 +9,43 @@ import com.github.shakelang.shake.util.characterinput.characterinputstream.Chara
 import com.github.shakelang.shake.util.characterinput.position.Position
 import kotlin.jvm.JvmOverloads
 
+
+/**
+ * A [JsonLexer] creates a [JsonTokenInputStream] from a [CharacterInputStream]
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
 @Suppress("unused")
-class JsonLexer(
+class JsonLexer (
+
+    /**
+     * The [CharacterInputStream] to create the [JsonTokenInputStream] from
+     */
     private val chars: CharacterInputStream
+
 ) {
 
+    /**
+     * Make a [JsonTokenInputStream] from the [chars] of the [JsonLexer]
+     * This function executes the [JsonLexer]
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     fun makeTokens(): JsonTokenInputStream {
 
+        // Set for storing the generated tokens
         val tokens = mutableSetOf<JsonToken>()
 
+        // Loop over all the characters in the characterInputStream
         while (this.chars.hasNext()) {
+
+            // Store the next character (Store it in a variable to not get it every time to save performance)
             val next = this.chars.next()
+
+            // If the next character is a whitespace character we will just ignore it
             if(next == ' ' || next == '\t' || next == '\r' || next == '\n') continue
+
+            // If it is one of the simple tokens we just return a new Token
             if(next == '{') {
                 tokens.add(JsonToken(JsonTokenType.LCURL, this.chars.position))
                 continue
@@ -45,87 +70,183 @@ class JsonLexer(
                 tokens.add(JsonToken(JsonTokenType.COMMA, this.chars.position))
                 continue
             }
+
+            // If the next token is a '"' or ''' call makeString()
             if(next == '"' || next == '\'') tokens.add(makeString())
+
+            // If the next token is an identifierStartCharacter (a-zA-Z_) call makeIdentifier() to generate a String
             else if(isIdentifierStartCharacter(next)) tokens.add(makeIdentifier())
+
+            // If the next character is 0-9 or '.' or '-' make a number
             else if(isNumberOrDotCharacter(next) || next == '-') tokens.add(makeNumber())
-            else throw JSONTokenLexerError("Unknown symbol '$next'")
+
+            // If we can't parse the character throw an error
+            else throw JsonTokenLexerError("Unknown symbol '$next'")
         }
 
-        return JsonTokenInputStream(chars.source.location, tokens.toTypedArray(), chars.positionMaker.createPositionMap())
+
+        // Create a new JsonTokenInputStream out of the tokens
+        return JsonTokenInputStream(
+            chars.source.location,
+            tokens.toTypedArray(),
+            chars.positionMaker.createPositionMap()
+        )
 
     }
 
+
+    /**
+     * Parses an identifier token (Returns a string token, because there are no identifiers in Json)
+     *
+     * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
+     * there and not here to improve performance. The condition **must** be checked before the call of this
+     * function!)_
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     private fun makeIdentifier(): JsonToken {
 
+        // Store the start position
         val start = this.chars.position
+
+        // Loop over the characters that are contained in the Identifier
         var identifier = chars.actual().toString()
         while (chars.hasNext() && isIdentifierCharacter(chars.peek())) {
             identifier += chars.next()
         }
 
+        // return a new string token out of the identifier
         return JsonToken(JsonTokenType.STRING, start, this.chars.position - 1, identifier)
+
     }
 
+
+    /**
+     * Parses a string token
+     *
+     * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
+     * there and not here to improve performance. The condition **must** be checked before the call of this
+     * function!)_
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     private fun makeString(): JsonToken {
 
+        // Store the start position
         val start = this.chars.position
-        val end = this.chars.actual()
-        var str = ""
 
+        // Store the string end ('"' or ''')
+        // We will then run the loop till we find this character again
+        val end = this.chars.actual()
+
+        // String for storing the
+        val str = StringBuilder()
+
+        // Loop until we find the end character
         while(this.chars.hasNext() && this.chars.next() != end) {
+
+            // If the character is an escape-character
             if(this.chars.actual() == '\\') {
                 when (this.chars.next()) {
-                    '"' -> str += "\""
-                    '\'' -> str += "\'"
-                    '\\' -> str += "\\"
-                    'b' -> str += "\b"
-                    'n' -> str += "\n"
-                    'r' -> str += "\r"
-                    't' -> str += "\t"
+                    '"' -> str.append('"')
+                    '\'' -> str.append('\'')
+                    '\\' -> str.append('\\')
+                    'b' -> str.append('\b')
+                    'n' -> str.append('\n')
+                    'r' -> str.append('\r')
+                    't' -> str.append('\t')
                     'u' -> {
                         var s = ""
                         for (i in 0..3) {
                             val c: Char = this.chars.next()
-                            if (!isHexCharacter(c)) throw JSONTokenLexerError("Expecting hex char")
+                            if (!isHexCharacter(c)) throw JsonTokenLexerError("Expecting hex char")
                             s += c
                         }
-                        str += s.toInt(radix = 16).toChar()
+                        str.append(s.toInt(radix = 16).toChar())
                     }
-                    else -> throw JSONTokenLexerError("Unknown escape sequence '\\" + this.chars.actual() + "'")
+                    else -> throw JsonTokenLexerError("Unknown escape sequence '\\" + this.chars.actual() + "'")
                 }
             }
-            else str += this.chars.actual()
+            else str.append(this.chars.actual())
         }
-        
-        if(this.chars.actual() != end) throw  JSONTokenLexerError("Unexpected End")
-        
-        return JsonToken(JsonTokenType.STRING, start, this.chars.position, str)
+
+        // If we have not found the end throw an Error
+        if(this.chars.actual() != end) throw  JsonTokenLexerError("Unexpected End")
+
+        // Return a string JsonToken
+        return JsonToken(JsonTokenType.STRING, start, this.chars.position, str.toString())
 
     }
 
+    /**
+     * Parse a number token
+     *
+     * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
+     * there and not here to improve performance. The condition **must** be checked before the call of this
+     * function!)_
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     private fun makeNumber(): JsonToken {
 
+        // Store the start position
         val start = this.chars.position
-        var foundDot = false
-        var number = this.chars.actual().toString()
 
+        // Boolean if we found a dot. This is important for checking
+        // if we parsed a Integer or a double.
+        var foundDot = false
+
+        // The number string
+        val number = StringBuilder().append(this.chars.actual())
+
+        // Loop as long as we find a '.' or '0-9'
         while (this.chars.hasNext() && isNumberOrDotCharacter(this.chars.peek())) {
 
             if (this.chars.next() == '.') {
-                if (foundDot) throw JSONTokenLexerError("Number must not contain two dots")
+
+                // Prevent two dots in a number
+                if (foundDot) throw JsonTokenLexerError("Number must not contain two dots")
                 else foundDot = true
+
             }
-            number += this.chars.actual()
+
+            // Append the character to the number
+            number.append(this.chars.actual())
 
         }
 
-        return JsonToken(if(foundDot) JsonTokenType.DOUBLE else JsonTokenType.INT, start, this.chars.position, number)
+        // Create a new double-token or integer-token
+        return JsonToken(
+            if(foundDot) JsonTokenType.DOUBLE
+            else JsonTokenType.INT, start,
+            this.chars.position, number.toString()
+        )
 
     }
 
-    private inner class JSONTokenLexerError(message: String, name: String, details: String, start: Position, end: Position) :
-        CompilerError(message, name, details, start, end) {
+    /**
+     * An [CompilerError] thrown by the [JsonLexer]
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
+    private inner class JsonTokenLexerError(
+        message: String,
+        name: String,
+        details: String,
+        start: Position,
+        end: Position
+    ) : CompilerError(message, name, details, start, end) {
 
+        /**
+         * Constructor for [JsonTokenLexerError]
+         *
+         * @param name the name of the [CompilerError]
+         * @param details the details of the [CompilerError]
+         * @param start the start position of the [CompilerError]
+         * @param end the end position of the [CompilerError]
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
         @JvmOverloads
         constructor(
             name: String,
@@ -140,6 +261,16 @@ class JsonLexer(
             end
         )
 
+
+        /**
+         * Constructor for [JsonTokenLexerError]
+         *
+         * @param details the details of the [CompilerError]
+         * @param start the start position of the [CompilerError]
+         * @param end the end position of the [CompilerError]
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
         @JvmOverloads
         constructor(
             details: String,
