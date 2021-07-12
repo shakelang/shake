@@ -25,7 +25,7 @@ interface JsonArray : JsonElement, CollectionType<JsonElement, JsonArray, Mutabl
         CollectionBase<JsonElement, JsonArray, MutableJsonArray>(value) {
 
         /**
-         * Get the value of the JsonArray
+         * Get the value of the [JsonArray]
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
@@ -46,11 +46,11 @@ interface JsonArray : JsonElement, CollectionType<JsonElement, JsonArray, Mutabl
         override fun toMutableCollection(): MutableJsonArray = MutableJsonArray.of(value)
 
         /**
-         * Override toString to generate via JSON.stringify
+         * Override toString to generate via [JSON.stringify]
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        override fun toString(): String = json.stringify(value)
+        override fun toString(): String = JSON.stringify(value)
 
     }
 
@@ -115,28 +115,28 @@ interface MutableJsonArray : JsonArray, MutableCollectionType<JsonElement, JsonA
         MutableCollectionBase<JsonElement, JsonArray, MutableJsonArray>(value) {
 
         /**
-         * Get the value of the JsonArray
+         * Get the value of the [MutableJsonArray]
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override val value get() = collection
 
         /**
-         * Creates a new [JsonArray] from the [JsonArray]
+         * Creates a new [JsonArray] from the [MutableJsonArray]
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override fun toCollection(): JsonArray = JsonArray.of(value)
 
         /**
-         * Creates a new [MutableJsonArray] from the [JsonArray]
+         * Creates a new [MutableJsonArray] from the [MutableJsonArray]
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override fun toMutableCollection(): MutableJsonArray = of(value)
 
         /**
-         * Override toString to generate via JSON.stringify
+         * Override toString to generate via [JSON.stringify]
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
