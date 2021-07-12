@@ -9,7 +9,7 @@ enum class JsonNullElement : JsonPrimitive {
     override val value: Nothing?
         get() = null
 
-    override fun toString(): String = JSON.stringify(this)
+    override fun toString(): String = JSON.stringify(value)
 
 
 }

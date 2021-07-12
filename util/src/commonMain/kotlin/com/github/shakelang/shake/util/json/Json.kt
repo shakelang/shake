@@ -5,12 +5,12 @@ import com.github.shakelang.shake.util.characterinput.charactersource.CharacterS
 
 @Suppress("unused")
 object JSON {
-    fun parse(code: String, createSets: Boolean = false): Any {
+    fun parse(code: String): Any {
         val source = CharacterSource.from(code, "JSOn.parse")
         val chars = SourceCharacterInputStream(source)
         val lexer = JsonLexer(chars)
         val tokens = lexer.makeTokens()
-        val parser = JsonParser(tokens, createSets = createSets)
+        val parser = JsonParser(tokens)
         return parser.parse()
     }
     fun stringify(input: Any?, indent: Any? = null): String {

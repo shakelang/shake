@@ -1,5 +1,7 @@
 package com.github.shakelang.shake.util.json.elements
 
+import kotlin.jvm.JvmName
+
 interface JsonElement {
 
     val value: Any?
@@ -16,14 +18,31 @@ interface JsonElement {
             }
 
         fun from(value: String) = JsonStringElement(value)
-        fun from(value: Double) = JsonDoubleElement(value)
-        fun from(value: Int) = JsonIntegerElement(value)
 
+        fun from(value: Double) = JsonDoubleElement(value)
+        fun from(value: Float) = from(value.toDouble())
+
+        fun from(value: Long) = JsonIntegerElement(value)
+        fun from(value: Int) = from(value.toLong())
+        fun from(value: Short) = from(value.toLong())
+        fun from(value: Byte) = from(value.toLong())
         fun from(value: Map<String, Any?>) = JsonObject.of(value)
         fun from(vararg values: Pair<String, Any?>) = JsonObject.of(*values)
 
+        @JvmName("fromElements")
+        fun from(value: Map<String, JsonElement>) = JsonObject.of(value)
+
+        @JvmName("fromElements")
+        fun from(vararg values: Pair<String, JsonElement>) = JsonObject.of(*values)
+
         fun from(value: Collection<Any?>) = JsonArray.of(value)
         fun from(vararg values: Any?) = JsonArray.of(*values)
+
+        @JvmName("fromElements")
+        fun from(value: Collection<JsonElement>) = JsonArray.of(value)
+
+        @JvmName("fromElements")
+        fun from(vararg values: JsonElement) = JsonArray.of(*values)
 
     }
 

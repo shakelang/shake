@@ -8,6 +8,6 @@ class JsonStringElement (
 
 ) : JsonPrimitive {
 
-    override fun toString(): String = JSON.stringify(this)
+    override fun toString(): String = JSON.stringify(value)
 
 }
