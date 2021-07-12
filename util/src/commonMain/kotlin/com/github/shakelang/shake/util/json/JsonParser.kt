@@ -3,11 +3,11 @@ package com.github.shakelang.shake.util.json
 import com.github.shakelang.shake.util.Characters
 import com.github.shakelang.shake.util.CompilerError
 import com.github.shakelang.shake.util.characterinput.position.Position
-import com.github.shakelang.shake.util.json.JSONTokenType.*
+import com.github.shakelang.shake.util.json.JsonTokenType.*
 
 @Suppress("unused")
 class JsonParser(
-    val tokens: JSONTokenInputStream,
+    val tokens: JsonTokenInputStream,
     private val createSets: Boolean = false
 ) {
 

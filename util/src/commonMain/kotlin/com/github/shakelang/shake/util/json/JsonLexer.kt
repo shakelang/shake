@@ -14,35 +14,35 @@ class JsonLexer(
     private val chars: CharacterInputStream
 ) {
 
-    fun makeTokens(): JSONTokenInputStream {
+    fun makeTokens(): JsonTokenInputStream {
 
-        val tokens = mutableSetOf<JSONToken>()
+        val tokens = mutableSetOf<JsonToken>()
 
         while (this.chars.hasNext()) {
             val next = this.chars.next()
             if(next == ' ' || next == '\t' || next == '\r' || next == '\n') continue
             if(next == '{') {
-                tokens.add(JSONToken(JSONTokenType.LCURL, this.chars.position))
+                tokens.add(JsonToken(JsonTokenType.LCURL, this.chars.position))
                 continue
             }
             if(next == '}') {
-                tokens.add(JSONToken(JSONTokenType.RCURL, this.chars.position))
+                tokens.add(JsonToken(JsonTokenType.RCURL, this.chars.position))
                 continue
             }
             if(next == '[') {
-                tokens.add(JSONToken(JSONTokenType.LSQUARE, this.chars.position))
+                tokens.add(JsonToken(JsonTokenType.LSQUARE, this.chars.position))
                 continue
             }
             if(next == ']') {
-                tokens.add(JSONToken(JSONTokenType.RSQUARE, this.chars.position))
+                tokens.add(JsonToken(JsonTokenType.RSQUARE, this.chars.position))
                 continue
             }
             if(next == ':') {
-                tokens.add(JSONToken(JSONTokenType.COLON, this.chars.position))
+                tokens.add(JsonToken(JsonTokenType.COLON, this.chars.position))
                 continue
             }
             if(next == ',') {
-                tokens.add(JSONToken(JSONTokenType.COMMA, this.chars.position))
+                tokens.add(JsonToken(JsonTokenType.COMMA, this.chars.position))
                 continue
             }
             if(next == '"' || next == '\'') tokens.add(makeString())
@@ -51,11 +51,11 @@ class JsonLexer(
             else throw JSONTokenLexerError("Unknown symbol '$next'")
         }
 
-        return JSONTokenInputStream(chars.source.location, tokens.toTypedArray(), chars.positionMaker.createPositionMap())
+        return JsonTokenInputStream(chars.source.location, tokens.toTypedArray(), chars.positionMaker.createPositionMap())
 
     }
 
-    private fun makeIdentifier(): JSONToken {
+    private fun makeIdentifier(): JsonToken {
 
         val start = this.chars.position
         var identifier = chars.actual().toString()
@@ -63,10 +63,10 @@ class JsonLexer(
             identifier += chars.next()
         }
 
-        return JSONToken(JSONTokenType.STRING, start, this.chars.position - 1, identifier)
+        return JsonToken(JsonTokenType.STRING, start, this.chars.position - 1, identifier)
     }
 
-    private fun makeString(): JSONToken {
+    private fun makeString(): JsonToken {
 
         val start = this.chars.position
         val end = this.chars.actual()
@@ -99,11 +99,11 @@ class JsonLexer(
         
         if(this.chars.actual() != end) throw  JSONTokenLexerError("Unexpected End")
         
-        return JSONToken(JSONTokenType.STRING, start, this.chars.position, str)
+        return JsonToken(JsonTokenType.STRING, start, this.chars.position, str)
 
     }
 
-    private fun makeNumber(): JSONToken {
+    private fun makeNumber(): JsonToken {
 
         val start = this.chars.position
         var foundDot = false
@@ -119,7 +119,7 @@ class JsonLexer(
 
         }
 
-        return JSONToken(if(foundDot) JSONTokenType.DOUBLE else JSONTokenType.INT, start, this.chars.position, number)
+        return JsonToken(if(foundDot) JsonTokenType.DOUBLE else JsonTokenType.INT, start, this.chars.position, number)
 
     }
 
