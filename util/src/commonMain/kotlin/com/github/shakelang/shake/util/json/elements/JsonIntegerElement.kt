@@ -10,7 +10,7 @@ import com.github.shakelang.shake.util.json.JSON
 class JsonIntegerElement (
 
     /**
-     * The value of the [JsonDoubleElement]
+     * The value of the [JsonIntegerElement]
      */
     override val value: Long
 
