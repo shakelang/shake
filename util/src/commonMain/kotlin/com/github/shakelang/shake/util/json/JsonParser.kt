@@ -4,14 +4,14 @@ import com.github.shakelang.shake.util.Characters
 import com.github.shakelang.shake.util.CompilerError
 import com.github.shakelang.shake.util.characterinput.position.Position
 import com.github.shakelang.shake.util.json.JsonTokenType.*
+import com.github.shakelang.shake.util.json.elements.*
 
 @Suppress("unused")
 class JsonParser(
-    val tokens: JsonTokenInputStream,
-    private val createSets: Boolean = false
+    val tokens: JsonTokenInputStream
 ) {
 
-    fun parse(): Any {
+    fun parse(): JsonElement {
 
         val ret = parseValue()
         if(tokens.hasNext()) throw ParserError("Input not finished")
@@ -19,15 +19,15 @@ class JsonParser(
 
     }
 
-    private fun parseValue(): Any {
+    private fun parseValue(): JsonElement {
 
         return when (tokens.next().type) {
 
             LCURL -> parseMap()
             LSQUARE -> parseArray()
-            STRING -> Characters.parseString(tokens.actual().value!!)
-            INT -> tokens.actual().value!!.toLong()
-            DOUBLE -> tokens.actual().value!!.toDouble()
+            STRING -> JsonElement.from(Characters.parseString(tokens.actual().value!!))
+            INT -> JsonElement.from(tokens.actual().value!!.toLong())
+            DOUBLE -> JsonElement.from(tokens.actual().value!!.toDouble())
 
             else -> throw ParserError("")
 
@@ -36,10 +36,10 @@ class JsonParser(
 
     }
 
-    private fun parseMap(): Map<String, Any> {
+    private fun parseMap(): JsonObject {
         if(tokens.actual().type != LCURL) throw ParserError("Expecting '{'")
 
-        val map = mutableMapOf<String, Any>()
+        val map = mutableJsonObjectOf()
         var next = true
 
         while(tokens.hasNext() && next) {
@@ -57,10 +57,10 @@ class JsonParser(
         return map
     }
 
-    private fun parseArray(): Any {
+    private fun parseArray(): JsonArray {
         if(tokens.actual().type != LSQUARE) throw ParserError("Expecting '['")
 
-        val arr = mutableSetOf<Any>()
+        val arr = mutableJsonArrayOf()
         var next = true
 
         while(tokens.hasNext() && next) {
@@ -73,7 +73,7 @@ class JsonParser(
         }
 
         if(tokens.next().type != RSQUARE) throw ParserError("Expecting ']")
-        return if(createSets) arr else arr.toTypedArray()
+        return arr
 
     }
 
