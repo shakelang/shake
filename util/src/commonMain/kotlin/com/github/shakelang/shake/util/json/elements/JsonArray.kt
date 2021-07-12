@@ -16,9 +16,9 @@ interface JsonArray : JsonElement, CollectionType<JsonElement, JsonArray, Mutabl
 
         override val value get() = collection
 
-        override fun toMap(): JsonArray = of(value)
+        override fun toCollection(): JsonArray = of(value)
 
-        override fun toMutableMap(): MutableJsonArray = MutableJsonArray.of(value)
+        override fun toMutableCollection(): MutableJsonArray = MutableJsonArray.of(value)
 
         override fun toString(): String = JSON.stringify(value)
 
@@ -51,9 +51,9 @@ interface MutableJsonArray : JsonArray, MutableCollectionType<JsonElement, JsonA
 
         override val value get() = collection
 
-        override fun toMap(): JsonArray = JsonArray.of(value)
+        override fun toCollection(): JsonArray = JsonArray.of(value)
 
-        override fun toMutableMap(): MutableJsonArray = of(value)
+        override fun toMutableCollection(): MutableJsonArray = of(value)
 
         override fun toString(): String = JSON.stringify(value)
     }
