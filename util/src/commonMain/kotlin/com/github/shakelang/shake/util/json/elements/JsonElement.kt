@@ -12,12 +12,20 @@ interface JsonElement {
             = when(value) {
                 null -> JsonNullElement.INSTANCE
                 is String -> from(value)
+                is Float -> from(value)
                 is Double -> from(value)
+                is Byte -> from(value)
+                is Short -> from(value)
                 is Int -> from(value)
+                is Long -> from(value)
+                is Boolean -> from(value)
+                is JsonElement -> value
                 else -> throw Error("Can't create JsonElement from $value")
             }
 
         fun from(value: String) = JsonStringElement(value)
+
+        fun from(value: Boolean) = JsonBooleanElement.from(value)
 
         fun from(value: Double) = JsonDoubleElement(value)
         fun from(value: Float) = from(value.toDouble())

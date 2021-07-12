@@ -11,4 +11,7 @@ interface JsonPrimitive : JsonElement {
     fun isString() = this is JsonIntegerElement
     fun toStringElement() = if(this.isString()) this as JsonStringElement else throw Error("Element is not a JsonStringElement")
 
+    fun isBoolean() = this is JsonBooleanElement
+    fun toBoolean() = if(this.isBoolean()) this as JsonBooleanElement else throw Error("Element is not a JsonBooleanElement")
+
 }
