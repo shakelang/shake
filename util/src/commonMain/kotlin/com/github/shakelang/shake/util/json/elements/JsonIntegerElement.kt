@@ -3,7 +3,7 @@ package com.github.shakelang.shake.util.json.elements
 import com.github.shakelang.shake.util.json.JSON
 
 /**
- * A json representation of double values
+ * A json representation of integer values
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
