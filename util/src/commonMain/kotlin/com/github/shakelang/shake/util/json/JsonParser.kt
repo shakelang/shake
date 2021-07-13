@@ -6,9 +6,20 @@ import com.github.shakelang.shake.util.characterinput.position.Position
 import com.github.shakelang.shake.util.json.JsonTokenType.*
 import com.github.shakelang.shake.util.json.elements.*
 
+
+/**
+ * A [JsonParser] creates a [JsonElement] from a [JsonTokenInputStream]
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
 @Suppress("unused")
 class JsonParser(
+
+    /**
+     * The [JsonToken]s to parse ([JsonTokenInputStream])
+     */
     val tokens: JsonTokenInputStream
+
 ) {
 
     fun parse(): JsonElement {
@@ -19,9 +30,14 @@ class JsonParser(
 
     }
 
+    /**
+     * Parse a [JsonElement]
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     private fun parseValue(): JsonElement {
 
-        return when (tokens.next().type) {
+        return when (val next = tokens.next().type) {
 
             LCURL -> parseMap()
             LSQUARE -> parseArray()
@@ -29,13 +45,17 @@ class JsonParser(
             INT -> JsonElement.from(tokens.actual().value!!.toLong())
             DOUBLE -> JsonElement.from(tokens.actual().value!!.toDouble())
 
-            else -> throw ParserError("")
-
+            else -> throw ParserError("Could not parse token $next")
 
         }
 
     }
 
+    /**
+     * Parse a [JsonObject]
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     private fun parseMap(): JsonObject {
         if(tokens.actual().type != LCURL) throw ParserError("Expecting '{'")
 
@@ -57,6 +77,11 @@ class JsonParser(
         return map
     }
 
+    /**
+     * Parse a [JsonArray]
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     private fun parseArray(): JsonArray {
         if(tokens.actual().type != LSQUARE) throw ParserError("Expecting '['")
 
@@ -79,6 +104,12 @@ class JsonParser(
 
     // ****************************************************************************
     // Errors
+
+    /**
+     * An [CompilerError] thrown by the [JsonParser]
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
     inner class ParserError(message: String, name: String, details: String, start: Position, end: Position) :
         CompilerError(message, name, details, start, end) {
 
@@ -87,6 +118,16 @@ class JsonParser(
             println(end)
         }
 
+        /**
+         * Constructor for [ParserError]
+         *
+         * @param name the name of the [ParserError]
+         * @param details the details of the [ParserError]
+         * @param start the start position of the [ParserError]
+         * @param end the end position of the [ParserError]
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
         constructor(
             name: String,
             details: String,
@@ -100,7 +141,28 @@ class JsonParser(
             end
         )
 
+
+        /**
+         * Constructor for [ParserError]
+         *
+         * @param details the details of the [ParserError]
+         * @param start the start position of the [ParserError]
+         * @param end the end position of the [ParserError]
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
         constructor(details: String, start: Position, end: Position) : this("ParserError", details, start, end)
+
+
+        /**
+         * Constructor for [ParserError]
+         *
+         * @param details the details of the [ParserError]
+         * @param start the start position of the [ParserError]
+         * @param end the end position of the [ParserError]
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
         constructor(details: String, start: Int, end: Int) : this(
             "ParserError",
             details,
@@ -108,12 +170,29 @@ class JsonParser(
             tokens.map.resolve(end)
         )
 
+
+        /**
+         * Constructor for [ParserError]
+         *
+         * @param error the [ParserError] message
+         * @param position the position of the [ParserError]
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
         constructor(error: String, position: Int) : this(
             error,
             tokens.map.resolve(tokens[position].start),
             tokens.map.resolve(tokens[position].end)
         )
 
+
+        /**
+         * Constructor for [ParserError]
+         *
+         * @param error the error message
+         *
+         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+         */
         constructor(error: String) : this(
             error,
             tokens.map.resolve(tokens.peek().start),
