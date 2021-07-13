@@ -1,4 +1,4 @@
-package com.github.shakelang.shake.util.json
+package com.github.shakelang.shake.util.json.processing
 
 import com.github.shakelang.shake.util.Characters.isHexCharacter
 import com.github.shakelang.shake.util.Characters.isIdentifierCharacter

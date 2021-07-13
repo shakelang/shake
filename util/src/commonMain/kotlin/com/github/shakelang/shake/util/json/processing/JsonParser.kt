@@ -1,9 +1,9 @@
-package com.github.shakelang.shake.util.json
+package com.github.shakelang.shake.util.json.processing
 
 import com.github.shakelang.shake.util.Characters
 import com.github.shakelang.shake.util.CompilerError
 import com.github.shakelang.shake.util.characterinput.position.Position
-import com.github.shakelang.shake.util.json.JsonTokenType.*
+import com.github.shakelang.shake.util.json.processing.JsonTokenType.*
 import com.github.shakelang.shake.util.json.elements.*
 
 

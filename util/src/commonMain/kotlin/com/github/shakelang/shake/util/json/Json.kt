@@ -2,6 +2,9 @@ package com.github.shakelang.shake.util.json
 
 import com.github.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import com.github.shakelang.shake.util.characterinput.charactersource.CharacterSource
+import com.github.shakelang.shake.util.json.processing.JsonGenerator
+import com.github.shakelang.shake.util.json.processing.JsonLexer
+import com.github.shakelang.shake.util.json.processing.JsonParser
 
 @Suppress("unused")
 object JSON {
