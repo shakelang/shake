@@ -128,5 +128,5 @@ private fun debug(message: String) {
 fun main() {
     // Keep these functions
     ::execute
-    ::addInterpreterFile
+    ::addInterpreterFileFromUrl
 }
