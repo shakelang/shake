@@ -2,6 +2,8 @@ import com.github.shakelang.shake.interpreter.Interpreter
 import com.github.shakelang.shake.lexer.Lexer
 import com.github.shakelang.shake.parser.Parser
 import com.github.shakelang.shake.parser.node.Tree
+import com.github.shakelang.shake.util.Promise
+import com.github.shakelang.shake.util.Request
 import com.github.shakelang.shake.util.characterinput.characterinputstream.CharacterInputStream
 import com.github.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import com.github.shakelang.shake.util.characterinput.charactersource.CharacterSource
@@ -18,10 +20,23 @@ private val core_files = mutableMapOf<String, String>()
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
+@JsName("addInterpreterFile")
 fun addInterpreterFile(filename: String, contents: String): Boolean {
     val existing = core_files.containsKey(filename)
     core_files[filename] = contents
     return existing
+}
+
+/**
+ * Add an api file from an url to the interpreter code execution
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
+@JsName("addInterpreterFileFromUrl")
+fun addInterpreterFileFromUrl(filename: String, url: String): Promise<Unit> {
+    return Request.getString(url).then {
+        addInterpreterFile(filename, it)
+    }
 }
 
 /**
