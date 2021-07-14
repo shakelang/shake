@@ -8,19 +8,51 @@ import com.github.shakelang.shake.util.characterinput.charactersource.CharacterS
 import com.github.shakelang.shake.util.characterinput.position.PositionMap
 
 
+/**
+ * The core api files for the shake code execution
+ */
+private val core_files = mutableMapOf<String, String>()
 
+/**
+ * Add an api file to the interpreter code execution
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
+fun addInterpreterFile(filename: String, contents: String): Boolean {
+    val existing = core_files.containsKey(filename)
+    core_files[filename] = contents
+    return existing
+}
+
+/**
+ * Execute the given code
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
 @JsName("execute")
 @Suppress("unused")
 fun execute(source: String, code: String) {
 
     val interpreter = Interpreter()
+
+    // add code files
+    core_files.forEach {
+        val result = parse(it.key, it.value)
+        interpreter.visit(result.tree)
+    }
+
     val result = parse(source, code)
     interpreter.visit(result.tree)
 
 }
 
-private fun parse(source: String, input: String): ParseResult =
-    parse(SourceCharacterInputStream(CharacterSource.Companion.from(input, source)))
+/**
+ * Parse the given code
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
+private fun parse(source: String, input: String)
+    = parse(SourceCharacterInputStream(CharacterSource.Companion.from(input, source)))
 
 
 /**
@@ -56,15 +88,30 @@ private fun parse(input: CharacterInputStream): ParseResult {
 
 }
 
+
+/**
+ * The result of a parsing operation.
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
 @Suppress("unused")
 private class ParseResult(val tree: Tree, val map: PositionMap)
 
-@Suppress("unused")
+
+/**
+ * Log a message to console.debug
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
+@Suppress("unused_parameter")
 private fun debug(message: String) {
     js("console.debug(message)")
 }
 
 @JsName("main")
-fun main(args: Array<String>) {
-    execute("<main>", "js(\"console.log(\\\"Shake test executed from interpreter main\\\")\")")
+@Suppress("unused_expression")
+fun main() {
+    // Keep these functions
+    ::execute
+    ::addInterpreterFile
 }

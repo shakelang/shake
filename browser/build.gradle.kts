@@ -19,9 +19,9 @@ dependencies {
 kotlin {
     js {
         browser {
-            dceTask  {
-                dceOptions.devMode = true
+            dceTask {
                 keep("shake.execute")
+                keep("shake.addInterpreterFile")
             }
             compilations {
                 "main" {
