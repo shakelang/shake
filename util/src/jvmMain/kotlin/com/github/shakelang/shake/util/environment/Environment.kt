@@ -4,7 +4,7 @@ actual class JavaEnvironment : Environment(EnvironmentType.JAVA) {
     actual val javaVersion: String get() = System.getProperty("java.version")
 }
 
-actual class JavaScriptEnvironment : Environment(EnvironmentType.JAVA) {
+actual class JavaScriptEnvironment : Environment(EnvironmentType.JAVASCRIPT) {
     actual val isNodeAvailable: Boolean = throw Error("No javascript available in java!")
 }
 
