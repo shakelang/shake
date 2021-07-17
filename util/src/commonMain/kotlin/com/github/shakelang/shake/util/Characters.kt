@@ -1,5 +1,6 @@
 package com.github.shakelang.shake.util
 
+import com.github.shakelang.shake.util.json.json
 import kotlin.js.JsName
 import kotlin.jvm.JvmStatic
 
@@ -107,12 +108,12 @@ object Characters {
                         val unicode = StringBuilder()
 
                         // Get the next 4 hex characters
-                        val to = i + 5
+                        val to = i + 4
                         while (i < to) {
-                            c = s[i++]
+                            c = s[++i]
 
                             // Throw an error if the character is not a hex character
-                            if (!isHexCharacter(c)) throw Error("Expecting hex char")
+                            if (!isHexCharacter(c)) throw Error("Expecting hex char, got $c")
 
                             unicode.append(c)
 
