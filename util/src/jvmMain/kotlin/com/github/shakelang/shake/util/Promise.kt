@@ -1,5 +1,10 @@
 package com.github.shakelang.shake.util
 
+import jdk.internal.misc.Signal
+import java.util.*
+import java.util.logging.Handler
+import javax.management.timer.Timer
+
 @Suppress("ACTUAL_TYPE_ALIAS_TO_CLASS_WITH_DECLARATION_SITE_VARIANCE", "unused")
 actual open class Promise<out T> actual constructor(
     private val executor: PromiseExecutor<T>
@@ -90,3 +95,10 @@ actual open class Promise<out T> actual constructor(
     init {
     }
 }
+
+actual fun timeout(millis: Int): Promise<Unit> =
+    promisify {
+        Timer("SettingUp", false).schedule(object: TimerTask() {
+            override fun run() = it.resolve(Unit)
+        }, millis.toLong())
+    }

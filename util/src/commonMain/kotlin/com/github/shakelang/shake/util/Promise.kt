@@ -100,3 +100,23 @@ class PromiseExecutorArgument<T> (
  */
 fun <T> promisify(executor: (PromiseExecutorArgument<T>) -> Unit) =
     Promise<T> { resolve, reject -> executor(PromiseExecutorArgument(resolve, reject))}
+
+/**
+ * Create a promise that resolves after given amount of time
+ *
+ * @param millis time for the timeout (in milliseconds)
+ * @return a promise that resolves after the given amount of time
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
+expect fun timeout(millis: Int): Promise<Unit>
+
+/**
+ * Create a promise that resolves after given amount of time
+ *
+ * @param millis time for the timeout (in milliseconds)
+ * @return a promise that resolves after the given amount of time
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
+fun timeout(millis: Int, executeThen: FulfilledFunction<Unit, Unit>) = timeout(millis).then(executeThen);
