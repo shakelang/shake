@@ -1,9 +1,7 @@
 package com.github.shakelang.shake.util
 
-import jdk.internal.misc.Signal
 import java.util.*
-import java.util.logging.Handler
-import javax.management.timer.Timer
+
 
 @Suppress("ACTUAL_TYPE_ALIAS_TO_CLASS_WITH_DECLARATION_SITE_VARIANCE", "unused")
 actual open class Promise<out T> actual constructor(
