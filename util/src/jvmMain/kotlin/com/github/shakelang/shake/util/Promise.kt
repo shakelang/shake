@@ -1,8 +1,5 @@
 package com.github.shakelang.shake.util
 
-import java.util.*
-
-
 @Suppress("ACTUAL_TYPE_ALIAS_TO_CLASS_WITH_DECLARATION_SITE_VARIANCE", "unused")
 actual open class Promise<out T> actual constructor(
     private val executor: PromiseExecutor<T>
@@ -66,7 +63,7 @@ actual open class Promise<out T> actual constructor(
             val v = this.onFulfilled?.let { it(value) }
             followResolve?.let { it(v as Nothing) }
         } catch(t: Throwable) {
-            followReject?.let { it(t) };
+            followReject?.let { it(t) }
         }
     }
 
@@ -78,7 +75,7 @@ actual open class Promise<out T> actual constructor(
             val v = this.onRejected?.let { it(error) }
             followResolve?.let { it(v as Nothing) }
         } catch(t: Throwable) {
-            followReject?.let { it(t) };
+            followReject?.let { it(t) }
         }
     }
 
@@ -89,14 +86,4 @@ actual open class Promise<out T> actual constructor(
             this.reject(error)
         }
     }
-
-    init {
-    }
 }
-
-actual fun timeout(millis: Int): Promise<Unit> =
-    promisify {
-        Timer("SettingUp", false).schedule(object: TimerTask() {
-            override fun run() = it.resolve(Unit)
-        }, millis.toLong())
-    }
