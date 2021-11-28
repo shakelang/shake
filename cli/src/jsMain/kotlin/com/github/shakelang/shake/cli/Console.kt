@@ -1,9 +1,9 @@
-package com.github.shakelang.shake.cli
+package io.github.shakelang.shake.cli
 
-import com.github.shakelang.shake.util.Promise
-import com.github.shakelang.shake.util.nodeJsAvailable
-import com.github.shakelang.shake.util.require
-import com.github.shakelang.shake.util.process
+import io.github.shakelang.shake.util.Promise
+import io.github.shakelang.shake.util.nodeJsAvailable
+import io.github.shakelang.shake.util.require
+import io.github.shakelang.shake.util.process
 
 val readline = if(nodeJsAvailable) require("readline") else null
 

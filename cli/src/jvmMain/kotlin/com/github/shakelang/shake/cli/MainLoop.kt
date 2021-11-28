@@ -1,4 +1,4 @@
-package com.github.shakelang.shake.cli
+package io.github.shakelang.shake.cli
 
 actual fun mainLoop(execute: (String) -> Unit) {
     while(true) {

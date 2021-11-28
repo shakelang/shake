@@ -1,6 +1,6 @@
-package com.github.shakelang.shake.cli
+package io.github.shakelang.shake.cli
 
-import com.github.shakelang.shake.util.recursiveWhile
+import io.github.shakelang.shake.util.recursiveWhile
 
 actual fun mainLoop(execute: (String) -> Unit) {
     recursiveWhile({ true }) { wBreak, wContinue -> run {

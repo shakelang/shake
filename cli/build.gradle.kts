@@ -1,4 +1,4 @@
-group = "com.github.shakelang.shake"
+group = "io.github.shakelang.shake"
 version = "0.1.0"
 description = "interpreter"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
@@ -8,7 +8,7 @@ apply(plugin = "java-library")
 plugins {
     kotlin("multiplatform") version "1.5.10"
     id("org.jetbrains.dokka")
-    id("com.github.shakelang.shake.java-conventions")
+    id("io.github.shakelang.shake.java-conventions")
     java
     `maven-publish`
 }
@@ -78,7 +78,7 @@ kotlin {
                     attributes (mapOf(
                         "Implementation-Title" to "Gradle Jar File Example",
                         "Implementation-Version" to archiveVersion,
-                        "Main-Class" to "com.github.shakelang.shake.cli.ShakeCli"
+                        "Main-Class" to "io.github.shakelang.shake.cli.ShakeCli"
                     ))
                 }
 
@@ -175,6 +175,6 @@ tasks.test {
     maxHeapSize = "1G"
     // ignoreFailures = true
     filter {
-        includeTestsMatching("com.github.shakelang.shake.*")
+        includeTestsMatching("io.github.shakelang.shake.*")
     }
 }

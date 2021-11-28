@@ -4,18 +4,18 @@
 
 @file:JvmName("ShakeCli")
 
-package com.github.shakelang.shake.cli
+package io.github.shakelang.shake.cli
 
-import com.github.shakelang.shake.interpreter.Interpreter
-import com.github.shakelang.shake.lexer.Lexer
-import com.github.shakelang.shake.parser.Parser
-import com.github.shakelang.shake.parser.node.Tree
-import com.github.shakelang.shake.util.File
-import com.github.shakelang.shake.util.characterinput.characterinputstream.CharacterInputStream
-import com.github.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
-import com.github.shakelang.shake.util.characterinput.position.PositionMap
-import com.github.shakelang.shake.util.json.json
-import com.github.shakelang.shake.util.recursiveWhile
+import io.github.shakelang.shake.interpreter.Interpreter
+import io.github.shakelang.shake.lexer.Lexer
+import io.github.shakelang.shake.parser.Parser
+import io.github.shakelang.shake.parser.node.Tree
+import io.github.shakelang.shake.util.File
+import io.github.shakelang.shake.util.characterinput.characterinputstream.CharacterInputStream
+import io.github.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
+import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.json.json
+import io.github.shakelang.shake.util.recursiveWhile
 import kotlin.jvm.JvmName
 
 /**
@@ -51,7 +51,7 @@ const val VERSION = "0.1.0"
 fun main(args: Array<String>) {
 
     // Create a parser for the arguments
-    val argumentParser = com.github.shakelang.shake.cli.CliArgumentParser()
+    val argumentParser = io.github.shakelang.shake.cli.CliArgumentParser()
 
     // Define the options for the argumentParser
     argumentParser

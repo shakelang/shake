@@ -1,5 +1,5 @@
 import java.java.lang.System;
-import java.com.github.nsc.de.shake.cli.ShakeCli;
+import java.io.github.nsc.de.shake.cli.ShakeCli;
 
 
 private class ConsoleOutput {
