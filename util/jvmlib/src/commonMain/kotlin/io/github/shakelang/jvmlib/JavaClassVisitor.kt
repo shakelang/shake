@@ -4,11 +4,16 @@ import io.github.shakelang.jvmlib.constants.*
 import io.github.shakelang.jvmlib.info.AttributeInfo
 import io.github.shakelang.jvmlib.info.FieldInfo
 import io.github.shakelang.jvmlib.info.MethodInfo
+import io.github.shakelang.parseutils.streaming.CountingInputStream
 import io.github.shakelang.parseutils.streaming.DataInputStream
+import io.github.shakelang.parseutils.streaming.InputStream
 import io.github.shakelang.shason.json
 import kotlin.properties.Delegates
 
-class JavaClassVisitor(private val inputStream: DataInputStream) {
+class JavaClassVisitor(inputStream: InputStream) {
+
+    private val counter = CountingInputStream(inputStream)
+    private val inputStream = DataInputStream(counter)
 
     private var magic by Delegates.notNull<UInt>()
     private var minorVersion by Delegates.notNull<Int>()
@@ -28,7 +33,7 @@ class JavaClassVisitor(private val inputStream: DataInputStream) {
     private lateinit var attributes: Array<AttributeInfo>
 
     fun process() {
-        magic = inputStream.readInt().toUInt()
+        magic = inputStream.readUnsignedInt()
         println("Magic: 0x${magic.toString(16)}")
         minorVersion = inputStream.readUnsignedShort().toInt()
         println("Minor version: $minorVersion")
@@ -107,7 +112,7 @@ class JavaClassVisitor(private val inputStream: DataInputStream) {
                 18 -> InvokeDynamic(inputStream.readNBytes(4))
                 19 -> IdentifyModule(inputStream.readShort()) // TODO ??
                 20 -> IdentifyPackage(inputStream.readShort()) // TODO ??
-                else -> throw Error(tag.toString())
+                else -> throw Error("Unknown tag: 0x${tag.toString(16)} at 0x${(counter.getCount()-1).toString(16)}")
             }
         }
     }
