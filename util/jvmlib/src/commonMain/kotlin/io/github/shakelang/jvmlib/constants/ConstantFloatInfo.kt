@@ -2,8 +2,14 @@ package io.github.shakelang.jvmlib.constants
 
 class ConstantFloatInfo(val value: Float) : CONSTANT() {
 
-    override val tag: Byte = 4
+    override val tag: Byte get() = ConstantFloatInfo.tag
+    override val type: String get() = name
+
     override fun toJson() = super.toJson().with("value", value)
-    override val type: String get() = "CONSTANT_Float"
+
+    companion object {
+        const val name = "ConstantFloatInfo"
+        const val tag = ConstantTags.CONSTANT_FLOAT
+    }
 
 }

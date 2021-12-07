@@ -1,6 +1,7 @@
 package io.github.shakelang.jvmlib
 
 import io.github.shakelang.jvmlib.constants.*
+import io.github.shakelang.jvmlib.constants.ConstantTags
 import io.github.shakelang.jvmlib.info.AttributeInfo
 import io.github.shakelang.jvmlib.info.FieldInfo
 import io.github.shakelang.jvmlib.info.MethodInfo
@@ -90,47 +91,45 @@ class JavaClassVisitor(inputStream: InputStream) {
     fun expectConstant(): CONSTANT {
         val tag = inputStream.read()
         println("received tag: $tag (Address: 0x${(counter.getCount()-1).toString(16)})")
-        return if (tag == 1) {
-            val length = (inputStream.read() shl 8) + inputStream.read()
-            val sb = StringBuilder()
-            for (c in 0 until length) sb.append(inputStream.read().toChar())
-            ConstantUtf8Info(sb.toString())
-        } else {
-            when (tag) {
-                3 -> ConstantIntegerInfo(inputStream.readInt())
-                4 -> ConstantFloatInfo(inputStream.readFloat())
-                5 -> ConstantLongInfo(inputStream.readLong())
-                6 -> ConstantDoubleInfo(inputStream.readDouble())
-                7 -> ConstantClassInfo(inputStream.readUnsignedShort().toInt())
-                8 -> ConstantStringInfo(inputStream.readUnsignedShort().toInt())
-                9 -> ConstantFieldrefInfo(
-                        inputStream.readUnsignedShort().toInt(),
-                        inputStream.readUnsignedShort().toInt()
-                    )
-                10 -> ConstantMethodrefInfo(
-                        inputStream.readUnsignedShort().toInt(),
-                        inputStream.readUnsignedShort().toInt()
-                    )
-                11 -> ConstantInterfaceMethodrefInfo(
-                        inputStream.readUnsignedShort().toInt(),
-                        inputStream.readUnsignedShort().toInt()
-                    )
-                12 -> ConstantNameAndTypeInfo(
-                        inputStream.readUnsignedShort().toInt(),
-                        inputStream.readUnsignedShort().toInt()
-                    )
-                15 -> ConstantMethodHandleInfo(
-                        inputStream.read().toByte(),
-                        inputStream.readUnsignedShort().toInt()
-                    )
-                16 ->
-                    ConstantMethodTypeInfo(inputStream.readUnsignedShort().toInt())
-                17 -> Dynamic(inputStream.readInt()) // TODO ??
-                18 -> ConstantInvokeDynamicInfo(inputStream.readNBytes(4))
-                19 -> IdentifyModule(inputStream.readShort()) // TODO ??
-                20 -> IdentifyPackage(inputStream.readShort()) // TODO ??
-                else -> throw Error("Unknown tag: 0x${tag.toString(16)} at 0x${(counter.getCount()-1).toString(16)}")
+        return when (tag.toByte()) {
+            ConstantTags.CONSTANT_UTF8 -> {
+                val length = (inputStream.read() shl 8) + inputStream.read()
+                val sb = StringBuilder()
+                for (c in 0 until length) sb.append(inputStream.read().toChar())
+                ConstantUtf8Info(sb.toString())
             }
+            ConstantTags.CONSTANT_INTEGER -> ConstantIntegerInfo(inputStream.readInt())
+            ConstantTags.CONSTANT_FLOAT -> ConstantFloatInfo(inputStream.readFloat())
+            ConstantTags.CONSTANT_LONG -> ConstantLongInfo(inputStream.readLong())
+            ConstantTags.CONSTANT_DOUBLE -> ConstantDoubleInfo(inputStream.readDouble())
+            ConstantTags.CONSTANT_CLASS -> ConstantClassInfo(inputStream.readUnsignedShort().toInt())
+            ConstantTags.CONSTANT_STRING -> ConstantStringInfo(inputStream.readUnsignedShort().toInt())
+            ConstantTags.CONSTANT_FIELD_REF -> ConstantFieldrefInfo(
+                inputStream.readUnsignedShort().toInt(),
+                inputStream.readUnsignedShort().toInt()
+            )
+            ConstantTags.CONSTANT_METHOD_REF -> ConstantMethodrefInfo(
+                inputStream.readUnsignedShort().toInt(),
+                inputStream.readUnsignedShort().toInt()
+            )
+            ConstantTags.CONSTANT_INTERFACE_METHOD_REF -> ConstantInterfaceMethodrefInfo(
+                inputStream.readUnsignedShort().toInt(),
+                inputStream.readUnsignedShort().toInt()
+            )
+            ConstantTags.CONSTANT_NAME_AND_TYPE -> ConstantNameAndTypeInfo(
+                inputStream.readUnsignedShort().toInt(),
+                inputStream.readUnsignedShort().toInt()
+            )
+            ConstantTags.CONSTANT_METHOD_HANDLE -> ConstantMethodHandleInfo(
+                inputStream.read().toByte(),
+                inputStream.readUnsignedShort().toInt()
+            )
+            ConstantTags.CONSTANT_METHODTYPE -> ConstantMethodTypeInfo(inputStream.readUnsignedShort().toInt())
+            17.toByte() -> Dynamic(inputStream.readInt()) // TODO ??
+            18.toByte() -> ConstantInvokeDynamicInfo(inputStream.readNBytes(4))
+            19.toByte() -> IdentifyModule(inputStream.readShort()) // TODO ??
+            20.toByte() -> IdentifyPackage(inputStream.readShort()) // TODO ??
+            else -> throw Error("Unknown tag: 0x${tag.toString(16)} at 0x${(counter.getCount()-1).toString(16)}")
         }
     }
 

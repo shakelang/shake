@@ -2,8 +2,13 @@ package io.github.shakelang.jvmlib.constants
 
 class ConstantDoubleInfo(val value: Double) : CONSTANT() {
 
-    override val tag: Byte = 6
+    override val tag: Byte get() = ConstantDoubleInfo.tag
+    override val type: String get() = name
     override fun toJson() = super.toJson().with("value", value)
-    override val type: String get() = "CONSTANT_Double"
+
+    companion object {
+        const val name = "ConstantDoubleInfo"
+        const val tag = ConstantTags.CONSTANT_DOUBLE
+    }
 
 }

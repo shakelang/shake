@@ -2,8 +2,14 @@ package io.github.shakelang.jvmlib.constants
 
 class ConstantUtf8Info(val value: String) : CONSTANT() {
 
-    override val tag: Byte get() = 1
+    override val tag: Byte get() = ConstantUtf8Info.tag
+    override val type: String get() = name
+
     override fun toJson() = super.toJson().with("value", value)
-    override val type: String get() = "CONSTANT_Utf8"
+
+    companion object {
+        const val name = "ConstantUtf8Info"
+        const val tag = ConstantTags.CONSTANT_STRING
+    }
 
 }

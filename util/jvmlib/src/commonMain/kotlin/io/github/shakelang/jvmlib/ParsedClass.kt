@@ -19,21 +19,21 @@ class ClassFile (
     val attributes: Array<AttributeInfo>
 ) {
 
+    fun toJson() = mapOf(
+        "minorVersion" to "0x${minorVersion.toString(16)}",
+        "majorVersion" to "0x${majorVersion.toString(16)}",
+        "constantPool" to constantPool.toString(),
+        "accessFlags" to "0x${accessFlags.toString(16)}",
+        "thisClass" to "0x${thisClass.toString(16)}",
+        "superClass" to "0x${superClass.toString(16)}",
+        "interfaces" to interfaces.map { "0x${it.toString(16)}" },
+        "fields" to fields.map { it.toString() },
+        "methods" to methods.map { it.toString() },
+        "attributes" to attributes.map { it.toString() }
+    )
+
     override fun toString(): String {
-        return json.stringify(
-            mapOf(
-                "minorVersion" to "0x${minorVersion.toString(16)}",
-                "majorVersion" to "0x${majorVersion.toString(16)}",
-                "constantPool" to constantPool.toString(),
-                "accessFlags" to "0x${accessFlags.toString(16)}",
-                "thisClass" to "0x${thisClass.toString(16)}",
-                "superClass" to "0x${superClass.toString(16)}",
-                "interfaces" to interfaces.map { "0x${it.toString(16)}" },
-                "fields" to fields.map { it.toString() },
-                "methods" to methods.map { it.toString() },
-                "attributes" to attributes.map { it.toString() }
-            )
-        )
+        return json.stringify(toJson())
     }
 
 }
