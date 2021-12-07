@@ -1,6 +1,6 @@
-group = "io.github.shakelang.shason"
+group = "io.github.shakelang.jvmlib"
 version = "0.1.0"
-description = "A json parser implemented in kotlin (mpp)"
+description = "A library for jvm stuff in java"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 plugins {
@@ -82,6 +82,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":util:parseutils"))
+                implementation(project(":util:shason"))
             }
         }
         val commonTest by getting {
