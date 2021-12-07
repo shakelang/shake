@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
-class CONSTANT_NameAndType(val value: Int, val name: Int) : CONSTANT() {
+class ConstantNameAndTypeInfo(val value: Int, val name: Int) : CONSTANT() {
 
     override val tag: Byte = 12
     override fun toJson() = super.toJson().with("name", value).with("type", name)

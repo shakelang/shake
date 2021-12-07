@@ -48,12 +48,12 @@ class JavaClassVisitor(inputStream: InputStream) {
             println("Access flags: 0x${accessFlags.toString(16)}")
             thisClass = inputStream.readUnsignedShort().toInt()
             println("This class: $thisClass")
-            val thisClassConstant = constantPool[thisClass] as CONSTANT_Class
+            val thisClassConstant = constantPool[thisClass] as ConstantClassInfo
             println("This class: ${json.stringify(thisClassConstant.toJson())}")
             println("This class name: ${json.stringify(constantPool[thisClassConstant.value].toJson())}")
             superClass = inputStream.readUnsignedShort().toInt()
             println("Super class: $superClass")
-            val superClassConstant = constantPool[superClass] as CONSTANT_Class
+            val superClassConstant = constantPool[superClass] as ConstantClassInfo
             println("Super class: ${json.stringify(superClassConstant.toJson())}")
             println("Super class name: ${json.stringify(constantPool[superClassConstant.value].toJson())}")
             interfacesCount = inputStream.readUnsignedShort().toInt()
@@ -94,39 +94,39 @@ class JavaClassVisitor(inputStream: InputStream) {
             val length = (inputStream.read() shl 8) + inputStream.read()
             val sb = StringBuilder()
             for (c in 0 until length) sb.append(inputStream.read().toChar())
-            CONSTANT_Utf8(sb.toString())
+            ConstantUtf8Info(sb.toString())
         } else {
             when (tag) {
-                3 -> CONSTANT_Integer(inputStream.readInt())
-                4 -> CONSTANT_Float(inputStream.readFloat())
-                5 -> CONSTANT_Long(inputStream.readLong())
-                6 -> CONSTANT_Double(inputStream.readDouble())
-                7 -> CONSTANT_Class(inputStream.readUnsignedShort().toInt())
-                8 -> CONSTANT_String(inputStream.readUnsignedShort().toInt())
-                9 -> CONSTANT_Fieldref(
+                3 -> ConstantIntegerInfo(inputStream.readInt())
+                4 -> ConstantFloatInfo(inputStream.readFloat())
+                5 -> ConstantLongInfo(inputStream.readLong())
+                6 -> ConstantDoubleInfo(inputStream.readDouble())
+                7 -> ConstantClassInfo(inputStream.readUnsignedShort().toInt())
+                8 -> ConstantStringInfo(inputStream.readUnsignedShort().toInt())
+                9 -> ConstantFieldrefInfo(
                         inputStream.readUnsignedShort().toInt(),
                         inputStream.readUnsignedShort().toInt()
                     )
-                10 -> CONSTANT_Methodref(
+                10 -> ConstantMethodrefInfo(
                         inputStream.readUnsignedShort().toInt(),
                         inputStream.readUnsignedShort().toInt()
                     )
-                11 -> CONSTANT_InterfaceMethodref(
+                11 -> ConstantInterfaceMethodrefInfo(
                         inputStream.readUnsignedShort().toInt(),
                         inputStream.readUnsignedShort().toInt()
                     )
-                12 -> CONSTANT_NameAndType(
+                12 -> ConstantNameAndTypeInfo(
                         inputStream.readUnsignedShort().toInt(),
                         inputStream.readUnsignedShort().toInt()
                     )
-                15 -> CONSTANT_MethodHandle(
+                15 -> ConstantMethodHandleInfo(
                         inputStream.read().toByte(),
                         inputStream.readUnsignedShort().toInt()
                     )
                 16 ->
-                    CONSTANT_MethodType(inputStream.readUnsignedShort().toInt())
+                    ConstantMethodTypeInfo(inputStream.readUnsignedShort().toInt())
                 17 -> Dynamic(inputStream.readInt()) // TODO ??
-                18 -> CONSTANT_InvokeDynamic(inputStream.readNBytes(4))
+                18 -> ConstantInvokeDynamicInfo(inputStream.readNBytes(4))
                 19 -> IdentifyModule(inputStream.readShort()) // TODO ??
                 20 -> IdentifyPackage(inputStream.readShort()) // TODO ??
                 else -> throw Error("Unknown tag: 0x${tag.toString(16)} at 0x${(counter.getCount()-1).toString(16)}")

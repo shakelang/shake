@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
-class CONSTANT_Methodref(val classRef: Int, val nameTypeRef: Int) : CONSTANT() {
+class ConstantMethodrefInfo(val classRef: Int, val nameTypeRef: Int) : CONSTANT() {
 
     override val tag: Byte = 10
     override fun toJson() = super.toJson().with("classRef", classRef).with("nameTypeRef", nameTypeRef)

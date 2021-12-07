@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
-class CONSTANT_InvokeDynamic : CONSTANT {
+class ConstantInvokeDynamicInfo : CONSTANT {
     val byte0: Byte
     val byte1: Byte
     val byte2: Byte
