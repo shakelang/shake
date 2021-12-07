@@ -33,46 +33,51 @@ class JavaClassVisitor(inputStream: InputStream) {
     private lateinit var attributes: Array<AttributeInfo>
 
     fun process() {
-        magic = inputStream.readUnsignedInt()
-        println("Magic: 0x${magic.toString(16)}")
-        minorVersion = inputStream.readUnsignedShort().toInt()
-        println("Minor version: $minorVersion")
-        majorVersion = inputStream.readUnsignedShort().toInt()
-        println("Major version: $majorVersion")
-        constantPoolCount = (inputStream.readUnsignedShort()).toInt()-1
-        println("Constant pool count: $constantPoolCount")
-        constantPool = Array(constantPoolCount) { println(it);expectConstant() }
-        println("Constant pool: ${json.stringify(constantPool.map{it.toJson()})}")
-        accessFlags = inputStream.readUnsignedShort().toInt()
-        println("Access flags: 0x${accessFlags.toString(16)}")
-        thisClass = inputStream.readUnsignedShort().toInt()
-        println("This class: ${json.stringify(constantPool[thisClass].toJson())}")
-        superClass = inputStream.readUnsignedShort().toInt()
-        println("Super class: ${json.stringify(constantPool[superClass].toJson())}")
-        interfacesCount = inputStream.readUnsignedShort().toInt()
-        println("Interfaces count: $interfacesCount")
-        interfaces = Array(interfacesCount) { inputStream.readUnsignedShort().toInt() }
-        println("Interfaces: ${json.stringify(interfaces.map { constantPool[it].toJson() })}")
-        fieldsCount = inputStream.readUnsignedShort().toInt()
-        println("Fields count: $fieldsCount")
-        fields = Array(fieldsCount) { expectField() }
-        println("Fields: ${json.stringify(fields.map { it.toJson() })}")
-        methodsCount = inputStream.readUnsignedShort().toInt()
-        println("Methods count: $methodsCount")
-        methods = Array(methodsCount) {
-            println(it)
-            expectMethod()
+        try {
+            magic = inputStream.readUnsignedInt()
+            println("Magic: 0x${magic.toString(16)}")
+            minorVersion = inputStream.readUnsignedShort().toInt()
+            println("Minor version: $minorVersion")
+            majorVersion = inputStream.readUnsignedShort().toInt()
+            println("Major version: $majorVersion")
+            constantPoolCount = (inputStream.readUnsignedShort()).toInt()
+            println("Constant pool count: $constantPoolCount")
+            constantPool = Array(constantPoolCount-1) { expectConstant() }
+            println("Constant pool: ${json.stringify(constantPool.map{it.toJson()})}")
+            accessFlags = inputStream.readUnsignedShort().toInt()
+            println("Access flags: 0x${accessFlags.toString(16)}")
+            thisClass = inputStream.readUnsignedShort().toInt()
+            println("This class: ${json.stringify(constantPool[thisClass].toJson())}")
+            superClass = inputStream.readUnsignedShort().toInt()
+            println("Super class: ${json.stringify(constantPool[superClass].toJson())}")
+            interfacesCount = inputStream.readUnsignedShort().toInt()
+            println("Interfaces count: $interfacesCount")
+            interfaces = Array(interfacesCount) { inputStream.readUnsignedShort().toInt() }
+            println("Interfaces: ${json.stringify(interfaces.map { constantPool[it].toJson() })}")
+            fieldsCount = inputStream.readUnsignedShort().toInt()
+            println("Fields count: $fieldsCount")
+            fields = Array(fieldsCount) { expectField() }
+            println("Fields: ${json.stringify(fields.map { it.toJson() })}")
+            methodsCount = inputStream.readUnsignedShort().toInt()
+            println("Methods count: $methodsCount")
+            methods = Array(methodsCount) {
+                println(it)
+                expectMethod()
+            }
+            println("Methods: ${json.stringify(methods.map { it.toJson() })}")
+            attributesCount = inputStream.readUnsignedShort().toInt()
+            println("Attributes count: $attributesCount")
+            attributes = Array(attributesCount) { expectAttribute() }
+            println("Attributes: ${json.stringify(attributes.map { it.toJson() })}")
+        } catch (e: Throwable) {
+            println("Error at 0x${counter.getCount().toString(16)}")
+            e.printStackTrace()
         }
-        //println("Methods: ${json.stringify(methods.map { it.toJson() })}")
-        attributesCount = inputStream.readUnsignedShort().toInt()
-        //println("Attributes count: $attributesCount")
-        attributes = Array(attributesCount) { expectAttribute() }
-        //println("Attributes: ${json.stringify(attributes.map { it.toJson() })}")
     }
 
     fun expectConstant(): JavaClassConstant {
         val tag = inputStream.read()
-//        println("received tag: $tag (Address: 0x${(inputStream.position-1).toString(16)})")
+        println("received tag: $tag (Address: 0x${(counter.getCount()-1).toString(16)})")
         return if (tag == 1) {
             val length = (inputStream.read() shl 8) + inputStream.read()
             val sb = StringBuilder()
