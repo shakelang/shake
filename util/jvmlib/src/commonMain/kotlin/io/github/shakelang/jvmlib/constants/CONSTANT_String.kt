@@ -1,9 +1,9 @@
 package io.github.shakelang.jvmlib.constants
 
-class StringReference(private val value: Int) : JavaClassConstant() {
+class CONSTANT_String(private val value: Int) : CONSTANT() {
 
     override val tag: Byte = 8
     override fun toJson() = super.toJson().with("value", value)
-    override val name: String get() = "StringReference"
+    override val type: String get() = "CONSTANT_String"
 
 }

@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
-class InvokeDynamic : JavaClassConstant {
+class CONSTANT_InvokeDynamic : CONSTANT {
     val byte0: Byte
     val byte1: Byte
     val byte2: Byte
@@ -20,8 +20,8 @@ class InvokeDynamic : JavaClassConstant {
         byte2 = bytes[2]
         byte3 = bytes[3]
     }
-    override val tag: Byte = 16
+    override val tag: Byte = 18
     override fun toJson() = super.toJson().with("bytes", arrayOf(byte0, byte1, byte2, byte3))
-    override val name: String get() = "InvokeDynamic"
+    override val type: String get() = "CONSTANT_InvokeDynamic"
 
 }

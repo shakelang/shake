@@ -19,7 +19,7 @@ class JavaClassVisitor(inputStream: InputStream) {
     private var minorVersion by Delegates.notNull<Int>()
     private var majorVersion by Delegates.notNull<Int>()
     private var constantPoolCount by Delegates.notNull<Int>()
-    private lateinit var constantPool: Array<JavaClassConstant>
+    private lateinit var constantPool: ConstantPool
     private var accessFlags by Delegates.notNull<Int>()
     private var thisClass by Delegates.notNull<Int>()
     private var superClass by Delegates.notNull<Int>()
@@ -32,7 +32,7 @@ class JavaClassVisitor(inputStream: InputStream) {
     private var attributesCount by Delegates.notNull<Int>()
     private lateinit var attributes: Array<AttributeInfo>
 
-    fun process() {
+    fun process(): ClassFile {
         try {
             magic = inputStream.readUnsignedInt()
             println("Magic: 0x${magic.toString(16)}")
@@ -42,14 +42,20 @@ class JavaClassVisitor(inputStream: InputStream) {
             println("Major version: $majorVersion")
             constantPoolCount = (inputStream.readUnsignedShort()).toInt()
             println("Constant pool count: $constantPoolCount")
-            constantPool = Array(constantPoolCount-1) { expectConstant() }
+            constantPool = ConstantPool(Array(constantPoolCount-1) { expectConstant() })
             println("Constant pool: ${json.stringify(constantPool.map{it.toJson()})}")
             accessFlags = inputStream.readUnsignedShort().toInt()
             println("Access flags: 0x${accessFlags.toString(16)}")
             thisClass = inputStream.readUnsignedShort().toInt()
-            println("This class: ${json.stringify(constantPool[thisClass].toJson())}")
+            println("This class: $thisClass")
+            val thisClassConstant = constantPool[thisClass] as CONSTANT_Class
+            println("This class: ${json.stringify(thisClassConstant.toJson())}")
+            println("This class name: ${json.stringify(constantPool[thisClassConstant.value].toJson())}")
             superClass = inputStream.readUnsignedShort().toInt()
-            println("Super class: ${json.stringify(constantPool[superClass].toJson())}")
+            println("Super class: $superClass")
+            val superClassConstant = constantPool[superClass] as CONSTANT_Class
+            println("Super class: ${json.stringify(superClassConstant.toJson())}")
+            println("Super class name: ${json.stringify(constantPool[superClassConstant.value].toJson())}")
             interfacesCount = inputStream.readUnsignedShort().toInt()
             println("Interfaces count: $interfacesCount")
             interfaces = Array(interfacesCount) { inputStream.readUnsignedShort().toInt() }
@@ -57,11 +63,17 @@ class JavaClassVisitor(inputStream: InputStream) {
             fieldsCount = inputStream.readUnsignedShort().toInt()
             println("Fields count: $fieldsCount")
             fields = Array(fieldsCount) { expectField() }
+            fields.forEach {
+                println("\n------------------------------------ Field ------------------------------------")
+                println("Name: ${json.stringify(constantPool[it.name_index].toJson())}")
+                println("Descriptor: ${json.stringify(constantPool[it.descriptor_index].toJson())}")
+                println()
+            }
             println("Fields: ${json.stringify(fields.map { it.toJson() })}")
+            println("Position: 0x${counter.getCount().toString(16)}")
             methodsCount = inputStream.readUnsignedShort().toInt()
             println("Methods count: $methodsCount")
             methods = Array(methodsCount) {
-                println(it)
                 expectMethod()
             }
             println("Methods: ${json.stringify(methods.map { it.toJson() })}")
@@ -69,52 +81,52 @@ class JavaClassVisitor(inputStream: InputStream) {
             println("Attributes count: $attributesCount")
             attributes = Array(attributesCount) { expectAttribute() }
             println("Attributes: ${json.stringify(attributes.map { it.toJson() })}")
+            return ClassFile(minorVersion, majorVersion, constantPool, accessFlags, thisClass, superClass, interfaces, fields, methods, attributes)
         } catch (e: Throwable) {
-            println("Error at 0x${counter.getCount().toString(16)}")
-            e.printStackTrace()
+            throw Error("Error at 0x${counter.getCount().toString(16)}", e)
         }
     }
 
-    fun expectConstant(): JavaClassConstant {
+    fun expectConstant(): CONSTANT {
         val tag = inputStream.read()
         println("received tag: $tag (Address: 0x${(counter.getCount()-1).toString(16)})")
         return if (tag == 1) {
             val length = (inputStream.read() shl 8) + inputStream.read()
             val sb = StringBuilder()
             for (c in 0 until length) sb.append(inputStream.read().toChar())
-            JavaClassStringConstant(sb.toString())
+            CONSTANT_Utf8(sb.toString())
         } else {
             when (tag) {
-                3 -> JavaClassIntegerConstant(inputStream.readInt())
-                4 -> JavaClassFloatConstant(inputStream.readFloat())
-                5 -> JavaClassLongConstant(inputStream.readLong())
-                6 -> JavaClassDoubleConstant(inputStream.readDouble())
-                7 -> ClassReference(inputStream.readUnsignedShort().toInt())
-                8 -> StringReference(inputStream.readUnsignedShort().toInt())
-                9 -> FieldReference(
+                3 -> CONSTANT_Integer(inputStream.readInt())
+                4 -> CONSTANT_Float(inputStream.readFloat())
+                5 -> CONSTANT_Long(inputStream.readLong())
+                6 -> CONSTANT_Double(inputStream.readDouble())
+                7 -> CONSTANT_Class(inputStream.readUnsignedShort().toInt())
+                8 -> CONSTANT_String(inputStream.readUnsignedShort().toInt())
+                9 -> CONSTANT_Fieldref(
                         inputStream.readUnsignedShort().toInt(),
                         inputStream.readUnsignedShort().toInt()
                     )
-                10 -> MethodReference(
+                10 -> CONSTANT_Methodref(
                         inputStream.readUnsignedShort().toInt(),
                         inputStream.readUnsignedShort().toInt()
                     )
-                11 -> InterfaceMethodReference(
+                11 -> CONSTANT_InterfaceMethodref(
                         inputStream.readUnsignedShort().toInt(),
                         inputStream.readUnsignedShort().toInt()
                     )
-                12 -> NameAndTypeDescriptor(
+                12 -> CONSTANT_NameAndType(
                         inputStream.readUnsignedShort().toInt(),
                         inputStream.readUnsignedShort().toInt()
                     )
-                15 -> MethodHandleDescriptor(
+                15 -> CONSTANT_MethodHandle(
                         inputStream.read().toByte(),
                         inputStream.readUnsignedShort().toInt()
                     )
                 16 ->
-                    MethodTypeReference(inputStream.readUnsignedShort().toInt())
-                17 -> Dynamic(inputStream.readInt().toInt()) // TODO ??
-                18 -> InvokeDynamic(inputStream.readNBytes(4))
+                    CONSTANT_MethodType(inputStream.readUnsignedShort().toInt())
+                17 -> Dynamic(inputStream.readInt()) // TODO ??
+                18 -> CONSTANT_InvokeDynamic(inputStream.readNBytes(4))
                 19 -> IdentifyModule(inputStream.readShort()) // TODO ??
                 20 -> IdentifyPackage(inputStream.readShort()) // TODO ??
                 else -> throw Error("Unknown tag: 0x${tag.toString(16)} at 0x${(counter.getCount()-1).toString(16)}")
@@ -127,18 +139,22 @@ class JavaClassVisitor(inputStream: InputStream) {
         val nameIndex = inputStream.readUnsignedShort().toInt()
         val descriptorIndex = inputStream.readUnsignedShort().toInt()
         val attributesCount = inputStream.readUnsignedShort().toInt()
-        val attributes = Array(attributesCount) { inputStream.readUnsignedShort().toInt() }
+        val attributes = Array(attributesCount) { expectAttribute() }
         return FieldInfo(accessFlags, nameIndex, descriptorIndex, attributes)
     }
 
     fun expectMethod(): MethodInfo {
+        println("-----------------------------------------------------")
         val accessFlags = inputStream.readUnsignedShort().toInt()
+        println("Access flags: $accessFlags")
         val nameIndex = inputStream.readUnsignedShort().toInt()
+        println("Name index: $nameIndex")
         val descriptorIndex = inputStream.readUnsignedShort().toInt()
+        println("Descriptor index: $descriptorIndex")
         val attributesCount = inputStream.readUnsignedShort().toInt()
-                //println("Attributes index: 0x${inputStream.}")
-        println(attributesCount)
-        val attributes = Array(attributesCount) { inputStream.readUnsignedShort().toInt() }
+        println("Attributes count: $attributesCount")
+        val attributes = Array(attributesCount) { expectAttribute() }
+        println("Attributes: ${attributes.joinToString(", ")}")
         return MethodInfo(accessFlags, nameIndex, descriptorIndex, attributes)
     }
 

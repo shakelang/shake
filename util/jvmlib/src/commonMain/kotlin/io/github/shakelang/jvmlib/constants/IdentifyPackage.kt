@@ -1,9 +1,9 @@
 package io.github.shakelang.jvmlib.constants
 
-class IdentifyPackage(val identifyPackage: Short) : JavaClassConstant() {
+class IdentifyPackage(val identifyPackage: Short) : CONSTANT() {
 
     override val tag: Byte = 20
     override fun toJson() = super.toJson().with("identify_package", identifyPackage)
-    override val name: String get() = "IdentifyPackage"
+    override val type: String get() = "IdentifyPackage"
 
 }

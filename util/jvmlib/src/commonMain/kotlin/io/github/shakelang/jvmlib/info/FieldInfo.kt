@@ -6,7 +6,7 @@ class FieldInfo(
     val access_flags: Int,
     val name_index: Int,
     val descriptor_index: Int,
-    val attributes: Array<Int>
+    val attributes: Array<AttributeInfo>
 ) {
     override fun toString() = json.stringify(toJson())
 

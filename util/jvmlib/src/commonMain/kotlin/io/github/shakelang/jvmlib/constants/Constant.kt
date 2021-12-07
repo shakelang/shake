@@ -3,11 +3,11 @@ package io.github.shakelang.jvmlib.constants
 import io.github.shakelang.shason.json
 
 
-abstract class JavaClassConstant() {
+abstract class CONSTANT {
     abstract val tag: Byte
-    abstract val name: String
+    abstract val type: String
 
-    open fun toJson(): Map<String, Any> = mapOf("tag_type" to name, "tag" to tag)
+    open fun toJson(): Map<String, Any> = mapOf("tag_type" to type, "tag" to tag)
     override fun toString(): String = json.stringify(toJson())
 
 }

@@ -1,16 +1,16 @@
 package io.github.shakelang.jvmlib.info
 
-import io.github.shakelang.jvmlib.constants.JavaClassConstant
+import io.github.shakelang.jvmlib.constants.CONSTANT
 import io.github.shakelang.shason.json
 
 class MethodInfo(
     val name: Int,
     val descriptor: Int,
     val accessFlags: Int,
-    val attributes: Array<Int>
+    val attributes: Array<AttributeInfo>
 ) {
 
-    fun getNameValue(constants: Array<JavaClassConstant>): String {
+    fun getNameValue(constants: Array<CONSTANT>): String {
         //(constants[name] as ).value as String
         TODO()
     }
