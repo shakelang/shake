@@ -6,8 +6,8 @@ class ConstantNameAndTypeInfo(val value: Int, val name: Int) : CONSTANT() {
     override val type: String get() = ConstantNameAndTypeInfo.name
 
     override fun toJson() = super.toJson().with("name", value).with("type", name)
-    fun getNameValue(pool: Array<CONSTANT>): CONSTANT = pool[value-1]
-    fun typeValue(pool: Array<CONSTANT>): CONSTANT = pool[name-1]
+    fun getName(pool: ConstantPool) = pool[name] as ConstantUtf8Info
+    fun getValue(pool: ConstantPool) = pool[value] as ConstantUtf8Info
 
     companion object {
         const val name = "ConstantNameAndTypeInfo"
