@@ -14,6 +14,6 @@ class FieldInfo(
         "access_flags" to access_flags,
         "name_index" to name_index,
         "descriptor_index" to descriptor_index,
-        "attributes" to attributes
+        "attributes" to attributes.map { it.toJson() }
     )
 }

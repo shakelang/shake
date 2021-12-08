@@ -20,6 +20,6 @@ class MethodInfo(
         "name" to name,
         "descriptor" to descriptor,
         "accessFlags" to accessFlags,
-        "attributes" to attributes.contentToString()
+        "attributes" to attributes.map { it.toJson() }
     )
 }
