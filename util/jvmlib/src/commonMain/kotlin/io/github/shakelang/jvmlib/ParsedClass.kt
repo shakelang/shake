@@ -46,6 +46,30 @@ class ClassFile (
     val interfacesNamesEntries: Array<ConstantUtf8Info>
         get() = interfacesEntries.map { it.getValue(constantPool) }.toTypedArray()
 
+    val isPublic: Boolean
+        get() = accessFlags and 0x0001 != 0
+
+    val isFinal: Boolean
+        get() = accessFlags and 0x0010 != 0
+
+    val isSuper: Boolean
+        get() = accessFlags and 0x0020 != 0
+
+    val isInterface: Boolean
+        get() = accessFlags and 0x0200 != 0
+
+    val isAbstract: Boolean
+        get() = accessFlags and 0x0400 != 0
+
+    val isSynthetic: Boolean
+        get() = accessFlags and 0x1000 != 0
+
+    val isAnnotation: Boolean
+        get() = accessFlags and 0x2000 != 0
+
+    val isEnum: Boolean
+        get() = accessFlags and 0x4000 != 0
+
 
     fun toJson() = mapOf(
         "minorVersion" to "0x${minorVersion.toString(16)}",
@@ -65,9 +89,37 @@ class ClassFile (
     }
 
     inner class FieldContents(val index: Int) {
+        val accessFlags: Int get() = fieldInfos[index].access_flags
         val name: String get() = (this@ClassFile.constantPool[this@ClassFile.fieldInfos[index].name_index] as ConstantUtf8Info).value
         val descriptor: String get() = (this@ClassFile.constantPool[this@ClassFile.fieldInfos[index].descriptor_index] as ConstantUtf8Info).value
         val attributes: Array<AttributeInfo> get() = this@ClassFile.fieldInfos[index].attributes
+
+        val isPublic: Boolean
+            get() = accessFlags and 0x0001 != 0
+
+        val isPrivate: Boolean
+            get() = accessFlags and 0x0002 != 0
+
+        val isProtected: Boolean
+            get() = accessFlags and 0x0004 != 0
+
+        val isStatic: Boolean
+            get() = accessFlags and 0x0008 != 0
+
+        val isFinal: Boolean
+            get() = accessFlags and 0x0010 != 0
+
+        val isVolatile: Boolean
+            get() = accessFlags and 0x0040 != 0
+
+        val isTransient: Boolean
+            get() = accessFlags and 0x0080 != 0
+
+        val isSynthetic: Boolean
+            get() = accessFlags and 0x1000 != 0
+
+        val isEnum: Boolean
+            get() = accessFlags and 0x4000 != 0
 
         fun toJson() = mapOf(
             "name" to name,
@@ -82,9 +134,52 @@ class ClassFile (
 
     inner class MethodContents(val index: Int) {
 
+        val accessFlags: Int get() = methodInfos[index].accessFlags
         val name: String get() = (this@ClassFile.constantPool[this@ClassFile.methodInfos[index].name] as ConstantUtf8Info).value
         val descriptor: String get() = (this@ClassFile.constantPool[this@ClassFile.methodInfos[index].descriptor] as ConstantUtf8Info).value
         val attributes: Array<AttributeInfo> get() = this@ClassFile.methodInfos[index].attributes
+
+        val isPublic: Boolean
+            get() = accessFlags and 0x0001 != 0
+
+        val isPrivate: Boolean
+            get() = accessFlags and 0x0002 != 0
+
+        val isProtected: Boolean
+            get() = accessFlags and 0x0004 != 0
+
+        val isStatic: Boolean
+            get() = accessFlags and 0x0008 != 0
+
+        val isFinal: Boolean
+            get() = accessFlags and 0x0010 != 0
+
+        val isSynchronized: Boolean
+            get() = accessFlags and 0x0020 != 0
+
+        val isBridge: Boolean
+            get() = accessFlags and 0x0040 != 0
+
+        val isVarargs: Boolean
+            get() = accessFlags and 0x0080 != 0
+
+        val isNative: Boolean
+            get() = accessFlags and 0x0100 != 0
+
+        val isAbstract: Boolean
+            get() = accessFlags and 0x0400 != 0
+
+        val isStrict: Boolean
+            get() = accessFlags and 0x0800 != 0
+
+        val isSynthetic: Boolean
+            get() = accessFlags and 0x1000 != 0
+
+        val isAnnotation: Boolean
+            get() = accessFlags and 0x2000 != 0
+
+        val isEnum: Boolean
+            get() = accessFlags and 0x4000 != 0
 
         fun toJson() = mapOf(
             "name" to name,
