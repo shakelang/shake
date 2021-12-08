@@ -142,7 +142,7 @@ class JavaClassVisitor(inputStream: InputStream) {
         val descriptorIndex = inputStream.readUnsignedShort().toInt()
         val attributesCount = inputStream.readUnsignedShort().toInt()
         val attributes = Array(attributesCount) { expectAttribute() }
-        return MethodInfo(accessFlags, nameIndex, descriptorIndex, attributes)
+        return MethodInfo(nameIndex, descriptorIndex, accessFlags, attributes)
     }
 
     fun expectAttribute(): AttributeInfo {
