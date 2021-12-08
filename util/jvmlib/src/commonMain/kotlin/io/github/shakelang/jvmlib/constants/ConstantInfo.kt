@@ -3,7 +3,7 @@ package io.github.shakelang.jvmlib.constants
 import io.github.shakelang.shason.json
 
 
-abstract class CONSTANT {
+abstract class ConstantInfo {
     abstract val tag: Byte
     abstract val type: String
 

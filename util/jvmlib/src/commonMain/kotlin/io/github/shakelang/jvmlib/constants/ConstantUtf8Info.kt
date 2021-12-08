@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
-class ConstantUtf8Info(val value: String) : CONSTANT() {
+class ConstantUtf8Info(val value: String) : ConstantInfo() {
 
     override val tag: Byte get() = ConstantUtf8Info.tag
     override val type: String get() = name

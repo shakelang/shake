@@ -19,6 +19,6 @@ fun main(args: Array<String>) {
     val f = File(args[0])
     if (!f.exists()) throw Error("This class-file does not exist!")
     val inputStream: InputStream = BufferedInputStream(FileInputStream(f))
-    JavaClassVisitor(inputStream).process()
+    println(JavaClassVisitor(inputStream).process())
     inputStream.close()
 }

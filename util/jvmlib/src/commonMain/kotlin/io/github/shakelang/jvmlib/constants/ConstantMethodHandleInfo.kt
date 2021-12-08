@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
-class ConstantMethodHandleInfo(val name: Byte, val index: Int) : CONSTANT() {
+class ConstantMethodHandleInfo(val name: Byte, val index: Int) : ConstantInfo() {
 
     override val tag: Byte get() = ConstantMethodHandleInfo.tag
     override val type: String get() = ConstantMethodHandleInfo.name

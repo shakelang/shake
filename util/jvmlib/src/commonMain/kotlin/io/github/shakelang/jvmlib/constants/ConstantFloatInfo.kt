@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
-class ConstantFloatInfo(val value: Float) : CONSTANT() {
+class ConstantFloatInfo(val value: Float) : ConstantInfo() {
 
     override val tag: Byte get() = ConstantFloatInfo.tag
     override val type: String get() = name

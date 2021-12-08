@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.info
 
-import io.github.shakelang.jvmlib.constants.CONSTANT
+import io.github.shakelang.jvmlib.constants.ConstantInfo
 import io.github.shakelang.shason.json
 
 class MethodInfo(
@@ -10,7 +10,7 @@ class MethodInfo(
     val attributes: Array<AttributeInfo>
 ) {
 
-    fun getNameValue(constants: Array<CONSTANT>): String {
+    fun getNameValue(constants: Array<ConstantInfo>): String {
         //(constants[name] as ).value as String
         TODO()
     }

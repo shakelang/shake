@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
-class ConstantStringInfo(val value: Int) : CONSTANT() {
+class ConstantStringInfo(val value: Int) : ConstantInfo() {
 
     override val tag: Byte get() = ConstantStringInfo.tag
     override val type: String get() = name

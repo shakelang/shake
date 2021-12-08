@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
-class ConstantInvokeDynamicInfo : CONSTANT {
+class ConstantInvokeDynamicInfo : ConstantInfo {
 
     override val tag: Byte get() = ConstantInvokeDynamicInfo.tag
     override val type: String get() = name
