@@ -1,6 +1,6 @@
 package io.github.shakelang.parseutils.streaming
 
-import io.github.shakelang.parseutils.bits.*
+import io.github.shakelang.parseutils.bytes.*
 
 class DataInputStream(private val data: InputStream) : InputStream() {
 

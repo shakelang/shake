@@ -19,6 +19,10 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo> {
         return constants[index-1]
     }
 
+    fun get(index: UShort): ConstantInfo {
+        return this[index.toInt()]
+    }
+
     override fun indexOf(element: ConstantInfo): Int {
         return constants.indexOf(element)
     }
@@ -54,4 +58,20 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo> {
     override fun toString(): String {
         return constants.toString()
     }
+
+    fun getUtf8(nameIndex: UShort): ConstantUtf8Info = this.constants[nameIndex.toInt()].toUtf8()
+    fun getClass(nameIndex: UShort): ConstantClassInfo = this.constants[nameIndex.toInt()].toClass()
+    fun getFieldRef(nameIndex: UShort) = this.constants[nameIndex.toInt()].toFieldRef()
+    fun getMethodRef(nameIndex: UShort) = this.constants[nameIndex.toInt()].toMethodRef()
+    fun getInterfaceMethodRef(nameIndex: UShort) = this.constants[nameIndex.toInt()].toInterfaceMethodRef()
+    fun getString(nameIndex: UShort) = this.constants[nameIndex.toInt()].toString()
+    fun getInteger(nameIndex: UShort) = this.constants[nameIndex.toInt()].toInteger()
+    fun getFloat(nameIndex: UShort) = this.constants[nameIndex.toInt()].toFloat()
+    fun getLong(nameIndex: UShort) = this.constants[nameIndex.toInt()].toLong()
+    fun getDouble(nameIndex: UShort) = this.constants[nameIndex.toInt()].toDouble()
+    fun getNameAndType(nameIndex: UShort) = this.constants[nameIndex.toInt()].toNameAndType()
+    fun getMethodHandle(nameIndex: UShort) = this.constants[nameIndex.toInt()].toMethodHandle()
+    fun getMethodType(nameIndex: UShort) = this.constants[nameIndex.toInt()].toMethodType()
+    fun getInvokeDynamic(nameIndex: UShort) = this.constants[nameIndex.toInt()].toInvokeDynamic()
+
 }

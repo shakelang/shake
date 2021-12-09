@@ -10,6 +10,22 @@ abstract class ConstantInfo {
     open fun toJson(): Map<String, Any> = mapOf("tag_type" to type, "tag" to tag)
     override fun toString(): String = json.stringify(toJson())
 
+    fun toUtf8(): ConstantUtf8Info = this as ConstantUtf8Info
+    fun toInteger(): ConstantIntegerInfo = this as ConstantIntegerInfo
+    fun toFloat(): ConstantFloatInfo = this as ConstantFloatInfo
+    fun toLong(): ConstantLongInfo = this as ConstantLongInfo
+    fun toDouble(): ConstantDoubleInfo = this as ConstantDoubleInfo
+    fun toClass(): ConstantClassInfo = this as ConstantClassInfo
+    fun toStringRef(): ConstantStringInfo = this as ConstantStringInfo
+    fun toFieldRef(): ConstantFieldrefInfo = this as ConstantFieldrefInfo
+    fun toMethodRef(): ConstantMethodrefInfo = this as ConstantMethodrefInfo
+    fun toInterfaceMethodRef(): ConstantInterfaceMethodrefInfo = this as ConstantInterfaceMethodrefInfo
+    fun toNameAndType(): ConstantNameAndTypeInfo = this as ConstantNameAndTypeInfo
+    fun toMethodHandle(): ConstantMethodHandleInfo = this as ConstantMethodHandleInfo
+    fun toMethodType(): ConstantMethodTypeInfo = this as ConstantMethodTypeInfo
+    fun toInvokeDynamic(): ConstantInvokeDynamicInfo = this as ConstantInvokeDynamicInfo
+
+
 }
 
 fun <K, V> Map<K, V>.with(k: K, v: V): Map<K, V>{
