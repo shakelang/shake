@@ -1,5 +1,7 @@
 package io.github.shakelang.jvmlib.constants
 
+import io.github.shakelang.parseutils.streaming.DataInputStream
+
 class ConstantInvokeDynamicInfo : ConstantInfo {
 
     override val tag: Byte get() = ConstantInvokeDynamicInfo.tag
@@ -27,6 +29,21 @@ class ConstantInvokeDynamicInfo : ConstantInfo {
     override fun toJson() = super.toJson().with("bytes", arrayOf(byte0, byte1, byte2, byte3))
 
     companion object {
+        fun contentsFromStream(stream: DataInputStream): ConstantInvokeDynamicInfo {
+            return ConstantInvokeDynamicInfo(
+                stream.readByte(),
+                stream.readByte(),
+                stream.readByte(),
+                stream.readByte()
+            )
+        }
+
+        fun fromStream(stream: DataInputStream): ConstantInvokeDynamicInfo {
+            if(stream.readByte() != ConstantClassInfo.tag)
+                throw Error("Expecting to get a ConstantClassInfo!")
+            return contentsFromStream(stream)
+        }
+
         const val name = "ConstantInvokeDynamicInfo"
         const val tag = ConstantTags.CONSTANT_INVOKE_DYNAMIC
     }

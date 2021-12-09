@@ -1,5 +1,7 @@
 package io.github.shakelang.jvmlib.constants
 
+import io.github.shakelang.parseutils.streaming.DataInputStream
+
 class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo> {
 
     constructor(constants: Array<ConstantInfo>) : this(constants.toList())
@@ -73,5 +75,13 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo> {
     fun getMethodHandle(nameIndex: UShort) = this.constants[nameIndex.toInt()].toMethodHandle()
     fun getMethodType(nameIndex: UShort) = this.constants[nameIndex.toInt()].toMethodType()
     fun getInvokeDynamic(nameIndex: UShort) = this.constants[nameIndex.toInt()].toInvokeDynamic()
+
+    companion object {
+        fun fromStream(stream: DataInputStream): ConstantPool {
+            val constantPoolCount = stream.readUnsignedShort()
+            val constants = Array(constantPoolCount.toInt()) { ConstantInfo.fromStream(stream) }
+            return ConstantPool(constants)
+        }
+    }
 
 }

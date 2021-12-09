@@ -36,7 +36,7 @@ class JavaClassVisitor(inputStream: InputStream) {
     fun process(): ClassFile {
         try {
             magic = inputStream.readUnsignedInt()
-            if(magic.toLong() != 0xcafebabe) throw IllegalArgumentException("Invalid magic number")
+            if(magic.toLong() != 0xcafebabe) throw IllegalArgumentException("Invalid magic number 0x${magic.toString(16)}")
             println("Magic: 0x${magic.toString(16)}")
             minorVersion = inputStream.readUnsignedShort().toInt()
             println("Minor version: $minorVersion")
@@ -52,12 +52,12 @@ class JavaClassVisitor(inputStream: InputStream) {
             println("This class: $thisClass")
             val thisClassConstant = constantPool[thisClass] as ConstantClassInfo
             println("This class: ${json.stringify(thisClassConstant.toJson())}")
-            println("This class name: ${json.stringify(constantPool[thisClassConstant.value].toJson())}")
+            println("This class name: ${json.stringify(constantPool[thisClassConstant.value.toInt()].toJson())}")
             superClass = inputStream.readUnsignedShort().toInt()
             println("Super class: $superClass")
             val superClassConstant = constantPool[superClass] as ConstantClassInfo
             println("Super class: ${json.stringify(superClassConstant.toJson())}")
-            println("Super class name: ${json.stringify(constantPool[superClassConstant.value].toJson())}")
+            println("Super class name: ${json.stringify(constantPool[superClassConstant.value.toInt()].toJson())}")
             interfacesCount = inputStream.readUnsignedShort().toInt()
             println("Interfaces count: $interfacesCount")
             interfaces = Array(interfacesCount) { inputStream.readUnsignedShort().toInt() }
@@ -96,29 +96,29 @@ class JavaClassVisitor(inputStream: InputStream) {
             ConstantTags.CONSTANT_FLOAT -> ConstantFloatInfo(inputStream.readFloat())
             ConstantTags.CONSTANT_LONG -> ConstantLongInfo(inputStream.readLong())
             ConstantTags.CONSTANT_DOUBLE -> ConstantDoubleInfo(inputStream.readDouble())
-            ConstantTags.CONSTANT_CLASS -> ConstantClassInfo(inputStream.readUnsignedShort().toInt())
+            ConstantTags.CONSTANT_CLASS -> ConstantClassInfo(inputStream.readUnsignedShort())
             ConstantTags.CONSTANT_STRING -> ConstantStringInfo(inputStream.readUnsignedShort().toInt())
             ConstantTags.CONSTANT_FIELD_REF -> ConstantFieldrefInfo(
-                inputStream.readUnsignedShort().toInt(),
-                inputStream.readUnsignedShort().toInt()
+                inputStream.readUnsignedShort(),
+                inputStream.readUnsignedShort()
             )
             ConstantTags.CONSTANT_METHOD_REF -> ConstantMethodrefInfo(
-                inputStream.readUnsignedShort().toInt(),
-                inputStream.readUnsignedShort().toInt()
+                inputStream.readUnsignedShort(),
+                inputStream.readUnsignedShort()
             )
             ConstantTags.CONSTANT_INTERFACE_METHOD_REF -> ConstantInterfaceMethodrefInfo(
-                inputStream.readUnsignedShort().toInt(),
-                inputStream.readUnsignedShort().toInt()
+                inputStream.readUnsignedShort(),
+                inputStream.readUnsignedShort()
             )
             ConstantTags.CONSTANT_NAME_AND_TYPE -> ConstantNameAndTypeInfo(
-                inputStream.readUnsignedShort().toInt(),
-                inputStream.readUnsignedShort().toInt()
+                inputStream.readUnsignedShort(),
+                inputStream.readUnsignedShort()
             )
             ConstantTags.CONSTANT_METHOD_HANDLE -> ConstantMethodHandleInfo(
                 inputStream.read().toByte(),
-                inputStream.readUnsignedShort().toInt()
+                inputStream.readUnsignedShort()
             )
-            ConstantTags.CONSTANT_METHODTYPE -> ConstantMethodTypeInfo(inputStream.readUnsignedShort().toInt())
+            ConstantTags.CONSTANT_METHODTYPE -> ConstantMethodTypeInfo(inputStream.readUnsignedShort())
             17.toByte() -> Dynamic(inputStream.readInt()) // TODO ??
             ConstantTags.CONSTANT_INVOKE_DYNAMIC -> ConstantInvokeDynamicInfo(inputStream.readNBytes(4))
             19.toByte() -> IdentifyModule(inputStream.readShort()) // TODO ??

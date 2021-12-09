@@ -1,5 +1,6 @@
 package io.github.shakelang.jvmlib.constants
 
+import io.github.shakelang.parseutils.streaming.DataInputStream
 import io.github.shakelang.shason.json
 
 
@@ -25,6 +26,30 @@ abstract class ConstantInfo {
     fun toMethodType(): ConstantMethodTypeInfo = this as ConstantMethodTypeInfo
     fun toInvokeDynamic(): ConstantInvokeDynamicInfo = this as ConstantInvokeDynamicInfo
 
+    companion object {
+
+        fun fromStream(stream: DataInputStream): ConstantInfo {
+            val tag = stream.readByte()
+            return when (tag) {
+                ConstantTags.CONSTANT_UTF8 -> ConstantUtf8Info.contentsFromStream(stream)
+                ConstantTags.CONSTANT_INTEGER -> ConstantIntegerInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_FLOAT -> ConstantFloatInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_LONG -> ConstantLongInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_DOUBLE -> ConstantDoubleInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_CLASS -> ConstantClassInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_STRING -> ConstantStringInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_FIELD_REF -> ConstantFieldrefInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_METHOD_REF -> ConstantMethodrefInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_INTERFACE_METHOD_REF -> ConstantInterfaceMethodrefInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_NAME_AND_TYPE -> ConstantNameAndTypeInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_METHOD_HANDLE -> ConstantMethodHandleInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_METHODTYPE -> ConstantMethodTypeInfo.contentsFromStream(stream)
+                ConstantTags.CONSTANT_INVOKE_DYNAMIC -> ConstantInvokeDynamicInfo.contentsFromStream(stream)
+                else -> throw IllegalArgumentException("Unknown tag $tag")
+            }
+        }
+
+    }
 
 }
 
