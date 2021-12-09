@@ -1,6 +1,8 @@
 package io.github.shakelang.jvmlib.attributes
 
+import io.github.shakelang.jvmlib.constants.ConstantPool
 import io.github.shakelang.parseutils.bytes.toBytes
+import io.github.shakelang.parseutils.streaming.DataInputStream
 
 open class AttributeMap(open val map: Map<String, Attribute>) : Map<String, Attribute> {
 
@@ -29,6 +31,20 @@ open class AttributeMap(open val map: Map<String, Attribute>) : Map<String, Attr
             childBytes.addAll(attribute.toBytes().toList())
         }
         return childBytes.toTypedArray()
+    }
+
+    companion object {
+
+        fun fromStream(pool: ConstantPool, stream: DataInputStream): AttributeMap {
+            val size = stream.readUnsignedShort()
+            val map = mutableMapOf<String, Attribute>()
+            for (i in 0 until size.toInt()) {
+                val attribute = Attribute.fromStream(pool, stream)
+                map[attribute.name] = attribute
+            }
+            return AttributeMap(map)
+        }
+
     }
 
 }
