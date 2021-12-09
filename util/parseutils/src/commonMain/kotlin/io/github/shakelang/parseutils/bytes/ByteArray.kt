@@ -239,3 +239,5 @@ fun ByteArray.getUnsignedLong(index: Int): ULong = (this[index].toUByte().toLong
         or this[index + 2].toUByte().toLong() shl 40 or this[index + 3].toUByte().toLong() shl 32
         or this[index + 4].toUByte().toLong() shl 24 or this[index + 5].toUByte().toLong() shl 16
         or this[index + 6].toUByte().toLong() shl 8 or this[index + 7].toUByte().toLong()).toULong()
+
+fun ByteArray.getBytes(index: Int, length: Int): ByteArray = this.copyOfRange(index, index + length)
