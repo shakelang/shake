@@ -241,3 +241,13 @@ fun ByteArray.getUnsignedLong(index: Int): ULong = (this[index].toUByte().toLong
         or this[index + 6].toUByte().toLong() shl 8 or this[index + 7].toUByte().toLong()).toULong()
 
 fun ByteArray.getBytes(index: Int, length: Int): ByteArray = this.copyOfRange(index, index + length)
+
+fun ByteArray.toHexString(): String {
+    val sb = StringBuilder()
+    for (b in this) {
+        val i = b.toString(16)
+        if (i.length == 1) sb.append("0")
+        sb.append(i)
+    }
+    return sb.toString()
+}
