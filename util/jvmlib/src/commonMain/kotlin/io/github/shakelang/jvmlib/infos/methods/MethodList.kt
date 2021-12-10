@@ -2,10 +2,14 @@ package io.github.shakelang.jvmlib.infos.methods
 
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.streaming.DataInputStream
 import io.github.shakelang.shason.json
 
-class MethodList(methods: Array<MethodInfo>) : List<MethodInfo> {
+class MethodList(methods: Array<MethodInfo>) : List<MethodInfo>, ConstantUser {
+
+    override val uses get() = methods.map { it.uses.toList() }.flatten().toTypedArray()
+    val users = methods.map { it.users.toList() }.flatten().toTypedArray()
 
     private lateinit var clazz: ClassInfo
 

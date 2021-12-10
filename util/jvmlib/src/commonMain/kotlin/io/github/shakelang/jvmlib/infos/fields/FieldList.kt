@@ -2,10 +2,14 @@ package io.github.shakelang.jvmlib.infos.fields
 
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.streaming.DataInputStream
 import io.github.shakelang.shason.json
 
-class FieldList(fields: Array<FieldInfo>) : List<FieldInfo> {
+class FieldList(fields: Array<FieldInfo>) : List<FieldInfo>, ConstantUser {
+
+    override val uses get() = fields.map { it.uses.toList() }.flatten().toTypedArray()
+    val users = fields.map { it.users.toList() }.flatten().toTypedArray()
 
     private lateinit var clazz: ClassInfo
 

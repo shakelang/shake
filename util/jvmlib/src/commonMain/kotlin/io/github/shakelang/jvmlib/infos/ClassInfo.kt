@@ -14,14 +14,31 @@ class ClassInfo(
     val accessFlags: UShort,
     val thisClass: UShort,
     val superClass: UShort,
-    val interfaces: Array<Int>,
+    val interfaces: InterfaceList,
     val fieldInfos: FieldList,
     val methodInfos: MethodList,
     val attributeInfos: AttributeMap
 ) {
 
+    val users = arrayOf(
+        *constantPool.users,
+        interfaces,
+        *fieldInfos.users,
+        *methodInfos.users,
+        *attributeInfos.users
+    )
+
+    val uses = arrayOf(
+        *constantPool.uses,
+        interfaces.uses,
+        *fieldInfos.uses,
+        *methodInfos.uses,
+        *attributeInfos.uses
+    )
+
     init {
         constantPool.init(this)
+        interfaces.init(this)
         fieldInfos.init(this)
         methodInfos.init(this)
         attributeInfos.init(this)
@@ -53,8 +70,7 @@ class ClassInfo(
             val accessFlags = stream.readUnsignedShort()
             val thisClass = stream.readUnsignedShort()
             val superClass = stream.readUnsignedShort()
-            val interfacesCount = stream.readUnsignedShort()
-            val interfaces = Array(interfacesCount.toInt()) { stream.readUnsignedShort().toInt() }
+            val interfaces = InterfaceList.fromStream(stream)
             val fieldInfos = FieldList.fromStream(constantPool, stream)
             val methodInfos = MethodList.fromStream(constantPool, stream)
             val attributeInfos = AttributeMap.fromStream(constantPool, stream)

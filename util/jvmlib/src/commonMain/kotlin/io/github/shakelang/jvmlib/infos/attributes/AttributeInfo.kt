@@ -2,11 +2,12 @@ package io.github.shakelang.jvmlib.infos.attributes
 
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.parseutils.streaming.ByteArrayInputStream
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-abstract class AttributeInfo (val nameIndex: UShort, val name: String) {
+abstract class AttributeInfo (val nameIndex: UShort, val name: String) : ConstantUser {
 
     private lateinit var clazz: ClassInfo
 

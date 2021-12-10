@@ -3,6 +3,7 @@ package io.github.shakelang.jvmlib.infos.methods
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.streaming.DataInputStream
 import io.github.shakelang.shason.json
 
@@ -11,7 +12,10 @@ class MethodInfo(
     val descriptor: UShort,
     val accessFlags: UShort,
     val attributes: AttributeMap
-) {
+) : ConstantUser {
+
+    override val uses get() = arrayOf(name, descriptor, *attributes.uses)
+    val users: Array<ConstantUser> get() = arrayOf(this, *attributes.users)
 
     private lateinit var clazz: ClassInfo
 

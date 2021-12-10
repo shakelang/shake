@@ -3,9 +3,11 @@ package io.github.shakelang.jvmlib.infos.constants
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo> {
+class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo>, ConstantUser {
 
     private lateinit var clazz: ClassInfo
+    val users : Array<ConstantUser> = (constants.filter { it is ConstantUser } as List<ConstantUser>).toTypedArray()
+    override val uses: Array<UShort> = users.map { it.uses.toList() }.flatten().toTypedArray()
 
     constructor(constants: Array<ConstantInfo>) : this(constants.toList())
 

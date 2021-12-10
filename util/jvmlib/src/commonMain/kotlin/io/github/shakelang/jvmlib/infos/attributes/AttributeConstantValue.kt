@@ -12,6 +12,8 @@ class AttributeConstantValue (
 
 ) : AttributeInfo(attributeNameIndex, TAG) {
 
+    override val uses get() = arrayOf(nameIndex, constantValueIndex)
+
     override val bytes: ByteArray
         get() = constantValueIndex.toBytes()
 

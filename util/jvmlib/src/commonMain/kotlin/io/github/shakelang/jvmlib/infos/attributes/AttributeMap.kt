@@ -2,10 +2,14 @@ package io.github.shakelang.jvmlib.infos.attributes
 
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.bytes.toBytes
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, AttributeInfo> {
+open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, AttributeInfo>, ConstantUser {
+
+    override val uses get() = map.values.map { it.uses.toList() }.flatten().toTypedArray()
+    val users: Array<ConstantUser> get() = map.values.toTypedArray()
 
     private lateinit var clazz: ClassInfo
 

@@ -3,6 +3,7 @@ package io.github.shakelang.jvmlib.infos.fields
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.streaming.DataInputStream
 import io.github.shakelang.shason.json
 
@@ -10,8 +11,11 @@ class FieldInfo(
     val access_flags: UShort,
     val name_index: UShort,
     val descriptor_index: UShort,
-    val attributes: AttributeMap
-) {
+    val attributes: AttributeMap,
+) : ConstantUser {
+
+    override val uses get() = arrayOf(name_index, descriptor_index, *attributes.uses)
+    val users: Array<ConstantUser> get() = arrayOf(this, *attributes.users)
 
     private lateinit var clazz: ClassInfo
 

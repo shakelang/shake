@@ -15,6 +15,8 @@ class AttributeCode(
 
 ): AttributeInfo(nameIndex, ATTRIBUTE_CODE) {
 
+    override val uses get() = arrayOf(nameIndex)
+
     override val bytes: ByteArray
         get() {
             val b = ByteArray(2 + 2 + 4 + code.size + 2 + exception_table.size * 8 + 2)

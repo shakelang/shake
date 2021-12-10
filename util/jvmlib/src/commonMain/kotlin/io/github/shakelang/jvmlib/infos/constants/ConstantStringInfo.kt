@@ -2,7 +2,9 @@ package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-class ConstantStringInfo(val value: UShort) : ConstantInfo() {
+class ConstantStringInfo(val value: UShort) : ConstantInfo(), ConstantUser {
+
+    override val uses get() = arrayOf(value)
 
     override val tag: Byte get() = ConstantStringInfo.tag
     override val type: String get() = name

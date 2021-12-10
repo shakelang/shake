@@ -9,6 +9,8 @@ import io.github.shakelang.parseutils.streaming.DataInputStream
 
 class UnknownAttribute(nameIndex: UShort, name: String, override val bytes: ByteArray) : AttributeInfo(nameIndex, name) {
 
+    override val uses get() = arrayOf(nameIndex)
+
     override fun toJson(): Map<String, Any> = mapOf(
         "name" to name,
         "bytes" to bytes.toHexString()

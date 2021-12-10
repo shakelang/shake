@@ -30,6 +30,8 @@ abstract class ConstantInfo {
     fun toMethodType(): ConstantMethodTypeInfo = this as ConstantMethodTypeInfo
     fun toInvokeDynamic(): ConstantInvokeDynamicInfo = this as ConstantInvokeDynamicInfo
 
+    fun isUsed(): Boolean = clazz.uses.contains(clazz.constantPool.indexOf(this))
+
     fun init(clazz: ClassInfo) {
         this.clazz = clazz
     }
