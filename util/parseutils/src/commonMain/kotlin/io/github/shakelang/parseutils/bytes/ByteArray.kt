@@ -195,15 +195,15 @@ fun ByteArray.getShort(index: Int): Short = (this[index].toUByte().toInt() shl 8
 /**
  * Get specific int from a byte array at a given position
  */
-fun ByteArray.getInt(index: Int): Int = (this[index].toUByte().toInt() shl 24 or this[index + 1].toUByte().toInt() shl 16
+fun ByteArray.getInt(index: Int): Int = (this[index].toUByte().toInt() shl 8 or this[index + 1].toUByte().toInt() shl 8
         or this[index + 2].toUByte().toInt() shl 8 or this[index + 3].toUByte().toInt())
 
 /**
  * Get specific long from a byte array at a given position
  */
-fun ByteArray.getLong(index: Int): Long = (this[index].toUByte().toLong() shl 56 or this[index + 1].toUByte().toLong() shl 48
-        or this[index + 2].toUByte().toLong() shl 40 or this[index + 3].toUByte().toLong() shl 32
-        or this[index + 4].toUByte().toLong() shl 24 or this[index + 5].toUByte().toLong() shl 16
+fun ByteArray.getLong(index: Int): Long = (this[index].toUByte().toLong() shl 8 or this[index + 1].toUByte().toLong() shl 8
+        or this[index + 2].toUByte().toLong() shl 8 or this[index + 3].toUByte().toLong() shl 8
+        or this[index + 4].toUByte().toLong() shl 8 or this[index + 5].toUByte().toLong() shl 8
         or this[index + 6].toUByte().toLong() shl 8 or this[index + 7].toUByte().toLong())
 
 /**
