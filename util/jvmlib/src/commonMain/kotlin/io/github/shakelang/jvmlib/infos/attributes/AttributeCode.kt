@@ -1,4 +1,4 @@
-package io.github.shakelang.jvmlib.attributes
+package io.github.shakelang.jvmlib.infos.attributes
 
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.parseutils.bytes.*
@@ -11,9 +11,9 @@ class AttributeCode(
     val max_locals: UShort,
     val code: ByteArray,
     val exception_table: Array<ExceptionTableEntry>,
-    val attributes: Array<Attribute>
+    val attributes: Array<AttributeInfo>
 
-): Attribute(nameIndex, ATTRIBUTE_CODE) {
+): AttributeInfo(nameIndex, ATTRIBUTE_CODE) {
 
     override val bytes: ByteArray
         get() {
@@ -32,6 +32,16 @@ class AttributeCode(
             }
             return b
         }
+
+    override fun toJson() = mapOf(
+        "tag" to ATTRIBUTE_CODE,
+        "max_stack" to max_stack,
+        "max_locals" to max_locals,
+        "code" to code.toHexString(),
+        "name_index" to nameIndex,
+        "exception_table" to exception_table.map { it.toJson() },
+        "attributes" to attributes.map { it.toJson() }
+    )
 
     companion object {
         const val ATTRIBUTE_CODE = "Code"
@@ -77,6 +87,12 @@ class AttributeCode(
             }
 
         fun toBytes() = this.bytes
+        fun toJson() = mapOf(
+            "start_pc" to start_pc,
+            "end_pc" to end_pc,
+            "handler_pc" to handler_pc,
+            "catch_type" to catch_type
+        )
 
         companion object {
             fun fromBytes(b: ByteArray): ExceptionTableEntry {

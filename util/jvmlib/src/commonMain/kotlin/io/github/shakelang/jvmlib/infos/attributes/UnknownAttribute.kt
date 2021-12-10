@@ -1,12 +1,19 @@
-package io.github.shakelang.jvmlib.attributes
+package io.github.shakelang.jvmlib.infos.attributes
 
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.parseutils.bytes.getBytes
 import io.github.shakelang.parseutils.bytes.getInt
 import io.github.shakelang.parseutils.bytes.getUnsignedShort
+import io.github.shakelang.parseutils.bytes.toHexString
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-class UnknownAttribute(nameIndex: UShort, name: String, override val bytes: ByteArray) : Attribute(nameIndex, name) {
+class UnknownAttribute(nameIndex: UShort, name: String, override val bytes: ByteArray) : AttributeInfo(nameIndex, name) {
+
+    override fun toJson(): Map<String, Any> = mapOf(
+        "name" to name,
+        "bytes" to bytes.toHexString()
+    )
+
     companion object {
         fun fromBytes(pool: ConstantPool, bytes: ByteArray): UnknownAttribute {
             val nameIndex = bytes.getUnsignedShort(0)

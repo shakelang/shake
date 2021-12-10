@@ -245,7 +245,7 @@ fun ByteArray.getBytes(index: Int, length: Int): ByteArray = this.copyOfRange(in
 fun ByteArray.toHexString(): String {
     val sb = StringBuilder()
     for (b in this) {
-        val i = b.toString(16)
+        val i = b.toUByte().toString(16)
         if (i.length == 1) sb.append("0")
         sb.append(i)
     }

@@ -1,8 +1,11 @@
 package io.github.shakelang.jvmlib.infos.constants
 
+import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
 class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo> {
+
+    private lateinit var clazz: ClassInfo
 
     constructor(constants: Array<ConstantInfo>) : this(constants.toList())
 
@@ -57,29 +60,50 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo> {
         return this.constants.map { it.toJson() }
     }
 
+    fun init(clazz: ClassInfo) {
+        this.clazz = clazz
+        this.constants.forEach { it.init(clazz) }
+    }
+
     override fun toString(): String {
         return constants.toString()
     }
 
-    fun getUtf8(nameIndex: UShort): ConstantUtf8Info = this.constants[nameIndex.toInt()].toUtf8()
-    fun getClass(nameIndex: UShort): ConstantClassInfo = this.constants[nameIndex.toInt()].toClass()
-    fun getFieldRef(nameIndex: UShort) = this.constants[nameIndex.toInt()].toFieldRef()
-    fun getMethodRef(nameIndex: UShort) = this.constants[nameIndex.toInt()].toMethodRef()
-    fun getInterfaceMethodRef(nameIndex: UShort) = this.constants[nameIndex.toInt()].toInterfaceMethodRef()
-    fun getString(nameIndex: UShort) = this.constants[nameIndex.toInt()].toString()
-    fun getInteger(nameIndex: UShort) = this.constants[nameIndex.toInt()].toInteger()
-    fun getFloat(nameIndex: UShort) = this.constants[nameIndex.toInt()].toFloat()
-    fun getLong(nameIndex: UShort) = this.constants[nameIndex.toInt()].toLong()
-    fun getDouble(nameIndex: UShort) = this.constants[nameIndex.toInt()].toDouble()
-    fun getNameAndType(nameIndex: UShort) = this.constants[nameIndex.toInt()].toNameAndType()
-    fun getMethodHandle(nameIndex: UShort) = this.constants[nameIndex.toInt()].toMethodHandle()
-    fun getMethodType(nameIndex: UShort) = this.constants[nameIndex.toInt()].toMethodType()
-    fun getInvokeDynamic(nameIndex: UShort) = this.constants[nameIndex.toInt()].toInvokeDynamic()
+    fun getUtf8(nameIndex: Int): ConstantUtf8Info = this[nameIndex].toUtf8()
+    fun getClass(nameIndex: Int): ConstantClassInfo = this[nameIndex].toClass()
+    fun getFieldRef(nameIndex: Int) = this[nameIndex].toFieldRef()
+    fun getMethodRef(nameIndex: Int) = this[nameIndex].toMethodRef()
+    fun getInterfaceMethodRef(nameIndex: Int) = this[nameIndex].toInterfaceMethodRef()
+    fun getString(nameIndex: Int) = this[nameIndex].toStringRef()
+    fun getInteger(nameIndex: Int) = this[nameIndex].toInteger()
+    fun getFloat(nameIndex: Int) = this[nameIndex].toFloat()
+    fun getLong(nameIndex: Int) = this[nameIndex].toLong()
+    fun getDouble(nameIndex: Int) = this[nameIndex].toDouble()
+    fun getNameAndType(nameIndex: Int) = this[nameIndex].toNameAndType()
+    fun getMethodHandle(nameIndex: Int) = this[nameIndex].toMethodHandle()
+    fun getMethodType(nameIndex: Int) = this[nameIndex].toMethodType()
+    fun getInvokeDynamic(nameIndex: Int) = this[nameIndex].toInvokeDynamic()
+
+    fun getUtf8(nameIndex: UShort): ConstantUtf8Info = this.getUtf8(nameIndex.toInt())
+    fun getClass(nameIndex: UShort): ConstantClassInfo = this.getClass(nameIndex.toInt())
+    fun getFieldRef(nameIndex: UShort) = this.getFieldRef(nameIndex.toInt())
+    fun getMethodRef(nameIndex: UShort) = this.getMethodRef(nameIndex.toInt())
+    fun getInterfaceMethodRef(nameIndex: UShort) = this.getInterfaceMethodRef(nameIndex.toInt())
+    fun getString(nameIndex: UShort) = this.getString(nameIndex.toInt())
+    fun getInteger(nameIndex: UShort) = this.getInteger(nameIndex.toInt())
+    fun getFloat(nameIndex: UShort) = this.getFloat(nameIndex.toInt())
+    fun getLong(nameIndex: UShort) = this.getLong(nameIndex.toInt())
+    fun getDouble(nameIndex: UShort) = this.getDouble(nameIndex.toInt())
+    fun getNameAndType(nameIndex: UShort) = this.getNameAndType(nameIndex.toInt())
+    fun getMethodHandle(nameIndex: UShort) = this.getMethodHandle(nameIndex.toInt())
+    fun getMethodType(nameIndex: UShort) = this.getMethodType(nameIndex.toInt())
+    fun getInvokeDynamic(nameIndex: UShort) = this.getInvokeDynamic(nameIndex.toInt())
+
 
     companion object {
         fun fromStream(stream: DataInputStream): ConstantPool {
             val constantPoolCount = stream.readUnsignedShort()
-            val constants = Array(constantPoolCount.toInt()) { ConstantInfo.fromStream(stream) }
+            val constants = Array(constantPoolCount.toInt()-1) { ConstantInfo.fromStream(stream) }
             return ConstantPool(constants)
         }
     }

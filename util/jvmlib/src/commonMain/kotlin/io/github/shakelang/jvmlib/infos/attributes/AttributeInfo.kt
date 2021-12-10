@@ -1,11 +1,14 @@
-package io.github.shakelang.jvmlib.attributes
+package io.github.shakelang.jvmlib.infos.attributes
 
+import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.parseutils.streaming.ByteArrayInputStream
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-abstract class Attribute (val nameIndex: UShort, val name: String) {
+abstract class AttributeInfo (val nameIndex: UShort, val name: String) {
+
+    private lateinit var clazz: ClassInfo
 
     abstract val bytes: ByteArray
     fun toBytes(): ByteArray {
@@ -17,11 +20,16 @@ abstract class Attribute (val nameIndex: UShort, val name: String) {
         return bytes
     }
 
+    abstract fun toJson(): Map<String, Any>
+    fun init(clazz: ClassInfo) {
+        this.clazz = clazz
+    }
+
     companion object {
-        fun fromBytes(pool: ConstantPool, bytes: ByteArray): Attribute
+        fun fromBytes(pool: ConstantPool, bytes: ByteArray): AttributeInfo
             = fromStream(pool, DataInputStream(ByteArrayInputStream(bytes)))
 
-        fun fromStream(pool: ConstantPool, stream: DataInputStream): Attribute {
+        fun fromStream(pool: ConstantPool, stream: DataInputStream): AttributeInfo {
             val nameIndex = stream.readUnsignedShort()
             val name = pool.getUtf8(nameIndex).value
             val length = stream.readInt()
