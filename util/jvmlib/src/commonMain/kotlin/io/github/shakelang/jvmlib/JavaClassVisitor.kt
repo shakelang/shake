@@ -1,10 +1,10 @@
 package io.github.shakelang.jvmlib
 
-import io.github.shakelang.jvmlib.constants.*
-import io.github.shakelang.jvmlib.constants.ConstantTags
-import io.github.shakelang.jvmlib.info.AttributeInfo
-import io.github.shakelang.jvmlib.info.FieldInfo
-import io.github.shakelang.jvmlib.info.MethodInfo
+import io.github.shakelang.jvmlib.infos.constants.*
+import io.github.shakelang.jvmlib.infos.constants.ConstantTags
+import io.github.shakelang.jvmlib.infos.AttributeInfo
+import io.github.shakelang.jvmlib.infos.FieldInfo
+import io.github.shakelang.jvmlib.infos.MethodInfo
 import io.github.shakelang.parseutils.streaming.CountingInputStream
 import io.github.shakelang.parseutils.streaming.DataInputStream
 import io.github.shakelang.parseutils.streaming.InputStream

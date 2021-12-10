@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.attributes
 
-import io.github.shakelang.jvmlib.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.parseutils.streaming.ByteArrayInputStream
 import io.github.shakelang.parseutils.streaming.DataInputStream

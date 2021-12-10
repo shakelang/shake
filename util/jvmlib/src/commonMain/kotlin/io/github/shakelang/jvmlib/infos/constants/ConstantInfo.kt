@@ -1,4 +1,4 @@
-package io.github.shakelang.jvmlib.constants
+package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.DataInputStream
 import io.github.shakelang.shason.json

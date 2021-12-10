@@ -1,6 +1,6 @@
-package io.github.shakelang.jvmlib.info
+package io.github.shakelang.jvmlib.infos
 
-import io.github.shakelang.jvmlib.constants.ConstantInfo
+import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shason.json
 
 class MethodInfo(

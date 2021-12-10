@@ -1,4 +1,4 @@
-package io.github.shakelang.jvmlib.constants
+package io.github.shakelang.jvmlib.infos.constants
 
 class Dynamic(val value: Int) : ConstantInfo() {
 

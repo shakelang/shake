@@ -1,11 +1,11 @@
 package io.github.shakelang.jvmlib
 
-import io.github.shakelang.jvmlib.constants.ConstantClassInfo
-import io.github.shakelang.jvmlib.constants.ConstantPool
-import io.github.shakelang.jvmlib.constants.ConstantUtf8Info
-import io.github.shakelang.jvmlib.info.AttributeInfo
-import io.github.shakelang.jvmlib.info.FieldInfo
-import io.github.shakelang.jvmlib.info.MethodInfo
+import io.github.shakelang.jvmlib.infos.constants.ConstantClassInfo
+import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
+import io.github.shakelang.jvmlib.infos.AttributeInfo
+import io.github.shakelang.jvmlib.infos.FieldInfo
+import io.github.shakelang.jvmlib.infos.MethodInfo
 import io.github.shakelang.shason.json
 
 class ClassFile (
