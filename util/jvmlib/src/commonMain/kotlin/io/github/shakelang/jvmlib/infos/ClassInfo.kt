@@ -28,7 +28,7 @@ class ClassInfo(
         *attributeInfos.users
     )
 
-    val uses = arrayOf(
+    val uses get() = arrayOf(
         *constantPool.uses,
         interfaces.uses,
         *fieldInfos.uses,
@@ -70,7 +70,7 @@ class ClassInfo(
             val accessFlags = stream.readUnsignedShort()
             val thisClass = stream.readUnsignedShort()
             val superClass = stream.readUnsignedShort()
-            val interfaces = InterfaceList.fromStream(stream)
+            val interfaces = InterfaceList.fromStream(constantPool, stream)
             val fieldInfos = FieldList.fromStream(constantPool, stream)
             val methodInfos = MethodList.fromStream(constantPool, stream)
             val attributeInfos = AttributeMap.fromStream(constantPool, stream)
