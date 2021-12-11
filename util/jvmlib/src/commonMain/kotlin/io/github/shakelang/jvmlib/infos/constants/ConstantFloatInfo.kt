@@ -5,7 +5,7 @@ import io.github.shakelang.parseutils.streaming.DataInputStream
 class ConstantFloatInfo(val value: Float) : ConstantInfo() {
 
     override val tag: Byte get() = ConstantFloatInfo.tag
-    override val type: String get() = name
+    override val tagName: String get() = name
 
     override fun toJson() = super.toJson().with("value", value)
 

@@ -2,16 +2,21 @@ package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-class ConstantMethodHandleInfo(val referenceKind: Byte, val referenceIndex: UShort) : ConstantInfo(), ConstantUser {
+class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) : ConstantInfo(), ConstantUser {
+
+    lateinit var reference: ConstantInfo
+    val referenceIndex: UShort get() = constantPool.indexOf(reference).toUShort()
 
     override val uses get() = arrayOf(referenceIndex)
 
     override val tag: Byte get() = ConstantMethodHandleInfo.tag
-    override val type: String get() = ConstantMethodHandleInfo.name
+    override val tagName: String get() = ConstantMethodHandleInfo.name
     override fun toJson() = super.toJson().with("type", referenceKind).with("index", referenceIndex)
 
-    fun getIndex(pool: ConstantPool) = pool[referenceIndex.toInt()]
-    fun getValue(pool: ConstantPool) = pool[referenceIndex.toInt()]
+    override fun init(pool: ConstantPool) {
+        super.init(pool)
+        reference = pool[ri]
+    }
 
 
     companion object {

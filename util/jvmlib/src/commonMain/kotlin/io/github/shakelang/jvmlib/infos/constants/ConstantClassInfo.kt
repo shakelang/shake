@@ -2,15 +2,21 @@ package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-class ConstantClassInfo(val valueIndex: UShort) : ConstantInfo(), ConstantUser {
+class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
+
+    lateinit var value: ConstantUtf8Info
+    val valueIndex: UShort get() = constantPool.indexOf(this).toUShort()
 
     override val uses get() = arrayOf(valueIndex)
 
     override val tag: Byte get() = ConstantClassInfo.tag
-    override val type: String get() = name
+    override val tagName: String get() = name
     override fun toJson() = super.toJson().with("value", valueIndex)
 
-    fun getValue(pool: ConstantPool) = pool[valueIndex.toInt()] as ConstantUtf8Info
+    override fun init(pool: ConstantPool) {
+        super.init(pool)
+        value = pool.getUtf8(vi)
+    }
 
     companion object {
         fun contentsFromStream(stream: DataInputStream): ConstantClassInfo {

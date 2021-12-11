@@ -5,7 +5,7 @@ import io.github.shakelang.parseutils.streaming.DataInputStream
 class ConstantLongInfo(val value: Long) : ConstantInfo() {
 
     override val tag: Byte get() = ConstantLongInfo.tag
-    override val type: String get() = name
+    override val tagName: String get() = name
 
     override fun toJson() = super.toJson().with("value", value)
 

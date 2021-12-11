@@ -5,7 +5,12 @@ import io.github.shakelang.parseutils.streaming.DataInputStream
 
 class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo>, ConstantUser {
 
+    init {
+        constants.forEach { it.init(this) }
+    }
+
     private lateinit var clazz: ClassInfo
+    val classInfo : ClassInfo get() = clazz
     val users : Array<ConstantUser> = (constants.filter { it is ConstantUser } as List<ConstantUser>).toTypedArray()
     override val uses: Array<UShort> = users.map { it.uses.toList() }.flatten().toTypedArray()
 
@@ -26,7 +31,7 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo>, Cons
         return constants[index-1]
     }
 
-    fun get(index: UShort): ConstantInfo {
+    operator fun get(index: UShort): ConstantInfo {
         return this[index.toInt()]
     }
 
@@ -64,7 +69,6 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo>, Cons
 
     fun init(clazz: ClassInfo) {
         this.clazz = clazz
-        this.constants.forEach { it.init(clazz) }
     }
 
     override fun toString(): String {

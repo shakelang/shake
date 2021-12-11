@@ -1,6 +1,5 @@
 package io.github.shakelang.jvmlib.infos
 
-import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.streaming.DataInputStream
 import io.github.shakelang.shason.json
@@ -9,7 +8,7 @@ import io.github.shakelang.shason.json
 class InterfaceList(interfaces: Array<UShort>) : List<UShort>, ConstantUser {
 
     override val uses get() = interfaces.toTypedArray()
-    val users = interfaces.map { this }.flatten().toTypedArray()
+    val users get() = interfaces.map { this }.flatten().toTypedArray()
 
     private lateinit var clazz: ClassInfo
 
@@ -40,6 +39,7 @@ class InterfaceList(interfaces: Array<UShort>) : List<UShort>, ConstantUser {
         fun fromStream(stream: DataInputStream): InterfaceList {
             val count = stream.readUnsignedShort()
             val interfaces = Array(count.toInt()) { stream.readUnsignedShort() }
+            println(interfaces)
             return InterfaceList(interfaces)
         }
     }

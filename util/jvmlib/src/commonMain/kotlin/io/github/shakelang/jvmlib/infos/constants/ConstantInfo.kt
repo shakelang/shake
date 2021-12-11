@@ -7,12 +7,14 @@ import io.github.shakelang.shason.json
 
 abstract class ConstantInfo {
 
-    private lateinit var clazz: ClassInfo
+    private lateinit var pool: ConstantPool
+    val constantPool: ConstantPool get() = pool
+    val classInfo: ClassInfo get() = pool.classInfo
 
     abstract val tag: Byte
-    abstract val type: String
+    abstract val tagName: String
 
-    open fun toJson(): Map<String, Any> = mapOf("tag_type" to type, "tag" to tag)
+    open fun toJson(): Map<String, Any> = mapOf("tag_type" to tagName, "tag" to tag)
     override fun toString(): String = json.stringify(toJson())
 
     fun toUtf8(): ConstantUtf8Info = this as ConstantUtf8Info
@@ -30,10 +32,10 @@ abstract class ConstantInfo {
     fun toMethodType(): ConstantMethodTypeInfo = this as ConstantMethodTypeInfo
     fun toInvokeDynamic(): ConstantInvokeDynamicInfo = this as ConstantInvokeDynamicInfo
 
-    fun isUsed(): Boolean = clazz.uses.contains(clazz.constantPool.indexOf(this))
+    fun isUsed(): Boolean = classInfo.uses.contains(classInfo.constantPool.indexOf(this))
 
-    fun init(clazz: ClassInfo) {
-        this.clazz = clazz
+    open fun init(pool: ConstantPool) {
+        this.pool = pool
     }
 
     companion object {

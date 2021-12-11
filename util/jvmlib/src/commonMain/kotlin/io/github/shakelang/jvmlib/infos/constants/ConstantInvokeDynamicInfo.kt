@@ -5,7 +5,7 @@ import io.github.shakelang.parseutils.streaming.DataInputStream
 class ConstantInvokeDynamicInfo : ConstantInfo {
 
     override val tag: Byte get() = ConstantInvokeDynamicInfo.tag
-    override val type: String get() = name
+    override val tagName: String get() = name
 
     val byte0: Byte
     val byte1: Byte
