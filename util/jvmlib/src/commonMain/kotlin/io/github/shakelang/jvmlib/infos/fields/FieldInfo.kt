@@ -15,8 +15,8 @@ class FieldInfo(
     val attributes: AttributeMap,
 ) : ConstantUser {
 
-    val nameIndex get() = classInfo.constantPool.indexOf(name).toUShort()
-    val descriptorIndex get() = classInfo.constantPool.indexOf(descriptor).toUShort()
+    val nameIndex get() = name.index
+    val descriptorIndex get() = descriptor.index
 
     override val uses get() = arrayOf(nameIndex, descriptorIndex, *attributes.uses)
     val users: Array<ConstantUser> get() = arrayOf(this, *attributes.users)

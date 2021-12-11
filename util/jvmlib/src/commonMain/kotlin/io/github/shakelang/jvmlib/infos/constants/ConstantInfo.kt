@@ -11,6 +11,8 @@ abstract class ConstantInfo {
     val constantPool: ConstantPool get() = pool
     val classInfo: ClassInfo get() = pool.classInfo
 
+    val index: UShort get() = constantPool.indexOf(this).toUShort()
+
     abstract val tag: Byte
     abstract val tagName: String
 
