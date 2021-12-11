@@ -13,7 +13,7 @@ class ConstantUtf8Info(val value: String) : ConstantInfo() {
         fun contentsFromStream(stream: DataInputStream): ConstantUtf8Info {
             val length = stream.readUnsignedShort()
             val bytes = stream.readNBytes(length.toInt())
-            val value = bytes.joinToString { it.toInt().toChar().toString() }
+            val value = bytes.joinToString("") { it.toInt().toChar().toString() }
             return ConstantUtf8Info(value)
         }
 
