@@ -1,15 +1,18 @@
 package io.github.shakelang.jvmlib.infos.attributes
 
+import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.getBytes
 import io.github.shakelang.parseutils.bytes.getInt
 import io.github.shakelang.parseutils.bytes.getUnsignedShort
 import io.github.shakelang.parseutils.bytes.toHexString
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-class UnknownAttribute(nameIndex: UShort, name: String, override val bytes: ByteArray) : AttributeInfo(nameIndex, name) {
+class UnknownAttribute(name: ConstantUtf8Info, override val bytes: ByteArray) : AttributeInfo(name) {
 
-    override val uses get() = arrayOf(nameIndex)
+    override val uses: Array<ConstantInfo> get() = arrayOf(name)
+
 
     override fun toJson(): Map<String, Any> = mapOf(
         "name" to name,
@@ -19,24 +22,24 @@ class UnknownAttribute(nameIndex: UShort, name: String, override val bytes: Byte
     companion object {
         fun fromBytes(pool: ConstantPool, bytes: ByteArray): UnknownAttribute {
             val nameIndex = bytes.getUnsignedShort(0)
+            val name = pool.getUtf8(nameIndex)
             val length = bytes.getInt(2)
-            return contentsFromBytes(pool, bytes, nameIndex, length)
+            return contentsFromBytes(pool, bytes, name, length)
         }
 
-        fun contentsFromBytes(pool: ConstantPool, bytes: ByteArray, nameIndex: UShort, length: Int): UnknownAttribute {
-            val name = pool.getUtf8(nameIndex).value
-            return UnknownAttribute(nameIndex, name, bytes.getBytes(6, length))
+        fun contentsFromBytes(pool: ConstantPool, bytes: ByteArray, name: ConstantUtf8Info, length: Int): UnknownAttribute {
+            return UnknownAttribute(name, bytes.getBytes(6, length))
         }
 
         fun fromStream(pool: ConstantPool, stream: DataInputStream): UnknownAttribute {
             val nameIndex = stream.readUnsignedShort()
+            val name = pool.getUtf8(nameIndex)
             val length = stream.readInt()
-            return contentsFromStream(pool, stream, nameIndex, length)
+            return contentsFromStream(pool, stream, name, length)
         }
 
-        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, nameIndex: UShort, length: Int): UnknownAttribute {
-            val name = pool.getUtf8(nameIndex).value
-            return UnknownAttribute(nameIndex, name, stream.readNBytes(length))
+        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, name: ConstantUtf8Info, length: Int): UnknownAttribute {
+            return UnknownAttribute(name, stream.readNBytes(length))
         }
     }
 }

@@ -7,7 +7,7 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
     lateinit var descriptor: ConstantUtf8Info
     val descriptorIndex get() = constantPool.indexOf(descriptor).toUShort()
 
-    override val uses get() = arrayOf(descriptorIndex)
+    override val uses: Array<ConstantInfo> get() = arrayOf(descriptor)
 
     override val tag: Byte get() = ConstantMethodrefInfo.tag
     override val tagName: String get() = ConstantMethodrefInfo.name

@@ -7,7 +7,7 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
     lateinit var reference: ConstantInfo
     val referenceIndex: UShort get() = constantPool.indexOf(reference).toUShort()
 
-    override val uses get() = arrayOf(referenceIndex)
+    override val uses get() = arrayOf(reference)
 
     override val tag: Byte get() = ConstantMethodHandleInfo.tag
     override val tagName: String get() = ConstantMethodHandleInfo.name

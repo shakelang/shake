@@ -2,6 +2,7 @@ package io.github.shakelang.jvmlib.infos
 
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
 import io.github.shakelang.jvmlib.infos.constants.ConstantClassInfo
+import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.fields.FieldList
 import io.github.shakelang.jvmlib.infos.methods.MethodList
@@ -53,13 +54,14 @@ class ClassInfo(
         *attributeInfos.users
     )
 
-    val uses get() = arrayOf(
+    val uses: Array<ConstantInfo>
+        get() = arrayOf(
         *constantPool.uses,
         interfaces.uses,
         *fieldInfos.uses,
         *methodInfos.uses,
         *attributeInfos.uses
-    )
+    ) as Array<ConstantInfo>
 
     init {
         constantPool.init(this)

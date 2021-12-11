@@ -1,5 +1,6 @@
 package io.github.shakelang.jvmlib.infos
 
+import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
@@ -9,8 +10,7 @@ import io.github.shakelang.shason.json
 
 class InterfaceList(interfaces: Array<ConstantUtf8Info>) : List<ConstantUtf8Info>, ConstantUser {
 
-    override val uses get() = interfaces.map { classInfo.constantPool.constants.indexOf(it).toUShort() }.toTypedArray()
-    val users get() = interfaces.map { this }.flatten().toTypedArray()
+    override val uses: Array<ConstantInfo> get() = interfaces.toTypedArray()
 
     private lateinit var clazz: ClassInfo
     val classInfo : ClassInfo get() = clazz

@@ -54,8 +54,8 @@ class MethodInfo(
     val nameIndex: UShort get() = name.index
     val descriptorIndex: UShort get() = descriptor.index
 
-    override val uses get() = arrayOf(nameIndex, descriptorIndex, *attributes.uses)
-    val users: Array<ConstantUser> get() = arrayOf(this, *attributes.users)
+    override val uses get() = arrayOf(name, descriptor, *attributes.uses)
+    override val users: Array<ConstantUser> get() = arrayOf(this, *attributes.users)
 
     private lateinit var clazz: ClassInfo
 

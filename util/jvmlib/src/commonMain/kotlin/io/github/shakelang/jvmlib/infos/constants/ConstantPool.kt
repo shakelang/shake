@@ -11,8 +11,8 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo>, Cons
 
     private lateinit var clazz: ClassInfo
     val classInfo : ClassInfo get() = clazz
-    val users : Array<ConstantUser> = (constants.filter { it is ConstantUser } as List<ConstantUser>).toTypedArray()
-    override val uses: Array<UShort> = users.map { it.uses.toList() }.flatten().toTypedArray()
+    override val uses : Array<ConstantInfo> = users.map { it.uses.toList() }.flatten().toTypedArray()
+    override val users: Array<ConstantUser> get() = constants.filter { it is ConstantUser }.map { it as ConstantUser }.toTypedArray()
 
     constructor(constants: Array<ConstantInfo>) : this(constants.toList())
 

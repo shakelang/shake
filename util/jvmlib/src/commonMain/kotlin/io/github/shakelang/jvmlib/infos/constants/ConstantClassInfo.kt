@@ -7,7 +7,7 @@ class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
     lateinit var value: ConstantUtf8Info
     val valueIndex: UShort get() = constantPool.indexOf(this).toUShort()
 
-    override val uses get() = arrayOf(valueIndex)
+    override val uses: Array<ConstantInfo> get() = arrayOf(value)
 
     override val tag: Byte get() = ConstantClassInfo.tag
     override val tagName: String get() = name

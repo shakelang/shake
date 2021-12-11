@@ -3,11 +3,14 @@ package io.github.shakelang.jvmlib.infos.attributes
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
+import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.parseutils.streaming.ByteArrayInputStream
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-abstract class AttributeInfo (val nameIndex: UShort, val name: String) : ConstantUser {
+abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
+
+    val nameIndex get() = name.index
 
     private lateinit var clazz: ClassInfo
 
@@ -32,12 +35,12 @@ abstract class AttributeInfo (val nameIndex: UShort, val name: String) : Constan
 
         fun fromStream(pool: ConstantPool, stream: DataInputStream): AttributeInfo {
             val nameIndex = stream.readUnsignedShort()
-            val name = pool.getUtf8(nameIndex).value
+            val name = pool.getUtf8(nameIndex)
             val length = stream.readInt()
-            return when (name) {
-                "ConstantValue" -> AttributeConstantValue.contentsFromStream(pool, stream, nameIndex)
-                "Code" -> AttributeCode.contentsFromStream(pool, stream, nameIndex)
-                else -> UnknownAttribute.contentsFromStream(pool, stream, nameIndex, length)
+            return when (name.value) {
+                "ConstantValue" -> AttributeConstantValue.contentsFromStream(pool, stream, name)
+                "Code" -> AttributeCode.contentsFromStream(pool, stream, name)
+                else -> UnknownAttribute.contentsFromStream(pool, stream, name, length)
             }
         }
     }

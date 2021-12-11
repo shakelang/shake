@@ -1,21 +1,23 @@
 package io.github.shakelang.jvmlib.infos.attributes
 
+import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
 class AttributeCode(
 
-    nameIndex: UShort,
+    name: ConstantUtf8Info,
     val max_stack: UShort,
     val max_locals: UShort,
     val code: ByteArray,
     val exception_table: Array<ExceptionTableEntry>,
     val attributes: Array<AttributeInfo>
 
-): AttributeInfo(nameIndex, ATTRIBUTE_CODE) {
+): AttributeInfo(name) {
 
-    override val uses get() = arrayOf(nameIndex)
+    override val uses: Array<ConstantInfo> get() = arrayOf(name)
 
     override val bytes: ByteArray
         get() {
@@ -47,7 +49,7 @@ class AttributeCode(
 
     companion object {
         const val ATTRIBUTE_CODE = "Code"
-        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, nameIndex: UShort): AttributeCode {
+        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, name: ConstantUtf8Info): AttributeCode {
             val max_stack = stream.readUnsignedShort()
             val max_locals = stream.readUnsignedShort()
             val code_length = stream.readInt()
@@ -61,7 +63,7 @@ class AttributeCode(
                 fromStream(pool, stream)
             }
             return AttributeCode(
-                nameIndex,
+                name,
                 max_stack,
                 max_locals,
                 code,

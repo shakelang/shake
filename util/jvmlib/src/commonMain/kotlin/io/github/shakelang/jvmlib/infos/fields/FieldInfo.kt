@@ -2,6 +2,7 @@ package io.github.shakelang.jvmlib.infos.fields
 
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
+import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
@@ -45,8 +46,8 @@ class FieldInfo(
     val nameIndex get() = name.index
     val descriptorIndex get() = descriptor.index
 
-    override val uses get() = arrayOf(nameIndex, descriptorIndex, *attributes.uses)
-    val users: Array<ConstantUser> get() = arrayOf(this, *attributes.users)
+    override val uses: Array<ConstantInfo> get() = arrayOf(name, descriptor, *attributes.uses)
+    override val users: Array<ConstantUser> get() = arrayOf(this, *attributes.users)
 
     private lateinit var clazz: ClassInfo
     val classInfo: ClassInfo get() = clazz

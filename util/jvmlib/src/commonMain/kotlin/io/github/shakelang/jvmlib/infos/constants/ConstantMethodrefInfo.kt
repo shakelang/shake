@@ -10,7 +10,7 @@ class ConstantMethodrefInfo(private val cri: UShort, val ntri: UShort) : Constan
     val classRefIndex: UShort get() = constantPool.indexOf(classRef).toUShort()
     val nameTypeRefIndex: UShort get() = constantPool.indexOf(nameTypeRef).toUShort()
 
-    override val uses get() = arrayOf(classRefIndex, nameTypeRefIndex)
+    override val uses: Array<ConstantInfo> get() = arrayOf(classRef, nameTypeRef)
 
     override val tag: Byte get() = ConstantMethodrefInfo.tag
     override val tagName: String get() = name

@@ -1,18 +1,22 @@
 package io.github.shakelang.jvmlib.infos.attributes
 
+import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
+import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.toBytes
 import io.github.shakelang.parseutils.bytes.toUnsignedShort
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
 class AttributeConstantValue (
 
-    attributeNameIndex: UShort,
-    val constantValueIndex: UShort
+    attributeName: ConstantUtf8Info,
+    val constantValue: ConstantInfo
 
-) : AttributeInfo(attributeNameIndex, TAG) {
+) : AttributeInfo(attributeName) {
 
-    override val uses get() = arrayOf(nameIndex, constantValueIndex)
+
+    override val uses: Array<ConstantInfo> get() = arrayOf(name, constantValue)
+    val constantValueIndex: UShort get() = constantValue.index
 
     override val bytes: ByteArray
         get() = constantValueIndex.toBytes()
@@ -25,14 +29,16 @@ class AttributeConstantValue (
 
     companion object {
         const val TAG = "ConstantValue"
-        fun fromBytes(tagIndex: UShort, bytes: ByteArray): AttributeConstantValue {
+        fun fromBytes(pool: ConstantPool, tagIndex: ConstantUtf8Info, bytes: ByteArray): AttributeConstantValue {
             val constantValueIndex = bytes.toUnsignedShort()
-            return AttributeConstantValue(tagIndex, constantValueIndex)
+            val constantValue = pool[constantValueIndex]
+            return AttributeConstantValue(tagIndex, constantValue)
         }
 
-        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, nameIndex: UShort): AttributeConstantValue {
+        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, name: ConstantUtf8Info): AttributeConstantValue {
             val constantValueIndex = stream.readUnsignedShort()
-            return AttributeConstantValue(nameIndex, constantValueIndex)
+            val constantValue = pool[constantValueIndex]
+            return AttributeConstantValue(name, constantValue)
         }
     }
 }

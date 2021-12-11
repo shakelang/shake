@@ -15,7 +15,7 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
         get() = constantPool.indexOf(name).toUShort()
 
 
-    override val uses get() = arrayOf(typeIndex, nameIndex)
+    override val uses: Array<ConstantInfo> get() = arrayOf(type, name)
 
     override val tag: Byte get() = ConstantNameAndTypeInfo.tag
     override val tagName: String get() = ConstantNameAndTypeInfo.name
