@@ -1,6 +1,7 @@
 package io.github.shakelang.jvmlib.infos
 
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
+import io.github.shakelang.jvmlib.infos.constants.ConstantClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.fields.FieldList
 import io.github.shakelang.jvmlib.infos.methods.MethodList
@@ -12,8 +13,8 @@ class ClassInfo(
     val majorVersion: UShort,
     val constantPool: ConstantPool,
     val accessFlags: UShort,
-    val thisClass: UShort,
-    val superClass: UShort,
+    val thisClass: ConstantClassInfo,
+    val superClass: ConstantClassInfo,
     val interfaces: InterfaceList,
     val fieldInfos: FieldList,
     val methodInfos: MethodList,
@@ -92,8 +93,10 @@ class ClassInfo(
             val majorVersion = stream.readUnsignedShort()
             val constantPool = ConstantPool.fromStream(stream)
             val accessFlags = stream.readUnsignedShort()
-            val thisClass = stream.readUnsignedShort()
-            val superClass = stream.readUnsignedShort()
+            val thisClassIndex = stream.readUnsignedShort()
+            val thisClass = constantPool.getClass(thisClassIndex)
+            val superClassIndex = stream.readUnsignedShort()
+            val superClass = constantPool.getClass(superClassIndex)
             val interfaces = InterfaceList.fromStream(constantPool, stream)
             val fieldInfos = FieldList.fromStream(constantPool, stream)
             val methodInfos = MethodList.fromStream(constantPool, stream)
