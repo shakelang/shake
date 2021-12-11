@@ -15,6 +15,42 @@ class MethodInfo(
     val attributes: AttributeMap
 ) : ConstantUser {
 
+    val isPublic: Boolean
+        get() = accessFlags.toInt() and 0x0001 != 0
+
+    val isPrivate: Boolean
+        get() = accessFlags.toInt() and 0x0002 != 0
+
+    val isProtected: Boolean
+        get() = accessFlags.toInt() and 0x0004 != 0
+
+    val isStatic: Boolean
+        get() = accessFlags.toInt() and 0x0008 != 0
+
+    val isFinal: Boolean
+        get() = accessFlags.toInt() and 0x0010 != 0
+
+    val isSynchronized: Boolean
+        get() = accessFlags.toInt() and 0x0020 != 0
+
+    val isBridge: Boolean
+        get() = accessFlags.toInt() and 0x0040 != 0
+
+    val isVarargs: Boolean
+        get() = accessFlags.toInt() and 0x0080 != 0
+
+    val isNative: Boolean
+        get() = accessFlags.toInt() and 0x0100 != 0
+
+    val isAbstract: Boolean
+        get() = accessFlags.toInt() and 0x0400 != 0
+
+    val isStrict: Boolean
+        get() = accessFlags.toInt() and 0x0800 != 0
+
+    val isSynthetic: Boolean
+        get() = accessFlags.toInt() and 0x1000 != 0
+
     val nameIndex: UShort get() = name.index
     val descriptorIndex: UShort get() = descriptor.index
 

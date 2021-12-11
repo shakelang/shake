@@ -9,11 +9,38 @@ import io.github.shakelang.parseutils.streaming.DataInputStream
 import io.github.shakelang.shason.json
 
 class FieldInfo(
-    val access_flags: UShort,
+    val accessFlags: UShort,
     val name: ConstantUtf8Info,
     val descriptor: ConstantUtf8Info,
     val attributes: AttributeMap,
 ) : ConstantUser {
+
+    val isPublic: Boolean
+        get() = accessFlags.toInt() and 0x0001 != 0
+
+    val isPrivate: Boolean
+        get() = accessFlags.toInt() and 0x0002 != 0
+
+    val isProtected: Boolean
+        get() = accessFlags.toInt() and 0x0004 != 0
+
+    val isStatic: Boolean
+        get() = accessFlags.toInt() and 0x0008 != 0
+
+    val isFinal: Boolean
+        get() = accessFlags.toInt() and 0x0010 != 0
+
+    val isVolatile: Boolean
+        get() = accessFlags.toInt() and 0x0040 != 0
+
+    val isTransient: Boolean
+        get() = accessFlags.toInt() and 0x0080 != 0
+
+    val isSynthetic: Boolean
+        get() = accessFlags.toInt() and 0x1000 != 0
+
+    val isEnum: Boolean
+        get() = accessFlags.toInt() and 0x4000 != 0
 
     val nameIndex get() = name.index
     val descriptorIndex get() = descriptor.index
@@ -27,7 +54,7 @@ class FieldInfo(
     override fun toString() = json.stringify(toJson())
 
     fun toJson() = mapOf(
-        "access_flags" to access_flags,
+        "access_flags" to accessFlags,
         "name_index" to name,
         "descriptor_index" to descriptor,
         "attributes" to attributes.toJson()

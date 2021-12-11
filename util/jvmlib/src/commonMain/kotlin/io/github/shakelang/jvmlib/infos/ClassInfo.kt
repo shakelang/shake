@@ -20,7 +20,31 @@ class ClassInfo(
     val attributeInfos: AttributeMap
 ) {
 
-    val users = arrayOf(
+    val isPublic: Boolean
+        get() = accessFlags.toInt() and 0x0001 != 0
+
+    val isFinal: Boolean
+        get() = accessFlags.toInt() and 0x0010 != 0
+
+    val isSuper: Boolean
+        get() = accessFlags.toInt() and 0x0020 != 0
+
+    val isInterface: Boolean
+        get() = accessFlags.toInt() and 0x0200 != 0
+
+    val isAbstract: Boolean
+        get() = accessFlags.toInt() and 0x0400 != 0
+
+    val isSynthetic: Boolean
+        get() = accessFlags.toInt() and 0x1000 != 0
+
+    val isAnnotation: Boolean
+        get() = accessFlags.toInt() and 0x2000 != 0
+
+    val isEnum: Boolean
+        get() = accessFlags.toInt() and 0x4000 != 0
+
+    val users get() = arrayOf(
         *constantPool.users,
         interfaces,
         *fieldInfos.users,
