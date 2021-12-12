@@ -1,12 +1,18 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
 
     override val tag: Byte get() = ConstantDoubleInfo.tag
     override val tagName: String get() = name
     override fun toJson() = super.toJson().with("value", value)
+
+    override fun dumpTo(out: DataOutputStream) {
+        out.write(tag)
+        out.write(value)
+    }
 
     companion object {
         fun contentsFromStream(stream: DataInputStream): ConstantDoubleInfo {

@@ -1,6 +1,7 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) : ConstantInfo(), ConstantUser {
 
@@ -16,6 +17,12 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
     override fun init(pool: ConstantPool) {
         super.init(pool)
         reference = pool[ri]
+    }
+
+    override fun dumpTo(out: DataOutputStream) {
+        out.write(tag)
+        out.write(referenceKind)
+        out.write(referenceIndex)
     }
 
 

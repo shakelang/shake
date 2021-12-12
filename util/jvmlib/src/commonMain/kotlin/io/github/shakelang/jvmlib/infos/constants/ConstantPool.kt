@@ -2,6 +2,7 @@ package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<ConstantInfo>, ConstantUser {
 
@@ -479,6 +480,13 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
             unused = filter { !used.contains(it) }
             removeAll(unused)
         } while (unused.isNotEmpty())
+    }
+
+    fun dumpTo(out: DataOutputStream) {
+        out.write(constants.size)
+        for (constant in constants) {
+            constant.dumpTo(out)
+        }
     }
 
     companion object {

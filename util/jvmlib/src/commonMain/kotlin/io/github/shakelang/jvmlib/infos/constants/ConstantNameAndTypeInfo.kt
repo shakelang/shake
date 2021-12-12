@@ -1,6 +1,7 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : ConstantInfo(), ConstantUser {
 
@@ -28,6 +29,11 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
         super.init(pool)
         type = pool[ti] as ConstantUtf8Info
         name = pool[ni] as ConstantUtf8Info
+    }
+
+    override fun dumpTo(out: DataOutputStream) {
+        out.write(tag)
+        out.write(typeIndex)
     }
 
     companion object {

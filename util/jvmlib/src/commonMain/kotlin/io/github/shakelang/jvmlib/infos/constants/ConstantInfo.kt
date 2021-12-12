@@ -2,6 +2,8 @@ package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 import io.github.shakelang.shason.json
 
 
@@ -40,6 +42,14 @@ abstract class ConstantInfo {
     open fun init(pool: ConstantPool) {
         this.pool = pool
     }
+
+    open fun toBytes(): ByteArray {
+        val arr = ByteArrayOutputStream()
+        val out = DataOutputStream(arr)
+        this.dumpTo(out)
+        return arr.toByteArray()
+    }
+    abstract fun dumpTo(out: DataOutputStream)
 
     companion object {
 

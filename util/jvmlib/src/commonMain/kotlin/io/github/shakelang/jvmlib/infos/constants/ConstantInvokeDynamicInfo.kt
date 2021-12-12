@@ -1,6 +1,7 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantInvokeDynamicInfo(
     val bootstrapMethodAttributeIndex: UShort,
@@ -15,6 +16,12 @@ class ConstantInvokeDynamicInfo(
     override fun toJson() = super.toJson()
         .with("bootstrapMethodAttributeIndex", bootstrapMethodAttributeIndex)
         .with("nameAndTypeIndex", nameAndTypeIndex)
+
+    override fun dumpTo(out: DataOutputStream) {
+        out.write(tag)
+        out.write(bootstrapMethodAttributeIndex)
+        out.write(nameAndTypeIndex)
+    }
 
     companion object {
         fun contentsFromStream(stream: DataInputStream): ConstantInvokeDynamicInfo {

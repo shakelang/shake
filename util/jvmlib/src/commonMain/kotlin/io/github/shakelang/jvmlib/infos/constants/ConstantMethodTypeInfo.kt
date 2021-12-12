@@ -1,6 +1,7 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
 
@@ -20,6 +21,11 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
     override fun init(pool: ConstantPool) {
         super.init(pool)
         descriptor = pool.getUtf8(di.toInt())
+    }
+
+    override fun dumpTo(out: DataOutputStream) {
+        out.write(tag)
+        out.write(descriptorIndex)
     }
 
     companion object {

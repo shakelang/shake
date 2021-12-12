@@ -1,6 +1,7 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantInterfaceMethodrefInfo(private val cri: UShort, val ntri: UShort) : ConstantInfo(), ConstantUser {
 
@@ -21,6 +22,12 @@ class ConstantInterfaceMethodrefInfo(private val cri: UShort, val ntri: UShort) 
         super.init(pool)
         classRef = pool.getClass(cri)
         nameTypeRef = pool.getNameAndType(ntri)
+    }
+
+    override fun dumpTo(out: DataOutputStream) {
+        out.write(tag)
+        out.write(classRefIndex)
+        out.write(nameTypeRefIndex)
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantStringInfo(private val si: UShort) : ConstantInfo(), ConstantUser {
 
@@ -18,6 +19,11 @@ class ConstantStringInfo(private val si: UShort) : ConstantInfo(), ConstantUser 
     override fun init(pool: ConstantPool) {
         super.init(pool)
         string = pool.getUtf8(si)
+    }
+
+    override fun dumpTo(out: DataOutputStream) {
+        out.write(tag)
+        out.write(stringIndex)
     }
 
     companion object {
