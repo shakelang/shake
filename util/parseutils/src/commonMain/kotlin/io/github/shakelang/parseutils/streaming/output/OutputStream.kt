@@ -1,6 +1,6 @@
 package io.github.shakelang.parseutils.streaming.output
 
-expect abstract class OutputStream {
+expect abstract class OutputStream() {
 
     /**
      * Writes the specified byte to this output stream. The general
