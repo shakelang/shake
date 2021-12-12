@@ -8,8 +8,8 @@ class ConstantInterfaceMethodrefInfo(private val cri: UShort, val ntri: UShort) 
     lateinit var classRef: ConstantClassInfo
     lateinit var nameTypeRef: ConstantNameAndTypeInfo
 
-    val classRefIndex: UShort get() = constantPool.indexOf(classRef).toUShort()
-    val nameTypeRefIndex: UShort get() = constantPool.indexOf(nameTypeRef).toUShort()
+    val classRefIndex: UShort get() = classRef.index
+    val nameTypeRefIndex: UShort get() = nameTypeRef.index
 
     override val uses: Array<ConstantInfo> get() = arrayOf(classRef, nameTypeRef)
 

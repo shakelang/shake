@@ -6,7 +6,7 @@ import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) : ConstantInfo(), ConstantUser {
 
     lateinit var reference: ConstantInfo
-    val referenceIndex: UShort get() = constantPool.indexOf(reference).toUShort()
+    val referenceIndex: UShort get() = reference.index
 
     override val uses get() = arrayOf(reference)
 

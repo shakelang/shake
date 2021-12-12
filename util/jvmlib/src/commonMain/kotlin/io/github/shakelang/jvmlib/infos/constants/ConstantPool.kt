@@ -483,7 +483,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun dump(out: DataOutputStream) {
-        out.writeInt(constants.size)
+        out.writeUnsignedShort((constants.size + 1).toUShort())
         for (constant in constants) {
             constant.dump(out)
         }

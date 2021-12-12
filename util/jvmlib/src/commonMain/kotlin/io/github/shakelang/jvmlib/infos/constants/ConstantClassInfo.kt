@@ -6,7 +6,7 @@ import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
 
     lateinit var value: ConstantUtf8Info
-    val valueIndex: UShort get() = constantPool.indexOf(this).toUShort()
+    val valueIndex: UShort get() = value.index
 
     override val uses: Array<ConstantInfo> get() = arrayOf(value)
 

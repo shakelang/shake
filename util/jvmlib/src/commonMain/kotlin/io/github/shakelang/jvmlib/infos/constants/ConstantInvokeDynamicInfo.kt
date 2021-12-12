@@ -9,7 +9,7 @@ class ConstantInvokeDynamicInfo(
 ) : ConstantInfo() {
 
     lateinit var nameAndType: ConstantNameAndTypeInfo
-    val nameAndTypeIndex: UShort get() = constantPool.indexOf(nameAndType).toUShort()
+    val nameAndTypeIndex: UShort get() = nameAndType.index
 
     override val tag: Byte get() = ConstantInvokeDynamicInfo.tag
     override val tagName: String get() = name

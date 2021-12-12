@@ -8,12 +8,8 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
     lateinit var type: ConstantUtf8Info
     lateinit var name: ConstantUtf8Info
 
-    val typeIndex: UShort
-        get() = constantPool.indexOf(type).toUShort()
-
-
-    val nameIndex: UShort
-        get() = constantPool.indexOf(name).toUShort()
+    val typeIndex: UShort get() = type.index
+    val nameIndex: UShort get() = name.index
 
 
     override val uses: Array<ConstantInfo> get() = arrayOf(type, name)

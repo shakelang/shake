@@ -14,6 +14,7 @@ fun main(args: Array<String>) {
     if (!output.exists()) output.createNewFile()
     val out = BufferedOutputStream(FileOutputStream(output))
     clazz.dump(out)
+    println(clazz)
 
     out.flush()
     out.close()

@@ -6,7 +6,7 @@ import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
 
     lateinit var descriptor: ConstantUtf8Info
-    val descriptorIndex get() = constantPool.indexOf(descriptor).toUShort()
+    val descriptorIndex get() = descriptor.index
 
     override val uses: Array<ConstantInfo> get() = arrayOf(descriptor)
 
