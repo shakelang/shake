@@ -473,6 +473,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         return constants.set(index, element)
     }
 
+    @Deprecated("DON'T USE THIS METHOD, IT CORRUPTS THE CLASS FILE")
     fun clean() {
         lateinit var unused: List<ConstantInfo>
         do {

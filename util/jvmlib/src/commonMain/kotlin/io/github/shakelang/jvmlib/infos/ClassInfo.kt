@@ -58,12 +58,16 @@ class ClassInfo(
 
     val uses: Array<ConstantInfo>
         get() = arrayOf(
-        *constantPool.uses,
-        interfaces.uses,
-        *fieldInfos.uses,
-        *methodInfos.uses,
-        *attributeInfos.uses
-    ) as Array<ConstantInfo>
+            constantPool[1],
+            constantPool[constantPool.size],
+            thisClass,
+            superClass,
+            *constantPool.uses,
+            *interfaces.uses,
+            *fieldInfos.uses,
+            *methodInfos.uses,
+            *attributeInfos.uses
+        )
 
     init {
         constantPool.init(this)

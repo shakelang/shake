@@ -13,8 +13,8 @@ fun main(args: Array<String>) {
 
     if (!output.exists()) output.createNewFile()
     val out = BufferedOutputStream(FileOutputStream(output))
-    clazz.dump(out)
     println(clazz)
+    clazz.dump(out)
 
     out.flush()
     out.close()
