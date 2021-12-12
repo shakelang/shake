@@ -34,7 +34,8 @@ abstract class ConstantInfo {
     fun toMethodType(): ConstantMethodTypeInfo = this as ConstantMethodTypeInfo
     fun toInvokeDynamic(): ConstantInvokeDynamicInfo = this as ConstantInvokeDynamicInfo
 
-    val isUsed: Boolean get() = classInfo.uses.contains(this)
+    val isUsed: Boolean get() = isUsed(classInfo.uses)
+    fun isUsed(used: Array<ConstantInfo>): Boolean = used.contains(this)
 
     open fun init(pool: ConstantPool) {
         this.pool = pool

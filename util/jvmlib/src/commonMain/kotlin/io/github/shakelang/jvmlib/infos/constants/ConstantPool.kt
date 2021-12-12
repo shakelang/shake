@@ -3,7 +3,10 @@ package io.github.shakelang.jvmlib.infos.constants
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.parseutils.streaming.DataInputStream
 
-class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo>, ConstantUser {
+class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<ConstantInfo>, ConstantUser {
+
+    constructor() : this(mutableListOf())
+    constructor(constants: List<ConstantInfo>) : this(constants.toMutableList())
 
     init {
         constants.forEach { it.init(this) }
@@ -43,7 +46,7 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo>, Cons
         return constants.isEmpty()
     }
 
-    override fun iterator(): Iterator<ConstantInfo> {
+    override fun iterator(): MutableIterator<ConstantInfo> {
         return constants.iterator()
     }
 
@@ -51,15 +54,15 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo>, Cons
         return constants.lastIndexOf(element)
     }
 
-    override fun listIterator(): ListIterator<ConstantInfo> {
+    override fun listIterator(): MutableListIterator<ConstantInfo> {
         return constants.listIterator()
     }
 
-    override fun listIterator(index: Int): ListIterator<ConstantInfo> {
+    override fun listIterator(index: Int): MutableListIterator<ConstantInfo> {
         return constants.listIterator(index)
     }
 
-    override fun subList(fromIndex: Int, toIndex: Int): List<ConstantInfo> {
+    override fun subList(fromIndex: Int, toIndex: Int): MutableList<ConstantInfo> {
         return constants.subList(fromIndex, toIndex)
     }
 
@@ -105,6 +108,54 @@ class ConstantPool(val constants: List<ConstantInfo>) : List<ConstantInfo>, Cons
     fun getMethodType(nameIndex: UShort) = this.getMethodType(nameIndex.toInt())
     fun getInvokeDynamic(nameIndex: UShort) = this.getInvokeDynamic(nameIndex.toInt())
 
+    override fun add(element: ConstantInfo): Boolean {
+        return constants.add(element)
+    }
+
+    override fun add(index: Int, element: ConstantInfo) {
+        constants.add(index, element)
+    }
+
+    override fun addAll(index: Int, elements: Collection<ConstantInfo>): Boolean {
+        return constants.addAll(index, elements)
+    }
+
+    override fun addAll(elements: Collection<ConstantInfo>): Boolean {
+        return constants.addAll(elements)
+    }
+
+    override fun clear() {
+        constants.clear()
+    }
+
+    override fun remove(element: ConstantInfo): Boolean {
+        return constants.remove(element)
+    }
+
+    override fun removeAll(elements: Collection<ConstantInfo>): Boolean {
+        return constants.removeAll(elements)
+    }
+
+    override fun removeAt(index: Int): ConstantInfo {
+        return constants.removeAt(index)
+    }
+
+    override fun retainAll(elements: Collection<ConstantInfo>): Boolean {
+        return constants.retainAll(elements)
+    }
+
+    override fun set(index: Int, element: ConstantInfo): ConstantInfo {
+        return constants.set(index, element)
+    }
+
+    fun clean() {
+        lateinit var unused: List<ConstantInfo>
+        do {
+            val used = classInfo.uses
+            unused = filter { !used.contains(it) }
+            removeAll(unused)
+        } while (unused.isNotEmpty())
+    }
 
     companion object {
         fun fromStream(stream: DataInputStream): ConstantPool {
