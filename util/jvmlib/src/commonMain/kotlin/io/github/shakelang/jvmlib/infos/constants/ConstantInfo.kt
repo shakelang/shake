@@ -46,10 +46,10 @@ abstract class ConstantInfo {
     open fun toBytes(): ByteArray {
         val arr = ByteArrayOutputStream()
         val out = DataOutputStream(arr)
-        this.dumpTo(out)
+        this.dump(out)
         return arr.toByteArray()
     }
-    abstract fun dumpTo(out: DataOutputStream)
+    abstract fun dump(out: DataOutputStream)
 
     companion object {
 

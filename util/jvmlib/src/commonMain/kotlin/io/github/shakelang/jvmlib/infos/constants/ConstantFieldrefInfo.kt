@@ -24,7 +24,7 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
         nameTypeRef = pool.getNameAndType(ntri)
     }
 
-    override fun dumpTo(out: DataOutputStream) {
+    override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
         out.writeUnsignedShort(classRefIndex)
         out.writeUnsignedShort(nameTypeRefIndex)

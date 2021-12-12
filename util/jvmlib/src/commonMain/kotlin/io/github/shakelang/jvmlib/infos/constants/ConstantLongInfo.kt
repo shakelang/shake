@@ -10,7 +10,7 @@ class ConstantLongInfo(val value: Long) : ConstantInfo() {
 
     override fun toJson() = super.toJson().with("value", value)
 
-    override fun dumpTo(out: DataOutputStream) {
+    override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
         out.writeLong(value)
     }

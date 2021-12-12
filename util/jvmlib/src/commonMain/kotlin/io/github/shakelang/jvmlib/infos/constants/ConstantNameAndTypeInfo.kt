@@ -31,7 +31,7 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
         name = pool[ni] as ConstantUtf8Info
     }
 
-    override fun dumpTo(out: DataOutputStream) {
+    override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
         out.writeUnsignedShort(typeIndex)
     }

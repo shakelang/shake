@@ -482,10 +482,10 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         } while (unused.isNotEmpty())
     }
 
-    fun dumpTo(out: DataOutputStream) {
+    fun dump(out: DataOutputStream) {
         out.writeInt(constants.size)
         for (constant in constants) {
-            constant.dumpTo(out)
+            constant.dump(out)
         }
     }
 

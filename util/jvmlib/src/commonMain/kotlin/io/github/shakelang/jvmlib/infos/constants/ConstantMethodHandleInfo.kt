@@ -19,7 +19,7 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
         reference = pool[ri]
     }
 
-    override fun dumpTo(out: DataOutputStream) {
+    override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
         out.writeByte(referenceKind)
         out.writeUnsignedShort(referenceIndex)

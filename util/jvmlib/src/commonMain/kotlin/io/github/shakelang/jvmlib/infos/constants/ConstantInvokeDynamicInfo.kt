@@ -17,7 +17,7 @@ class ConstantInvokeDynamicInfo(
         .with("bootstrapMethodAttributeIndex", bootstrapMethodAttributeIndex)
         .with("nameAndTypeIndex", nameAndTypeIndex)
 
-    override fun dumpTo(out: DataOutputStream) {
+    override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
         out.writeUnsignedShort(bootstrapMethodAttributeIndex)
         out.writeUnsignedShort(nameAndTypeIndex)

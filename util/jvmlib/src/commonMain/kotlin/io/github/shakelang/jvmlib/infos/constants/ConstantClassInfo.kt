@@ -19,7 +19,7 @@ class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
         value = pool.getUtf8(vi)
     }
 
-    override fun dumpTo(out: DataOutputStream) {
+    override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
         out.writeUnsignedShort(valueIndex)
     }

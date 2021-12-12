@@ -23,7 +23,7 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
         descriptor = pool.getUtf8(di.toInt())
     }
 
-    override fun dumpTo(out: DataOutputStream) {
+    override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
         out.writeUnsignedShort(descriptorIndex)
     }

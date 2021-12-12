@@ -9,7 +9,7 @@ class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
     override val tagName: String get() = name
     override fun toJson() = super.toJson().with("value", value)
 
-    override fun dumpTo(out: DataOutputStream) {
+    override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
         out.writeDouble(value)
     }
