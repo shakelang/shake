@@ -40,7 +40,7 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantMethodTypeInfo"
+        const val name = "constant_methodtype_info"
         const val tag = ConstantTags.CONSTANT_METHODTYPE
     }
 

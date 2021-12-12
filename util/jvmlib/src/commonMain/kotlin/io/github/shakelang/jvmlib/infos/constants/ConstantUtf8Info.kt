@@ -29,7 +29,7 @@ class ConstantUtf8Info(val value: String) : ConstantInfo() {
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantUtf8Info"
+        const val name = "constant_utf8_info"
         const val tag = ConstantTags.CONSTANT_UTF8
     }
 

@@ -26,7 +26,7 @@ class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantDoubleInfo"
+        const val name = "constant_double_info"
         const val tag = ConstantTags.CONSTANT_DOUBLE
     }
 

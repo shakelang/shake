@@ -38,7 +38,7 @@ class ConstantStringInfo(private val si: UShort) : ConstantInfo(), ConstantUser 
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantStringInfo"
+        const val name = "constant_string_info"
         const val tag = ConstantTags.CONSTANT_STRING
     }
 

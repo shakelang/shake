@@ -27,7 +27,7 @@ class ConstantFloatInfo(val value: Float) : ConstantInfo() {
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantFloatInfo"
+        const val name = "constant_float_info"
         const val tag = ConstantTags.CONSTANT_FLOAT
     }
 

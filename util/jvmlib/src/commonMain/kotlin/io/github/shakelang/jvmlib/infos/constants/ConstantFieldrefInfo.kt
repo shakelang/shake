@@ -43,7 +43,7 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantFieldrefInfo"
+        const val name = "constant_fieldref_info"
         const val tag = ConstantTags.CONSTANT_FIELD_REF
     }
 

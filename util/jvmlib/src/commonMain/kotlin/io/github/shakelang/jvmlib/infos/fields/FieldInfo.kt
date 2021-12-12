@@ -57,8 +57,10 @@ class FieldInfo(
 
     fun toJson() = mapOf(
         "access_flags" to accessFlags,
-        "name_index" to name,
-        "descriptor_index" to descriptor,
+        "name" to name.toJson(),
+        "name_index" to nameIndex,
+        "descriptor" to descriptor.toJson(),
+        "descriptor_index" to descriptorIndex,
         "attributes" to attributes.toJson()
     )
 

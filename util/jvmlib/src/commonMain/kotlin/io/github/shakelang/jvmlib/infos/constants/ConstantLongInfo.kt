@@ -27,7 +27,7 @@ class ConstantLongInfo(val value: Long) : ConstantInfo() {
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantLongInfo"
+        const val name = "constant_long_info"
         const val tag = ConstantTags.CONSTANT_LONG
     }
 

@@ -80,7 +80,7 @@ class ClassInfo(
         "accessFlags" to accessFlags,
         "thisClass" to thisClass.toJson(),
         "superClass" to superClass.toJson(),
-        "interfaces" to interfaces,
+        "interfaces" to interfaces.toJson(),
         "fieldInfos" to fieldInfos.toJson(),
         "methodInfos" to methodInfos.toJson(),
         "attributeInfos" to attributeInfos.toJson()
@@ -90,7 +90,6 @@ class ClassInfo(
 
     fun dump(out: OutputStream) = this.dump(DataOutputStream(out))
     fun dump(out: DataOutputStream) {
-        println(magic.toUInt().toString(16))
         out.writeInt(magic)
         out.writeUnsignedShort(minorVersion)
         out.writeUnsignedShort(majorVersion)

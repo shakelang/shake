@@ -34,7 +34,7 @@ class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantClassInfo"
+        const val name = "constant_class_info"
         const val tag = ConstantTags.CONSTANT_CLASS
     }
 

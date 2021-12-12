@@ -63,9 +63,11 @@ class MethodInfo(
     override fun toString(): String = json.stringify(toJson())
 
     fun toJson() = mapOf(
-        "name" to name,
-        "descriptor" to descriptor,
-        "accessFlags" to accessFlags,
+        "access_flags" to accessFlags,
+        "name" to name.toJson(),
+        "name_index" to nameIndex,
+        "descriptor" to descriptor.toJson(),
+        "descriptor_index" to descriptorIndex,
         "attributes" to attributes.toJson()
     )
 

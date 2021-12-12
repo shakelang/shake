@@ -43,7 +43,7 @@ class ConstantInterfaceMethodrefInfo(private val cri: UShort, val ntri: UShort) 
             return contentsFromStream(stream)
         }
 
-        const val name: String = "ConstantInterfaceMethodrefInfo"
+        const val name: String = "constant_interface_methodref_info"
         const val tag: Byte = ConstantTags.CONSTANT_INTERFACE_METHOD_REF
     }
 

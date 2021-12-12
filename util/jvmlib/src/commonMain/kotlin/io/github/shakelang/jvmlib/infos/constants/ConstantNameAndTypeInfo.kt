@@ -46,7 +46,7 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantNameAndTypeInfo"
+        const val name = "constant_name_and_type_info"
         const val tag = ConstantTags.CONSTANT_NAME_AND_TYPE
     }
 

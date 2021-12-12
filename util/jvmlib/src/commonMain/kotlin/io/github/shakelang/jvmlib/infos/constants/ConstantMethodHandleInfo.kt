@@ -39,7 +39,7 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantMethodHandleInfo"
+        const val name = "constant_method_handle_info"
         const val tag = ConstantTags.CONSTANT_METHOD_HANDLE
     }
 

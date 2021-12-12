@@ -43,7 +43,7 @@ class ConstantMethodrefInfo(private val cri: UShort, val ntri: UShort) : Constan
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantMethodrefInfo"
+        const val name = "constant_methodref_info"
         const val tag = ConstantTags.CONSTANT_METHOD_REF
     }
 

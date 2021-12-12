@@ -27,7 +27,7 @@ class ConstantIntegerInfo(val value: Int) : ConstantInfo() {
             return contentsFromStream(stream)
         }
 
-        const val name: String = "ConstantIntegerInfo"
+        const val name: String = "constant_integer_info"
         const val tag: Byte = ConstantTags.CONSTANT_INTEGER
     }
 

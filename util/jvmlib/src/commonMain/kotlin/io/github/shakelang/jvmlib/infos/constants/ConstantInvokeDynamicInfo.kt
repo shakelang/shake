@@ -37,7 +37,7 @@ class ConstantInvokeDynamicInfo(
             return contentsFromStream(stream)
         }
 
-        const val name = "ConstantInvokeDynamicInfo"
+        const val name = "constant_invoke_dynamic"
         const val tag = ConstantTags.CONSTANT_INVOKE_DYNAMIC
     }
 
