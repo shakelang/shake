@@ -6,7 +6,7 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
 
-class AttributeCode(
+class AttributeCodeInfo(
 
     name: ConstantUtf8Info,
     val max_stack: UShort,
@@ -48,7 +48,7 @@ class AttributeCode(
 
     companion object {
         const val ATTRIBUTE_CODE = "Code"
-        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, name: ConstantUtf8Info): AttributeCode {
+        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, name: ConstantUtf8Info): AttributeCodeInfo {
             val max_stack = stream.readUnsignedShort()
             val max_locals = stream.readUnsignedShort()
             val code_length = stream.readInt()
@@ -61,7 +61,7 @@ class AttributeCode(
             val attributes = Array(attributes_count.toInt()) {
                 fromStream(pool, stream)
             }
-            return AttributeCode(
+            return AttributeCodeInfo(
                 name,
                 max_stack,
                 max_locals,

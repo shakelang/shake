@@ -41,9 +41,9 @@ abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
             val name = pool.getUtf8(nameIndex)
             val length = stream.readInt()
             return when (name.value) {
-                "ConstantValue" -> AttributeConstantValue.contentsFromStream(pool, stream, name)
-                "Code" -> AttributeCode.contentsFromStream(pool, stream, name)
-                else -> UnknownAttribute.contentsFromStream(pool, stream, name, length)
+                "ConstantValue" -> AttributeConstantValueInfo.contentsFromStream(pool, stream, name)
+                "Code" -> AttributeCodeInfo.contentsFromStream(pool, stream, name)
+                else -> AttributeUnknownInfo.contentsFromStream(pool, stream, name, length)
             }
         }
     }

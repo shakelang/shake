@@ -7,7 +7,7 @@ import io.github.shakelang.parseutils.bytes.toBytes
 import io.github.shakelang.parseutils.bytes.toUnsignedShort
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
 
-class AttributeConstantValue (
+class AttributeConstantValueInfo (
 
     attributeName: ConstantUtf8Info,
     val constantValue: ConstantInfo
@@ -29,16 +29,16 @@ class AttributeConstantValue (
 
     companion object {
         const val TAG = "ConstantValue"
-        fun fromBytes(pool: ConstantPool, tagIndex: ConstantUtf8Info, bytes: ByteArray): AttributeConstantValue {
+        fun fromBytes(pool: ConstantPool, tagIndex: ConstantUtf8Info, bytes: ByteArray): AttributeConstantValueInfo {
             val constantValueIndex = bytes.toUnsignedShort()
             val constantValue = pool[constantValueIndex]
-            return AttributeConstantValue(tagIndex, constantValue)
+            return AttributeConstantValueInfo(tagIndex, constantValue)
         }
 
-        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, name: ConstantUtf8Info): AttributeConstantValue {
+        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, name: ConstantUtf8Info): AttributeConstantValueInfo {
             val constantValueIndex = stream.readUnsignedShort()
             val constantValue = pool[constantValueIndex]
-            return AttributeConstantValue(name, constantValue)
+            return AttributeConstantValueInfo(name, constantValue)
         }
     }
 }
