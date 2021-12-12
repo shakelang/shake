@@ -6,7 +6,6 @@ import io.github.shakelang.parseutils.streaming.DataInputStream
 class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<ConstantInfo>, ConstantUser {
 
     constructor() : this(mutableListOf())
-    constructor(constants: List<ConstantInfo>) : this(constants.toMutableList())
 
     init {
         constants.forEach { it.init(this) }
@@ -17,7 +16,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     override val uses : Array<ConstantInfo> = users.map { it.uses.toList() }.flatten().toTypedArray()
     override val users: Array<ConstantUser> get() = constants.filter { it is ConstantUser }.map { it as ConstantUser }.toTypedArray()
 
-    constructor(constants: Array<ConstantInfo>) : this(constants.toList())
+    constructor(constants: Array<ConstantInfo>) : this(constants.toMutableList())
 
     override val size: Int
         get() = constants.size
@@ -107,6 +106,331 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun getMethodHandle(nameIndex: UShort) = this.getMethodHandle(nameIndex.toInt())
     fun getMethodType(nameIndex: UShort) = this.getMethodType(nameIndex.toInt())
     fun getInvokeDynamic(nameIndex: UShort) = this.getInvokeDynamic(nameIndex.toInt())
+
+    fun findUtf8(name: String): ConstantUtf8Info? {
+        for(constant in constants) {
+            if(constant is ConstantUtf8Info) {
+                if(constant.value == name) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findClass(value: ConstantUtf8Info): ConstantClassInfo? {
+        for(constant in constants) {
+            if(constant is ConstantClassInfo) {
+                if(constant.value == value) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findClass(value: String): ConstantClassInfo? {
+        for(constant in constants) {
+            if(constant is ConstantClassInfo) {
+                if(constant.value.value == value) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findFieldRef(classRef: ConstantClassInfo, nameTypeRef: ConstantNameAndTypeInfo): ConstantFieldrefInfo? {
+        for(constant in constants) {
+            if(constant is ConstantFieldrefInfo) {
+                if(constant.classRef == classRef && constant.nameTypeRef == nameTypeRef) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findFieldRef(classRef: ConstantClassInfo, name: String, descriptor: String): ConstantFieldrefInfo? {
+        for(constant in constants) {
+            if(constant is ConstantFieldrefInfo) {
+                if(constant.classRef == classRef
+                    && constant.nameTypeRef.name.value == name
+                    && constant.nameTypeRef.type.value == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findFieldRef(classRef: String, name: String, descriptor: String): ConstantFieldrefInfo? {
+        for(constant in constants) {
+            if(constant is ConstantFieldrefInfo) {
+                if(constant.classRef.value.value == classRef
+                    && constant.nameTypeRef.name.value == name
+                    && constant.nameTypeRef.type.value == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findMethodRef(classRef: ConstantClassInfo, nameTypeRef: ConstantNameAndTypeInfo): ConstantMethodrefInfo? {
+        for(constant in constants) {
+            if(constant is ConstantMethodrefInfo) {
+                if(constant.classRef == classRef && constant.nameTypeRef == nameTypeRef) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findMethodRef(classRef: ConstantClassInfo, name: String, descriptor: String): ConstantMethodrefInfo? {
+        for(constant in constants) {
+            if(constant is ConstantMethodrefInfo) {
+                if(constant.classRef == classRef
+                    && constant.nameTypeRef.name.value == name
+                    && constant.nameTypeRef.type.value == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findMethodRef(classRef: String, name: String, descriptor: String): ConstantMethodrefInfo? {
+        for(constant in constants) {
+            if(constant is ConstantMethodrefInfo) {
+                if(constant.classRef.value.value == classRef
+                    && constant.nameTypeRef.name.value == name
+                    && constant.nameTypeRef.type.value == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findInterfaceMethodRef(classRef: ConstantClassInfo, nameTypeRef: ConstantNameAndTypeInfo): ConstantInterfaceMethodrefInfo? {
+        for(constant in constants) {
+            if(constant is ConstantInterfaceMethodrefInfo) {
+                if(constant.classRef == classRef && constant.nameTypeRef == nameTypeRef) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findInterfaceMethodRef(classRef: ConstantClassInfo, name: String, descriptor: String): ConstantInterfaceMethodrefInfo? {
+        for(constant in constants) {
+            if(constant is ConstantInterfaceMethodrefInfo) {
+                if(constant.classRef == classRef
+                    && constant.nameTypeRef.name.value == name
+                    && constant.nameTypeRef.type.value == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findInterfaceMethodRef(classRef: String, name: String, descriptor: String): ConstantInterfaceMethodrefInfo? {
+        for(constant in constants) {
+            if(constant is ConstantInterfaceMethodrefInfo) {
+                if(constant.classRef.value.value == classRef
+                    && constant.nameTypeRef.name.value == name
+                    && constant.nameTypeRef.type.value == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findString(value: ConstantUtf8Info): ConstantStringInfo? {
+        for(constant in constants) {
+            if(constant is ConstantStringInfo) {
+                if(constant.string == value) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findString(value: String): ConstantStringInfo? {
+        for(constant in constants) {
+            if(constant is ConstantStringInfo) {
+                if(constant.string.value == value) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findInteger(value: Int): ConstantIntegerInfo? {
+        for(constant in constants) {
+            if(constant is ConstantIntegerInfo) {
+                if(constant.value == value) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findFloat(value: Float): ConstantFloatInfo? {
+        for(constant in constants) {
+            if(constant is ConstantFloatInfo) {
+                if(constant.value == value) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findLong(value: Long): ConstantLongInfo? {
+        for(constant in constants) {
+            if(constant is ConstantLongInfo) {
+                if(constant.value == value) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findDouble(value: Double): ConstantDoubleInfo? {
+        for(constant in constants) {
+            if(constant is ConstantDoubleInfo) {
+                if(constant.value == value) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findNameAndType(name: ConstantUtf8Info, descriptor: ConstantUtf8Info): ConstantNameAndTypeInfo? {
+        for(constant in constants) {
+            if(constant is ConstantNameAndTypeInfo) {
+                if(constant.name == name && constant.type == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findNameAndType(name: String, descriptor: String): ConstantNameAndTypeInfo? {
+        for(constant in constants) {
+            if(constant is ConstantNameAndTypeInfo) {
+                if(constant.name.value == name && constant.type.value == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findMethodHandle(referenceKind: Byte, reference: ConstantInfo): ConstantMethodHandleInfo? {
+        for(constant in constants) {
+            if(constant is ConstantMethodHandleInfo) {
+                if(constant.referenceKind == referenceKind && constant.reference == reference) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findMethodType(descriptor: ConstantUtf8Info): ConstantMethodTypeInfo? {
+        for(constant in constants) {
+            if(constant is ConstantMethodTypeInfo) {
+                if(constant.descriptor == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findMethodType(descriptor: String): ConstantMethodTypeInfo? {
+        for(constant in constants) {
+            if(constant is ConstantMethodTypeInfo) {
+                if(constant.descriptor.value == descriptor) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+    fun findInvokeDynamic(bootstrapMethod: UShort, nameAndType: ConstantNameAndTypeInfo): ConstantInvokeDynamicInfo? {
+        for(constant in constants) {
+            if(constant is ConstantInvokeDynamicInfo) {
+                if(constant.bootstrapMethodAttributeIndex == bootstrapMethod && constant.nameAndType == nameAndType) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
+
+
+
+    fun expectUtf8(value: String): ConstantUtf8Info
+        = findUtf8(value) ?: throw Exception("No utf8 constant found for value: $value")
+
+    fun expectClass(value: String): ConstantClassInfo
+        = findClass(value) ?: throw Exception("No class constant found for value: $value")
+
+    fun expectFieldRef(classRef: String, name: String, descriptor: String): ConstantFieldrefInfo
+        = findFieldRef(classRef, name, descriptor) ?: throw Exception("No fieldref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")
+
+    fun expectMethodRef(classRef: String, name: String, descriptor: String): ConstantMethodrefInfo
+        = findMethodRef(classRef, name, descriptor) ?: throw Exception("No methodref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")
+
+    fun expectInterfaceMethodRef(classRef: String, name: String, descriptor: String): ConstantInterfaceMethodrefInfo
+        = findInterfaceMethodRef(classRef, name, descriptor) ?: throw Exception("No interface methodref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")
+
+    fun expectString(value: String): ConstantStringInfo
+        = findString(value) ?: throw Exception("No string constant found for value: $value")
+
+    fun expectInteger(value: Int): ConstantIntegerInfo
+        = findInteger(value) ?: throw Exception("No integer constant found for value: $value")
+
+    fun expectFloat(value: Float): ConstantFloatInfo
+        = findFloat(value) ?: throw Exception("No float constant found for value: $value")
+
+    fun expectLong(value: Long): ConstantLongInfo
+        = findLong(value) ?: throw Exception("No long constant found for value: $value")
+
+    fun expectDouble(value: Double): ConstantDoubleInfo
+        = findDouble(value) ?: throw Exception("No double constant found for value: $value")
+
+    fun expectNameAndType(name: String, descriptor: String): ConstantNameAndTypeInfo
+        = findNameAndType(name, descriptor) ?: throw Exception("No name and type constant found for name: $name, descriptor: $descriptor")
+
+    fun expectNameAndType(name: ConstantUtf8Info, descriptor: ConstantUtf8Info): ConstantNameAndTypeInfo
+        = findNameAndType(name, descriptor) ?: throw Exception("No name and type constant found for name: $name, descriptor: $descriptor")
+
+    fun expectMethodHandle(referenceKind: Byte, reference: ConstantInfo): ConstantMethodHandleInfo
+        = findMethodHandle(referenceKind, reference) ?: throw Exception("No method handle constant found for referenceKind: $referenceKind, reference: $reference")
+
+    fun expectMethodType(descriptor: ConstantUtf8Info): ConstantMethodTypeInfo
+        = findMethodType(descriptor) ?: throw Exception("No method type constant found for descriptor: $descriptor")
+
+    fun expectInvokeDynamic(bootstrapMethod: UShort, nameAndType: ConstantNameAndTypeInfo): ConstantInvokeDynamicInfo
+        = findInvokeDynamic(bootstrapMethod, nameAndType) ?: throw Exception("No invoke dynamic constant found for bootstrapMethod: $bootstrapMethod, nameAndType: $nameAndType")
+
 
     override fun add(element: ConstantInfo): Boolean {
         return constants.add(element)
