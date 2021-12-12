@@ -5,6 +5,7 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 import io.github.shakelang.shason.json
 
 class FieldList(fields: Array<FieldInfo>) : List<FieldInfo>, ConstantUser {
@@ -37,6 +38,11 @@ class FieldList(fields: Array<FieldInfo>) : List<FieldInfo>, ConstantUser {
 
     fun toJson() = fields.map { it.toJson() }
     override fun toString() = json.stringify(toJson())
+
+    fun dump(out: DataOutputStream) {
+        out.writeUnsignedShort(fields.size.toUShort())
+        fields.forEach { it.dump(out) }
+    }
 
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): FieldList {

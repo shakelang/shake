@@ -7,6 +7,7 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 import io.github.shakelang.shason.json
 
 class FieldInfo(
@@ -64,6 +65,13 @@ class FieldInfo(
     fun init(clazz: ClassInfo) {
         this.clazz = clazz
         this.attributes.init(clazz)
+    }
+
+    fun dump(out: DataOutputStream) {
+        out.writeUnsignedShort(accessFlags)
+        out.writeUnsignedShort(nameIndex)
+        out.writeUnsignedShort(descriptorIndex)
+        attributes.dump(out)
     }
 
     companion object {
