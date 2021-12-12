@@ -11,8 +11,8 @@ class ConstantFloatInfo(val value: Float) : ConstantInfo() {
     override fun toJson() = super.toJson().with("value", value)
 
     override fun dumpTo(out: DataOutputStream) {
-        out.write(tag)
-        out.write(value)
+        out.writeByte(tag)
+        out.writeFloat(value)
     }
 
     companion object {

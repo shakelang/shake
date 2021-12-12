@@ -10,8 +10,8 @@ class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
     override fun toJson() = super.toJson().with("value", value)
 
     override fun dumpTo(out: DataOutputStream) {
-        out.write(tag)
-        out.write(value)
+        out.writeByte(tag)
+        out.writeDouble(value)
     }
 
     companion object {

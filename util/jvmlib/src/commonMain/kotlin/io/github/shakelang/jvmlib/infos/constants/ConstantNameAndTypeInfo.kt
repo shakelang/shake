@@ -32,8 +32,8 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
     }
 
     override fun dumpTo(out: DataOutputStream) {
-        out.write(tag)
-        out.write(typeIndex)
+        out.writeByte(tag)
+        out.writeUnsignedShort(typeIndex)
     }
 
     companion object {

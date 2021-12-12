@@ -483,7 +483,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun dumpTo(out: DataOutputStream) {
-        out.write(constants.size)
+        out.writeInt(constants.size)
         for (constant in constants) {
             constant.dumpTo(out)
         }

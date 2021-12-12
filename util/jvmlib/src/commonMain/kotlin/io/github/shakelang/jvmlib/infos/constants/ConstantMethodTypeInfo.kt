@@ -24,8 +24,8 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
     }
 
     override fun dumpTo(out: DataOutputStream) {
-        out.write(tag)
-        out.write(descriptorIndex)
+        out.writeByte(tag)
+        out.writeUnsignedShort(descriptorIndex)
     }
 
     companion object {

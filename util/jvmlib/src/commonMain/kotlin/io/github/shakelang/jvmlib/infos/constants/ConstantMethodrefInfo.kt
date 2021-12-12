@@ -25,9 +25,9 @@ class ConstantMethodrefInfo(private val cri: UShort, val ntri: UShort) : Constan
     }
 
     override fun dumpTo(out: DataOutputStream) {
-        out.write(tag)
-        out.write(classRefIndex)
-        out.write(nameTypeRefIndex)
+        out.writeByte(tag)
+        out.writeUnsignedShort(classRefIndex)
+        out.writeUnsignedShort(nameTypeRefIndex)
     }
 
     companion object {

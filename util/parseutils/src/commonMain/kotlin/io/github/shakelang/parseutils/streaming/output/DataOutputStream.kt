@@ -6,6 +6,10 @@ class DataOutputStream(
     val output: OutputStream
 ) : OutputStream() {
 
+    override fun write(b: Int) {
+        output.write(b)
+    }
+
     override fun flush() {
         output.flush()
     }
@@ -14,260 +18,222 @@ class DataOutputStream(
         output.close()
     }
 
-    fun write(b: Boolean) {
-        output.write(if (b) 1 else 0)
+    fun writeBoolean(b: Boolean) {
+        write(if (b) 1 else 0)
     }
 
-    fun write(b: Byte) {
-        output.write(b.toInt())
-    }
-
-    fun write(b: Short) {
-        output.write(b.toBytes())
-    }
-
-    override fun write(b: Int) {
-        output.write(b.toBytes())
-    }
-
-    fun write(b: Long) {
-        output.write(b.toBytes())
-    }
-
-    fun write(b: Float) {
-        output.write(b.toBytes())
-    }
-
-    fun write(b: Double) {
-        output.write(b.toBytes())
-    }
-
-    fun write(b: UByte) {
-        write(b.toByte())
-    }
-
-    fun write(b: UShort) {
-        write(b.toShort())
-    }
-
-    fun write(b: UInt) {
+    fun writeByte(b: Byte) {
         write(b.toInt())
     }
 
-    fun write(b: ULong) {
-        write(b.toLong())
+    fun writeShort(b: Short) {
+        write(b.toBytes())
     }
 
-    fun write(b: Char) {
-        write(b.code.toUByte())
+    fun writeInt(b: Int) {
+        write(b.toBytes())
     }
 
-    fun write(b: BooleanArray) {
-        b.forEach { write(it) }
+    fun writeLong(b: Long) {
+        write(b.toBytes())
     }
 
-    fun write(b: BooleanArray, off: Int, len: Int) {
+    fun writeFloat(b: Float) {
+        write(b.toBytes())
+    }
+
+    fun writeDouble(b: Double) {
+        write(b.toBytes())
+    }
+
+    fun writeUnsignedByte(b: UByte) {
+        writeByte(b.toByte())
+    }
+
+    fun writeUnsignedShort(b: UShort) {
+        writeShort(b.toShort())
+    }
+
+    fun writeUnsignedInt(b: UInt) {
+        writeInt(b.toInt())
+    }
+
+    fun writeUnsignedLong(b: ULong) {
+        writeLong(b.toLong())
+    }
+
+    fun writeChar(b: Char) {
+        writeUnsignedByte(b.code.toUByte())
+    }
+
+    fun writeBooleanArray(b: BooleanArray) {
+        b.forEach { writeBoolean(it) }
+    }
+
+    fun writeBooleanArray(b: BooleanArray, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeBoolean(b[i])
         }
     }
 
-    override fun write(b: ByteArray) {
-        output.write(b)
+    fun writeByteArray(b: ByteArray) {
+        write(b)
     }
 
-    override fun write(b: ByteArray, off: Int, len: Int) {
-        output.write(b, off, len)
+    fun writeByteArray(b: ByteArray, off: Int, len: Int) {
+        write(b, off, len)
     }
 
-    fun write(b: ShortArray) {
-        b.forEach { write(it) }
+    fun writeShortArray(b: ShortArray) {
+        b.forEach { writeShort(it) }
     }
 
-    fun write(b: ShortArray, off: Int, len: Int) {
+    fun writeShortArray(b: ShortArray, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeShort(b[i])
         }
     }
 
-    fun write(b: IntArray) {
-        b.forEach { write(it) }
+    fun writeIntArray(b: IntArray) {
+        b.forEach { writeInt(it) }
     }
 
-    fun write(b: IntArray, off: Int, len: Int) {
+    fun writeIntArray(b: IntArray, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeInt(b[i])
         }
     }
 
-    fun write(b: LongArray) {
-        b.forEach { write(it) }
+    fun writeLongArray(b: LongArray) {
+        b.forEach { writeLong(it) }
     }
 
-    fun write(b: LongArray, off: Int, len: Int) {
+    fun writeLongArray(b: LongArray, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeLong(b[i])
         }
     }
 
-    fun write(b: FloatArray) {
-        b.forEach { write(it) }
+    fun writeFloatArray(b: FloatArray) {
+        b.forEach { writeFloat(it) }
     }
 
-    fun write(b: FloatArray, off: Int, len: Int) {
+    fun writeFloatArray(b: FloatArray, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeFloat(b[i])
         }
     }
 
-    fun write(b: DoubleArray) {
-        b.forEach { write(it) }
+    fun writeDoubleArray(b: DoubleArray) {
+        b.forEach { writeDouble(it) }
     }
 
-    fun write(b: DoubleArray, off: Int, len: Int) {
+    fun writeDoubleArray(b: DoubleArray, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeDouble(b[i])
         }
     }
 
-    fun write(b: CharArray) {
-        b.forEach { write(it) }
+    fun writeCharArray(b: CharArray) {
+        b.forEach { writeChar(it) }
     }
 
-    fun write(b: CharArray, off: Int, len: Int) {
+    fun writeCharArray(b: CharArray, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeChar(b[i])
         }
     }
 
-    fun write(b: Array<UByte>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<UByte>, off: Int, len: Int) {
+    fun writeUnsignedByteArray(b: Array<UByte>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeUnsignedByte(b[i])
         }
     }
 
-    fun write(b: Array<UShort>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<UShort>, off: Int, len: Int) {
+    fun writeUnsignedShortArray(b: Array<UShort>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeUnsignedShort(b[i])
         }
     }
 
-    fun write(b: Array<UInt>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<UInt>, off: Int, len: Int) {
+    fun writeUnsignedIntArray(b: Array<UInt>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeUnsignedInt(b[i])
         }
     }
 
-    fun write(b: Array<ULong>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<ULong>, off: Int, len: Int) {
+    fun writeUnsignedLongArray(b: Array<ULong>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeUnsignedLong(b[i])
         }
     }
 
-    fun write(b: Array<Char>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<Char>, off: Int, len: Int) {
+    fun writeCharArray(b: Array<Char>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeChar(b[i])
         }
     }
 
-    fun write(b: Array<Boolean>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<Boolean>, off: Int, len: Int) {
+    fun writeBooleanArray(b: Array<Boolean>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeBoolean(b[i])
         }
     }
 
-    fun write(b: Array<Byte>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<Byte>, off: Int, len: Int) {
+    fun writeByteArray(b: Array<Byte>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeByte(b[i])
         }
     }
 
-    fun write(b: Array<Short>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<Short>, off: Int, len: Int) {
+    fun writeShortArray(b: Array<Short>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeShort(b[i])
         }
     }
 
-    fun write(b: Array<Int>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<Int>, off: Int, len: Int) {
+    fun writeIntArray(b: Array<Int>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeInt(b[i])
         }
     }
 
-    fun write(b: Array<Long>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<Long>, off: Int, len: Int) {
+    fun writeLongArray(b: Array<Long>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeLong(b[i])
         }
     }
 
-    fun write(b: Array<Float>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<Float>, off: Int, len: Int) {
+    fun writeFloatArray(b: Array<Float>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeFloat(b[i])
         }
     }
 
-    fun write(b: Array<Double>) {
-        b.forEach { write(it) }
-    }
-
-    fun write(b: Array<Double>, off: Int, len: Int) {
+    fun writeDoubleArray(b: Array<Double>, off: Int, len: Int) {
         for (i in off until off + len) {
-            write(b[i])
+            writeDouble(b[i])
         }
     }
 
-    fun write(b: CharSequence) {
-        b.forEach { write(it) }
+    fun writeUTF(str: CharSequence) {
+        val bytes = str.toBytes()
+        writeUnsignedShort(bytes.size.toUShort())
+        writeByteArray(bytes)
     }
 
-    fun write(b: CharSequence, off: Int, len: Int) {
-        b.forEachIndexed { i, c ->
-            if (i >= off && i < off + len) write(c)
-        }
+    fun writeUTF(str: CharSequence, off: Int, len: Int) {
+        val bytes = str.toBytes()
+        writeUnsignedShort(len.toUShort())
+        writeByteArray(bytes, off, len)
+    }
+
+    fun writeString(s: CharSequence) {
+        writeUTF(s)
+    }
+
+    fun writeString(s: CharSequence, off: Int, len: Int) {
+        writeUTF(s, off, len)
     }
 
 }

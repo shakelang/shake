@@ -20,9 +20,9 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
     }
 
     override fun dumpTo(out: DataOutputStream) {
-        out.write(tag)
-        out.write(referenceKind)
-        out.write(referenceIndex)
+        out.writeByte(tag)
+        out.writeByte(referenceKind)
+        out.writeUnsignedShort(referenceIndex)
     }
 
 

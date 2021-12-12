@@ -20,8 +20,8 @@ class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
     }
 
     override fun dumpTo(out: DataOutputStream) {
-        out.write(tag)
-        out.write(valueIndex)
+        out.writeByte(tag)
+        out.writeUnsignedShort(valueIndex)
     }
 
     companion object {

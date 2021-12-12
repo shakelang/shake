@@ -11,8 +11,8 @@ class ConstantIntegerInfo(val value: Int) : ConstantInfo() {
     override fun toJson() = super.toJson().with("value", value)
 
     override fun dumpTo(out: DataOutputStream) {
-        out.write(tag)
-        out.write(value)
+        out.writeByte(tag)
+        out.writeInt(value)
     }
 
     companion object {

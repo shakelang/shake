@@ -22,8 +22,8 @@ class ConstantStringInfo(private val si: UShort) : ConstantInfo(), ConstantUser 
     }
 
     override fun dumpTo(out: DataOutputStream) {
-        out.write(tag)
-        out.write(stringIndex)
+        out.writeByte(tag)
+        out.writeUnsignedShort(stringIndex)
     }
 
     companion object {
