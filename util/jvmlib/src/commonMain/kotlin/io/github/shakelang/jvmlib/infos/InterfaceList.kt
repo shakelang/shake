@@ -5,6 +5,7 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 import io.github.shakelang.shason.json
 
 
@@ -37,6 +38,13 @@ class InterfaceList(interfaces: Array<ConstantUtf8Info>) : List<ConstantUtf8Info
 
     fun toJson() = interfaces.toList()
     override fun toString() = json.stringify(toJson())
+
+    fun dump(out: DataOutputStream) {
+        out.writeUnsignedShort(interfaces.size.toUShort())
+        interfaces.forEach {
+            out.writeUnsignedShort(it.index)
+        }
+    }
 
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): InterfaceList {
