@@ -1,4 +1,4 @@
-package io.github.shakelang.parseutils.streaming
+package io.github.shakelang.parseutils.streaming.input
 
 class ByteArrayInputStream(
     private var buf: ByteArray

@@ -5,7 +5,7 @@ import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.parseutils.streaming.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.DataInputStream
 import io.github.shakelang.shason.json
 
 class MethodInfo(

@@ -4,7 +4,7 @@ import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
-import io.github.shakelang.parseutils.streaming.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.DataInputStream
 import io.github.shakelang.shason.json
 
 class MethodList(methods: Array<MethodInfo>) : List<MethodInfo>, ConstantUser {

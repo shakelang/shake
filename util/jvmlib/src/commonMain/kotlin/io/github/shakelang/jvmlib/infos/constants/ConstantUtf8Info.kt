@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.infos.constants
 
-import io.github.shakelang.parseutils.streaming.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.DataInputStream
 
 class ConstantUtf8Info(val value: String) : ConstantInfo() {
 

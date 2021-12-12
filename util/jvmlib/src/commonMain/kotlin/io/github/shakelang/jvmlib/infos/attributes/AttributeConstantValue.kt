@@ -5,7 +5,7 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.toBytes
 import io.github.shakelang.parseutils.bytes.toUnsignedShort
-import io.github.shakelang.parseutils.streaming.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.DataInputStream
 
 class AttributeConstantValue (
 

@@ -1,4 +1,4 @@
-package io.github.shakelang.parseutils.streaming
+package io.github.shakelang.parseutils.streaming.input
 
 class CountingInputStream (private val data: InputStream) : InputStream() {
     private var count = 0L

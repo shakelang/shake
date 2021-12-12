@@ -7,7 +7,7 @@ import io.github.shakelang.parseutils.bytes.getBytes
 import io.github.shakelang.parseutils.bytes.getInt
 import io.github.shakelang.parseutils.bytes.getUnsignedShort
 import io.github.shakelang.parseutils.bytes.toHexString
-import io.github.shakelang.parseutils.streaming.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.DataInputStream
 
 class UnknownAttribute(name: ConstantUtf8Info, override val bytes: ByteArray) : AttributeInfo(name) {
 
