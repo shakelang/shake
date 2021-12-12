@@ -17,7 +17,7 @@ class AttributeCodeInfo(
 
 ): AttributeInfo(name) {
 
-    override val uses: Array<ConstantInfo> get() = arrayOf(name)
+    override val uses: Array<ConstantInfo> get() = arrayOf(name, *attributes.flatMap { it.uses.toList() }.toTypedArray())
 
     override val bytes: ByteArray
         get() {

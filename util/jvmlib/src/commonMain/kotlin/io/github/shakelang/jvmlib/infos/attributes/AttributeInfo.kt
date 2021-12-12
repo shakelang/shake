@@ -43,6 +43,7 @@ abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
             return when (name.value) {
                 "ConstantValue" -> AttributeConstantValueInfo.contentsFromStream(pool, stream, name)
                 "Code" -> AttributeCodeInfo.contentsFromStream(pool, stream, name)
+                "StackMapTable" -> AttributeStackMapTableInfo.contentsFromStream(stream, name)
                 else -> AttributeUnknownInfo.contentsFromStream(pool, stream, name, length)
             }
         }
