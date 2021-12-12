@@ -8,6 +8,7 @@ import io.github.shakelang.jvmlib.infos.fields.FieldList
 import io.github.shakelang.jvmlib.infos.methods.MethodList
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
+import io.github.shakelang.parseutils.streaming.output.OutputStream
 import io.github.shakelang.shason.json
 
 class ClassInfo(
@@ -87,7 +88,9 @@ class ClassInfo(
 
     override fun toString() = json.stringify(toJson())
 
+    fun dump(out: OutputStream) = this.dump(DataOutputStream(out))
     fun dump(out: DataOutputStream) {
+        println(magic.toUInt().toString(16))
         out.writeInt(magic)
         out.writeUnsignedShort(minorVersion)
         out.writeUnsignedShort(majorVersion)

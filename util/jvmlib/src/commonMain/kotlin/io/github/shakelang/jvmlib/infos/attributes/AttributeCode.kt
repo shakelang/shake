@@ -21,19 +21,18 @@ class AttributeCode(
 
     override val bytes: ByteArray
         get() {
-            val b = ByteArray(2 + 2 + 4 + code.size + 2 + exception_table.size * 8 + 2)
-            b.setUnsignedShort(0, max_stack)
-            b.setUnsignedShort(2, max_locals)
-            b.setInt(4, code.size)
-            b.setBytes(8, code)
-            b.setUnsignedShort(8 + code.size, exception_table.size.toUShort())
-            for (i in exception_table.indices) {
-                b.setBytes(8 + code.size + 2 + i * 8, exception_table[i].toBytes())
+            val attributes = this.attributes.map { it.toBytes().toList() }.flatten().toByteArray()
+            val b = ByteArray(12 + code.size + exception_table.size * 8 + attributes.size)
+            b.setUnsignedShort(0, max_stack) // 2
+            b.setUnsignedShort(2, max_locals) // 2
+            b.setInt(4, code.size) // 2
+            b.setBytes(8, code) // code.size
+            b.setUnsignedShort(8 + code.size, exception_table.size.toUShort()) // 2
+            for (i in exception_table.indices) { // 8 * exception_table.size
+                b.setBytes(10 + code.size + i * 8, exception_table[i].toBytes())
             }
-            b.setUnsignedShort(8 + code.size + 2 + exception_table.size * 8, attributes.size.toUShort())
-            for (i in attributes.indices) {
-                b.setBytes(8 + code.size + 2 + exception_table.size * 8 + 2 + i * 2, attributes[i].toBytes())
-            }
+            b.setUnsignedShort(8 + code.size + 2 + exception_table.size * 8, attributes.size.toUShort()) // 2
+            b.setBytes(12 + code.size + exception_table.size * 8, attributes) // attributes.size
             return b
         }
 

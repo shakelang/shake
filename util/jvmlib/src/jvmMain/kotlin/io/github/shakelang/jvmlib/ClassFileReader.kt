@@ -4,10 +4,18 @@ import java.io.*
 
 @Throws(IOException::class)
 fun main(args: Array<String>) {
-    if (args.size != 1) throw Error("Need class file as first argument, and not more than one argument")
-    val f = File(args[0])
-    if (!f.exists()) throw Error("This class-file does not exist!")
-    val inputStream: InputStream = BufferedInputStream(FileInputStream(f))
+    if (args.size != 2) throw Error("Need class file as first and second argument, and not more than two arguments")
+    val input = File(args[0])
+    val output = File(args[1])
+    if (!input.exists()) throw Error("This class-file does not exist!")
+    val inputStream: InputStream = BufferedInputStream(FileInputStream(input))
     val clazz = ClassFileReader.readClass(inputStream)
-    println(clazz.toString())
+
+    if (!output.exists()) output.createNewFile()
+    val out = BufferedOutputStream(FileOutputStream(output))
+    clazz.dump(out)
+
+    out.flush()
+    out.close()
+
 }
