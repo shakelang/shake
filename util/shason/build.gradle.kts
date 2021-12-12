@@ -1,4 +1,4 @@
-group = "io.github.shakelang.shason"
+group = "io.github.shakelang.shake.util.shason"
 version = "0.1.0"
 description = "A json parser implemented in kotlin (mpp)"
 java.sourceCompatibility = JavaVersion.VERSION_1_8

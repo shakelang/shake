@@ -5,7 +5,7 @@ plugins {
     id("maven-publish")
 }
 
-group = "io.github.shakelang.parseutils"
+group = "io.github.shakelang.shake.util.parseutils"
 version = "0.1.0"
 description = "Utilities for parsing stuff with kotlin"
 
