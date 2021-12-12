@@ -7,6 +7,7 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.parseutils.streaming.input.ByteArrayInputStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
 
@@ -28,6 +29,8 @@ abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
     fun init(clazz: ClassInfo) {
         this.clazz = clazz
     }
+
+    fun dump(out: DataOutputStream) = out.write(toBytes())
 
     companion object {
         fun fromBytes(pool: ConstantPool, bytes: ByteArray): AttributeInfo

@@ -6,6 +6,7 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.bytes.toBytes
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, AttributeInfo>, ConstantUser {
 
@@ -31,14 +32,14 @@ open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, 
     override fun containsValue(value: AttributeInfo): Boolean = map.containsValue(value)
     override fun isEmpty(): Boolean = map.isEmpty()
 
-    fun toBytes(): Array<Byte> {
+    fun toBytes(): ByteArray {
         val childBytes = mutableListOf<Byte>()
         childBytes.addAll(this.size.toUShort().toBytes().toList())
         for (i in map.values.indices) {
             val attribute = map.values.elementAt(i)
             childBytes.addAll(attribute.toBytes().toList())
         }
-        return childBytes.toTypedArray()
+        return childBytes.toByteArray()
     }
 
     fun toJson() = map {
@@ -52,6 +53,8 @@ open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, 
             attribute.init(clazz)
         }
     }
+
+    fun dump(out: DataOutputStream) = out.writeByteArray(this.toBytes())
 
     companion object {
 
