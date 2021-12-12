@@ -42,7 +42,7 @@ open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, 
         return childBytes.toByteArray()
     }
 
-    fun toJson() = map {
+    fun toJson() = map.map {
         it.value.toJson()
     }
     

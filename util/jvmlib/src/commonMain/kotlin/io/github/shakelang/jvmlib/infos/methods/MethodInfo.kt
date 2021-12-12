@@ -91,7 +91,7 @@ class MethodInfo(
             val descriptorIndex = stream.readUnsignedShort()
             val descriptor: ConstantUtf8Info = pool.getUtf8(descriptorIndex)
             val attributes = AttributeMap.fromStream(pool, stream)
-            return MethodInfo(accessFlags, descriptor, name, attributes)
+            return MethodInfo(accessFlags, name, descriptor, attributes)
 
         }
 

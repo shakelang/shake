@@ -31,7 +31,7 @@ class AttributeCode(
             for (i in exception_table.indices) { // 8 * exception_table.size
                 b.setBytes(10 + code.size + i * 8, exception_table[i].toBytes())
             }
-            b.setUnsignedShort(8 + code.size + 2 + exception_table.size * 8, attributes.size.toUShort()) // 2
+            b.setUnsignedShort(10 + code.size + exception_table.size * 8, this.attributes.size.toUShort()) // 2
             b.setBytes(12 + code.size + exception_table.size * 8, attributes) // attributes.size
             return b
         }

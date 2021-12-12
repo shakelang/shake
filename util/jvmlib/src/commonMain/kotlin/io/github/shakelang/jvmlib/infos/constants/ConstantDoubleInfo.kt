@@ -21,7 +21,7 @@ class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
         }
 
         fun fromStream(stream: DataInputStream): ConstantDoubleInfo {
-            if(stream.readByte() != ConstantClassInfo.tag)
+            if(stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantDoubleInfo")
             return contentsFromStream(stream)
         }

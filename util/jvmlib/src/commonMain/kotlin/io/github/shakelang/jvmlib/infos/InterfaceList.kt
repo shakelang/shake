@@ -36,13 +36,13 @@ class InterfaceList(interfaces: Array<ConstantUtf8Info>) : List<ConstantUtf8Info
         this.clazz = clazz
     }
 
-    fun toJson() = interfaces.toList()
+    fun toJson() = interfaces.map { it.toJson() }
     override fun toString() = json.stringify(toJson())
 
     fun dump(out: DataOutputStream) {
         out.writeUnsignedShort(interfaces.size.toUShort())
         interfaces.forEach {
-            out.writeUnsignedShort(it.index)
+            out.writeUnsignedShort((it.index-1u).toUShort())
         }
     }
 
@@ -51,7 +51,7 @@ class InterfaceList(interfaces: Array<ConstantUtf8Info>) : List<ConstantUtf8Info
             val count = stream.readUnsignedShort()
             val interfaces = Array(count.toInt()) {
                 val pos = stream.readUnsignedShort()
-                pool.getUtf8((pos+ 1u).toInt())
+                pool.getUtf8((pos + 1u).toInt())
             }
             return InterfaceList(interfaces)
         }
