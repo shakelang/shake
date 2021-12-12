@@ -5,6 +5,7 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 import io.github.shakelang.shason.json
 
 class MethodList(methods: Array<MethodInfo>) : List<MethodInfo>, ConstantUser {
@@ -37,6 +38,11 @@ class MethodList(methods: Array<MethodInfo>) : List<MethodInfo>, ConstantUser {
 
     fun toJson() = methods.map { it.toJson() }
     override fun toString() = json.stringify(toJson())
+
+    fun dump(out: DataOutputStream) {
+        out.writeUnsignedShort(size.toUShort())
+        methods.forEach { it.dump(out) }
+    }
 
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): MethodList {

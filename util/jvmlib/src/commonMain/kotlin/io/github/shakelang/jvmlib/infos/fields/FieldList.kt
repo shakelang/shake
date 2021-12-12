@@ -40,7 +40,7 @@ class FieldList(fields: Array<FieldInfo>) : List<FieldInfo>, ConstantUser {
     override fun toString() = json.stringify(toJson())
 
     fun dump(out: DataOutputStream) {
-        out.writeUnsignedShort(fields.size.toUShort())
+        out.writeUnsignedShort(size.toUShort())
         fields.forEach { it.dump(out) }
     }
 
