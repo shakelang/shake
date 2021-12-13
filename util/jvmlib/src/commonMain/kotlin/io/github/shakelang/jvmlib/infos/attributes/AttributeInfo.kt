@@ -4,7 +4,9 @@ import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.parseutils.bytes.*
+import io.github.shakelang.parseutils.bytes.setBytes
+import io.github.shakelang.parseutils.bytes.setInt
+import io.github.shakelang.parseutils.bytes.setUnsignedShort
 import io.github.shakelang.parseutils.streaming.input.ByteArrayInputStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream

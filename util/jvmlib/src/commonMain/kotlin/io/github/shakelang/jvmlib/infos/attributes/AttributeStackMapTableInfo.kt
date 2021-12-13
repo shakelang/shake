@@ -1,7 +1,6 @@
 package io.github.shakelang.jvmlib.infos.attributes
 
 import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
-import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.setUnsignedShort
 import io.github.shakelang.parseutils.bytes.toBytes
