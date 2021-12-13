@@ -19,6 +19,10 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
 
     constructor(constants: Array<ConstantInfo>) : this(constants.toMutableList())
 
+    override fun get(index: Int): ConstantInfo = if(index == 0) ConstantNullPointer.INSTANCE else constants[index-1]
+
+    operator fun get(index: UShort) : ConstantInfo = get(index.toInt())
+
     fun toJson(): List<Map<String, Any>> {
         return this.constants.map { it.toJson() }
     }

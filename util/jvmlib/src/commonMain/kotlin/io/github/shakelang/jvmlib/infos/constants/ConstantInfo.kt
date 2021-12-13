@@ -13,7 +13,7 @@ abstract class ConstantInfo {
     val constantPool: ConstantPool get() = pool
     val classInfo: ClassInfo get() = pool.classInfo
 
-    val index: UShort get() = (constantPool.indexOf(this) + 1).toUShort()
+    open val index: UShort get() = (constantPool.indexOf(this) + 1).toUShort()
 
     abstract val tag: Byte
     abstract val tagName: String
