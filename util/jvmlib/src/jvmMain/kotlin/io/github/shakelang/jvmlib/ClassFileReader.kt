@@ -9,7 +9,11 @@ fun main(args: Array<String>) {
     val output = File(args[1])
     if (!input.exists()) throw Error("This class-file does not exist!")
     val inputStream: InputStream = BufferedInputStream(FileInputStream(input))
-    val clazz = ClassFileReader.readClass(inputStream)
+    val clazz = try {
+        ClassFileReader.readClass(inputStream)
+    } catch (e: Exception) {
+        throw Error("Could not read class file ${input.absolutePath}!", e)
+    }
 
     if (!output.exists()) output.createNewFile()
     val out = BufferedOutputStream(FileOutputStream(output))

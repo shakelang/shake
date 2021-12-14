@@ -42,11 +42,27 @@ abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
             val nameIndex = stream.readUnsignedShort()
             val name = pool.getUtf8(nameIndex)
             val length = stream.readInt()
-            return when (name.value) {
-                "ConstantValue" -> AttributeConstantValueInfo.contentsFromStream(pool, stream, name)
-                "Code" -> AttributeCodeInfo.contentsFromStream(pool, stream, name)
-                "StackMapTable" -> AttributeStackMapTableInfo.contentsFromStream(stream, name)
-                else -> AttributeUnknownInfo.contentsFromStream(pool, stream, name, length)
+            val bytes = stream.readNBytes(length)
+            println("AttributeInfo: $name")
+            println("AttributeBytes: ${bytes.map{it.toUByte().toString(16)}}")
+
+            val attrStream = DataInputStream(ByteArrayInputStream(bytes))
+            try {
+                return when (name.value) {
+                    "ConstantValue" -> AttributeConstantValueInfo.contentsFromStream(pool, attrStream, name)
+                    "Code" -> AttributeCodeInfo.contentsFromStream(pool, attrStream, name)
+                    "StackMapTable" -> AttributeStackMapTableInfo.contentsFromStream(attrStream, name)
+                    else -> AttributeUnknownInfo.contentsFromStream(pool, attrStream, name, length)
+                }.let {
+                    if(attrStream.available() > 0) {
+                        println("WARNING: ${attrStream.available()} bytes left in attribute $name")
+                    }
+                    it
+                }
+            }
+            catch (e: Throwable) {
+                println("AttributeInfo: $name, $length bytes")
+                throw e
             }
         }
     }

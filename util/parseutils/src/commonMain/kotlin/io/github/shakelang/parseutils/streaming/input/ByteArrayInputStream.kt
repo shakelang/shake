@@ -33,7 +33,8 @@ class ByteArrayInputStream(
         if (pos + l > count) {
             l = count - pos
         }
-        b.copyInto(b, pos, off, l)
+        buf.copyInto(b, off, pos, l + pos)
+        println(b.map {it.toUByte().toString(16)})
         pos += l
         return l
     }

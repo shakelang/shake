@@ -4,6 +4,7 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.setUnsignedShort
 import io.github.shakelang.parseutils.bytes.toBytes
+import io.github.shakelang.parseutils.bytes.toHexString
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
 
 class AttributeStackMapTableInfo (
@@ -15,15 +16,26 @@ class AttributeStackMapTableInfo (
         get() = entries.bytes
 
     override val uses: Array<ConstantInfo>
-        get() = TODO("Not yet implemented")
+        get() = arrayOf(this.name)
 
     override fun toJson(): Map<String, Any> {
-        TODO("Not yet implemented")
+        return mapOf(
+            "tag" to ATTRIBUTE_STACK_MAP_TABLE_TAG,
+            "entries" to entries.toJson()
+        )
+    }
+
+    companion object {
+        const val ATTRIBUTE_STACK_MAP_TABLE_TAG: String = "StackMapTable"
+        fun contentsFromStream(stream: DataInputStream, name: ConstantUtf8Info): AttributeStackMapTableInfo {
+            return AttributeStackMapTableInfo(name, StackMapFrameList.fromStream(stream))
+        }
     }
 
     class StackMapFrameList(
         val frames: MutableList<StackMapFrameInfo>
     ) : MutableList<StackMapFrameInfo> by frames {
+
         val bytes: ByteArray
             get() {
                 val cbytes = frames.map { it.bytes }
@@ -37,16 +49,22 @@ class AttributeStackMapTableInfo (
                 return bytes
             }
 
+        fun toJson() = frames.map { it.toJson() }
+
         companion object {
             fun fromStream(stream: DataInputStream): StackMapFrameList {
                 val numberOfEntries = stream.readUnsignedShort()
-                val frames = Array(numberOfEntries.toInt()) { StackMapFrameInfo.fromStream(stream) }
+                val frames = Array(numberOfEntries.toInt()) {
+                    StackMapFrameInfo.fromStream(stream)
+                }
                 return StackMapFrameList(frames.toMutableList())
             }
         }
     }
 
     abstract class StackMapFrameInfo {
+        abstract fun toJson(): Map<String, Any>
+
         abstract val bytes: ByteArray
         abstract val frameType: UByte
         abstract val offsetDelta: UShort
@@ -71,6 +89,10 @@ class AttributeStackMapTableInfo (
             override val offsetDelta: UShort get() = frameType.toUShort()
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte())
 
+            override fun toJson() = mapOf(
+                "frameType" to frameType.toInt()
+            )
+
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): SameFrameInfo {
                     return SameFrameInfo(frameType)
@@ -82,12 +104,22 @@ class AttributeStackMapTableInfo (
             override val frameType: UByte,
             val stack: VerificationTypeList
         ) : StackMapFrameInfo() {
+
+
+
             override val offsetDelta: UShort get() = (frameType - 64u).toUShort()
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte()) + stack.bytes
 
+            override fun toJson(): Map<String, Any> {
+                return mapOf(
+                    "frameType" to frameType.toInt(),
+                    "stack" to stack.toJson()
+                )
+            }
+
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): SameLocals1StackItemFrameInfo {
-                    val stack = VerificationTypeList.fromStream(stream)
+                    val stack = VerificationTypeList.fromStream(stream, 1)
                     return SameLocals1StackItemFrameInfo(frameType, stack)
                 }
             }
@@ -100,11 +132,17 @@ class AttributeStackMapTableInfo (
             override val frameType: UByte get() = 247u
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte(), *offsetDelta.toBytes(), *stack.bytes)
 
+            override fun toJson(): Map<String, Any> = mapOf(
+                "offsetDelta" to offsetDelta.toInt(),
+                "stack" to stack.toJson()
+            )
+
+
             companion object {
                 fun fromStream(stream: DataInputStream): SameLocals1StackItemFrameExtendedInfo {
                     return SameLocals1StackItemFrameExtendedInfo(
                         stream.readUnsignedShort(),
-                        VerificationTypeList.fromStream(stream)
+                        VerificationTypeList.fromStream(stream, 1)
                     )
                 }
             }
@@ -116,6 +154,11 @@ class AttributeStackMapTableInfo (
         ) : StackMapFrameInfo() {
             val k get() = 251 - frameType.toInt()
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte(), *offsetDelta.toBytes())
+
+            override fun toJson(): Map<String, Any> = mapOf(
+                "frameType" to frameType.toInt(),
+                "offsetDelta" to offsetDelta.toInt()
+            )
 
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): ChopFrameInfo {
@@ -130,6 +173,10 @@ class AttributeStackMapTableInfo (
             override val frameType: UByte get() = 251u
             override val bytes: ByteArray get() = offsetDelta.toBytes()
 
+            override fun toJson(): Map<String, Any> = mapOf(
+                "offsetDelta" to offsetDelta.toInt()
+            )
+
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): SameFrameExtendedInfo {
                     return SameFrameExtendedInfo(stream.readUnsignedShort())
@@ -142,12 +189,17 @@ class AttributeStackMapTableInfo (
             override val offsetDelta: UShort,
             val locals: VerificationTypeList
         ) : StackMapFrameInfo() {
-            val k get() = frameType.toInt() - 251
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte(), *offsetDelta.toBytes()) + locals.bytes
+
+            override fun toJson(): Map<String, Any> = mapOf(
+                "frameType" to frameType.toInt(),
+                "offsetDelta" to offsetDelta.toInt(),
+                "locals" to locals.toJson()
+            )
 
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): AppendFrameInfo {
-                    val locals = VerificationTypeList.fromStream(stream)
+                    val locals = VerificationTypeList.fromStream(stream, (frameType - 251u).toInt())
                     return AppendFrameInfo(frameType, stream.readUnsignedShort(), locals)
                 }
             }
@@ -157,22 +209,28 @@ class AttributeStackMapTableInfo (
             override val offsetDelta: UShort,
             val numberOfLocals: UShort,
             val numberOfStackItems: UShort,
-            val locals: Array<VerificationTypeList>,
-            val stack: Array<VerificationTypeList>
+            val locals: VerificationTypeList,
+            val stack: VerificationTypeList
         ) : StackMapFrameInfo() {
             override val frameType: UByte get() = 255u
-            override val bytes: ByteArray get() =
-                byteArrayOf(frameType.toByte(), *offsetDelta.toBytes(), *numberOfLocals.toBytes(), *numberOfStackItems.toBytes()) +
-                        locals.flatMap { it.bytes.toList() }.toByteArray() +
-                        stack.flatMap { it.bytes.toList() }.toByteArray()
+            override val bytes: ByteArray get() = byteArrayOf(frameType.toByte()) + offsetDelta.toBytes() +
+                numberOfLocals.toBytes() + numberOfStackItems.toBytes() + locals.bytes + stack.bytes
+
+            override fun toJson(): Map<String, Any> = mapOf(
+                "offsetDelta" to offsetDelta.toInt(),
+                "numberOfLocals" to numberOfLocals.toInt(),
+                "numberOfStackItems" to numberOfStackItems.toInt(),
+                "locals" to locals.toJson(),
+                "stack" to stack.toJson()
+            )
 
             companion object {
                 fun fromStream(stream: DataInputStream): FullFrameInfo {
                     val offsetDelta = stream.readUnsignedShort()
                     val numberOfLocals = stream.readUnsignedShort()
-                    val locals = Array(numberOfLocals.toInt()) { VerificationTypeList.fromStream(stream) }
+                    val locals = VerificationTypeList.fromStream(stream, numberOfLocals.toInt())
                     val numberOfStackItems = stream.readUnsignedShort()
-                    val stack = Array(numberOfStackItems.toInt()) { VerificationTypeList.fromStream(stream) }
+                    val stack = VerificationTypeList.fromStream(stream, numberOfStackItems.toInt())
                     return FullFrameInfo(offsetDelta, numberOfLocals, numberOfStackItems, locals, stack)
                 }
             }
@@ -185,6 +243,8 @@ class AttributeStackMapTableInfo (
 
         val bytes: ByteArray get() = entries.map { it.toByte() }.toByteArray()
 
+        fun toJson(): String = entries.map { it.toByte() }.toByteArray().toHexString()
+
         companion object {
             const val ITEM_TOP : UByte = 0u
             const val ITEM_INTEGER : UByte = 1u
@@ -196,17 +256,12 @@ class AttributeStackMapTableInfo (
             const val ITEM_OBJECT : UByte = 7u
             const val ITEM_UNINITIALIZED : UByte = 8u
 
-            fun fromStream(stream: DataInputStream): VerificationTypeList {
-                val count = stream.readUnsignedShort()
-                val entries = Array(count.toInt()) { stream.readUnsignedByte() }
+            fun fromStream(stream: DataInputStream, count: Int): VerificationTypeList {
+                val entries = Array(count) {
+                    stream.readUnsignedByte()
+                }
                 return VerificationTypeList(entries.toMutableList())
             }
-        }
-    }
-
-    companion object {
-        fun contentsFromStream(stream: DataInputStream, name: ConstantUtf8Info): AttributeStackMapTableInfo {
-            return AttributeStackMapTableInfo(name, StackMapFrameList.fromStream(stream))
         }
     }
 }
