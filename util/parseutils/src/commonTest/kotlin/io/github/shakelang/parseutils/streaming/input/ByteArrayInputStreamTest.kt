@@ -38,4 +38,16 @@ class ByteArrayInputStreamTest {
         assertEquals(-5, buffer[4])
     }
 
+    @Test
+    fun testSkip() {
+        val stream = ByteArrayInputStream(byteArrayOf(0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F))
+        assertEquals(0x00, stream.read())
+        stream.skip(3)
+        assertEquals(0x04, stream.read())
+        stream.skip(4)
+        assertEquals(0x09, stream.read())
+        stream.skip(5)
+        assertEquals(0x0F, stream.read())
+    }
+
 }
