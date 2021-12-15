@@ -720,6 +720,12 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testToUtf8String() {
+        val bytes = "hello world".toCharArray().map { it.code.toUByte().toByte() }.toByteArray()
+        assertEquals("hello world", bytes.toUtf8String())
+    }
+
+    @Test
     fun testByteArrayOf() {
         val byteArray = byteArrayOf(0x00u, 0xFFu)
         assertEquals(0x00, byteArray[0])

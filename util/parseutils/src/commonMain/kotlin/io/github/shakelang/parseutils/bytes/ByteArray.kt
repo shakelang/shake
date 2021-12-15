@@ -240,8 +240,14 @@ fun ByteArray.getUnsignedLong(index: Int): ULong = (this[index].toUByte().toLong
         or this[index + 4].toUByte().toLong() shl 8 or this[index + 5].toUByte().toLong() shl 8
         or this[index + 6].toUByte().toLong() shl 8 or this[index + 7].toUByte().toLong()).toULong()
 
+/**
+ * Get specific bytes from a byte array at a given position
+ */
 fun ByteArray.getBytes(index: Int, length: Int): ByteArray = this.copyOfRange(index, index + length)
 
+/**
+ * Convert the ByteArray to a hexadecimal string
+ */
 fun ByteArray.toHexString(): String {
     val sb = StringBuilder()
     for (b in this) {
@@ -252,6 +258,20 @@ fun ByteArray.toHexString(): String {
     return sb.toString()
 }
 
+/**
+ * Convert the Bytes from the ByteArray to String
+ */
+fun ByteArray.toUtf8String(): String {
+    val sb = StringBuilder()
+    for (b in this) {
+        sb.append(b.toInt().toChar())
+    }
+    return sb.toString()
+}
+
+/**
+ * Create a ByteArray from unsigned bytes
+ */
 @OptIn(ExperimentalUnsignedTypes::class)
 fun byteArrayOf(vararg bytes: UByte): ByteArray {
     val array = ByteArray(bytes.size)
