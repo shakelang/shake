@@ -86,18 +86,27 @@ tasks.dokkaGfm.configure {
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
+            kotlinOptions {
+                jvmTarget = "1.8"
+                freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+            }
         }
         testRuns["test"].executionTask.configure {
             useJUnit()
         }
     }
     js(LEGACY) {
+        compilations.all {
+            kotlinOptions {
+                freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+            }
+        }
         browser {
             commonWebpackConfig {
                 cssSupport.enabled = true
             }
         }
+        nodejs { }
     }/*
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
