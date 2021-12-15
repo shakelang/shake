@@ -229,15 +229,15 @@ fun ByteArray.getUnsignedShort(index: Int): UShort = (this[index].toUByte().toIn
 /**
  * Get specific unsigned int from a byte array at a given position
  */
-fun ByteArray.getUnsignedInt(index: Int): UInt = (this[index].toUByte().toInt() shl 24 or this[index + 1].toUByte().toInt() shl 16
+fun ByteArray.getUnsignedInt(index: Int): UInt = (this[index].toUByte().toInt() shl 8 or this[index + 1].toUByte().toInt() shl 8
         or this[index + 2].toUByte().toInt() shl 8 or this[index + 3].toUByte().toInt()).toUInt()
 
 /**
  * Get specific unsigned long from a byte array at a given position
  */
-fun ByteArray.getUnsignedLong(index: Int): ULong = (this[index].toUByte().toLong() shl 56 or this[index + 1].toUByte().toLong() shl 48
-        or this[index + 2].toUByte().toLong() shl 40 or this[index + 3].toUByte().toLong() shl 32
-        or this[index + 4].toUByte().toLong() shl 24 or this[index + 5].toUByte().toLong() shl 16
+fun ByteArray.getUnsignedLong(index: Int): ULong = (this[index].toUByte().toLong() shl 8 or this[index + 1].toUByte().toLong() shl 8
+        or this[index + 2].toUByte().toLong() shl 8 or this[index + 3].toUByte().toLong() shl 8
+        or this[index + 4].toUByte().toLong() shl 8 or this[index + 5].toUByte().toLong() shl 8
         or this[index + 6].toUByte().toLong() shl 8 or this[index + 7].toUByte().toLong()).toULong()
 
 fun ByteArray.getBytes(index: Int, length: Int): ByteArray = this.copyOfRange(index, index + length)
@@ -250,4 +250,13 @@ fun ByteArray.toHexString(): String {
         sb.append(i)
     }
     return sb.toString()
+}
+
+@OptIn(ExperimentalUnsignedTypes::class)
+fun byteArrayOf(vararg bytes: UByte): ByteArray {
+    val array = ByteArray(bytes.size)
+    for (i in bytes.indices) {
+        array[i] = bytes[i].toByte()
+    }
+    return array
 }
