@@ -137,4 +137,19 @@ class DataInputStream(private val data: InputStream) : InputStream() {
         return readNBytes(8).toUnsignedLong()
     }
 
+    /**
+     * Reads a single UTF-8 encoded string from the InputStream.
+     */
+    fun readUTF(length: Int): String {
+        return readNBytes(length).toUtf8String()
+    }
+
+    /**
+     * Reads a single UTF-8 encoded string from the InputStream.
+     */
+    fun readUTF(): String {
+        val length = readInt()
+        return readUTF(length)
+    }
+
 }
