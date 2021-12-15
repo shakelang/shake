@@ -119,7 +119,11 @@ kotlin {
 
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.6.10-RC")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
