@@ -1,6 +1,9 @@
 package io.github.shakelang.jvmlib.infos.constants
 
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantInvokeDynamicInfo(
@@ -31,11 +34,19 @@ class ConstantInvokeDynamicInfo(
             )
         }
 
-        fun fromStream(stream: DataInputStream): ConstantInvokeDynamicInfo {
-            if(stream.readByte() != ConstantClassInfo.tag)
-                throw Error("Expecting to get a ConstantClassInfo!")
-            return contentsFromStream(stream)
-        }
+        fun contentsFromStream(stream: InputStream)
+                = contentsFromStream(stream.dataStream)
+
+        fun fromStream(stream: DataInputStream) =
+            if(stream.readByte() != tag)
+                throw IllegalArgumentException("Invalid tag for ConstantInvokeDynamicInfo")
+            else contentsFromStream(stream)
+
+        fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
+
+        fun contentsFromBytes(bytes: ByteArray) = contentsFromStream(bytes.dataStream())
+
+        fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
         const val name = "constant_invoke_dynamic"
         const val tag = ConstantTags.CONSTANT_INVOKE_DYNAMIC

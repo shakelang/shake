@@ -1,6 +1,9 @@
 package io.github.shakelang.jvmlib.infos.constants
 
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) : ConstantInfo(), ConstantUser {
@@ -33,11 +36,19 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
             return ConstantMethodHandleInfo(name, index)
         }
 
-        fun contentsFromStream(stream: DataInputStream, pool: ConstantPool): ConstantMethodHandleInfo {
-            if(stream.readByte() != ConstantClassInfo.tag)
-                throw IllegalArgumentException("Expected ConstantClassInfo")
-            return contentsFromStream(stream)
-        }
+        fun contentsFromStream(stream: InputStream)
+                = contentsFromStream(stream.dataStream)
+
+        fun fromStream(stream: DataInputStream) =
+            if(stream.readByte() != tag)
+                throw IllegalArgumentException("Invalid tag for ConstantMethodHandleInfo")
+            else contentsFromStream(stream)
+
+        fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
+
+        fun contentsFromBytes(bytes: ByteArray) = contentsFromStream(bytes.dataStream())
+
+        fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
         const val name = "constant_method_handle_info"
         const val tag = ConstantTags.CONSTANT_METHOD_HANDLE

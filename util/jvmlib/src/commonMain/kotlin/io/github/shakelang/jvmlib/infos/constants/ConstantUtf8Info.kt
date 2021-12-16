@@ -27,27 +27,19 @@ class ConstantUtf8Info(val value: String) : ConstantInfo() {
             return ConstantUtf8Info(value)
         }
 
-        fun contentsFromStream(stream: InputStream): ConstantUtf8Info {
-            return contentsFromStream(stream.dataStream)
-        }
+        fun contentsFromStream(stream: InputStream)
+                = contentsFromStream(stream.dataStream)
 
-        fun fromStream(stream: DataInputStream): ConstantUtf8Info {
+        fun fromStream(stream: DataInputStream) =
             if(stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantUtf8Info")
-            return contentsFromStream(stream)
-        }
+            else contentsFromStream(stream)
 
-        fun fromStream(stream: InputStream): ConstantUtf8Info {
-            return fromStream(stream.dataStream)
-        }
+        fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
-        fun contentsFromBytes(bytes: ByteArray): ConstantUtf8Info {
-            return contentsFromStream(bytes.dataStream())
-        }
+        fun contentsFromBytes(bytes: ByteArray) = contentsFromStream(bytes.dataStream())
 
-        fun fromBytes(bytes: ByteArray): ConstantUtf8Info {
-            return fromStream(bytes.dataStream())
-        }
+        fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
         const val name = "constant_utf8_info"
         const val tag = ConstantTags.CONSTANT_UTF8

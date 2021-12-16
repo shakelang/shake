@@ -1,6 +1,9 @@
 package io.github.shakelang.jvmlib.infos.constants
 
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantIntegerInfo(val value: Int) : ConstantInfo() {
@@ -21,11 +24,19 @@ class ConstantIntegerInfo(val value: Int) : ConstantInfo() {
             return ConstantIntegerInfo(value)
         }
 
-        fun fromStream(stream: DataInputStream): ConstantIntegerInfo {
-            if(stream.readByte() != ConstantClassInfo.tag)
+        fun contentsFromStream(stream: InputStream)
+                = contentsFromStream(stream.dataStream)
+
+        fun fromStream(stream: DataInputStream) =
+            if(stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantIntegerInfo")
-            return contentsFromStream(stream)
-        }
+            else contentsFromStream(stream)
+
+        fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
+
+        fun contentsFromBytes(bytes: ByteArray) = contentsFromStream(bytes.dataStream())
+
+        fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
         const val name: String = "constant_integer_info"
         const val tag: Byte = ConstantTags.CONSTANT_INTEGER

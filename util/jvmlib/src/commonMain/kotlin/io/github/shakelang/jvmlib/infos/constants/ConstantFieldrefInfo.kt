@@ -1,6 +1,9 @@
 package io.github.shakelang.jvmlib.infos.constants
 
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : ConstantInfo(), ConstantUser {
@@ -37,11 +40,19 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
             return ConstantFieldrefInfo(classRef, nameTypeRef)
         }
 
-        fun fromStream(stream: DataInputStream): ConstantFieldrefInfo {
-            if(stream.readByte() != ConstantClassInfo.tag)
+        fun contentsFromStream(stream: InputStream)
+                = contentsFromStream(stream.dataStream)
+
+        fun fromStream(stream: DataInputStream) =
+            if(stream.readByte() != ConstantDoubleInfo.tag)
                 throw IllegalArgumentException("Invalid tag for ConstantFieldrefInfo")
-            return contentsFromStream(stream)
-        }
+            else contentsFromStream(stream)
+
+        fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
+
+        fun contentsFromBytes(bytes: ByteArray) = contentsFromStream(bytes.dataStream())
+
+        fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
         const val name = "constant_fieldref_info"
         const val tag = ConstantTags.CONSTANT_FIELD_REF

@@ -1,6 +1,9 @@
 package io.github.shakelang.jvmlib.infos.constants
 
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
@@ -20,11 +23,19 @@ class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
             return ConstantDoubleInfo(value)
         }
 
-        fun fromStream(stream: DataInputStream): ConstantDoubleInfo {
-            if(stream.readByte() != tag)
+        fun contentsFromStream(stream: InputStream)
+                = ConstantFieldrefInfo.contentsFromStream(stream.dataStream)
+
+        fun fromStream(stream: DataInputStream) =
+            if(stream.readByte() != ConstantDoubleInfo.tag)
                 throw IllegalArgumentException("Invalid tag for ConstantDoubleInfo")
-            return contentsFromStream(stream)
-        }
+            else ConstantFieldrefInfo.contentsFromStream(stream)
+
+        fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
+
+        fun contentsFromBytes(bytes: ByteArray) = ConstantFieldrefInfo.contentsFromStream(bytes.dataStream())
+
+        fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
         const val name = "constant_double_info"
         const val tag = ConstantTags.CONSTANT_DOUBLE

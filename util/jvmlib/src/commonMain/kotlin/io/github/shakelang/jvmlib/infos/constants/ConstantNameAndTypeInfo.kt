@@ -1,6 +1,9 @@
 package io.github.shakelang.jvmlib.infos.constants
 
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : ConstantInfo(), ConstantUser {
@@ -40,11 +43,19 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
             return ConstantNameAndTypeInfo(value, name)
         }
 
-        fun fromStream(stream: DataInputStream): ConstantNameAndTypeInfo {
-            if(stream.readByte() != ConstantClassInfo.tag)
+        fun contentsFromStream(stream: InputStream)
+                = contentsFromStream(stream.dataStream)
+
+        fun fromStream(stream: DataInputStream) =
+            if(stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantNameAndTypeInfo")
-            return contentsFromStream(stream)
-        }
+            else contentsFromStream(stream)
+
+        fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
+
+        fun contentsFromBytes(bytes: ByteArray) = contentsFromStream(bytes.dataStream())
+
+        fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
         const val name = "constant_name_and_type_info"
         const val tag = ConstantTags.CONSTANT_NAME_AND_TYPE
