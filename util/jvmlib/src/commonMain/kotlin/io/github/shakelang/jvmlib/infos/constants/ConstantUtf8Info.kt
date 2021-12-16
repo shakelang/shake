@@ -12,7 +12,7 @@ class ConstantUtf8Info(val value: String) : ConstantInfo() {
 
     override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
-        out.writeString(value)
+        out.writeStringUTF8(value)
     }
 
     companion object {
