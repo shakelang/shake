@@ -20,7 +20,7 @@ class ByteArrayOutputStream : OutputStream() {
 
     fun toByteArray(): ByteArray {
         val newbuf = ByteArray(count)
-        buf.copyInto(newbuf, 0)
+        buf.copyInto(newbuf, 0, 0, count)
         return newbuf
     }
 
