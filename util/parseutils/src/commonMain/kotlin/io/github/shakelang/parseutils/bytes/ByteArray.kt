@@ -1,5 +1,9 @@
 package io.github.shakelang.parseutils.bytes
 
+import io.github.shakelang.parseutils.streaming.input.ByteArrayInputStream
+import io.github.shakelang.parseutils.streaming.input.CountingInputStream
+import io.github.shakelang.parseutils.streaming.input.DataInputStream
+
 /**
  * Convert a byte array to a byte.
  */
@@ -280,3 +284,19 @@ fun byteArrayOf(vararg bytes: UByte): ByteArray {
     }
     return array
 }
+
+/**
+ * Byte array to ByteArrayInputStream
+ */
+fun ByteArray.stream(): ByteArrayInputStream = ByteArrayInputStream(this)
+
+/**
+ * Byte array to DataInputStream
+ */
+fun ByteArray.dataStream(): DataInputStream = DataInputStream(this.stream())
+
+/**
+ * Byte array to CountingInputStream
+ */
+fun ByteArray.countingStream(): CountingInputStream = CountingInputStream(this.stream())
+

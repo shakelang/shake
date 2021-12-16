@@ -1,4 +1,8 @@
+@file:Suppress("NOTHING_TO_INLINE")
+@file:JvmName("InputStreamCommons")
 package io.github.shakelang.parseutils.streaming.input
+
+import kotlin.jvm.JvmName
 
 expect abstract class InputStream() {
     /**
@@ -59,3 +63,42 @@ expect abstract class InputStream() {
     open fun readNBytes(b: ByteArray, off: Int, len: Int): Int
 
 }
+
+/**
+ * Returns a DataInputStream that reads from this input stream.
+ */
+inline fun InputStream.asDataInputStream(): DataInputStream {
+    return DataInputStream(this)
+}
+
+/**
+ * Returns a DataInputStream that reads from this input stream.
+ */
+inline val InputStream.dataStream: DataInputStream
+    get() = DataInputStream(this)
+
+/**
+ * Returns a CountingInputStream that reads from this input stream.
+ */
+inline fun InputStream.asCountingInputStream(): CountingInputStream {
+    return CountingInputStream(this)
+}
+
+/**
+ * Returns a CountingInputStream that reads from this input stream.
+ */
+inline val InputStream.countingStream: CountingInputStream
+    get() = CountingInputStream(this)
+
+/**
+ * Returns a BufferedInputStream that reads from this input stream.
+ */
+inline fun InputStream.asBufferedInputStream(): BufferedInputStream {
+    return BufferedInputStream(this)
+}
+
+/**
+ * Returns a BufferedInputStream that reads from this input stream.
+ */
+inline val InputStream.bufferedStream: BufferedInputStream
+    get() = BufferedInputStream(this)
