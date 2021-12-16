@@ -3,7 +3,7 @@ package io.github.shakelang.parseutils.streaming.input
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ByteArrayInputStreamTest {
+class ByteArrayInputStreamTests {
 
     @Test
     fun test() {

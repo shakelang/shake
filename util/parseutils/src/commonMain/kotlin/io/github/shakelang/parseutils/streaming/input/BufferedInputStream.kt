@@ -2,7 +2,7 @@ package io.github.shakelang.parseutils.streaming.input
 
 import kotlin.math.min
 
-class BufferedInputSteam (
+class BufferedInputStream (
     private val input: InputStream,
     maxBuffer: Int = 8192
 ) : InputStream() {

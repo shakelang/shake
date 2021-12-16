@@ -4,7 +4,7 @@ import io.github.shakelang.parseutils.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class CountingInputStreamTest {
+class CountingInputStreamTests {
 
     @Test
     fun test() {
