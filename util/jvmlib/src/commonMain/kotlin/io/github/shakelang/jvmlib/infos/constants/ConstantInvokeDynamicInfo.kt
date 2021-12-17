@@ -26,6 +26,11 @@ class ConstantInvokeDynamicInfo(
         out.writeUnsignedShort(nameAndTypeIndex)
     }
 
+    override fun init(pool: ConstantPool) {
+        super.init(pool)
+        nameAndType = pool[nati] as ConstantNameAndTypeInfo
+    }
+
     companion object {
         fun contentsFromStream(stream: DataInputStream): ConstantInvokeDynamicInfo {
             return ConstantInvokeDynamicInfo(
