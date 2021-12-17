@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 class ConstantMethodTypeTests {
 
-    private val testConstants: Array<ConstantInfo> get() = arrayOf(ConstantUtf8Info("java/lang/Object"))
+    private val testConstants: Array<ConstantInfo> get() = arrayOf(ConstantUtf8Info("testMethod"))
 
     @Test
     fun test() {
