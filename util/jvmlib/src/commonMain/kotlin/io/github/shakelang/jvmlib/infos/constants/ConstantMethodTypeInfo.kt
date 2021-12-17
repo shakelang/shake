@@ -13,8 +13,8 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
 
     override val uses: Array<ConstantInfo> get() = arrayOf(descriptor)
 
-    override val tag: Byte get() = ConstantMethodrefInfo.tag
-    override val tagName: String get() = ConstantMethodrefInfo.name
+    override val tag: Byte get() = ConstantMethodTypeInfo.tag
+    override val tagName: String get() = name
     override fun toJson() = super.toJson().with("index", descriptorIndex)
 
     fun getIndex(pool: ConstantPool) = pool[descriptorIndex.toInt()] as ConstantMethodTypeInfo
