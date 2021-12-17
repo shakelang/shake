@@ -14,8 +14,10 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
     override val uses get() = arrayOf(reference)
 
     override val tag: Byte get() = ConstantMethodHandleInfo.tag
-    override val tagName: String get() = ConstantMethodHandleInfo.name
-    override fun toJson() = super.toJson().with("type", referenceKind).with("index", referenceIndex)
+    override val tagName: String get() = name
+    override fun toJson() = super.toJson()
+        .with("type", referenceKind.toInt())
+        .with("index", referenceIndex.toInt())
 
     override fun init(pool: ConstantPool) {
         super.init(pool)

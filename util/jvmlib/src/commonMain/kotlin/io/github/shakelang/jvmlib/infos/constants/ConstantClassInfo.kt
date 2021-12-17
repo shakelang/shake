@@ -15,7 +15,7 @@ class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
 
     override val tag: Byte get() = ConstantClassInfo.tag
     override val tagName: String get() = name
-    override fun toJson() = super.toJson().with("value", valueIndex)
+    override fun toJson() = super.toJson().with("value", valueIndex.toInt())
 
     override fun init(pool: ConstantPool) {
         super.init(pool)

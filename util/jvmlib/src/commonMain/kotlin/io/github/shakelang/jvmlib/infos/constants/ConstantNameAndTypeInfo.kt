@@ -20,9 +20,9 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
     override val tag: Byte get() = ConstantNameAndTypeInfo.tag
     override val tagName: String get() = ConstantNameAndTypeInfo.name
 
-    override fun toJson() = super.toJson().with("name", typeIndex).with("type", nameIndex)
-    fun getName(pool: ConstantPool) = pool[nameIndex.toInt()] as ConstantUtf8Info
-    fun getValue(pool: ConstantPool) = pool[typeIndex.toInt()] as ConstantUtf8Info
+    override fun toJson() = super.toJson()
+        .with("name", typeIndex.toInt())
+        .with("type", nameIndex.toInt())
 
     override fun init(pool: ConstantPool) {
         super.init(pool)

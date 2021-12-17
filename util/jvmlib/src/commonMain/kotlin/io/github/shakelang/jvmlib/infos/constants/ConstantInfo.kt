@@ -18,7 +18,7 @@ abstract class ConstantInfo {
     abstract val tag: Byte
     abstract val tagName: String
 
-    open fun toJson(): Map<String, Any> = mapOf("tag_type" to tagName, "tag" to tag)
+    open fun toJson(): Map<String, Any> = mapOf("tag_type" to tagName, "tag" to tag.toInt())
     override fun toString(): String = json.stringify(toJson())
 
     fun toUtf8(): ConstantUtf8Info = this as ConstantUtf8Info

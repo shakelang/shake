@@ -19,7 +19,9 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
 
     override val tag: Byte get() = ConstantFieldrefInfo.tag
     override val tagName: String get() = name
-    override fun toJson() = super.toJson().with("classRef", classRefIndex).with("nameTypeRef", nameTypeRefIndex)
+    override fun toJson() = super.toJson()
+        .with("classRef", classRefIndex.toInt())
+        .with("nameTypeRef", nameTypeRefIndex.toInt())
 
     override fun init(pool: ConstantPool) {
         super.init(pool)

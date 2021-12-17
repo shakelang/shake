@@ -54,6 +54,24 @@ class ConstantDoubleTests {
         assertEquals("constant_double_info", constant.tagName)
     }
 
+    @Test
+    fun testToBytes() {
+        val constant = ConstantDoubleInfo(1.0)
+        assertEquals(byteArrayOf(0x06, *1.0.toBytes()).toList(), constant.toBytes().toList())
+    }
+
+    @Test
+    fun testToJson() {
+        val constant = ConstantDoubleInfo(1.0)
+        val json = constant.toJson()
+        assertEquals(json.size, 3)
+        assertTrue(json.containsKey("tag"))
+        assertTrue(json.containsKey("tag_type"))
+        assertTrue(json.containsKey("value"))
+        assertEquals(6, json["tag"])
+        assertEquals("constant_double_info", json["tag_type"])
+        assertEquals(1.0, json["value"])
+    }
 }
 
 fun assertCompare(expected: Float, actual: Float) {
