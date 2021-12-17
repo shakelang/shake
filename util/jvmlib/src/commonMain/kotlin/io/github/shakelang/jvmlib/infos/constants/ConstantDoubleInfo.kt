@@ -24,16 +24,16 @@ class ConstantDoubleInfo(val value: Double) : ConstantInfo() {
         }
 
         fun contentsFromStream(stream: InputStream)
-                = ConstantFieldrefInfo.contentsFromStream(stream.dataStream)
+                = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if(stream.readByte() != ConstantDoubleInfo.tag)
+            if(stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantDoubleInfo")
-            else ConstantFieldrefInfo.contentsFromStream(stream)
+            else contentsFromStream(stream)
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
-        fun contentsFromBytes(bytes: ByteArray) = ConstantFieldrefInfo.contentsFromStream(bytes.dataStream())
+        fun contentsFromBytes(bytes: ByteArray) = contentsFromStream(bytes.dataStream())
 
         fun fromBytes(bytes: ByteArray) = fromStream(bytes.dataStream())
 
