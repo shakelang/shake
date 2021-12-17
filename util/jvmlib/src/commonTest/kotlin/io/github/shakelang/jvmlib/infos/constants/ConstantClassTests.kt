@@ -14,6 +14,7 @@ class ConstantClassTests {
         val constant = ConstantClassInfo(2u)
         val pool = ConstantPool(mutableListOf(constant, *testConstants))
         assertEquals(pool[2], constant.value)
+        assertEquals(2u, constant.valueIndex)
         assertEquals(7, constant.tag)
         assertEquals("constant_class_info", constant.tagName)
     }
@@ -24,6 +25,7 @@ class ConstantClassTests {
         val constant = ConstantClassInfo.contentsFromStream(inputStream)
         val pool = ConstantPool(mutableListOf(constant, *testConstants))
         assertEquals(pool[2], constant.value)
+        assertEquals(2u, constant.valueIndex)
         assertEquals(7, constant.tag)
         assertEquals("constant_class_info", constant.tagName)
     }
@@ -34,6 +36,7 @@ class ConstantClassTests {
         val constant = ConstantClassInfo.fromStream(inputStream)
         val pool = ConstantPool(mutableListOf(constant, *testConstants))
         assertEquals(pool[2], constant.value)
+        assertEquals(2u, constant.valueIndex)
         assertEquals(7, constant.tag)
         assertEquals("constant_class_info", constant.tagName)
     }
@@ -44,6 +47,7 @@ class ConstantClassTests {
         val constant = ConstantClassInfo.contentsFromBytes(bytes)
         val pool = ConstantPool(mutableListOf(constant, *testConstants))
         assertEquals(pool[2], constant.value)
+        assertEquals(2u, constant.valueIndex)
         assertEquals(7, constant.tag)
         assertEquals("constant_class_info", constant.tagName)
     }
@@ -54,6 +58,7 @@ class ConstantClassTests {
         val constant = ConstantClassInfo.fromBytes(bytes)
         val pool = ConstantPool(mutableListOf(constant, *testConstants))
         assertEquals(pool[2], constant.value)
+        assertEquals(2u, constant.valueIndex)
         assertEquals(7, constant.tag)
         assertEquals("constant_class_info", constant.tagName)
     }
