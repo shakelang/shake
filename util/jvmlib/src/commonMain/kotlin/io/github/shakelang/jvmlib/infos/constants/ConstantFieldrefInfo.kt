@@ -44,7 +44,7 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
                 = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if(stream.readByte() != ConstantDoubleInfo.tag)
+            if(stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantFieldrefInfo")
             else contentsFromStream(stream)
 
