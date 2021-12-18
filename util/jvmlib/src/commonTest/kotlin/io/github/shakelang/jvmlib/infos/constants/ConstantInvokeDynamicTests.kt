@@ -72,4 +72,11 @@ class ConstantInvokeDynamicTests {
         assertEquals("constant_invoke_dynamic", constant.tagName)
     }
 
+    @Test
+    fun testToBytes() {
+        val constant = ConstantInvokeDynamicInfo(0u, 2u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        assertEquals(byteArrayOf(0x12, 0x00, 0x00, 0x00, 0x02).toList(), constant.toBytes().toList())
+    }
+
 }

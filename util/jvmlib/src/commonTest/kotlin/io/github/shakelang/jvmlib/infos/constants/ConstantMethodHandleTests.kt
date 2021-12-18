@@ -66,4 +66,10 @@ class ConstantMethodHandleTests {
         assertEquals(15, constant.tag)
         assertEquals("constant_method_handle_info", constant.tagName)
     }
+
+    fun testToBytes() {
+        val constant = ConstantMethodHandleInfo(2, 2u)
+        val bytes = byteArrayOf(0x0f, 0x02, 0x00, 0x02)
+        assertEquals(bytes.toList(), constant.toBytes().toList())
+    }
 }

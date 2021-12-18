@@ -51,4 +51,10 @@ class ConstantFloatTests {
         assertEquals("constant_float_info", constant.tagName)
     }
 
+    @Test
+    fun testToBytes() {
+        val constant = ConstantFloatInfo(1.0f)
+        assertEquals(byteArrayOf(0x04, *1.0f.toBytes()).toList(), constant.toBytes().toList())
+    }
+
 }

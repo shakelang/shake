@@ -63,4 +63,11 @@ class ConstantStringTests {
         assertEquals("constant_class_info", constant.tagName)
     }
 
+    @Test
+    fun testToBytes() {
+        val constant = ConstantClassInfo(2u)
+        val pool = ConstantPool(mutableListOf(constant, *testConstants))
+        assertEquals(byteArrayOf(0x07, 0x00, 0x02).toList(), constant.toBytes().toList())
+    }
+
 }

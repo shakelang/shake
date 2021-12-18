@@ -51,4 +51,10 @@ class ConstantUtf8Tests {
         assertEquals("constant_utf8_info", constant.tagName)
     }
 
+    @Test
+    fun testToBytes() {
+        val constant = ConstantUtf8Info("Hello, World!")
+        assertEquals(byteArrayOf(0x01, 0x00, 0x0d, *"Hello, World!".toBytes()).toList(), constant.toBytes().toList())
+    }
+
 }

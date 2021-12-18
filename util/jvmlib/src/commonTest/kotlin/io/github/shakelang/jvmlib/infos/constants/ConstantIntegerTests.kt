@@ -49,4 +49,10 @@ class ConstantIntegerTests {
         assertEquals(3, constant.tag)
         assertEquals("constant_integer_info", constant.tagName)
     }
+
+    @Test
+    fun testToBytes() {
+        val constant = ConstantIntegerInfo(1)
+        assertEquals(byteArrayOf(0x03, 0x00, 0x00, 0x00, 0x01).toList(), constant.toBytes().toList())
+    }
 }

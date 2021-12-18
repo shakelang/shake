@@ -49,4 +49,10 @@ class ConstantLongTests {
         assertEquals(5, constant.tag)
         assertEquals("constant_long_info", constant.tagName)
     }
+
+    @Test
+    fun testToBytes() {
+        val constant = ConstantLongInfo(1)
+        assertEquals(byteArrayOf(0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01).toList(), constant.toBytes().toList())
+    }
 }

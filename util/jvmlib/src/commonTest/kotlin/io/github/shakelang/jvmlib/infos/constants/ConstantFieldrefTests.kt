@@ -77,4 +77,12 @@ class ConstantFieldrefTests {
         assertEquals(9, constant.tag)
         assertEquals("constant_fieldref_info", constant.tagName)
     }
+
+    @Test
+    fun testToBytes() {
+        val constant = ConstantFieldrefInfo(2u, 4u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        val bytes = byteArrayOf(0x09, 0x00, 0x02, 0x00, 0x04)
+        assertEquals(bytes.toList(), constant.toBytes().toList())
+    }
 }

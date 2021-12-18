@@ -62,4 +62,12 @@ class ConstantMethodTypeTests {
         assertEquals("constant_methodtype_info", constant.tagName)
     }
 
+    @Test
+    fun testToBytes() {
+        val constant = ConstantMethodTypeInfo(2u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        val bytes = constant.toBytes()
+        assertEquals(byteArrayOf(0x10, 0x00, 0x02).toList(), bytes.toList())
+    }
+
 }

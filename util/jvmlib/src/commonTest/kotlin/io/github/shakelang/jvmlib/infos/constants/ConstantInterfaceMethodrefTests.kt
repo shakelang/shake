@@ -77,4 +77,11 @@ class ConstantInterfaceMethodrefTests {
         assertEquals(11, constant.tag)
         assertEquals("constant_interface_methodref_info", constant.tagName)
     }
+
+    @Test
+    fun testToBytes() {
+        val constant = ConstantInterfaceMethodrefInfo(2u, 4u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        assertEquals(byteArrayOf(0x0b, 0x00, 0x02, 0x00, 0x04).toList(), constant.toBytes().toList())
+    }
 }
