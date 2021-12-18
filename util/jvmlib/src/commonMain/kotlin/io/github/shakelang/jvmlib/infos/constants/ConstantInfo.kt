@@ -1,7 +1,10 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.jvmlib.infos.ClassInfo
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
 import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 import io.github.shakelang.shason.json
@@ -72,6 +75,14 @@ abstract class ConstantInfo {
                 ConstantTags.CONSTANT_INVOKE_DYNAMIC -> ConstantInvokeDynamicInfo.contentsFromStream(stream)
                 else -> throw IllegalArgumentException("Unknown tag $tag")
             }
+        }
+
+        fun fromStream(stream: InputStream): ConstantInfo {
+            return fromStream(stream.dataStream)
+        }
+
+        fun fromBytes(bytes: ByteArray): ConstantInfo {
+            return fromStream(bytes.dataStream())
         }
 
     }
