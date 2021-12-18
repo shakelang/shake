@@ -72,4 +72,16 @@ class ConstantMethodHandleTests {
         val bytes = byteArrayOf(0x0f, 0x02, 0x00, 0x02)
         assertEquals(bytes.toList(), constant.toBytes().toList())
     }
+
+    @Test
+    fun testToJson() {
+        val constant = ConstantMethodHandleInfo(2, 2u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        val json = constant.toJson()
+        assertEquals(4, json.size)
+        assertEquals(15, json["tag"])
+        assertEquals("constant_method_handle_info", json["tag_type"])
+        assertEquals(2, json["index"])
+        assertEquals(2, json["type"])
+    }
 }

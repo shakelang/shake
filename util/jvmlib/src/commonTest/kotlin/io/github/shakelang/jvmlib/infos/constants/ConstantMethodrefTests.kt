@@ -84,4 +84,16 @@ class ConstantMethodrefTests {
         val pool = ConstantPool(mutableListOf(constant, *testConstants))
         assertEquals(byteArrayOf(0x0a, 0x00, 0x02, 0x00, 0x04).toList(), constant.toBytes().toList())
     }
+
+    @Test
+    fun testToJson() {
+        val constant = ConstantMethodrefInfo(2u, 4u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        val json = constant.toJson()
+        assertEquals(4, json.size)
+        assertEquals(2, json["class_ref"])
+        assertEquals(4, (json["name_type_ref"] as Number).toInt())
+        assertEquals(10, json["tag"])
+        assertEquals("constant_methodref_info", json["tag_type"])
+    }
 }

@@ -70,4 +70,15 @@ class ConstantStringTests {
         assertEquals(byteArrayOf(0x07, 0x00, 0x02).toList(), constant.toBytes().toList())
     }
 
+    @Test
+    fun testToJson() {
+        val constant = ConstantStringInfo(2u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        val json = constant.toJson()
+        assertEquals(3, json.size)
+        assertEquals(8, json["tag"])
+        assertEquals("constant_string_info", json["tag_type"])
+        assertEquals(2, json["value"])
+    }
+
 }

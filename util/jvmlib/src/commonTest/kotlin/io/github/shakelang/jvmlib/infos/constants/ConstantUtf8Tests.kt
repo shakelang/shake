@@ -57,4 +57,14 @@ class ConstantUtf8Tests {
         assertEquals(byteArrayOf(0x01, 0x00, 0x0d, *"Hello, World!".toBytes()).toList(), constant.toBytes().toList())
     }
 
+    @Test
+    fun testToJson() {
+        val constant = ConstantUtf8Info("Hello, World!")
+        val json = constant.toJson()
+        assertEquals(3, json.size)
+        assertEquals(1, json["tag"])
+        assertEquals("constant_utf8_info", json["tag_type"])
+        assertEquals("Hello, World!", json["value"])
+    }
+
 }

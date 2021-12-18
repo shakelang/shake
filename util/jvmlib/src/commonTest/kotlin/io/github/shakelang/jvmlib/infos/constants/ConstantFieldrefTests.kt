@@ -85,4 +85,16 @@ class ConstantFieldrefTests {
         val bytes = byteArrayOf(0x09, 0x00, 0x02, 0x00, 0x04)
         assertEquals(bytes.toList(), constant.toBytes().toList())
     }
+
+    @Test
+    fun testToJson() {
+        val constant = ConstantFieldrefInfo(2u, 4u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        val json = constant.toJson()
+        assertEquals(4, json.size)
+        assertEquals(9, json["tag"])
+        assertEquals("constant_fieldref_info", json["tag_type"])
+        assertEquals(2, json["class_ref"],)
+        assertEquals(4, json["name_type_ref"])
+    }
 }

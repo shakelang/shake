@@ -20,8 +20,8 @@ class ConstantInterfaceMethodrefInfo(private val cri: UShort, val ntri: UShort) 
     override val tagName: String get() = name
 
     override fun toJson() = super.toJson()
-        .with("classRef", classRefIndex.toInt())
-        .with("nameTypeRef", nameTypeRefIndex.toInt())
+        .with("class_ref", classRefIndex.toInt())
+        .with("name_type_ref", nameTypeRefIndex.toInt())
 
     override fun init(pool: ConstantPool) {
         super.init(pool)

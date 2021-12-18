@@ -55,4 +55,14 @@ class ConstantLongTests {
         val constant = ConstantLongInfo(1)
         assertEquals(byteArrayOf(0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01).toList(), constant.toBytes().toList())
     }
+
+    @Test
+    fun testToJson() {
+        val constant = ConstantLongInfo(1)
+        val json = constant.toJson()
+        assertEquals(3, json.size)
+        assertEquals(1L, json["value"])
+        assertEquals(5, json["tag"])
+        assertEquals("constant_long_info", json["tag_type"])
+    }
 }

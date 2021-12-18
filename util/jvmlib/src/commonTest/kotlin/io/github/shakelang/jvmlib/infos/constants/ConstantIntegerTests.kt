@@ -55,4 +55,14 @@ class ConstantIntegerTests {
         val constant = ConstantIntegerInfo(1)
         assertEquals(byteArrayOf(0x03, 0x00, 0x00, 0x00, 0x01).toList(), constant.toBytes().toList())
     }
+
+    @Test
+    fun testToJson() {
+        val constant = ConstantIntegerInfo(1)
+        val json = constant.toJson()
+        assertEquals(3, json.size)
+        assertEquals(1, json["value"])
+        assertEquals(3, json["tag"])
+        assertEquals("constant_integer_info", json["tag_type"])
+    }
 }

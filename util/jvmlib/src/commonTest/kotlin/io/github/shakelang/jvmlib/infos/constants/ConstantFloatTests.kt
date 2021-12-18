@@ -57,4 +57,14 @@ class ConstantFloatTests {
         assertEquals(byteArrayOf(0x04, *1.0f.toBytes()).toList(), constant.toBytes().toList())
     }
 
+    @Test
+    fun testToJson() {
+        val constant = ConstantFloatInfo(1.0f)
+        val json = constant.toJson()
+        assertEquals(3, json.size)
+        assertEquals(1.0, json["value"] as Double, 0.01)
+        assertEquals(4, json["tag"])
+        assertEquals("constant_float_info", json["tag_type"])
+    }
+
 }

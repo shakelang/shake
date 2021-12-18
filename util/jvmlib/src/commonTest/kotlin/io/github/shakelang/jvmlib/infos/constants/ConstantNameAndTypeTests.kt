@@ -79,4 +79,16 @@ class ConstantNameAndTypeTests {
         val bytes = byteArrayOf(0x0c, 0x00, 0x03, 0x00, 0x02)
         assertEquals(bytes.toList(), constant.toBytes().toList())
     }
+
+    @Test
+    fun testToJson() {
+        val constant = ConstantNameAndTypeInfo(3u, 2u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        val json = constant.toJson()
+        assertEquals(4, json.size)
+        assertEquals(3, json["name"])
+        assertEquals(2, json["type"])
+        assertEquals(12, json["tag"])
+        assertEquals("constant_name_and_type_info", json["tag_type"])
+    }
 }

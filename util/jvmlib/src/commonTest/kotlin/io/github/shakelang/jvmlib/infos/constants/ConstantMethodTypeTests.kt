@@ -70,4 +70,15 @@ class ConstantMethodTypeTests {
         assertEquals(byteArrayOf(0x10, 0x00, 0x02).toList(), bytes.toList())
     }
 
+    @Test
+    fun testToJson() {
+        val constant = ConstantMethodTypeInfo(2u)
+        ConstantPool(mutableListOf(constant, *testConstants))
+        val json = constant.toJson()
+        assertEquals(3, json.size)
+        assertEquals(16, json["tag"])
+        assertEquals("constant_methodtype_info", json["tag_type"])
+        assertEquals(2, json["index"])
+    }
+
 }

@@ -17,8 +17,8 @@ class ConstantInvokeDynamicInfo(
     override val tag: Byte get() = ConstantInvokeDynamicInfo.tag
     override val tagName: String get() = name
     override fun toJson() = super.toJson()
-        .with("bootstrapMethodAttributeIndex", bootstrapMethodAttributeIndex.toInt())
-        .with("nameAndTypeIndex", nameAndTypeIndex.toInt())
+        .with("bootstrap_method_attribute", bootstrapMethodAttributeIndex.toInt())
+        .with("name_type_ref", nameAndTypeIndex.toInt())
 
     override fun dump(out: DataOutputStream) {
         out.writeByte(tag)
