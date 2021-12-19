@@ -48,37 +48,14 @@ class DataBasedTokenInputStream
     map: PositionMap
 ) : TokenInputStream(source, map) {
 
-    /**
-     * The position that the TokenInputStream is actually at
-     */
     private var pos: Int = -1
-
-    /**
-     * The value-position of the [DataBasedTokenInputStream]
-     * (This variable we just need for performance-reasons, because don't have to search all the tokens again to get the
-     * value-index of the actual position)
-     */
     private var valuePos = -1
-    /**
-     * Getter for [map] (Gives back the map for the positions)
-     *
-     * @return The [PositionMap] of the [DataBasedTokenInputStream] (for resolving the token-positions
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
 
-    /**
-     * Getter for [DataBasedTokenInputStream.pos] (The actual position of the [DataBasedTokenInputStream])
-     *
-     * @return the actual position of the [DataBasedTokenInputStream]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override var position: Int
         get() {
             return pos
         }
-        set(position: Int) {
+        set(position) {
             pos = position
 
             // test the position (throw error if a wrong position is provided)
@@ -210,7 +187,8 @@ class DataBasedTokenInputStream
      
       """
     )
-    fun getValue(position: Int): String {
+    fun getValue(position: Int): String? {
+        if(!getHasValue(position)) return null
 
         // We start the valueIndex at 0
         var valueIndex = 0
@@ -231,19 +209,10 @@ class DataBasedTokenInputStream
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun getHasValue(position: Int): Boolean {
-
         // Check, if the token at the given position has a value
         return TokenType.hasValue(tokenTypes[position])
     }
 
-    /**
-     * Checks if the [DataBasedTokenInputStream] has left a given number of tokens
-     *
-     * @param num the number of tokens to check
-     * @return has the [DataBasedTokenInputStream] left the given amount of [Token]s?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun has(num: Int): Boolean {
         // When the number to check is smaller than 0 throw an error
         // in other case just check if the required tokens are left
@@ -251,56 +220,34 @@ class DataBasedTokenInputStream
         return pos + num < tokenTypes.size
     }
 
-    /**
-     * Checks if the [DataBasedTokenInputStream] has a token left
-     *
-     * @return has the [DataBasedTokenInputStream] another [Token] left?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override operator fun hasNext(): Boolean {
         // We could also use has(1) here, but for performance-reasons
         // that here should be better
         return pos + 1 < tokenTypes.size
     }
 
-    /**
-     * Returns the type of the next token of the [DataBasedTokenInputStream] (and skips)
-     *
-     * @return the next token
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun nextType(): Byte {
         // skip to next token and then return the actual token
         skip()
         return actualType
     }
 
-    /**
-     * Returns the next token of the [DataBasedTokenInputStream]
-     *
-     * @return the next token
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun nextValue(): String? {
         // skip to next token and then return the actual token
         skip()
         return actualValue
     }
 
-    /**
-     * Skips the next token of the [DataBasedTokenInputStream]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun skip() {
         // Check if the input has a next token. If so then increase the position. If not throw an error
         // also increase the valuePosition if the next token has a value
         if (hasNext()) {
             if (TokenType.hasValue(tokenTypes[++pos])) valuePos++
         } else throw Error("Input already finished")
+    }
+
+    override fun skip(amount: Int) {
+        for(i in 0 until amount) skip()
     }
 
     override val actual: Token get() {
@@ -310,13 +257,6 @@ class DataBasedTokenInputStream
         return Token(actualType, actualValue, actualStart, actualEnd)
     }
 
-    /**
-     * Returns the type of the actual token of the [DataBasedTokenInputStream]
-     *
-     * @return The actual token-type
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override val actualType: Byte get() {
         // Just return the actual token-type
         // That is possible, because the position should never get
@@ -324,13 +264,6 @@ class DataBasedTokenInputStream
         return tokenTypes[pos]
     }
 
-    /**
-     * Returns the start of the actual token of the [DataBasedTokenInputStream]
-     *
-     * @return The actual token-start
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override val actualStart: Int get() {
         // Just return the actual token-start
         // That is possible, because the position should never get
@@ -340,13 +273,6 @@ class DataBasedTokenInputStream
                 else TokenType.getTokenLength(actualType).toInt()
     }
 
-    /**
-     * Returns the end of the actual token of the [DataBasedTokenInputStream]
-     *
-     * @return The actual token-end
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override val actualEnd: Int get() {
         // Just return the actual token-end
         // That is possible, because the position should never get
@@ -354,13 +280,6 @@ class DataBasedTokenInputStream
         return positions[pos]
     }
 
-    /**
-     * Returns the value of the actual token of the [DataBasedTokenInputStream]
-     *
-     * @return The actual token-value
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override val actualValue: String? get() {
         // Just return the actual token-value
         // That is possible, because the position should never get
@@ -368,24 +287,11 @@ class DataBasedTokenInputStream
         return if (TokenType.hasValue(tokenTypes[pos])) values[valuePos] else null
     }
 
-    /**
-     * Checks if the actual token of the [DataBasedTokenInputStream] has a value
-     *
-     * @return Has the actual token a value?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override val actualHasValue: Boolean get() {
         // just return if the actual token-type
         return TokenType.hasValue(tokenTypes[pos])
     }
 
-    /**
-     * Returns the next [Token] of the [DataBasedTokenInputStream] without skipping
-     *
-     * @return The next [Token]
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun peek(): Token {
         return if (pos + 1 < tokenTypes.size) Token(
             peekType(),
@@ -395,24 +301,10 @@ class DataBasedTokenInputStream
         ) else throw Error("Not enough tokens left")
     }
 
-    /**
-     * Returns the type of the next token of the [DataBasedTokenInputStream] without skipping
-     *
-     * @return The next token-type
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun peekType(): Byte {
         return if (pos + 1 < tokenTypes.size) tokenTypes[pos + 1] else throw Error("Not enough tokens left")
     }
 
-    /**
-     * Returns the start of the next token of the [DataBasedTokenInputStream] without skipping
-     *
-     * @return The next token-start
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun peekStart(): Int {
         return if (pos + 1 < tokenTypes.size) peekEnd() + 1 -
                 (if (peekHasValue()) TokenType.getTokenLength(peekType(), peekValue())
@@ -420,46 +312,58 @@ class DataBasedTokenInputStream
             else throw Error("Not enough tokens left")
     }
 
-    /**
-     * Returns the end of the next token of the [DataBasedTokenInputStream] without skipping
-     *
-     * @return The next token-end
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun peekEnd(): Int {
         return if (pos + 1 < tokenTypes.size) positions[pos + 1] else throw Error("Not enough tokens left")
     }
 
-    /**
-     * Returns the value of the next token of the [DataBasedTokenInputStream] without skipping
-     *
-     * @return The next token-value
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun peekValue(): String? {
         return if (peekHasValue()) values[if (TokenType.hasValue(actualType)) valuePos + 2 else valuePos + 1] else null
     }
 
-    /**
-     * Checks if the next token of the [DataBasedTokenInputStream] has a value without skipping
-     *
-     * @return The next [Token]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
     override fun peekHasValue(): Boolean {
         return if (pos + 1 < tokenTypes.size) TokenType.hasValue(peekType()) else throw Error("Not enough tokens left")
     }
 
-    /**
-     * Returns a string-representation of the [DataBasedTokenInputStream]
-     *
-     * @return the string-representation of the [DataBasedTokenInputStream]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
+    override fun peek(offset: Int): Token {
+        return if (pos + offset < tokenTypes.size) Token(
+            peekType(offset),
+            peekValue(offset),
+            peekStart(offset),
+            peekEnd(offset)
+        ) else throw Error("Not enough tokens left")
+    }
+
+    override fun peekType(offset: Int): Byte {
+        return if (pos + 1 + offset < tokenTypes.size) tokenTypes[pos + 1 + offset] else throw Error("Not enough tokens left")
+    }
+
+    override fun peekStart(offset: Int): Int {
+        return if (pos + 1 + offset < tokenTypes.size) peekEnd(offset) + 1 -
+                (if (peekHasValue(offset)) TokenType.getTokenLength(peekType(offset), peekValue(offset))
+                else TokenType.getTokenLength(peekType(offset)).toInt())
+            else throw Error("Not enough tokens left")
+    }
+
+    override fun peekEnd(offset: Int): Int {
+        return if (pos + 1 + offset < tokenTypes.size) positions[pos + 1 + offset] else throw Error("Not enough tokens left")
+    }
+
+    override fun peekValue(offset: Int): String? {
+        var valuePos = valuePos
+        for (i in 0 until offset) {
+            if (TokenType.hasValue(tokenTypes[pos + 1 + i])) valuePos++
+        }
+        return if (peekHasValue(offset)) values[valuePos] else null
+    }
+
+    override fun peekHasValue(offset: Int): Boolean {
+        var valuePos = valuePos
+        for (i in 0 until offset) {
+            if (TokenType.hasValue(tokenTypes[pos + 1 + i])) valuePos++
+        }
+        return if (pos + 1 + offset < tokenTypes.size) TokenType.hasValue(peekType(offset)) else throw Error("Not enough tokens left")
+    }
+
     override fun toString(): String {
         // Return a string-representation of the input just showing all the sub-elements
         return "TokenInputStream{source='$source', tokens=${tokenTypes.map { TokenType.getName(it) }}, position=$pos}"

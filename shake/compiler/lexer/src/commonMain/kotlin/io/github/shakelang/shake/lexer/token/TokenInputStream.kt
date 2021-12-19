@@ -97,14 +97,21 @@ abstract class TokenInputStream
     }
 
     /**
-     * Skips the next token of the [TokenInputStream]
+     * Skips the next token
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     abstract fun skip()
 
     /**
-     * Skips all ignorable tokens of the [TokenInputStream]
+     * Skips a number of tokens
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
+    abstract fun skip(amount: Int)
+
+    /**
+     * Skips all ignorable tokens
      * _(ignorable tokens are tokens that can have a function in the parser, but can also be ignored
      * ([TokenType.LINE_SEPARATOR]))
      *
@@ -119,7 +126,7 @@ abstract class TokenInputStream
     }
 
     /**
-     * Returns the actual [Token] of the [TokenInputStream]
+     * Returns the actual [Token]
      *
      * @return The actual [Token]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
@@ -127,7 +134,7 @@ abstract class TokenInputStream
     abstract val actual: Token
 
     /**
-     * Returns the type of the actual token of the [TokenInputStream]
+     * Returns the type of the actual token
      *
      * @return The actual token-type
      *
@@ -138,7 +145,7 @@ abstract class TokenInputStream
     }
 
     /**
-     * Returns the start of the actual token of the [TokenInputStream]
+     * Returns the start of the actual token
      *
      * @return The actual token-start
      *
@@ -149,7 +156,7 @@ abstract class TokenInputStream
     }
 
     /**
-     * Returns the end of the actual token of the [TokenInputStream]
+     * Returns the end of the actual token
      *
      * @return The actual token-end
      *
@@ -160,7 +167,7 @@ abstract class TokenInputStream
     }
 
     /**
-     * Returns the value of the actual token of the [TokenInputStream]
+     * Returns the value of the actual
      *
      * @return The actual token-value
      *
@@ -171,7 +178,7 @@ abstract class TokenInputStream
     }
 
     /**
-     * Checks if the actual token of the [TokenInputStream] has a value
+     * Checks if the actual token without changing the actual token
      *
      * @return Has the actual token a value?
      *
@@ -182,15 +189,17 @@ abstract class TokenInputStream
     }
 
     /**
-     * Returns the next [Token] of the [TokenInputStream] without skipping
+     * Returns the next [Token]
      *
      * @return The next [Token]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    abstract fun peek(): Token
+    open fun peek(): Token {
+        return peek(1)
+    }
 
     /**
-     * Returns the type of the next token of the [TokenInputStream] without skipping
+     * Returns the type of the next token without changing the actual token
      *
      * @return The next token-type
      *
@@ -201,7 +210,7 @@ abstract class TokenInputStream
     }
 
     /**
-     * Returns the start of the next token of the [TokenInputStream] without skipping
+     * Returns the start of the next token without changing the actual token
      *
      * @return The next token-start
      *
@@ -212,7 +221,7 @@ abstract class TokenInputStream
     }
 
     /**
-     * Returns the end of the next token of the [TokenInputStream] without skipping
+     * Returns the end of the next token without changing the actual token
      *
      * @return The next token-end
      *
@@ -223,7 +232,7 @@ abstract class TokenInputStream
     }
 
     /**
-     * Returns the value of the next token of the [TokenInputStream] without skipping
+     * Returns the value of the next token without changing the actual token
      *
      * @return The next token-value
      *
@@ -242,5 +251,45 @@ abstract class TokenInputStream
      */
     open fun peekHasValue(): Boolean {
         return peekValue() != null
+    }
+
+    /**
+     * Peek the token at the given index
+     */
+    abstract fun peek(offset: Int): Token
+
+    /**
+     * Peek the token type at the given index
+     */
+    open fun peekType(offset: Int): Byte {
+        return peek(offset).type
+    }
+
+    /**
+     * Peek the token start at the given index
+     */
+    open fun peekStart(offset: Int): Int {
+        return peek(offset).start
+    }
+
+    /**
+     * Peek the token end at the given index
+     */
+    open fun peekEnd(offset: Int): Int {
+        return peek(offset).end
+    }
+
+    /**
+     * Peek the token value at the given index
+     */
+    open fun peekValue(offset: Int): String? {
+        return peek(offset).value
+    }
+
+    /**
+     * Checks if the token at the given offset of the [TokenInputStream] has a value without changing the actual token
+     */
+    open fun peekHasValue(offset: Int): Boolean {
+        return peekValue(offset) != null
     }
 }
