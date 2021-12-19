@@ -9,35 +9,23 @@ import io.github.shakelang.parseutils.characters.position.PositionMap
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
-abstract class TokenInputStream
+interface TokenInputStream {
 
-
-/**
- * A stream of [Token]s that is created by a shake lexer
- *
- * @param source value for field [TokenInputStream.source] (The source (mostly file) of the tokens)
- * (We just store the end-indexes of each token. We can calculate the start-index out of the token type &amp; value)
- * @param map  value for field [TokenInputStream.map] (The position map of the [TokenInputStream])
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
- */
-(
     /**
      * The source (mostly filename) of the [TokenInputStream]
      */
-    open val source: String,
+    val source: String
 
     /**
      * The map for the token-positions
      * We have this map to resolve the column / line of an index. This is useful for error-generation.
      */
-    open val map: PositionMap
-) {
+    val map: PositionMap
 
     /**
      * The position that the TokenInputStream is actually at
      */
-    abstract val position: Int
+    val position: Int
 
     /**
      * Checks if the [TokenInputStream] has left a given number of tokens
@@ -47,7 +35,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    abstract fun has(num: Int): Boolean
+    fun has(num: Int): Boolean
 
     /**
      * Checks if the [TokenInputStream] has a token left
@@ -56,7 +44,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open operator fun hasNext(): Boolean = has(1)
+    operator fun hasNext(): Boolean = has(1)
 
     /**
      * Returns the next token of the [TokenInputStream] (and skips)
@@ -64,7 +52,7 @@ abstract class TokenInputStream
      * @return the next token
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open operator fun next(): Token {
+    operator fun next(): Token {
         // skip to next token and then return the actual token
         skip()
         return actual
@@ -77,7 +65,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open fun nextType(): Byte {
+    fun nextType(): Byte {
         // skip to next token and then return the actual token
         skip()
         return actualType
@@ -90,7 +78,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open fun nextValue(): String? {
+    fun nextValue(): String? {
         // skip to next token and then return the actual token
         skip()
         return actualValue
@@ -101,14 +89,14 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    abstract fun skip()
+    fun skip()
 
     /**
      * Skips a number of tokens
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    abstract fun skip(amount: Int)
+    fun skip(amount: Int)
 
     /**
      * Skips all ignorable tokens
@@ -119,7 +107,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open fun skipIgnorable(): TokenInputStream {
+    fun skipIgnorable(): TokenInputStream {
         // As long as the next token is a line-separator execute skip
         while (hasNext() && peekType() == TokenType.LINE_SEPARATOR) skip()
         return this
@@ -131,7 +119,7 @@ abstract class TokenInputStream
      * @return The actual [Token]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    abstract val actual: Token
+    val actual: Token
 
     /**
      * Returns the type of the actual token
@@ -140,7 +128,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open val actualType: Byte get() {
+    val actualType: Byte get() {
         return actual.type
     }
 
@@ -151,7 +139,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open val actualStart: Int get() {
+    val actualStart: Int get() {
         return actual.start
     }
 
@@ -162,7 +150,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open val actualEnd: Int get() {
+    val actualEnd: Int get() {
         return actual.end
     }
 
@@ -173,7 +161,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open val actualValue: String? get() {
+    val actualValue: String? get() {
         return actual.value
     }
 
@@ -184,7 +172,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open val actualHasValue: Boolean get() {
+    val actualHasValue: Boolean get() {
         return actualValue != null
     }
 
@@ -194,7 +182,7 @@ abstract class TokenInputStream
      * @return The next [Token]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open fun peek(): Token {
+    fun peek(): Token {
         return peek(1)
     }
 
@@ -205,7 +193,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open fun peekType(): Byte {
+    fun peekType(): Byte {
         return peek().type
     }
 
@@ -216,7 +204,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open fun peekStart(): Int {
+    fun peekStart(): Int {
         return peek().start
     }
 
@@ -227,7 +215,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open fun peekEnd(): Int {
+    fun peekEnd(): Int {
         return peek().end
     }
 
@@ -238,7 +226,7 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open fun peekValue(): String? {
+    fun peekValue(): String? {
         return peek().value
     }
 
@@ -249,47 +237,47 @@ abstract class TokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    open fun peekHasValue(): Boolean {
+    fun peekHasValue(): Boolean {
         return peekValue() != null
     }
 
     /**
      * Peek the token at the given index
      */
-    abstract fun peek(offset: Int): Token
+    fun peek(offset: Int): Token
 
     /**
      * Peek the token type at the given index
      */
-    open fun peekType(offset: Int): Byte {
+    fun peekType(offset: Int): Byte {
         return peek(offset).type
     }
 
     /**
      * Peek the token start at the given index
      */
-    open fun peekStart(offset: Int): Int {
+    fun peekStart(offset: Int): Int {
         return peek(offset).start
     }
 
     /**
      * Peek the token end at the given index
      */
-    open fun peekEnd(offset: Int): Int {
+    fun peekEnd(offset: Int): Int {
         return peek(offset).end
     }
 
     /**
      * Peek the token value at the given index
      */
-    open fun peekValue(offset: Int): String? {
+    fun peekValue(offset: Int): String? {
         return peek(offset).value
     }
 
     /**
      * Checks if the token at the given offset of the [TokenInputStream] has a value without changing the actual token
      */
-    open fun peekHasValue(offset: Int): Boolean {
+    fun peekHasValue(offset: Int): Boolean {
         return peekValue(offset) != null
     }
 }

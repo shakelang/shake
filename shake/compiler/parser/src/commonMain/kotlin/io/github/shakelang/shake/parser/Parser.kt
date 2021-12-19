@@ -67,8 +67,8 @@ class Parser(val input: TokenInputStream) {
 
             // if(!separator) throw new ParserError("AwaitSeparatorError", "Awaited separator at this point");
             // separator = false;
-            if (position >= input.getPosition()) break
-            position = input.getPosition()
+            if (position >= input.position) break
+            position = input.position
             if (input.hasNext()) {
                 val result = operation()
                 if (result != null) nodes.add(result)
@@ -137,10 +137,9 @@ class Parser(val input: TokenInputStream) {
         return number
     }
 
-    private fun awaitSemicolon() {
-        if (input.skipIgnorable()
-                .nextType() != TokenType.SEMICOLON
-        ) throw ParserError("Expecting semicolon at this point", input.getPosition())
+    private fun expectSemicolon() {
+        if (input.skipIgnorable().nextType() != TokenType.SEMICOLON)
+            throw ParserError("Expecting semicolon at this point")
     }
 
     private fun parseDeclaration(
@@ -192,7 +191,7 @@ class Parser(val input: TokenInputStream) {
 
     private fun parseIdentifier(parent: ValuedNode?): ValuedNode {
         if (input.nextType() != TokenType.IDENTIFIER) throw ParserError("Expecting identifier")
-        val identifierNode = IdentifierNode(map, parent, expectNotNull(input.actualValue()), input.actualStart())
+        val identifierNode = IdentifierNode(map, parent, expectNotNull(input.actualValue), input.actualStart)
         var ret: ValuedNode? = null
 
         // Assignments
@@ -225,13 +224,13 @@ class Parser(val input: TokenInputStream) {
 
     private fun parseClassConstruction(): ClassConstructionNode {
         input.skip()
-        val newKeywordPosition = input.actualStart()
+        val newKeywordPosition = input.actualStart
         input.skipIgnorable()
-        val start = input.actualStart()
+        val start = input.actualStart
         val node = parseIdentifier(null) as? FunctionCallNode
             ?: throw ParserError(
                 "Expecting a call after keyword new",
-                start, input.actualEnd()
+                start, input.actualEnd
             )
         return ClassConstructionNode(
             map, node.function, node.args,
@@ -250,8 +249,8 @@ class Parser(val input: TokenInputStream) {
                 list.add(ImportNode.EVERYTHING)
                 break
             }
-            if (input.actualType() != TokenType.IDENTIFIER) throw ParserError("Expecting identifier")
-            list.add(expectNotNull(input.actualValue()))
+            if (input.actualType != TokenType.IDENTIFIER) throw ParserError("Expecting identifier")
+            list.add(expectNotNull(input.actualValue))
         } while (input.hasNext() && input.skipIgnorable().peekType() == TokenType.DOT)
         return ImportNode(map, list.toTypedArray())
     }
@@ -330,8 +329,7 @@ class Parser(val input: TokenInputStream) {
             }
         }
         if (!input.hasNext() || input.nextType() != TokenType.RPAREN) throw ParserError(
-            "Expecting ')'",
-            input.getPosition()
+            "Expecting ')'"
         )
         return args.toTypedArray()
     }
@@ -357,7 +355,7 @@ class Parser(val input: TokenInputStream) {
         var peek: Byte
         if (next == TokenType.IDENTIFIER && (!input.hasNext() || input.peekType()
                 .also { peek = it } != TokenType.IDENTIFIER && peek != TokenType.DOT)
-        ) return FunctionArgumentNode(map, input.actualValue()!!)
+        ) return FunctionArgumentNode(map, input.actualValue!!)
         val type: VariableType
         when (next) {
             TokenType.KEYWORD_DYNAMIC -> type = VariableType.DYNAMIC
@@ -371,14 +369,14 @@ class Parser(val input: TokenInputStream) {
             TokenType.KEYWORD_DOUBLE -> type = VariableType.DOUBLE
             TokenType.IDENTIFIER -> {
                 var node = IdentifierNode(
-                    map, input.actualValue()!!,
-                    input.getPosition()
+                    map, input.actualValue!!,
+                    input.position
                 )
                 while (input.peekType() == TokenType.DOT) {
                     input.skip()
                     input.skipIgnorable()
                     if (input.nextType() != TokenType.IDENTIFIER) throw ParserError("Expecting identifier")
-                    node = IdentifierNode(map, input.actualValue()!!, input.actualStart())
+                    node = IdentifierNode(map, input.actualValue!!, input.actualStart)
                 }
                 type = VariableType(node)
             }
@@ -416,61 +414,61 @@ class Parser(val input: TokenInputStream) {
     // Variables
     private fun varAssignment(variable: ValuedNode): VariableAssignmentNode {
         if (!input.hasNext() || input.nextType() != TokenType.ASSIGN) throw ParserError("Expecting '='")
-        val operatorPosition = input.actualStart()
+        val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
         return VariableAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varAddAssignment(variable: ValuedNode): VariableAddAssignmentNode {
         if (!input.hasNext() || input.nextType() != TokenType.ADD_ASSIGN) throw ParserError("Expecting '+='")
-        val operatorPosition = input.actualStart()
+        val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
         return VariableAddAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varSubAssignment(variable: ValuedNode): VariableSubAssignmentNode {
         if (!input.hasNext() || input.nextType() != TokenType.SUB_ASSIGN) throw ParserError("Expecting '-='")
-        val operatorPosition = input.actualStart()
+        val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
         return VariableSubAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varMulAssignment(variable: ValuedNode): VariableMulAssignmentNode {
         if (!input.hasNext() || input.nextType() != TokenType.MUL_ASSIGN) throw ParserError("Expecting '*='")
-        val operatorPosition = input.actualStart()
+        val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
         return VariableMulAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varDivAssignment(variable: ValuedNode): VariableDivAssignmentNode {
         if (!input.hasNext() || input.nextType() != TokenType.DIV_ASSIGN) throw ParserError("Expecting '/='")
-        val operatorPosition = input.actualStart()
+        val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
         return VariableDivAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varModAssignment(variable: ValuedNode): VariableModAssignmentNode {
         if (!input.hasNext() || input.nextType() != TokenType.MOD_ASSIGN) throw ParserError("Expecting '%='")
-        val operatorPosition = input.actualStart()
+        val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
         return VariableModAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varPowAssignment(variable: ValuedNode): VariablePowAssignmentNode {
         if (!input.hasNext() || input.nextType() != TokenType.POW_ASSIGN) throw ParserError("Expecting '**='")
-        val operatorPosition = input.actualStart()
+        val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
         return VariablePowAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varIncrease(variable: ValuedNode): VariableIncreaseNode {
         if (!input.hasNext() || input.nextType() != TokenType.INCR) throw ParserError("Expecting '++'")
-        return VariableIncreaseNode(map, variable, input.actualStart())
+        return VariableIncreaseNode(map, variable, input.actualStart)
     }
 
     private fun varDecrease(variable: ValuedNode): VariableDecreaseNode {
         if (!input.hasNext() || input.nextType() != TokenType.DECR) throw ParserError("Expecting '--'")
-        return VariableDecreaseNode(map, variable, input.actualStart())
+        return VariableDecreaseNode(map, variable, input.actualStart)
     }
 
     private fun varDeclaration1(
@@ -484,12 +482,12 @@ class Parser(val input: TokenInputStream) {
         if (input.nextType() == TokenType.KEYWORD_CONST) {
             if (final) throw ParserError("A constant is always final, must not have \"final\" attribute!")
             final = true
-        } else if (input.actualType() != TokenType.KEYWORD_VAR) throw ParserError("Expecting var or const keyword")
+        } else if (input.actualType != TokenType.KEYWORD_VAR) throw ParserError("Expecting var or const keyword")
         if (!input.skipIgnorable()
                 .hasNext() || input.peekType() != TokenType.IDENTIFIER
         ) throw ParserError("Expecting identifier")
         val identifier = expectNotNull(input.nextValue())
-        val pos = input.actualStart()
+        val pos = input.actualStart
         return if (input.skipIgnorable().hasNext() && input.peekType() == TokenType.ASSIGN) {
             VariableDeclarationNode(
                 map, identifier, VariableType.DYNAMIC,
@@ -532,7 +530,7 @@ class Parser(val input: TokenInputStream) {
                 .hasNext() || input.peekType() != TokenType.IDENTIFIER
         ) throw ParserError("Expecting identifier")
         val identifier = input.nextValue()
-        val position = input.actualStart()
+        val position = input.actualStart
         val hasNext = input.skipIgnorable().hasNext()
         return if (hasNext && input.peekType() == TokenType.ASSIGN) {
             VariableDeclarationNode(
@@ -547,7 +545,7 @@ class Parser(val input: TokenInputStream) {
             isStatic,
             isFinal
         ) else VariableDeclarationNode(
-            map, input.actualValue()!!, type, null, access, isInClass,
+            map, input.actualValue!!, type, null, access, isInClass,
             isStatic, isFinal
         )
     }
@@ -558,9 +556,9 @@ class Parser(val input: TokenInputStream) {
         if (!input.hasNext() || input.nextType() != TokenType.KEYWORD_FOR) throw ParserError("Expecting for keyword")
         if (!input.hasNext() || input.nextType() != TokenType.LPAREN) throw ParserError("Expecting '('")
         val declaration = operation()
-        awaitSemicolon()
+        expectSemicolon()
         val condition = valuedOperation()
-        awaitSemicolon()
+        expectSemicolon()
         val round = operation()
         if (!input.hasNext() || input.nextType() != TokenType.RPAREN) throw ParserError("Expecting ')'")
         val body = parseBodyStatement()
@@ -599,13 +597,11 @@ class Parser(val input: TokenInputStream) {
 
     private fun parseConditionStatement(): ValuedNode {
         if (!input.hasNext() || input.nextType() != TokenType.LPAREN) throw ParserError(
-            "Expecting '('",
-            input.getPosition()
+            "Expecting '('"
         )
         val condition = logicalOr()
         if (!input.hasNext() || input.nextType() != TokenType.RPAREN) throw ParserError(
-            "Expecting ')'",
-            input.getPosition()
+            "Expecting ')'"
         )
         return condition
     }
@@ -616,8 +612,7 @@ class Parser(val input: TokenInputStream) {
             input.skip()
             val body = prog()
             if (!input.hasNext() || input.nextType() != TokenType.RCURL) throw ParserError(
-                "Expecting '}'",
-                input.getPosition()
+                "Expecting '}'"
             )
             body
         } else {
@@ -649,11 +644,11 @@ class Parser(val input: TokenInputStream) {
         }
         if (token == TokenType.INTEGER) {
             input.skip()
-            return IntegerNode(map, input.actualValue()!!.toInt())
+            return IntegerNode(map, input.actualValue!!.toInt())
         }
         if (token == TokenType.DOUBLE) {
             input.skip()
-            return DoubleNode(map, input.actualValue()!!.toDouble())
+            return DoubleNode(map, input.actualValue!!.toDouble())
         }
         if (token == TokenType.IDENTIFIER) {
             return parseIdentifier(null)
@@ -663,19 +658,19 @@ class Parser(val input: TokenInputStream) {
         }
         if (token == TokenType.ADD) {
             input.skip()
-            return AddNode(map, 0, factor(), input.getPosition())
+            return AddNode(map, 0, factor(), input.position)
         }
         if (token == TokenType.SUB) {
             input.skip()
-            return SubNode(map, 0, factor(), input.getPosition())
+            return SubNode(map, 0, factor(), input.position)
         }
         if (token == TokenType.STRING) {
             input.skip()
-            return StringNode(map, parseString(input.actualValue()!!))
+            return StringNode(map, parseString(input.actualValue!!))
         }
         if (token == TokenType.CHARACTER) {
             input.skip()
-            return CharacterNode(map, parseString(input.actualValue()!!)[0])
+            return CharacterNode(map, parseString(input.actualValue!!)[0])
         }
         throw ParserError(input.toString())
     }
@@ -726,7 +721,7 @@ class Parser(val input: TokenInputStream) {
                         if (!input.skipIgnorable()
                                 .hasNext() && input.nextType() != TokenType.IDENTIFIER
                         ) throw ParserError("Expecting identifier")
-                        node = IdentifierNode(map, node, input.actualValue()!!, input.actualStart())
+                        node = IdentifierNode(map, node, input.actualValue!!, input.actualStart)
                     } while (input.skipIgnorable().hasNext() && input.peekType() == TokenType.DOT)
                     target = CastTarget(node)
                 }
@@ -745,7 +740,7 @@ class Parser(val input: TokenInputStream) {
             (input.peekType().also { tmpType = it } == TokenType.ADD || tmpType == TokenType.SUB)
         ) {
             input.skip()
-            val pos = input.actualStart()
+            val pos = input.actualStart
             result = if (tmpType == TokenType.ADD) {
                 AddNode(map, result, term(), pos)
             } else {
@@ -763,7 +758,7 @@ class Parser(val input: TokenInputStream) {
                 .also { tmpType = it } == TokenType.MUL || tmpType == TokenType.DIV || tmpType == TokenType.MOD)
         ) {
             input.skip()
-            val pos = input.actualStart()
+            val pos = input.actualStart
             result = when (tmpType) {
                 TokenType.MUL -> MulNode(map, result, pow(), pos)
                 TokenType.DIV -> DivNode(map, result, pow(), pos)
@@ -777,7 +772,7 @@ class Parser(val input: TokenInputStream) {
         var result = cast()
         while (input.hasNext() && input.peekType() == TokenType.POW) {
             input.skip()
-            val pos = input.actualStart()
+            val pos = input.actualStart
             result = PowNode(map, result, cast(), pos)
         }
         return result
@@ -869,17 +864,10 @@ class Parser(val input: TokenInputStream) {
             input.map.resolve(end)
         )
 
-        @Suppress("deprecation")
-        constructor(error: String, position: Int) : this(
-            error,
-            input.map.resolve(input.getStart(position)),
-            input.map.resolve(input.getEnd(position))
-        )
-
         constructor(error: String) : this(
             error,
-            input.map.resolve(input.peekStart()),
-            input.map.resolve(input.peekEnd())
+            input.map.resolve(input.actualStart),
+            input.map.resolve(input.actualEnd)
         )
     }
 

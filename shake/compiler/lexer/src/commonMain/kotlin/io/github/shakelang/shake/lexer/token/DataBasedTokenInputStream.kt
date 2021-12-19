@@ -27,7 +27,7 @@ class DataBasedTokenInputStream
     /**
      * The source (mostly filename) of the [DataBasedTokenInputStream]
      */
-    source: String,
+    override val source: String,
     /**
      * The tokenTypes that are contained in the [DataBasedTokenInputStream]
      */
@@ -45,8 +45,8 @@ class DataBasedTokenInputStream
      * The map for the token-positions
      * We have this map to resolve the column / line of an index. This is useful for error-generation.
      */
-    map: PositionMap
-) : TokenInputStream(source, map) {
+    override val map: PositionMap
+) : TokenInputStream {
 
     private var pos: Int = -1
     private var valuePos = -1

@@ -70,8 +70,8 @@ class PositionMakerTest {
         maker.nextLine()
         maker.nextColumn()
 
-        assertSame(1, maker.getLineSeparators().size)
-        assertSame(3, maker.getLineSeparators()[0])
+        assertSame(1, maker.lineSeparators.size)
+        assertSame(3, maker.lineSeparators[0])
     }
 
 }
