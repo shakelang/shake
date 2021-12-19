@@ -1,6 +1,6 @@
 group = "io.github.shakelang.shake"
 version = "0.1.0"
-description = "parser"
+description = "interpreter"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 apply(plugin = "java-library")
@@ -63,8 +63,17 @@ kotlin {
         nodejs {
         }
         browser {
-            compilations["main"].packageJson {
-                customField("browser", mapOf( "fs" to false, "path" to false, "os" to false))
+            compilations {
+                "main" {
+                    packageJson {
+                        customField("browser", mapOf( "fs" to false, "path" to false, "os" to false))
+                    }
+                    kotlinOptions {
+                        moduleKind = "commonjs"
+                        sourceMap = true
+                        sourceMapEmbedSources = "always"
+                    }
+                }
             }
             commonWebpackConfig {
                 cssSupport.enabled = true
@@ -87,8 +96,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":util:parseutils"))
-                implementation(project(":util:shason"))
-                implementation(project(":lexer"))
+                implementation(project(":shake:compiler:lexer"))
+                implementation(project(":shake:compiler:parser"))
             }
         }
         val commonTest by getting {
@@ -96,10 +105,18 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val jvmMain by getting
+        val jvmMain by getting {
+            dependencies {
+                implementation("org.reflections:reflections:0.9.12")
+            }
+        }
         val jvmTest by getting
         val jsMain by getting
-        val jsTest by getting
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
         // val nativeMain by getting
         // val nativeTest by getting
     }
