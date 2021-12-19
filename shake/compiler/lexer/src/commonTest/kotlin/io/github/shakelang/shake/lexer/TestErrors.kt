@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.lexer
 
-import io.github.shakelang.shake.lexer.Lexer.LexerError
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import kotlin.test.*
@@ -10,7 +9,7 @@ class TestErrors {
     fun testStringMustEndError() {
 
         // String type 1 not finished
-        val error = assertFailsWith(LexerError::class) {
+        val error = assertFailsWith(LexingBase.LexerError::class) {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"test")
             val lexer = Lexer(chars)
             lexer.makeTokens()
@@ -31,7 +30,7 @@ class TestErrors {
     fun testUnknownEscapeSequenceError() {
 
         // Unknown escape sequence (using \a here)
-        val error = assertFailsWith(LexerError::class) {
+        val error = assertFailsWith(LexingBase.LexerError::class) {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"\\a\"")
             val lexer = Lexer(chars)
             lexer.makeTokens()
@@ -53,7 +52,7 @@ class TestErrors {
     fun testExpectHexCharacterError() {
 
         // Wrong input to unicode character
-        val error = assertFailsWith(LexerError::class) {
+        val error = assertFailsWith(LexingBase.LexerError::class) {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"\\uatea\"")
             val lexer = Lexer(chars)
             lexer.makeTokens()
@@ -74,7 +73,7 @@ class TestErrors {
     fun testUnexpectedTokenError() {
 
         // Unexpected Token
-        val error = assertFailsWith(LexerError::class) {
+        val error = assertFailsWith(LexingBase.LexerError::class) {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\u00dc")
             val lexer = Lexer(chars)
             lexer.makeTokens()
