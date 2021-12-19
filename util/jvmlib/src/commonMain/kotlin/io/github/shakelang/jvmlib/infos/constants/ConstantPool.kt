@@ -37,6 +37,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
 
     fun getUtf8(nameIndex: Int) = this[nameIndex].toUtf8()
     fun getClass(nameIndex: Int) = this[nameIndex].toClass()
+    fun getClassRef(nameIndex: Int) = this[nameIndex].toClass()
     fun getFieldRef(nameIndex: Int) = this[nameIndex].toFieldRef()
     fun getMethodRef(nameIndex: Int) = this[nameIndex].toMethodRef()
     fun getInterfaceMethodRef(nameIndex: Int) = this[nameIndex].toInterfaceMethodRef()
@@ -52,6 +53,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
 
     fun getUtf8(nameIndex: UShort) = this.getUtf8(nameIndex.toInt())
     fun getClass(nameIndex: UShort) = this.getClass(nameIndex.toInt())
+    fun getClassRef(nameIndex: UShort) = this.getClass(nameIndex.toInt())
     fun getFieldRef(nameIndex: UShort) = this.getFieldRef(nameIndex.toInt())
     fun getMethodRef(nameIndex: UShort) = this.getMethodRef(nameIndex.toInt())
     fun getInterfaceMethodRef(nameIndex: UShort) = this.getInterfaceMethodRef(nameIndex.toInt())
@@ -388,6 +390,12 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
 
     fun expectInvokeDynamic(bootstrapMethod: UShort, nameAndType: ConstantNameAndTypeInfo): ConstantInvokeDynamicInfo
         = findInvokeDynamic(bootstrapMethod, nameAndType) ?: throw Exception("No invoke dynamic constant found for bootstrapMethod: $bootstrapMethod, nameAndType: $nameAndType")
+
+    override fun add(element: ConstantInfo): Boolean {
+        val ret = constants.add(element)
+        if(ret) element.init(this)
+        return ret
+    }
 
     override fun clear() {
         constants.clear()
