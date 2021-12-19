@@ -1,8 +1,15 @@
 @file:Suppress("unused_variable")
 package io.github.shakelang.jvmlib.infos.constants
 
+import io.github.shakelang.jvmlib.infos.ClassInfo
+import io.github.shakelang.jvmlib.infos.InterfaceList
+import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
+import io.github.shakelang.jvmlib.infos.fields.FieldList
+import io.github.shakelang.jvmlib.infos.methods.MethodList
 import io.github.shakelang.parseutils.bytes.stream
 import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class ConstantInfoTests {
 
@@ -136,6 +143,36 @@ class ConstantInfoTests {
     fun testConstantUtf8FromBytes() {
         val bytes = byteArrayOf(0x01, 0x04, 0x00, 0x01, 0x06, 0x06)
         val constant = ConstantInfo.fromBytes(bytes).toUtf8()
+    }
+
+    @Test
+    fun testIsUsed() {
+        val testConstants: Array<ConstantInfo> = arrayOf(
+            ConstantFieldrefInfo(2u, 4u),
+            ConstantClassInfo(3u),
+            ConstantUtf8Info("java/lang/Object"),
+            ConstantNameAndTypeInfo(6u, 5u),
+            ConstantUtf8Info("foo"),
+            ConstantUtf8Info("I")
+        )
+        val pool = ConstantPool(testConstants)
+        val clz = ClassInfo(
+            0u,
+            0u,
+            pool,
+            0u,
+            pool.getClass(2),
+            pool.getClass(2),
+            InterfaceList(emptyArray()),
+            FieldList(arrayOf()),
+            MethodList(arrayOf()),
+            AttributeMap(mapOf())
+        )
+        val constant = ConstantFieldrefInfo(2u, 4u)
+        val constant2 = pool[4]
+        constant.init(pool)
+        assertFalse(constant.isUsed)
+        assertTrue(constant2.isUsed)
     }
 
 }
