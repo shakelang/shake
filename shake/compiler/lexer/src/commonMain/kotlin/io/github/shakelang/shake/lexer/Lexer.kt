@@ -1,19 +1,14 @@
 package io.github.shakelang.shake.lexer
 
-import io.github.shakelang.shake.lexer.token.TokenInputStream
-import io.github.shakelang.shake.lexer.token.TokenType
-import io.github.shakelang.parseutils.characters.Characters
-import io.github.shakelang.parseutils.CompilerError
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.parseutils.characters.position.Position
-import kotlin.jvm.JvmOverloads
+import io.github.shakelang.shake.lexer.token.DataBasedTokenInputStream
 
 class Lexer(
     input: CharacterInputStream
 ): LexingBase(input) {
 
 
-    fun makeTokens(): TokenInputStream {
+    fun makeTokens(): DataBasedTokenInputStream {
 
         val tokens = mutableListOf<Byte>()
         val positions = mutableListOf<Int>()
@@ -26,7 +21,7 @@ class Lexer(
             if(token.value != null) values.add(token.value)
         }
 
-        return TokenInputStream(
+        return DataBasedTokenInputStream(
             input.source.location,
             createPrimitiveByteArray(tokens),
             values.toTypedArray(),
