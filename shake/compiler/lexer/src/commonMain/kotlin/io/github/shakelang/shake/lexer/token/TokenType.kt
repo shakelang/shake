@@ -545,8 +545,8 @@ object TokenType {
     
     @JvmStatic
     fun getTokenLength(b: Byte, value: String?): Int {
-        if (TOKEN_LENGTH[b.toInt()] != (-1).toByte()) return TOKEN_LENGTH[b.toInt()]
-            .toInt() else if (b == STRING || b == CHARACTER) return value!!.length + 2
+        if (TOKEN_LENGTH[b.toInt()] != (-1).toByte()) return TOKEN_LENGTH[b.toInt()].toInt()
+        else if (b == STRING || b == CHARACTER) return value!!.length + 2
         return value!!.length
     }
 }
