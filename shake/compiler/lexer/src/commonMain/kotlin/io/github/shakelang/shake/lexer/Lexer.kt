@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.lexer
 
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.lexer.token.DataBasedTokenInputStream
+import io.github.shakelang.shake.lexer.token.stream.DataBasedTokenInputStream
 
 class Lexer(
     input: CharacterInputStream

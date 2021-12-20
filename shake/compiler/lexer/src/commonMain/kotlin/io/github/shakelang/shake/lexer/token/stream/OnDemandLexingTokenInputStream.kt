@@ -1,10 +1,11 @@
-package io.github.shakelang.shake.lexer.token
+package io.github.shakelang.shake.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.lexer.LexingBase
+import io.github.shakelang.shake.lexer.token.Token
 
-class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : LexingBase(inputStream), TokenInputStream  {
+class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : LexingBase(inputStream), TokenInputStream {
 
     val buffer: MutableList<Token> = mutableListOf()
     override lateinit var actual: Token

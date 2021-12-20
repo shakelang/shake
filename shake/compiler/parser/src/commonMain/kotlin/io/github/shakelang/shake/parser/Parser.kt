@@ -5,7 +5,7 @@ import io.github.shakelang.parseutils.characters.Characters.parseString
 import io.github.shakelang.parseutils.characters.position.Position
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.lexer.token.TokenType.getName
-import io.github.shakelang.shake.lexer.token.TokenInputStream
+import io.github.shakelang.shake.lexer.token.stream.TokenInputStream
 import io.github.shakelang.shake.lexer.token.TokenType
 import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.variables.VariableUsageNode

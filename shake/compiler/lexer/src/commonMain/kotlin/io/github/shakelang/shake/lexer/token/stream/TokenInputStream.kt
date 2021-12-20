@@ -1,6 +1,8 @@
-package io.github.shakelang.shake.lexer.token
+package io.github.shakelang.shake.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.lexer.token.Token
+import io.github.shakelang.shake.lexer.token.TokenType
 
 /**
  * A [TokenInputStream] provides the [Token]s for a Parser. It is

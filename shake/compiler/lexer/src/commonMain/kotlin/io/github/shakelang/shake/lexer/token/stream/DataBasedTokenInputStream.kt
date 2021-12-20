@@ -1,6 +1,8 @@
-package io.github.shakelang.shake.lexer.token
+package io.github.shakelang.shake.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.lexer.token.Token
+import io.github.shakelang.shake.lexer.token.TokenType
 
 /**
  * A [DataBasedTokenInputStream] provides the [Token]s for a Parser. It is
@@ -250,7 +252,8 @@ class DataBasedTokenInputStream
         for(i in 0 until amount) skip()
     }
 
-    override val actual: Token get() {
+    override val actual: Token
+        get() {
         // Just return the actual token
         // That is possible, because the position should never get
         // bigger than the token length.
