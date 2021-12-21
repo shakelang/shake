@@ -27,11 +27,21 @@ class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : Lexing
             true
         } catch (e: IndexOutOfBoundsException) {
             false
+        } catch (e: IllegalStateException) {
+            false
         }
     }
 
     override fun skip() {
-        fillBuffer(1)
+        try {
+            fillBuffer(1)
+        } catch (e: IndexOutOfBoundsException) {
+            throw Error("Input already finished")
+        } catch (e: IllegalStateException) {
+            throw Error("Input already finished")
+        }
+
+        position++
         actual = buffer.removeAt(0)
     }
 
@@ -40,12 +50,18 @@ class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : Lexing
     }
 
     override fun peek(offset: Int): Token {
-        fillBuffer(offset)
-        return buffer[offset]
+        try {
+            fillBuffer(offset)
+        }  catch (e: IndexOutOfBoundsException) {
+            throw Error("Not enough tokens left", e)
+        } catch (e: IllegalStateException) {
+            throw Error("Not enough tokens left", e)
+        }
+        return buffer[offset - 1]
     }
 
     private fun generateToken(): Boolean {
-        if (!this.hasNext()) return false
+        if (!this.input.hasNext()) return false
         buffer.add(this.makeToken())
         return true
     }

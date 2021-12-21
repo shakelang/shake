@@ -1,31 +1,20 @@
-@file:Suppress("deprecation")
 package io.github.shakelang.shake.lexer.token.stream
 
-import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.source.CharacterSource
-import io.github.shakelang.shake.lexer.token.Token
+import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.lexer.token.TokenType
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class TokenBasedTokenInputStreamTests {
+class OnDemandLexingTokenInputStreamTests {
 
     @Test
     fun testNextType() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testNextType()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextType()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testNextType()")
             )
         )
 
@@ -45,18 +34,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testNextValue() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testNextValue()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextValue()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testNextValue()")
             )
         )
 
@@ -76,18 +56,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testNextToken() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testNextToken()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextToken()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testNextToken()")
             )
         )
 
@@ -119,227 +90,33 @@ class TokenBasedTokenInputStreamTests {
     }
 
     @Test
-    fun testGetType() {
-
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testGetType()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetType()"),
-                intArrayOf()
-            )
-        )
-
-        assertEquals(TokenType.KEYWORD_INT, dbtis.getType(0))
-        assertEquals(TokenType.IDENTIFIER, dbtis.getType(1))
-        assertEquals(TokenType.ASSIGN, dbtis.getType(2))
-        assertEquals(TokenType.INTEGER, dbtis.getType(3))
-        assertEquals(TokenType.SEMICOLON, dbtis.getType(4))
-
-    }
-
-    @Test
-    fun testGetEnd() {
-
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testGetEnd()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetEnd()"),
-                intArrayOf()
-            )
-        )
-
-        assertEquals(2, dbtis.getEnd(0))
-        assertEquals(4, dbtis.getEnd(1))
-        assertEquals(6, dbtis.getEnd(2))
-        assertEquals(9, dbtis.getEnd(3))
-        assertEquals(10, dbtis.getEnd(4))
-
-    }
-
-    @Test
-    fun testGetStart() {
-
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testGetStart()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetStart()"),
-                intArrayOf()
-            )
-        )
-
-        assertEquals(0, dbtis.getStart(0))
-        assertEquals(4, dbtis.getStart(1))
-        assertEquals(6, dbtis.getStart(2))
-        assertEquals(8, dbtis.getStart(3))
-        assertEquals(10, dbtis.getStart(4))
-
-    }
-
-    @Test
-    fun testGetValue() {
-
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testGetValue()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetValue()"),
-                intArrayOf()
-            )
-        )
-
-        assertEquals(null, dbtis.getValue(0))
-        assertEquals("i", dbtis.getValue(1))
-        assertEquals(null, dbtis.getValue(2))
-        assertEquals("10", dbtis.getValue(3))
-        assertEquals(null, dbtis.getValue(4))
-
-    }
-
-    @Test
-    fun testGetHasValue() {
-
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testGetHasValue()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetHasValue()"),
-                intArrayOf()
-            )
-        )
-
-        assertEquals(false, dbtis.getHasValue(0))
-        assertEquals(true, dbtis.getHasValue(1))
-        assertEquals(false, dbtis.getHasValue(2))
-        assertEquals(true, dbtis.getHasValue(3))
-        assertEquals(false, dbtis.getHasValue(4))
-
-    }
-
-    @Test
     fun testSkip() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testSkip()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSkip()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testSkip()")
             )
         )
 
-        assertEquals(dbtis.position, -1)
+        assertEquals(-1, dbtis.position)
         dbtis.skip()
-        assertEquals(dbtis.position, 0)
+        assertEquals(0, dbtis.position)
         dbtis.skip(2)
-        assertEquals(dbtis.position, 2)
+        assertEquals(2, dbtis.position)
         dbtis.skip()
-        assertEquals(dbtis.position, 3)
+        assertEquals(3, dbtis.position)
         dbtis.skip()
-        assertEquals(dbtis.position, 4)
+        assertEquals(4, dbtis.position)
         assertEquals("Input already finished", assertFailsWith<Error> { dbtis.skip() }.message)
-
-    }
-
-    @Test
-    fun testSetPosition() {
-
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testSetPosition()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSetPosition()"),
-                intArrayOf()
-            )
-        )
-
-        assertEquals(dbtis.position, -1)
-        dbtis.position = 0
-        assertEquals(dbtis.position, 0)
-        assertEquals(2, dbtis.actualEnd)
-        assertEquals(null, dbtis.actualValue)
-        dbtis.position = 1
-        assertEquals(dbtis.position, 1)
-        assertEquals(4, dbtis.actualEnd)
-        assertEquals("i", dbtis.actualValue)
-        dbtis.position = 2
-        assertEquals(dbtis.position, 2)
-        assertEquals(6, dbtis.actualEnd)
-        assertEquals(null, dbtis.actualValue)
-        dbtis.position = 3
-        assertEquals(dbtis.position, 3)
-        assertEquals(9, dbtis.actualEnd)
-        assertEquals("10", dbtis.actualValue)
-        dbtis.position = 4
-        assertEquals(dbtis.position, 4)
-        assertEquals(10, dbtis.actualEnd)
-        assertEquals(null, dbtis.actualValue)
-        dbtis.position = 3
-        assertEquals(dbtis.position, 3)
-        assertEquals(9, dbtis.actualEnd)
-        assertEquals("10", dbtis.actualValue)
 
     }
 
     @Test
     fun testHas() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testHas()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHas()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testHas()")
             )
         )
 
@@ -360,18 +137,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testHasNext() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testHasNext()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHasNext()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testHasNext()")
             )
         )
 
@@ -384,30 +152,11 @@ class TokenBasedTokenInputStreamTests {
     }
 
     @Test
-    fun testHasNextWithEmpty() {
-
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testHasNextWithEmpty()",
-            arrayOf(),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("", "TokenBasedTokenInputStreamTests#testHasNextWithEmpty()"),
-                intArrayOf()
-            )
-        )
-
-        assertEquals(false, dbtis.hasNext())
-
-    }
-
-    @Test
     fun testHasNextWithEmptyAndPosition() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testHasNextWithEmptyAndPosition()",
-            arrayOf(),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("", "TokenBasedTokenInputStreamTests#testHasNextWithEmptyAndPosition()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("", "OnDemandLexingTokenInputStreamTests#testHasNextWithEmptyAndPosition()")
             )
         )
 
@@ -419,18 +168,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testActualEnd() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testActualEnd()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualEnd()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualEnd()")
             )
         )
 
@@ -450,18 +190,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testActualStart() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testActualStart()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualStart()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualStart()")
             )
         )
 
@@ -481,18 +212,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testActualType() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testActualType()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualType()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualType()")
             )
         )
 
@@ -512,18 +234,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testActualValue() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testActualValue()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualValue()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualValue()")
             )
         )
 
@@ -543,18 +256,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testActual() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testActual()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActual()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActual()")
             )
         )
 
@@ -594,18 +298,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekType() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeekType()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekType()")
             )
         )
 
@@ -624,18 +319,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekEnd() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeekEnd()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekEnd()")
             )
         )
 
@@ -654,18 +340,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekStart() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeekStart()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekStart()")
             )
         )
 
@@ -684,18 +361,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekValue() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeekValue()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekValue()")
             )
         )
 
@@ -714,18 +382,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeek() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeek()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeek()")
             )
         )
 
@@ -764,18 +423,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekType2() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeekType2()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType2()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekType2()")
             )
         )
 
@@ -814,18 +464,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekEnd2() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeekEnd2()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd2()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekEnd2()")
             )
         )
 
@@ -864,18 +505,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekStart2() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeekStart2()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart2()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekStart2()")
             )
         )
 
@@ -920,18 +552,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekValue2() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeekValue2()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue2()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekValue2()")
             )
         )
 
@@ -976,18 +599,9 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeek2() {
 
-        val dbtis = TokenBasedTokenInputStream(
-            "TokenBasedTokenInputStreamTests#testPeek2()",
-            arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
-            ),
-            PositionMap.PositionMapImpl(
-                CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek2()"),
-                intArrayOf()
+        val dbtis = OnDemandLexingTokenInputStream(
+            SourceCharacterInputStream(
+                CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeek2()")
             )
         )
 
