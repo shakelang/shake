@@ -95,17 +95,19 @@ class TokenBasedTokenInputStream
         return this[position].value != null
     }
 
-    override var position: Int = 0
+    override var position: Int = -1
 
     override fun has(num: Int): Boolean {
         return position + num < tokens.size
     }
 
     override fun next(): Token {
-        return tokens[position++]
+        if(!hasNext()) throw Error("Not enough tokens left")
+        return tokens[++position]
     }
 
     override fun skip() {
+        if(!hasNext()) throw Error("Input already finished")
         position++
     }
 
@@ -114,14 +116,16 @@ class TokenBasedTokenInputStream
     }
 
     override fun hasNext(): Boolean {
-        return position < tokens.size
+        return position + 1 < tokens.size
     }
 
     override fun peek(): Token {
-        return tokens[position]
+        if(position + 1 >= tokens.size) throw Error("Not enough tokens left")
+        return tokens[position + 1]
     }
 
     override fun peek(offset: Int): Token {
+        if(position + offset >= tokens.size) throw Error("Not enough tokens left")
         return tokens[position + offset]
     }
 
