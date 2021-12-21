@@ -3,6 +3,7 @@ package io.github.shakelang.shake.lexer.token.stream
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.lexer.token.Token
 import io.github.shakelang.shake.lexer.token.TokenType
+import io.github.shakelang.shake.lexer.token.tokenLength
 
 /**
  * A [DataBasedTokenInputStream] provides the [Token]s for a Parser. It is
@@ -26,6 +27,7 @@ class DataBasedTokenInputStream
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 (
+
     /**
      * The source (mostly filename) of the [DataBasedTokenInputStream]
      */
@@ -48,6 +50,7 @@ class DataBasedTokenInputStream
      * We have this map to resolve the column / line of an index. This is useful for error-generation.
      */
     override val map: PositionMap
+
 ) : TokenInputStream {
 
     private var pos: Int = -1
@@ -337,34 +340,35 @@ class DataBasedTokenInputStream
     }
 
     override fun peekType(offset: Int): Byte {
-        return if (pos + 1 + offset < tokenTypes.size) tokenTypes[pos + 1 + offset] else throw Error("Not enough tokens left")
+        return if (pos + offset < tokenTypes.size) tokenTypes[pos + offset] else throw Error("Not enough tokens left")
     }
 
     override fun peekStart(offset: Int): Int {
-        return if (pos + 1 + offset < tokenTypes.size) peekEnd(offset) + 1 -
-                (if (peekHasValue(offset)) TokenType.getTokenLength(peekType(offset), peekValue(offset))
-                else TokenType.getTokenLength(peekType(offset)).toInt())
-            else throw Error("Not enough tokens left")
+        return if (pos + offset < tokenTypes.size)
+            peekEnd(offset) + 1 - peekType(offset).tokenLength(peekValue(offset))
+        else throw Error("Not enough tokens left")
     }
 
     override fun peekEnd(offset: Int): Int {
-        return if (pos + 1 + offset < tokenTypes.size) positions[pos + 1 + offset] else throw Error("Not enough tokens left")
+        return if (pos + offset < tokenTypes.size) positions[pos + offset] else throw Error("Not enough tokens left")
     }
 
     override fun peekValue(offset: Int): String? {
+        if (!has(offset)) throw Error("Not enough tokens left")
         var valuePos = valuePos
-        for (i in 0 until offset) {
-            if (TokenType.hasValue(tokenTypes[pos + 1 + i])) valuePos++
+        for (i in 1 until offset + 1) {
+            if (TokenType.hasValue(tokenTypes[pos + i])) valuePos++
         }
         return if (peekHasValue(offset)) values[valuePos] else null
     }
 
     override fun peekHasValue(offset: Int): Boolean {
+        if (!has(offset)) throw Error("Not enough tokens left")
         var valuePos = valuePos
-        for (i in 0 until offset) {
-            if (TokenType.hasValue(tokenTypes[pos + 1 + i])) valuePos++
+        for (i in 0 until valuePos) {
+            if (pos + i >= 0 && TokenType.hasValue(tokenTypes[pos + i + 1])) valuePos++
         }
-        return if (pos + 1 + offset < tokenTypes.size) TokenType.hasValue(peekType(offset)) else throw Error("Not enough tokens left")
+        return if (pos + offset < tokenTypes.size) TokenType.hasValue(peekType(offset)) else throw Error("Not enough tokens left")
     }
 
     override fun toString(): String {
