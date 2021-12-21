@@ -1,14 +1,23 @@
 package io.github.shakelang.shake.lexer
 
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
+import io.github.shakelang.shake.lexer.token.Token
 import io.github.shakelang.shake.lexer.token.stream.DataBasedTokenInputStream
+import io.github.shakelang.shake.lexer.token.stream.OnDemandLexingTokenInputStream
+import io.github.shakelang.shake.lexer.token.stream.TokenBasedTokenInputStream
 
 class Lexer(
     input: CharacterInputStream
 ): LexingBase(input) {
 
+    fun makeTokens(): TokenBasedTokenInputStream {
+        val tokens = mutableListOf<Token>()
+        while (input.hasNext()) tokens.add(makeToken())
+        return TokenBasedTokenInputStream(input.source.location, tokens.toTypedArray(), input.positionMaker)
+    }
 
-    fun makeTokens(): DataBasedTokenInputStream {
+
+    fun makeTokens2(): DataBasedTokenInputStream {
 
         val tokens = mutableListOf<Byte>()
         val positions = mutableListOf<Int>()
@@ -28,5 +37,9 @@ class Lexer(
             createPrimitiveIntArray(positions),
             input.positionMaker.createPositionMap()
         )
+    }
+
+    fun stream(): OnDemandLexingTokenInputStream {
+        return OnDemandLexingTokenInputStream(input)
     }
 }
