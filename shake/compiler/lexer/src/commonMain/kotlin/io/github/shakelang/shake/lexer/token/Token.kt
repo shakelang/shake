@@ -32,20 +32,23 @@ class Token
      * @see Token
      */
     val type: Byte,
+
     /**
      * The value of the [Token] (This is for identifiers, strings or numbers. If not necessary this is null)
      *
      * @see Token
      */
     val value: String?,
+
     /**
-     * The starting [io.github.shakelang.shake.util.characterinput.position.Position] of the [Token]
+     * The starting Position of the [Token]
      *
      * @see Token
      */
     val start: Int,
+
     /**
-     * The ending [io.github.shakelang.shake.util.characterinput.position.Position] of the [Token]
+     * The ending Position of the [Token]
      *
      * @see Token
      */
@@ -57,7 +60,7 @@ class Token
      *
      * @param type the [type] of the [Token]
      * @param value the [value] of the [Token]
-     * @param position the [start] and [end] and of the [Token]
+     * @param end the [end] position of the [Token]
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
@@ -67,7 +70,7 @@ class Token
      * @see start
      * @see end
      */
-    constructor(type: Byte, value: String?, position: Int) : this(type, value, position, position)
+    constructor(type: Byte, value: String?, end: Int) : this(type, value, end - type.tokenLength(value) + 1, end)
 
     /**
      * Constructor for [Token]
@@ -89,7 +92,7 @@ class Token
      * Constructor for [Token]
      *
      * @param type the [type] of the [Token]
-     * @param position the [start] and [end] and of the [Token]
+     * @param end the [end] position of the [Token]
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
@@ -98,7 +101,7 @@ class Token
      * @see start
      * @see end
      */
-    constructor(type: Byte, position: Int) : this(type, null, position, position)
+    constructor(type: Byte, end: Int) : this(type, null, end)
 
     override fun toString(): String {
         return if (start == end) if (value != null) "" +

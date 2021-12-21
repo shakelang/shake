@@ -1,3 +1,4 @@
+@file:Suppress("NOTHING_TO_INLINE")
 package io.github.shakelang.shake.lexer.token
 
 import kotlin.jvm.JvmStatic
@@ -102,7 +103,7 @@ object TokenType {
         1,      //  BIGGER               17
         1,      //  SMALLER              18
         2,      //  LOGICAL_OR           19
-        2,      //  LOGICAL_XOR          20
+        1,      //  LOGICAL_XOR          20
         2,      //  LOGICAL_AND          21
         1,      //  LINE_SEPARATOR       22
         1,      //  ASSIGN               23
@@ -270,7 +271,7 @@ object TokenType {
     const val LOGICAL_OR: Byte = 19
 
     /**
-     * Token '||' (logical or operator)
+     * Token '^' (logical or operator)
      */
     const val LOGICAL_XOR: Byte = 20
 
@@ -278,12 +279,16 @@ object TokenType {
      * Token '&amp;&amp;' (logical and operator)
      */
     const val LOGICAL_AND: Byte = 21
+
+
     // *****************************************************
     // Separators
     /**
      * Token '\n' (separator that can be used instead of a semicolon or that will be ignored)
      */
     const val LINE_SEPARATOR: Byte = 22
+
+
     // *****************************************************
     // Assign
     /**
@@ -540,8 +545,14 @@ object TokenType {
     
     @JvmStatic
     fun getTokenLength(b: Byte, value: String?): Int {
-        if (TOKEN_LENGTH[b.toInt()] != (-1).toByte()) return TOKEN_LENGTH[b.toInt()]
-            .toInt() else if (b == STRING || b == CHARACTER) return value!!.length + 2
+        if (TOKEN_LENGTH[b.toInt()] != (-1).toByte()) return TOKEN_LENGTH[b.toInt()].toInt()
+        else if (b == STRING || b == CHARACTER) return value!!.length + 2
         return value!!.length
     }
 }
+
+inline val Byte.tokenName: String get() = TokenType.getName(this)
+inline val Byte.tokenLength: Byte get() = TokenType.getTokenLength(this)
+inline fun Byte.tokenLength(): Byte = TokenType.getTokenLength(this)
+inline fun Byte.tokenLength(value: String?): Int = TokenType.getTokenLength(this, value)
+inline val Byte.tokenHasValue: Boolean get() = TokenType.hasValue(this)

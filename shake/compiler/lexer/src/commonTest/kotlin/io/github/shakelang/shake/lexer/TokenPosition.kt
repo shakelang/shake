@@ -1,9 +1,11 @@
 package io.github.shakelang.shake.lexer
 
-import io.github.shakelang.shake.lexer.token.TokenType
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
-import kotlin.test.*
+import io.github.shakelang.shake.lexer.token.TokenType
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertSame
 
 class TokenPosition {
 
