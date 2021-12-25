@@ -6,8 +6,13 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
+import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
+import io.github.shakelang.parseutils.streaming.output.OutputStream
 import io.github.shakelang.shason.json
 
 class FieldInfo(
@@ -76,6 +81,13 @@ class FieldInfo(
         attributes.dump(out)
     }
 
+    fun dump(out: OutputStream) = dump(DataOutputStream(out))
+    fun toBytes(): ByteArray {
+        val out = ByteArrayOutputStream()
+        dump(out)
+        return out.toByteArray()
+    }
+
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): FieldInfo {
             val access_flags = stream.readUnsignedShort()
@@ -85,6 +97,12 @@ class FieldInfo(
             val descriptor = pool.getUtf8(descriptorIndex)
             val attributes = AttributeMap.fromStream(pool, stream)
             return FieldInfo(access_flags, name, descriptor, attributes)
+        }
+        fun fromStream(pool: ConstantPool, stream: InputStream): FieldInfo {
+            return fromStream(pool, stream.dataStream)
+        }
+        fun fromBytes(pool: ConstantPool, array: ByteArray): FieldInfo {
+            return fromStream(pool, array.dataStream())
         }
     }
 }
