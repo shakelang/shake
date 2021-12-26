@@ -165,7 +165,7 @@ class ConstantInfoTests {
             pool.getClass(2),
             InterfaceList(emptyArray()),
             FieldList(listOf()),
-            MethodList(arrayOf()),
+            MethodList(listOf()),
             AttributeMap(mapOf())
         )
         val constant = ConstantFieldrefInfo(2u, 4u)
