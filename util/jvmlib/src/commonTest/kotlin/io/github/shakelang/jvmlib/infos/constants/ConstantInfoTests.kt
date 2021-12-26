@@ -164,7 +164,7 @@ class ConstantInfoTests {
             pool.getClass(2),
             pool.getClass(2),
             InterfaceList(emptyArray()),
-            FieldList(arrayOf()),
+            FieldList(listOf()),
             MethodList(arrayOf()),
             AttributeMap(mapOf())
         )

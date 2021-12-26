@@ -1,8 +1,8 @@
 package io.github.shakelang.jvmlib.infos.fields
 
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
+import io.github.shakelang.jvmlib.infos.constants.Constant
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
-import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import kotlin.test.Test
@@ -17,8 +17,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         val info = FieldInfo(0x00u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -36,8 +36,8 @@ class FieldInfoTests {
         val stream = byteArrayOf(0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00).dataStream()
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         val info = FieldInfo.fromStream(pool, stream)
@@ -55,8 +55,8 @@ class FieldInfoTests {
         val arr = byteArrayOf(0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00)
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         val info = FieldInfo.fromBytes(pool, arr)
@@ -73,8 +73,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         var info = FieldInfo(0x0000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -90,8 +90,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         var info = FieldInfo(0x0000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -107,8 +107,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         var info = FieldInfo(0x0000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -124,8 +124,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         var info = FieldInfo(0x0000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -141,8 +141,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         var info = FieldInfo(0x0000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -158,8 +158,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         var info = FieldInfo(0x0000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -175,8 +175,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         var info = FieldInfo(0x0000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -192,8 +192,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         var info = FieldInfo(0x0000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -209,8 +209,8 @@ class FieldInfoTests {
 
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         var info = FieldInfo(0x0000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -225,8 +225,8 @@ class FieldInfoTests {
     fun testDump() {
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         val info = FieldInfo(0x00u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
@@ -239,8 +239,8 @@ class FieldInfoTests {
     fun testToBytes() {
         val pool = ConstantPool(
             arrayOf(
-                ConstantUtf8Info("variable"),
-                ConstantUtf8Info("I")
+                Constant.utf8("variable"),
+                Constant.utf8("I")
             )
         )
         val info = FieldInfo(0x00u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
