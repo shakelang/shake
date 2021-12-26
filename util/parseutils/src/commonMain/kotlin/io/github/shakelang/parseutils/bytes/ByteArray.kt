@@ -1,3 +1,4 @@
+@file:Suppress("nothing_to_inline", "unused")
 package io.github.shakelang.parseutils.bytes
 
 import io.github.shakelang.parseutils.streaming.input.ByteArrayInputStream
@@ -288,15 +289,15 @@ fun byteArrayOf(vararg bytes: UByte): ByteArray {
 /**
  * Byte array to ByteArrayInputStream
  */
-fun ByteArray.stream(): ByteArrayInputStream = ByteArrayInputStream(this)
+inline fun ByteArray.stream(): ByteArrayInputStream = ByteArrayInputStream(this)
 
 /**
  * Byte array to DataInputStream
  */
-fun ByteArray.dataStream(): DataInputStream = DataInputStream(this.stream())
+inline fun ByteArray.dataStream(): DataInputStream = DataInputStream(this.stream())
 
 /**
  * Byte array to CountingInputStream
  */
-fun ByteArray.countingStream(): CountingInputStream = CountingInputStream(this.stream())
+inline fun ByteArray.countingStream(): CountingInputStream = CountingInputStream(this.stream())
 
