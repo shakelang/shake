@@ -5,8 +5,10 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
 
-class AttributeCodeInfo(
+class AttributeCodeInfo (
 
     name: ConstantUtf8Info,
     val max_stack: UShort,
@@ -59,7 +61,7 @@ class AttributeCodeInfo(
             }
             val attributes_count = stream.readUnsignedShort()
             val attributes = Array(attributes_count.toInt()) {
-                fromStream(pool, stream)
+                AttributeInfo.fromStream(pool, stream)
             }
             return AttributeCodeInfo(
                 name,
@@ -69,6 +71,22 @@ class AttributeCodeInfo(
                 exception_table,
                 attributes
             )
+        }
+        fun fromStream(pool: ConstantPool, stream: DataInputStream): AttributeCodeInfo {
+            val name = pool.getUtf8(stream.readUnsignedShort())
+            return contentsFromStream(pool, stream, name)
+        }
+        fun contentsFromStream(pool: ConstantPool, stream: InputStream, name: ConstantUtf8Info): AttributeCodeInfo {
+            return contentsFromStream(pool, stream.dataStream, name)
+        }
+        fun fromStream(pool: ConstantPool, stream: InputStream): AttributeCodeInfo {
+            return fromStream(pool, stream.dataStream)
+        }
+        fun contentsFromBytes(pool: ConstantPool, bytes: ByteArray, name: ConstantUtf8Info): AttributeCodeInfo {
+            return contentsFromStream(pool, bytes.dataStream(), name)
+        }
+        fun fromBytes(pool: ConstantPool, bytes: ByteArray): AttributeCodeInfo {
+            return fromStream(pool, bytes.dataStream())
         }
     }
 
