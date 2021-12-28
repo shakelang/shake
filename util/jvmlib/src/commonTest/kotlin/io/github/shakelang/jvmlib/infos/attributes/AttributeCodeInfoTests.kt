@@ -119,14 +119,14 @@ class AttributeCodeInfoTests {
     @Test
     fun testContentsFromBytes() {
         val pool = pool
-        val stream = byteArrayOf(
+        val bytes = byteArrayOf(
             0x00, 0x00, // max_stack
             0x00, 0x00, // max_locals
             0x00, 0x00, 0x00, 0x00, // code length
             0x00, 0x00, // exception table length
             0x00, 0x00, // attributes length
         )
-        val attribute = AttributeCodeInfo.contentsFromBytes(pool, stream, pool.getUtf8(1))
+        val attribute = AttributeCodeInfo.contentsFromBytes(pool, bytes, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
         assertEquals(0u, attribute.max_stack)
         assertEquals(0u, attribute.max_locals)
@@ -138,7 +138,7 @@ class AttributeCodeInfoTests {
     @Test
     fun testContentsFromBytes2() {
         val pool = pool
-        val stream = byteArrayOf(
+        val bytes = byteArrayOf(
             0x00, 0x00, // max_stack
             0x00, 0x00, // max_locals
             0x00, 0x00, 0x01, 0x00, // code length
@@ -148,7 +148,7 @@ class AttributeCodeInfoTests {
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
             0x00, 0x00, // attributes length
         )
-        val attribute = AttributeCodeInfo.contentsFromBytes(pool, stream, pool.getUtf8(1))
+        val attribute = AttributeCodeInfo.contentsFromBytes(pool, bytes, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
         assertEquals(0u, attribute.max_stack)
         assertEquals(0u, attribute.max_locals)
@@ -160,7 +160,7 @@ class AttributeCodeInfoTests {
     @Test
     fun testFromBytes() {
         val pool = pool
-        val stream = byteArrayOf(
+        val bytes = byteArrayOf(
             0x00, 0x01, // code constant pool index
             0x00, 0x00, // max_stack
             0x00, 0x00, // max_locals
@@ -168,7 +168,7 @@ class AttributeCodeInfoTests {
             0x00, 0x00, // exception table length
             0x00, 0x00, // attributes length
         )
-        val attribute = AttributeCodeInfo.fromBytes(pool, stream)
+        val attribute = AttributeCodeInfo.fromBytes(pool, bytes)
         assertSame(pool[1], attribute.name)
         assertEquals(0u, attribute.max_stack)
         assertEquals(0u, attribute.max_locals)
@@ -180,7 +180,7 @@ class AttributeCodeInfoTests {
     @Test
     fun testFromBytes2() {
         val pool = pool
-        val stream = byteArrayOf(
+        val bytes = byteArrayOf(
             0x00, 0x01, // code constant pool index
             0x00, 0x00, // max_stack
             0x00, 0x00, // max_locals
@@ -191,7 +191,7 @@ class AttributeCodeInfoTests {
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
             0x00, 0x00, // attributes length
         )
-        val attribute = AttributeCodeInfo.fromBytes(pool, stream)
+        val attribute = AttributeCodeInfo.fromBytes(pool, bytes)
         assertSame(pool[1], attribute.name)
         assertEquals(0u, attribute.max_stack)
         assertEquals(0u, attribute.max_locals)
