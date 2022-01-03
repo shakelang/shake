@@ -1,6 +1,7 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator
 
+import io.github.shakelang.parseutils.bytes.toBytes
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 
 typealias SimpleShasamblyGeneratorFunction = SimpleShasamblyGenerator.() -> Unit
@@ -256,15 +257,25 @@ interface SimpleShasambly {
     fun boolNot() = bnot()
     fun booleanNot() = bnot()
 
-    fun b_get_global(address: Int) = ShasasamblyOpcodeBGetGlobal(address)
-    fun s_get_global(address: Int) = ShasasamblyOpcodeSGetGlobal(address)
-    fun i_get_global(address: Int) = ShasasamblyOpcodeIGetGlobal(address)
-    fun l_get_global(address: Int) = ShasasamblyOpcodeLGetGlobal(address)
+    fun b_get_global(address: Int) = opcode(ShasamblyOpcodeBGetGlobal(address))
+    fun s_get_global(address: Int) = opcode(ShasamblyOpcodeSGetGlobal(address))
+    fun i_get_global(address: Int) = opcode(ShasamblyOpcodeIGetGlobal(address))
+    fun l_get_global(address: Int) = opcode(ShasamblyOpcodeLGetGlobal(address))
 
-    fun b_get_global_dynamic() = ShasasamblyOpcodeBGetGlobalDynamic()
-    fun s_get_global_dynamic() = ShasasamblyOpcodeSGetGlobalDynamic()
-    fun i_get_global_dynamic() = ShasasamblyOpcodeIGetGlobalDynamic()
-    fun l_get_global_dynamic() = ShasasamblyOpcodeLGetGlobalDynamic()
+    fun b_get_global_dynamic() = opcode(ShasamblyOpcodeBGetGlobalDynamic())
+    fun s_get_global_dynamic() = opcode(ShasamblyOpcodeSGetGlobalDynamic())
+    fun i_get_global_dynamic() = opcode(ShasamblyOpcodeIGetGlobalDynamic())
+    fun l_get_global_dynamic() = opcode(ShasamblyOpcodeLGetGlobalDynamic())
+
+    fun b_store_global(address: Int) = opcode(ShasamblyOpcodeBStoreGlobal(address))
+    fun s_store_global(address: Int) = opcode(ShasamblyOpcodeSStoreGlobal(address))
+    fun i_store_global(address: Int) = opcode(ShasamblyOpcodeIStoreGlobal(address))
+    fun l_store_global(address: Int) = opcode(ShasamblyOpcodeLStoreGlobal(address))
+
+    fun b_store_global_dynamic() = opcode(ShasamblyOpcodeBStoreGlobalDynamic())
+    fun s_store_global_dynamic() = opcode(ShasamblyOpcodeSStoreGlobalDynamic())
+    fun i_store_global_dynamic() = opcode(ShasamblyOpcodeIStoreGlobalDynamic())
+    fun l_store_global_dynamic() = opcode(ShasamblyOpcodeLStoreGlobalDynamic())
 
     fun lateinit(size: Int): (ShasamblyOpcode) -> Unit
     fun relative(it: RelativeShasamblyGeneratorPartFunction)
@@ -486,7 +497,6 @@ class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): Sha
     override fun fsmallereq() = opcode(ShasamblyOpcodeFSmallerEq())
     override fun dsmallereq() = opcode(ShasamblyOpcodeDSmallerEq())
 
-
     override fun byteAdd() = badd()
     override fun byteSub() = bsub()
     override fun byteMul() = bmul()
@@ -603,6 +613,8 @@ class NativeFunctions(val base: SimpleShasambly) {
     fun printDouble() = base.invokeNative(Natives.printDouble)
     fun printLineEnding() = base.invokeNative(Natives.printLineEnding)
     fun printUtf8() = base.invokeNative(Natives.printUtf8)
+    fun declareGlobal(csize: Int) = base.invokeNative(Natives.declareGlobal, csize.toBytes())
+    fun freeGlobal(csize: Int) = base.invokeNative(Natives.freeGlobal, csize.toBytes())
 
 }
 

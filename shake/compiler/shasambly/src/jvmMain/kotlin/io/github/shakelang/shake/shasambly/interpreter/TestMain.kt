@@ -12,6 +12,31 @@ fun main() {
     val code = shasambly {
 
         incrStack(0x007f)
+        natives.declareGlobal(8)
+        i_store_local(0)
+        lpush(1000)
+        i_get_local(0)
+        l_store_global_dynamic()
+        i_get_local(0)
+        natives.printInt()
+        natives.printLineEnding()
+        i_get_local(0)
+        l_get_global_dynamic()
+        natives.printLong()
+        natives.printLineEnding()
+        i_get_local(0)
+        natives.freeGlobal(8)
+        natives.declareGlobal(4)
+        natives.printInt()
+        natives.printLineEnding()
+        natives.declareGlobal(4)
+        natives.printInt()
+        natives.printLineEnding()
+        natives.declareGlobal(4)
+        natives.printInt()
+        natives.printLineEnding()
+
+        /*
         ipush(0x00000000)
         i_store_local(0x0000)
 
@@ -42,6 +67,7 @@ fun main() {
         }
 
         natives.printLineEnding()
+        */
 
 
     }

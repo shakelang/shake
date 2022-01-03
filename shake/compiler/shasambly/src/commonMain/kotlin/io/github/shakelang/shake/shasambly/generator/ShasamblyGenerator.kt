@@ -341,10 +341,10 @@ abstract class ShasamblyGetGlobalOpcode(val opcode: Byte, val address: Int) : Sh
     }
 }
 
-class ShasasamblyOpcodeBGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.B_GET_GLOBAL, address)
-class ShasasamblyOpcodeSGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.S_GET_GLOBAL, address)
-class ShasasamblyOpcodeIGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.I_GET_GLOBAL, address)
-class ShasasamblyOpcodeLGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.L_GET_GLOBAL, address)
+class ShasamblyOpcodeBGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.B_GET_GLOBAL, address)
+class ShasamblyOpcodeSGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.S_GET_GLOBAL, address)
+class ShasamblyOpcodeIGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.I_GET_GLOBAL, address)
+class ShasamblyOpcodeLGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.L_GET_GLOBAL, address)
 
 abstract class ShasamblyGetGlobalDynamicOpcode(val opcode: Byte) : ShasamblyOpcode {
     override val size: Int get() = 1
@@ -353,7 +353,31 @@ abstract class ShasamblyGetGlobalDynamicOpcode(val opcode: Byte) : ShasamblyOpco
     }
 }
 
-class ShasasamblyOpcodeBGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.B_GET_GLOBAL_DYNAMIC)
-class ShasasamblyOpcodeSGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.S_GET_GLOBAL_DYNAMIC)
-class ShasasamblyOpcodeIGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.I_GET_GLOBAL_DYNAMIC)
-class ShasasamblyOpcodeLGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.L_GET_GLOBAL_DYNAMIC)
+class ShasamblyOpcodeBGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.B_GET_GLOBAL_DYNAMIC)
+class ShasamblyOpcodeSGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.S_GET_GLOBAL_DYNAMIC)
+class ShasamblyOpcodeIGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.I_GET_GLOBAL_DYNAMIC)
+class ShasamblyOpcodeLGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.L_GET_GLOBAL_DYNAMIC)
+
+abstract class ShasamblyStoreGlobalOpcode(val opcode: Byte, val address: Int) : ShasamblyOpcode {
+    override val size: Int get() = 5
+    override fun generate(gen: ShasamblyGenerator): ByteArray {
+        return byteArrayOf(opcode, *address.toBytes())
+    }
+}
+
+class ShasamblyOpcodeBStoreGlobal(address: Int) : ShasamblyStoreGlobalOpcode(Opcodes.B_STORE_GLOBAL, address)
+class ShasamblyOpcodeSStoreGlobal(address: Int) : ShasamblyStoreGlobalOpcode(Opcodes.S_STORE_GLOBAL, address)
+class ShasamblyOpcodeIStoreGlobal(address: Int) : ShasamblyStoreGlobalOpcode(Opcodes.I_STORE_GLOBAL, address)
+class ShasamblyOpcodeLStoreGlobal(address: Int) : ShasamblyStoreGlobalOpcode(Opcodes.L_STORE_GLOBAL, address)
+
+abstract class ShasamblyStoreGlobalDynamicOpcode(val opcode: Byte) : ShasamblyOpcode {
+    override val size: Int get() = 1
+    override fun generate(gen: ShasamblyGenerator): ByteArray {
+        return byteArrayOf(opcode)
+    }
+}
+
+class ShasamblyOpcodeBStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.B_STORE_GLOBAL_DYNAMIC)
+class ShasamblyOpcodeSStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.S_STORE_GLOBAL_DYNAMIC)
+class ShasamblyOpcodeIStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.I_STORE_GLOBAL_DYNAMIC)
+class ShasamblyOpcodeLStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.L_STORE_GLOBAL_DYNAMIC)

@@ -42,4 +42,14 @@ object Natives {
     val printLineEnding = nativeFunction("print_line_ending", 0x08) {
         println()
     }
+    val declareGlobal = nativeFunction("declare_global", 0x09) {
+        val size = it.read_int()
+        val addr = it.declareGlobal(size)
+        it.stack.addInt(addr)
+    }
+    val freeGlobal = nativeFunction("free_global", 0x0a) {
+        val size = it.read_int()
+        val addr = it.stack.removeLastInt()
+        it.free(addr, size)
+    }
 }
