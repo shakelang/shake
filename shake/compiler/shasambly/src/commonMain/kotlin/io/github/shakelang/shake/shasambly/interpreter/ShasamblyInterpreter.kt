@@ -2,6 +2,8 @@
 package io.github.shakelang.shake.shasambly.interpreter
 
 import io.github.shakelang.parseutils.bytes.*
+import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import kotlin.experimental.and
 
 object Bytes {
@@ -11,6 +13,7 @@ object Bytes {
     val JUMP_STATIC: Byte = 0x03 // Syntax: JUMP_STATIC, u4 position ; Jump to the given position
     val JUMP_DYNAMIC: Byte = 0x04 // Syntax: JUMP_DYNAMIC ; Jump to the top u4 element on the stack
     val JUMP_IF: Byte = 0x05 // Syntax: JUMP_IF, u4 position ; Jump if the top stack boolean is true
+    val INVOKE_NATIVE: Byte = 0x06 // Syntax: INVOKE_NATIVE, u4 native ; Invoke native function with the given id
 
     val B_GET_LOCAL: Byte = 0x10 // Syntax: B_GET_LOCAL, u2 position ; Load a local byte onto the stack
     val S_GET_LOCAL: Byte = 0x11 // Syntax: S_GET_LOCAL, u2 position ; Load a local short onto the stack
@@ -161,6 +164,13 @@ class ShasamblyInterpreter(
     fun jump_if() {
         val addr = read_int()
         if(stack.removeLastByte() != 0x00.toByte()) jump(addr)
+    }
+
+    fun invoke_native() {
+        val native = read_short().toUShort().toInt()
+        (nativeFunctions[native]
+            ?: throw Error("Unknown native function 0x${native.toBytes().toHexString()} at position 0x${position.toBytes().toHexString()}"))
+            .second.invoke(this)
     }
 
     fun b_get_local() {
@@ -608,74 +618,6 @@ class ShasamblyInterpreter(
         stack.addBoolean(v0 <= v1)
     }
 
-    private inline fun MutableList<Byte>.removeLastByte(): Byte
-        = this.removeLast()
-
-    private inline fun MutableList<Byte>.removeLastShort(): Short {
-        val v1 = this.removeLast()
-        val v0 = this.removeLast()
-        return shortOf(v0, v1)
-    }
-
-    private inline fun MutableList<Byte>.removeLastInt(): Int {
-        val v3 = this.removeLast()
-        val v2 = this.removeLast()
-        val v1 = this.removeLast()
-        val v0 = this.removeLast()
-        return intOf(v0, v1, v2, v3)
-    }
-
-    private inline fun MutableList<Byte>.removeLastLong(): Long {
-        val v7 = this.removeLast()
-        val v6 = this.removeLast()
-        val v5 = this.removeLast()
-        val v4 = this.removeLast()
-        val v3 = this.removeLast()
-        val v2 = this.removeLast()
-        val v1 = this.removeLast()
-        val v0 = this.removeLast()
-        return longOf(v0, v1, v2, v3, v4, v5, v6, v7)
-    }
-
-    private inline fun MutableList<Byte>.removeLastFloat(): Float
-            = Float.fromBits(this.removeLastInt())
-
-    private inline fun MutableList<Byte>.removeLastDouble(): Double
-            = Double.fromBits(this.removeLastLong())
-
-    private inline fun MutableList<Byte>.addByte(v: Byte) {
-        this.add(v)
-    }
-
-    private inline fun MutableList<Byte>.addShort(v: Short) {
-        this.add((v.toInt() shr 8).toByte())
-        this.add((v and 0x00ff).toByte())
-    }
-
-    private inline fun MutableList<Byte>.addInt(v: Int) {
-        this.add((v shr 24 and 0xff).toByte())
-        this.add((v shr 16 and 0xff).toByte())
-        this.add((v shr 8 and 0xff).toByte())
-        this.add((v and 0xff).toByte())
-    }
-
-    private inline fun MutableList<Byte>.addLong(v: Long) {
-        this.add((v shr 56 and 0xff).toByte())
-        this.add((v shr 48 and 0xff).toByte())
-        this.add((v shr 40 and 0xff).toByte())
-        this.add((v shr 32 and 0xff).toByte())
-        this.add((v shr 24 and 0xff).toByte())
-        this.add((v shr 16 and 0xff).toByte())
-        this.add((v shr 8 and 0xff).toByte())
-        this.add((v and 0xff).toByte())
-    }
-
-    private inline fun MutableList<Byte>.addFloat(v: Float) = this.addInt(v.toBits())
-    private inline fun MutableList<Byte>.addDouble(v: Double) = this.addLong(v.toBits())
-
-    private inline fun MutableList<Byte>.addBoolean(v: Boolean) = this.add(if(v) 0x1.toByte() else 0x0.toByte())
-
-
     private inline fun byte() = bytes[position]
     private inline fun short() = bytes.getShort(position)
     private inline fun int() = bytes.getInt(position)
@@ -705,6 +647,7 @@ class ShasamblyInterpreter(
         map[Bytes.JUMP_STATIC.toInt()] = { this.jump_static() }
         map[Bytes.JUMP_DYNAMIC.toInt()] = { this.jump_dynamic() }
         map[Bytes.JUMP_IF.toInt()] = { this.jump_if() }
+        map[Bytes.INVOKE_NATIVE.toInt()] = { this.invoke_native() }
 
         map[Bytes.B_GET_LOCAL.toInt()] = { this.b_get_local() }
         map[Bytes.S_GET_LOCAL.toInt()] = { this.s_get_local() }
@@ -807,6 +750,73 @@ class ShasamblyInterpreter(
     }
 }
 
+inline fun MutableList<Byte>.removeLastByte(): Byte
+        = this.removeLast()
+
+inline fun MutableList<Byte>.removeLastShort(): Short {
+    val v1 = this.removeLast()
+    val v0 = this.removeLast()
+    return shortOf(v0, v1)
+}
+
+inline fun MutableList<Byte>.removeLastInt(): Int {
+    val v3 = this.removeLast()
+    val v2 = this.removeLast()
+    val v1 = this.removeLast()
+    val v0 = this.removeLast()
+    return intOf(v0, v1, v2, v3)
+}
+
+inline fun MutableList<Byte>.removeLastLong(): Long {
+    val v7 = this.removeLast()
+    val v6 = this.removeLast()
+    val v5 = this.removeLast()
+    val v4 = this.removeLast()
+    val v3 = this.removeLast()
+    val v2 = this.removeLast()
+    val v1 = this.removeLast()
+    val v0 = this.removeLast()
+    return longOf(v0, v1, v2, v3, v4, v5, v6, v7)
+}
+
+inline fun MutableList<Byte>.removeLastFloat(): Float
+        = Float.fromBits(this.removeLastInt())
+
+inline fun MutableList<Byte>.removeLastDouble(): Double
+        = Double.fromBits(this.removeLastLong())
+
+inline fun MutableList<Byte>.addByte(v: Byte) {
+    this.add(v)
+}
+
+inline fun MutableList<Byte>.addShort(v: Short) {
+    this.add((v.toInt() shr 8).toByte())
+    this.add((v and 0x00ff).toByte())
+}
+
+inline fun MutableList<Byte>.addInt(v: Int) {
+    this.add((v shr 24 and 0xff).toByte())
+    this.add((v shr 16 and 0xff).toByte())
+    this.add((v shr 8 and 0xff).toByte())
+    this.add((v and 0xff).toByte())
+}
+
+inline fun MutableList<Byte>.addLong(v: Long) {
+    this.add((v shr 56 and 0xff).toByte())
+    this.add((v shr 48 and 0xff).toByte())
+    this.add((v shr 40 and 0xff).toByte())
+    this.add((v shr 32 and 0xff).toByte())
+    this.add((v shr 24 and 0xff).toByte())
+    this.add((v shr 16 and 0xff).toByte())
+    this.add((v shr 8 and 0xff).toByte())
+    this.add((v and 0xff).toByte())
+}
+
+inline fun MutableList<Byte>.addFloat(v: Float) = this.addInt(v.toBits())
+inline fun MutableList<Byte>.addDouble(v: Double) = this.addLong(v.toBits())
+
+private inline fun MutableList<Byte>.addBoolean(v: Boolean) = this.add(if(v) 0x1.toByte() else 0x0.toByte())
+
 fun main() {
     val code = byteArrayOf(
         Bytes.INCR_STACK, 0x00, 0x7F,
@@ -817,6 +827,9 @@ fun main() {
         Bytes.I_PUSH, 0x00, 0x00, 0x00, 0x01,
         Bytes.I_ADD,
         Bytes.I_STORE_LOCAL, 0x00, 0x00,
+        Bytes.I_GET_LOCAL, 0x00, 0x00,
+        Bytes.INVOKE_NATIVE, *Natives.printInt.toBytes(),
+        Bytes.INVOKE_NATIVE, *Natives.printLineEnding.toBytes(),
         Bytes.I_GET_LOCAL, 0x00, 0x00,
         Bytes.I_PUSH, 0x00, 0x00, 0x00, 0x0f,
         Bytes.I_SMALLER,
