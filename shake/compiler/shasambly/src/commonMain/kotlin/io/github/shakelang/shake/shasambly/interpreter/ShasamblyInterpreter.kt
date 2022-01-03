@@ -116,6 +116,7 @@ class ShasamblyInterpreter(
     private var variableStackSize: Int = 0
     var variableAddress = 0
     val byteMap = createByteMap()
+    var globalAddress = 0
 
     fun finished(): Boolean = this.position >= this.bytes.size
 

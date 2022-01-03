@@ -272,28 +272,13 @@ interface SimpleShasambly {
         }
     }
 
-    fun whileLoop(it: RelativeShasamblyGeneratorPartFunction) {
-        relative {
-            bnot()
-            val init = lateinit(5)
-            val start = base.size
-            it(this)
-            sjumpIfTo(start)
-            val end = base.size
-            init(ShasamblyOpcodeJumpIfToIndex(end))
-        }
-    }
-
-
     fun whileLoop(cond: RelativeShasamblyGeneratorPartFunction, it: RelativeShasamblyGeneratorPartFunction) {
         relative {
             cond(this)
             bnot()
             val init = lateinit(5)
-            val start = base.size
             it(this)
-            cond(this)
-            sjumpIfTo(start)
+            jumpStaticTo(0)
             val end = base.size
             init(ShasamblyOpcodeJumpIfToIndex(end))
         }
