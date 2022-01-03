@@ -319,3 +319,27 @@ class ShasamblyOpcodeLSmallerEq : ShasamblyOperationOpcode(Opcodes.L_SMALLER_EQ)
 class ShasamblyOpcodeFSmallerEq : ShasamblyOperationOpcode(Opcodes.F_SMALLER_EQ)
 class ShasamblyOpcodeDSmallerEq : ShasamblyOperationOpcode(Opcodes.D_SMALLER_EQ)
 class ShasamblyOpcodeBoolNot : ShasamblyOperationOpcode(Opcodes.BOOL_NOT)
+
+abstract class ShasamblyGetGlobalOpcode(val opcode: Byte, val address: Int) : ShasamblyOpcode {
+    override val size: Int get() = 5
+    override fun generate(gen: ShasamblyGenerator): ByteArray {
+        return byteArrayOf(opcode, *address.toBytes())
+    }
+}
+
+class ShasasamblyOpcodeBGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.B_GET_GLOBAL, address)
+class ShasasamblyOpcodeSGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.S_GET_GLOBAL, address)
+class ShasasamblyOpcodeIGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.I_GET_GLOBAL, address)
+class ShasasamblyOpcodeLGetGlobal(address: Int) : ShasamblyGetGlobalOpcode(Opcodes.L_GET_GLOBAL, address)
+
+abstract class ShasamblyGetGlobalDynamicOpcode(val opcode: Byte) : ShasamblyOpcode {
+    override val size: Int get() = 1
+    override fun generate(gen: ShasamblyGenerator): ByteArray {
+        return byteArrayOf(opcode)
+    }
+}
+
+class ShasasamblyOpcodeBGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.B_GET_GLOBAL_DYNAMIC)
+class ShasasamblyOpcodeSGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.S_GET_GLOBAL_DYNAMIC)
+class ShasasamblyOpcodeIGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.I_GET_GLOBAL_DYNAMIC)
+class ShasasamblyOpcodeLGetGlobalDynamic : ShasamblyGetGlobalDynamicOpcode(Opcodes.L_GET_GLOBAL_DYNAMIC)

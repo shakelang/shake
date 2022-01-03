@@ -101,6 +101,17 @@ object Opcodes {
     val D_SMALLER_EQ: Byte = 0x050 // Syntax: D_SMALLER_EQ ; Calculates a boolean if the second but top double is smaller or equal than the top byte
 
     val BOOL_NOT: Byte = 0x051 // Syntax: BOOL_NOT ; Put the opposite of the top boolean onto the stack
+
+    val B_GET_GLOBAL: Byte = 0x052 // Syntax: B_GET_GLOBAL, u4 position ; Get a global byte at a given position
+    val S_GET_GLOBAL: Byte = 0x053 // Syntax: S_GET_GLOBAL, u4 position ; Get a global short at a given position
+    val I_GET_GLOBAL: Byte = 0x054 // Syntax: I_GET_GLOBAL, u4 position ; Get a global int at a given position
+    val L_GET_GLOBAL: Byte = 0x055 // Syntax: L_GET_GLOBAL, u4 position ; Get a global long at a given position
+
+    val B_GET_GLOBAL_DYNAMIC: Byte = 0x056 // Syntax: B_GET_GLOBAL ; Get a global byte at a given position (position is the top stack integer)
+    val S_GET_GLOBAL_DYNAMIC: Byte = 0x057 // Syntax: S_GET_GLOBAL ; Get a global short at a given position (position is the top stack integer)
+    val I_GET_GLOBAL_DYNAMIC: Byte = 0x058 // Syntax: I_GET_GLOBAL ; Get a global int at a given position (position is the top stack integer)
+    val L_GET_GLOBAL_DYNAMIC: Byte = 0x059 // Syntax: L_GET_GLOBAL ; Get a global long at a given position (position is the top stack integer)
+
 }
 
 class ShasamblyInterpreter(
@@ -627,6 +638,46 @@ class ShasamblyInterpreter(
         stack.addBoolean(stack.removeLastByte() == 0.toByte())
     }
 
+    fun b_get_global() {
+        val pos = read_int()
+        stack.addByte(memory[pos])
+    }
+
+    fun s_get_global() {
+        val pos = read_int()
+        stack.addShort(memory.getShort(pos - 1))
+    }
+
+    fun i_get_global() {
+        val pos = read_int()
+        stack.addInt(memory.getInt(pos - 3))
+    }
+
+    fun l_get_global() {
+        val pos = read_int()
+        stack.addLong(memory.getLong(pos - 7))
+    }
+
+    fun b_get_global_dynamic() {
+        val pos = stack.removeLastInt()
+        stack.addByte(memory.getByte(pos))
+    }
+
+    fun s_get_global_dynamic() {
+        val pos = stack.removeLastInt()
+        stack.addShort(memory.getShort(pos - 1))
+    }
+
+    fun i_get_global_dynamic() {
+        val pos = stack.removeLastInt()
+        stack.addInt(memory.getInt(pos - 3))
+    }
+
+    fun l_get_global_dynamic() {
+        val pos = stack.removeLastInt()
+        stack.addLong(memory.getLong(pos - 7))
+    }
+
     private inline fun byte() = bytes[position]
     private inline fun short() = bytes.getShort(position)
     private inline fun int() = bytes.getInt(position)
@@ -746,8 +797,15 @@ class ShasamblyInterpreter(
 
         map[Opcodes.BOOL_NOT.toInt()] = { this.bnot() }
 
+        map[Opcodes.B_GET_GLOBAL.toInt()] = { this.b_get_global() }
+        map[Opcodes.S_GET_GLOBAL.toInt()] = { this.s_get_global() }
+        map[Opcodes.I_GET_GLOBAL.toInt()] = { this.i_get_global() }
+        map[Opcodes.L_GET_GLOBAL.toInt()] = { this.l_get_global() }
 
-
+        map[Opcodes.B_GET_GLOBAL_DYNAMIC.toInt()] = { this.b_get_global_dynamic() }
+        map[Opcodes.S_GET_GLOBAL_DYNAMIC.toInt()] = { this.s_get_global_dynamic() }
+        map[Opcodes.I_GET_GLOBAL_DYNAMIC.toInt()] = { this.i_get_global_dynamic() }
+        map[Opcodes.L_GET_GLOBAL_DYNAMIC.toInt()] = { this.l_get_global_dynamic() }
 
         return map
     }

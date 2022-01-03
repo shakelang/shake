@@ -254,6 +254,16 @@ interface SimpleShasambly {
     fun boolNot() = bnot()
     fun booleanNot() = bnot()
 
+    fun b_get_global(address: Int) = ShasasamblyOpcodeBGetGlobal(address)
+    fun s_get_global(address: Int) = ShasasamblyOpcodeSGetGlobal(address)
+    fun i_get_global(address: Int) = ShasasamblyOpcodeIGetGlobal(address)
+    fun l_get_global(address: Int) = ShasasamblyOpcodeLGetGlobal(address)
+
+    fun b_get_global_dynamic() = ShasasamblyOpcodeBGetGlobalDynamic()
+    fun s_get_global_dynamic() = ShasasamblyOpcodeSGetGlobalDynamic()
+    fun i_get_global_dynamic() = ShasasamblyOpcodeIGetGlobalDynamic()
+    fun l_get_global_dynamic() = ShasasamblyOpcodeLGetGlobalDynamic()
+
     fun lateinit(size: Int): (ShasamblyOpcode) -> Unit
     fun relative(it: RelativeShasamblyGeneratorPartFunction)
 
