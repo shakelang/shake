@@ -24,6 +24,8 @@ interface SimpleShasambly {
     fun sjumpIf(target: Int)
     fun sjumpIfTo(target: Int)
     fun invokeNative(address: Short, bytes: ByteArray = byteArrayOf())
+    fun globAddr(address: Int)
+    fun globalAddress(address: Int) = globAddr(address)
 
     fun getLocalByte(address: Int)
     fun getLocalShort(address: Int)
@@ -349,6 +351,7 @@ class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): Sha
     override fun sjumpIf(target: Int) = jumpIf(target)
     override fun sjumpIfTo(target: Int) = jumpIfTo(target)
     override fun invokeNative(address: Short, bytes: ByteArray) = opcode(ShasamblyOpcodeInvokeNative(address, bytes))
+    override fun globAddr(address: Int) = opcode(ShasamblyOpcodeGlobAddr(address))
 
     override fun getLocalByte(address: Int) = opcode(ShasamblyOpcodeBGetLocal(address))
     override fun getLocalShort(address: Int) = opcode(ShasamblyOpcodeSGetLocal(address))

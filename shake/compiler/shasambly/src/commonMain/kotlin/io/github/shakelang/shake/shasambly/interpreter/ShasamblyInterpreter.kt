@@ -13,6 +13,7 @@ object Opcodes {
     val JUMP_DYNAMIC: Byte = 0x04 // Syntax: JUMP_DYNAMIC ; Jump to the top u4 element on the stack
     val JUMP_IF: Byte = 0x05 // Syntax: JUMP_IF, u4 position ; Jump if the top stack boolean is true
     val INVOKE_NATIVE: Byte = 0x06 // Syntax: INVOKE_NATIVE, u4 native ; Invoke native function with the given id
+    val GLOB_ADDR: Byte = 0x07 // Syntax: GLOB_ADDR, u2 position ; Puts the global address of a local variable on top of the stack
 
     val B_GET_LOCAL: Byte = 0x10 // Syntax: B_GET_LOCAL, u2 position ; Load a local byte onto the stack
     val S_GET_LOCAL: Byte = 0x11 // Syntax: S_GET_LOCAL, u2 position ; Load a local short onto the stack
@@ -187,6 +188,12 @@ class ShasamblyInterpreter(
         (nativeFunctions[native]
             ?: throw Error("Unknown native function 0x${native.toBytes().toHexString()} at position 0x${position.toBytes().toHexString()}"))
             .second.invoke(this)
+    }
+
+    fun glob_addr() {
+        val variable = read_short().toUShort().toInt()
+        if(variable >= variableStackSize) throw IllegalArgumentException("Could not get global address of local $variable (Local stack size is only $variableStackSize)")
+        stack.addInt(variableAddress - variable)
     }
 
     fun b_get_local() {
@@ -708,6 +715,7 @@ class ShasamblyInterpreter(
         map[Opcodes.JUMP_DYNAMIC.toInt()] = { this.jump_dynamic() }
         map[Opcodes.JUMP_IF.toInt()] = { this.jump_if() }
         map[Opcodes.INVOKE_NATIVE.toInt()] = { this.invoke_native() }
+        map[Opcodes.GLOB_ADDR.toInt()] = { this.glob_addr() }
 
         map[Opcodes.B_GET_LOCAL.toInt()] = { this.b_get_local() }
         map[Opcodes.S_GET_LOCAL.toInt()] = { this.s_get_local() }

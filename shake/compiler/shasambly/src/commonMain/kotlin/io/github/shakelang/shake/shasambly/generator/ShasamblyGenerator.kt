@@ -116,6 +116,20 @@ open class ShasamblyOpcodeJumpIfToRelativeIndex(val relativeIndex: Int): Shasamb
     }
 }
 
+open class ShasamblyOpcodeGlobAddr(val address: Int) : ShasamblyOpcode {
+    init {
+        if(address !in 0..UShort.MAX_VALUE.toInt())
+            throw IllegalArgumentException("Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
+                    " and not below 0x0, but is 0x${address.toBytes().toHexString()}")
+    }
+
+    override val size: Int get() = 3
+    override fun generate(gen: ShasamblyGenerator): ByteArray {
+        return byteArrayOf(Opcodes.GLOB_ADDR, *address.toUShort().toBytes())
+    }
+
+}
+
 open class ShasamblyLateInitOpcode(override val size: Int) : ShasamblyOpcode {
     lateinit var opcode: ShasamblyOpcode
     override fun generate(gen: ShasamblyGenerator): ByteArray {
