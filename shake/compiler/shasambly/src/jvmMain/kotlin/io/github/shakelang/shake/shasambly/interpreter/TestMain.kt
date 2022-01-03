@@ -15,7 +15,12 @@ fun main() {
         ipush(0x00000000)
         i_store_local(0x0000)
 
-        relative {
+        whileLoop({
+            // Condition
+            i_get_local(0x0000)
+            ipush(15)
+            ismaller()
+        }) {
             i_get_local(0x0000)
             ipush(1)
             iadd()
@@ -24,11 +29,6 @@ fun main() {
 
             natives.printInt()
             natives.printLineEnding()
-
-            i_get_local(0x0000)
-            ipush(15)
-            ismaller()
-            jumpIfTo(0)
         }
 
         // Hello World

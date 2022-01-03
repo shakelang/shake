@@ -148,7 +148,6 @@ class ShasamblyInterpreter(
     }
 
     fun jump(address: Int) {
-        println(address)
         if(address !in bytes.indices) throw Error("Address out of range")
         position = address
     }

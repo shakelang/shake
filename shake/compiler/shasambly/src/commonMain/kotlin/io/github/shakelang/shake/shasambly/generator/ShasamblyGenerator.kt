@@ -32,7 +32,6 @@ open class ShasamblyGenerator(contents: MutableList<ShasamblyOpcode>) : MutableL
     fun positionOfIndex(index: Int): Int {
         val sizes = sizes
         var sum = 0
-        println(sizes)
         if(index > sizes.size) throw IllegalArgumentException("Index to big, must be smaller than ${sizes.size} (is $index)")
         for(i in 0 until index) sum += sizes[i]
         return sum
@@ -114,6 +113,16 @@ open class ShasamblyOpcodeJumpIfToRelativeIndex(val relativeIndex: Int): Shasamb
         val index = gen.indexOf(this) + relativeIndex
         val address = gen.positionOfIndex(index)
         return byteArrayOf(Opcodes.JUMP_IF, *address.toBytes())
+    }
+}
+
+open class ShasamblyLateInitOpcode(override val size: Int) : ShasamblyOpcode {
+    lateinit var opcode: ShasamblyOpcode
+    override fun generate(gen: ShasamblyGenerator): ByteArray {
+        return opcode.generate(gen)
+    }
+    fun init(opcode: ShasamblyOpcode) {
+        this.opcode = opcode
     }
 }
 
