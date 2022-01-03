@@ -2,11 +2,12 @@
 package io.github.shakelang.shake.shasambly.interpreter
 
 import io.github.shakelang.parseutils.bytes.*
+import io.github.shakelang.shake.shasambly.generator.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import kotlin.experimental.and
 
-object Bytes {
+object Opcodes {
 
     val INCR_STACK: Byte = 0x01 // Syntax: INCR_STACK, u2 stack_size (Increase the variable stack, the new stack has stack_size bytes of space)
     val DECR_STACK: Byte = 0x02 // Syntax: DECR_STACK ; Removes the top stack level
@@ -642,98 +643,98 @@ class ShasamblyInterpreter(
     }
     private fun createByteMap(): Array<(() -> Unit)?> {
         val map = arrayOfNulls<() -> Unit>(256)
-        map[Bytes.INCR_STACK.toInt()] = { this.incr_variable_stack() }
-        map[Bytes.DECR_STACK.toInt()] = { this.decr_variable_stack() }
-        map[Bytes.JUMP_STATIC.toInt()] = { this.jump_static() }
-        map[Bytes.JUMP_DYNAMIC.toInt()] = { this.jump_dynamic() }
-        map[Bytes.JUMP_IF.toInt()] = { this.jump_if() }
-        map[Bytes.INVOKE_NATIVE.toInt()] = { this.invoke_native() }
+        map[Opcodes.INCR_STACK.toInt()] = { this.incr_variable_stack() }
+        map[Opcodes.DECR_STACK.toInt()] = { this.decr_variable_stack() }
+        map[Opcodes.JUMP_STATIC.toInt()] = { this.jump_static() }
+        map[Opcodes.JUMP_DYNAMIC.toInt()] = { this.jump_dynamic() }
+        map[Opcodes.JUMP_IF.toInt()] = { this.jump_if() }
+        map[Opcodes.INVOKE_NATIVE.toInt()] = { this.invoke_native() }
 
-        map[Bytes.B_GET_LOCAL.toInt()] = { this.b_get_local() }
-        map[Bytes.S_GET_LOCAL.toInt()] = { this.s_get_local() }
-        map[Bytes.I_GET_LOCAL.toInt()] = { this.i_get_local() }
-        map[Bytes.L_GET_LOCAL.toInt()] = { this.l_get_local() }
+        map[Opcodes.B_GET_LOCAL.toInt()] = { this.b_get_local() }
+        map[Opcodes.S_GET_LOCAL.toInt()] = { this.s_get_local() }
+        map[Opcodes.I_GET_LOCAL.toInt()] = { this.i_get_local() }
+        map[Opcodes.L_GET_LOCAL.toInt()] = { this.l_get_local() }
 
-        map[Bytes.B_STORE_LOCAL.toInt()] = { this.b_store_local() }
-        map[Bytes.S_STORE_LOCAL.toInt()] = { this.s_store_local() }
-        map[Bytes.I_STORE_LOCAL.toInt()] = { this.i_store_local() }
-        map[Bytes.L_STORE_LOCAL.toInt()] = { this.l_store_local() }
+        map[Opcodes.B_STORE_LOCAL.toInt()] = { this.b_store_local() }
+        map[Opcodes.S_STORE_LOCAL.toInt()] = { this.s_store_local() }
+        map[Opcodes.I_STORE_LOCAL.toInt()] = { this.i_store_local() }
+        map[Opcodes.L_STORE_LOCAL.toInt()] = { this.l_store_local() }
 
-        map[Bytes.B_ADD.toInt()] = { this.badd() }
-        map[Bytes.B_SUB.toInt()] = { this.bsub() }
-        map[Bytes.B_MUL.toInt()] = { this.bmul() }
-        map[Bytes.B_DIV.toInt()] = { this.bdiv() }
-        map[Bytes.B_MOD.toInt()] = { this.bmod() }
+        map[Opcodes.B_ADD.toInt()] = { this.badd() }
+        map[Opcodes.B_SUB.toInt()] = { this.bsub() }
+        map[Opcodes.B_MUL.toInt()] = { this.bmul() }
+        map[Opcodes.B_DIV.toInt()] = { this.bdiv() }
+        map[Opcodes.B_MOD.toInt()] = { this.bmod() }
 
-        map[Bytes.S_ADD.toInt()] = { this.sadd() }
-        map[Bytes.S_SUB.toInt()] = { this.ssub() }
-        map[Bytes.S_MUL.toInt()] = { this.smul() }
-        map[Bytes.S_DIV.toInt()] = { this.sdiv() }
-        map[Bytes.S_MOD.toInt()] = { this.smod() }
+        map[Opcodes.S_ADD.toInt()] = { this.sadd() }
+        map[Opcodes.S_SUB.toInt()] = { this.ssub() }
+        map[Opcodes.S_MUL.toInt()] = { this.smul() }
+        map[Opcodes.S_DIV.toInt()] = { this.sdiv() }
+        map[Opcodes.S_MOD.toInt()] = { this.smod() }
 
-        map[Bytes.I_ADD.toInt()] = { this.iadd() }
-        map[Bytes.I_SUB.toInt()] = { this.isub() }
-        map[Bytes.I_MUL.toInt()] = { this.imul() }
-        map[Bytes.I_DIV.toInt()] = { this.idiv() }
-        map[Bytes.I_MOD.toInt()] = { this.imod() }
+        map[Opcodes.I_ADD.toInt()] = { this.iadd() }
+        map[Opcodes.I_SUB.toInt()] = { this.isub() }
+        map[Opcodes.I_MUL.toInt()] = { this.imul() }
+        map[Opcodes.I_DIV.toInt()] = { this.idiv() }
+        map[Opcodes.I_MOD.toInt()] = { this.imod() }
 
-        map[Bytes.L_ADD.toInt()] = { this.ladd() }
-        map[Bytes.L_SUB.toInt()] = { this.lsub() }
-        map[Bytes.L_MUL.toInt()] = { this.lmul() }
-        map[Bytes.L_DIV.toInt()] = { this.ldiv() }
-        map[Bytes.L_MOD.toInt()] = { this.lmod() }
+        map[Opcodes.L_ADD.toInt()] = { this.ladd() }
+        map[Opcodes.L_SUB.toInt()] = { this.lsub() }
+        map[Opcodes.L_MUL.toInt()] = { this.lmul() }
+        map[Opcodes.L_DIV.toInt()] = { this.ldiv() }
+        map[Opcodes.L_MOD.toInt()] = { this.lmod() }
 
-        map[Bytes.F_ADD.toInt()] = { this.fadd() }
-        map[Bytes.F_SUB.toInt()] = { this.fsub() }
-        map[Bytes.F_MUL.toInt()] = { this.fmul() }
-        map[Bytes.F_DIV.toInt()] = { this.fdiv() }
-        map[Bytes.F_MOD.toInt()] = { this.fmod() }
+        map[Opcodes.F_ADD.toInt()] = { this.fadd() }
+        map[Opcodes.F_SUB.toInt()] = { this.fsub() }
+        map[Opcodes.F_MUL.toInt()] = { this.fmul() }
+        map[Opcodes.F_DIV.toInt()] = { this.fdiv() }
+        map[Opcodes.F_MOD.toInt()] = { this.fmod() }
 
-        map[Bytes.D_ADD.toInt()] = { this.dadd() }
-        map[Bytes.D_SUB.toInt()] = { this.dsub() }
-        map[Bytes.D_MUL.toInt()] = { this.dmul() }
-        map[Bytes.D_DIV.toInt()] = { this.ddiv() }
-        map[Bytes.D_MOD.toInt()] = { this.dmod() }
+        map[Opcodes.D_ADD.toInt()] = { this.dadd() }
+        map[Opcodes.D_SUB.toInt()] = { this.dsub() }
+        map[Opcodes.D_MUL.toInt()] = { this.dmul() }
+        map[Opcodes.D_DIV.toInt()] = { this.ddiv() }
+        map[Opcodes.D_MOD.toInt()] = { this.dmod() }
 
-        map[Bytes.B_PUSH.toInt()] = { this.bpush() }
-        map[Bytes.S_PUSH.toInt()] = { this.spush() }
-        map[Bytes.I_PUSH.toInt()] = { this.ipush() }
-        map[Bytes.L_PUSH.toInt()] = { this.lpush() }
+        map[Opcodes.B_PUSH.toInt()] = { this.bpush() }
+        map[Opcodes.S_PUSH.toInt()] = { this.spush() }
+        map[Opcodes.I_PUSH.toInt()] = { this.ipush() }
+        map[Opcodes.L_PUSH.toInt()] = { this.lpush() }
 
-        map[Bytes.B_EQ.toInt()] = { this.beq() }
-        map[Bytes.S_EQ.toInt()] = { this.seq() }
-        map[Bytes.I_EQ.toInt()] = { this.ieq() }
-        map[Bytes.L_EQ.toInt()] = { this.leq() }
-        map[Bytes.F_EQ.toInt()] = { this.feq() }
-        map[Bytes.D_EQ.toInt()] = { this.deq() }
+        map[Opcodes.B_EQ.toInt()] = { this.beq() }
+        map[Opcodes.S_EQ.toInt()] = { this.seq() }
+        map[Opcodes.I_EQ.toInt()] = { this.ieq() }
+        map[Opcodes.L_EQ.toInt()] = { this.leq() }
+        map[Opcodes.F_EQ.toInt()] = { this.feq() }
+        map[Opcodes.D_EQ.toInt()] = { this.deq() }
 
-        map[Bytes.B_BIGGER.toInt()] = { this.bbigger() }
-        map[Bytes.S_BIGGER.toInt()] = { this.sbigger() }
-        map[Bytes.I_BIGGER.toInt()] = { this.ibigger() }
-        map[Bytes.L_BIGGER.toInt()] = { this.lbigger() }
-        map[Bytes.F_BIGGER.toInt()] = { this.fbigger() }
-        map[Bytes.D_BIGGER.toInt()] = { this.dbigger() }
+        map[Opcodes.B_BIGGER.toInt()] = { this.bbigger() }
+        map[Opcodes.S_BIGGER.toInt()] = { this.sbigger() }
+        map[Opcodes.I_BIGGER.toInt()] = { this.ibigger() }
+        map[Opcodes.L_BIGGER.toInt()] = { this.lbigger() }
+        map[Opcodes.F_BIGGER.toInt()] = { this.fbigger() }
+        map[Opcodes.D_BIGGER.toInt()] = { this.dbigger() }
 
-        map[Bytes.B_SMALLER.toInt()] = { this.bsmaller() }
-        map[Bytes.S_SMALLER.toInt()] = { this.ssmaller() }
-        map[Bytes.I_SMALLER.toInt()] = { this.ismaller() }
-        map[Bytes.L_SMALLER.toInt()] = { this.lsmaller() }
-        map[Bytes.F_SMALLER.toInt()] = { this.fsmaller() }
-        map[Bytes.D_SMALLER.toInt()] = { this.dsmaller() }
+        map[Opcodes.B_SMALLER.toInt()] = { this.bsmaller() }
+        map[Opcodes.S_SMALLER.toInt()] = { this.ssmaller() }
+        map[Opcodes.I_SMALLER.toInt()] = { this.ismaller() }
+        map[Opcodes.L_SMALLER.toInt()] = { this.lsmaller() }
+        map[Opcodes.F_SMALLER.toInt()] = { this.fsmaller() }
+        map[Opcodes.D_SMALLER.toInt()] = { this.dsmaller() }
 
-        map[Bytes.B_BIGGER_EQ.toInt()] = { this.bbiggereq() }
-        map[Bytes.S_BIGGER_EQ.toInt()] = { this.sbiggereq() }
-        map[Bytes.I_BIGGER_EQ.toInt()] = { this.ibiggereq() }
-        map[Bytes.L_BIGGER_EQ.toInt()] = { this.lbiggereq() }
-        map[Bytes.F_BIGGER_EQ.toInt()] = { this.fbiggereq() }
-        map[Bytes.D_BIGGER_EQ.toInt()] = { this.dbiggereq() }
+        map[Opcodes.B_BIGGER_EQ.toInt()] = { this.bbiggereq() }
+        map[Opcodes.S_BIGGER_EQ.toInt()] = { this.sbiggereq() }
+        map[Opcodes.I_BIGGER_EQ.toInt()] = { this.ibiggereq() }
+        map[Opcodes.L_BIGGER_EQ.toInt()] = { this.lbiggereq() }
+        map[Opcodes.F_BIGGER_EQ.toInt()] = { this.fbiggereq() }
+        map[Opcodes.D_BIGGER_EQ.toInt()] = { this.dbiggereq() }
 
-        map[Bytes.B_SMALLER_EQ.toInt()] = { this.bsmallereq() }
-        map[Bytes.S_SMALLER_EQ.toInt()] = { this.ssmallereq() }
-        map[Bytes.I_SMALLER_EQ.toInt()] = { this.ismallereq() }
-        map[Bytes.L_SMALLER_EQ.toInt()] = { this.lsmallereq() }
-        map[Bytes.F_SMALLER_EQ.toInt()] = { this.fsmallereq() }
-        map[Bytes.D_SMALLER_EQ.toInt()] = { this.dsmallereq() }
+        map[Opcodes.B_SMALLER_EQ.toInt()] = { this.bsmallereq() }
+        map[Opcodes.S_SMALLER_EQ.toInt()] = { this.ssmallereq() }
+        map[Opcodes.I_SMALLER_EQ.toInt()] = { this.ismallereq() }
+        map[Opcodes.L_SMALLER_EQ.toInt()] = { this.lsmallereq() }
+        map[Opcodes.F_SMALLER_EQ.toInt()] = { this.fsmallereq() }
+        map[Opcodes.D_SMALLER_EQ.toInt()] = { this.dsmallereq() }
 
 
 
@@ -818,32 +819,36 @@ inline fun MutableList<Byte>.addDouble(v: Double) = this.addLong(v.toBits())
 private inline fun MutableList<Byte>.addBoolean(v: Boolean) = this.add(if(v) 0x1.toByte() else 0x0.toByte())
 
 fun main() {
-    val code = byteArrayOf(
-        Bytes.INCR_STACK, 0x00, 0x7F,
-        Bytes.I_PUSH, 0x00, 0x00, 0x00, 0x00,
-        Bytes.I_STORE_LOCAL, 0x00, 0x00,
 
-        // A small loop
-        Bytes.I_GET_LOCAL, 0x00, 0x00,
-        Bytes.I_PUSH, 0x00, 0x00, 0x00, 0x01,
-        Bytes.I_ADD,
-        Bytes.I_STORE_LOCAL, 0x00, 0x00,
-        Bytes.I_GET_LOCAL, 0x00, 0x00,
-        Bytes.INVOKE_NATIVE, *Natives.printInt.toBytes(),
-        Bytes.INVOKE_NATIVE, *Natives.printLineEnding.toBytes(),
-        Bytes.I_GET_LOCAL, 0x00, 0x00,
-        Bytes.I_PUSH, 0x00, 0x00, 0x00, 0x0f,
-        Bytes.I_SMALLER,
-        Bytes.JUMP_IF, 0x00, 0x00, 0x00, 0x0b,
+    val code = ShasamblyGenerator(arrayOf(
+
+        ShasamblyOpcodeIncrStack(0x007f),
+        ShasamblyOpcodeIPush(0x00000000),
+        ShasamblyOpcodeIStoreLocal(0x0000),
+
+        ShasamblyOpcodeIGetLocal(0x0000),
+        ShasamblyOpcodeIPush(0x00000001),
+        ShasamblyOpcodeIAdd(),
+        ShasamblyOpcodeIStoreLocal(0x0000),
+        ShasamblyOpcodeIGetLocal(0x0000),
+        ShasamblyOpcodeInvokeNative(Natives.printInt),
+        ShasamblyOpcodeInvokeNative(Natives.printLineEnding),
+        ShasamblyOpcodeIGetLocal(0x0000),
+        ShasamblyOpcodeIPush(0x00000000f),
+        ShasamblyOpcodeISmaller(),
+        ShasamblyOpcodeJumpIfToIndex(3),
 
         // Hello World
         *"Hello World!\n".flatMap {
             listOf(
-                Bytes.B_PUSH, it.code.toUByte().toByte(),
-                Bytes.INVOKE_NATIVE, *Natives.printUtf8.toBytes().toTypedArray()
+                ShasamblyOpcodeBPush(it.code.toByte()),
+                ShasamblyOpcodeInvokeNative(Natives.printUtf8)
             )
-        }.toByteArray()
-    )
+        }.toTypedArray(),
+        ShasamblyOpcodeInvokeNative(Natives.printLineEnding),
+
+    )).generate()
+
     println(code.toHexString())
     val interpreter = ShasamblyInterpreter(
         1024, code, 0
