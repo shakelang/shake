@@ -823,6 +823,7 @@ fun main() {
         Bytes.I_PUSH, 0x00, 0x00, 0x00, 0x00,
         Bytes.I_STORE_LOCAL, 0x00, 0x00,
 
+        // A small loop
         Bytes.I_GET_LOCAL, 0x00, 0x00,
         Bytes.I_PUSH, 0x00, 0x00, 0x00, 0x01,
         Bytes.I_ADD,
@@ -833,7 +834,15 @@ fun main() {
         Bytes.I_GET_LOCAL, 0x00, 0x00,
         Bytes.I_PUSH, 0x00, 0x00, 0x00, 0x0f,
         Bytes.I_SMALLER,
-        Bytes.JUMP_IF, 0x00, 0x00, 0x00, 0x0b
+        Bytes.JUMP_IF, 0x00, 0x00, 0x00, 0x0b,
+
+        // Hello World
+        *"Hello World!\n".flatMap {
+            listOf(
+                Bytes.B_PUSH, it.code.toUByte().toByte(),
+                Bytes.INVOKE_NATIVE, *Natives.printUtf8.toBytes().toTypedArray()
+            )
+        }.toByteArray()
     )
     println(code.toHexString())
     val interpreter = ShasamblyInterpreter(

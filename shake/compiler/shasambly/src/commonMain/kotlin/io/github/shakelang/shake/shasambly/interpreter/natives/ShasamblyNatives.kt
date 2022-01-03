@@ -35,7 +35,11 @@ object Natives {
         val v = it.stack.removeLastDouble()
         print(v)
     }
-    val printLineEnding = nativeFunction("print_line_ending", 0x07) {
+    val printUtf8 = nativeFunction("print_utf8", 0x07) {
+        val v = it.stack.removeLastByte().toInt().toChar()
+        print(v)
+    }
+    val printLineEnding = nativeFunction("print_line_ending", 0x08) {
         println()
     }
 }
