@@ -820,34 +820,35 @@ private inline fun MutableList<Byte>.addBoolean(v: Boolean) = this.add(if(v) 0x1
 
 fun main() {
 
-    val code = ShasamblyGenerator(arrayOf(
+    val code = shasambly {
 
-        ShasamblyOpcodeIncrStack(0x007f),
-        ShasamblyOpcodeIPush(0x00000000),
-        ShasamblyOpcodeIStoreLocal(0x0000),
+        incrStack(0x007f)
+        ipush(0x00000000)
+        i_store_local(0x0000)
 
-        ShasamblyOpcodeIGetLocal(0x0000),
-        ShasamblyOpcodeIPush(0x00000001),
-        ShasamblyOpcodeIAdd(),
-        ShasamblyOpcodeIStoreLocal(0x0000),
-        ShasamblyOpcodeIGetLocal(0x0000),
-        ShasamblyOpcodeInvokeNative(Natives.printInt),
-        ShasamblyOpcodeInvokeNative(Natives.printLineEnding),
-        ShasamblyOpcodeIGetLocal(0x0000),
-        ShasamblyOpcodeIPush(0x00000000f),
-        ShasamblyOpcodeISmaller(),
-        ShasamblyOpcodeJumpIfToIndex(3),
+        i_get_local(0x0000)
+        ipush(1)
+        iadd()
+        i_store_local(0x0000)
+        i_get_local(0x0000)
+
+        invokeNative(Natives.printInt)
+        invokeNative(Natives.printLineEnding)
+
+        i_get_local(0x0000)
+        ipush(15)
+        ismaller()
+        jumpIfTo(3)
 
         // Hello World
-        *"Hello World!\n".flatMap {
-            listOf(
-                ShasamblyOpcodeBPush(it.code.toByte()),
-                ShasamblyOpcodeInvokeNative(Natives.printUtf8)
-            )
-        }.toTypedArray(),
-        ShasamblyOpcodeInvokeNative(Natives.printLineEnding),
+        "Hello World!\n".forEach {
+            bpush(it.code.toByte())
+            invokeNative(Natives.printUtf8)
+        }
 
-    )).generate()
+        invokeNative(Natives.printLineEnding)
+
+    }
 
     println(code.toHexString())
     val interpreter = ShasamblyInterpreter(

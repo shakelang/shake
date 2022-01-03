@@ -17,7 +17,7 @@ open class ShasamblyGenerator(contents: MutableList<ShasamblyOpcode>) : MutableL
     constructor(contents: Array<ShasamblyOpcode>) : this(contents.toMutableList())
 
     private var sizesCache: List<Int>? = null
-    val sizes: List<Int> = sizesCache ?: map { it.size }
+    val sizes: List<Int> get() = sizesCache ?: map { it.size }
 
     fun generate(): ByteArray {
         if(sizesCache != null) throw IllegalStateException("Generate already running")
@@ -32,6 +32,7 @@ open class ShasamblyGenerator(contents: MutableList<ShasamblyOpcode>) : MutableL
     fun positionOfIndex(index: Int): Int {
         val sizes = sizes
         var sum = -1
+        if(index > sizes.size) throw IllegalArgumentException("Index to big, must be smaller than ${sizes.size} (is $index)")
         for(i in 0 .. index) sum += sizes[i]
         return sum
     }
@@ -245,27 +246,49 @@ class ShasamblyOpcodeLMul : ShasamblyOperationOpcode(Opcodes.L_MUL)
 class ShasamblyOpcodeLDiv : ShasamblyOperationOpcode(Opcodes.L_DIV)
 class ShasamblyOpcodeLMod : ShasamblyOperationOpcode(Opcodes.L_MOD)
 
+class ShasamblyOpcodeFAdd : ShasamblyOperationOpcode(Opcodes.F_ADD)
+class ShasamblyOpcodeFSub : ShasamblyOperationOpcode(Opcodes.F_SUB)
+class ShasamblyOpcodeFMul : ShasamblyOperationOpcode(Opcodes.F_MUL)
+class ShasamblyOpcodeFDiv : ShasamblyOperationOpcode(Opcodes.F_DIV)
+class ShasamblyOpcodeFMod : ShasamblyOperationOpcode(Opcodes.F_MOD)
+
+class ShasamblyOpcodeDAdd : ShasamblyOperationOpcode(Opcodes.D_ADD)
+class ShasamblyOpcodeDSub : ShasamblyOperationOpcode(Opcodes.D_SUB)
+class ShasamblyOpcodeDMul : ShasamblyOperationOpcode(Opcodes.D_MUL)
+class ShasamblyOpcodeDDiv : ShasamblyOperationOpcode(Opcodes.D_DIV)
+class ShasamblyOpcodeDMod : ShasamblyOperationOpcode(Opcodes.D_MOD)
+
 class ShasamblyOpcodeBEq : ShasamblyOperationOpcode(Opcodes.B_EQ)
 class ShasamblyOpcodeSEq : ShasamblyOperationOpcode(Opcodes.S_EQ)
 class ShasamblyOpcodeIEq : ShasamblyOperationOpcode(Opcodes.I_EQ)
 class ShasamblyOpcodeLEq : ShasamblyOperationOpcode(Opcodes.L_EQ)
+class ShasamblyOpcodeFEq : ShasamblyOperationOpcode(Opcodes.F_EQ)
+class ShasamblyOpcodeDEq : ShasamblyOperationOpcode(Opcodes.D_EQ)
 
 class ShasamblyOpcodeBBigger : ShasamblyOperationOpcode(Opcodes.B_BIGGER)
 class ShasamblyOpcodeSBigger : ShasamblyOperationOpcode(Opcodes.S_BIGGER)
 class ShasamblyOpcodeIBigger : ShasamblyOperationOpcode(Opcodes.I_BIGGER)
 class ShasamblyOpcodeLBigger : ShasamblyOperationOpcode(Opcodes.L_BIGGER)
+class ShasamblyOpcodeFBigger : ShasamblyOperationOpcode(Opcodes.F_BIGGER)
+class ShasamblyOpcodeDBigger : ShasamblyOperationOpcode(Opcodes.D_BIGGER)
 
 class ShasamblyOpcodeBSmaller : ShasamblyOperationOpcode(Opcodes.B_SMALLER)
 class ShasamblyOpcodeSSmaller : ShasamblyOperationOpcode(Opcodes.S_SMALLER)
 class ShasamblyOpcodeISmaller : ShasamblyOperationOpcode(Opcodes.I_SMALLER)
 class ShasamblyOpcodeLSmaller : ShasamblyOperationOpcode(Opcodes.L_SMALLER)
+class ShasamblyOpcodeFSmaller : ShasamblyOperationOpcode(Opcodes.F_SMALLER)
+class ShasamblyOpcodeDSmaller : ShasamblyOperationOpcode(Opcodes.D_SMALLER)
 
 class ShasamblyOpcodeBBiggerEq : ShasamblyOperationOpcode(Opcodes.B_BIGGER_EQ)
 class ShasamblyOpcodeSBiggerEq : ShasamblyOperationOpcode(Opcodes.S_BIGGER_EQ)
 class ShasamblyOpcodeIBiggerEq : ShasamblyOperationOpcode(Opcodes.I_BIGGER_EQ)
 class ShasamblyOpcodeLBiggerEq : ShasamblyOperationOpcode(Opcodes.L_BIGGER_EQ)
+class ShasamblyOpcodeFBiggerEq : ShasamblyOperationOpcode(Opcodes.F_BIGGER_EQ)
+class ShasamblyOpcodeDBiggerEq : ShasamblyOperationOpcode(Opcodes.D_BIGGER_EQ)
 
 class ShasamblyOpcodeBSmallerEq : ShasamblyOperationOpcode(Opcodes.B_SMALLER_EQ)
 class ShasamblyOpcodeSSmallerEq : ShasamblyOperationOpcode(Opcodes.S_SMALLER_EQ)
 class ShasamblyOpcodeISmallerEq : ShasamblyOperationOpcode(Opcodes.I_SMALLER_EQ)
 class ShasamblyOpcodeLSmallerEq : ShasamblyOperationOpcode(Opcodes.L_SMALLER_EQ)
+class ShasamblyOpcodeFSmallerEq : ShasamblyOperationOpcode(Opcodes.F_SMALLER_EQ)
+class ShasamblyOpcodeDSmallerEq : ShasamblyOperationOpcode(Opcodes.D_SMALLER_EQ)
