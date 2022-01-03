@@ -31,9 +31,10 @@ open class ShasamblyGenerator(contents: MutableList<ShasamblyOpcode>) : MutableL
 
     fun positionOfIndex(index: Int): Int {
         val sizes = sizes
-        var sum = -1
+        var sum = 0
+        println(sizes)
         if(index > sizes.size) throw IllegalArgumentException("Index to big, must be smaller than ${sizes.size} (is $index)")
-        for(i in 0 .. index) sum += sizes[i]
+        for(i in 0 until index) sum += sizes[i]
         return sum
     }
 
@@ -75,6 +76,14 @@ open class ShasamblyOpcodeJumpStaticToIndex(val index: Int): ShasamblyOpcodeJump
     }
 }
 
+open class ShasamblyOpcodeJumpStaticToRelativeIndex(val relativeIndex: Int): ShasamblyOpcodeJumpStatic(0) {
+    override fun generate(gen: ShasamblyGenerator): ByteArray {
+        val index = gen.indexOf(this) + relativeIndex
+        val address = gen.positionOfIndex(index)
+        return byteArrayOf(Opcodes.JUMP_STATIC, *address.toBytes())
+    }
+}
+
 open class ShasamblyOpcodeJumpDynamic : ShasamblyOpcode {
     override val size: Int get() = 1
     override fun generate(gen: ShasamblyGenerator): ByteArray {
@@ -95,6 +104,14 @@ open class ShasamblyOpcodeJumpIf(val address: Int) : ShasamblyOpcode {
 
 open class ShasamblyOpcodeJumpIfToIndex(val index: Int): ShasamblyOpcodeJumpIf(0) {
     override fun generate(gen: ShasamblyGenerator): ByteArray {
+        val address = gen.positionOfIndex(index)
+        return byteArrayOf(Opcodes.JUMP_IF, *address.toBytes())
+    }
+}
+
+open class ShasamblyOpcodeJumpIfToRelativeIndex(val relativeIndex: Int): ShasamblyOpcodeJumpIf(0) {
+    override fun generate(gen: ShasamblyGenerator): ByteArray {
+        val index = gen.indexOf(this) + relativeIndex
         val address = gen.positionOfIndex(index)
         return byteArrayOf(Opcodes.JUMP_IF, *address.toBytes())
     }
@@ -191,7 +208,7 @@ open class ShasamblyOpcodeIPush(val int: Int) : ShasamblyOpcode {
     constructor(float: Float) : this(float.toBits())
 
     override val size: Int
-        get() = 3
+        get() = 5
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         return byteArrayOf(Opcodes.I_PUSH, *int.toBytes())
     }
@@ -203,7 +220,7 @@ open class ShasamblyOpcodeLPush(val long: Long) : ShasamblyOpcode {
     constructor(double: Double) : this(double.toBits())
 
     override val size: Int
-        get() = 3
+        get() = 9
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         return byteArrayOf(Opcodes.L_PUSH, *long.toBytes())
     }
