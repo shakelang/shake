@@ -100,6 +100,7 @@ object Opcodes {
     val F_SMALLER_EQ: Byte = 0x04f // Syntax: F_SMALLER_EQ ; Calculates a boolean if the second but top float is smaller or equal than the top byte
     val D_SMALLER_EQ: Byte = 0x050 // Syntax: D_SMALLER_EQ ; Calculates a boolean if the second but top double is smaller or equal than the top byte
 
+    val BOOL_NOT: Byte = 0x051 // Syntax: BOOL_NOT ; Put the opposite of the top boolean onto the stack
 }
 
 class ShasamblyInterpreter(
@@ -119,10 +120,14 @@ class ShasamblyInterpreter(
     fun finished(): Boolean = this.position >= this.bytes.size
 
     fun tick() {
+        val pos = position
         val next = bytes[position++]
-        (byteMap[next.toUByte().toInt()]
-            ?: throw Error("Could not execute byte 0x${next.toBytes().toHexString()} " +
-                    "at position 0x${(position-1).toBytes().toHexString()} (${position-1})")).invoke()
+        try {
+            (byteMap[next.toUByte().toInt()] ?: throw NoSuchElementException("Wrong opcode")).invoke()
+        } catch (e: Throwable) {
+            throw Error("Could not execute byte 0x${next.toBytes().toHexString()} " +
+                    "at position 0x${pos.toBytes().toHexString()} ($pos)", e)
+        }
     }
 
     fun tick(times: Int) {
@@ -617,6 +622,10 @@ class ShasamblyInterpreter(
         stack.addBoolean(v0 <= v1)
     }
 
+    fun bnot() {
+        stack.addBoolean(stack.removeLastByte() == 0.toByte())
+    }
+
     private inline fun byte() = bytes[position]
     private inline fun short() = bytes.getShort(position)
     private inline fun int() = bytes.getInt(position)
@@ -733,6 +742,8 @@ class ShasamblyInterpreter(
         map[Opcodes.L_SMALLER_EQ.toInt()] = { this.lsmallereq() }
         map[Opcodes.F_SMALLER_EQ.toInt()] = { this.fsmallereq() }
         map[Opcodes.D_SMALLER_EQ.toInt()] = { this.dsmallereq() }
+
+        map[Opcodes.BOOL_NOT.toInt()] = { this.bnot() }
 
 
 

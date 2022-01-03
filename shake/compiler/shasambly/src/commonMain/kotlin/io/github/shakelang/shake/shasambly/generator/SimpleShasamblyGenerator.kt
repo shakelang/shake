@@ -249,6 +249,11 @@ interface SimpleShasambly {
     fun longSmallerEquals()
     fun floatSmallerEquals()
     fun doubleSmallerEquals()
+
+    fun bnot()
+    fun boolNot() = bnot()
+    fun booleanNot() = bnot()
+
     fun lateinit(size: Int): (ShasamblyOpcode) -> Unit
     fun relative(it: RelativeShasamblyGeneratorPartFunction)
 
@@ -269,10 +274,11 @@ interface SimpleShasambly {
 
     fun whileLoop(it: RelativeShasamblyGeneratorPartFunction) {
         relative {
+            bnot()
             val init = lateinit(5)
             val start = base.size
             it(this)
-            jumpIfTo(start)
+            sjumpIfTo(start)
             val end = base.size
             init(ShasamblyOpcodeJumpIfToIndex(end))
         }
@@ -282,10 +288,12 @@ interface SimpleShasambly {
     fun whileLoop(cond: RelativeShasamblyGeneratorPartFunction, it: RelativeShasamblyGeneratorPartFunction) {
         relative {
             cond(this)
+            bnot()
             val init = lateinit(5)
             val start = base.size
             it(this)
-            jumpIfTo(start)
+            cond(this)
+            sjumpIfTo(start)
             val end = base.size
             init(ShasamblyOpcodeJumpIfToIndex(end))
         }
@@ -572,6 +580,9 @@ class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): Sha
     override fun longSmallerEquals() = lsmallereq()
     override fun floatSmallerEquals() = fsmallereq()
     override fun doubleSmallerEquals() = dsmallereq()
+
+    override fun bnot() = opcode(ShasamblyOpcodeBoolNot())
+
     override fun lateinit(size: Int): (ShasamblyOpcode) -> Unit {
         val opcode = ShasamblyLateInitOpcode(size)
         this.opcode(opcode)

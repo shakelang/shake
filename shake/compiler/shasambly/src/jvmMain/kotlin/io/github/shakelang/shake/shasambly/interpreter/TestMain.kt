@@ -18,7 +18,7 @@ fun main() {
         whileLoop({
             // Condition
             i_get_local(0x0000)
-            ipush(15)
+            ipush(2000)
             ismaller()
         }) {
             i_get_local(0x0000)
@@ -28,8 +28,12 @@ fun main() {
             i_get_local(0x0000)
 
             natives.printInt()
-            natives.printLineEnding()
+            bpush(' '.code.toByte())
+            natives.printUtf8()
+            //natives.printLineEnding()
         }
+        natives.printLineEnding()
+
 
         // Hello World
         "Hello World!\n".forEach {
@@ -39,9 +43,11 @@ fun main() {
 
         natives.printLineEnding()
 
+
     }
 
     val file = File("test.shas")
+    if(file.exists()) file.delete()
     println("Write code bytes to ${file.absolutePath}...")
     val os = BufferedOutputStream(FileOutputStream(file))
     os.write(code)
