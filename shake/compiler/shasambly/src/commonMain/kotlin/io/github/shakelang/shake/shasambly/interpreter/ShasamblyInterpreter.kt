@@ -252,6 +252,30 @@ class ShasamblyInterpreter(
         memory.setInt(address - 3, -1)
     }
 
+    fun removeEmptyFreeTable(address: Int) {
+        val a = startPointer == address
+        val b = endPointer == address
+        if(a && b) {
+            startPointer = -1
+            endPointer = -1
+        }
+        else if(a && !b) {
+            startPointer = memory.getInt(address - 15)
+            memory.setInt(startPointer - 19, -1)
+        }
+        else if(b && !a) {
+            endPointer = memory.getInt(address - 19)
+            memory.setInt(endPointer - 15, -1)
+        }
+        else {
+            val next = memory.getInt(address - 15)
+            val before = memory.getInt(address - 19)
+            memory.setInt(next - 19, before)
+            memory.setInt(before - 15, next)
+        }
+        free(address, 20)
+    }
+
     fun getReusedAddress(csize: Int): Int {
         var table = findClosestFreeAboveTable(csize)
         var size: Int
@@ -270,6 +294,7 @@ class ShasamblyInterpreter(
         if(next == -1) {
             memory.setInt(table - 7, -1)
             memory.setInt(table - 11, -1)
+            removeEmptyFreeTable(table)
         }
         else {
             memory.setInt(table - 7, next)
