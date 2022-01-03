@@ -1,9 +1,13 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator
 
+import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+
 typealias SimpleShasamblyGeneratorFunction = SimpleShasamblyGenerator.() -> Unit
 
 class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): ShasamblyGenerator(mutableListOf()) {
+
+    val natives = NativeFunctions()
 
     init {
         generator.invoke(this)
@@ -247,6 +251,19 @@ class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): Sha
     fun longSmallerEquals() = lsmallereq()
     fun floatSmallerEquals() = fsmallereq()
     fun doubleSmallerEquals() = dsmallereq()
+
+    inner class NativeFunctions {
+
+        fun printByte() = invokeNative(Natives.printByte)
+        fun printShort() = invokeNative(Natives.printShort)
+        fun printInt() = invokeNative(Natives.printInt)
+        fun printLong() = invokeNative(Natives.printLong)
+        fun printFloat() = invokeNative(Natives.printFloat)
+        fun printDouble() = invokeNative(Natives.printDouble)
+        fun printLineEnding() = invokeNative(Natives.printLineEnding)
+        fun printUtf8() = invokeNative(Natives.printUtf8)
+
+    }
 
 }
 

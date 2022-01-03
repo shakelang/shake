@@ -3,7 +3,6 @@ package io.github.shakelang.shake.shasambly.interpreter
 
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.shake.shasambly.generator.*
-import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import kotlin.experimental.and
 
@@ -832,8 +831,8 @@ fun main() {
         i_store_local(0x0000)
         i_get_local(0x0000)
 
-        invokeNative(Natives.printInt)
-        invokeNative(Natives.printLineEnding)
+        natives.printInt()
+        natives.printLineEnding()
 
         i_get_local(0x0000)
         ipush(15)
@@ -843,10 +842,10 @@ fun main() {
         // Hello World
         "Hello World!\n".forEach {
             bpush(it.code.toByte())
-            invokeNative(Natives.printUtf8)
+            natives.printUtf8()
         }
 
-        invokeNative(Natives.printLineEnding)
+        natives.printLineEnding()
 
     }
 
