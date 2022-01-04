@@ -2,5 +2,5 @@ incr_stack 100
 ipush 10
 ipush 2
 iadd
-call 0x03
-call 0x08
+call print_int
+call print_line_ending

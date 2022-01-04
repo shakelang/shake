@@ -1,12 +1,18 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.shas
 
-import io.github.shakelang.parseutils.characters.Characters
+import io.github.shakelang.parseutils.characters.Characters.isHexCharacter
+import io.github.shakelang.parseutils.characters.Characters.isIdentifierCharacter
+import io.github.shakelang.parseutils.characters.Characters.isIdentifierStartCharacter
+import io.github.shakelang.parseutils.characters.Characters.isNumberCharacter
+import io.github.shakelang.parseutils.characters.Characters.isNumberOrDotCharacter
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 import io.github.shakelang.parseutils.streaming.output.OutputStream
 import io.github.shakelang.shake.shasambly.interpreter.Opcodes
+import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 
 class ShasCompiler(private val input: CharacterInputStream) {
 
@@ -27,6 +33,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
     }
 
     private fun doParse() {
+        Natives.initNativeFunctions()
         while(input.hasNext()) {
             expectCommand()
             skipIgnored()
@@ -48,7 +55,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
         skipIgnored()
         if(input.next() != '0' || !input.hasNext() || input.next() != 'x') throw IllegalStateException("Hex numbers have to start with '0x'")
         val number = StringBuilder()
-        while(input.hasNext() && Characters.isHexCharacter(input.peek())) {
+        while(input.hasNext() && isHexCharacter(input.peek())) {
             number.append(input.next())
         }
         if(number.isEmpty()) throw IllegalStateException("Hex number to short")
@@ -58,7 +65,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
     private fun expectNumber(): String {
         skipIgnored()
         val number = StringBuilder()
-        while(input.hasNext() && Characters.isNumberCharacter(input.peek())) {
+        while(input.hasNext() && isNumberCharacter(input.peek())) {
             number.append(input.next())
         }
         if(number.isEmpty()) throw IllegalStateException("Hex number to short")
@@ -69,7 +76,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
         skipIgnored()
         val number = StringBuilder()
         var dotCount = 0
-        while(input.hasNext() && Characters.isNumberOrDotCharacter(input.next())) {
+        while(input.hasNext() && isNumberOrDotCharacter(input.next())) {
             if(input.next() == '.') dotCount++
             if(dotCount > 1) throw IllegalStateException("There must not be more then one dots in a floating point number")
             number.append(input.next())
@@ -163,7 +170,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
     private fun expectBytes(): ByteArray {
         skipIgnored()
         val number = StringBuilder()
-        while(input.hasNext() && Characters.isHexCharacter(input.peek())) {
+        while(input.hasNext() && isHexCharacter(input.peek())) {
             number.append(input.next())
         }
         val byteString = number.toString()
@@ -173,14 +180,33 @@ class ShasCompiler(private val input: CharacterInputStream) {
         }
     }
 
-    private fun expectCommand() {
-        skipIgnored()
+    private fun makeIdentifier(): String {
         val cmd = StringBuilder()
-        while(Characters.isIdentifierCharacter(input.peek())) {
+        while(isIdentifierCharacter(input.peek())) {
             cmd.append(input.next())
         }
+        return cmd.toString()
+    }
+
+    private fun expectNativeFunction(): Short {
+        skipIgnored()
+        if(isIdentifierStartCharacter(input.peek())) {
+            val identifier = makeIdentifier()
+            for (i in nativeFunctions.indices) {
+                val f = nativeFunctions[i]
+                if (f != null && f.first.equals(identifier, ignoreCase = true)) return i.toUShort().toShort()
+            }
+            throw IllegalArgumentException("Unknown native function $identifier")
+        }
+        else return expectUShort().toShort()
+
+    }
+
+    private fun expectCommand() {
+        skipIgnored()
+        val cmd = makeIdentifier()
         if(cmd.isEmpty()) throw Error("Expecting Command")
-        when(cmd.toString().uppercase()) {
+        when(cmd.uppercase()) {
             "INCR_STACK" -> {
                 out.writeByte(Opcodes.INCR_STACK)
                 out.writeUnsignedShort(expectUShort())
@@ -197,7 +223,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
             }
             "NATIVE", "INVOKE", "CALL", "INVOKE_NATIVE" -> {
                 out.writeByte(Opcodes.INVOKE_NATIVE)
-                out.writeUnsignedShort(expectUShort())
+                out.writeShort(expectNativeFunction())
             }
             "GLOB_ADDR" -> {
                 out.writeByte(Opcodes.GLOB_ADDR)

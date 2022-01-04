@@ -63,6 +63,11 @@ object Natives {
         free(addr, size)
     }
     fun initNativeFunctions() {
-
+        // Do nothing
+        // This function is just a placeholder called to initialize all
+        // fields!
+        // It is important to initialize them even if you are not using
+        // it's numerical values because the nativeFunctions table will
+        // be empty if the fields are not initialized.
     }
 }
