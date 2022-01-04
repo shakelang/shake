@@ -1,6 +1,6 @@
-incr_stack 100
-ipush 10
-ipush 2
-iadd
-call print_int
-call print_line_ending
+[0x00000000] incr_stack 100
+[0x00000003] ipush 0
+[0x00000008] ipush 0
+[0x0000000d] iadd
+[0x0000000e] invoke_native print_int
+[0x00000011] invoke_native print_line_ending
