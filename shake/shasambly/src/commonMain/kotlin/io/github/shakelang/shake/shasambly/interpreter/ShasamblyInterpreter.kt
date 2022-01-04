@@ -31,112 +31,112 @@ object Opcodes {
     val I_PUSH: Byte = 0x1a // Syntax: I_PUSH u4 ; Pushes an integer onto the stack
     val L_PUSH: Byte = 0x1b // Syntax: L_PUSH u8 ; Pushes a long onto the stack
 
-    val B_ADD: Byte = 0x1b // Syntax: B_ADD ; Adds the top two bytes and leaves the result on the stack
-    val B_SUB: Byte = 0x1c // Syntax: B_SUB ; Subtracts the top two bytes and leaves the result on the stack
-    val B_MUL: Byte = 0x1d // Syntax: B_MUL ; Multiplies the top two bytes and leaves the result on the stack
-    val B_DIV: Byte = 0x1e // Syntax: B_DIV ; Divides the top two bytes and leaves the result on the stack
-    val B_MOD: Byte = 0x1f // Syntax: B_MOD ; Calculates the modulo of the top two bytes and leaves the result on the stack
+    val B_ADD: Byte = 0x1c // Syntax: B_ADD ; Adds the top two bytes and leaves the result on the stack
+    val B_SUB: Byte = 0x1d // Syntax: B_SUB ; Subtracts the top two bytes and leaves the result on the stack
+    val B_MUL: Byte = 0x1e // Syntax: B_MUL ; Multiplies the top two bytes and leaves the result on the stack
+    val B_DIV: Byte = 0x1f // Syntax: B_DIV ; Divides the top two bytes and leaves the result on the stack
+    val B_MOD: Byte = 0x20 // Syntax: B_MOD ; Calculates the modulo of the top two bytes and leaves the result on the stack
 
-    val S_ADD: Byte = 0x20 // Syntax: S_ADD ; Adds the top two shorts and leaves the result on the stack
-    val S_SUB: Byte = 0x21 // Syntax: S_SUB ; Subtracts the top two shorts and leaves the result on the stack
-    val S_MUL: Byte = 0x22 // Syntax: S_MUL ; Multiplies the top two shorts and leaves the result on the stack
-    val S_DIV: Byte = 0x23 // Syntax: S_DIV ; Divides the top two shorts and leaves the result on the stack
-    val S_MOD: Byte = 0x24 // Syntax: S_MOD ; Calculates the modulo of the top two shorts and leaves the result on the stack
+    val S_ADD: Byte = 0x21 // Syntax: S_ADD ; Adds the top two shorts and leaves the result on the stack
+    val S_SUB: Byte = 0x22 // Syntax: S_SUB ; Subtracts the top two shorts and leaves the result on the stack
+    val S_MUL: Byte = 0x23 // Syntax: S_MUL ; Multiplies the top two shorts and leaves the result on the stack
+    val S_DIV: Byte = 0x24 // Syntax: S_DIV ; Divides the top two shorts and leaves the result on the stack
+    val S_MOD: Byte = 0x25 // Syntax: S_MOD ; Calculates the modulo of the top two shorts and leaves the result on the stack
 
-    val I_ADD: Byte = 0x25 // Syntax: I_ADD ; Adds the top two integers and leaves the result on the stack
-    val I_SUB: Byte = 0x26 // Syntax: I_SUB ; Subtracts the top two integers and leaves the result on the stack
-    val I_MUL: Byte = 0x27 // Syntax: I_MUL ; Multiplies the top two integers and leaves the result on the stack
-    val I_DIV: Byte = 0x28 // Syntax: I_DIV ; Divides the top two integers and leaves the result on the stack
-    val I_MOD: Byte = 0x29 // Syntax: I_MOD ; Calculates the modulo of the top two integers and leaves the result on the stack
+    val I_ADD: Byte = 0x26 // Syntax: I_ADD ; Adds the top two integers and leaves the result on the stack
+    val I_SUB: Byte = 0x27 // Syntax: I_SUB ; Subtracts the top two integers and leaves the result on the stack
+    val I_MUL: Byte = 0x28 // Syntax: I_MUL ; Multiplies the top two integers and leaves the result on the stack
+    val I_DIV: Byte = 0x29 // Syntax: I_DIV ; Divides the top two integers and leaves the result on the stack
+    val I_MOD: Byte = 0x2a // Syntax: I_MOD ; Calculates the modulo of the top two integers and leaves the result on the stack
 
-    val L_ADD: Byte = 0x2a // Syntax: L_ADD ; Adds the top two longs and leaves the result on the stack
-    val L_SUB: Byte = 0x2b // Syntax: L_SUB ; Subtracts the top two longs and leaves the result on the stack
-    val L_MUL: Byte = 0x2c // Syntax: L_MUL ; Multiplies the top two longs and leaves the result on the stack
-    val L_DIV: Byte = 0x2d // Syntax: L_DIV ; Divides the top two longs and leaves the result on the stack
-    val L_MOD: Byte = 0x2e // Syntax: L_MOD ; Calculates the modulo of the top two longs and leaves the result on the stack
+    val L_ADD: Byte = 0x2b // Syntax: L_ADD ; Adds the top two longs and leaves the result on the stack
+    val L_SUB: Byte = 0x2c // Syntax: L_SUB ; Subtracts the top two longs and leaves the result on the stack
+    val L_MUL: Byte = 0x2d // Syntax: L_MUL ; Multiplies the top two longs and leaves the result on the stack
+    val L_DIV: Byte = 0x2e // Syntax: L_DIV ; Divides the top two longs and leaves the result on the stack
+    val L_MOD: Byte = 0x2f // Syntax: L_MOD ; Calculates the modulo of the top two longs and leaves the result on the stack
 
-    val F_ADD: Byte = 0x2f // Syntax: F_ADD ; Adds the top two floats and leaves the result on the stack
-    val F_SUB: Byte = 0x30 // Syntax: F_SUB ; Subtracts the top two floats and leaves the result on the stack
-    val F_MUL: Byte = 0x31 // Syntax: F_MUL ; Multiplies the top two floats and leaves the result on the stack
-    val F_DIV: Byte = 0x32 // Syntax: F_DIV ; Divides the top two floats and leaves the result on the stack
-    val F_MOD: Byte = 0x33 // Syntax: F_MOD ; Calculates the modulo of the top two floats and leaves the result on the stack
+    val F_ADD: Byte = 0x30 // Syntax: F_ADD ; Adds the top two floats and leaves the result on the stack
+    val F_SUB: Byte = 0x31 // Syntax: F_SUB ; Subtracts the top two floats and leaves the result on the stack
+    val F_MUL: Byte = 0x32 // Syntax: F_MUL ; Multiplies the top two floats and leaves the result on the stack
+    val F_DIV: Byte = 0x33 // Syntax: F_DIV ; Divides the top two floats and leaves the result on the stack
+    val F_MOD: Byte = 0x34 // Syntax: F_MOD ; Calculates the modulo of the top two floats and leaves the result on the stack
 
-    val D_ADD: Byte = 0x34 // Syntax: D_ADD ; Adds the top two doubles and leaves the result on the stack
-    val D_SUB: Byte = 0x35 // Syntax: D_SUB ; Subtracts the top two doubles and leaves the result on the stack
-    val D_MUL: Byte = 0x36 // Syntax: D_MUL ; Multiplies the top two doubles and leaves the result on the stack
-    val D_DIV: Byte = 0x37 // Syntax: D_DIV ; Divides the top two doubles and leaves the result on the stack
-    val D_MOD: Byte = 0x38 // Syntax: D_MOD ; Calculates the modulo of the top two doubles and leaves the result on the stack
+    val D_ADD: Byte = 0x35 // Syntax: D_ADD ; Adds the top two doubles and leaves the result on the stack
+    val D_SUB: Byte = 0x36 // Syntax: D_SUB ; Subtracts the top two doubles and leaves the result on the stack
+    val D_MUL: Byte = 0x37 // Syntax: D_MUL ; Multiplies the top two doubles and leaves the result on the stack
+    val D_DIV: Byte = 0x38 // Syntax: D_DIV ; Divides the top two doubles and leaves the result on the stack
+    val D_MOD: Byte = 0x39 // Syntax: D_MOD ; Calculates the modulo of the top two doubles and leaves the result on the stack
 
-    val B_EQ: Byte = 0x039 // Syntax: B_EQ ; Calculates a boolean if the top two bytes are similar to each other
-    val S_EQ: Byte = 0x03a // Syntax: S_EQ ; Calculates a boolean if the top two shorts are similar to each other
-    val I_EQ: Byte = 0x03b // Syntax: I_EQ ; Calculates a boolean if the top two integers are similar to each other
-    val L_EQ: Byte = 0x03c // Syntax: L_EQ ; Calculates a boolean if the top two longs are similar to each other
-    val F_EQ: Byte = 0x03d // Syntax: F_EQ ; Calculates a boolean if the top two floats are similar to each other
-    val D_EQ: Byte = 0x03e // Syntax: D_EQ ; Calculates a boolean if the top two doubles are similar to each other
+    val B_EQ: Byte = 0x03a // Syntax: B_EQ ; Calculates a boolean if the top two bytes are similar to each other
+    val S_EQ: Byte = 0x03b // Syntax: S_EQ ; Calculates a boolean if the top two shorts are similar to each other
+    val I_EQ: Byte = 0x03c // Syntax: I_EQ ; Calculates a boolean if the top two integers are similar to each other
+    val L_EQ: Byte = 0x03d // Syntax: L_EQ ; Calculates a boolean if the top two longs are similar to each other
+    val F_EQ: Byte = 0x03e // Syntax: F_EQ ; Calculates a boolean if the top two floats are similar to each other
+    val D_EQ: Byte = 0x03f // Syntax: D_EQ ; Calculates a boolean if the top two doubles are similar to each other
 
-    val B_BIGGER: Byte = 0x03f // Syntax: B_BIGGER ; Calculates a boolean if the second but top byte is bigger than the top byte
-    val S_BIGGER: Byte = 0x040 // Syntax: S_BIGGER ; Calculates a boolean if the second but top short is bigger than the top byte
-    val I_BIGGER: Byte = 0x041 // Syntax: I_BIGGER ; Calculates a boolean if the second but top integer is bigger than the top byte
-    val L_BIGGER: Byte = 0x042 // Syntax: L_BIGGER ; Calculates a boolean if the second but top long is bigger than the top byte
-    val F_BIGGER: Byte = 0x043 // Syntax: F_BIGGER ; Calculates a boolean if the second but top float is bigger than the top byte
-    val D_BIGGER: Byte = 0x044 // Syntax: D_BIGGER ; Calculates a boolean if the second but top double is bigger than the top byte
+    val B_BIGGER: Byte = 0x040 // Syntax: B_BIGGER ; Calculates a boolean if the second but top byte is bigger than the top byte
+    val S_BIGGER: Byte = 0x041 // Syntax: S_BIGGER ; Calculates a boolean if the second but top short is bigger than the top byte
+    val I_BIGGER: Byte = 0x042 // Syntax: I_BIGGER ; Calculates a boolean if the second but top integer is bigger than the top byte
+    val L_BIGGER: Byte = 0x043 // Syntax: L_BIGGER ; Calculates a boolean if the second but top long is bigger than the top byte
+    val F_BIGGER: Byte = 0x044 // Syntax: F_BIGGER ; Calculates a boolean if the second but top float is bigger than the top byte
+    val D_BIGGER: Byte = 0x045 // Syntax: D_BIGGER ; Calculates a boolean if the second but top double is bigger than the top byte
 
-    val B_SMALLER: Byte = 0x03f // Syntax: B_SMALLER ; Calculates a boolean if the second but top byte is smaller than the top byte
-    val S_SMALLER: Byte = 0x040 // Syntax: S_SMALLER ; Calculates a boolean if the second but top short is smaller than the top byte
-    val I_SMALLER: Byte = 0x041 // Syntax: I_SMALLER ; Calculates a boolean if the second but top integer is smaller than the top byte
-    val L_SMALLER: Byte = 0x042 // Syntax: L_SMALLER ; Calculates a boolean if the second but top long is smaller than the top byte
-    val F_SMALLER: Byte = 0x043 // Syntax: F_SMALLER ; Calculates a boolean if the second but top float is smaller than the top byte
-    val D_SMALLER: Byte = 0x044 // Syntax: D_SMALLER ; Calculates a boolean if the second but top double is smaller than the top byte
+    val B_SMALLER: Byte = 0x046 // Syntax: B_SMALLER ; Calculates a boolean if the second but top byte is smaller than the top byte
+    val S_SMALLER: Byte = 0x047 // Syntax: S_SMALLER ; Calculates a boolean if the second but top short is smaller than the top byte
+    val I_SMALLER: Byte = 0x048 // Syntax: I_SMALLER ; Calculates a boolean if the second but top integer is smaller than the top byte
+    val L_SMALLER: Byte = 0x049 // Syntax: L_SMALLER ; Calculates a boolean if the second but top long is smaller than the top byte
+    val F_SMALLER: Byte = 0x04a // Syntax: F_SMALLER ; Calculates a boolean if the second but top float is smaller than the top byte
+    val D_SMALLER: Byte = 0x04b // Syntax: D_SMALLER ; Calculates a boolean if the second but top double is smaller than the top byte
 
-    val B_BIGGER_EQ: Byte = 0x045 // Syntax: B_BIGGER_EQ ; Calculates a boolean if the second but top byte is bigger or equal than the top byte
-    val S_BIGGER_EQ: Byte = 0x046 // Syntax: S_BIGGER_EQ ; Calculates a boolean if the second but top short is bigger or equal than the top byte
-    val I_BIGGER_EQ: Byte = 0x047 // Syntax: I_BIGGER_EQ ; Calculates a boolean if the second but top integer is bigger or equal than the top byte
-    val L_BIGGER_EQ: Byte = 0x048 // Syntax: L_BIGGER_EQ ; Calculates a boolean if the second but top long is bigger or equal than the top byte
-    val F_BIGGER_EQ: Byte = 0x049 // Syntax: F_BIGGER_EQ ; Calculates a boolean if the second but top float is bigger or equal than the top byte
-    val D_BIGGER_EQ: Byte = 0x04a // Syntax: D_BIGGER_EQ ; Calculates a boolean if the second but top double is bigger or equal than the top byte
+    val B_BIGGER_EQ: Byte = 0x04c // Syntax: B_BIGGER_EQ ; Calculates a boolean if the second but top byte is bigger or equal than the top byte
+    val S_BIGGER_EQ: Byte = 0x04d // Syntax: S_BIGGER_EQ ; Calculates a boolean if the second but top short is bigger or equal than the top byte
+    val I_BIGGER_EQ: Byte = 0x04e // Syntax: I_BIGGER_EQ ; Calculates a boolean if the second but top integer is bigger or equal than the top byte
+    val L_BIGGER_EQ: Byte = 0x04f // Syntax: L_BIGGER_EQ ; Calculates a boolean if the second but top long is bigger or equal than the top byte
+    val F_BIGGER_EQ: Byte = 0x050 // Syntax: F_BIGGER_EQ ; Calculates a boolean if the second but top float is bigger or equal than the top byte
+    val D_BIGGER_EQ: Byte = 0x051 // Syntax: D_BIGGER_EQ ; Calculates a boolean if the second but top double is bigger or equal than the top byte
 
-    val B_SMALLER_EQ: Byte = 0x04b // Syntax: B_SMALLER_EQ ; Calculates a boolean if the second but top byte is smaller or equal than the top byte
-    val S_SMALLER_EQ: Byte = 0x04c // Syntax: S_SMALLER_EQ ; Calculates a boolean if the second but top short is smaller or equal than the top byte
-    val I_SMALLER_EQ: Byte = 0x04d // Syntax: I_SMALLER_EQ ; Calculates a boolean if the second but top integer is smaller or equal than the top byte
-    val L_SMALLER_EQ: Byte = 0x04e // Syntax: L_SMALLER_EQ ; Calculates a boolean if the second but top long is smaller or equal than the top byte
-    val F_SMALLER_EQ: Byte = 0x04f // Syntax: F_SMALLER_EQ ; Calculates a boolean if the second but top float is smaller or equal than the top byte
-    val D_SMALLER_EQ: Byte = 0x050 // Syntax: D_SMALLER_EQ ; Calculates a boolean if the second but top double is smaller or equal than the top byte
+    val B_SMALLER_EQ: Byte = 0x052 // Syntax: B_SMALLER_EQ ; Calculates a boolean if the second but top byte is smaller or equal than the top byte
+    val S_SMALLER_EQ: Byte = 0x053 // Syntax: S_SMALLER_EQ ; Calculates a boolean if the second but top short is smaller or equal than the top byte
+    val I_SMALLER_EQ: Byte = 0x054 // Syntax: I_SMALLER_EQ ; Calculates a boolean if the second but top integer is smaller or equal than the top byte
+    val L_SMALLER_EQ: Byte = 0x055 // Syntax: L_SMALLER_EQ ; Calculates a boolean if the second but top long is smaller or equal than the top byte
+    val F_SMALLER_EQ: Byte = 0x056 // Syntax: F_SMALLER_EQ ; Calculates a boolean if the second but top float is smaller or equal than the top byte
+    val D_SMALLER_EQ: Byte = 0x057 // Syntax: D_SMALLER_EQ ; Calculates a boolean if the second but top double is smaller or equal than the top byte
 
-    val BOOL_NOT: Byte = 0x051 // Syntax: BOOL_NOT ; Put the opposite of the top boolean onto the stack
+    val BOOL_NOT: Byte = 0x058 // Syntax: BOOL_NOT ; Put the opposite of the top boolean onto the stack
 
-    val B_GET_GLOBAL: Byte = 0x052 // Syntax: B_GET_GLOBAL, u4 position ; Get a global byte at a given position
-    val S_GET_GLOBAL: Byte = 0x053 // Syntax: S_GET_GLOBAL, u4 position ; Get a global short at a given position
-    val I_GET_GLOBAL: Byte = 0x054 // Syntax: I_GET_GLOBAL, u4 position ; Get a global int at a given position
-    val L_GET_GLOBAL: Byte = 0x055 // Syntax: L_GET_GLOBAL, u4 position ; Get a global long at a given position
+    val B_GET_GLOBAL: Byte = 0x059 // Syntax: B_GET_GLOBAL, u4 position ; Get a global byte at a given position
+    val S_GET_GLOBAL: Byte = 0x05a // Syntax: S_GET_GLOBAL, u4 position ; Get a global short at a given position
+    val I_GET_GLOBAL: Byte = 0x05b // Syntax: I_GET_GLOBAL, u4 position ; Get a global int at a given position
+    val L_GET_GLOBAL: Byte = 0x05c // Syntax: L_GET_GLOBAL, u4 position ; Get a global long at a given position
 
-    val B_GET_GLOBAL_DYNAMIC: Byte = 0x056 // Syntax: B_GET_GLOBAL ; Get a global byte at a given position (position is the top stack integer)
-    val S_GET_GLOBAL_DYNAMIC: Byte = 0x057 // Syntax: S_GET_GLOBAL ; Get a global short at a given position (position is the top stack integer)
-    val I_GET_GLOBAL_DYNAMIC: Byte = 0x058 // Syntax: I_GET_GLOBAL ; Get a global int at a given position (position is the top stack integer)
-    val L_GET_GLOBAL_DYNAMIC: Byte = 0x059 // Syntax: L_GET_GLOBAL ; Get a global long at a given position (position is the top stack integer)
+    val B_GET_GLOBAL_DYNAMIC: Byte = 0x05d // Syntax: B_GET_GLOBAL ; Get a global byte at a given position (position is the top stack integer)
+    val S_GET_GLOBAL_DYNAMIC: Byte = 0x05e // Syntax: S_GET_GLOBAL ; Get a global short at a given position (position is the top stack integer)
+    val I_GET_GLOBAL_DYNAMIC: Byte = 0x05f // Syntax: I_GET_GLOBAL ; Get a global int at a given position (position is the top stack integer)
+    val L_GET_GLOBAL_DYNAMIC: Byte = 0x060 // Syntax: L_GET_GLOBAL ; Get a global long at a given position (position is the top stack integer)
 
-    val B_STORE_GLOBAL: Byte = 0x05a // Syntax: B_GET_GLOBAL, u4 position ; Get a global byte at a given position
-    val S_STORE_GLOBAL: Byte = 0x05b // Syntax: S_GET_GLOBAL, u4 position ; Get a global short at a given position
-    val I_STORE_GLOBAL: Byte = 0x05c // Syntax: I_GET_GLOBAL, u4 position ; Get a global int at a given position
-    val L_STORE_GLOBAL: Byte = 0x05d // Syntax: L_GET_GLOBAL, u4 position ; Get a global long at a given position
+    val B_STORE_GLOBAL: Byte = 0x061 // Syntax: B_GET_GLOBAL, u4 position ; Get a global byte at a given position
+    val S_STORE_GLOBAL: Byte = 0x062 // Syntax: S_GET_GLOBAL, u4 position ; Get a global short at a given position
+    val I_STORE_GLOBAL: Byte = 0x063 // Syntax: I_GET_GLOBAL, u4 position ; Get a global int at a given position
+    val L_STORE_GLOBAL: Byte = 0x064 // Syntax: L_GET_GLOBAL, u4 position ; Get a global long at a given position
 
-    val B_STORE_GLOBAL_DYNAMIC: Byte = 0x05e // Syntax: B_GET_GLOBAL ; Get a global byte at a given position (position is the top stack integer)
-    val S_STORE_GLOBAL_DYNAMIC: Byte = 0x05f // Syntax: S_GET_GLOBAL ; Get a global short at a given position (position is the top stack integer)
-    val I_STORE_GLOBAL_DYNAMIC: Byte = 0x060 // Syntax: I_GET_GLOBAL ; Get a global int at a given position (position is the top stack integer)
-    val L_STORE_GLOBAL_DYNAMIC: Byte = 0x061 // Syntax: L_GET_GLOBAL ; Get a global long at a given position (position is the top stack integer)
+    val B_STORE_GLOBAL_DYNAMIC: Byte = 0x065 // Syntax: B_GET_GLOBAL ; Get a global byte at a given position (position is the top stack integer)
+    val S_STORE_GLOBAL_DYNAMIC: Byte = 0x066 // Syntax: S_GET_GLOBAL ; Get a global short at a given position (position is the top stack integer)
+    val I_STORE_GLOBAL_DYNAMIC: Byte = 0x067 // Syntax: I_GET_GLOBAL ; Get a global int at a given position (position is the top stack integer)
+    val L_STORE_GLOBAL_DYNAMIC: Byte = 0x068 // Syntax: L_GET_GLOBAL ; Get a global long at a given position (position is the top stack integer)
 
-    val B_NEG: Byte = 0x062 // Syntax: B_NEG ; Negate the top byte
-    val S_NEG: Byte = 0x063 // Syntax: S_NEG ; Negate the top short
-    val I_NEG: Byte = 0x064 // Syntax: I_NEG ; Negate the top integer
-    val L_NEG: Byte = 0x065 // Syntax: L_NEG ; Negate the top long
-    val F_NEG: Byte = 0x066 // Syntax: F_NEG ; Negate the top float
-    val D_NEG: Byte = 0x067 // Syntax: D_NEG ; Negate the top double
+    val B_NEG: Byte = 0x069 // Syntax: B_NEG ; Negate the top byte
+    val S_NEG: Byte = 0x06a // Syntax: S_NEG ; Negate the top short
+    val I_NEG: Byte = 0x06b // Syntax: I_NEG ; Negate the top integer
+    val L_NEG: Byte = 0x06c // Syntax: L_NEG ; Negate the top long
+    val F_NEG: Byte = 0x06d // Syntax: F_NEG ; Negate the top float
+    val D_NEG: Byte = 0x06e // Syntax: D_NEG ; Negate the top double
 
-    val B_ABS: Byte = 0x068 // Syntax: B_ABS ; Absolute value of the top byte
-    val S_ABS: Byte = 0x069 // Syntax: S_ABS ; Absolute value of the top short
-    val I_ABS: Byte = 0x06a // Syntax: I_ABS ; Absolute value of the top integer
-    val L_ABS: Byte = 0x06b // Syntax: L_ABS ; Absolute value of the top long
-    val F_ABS: Byte = 0x06c // Syntax: F_ABS ; Absolute value of the top float
-    val D_ABS: Byte = 0x06d // Syntax: D_ABS ; Absolute value of the top double
+    val B_ABS: Byte = 0x06f // Syntax: B_ABS ; Absolute value of the top byte
+    val S_ABS: Byte = 0x070 // Syntax: S_ABS ; Absolute value of the top short
+    val I_ABS: Byte = 0x071 // Syntax: I_ABS ; Absolute value of the top integer
+    val L_ABS: Byte = 0x072 // Syntax: L_ABS ; Absolute value of the top long
+    val F_ABS: Byte = 0x073 // Syntax: F_ABS ; Absolute value of the top float
+    val D_ABS: Byte = 0x074 // Syntax: D_ABS ; Absolute value of the top double
 
 }
 
