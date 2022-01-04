@@ -1,13 +1,17 @@
 @file:Suppress("unused")
-package io.github.shakelang.shake.shasambly.generator
+package io.github.shakelang.shake.shasambly.generator.simple
 
 import io.github.shakelang.parseutils.bytes.toBytes
+import io.github.shakelang.shake.shasambly.generator.basic.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 
-typealias SimpleShasamblyGeneratorFunction = SimpleShasamblyGenerator.() -> Unit
-typealias RelativeShasamblyGeneratorPartFunction = RelativeShasamblyGeneratorPart.() -> Unit
+typealias SimpleShasamblyGeneratorFunction = SimpleShasambly.() -> Unit
 
 interface SimpleShasambly {
+
+    val natives: NativeFunctions
+    val base: SimpleShasamblyGenerator
+    val size: Int
 
     fun opcode(vararg opcodes: ShasamblyOpcode)
 
@@ -277,17 +281,49 @@ interface SimpleShasambly {
     fun i_store_global_dynamic() = opcode(ShasamblyOpcodeIStoreGlobalDynamic())
     fun l_store_global_dynamic() = opcode(ShasamblyOpcodeLStoreGlobalDynamic())
 
-    fun lateinit(size: Int): (ShasamblyOpcode) -> Unit
-    fun relative(it: RelativeShasamblyGeneratorPartFunction)
+    fun bneg() = opcode(ShasamblyOpcodeBNeg())
+    fun sneg() = opcode(ShasamblyOpcodeSNeg())
+    fun ineg() = opcode(ShasamblyOpcodeINeg())
+    fun lneg() = opcode(ShasamblyOpcodeLNeg())
+    fun fneg() = opcode(ShasamblyOpcodeFNeg())
+    fun dneg() = opcode(ShasamblyOpcodeDNeg())
 
-    fun doWhileLoop(it: RelativeShasamblyGeneratorPartFunction) {
+    fun b_neg() = bneg()
+    fun s_neg() = sneg()
+    fun i_neg() = ineg()
+    fun l_neg() = lneg()
+    fun f_neg() = fneg()
+    fun d_neg() = dneg()
+
+    fun babs() = opcode(ShasamblyOpcodeBAbs())
+    fun sabs() = opcode(ShasamblyOpcodeSAbs())
+    fun iabs() = opcode(ShasamblyOpcodeIAbs())
+    fun labs() = opcode(ShasamblyOpcodeLAbs())
+    fun fabs() = opcode(ShasamblyOpcodeFAbs())
+    fun dabs() = opcode(ShasamblyOpcodeDAbs())
+
+    fun b_abs() = babs()
+    fun s_abs() = sabs()
+    fun i_abs() = iabs()
+    fun l_abs() = labs()
+    fun f_abs() = fabs()
+    fun d_abs() = dabs()
+
+    operator fun invoke(it: SimpleShasamblyGeneratorFunction) {
+        it(this)
+    }
+
+    fun lateinit(size: Int): (ShasamblyOpcode) -> Unit
+    fun relative(it: SimpleShasamblyGeneratorFunction)
+
+    fun doWhileLoop(it: SimpleShasamblyGeneratorFunction) {
         relative {
             it(this)
             jumpIfTo(0)
         }
     }
 
-    fun doWhileLoop(cond: RelativeShasamblyGeneratorPartFunction, it: RelativeShasamblyGeneratorPartFunction) {
+    fun doWhileLoop(cond: SimpleShasamblyGeneratorFunction, it: SimpleShasamblyGeneratorFunction) {
         relative {
             it(this)
             cond(this)
@@ -295,14 +331,14 @@ interface SimpleShasambly {
         }
     }
 
-    fun whileLoop(cond: RelativeShasamblyGeneratorPartFunction, it: RelativeShasamblyGeneratorPartFunction) {
+    fun whileLoop(cond: SimpleShasamblyGeneratorFunction, it: SimpleShasamblyGeneratorFunction) {
         relative {
             cond(this)
             bnot()
             val init = lateinit(5)
             it(this)
             jumpStaticTo(0)
-            val end = base.size
+            val end = size
             init(ShasamblyOpcodeJumpIfToIndex(end))
         }
     }
@@ -311,12 +347,12 @@ interface SimpleShasambly {
 }
 
 class RelativeShasamblyGeneratorPart(
-    val base: SimpleShasamblyGenerator,
+    override val base: SimpleShasamblyGenerator,
     val parent: SimpleShasambly,
-    generator: RelativeShasamblyGeneratorPartFunction
+    generator: SimpleShasamblyGeneratorFunction
 ) : SimpleShasambly by parent {
 
-    val natives = NativeFunctions(this)
+    override val natives = NativeFunctions(this)
 
     val basePosIndex = base.size
     val basePos = base.positionOfIndex(basePosIndex)
@@ -330,7 +366,7 @@ class RelativeShasamblyGeneratorPart(
     override fun jumpIf(target: Int) = parent.jumpIf(basePos + target)
     override fun jumpIfTo(target: Int) = parent.jumpIfTo(basePosIndex + target)
 
-    override fun relative(it: RelativeShasamblyGeneratorPartFunction) {
+    override fun relative(it: SimpleShasamblyGeneratorFunction) {
         RelativeShasamblyGeneratorPart(base, this, it)
     }
 
@@ -338,7 +374,8 @@ class RelativeShasamblyGeneratorPart(
 
 class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): ShasamblyGenerator(mutableListOf()), SimpleShasambly {
 
-    val natives = NativeFunctions(this)
+    override val natives = NativeFunctions(this)
+    override val base = this
 
     init {
         generator.invoke(this)
@@ -597,7 +634,7 @@ class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): Sha
         return { opcode.init(it) }
     }
 
-    override fun relative(it: RelativeShasamblyGeneratorPartFunction) {
+    override fun relative(it: SimpleShasamblyGeneratorFunction) {
         RelativeShasamblyGeneratorPart(this, this, it)
     }
 
@@ -614,7 +651,9 @@ class NativeFunctions(val base: SimpleShasambly) {
     fun printLineEnding() = base.invokeNative(Natives.printLineEnding)
     fun printUtf8() = base.invokeNative(Natives.printUtf8)
     fun declareGlobal(csize: Int) = base.invokeNative(Natives.declareGlobal, csize.toBytes())
+    fun declareGlobal() = base.invokeNative(Natives.declareGlobalDynamic)
     fun freeGlobal(csize: Int) = base.invokeNative(Natives.freeGlobal, csize.toBytes())
+    fun freeGlobal() = base.invokeNative(Natives.freeGlobalDynamic)
 
 }
 

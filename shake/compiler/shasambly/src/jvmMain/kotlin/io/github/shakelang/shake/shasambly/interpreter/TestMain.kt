@@ -2,7 +2,8 @@
 package io.github.shakelang.shake.shasambly.interpreter
 
 import io.github.shakelang.parseutils.bytes.toHexString
-import io.github.shakelang.shake.shasambly.generator.shasambly
+import io.github.shakelang.shake.shasambly.generator.simple.shasambly
+import io.github.shakelang.shake.shasambly.generator.simple.util.createStaticallySizedLocalByteArray
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -12,6 +13,18 @@ fun main() {
     val code = shasambly {
 
         incrStack(0x007f)
+        val arr = createStaticallySizedLocalByteArray(0, 10)
+        arr.storeElement(0, 10)
+        arr.storeElement(1, 11)
+        arr.storeElement(2, 12)
+        arr.storeElement(3, 13)
+        arr.getElement(2)
+        natives.printByte()
+        arr.getElement(1)
+        natives.printByte()
+        arr.free()
+
+        /*
         natives.declareGlobal(8)
         i_store_local(0)
         lpush(1000)
@@ -35,6 +48,7 @@ fun main() {
         natives.declareGlobal(4)
         natives.printInt()
         natives.printLineEnding()
+        */
 
         /*
         ipush(0x00000000)

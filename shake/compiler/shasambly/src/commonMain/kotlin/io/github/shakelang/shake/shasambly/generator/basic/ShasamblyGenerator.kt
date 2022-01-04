@@ -1,5 +1,5 @@
 @file: Suppress("unused")
-package io.github.shakelang.shake.shasambly.generator
+package io.github.shakelang.shake.shasambly.generator.basic
 
 import io.github.shakelang.parseutils.bytes.toBytes
 import io.github.shakelang.parseutils.bytes.toHexString
@@ -381,3 +381,17 @@ class ShasamblyOpcodeBStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opc
 class ShasamblyOpcodeSStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.S_STORE_GLOBAL_DYNAMIC)
 class ShasamblyOpcodeIStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.I_STORE_GLOBAL_DYNAMIC)
 class ShasamblyOpcodeLStoreGlobalDynamic : ShasamblyStoreGlobalDynamicOpcode(Opcodes.L_STORE_GLOBAL_DYNAMIC)
+
+class ShasamblyOpcodeBNeg : ShasamblyOperationOpcode(Opcodes.B_NEG)
+class ShasamblyOpcodeSNeg : ShasamblyOperationOpcode(Opcodes.S_NEG)
+class ShasamblyOpcodeINeg : ShasamblyOperationOpcode(Opcodes.I_NEG)
+class ShasamblyOpcodeLNeg : ShasamblyOperationOpcode(Opcodes.L_NEG)
+class ShasamblyOpcodeFNeg : ShasamblyOperationOpcode(Opcodes.F_NEG)
+class ShasamblyOpcodeDNeg : ShasamblyOperationOpcode(Opcodes.D_NEG)
+
+class ShasamblyOpcodeBAbs : ShasamblyOperationOpcode(Opcodes.B_ABS)
+class ShasamblyOpcodeSAbs : ShasamblyOperationOpcode(Opcodes.S_ABS)
+class ShasamblyOpcodeIAbs : ShasamblyOperationOpcode(Opcodes.I_ABS)
+class ShasamblyOpcodeLAbs : ShasamblyOperationOpcode(Opcodes.L_ABS)
+class ShasamblyOpcodeFAbs : ShasamblyOperationOpcode(Opcodes.F_ABS)
+class ShasamblyOpcodeDAbs : ShasamblyOperationOpcode(Opcodes.D_ABS)

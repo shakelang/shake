@@ -4,6 +4,7 @@ package io.github.shakelang.shake.shasambly.interpreter
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import kotlin.experimental.and
+import kotlin.math.abs
 
 object Opcodes {
 
@@ -122,6 +123,20 @@ object Opcodes {
     val S_STORE_GLOBAL_DYNAMIC: Byte = 0x05f // Syntax: S_GET_GLOBAL ; Get a global short at a given position (position is the top stack integer)
     val I_STORE_GLOBAL_DYNAMIC: Byte = 0x060 // Syntax: I_GET_GLOBAL ; Get a global int at a given position (position is the top stack integer)
     val L_STORE_GLOBAL_DYNAMIC: Byte = 0x061 // Syntax: L_GET_GLOBAL ; Get a global long at a given position (position is the top stack integer)
+
+    val B_NEG: Byte = 0x062 // Syntax: B_NEG ; Negate the top byte
+    val S_NEG: Byte = 0x063 // Syntax: S_NEG ; Negate the top short
+    val I_NEG: Byte = 0x064 // Syntax: I_NEG ; Negate the top integer
+    val L_NEG: Byte = 0x065 // Syntax: L_NEG ; Negate the top long
+    val F_NEG: Byte = 0x066 // Syntax: F_NEG ; Negate the top float
+    val D_NEG: Byte = 0x067 // Syntax: D_NEG ; Negate the top double
+
+    val B_ABS: Byte = 0x068 // Syntax: B_ABS ; Absolute value of the top byte
+    val S_ABS: Byte = 0x069 // Syntax: S_ABS ; Absolute value of the top short
+    val I_ABS: Byte = 0x06a // Syntax: I_ABS ; Absolute value of the top integer
+    val L_ABS: Byte = 0x06b // Syntax: L_ABS ; Absolute value of the top long
+    val F_ABS: Byte = 0x06c // Syntax: F_ABS ; Absolute value of the top float
+    val D_ABS: Byte = 0x06d // Syntax: D_ABS ; Absolute value of the top double
 
 }
 
@@ -907,6 +922,54 @@ class ShasamblyInterpreter(
         memory.setLong(pos - 7, value)
     }
 
+    fun b_neg() {
+        stack.addByte((-stack.removeLastByte()).toByte())
+    }
+
+    fun s_neg() {
+        stack.addShort((-stack.removeLastShort()).toShort())
+    }
+
+    fun i_neg() {
+        stack.addInt(-stack.removeLastInt())
+    }
+
+    fun l_neg() {
+        stack.addLong(-stack.removeLastLong())
+    }
+
+    fun f_neg() {
+        stack.addFloat(-stack.removeLastFloat())
+    }
+
+    fun d_neg() {
+        stack.addDouble(-stack.removeLastDouble())
+    }
+
+    fun b_abs() {
+        stack.addByte(abs(stack.removeLastByte().toInt()).toByte())
+    }
+
+    fun s_abs() {
+        stack.addShort(abs(stack.removeLastShort().toInt()).toShort())
+    }
+
+    fun i_abs() {
+        stack.addInt(abs(stack.removeLastInt()))
+    }
+
+    fun l_abs() {
+        stack.addLong(abs(stack.removeLastLong()))
+    }
+
+    fun f_abs() {
+        stack.addFloat(abs(stack.removeLastFloat()))
+    }
+
+    fun d_abs() {
+        stack.addDouble(abs(stack.removeLastDouble()))
+    }
+
     inline fun byte() = bytes[position]
     inline fun short() = bytes.getShort(position)
     inline fun int() = bytes.getInt(position)
@@ -1046,6 +1109,20 @@ class ShasamblyInterpreter(
         map[Opcodes.S_STORE_GLOBAL_DYNAMIC.toInt()] = { this.s_store_global_dynamic() }
         map[Opcodes.I_STORE_GLOBAL_DYNAMIC.toInt()] = { this.i_store_global_dynamic() }
         map[Opcodes.L_STORE_GLOBAL_DYNAMIC.toInt()] = { this.l_store_global_dynamic() }
+
+        map[Opcodes.B_NEG.toInt()] = { this.b_neg() }
+        map[Opcodes.S_NEG.toInt()] = { this.s_neg() }
+        map[Opcodes.I_NEG.toInt()] = { this.i_neg() }
+        map[Opcodes.L_NEG.toInt()] = { this.l_neg() }
+        map[Opcodes.F_NEG.toInt()] = { this.f_neg() }
+        map[Opcodes.D_NEG.toInt()] = { this.d_neg() }
+
+        map[Opcodes.B_ABS.toInt()] = { this.b_abs() }
+        map[Opcodes.S_ABS.toInt()] = { this.s_abs() }
+        map[Opcodes.I_ABS.toInt()] = { this.i_abs() }
+        map[Opcodes.L_ABS.toInt()] = { this.l_abs() }
+        map[Opcodes.F_ABS.toInt()] = { this.f_abs() }
+        map[Opcodes.D_ABS.toInt()] = { this.d_abs() }
 
         return map
     }
