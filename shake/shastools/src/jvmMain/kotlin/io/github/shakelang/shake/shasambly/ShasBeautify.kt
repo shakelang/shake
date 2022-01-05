@@ -21,6 +21,7 @@ fun main(args: Array<String>) {
     val chars = SourceCharacterInputStream(source)
     val compiler = ShasCompiler(chars)
     val output = if(args.size == 1) args[0] else args[1]
+    println("Generating file \"${File(output).absolutePath}\"...")
     val out = FileOutputStream(output).buffered()
     val generator = ShasGenerator(compiler.parse().stream())
     generator.dumpParse(out)

@@ -1,8 +1,9 @@
 package io.github.shakelang.shake.shasambly
 
-import io.github.shakelang.parseutils.bytes.toHexString
+import io.github.shakelang.parseutils.bytes.stream
+import io.github.shakelang.shake.shasambly.generator.shas.ShasGenerator
 import io.github.shakelang.shake.shasambly.generator.simple.shasambly
-import io.github.shakelang.shake.shasambly.generator.simple.util.createStaticallySizedLocalByteArray
+import io.github.shakelang.shake.shasambly.generator.simple.util.array.createSavedSizeLocalByteArray
 import io.github.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
 import java.io.BufferedOutputStream
 import java.io.File
@@ -13,15 +14,17 @@ fun main() {
     val code = shasambly {
 
         incrStack(0x007f)
-        val arr = createStaticallySizedLocalByteArray(0, 10)
+        val arr = createSavedSizeLocalByteArray(0, 10)
         arr.storeElement(0, 10)
         arr.storeElement(1, 11)
         arr.storeElement(2, 12)
         arr.storeElement(3, 13)
         arr.getElement(2)
         natives.printByte()
+        natives.printLineEnding()
         arr.getElement(1)
         natives.printByte()
+        natives.printLineEnding()
         arr.free()
 
         /*
@@ -94,10 +97,17 @@ fun main() {
     os.flush()
     os.close()
 
-    println(code.toHexString())
+    val generator = ShasGenerator(code.stream())
+    val output = File("test.shas")
+    println("Generating file \"${output.absolutePath}\"...")
+    val out = FileOutputStream(output).buffered()
+    generator.dumpParse(out)
+    out.flush()
+    out.close()
+
     val interpreter = ShasamblyInterpreter(
         1024, code, 0
     )
     interpreter.finish()
-    println(interpreter)
+    //println(interpreter)
 }

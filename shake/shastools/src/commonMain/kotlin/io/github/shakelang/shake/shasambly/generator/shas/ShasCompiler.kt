@@ -167,14 +167,17 @@ class ShasCompiler(private val input: CharacterInputStream) {
         } else (if(neg) "-" else "" + expectFloatingPointNumber()).toDouble()
     }
 
-    private fun expectBytes(): ByteArray {
+    private fun expectBytes(byteArgumentAmount: Int): ByteArray {
         skipIgnored()
+        if(byteArgumentAmount <= 0) return byteArrayOf()
         val number = StringBuilder()
         while(input.hasNext() && isHexCharacter(input.peek())) {
             number.append(input.next())
         }
         val byteString = number.toString()
         if(number.length % 2 != 0) throw IllegalStateException("Expecting an even number of hex chars in byte array")
+        if(byteString.length / 2 != byteArgumentAmount)
+            throw IllegalStateException("Wrong number of bytes given, expect $byteArgumentAmount, but got ${byteString.length / 2}")
         return ByteArray(byteString.length / 2) {
             byteString.substring(it * 2, it * 2 + 1).toUByte(16).toByte()
         }
@@ -194,7 +197,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
             val identifier = makeIdentifier()
             for (i in nativeFunctions.indices) {
                 val f = nativeFunctions[i]
-                if (f != null && f.first.equals(identifier, ignoreCase = true)) return i.toUShort().toShort()
+                if (f != null && f.name.equals(identifier, ignoreCase = true)) return i.toUShort().toShort()
             }
             throw IllegalArgumentException("Unknown native function $identifier")
         }
@@ -223,7 +226,9 @@ class ShasCompiler(private val input: CharacterInputStream) {
             }
             "NATIVE", "INVOKE", "CALL", "INVOKE_NATIVE" -> {
                 out.writeByte(Opcodes.INVOKE_NATIVE)
-                out.writeShort(expectNativeFunction())
+                val function = expectNativeFunction()
+                out.writeShort(function)
+                out.writeByteArray(expectBytes(nativeFunctions[function.toInt()]!!.byteArgumentAmount))
             }
             "GLOB_ADDR" -> {
                 out.writeByte(Opcodes.GLOB_ADDR)

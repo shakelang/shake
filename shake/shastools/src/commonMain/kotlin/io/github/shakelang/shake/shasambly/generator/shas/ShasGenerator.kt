@@ -43,7 +43,7 @@ class ShasGenerator(input: InputStream) {
         out.write(contents.toCharArray().map { it.code.toUByte().toByte() }.toByteArray())
     }
 
-    private fun oprintln(contents: String) {
+    private fun oprintln(contents: String = "") {
         oprint("${contents}\n")
     }
 
@@ -55,7 +55,13 @@ class ShasGenerator(input: InputStream) {
             Opcodes.JUMP_STATIC -> oprintln("jump_static ${input.readUnsignedInt()}")
             Opcodes.JUMP_DYNAMIC -> oprint("jump_dynamic")
             Opcodes.JUMP_IF -> oprintln("jump_if ${input.readUnsignedInt()}")
-            Opcodes.INVOKE_NATIVE -> oprintln("invoke_native ${nativeFunctions[input.readUnsignedShort().toInt()]?.first ?: throw Error("Unknown native")}")
+            Opcodes.INVOKE_NATIVE -> {
+                val f = input.readUnsignedShort().toInt()
+                oprint("invoke_native ${nativeFunctions[f]?.name ?: throw Error("Unknown native")}")
+                val args = nativeFunctions[f]!!.byteArgumentAmount
+                if(args > 0) oprint(" ${input.readNBytes(args).toHexString()}")
+                oprintln()
+            }
             Opcodes.GLOB_ADDR -> oprintln("glob_addr ${input.readUnsignedShort()}")
 
             Opcodes.B_GET_LOCAL -> oprintln("b_get_local ${input.readUnsignedShort()}")

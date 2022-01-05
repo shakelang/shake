@@ -642,18 +642,114 @@ class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): Sha
 
 class NativeFunctions(val base: SimpleShasambly) {
 
+    /**
+     * Print and remove the first byte from the stack
+     */
     fun printByte() = base.invokeNative(Natives.printByte)
+
+    /**
+     * Print and remove the first short from the stack
+     */
     fun printShort() = base.invokeNative(Natives.printShort)
+
+    /**
+     * Print and remove the first int from the stack
+     */
     fun printInt() = base.invokeNative(Natives.printInt)
+
+    /**
+     * Print and remove the first long from the stack
+     */
     fun printLong() = base.invokeNative(Natives.printLong)
+
+    /**
+     * Print and remove the first float from the stack
+     */
     fun printFloat() = base.invokeNative(Natives.printFloat)
+
+    /**
+     * Print and remove the first double from the stack
+     */
     fun printDouble() = base.invokeNative(Natives.printDouble)
+
+    /**
+     * Print a line separator character to the console
+     */
     fun printLineEnding() = base.invokeNative(Natives.printLineEnding)
+
+    /**
+     * Print the first byte as a utf8 character to the console
+     */
     fun printUtf8() = base.invokeNative(Natives.printUtf8)
+
+    /**
+     * Declare a global with a given size
+     * (leaves the global address on top of the stack)
+     */
     fun declareGlobal(csize: Int) = base.invokeNative(Natives.declareGlobal, csize.toBytes())
+
+    /**
+     * Declare a global with a given size (the size is the first integer on top of the stack, it will be removed)
+     * (leaves the global address on top of the stack)
+     */
     fun declareGlobal() = base.invokeNative(Natives.declareGlobalDynamic)
+
+    /**
+     * Free a global with a given size
+     * The globals address is the first integer on the stack and will be removed
+     */
     fun freeGlobal(csize: Int) = base.invokeNative(Natives.freeGlobal, csize.toBytes())
+
+    /**
+     * Free a global with a given size
+     * The address is the first integer on the stack and will be removed
+     * The size is the second integer on the stack and will also be removed
+     */
     fun freeGlobal() = base.invokeNative(Natives.freeGlobalDynamic)
+
+    /**
+     * Swap two bytes on the stack (the indexes are given as arguments, for example 0 means the top byte,
+     * on the stack, 1 the second...)
+     */
+    fun bswap(first: UByte, second: UByte) = base.invokeNative(Natives.bSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
+
+    /**
+     * Swap two shorts on the stack (the indexes are given as arguments, for example 0 means the top short,
+     * on the stack, 2 the second...)
+     */
+    fun sswap(first: UByte, second: UByte) = base.invokeNative(Natives.sSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
+
+    /**
+     * Swap two integers on the stack (the indexes are given as arguments, for example 0 means the top integer,
+     * on the stack, 2 the second...)
+     */
+    fun iswap(first: UByte, second: UByte) = base.invokeNative(Natives.iSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
+
+    /**
+     * Swap two longs on the stack (the indexes are given as arguments, for example 0 means the top integer,
+     * on the stack, 2 the second...)
+     */
+    fun lswap(first: UByte, second: UByte) = base.invokeNative(Natives.lSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
+
+    /**
+     * Duplicate the top byte on the stack
+     */
+    fun bdup() = base.invokeNative(Natives.bDup)
+
+    /**
+     * Duplicate the top short on the stack
+     */
+    fun sdup() = base.invokeNative(Natives.sDup)
+
+    /**
+     * Duplicate the first integer on the stack
+     */
+    fun idup() = base.invokeNative(Natives.iDup)
+
+    /**
+     * Duplicate the first long on the stack
+     */
+    fun ldup() = base.invokeNative(Natives.lDup)
 
 }
 

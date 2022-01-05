@@ -13,6 +13,7 @@ fun main(args: Array<String>) {
     val inputStream = FileInputStream(f).buffered()
     val generator = ShasGenerator(inputStream)
     val output = if(args.size == 1) args[0].substring(0, args[0].length - 1) else args[1]
+    println("Generating file \"${File(output).absolutePath}\"...")
     val out = FileOutputStream(output).buffered()
     generator.dumpParse(out)
     inputStream.close()
