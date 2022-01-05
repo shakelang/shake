@@ -33,10 +33,7 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
     fun getElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) {
-                ipush(index)
-                isub()
-            }
+            if(index != 0) isub(index)
             b_get_global_dynamic()
         }
     }
@@ -63,10 +60,7 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
     fun storeElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) {
-                ipush(index)
-                isub()
-            }
+            if(index != 0) isub(index)
             b_store_global_dynamic()
         }
     }
@@ -81,10 +75,7 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
         shasambly {
             bpush(value)
             i_get_local(address)
-            if(index != 0) {
-                ipush(index)
-                isub()
-            }
+            if(index != 0) isub(index)
             b_store_global_dynamic()
         }
     }
@@ -169,8 +160,7 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
             i_get_local(address)
             isub()
             ineg()
-            ipush(4)
-            isub()
+            isub(4)
             b_get_global_dynamic()
         }
     }
@@ -183,8 +173,7 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
     fun getElement(index: Int) {
         shasambly {
             i_get_local(address)
-            ipush(index + 4)
-            isub()
+            isub(index + 4)
             b_get_global_dynamic()
         }
     }
@@ -199,8 +188,7 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
             i_get_local(address)
             isub()
             ineg()
-            ipush(4)
-            isub()
+            isub(4)
             b_store_global_dynamic()
         }
     }
@@ -214,8 +202,7 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
     fun storeElement(index: Int) {
         shasambly {
             i_get_local(address)
-            ipush(index + 4)
-            isub()
+            isub(index + 4)
             b_store_global_dynamic()
         }
     }
@@ -230,8 +217,7 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
         shasambly {
             bpush(value)
             i_get_local(address)
-            ipush(index + 4)
-            isub()
+            isub(index + 4)
             b_store_global_dynamic()
         }
     }
@@ -242,8 +228,7 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
     fun free() {
         shasambly {
             getSize()
-            ipush(4)
-            iadd()
+            iadd(4)
             i_get_local(address)
             natives.freeGlobal()
         }

@@ -18,8 +18,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
      */
     fun getElement() {
         shasambly {
-            ipush(2)
-            imul()
+            imul(2)
             i_get_local(address)
             isub()
             ineg()
@@ -35,10 +34,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
     fun getElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) {
-                ipush(index * 2)
-                isub()
-            }
+            if(index != 0) isub(index * 2)
             s_get_global_dynamic()
         }
     }
@@ -49,8 +45,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
      */
     fun storeElement() {
         shasambly {
-            ipush(2)
-            imul()
+            imul(2)
             i_get_local(address)
             isub()
             ineg()
@@ -67,10 +62,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
     fun storeElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) {
-                ipush(index * 2)
-                isub()
-            }
+            if(index != 0) isub(index * 2)
             s_store_global_dynamic()
         }
     }
@@ -85,10 +77,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
         shasambly {
             spush(value)
             i_get_local(address)
-            if(index != 0) {
-                ipush(index * 2)
-                isub()
-            }
+            if(index != 0) isub(index * 2)
             s_store_global_dynamic()
         }
     }
@@ -101,8 +90,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
         shasambly {
             i_get_local(address)
             if(size == -1) {
-                ipush(2)
-                imul()
+                imul(2)
                 natives.freeGlobal()
             }
             else natives.freeGlobal(size * 2)
@@ -147,8 +135,7 @@ fun SimpleShasambly.createStaticallySizedLocalShortArray(addr: Int, size: Int): 
  * @param addr the local address to store the array in
  */
 fun SimpleShasambly.createStaticallySizedLocalShortArray(addr: Int): StaticallySizedLocalShortArrayStructure {
-    ipush(2)
-    imul()
+    imul(2)
     natives.declareGlobal()
     i_store_local(addr)
     return StaticallySizedLocalShortArrayStructure(this.base, addr)
@@ -176,13 +163,11 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
      */
     fun getElement() {
         shasambly {
-            ipush(2)
-            imul()
+            imul(2)
             i_get_local(address)
             isub()
             ineg()
-            ipush(4)
-            isub()
+            isub(4)
             s_get_global_dynamic()
         }
     }
@@ -195,8 +180,7 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
     fun getElement(index: Int) {
         shasambly {
             i_get_local(address)
-            ipush(index * 2 + 4)
-            isub()
+            isub(index * 2 + 4)
             s_get_global_dynamic()
         }
     }
@@ -208,13 +192,11 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
      */
     fun storeElement() {
         shasambly {
-            ipush(2)
-            imul()
+            imul(2)
             i_get_local(address)
             isub()
             ineg()
-            ipush(4)
-            isub()
+            isub(4)
             s_store_global_dynamic()
         }
     }
@@ -228,8 +210,7 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
     fun storeElement(index: Int) {
         shasambly {
             i_get_local(address)
-            ipush(index * 2 + 4)
-            isub()
+            isub(index * 2 + 4)
             s_store_global_dynamic()
         }
     }
@@ -244,8 +225,7 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
         shasambly {
             spush(value)
             i_get_local(address)
-            ipush(index * 2 + 4)
-            isub()
+            isub(index * 2 + 4)
             s_store_global_dynamic()
         }
     }
@@ -256,10 +236,8 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
     fun free() {
         shasambly {
             getSize()
-            ipush(2)
-            imul()
-            ipush(4)
-            iadd()
+            imul(2)
+            iadd(4)
             i_get_local(address)
             natives.freeGlobal()
         }
@@ -293,10 +271,8 @@ fun SimpleShasambly.createSavedSizeLocalShortArray(addr: Int, size: Int): LocalS
  */
 fun SimpleShasambly.createSavedSizeLocalShortArray(addr: Int): LocalShortArrayStructure {
     natives.idup()
-    ipush(2)
-    imul()
-    ipush(4)
-    iadd()
+    imul(2)
+    iadd(4)
     natives.declareGlobal()
     natives.idup()
     i_store_local(addr)
