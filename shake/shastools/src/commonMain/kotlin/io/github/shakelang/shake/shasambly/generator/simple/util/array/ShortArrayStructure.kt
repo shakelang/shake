@@ -4,24 +4,26 @@ package io.github.shakelang.shake.shasambly.generator.simple.util.array
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
 
 /**
- * A local byte array that does not store it's size. If you are using it you have to store
+ * A local short array that does not store it's size. If you are using it you have to store
  * its size in some other way. It's advised to use arrays that store their size instead
- * e.g. [LocalByteArrayStructure]
+ * e.g. [LocalShortArrayStructure]
  *
- * @see LocalByteArrayStructure
- * @see createStaticallySizedLocalByteArray
+ * @see LocalShortArrayStructure
+ * @see createStaticallySizedLocalShortArray
  */
-class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int, val size: Int = -1) {
+class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int, val size: Int = -1) {
 
     /**
      * Get an element of the array. The index is the first integer from the stack
      */
     fun getElement() {
         shasambly {
+            ipush(2)
+            imul()
             i_get_local(address)
             isub()
             ineg()
-            b_get_global_dynamic()
+            s_get_global_dynamic()
         }
     }
 
@@ -34,29 +36,31 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
         shasambly {
             i_get_local(address)
             if(index != 0) {
-                ipush(index)
+                ipush(index * 2)
                 isub()
             }
-            b_get_global_dynamic()
+            s_get_global_dynamic()
         }
     }
 
     /**
      * Store an element into the array. The index is the first integer on the stack.
-     * The element value is the byte below it
+     * The element value is the short below it
      */
     fun storeElement() {
         shasambly {
+            ipush(2)
+            imul()
             i_get_local(address)
             isub()
             ineg()
-            b_store_global_dynamic()
+            s_store_global_dynamic()
         }
     }
 
     /**
      * Store an element into the array. The index is given as argument. The element value is
-     * the top byte on the stack.
+     * the top short on the stack.
      *
      * @param index the index of the array to store the element in
      */
@@ -64,10 +68,10 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
         shasambly {
             i_get_local(address)
             if(index != 0) {
-                ipush(index)
+                ipush(index * 2)
                 isub()
             }
-            b_store_global_dynamic()
+            s_store_global_dynamic()
         }
     }
 
@@ -77,15 +81,15 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
      * @param index the index of the array to store the element in
      * @param value the value to store into the index
      */
-    fun storeElement(index: Int, value: Byte) {
+    fun storeElement(index: Int, value: Short) {
         shasambly {
-            bpush(value)
+            spush(value)
             i_get_local(address)
             if(index != 0) {
-                ipush(index)
+                ipush(index * 2)
                 isub()
             }
-            b_store_global_dynamic()
+            s_store_global_dynamic()
         }
     }
 
@@ -96,8 +100,12 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
     fun free() {
         shasambly {
             i_get_local(address)
-            if(size == -1) natives.freeGlobal()
-            else natives.freeGlobal(size)
+            if(size == -1) {
+                ipush(2)
+                imul()
+                natives.freeGlobal()
+            }
+            else natives.freeGlobal(size * 2)
         }
     }
 
@@ -109,49 +117,51 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
     fun free(size: Int) {
         shasambly {
             i_get_local(address)
-            natives.freeGlobal(size)
+            natives.freeGlobal(size * 2)
         }
     }
 }
 
 /**
- * Create a [StaticallySizedLocalByteArrayStructure]
- * A byte array that does not store it's size. If you are using it you have to store
+ * Create a [StaticallySizedLocalShortArrayStructure]
+ * A short array that does not store it's size. If you are using it you have to store
  * its size in some other way. It's advised to use arrays that store their size instead
- * e.g. [LocalByteArrayStructure]
+ * e.g. [LocalShortArrayStructure]
  *
  * @param addr the local address to store the array in
- * @param size the size of the created array (must be at least 4 for this type of array!!!)
+ * @param size the size of the created array (must be at least 2 for this type of array!!!)
  */
-fun SimpleShasambly.createStaticallySizedLocalByteArray(addr: Int, size: Int): StaticallySizedLocalByteArrayStructure {
-    if(size < 4) throw IllegalArgumentException("Size must be at least 4 for this type of array")
-    natives.declareGlobal(size)
+fun SimpleShasambly.createStaticallySizedLocalShortArray(addr: Int, size: Int): StaticallySizedLocalShortArrayStructure {
+    if(size < 2) throw IllegalArgumentException("Size must be at least 2 for this type of array")
+    natives.declareGlobal(size * 2)
     i_store_local(addr)
-    return StaticallySizedLocalByteArrayStructure(this.base, addr, size)
+    return StaticallySizedLocalShortArrayStructure(this.base, addr, size)
 }
 
 /**
- * Create a [StaticallySizedLocalByteArrayStructure]
- * A byte array that does not store it's size. If you are using it you have to store
+ * Create a [StaticallySizedLocalShortArrayStructure]
+ * A short array that does not store it's size. If you are using it you have to store
  * its size in some other way. It's advised to use arrays that store their size instead
- * e.g. [LocalByteArrayStructure]
+ * e.g. [LocalShortArrayStructure]
  *
  * @param addr the local address to store the array in
  */
-fun SimpleShasambly.createStaticallySizedLocalByteArray(addr: Int): StaticallySizedLocalByteArrayStructure {
+fun SimpleShasambly.createStaticallySizedLocalShortArray(addr: Int): StaticallySizedLocalShortArrayStructure {
+    ipush(2)
+    imul()
     natives.declareGlobal()
     i_store_local(addr)
-    return StaticallySizedLocalByteArrayStructure(this.base, addr)
+    return StaticallySizedLocalShortArrayStructure(this.base, addr)
 }
 
 /**
- * A local byte array. It stores the size at the start of it, so you can always get the size using [getSize]
- * This is the advised type of local byte array over [StaticallySizedLocalByteArrayStructure]
+ * A local short array. It stores the size at the start of it, so you can always get the size using [getSize]
+ * This is the advised type of local short array over [StaticallySizedLocalShortArrayStructure]
  */
-class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) {
+class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int) {
 
     /**
-     * Put the size of the byte array on top of the stack
+     * Put the size of the short array on top of the stack
      */
     fun getSize() {
         shasambly {
@@ -166,12 +176,14 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
      */
     fun getElement() {
         shasambly {
+            ipush(2)
+            imul()
             i_get_local(address)
             isub()
             ineg()
             ipush(4)
             isub()
-            b_get_global_dynamic()
+            s_get_global_dynamic()
         }
     }
 
@@ -183,9 +195,9 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
     fun getElement(index: Int) {
         shasambly {
             i_get_local(address)
-            ipush(index + 4)
+            ipush(index * 2 + 4)
             isub()
-            b_get_global_dynamic()
+            s_get_global_dynamic()
         }
     }
 
@@ -196,12 +208,14 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
      */
     fun storeElement() {
         shasambly {
+            ipush(2)
+            imul()
             i_get_local(address)
             isub()
             ineg()
             ipush(4)
             isub()
-            b_store_global_dynamic()
+            s_store_global_dynamic()
         }
     }
 
@@ -214,9 +228,9 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
     fun storeElement(index: Int) {
         shasambly {
             i_get_local(address)
-            ipush(index + 4)
+            ipush(index * 2 + 4)
             isub()
-            b_store_global_dynamic()
+            s_store_global_dynamic()
         }
     }
 
@@ -226,13 +240,13 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
      * @param index the index to store the element in
      * @param value the value to store into the array
      */
-    fun storeElement(index: Int, value: Byte) {
+    fun storeElement(index: Int, value: Short) {
         shasambly {
-            bpush(value)
+            spush(value)
             i_get_local(address)
-            ipush(index + 4)
+            ipush(index * 2 + 4)
             isub()
-            b_store_global_dynamic()
+            s_store_global_dynamic()
         }
     }
 
@@ -242,6 +256,8 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
     fun free() {
         shasambly {
             getSize()
+            ipush(2)
+            imul()
             ipush(4)
             iadd()
             i_get_local(address)
@@ -251,32 +267,34 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
 }
 
 /**
- * Create a [LocalByteArrayStructure]
- * A local byte array. It stores the size at the start of it, so you can always get the size using [LocalByteArrayStructure.getSize]
- * This is the advised type of local byte array over [StaticallySizedLocalByteArrayStructure]
+ * Create a [LocalShortArrayStructure]
+ * A local short array. It stores the size at the start of it, so you can always get the size using [LocalShortArrayStructure.getSize]
+ * This is the advised type of local short array over [StaticallySizedLocalShortArrayStructure]
  *
- * @param addr the local address to create the byte array in
- * @param size the size of the byte array
+ * @param addr the local address to create the short array in
+ * @param size the size of the short array
  */
-fun SimpleShasambly.createSavedSizeLocalByteArray(addr: Int, size: Int): LocalByteArrayStructure {
-    natives.declareGlobal(size + 4)
+fun SimpleShasambly.createSavedSizeLocalShortArray(addr: Int, size: Int): LocalShortArrayStructure {
+    natives.declareGlobal(size * 2 + 4)
     i_store_local(addr)
     ipush(size)
     i_get_local(addr)
     i_store_global_dynamic()
-    return LocalByteArrayStructure(this.base, addr)
+    return LocalShortArrayStructure(this.base, addr)
 }
 
 /**
- * Create a [LocalByteArrayStructure]
- * A local byte array. It stores the size at the start of it, so you can always get the size using [LocalByteArrayStructure.getSize]
- * This is the advised type of local byte array over [StaticallySizedLocalByteArrayStructure]
+ * Create a [LocalShortArrayStructure]
+ * A local short array. It stores the size at the start of it, so you can always get the size using [LocalShortArrayStructure.getSize]
+ * This is the advised type of local short array over [StaticallySizedLocalShortArrayStructure]
  * The size is the first integer on the stack
  *
- * @param addr the local address to create the byte array in
+ * @param addr the local address to create the short array in
  */
-fun SimpleShasambly.createSavedSizeLocalByteArray(addr: Int): LocalByteArrayStructure {
+fun SimpleShasambly.createSavedSizeLocalShortArray(addr: Int): LocalShortArrayStructure {
     natives.idup()
+    ipush(2)
+    imul()
     ipush(4)
     iadd()
     natives.declareGlobal()
@@ -284,5 +302,5 @@ fun SimpleShasambly.createSavedSizeLocalByteArray(addr: Int): LocalByteArrayStru
     i_store_local(addr)
     natives.iswap(0u, 4u)
     i_store_global_dynamic()
-    return LocalByteArrayStructure(this.base, addr)
+    return LocalShortArrayStructure(this.base, addr)
 }
