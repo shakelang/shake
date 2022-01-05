@@ -115,11 +115,6 @@ class JsonParser(
     inner class ParserError(message: String, name: String, details: String, start: Position, end: Position) :
         CompilerError(message, name, details, start, end) {
 
-        init {
-            println(start)
-            println(end)
-        }
-
         /**
          * Constructor for [ParserError]
          *

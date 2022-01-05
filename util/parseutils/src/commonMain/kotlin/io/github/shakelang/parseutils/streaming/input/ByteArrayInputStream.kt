@@ -34,7 +34,6 @@ class ByteArrayInputStream(
             l = count - pos
         }
         buf.copyInto(b, off, pos, l + pos)
-        println(b.map {it.toUByte().toString(16)})
         pos += l
         return l
     }
