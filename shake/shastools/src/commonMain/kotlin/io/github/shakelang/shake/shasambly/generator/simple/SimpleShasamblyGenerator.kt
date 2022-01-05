@@ -165,6 +165,292 @@ interface SimpleShasambly {
     fun fsmallereq()
     fun dsmallereq()
 
+    fun badd(b: Byte) {
+        bpush(b)
+        badd()
+    }
+    fun bsub(b: Byte) {
+        bpush(b)
+        bsub()
+    }
+    fun bmul(b: Byte) {
+        bpush(b)
+        bmul()
+    }
+    fun bdiv(b: Byte) {
+        bpush(b)
+        bdiv()
+    }
+    fun bmod(b: Byte) {
+        bpush(b)
+        bmod()
+    }
+
+
+    fun sadd(s: Short) {
+        spush(s)
+        sadd()
+    }
+    fun ssub(s: Short) {
+        spush(s)
+        ssub()
+    }
+    fun smul(s: Short) {
+        spush(s)
+        smul()
+    }
+    fun sdiv(s: Short) {
+        spush(s)
+        sdiv()
+    }
+    fun smod(s: Short) {
+        spush(s)
+        smod()
+    }
+
+
+    fun iadd(i: Int) {
+        ipush(i)
+        iadd()
+    }
+    fun isub(i: Int) {
+        ipush(i)
+        isub()
+    }
+    fun imul(i: Int) {
+        ipush(i)
+        imul()
+    }
+    fun idiv(i: Int) {
+        ipush(i)
+        idiv()
+    }
+    fun imod(i: Int) {
+        ipush(i)
+        imod()
+    }
+
+
+    fun ladd(l: Long) {
+        lpush(l)
+        ladd()
+    }
+    fun lsub(l: Long) {
+        lpush(l)
+        lsub()
+    }
+    fun lmul(l: Long) {
+        lpush(l)
+        lmul()
+    }
+    fun ldiv(l: Long) {
+        lpush(l)
+        ldiv()
+    }
+    fun lmod(l: Long) {
+        lpush(l)
+        lmod()
+    }
+
+
+    fun fadd(f: Float) {
+        fpush(f)
+        fadd()
+    }
+    fun fsub(f: Float) {
+        fpush(f)
+        fsub()
+    }
+    fun fmul(f: Float) {
+        fpush(f)
+        fmul()
+    }
+    fun fdiv(f: Float) {
+        fpush(f)
+        fdiv()
+    }
+    fun fmod(f: Float) {
+        fpush(f)
+        fmod()
+    }
+
+
+    fun dadd(d: Double) {
+        dpush(d)
+        dadd()
+    }
+    fun dsub(d: Double) {
+        dpush(d)
+        dsub()
+    }
+    fun dmul(d: Double) {
+        dpush(d)
+        dmul()
+    }
+    fun ddiv(d: Double) {
+        dpush(d)
+        ddiv()
+    }
+    fun dmod(d: Double) {
+        dpush(d)
+        dmod()
+    }
+
+
+    fun beq(b: Byte) {
+        bpush(b)
+        beq()
+    }
+
+    fun seq(s: Short) {
+        spush(s)
+        seq()
+    }
+
+    fun ieq(i: Int) {
+        ipush(i)
+        ieq()
+    }
+
+    fun leq(l: Long) {
+        lpush(l)
+        leq()
+    }
+
+    fun feq(f: Float) {
+        fpush(f)
+        feq()
+    }
+
+    fun deq(d: Double) {
+        dpush(d)
+        deq()
+    }
+
+
+    fun bbigger(b: Byte) {
+        bpush(b)
+        bbigger()
+    }
+
+    fun sbigger(s: Short) {
+        spush(s)
+        sbigger()
+    }
+
+    fun ibigger(i: Int) {
+        ipush(i)
+        ibigger()
+    }
+
+    fun lbigger(l: Long) {
+        lpush(l)
+        lbigger()
+    }
+
+    fun fbigger(f: Float) {
+        fpush(f)
+        fbigger()
+    }
+
+    fun dbigger(d: Double) {
+        dpush(d)
+        dbigger()
+    }
+
+
+    fun bsmaller(b: Byte) {
+        bpush(b)
+        bsmaller()
+    }
+
+    fun ssmaller(s: Short) {
+        spush(s)
+        ssmaller()
+    }
+
+    fun ismaller(i: Int) {
+        ipush(i)
+        ismaller()
+    }
+
+    fun lsmaller(l: Long) {
+        lpush(l)
+        lsmaller()
+    }
+
+    fun fsmaller(f: Float) {
+        fpush(f)
+        fsmaller()
+    }
+
+    fun dsmaller(d: Double) {
+        dpush(d)
+        dsmaller()
+    }
+
+
+    fun bbiggereq(b: Byte) {
+        bpush(b)
+        bbiggereq()
+    }
+
+    fun sbiggereq(s: Short) {
+        spush(s)
+        sbiggereq()
+    }
+
+    fun ibiggereq(i: Int) {
+        ipush(i)
+        ibiggereq()
+    }
+
+    fun lbiggereq(l: Long) {
+        lpush(l)
+        lbiggereq()
+    }
+
+    fun fbiggereq(f: Float) {
+        fpush(f)
+        fbiggereq()
+    }
+
+    fun dbiggereq(d: Double) {
+        dpush(d)
+        dbiggereq()
+    }
+
+
+    fun bsmallereq(b: Byte) {
+        bpush(b)
+        bsmallereq()
+    }
+
+    fun ssmallereq(s: Short) {
+        spush(s)
+        ssmallereq()
+    }
+
+    fun ismallereq(i: Int) {
+        ipush(i)
+        ismallereq()
+    }
+
+    fun lsmallereq(l: Long) {
+        lpush(l)
+        lsmallereq()
+    }
+
+    fun fsmallereq(f: Float) {
+        fpush(f)
+        fsmallereq()
+    }
+
+    fun dsmallereq(d: Double) {
+        dpush(d)
+        dsmallereq()
+    }
+
     fun byteAdd()
     fun byteSub()
     fun byteMul()
