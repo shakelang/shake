@@ -629,6 +629,40 @@ interface SimpleShasambly {
         }
     }
 
+    fun forLoop(decl: SimpleShasamblyGeneratorFunction,
+                cond: SimpleShasamblyGeneratorFunction,
+                round: SimpleShasamblyGeneratorFunction,
+                it: SimpleShasamblyGeneratorFunction) {
+        decl(this)
+        whileLoop(cond) {
+            it(this)
+            round(this)
+        }
+    }
+
+    fun ifElse(cond: SimpleShasamblyGeneratorFunction,
+               orElse: SimpleShasamblyGeneratorFunction? = null,
+               it: SimpleShasamblyGeneratorFunction) {
+        relative {
+            cond(this)
+            if (orElse == null) {
+                ineg()
+                val init = lateinit(5)
+                it(this)
+                val end = size
+                init(ShasamblyOpcodeJumpIfToIndex(end))
+            }
+            else {
+                val elseJump = lateinit(5)
+                orElse(this)
+                val endJump = lateinit(5)
+                elseJump(ShasamblyOpcodeJumpIfToIndex(size))
+                it(this)
+                endJump(ShasamblyOpcodeJumpIfToIndex(size))
+            }
+        }
+    }
+
 
 }
 
