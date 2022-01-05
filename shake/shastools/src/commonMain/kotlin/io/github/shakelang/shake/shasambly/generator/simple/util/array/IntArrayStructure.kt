@@ -272,7 +272,7 @@ class LocalIntArrayStructure(val shasambly: SimpleShasambly, val address: Int) {
  * @param addr the local address to create the int array in
  * @param size the size of the int array
  */
-fun SimpleShasambly.createSavedSizeLocalIntArray(addr: Int, size: Int): LocalIntArrayStructure {
+fun SimpleShasambly.createLocalIntArray(addr: Int, size: Int): LocalIntArrayStructure {
     natives.declareGlobal(size * 4 + 4)
     i_store_local(addr)
     ipush(size)
@@ -289,7 +289,7 @@ fun SimpleShasambly.createSavedSizeLocalIntArray(addr: Int, size: Int): LocalInt
  *
  * @param addr the local address to create the int array in
  */
-fun SimpleShasambly.createSavedSizeLocalIntArray(addr: Int): LocalIntArrayStructure {
+fun SimpleShasambly.createLocalIntArray(addr: Int): LocalIntArrayStructure {
     natives.idup()
     imul(4)
     iadd(4)
@@ -302,18 +302,92 @@ fun SimpleShasambly.createSavedSizeLocalIntArray(addr: Int): LocalIntArrayStruct
 }
 
 typealias StaticallySizedLocalIntegerArrayStructure = StaticallySizedLocalIntArrayStructure
+
+/**
+ * Create a [StaticallySizedLocalIntArrayStructure]
+ * A int array that does not store it's size. If you are using it you have to store
+ * its size in some other way. It's advised to use arrays that store their size instead
+ * e.g. [LocalIntArrayStructure]
+ *
+ * @param addr the local address to store the array in
+ * @param size the size of the created array (must be at least 1 for this type of array!!!)
+ */
 fun SimpleShasambly.createStaticallySizedLocalIntegerArray(addr: Int, size: Int) = this.createStaticallySizedLocalIntArray(addr, size)
+
+/**
+ * Create a [StaticallySizedLocalIntArrayStructure]
+ * A int array that does not store it's size. If you are using it you have to store
+ * its size in some other way. It's advised to use arrays that store their size instead
+ * e.g. [LocalIntArrayStructure]
+ *
+ * @param addr the local address to store the array in
+ */
 fun SimpleShasambly.createStaticallySizedLocalIntegerArray(addr: Int) = this.createStaticallySizedLocalIntArray(addr)
 
 typealias LocalIntegerArrayStructure = LocalIntArrayStructure
-fun SimpleShasambly.createSavedSizeLocalIntegerArray(addr: Int, size: Int) = this.createSavedSizeLocalIntArray(addr, size)
-fun SimpleShasambly.createSavedSizeLocalIntegerArray(addr: Int) = this.createSavedSizeLocalIntArray(addr)
+
+/**
+ * Create a [LocalIntArrayStructure]
+ * A local int array. It stores the size at the start of it, so you can always get the size using [LocalIntArrayStructure.getSize]
+ * This is the advised type of local int array over [StaticallySizedLocalIntArrayStructure]
+ *
+ * @param addr the local address to create the int array in
+ * @param size the size of the int array
+ */
+fun SimpleShasambly.createLocalIntegerArray(addr: Int, size: Int) = this.createLocalIntArray(addr, size)
+
+/**
+ * Create a [LocalIntArrayStructure]
+ * A local int array. It stores the size at the start of it, so you can always get the size using [LocalIntArrayStructure.getSize]
+ * This is the advised type of local int array over [StaticallySizedLocalIntArrayStructure]
+ * The size is the first integer on the stack
+ *
+ * @param addr the local address to create the int array in
+ */
+fun SimpleShasambly.createLocalIntegerArray(addr: Int) = this.createLocalIntArray(addr)
 
 
 typealias StaticallySizedLocalFloatArrayStructure = StaticallySizedLocalIntArrayStructure
+
+/**
+ * Create a [StaticallySizedLocalIntArrayStructure]
+ * A int array that does not store it's size. If you are using it you have to store
+ * its size in some other way. It's advised to use arrays that store their size instead
+ * e.g. [LocalIntArrayStructure]
+ *
+ * @param addr the local address to store the array in
+ * @param size the size of the created array (must be at least 1 for this type of array!!!)
+ */
 fun SimpleShasambly.createStaticallySizedLocalFloatArray(addr: Int, size: Int) = this.createStaticallySizedLocalIntArray(addr, size)
+
+/**
+ * Create a [StaticallySizedLocalIntArrayStructure]
+ * A int array that does not store it's size. If you are using it you have to store
+ * its size in some other way. It's advised to use arrays that store their size instead
+ * e.g. [LocalIntArrayStructure]
+ *
+ * @param addr the local address to store the array in
+ */
 fun SimpleShasambly.createStaticallySizedLocalFloatArray(addr: Int) = this.createStaticallySizedLocalIntArray(addr)
 
 typealias LocalFloatArrayStructure = LocalIntArrayStructure
-fun SimpleShasambly.createSavedSizeLocalFloatArray(addr: Int, size: Int) = this.createSavedSizeLocalIntArray(addr, size)
-fun SimpleShasambly.createSavedSizeLocalFloatArray(addr: Int) = this.createSavedSizeLocalIntArray(addr)
+
+/**
+ * Create a [LocalIntArrayStructure]
+ * A local int array. It stores the size at the start of it, so you can always get the size using [LocalIntArrayStructure.getSize]
+ * This is the advised type of local int array over [StaticallySizedLocalIntArrayStructure]
+ *
+ * @param addr the local address to create the int/float array in
+ * @param size the size of the int array
+ */
+fun SimpleShasambly.createLocalFloatArray(addr: Int, size: Int) = this.createLocalIntArray(addr, size)
+
+/**
+ * Create a [LocalIntArrayStructure]
+ * A local int array. It stores the size at the start of it, so you can always get the size using [LocalIntArrayStructure.getSize]
+ * This is the advised type of local int array over [StaticallySizedLocalIntArrayStructure]
+ * The size is the first integer on the stack
+ *
+ * @param addr the local address to create the int/float array in
+ */
+fun SimpleShasambly.createLocalFloatArray(addr: Int) = this.createLocalIntArray(addr)

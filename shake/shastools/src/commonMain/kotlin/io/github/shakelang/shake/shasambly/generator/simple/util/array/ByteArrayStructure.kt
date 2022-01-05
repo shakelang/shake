@@ -243,7 +243,7 @@ class LocalByteArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
  * @param addr the local address to create the byte array in
  * @param size the size of the byte array
  */
-fun SimpleShasambly.createSavedSizeLocalByteArray(addr: Int, size: Int): LocalByteArrayStructure {
+fun SimpleShasambly.createLocalByteArray(addr: Int, size: Int): LocalByteArrayStructure {
     natives.declareGlobal(size + 4)
     i_store_local(addr)
     ipush(size)
@@ -260,7 +260,7 @@ fun SimpleShasambly.createSavedSizeLocalByteArray(addr: Int, size: Int): LocalBy
  *
  * @param addr the local address to create the byte array in
  */
-fun SimpleShasambly.createSavedSizeLocalByteArray(addr: Int): LocalByteArrayStructure {
+fun SimpleShasambly.createLocalByteArray(addr: Int): LocalByteArrayStructure {
     natives.idup()
     ipush(4)
     iadd()

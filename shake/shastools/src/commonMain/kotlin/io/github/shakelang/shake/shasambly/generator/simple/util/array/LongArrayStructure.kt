@@ -137,10 +137,10 @@ fun SimpleShasambly.createStaticallySizedLocalLongArray(addr: Int, size: Int): S
 }
 
 /**
- * Create a [StaticallySizedLocalIntArrayStructure]
+ * Create a [StaticallySizedLocalLongArrayStructure]
  * A int array that does not store it's size. If you are using it you have to store
  * its size in some other way. It's advised to use arrays that store their size instead
- * e.g. [LocalIntArrayStructure]
+ * e.g. [LocalLongArrayStructure]
  *
  * @param addr the local address to store the array in
  */
@@ -272,13 +272,13 @@ class LocalLongArrayStructure(val shasambly: SimpleShasambly, val address: Int) 
  * @param addr the local address to create the long array in
  * @param size the size of the long array
  */
-fun SimpleShasambly.createSavedSizeLocalLongArray(addr: Int, size: Int): LocalIntArrayStructure {
+fun SimpleShasambly.createLocalLongArray(addr: Int, size: Int): LocalLongArrayStructure {
     natives.declareGlobal(size * 8 + 4)
     i_store_local(addr)
     ipush(size)
     i_get_local(addr)
     i_store_global_dynamic()
-    return LocalIntArrayStructure(this.base, addr)
+    return LocalLongArrayStructure(this.base, addr)
 }
 
 /**
@@ -289,7 +289,7 @@ fun SimpleShasambly.createSavedSizeLocalLongArray(addr: Int, size: Int): LocalIn
  *
  * @param addr the local address to create the long array in
  */
-fun SimpleShasambly.createSavedSizeLocalLongArray(addr: Int): LocalLongArrayStructure {
+fun SimpleShasambly.createLocalLongArray(addr: Int): LocalLongArrayStructure {
     natives.idup()
     imul(8)
     iadd(4)
@@ -302,9 +302,46 @@ fun SimpleShasambly.createSavedSizeLocalLongArray(addr: Int): LocalLongArrayStru
 }
 
 typealias StaticallySizedLocalDoubleArrayStructure = StaticallySizedLocalLongArrayStructure
+
+/**
+ * Create a [StaticallySizedLocalLongArrayStructure]
+ * A long array that does not store it's size. If you are using it you have to store
+ * its size in some other way. It's advised to use arrays that store their size instead
+ * e.g. [LocalLongArrayStructure]
+ *
+ * @param addr the local address to store the array in
+ * @param size the size of the created array (must be at least 2 for this type of array!!!)
+ */
 fun SimpleShasambly.createStaticallySizedLocalDoubleArray(addr: Int, size: Int) = this.createStaticallySizedLocalLongArray(addr, size)
+
+/**
+ * Create a [StaticallySizedLocalLongArrayStructure]
+ * A int array that does not store it's size. If you are using it you have to store
+ * its size in some other way. It's advised to use arrays that store their size instead
+ * e.g. [LocalLongArrayStructure]
+ *
+ * @param addr the local address to store the array in
+ */
 fun SimpleShasambly.createStaticallySizedLocalDoubleArray(addr: Int) = this.createStaticallySizedLocalLongArray(addr)
 
 typealias LocalDoubleArrayStructure = LocalLongArrayStructure
-fun SimpleShasambly.createSavedSizeLocalDoubleArray(addr: Int, size: Int) = this.createSavedSizeLocalLongArray(addr, size)
-fun SimpleShasambly.createSavedSizeLocalDoubleArray(addr: Int) = this.createSavedSizeLocalLongArray(addr)
+
+/**
+ * Create a [LocalLongArrayStructure]
+ * A local long array. It stores the size at the start of it, so you can always get the size using [LocalLongArrayStructure.getSize]
+ * This is the advised type of local long array over [StaticallySizedLocalLongArrayStructure]
+ *
+ * @param addr the local address to create the long array in
+ * @param size the size of the long array
+ */
+fun SimpleShasambly.createLocalDoubleArray(addr: Int, size: Int) = this.createLocalLongArray(addr, size)
+
+/**
+ * Create a [LocalLongArrayStructure]
+ * A local long array. It stores the size at the start of it, so you can always get the size using [LocalLongArrayStructure.getSize]
+ * This is the advised type of local long array over [StaticallySizedLocalLongArrayStructure]
+ * The size is the first integer on the stack
+ *
+ * @param addr the local address to create the long array in
+ */
+fun SimpleShasambly.createLocalDoubleArray(addr: Int) = this.createLocalLongArray(addr)

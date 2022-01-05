@@ -252,7 +252,7 @@ class LocalShortArrayStructure(val shasambly: SimpleShasambly, val address: Int)
  * @param addr the local address to create the short array in
  * @param size the size of the short array
  */
-fun SimpleShasambly.createSavedSizeLocalShortArray(addr: Int, size: Int): LocalShortArrayStructure {
+fun SimpleShasambly.createLocalShortArray(addr: Int, size: Int): LocalShortArrayStructure {
     natives.declareGlobal(size * 2 + 4)
     i_store_local(addr)
     ipush(size)
@@ -269,7 +269,7 @@ fun SimpleShasambly.createSavedSizeLocalShortArray(addr: Int, size: Int): LocalS
  *
  * @param addr the local address to create the short array in
  */
-fun SimpleShasambly.createSavedSizeLocalShortArray(addr: Int): LocalShortArrayStructure {
+fun SimpleShasambly.createLocalShortArray(addr: Int): LocalShortArrayStructure {
     natives.idup()
     imul(2)
     iadd(4)

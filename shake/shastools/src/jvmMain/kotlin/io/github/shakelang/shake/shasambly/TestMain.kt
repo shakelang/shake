@@ -3,7 +3,7 @@ package io.github.shakelang.shake.shasambly
 import io.github.shakelang.parseutils.bytes.stream
 import io.github.shakelang.shake.shasambly.generator.shas.ShasGenerator
 import io.github.shakelang.shake.shasambly.generator.simple.shasambly
-import io.github.shakelang.shake.shasambly.generator.simple.util.array.createSavedSizeLocalShortArray
+import io.github.shakelang.shake.shasambly.generator.simple.util.array.createLocalShortArray
 import io.github.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
 import java.io.BufferedOutputStream
 import java.io.File
@@ -14,7 +14,7 @@ fun main() {
     val code = shasambly {
 
         incrStack(0x007f)
-        val arr = createSavedSizeLocalShortArray(0, 10)
+        val arr = createLocalShortArray(0, 10)
         arr.storeElement(0, 10)
         arr.storeElement(1, 11)
         arr.storeElement(2, 12)
