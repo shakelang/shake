@@ -629,7 +629,7 @@ class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): Sha
     override fun bnot() = opcode(ShasamblyOpcodeBoolNot())
 
     override fun lateinit(size: Int): (ShasamblyOpcode) -> Unit {
-        val opcode = ShasamblyLateInitOpcode(size)
+        val opcode = ShasamblyLateinitOpcode(size)
         this.opcode(opcode)
         return { opcode.init(it) }
     }
