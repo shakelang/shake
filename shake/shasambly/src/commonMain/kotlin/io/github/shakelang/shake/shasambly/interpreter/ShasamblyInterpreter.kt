@@ -6,6 +6,23 @@ import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import kotlin.experimental.and
 import kotlin.math.abs
 
+object PrimitiveIds {
+
+    const val PRIMITIVE_BYTE = 0u
+    const val PRIMITIVE_UNSIGNED_BYTE = 1u
+    const val PRIMITIVE_SHORT = 2u
+    const val PRIMITIVE_UNSIGNED_SHORT = 3u
+    const val PRIMITIVE_INT = 4u
+    const val PRIMITIVE_UNSIGNED_INT = 5u
+    const val PRIMITIVE_LONG = 6u
+    const val PRIMITIVE_UNSIGNED_LONG = 7u
+    const val PRIMITIVE_FLOAT = 8u
+    const val PRIMITIVE_DOUBLE = 9u
+    const val PRIMITIVE_BOOLEAN = 10u
+    const val PRIMITIVE_CHAR = 11u
+
+}
+
 object Opcodes {
 
     const val INCR_STACK: Byte = 0x01 // Syntax: INCR_STACK, u2 stack_size (Increase the variable stack, the new stack has stack_size bytes of space)
@@ -137,6 +154,8 @@ object Opcodes {
     const val L_ABS: Byte = 0x072 // Syntax: L_ABS ; Absolute value of the top long
     const val F_ABS: Byte = 0x073 // Syntax: F_ABS ; Absolute value of the top float
     const val D_ABS: Byte = 0x074 // Syntax: D_ABS ; Absolute value of the top double
+
+    const val PRIMITIVE_CAST: Byte = 0x075 // Syntax: PRIMITIVE_CAST CAST ; Cast the top value on the stack 4 Bits for from type, 4 Bits for to type
 
 }
 
@@ -990,6 +1009,202 @@ class ShasamblyInterpreter(
     fun d_abs() {
         addDouble(abs(removeLastDouble()))
     }
+    inline fun primitive_cast() {
+        val cast = read_byte().toUByte()
+        val from = cast / 16u
+        val to = cast % 16u
+
+        when (from) {
+            PrimitiveIds.PRIMITIVE_BYTE -> {
+                val v = removeLastByte()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> {
+                val v = removeLastByte().toUByte()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_SHORT -> {
+                val v = removeLastShort()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> {
+                val v = removeLastShort().toUShort()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_INT -> {
+                val v = removeLastInt()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v)
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> {
+                val v = removeLastInt().toUInt()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_LONG -> {
+                val v = removeLastLong()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> {
+                val v = removeLastLong()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_FLOAT -> {
+                val v = removeLastFloat()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toInt().toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toInt().toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toInt().toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toInt().toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v)
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toInt().toUByte().toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_DOUBLE -> {
+                val v = removeLastDouble()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toInt().toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toInt().toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toInt().toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toInt().toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v)
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
+                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toInt().toUByte().toShort())
+                }
+            }
+            PrimitiveIds.PRIMITIVE_BOOLEAN -> {
+                val v = removeLastByte()
+                when(to) {
+                    PrimitiveIds.PRIMITIVE_BYTE -> throw Error("Cannot cast from boolean to byte")
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> throw Error("Cannot cast from boolean to unsigned byte")
+                    PrimitiveIds.PRIMITIVE_SHORT -> throw Error("Cannot cast from boolean to short")
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> throw Error("Cannot cast from boolean to unsigned short")
+                    PrimitiveIds.PRIMITIVE_INT -> throw Error("Cannot cast from boolean to int")
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> throw Error("Cannot cast from boolean to unsigned int")
+                    PrimitiveIds.PRIMITIVE_LONG -> throw Error("Cannot cast from boolean to long")
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> throw Error("Cannot cast from boolean to unsigned long")
+                    PrimitiveIds.PRIMITIVE_FLOAT -> throw Error("Cannot cast from boolean to float")
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> throw Error("Cannot cast from boolean to double")
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> addByte(v)
+                    PrimitiveIds.PRIMITIVE_CHAR -> throw Error("Cannot cast from boolean to char")
+                }
+            }
+        }
+
+    }
 
     inline fun byte() = memory[position]
     inline fun short() = memory.getShort(position)
@@ -1144,6 +1359,8 @@ class ShasamblyInterpreter(
         map[Opcodes.L_ABS.toInt()] = { this.l_abs() }
         map[Opcodes.F_ABS.toInt()] = { this.f_abs() }
         map[Opcodes.D_ABS.toInt()] = { this.d_abs() }
+
+        map[Opcodes.PRIMITIVE_CAST.toInt()] = { this.primitive_cast() }
 
         return map
     }
