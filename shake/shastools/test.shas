@@ -1,5 +1,5 @@
 [0x00000000] incr_stack 100
-[0x00000003] jump_static 0x00000016 [numeric: 22]
+[0x00000003] jump_static 0x0000001a [numeric: 26]
 [0x00000008] i_get_local 0x0064 [numeric: 100]
 [0x0000000b] invoke_native print_int
 [0x0000000e] invoke_native print_line_ending
@@ -12,16 +12,16 @@
 [0x00000021] i_push 0x00000064 [numeric: 100]
 [0x00000026] i_smaller
 [0x00000027] not
-[0x00000028] jump_if 0x00000054
+[0x00000028] jump_if 0x00000058
 [0x0000002d] i_get_local 0x0000 [numeric: 0]
 [0x00000030] incr_stack 108
 [0x00000033] i_store_local 0x0064 [numeric: 100]
-[0x00000036] i_push 0x00000043 [numeric: 67]
+[0x00000036] i_push 0x00000047 [numeric: 71]
 [0x0000003b] i_store_local 0x0068 [numeric: 104]
-[0x0000003e] jump_static 0x00000008 [numeric: 8]
+[0x0000003e] jump_static 0x0000000c [numeric: 12]
 [0x00000043] i_get_local 0x0000 [numeric: 0]
 [0x00000046] i_push 0x00000001 [numeric: 1]
 [0x0000004b] iadd
 [0x0000004c] i_store_local 0x0000 [numeric: 0]
-[0x0000004f] jump_static 0x0000001e [numeric: 30]
+[0x0000004f] jump_static 0x00000022 [numeric: 34]
 [0x00000054] decr_stack

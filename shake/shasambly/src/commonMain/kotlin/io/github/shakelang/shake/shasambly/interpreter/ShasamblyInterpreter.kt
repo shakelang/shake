@@ -142,8 +142,8 @@ object Opcodes {
 
 class ShasamblyInterpreter(
     memorySize: Int,
-    val bytes: ByteArray,
-    var position: Int
+    bytes: ByteArray,
+    position: Int
 ) {
 
     val memory = ByteArray(memorySize)
@@ -152,12 +152,21 @@ class ShasamblyInterpreter(
     val stack = ByteArray(1024)
     var stackSize = 0
     private var variableStackSize: Int = 0
-    var variableAddress = 0
+    var variableAddress = bytes.size + 9
     val byteMap = createByteMap()
     var globalAddress = 0
     var globalsSize = 4
     private var startPointer = -1
     private var endPointer = -1
+    var position = position + 4
+
+    val exitCode : Int get() = memory.getInt(0)
+
+    init {
+        bytes.copyInto(memory, 4)
+        memory[bytes.size + 4] = Opcodes.JUMP_STATIC
+        memory.setInt(bytes.size + 5, 0)
+    }
 
     private fun increaseGlobals(chunkSize: Int): Int {
         val addr = memorySize - globalsSize
@@ -320,17 +329,17 @@ class ShasamblyInterpreter(
         return addr
     }
 
-    fun finished(): Boolean = this.position >= this.bytes.size
+    fun finished(): Boolean = this.position == 0
 
     fun tick() {
         val pos = position
-        val next = bytes[position++]
+        val next = memory[position++]
         //println("Executing byte at position 0x${(position-1).toBytes().toHexString()}")
         try {
             (byteMap[next.toUByte().toInt()] ?: throw NoSuchElementException("Wrong opcode")).invoke()
         } catch (e: Throwable) {
             throw Error("Could not execute byte 0x${next.toBytes().toHexString()} " +
-                    "at position 0x${(pos - 1).toBytes().toHexString()} ($pos)", e)
+                    "at position 0x${(pos - 5).toBytes().toHexString()} (${pos-5})", e)
         }
     }
 
@@ -359,7 +368,7 @@ class ShasamblyInterpreter(
 
     fun jump(address: Int) {
         //println("Jumping to ${address.toBytes().toHexString()}")
-        if(address < 0 || address > bytes.size) throw Error("Address 0x${address.toBytes().toHexString()} out of range")
+        if(address < 0 || address > memory.size) throw Error("Address 0x${address.toBytes().toHexString()} out of range")
         position = address
     }
 
@@ -974,12 +983,12 @@ class ShasamblyInterpreter(
         addDouble(abs(removeLastDouble()))
     }
 
-    inline fun byte() = bytes[position]
-    inline fun short() = bytes.getShort(position)
-    inline fun int() = bytes.getInt(position)
-    inline fun long() = bytes.getLong(position)
+    inline fun byte() = memory[position]
+    inline fun short() = memory.getShort(position)
+    inline fun int() = memory.getInt(position)
+    inline fun long() = memory.getLong(position)
     inline fun read_byte(): Byte {
-        return bytes[position++]
+        return memory[position++]
     }
     inline fun read_short(): Short {
         val v = short()
@@ -1134,7 +1143,6 @@ class ShasamblyInterpreter(
     override fun toString(): String {
         return "ShasablyInterpreter{" +
                 "position=$position," +
-                "code=${bytes.toHexString()}," +
                 "memory=${memory.toHexString()}," +
                 "stack=${stack.toHexString()}}"
     }

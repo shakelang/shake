@@ -102,6 +102,10 @@ open class ShasamblyOpcodeDecrStack : ShasamblyOpcode {
     }
 }
 
+private fun resolveJump(target: Int): Int {
+    return target + 4
+}
+
 /**
  * Generator for opcode [Opcodes.JUMP_STATIC]
  *
@@ -115,7 +119,7 @@ open class ShasamblyOpcodeJumpStatic(val address: Int) : ShasamblyOpcode {
 
     override val size: Int get() = 5
     override fun generate(gen: ShasamblyGenerator): ByteArray {
-        return byteArrayOf(Opcodes.JUMP_STATIC, *address.toBytes())
+        return byteArrayOf(Opcodes.JUMP_STATIC, *resolveJump(address).toBytes())
     }
 }
 
@@ -129,7 +133,7 @@ open class ShasamblyOpcodeJumpStatic(val address: Int) : ShasamblyOpcode {
 open class ShasamblyOpcodeJumpStaticToIndex(val index: Int): ShasamblyOpcodeJumpStatic(0) {
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val address = gen.positionOfIndex(index)
-        return byteArrayOf(Opcodes.JUMP_STATIC, *address.toBytes())
+        return byteArrayOf(Opcodes.JUMP_STATIC, *resolveJump(address).toBytes())
     }
 }
 
@@ -154,14 +158,14 @@ open class ShasamblyOpcodeJumpStaticToRelativeIndex(val relativeIndex: Int): Sha
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val index = gen.indexOf(this) + relativeIndex
         val address = gen.positionOfIndex(index)
-        return byteArrayOf(Opcodes.JUMP_STATIC, *address.toBytes())
+        return byteArrayOf(Opcodes.JUMP_STATIC, *resolveJump(address).toBytes())
     }
 }
 open class ShasamblyOpcodeIPushAddress(val relativeIndex: Int): ShasamblyOpcodeJumpStatic(0) {
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val index = gen.indexOf(this) + relativeIndex
         val address = gen.positionOfIndex(index)
-        return byteArrayOf(Opcodes.I_PUSH, *address.toBytes())
+        return byteArrayOf(Opcodes.I_PUSH, *resolveJump(address).toBytes())
     }
 }
 
@@ -190,7 +194,7 @@ open class ShasamblyOpcodeJumpIf(val address: Int) : ShasamblyOpcode {
 
     override val size: Int get() = 5
     override fun generate(gen: ShasamblyGenerator): ByteArray {
-        return byteArrayOf(Opcodes.JUMP_IF, *address.toBytes())
+        return byteArrayOf(Opcodes.JUMP_IF, *resolveJump(address).toBytes())
     }
 }
 
@@ -204,7 +208,7 @@ open class ShasamblyOpcodeJumpIf(val address: Int) : ShasamblyOpcode {
 open class ShasamblyOpcodeJumpIfToIndex(val index: Int): ShasamblyOpcodeJumpIf(0) {
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val address = gen.positionOfIndex(index)
-        return byteArrayOf(Opcodes.JUMP_IF, *address.toBytes())
+        return byteArrayOf(Opcodes.JUMP_IF, *resolveJump(address).toBytes())
     }
 }
 
@@ -229,7 +233,7 @@ open class ShasamblyOpcodeJumpIfToRelativeIndex(val relativeIndex: Int): Shasamb
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val index = gen.indexOf(this) + relativeIndex
         val address = gen.positionOfIndex(index)
-        return byteArrayOf(Opcodes.JUMP_IF, *address.toBytes())
+        return byteArrayOf(Opcodes.JUMP_IF, *resolveJump(address).toBytes())
     }
 }
 
@@ -247,7 +251,7 @@ open class ShasamblyOpcodeGlobAddr(val address: Int) : ShasamblyOpcode {
 
     override val size: Int get() = 3
     override fun generate(gen: ShasamblyGenerator): ByteArray {
-        return byteArrayOf(Opcodes.GLOB_ADDR, *address.toUShort().toBytes())
+        return byteArrayOf(Opcodes.GLOB_ADDR, *resolveJump(address).toUShort().toBytes())
     }
 
 }

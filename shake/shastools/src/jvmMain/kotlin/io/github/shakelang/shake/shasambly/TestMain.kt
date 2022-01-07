@@ -8,6 +8,7 @@ import io.github.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.system.exitProcess
 
 fun main() {
 
@@ -139,7 +140,7 @@ fun main() {
     out.close()
 
     val interpreter = ShasamblyInterpreter(
-        1024, code, 0
+        1024 * 8, code, 0
     )
 
     try {
@@ -148,4 +149,5 @@ fun main() {
         e.printStackTrace()
     }
     println(interpreter)
+    exitProcess(interpreter.exitCode)
 }
