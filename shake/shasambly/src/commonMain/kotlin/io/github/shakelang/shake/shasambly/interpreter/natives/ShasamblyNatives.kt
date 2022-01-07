@@ -9,12 +9,12 @@ import io.github.shakelang.shake.shasambly.interpreter.*
 
 val nativeFunctions = arrayOfNulls<ShasamblyNative>((UShort.MAX_VALUE).toInt() + 1)
 
-private fun nativeFunction(name: String, id: Int, execute: ShasamblyInterpreter.() -> Unit): Short {
+private fun nativeFunction(name: String, id: Int, execute: ShasamblyOpcodeExecutor.() -> Unit): Short {
     nativeFunctions[id] = ShasamblyNative(name, 0, execute)
     return id.toShort()
 }
 
-private fun nativeFunction(name: String, id: Int, byteArgumentAmount: Int, execute: ShasamblyInterpreter.() -> Unit): Short {
+private fun nativeFunction(name: String, id: Int, byteArgumentAmount: Int, execute: ShasamblyOpcodeExecutor.() -> Unit): Short {
     nativeFunctions[id] = ShasamblyNative(name, byteArgumentAmount, execute)
     return id.toShort()
 }
@@ -22,7 +22,7 @@ private fun nativeFunction(name: String, id: Int, byteArgumentAmount: Int, execu
 class ShasamblyNative(
     val name: String,
     val byteArgumentAmount: Int = 0,
-    val execute: ShasamblyInterpreter.() -> Unit
+    val execute: ShasamblyOpcodeExecutor.() -> Unit
 )
 
 object Natives {
