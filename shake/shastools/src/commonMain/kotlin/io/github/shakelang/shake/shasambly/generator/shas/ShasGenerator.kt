@@ -52,7 +52,9 @@ class ShasGenerator(input: InputStream) {
         when(val opcode = input.readByte()) {
             Opcodes.INCR_STACK -> oprintln("incr_stack ${input.readUnsignedShort()}")
             Opcodes.DECR_STACK -> oprintln("decr_stack")
-            Opcodes.JUMP_STATIC -> oprintln("jump_static 0x${input.readUnsignedInt().toBytes().toHexString()}")
+            Opcodes.JUMP_STATIC -> input.readUnsignedInt().let {
+                oprintln("jump_static 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
             Opcodes.JUMP_DYNAMIC -> oprintln("jump_dynamic")
             Opcodes.JUMP_IF -> oprintln("jump_if 0x${input.readUnsignedInt().toBytes().toHexString()}")
             Opcodes.INVOKE_NATIVE -> {
@@ -64,18 +66,42 @@ class ShasGenerator(input: InputStream) {
             }
             Opcodes.GLOB_ADDR -> oprintln("glob_addr ${input.readUnsignedShort()}")
 
-            Opcodes.B_GET_LOCAL -> oprintln("b_get_local ${input.readUnsignedShort()}")
-            Opcodes.S_GET_LOCAL -> oprintln("s_get_local ${input.readUnsignedShort()}")
-            Opcodes.I_GET_LOCAL -> oprintln("i_get_local ${input.readUnsignedShort()}")
-            Opcodes.L_GET_LOCAL -> oprintln("l_get_local ${input.readUnsignedShort()}")
-            Opcodes.B_STORE_LOCAL -> oprintln("b_store_local ${input.readUnsignedShort()}")
-            Opcodes.S_STORE_LOCAL -> oprintln("s_store_local ${input.readUnsignedShort()}")
-            Opcodes.I_STORE_LOCAL -> oprintln("i_store_local ${input.readUnsignedShort()}")
-            Opcodes.L_STORE_LOCAL -> oprintln("l_store_local ${input.readUnsignedShort()}")
-            Opcodes.B_PUSH -> oprintln("bpush 0x${input.readUnsignedByte().toString(16)}")
-            Opcodes.S_PUSH -> oprintln("spush ${input.readShort()}")
-            Opcodes.I_PUSH -> oprintln("ipush ${input.readInt()}")
-            Opcodes.L_PUSH -> oprintln("lpush ${input.readLong()}")
+            Opcodes.B_GET_LOCAL -> input.readUnsignedShort().let {
+                oprintln("b_get_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.S_GET_LOCAL -> input.readUnsignedShort().let {
+                oprintln("s_get_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.I_GET_LOCAL -> input.readUnsignedShort().let {
+                oprintln("i_get_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.L_GET_LOCAL -> input.readUnsignedShort().let {
+                oprintln("l_get_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.B_STORE_LOCAL -> input.readUnsignedShort().let {
+                oprintln("b_store_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.S_STORE_LOCAL -> input.readUnsignedShort().let {
+                oprintln("s_store_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.I_STORE_LOCAL -> input.readUnsignedShort().let {
+                oprintln("i_store_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.L_STORE_LOCAL -> input.readUnsignedShort().let {
+                oprintln("l_store_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.B_PUSH -> input.readByte().let {
+                oprintln("b_push 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.S_PUSH -> input.readShort().let {
+                oprintln("s_push 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.I_PUSH -> input.readInt().let {
+                oprintln("i_push 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
+            Opcodes.L_PUSH -> input.readLong().let {
+                oprintln("l_push 0x${it.toBytes().toHexString()} [numeric: ${it}]")
+            }
 
             Opcodes.B_ADD -> oprintln("badd")
             Opcodes.B_SUB -> oprintln("bsub")
@@ -174,7 +200,8 @@ class ShasGenerator(input: InputStream) {
             Opcodes.L_ABS -> oprintln("labs")
             Opcodes.F_ABS -> oprintln("fabs")
             Opcodes.D_ABS -> oprintln("dabs")
-            else -> throw Error("Wrong opcode 0x${opcode.toBytes().toHexString()} at position 0x${counter.getCount().toUInt().toBytes().toHexString()}")
+            else -> throw Error("Wrong opcode 0x${opcode.toBytes().toHexString()} at position " +
+                    "0x${(counter.getCount()-1).toUInt().toBytes().toHexString()}")
         }
     }
 
