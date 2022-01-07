@@ -155,9 +155,17 @@ class ShasamblyInterpreter(
     var variableAddress = bytes.size + 9
     val byteMap = createByteMap()
     var globalAddress = 0
-    var globalsSize = 4
-    private var startPointer = -1
-    private var endPointer = -1
+    var globalsSize = 8
+    var startPointer = -1
+        set(v) {
+            memory.setInt(memory.size - 4, v)
+            field = v
+        }
+    var endPointer = -1
+        set(v) {
+            memory.setInt(memory.size - 8, v)
+            field = v
+        }
     var position = position + 4
 
     val exitCode : Int get() = memory.getInt(0)
