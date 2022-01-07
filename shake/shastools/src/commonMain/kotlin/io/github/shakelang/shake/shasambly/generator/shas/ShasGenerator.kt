@@ -52,9 +52,9 @@ class ShasGenerator(input: InputStream) {
         when(val opcode = input.readByte()) {
             Opcodes.INCR_STACK -> oprintln("incr_stack ${input.readUnsignedShort()}")
             Opcodes.DECR_STACK -> oprintln("decr_stack")
-            Opcodes.JUMP_STATIC -> oprintln("jump_static ${input.readUnsignedInt()}")
-            Opcodes.JUMP_DYNAMIC -> oprint("jump_dynamic")
-            Opcodes.JUMP_IF -> oprintln("jump_if ${input.readUnsignedInt()}")
+            Opcodes.JUMP_STATIC -> oprintln("jump_static 0x${input.readUnsignedInt().toBytes().toHexString()}")
+            Opcodes.JUMP_DYNAMIC -> oprintln("jump_dynamic")
+            Opcodes.JUMP_IF -> oprintln("jump_if 0x${input.readUnsignedInt().toBytes().toHexString()}")
             Opcodes.INVOKE_NATIVE -> {
                 val f = input.readUnsignedShort().toInt()
                 oprint("invoke_native ${nativeFunctions[f]?.name ?: throw Error("Unknown native")}")
