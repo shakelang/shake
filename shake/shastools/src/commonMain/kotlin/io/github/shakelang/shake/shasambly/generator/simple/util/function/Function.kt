@@ -1,19 +1,64 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.simple.util.function
 
+import io.github.shakelang.parseutils.bytes.removeLastByte
 import io.github.shakelang.parseutils.bytes.removeLastInt
 import io.github.shakelang.parseutils.bytes.removeLastLong
 import io.github.shakelang.parseutils.bytes.removeLastShort
 import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcode
 import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcodeJumpStaticToIndex
-import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
-import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGeneratorFunction
+import io.github.shakelang.shake.shasambly.generator.simple.*
+
+typealias SimpleRoutineShasamblyGenerator = SimpleRoutineShasambly.() -> Unit
+
+open class SimpleRoutineShasambly(
+    val routine: CallableRoutine,
+    base: SimpleShasamblyGenerator,
+    parent: SimpleShasambly,
+    generator: SimpleRoutineShasamblyGenerator,
+) : RelativeShasamblyGeneratorPart(base, parent, {}) {
+
+    init {
+        generator(this)
+    }
+
+    fun getByteArgument(position: Int) {
+        if(position < 0 || position >= routine.argumentCount)
+            throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount}")
+        b_get_local(position + routine.stackSize)
+    }
+
+    fun getShortArgument(position: Int) {
+        if(position < 0 || position >= routine.argumentCount - 1)
+            throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount - 1}")
+        if(position < 0) throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount}")
+        s_get_local(position + routine.stackSize)
+    }
+
+    fun getIntArgument(position: Int) {
+        if(position < 0 || position >= routine.argumentCount - 3)
+            throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount - 3}")
+        if(position < 0) throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount}")
+        i_get_local(position + routine.stackSize)
+    }
+
+    fun getLongArgument(position: Int) {
+        if(position < 0 || position >= routine.argumentCount - 7)
+            throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount - 3}")
+        if(position < 0) throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount}")
+        l_get_local(position + routine.stackSize)
+    }
+
+    fun getFloatArgument(position: Int) = getIntArgument(position)
+    fun getDoubleArgument(position: Int) = getLongArgument(position)
+
+}
 
 open class CallableRoutine(
     val shasambly: SimpleShasambly,
     val argumentCount: Int,
     val stackSize: Int,
-    var exec: SimpleShasamblyGeneratorFunction? = null
+    var exec: SimpleRoutineShasamblyGenerator? = null
 ) {
     val toInitCalls = mutableListOf<(ShasamblyOpcode) -> Unit>()
     val realStackSize: Int = stackSize + argumentCount + 4
@@ -26,25 +71,50 @@ open class CallableRoutine(
         shasambly {
             incrStack(realStackSize)
             val list = args.toMutableList()
-            while(args.size > 7) {
-                val pos = list.size + argumentCount
+            while(list.size > 7) {
                 lpush(list.removeLastLong())
-                storeLocalLong(pos)
+                l_store_local(list.size + stackSize)
             }
             if(list.size > 3) {
-                val pos = list.size + argumentCount
                 ipush(list.removeLastInt())
-                storeLocalLong(pos)
+                i_store_local(list.size + stackSize)
             }
             if(list.size > 1) {
-                val pos = list.size + argumentCount
                 spush(list.removeLastShort())
-                storeLocalShort(pos)
+                s_store_local(list.size + stackSize)
             }
             if(list.size > 0) {
-                spush(list.removeLastShort())
-                storeLocalShort(argumentCount)
+                bpush(list.removeLastByte())
+                b_store_local(stackSize)
             }
+            push_rel_addr(3)
+            i_store_local(realStackSize - 4)
+            jumpToCallableRoutineStart()
+        }
+    }
+
+    fun call() {
+        shasambly {
+            incrStack(realStackSize)
+            var size = argumentCount
+            while(size > 7) {
+                size -= 8
+                l_store_local(size + stackSize)
+            }
+            if(size > 3) {
+                size -= 4
+                i_store_local(size + stackSize)
+            }
+            if(size > 1) {
+                size -= 2
+                s_store_local(size + stackSize)
+            }
+            if(size > 0) {
+                size -= 1
+                b_store_local(stackSize)
+            }
+            push_rel_addr(3)
+            i_store_local(realStackSize - 4)
             jumpToCallableRoutineStart()
         }
     }
@@ -62,17 +132,19 @@ open class CallableRoutine(
         this.exec = null
     }
 
-    fun create(exec: SimpleShasamblyGeneratorFunction) {
+    fun create(exec: SimpleRoutineShasamblyGenerator) {
         shasambly {
             if (isCreated) throw Error("Already created")
             isCreated = true
+            val jumpEnd = lateinit(5)
             location = size
-            toInitCalls.forEach {
-                it(ShasamblyOpcodeJumpStaticToIndex(location))
-            }
-            exec()
-            i_get_local(realStackSize)
+            val jump = ShasamblyOpcodeJumpStaticToIndex(location)
+            toInitCalls.forEach { it(jump) }
+            SimpleRoutineShasambly(this@CallableRoutine, base, this@shasambly, exec)
+            i_get_local(realStackSize - 4)
+            decrStack()
             jumpDynamic()
+            jumpEnd(ShasamblyOpcodeJumpStaticToIndex(size))
         }
     }
 
@@ -82,7 +154,7 @@ open class CallableRoutine(
     }
 }
 
-fun SimpleShasambly.declareRoutine(argumentCount: Int, stackSize: Int = 100, exec: SimpleShasamblyGeneratorFunction): CallableRoutine {
+fun SimpleShasambly.declareRoutine(argumentCount: Int, stackSize: Int = 100, exec: SimpleRoutineShasamblyGenerator): CallableRoutine {
     return CallableRoutine(this, argumentCount = argumentCount, stackSize = stackSize, exec = exec)
 }
 
@@ -90,7 +162,7 @@ fun SimpleShasambly.declareRoutine(argumentCount: Int, stackSize: Int = 100): Ca
     return CallableRoutine(this, argumentCount = argumentCount, stackSize = stackSize)
 }
 
-fun SimpleShasambly.createRoutine(argumentCount: Int, stackSize: Int = 100, exec: SimpleShasamblyGeneratorFunction): CallableRoutine {
+fun SimpleShasambly.createRoutine(argumentCount: Int, stackSize: Int = 100, exec: SimpleRoutineShasamblyGenerator): CallableRoutine {
     val ret = CallableRoutine(this, argumentCount = argumentCount, stackSize = stackSize, exec = exec)
     ret.create()
     return ret

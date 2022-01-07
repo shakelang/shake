@@ -157,6 +157,13 @@ open class ShasamblyOpcodeJumpStaticToRelativeIndex(val relativeIndex: Int): Sha
         return byteArrayOf(Opcodes.JUMP_STATIC, *address.toBytes())
     }
 }
+open class ShasamblyOpcodeIPushAddress(val relativeIndex: Int): ShasamblyOpcodeJumpStatic(0) {
+    override fun generate(gen: ShasamblyGenerator): ByteArray {
+        val index = gen.indexOf(this) + relativeIndex
+        val address = gen.positionOfIndex(index)
+        return byteArrayOf(Opcodes.I_PUSH, *address.toBytes())
+    }
+}
 
 /**
  * Generator for opcode [Opcodes.JUMP_DYNAMIC]. Jumps dynamically to a byte index (not opcode-index!!!)

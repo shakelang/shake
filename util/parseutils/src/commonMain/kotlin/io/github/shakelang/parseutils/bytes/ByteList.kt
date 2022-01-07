@@ -250,7 +250,7 @@ inline fun MutableList<Byte>.removeLastInt(): Int {
     return intOf(bytes[3], bytes[2], bytes[1], bytes[0])
 }
 inline fun MutableList<Byte>.removeLastLong(): Long {
-    val bytes = ByteArray(4) { this.removeLast() }
+    val bytes = ByteArray(8) { this.removeLast() }
     return longOf(bytes[7], bytes[6], bytes[5], bytes[4], bytes[3], bytes[2], bytes[1], bytes[0])
 }
 inline fun MutableList<Byte>.removeLastFloat(): Float {
@@ -309,15 +309,15 @@ fun List<Byte>.toUtf8String(): String {
 /**
  * Byte array to ByteArrayInputStream
  */
-fun List<Byte>.stream(): ByteArrayInputStream = ByteArrayInputStream(this.toByteArray())
+fun List<Byte>.inputStream(): ByteArrayInputStream = ByteArrayInputStream(this.toByteArray())
 
 /**
  * Byte array to DataInputStream
  */
-fun List<Byte>.dataStream(): DataInputStream = DataInputStream(this.stream())
+fun List<Byte>.dataStream(): DataInputStream = DataInputStream(this.inputStream())
 
 /**
  * Byte array to CountingInputStream
  */
-fun List<Byte>.countingStream(): CountingInputStream = CountingInputStream(this.stream())
+fun List<Byte>.countingStream(): CountingInputStream = CountingInputStream(this.inputStream())
 

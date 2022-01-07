@@ -3,7 +3,7 @@ package io.github.shakelang.shake.shasambly
 import io.github.shakelang.parseutils.bytes.stream
 import io.github.shakelang.shake.shasambly.generator.shas.ShasGenerator
 import io.github.shakelang.shake.shasambly.generator.simple.shasambly
-import io.github.shakelang.shake.shasambly.generator.simple.util.array.createLocalShortArray
+import io.github.shakelang.shake.shasambly.generator.simple.util.function.declareRoutine
 import io.github.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
 import java.io.BufferedOutputStream
 import java.io.File
@@ -13,6 +13,35 @@ fun main() {
 
     val code = shasambly {
 
+        incrStack(100)
+
+        val printIntLn = declareRoutine(4) {
+            getIntArgument(0)
+            natives.printInt()
+            natives.printLineEnding()
+        }
+
+        printIntLn.create()
+
+        forLoop({
+            ipush(0)
+            i_store_local(0)
+        }, {
+            i_get_local(0)
+            ipush(100)
+            ismaller()
+        }, {
+            i_get_local(0)
+            iadd(1)
+            i_store_local(0)
+        }) {
+            i_get_local(0)
+            printIntLn.call()
+        }
+        decrStack()
+
+
+        /*
         incrStack(0x007f)
         val arr = createLocalShortArray(0, 10)
         arr.storeElement(0, 10)
@@ -29,6 +58,7 @@ fun main() {
         natives.printShort()
         natives.printLineEnding()
         arr.free()
+        */
 
         /*
         natives.declareGlobal(8)
@@ -111,6 +141,11 @@ fun main() {
     val interpreter = ShasamblyInterpreter(
         1024, code, 0
     )
-    interpreter.finish()
+
+    try {
+        interpreter.finish()
+    } catch (e: Throwable) {
+        e.printStackTrace()
+    }
     println(interpreter)
 }

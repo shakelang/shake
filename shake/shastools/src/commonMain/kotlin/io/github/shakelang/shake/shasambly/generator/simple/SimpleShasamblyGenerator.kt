@@ -601,6 +601,7 @@ interface SimpleShasambly {
 
     fun lateinit(size: Int): (ShasamblyOpcode) -> Unit
     fun relative(it: SimpleShasamblyGeneratorFunction)
+    fun run(it: SimpleShasamblyGeneratorFunction) = it(this)
 
     fun doWhileLoop(it: SimpleShasamblyGeneratorFunction) {
         relative {
@@ -663,10 +664,13 @@ interface SimpleShasambly {
         }
     }
 
+    fun push_rel_addr(relIdx: Int) {
+        opcode(ShasamblyOpcodeIPushAddress(relIdx))
+    }
 
 }
 
-class RelativeShasamblyGeneratorPart(
+open class RelativeShasamblyGeneratorPart(
     override val base: SimpleShasamblyGenerator,
     val parent: SimpleShasambly,
     generator: SimpleShasamblyGeneratorFunction

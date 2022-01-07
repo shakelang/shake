@@ -149,7 +149,7 @@ class ShasamblyInterpreter(
     val memory = ByteArray(memorySize)
     val memorySize get() = memory.size
     val variableStackSizes = mutableListOf<Int>()
-    val stack = ByteArray(255)
+    val stack = ByteArray(1024)
     var stackSize = 0
     private var variableStackSize: Int = 0
     var variableAddress = 0
@@ -325,11 +325,12 @@ class ShasamblyInterpreter(
     fun tick() {
         val pos = position
         val next = bytes[position++]
+        //println("Executing byte at position 0x${(position-1).toBytes().toHexString()}")
         try {
             (byteMap[next.toUByte().toInt()] ?: throw NoSuchElementException("Wrong opcode")).invoke()
         } catch (e: Throwable) {
             throw Error("Could not execute byte 0x${next.toBytes().toHexString()} " +
-                    "at position 0x${pos.toBytes().toHexString()} ($pos)", e)
+                    "at position 0x${(pos - 1).toBytes().toHexString()} ($pos)", e)
         }
     }
 
@@ -348,15 +349,17 @@ class ShasamblyInterpreter(
         variableStackSize = read_short().toUShort().toInt()
         variableAddress += variableStackSize
         variableStackSizes.add(variableStackSize)
+        //println("Variable stack size updated to $variableAddress")
     }
 
     fun decr_variable_stack() {
         variableAddress -= variableStackSizes.removeLast()
-        variableStackSize = variableStackSizes.last()
+        //println("Variable stack size updated to $variableAddress")
     }
 
     fun jump(address: Int) {
-        if(address !in bytes.indices) throw Error("Address out of range")
+        //println("Jumping to ${address.toBytes().toHexString()}")
+        if(address < 0 || address > bytes.size) throw Error("Address 0x${address.toBytes().toHexString()} out of range")
         position = address
     }
 
@@ -1139,6 +1142,7 @@ class ShasamblyInterpreter(
 
     fun ShasamblyInterpreter.sadd(b: Byte) {
         this.stack[stackSize++] = b
+        // println("New stack size: $stackSize")
     }
 
     fun addByte(v: Byte) {
@@ -1174,6 +1178,7 @@ class ShasamblyInterpreter(
     fun addBoolean(v: Boolean) = this.sadd(if(v) 0x1.toByte() else 0x0.toByte())
 
     fun sRemoveLast(): Byte {
+        //println("New stack size: ${stackSize - 1}")
         return this.stack[--stackSize]
     }
 
