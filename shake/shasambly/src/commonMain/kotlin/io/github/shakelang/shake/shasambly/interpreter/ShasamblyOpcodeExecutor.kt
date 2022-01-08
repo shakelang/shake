@@ -3,6 +3,9 @@ package io.github.shakelang.shake.shasambly.interpreter
 
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
+import kotlin.experimental.and
+import kotlin.experimental.or
+import kotlin.experimental.xor
 import kotlin.math.abs
 
 abstract class ShasamblyOpcodeExecutor (
@@ -640,7 +643,7 @@ abstract class ShasamblyOpcodeExecutor (
     fun d_abs() {
         addDouble(abs(removeLastDouble()))
     }
-    inline fun primitive_cast() {
+    fun primitive_cast() {
         val cast = read_byte().toUByte()
         val from = cast / 16u
         val to = cast % 16u
@@ -834,5 +837,124 @@ abstract class ShasamblyOpcodeExecutor (
                 }
             }
         }
+    }
+    fun b_shr() {
+        val shr = removeLastByte().toUByte().toInt()
+        val byte = removeLastByte()
+        addByte((byte.toInt() shr shr).toByte())
+    }
+
+    fun s_shr() {
+        val shr = removeLastByte().toUByte().toInt()
+        val short = removeLastShort()
+        addShort((short.toInt() shr shr).toShort())
+    }
+
+    fun i_shr() {
+        val shr = removeLastByte().toUByte().toInt()
+        val int = removeLastInt()
+        addInt(int shr shr)
+    }
+
+    fun l_shr() {
+        val shr = removeLastByte().toUByte().toInt()
+        val long = removeLastLong()
+        addLong(long shr shr)
+    }
+
+    fun b_shl() {
+        val shl = removeLastByte().toUByte().toInt()
+        val byte = removeLastByte()
+        addByte((byte.toInt() shl shl).toByte())
+    }
+
+    fun s_shl() {
+        val shl = removeLastByte().toUByte().toInt()
+        val short = removeLastShort()
+        addShort((short.toInt() shl shl).toShort())
+    }
+
+    fun i_shl() {
+        val shl = removeLastByte().toUByte().toInt()
+        val int = removeLastInt()
+        addInt(int shl shl)
+    }
+
+    fun l_shl() {
+        val shl = removeLastByte().toUByte().toInt()
+        val long = removeLastLong()
+        addLong(long shl shl)
+    }
+
+    fun b_and() {
+        val v0 = removeLastByte()
+        val v1 = removeLastByte()
+        addByte(v0 and v1)
+    }
+
+    fun s_and() {
+        val v0 = removeLastShort()
+        val v1 = removeLastShort()
+        addShort(v0 and v1)
+    }
+
+    fun i_and() {
+        val v0 = removeLastInt()
+        val v1 = removeLastInt()
+        addInt(v0 and v1)
+    }
+
+    fun l_and() {
+        val v0 = removeLastLong()
+        val v1 = removeLastLong()
+        addLong(v0 and v1)
+    }
+
+    fun b_or() {
+        val v0 = removeLastByte()
+        val v1 = removeLastByte()
+        addByte(v0 or  v1)
+    }
+
+    fun s_or() {
+        val v0 = removeLastShort()
+        val v1 = removeLastShort()
+        addShort(v0 or v1)
+    }
+
+    fun i_or() {
+        val v0 = removeLastInt()
+        val v1 = removeLastInt()
+        addInt(v0 or v1)
+    }
+
+    fun l_or() {
+        val v0 = removeLastLong()
+        val v1 = removeLastLong()
+        addLong(v0 or v1)
+    }
+
+    fun b_xor() {
+        val v0 = removeLastByte()
+        val v1 = removeLastByte()
+        addByte(v0 xor  v1)
+    }
+
+    fun s_xor() {
+        val v0 = removeLastShort()
+        val v1 = removeLastShort()
+        addShort(v0 xor v1)
+    }
+
+    fun i_xor() {
+        val v0 = removeLastInt()
+        val v1 = removeLastInt()
+        addInt(v0 xor v1)
+    }
+
+    fun l_xor() {
+        val v0 = removeLastLong()
+        val v1 = removeLastLong()
+        addLong(v0 xor v1)
     }
 }

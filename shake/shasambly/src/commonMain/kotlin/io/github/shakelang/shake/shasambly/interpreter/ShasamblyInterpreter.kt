@@ -170,6 +170,31 @@ class ShasamblyInterpreter(
 
         map[Opcodes.PRIMITIVE_CAST.toInt()] = { this.primitive_cast() }
 
+        map[Opcodes.B_SHR.toInt()] = { this.b_shr() }
+        map[Opcodes.S_SHR.toInt()] = { this.s_shr() }
+        map[Opcodes.I_SHR.toInt()] = { this.i_shr() }
+        map[Opcodes.L_SHR.toInt()] = { this.l_shr() }
+
+        map[Opcodes.B_SHL.toInt()] = { this.b_shl() }
+        map[Opcodes.S_SHL.toInt()] = { this.s_shl() }
+        map[Opcodes.I_SHL.toInt()] = { this.i_shl() }
+        map[Opcodes.L_SHL.toInt()] = { this.l_shl() }
+
+        map[Opcodes.B_AND.toInt()] = { this.b_and() }
+        map[Opcodes.S_AND.toInt()] = { this.s_and() }
+        map[Opcodes.I_AND.toInt()] = { this.i_and() }
+        map[Opcodes.L_AND.toInt()] = { this.l_and() }
+
+        map[Opcodes.B_OR.toInt()] = { this.b_or() }
+        map[Opcodes.S_OR.toInt()] = { this.s_or() }
+        map[Opcodes.I_OR.toInt()] = { this.i_or() }
+        map[Opcodes.L_OR.toInt()] = { this.l_or() }
+
+        map[Opcodes.B_XOR.toInt()] = { this.b_xor() }
+        map[Opcodes.S_XOR.toInt()] = { this.s_xor() }
+        map[Opcodes.I_XOR.toInt()] = { this.i_xor() }
+        map[Opcodes.L_XOR.toInt()] = { this.l_xor() }
+
         return map
     }
 
