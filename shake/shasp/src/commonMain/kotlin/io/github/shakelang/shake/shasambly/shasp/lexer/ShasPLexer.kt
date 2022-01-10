@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.lexer
+package io.github.shakelang.shake.shasambly.shasp.lexer
 
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.lexer.token.ShasPToken

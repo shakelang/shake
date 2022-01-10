@@ -1,5 +1,5 @@
 @file:Suppress("NOTHING_TO_INLINE")
-package io.github.shakelang.shake.shasambly.shasp.token
+package io.github.shakelang.shake.shasambly.shasp.lexer.token
 
 /**
  * These are the different types of tokens, that the lexer creates
@@ -273,6 +273,11 @@ enum class ShasPTokenType(private val size: Int, private val hasValue: Boolean =
      * As keyword
      */
     KEYWORD_AS(2),
+
+    /**
+     * Unsigned keyword
+     */
+    KEYWORD_UNSIGNED(2),
 
     ;
 

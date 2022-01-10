@@ -2,7 +2,7 @@ package io.github.shakelang.shake.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.lexer.ShasPLexingBase
+import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexingBase
 import io.github.shakelang.shake.lexer.token.ShasPToken
 
 class OnDemandLexingShasPTokenInputStream(inputStream: CharacterInputStream) : ShasPLexingBase(inputStream), ShasPTokenInputStream {

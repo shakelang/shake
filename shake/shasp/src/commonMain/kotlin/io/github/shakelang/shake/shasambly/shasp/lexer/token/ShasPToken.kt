@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.lexer.token
 
-import io.github.shakelang.shake.shasambly.shasp.token.ShasPTokenType
+import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 
 
 /**

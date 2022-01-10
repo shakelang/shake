@@ -2,7 +2,7 @@ package io.github.shakelang.shake.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.lexer.token.ShasPToken
-import io.github.shakelang.shake.shasambly.shasp.token.ShasPTokenType
+import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 
 /**
  * A [TokenBasedShasPTokenInputStream] provides the [ShasPToken]s for a Parser. It is
