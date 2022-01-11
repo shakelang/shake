@@ -5,13 +5,14 @@ interface ShasPStatement : ShasPNode
 
 class ShasPProgram (val children: Array<ShasPProgChild>) : ShasPNode
 interface ShasPProgChild : ShasPNode
+open class ShasPVariableDeclaration (val name: String, val type: ShasPType, val value: ShasPValuedNode? = null) : ShasPProgChild
 open class ShasPFunctionDeclaration(
     val type: ShasPType,
     val name: String,
     val args: Array<ShasPArgument>,
     val body: ShasPStatement
 ) : ShasPProgChild
-open class ShasPCode (val children: List<ShasPStatement>) : ShasPStatement
+open class ShasPCode(val children: Array<ShasPStatement>) : ShasPStatement
 open class ShasPArgument (val name: String, val type: ShasPType)
 
 interface ShasPValuedNode : ShasPNode
@@ -34,6 +35,35 @@ open class ShasPGreater (left: ShasPValuedNode, right: ShasPValuedNode) : Expres
 open class ShasPLessEqual (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right)
 open class ShasPGreaterEqual (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right)
 open class ShasPNot (val child: ShasPValuedNode) : ShasPValuedNode
+open class ShasPLogicalTrueNode : ShasPValuedNode
+open class ShasPLogicalFalseNode : ShasPValuedNode
+open class ShasPCast (val type: ShasPType, val child: ShasPValuedNode) : ShasPValuedNode
+
+open class ShasPPosNode (val child: ShasPValuedNode) : ShasPValuedNode
+open class ShasPNegNode (val child: ShasPValuedNode) : ShasPValuedNode
+
+open class ShasPIntegerLiteral (val value: String) : ShasPValuedNode
+open class ShasPDoubleLiteral (val value: String) : ShasPValuedNode
+open class ShasPStringLiteral (val value: String) : ShasPValuedNode
+open class ShasPCharLiteral (val value: Char) : ShasPValuedNode
+open class ShasPIdentifier (val name: String) : ShasPValuedNode
+open class ShasPFunctionCall (val name: String, val args: Array<ShasPValuedNode>) : ShasPValuedStatement
+
+open class ShasPVariableAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement
+open class ShasPVariableAddAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement
+open class ShasPVariableSubAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement
+open class ShasPVariableMulAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement
+open class ShasPVariableDivAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement
+open class ShasPVariableModAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement
+
+open class ShasPIf (val condition: ShasPValuedNode, val then: ShasPStatement, val orElse: ShasPStatement? = null) : ShasPValuedStatement
+open class ShasPWhile (val condition: ShasPValuedNode, val body: ShasPStatement) : ShasPValuedStatement
+open class ShasPDoWhile (val condition: ShasPValuedNode, val body: ShasPStatement) : ShasPValuedStatement
+open class ShasPFor (val init: ShasPStatement, val condition: ShasPValuedNode, val step: ShasPStatement, val body: ShasPStatement) : ShasPValuedStatement
+open class ShasPForEach (val name: String, val collection: ShasPValuedNode, val body: ShasPStatement) : ShasPValuedStatement
+open class ShasPBreak : ShasPValuedStatement
+open class ShasPContinue : ShasPValuedStatement
+open class ShasPReturn (val value: ShasPValuedNode?) : ShasPValuedStatement
 
 open class ShasPType (val name: String, val byteSize: Int) {
     companion object {

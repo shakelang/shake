@@ -1,6 +1,7 @@
 package io.github.shakelang.shake.shasambly.shasp.parser
 
 import io.github.shakelang.parseutils.CompilerError
+import io.github.shakelang.parseutils.characters.Characters
 import io.github.shakelang.parseutils.characters.position.Position
 import io.github.shakelang.shake.lexer.token.stream.ShasPTokenInputStream
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
@@ -84,14 +85,268 @@ class ShasPParser (
 
     private fun parseVariableDeclaration(type: ShasPType, name: String): ShasPVariableDeclaration {
 
-        if(input.peek().type == ShasPTokenType.EQUALS) {
+        if(input.peek().type == ShasPTokenType.ASSIGN) {
             input.skip()
-            val value = parseExpression()
-            return ShasPVariableDeclaration(type, name, value)
+            val value = expr()
+            return ShasPVariableDeclaration(name, type, value)
         }
 
-        return ShasPVariableDeclaration(type, name)
+        return ShasPVariableDeclaration(name, type)
 
+    }
+
+    private fun parseVariableAssignment(name: String): ShasPVariableAssignment {
+
+        if(input.next().type != ShasPTokenType.ASSIGN) {
+            throw ParserError(
+                "Expected assignment operator",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val value = expr()
+
+        return ShasPVariableAssignment(name, value)
+
+    }
+
+    private fun parseIfStatement(): ShasPIf {
+
+        if(input.actual.type != ShasPTokenType.KEYWORD_IF) {
+            throw ParserError(
+                "Expected if keyword",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        if(input.next().type != ShasPTokenType.LPAREN) {
+            throw ParserError(
+                "Expected left parenthesis",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val condition = logicalOr()
+
+        if(input.next().type != ShasPTokenType.RPAREN) {
+            throw ParserError(
+                "Expected right parenthesis",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val body = parseBody()
+
+        if(input.peek().type == ShasPTokenType.KEYWORD_ELSE) {
+            input.skip()
+            val elseBody = parseBody()
+            return ShasPIf(condition, body, elseBody)
+        }
+
+        return ShasPIf(condition, body)
+
+    }
+
+    fun parseWhileStatement(): ShasPWhile {
+
+        if(input.actual.type != ShasPTokenType.KEYWORD_WHILE) {
+            throw ParserError(
+                "Expected while keyword",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        if(input.next().type != ShasPTokenType.LPAREN) {
+            throw ParserError(
+                "Expected left parenthesis",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val condition = logicalOr()
+
+        if(input.next().type != ShasPTokenType.RPAREN) {
+            throw ParserError(
+                "Expected right parenthesis",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val body = parseBody()
+
+        return ShasPWhile(condition, body)
+
+    }
+
+    fun parseReturnStatement(): ShasPReturn {
+
+        if(input.actual.type != ShasPTokenType.KEYWORD_RETURN) {
+            throw ParserError(
+                "Expected return keyword",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        if(input.peek().type == ShasPTokenType.SEMICOLON) {
+            return ShasPReturn(null)
+        }
+
+        val value = expr()
+
+        if(input.peek().type == ShasPTokenType.SEMICOLON) {
+            return ShasPReturn(value)
+        }
+
+        throw ParserError(
+            "Expected semicolon",
+            input.peekStart(),
+            input.peekEnd()
+        )
+
+    }
+
+    private fun parseForStatement(): ShasPFor {
+
+        if(input.actual.type != ShasPTokenType.KEYWORD_FOR) {
+            throw ParserError(
+                "Expected for keyword",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        if(input.next().type != ShasPTokenType.LPAREN) {
+            throw ParserError(
+                "Expected left parenthesis",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val initializer = parseStatement()
+
+        if(input.next().type != ShasPTokenType.SEMICOLON) {
+            throw ParserError(
+                "Expected semicolon",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val condition = logicalOr()
+
+        if(input.next().type != ShasPTokenType.SEMICOLON) {
+            throw ParserError(
+                "Expected semicolon",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val increment = parseStatement()
+
+        if(input.next().type != ShasPTokenType.RPAREN) {
+            throw ParserError(
+                "Expected right parenthesis",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val body = parseBody()
+
+        return ShasPFor(initializer, condition, increment, body)
+
+    }
+
+    private fun parseDoWhileStatement(): ShasPDoWhile {
+
+        if(input.actual.type != ShasPTokenType.KEYWORD_DO) {
+            throw ParserError(
+                "Expected do keyword",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val body = parseBody()
+
+        if(input.actual.type != ShasPTokenType.KEYWORD_WHILE) {
+            throw ParserError(
+                "Expected while keyword",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        if(input.next().type != ShasPTokenType.LPAREN) {
+            throw ParserError(
+                "Expected left parenthesis",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        val condition = logicalOr()
+
+        if(input.next().type != ShasPTokenType.RPAREN) {
+            throw ParserError(
+                "Expected right parenthesis",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        if(input.next().type != ShasPTokenType.SEMICOLON) {
+            throw ParserError(
+                "Expected semicolon",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
+
+        return ShasPDoWhile(condition, body)
+
+    }
+
+    private fun parseStatement(): ShasPStatement {
+
+        val token = input.next()
+        if(token.type == ShasPTokenType.IDENTIFIER) {
+            val name = token.value!!
+            if(input.peek().type == ShasPTokenType.ASSIGN) {
+                return parseVariableAssignment(name)
+            }
+            if(input.peek().type == ShasPTokenType.LPAREN) {
+                input.skip()
+                return parseFunctionCall(name)
+            }
+
+        }
+        if(token.type == ShasPTokenType.KEYWORD_IF) {
+            return parseIfStatement()
+        }
+        if(token.type == ShasPTokenType.KEYWORD_WHILE) {
+            return parseWhileStatement()
+        }
+        if(token.type == ShasPTokenType.KEYWORD_RETURN) {
+            return parseReturnStatement()
+        }
+        if(token.type == ShasPTokenType.KEYWORD_FOR) {
+            return parseForStatement()
+        }
+        if(token.type == ShasPTokenType.KEYWORD_DO) {
+            return parseDoWhileStatement()
+        }
+        throw ParserError("Expected statement")
     }
 
     private fun parseBody(): ShasPCode {
@@ -104,16 +359,184 @@ class ShasPParser (
             )
         }
 
+        val statements = mutableListOf<ShasPStatement>()
+
         while(input.next().type != ShasPTokenType.RCURL) {
-            parseStatement()
+            statements.add(parseStatement())
         }
+
+        return ShasPCode(statements.toTypedArray())
 
     }
 
-    private fun parseStatement(): ShasPStatement {
+    private fun parseIdentifier(): ShasPValuedNode {
+        if(input.actualType != ShasPTokenType.IDENTIFIER) {
+            throw ParserError(
+                "Expected identifier",
+                input.peekStart(),
+                input.peekEnd()
+            )
+        }
 
+        val identifier = input.actual.value!!
+        return if(input.peek().type == ShasPTokenType.LPAREN) parseFunctionCall(identifier)
+            else ShasPIdentifier(identifier)
+    }
 
+    private fun parseFunctionCall(identifier: String): ShasPFunctionCall {
+        input.skip()
+        val args = mutableListOf<ShasPValuedNode>()
+        while(input.next().type != ShasPTokenType.RPAREN) {
+            args.add(expr())
+        }
+        return ShasPFunctionCall(identifier, args.toTypedArray())
+    }
 
+    // ****************************************************************************
+    // Statements
+    // (Factor)
+    private fun factor(): ShasPValuedNode {
+        val token = input.nextType()
+        if (token == ShasPTokenType.LPAREN) {
+            val result = logicalOr()
+            if (input.nextType() != ShasPTokenType.RPAREN) throw ParserError("Expecting ')'")
+            return result
+        }
+        if (token == ShasPTokenType.KEYWORD_TRUE) {
+            return ShasPLogicalTrueNode()
+        }
+        if (token == ShasPTokenType.KEYWORD_FALSE) {
+            return ShasPLogicalFalseNode()
+        }
+        if (token == ShasPTokenType.INTEGER) {
+            return ShasPIntegerLiteral(input.actualValue!!)
+        }
+        if (token == ShasPTokenType.DOUBLE) {
+            return ShasPDoubleLiteral(input.actualValue!!)
+        }
+        if (token == ShasPTokenType.IDENTIFIER) {
+            return parseIdentifier()
+        }
+        if (token == ShasPTokenType.ADD) {
+            input.skip()
+            return ShasPPosNode(factor())
+        }
+        if (token == ShasPTokenType.SUB) {
+            input.skip()
+            return ShasPNegNode(factor())
+        }
+        if (token == ShasPTokenType.CHARACTER) {
+            input.skip()
+            return ShasPCharLiteral(Characters.parseString(input.actualValue!!)[0])
+        }
+        throw ParserError(input.toString())
+    }
+
+    // Casting
+    private fun cast(): ShasPValuedNode {
+        var result = factor()
+        while (input.hasNext() && input.peekType() == ShasPTokenType.KEYWORD_AS) {
+            input.skip()
+
+            val target = when (input.nextType()) {
+                ShasPTokenType.KEYWORD_BYTE -> ShasPType.BYTE
+                ShasPTokenType.KEYWORD_SHORT -> ShasPType.SHORT
+                ShasPTokenType.KEYWORD_INT -> ShasPType.INT
+                ShasPTokenType.KEYWORD_LONG -> ShasPType.LONG
+                ShasPTokenType.KEYWORD_FLOAT -> ShasPType.FLOAT
+                ShasPTokenType.KEYWORD_DOUBLE -> ShasPType.DOUBLE
+                ShasPTokenType.KEYWORD_BOOLEAN -> ShasPType.BOOLEAN
+                ShasPTokenType.KEYWORD_CHAR -> ShasPType.CHAR
+                else -> throw ParserError("Expecting cast-target")
+            }
+            result = ShasPCast(target, result)
+        }
+        return result
+    }
+
+    // (Calculations)
+    private fun expr(): ShasPValuedNode {
+        var result = term()
+        while (input.hasNext() && input.peekType().let { it == ShasPTokenType.ADD || it == ShasPTokenType.SUB }) {
+            input.skip()
+            val type = input.actualType
+            result = if (type == ShasPTokenType.ADD) {
+                ShasPAdd(result, term())
+            } else {
+                ShasPSub(result, term())
+            }
+        }
+        return result
+    }
+
+    private fun term(): ShasPValuedNode {
+        var result = factor()
+        var tmpType: Byte = 0
+        while (input.hasNext() && input.peekType().let {
+                it == ShasPTokenType.MUL
+                        || it == ShasPTokenType.DIV
+                        || it == ShasPTokenType.MOD }) {
+            input.skip()
+            val type = input.actualType
+            result = when (type) {
+                ShasPTokenType.MUL -> ShasPMul(result, term())
+                ShasPTokenType.DIV -> ShasPDiv(result, term())
+                else -> ShasPMod(result, term())
+            }
+        }
+        return result
+    }
+
+    // (Logical)
+    private fun logicalOr(): ShasPValuedNode {
+        var result = logicalXOr()
+        while (input.hasNext() && input.peekType() == ShasPTokenType.LOGICAL_OR) {
+            input.skip()
+            result = ShasPOr(result, logicalXOr())
+        }
+        return result
+    }
+
+    private fun logicalXOr(): ShasPValuedNode {
+        var result = logicalAnd()
+        while (input.hasNext() && input.peekType() == ShasPTokenType.LOGICAL_XOR) {
+            input.skip()
+            result = ShasPXor(result, logicalAnd())
+        }
+        return result
+    }
+
+    private fun logicalAnd(): ShasPValuedNode {
+        var result = compare()
+        while (input.hasNext() && input.peekType() == ShasPTokenType.LOGICAL_AND) {
+            input.skip()
+            result = ShasPAnd(result, compare())
+        }
+        return result
+    }
+
+    private fun compare(): ShasPValuedNode {
+        var result = expr()
+        while (input.hasNext() && input.peekType().let {
+                it == ShasPTokenType.EQ_EQUALS
+                        || it == ShasPTokenType.NOT_EQUALS
+                        || it == ShasPTokenType.BIGGER
+                        || it == ShasPTokenType.BIGGER_EQUALS
+                        || it == ShasPTokenType.SMALLER
+                        || it == ShasPTokenType.SMALLER_EQUALS }) {
+            input.skip()
+            val type = input.actualType
+            result = when (type) {
+                ShasPTokenType.EQ_EQUALS -> ShasPEqual(result, expr())
+                ShasPTokenType.NOT_EQUALS -> ShasPNotEqual(result, expr())
+                ShasPTokenType.SMALLER -> ShasPLess(result, expr())
+                ShasPTokenType.SMALLER_EQUALS -> ShasPLessEqual(result, expr())
+                ShasPTokenType.BIGGER -> ShasPGreater(result, expr())
+                ShasPTokenType.BIGGER_EQUALS -> ShasPGreaterEqual(result, expr())
+                else -> throw ParserError("Expecting comparison operator")
+            }
+        }
+        return result
     }
 
     private fun parseArgument(): ShasPArgument {

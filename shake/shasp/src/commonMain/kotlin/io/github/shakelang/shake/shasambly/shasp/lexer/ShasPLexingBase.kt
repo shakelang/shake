@@ -82,6 +82,10 @@ abstract class ShasPLexingBase(
             input.skip()
             ShasPToken(ShasPTokenType.EQ_EQUALS, input.position)
         }
+        else if (next == '!' && peek == '=') {
+            input.skip()
+            ShasPToken(ShasPTokenType.NOT_EQUALS, input.position)
+        }
         else if (next == '>' && peek == '=') {
             input.skip()
             ShasPToken(ShasPTokenType.BIGGER_EQUALS, input.position)

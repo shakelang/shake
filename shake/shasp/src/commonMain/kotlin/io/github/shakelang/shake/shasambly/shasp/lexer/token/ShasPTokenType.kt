@@ -80,6 +80,11 @@ enum class ShasPTokenType(private val size: Int, private val hasValue: Boolean =
     EQ_EQUALS(2),
 
     /**
+     * Not Equal
+     */
+    NOT_EQUALS(2),
+
+    /**
      * Bigger than
      */
     BIGGER_EQUALS(2),
