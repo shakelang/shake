@@ -11,7 +11,7 @@ open class ShasPFunctionDeclaration(
     val type: ShasPType,
     val name: String,
     val args: Array<ShasPArgument>,
-    val body: ShasPStatement
+    val body: ShasPCode
 ) : ShasPProgChild
 open class ShasPCode(val children: Array<ShasPStatement>) : ShasPStatement
 open class ShasPArgument (val name: String, val type: ShasPType)
