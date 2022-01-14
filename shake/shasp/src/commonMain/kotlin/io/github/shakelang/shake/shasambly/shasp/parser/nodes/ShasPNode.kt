@@ -1,3 +1,4 @@
+@file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.shasp.parser.nodes
 
 interface ShasPNode
@@ -5,7 +6,7 @@ interface ShasPStatement : ShasPNode
 
 class ShasPProgram (val children: Array<ShasPProgChild>) : ShasPNode
 interface ShasPProgChild : ShasPNode
-open class ShasPVariableDeclaration (val name: String, val type: ShasPType, val value: ShasPValuedNode? = null) : ShasPProgChild
+open class ShasPVariableDeclaration (val name: String, val type: ShasPType, val value: ShasPValuedNode? = null) : ShasPProgChild, ShasPStatement
 open class ShasPFunctionDeclaration(
     val type: ShasPType,
     val name: String,
