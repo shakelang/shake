@@ -56,6 +56,9 @@ open class ShasPVariableSubAssignment (val name: String, val value: ShasPValuedN
 open class ShasPVariableMulAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement
 open class ShasPVariableDivAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement
 open class ShasPVariableModAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement
+open class ShasPVariableIncr (val name: String) : ShasPValuedStatement
+open class ShasPVariableDecr (val name: String) : ShasPValuedStatement
+
 
 open class ShasPIf (val condition: ShasPValuedNode, val then: ShasPStatement, val orElse: ShasPStatement? = null) : ShasPValuedStatement
 open class ShasPWhile (val condition: ShasPValuedNode, val body: ShasPStatement) : ShasPValuedStatement

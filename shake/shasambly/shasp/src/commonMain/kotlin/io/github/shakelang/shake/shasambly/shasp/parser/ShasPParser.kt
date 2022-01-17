@@ -341,12 +341,41 @@ class ShasPParser (
         val token = input.next()
         if(token.type == ShasPTokenType.IDENTIFIER) {
             val name = token.value!!
-            if (input.peek().type == ShasPTokenType.ASSIGN) {
+            val peek = input.peek()
+            if (peek.type == ShasPTokenType.ASSIGN) {
                 return parseVariableAssignment(name)
             }
-            if (input.peek().type == ShasPTokenType.LPAREN) {
+            if (peek.type == ShasPTokenType.LPAREN) {
                 input.skip()
                 return parseFunctionCall(name)
+            }
+            if(peek.type == ShasPTokenType.ADD_ASSIGN) {
+                input.skip()
+                return ShasPVariableAddAssignment(name, logicalOr())
+            }
+            if(peek.type == ShasPTokenType.SUB_ASSIGN) {
+                input.skip()
+                return ShasPVariableSubAssignment(name, logicalOr())
+            }
+            if(peek.type == ShasPTokenType.MUL_ASSIGN) {
+                input.skip()
+                return ShasPVariableMulAssignment(name, logicalOr())
+            }
+            if(peek.type == ShasPTokenType.DIV_ASSIGN) {
+                input.skip()
+                return ShasPVariableDivAssignment(name, logicalOr())
+            }
+            if(peek.type == ShasPTokenType.MOD_ASSIGN) {
+                input.skip()
+                return ShasPVariableModAssignment(name, logicalOr())
+            }
+            if(peek.type == ShasPTokenType.INCR) {
+                input.skip()
+                return ShasPVariableIncr(name)
+            }
+            if(peek.type == ShasPTokenType.DECR) {
+                input.skip()
+                return ShasPVariableDecr(name)
             }
 
         }
@@ -506,7 +535,6 @@ class ShasPParser (
 
     private fun term(): ShasPValuedNode {
         var result = cast()
-        var tmpType: Byte = 0
         while (input.hasNext() && input.peekType().let {
                 it == ShasPTokenType.MUL
                         || it == ShasPTokenType.DIV

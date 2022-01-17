@@ -65,12 +65,21 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generate(it: ShasPStatement) {
-            if(it is ShasPVariableDeclaration) this.generate(it)
-            if(it is ShasPVariableAssignment) this.generate(it)
-            if(it is ShasPIf) this.generate(it)
-            if(it is ShasPWhile) this.generate(it)
-            if(it is ShasPDoWhile) this.generate(it)
-            if(it is ShasPFor) this.generate(it)
+            when (it) {
+                is ShasPVariableDeclaration -> this.generate(it)
+                is ShasPVariableAssignment -> this.generate(it)
+                is ShasPVariableAddAssignment -> this.generate(it)
+                is ShasPVariableSubAssignment -> this.generate(it)
+                is ShasPVariableMulAssignment -> this.generate(it)
+                is ShasPVariableDivAssignment -> this.generate(it)
+                is ShasPVariableModAssignment -> this.generate(it)
+                is ShasPVariableIncr -> this.generate(it)
+                is ShasPVariableDecr -> this.generate(it)
+                is ShasPIf -> this.generate(it)
+                is ShasPWhile -> this.generate(it)
+                is ShasPDoWhile -> this.generate(it)
+                is ShasPFor -> this.generate(it)
+            }
         }
 
         fun findType(type0: ShasPType, type1: ShasPType): ShasPType? {
@@ -193,17 +202,33 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             return null
         }
 
-        fun SimpleShasambly.generate(value: ShasPValuedNode, expectedType: ShasPType) {
+        fun SimpleShasambly.generateValued(value: ShasPValuedNode, expectedType: ShasPType) {
             when(value) {
-                is ShasPAdd -> generate(value, expectedType)
-                is ShasPSub -> generate(value, expectedType)
-                is ShasPMul -> generate(value, expectedType)
-                is ShasPDiv -> generate(value, expectedType)
-                is ShasPMod -> generate(value, expectedType)
-                is ShasPIntegerLiteral -> generate(value, expectedType)
-                is ShasPDoubleLiteral -> generate(value, expectedType)
-                is ShasPIdentifier -> generate(value, expectedType)
-                is ShasPVariableAssignment -> generate(value, expectedType)
+                is ShasPAdd -> generateValued(value, expectedType)
+                is ShasPSub -> generateValued(value, expectedType)
+                is ShasPMul -> generateValued(value, expectedType)
+                is ShasPDiv -> generateValued(value, expectedType)
+                is ShasPMod -> generateValued(value, expectedType)
+                is ShasPIntegerLiteral -> generateValued(value, expectedType)
+                is ShasPDoubleLiteral -> generateValued(value, expectedType)
+                is ShasPIdentifier -> this.generateValued(value, expectedType)
+                is ShasPVariableAssignment -> this.generateValued(value, expectedType)
+                is ShasPVariableAddAssignment -> this.generateValued(value, expectedType)
+                is ShasPVariableSubAssignment -> this.generateValued(value, expectedType)
+                is ShasPVariableMulAssignment -> this.generateValued(value, expectedType)
+                is ShasPVariableDivAssignment -> this.generateValued(value, expectedType)
+                is ShasPVariableModAssignment -> this.generateValued(value, expectedType)
+                is ShasPVariableIncr -> this.generateValued(value, expectedType)
+                is ShasPVariableDecr -> this.generateValued(value, expectedType)
+                is ShasPEqual -> this.generateValued(value, expectedType)
+                is ShasPNotEqual -> this.generateValued(value, expectedType)
+                is ShasPGreater -> this.generateValued(value, expectedType)
+                is ShasPLess -> this.generateValued(value, expectedType)
+                is ShasPGreaterEqual -> this.generateValued(value, expectedType)
+                is ShasPLessEqual -> this.generateValued(value, expectedType)
+                is ShasPAnd -> this.generateValued(value, expectedType)
+                is ShasPOr -> this.generateValued(value, expectedType)
+                is ShasPNot -> this.generateValued(value, expectedType)
                 else -> TODO(value::class.simpleName?:"null")
             }
         }
@@ -258,49 +283,97 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             }
         }
 
-        fun SimpleShasambly.generate(value: ShasPAdd, expectedType: ShasPType) {
-            generate(value.left, expectedType)
-            generate(value.right, expectedType)
-            when(expectedType) {
+        fun SimpleShasambly.add(type: ShasPType) {
+            when(type) {
                 BYTE -> badd()
                 SHORT -> sadd()
                 INT -> iadd()
                 LONG -> ladd()
                 FLOAT -> fadd()
                 DOUBLE -> dadd()
-                else -> throw Error("Can't perform additions with value type $expectedType.")
+                else -> throw Error("Can't perform additions with value type $type.")
             }
         }
 
-        fun SimpleShasambly.generate(value: ShasPSub, expectedType: ShasPType) {
-            generate(value.left, expectedType)
-            generate(value.right, expectedType)
-            when(expectedType) {
+        fun SimpleShasambly.sub(type: ShasPType) {
+            when(type) {
                 BYTE -> bsub()
                 SHORT -> ssub()
                 INT -> isub()
                 LONG -> lsub()
                 FLOAT -> fsub()
                 DOUBLE -> dsub()
-                else -> throw Error("Can't perform subtractions with value type $expectedType.")
+                else -> throw Error("Can't perform subtractions with value type $type.")
             }
         }
 
-        fun SimpleShasambly.generate(value: ShasPMul, expectedType: ShasPType) {
-            generate(value.left, expectedType)
-            generate(value.right, expectedType)
-            when(expectedType) {
+        fun SimpleShasambly.mul(type: ShasPType) {
+            when(type) {
                 BYTE -> bmul()
                 SHORT -> smul()
                 INT -> imul()
                 LONG -> lmul()
                 FLOAT -> fmul()
                 DOUBLE -> dmul()
-                else -> throw Error("Can't perform multiplications with value type $expectedType.")
+                else -> throw Error("Can't perform multiplications with value type $type.")
             }
         }
 
-        fun SimpleShasambly.generate(it: ShasPIntegerLiteral, type: ShasPType) {
+        fun SimpleShasambly.div(type: ShasPType) {
+            when(type) {
+                BYTE -> bdiv()
+                SHORT -> sdiv()
+                INT -> idiv()
+                LONG -> ldiv()
+                FLOAT -> fdiv()
+                DOUBLE -> ddiv()
+                else -> throw Error("Can't perform divisions with value type $type.")
+            }
+        }
+
+        fun SimpleShasambly.mod(type: ShasPType) {
+            when(type) {
+                BYTE -> bmod()
+                SHORT -> smod()
+                INT -> imod()
+                LONG -> lmod()
+                FLOAT -> fmod()
+                DOUBLE -> dmod()
+                else -> throw Error("Can't perform modulus with value type $type.")
+            }
+        }
+
+        fun SimpleShasambly.generateValued(value: ShasPAdd, expectedType: ShasPType) {
+            generateValued(value.left, expectedType)
+            generateValued(value.right, expectedType)
+            add(expectedType)
+        }
+
+        fun SimpleShasambly.generateValued(value: ShasPSub, expectedType: ShasPType) {
+            generateValued(value.left, expectedType)
+            generateValued(value.right, expectedType)
+            sub(expectedType)
+        }
+
+        fun SimpleShasambly.generateValued(value: ShasPMul, expectedType: ShasPType) {
+            generateValued(value.left, expectedType)
+            generateValued(value.right, expectedType)
+            mul(expectedType)
+        }
+
+        fun SimpleShasambly.generateValued(value: ShasPDiv, expectedType: ShasPType) {
+            generateValued(value.left, expectedType)
+            generateValued(value.right, expectedType)
+            div(expectedType)
+        }
+
+        fun SimpleShasambly.generateValued(value: ShasPMod, expectedType: ShasPType) {
+            generateValued(value.left, expectedType)
+            generateValued(value.right, expectedType)
+            mod(expectedType)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPIntegerLiteral, type: ShasPType) {
             when(type) {
                 BYTE -> bpush(it.value.toByte())
                 SHORT -> spush(it.value.toShort())
@@ -312,7 +385,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             }
         }
 
-        fun SimpleShasambly.generate(it: ShasPDoubleLiteral, type: ShasPType) {
+        fun SimpleShasambly.generateValued(it: ShasPDoubleLiteral, type: ShasPType) {
             when(type) {
                 FLOAT -> fpush(it.value.toFloat())
                 DOUBLE -> dpush(it.value.toDouble())
@@ -321,7 +394,11 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.setLocal(addr: Int, type: ShasPType, value: ShasPValuedNode) {
-            generate(value, type)
+            generateValued(value, type)
+            setLocal(addr, type)
+        }
+
+        fun SimpleShasambly.setLocal(addr: Int, type: ShasPType) {
             when(type) {
                 BYTE, BOOLEAN -> b_store_local(addr)
                 SHORT, CHAR -> s_store_local(addr)
@@ -355,32 +432,169 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             setLocal(addr.second, type, it.value)
         }
 
-        fun SimpleShasambly.generateValued(it: ShasPVariableAssignment) {
+        fun SimpleShasambly.generate(it: ShasPVariableAddAssignment) {
             val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
             val type = addr.first
-            setLocal(addr.second, type, it.value)
             getLocal(addr.second, type)
+            generateValued(it.value, type)
+            add(type)
+            setLocal(addr.second, type, it.value)
+        }
+
+        fun SimpleShasambly.generate(it: ShasPVariableSubAssignment) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val type = addr.first
+            getLocal(addr.second, type)
+            generateValued(it.value, type)
+            sub(type)
+            setLocal(addr.second, type, it.value)
+        }
+
+        fun SimpleShasambly.generate(it: ShasPVariableMulAssignment) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val type = addr.first
+            getLocal(addr.second, type)
+            generateValued(it.value, type)
+            mul(type)
+            setLocal(addr.second, type, it.value)
+        }
+
+        fun SimpleShasambly.generate(it: ShasPVariableDivAssignment) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val type = addr.first
+            getLocal(addr.second, type)
+            generateValued(it.value, type)
+            div(type)
+            setLocal(addr.second, type, it.value)
+        }
+
+        fun SimpleShasambly.generate(it: ShasPVariableModAssignment) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val type = addr.first
+            getLocal(addr.second, type)
+            generateValued(it.value, type)
+            mod(type)
+            setLocal(addr.second, type, it.value)
+        }
+
+        fun SimpleShasambly.generate(it: ShasPVariableIncr) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val type = addr.first
+            getLocal(addr.second, type)
+            when(type) {
+                BYTE -> badd(1)
+                SHORT -> sadd(1)
+                INT -> iadd(1)
+                LONG -> ladd(1)
+                else -> throw Error("Cannot increment $type")
+            }
+            setLocal(addr.second, type)
+        }
+
+        fun SimpleShasambly.generate(it: ShasPVariableDecr) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val type = addr.first
+            getLocal(addr.second, type)
+            when(type) {
+                BYTE -> bsub(1)
+                SHORT -> ssub(1)
+                INT -> isub(1)
+                LONG -> lsub(1)
+                else -> throw Error("Cannot decrement $type")
+            }
+            setLocal(addr.second, type)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPVariableAddAssignment, type: ShasPType) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val rType = addr.first
+            generate(it)
+            getLocal(addr.second, type)
+            convert(rType, type)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPVariableSubAssignment, type: ShasPType) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val rType = addr.first
+            generate(it)
+            getLocal(addr.second, type)
+            convert(rType, type)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPVariableMulAssignment, type: ShasPType) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val rType = addr.first
+            generate(it)
+            getLocal(addr.second, type)
+            convert(rType, type)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPVariableDivAssignment, type: ShasPType) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val rType = addr.first
+            generate(it)
+            getLocal(addr.second, type)
+            convert(rType, type)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPVariableModAssignment, type: ShasPType) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val rType = addr.first
+            generate(it)
+            getLocal(addr.second, type)
+            convert(rType, type)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPVariableIncr, type: ShasPType) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val rType = addr.first
+            generate(it)
+            getLocal(addr.second, type)
+            convert(rType, type)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPVariableDecr, type: ShasPType) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val rType = addr.first
+            generate(it)
+            getLocal(addr.second, type)
+            convert(rType, type)
+        }
+
+
+        fun SimpleShasambly.generateValued(it: ShasPVariableAssignment, type: ShasPType) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val rType = addr.first
+            generate(it)
+            getLocal(addr.second, type)
+            convert(rType, type)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPLess, type: ShasPType) {
+            generate(it.left)
+            getLocal(addr.second, type)
+            convert(rType, type)
         }
 
         fun SimpleShasambly.generate(it: ShasPIf) {
-            if(it.orElse == null) ifElse({ generate(it.condition, BOOLEAN) }) { generate(it.then) }
-            else ifElse({ generate(it.condition, BOOLEAN) }, orElse = { generate(it.orElse) }) { generate(it.then) }
+            if(it.orElse == null) ifElse({ generateValued(it.condition, BOOLEAN) }) { generate(it.then) }
+            else ifElse({ generateValued(it.condition, BOOLEAN) }, orElse = { generate(it.orElse) }) { generate(it.then) }
         }
 
         fun SimpleShasambly.generate(it: ShasPWhile) {
-            whileLoop({ generate(it.condition, BOOLEAN) }) {
+            whileLoop({ generateValued(it.condition, BOOLEAN) }) {
                 generate(it.body)
             }
         }
 
         fun SimpleShasambly.generate(it: ShasPDoWhile) {
-            doWhileLoop({ generate(it.condition, BOOLEAN) }) {
+            doWhileLoop({ generateValued(it.condition, BOOLEAN) }) {
                 generate(it.body)
             }
         }
 
         fun SimpleShasambly.generate(it: ShasPFor) {
-            forLoop({ generate(it.init) }, { generate(it.condition, BOOLEAN) }, { generate(it.step) }) {
+            forLoop({ generate(it.init) }, { generateValued(it.condition, BOOLEAN) }, { generate(it.step) }) {
                 generate(it.body)
             }
         }

@@ -69,7 +69,7 @@ var classPath: FileCollection? = null
 val startScripts = tasks.named<CreateStartScripts>("startScripts") {
     applicationName = "shasx"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasxKt"
+    mainClassName = "io.github.shakelang.shake.shasambly.ShasXKt"
     classPath = classpath
     dependsOn(startScriptShasB, startScriptShasC, startScriptShasG, startScriptShasP)
 }
