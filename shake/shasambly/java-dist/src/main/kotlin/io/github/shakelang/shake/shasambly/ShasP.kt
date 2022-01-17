@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.shasambly.shasp
+package io.github.shakelang.shake.shasambly
 
 import io.github.shakelang.parseutils.characters.source.CharacterSource
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream

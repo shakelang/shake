@@ -1,5 +1,4 @@
 plugins {
-    application
     kotlin("multiplatform")
     id("org.jetbrains.dokka")
     id("com.github.node-gradle.node") version "3.1.1"
@@ -94,35 +93,3 @@ kotlin {
         //val nativeTest by getting
     }
 }
-
-application {
-    applicationName = "ShasTools"
-}
-tasks.named<CreateStartScripts>("startScripts") {
-    applicationName = "shasx"
-    outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.Shasx"
-    //classpath = //configurations.runtimeClasspath
-
-}
-val startScriptShasB by tasks.register<CreateStartScripts>("startScriptShasB") {
-    applicationName = "shasb"
-    outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasBeautify"
-    classpath = project.tasks.getAt(JavaPlugin.JAR_TASK_NAME).outputs.files.plus(project.configurations.getByName(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME))
-}
-val startScriptShasC by tasks.register<CreateStartScripts>("startScriptShasC") {
-    applicationName = "shasc"
-    outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasCompile"
-    classpath = project.tasks.getAt(JavaPlugin.JAR_TASK_NAME).outputs.files.plus(project.configurations.getByName(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME))
-}
-val startScriptShasG by tasks.register<CreateStartScripts>("startScriptShasG") {
-    applicationName = "shasg"
-    outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasGenerate"
-    classpath = project.tasks.getAt(JavaPlugin.JAR_TASK_NAME).outputs.files.plus(project.configurations.getByName(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME))
-}/*
-tasks.named("installDist") {
-    dependsOn(startScriptShasB, startScriptShasC, startScriptShasG)
-}*/

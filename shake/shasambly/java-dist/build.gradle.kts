@@ -51,12 +51,12 @@ kotlin {
             dependencies {
                 implementation(project(":util:parseutils"))
                 implementation(project(":shake:shasambly:shasambly"))
+                implementation(project(":shake:shasambly:shastools"))
+                implementation(project(":shake:shasambly:shasp"))
             }
         }
         val test by getting {
             dependencies {
-                implementation(project(":util:parseutils"))
-                implementation(project(":shake:shasambly:shasambly"))
             }
         }
     }
@@ -69,25 +69,31 @@ var classPath: FileCollection? = null
 val startScripts = tasks.named<CreateStartScripts>("startScripts") {
     applicationName = "shasx"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.Shasx"
+    mainClassName = "io.github.shakelang.shake.shasambly.ShasxKt"
     classPath = classpath
-    finalizedBy(startScriptShasB, startScriptShasC, startScriptShasG)
+    dependsOn(startScriptShasB, startScriptShasC, startScriptShasG, startScriptShasP)
 }
 val startScriptShasB by tasks.register<CreateStartScripts>("startScriptShasB") {
     applicationName = "shasb"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasBeautify"
+    mainClassName = "io.github.shakelang.shake.shasambly.ShasBeautifyKt"
     classpath = classPath
 }
 val startScriptShasC by tasks.register<CreateStartScripts>("startScriptShasC") {
     applicationName = "shasc"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasCompile"
+    mainClassName = "io.github.shakelang.shake.shasambly.ShasCompileKt"
     classpath = classPath
 }
 val startScriptShasG by tasks.register<CreateStartScripts>("startScriptShasG") {
     applicationName = "shasg"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasGenerate"
+    mainClassName = "io.github.shakelang.shake.shasambly.ShasGenerateKt"
+    classpath = classPath
+}
+val startScriptShasP by tasks.register<CreateStartScripts>("startScriptShasP") {
+    applicationName = "shasp"
+    outputDir = file("build/scripts")
+    mainClassName = "io.github.shakelang.shake.shasambly.ShasPKt"
     classpath = classPath
 }
