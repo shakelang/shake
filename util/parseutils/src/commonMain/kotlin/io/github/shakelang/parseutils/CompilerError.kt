@@ -247,73 +247,86 @@ open class CompilerError : Error {
             pos2: Position
         ): ErrorMarker {
 
-            // Check requirements
-            if (pos1.source != pos2.source) throw Error("The two have to be located in the same source")
-            if (pos1.line != pos2.line) throw Error("The two positions that should be marked have to be in the same line")
-            if (pos1.column > pos2.column) throw Error("Position 1 must be before Position 2")
+            try {
+
+                // Check requirements
+                if (pos1.source != pos2.source) throw Error("The two have to be located in the same source")
+                if (pos1.line != pos2.line) throw Error("The two positions that should be marked have to be in the same line")
+                if (pos1.column > pos2.column) throw Error("Position 1 must be before Position 2")
 
 
-            // Line start (linenumber + 2 spaces)
-            val lineStr = pos1.line.toString() + "  "
+                // Line start (linenumber + 2 spaces)
+                val lineStr = pos1.line.toString() + "  "
 
-            // Length of the highlighted section
-            val highlighted = pos2.column - pos1.column + 1
+                // Length of the highlighted section
+                val highlighted = pos2.column - pos1.column + 1
 
-            // The maximum amount of characters that will be shown around the highlighted section
-            val maxAround = maxLength - highlighted - lineStr.length
-            val before = maxAround / 2 + maxAround % 2
-            val after = maxAround / 2
+                // The maximum amount of characters that will be shown around the highlighted section
+                val maxAround = maxLength - highlighted - lineStr.length
+                val before = maxAround / 2 + maxAround % 2
+                val after = maxAround / 2
 
 
-            // The available tokens before the highlighted section
-            val before2 = pos1.column - 1
+                // The available tokens before the highlighted section
+                val before2 = pos1.column - 1
 
-            // The available tokens after the highlighted section
-            val after2 = pos2.source.getAfterInLine(pos2)
+                // The available tokens after the highlighted section
+                val after2 = pos2.source.getAfterInLine(pos2)
 
-            // Take the smallest value and use it
-            var realBefore = smallest(before, before2)
-            var realAfter = smallest(after, after2 + 1)
+                // Take the smallest value and use it
+                var realBefore = smallest(before, before2)
+                var realAfter = smallest(after, after2 + 1)
 
-            // Get the differences (to display if there are tokens that can't be displayed)
-            var beforeDif = before2 - realBefore
-            var afterDif = after2 - realAfter
+                // Get the differences (to display if there are tokens that can't be displayed)
+                var beforeDif = before2 - realBefore
+                var afterDif = after2 - realAfter
 
-            // Resolve numbers if there is a non-displayed part
-            if (beforeDif > 0) {
-                val baseLen = beforeDif.toString().length
-                var len = baseLen + 4
-                realBefore -= if (len.toString().length != baseLen) ++len else len
-                beforeDif += len
+                // Resolve numbers if there is a non-displayed part
+                if (beforeDif > 0) {
+                    val baseLen = beforeDif.toString().length
+                    var len = baseLen + 4
+                    realBefore -= if (len.toString().length != baseLen) ++len else len
+                    beforeDif += len
+                }
+                if (afterDif > 0) {
+                    val baseLen = afterDif.toString().length
+                    var len = baseLen + 4
+                    realAfter -= if (len.toString().length != baseLen) ++len else len
+                    afterDif += len
+                }
+
+
+                // The start of the line
+                val start = (lineStr
+                        + (if (beforeDif > 0) "+$beforeDif..." else "")
+                        + pos1.source.source[pos1.index - realBefore, pos1.index].concatToString()
+                    .replace("\t".toRegex(), " "))
+
+                // The end of the line
+                val end = (pos1.source.source[pos2.index + 1, pos2.index + realAfter].concatToString()
+                    .replace("\t".toRegex(), " ")
+                    .replace("\n".toRegex(), " ")
+                        + if (afterDif > 0) "...+$afterDif" else "")
+
+                // Generate end-string
+                return ErrorMarker(
+                    pos1.source.location + ':' + pos1.line + ':' + pos1.column,
+                    start + Formatting.INVERT + FGColor.RED
+                            + pos1.source.source[pos1.index, pos2.index + 1].concatToString() + Formatting.RESET + end,
+                    start + pos1.source.source[pos1.index, pos2.index + 1].concatToString() + end,
+                    ' '.repeat(start.length) + '^'.repeat(highlighted)
+                )
             }
-            if (afterDif > 0) {
-                val baseLen = afterDif.toString().length
-                var len = baseLen + 4
-                realAfter -= if (len.toString().length != baseLen) ++len else len
-                afterDif += len
+            catch (e: Throwable) {
+                println("Error while creating position marker:")
+                e.printStackTrace()
+                return ErrorMarker(
+                    "${pos1.source.location}:${pos1.line}:${pos1.column}",
+                    "${FGColor.RED}Error while creating position marker: ${e.message}${Formatting.RESET}",
+                    "Error while creating position marker: ${e.message}",
+                    ""
+                )
             }
-
-
-            // The start of the line
-            val start = (lineStr
-                    + (if (beforeDif > 0) "+$beforeDif..." else "")
-                    + pos1.source.source[pos1.index - realBefore, pos1.index].concatToString()
-                .replace("\t".toRegex(), " "))
-
-            // The end of the line
-            val end = (pos1.source.source[pos2.index + 1, pos2.index + realAfter].concatToString()
-                .replace("\t".toRegex(), " ")
-                .replace("\n".toRegex(), " ")
-                    + if (afterDif > 0) "...+$afterDif" else "")
-
-            // Generate end-string
-            return ErrorMarker(
-                pos1.source.location + ':' + pos1.line + ':' + pos1.column,
-                start + Formatting.INVERT + FGColor.RED
-                        + pos1.source.source[pos1.index, pos2.index + 1].concatToString() + Formatting.RESET + end,
-                start + pos1.source.source[pos1.index, pos2.index + 1].concatToString() + end,
-                ' '.repeat(start.length) + '^'.repeat(highlighted)
-            )
         }
     }
 }
