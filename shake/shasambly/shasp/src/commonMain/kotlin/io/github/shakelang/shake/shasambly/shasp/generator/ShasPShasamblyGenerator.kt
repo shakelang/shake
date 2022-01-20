@@ -947,13 +947,14 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             }
         }
 
-        fun SimpleShasambly.generate(it: ShasPFunctionCall) {
-            val function = functions.find { it.name == it.name } ?: throw Error("Function ${it.name} is not defined")
+        fun SimpleShasambly.generate(fCall: ShasPFunctionCall) {
+            val function = functions.find { fCall.name == it.name } ?: throw Error("Function ${fCall.name} is not defined")
 
-            if(it.args.size != function.argTypes.size)
-                throw Error("Function ${it.name} expects ${function.argTypes.size} arguments but ${it.args.size} were given")
+            if(fCall.args.size != function.argTypes.size)
+                throw Error("Function ${fCall.name} expects ${function.argTypes.size} arguments but ${fCall.args.size} were given")
 
-            for((i, arg) in it.args.withIndex()) generateValued(arg, function.argTypes[i])
+            for((i, arg) in fCall.args.withIndex())
+                generateValued(arg, function.argTypes[i])
 
             function.call()
         }

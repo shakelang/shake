@@ -2,19 +2,38 @@
 [0x00000007] i_push 0x00000014 [numeric: 20]
 [0x0000000c] i_store_local 0x0064 [numeric: 100]
 [0x0000000f] jump_static 0x00000019 [numeric: 25]
-[0x00000014] jump_static 0x00000033 [numeric: 51]
-[0x00000019] b_push 0x0a [numeric: 10]
-[0x0000001b] incr_stack 5
-[0x0000001e] b_store_local 0x0000 [numeric: 0]
-[0x00000021] i_push 0x0000002e [numeric: 46]
-[0x00000026] i_store_local 0x0001 [numeric: 1]
-[0x00000029] jump_static 0x00000038 [numeric: 56]
-[0x0000002e] i_get_local 0x0064 [numeric: 100]
-[0x00000031] decr_stack
-[0x00000032] jump_dynamic
-[0x00000033] jump_static 0x00000043 [numeric: 67]
-[0x00000038] b_get_local 0x0000 [numeric: 0]
-[0x0000003b] invoke_native print_byte
-[0x0000003e] i_get_local 0x0001 [numeric: 1]
-[0x00000041] decr_stack
-[0x00000042] jump_dynamic
+[0x00000014] jump_static 0x00000036 [numeric: 54]
+[0x00000019] i_push 0x0000000a [numeric: 10]
+[0x0000001e] incr_stack 8
+[0x00000021] i_store_local 0x0000 [numeric: 0]
+[0x00000024] i_push 0x00000031 [numeric: 49]
+[0x00000029] i_store_local 0x0004 [numeric: 4]
+[0x0000002c] jump_static 0x0000003b [numeric: 59]
+[0x00000031] i_get_local 0x0064 [numeric: 100]
+[0x00000034] decr_stack
+[0x00000035] jump_dynamic
+[0x00000036] jump_static 0x00000066 [numeric: 102]
+[0x0000003b] i_get_local 0x0000 [numeric: 0]
+[0x0000003e] incr_stack 8
+[0x00000041] i_store_local 0x0000 [numeric: 0]
+[0x00000044] i_push 0x00000051 [numeric: 81]
+[0x00000049] i_store_local 0x0004 [numeric: 4]
+[0x0000004c] jump_static 0x0000006b [numeric: 107]
+[0x00000051] incr_stack 4
+[0x00000054] i_push 0x00000061 [numeric: 97]
+[0x00000059] i_store_local 0x0000 [numeric: 0]
+[0x0000005c] jump_static 0x0000007b [numeric: 123]
+[0x00000061] i_get_local 0x0004 [numeric: 4]
+[0x00000064] decr_stack
+[0x00000065] jump_dynamic
+[0x00000066] jump_static 0x00000076 [numeric: 118]
+[0x0000006b] i_get_local 0x0000 [numeric: 0]
+[0x0000006e] invoke_native print_int
+[0x00000071] i_get_local 0x0004 [numeric: 4]
+[0x00000074] decr_stack
+[0x00000075] jump_dynamic
+[0x00000076] jump_static 0x00000083 [numeric: 131]
+[0x0000007b] invoke_native print_line_ending
+[0x0000007e] i_get_local 0x0000 [numeric: 0]
+[0x00000081] decr_stack
+[0x00000082] jump_dynamic
