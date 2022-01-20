@@ -148,7 +148,7 @@ class ShasPParser (
             )
         }
 
-        val condition = logicalOr()
+        val condition = value()
 
         if(input.next().type != ShasPTokenType.RPAREN) {
             throw ParserError(
@@ -188,7 +188,7 @@ class ShasPParser (
             )
         }
 
-        val condition = logicalOr()
+        val condition = value()
 
         if(input.next().type != ShasPTokenType.RPAREN) {
             throw ParserError(
@@ -260,7 +260,7 @@ class ShasPParser (
             )
         }
 
-        val condition = logicalOr()
+        val condition = value()
 
         if(input.next().type != ShasPTokenType.SEMICOLON) {
             throw ParserError(
@@ -314,7 +314,7 @@ class ShasPParser (
             )
         }
 
-        val condition = logicalOr()
+        val condition = value()
 
         if(input.next().type != ShasPTokenType.RPAREN) {
             throw ParserError(
@@ -346,28 +346,27 @@ class ShasPParser (
                 return parseVariableAssignment(name)
             }
             if (peek.type == ShasPTokenType.LPAREN) {
-                input.skip()
                 return parseFunctionCall(name)
             }
             if(peek.type == ShasPTokenType.ADD_ASSIGN) {
                 input.skip()
-                return ShasPVariableAddAssignment(name, logicalOr())
+                return ShasPVariableAddAssignment(name, value())
             }
             if(peek.type == ShasPTokenType.SUB_ASSIGN) {
                 input.skip()
-                return ShasPVariableSubAssignment(name, logicalOr())
+                return ShasPVariableSubAssignment(name, value())
             }
             if(peek.type == ShasPTokenType.MUL_ASSIGN) {
                 input.skip()
-                return ShasPVariableMulAssignment(name, logicalOr())
+                return ShasPVariableMulAssignment(name, value())
             }
             if(peek.type == ShasPTokenType.DIV_ASSIGN) {
                 input.skip()
-                return ShasPVariableDivAssignment(name, logicalOr())
+                return ShasPVariableDivAssignment(name, value())
             }
             if(peek.type == ShasPTokenType.MOD_ASSIGN) {
                 input.skip()
-                return ShasPVariableModAssignment(name, logicalOr())
+                return ShasPVariableModAssignment(name, value())
             }
             if(peek.type == ShasPTokenType.INCR) {
                 input.skip()
@@ -443,16 +442,19 @@ class ShasPParser (
         }
 
         val identifier = input.actual.value!!
-        return if(input.peek().type == ShasPTokenType.LPAREN) parseFunctionCall(identifier)
+        return if(input.peek().type == ShasPTokenType.LPAREN) {
+            parseFunctionCall(identifier)
+        }
             else ShasPIdentifier(identifier)
     }
 
     private fun parseFunctionCall(identifier: String): ShasPFunctionCall {
         input.skip()
         val args = mutableListOf<ShasPValuedNode>()
-        while(input.next().type != ShasPTokenType.RPAREN) {
-            args.add(expr())
+        while(input.peek().type != ShasPTokenType.RPAREN) {
+            args.add(value())
         }
+        input.skip()
         return ShasPFunctionCall(identifier, args.toTypedArray())
     }
 
@@ -462,7 +464,7 @@ class ShasPParser (
     private fun factor(): ShasPValuedNode {
         val token = input.nextType()
         if (token == ShasPTokenType.LPAREN) {
-            val result = logicalOr()
+            val result = value()
             if (input.nextType() != ShasPTokenType.RPAREN) throw ParserError("Expecting ')'")
             return result
         }
@@ -493,7 +495,7 @@ class ShasPParser (
             input.skip()
             return ShasPCharLiteral(Characters.parseString(input.actualValue!!)[0])
         }
-        throw ParserError(input.toString())
+        throw ParserError("Unexpected Token $token")
     }
 
     // Casting
@@ -551,6 +553,8 @@ class ShasPParser (
     }
 
     // (Logical)
+    private fun value(): ShasPValuedNode = logicalOr()
+
     private fun logicalOr(): ShasPValuedNode {
         var result = logicalXOr()
         while (input.hasNext() && input.peekType() == ShasPTokenType.LOGICAL_OR) {

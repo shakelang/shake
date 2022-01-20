@@ -77,6 +77,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":util:parseutils"))
+                implementation(project(":util:shason"))
                 implementation(project(":shake:shasambly:shasambly"))
                 implementation(project(":shake:shasambly:shastools"))
             }

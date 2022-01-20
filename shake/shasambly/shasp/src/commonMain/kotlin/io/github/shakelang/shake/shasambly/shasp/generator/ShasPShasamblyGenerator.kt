@@ -1,8 +1,11 @@
+@file:Suppress("unused_variable", "unused")
 package io.github.shakelang.shake.shasambly.shasp.generator
 
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGenerator
+import io.github.shakelang.shake.shasambly.generator.simple.shasambly
 import io.github.shakelang.shake.shasambly.generator.simple.util.function.CallableRoutine
+import io.github.shakelang.shake.shasambly.generator.simple.util.function.SimpleRoutineShasamblyGenerator
 import io.github.shakelang.shake.shasambly.generator.simple.util.function.declareRoutine
 import io.github.shakelang.shake.shasambly.interpreter.PrimitiveIds
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.*
@@ -14,17 +17,110 @@ import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companio
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.INT
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.LONG
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.SHORT
+import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UBYTE
+import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UINT
+import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.ULONG
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UNKNOWN_DOUBLE_LITERAL
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UNKNOWN_INTEGER_LITERAL
+import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.USHORT
 
 class ShasPShasamblyGenerator(val tree: ShasPProgram) {
 
-    private val functions = mutableListOf<ShasPShasamblyFunctionGenerator>()
+    private val functions = mutableListOf<ShasamblyFunctionGenerator>()
     private var localPosCounter: Int = 0
     private lateinit var gen: SimpleShasamblyGenerator
 
+    private fun SimpleShasambly.declareNativeRoutine(name: String, args: List<ShasPType>, localStackSize: Int, body: SimpleRoutineShasamblyGenerator): ShasamblyNativeFunctionGenerator {
+        if(functions.any { it.name == name }) {
+            throw IllegalStateException("Function $name already exists")
+        }
+        val routine = declareRoutine(args.sumOf { it.byteSize }, localStackSize)
+        val fn = ShasamblyNativeFunctionGenerator(name, routine, args, body)
+        functions.add(fn)
+        return fn
+    }
+
+    private fun SimpleShasambly.init() {
+        val printByte = declareNativeRoutine("printByte", listOf(BYTE), 0) {
+            getByteArgument(0)
+            natives.printByte()
+        }
+        val printShort = declareNativeRoutine("printShort", listOf(SHORT), 0) {
+            getShortArgument(0)
+            natives.printShort()
+        }
+        val printInt = declareNativeRoutine("printInt", listOf(INT), 0) {
+            getIntArgument(0)
+            natives.printInt()
+        }
+        val printLong = declareNativeRoutine("printLong", listOf(LONG), 0) {
+            getLongArgument(0)
+            natives.printLong()
+        }
+        val printFloat = declareNativeRoutine("printFloat", listOf(FLOAT), 0) {
+            getFloatArgument(0)
+            natives.printFloat()
+        }
+        val printDouble = declareNativeRoutine("printDouble", listOf(DOUBLE), 0) {
+            getDoubleArgument(0)
+            natives.printDouble()
+        }
+        val printUtf8 = declareNativeRoutine("printUtf8", listOf(BYTE), 0) {
+            getByteArgument(0)
+            natives.printUtf8()
+        }
+
+        val printLn = declareNativeRoutine("printLn", listOf(), 0) {
+            natives.printLineEnding()
+        }
+
+        val printByteLn = declareNativeRoutine("printByteLn", listOf(BYTE), 0) {
+            getByteArgument(0)
+            printByte.call()
+            printLn.call()
+        }
+
+        val printShortLn = declareNativeRoutine("printShortLn", listOf(SHORT), 0) {
+            getShortArgument(0)
+            printShort.call()
+            printLn.call()
+        }
+
+        val printIntLn = declareNativeRoutine("printIntLn", listOf(INT), 0) {
+            getIntArgument(0)
+            printInt.call()
+            printLn.call()
+        }
+
+        val printLongLn = declareNativeRoutine("printLongLn", listOf(LONG), 0) {
+            getLongArgument(0)
+            printLong.call()
+            printLn.call()
+        }
+
+        val printFloatLn = declareNativeRoutine("printFloatLn", listOf(FLOAT), 0) {
+            getFloatArgument(0)
+            printFloat.call()
+            printLn.call()
+        }
+
+        val printDoubleLn = declareNativeRoutine("printDoubleLn", listOf(DOUBLE), 0) {
+            getDoubleArgument(0)
+            printDouble.call()
+            printLn.call()
+        }
+
+        val printUtf8Ln = declareNativeRoutine("printUtf8Ln", listOf(BYTE), 0) {
+            getByteArgument(0)
+            printUtf8.call()
+            printLn.call()
+        }
+
+    }
+
     fun generate(): SimpleShasamblyGenerator {
         this.gen = SimpleShasamblyGenerator {}
+        this.gen.init()
         generate(this.tree)
         return this.gen
     }
@@ -34,12 +130,24 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             if(it is ShasPFunctionDeclaration) generate(it)
             if(it is ShasPVariableDeclaration) TODO("Global variables are not implemented for now")
         }
-        functions.forEach {
-            it.create()
+        val main = functions.find { it.name == "main" } ?: throw IllegalStateException("No main function found")
+        shasambly { main.call() }
+
+        createFunctions()
+    }
+
+    private fun createFunctions() {
+        // Only generate functions that are actually used at least once
+        while(functions.any { it.used && !it.created }) {
+            functions.filter { it.used && !it.created }.forEach {
+                it.create()
+            }
         }
     }
 
     private fun generate(function: ShasPFunctionDeclaration) {
+        val name = function.name
+        if(functions.any { it.name == name }) throw IllegalStateException("Function $name already exists")
         gen.run {
             val argSize = function.args.sumOf { it.type.byteSize }
             localPosCounter = 0
@@ -47,16 +155,53 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
     }
 
-    private inner class ShasPShasamblyFunctionGenerator(
+    private abstract inner class ShasamblyFunctionGenerator {
+        abstract val name: String
+        abstract val argTypes: List<ShasPType>
+        protected abstract val routine: CallableRoutine
+
+        var used: Boolean = false
+            private set
+
+        var created: Boolean = false
+            private set
+
+        protected abstract fun doCreate()
+        fun create() {
+            created = true
+            doCreate()
+        }
+
+        open fun call(args: ByteArray) {
+            used = true
+            routine.call(args)
+        }
+        open fun call() {
+            used = true
+            routine.call()
+        }
+    }
+
+    private open inner class ShasamblyNativeFunctionGenerator(
+        override val name: String,
+        override val routine: CallableRoutine,
+        override val argTypes: List<ShasPType>,
+        private val create: SimpleRoutineShasamblyGenerator
+    ) : ShasamblyFunctionGenerator() {
+        override fun doCreate() = routine.create(create)
+    }
+
+    private open inner class ShasPShasamblyFunctionGenerator(
         val function: ShasPFunctionDeclaration,
-        val routine: CallableRoutine
-    ) {
+        override val routine: CallableRoutine
+    ): ShasamblyFunctionGenerator() {
 
+        override val name: String = function.name
+        override val argTypes: List<ShasPType> = function.args.map { it.type }
         val localTable = mutableMapOf<String, Pair<ShasPType, Int>>()
-
         var lastLocalPointer = 0
 
-        fun create() {
+        override fun doCreate() {
             routine.create {
                 function.body.children.forEach {
                     this.generate(it)
@@ -79,6 +224,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 is ShasPWhile -> this.generate(it)
                 is ShasPDoWhile -> this.generate(it)
                 is ShasPFor -> this.generate(it)
+                is ShasPFunctionCall -> this.generate(it)
             }
         }
 
@@ -156,9 +302,26 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 is ShasPDoubleLiteral -> UNKNOWN_DOUBLE_LITERAL
                 is ShasPIdentifier -> valueType(value)
                 is ShasPVariableAssignment -> valueType(value)
+                is ShasPVariableAddAssignment -> valueType(value)
+                is ShasPVariableSubAssignment -> valueType(value)
+                is ShasPVariableMulAssignment -> valueType(value)
+                is ShasPVariableDivAssignment -> valueType(value)
+                is ShasPVariableModAssignment -> valueType(value)
+                is ShasPEqual -> BOOLEAN
+                is ShasPNotEqual -> BOOLEAN
+                is ShasPLess -> BOOLEAN
+                is ShasPGreater -> BOOLEAN
+                is ShasPLessEqual -> BOOLEAN
+                is ShasPGreaterEqual -> BOOLEAN
+                is ShasPAnd -> BOOLEAN
+                is ShasPOr -> BOOLEAN
+                is ShasPNot -> BOOLEAN
                 else -> TODO(value::class.simpleName?:"null")
             }
         }
+
+        val ShasPValuedNode.type: ShasPType?
+            get() = valueType(this)
 
         fun valueType(value: ShasPAdd): ShasPType? {
             val type0 = valueType(value.left) ?: return null
@@ -191,6 +354,36 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun valueType(value: ShasPVariableAssignment): ShasPType? {
+            val local = localTable[value.name]
+            if(local != null) return local.first
+            return null
+        }
+
+        fun valueType(value: ShasPVariableAddAssignment): ShasPType? {
+            val local = localTable[value.name]
+            if(local != null) return local.first
+            return null
+        }
+
+        fun valueType(value: ShasPVariableSubAssignment): ShasPType? {
+            val local = localTable[value.name]
+            if(local != null) return local.first
+            return null
+        }
+
+        fun valueType(value: ShasPVariableMulAssignment): ShasPType? {
+            val local = localTable[value.name]
+            if(local != null) return local.first
+            return null
+        }
+
+        fun valueType(value: ShasPVariableDivAssignment): ShasPType? {
+            val local = localTable[value.name]
+            if(local != null) return local.first
+            return null
+        }
+
+        fun valueType(value: ShasPVariableModAssignment): ShasPType? {
             val local = localTable[value.name]
             if(local != null) return local.first
             return null
@@ -234,6 +427,8 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.convert(from: ShasPType, to: ShasPType) {
+
+            if(from == to) return
 
             when(from) {
                 BYTE -> {
@@ -342,6 +537,98 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 else -> throw Error("Can't perform modulus with value type $type.")
             }
         }
+
+        fun SimpleShasambly.eq(type: ShasPType) {
+            when(type) {
+                BYTE -> beq()
+                SHORT -> seq()
+                INT -> ieq()
+                LONG -> leq()
+                UBYTE -> beq() // TODO val > 127
+                USHORT -> seq()
+                UINT -> ieq()
+                ULONG -> leq()
+                FLOAT -> feq()
+                DOUBLE -> deq()
+                BOOLEAN -> beq()
+                CHAR -> seq()
+                else -> throw Error("Can't perform equality checks with value type $type.")
+            }
+        }
+
+        fun SimpleShasambly.neq(type: ShasPType) {
+            eq(type)
+            bnot()
+        }
+
+        fun SimpleShasambly.biggereq(type: ShasPType) {
+            when(type) {
+                BYTE -> bbiggereq()
+                SHORT -> sbiggereq()
+                INT -> ibiggereq()
+                LONG -> lbiggereq()
+                UBYTE -> bbiggereq() // TODO val > 127
+                USHORT -> sbiggereq()
+                UINT -> ibiggereq()
+                ULONG -> lbiggereq()
+                FLOAT -> fbiggereq()
+                DOUBLE -> dbiggereq()
+                CHAR -> sbiggereq()
+                else -> throw Error("Can't perform greater-than-or-equal checks with value type $type.")
+            }
+        }
+
+        fun SimpleShasambly.bigger(type: ShasPType) {
+            when(type) {
+                BYTE -> bbigger()
+                SHORT -> sbigger()
+                INT -> ibigger()
+                LONG -> lbigger()
+                UBYTE -> bbigger()// TODO val > 127
+                USHORT -> sbigger()
+                UINT -> ibigger()
+                ULONG -> lbigger()
+                FLOAT -> fbigger()
+                DOUBLE -> dbigger()
+                CHAR -> sbigger()
+                else -> throw Error("Can't perform greater-than checks with value type $type.")
+            }
+        }
+
+        fun SimpleShasambly.smallereq(type: ShasPType) {
+            when(type) {
+                BYTE -> bsmallereq()
+                SHORT -> ssmallereq()
+                INT -> ismallereq()
+                LONG -> lsmallereq()
+                UBYTE -> bsmallereq()
+                USHORT -> ssmallereq()
+                UINT -> ismallereq()
+                ULONG -> lsmallereq()
+                FLOAT -> fsmallereq()
+                DOUBLE -> dsmallereq()
+                CHAR -> ssmallereq()
+                else -> throw Error("Can't perform less-than-or-equal checks with value type $type.")
+            }
+        }
+
+        fun SimpleShasambly.smaller(type: ShasPType) {
+            when(type) {
+                BYTE -> bsmaller()
+                SHORT -> ssmaller()
+                INT -> ismaller()
+                LONG -> lsmaller()
+                UBYTE -> bsmaller() // TODO val > 127
+                USHORT -> ssmaller()
+                UINT -> ismaller()
+                ULONG -> lsmaller()
+                FLOAT -> fsmaller()
+                DOUBLE -> dsmaller()
+                CHAR -> ssmaller()
+                else -> throw Error("Can't perform less-than checks with value type $type.")
+            }
+        }
+
 
         fun SimpleShasambly.generateValued(value: ShasPAdd, expectedType: ShasPType) {
             generateValued(value.left, expectedType)
@@ -570,8 +857,69 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             convert(rType, type)
         }
 
+        fun SimpleShasambly.generateValued(it: ShasPEqual, type: ShasPType) {
+            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
+            val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
+            val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
+            generateValued(it.left, t)
+            generateValued(it.right, t)
+            eq(t)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPNotEqual, type: ShasPType) {
+            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
+            val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
+            val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
+            generateValued(it.left, t)
+            generateValued(it.right, t)
+            neq(t)
+        }
+
         fun SimpleShasambly.generateValued(it: ShasPLess, type: ShasPType) {
-            generate(it.left)
+            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
+            val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
+            val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
+            generateValued(it.left, t)
+            generateValued(it.right, t)
+            smaller(t)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPLessEqual, type: ShasPType) {
+            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
+            val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
+            val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
+            generateValued(it.left, t)
+            generateValued(it.right, t)
+            smallereq(t)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPGreaterEqual, type: ShasPType) {
+            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
+            val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
+            val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
+            generateValued(it.left, t)
+            generateValued(it.right, t)
+            biggereq(t)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPGreater, type: ShasPType) {
+            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
+            val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
+            val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
+            generateValued(it.left, t)
+            generateValued(it.right, t)
+            bigger(t)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPIdentifier, type: ShasPType) {
+            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val rType = addr.first
             getLocal(addr.second, type)
             convert(rType, type)
         }
@@ -597,6 +945,17 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             forLoop({ generate(it.init) }, { generateValued(it.condition, BOOLEAN) }, { generate(it.step) }) {
                 generate(it.body)
             }
+        }
+
+        fun SimpleShasambly.generate(it: ShasPFunctionCall) {
+            val function = functions.find { it.name == it.name } ?: throw Error("Function ${it.name} is not defined")
+
+            if(it.args.size != function.argTypes.size)
+                throw Error("Function ${it.name} expects ${function.argTypes.size} arguments but ${it.args.size} were given")
+
+            for((i, arg) in it.args.withIndex()) generateValued(arg, function.argTypes[i])
+
+            function.call()
         }
 
     }
