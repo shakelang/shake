@@ -383,7 +383,7 @@ open class ShasPVariableDecr (val name: String) : ShasPValuedStatement {
 }
 
 
-open class ShasPIf (val condition: ShasPValuedNode, val then: ShasPStatement, val orElse: ShasPStatement? = null) : ShasPValuedStatement {
+open class ShasPIf (val condition: ShasPValuedNode, val then: ShasPCode, val orElse: ShasPCode? = null) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "if",
@@ -393,7 +393,7 @@ open class ShasPIf (val condition: ShasPValuedNode, val then: ShasPStatement, va
         )
     }
 }
-open class ShasPWhile (val condition: ShasPValuedNode, val body: ShasPStatement) : ShasPValuedStatement {
+open class ShasPWhile (val condition: ShasPValuedNode, val body: ShasPCode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "while",
@@ -402,7 +402,7 @@ open class ShasPWhile (val condition: ShasPValuedNode, val body: ShasPStatement)
         )
     }
 }
-open class ShasPDoWhile (val condition: ShasPValuedNode, val body: ShasPStatement) : ShasPValuedStatement {
+open class ShasPDoWhile (val condition: ShasPValuedNode, val body: ShasPCode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "do_while",
@@ -411,7 +411,7 @@ open class ShasPDoWhile (val condition: ShasPValuedNode, val body: ShasPStatemen
         )
     }
 }
-open class ShasPFor (val init: ShasPStatement, val condition: ShasPValuedNode, val step: ShasPStatement, val body: ShasPStatement) : ShasPValuedStatement {
+open class ShasPFor (val init: ShasPStatement, val condition: ShasPValuedNode, val step: ShasPStatement, val body: ShasPCode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "for",
@@ -422,7 +422,7 @@ open class ShasPFor (val init: ShasPStatement, val condition: ShasPValuedNode, v
         )
     }
 }
-open class ShasPForEach (val name: String, val collection: ShasPValuedNode, val body: ShasPStatement) : ShasPValuedStatement {
+open class ShasPForEach (val name: String, val collection: ShasPValuedNode, val body: ShasPCode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "for_each",

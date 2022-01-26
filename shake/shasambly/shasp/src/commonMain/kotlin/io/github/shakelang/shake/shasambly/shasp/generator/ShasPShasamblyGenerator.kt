@@ -209,6 +209,10 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             }
         }
 
+        fun SimpleShasambly.generate(it: ShasPCode) {
+            for (child in it.children) generate(child)
+        }
+
         fun SimpleShasambly.generate(it: ShasPStatement) {
             when (it) {
                 is ShasPVariableDeclaration -> this.generate(it)
@@ -225,6 +229,8 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 is ShasPDoWhile -> this.generate(it)
                 is ShasPFor -> this.generate(it)
                 is ShasPFunctionCall -> this.generate(it)
+                is ShasPCode -> this.generate(it)
+                else -> throw IllegalStateException("Could not generate statement ${it.toJsonString()} (not implemented)")
             }
         }
 
