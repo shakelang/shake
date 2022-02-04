@@ -20,7 +20,7 @@ abstract class ShasamblyInterpretingBase(
      * The size of the interpreters' memory.
      */
     val memorySize get() = memory.size
-    var globalsSize = 16 + bytes.size + 7
+    var globalsSize = 16 + bytes.size + 8
 
     var running: Boolean = true
         private set
@@ -107,10 +107,10 @@ abstract class ShasamblyInterpretingBase(
     //
     // [Size: 20 bytes]
     // u4 chunk_size: The size of the chunks
-    // u4 next_element: The next element in the list
-    // u4 prev_element: The previous element in the list
     // u4 first_chunk: The first chunk
     // u4 last_chunk: The last chunk
+    // u4 next_element: The next element in the list
+    // u4 prev_element: The previous element in the list
     //
     // The chunks are stored in a linked list then (The first chunk is stored in the chunk table)
     // The chunk just contains four bytes of data, the address of the next chunk.
@@ -120,7 +120,7 @@ abstract class ShasamblyInterpretingBase(
     // smaller than 4 bytes.
 
 
-    private fun findFreeTableWithSize(size: Int): Int {
+    fun findFreeTableWithSize(size: Int): Int {
         var position = freeTableStartPointer
         while(position != -1) {
             val csize = memory.getInt(position)
@@ -130,7 +130,7 @@ abstract class ShasamblyInterpretingBase(
         return -1
     }
 
-    private fun findClosestFreeBelowTable(size: Int): Int {
+    fun findClosestFreeBelowTable(size: Int): Int {
         var position = freeTableEndPointer
         while(position != -1) {
             if(memory.getInt(position) <= size) return position
@@ -139,7 +139,7 @@ abstract class ShasamblyInterpretingBase(
         return -1
     }
 
-    private fun findClosestFreeAboveTable(size: Int): Int {
+    fun findClosestFreeAboveTable(size: Int): Int {
         var position = freeTableEndPointer
         var bestMatch = -1
         while(position != -1) {
@@ -152,10 +152,10 @@ abstract class ShasamblyInterpretingBase(
         return bestMatch
     }
 
-    private fun createFreeTable(size: Int): Int {
+    fun createFreeTable(size: Int): Int {
         val closestFreeTable = findClosestFreeBelowTable(size)
         if(closestFreeTable == -1) {
-            if(this.freeTableStartPointer == -1) {
+            if(this.freeTableStartPointer == -1) { // This is the first defined free table
                 val addr = this.increaseGlobals(20)
                 this.memory.setInt(addr, size)
                 this.memory.setInt(addr + 4, -1)
@@ -166,19 +166,19 @@ abstract class ShasamblyInterpretingBase(
                 this.freeTableEndPointer = addr
                 return addr
             }
-            else {
+            else { // There is already a free table, but this is the free table with the smallest size
                 val addr = declareGlobal(20)
                 this.memory.setInt(addr, size)
-                this.memory.setInt(addr, -1)
                 this.memory.setInt(addr + 4, -1)
-                this.memory.setInt(addr + 8, this.freeTableStartPointer)
-                this.memory.setInt(addr + 12, -1)
+                this.memory.setInt(addr + 8, -1)
+                this.memory.setInt(addr + 12, this.freeTableStartPointer)
+                this.memory.setInt(addr + 16, -1)
                 this.memory.setInt(this.freeTableStartPointer + 16, addr)
                 this.freeTableStartPointer = addr
                 return addr
             }
         }
-        else {
+        else { // There is a table with a smaller size than the one we want to create
             val addr = declareGlobal(20)
             val next = this.memory.getInt(closestFreeTable + 12)
             this.memory.setInt(addr, size)
@@ -193,7 +193,7 @@ abstract class ShasamblyInterpretingBase(
         }
     }
 
-    private fun getFreeTable(size: Int): Int {
+    fun getFreeTable(size: Int): Int {
         var addr = findFreeTableWithSize(size)
         if(addr == -1) addr = createFreeTable(size)
         return addr
