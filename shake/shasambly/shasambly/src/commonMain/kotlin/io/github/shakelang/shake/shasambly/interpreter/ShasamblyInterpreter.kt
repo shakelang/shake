@@ -11,17 +11,17 @@ class ShasamblyInterpreter(
 
     val byteMap = createByteMap()
 
-    fun finished(): Boolean = this.position == 0
+    fun finished(): Boolean = !running
 
     fun tick() {
         val pos = position
         val next = memory[position++]
-        //println("Executing byte at position 0x${(position-1).toBytes().toHexString()}")
+        // println("Executing byte at position 0x${(position-1).toBytes().toHexString()}: 0x${next.toBytes().toHexString()}")
         try {
             (byteMap[next.toUByte().toInt()] ?: throw NoSuchElementException("Wrong opcode")).invoke()
         } catch (e: Throwable) {
             throw Error("Could not execute byte 0x${next.toBytes().toHexString()} " +
-                    "at position 0x${(pos - 5).toBytes().toHexString()} (${pos-5})", e)
+                    "at position 0x${(pos - 16).toBytes().toHexString()} (${pos-16})", e)
         }
     }
 
@@ -201,8 +201,7 @@ class ShasamblyInterpreter(
     override fun toString(): String {
         return "ShasablyInterpreter{" +
                 "position=$position," +
-                "memory=${memory.toHexString()}," +
-                "stack=${stack.toHexString()}}"
+                "memory=${memory.toHexString()}}"
     }
 
 }

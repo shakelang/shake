@@ -78,74 +78,78 @@ object Natives {
         free(addr, size)
     }
     val bSwap = nativeFunction("b_swap", 0x0d, 2) {
-        val first = stackSize - read_byte().toUByte().toInt() - 1
-        val second = stackSize - read_byte().toUByte().toInt() - 1
-        val zw = stack[first]
-        stack[first] = stack[second]
-        stack[second] = zw
+        val first = stackPointer - read_byte().toUByte().toInt()
+        val second = stackPointer - read_byte().toUByte().toInt()
+        val zw = memory[first]
+        memory[first] = memory[second]
+        memory[second] = zw
     }
     val sSwap = nativeFunction("s_swap", 0x0e, 2) {
-        var first = stackSize - read_byte().toUByte().toInt()
-        var second = stackSize - read_byte().toUByte().toInt()
-        var zw = stack[first]
-        stack[first] = stack[second]
-        stack[second] = zw
-        first--
-        second--
-        zw = stack[first]
-        stack[first] = stack[second]
-        stack[second] = zw
+        var first = stackPointer - read_byte().toUByte().toInt()
+        var second = stackPointer - read_byte().toUByte().toInt()
+        var zw = memory[first]
+        memory[first] = memory[second]
+        memory[second] = zw
+        first++
+        second++
+        zw = memory[first]
+        memory[first] = memory[second]
+        memory[second] = zw
     }
     val iSwap = nativeFunction("i_swap", 0x0f, 2) {
-        var first = stackSize - read_byte().toUByte().toInt()
-        var second = stackSize - read_byte().toUByte().toInt()
-        var zw = stack[first]
-        stack[first] = stack[second]
-        stack[second] = zw
+        var first = stackPointer - read_byte().toUByte().toInt()
+        var second = stackPointer - read_byte().toUByte().toInt()
+        var zw = memory[first]
+        memory[first] = memory[second]
+        memory[second] = zw
         for(i in 0..2) {
-            first--
-            second--
-            zw = stack[first]
-            stack[first] = stack[second]
-            stack[second] = zw
+            first++
+            second++
+            zw = memory[first]
+            memory[first] = memory[second]
+            memory[second] = zw
         }
     }
     val lSwap = nativeFunction("l_swap", 0x10, 2) {
-        var first = stackSize - read_byte().toUByte().toInt()
-        var second = stackSize - read_byte().toUByte().toInt()
-        var zw = stack[first]
-        stack[first] = stack[second]
-        stack[second] = zw
+        var first = stackPointer - read_byte().toUByte().toInt()
+        var second = stackPointer - read_byte().toUByte().toInt()
+        var zw = memory[first]
+        memory[first] = memory[second]
+        memory[second] = zw
         for(i in 0..6) {
-            first--
-            second--
-            zw = stack[first]
-            stack[first] = stack[second]
-            stack[second] = zw
+            first++
+            second++
+            zw = memory[first]
+            memory[first] = memory[second]
+            memory[second] = zw
         }
     }
     val bDup = nativeFunction("b_dup", 0x11) {
-        val byte = stack.getByte(stackSize - 1)
+        val byte = memory.getByte(stackPointer)
         addByte(byte)
     }
     val sDup = nativeFunction("s_dup", 0x12) {
-        val short = stack.getShort(stackSize - 2)
+        val short = memory.getShort(stackPointer)
         addShort(short)
     }
     val iDup = nativeFunction("i_dup", 0x13) {
-        val int = stack.getInt(stackSize - 4)
+        val int = memory.getInt(stackPointer)
         addInt(int)
     }
     val lDup = nativeFunction("l_dup", 0x14) {
-        val long = stack.getLong(stackSize - 8)
+        val long = memory.getLong(stackPointer)
         addLong(long)
+    }
+    val exit = nativeFunction("exit", 0x15) {
+        val code = removeLastInt()
+        exitProcess(code)
     }
     fun initNativeFunctions() {
         // Do nothing
         // This function is just a placeholder called to initialize all
         // fields!
         // It is important to initialize them even if you are not using
-        // it's numerical values because the nativeFunctions table will
+        // its numerical values because the nativeFunctions table will
         // be empty if the fields are not initialized.
     }
 }

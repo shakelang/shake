@@ -48,7 +48,7 @@ class ShasGenerator(input: InputStream) {
     }
 
     fun print_opcode() {
-        oprint("[0x${(counter.getCount() + 4).toUInt().toBytes().toHexString()}] ")
+        oprint("[0x${(counter.getCount() + Util.START_BYTES).toUInt().toBytes().toHexString()}] ")
         when(val opcode = input.readByte()) {
             Opcodes.INCR_STACK -> oprintln("incr_stack ${input.readUnsignedShort()}")
             Opcodes.DECR_STACK -> oprintln("decr_stack")

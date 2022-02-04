@@ -16,14 +16,13 @@ abstract class ShasamblyOpcodeExecutor (
 
 
     fun incr_variable_stack() {
-        variableStackSize = read_short().toUShort().toInt()
-        variableAddress += variableStackSize
-        variableStackSizes.add(variableStackSize)
+        val size = read_short().toUShort().toInt()
+        incrLocalStack(size)
         //println("Variable stack size updated to $variableAddress")
     }
 
     fun decr_variable_stack() {
-        variableAddress -= variableStackSizes.removeLast()
+        decrLocalStack()
         //println("Variable stack size updated to $variableAddress")
     }
 
@@ -56,76 +55,54 @@ abstract class ShasamblyOpcodeExecutor (
     fun glob_addr() {
         val variable = read_short().toUShort().toInt()
         if(variable >= variableStackSize) throw IllegalArgumentException("Could not get global address of local $variable (Local stack size is only $variableStackSize)")
-        addInt(variableAddress - variable)
+        addInt(localStackPointer + variable)
     }
 
     fun b_get_local() {
         val variable = read_short().toUShort().toInt()
-        sadd(memory[variableAddress - variable])
+        sadd(memory[localStackPointer + variable])
     }
 
     fun s_get_local() {
         val variable = read_short().toUShort().toInt()
-        val addr = variableAddress - variable
-        sadd(memory[addr])
-        sadd(memory[addr - 1])
+        val addr = localStackPointer + variable
+        (1 downTo 0).forEach { sadd(memory[addr + it]) }
     }
 
     fun i_get_local() {
         val variable = read_short().toUShort().toInt()
-        val addr = variableAddress - variable
-        sadd(memory[addr])
-        sadd(memory[addr - 1])
-        sadd(memory[addr - 2])
-        sadd(memory[addr - 3])
+        val addr = localStackPointer + variable
+        (3 downTo 0).forEach { sadd(memory[addr + it]) }
     }
 
     fun l_get_local() {
         val variable = read_short().toUShort().toInt()
-        val addr = variableAddress - variable
-        sadd(memory[addr])
-        sadd(memory[addr - 1])
-        sadd(memory[addr - 2])
-        sadd(memory[addr - 3])
-        sadd(memory[addr - 4])
-        sadd(memory[addr - 5])
-        sadd(memory[addr - 6])
-        sadd(memory[addr - 7])
+        val addr = localStackPointer - variable
+        (7 downTo 0).forEach { sadd(memory[addr + it]) }
     }
 
     fun b_store_local() {
         val variable = read_short().toUShort().toInt()
-        val addr = variableAddress - variable
-        memory[addr] = sRemoveLast()
+        val addr = localStackPointer - variable
+        memory[addr] = spop()
     }
 
     fun s_store_local() {
         val variable = read_short().toUShort().toInt()
-        val addr = variableAddress - variable
-        memory[addr - 1] = sRemoveLast()
-        memory[addr] = sRemoveLast()
+        val addr = localStackPointer - variable
+        (0..1).forEach { memory[addr + it] = spop() }
     }
 
     fun i_store_local() {
         val variable = read_short().toUShort().toInt()
-        val addr = variableAddress - variable
-        memory[addr - 3] = sRemoveLast()
-        memory[addr - 2] = sRemoveLast()
-        memory[addr - 1] = sRemoveLast()
-        memory[addr] = sRemoveLast()
+        val addr = localStackPointer - variable
+        (0..3).forEach { memory[addr + it] = spop() }
     }
 
     fun l_store_local() {
         val variable = read_short().toUShort().toInt()
-        val addr = variableAddress - variable
-        memory[addr - 7] = sRemoveLast()
-        memory[addr - 6] = sRemoveLast()
-        memory[addr - 5] = sRemoveLast()
-        memory[addr - 4] = sRemoveLast()
-        memory[addr - 3] = sRemoveLast()
-        memory[addr - 2] = sRemoveLast()
-        memory[addr - 1] = sRemoveLast()
-        memory[addr] = sRemoveLast()
+        val addr = localStackPointer - variable
+        (0..7).forEach { memory[addr + it] = spop() }
     }
 
     fun bpush() {
@@ -145,32 +122,32 @@ abstract class ShasamblyOpcodeExecutor (
     }
 
     fun badd() {
-        val v1 = sRemoveLast()
-        val v0 = sRemoveLast()
+        val v1 = spop()
+        val v0 = spop()
         sadd((v0 + v1).toByte())
     }
 
     fun bsub() {
-        val v1 = sRemoveLast()
-        val v0 = sRemoveLast()
+        val v1 = spop()
+        val v0 = spop()
         sadd((v0 - v1).toByte())
     }
 
     fun bmul() {
-        val v1 = sRemoveLast()
-        val v0 = sRemoveLast()
+        val v1 = spop()
+        val v0 = spop()
         sadd((v0 * v1).toByte())
     }
 
     fun bdiv() {
-        val v1 = sRemoveLast()
-        val v0 = sRemoveLast()
+        val v1 = spop()
+        val v0 = spop()
         sadd((v0 / v1).toByte())
     }
 
     fun bmod() {
-        val v1 = sRemoveLast()
-        val v0 = sRemoveLast()
+        val v1 = spop()
+        val v0 = spop()
         sadd((v0 % v1).toByte())
     }
 
@@ -515,17 +492,17 @@ abstract class ShasamblyOpcodeExecutor (
 
     fun s_get_global() {
         val pos = read_int()
-        addShort(memory.getShort(pos - 1))
+        addShort(memory.getShort(pos))
     }
 
     fun i_get_global() {
         val pos = read_int()
-        addInt(memory.getInt(pos - 3))
+        addInt(memory.getInt(pos))
     }
 
     fun l_get_global() {
         val pos = read_int()
-        addLong(memory.getLong(pos - 7))
+        addLong(memory.getLong(pos))
     }
 
     fun b_get_global_dynamic() {
@@ -535,17 +512,17 @@ abstract class ShasamblyOpcodeExecutor (
 
     fun s_get_global_dynamic() {
         val pos = removeLastInt()
-        addShort(memory.getShort(pos - 1))
+        addShort(memory.getShort(pos))
     }
 
     fun i_get_global_dynamic() {
         val pos = removeLastInt()
-        addInt(memory.getInt(pos - 3))
+        addInt(memory.getInt(pos))
     }
 
     fun l_get_global_dynamic() {
         val pos = removeLastInt()
-        addLong(memory.getLong(pos - 7))
+        addLong(memory.getLong(pos))
     }
 
     fun b_store_global() {
@@ -557,19 +534,19 @@ abstract class ShasamblyOpcodeExecutor (
     fun s_store_global() {
         val pos = read_int()
         val value = removeLastShort()
-        memory.setShort(pos - 1, value)
+        memory.setShort(pos, value)
     }
 
     fun i_store_global() {
         val pos = read_int()
         val value = removeLastInt()
-        memory.setInt(pos - 3, value)
+        memory.setInt(pos, value)
     }
 
     fun l_store_global() {
         val pos = read_int()
         val value = removeLastLong()
-        memory.setLong(pos - 7, value)
+        memory.setLong(pos, value)
     }
 
     fun b_store_global_dynamic() {
@@ -581,19 +558,19 @@ abstract class ShasamblyOpcodeExecutor (
     fun s_store_global_dynamic() {
         val pos = removeLastInt()
         val value = removeLastShort()
-        memory.setShort(pos - 1, value)
+        memory.setShort(pos, value)
     }
 
     fun i_store_global_dynamic() {
         val pos = removeLastInt()
         val value = removeLastInt()
-        memory.setInt(pos - 3, value)
+        memory.setInt(pos, value)
     }
 
     fun l_store_global_dynamic() {
         val pos = removeLastInt()
         val value = removeLastLong()
-        memory.setLong(pos - 7, value)
+        memory.setLong(pos, value)
     }
 
     fun b_neg() {

@@ -103,7 +103,7 @@ open class ShasamblyOpcodeDecrStack : ShasamblyOpcode {
 }
 
 private fun resolveJump(target: Int): Int {
-    return target + 4
+    return target + 16
 }
 
 /**

@@ -2,6 +2,7 @@
 package io.github.shakelang.shake.shasambly.interpreter
 
 import io.github.shakelang.parseutils.bytes.*
+import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import kotlin.experimental.and
 
 abstract class ShasamblyInterpretingBase(
@@ -10,39 +11,83 @@ abstract class ShasamblyInterpretingBase(
     position: Int
 ) {
 
+    /**
+     * The memory of the interpreter.
+     */
     val memory = ByteArray(memorySize)
-    val memorySize get() = memory.size
-    val variableStackSizes = mutableListOf<Int>()
-    val stack = ByteArray(1024)
-    var stackSize = 0
-    protected var variableStackSize: Int = 0
-    var variableAddress = bytes.size + 9
-    var globalAddress = 0
-    var globalsSize = 8
-    var startPointer = -1
-        set(v) {
-            memory.setInt(memory.size - 4, v)
-            field = v
-        }
-    var endPointer = -1
-        set(v) {
-            memory.setInt(memory.size - 8, v)
-            field = v
-        }
-    var position = position + 4
 
-    val exitCode : Int get() = memory.getInt(0)
+    /**
+     * The size of the interpreters' memory.
+     */
+    val memorySize get() = memory.size
+    var globalsSize = 16 + bytes.size + 7
+
+    var running: Boolean = true
+        private set
+
+    // Memory:
+    // 0x00 - 0x0F: Global variables
+    // u4 - Free table start pointer
+    // u4 - Free table end pointer
+    // u4 - Stack pointer
+    // u4 - Local variable stack pointer
+
+
+    var freeTableStartPointer
+        set(v) {
+            memory.setInt(0, v)
+        }
+        get() = memory.getInt(0)
+
+    var freeTableEndPointer
+        set(v) {
+            memory.setInt(4, v)
+        }
+        get() = memory.getInt(4)
+
+    var stackPointer
+        set(v) {
+            memory.setInt(8, v)
+        }
+        get() = memory.getInt(8)
+
+    var localStackPointer
+        set(v) {
+            memory.setInt(12, v)
+        }
+        get() = memory.getInt(12)
+
+    var variableStackSize
+        set(v) {
+            memory.setInt(localStackPointer - 4, v)
+        }
+        get() = memory.getInt(localStackPointer - 4)
+
+    var position = position + 16
+    var exitCode : Int = 0 // TODO
 
     init {
-        bytes.copyInto(memory, 4)
-        memory[bytes.size + 4] = Opcodes.JUMP_STATIC
-        memory.setInt(bytes.size + 5, 0)
+        bytes.copyInto(memory, 16)
+        memory.setBytes(16 + bytes.size, byteArrayOf(
+            Opcodes.I_PUSH,
+            *0.toBytes(),
+            Opcodes.INVOKE_NATIVE,
+            *Natives.exit.toBytes()
+        ))
+
+        freeTableStartPointer = -1
+        freeTableEndPointer = -1
+        stackPointer = memorySize - 1
+        localStackPointer = -1
+
+        //memory[bytes.size + 4] = Opcodes.JUMP_STATIC
+        //memory.setInt(bytes.size + 5, 0)
     }
 
-    private fun increaseGlobals(chunkSize: Int): Int {
-        val addr = memorySize - globalsSize
+    fun increaseGlobals(chunkSize: Int): Int {
+        if(chunkSize < 4) throw Error("Chunk size must not be smaller than 4 (but is $chunkSize)")
+        val addr = globalsSize
         globalsSize += chunkSize
-        // Addresses : addr - chunkSize + 1 .. addr
         return addr
     }
 
@@ -53,34 +98,56 @@ abstract class ShasamblyInterpretingBase(
         return addr
     }
 
+    // Free Table
+    //
+    // The free table is a list of addresses that are available for reuse.
+    // The free table contains firstly a linked list of the different sizes of chunks that are available.
+    // In this linked list the elements are sorted by chunk_size.
+    // These linked list is structured as follows:
+    //
+    // [Size: 20 bytes]
+    // u4 chunk_size: The size of the chunks
+    // u4 next_element: The next element in the list
+    // u4 prev_element: The previous element in the list
+    // u4 first_chunk: The first chunk
+    // u4 last_chunk: The last chunk
+    //
+    // The chunks are stored in a linked list then (The first chunk is stored in the chunk table)
+    // The chunk just contains four bytes of data, the address of the next chunk.
+    // The last chunk contains a zero address.
+    // The rest of the bytes are just ignored. When the chunk is reused, these addresses will also reused
+    // Caused by the link to the next element being 4 bytes in size it is not possible to add sectors that are
+    // smaller than 4 bytes.
+
+
     private fun findFreeTableWithSize(size: Int): Int {
-        var position = startPointer
+        var position = freeTableStartPointer
         while(position != -1) {
-            val csize = memory.getInt(position - 3)
+            val csize = memory.getInt(position)
             if(csize == size) return position
-            position = memory.getInt(position - 15)
+            position = memory.getInt(position + 12)
         }
         return -1
     }
 
     private fun findClosestFreeBelowTable(size: Int): Int {
-        var position = endPointer
+        var position = freeTableEndPointer
         while(position != -1) {
-            if(memory.getInt(position - 3) <= size) return position
-            position = memory.getInt(position - 19)
+            if(memory.getInt(position) <= size) return position
+            position = memory.getInt(position + 16)
         }
         return -1
     }
 
     private fun findClosestFreeAboveTable(size: Int): Int {
-        var position = endPointer
+        var position = freeTableEndPointer
         var bestMatch = -1
         while(position != -1) {
-            val csize = memory.getInt(position - 3)
+            val csize = memory.getInt(position)
             if(csize < size) break
             if(csize == size) return position
             if(csize >= size + 4) bestMatch = position
-            position = memory.getInt(position - 19)
+            position = memory.getInt(position + 16)
         }
         return bestMatch
     }
@@ -88,39 +155,39 @@ abstract class ShasamblyInterpretingBase(
     private fun createFreeTable(size: Int): Int {
         val closestFreeTable = findClosestFreeBelowTable(size)
         if(closestFreeTable == -1) {
-            if(this.startPointer == -1) {
+            if(this.freeTableStartPointer == -1) {
                 val addr = this.increaseGlobals(20)
-                this.memory.setInt(addr - 3, size)
-                this.memory.setInt(addr - 7, -1)
-                this.memory.setInt(addr - 11, -1)
-                this.memory.setInt(addr - 15, -1)
-                this.memory.setInt(addr - 19, -1)
-                this.startPointer = addr
-                this.endPointer = addr
+                this.memory.setInt(addr, size)
+                this.memory.setInt(addr + 4, -1)
+                this.memory.setInt(addr + 8, -1)
+                this.memory.setInt(addr + 12, -1)
+                this.memory.setInt(addr + 16, -1)
+                this.freeTableStartPointer = addr
+                this.freeTableEndPointer = addr
                 return addr
             }
             else {
                 val addr = declareGlobal(20)
-                this.memory.setInt(addr - 3, size)
-                this.memory.setInt(addr - 7, -1)
-                this.memory.setInt(addr - 11, -1)
-                this.memory.setInt(addr - 15, this.startPointer)
-                this.memory.setInt(addr - 19, -1)
-                this.memory.setInt(this.startPointer - 19, addr)
-                this.startPointer = addr
+                this.memory.setInt(addr, size)
+                this.memory.setInt(addr, -1)
+                this.memory.setInt(addr + 4, -1)
+                this.memory.setInt(addr + 8, this.freeTableStartPointer)
+                this.memory.setInt(addr + 12, -1)
+                this.memory.setInt(this.freeTableStartPointer + 16, addr)
+                this.freeTableStartPointer = addr
                 return addr
             }
         }
         else {
             val addr = declareGlobal(20)
-            val next = this.memory.getInt(closestFreeTable - 15)
-            this.memory.setInt(addr - 3, size)
-            this.memory.setInt(addr - 7, -1)
-            this.memory.setInt(addr - 11, -1)
-            this.memory.setInt(addr - 15, next)
-            this.memory.setInt(addr - 19, closestFreeTable)
-            this.memory.setInt(closestFreeTable - 15, addr)
-            if(next == -1) this.endPointer = addr
+            val next = this.memory.getInt(closestFreeTable + 12)
+            this.memory.setInt(addr, size)
+            this.memory.setInt(addr + 4, -1)
+            this.memory.setInt(addr + 8, -1)
+            this.memory.setInt(addr + 12, next)
+            this.memory.setInt(addr + 16, closestFreeTable)
+            this.memory.setInt(closestFreeTable + 12, addr)
+            if(next == -1) this.freeTableEndPointer = addr
             else this.memory.setInt(addr - 19, addr)
             return addr
         }
@@ -136,38 +203,38 @@ abstract class ShasamblyInterpretingBase(
     fun free(address: Int, csize: Int) {
         if(csize < 4) throw Error("Chunk size must be at least 4!")
         val table = getFreeTable(csize)
-        val lastElement = memory.getInt(table - 11)
+        val lastElement = memory.getInt(table + 8)
         if(lastElement == -1) {
-            memory.setInt(table - 7, address)
-            memory.setInt(table - 11, address)
+            memory.setInt(table + 4, address)
+            memory.setInt(table + 8, address)
         }
         else {
-            memory.setInt(lastElement - 3, address)
-            memory.setInt(table - 11, address)
+            memory.setInt(lastElement, address)
+            memory.setInt(table + 8, address)
         }
-        memory.setInt(address - 3, -1)
+        memory.setInt(address, -1)
     }
 
     fun removeEmptyFreeTable(address: Int) {
-        val a = startPointer == address
-        val b = endPointer == address
+        val a = freeTableStartPointer == address
+        val b = freeTableEndPointer == address
         if(a && b) {
-            startPointer = -1
-            endPointer = -1
+            freeTableStartPointer = -1
+            freeTableEndPointer = -1
         }
         else if(a && !b) {
-            startPointer = memory.getInt(address - 15)
-            memory.setInt(startPointer - 19, -1)
+            freeTableStartPointer = memory.getInt(address + 12)
+            memory.setInt(freeTableStartPointer + 16, -1)
         }
         else if(b && !a) {
-            endPointer = memory.getInt(address - 19)
-            memory.setInt(endPointer - 15, -1)
+            freeTableEndPointer = memory.getInt(address + 16)
+            memory.setInt(freeTableEndPointer + 12, -1)
         }
         else {
-            val next = memory.getInt(address - 15)
-            val before = memory.getInt(address - 19)
-            memory.setInt(next - 19, before)
-            memory.setInt(before - 15, next)
+            val next = memory.getInt(address + 12)
+            val before = memory.getInt(address + 16)
+            memory.setInt(next + 16, before)
+            memory.setInt(before + 12, next)
         }
         free(address, 20)
     }
@@ -178,22 +245,22 @@ abstract class ShasamblyInterpretingBase(
         var addr: Int
         while (true) {
             if (table == -1) return -1
-            size = memory.getInt(table - 3)
-            addr = memory.getInt(table - 7)
+            size = memory.getInt(table)
+            addr = memory.getInt(table + 4)
             if (addr == -1) {
                 table = findClosestFreeAboveTable(size + 1)
                 continue
             }
             else break
         }
-        val next = memory.getInt(addr - 3)
+        val next = memory.getInt(addr)
         if(next == -1) {
-            memory.setInt(table - 7, -1)
-            memory.setInt(table - 11, -1)
+            memory.setInt(table + 4, -1)
+            memory.setInt(table + 8, -1)
             removeEmptyFreeTable(table)
         }
         else {
-            memory.setInt(table - 7, next)
+            memory.setInt(table + 4, next)
         }
         val dif = size - csize
         if(dif > 0) free(addr - csize, dif)
@@ -225,8 +292,11 @@ abstract class ShasamblyInterpretingBase(
 
 
     fun sadd(b: Byte) {
-        this.stack[stackSize++] = b
-        // println("New stack size: $stackSize")
+        this.memory[stackPointer--] = b
+    }
+
+    fun spop(): Byte {
+        return this.memory[++stackPointer]
     }
 
     fun addByte(v: Byte) {
@@ -261,37 +331,32 @@ abstract class ShasamblyInterpretingBase(
 
     fun addBoolean(v: Boolean) = this.sadd(if(v) 0x1.toByte() else 0x0.toByte())
 
-    fun sRemoveLast(): Byte {
-        //println("New stack size: ${stackSize - 1}")
-        return this.stack[--stackSize]
-    }
-
     inline fun removeLastByte(): Byte
-            = this.sRemoveLast()
+            = this.spop()
 
     inline fun removeLastShort(): Short {
-        val v1 = this.sRemoveLast()
-        val v0 = this.sRemoveLast()
+        val v1 = this.spop()
+        val v0 = this.spop()
         return shortOf(v0, v1)
     }
 
     inline fun removeLastInt(): Int {
-        val v3 = this.sRemoveLast()
-        val v2 = this.sRemoveLast()
-        val v1 = this.sRemoveLast()
-        val v0 = this.sRemoveLast()
+        val v3 = this.spop()
+        val v2 = this.spop()
+        val v1 = this.spop()
+        val v0 = this.spop()
         return intOf(v0, v1, v2, v3)
     }
 
     inline fun removeLastLong(): Long {
-        val v7 = this.sRemoveLast()
-        val v6 = this.sRemoveLast()
-        val v5 = this.sRemoveLast()
-        val v4 = this.sRemoveLast()
-        val v3 = this.sRemoveLast()
-        val v2 = this.sRemoveLast()
-        val v1 = this.sRemoveLast()
-        val v0 = this.sRemoveLast()
+        val v7 = this.spop()
+        val v6 = this.spop()
+        val v5 = this.spop()
+        val v4 = this.spop()
+        val v3 = this.spop()
+        val v2 = this.spop()
+        val v1 = this.spop()
+        val v0 = this.spop()
         return longOf(v0, v1, v2, v3, v4, v5, v6, v7)
     }
 
@@ -300,4 +365,25 @@ abstract class ShasamblyInterpretingBase(
 
     fun removeLastDouble(): Double
             = Double.fromBits(this.removeLastLong())
+
+    fun incrLocalStack(size: Int) {
+        val old = localStackPointer
+        val new = declareGlobal(size + 8)
+        localStackPointer = new + 8
+        memory.setInt(new, old)
+        memory.setInt(new + 4, size)
+    }
+
+    fun decrLocalStack() {
+        val size = variableStackSize
+        val old = localStackPointer
+        val new = memory.getInt(old - 8)
+        localStackPointer = new
+        free(old - 8, size + 8)
+    }
+
+    fun exitProcess(code: Int) {
+        this.exitCode = code
+        this.running = false
+    }
 }
