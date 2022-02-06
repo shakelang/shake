@@ -130,7 +130,7 @@ abstract class ShasamblyInterpretingBase(
         return -1
     }
 
-    fun findClosestFreeBelowTable(size: Int): Int {
+    fun findClosestFreeTableBelow(size: Int): Int {
         var position = freeTableEndPointer
         while(position != -1) {
             if(memory.getInt(position) <= size) return position
@@ -139,7 +139,7 @@ abstract class ShasamblyInterpretingBase(
         return -1
     }
 
-    fun findClosestFreeAboveTable(size: Int): Int {
+    fun findBestAboveMatch(size: Int): Int {
         var position = freeTableEndPointer
         var bestMatch = -1
         while(position != -1) {
@@ -153,7 +153,7 @@ abstract class ShasamblyInterpretingBase(
     }
 
     fun createFreeTable(size: Int): Int {
-        val closestFreeTable = findClosestFreeBelowTable(size)
+        val closestFreeTable = findClosestFreeTableBelow(size)
         if(closestFreeTable == -1) {
             if(this.freeTableStartPointer == -1) { // This is the first defined free table
                 val addr = this.increaseGlobals(20)
@@ -240,7 +240,7 @@ abstract class ShasamblyInterpretingBase(
     }
 
     fun getReusedAddress(csize: Int): Int {
-        var table = findClosestFreeAboveTable(csize)
+        var table = findBestAboveMatch(csize)
         var size: Int
         var addr: Int
         while (true) {
@@ -248,7 +248,7 @@ abstract class ShasamblyInterpretingBase(
             size = memory.getInt(table)
             addr = memory.getInt(table + 4)
             if (addr == -1) {
-                table = findClosestFreeAboveTable(size + 1)
+                table = findBestAboveMatch(size + 1)
                 continue
             }
             else break

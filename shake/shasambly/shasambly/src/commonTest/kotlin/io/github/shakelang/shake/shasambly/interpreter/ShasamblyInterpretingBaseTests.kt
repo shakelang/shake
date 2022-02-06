@@ -574,6 +574,44 @@ class ShasamblyInterpretingBaseTests {
     }
 
     @Test
+    fun testFindClosestFreeTableBelow() {
+        val it = Instance(128, byteArrayOf())
+        val p10 = it.createFreeTable(10) // Position: 24
+        val p8 = it.createFreeTable(8) // Position: 44
+        val p12 = it.createFreeTable(12) // Position: 64
+
+        assertEquals(p10, it.findClosestFreeTableBelow(10))
+        assertEquals(p8, it.findClosestFreeTableBelow(8))
+        assertEquals(p12, it.findClosestFreeTableBelow(12))
+        assertEquals(p12, it.findClosestFreeTableBelow(13))
+        assertEquals(p12, it.findClosestFreeTableBelow(14))
+        assertEquals(p10, it.findClosestFreeTableBelow(11))
+        assertEquals(p8, it.findClosestFreeTableBelow(9))
+        assertEquals(-1, it.findClosestFreeTableBelow(7))
+    }
+
+    @Test
+    fun testFindBestAboveMatch() {
+        val it = Instance(128, byteArrayOf())
+        val p10 = it.createFreeTable(10) // Position: 24
+        val p8 = it.createFreeTable(8) // Position: 44
+        val p12 = it.createFreeTable(12) // Position: 64
+
+        assertEquals(p10, it.findBestAboveMatch(10))
+        assertEquals(p8, it.findBestAboveMatch(8))
+        assertEquals(p12, it.findBestAboveMatch(12))
+        assertEquals(-1, it.findBestAboveMatch(13))
+        assertEquals(-1, it.findBestAboveMatch(14))
+        assertEquals(-1, it.findBestAboveMatch(11))
+        assertEquals(-1, it.findBestAboveMatch(9))
+        assertEquals(p12, it.findBestAboveMatch(7))
+        assertEquals(p10, it.findBestAboveMatch(6))
+        assertEquals(p10, it.findBestAboveMatch(5))
+        assertEquals(p8, it.findBestAboveMatch(4))
+
+    }
+
+    @Test
     fun testGetFreeTable() {
         val it = Instance(64, byteArrayOf())
         assertEquals(listOf(
