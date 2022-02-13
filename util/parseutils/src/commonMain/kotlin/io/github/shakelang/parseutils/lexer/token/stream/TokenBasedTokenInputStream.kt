@@ -2,7 +2,6 @@ package io.github.shakelang.parseutils.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.lexer.token.TokenType
-import io.github.shakelang.parseutils.lexer.token.stream.TokenInputStream
 import io.github.shakelang.shake.lexer.token.Token
 
 /**
@@ -14,7 +13,6 @@ import io.github.shakelang.shake.lexer.token.Token
 @Suppress("unused")
 open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
 (
-    override val source: String,
 
     /**
      * The tokenTypes that are contained in the [TokenBasedTokenInputStream]
@@ -23,6 +21,8 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
     override val map: PositionMap
 
 ) : TokenInputStream<TT, T> {
+
+    override val source = map.source.location
 
     /**
      * Get a specific token from the [DataBasedTokenInputStream]

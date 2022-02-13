@@ -2,13 +2,13 @@ package io.github.shakelang.shake.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.lexer.LexingBase
-import io.github.shakelang.shake.lexer.token.Token
+import io.github.shakelang.shake.lexer.ShakeLexingBase
+import io.github.shakelang.shake.lexer.token.ShakeToken
 
-class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : LexingBase(inputStream), TokenInputStream {
+class ShakeOnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : ShakeLexingBase(inputStream), ShakeTokenInputStream {
 
-    val buffer: MutableList<Token> = mutableListOf()
-    override lateinit var actual: Token
+    val buffer: MutableList<ShakeToken> = mutableListOf()
+    override lateinit var actual: ShakeToken
         private set
 
     override val source: String
@@ -49,7 +49,7 @@ class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : Lexing
         for(i in 0 until amount) skip()
     }
 
-    override fun peek(offset: Int): Token {
+    override fun peek(offset: Int): ShakeToken {
         try {
             fillBuffer(offset)
         }  catch (e: IndexOutOfBoundsException) {

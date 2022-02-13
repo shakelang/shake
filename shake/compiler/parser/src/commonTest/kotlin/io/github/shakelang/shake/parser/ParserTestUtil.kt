@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.parser
 
 import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.lexer.Lexer
+import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.node.Node
 import io.github.shakelang.shake.parser.node.Tree
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
@@ -13,7 +13,7 @@ import kotlin.test.assertNotNull
 object ParserTestUtil {
     fun parse(source: String, input: String): Tree {
         val input: CharacterInputStream = SourceCharacterInputStream(source, input)
-        val lexer = Lexer(input)
+        val lexer = ShakeLexer(input)
         val tokens = lexer.makeTokens()
         val parser = Parser(tokens)
         return parser.parse()

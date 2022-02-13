@@ -1,5 +1,5 @@
 package io.github.shakelang.shake.interpreter
-import io.github.shakelang.shake.lexer.Lexer
+import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.Parser
 import io.github.shakelang.shake.parser.node.Tree
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
@@ -25,7 +25,7 @@ private fun parse(input: String): ParseResult = parse(SourceCharacterInputStream
 private fun parse(input: CharacterInputStream): ParseResult {
 
     // Create a new Lexer from the CharacterInputStream
-    val lexer = Lexer(input)
+    val lexer = ShakeLexer(input)
 
     // Generate the tokens using the lexer
     val tokens = lexer.makeTokens()

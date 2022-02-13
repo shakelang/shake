@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.interpreter
 
 import io.github.shakelang.shake.interpreter.values.Java
-import io.github.shakelang.shake.lexer.Lexer
+import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.Parser
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
@@ -26,7 +26,7 @@ private fun load(interpreter: Interpreter, src: String, src_name: String) {
     for (i in chars.indices) chars[i] = reader.read().toChar()
     val source = from(chars, src_name)
     val inputStream: CharacterInputStream = SourceCharacterInputStream(source)
-    val lexer = Lexer(inputStream)
+    val lexer = ShakeLexer(inputStream)
     val tokens = lexer.makeTokens()
     val parser = Parser(tokens)
     val tree = parser.parse()
