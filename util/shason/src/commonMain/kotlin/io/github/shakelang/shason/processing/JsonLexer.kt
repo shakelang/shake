@@ -16,7 +16,7 @@ import kotlin.jvm.JvmOverloads
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
-class JsonLexer(
+class JsonLexer (
 
     /**
      * The [CharacterInputStream] to create the [JsonTokenInputStream] from
@@ -86,8 +86,7 @@ class JsonLexer(
 
 
         // Create a new JsonTokenInputStream out of the tokens
-        return JsonTokenInputStream(
-            chars.source.location,
+        return JsonTokenInputStreamImpl(
             tokens.toTypedArray(),
             chars.positionMaker.createPositionMap()
         )

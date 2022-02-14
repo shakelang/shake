@@ -41,9 +41,9 @@ class JsonParser(
 
             LCURL -> parseMap()
             LSQUARE -> parseArray()
-            STRING -> JsonElement.from(Characters.parseString(tokens.actual().value!!))
-            INT -> JsonElement.from(tokens.actual().value!!.toLong())
-            DOUBLE -> JsonElement.from(tokens.actual().value!!.toDouble())
+            STRING -> JsonElement.from(Characters.parseString(tokens.actual.value!!))
+            INT -> JsonElement.from(tokens.actual.value!!.toLong())
+            DOUBLE -> JsonElement.from(tokens.actual.value!!.toDouble())
             TRUE -> JsonBooleanElement.TRUE
             FALSE -> JsonBooleanElement.FALSE
 
@@ -59,7 +59,7 @@ class JsonParser(
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun parseMap(): JsonObject {
-        if (tokens.actual().type != LCURL) throw ParserError("Expecting '{'")
+        if (tokens.actual.type != LCURL) throw ParserError("Expecting '{'")
 
         val map = mutableJsonObjectOf()
         var next = true
@@ -85,7 +85,7 @@ class JsonParser(
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun parseArray(): JsonArray {
-        if (tokens.actual().type != LSQUARE) throw ParserError("Expecting '['")
+        if (tokens.actual.type != LSQUARE) throw ParserError("Expecting '['")
 
         val arr = mutableJsonArrayOf()
         var next = true
@@ -170,21 +170,6 @@ class JsonParser(
             details,
             tokens.map.resolve(start),
             tokens.map.resolve(end)
-        )
-
-
-        /**
-         * Constructor for [ParserError]
-         *
-         * @param error the [ParserError] message
-         * @param position the position of the [ParserError]
-         *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-         */
-        constructor(error: String, position: Int) : this(
-            error,
-            tokens.map.resolve(tokens[position].start),
-            tokens.map.resolve(tokens[position].end)
         )
 
 
