@@ -84,7 +84,7 @@ enum class ShakeTokenType(private val length: Int) : TokenType {
     override fun length(value: String?): Int {
         return if(hasValue) value?.length ?: 0 else length
     }
-    override val hasValue: Boolean get() = length != -1
+    override val hasValue: Boolean get() = length < 0
     val tokenName: String get() = name
     val tokenLength: Int get() = length
 }
