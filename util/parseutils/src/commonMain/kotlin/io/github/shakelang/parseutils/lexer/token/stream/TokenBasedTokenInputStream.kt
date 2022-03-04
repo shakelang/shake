@@ -6,7 +6,7 @@ import io.github.shakelang.shake.lexer.token.Token
 
 /**
  * A [TokenBasedTokenInputStream] provides the [Token]s for a Parser. It is
- * created by the [io.github.shakelang.shake.lexer.Lexer]
+ * created by a lexer
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
@@ -22,7 +22,8 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
 
 ) : TokenInputStream<TT, T> {
 
-    override val source = map.source.location
+    override val source get() = map.source.location
+    override val size: Int get() = tokens.size
 
     /**
      * Get a specific token from the [DataBasedTokenInputStream]

@@ -6,7 +6,7 @@ import io.github.shakelang.parseutils.lexer.token.TokenType
 
 /**
  * A [TokenInputStream] provides the [Token]s for a Parser. It is
- * created by the [io.github.shakelang.shake.lexer.Lexer]
+ * created by a lexer
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
@@ -28,6 +28,11 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * The position that the TokenInputStream is actually at
      */
     val position: Int
+
+    /**
+     * The size of the TokenInputStream
+     */
+    val size: Int
 
     /**
      * Checks if the [TokenInputStream] has left a given number of tokens

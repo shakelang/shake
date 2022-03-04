@@ -13,8 +13,8 @@ import io.github.shakelang.shake.lexer.token.ShakeTokenType
 @Suppress("unused")
 interface ShakeTokenInputStream : TokenInputStream<ShakeTokenType, ShakeToken> {
     fun skipIgnorable(): ShakeTokenInputStream {
-        while (peek().type == ShakeTokenType.LINE_SEPARATOR) {
-            next()
+        while (hasNext() && peek().type == ShakeTokenType.LINE_SEPARATOR) {
+            skip()
         }
         return this
     }

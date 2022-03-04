@@ -9,6 +9,8 @@ open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
     private val lexingBase: LexingBase<TT, T>
 ) : LexingBase<TT, T>(lexingBase.input), TokenInputStream<TT, T> {
 
+    override val size: Int get() = throw UnsupportedOperationException()
+
     val buffer: MutableList<T> = mutableListOf()
     override lateinit var actual: T
 

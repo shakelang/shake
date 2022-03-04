@@ -6,7 +6,7 @@ import io.github.shakelang.parseutils.lexer.token.TokenType
 
 /**
  * A [DataBasedTokenInputStream] provides the [Token]s for a Parser. It is
- * created by the [io.github.shakelang.shake.lexer.Lexer]
+ * created by a lexer
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
@@ -80,6 +80,11 @@ open class DataBasedTokenInputStream<TT: TokenType, T: Token<TT>>
             valuePos = -1
             for (i in 0..position) if (tokenTypes[i].hasValue) valuePos++
         }
+
+    /**
+     * Get the amount of contained tokens
+     */
+    override val size: Int get() = tokenTypes.size
 
     /**
      * Getter for [tokenTypes] (Gives back an array of [Token]s)

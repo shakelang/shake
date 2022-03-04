@@ -7,6 +7,7 @@ import io.github.shakelang.shake.lexer.token.ShakeToken
 
 class ShakeOnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : ShakeLexingBase(inputStream), ShakeTokenInputStream {
 
+    override val size get() = throw UnsupportedOperationException()
     val buffer: MutableList<ShakeToken> = mutableListOf()
     override lateinit var actual: ShakeToken
         private set
