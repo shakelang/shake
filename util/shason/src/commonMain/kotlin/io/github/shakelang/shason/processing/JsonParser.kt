@@ -66,7 +66,7 @@ class JsonParser(
 
         while (tokens.hasNext() && next) {
             val key = if (tokens.peek().type == STRING) Characters.parseString(tokens.next().value!!) else break
-            if (tokens.next().type != COLON) throw ParserError("Expecting ':'")
+            if (tokens.nextType() != COLON) throw ParserError("Expecting ':'")
             map[key] = parseValue()
 
             next = tokens.peek().type == COMMA

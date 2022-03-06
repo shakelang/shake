@@ -34,7 +34,7 @@ class JsonLexer (
     fun makeTokens(): JsonTokenInputStream {
 
         // Set for storing the generated tokens
-        val tokens = mutableSetOf<JsonToken>()
+        val tokens = mutableListOf<JsonToken>()
 
         // Loop over all the characters in the characterInputStream
         while (this.chars.hasNext()) {
