@@ -1,5 +1,7 @@
 package io.github.shakelang.shake.lexer.token
 
+import io.github.shakelang.parseutils.lexer.token.TokenType
+
 
 /**
  * The input of the [io.github.shakelang.shake.lexer.Lexer] gets converted into [Token]s. These get parsed
@@ -8,7 +10,7 @@ package io.github.shakelang.shake.lexer.token
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
-class Token
+open class Token<T : TokenType>
 /**
  * Constructor for [Token]
  *
@@ -31,28 +33,28 @@ class Token
      *
      * @see Token
      */
-    val type: Byte,
+    open val type: T,
 
     /**
      * The value of the [Token] (This is for identifiers, strings or numbers. If not necessary this is null)
      *
      * @see Token
      */
-    val value: String?,
+    open val value: String?,
 
     /**
      * The starting Position of the [Token]
      *
      * @see Token
      */
-    val start: Int,
+    open val start: Int,
 
     /**
      * The ending Position of the [Token]
      *
      * @see Token
      */
-    val end: Int
+    open val end: Int
 ) {
 
     /**
@@ -70,7 +72,7 @@ class Token
      * @see start
      * @see end
      */
-    constructor(type: Byte, value: String?, end: Int) : this(type, value, end - type.tokenLength(value) + 1, end)
+    constructor(type: T, value: String?, end: Int) : this(type, value, end - type.length(value) + 1, end)
 
     /**
      * Constructor for [Token]
@@ -86,7 +88,7 @@ class Token
      * @see start
      * @see end
      */
-    constructor(type: Byte, start: Int, end: Int) : this(type, null, start, end)
+    constructor(type: T, start: Int, end: Int) : this(type, null, start, end)
 
     /**
      * Constructor for [Token]
@@ -101,7 +103,7 @@ class Token
      * @see start
      * @see end
      */
-    constructor(type: Byte, end: Int) : this(type, null, end)
+    constructor(type: T, end: Int) : this(type, null, end)
 
     override fun toString(): String {
         return if (start == end) if (value != null) "" +
@@ -112,7 +114,7 @@ class Token
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if(other is Byte) return other == this.type
-        if (other == null || other !is Token) return false
+        if (other == null || other !is Token<*>) return false
         return type == other.type &&
                 value == other.value
     }

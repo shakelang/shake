@@ -2,8 +2,8 @@ package io.github.shakelang.shake.lexer
 
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
-import io.github.shakelang.shake.lexer.token.Token
-import io.github.shakelang.shake.lexer.token.TokenType
+import io.github.shakelang.shake.lexer.token.ShakeToken
+import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -14,11 +14,11 @@ class LexerBaseTests {
     fun testString() {
 
         // strings
-        assertEquals("", generateToken("\"\"", TokenType.STRING).value)
-        assertEquals("afvne9214 ro", generateToken("\"afvne9214 ro\"", TokenType.STRING).value)
+        assertEquals("", generateToken("\"\"", ShakeTokenType.STRING).value)
+        assertEquals("afvne9214 ro", generateToken("\"afvne9214 ro\"", ShakeTokenType.STRING).value)
         assertEquals(
             "\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000",
-            generateToken("\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\"", TokenType.STRING).value
+            generateToken("\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\"", ShakeTokenType.STRING).value
         )
     }
 
@@ -26,91 +26,91 @@ class LexerBaseTests {
     fun testCharacter() {
 
         // characters
-        assertEquals(" ", generateToken("' '", TokenType.CHARACTER).value)
-        assertEquals("a", generateToken("'a'", TokenType.CHARACTER).value)
-        assertEquals("\\r", generateToken("'\\r'", TokenType.CHARACTER).value)
-        assertEquals("\\n", generateToken("'\\n'", TokenType.CHARACTER).value)
-        assertEquals("\\b", generateToken("'\\b'", TokenType.CHARACTER).value)
-        assertEquals("\\t", generateToken("'\\t'", TokenType.CHARACTER).value)
-        assertEquals("\\f", generateToken("'\\f'", TokenType.CHARACTER).value)
-        assertEquals("\\'", generateToken("'\\''", TokenType.CHARACTER).value)
-        assertEquals("\\u0000", generateToken("'\\u0000'", TokenType.CHARACTER).value)
+        assertEquals(" ", generateToken("' '", ShakeTokenType.CHARACTER).value)
+        assertEquals("a", generateToken("'a'", ShakeTokenType.CHARACTER).value)
+        assertEquals("\\r", generateToken("'\\r'", ShakeTokenType.CHARACTER).value)
+        assertEquals("\\n", generateToken("'\\n'", ShakeTokenType.CHARACTER).value)
+        assertEquals("\\b", generateToken("'\\b'", ShakeTokenType.CHARACTER).value)
+        assertEquals("\\t", generateToken("'\\t'", ShakeTokenType.CHARACTER).value)
+        assertEquals("\\f", generateToken("'\\f'", ShakeTokenType.CHARACTER).value)
+        assertEquals("\\'", generateToken("'\\''", ShakeTokenType.CHARACTER).value)
+        assertEquals("\\u0000", generateToken("'\\u0000'", ShakeTokenType.CHARACTER).value)
     }
 
     @Test
     fun testPunctuation() {
 
         // punctuation
-        generateToken(";", TokenType.SEMICOLON) // ';'
-        generateToken(",", TokenType.COMMA) // ','
-        generateToken(".", TokenType.DOT) // '.'
+        generateToken(";", ShakeTokenType.SEMICOLON) // ';'
+        generateToken(",", ShakeTokenType.COMMA) // ','
+        generateToken(".", ShakeTokenType.DOT) // '.'
     }
 
     @Test
     fun testLineSeparator() {
 
         // line separator
-        generateToken("\n", TokenType.LINE_SEPARATOR) // '\n'
-        generateToken("\r\n", TokenType.LINE_SEPARATOR) // '\r\n'
+        generateToken("\n", ShakeTokenType.LINE_SEPARATOR) // '\n'
+        generateToken("\r\n", ShakeTokenType.LINE_SEPARATOR) // '\r\n'
     }
 
     @Test
     fun testAssign() {
 
         // assign
-        generateToken("=", TokenType.ASSIGN) // '='
+        generateToken("=", ShakeTokenType.ASSIGN) // '='
 
         // math assign operators
-        generateToken("+=", TokenType.ADD_ASSIGN) // '+='
-        generateToken("-=", TokenType.SUB_ASSIGN) // '-='
-        generateToken("*=", TokenType.MUL_ASSIGN) // '*='
-        generateToken("/=", TokenType.DIV_ASSIGN) // '/='
-        generateToken("%=", TokenType.MOD_ASSIGN) // '%='
-        generateToken("**=", TokenType.POW_ASSIGN) // "**="
-        generateToken("++", TokenType.INCR) // '++'
-        generateToken("--", TokenType.DECR) // '--'
+        generateToken("+=", ShakeTokenType.ADD_ASSIGN) // '+='
+        generateToken("-=", ShakeTokenType.SUB_ASSIGN) // '-='
+        generateToken("*=", ShakeTokenType.MUL_ASSIGN) // '*='
+        generateToken("/=", ShakeTokenType.DIV_ASSIGN) // '/='
+        generateToken("%=", ShakeTokenType.MOD_ASSIGN) // '%='
+        generateToken("**=", ShakeTokenType.POW_ASSIGN) // "**="
+        generateToken("++", ShakeTokenType.INCR) // '++'
+        generateToken("--", ShakeTokenType.DECR) // '--'
     }
 
     @Test
     fun testMathOperators() {
 
         // math operators
-        generateToken("+", TokenType.ADD) // '+'
-        generateToken("-", TokenType.SUB) // '-'
-        generateToken("*", TokenType.MUL) // '*'
-        generateToken("/", TokenType.DIV) // '/'
-        generateToken("%", TokenType.MOD) // '%'
-        generateToken("**", TokenType.POW) // "**"
+        generateToken("+", ShakeTokenType.ADD) // '+'
+        generateToken("-", ShakeTokenType.SUB) // '-'
+        generateToken("*", ShakeTokenType.MUL) // '*'
+        generateToken("/", ShakeTokenType.DIV) // '/'
+        generateToken("%", ShakeTokenType.MOD) // '%'
+        generateToken("**", ShakeTokenType.POW) // "**"
     }
 
     @Test
     fun testLogicalComparison() {
 
         // logical comparison
-        generateToken("==", TokenType.EQ_EQUALS) // "=="
-        generateToken(">=", TokenType.BIGGER_EQUALS) // ">="
-        generateToken("<=", TokenType.SMALLER_EQUALS) // "<="
-        generateToken(">", TokenType.BIGGER) // '>'
-        generateToken("<", TokenType.SMALLER) // '<'
+        generateToken("==", ShakeTokenType.EQ_EQUALS) // "=="
+        generateToken(">=", ShakeTokenType.BIGGER_EQUALS) // ">="
+        generateToken("<=", ShakeTokenType.SMALLER_EQUALS) // "<="
+        generateToken(">", ShakeTokenType.BIGGER) // '>'
+        generateToken("<", ShakeTokenType.SMALLER) // '<'
     }
 
     @Test
     fun testLogicalConcatenation() {
 
         // logical concatenation
-        generateToken("||", TokenType.LOGICAL_OR) // "||"
-        generateToken("^", TokenType.LOGICAL_XOR) // "^"
-        generateToken("&&", TokenType.LOGICAL_AND) // "&&"
+        generateToken("||", ShakeTokenType.LOGICAL_OR) // "||"
+        generateToken("^", ShakeTokenType.LOGICAL_XOR) // "^"
+        generateToken("&&", ShakeTokenType.LOGICAL_AND) // "&&"
     }
 
     @Test
     fun testBrackets() {
 
         // brackets
-        generateToken("(", TokenType.LPAREN) // '('
-        generateToken(")", TokenType.RPAREN) // ')'
-        generateToken("{", TokenType.LCURL) // '{'
-        generateToken("}", TokenType.RCURL) // '}'
+        generateToken("(", ShakeTokenType.LPAREN) // '('
+        generateToken(")", ShakeTokenType.RPAREN) // ')'
+        generateToken("{", ShakeTokenType.LCURL) // '{'
+        generateToken("}", ShakeTokenType.RCURL) // '}'
     }
     fun testKeyword(test: KeywordTest) {
         generateToken(test.input, test.output)
@@ -155,66 +155,66 @@ class LexerBaseTests {
     fun testNumbers() {
 
         // numbers
-        assertEquals("149", generateToken("149", TokenType.INTEGER).value)
-        assertEquals("0.01", generateToken("0.01", TokenType.DOUBLE).value)
+        assertEquals("149", generateToken("149", ShakeTokenType.INTEGER).value)
+        assertEquals("0.01", generateToken("0.01", ShakeTokenType.DOUBLE).value)
     }
 
     @Test
     fun testIdentifiers() {
 
         // identifiers
-        assertEquals("hello", generateToken("hello", TokenType.IDENTIFIER).value)
-        assertEquals("world0A_", generateToken("world0A_", TokenType.IDENTIFIER).value)
+        assertEquals("hello", generateToken("hello", ShakeTokenType.IDENTIFIER).value)
+        assertEquals("world0A_", generateToken("world0A_", ShakeTokenType.IDENTIFIER).value)
     }
 
     @Test
     fun testSingleLineComments() {
-        generateToken("// test\n", TokenType.LINE_SEPARATOR)
+        generateToken("// test\n", ShakeTokenType.LINE_SEPARATOR)
     }
 
     @Test
     fun testMultiLineComments() {
-        generateToken("/* test */\n", TokenType.LINE_SEPARATOR)
-        generateToken("/*\ntest\ntest2*/\n", TokenType.LINE_SEPARATOR)
-        generateToken("/*\n * test\n *  test2\n */\n", TokenType.LINE_SEPARATOR)
+        generateToken("/* test */\n", ShakeTokenType.LINE_SEPARATOR)
+        generateToken("/*\ntest\ntest2*/\n", ShakeTokenType.LINE_SEPARATOR)
+        generateToken("/*\n * test\n *  test2\n */\n", ShakeTokenType.LINE_SEPARATOR)
     }
 
     @Suppress("unused")
-    enum class KeywordTest(val input: String, val output: Byte) {
-        DYNAMIC("dynamic", TokenType.KEYWORD_DYNAMIC),
-        BYTE("byte", TokenType.KEYWORD_BYTE),
-        SHORT("short", TokenType.KEYWORD_SHORT),
-        INT("int", TokenType.KEYWORD_INT),
-        LONG("long", TokenType.KEYWORD_LONG),
-        FLOAT("float", TokenType.KEYWORD_FLOAT),
-        DOUBLE("double", TokenType.KEYWORD_DOUBLE),
-        CHAR("char", TokenType.KEYWORD_CHAR),
-        BOOLEAN("boolean", TokenType.KEYWORD_BOOLEAN),
-        VAR("var", TokenType.KEYWORD_VAR),
-        LET("let", TokenType.KEYWORD_VAR),
-        CONST("const", TokenType.KEYWORD_CONST),
-        FUNCTION("function", TokenType.KEYWORD_FUNCTION),
-        RETURN("return", TokenType.KEYWORD_RETURN),
-        DO("do", TokenType.KEYWORD_DO),
-        WHILE("while", TokenType.KEYWORD_WHILE),
-        FOR("for", TokenType.KEYWORD_FOR),
-        IF("if", TokenType.KEYWORD_IF),
-        ELSE("else", TokenType.KEYWORD_ELSE),
-        TRUE("true", TokenType.KEYWORD_TRUE),
-        FALSE("false", TokenType.KEYWORD_FALSE),
-        CLASS("class", TokenType.KEYWORD_CLASS),
-        EXTENDS("extends", TokenType.KEYWORD_EXTENDS),
-        IMPLEMENTS("implements", TokenType.KEYWORD_IMPLEMENTS),
-        STATIC("static", TokenType.KEYWORD_STATIC),
-        FINAL("final", TokenType.KEYWORD_FINAL),
-        PUBLIC("public", TokenType.KEYWORD_PUBLIC),
-        PROTECTED("protected", TokenType.KEYWORD_PROTECTED),
-        PRIVATE("private", TokenType.KEYWORD_PRIVATE),
-        NEW("new", TokenType.KEYWORD_NEW),
-        IMPORT("import", TokenType.KEYWORD_IMPORT),
-        VOID("void", TokenType.KEYWORD_VOID),
-        CONSTRUCTOR("constructor", TokenType.KEYWORD_CONSTRUCTOR),
-        AS("as", TokenType.KEYWORD_AS);
+    enum class KeywordTest(val input: String, val output: ShakeTokenType) {
+        DYNAMIC("dynamic", ShakeTokenType.KEYWORD_DYNAMIC),
+        BYTE("byte", ShakeTokenType.KEYWORD_BYTE),
+        SHORT("short", ShakeTokenType.KEYWORD_SHORT),
+        INT("int", ShakeTokenType.KEYWORD_INT),
+        LONG("long", ShakeTokenType.KEYWORD_LONG),
+        FLOAT("float", ShakeTokenType.KEYWORD_FLOAT),
+        DOUBLE("double", ShakeTokenType.KEYWORD_DOUBLE),
+        CHAR("char", ShakeTokenType.KEYWORD_CHAR),
+        BOOLEAN("boolean", ShakeTokenType.KEYWORD_BOOLEAN),
+        VAR("var", ShakeTokenType.KEYWORD_VAR),
+        LET("let", ShakeTokenType.KEYWORD_VAR),
+        CONST("const", ShakeTokenType.KEYWORD_CONST),
+        FUNCTION("function", ShakeTokenType.KEYWORD_FUNCTION),
+        RETURN("return", ShakeTokenType.KEYWORD_RETURN),
+        DO("do", ShakeTokenType.KEYWORD_DO),
+        WHILE("while", ShakeTokenType.KEYWORD_WHILE),
+        FOR("for", ShakeTokenType.KEYWORD_FOR),
+        IF("if", ShakeTokenType.KEYWORD_IF),
+        ELSE("else", ShakeTokenType.KEYWORD_ELSE),
+        TRUE("true", ShakeTokenType.KEYWORD_TRUE),
+        FALSE("false", ShakeTokenType.KEYWORD_FALSE),
+        CLASS("class", ShakeTokenType.KEYWORD_CLASS),
+        EXTENDS("extends", ShakeTokenType.KEYWORD_EXTENDS),
+        IMPLEMENTS("implements", ShakeTokenType.KEYWORD_IMPLEMENTS),
+        STATIC("static", ShakeTokenType.KEYWORD_STATIC),
+        FINAL("final", ShakeTokenType.KEYWORD_FINAL),
+        PUBLIC("public", ShakeTokenType.KEYWORD_PUBLIC),
+        PROTECTED("protected", ShakeTokenType.KEYWORD_PROTECTED),
+        PRIVATE("private", ShakeTokenType.KEYWORD_PRIVATE),
+        NEW("new", ShakeTokenType.KEYWORD_NEW),
+        IMPORT("import", ShakeTokenType.KEYWORD_IMPORT),
+        VOID("void", ShakeTokenType.KEYWORD_VOID),
+        CONSTRUCTOR("constructor", ShakeTokenType.KEYWORD_CONSTRUCTOR),
+        AS("as", ShakeTokenType.KEYWORD_AS);
 
         override fun toString(): String {
             return "Keyword '$input'"
@@ -223,9 +223,9 @@ class LexerBaseTests {
 
     companion object {
         @Suppress("deprecation")
-        fun generateToken(input: String, tt: Byte): Token {
+        fun generateToken(input: String, tt: ShakeTokenType): ShakeToken {
             val i: CharacterInputStream = SourceCharacterInputStream("<tests>", input)
-            val lexer = object: LexingBase(i) {}
+            val lexer = object: ShakeLexingBase(i) {}
             val t = lexer.makeToken()
             assertSame(tt, t.type)
             assertFalse(i.hasNext())

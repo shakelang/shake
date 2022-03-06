@@ -1,26 +1,29 @@
-package io.github.shakelang.shake.lexer.token.stream
+package io.github.shakelang.parseutils.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.parseutils.lexer.token.TokenType
 import io.github.shakelang.shake.lexer.token.Token
 
 /**
  * A [TokenBasedTokenInputStream] provides the [Token]s for a Parser. It is
- * created by the [io.github.shakelang.shake.lexer.Lexer]
+ * created by a lexer
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
-class TokenBasedTokenInputStream
+open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
 (
-    override val source: String,
 
     /**
      * The tokenTypes that are contained in the [TokenBasedTokenInputStream]
      */
-    val tokens: Array<Token>,
+    open val tokens: Array<T>,
     override val map: PositionMap
 
-) : TokenInputStream {
+) : TokenInputStream<TT, T> {
+
+    override val source get() = map.source.location
+    override val size: Int get() = tokens.size
 
     /**
      * Get a specific token from the [DataBasedTokenInputStream]
@@ -30,7 +33,7 @@ class TokenBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    operator fun get(position: Int): Token {
+    open operator fun get(position: Int): T {
         return tokens[position]
     }
 
@@ -42,7 +45,7 @@ class TokenBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun getType(position: Int): Byte {
+    open fun getType(position: Int): TT {
         return this[position].type
     }
 
@@ -54,8 +57,7 @@ class TokenBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @Suppress("deprecation")
-    fun getStart(position: Int): Int {
+    open fun getStart(position: Int): Int {
         return this[position].start
     }
 
@@ -67,7 +69,7 @@ class TokenBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun getEnd(position: Int): Int {
+    open fun getEnd(position: Int): Int {
         return this[position].end
     }
 
@@ -79,7 +81,7 @@ class TokenBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun getValue(position: Int): String? {
+    open fun getValue(position: Int): String? {
         return this[position].value
     }
 
@@ -91,7 +93,7 @@ class TokenBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun getHasValue(position: Int): Boolean {
+    open fun getHasValue(position: Int): Boolean {
         return this[position].value != null
     }
 
@@ -101,7 +103,7 @@ class TokenBasedTokenInputStream
         return position + num < tokens.size
     }
 
-    override fun next(): Token {
+    override fun next(): T {
         if(!hasNext()) throw Error("Not enough tokens left")
         return tokens[++position]
     }
@@ -119,17 +121,17 @@ class TokenBasedTokenInputStream
         return position + 1 < tokens.size
     }
 
-    override fun peek(): Token {
+    override fun peek(): T {
         if(position + 1 >= tokens.size) throw Error("Not enough tokens left")
         return tokens[position + 1]
     }
 
-    override fun peek(offset: Int): Token {
+    override fun peek(offset: Int): T {
         if(position + offset >= tokens.size) throw Error("Not enough tokens left")
         return tokens[position + offset]
     }
 
-    override val actual: Token
+    override val actual: T
         get() = tokens[position]
 
     fun reset() {

@@ -1,17 +1,17 @@
-package io.github.shakelang.shake.lexer.token.stream
+package io.github.shakelang.parseutils.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.lexer.token.Token
-import io.github.shakelang.shake.lexer.token.TokenType
+import io.github.shakelang.parseutils.lexer.token.TokenType
 
 /**
  * A [TokenInputStream] provides the [Token]s for a Parser. It is
- * created by the [io.github.shakelang.shake.lexer.Lexer]
+ * created by a lexer
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
-interface TokenInputStream {
+interface TokenInputStream<TT: TokenType, T : Token<TT>> {
 
     /**
      * The source (mostly filename) of the [TokenInputStream]
@@ -28,6 +28,11 @@ interface TokenInputStream {
      * The position that the TokenInputStream is actually at
      */
     val position: Int
+
+    /**
+     * The size of the TokenInputStream
+     */
+    val size: Int
 
     /**
      * Checks if the [TokenInputStream] has left a given number of tokens
@@ -54,7 +59,7 @@ interface TokenInputStream {
      * @return the next token
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    operator fun next(): Token {
+    operator fun next(): T {
         // skip to next token and then return the actual token
         skip()
         return actual
@@ -67,7 +72,7 @@ interface TokenInputStream {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun nextType(): Byte {
+    fun nextType(): TT {
         // skip to next token and then return the actual token
         skip()
         return actualType
@@ -101,27 +106,12 @@ interface TokenInputStream {
     fun skip(amount: Int)
 
     /**
-     * Skips all ignorable tokens
-     * _(ignorable tokens are tokens that can have a function in the parser, but can also be ignored
-     * ([TokenType.LINE_SEPARATOR]))
-     *
-     * @return The [TokenInputStream] itself so you can do an operation directly after the call
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
-    fun skipIgnorable(): TokenInputStream {
-        // As long as the next token is a line-separator execute skip
-        while (hasNext() && peekType() == TokenType.LINE_SEPARATOR) skip()
-        return this
-    }
-
-    /**
      * Returns the actual [Token]
      *
      * @return The actual [Token]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    val actual: Token
+    val actual: T
 
     /**
      * Returns the type of the actual token
@@ -130,7 +120,7 @@ interface TokenInputStream {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    val actualType: Byte get() {
+    val actualType: TT get() {
         return actual.type
     }
 
@@ -184,7 +174,7 @@ interface TokenInputStream {
      * @return The next [Token]
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun peek(): Token {
+    fun peek(): T {
         return peek(1)
     }
 
@@ -195,7 +185,7 @@ interface TokenInputStream {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun peekType(): Byte {
+    fun peekType(): TT {
         return peek().type
     }
 
@@ -246,12 +236,12 @@ interface TokenInputStream {
     /**
      * Peek the token at the given index
      */
-    fun peek(offset: Int): Token
+    fun peek(offset: Int): T
 
     /**
      * Peek the token type at the given index
      */
-    fun peekType(offset: Int): Byte {
+    fun peekType(offset: Int): TT {
         return peek(offset).type
     }
 

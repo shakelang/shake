@@ -191,8 +191,7 @@ class JsonLexerTests {
 
     fun testTokens(src: String, content: String, vararg expectedTokens: JsonToken) {
         val input = makeTokens(src, content)
-        assertSame(expectedTokens.size, input.size,
-            "Expected ${expectedTokens.size} tokens, but got ${input.size}")
+        assertSame(expectedTokens.size, input.size, "Expected ${expectedTokens.size} tokens, but got ${input.size}")
         for(t in expectedTokens) assertEquals(t, input.next())
     }
 }

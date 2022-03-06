@@ -4,15 +4,16 @@ import io.github.shakelang.parseutils.CompilerError
 import io.github.shakelang.parseutils.characters.Characters
 import io.github.shakelang.parseutils.characters.position.Position
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.lexer.token.Token
-import io.github.shakelang.shake.lexer.token.TokenType
+import io.github.shakelang.parseutils.lexer.LexingBase
+import io.github.shakelang.shake.lexer.token.ShakeToken
+import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import kotlin.jvm.JvmOverloads
 
-abstract class LexingBase(
-    protected val input: CharacterInputStream
-) {
+abstract class ShakeLexingBase(
+    input: CharacterInputStream
+) : LexingBase<ShakeTokenType, ShakeToken>(input) {
 
-    open fun makeToken(): Token {
+    override fun makeToken(): ShakeToken {
         var next = input.next()
 
         // Whitespace
@@ -22,10 +23,10 @@ abstract class LexingBase(
         val start = input.position
 
         // Linebreaks
-        return if (next == '\n') Token(TokenType.LINE_SEPARATOR, start)
-        else if (next == ';') Token(TokenType.SEMICOLON, start)
-        else if (next == ',') Token(TokenType.COMMA, start)
-        else if (next == '.') Token(TokenType.DOT, start)
+        return if (next == '\n') ShakeToken(ShakeTokenType.LINE_SEPARATOR, start)
+        else if (next == ';') ShakeToken(ShakeTokenType.SEMICOLON, start)
+        else if (next == ',') ShakeToken(ShakeTokenType.COMMA, start)
+        else if (next == '.') ShakeToken(ShakeTokenType.DOT, start)
         else if (Characters.isNumberCharacter(next)) makeNumber()
         else if (Characters.isIdentifierStartCharacter(next)) makeIdentifier()
         else if (next == '"') makeString()
@@ -40,91 +41,77 @@ abstract class LexingBase(
         }
         else if (input.has(2) && next == '*' && peek == '*' && input.peek(2) == '=') {
             input.skip(2)
-             Token(TokenType.POW_ASSIGN, input.position)
+             ShakeToken(ShakeTokenType.POW_ASSIGN, input.position)
         }
         else if (next == '%' && peek == '=') {
             input.skip()
-            Token(TokenType.MOD_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.MOD_ASSIGN, input.position)
         }
         else if (next == '/' && peek == '=') {
             input.skip()
-            Token(TokenType.DIV_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.DIV_ASSIGN, input.position)
         }
         else if (next == '*' && peek == '=') {
             input.skip()
-            Token(TokenType.MUL_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.MUL_ASSIGN, input.position)
         }
         else if (next == '-' && peek == '=') {
             input.skip()
-            Token(TokenType.SUB_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.SUB_ASSIGN, input.position)
         }
         else if (next == '+' && peek == '=') {
             input.skip()
-            Token(TokenType.ADD_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.ADD_ASSIGN, input.position)
         }
         else if (next == '+' && peek == '+') {
             input.skip()
-            Token(TokenType.INCR, input.position)
+            ShakeToken(ShakeTokenType.INCR, input.position)
         }
         else if (next == '-' && peek == '-') {
             input.skip()
-            Token(TokenType.DECR, input.position)
+            ShakeToken(ShakeTokenType.DECR, input.position)
         }
         else if (next == '*' && peek == '*') {
             input.skip()
-            Token(TokenType.POW, input.position)
+            ShakeToken(ShakeTokenType.POW, input.position)
         }
-        else if (next == '%') Token(TokenType.MOD, input.position)
-        else if (next == '/') Token(TokenType.DIV, input.position)
-        else if (next == '*') Token(TokenType.MUL, input.position)
-        else if (next == '-') Token(TokenType.SUB, input.position)
-        else if (next == '+') Token(TokenType.ADD, input.position)
-        else if (next == '^') Token(TokenType.LOGICAL_XOR, input.position)
+        else if (next == '%') ShakeToken(ShakeTokenType.MOD, input.position)
+        else if (next == '/') ShakeToken(ShakeTokenType.DIV, input.position)
+        else if (next == '*') ShakeToken(ShakeTokenType.MUL, input.position)
+        else if (next == '-') ShakeToken(ShakeTokenType.SUB, input.position)
+        else if (next == '+') ShakeToken(ShakeTokenType.ADD, input.position)
+        else if (next == '^') ShakeToken(ShakeTokenType.LOGICAL_XOR, input.position)
         else if (next == '|' && peek == '|') {
             input.skip()
-            Token(TokenType.LOGICAL_OR, input.position)
+            ShakeToken(ShakeTokenType.LOGICAL_OR, input.position)
         }
         else if (next == '&' && peek == '&') {
             input.skip()
-            Token(TokenType.LOGICAL_AND, input.position)
+            ShakeToken(ShakeTokenType.LOGICAL_AND, input.position)
         }
         else if (next == '=' && peek == '=') {
             input.skip()
-            Token(TokenType.EQ_EQUALS, input.position)
+            ShakeToken(ShakeTokenType.EQ_EQUALS, input.position)
         }
         else if (next == '>' && peek == '=') {
             input.skip()
-            Token(TokenType.BIGGER_EQUALS, input.position)
+            ShakeToken(ShakeTokenType.BIGGER_EQUALS, input.position)
         }
         else if (next == '<' && peek == '=') {
             input.skip()
-            Token(TokenType.SMALLER_EQUALS, input.position)
+            ShakeToken(ShakeTokenType.SMALLER_EQUALS, input.position)
         }
-        else if (next == '>') Token(TokenType.BIGGER, input.position)
-        else if (next == '<') Token(TokenType.SMALLER, input.position)
-        else if (next == '=') Token(TokenType.ASSIGN, input.position)
-        else if (next == '(') Token(TokenType.LPAREN, input.position)
-        else if (next == ')') Token(TokenType.RPAREN, input.position)
-        else if (next == '{') Token(TokenType.LCURL, input.position)
-        else if (next == '}') return Token(TokenType.RCURL, input.position)
+        else if (next == '>') ShakeToken(ShakeTokenType.BIGGER, input.position)
+        else if (next == '<') ShakeToken(ShakeTokenType.SMALLER, input.position)
+        else if (next == '=') ShakeToken(ShakeTokenType.ASSIGN, input.position)
+        else if (next == '(') ShakeToken(ShakeTokenType.LPAREN, input.position)
+        else if (next == ')') ShakeToken(ShakeTokenType.RPAREN, input.position)
+        else if (next == '{') ShakeToken(ShakeTokenType.LCURL, input.position)
+        else if (next == '}') return ShakeToken(ShakeTokenType.RCURL, input.position)
         else throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
     }
 
-    fun createPrimitiveIntArray(list: List<Int>): IntArray {
-        val size = list.size
-        val arr = IntArray(size)
-        for (i in 0 until size) arr[i] = list[i]
-        return arr
-    }
-
-    fun createPrimitiveByteArray(list: List<Byte>): ByteArray {
-        val size = list.size
-        val arr = ByteArray(size)
-        for (i in 0 until size) arr[i] = list[i]
-        return arr
-    }
-
-    private fun makeNumber(): Token {
+    private fun makeNumber(): ShakeToken {
         val numStr = StringBuilder()
         var dot = false
         numStr.append(input.actual())
@@ -135,14 +122,14 @@ abstract class LexingBase(
             }
             numStr.append(input.next())
         }
-        return if (dot) Token(TokenType.DOUBLE, numStr.toString(), input.position) else Token(
-            TokenType.INTEGER,
+        return if (dot) ShakeToken(ShakeTokenType.DOUBLE, numStr.toString(), input.position) else ShakeToken(
+            ShakeTokenType.INTEGER,
             numStr.toString(),
             input.position,
         )
     }
 
-    private fun makeIdentifier(): Token {
+    private fun makeIdentifier(): ShakeToken {
         val identifier = StringBuilder()
         identifier.append(input.actual())
         while (input.hasNext() && Characters.isIdentifierCharacter(input.peek())) {
@@ -150,47 +137,47 @@ abstract class LexingBase(
         }
         val result = identifier.toString()
         val end = input.position
-        return Token(
+        return ShakeToken(
             when (result) {
-                "as" -> TokenType.KEYWORD_AS
-                "boolean" -> TokenType.KEYWORD_BOOLEAN
-                "byte" -> TokenType.KEYWORD_BYTE
-                "char" -> TokenType.KEYWORD_CHAR
-                "class" -> TokenType.KEYWORD_CLASS
-                "const" -> TokenType.KEYWORD_CONST
-                "constructor" -> TokenType.KEYWORD_CONSTRUCTOR
-                "do" -> TokenType.KEYWORD_DO
-                "double" -> TokenType.KEYWORD_DOUBLE
-                "dynamic" -> TokenType.KEYWORD_DYNAMIC
-                "else" -> TokenType.KEYWORD_ELSE
-                "extends" -> TokenType.KEYWORD_EXTENDS
-                "false" -> TokenType.KEYWORD_FALSE
-                "final" -> TokenType.KEYWORD_FINAL
-                "float" -> TokenType.KEYWORD_FLOAT
-                "for" -> TokenType.KEYWORD_FOR
-                "function" -> TokenType.KEYWORD_FUNCTION
-                "if" -> TokenType.KEYWORD_IF
-                "implements" -> TokenType.KEYWORD_IMPLEMENTS
-                "import" -> TokenType.KEYWORD_IMPORT
-                "int" -> TokenType.KEYWORD_INT
-                "long" -> TokenType.KEYWORD_LONG
-                "new" -> TokenType.KEYWORD_NEW
-                "private" -> TokenType.KEYWORD_PRIVATE
-                "protected" -> TokenType.KEYWORD_PROTECTED
-                "public" -> TokenType.KEYWORD_PUBLIC
-                "return" -> TokenType.KEYWORD_RETURN
-                "short" -> TokenType.KEYWORD_SHORT
-                "static" -> TokenType.KEYWORD_STATIC
-                "true" -> TokenType.KEYWORD_TRUE
-                "var", "let" -> TokenType.KEYWORD_VAR
-                "void" -> TokenType.KEYWORD_VOID
-                "while" -> TokenType.KEYWORD_WHILE
-                else -> return Token(TokenType.IDENTIFIER, identifier.toString(), end)
+                "as" -> ShakeTokenType.KEYWORD_AS
+                "boolean" -> ShakeTokenType.KEYWORD_BOOLEAN
+                "byte" -> ShakeTokenType.KEYWORD_BYTE
+                "char" -> ShakeTokenType.KEYWORD_CHAR
+                "class" -> ShakeTokenType.KEYWORD_CLASS
+                "const" -> ShakeTokenType.KEYWORD_CONST
+                "constructor" -> ShakeTokenType.KEYWORD_CONSTRUCTOR
+                "do" -> ShakeTokenType.KEYWORD_DO
+                "double" -> ShakeTokenType.KEYWORD_DOUBLE
+                "dynamic" -> ShakeTokenType.KEYWORD_DYNAMIC
+                "else" -> ShakeTokenType.KEYWORD_ELSE
+                "extends" -> ShakeTokenType.KEYWORD_EXTENDS
+                "false" -> ShakeTokenType.KEYWORD_FALSE
+                "final" -> ShakeTokenType.KEYWORD_FINAL
+                "float" -> ShakeTokenType.KEYWORD_FLOAT
+                "for" -> ShakeTokenType.KEYWORD_FOR
+                "function" -> ShakeTokenType.KEYWORD_FUNCTION
+                "if" -> ShakeTokenType.KEYWORD_IF
+                "implements" -> ShakeTokenType.KEYWORD_IMPLEMENTS
+                "import" -> ShakeTokenType.KEYWORD_IMPORT
+                "int" -> ShakeTokenType.KEYWORD_INT
+                "long" -> ShakeTokenType.KEYWORD_LONG
+                "new" -> ShakeTokenType.KEYWORD_NEW
+                "private" -> ShakeTokenType.KEYWORD_PRIVATE
+                "protected" -> ShakeTokenType.KEYWORD_PROTECTED
+                "public" -> ShakeTokenType.KEYWORD_PUBLIC
+                "return" -> ShakeTokenType.KEYWORD_RETURN
+                "short" -> ShakeTokenType.KEYWORD_SHORT
+                "static" -> ShakeTokenType.KEYWORD_STATIC
+                "true" -> ShakeTokenType.KEYWORD_TRUE
+                "var", "let" -> ShakeTokenType.KEYWORD_VAR
+                "void" -> ShakeTokenType.KEYWORD_VOID
+                "while" -> ShakeTokenType.KEYWORD_WHILE
+                else -> return ShakeToken(ShakeTokenType.IDENTIFIER, identifier.toString(), end)
             }, end
         )
     }
 
-    private fun makeString(): Token {
+    private fun makeString(): ShakeToken {
         val string = StringBuilder()
         if (input.actual() == '"') {
             while (input.hasNext() && input.next() != '"') {
@@ -220,10 +207,10 @@ abstract class LexingBase(
             }
             if (input.actual() != '"') throw LexerError("String must end with a '\"'")
         }
-        return Token(TokenType.STRING, string.toString(), input.position)
+        return ShakeToken(ShakeTokenType.STRING, string.toString(), input.position)
     }
 
-    private fun makeCharacter(): Token {
+    private fun makeCharacter(): ShakeToken {
         val c: String = if (input.next() == '\\') {
             when (input.next()) {
                 't' -> "\\t"
@@ -249,7 +236,7 @@ abstract class LexingBase(
             }
         } else input.actual().toString()
         if (input.next() != '\'') throw LexerError("Char must end with a \"'\"")
-        return Token(TokenType.CHARACTER, c, input.position)
+        return ShakeToken(ShakeTokenType.CHARACTER, c, input.position)
     }
 
     private fun singleLineComment() {
