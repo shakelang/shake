@@ -1,4 +1,4 @@
-@file:Suppress("nothing_to_inline", "unused")
+@file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.interpreter
 
 import io.github.shakelang.parseutils.bytes.*
@@ -267,24 +267,24 @@ abstract class ShasamblyInterpretingBase(
         return addr
     }
 
-    inline fun byte() = memory[position]
-    inline fun short() = memory.getShort(position)
-    inline fun int() = memory.getInt(position)
-    inline fun long() = memory.getLong(position)
-    inline fun read_byte(): Byte {
+    fun byte() = memory[position]
+    fun short() = memory.getShort(position)
+    fun int() = memory.getInt(position)
+    fun long() = memory.getLong(position)
+    fun read_byte(): Byte {
         return memory[position++]
     }
-    inline fun read_short(): Short {
+    fun read_short(): Short {
         val v = short()
         position += 2
         return v
     }
-    inline fun read_int(): Int {
+    fun read_int(): Int {
         val v = int()
         position += 4
         return v
     }
-    inline fun read_long(): Long {
+    fun read_long(): Long {
         val v = long()
         position += 8
         return v
@@ -331,16 +331,16 @@ abstract class ShasamblyInterpretingBase(
 
     fun addBoolean(v: Boolean) = this.sadd(if(v) 0x1.toByte() else 0x0.toByte())
 
-    inline fun removeLastByte(): Byte
+    fun removeLastByte(): Byte
             = this.spop()
 
-    inline fun removeLastShort(): Short {
+    fun removeLastShort(): Short {
         val v1 = this.spop()
         val v0 = this.spop()
         return shortOf(v0, v1)
     }
 
-    inline fun removeLastInt(): Int {
+    fun removeLastInt(): Int {
         val v3 = this.spop()
         val v2 = this.spop()
         val v1 = this.spop()
@@ -348,7 +348,7 @@ abstract class ShasamblyInterpretingBase(
         return intOf(v0, v1, v2, v3)
     }
 
-    inline fun removeLastLong(): Long {
+    fun removeLastLong(): Long {
         val v7 = this.spop()
         val v6 = this.spop()
         val v5 = this.spop()
