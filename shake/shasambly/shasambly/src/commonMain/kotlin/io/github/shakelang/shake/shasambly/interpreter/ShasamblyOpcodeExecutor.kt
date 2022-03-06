@@ -37,12 +37,12 @@ abstract class ShasamblyOpcodeExecutor (
     }
 
     fun jump_dynamic() {
-        jump(removeLastInt())
+        jump(stack.popInt())
     }
 
     fun jump_if() {
         val addr = read_int()
-        if(removeLastByte() != 0x00.toByte()) jump(addr)
+        if(stack.popByte() != 0x00.toByte()) jump(addr)
     }
 
     fun invoke_native() {
@@ -55,570 +55,570 @@ abstract class ShasamblyOpcodeExecutor (
     fun glob_addr() {
         val variable = read_short().toUShort().toInt()
         if(variable >= variableStackSize) throw IllegalArgumentException("Could not get global address of local $variable (Local stack size is only $variableStackSize)")
-        addInt(localStackPointer + variable)
+        stack.pushInt(localStackPointer + variable)
     }
 
     fun b_get_local() {
         val variable = read_short().toUShort().toInt()
-        sadd(memory[localStackPointer + variable])
+        stack.push(memory[localStackPointer + variable])
     }
 
     fun s_get_local() {
         val variable = read_short().toUShort().toInt()
         val addr = localStackPointer + variable
-        (1 downTo 0).forEach { sadd(memory[addr + it]) }
+        (1 downTo 0).forEach { stack.push(memory[addr + it]) }
     }
 
     fun i_get_local() {
         val variable = read_short().toUShort().toInt()
         val addr = localStackPointer + variable
-        (3 downTo 0).forEach { sadd(memory[addr + it]) }
+        (3 downTo 0).forEach { stack.push(memory[addr + it]) }
     }
 
     fun l_get_local() {
         val variable = read_short().toUShort().toInt()
         val addr = localStackPointer - variable
-        (7 downTo 0).forEach { sadd(memory[addr + it]) }
+        (7 downTo 0).forEach { stack.push(memory[addr + it]) }
     }
 
     fun b_store_local() {
         val variable = read_short().toUShort().toInt()
         val addr = localStackPointer - variable
-        memory[addr] = spop()
+        memory[addr] = stack.pop()
     }
 
     fun s_store_local() {
         val variable = read_short().toUShort().toInt()
         val addr = localStackPointer - variable
-        (0..1).forEach { memory[addr + it] = spop() }
+        (0..1).forEach { memory[addr + it] = stack.pop() }
     }
 
     fun i_store_local() {
         val variable = read_short().toUShort().toInt()
         val addr = localStackPointer - variable
-        (0..3).forEach { memory[addr + it] = spop() }
+        (0..3).forEach { memory[addr + it] = stack.pop() }
     }
 
     fun l_store_local() {
         val variable = read_short().toUShort().toInt()
         val addr = localStackPointer - variable
-        (0..7).forEach { memory[addr + it] = spop() }
+        (0..7).forEach { memory[addr + it] = stack.pop() }
     }
 
     fun bpush() {
-        sadd(read_byte())
+        stack.push(read_byte())
     }
 
     fun spush() {
-        addShort(read_short())
+        stack.pushShort(read_short())
     }
 
     fun ipush() {
-        addInt(read_int())
+        stack.pushInt(read_int())
     }
 
     fun lpush() {
-        addLong(read_long())
+        stack.pushLong(read_long())
     }
 
     fun badd() {
-        val v1 = spop()
-        val v0 = spop()
-        sadd((v0 + v1).toByte())
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.push((v0 + v1).toByte())
     }
 
     fun bsub() {
-        val v1 = spop()
-        val v0 = spop()
-        sadd((v0 - v1).toByte())
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.push((v0 - v1).toByte())
     }
 
     fun bmul() {
-        val v1 = spop()
-        val v0 = spop()
-        sadd((v0 * v1).toByte())
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.push((v0 * v1).toByte())
     }
 
     fun bdiv() {
-        val v1 = spop()
-        val v0 = spop()
-        sadd((v0 / v1).toByte())
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.push((v0 / v1).toByte())
     }
 
     fun bmod() {
-        val v1 = spop()
-        val v0 = spop()
-        sadd((v0 % v1).toByte())
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.push((v0 % v1).toByte())
     }
 
     fun sadd() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addShort((v0 + v1).toShort())
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushShort((v0 + v1).toShort())
     }
 
     fun ssub() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addShort((v0 - v1).toShort())
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushShort((v0 - v1).toShort())
     }
 
     fun smul() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addShort((v0 * v1).toShort())
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushShort((v0 * v1).toShort())
     }
 
     fun sdiv() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addShort((v0 / v1).toShort())
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushShort((v0 / v1).toShort())
     }
 
     fun smod() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addShort((v0 % v1).toShort())
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushShort((v0 % v1).toShort())
     }
 
     fun iadd() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addInt(v0 + v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushInt(v0 + v1)
     }
 
     fun isub() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addInt(v0 - v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushInt(v0 - v1)
     }
 
     fun imul() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addInt(v0 * v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushInt(v0 * v1)
     }
 
     fun idiv() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addInt(v0 / v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushInt(v0 / v1)
     }
 
     fun imod() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addInt(v0 % v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushInt(v0 % v1)
     }
 
     fun ladd() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addLong(v0 + v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushLong(v0 + v1)
     }
 
     fun lsub() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addLong(v0 - v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushLong(v0 - v1)
     }
 
     fun lmul() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addLong(v0 * v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushLong(v0 * v1)
     }
 
     fun ldiv() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addLong(v0 / v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushLong(v0 / v1)
     }
 
     fun lmod() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addLong(v0 % v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushLong(v0 % v1)
     }
 
     fun fadd() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addFloat(v0 + v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushFloat(v0 + v1)
     }
 
     fun fsub() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addFloat(v0 - v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushFloat(v0 - v1)
     }
 
     fun fmul() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addFloat(v0 * v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushFloat(v0 * v1)
     }
 
     fun fdiv() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addFloat(v0 / v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushFloat(v0 / v1)
     }
 
     fun fmod() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addFloat(v0 % v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushFloat(v0 % v1)
     }
 
     fun dadd() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addDouble(v0 + v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushDouble(v0 + v1)
     }
 
     fun dsub() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addDouble(v0 - v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushDouble(v0 - v1)
     }
 
     fun dmul() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addDouble(v0 * v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushDouble(v0 * v1)
     }
 
     fun ddiv() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addDouble(v0 / v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushDouble(v0 / v1)
     }
 
     fun dmod() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addDouble(v0 % v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushDouble(v0 % v1)
     }
 
     fun beq() {
-        val v1 = removeLastByte()
-        val v0 = removeLastByte()
-        addBoolean(v0 == v1)
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.pushBoolean(v0 == v1)
     }
 
     fun seq() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addBoolean(v0 == v1)
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushBoolean(v0 == v1)
     }
 
     fun ieq() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addBoolean(v0 == v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushBoolean(v0 == v1)
     }
 
     fun leq() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addBoolean(v0 == v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushBoolean(v0 == v1)
     }
 
     fun feq() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addBoolean(v0 == v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushBoolean(v0 == v1)
     }
 
     fun deq() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addBoolean(v0 == v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushBoolean(v0 == v1)
     }
 
     fun bbigger() {
-        val v1 = removeLastByte()
-        val v0 = removeLastByte()
-        addBoolean(v0 > v1)
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.pushBoolean(v0 > v1)
     }
 
     fun sbigger() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addBoolean(v0 > v1)
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushBoolean(v0 > v1)
     }
 
     fun ibigger() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addBoolean(v0 > v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushBoolean(v0 > v1)
     }
 
     fun lbigger() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addBoolean(v0 > v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushBoolean(v0 > v1)
     }
 
     fun fbigger() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addBoolean(v0 > v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushBoolean(v0 > v1)
     }
 
     fun dbigger() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addBoolean(v0 > v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushBoolean(v0 > v1)
     }
 
     fun bsmaller() {
-        val v1 = removeLastByte()
-        val v0 = removeLastByte()
-        addBoolean(v0 < v1)
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.pushBoolean(v0 < v1)
     }
 
     fun ssmaller() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addBoolean(v0 < v1)
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushBoolean(v0 < v1)
     }
 
     fun ismaller() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addBoolean(v0 < v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushBoolean(v0 < v1)
     }
 
     fun lsmaller() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addBoolean(v0 < v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushBoolean(v0 < v1)
     }
 
     fun fsmaller() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addBoolean(v0 < v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushBoolean(v0 < v1)
     }
 
     fun dsmaller() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addBoolean(v0 < v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushBoolean(v0 < v1)
     }
 
     fun bbiggereq() {
-        val v1 = removeLastByte()
-        val v0 = removeLastByte()
-        addBoolean(v0 >= v1)
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.pushBoolean(v0 >= v1)
     }
 
     fun sbiggereq() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addBoolean(v0 >= v1)
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushBoolean(v0 >= v1)
     }
 
     fun ibiggereq() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addBoolean(v0 >= v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushBoolean(v0 >= v1)
     }
 
     fun lbiggereq() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addBoolean(v0 >= v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushBoolean(v0 >= v1)
     }
 
     fun fbiggereq() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addBoolean(v0 >= v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushBoolean(v0 >= v1)
     }
 
     fun dbiggereq() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addBoolean(v0 >= v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushBoolean(v0 >= v1)
     }
 
     fun bsmallereq() {
-        val v1 = removeLastByte()
-        val v0 = removeLastByte()
-        addBoolean(v0 <= v1)
+        val v1 = stack.pop()
+        val v0 = stack.pop()
+        stack.pushBoolean(v0 <= v1)
     }
 
     fun ssmallereq() {
-        val v1 = removeLastShort()
-        val v0 = removeLastShort()
-        addBoolean(v0 <= v1)
+        val v1 = stack.popShort()
+        val v0 = stack.popShort()
+        stack.pushBoolean(v0 <= v1)
     }
 
     fun ismallereq() {
-        val v1 = removeLastInt()
-        val v0 = removeLastInt()
-        addBoolean(v0 <= v1)
+        val v1 = stack.popInt()
+        val v0 = stack.popInt()
+        stack.pushBoolean(v0 <= v1)
     }
 
     fun lsmallereq() {
-        val v1 = removeLastLong()
-        val v0 = removeLastLong()
-        addBoolean(v0 <= v1)
+        val v1 = stack.popLong()
+        val v0 = stack.popLong()
+        stack.pushBoolean(v0 <= v1)
     }
 
     fun fsmallereq() {
-        val v1 = removeLastFloat()
-        val v0 = removeLastFloat()
-        addBoolean(v0 <= v1)
+        val v1 = stack.popFloat()
+        val v0 = stack.popFloat()
+        stack.pushBoolean(v0 <= v1)
     }
 
     fun dsmallereq() {
-        val v1 = removeLastDouble()
-        val v0 = removeLastDouble()
-        addBoolean(v0 <= v1)
+        val v1 = stack.popDouble()
+        val v0 = stack.popDouble()
+        stack.pushBoolean(v0 <= v1)
     }
 
     fun bnot() {
-        addBoolean(removeLastByte() == 0.toByte())
+        stack.pushBoolean(stack.pop() == 0.toByte())
     }
 
     fun b_get_global() {
         val pos = read_int()
-        addByte(memory[pos])
+        stack.pushByte(memory[pos])
     }
 
     fun s_get_global() {
         val pos = read_int()
-        addShort(memory.getShort(pos))
+        stack.pushShort(memory.getShort(pos))
     }
 
     fun i_get_global() {
         val pos = read_int()
-        addInt(memory.getInt(pos))
+        stack.pushInt(memory.getInt(pos))
     }
 
     fun l_get_global() {
         val pos = read_int()
-        addLong(memory.getLong(pos))
+        stack.pushLong(memory.getLong(pos))
     }
 
     fun b_get_global_dynamic() {
-        val pos = removeLastInt()
-        addByte(memory.getByte(pos))
+        val pos = stack.popInt()
+        stack.pushByte(memory.getByte(pos))
     }
 
     fun s_get_global_dynamic() {
-        val pos = removeLastInt()
-        addShort(memory.getShort(pos))
+        val pos = stack.popInt()
+        stack.pushShort(memory.getShort(pos))
     }
 
     fun i_get_global_dynamic() {
-        val pos = removeLastInt()
-        addInt(memory.getInt(pos))
+        val pos = stack.popInt()
+        stack.pushInt(memory.getInt(pos))
     }
 
     fun l_get_global_dynamic() {
-        val pos = removeLastInt()
-        addLong(memory.getLong(pos))
+        val pos = stack.popInt()
+        stack.pushLong(memory.getLong(pos))
     }
 
     fun b_store_global() {
         val pos = read_int()
-        val value = removeLastByte()
+        val value = stack.pop()
         memory[pos] = value
     }
 
     fun s_store_global() {
         val pos = read_int()
-        val value = removeLastShort()
+        val value = stack.popShort()
         memory.setShort(pos, value)
     }
 
     fun i_store_global() {
         val pos = read_int()
-        val value = removeLastInt()
+        val value = stack.popInt()
         memory.setInt(pos, value)
     }
 
     fun l_store_global() {
         val pos = read_int()
-        val value = removeLastLong()
+        val value = stack.popLong()
         memory.setLong(pos, value)
     }
 
     fun b_store_global_dynamic() {
-        val pos = removeLastInt()
-        val value = removeLastByte()
+        val pos = stack.popInt()
+        val value = stack.pop()
         memory[pos] = value
     }
 
     fun s_store_global_dynamic() {
-        val pos = removeLastInt()
-        val value = removeLastShort()
+        val pos = stack.popInt()
+        val value = stack.popShort()
         memory.setShort(pos, value)
     }
 
     fun i_store_global_dynamic() {
-        val pos = removeLastInt()
-        val value = removeLastInt()
+        val pos = stack.popInt()
+        val value = stack.popInt()
         memory.setInt(pos, value)
     }
 
     fun l_store_global_dynamic() {
-        val pos = removeLastInt()
-        val value = removeLastLong()
+        val pos = stack.popInt()
+        val value = stack.popLong()
         memory.setLong(pos, value)
     }
 
     fun b_neg() {
-        addByte((-removeLastByte()).toByte())
+        stack.push((-stack.pop()).toByte())
     }
 
     fun s_neg() {
-        addShort((-removeLastShort()).toShort())
+        stack.pushShort((-stack.popShort()).toShort())
     }
 
     fun i_neg() {
-        addInt(-removeLastInt())
+        stack.pushInt(-stack.popInt())
     }
 
     fun l_neg() {
-        addLong(-removeLastLong())
+        stack.pushLong(-stack.popLong())
     }
 
     fun f_neg() {
-        addFloat(-removeLastFloat())
+        stack.pushFloat(-stack.popFloat())
     }
 
     fun d_neg() {
-        addDouble(-removeLastDouble())
+        stack.pushDouble(-stack.popDouble())
     }
 
     fun b_abs() {
-        addByte(abs(removeLastByte().toInt()).toByte())
+        stack.push(abs(stack.pop().toInt()).toByte())
     }
 
     fun s_abs() {
-        addShort(abs(removeLastShort().toInt()).toShort())
+        stack.pushShort(abs(stack.popShort().toInt()).toShort())
     }
 
     fun i_abs() {
-        addInt(abs(removeLastInt()))
+        stack.pushInt(abs(stack.popInt()))
     }
 
     fun l_abs() {
-        addLong(abs(removeLastLong()))
+        stack.pushLong(abs(stack.popLong()))
     }
 
     fun f_abs() {
-        addFloat(abs(removeLastFloat()))
+        stack.pushFloat(abs(stack.popFloat()))
     }
 
     fun d_abs() {
-        addDouble(abs(removeLastDouble()))
+        stack.pushDouble(abs(stack.popDouble()))
     }
     fun primitive_cast() {
         val cast = read_byte().toUByte()
@@ -627,177 +627,177 @@ abstract class ShasamblyOpcodeExecutor (
 
         when (from) {
             PrimitiveIds.PRIMITIVE_BYTE -> {
-                val v = removeLastByte()
+                val v = stack.pop()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v)
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v.toDouble())
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> {
-                val v = removeLastByte().toUByte()
+                val v = stack.popByte().toUByte()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v.toDouble())
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_SHORT -> {
-                val v = removeLastShort()
+                val v = stack.popShort()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v)
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v.toDouble())
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> {
-                val v = removeLastShort().toUShort()
+                val v = stack.popShort().toUShort()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v.toDouble())
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_INT -> {
-                val v = removeLastInt()
+                val v = stack.popInt()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v)
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v)
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v)
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v.toDouble())
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> {
-                val v = removeLastInt().toUInt()
+                val v = stack.popInt().toUInt()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v.toDouble())
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_LONG -> {
-                val v = removeLastLong()
+                val v = stack.popLong()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v)
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v.toDouble())
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> {
-                val v = removeLastLong()
+                val v = stack.popLong()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toByte())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toUByte().toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toShort())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toUShort().toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v)
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v)
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v.toDouble())
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toUByte().toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_FLOAT -> {
-                val v = removeLastFloat()
+                val v = stack.popFloat()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toInt().toByte())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toInt().toUByte().toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toInt().toShort())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toInt().toUShort().toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v)
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v.toDouble())
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toInt().toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toInt().toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toInt().toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toInt().toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v)
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v.toDouble())
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toInt().toUByte().toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toInt().toUByte().toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_DOUBLE -> {
-                val v = removeLastDouble()
+                val v = stack.popDouble()
                 when(to) {
-                    PrimitiveIds.PRIMITIVE_BYTE -> addByte(v.toInt().toByte())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> addByte(v.toInt().toUByte().toByte())
-                    PrimitiveIds.PRIMITIVE_SHORT -> addShort(v.toInt().toShort())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> addShort(v.toInt().toUShort().toShort())
-                    PrimitiveIds.PRIMITIVE_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> addInt(v.toInt())
-                    PrimitiveIds.PRIMITIVE_LONG -> addLong(v.toLong())
-                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> addLong(v.toULong().toLong())
-                    PrimitiveIds.PRIMITIVE_FLOAT -> addFloat(v.toFloat())
-                    PrimitiveIds.PRIMITIVE_DOUBLE -> addDouble(v)
+                    PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toInt().toByte())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toInt().toUByte().toByte())
+                    PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toInt().toShort())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> stack.pushShort(v.toInt().toUShort().toShort())
+                    PrimitiveIds.PRIMITIVE_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> stack.pushInt(v.toInt())
+                    PrimitiveIds.PRIMITIVE_LONG -> stack.pushLong(v.toLong())
+                    PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> stack.pushLong(v.toULong().toLong())
+                    PrimitiveIds.PRIMITIVE_FLOAT -> stack.pushFloat(v.toFloat())
+                    PrimitiveIds.PRIMITIVE_DOUBLE -> stack.pushDouble(v)
                     PrimitiveIds.PRIMITIVE_BOOLEAN -> throw Error("Cannot cast from unsigned byte to boolean")
-                    PrimitiveIds.PRIMITIVE_CHAR -> addShort(v.toInt().toUByte().toShort())
+                    PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toInt().toUByte().toShort())
                 }
             }
             PrimitiveIds.PRIMITIVE_BOOLEAN -> {
-                val v = removeLastByte()
+                val v = stack.popByte()
                 when(to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> throw Error("Cannot cast from boolean to byte")
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> throw Error("Cannot cast from boolean to unsigned byte")
@@ -809,129 +809,129 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> throw Error("Cannot cast from boolean to unsigned long")
                     PrimitiveIds.PRIMITIVE_FLOAT -> throw Error("Cannot cast from boolean to float")
                     PrimitiveIds.PRIMITIVE_DOUBLE -> throw Error("Cannot cast from boolean to double")
-                    PrimitiveIds.PRIMITIVE_BOOLEAN -> addByte(v)
+                    PrimitiveIds.PRIMITIVE_BOOLEAN -> stack.push(v)
                     PrimitiveIds.PRIMITIVE_CHAR -> throw Error("Cannot cast from boolean to char")
                 }
             }
         }
     }
     fun b_shr() {
-        val shr = removeLastByte().toUByte().toInt()
-        val byte = removeLastByte()
-        addByte((byte.toInt() shr shr).toByte())
+        val shr = stack.popByte().toUByte().toInt()
+        val byte = stack.popByte()
+        stack.push((byte.toInt() shr shr).toByte())
     }
 
     fun s_shr() {
-        val shr = removeLastByte().toUByte().toInt()
-        val short = removeLastShort()
-        addShort((short.toInt() shr shr).toShort())
+        val shr = stack.popByte().toUByte().toInt()
+        val short = stack.popShort()
+        stack.pushShort((short.toInt() shr shr).toShort())
     }
 
     fun i_shr() {
-        val shr = removeLastByte().toUByte().toInt()
-        val int = removeLastInt()
-        addInt(int shr shr)
+        val shr = stack.popByte().toUByte().toInt()
+        val int = stack.popInt()
+        stack.pushInt(int shr shr)
     }
 
     fun l_shr() {
-        val shr = removeLastByte().toUByte().toInt()
-        val long = removeLastLong()
-        addLong(long shr shr)
+        val shr = stack.popByte().toUByte().toInt()
+        val long = stack.popLong()
+        stack.pushLong(long shr shr)
     }
 
     fun b_shl() {
-        val shl = removeLastByte().toUByte().toInt()
-        val byte = removeLastByte()
-        addByte((byte.toInt() shl shl).toByte())
+        val shl = stack.popByte().toUByte().toInt()
+        val byte = stack.popByte()
+        stack.push((byte.toInt() shl shl).toByte())
     }
 
     fun s_shl() {
-        val shl = removeLastByte().toUByte().toInt()
-        val short = removeLastShort()
-        addShort((short.toInt() shl shl).toShort())
+        val shl = stack.popByte().toUByte().toInt()
+        val short = stack.popShort()
+        stack.pushShort((short.toInt() shl shl).toShort())
     }
 
     fun i_shl() {
-        val shl = removeLastByte().toUByte().toInt()
-        val int = removeLastInt()
-        addInt(int shl shl)
+        val shl = stack.popByte().toUByte().toInt()
+        val int = stack.popInt()
+        stack.pushInt(int shl shl)
     }
 
     fun l_shl() {
-        val shl = removeLastByte().toUByte().toInt()
-        val long = removeLastLong()
-        addLong(long shl shl)
+        val shl = stack.popByte().toUByte().toInt()
+        val long = stack.popLong()
+        stack.pushLong(long shl shl)
     }
 
     fun b_and() {
-        val v0 = removeLastByte()
-        val v1 = removeLastByte()
-        addByte(v0 and v1)
+        val v0 = stack.popByte()
+        val v1 = stack.popByte()
+        stack.push(v0 and v1)
     }
 
     fun s_and() {
-        val v0 = removeLastShort()
-        val v1 = removeLastShort()
-        addShort(v0 and v1)
+        val v0 = stack.popShort()
+        val v1 = stack.popShort()
+        stack.pushShort(v0 and v1)
     }
 
     fun i_and() {
-        val v0 = removeLastInt()
-        val v1 = removeLastInt()
-        addInt(v0 and v1)
+        val v0 = stack.popInt()
+        val v1 = stack.popInt()
+        stack.pushInt(v0 and v1)
     }
 
     fun l_and() {
-        val v0 = removeLastLong()
-        val v1 = removeLastLong()
-        addLong(v0 and v1)
+        val v0 = stack.popLong()
+        val v1 = stack.popLong()
+        stack.pushLong(v0 and v1)
     }
 
     fun b_or() {
-        val v0 = removeLastByte()
-        val v1 = removeLastByte()
-        addByte(v0 or  v1)
+        val v0 = stack.popByte()
+        val v1 = stack.popByte()
+        stack.push(v0 or  v1)
     }
 
     fun s_or() {
-        val v0 = removeLastShort()
-        val v1 = removeLastShort()
-        addShort(v0 or v1)
+        val v0 = stack.popShort()
+        val v1 = stack.popShort()
+        stack.pushShort(v0 or v1)
     }
 
     fun i_or() {
-        val v0 = removeLastInt()
-        val v1 = removeLastInt()
-        addInt(v0 or v1)
+        val v0 = stack.popInt()
+        val v1 = stack.popInt()
+        stack.pushInt(v0 or v1)
     }
 
     fun l_or() {
-        val v0 = removeLastLong()
-        val v1 = removeLastLong()
-        addLong(v0 or v1)
+        val v0 = stack.popLong()
+        val v1 = stack.popLong()
+        stack.pushLong(v0 or v1)
     }
 
     fun b_xor() {
-        val v0 = removeLastByte()
-        val v1 = removeLastByte()
-        addByte(v0 xor  v1)
+        val v0 = stack.popByte()
+        val v1 = stack.popByte()
+        stack.push(v0 xor  v1)
     }
 
     fun s_xor() {
-        val v0 = removeLastShort()
-        val v1 = removeLastShort()
-        addShort(v0 xor v1)
+        val v0 = stack.popShort()
+        val v1 = stack.popShort()
+        stack.pushShort(v0 xor v1)
     }
 
     fun i_xor() {
-        val v0 = removeLastInt()
-        val v1 = removeLastInt()
-        addInt(v0 xor v1)
+        val v0 = stack.popInt()
+        val v1 = stack.popInt()
+        stack.pushInt(v0 xor v1)
     }
 
     fun l_xor() {
-        val v0 = removeLastLong()
-        val v1 = removeLastLong()
-        addLong(v0 xor v1)
+        val v0 = stack.popLong()
+        val v1 = stack.popLong()
+        stack.pushLong(v0 xor v1)
     }
 }

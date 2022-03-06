@@ -27,31 +27,31 @@ class ShasamblyNative(
 
 object Natives {
     val printByte = nativeFunction("print_byte", 0x01) {
-        val v = removeLastByte()
+        val v = stack.pop()
         print(v)
     }
     val printShort = nativeFunction("print_short", 0x02) {
-        val v = removeLastShort()
+        val v = stack.popShort()
         print(v)
     }
     val printInt = nativeFunction("print_int", 0x03) {
-        val v = removeLastInt()
+        val v = stack.popInt()
         print(v)
     }
     val printLong = nativeFunction("print_long", 0x04) {
-        val v = removeLastLong()
+        val v = stack.popLong()
         print(v)
     }
     val printFloat = nativeFunction("print_float", 0x05) {
-        val v = removeLastFloat()
+        val v = stack.popFloat()
         print(v)
     }
     val printDouble = nativeFunction("print_double", 0x06) {
-        val v = removeLastDouble()
+        val v = stack.popDouble()
         print(v)
     }
     val printUtf8 = nativeFunction("print_utf8", 0x07) {
-        val v = removeLastByte().toInt().toChar()
+        val v = stack.popByte().toInt().toChar()
         print(v)
     }
     val printLineEnding = nativeFunction("print_line_ending", 0x08) {
@@ -60,21 +60,21 @@ object Natives {
     val declareGlobal = nativeFunction("declare_global", 0x09, 4) {
         val size = read_int()
         val addr = declareGlobal(size)
-        addInt(addr)
+        stack.pushInt(addr)
     }
     val declareGlobalDynamic = nativeFunction("declare_global_dynamic", 0x0a) {
-        val size = removeLastInt()
+        val size = stack.popInt()
         val addr = declareGlobal(size)
-        addInt(addr)
+        stack.pushInt(addr)
     }
     val freeGlobal = nativeFunction("free_global", 0x0b, 4) {
-        val addr = removeLastInt()
+        val addr = stack.popInt()
         val size = read_int()
         free(addr, size)
     }
     val freeGlobalDynamic = nativeFunction("free_global_dynamic", 0x0c) {
-        val addr = removeLastInt()
-        val size = removeLastInt()
+        val addr = stack.popInt()
+        val size = stack.popInt()
         free(addr, size)
     }
     val bSwap = nativeFunction("b_swap", 0x0d, 2) {
@@ -126,22 +126,22 @@ object Natives {
     }
     val bDup = nativeFunction("b_dup", 0x11) {
         val byte = memory.getByte(stackPointer)
-        addByte(byte)
+        stack.push(byte)
     }
     val sDup = nativeFunction("s_dup", 0x12) {
         val short = memory.getShort(stackPointer)
-        addShort(short)
+        stack.pushShort(short)
     }
     val iDup = nativeFunction("i_dup", 0x13) {
         val int = memory.getInt(stackPointer)
-        addInt(int)
+        stack.pushInt(int)
     }
     val lDup = nativeFunction("l_dup", 0x14) {
         val long = memory.getLong(stackPointer)
-        addLong(long)
+        stack.pushLong(long)
     }
     val exit = nativeFunction("exit", 0x15) {
-        val code = removeLastInt()
+        val code = stack.popInt()
         exitProcess(code)
     }
     fun initNativeFunctions() {

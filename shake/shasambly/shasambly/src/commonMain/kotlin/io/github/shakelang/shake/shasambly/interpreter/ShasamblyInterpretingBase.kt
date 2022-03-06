@@ -5,14 +5,39 @@ import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import kotlin.experimental.and
 
+/**
+ * The base of the shasambly interpreter.
+ * It contains the core functions of the interpreter that store data and are used to manipulate the interprets data.
+ * It does not contain any functions that are used to interpret the data or to execute opcodes.
+ *
+ * @author Nicolas Schmidt
+ */
 abstract class ShasamblyInterpretingBase(
     memorySize: Int,
     bytes: ByteArray,
     position: Int
 ) {
 
+    val freeTable = FreeTableControllerObject()
+    val stack = StackControllerObject()
+
     /**
      * The memory of the interpreter.
+     *
+     * Memory Arangement:
+     *
+     * 0x00 - 0x1f: Global variables:
+     *
+     * 0x00 - 0x03: u4 - Free table start pointer
+     * 0x04 - 0x07: u4 - Free table end pointer
+     * 0x08 - 0x0b: u4 - Stack pointer
+     * 0x0c - 0x0f: u4 - Local variable stack pointer
+     * 0x10 - 0x13: u4 - Instruction pointer
+     * 0x14 - 0x17: u4 - Globals size
+     * 0x18 - 0x1b: u4 - Unused
+     * 0x1c - 0x1f: u4 - Unused
+     * 0x20 - 0x20 + bytes.size: u1[] - Bytes
+     * 0x20 + bytes.size: u8 - Instruction to terminate the program
      */
     val memory = ByteArray(memorySize)
 
@@ -20,31 +45,50 @@ abstract class ShasamblyInterpretingBase(
      * The size of the interpreters' memory.
      */
     val memorySize get() = memory.size
-    var globalsSize = 16 + bytes.size + 8
+
+    /**
+     * The size of the global variable stack.
+     */
+    var globalsSize
+        set(v) {
+            memory.setInt(0x14, v)
+        }
+        get() = memory.getInt(0x14)
+
 
     var running: Boolean = true
         private set
 
-    // Memory:
-    // 0x00 - 0x0F: Global variables
-    // u4 - Free table start pointer
-    // u4 - Free table end pointer
-    // u4 - Stack pointer
-    // u4 - Local variable stack pointer
+    /**
+     * The current instruction pointer.
+     */
+    var instructionPointer: Int
+        set(v) {
+            memory.setInt(0x10, v)
+        }
+        get() = memory.getInt(0x10)
 
-
+    /**
+     * The start pointer of the free table.
+     */
     var freeTableStartPointer
         set(v) {
             memory.setInt(0, v)
         }
         get() = memory.getInt(0)
 
+    /**
+     * The end pointer of the free table.
+     */
     var freeTableEndPointer
         set(v) {
             memory.setInt(4, v)
         }
         get() = memory.getInt(4)
 
+    /**
+     * The stack pointer.
+     */
     var stackPointer
         set(v) {
             memory.setInt(8, v)
@@ -67,18 +111,20 @@ abstract class ShasamblyInterpretingBase(
     var exitCode : Int = 0 // TODO
 
     init {
-        bytes.copyInto(memory, 16)
-        memory.setBytes(16 + bytes.size, byteArrayOf(
-            Opcodes.I_PUSH,
-            *0.toBytes(),
-            Opcodes.INVOKE_NATIVE,
-            *Natives.exit.toBytes()
-        ))
+        bytes.copyInto(memory, 32)
 
         freeTableStartPointer = -1
         freeTableEndPointer = -1
         stackPointer = memorySize - 1
         localStackPointer = -1
+        globalsSize = 32 + bytes.size + 8
+
+        memory.setBytes(32 + bytes.size, byteArrayOf(
+            Opcodes.I_PUSH,
+            *0.toBytes(),
+            Opcodes.INVOKE_NATIVE,
+            *Natives.exit.toBytes()
+        ))
 
         //memory[bytes.size + 4] = Opcodes.JUMP_STATIC
         //memory.setInt(bytes.size + 5, 0)
@@ -311,82 +357,6 @@ abstract class ShasamblyInterpretingBase(
         return v
     }
 
-
-    fun sadd(b: Byte) {
-        this.memory[stackPointer--] = b
-    }
-
-    fun spop(): Byte {
-        return this.memory[++stackPointer]
-    }
-
-    fun addByte(v: Byte) {
-        this.sadd(v)
-    }
-
-    fun addShort(v: Short) {
-        this.sadd((v.toInt() shr 8).toByte())
-        this.sadd((v and 0x00ff).toByte())
-    }
-
-    fun addInt(v: Int) {
-        this.sadd((v shr 24 and 0xff).toByte())
-        this.sadd((v shr 16 and 0xff).toByte())
-        this.sadd((v shr 8 and 0xff).toByte())
-        this.sadd((v and 0xff).toByte())
-    }
-
-    fun addLong(v: Long) {
-        this.sadd((v shr 56 and 0xff).toByte())
-        this.sadd((v shr 48 and 0xff).toByte())
-        this.sadd((v shr 40 and 0xff).toByte())
-        this.sadd((v shr 32 and 0xff).toByte())
-        this.sadd((v shr 24 and 0xff).toByte())
-        this.sadd((v shr 16 and 0xff).toByte())
-        this.sadd((v shr 8 and 0xff).toByte())
-        this.sadd((v and 0xff).toByte())
-    }
-
-    fun addFloat(v: Float) = addInt(v.toBits())
-    fun addDouble(v: Double) = addLong(v.toBits())
-
-    fun addBoolean(v: Boolean) = this.sadd(if(v) 0x1.toByte() else 0x0.toByte())
-
-    fun removeLastByte(): Byte
-            = this.spop()
-
-    fun removeLastShort(): Short {
-        val v1 = this.spop()
-        val v0 = this.spop()
-        return shortOf(v0, v1)
-    }
-
-    fun removeLastInt(): Int {
-        val v3 = this.spop()
-        val v2 = this.spop()
-        val v1 = this.spop()
-        val v0 = this.spop()
-        return intOf(v0, v1, v2, v3)
-    }
-
-    fun removeLastLong(): Long {
-        val v7 = this.spop()
-        val v6 = this.spop()
-        val v5 = this.spop()
-        val v4 = this.spop()
-        val v3 = this.spop()
-        val v2 = this.spop()
-        val v1 = this.spop()
-        val v0 = this.spop()
-        return longOf(v0, v1, v2, v3, v4, v5, v6, v7)
-    }
-
-    fun removeLastFloat(): Float
-            = Float.fromBits(this.removeLastInt())
-
-    fun removeLastDouble(): Double
-            = Double.fromBits(this.removeLastLong())
-
     fun incrLocalStack(size: Int) {
         val old = localStackPointer
         val new = declareGlobal(size + 8)
@@ -407,4 +377,136 @@ abstract class ShasamblyInterpretingBase(
         this.exitCode = code
         this.running = false
     }
+
+    inner class StackControllerObject {
+
+        /**
+         * Push a byte on top of the stack
+         */
+        fun push(b: Byte) {
+            this@ShasamblyInterpretingBase.memory[stackPointer--] = b
+        }
+
+        /**
+         * Pop a byte from the stack
+         */
+        fun pop(): Byte {
+            return this@ShasamblyInterpretingBase.memory[++stackPointer]
+        }
+
+        /**
+         * Push a byte on top of the stack
+         */
+        fun pushByte(v: Byte) {
+            this.push(v)
+        }
+
+        /**
+         * Push a short on top of the stack
+         */
+        fun pushShort(v: Short) {
+            this.push((v.toInt() shr 8).toByte())
+            this.push((v and 0x00ff).toByte())
+        }
+
+        /**
+         * Push an int on top of the stack
+         */
+        fun pushInt(v: Int) {
+            this.push((v shr 24 and 0xff).toByte())
+            this.push((v shr 16 and 0xff).toByte())
+            this.push((v shr 8 and 0xff).toByte())
+            this.push((v and 0xff).toByte())
+        }
+
+        /**
+         * Push a long on top of the stack
+         */
+        fun pushLong(v: Long) {
+            this.push((v shr 56 and 0xff).toByte())
+            this.push((v shr 48 and 0xff).toByte())
+            this.push((v shr 40 and 0xff).toByte())
+            this.push((v shr 32 and 0xff).toByte())
+            this.push((v shr 24 and 0xff).toByte())
+            this.push((v shr 16 and 0xff).toByte())
+            this.push((v shr 8 and 0xff).toByte())
+            this.push((v and 0xff).toByte())
+        }
+
+        /**
+         * Push a float on top of the stack
+         */
+        fun pushFloat(v: Float) = pushInt(v.toBits())
+
+        /**
+         * Push a double on top of the stack
+         */
+        fun pushDouble(v: Double) = pushLong(v.toBits())
+
+        /**
+         * Push a boolean on top of the stack
+         */
+        fun pushBoolean(v: Boolean) = this.push(if(v) 0x1.toByte() else 0x0.toByte())
+
+        /**
+         * Pop the top byte from the stack
+         */
+        fun popByte(): Byte
+                = this.pop()
+
+        /**
+         * Pop the top short from the stack
+         */
+        fun popShort(): Short {
+            val v1 = this.pop()
+            val v0 = this.pop()
+            return shortOf(v0, v1)
+        }
+
+        /**
+         * Pop the top int from the stack
+         */
+        fun popInt(): Int {
+            val v3 = this.pop()
+            val v2 = this.pop()
+            val v1 = this.pop()
+            val v0 = this.pop()
+            return intOf(v0, v1, v2, v3)
+        }
+
+        /**
+         * Pop the top long from the stack
+         */
+        fun popLong(): Long {
+            val v7 = this.pop()
+            val v6 = this.pop()
+            val v5 = this.pop()
+            val v4 = this.pop()
+            val v3 = this.pop()
+            val v2 = this.pop()
+            val v1 = this.pop()
+            val v0 = this.pop()
+            return longOf(v0, v1, v2, v3, v4, v5, v6, v7)
+        }
+
+        /**
+         * Pop the top float from the stack
+         */
+        fun popFloat(): Float
+                = Float.fromBits(this.popInt())
+
+        /**
+         * Pop the top double from the stack
+         */
+        fun popDouble(): Double
+                = Double.fromBits(this.popLong())
+
+    }
+
+    inner class FreeTableControllerObject {
+
+    }
+
+
+
 }
