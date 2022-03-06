@@ -109,8 +109,8 @@ abstract class ShasamblyInterpretingBase(
     // u4 chunk_size: The size of the chunks
     // u4 first_chunk: The first chunk
     // u4 last_chunk: The last chunk
-    // u4 next_element: The next element in the list
-    // u4 prev_element: The previous element in the list
+    // u4 next_table: The next table in the list
+    // u4 prev_table: The previous table in the list
     //
     // The chunks are stored in a linked list then (The first chunk is stored in the chunk table)
     // The chunk just contains four bytes of data, the address of the next chunk.
@@ -265,6 +265,27 @@ abstract class ShasamblyInterpretingBase(
         val dif = size - csize
         if(dif > 0) free(addr - csize, dif)
         return addr
+    }
+
+    fun findFreeEntry(address: Int, startAddress: Int, csize: Int): Int {
+        var addr = startAddress
+        while(addr != -1) {
+            if(address in addr until addr +  csize) return addr
+            addr = memory.getInt(addr)
+        }
+        return -1
+    }
+
+    fun findFree(address: Int): IntArray {
+        var table = freeTableStartPointer
+        while(table != -1) {
+            val csize = memory.getInt(table)
+            val first = memory.getInt(table + 4)
+            val addr = findFreeEntry(address, first, csize)
+            if(addr != -1) return intArrayOf(addr, csize, table)
+            table = memory.getInt(table + 12)
+        }
+        return intArrayOf(-1, -1, -1)
     }
 
     fun byte() = memory[position]
