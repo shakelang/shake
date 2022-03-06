@@ -14,7 +14,6 @@ abstract class ShasamblyOpcodeExecutor (
     position: Int
 ) : ShasamblyInterpretingBase (memorySize, bytes, position) {
 
-
     fun incr_variable_stack() {
         val size = read_short().toUShort().toInt()
         incrLocalStack(size)

@@ -15,7 +15,7 @@ import kotlin.experimental.and
 abstract class ShasamblyInterpretingBase(
     memorySize: Int,
     bytes: ByteArray,
-    position: Int
+    position: Int = 0,
 ) {
 
     val freeTable = FreeTableControllerObject()
@@ -107,11 +107,21 @@ abstract class ShasamblyInterpretingBase(
         }
         get() = memory.getInt(localStackPointer - 4)
 
-    var position = position + 16
+    /**
+     * @deprecation This function is deprecated.
+     */
+    var position
+        set(v) {
+            this.instructionPointer = v
+        }
+        get() = this.instructionPointer
+
+
     var exitCode : Int = 0 // TODO
 
     init {
         bytes.copyInto(memory, 32)
+        instructionPointer = 32 + position
 
         freeTableStartPointer = -1
         freeTableEndPointer = -1
@@ -334,26 +344,27 @@ abstract class ShasamblyInterpretingBase(
         return intArrayOf(-1, -1, -1)
     }
 
-    fun byte() = memory[position]
-    fun short() = memory.getShort(position)
-    fun int() = memory.getInt(position)
-    fun long() = memory.getLong(position)
+    fun byte() = memory[instructionPointer]
+    fun short() = memory.getShort(instructionPointer)
+    fun int() = memory.getInt(instructionPointer)
+    fun long() = memory.getLong(instructionPointer)
+
     fun read_byte(): Byte {
-        return memory[position++]
+        return memory[instructionPointer++]
     }
     fun read_short(): Short {
         val v = short()
-        position += 2
+        instructionPointer += 2
         return v
     }
     fun read_int(): Int {
         val v = int()
-        position += 4
+        instructionPointer += 4
         return v
     }
     fun read_long(): Long {
         val v = long()
-        position += 8
+        instructionPointer += 8
         return v
     }
 
@@ -405,32 +416,32 @@ abstract class ShasamblyInterpretingBase(
          * Push a short on top of the stack
          */
         fun pushShort(v: Short) {
-            this.push((v.toInt() shr 8).toByte())
             this.push((v and 0x00ff).toByte())
+            this.push((v.toInt() shr 8).toByte())
         }
 
         /**
          * Push an int on top of the stack
          */
         fun pushInt(v: Int) {
-            this.push((v shr 24 and 0xff).toByte())
-            this.push((v shr 16 and 0xff).toByte())
-            this.push((v shr 8 and 0xff).toByte())
             this.push((v and 0xff).toByte())
+            this.push((v shr 8 and 0xff).toByte())
+            this.push((v shr 16 and 0xff).toByte())
+            this.push((v shr 24 and 0xff).toByte())
         }
 
         /**
          * Push a long on top of the stack
          */
         fun pushLong(v: Long) {
-            this.push((v shr 56 and 0xff).toByte())
-            this.push((v shr 48 and 0xff).toByte())
-            this.push((v shr 40 and 0xff).toByte())
-            this.push((v shr 32 and 0xff).toByte())
-            this.push((v shr 24 and 0xff).toByte())
-            this.push((v shr 16 and 0xff).toByte())
-            this.push((v shr 8 and 0xff).toByte())
             this.push((v and 0xff).toByte())
+            this.push((v shr 8 and 0xff).toByte())
+            this.push((v shr 16 and 0xff).toByte())
+            this.push((v shr 24 and 0xff).toByte())
+            this.push((v shr 32 and 0xff).toByte())
+            this.push((v shr 40 and 0xff).toByte())
+            this.push((v shr 48 and 0xff).toByte())
+            this.push((v shr 56 and 0xff).toByte())
         }
 
         /**
@@ -451,55 +462,38 @@ abstract class ShasamblyInterpretingBase(
         /**
          * Pop the top byte from the stack
          */
-        fun popByte(): Byte
-                = this.pop()
+        fun popByte(): Byte = this.pop()
 
         /**
          * Pop the top short from the stack
          */
         fun popShort(): Short {
-            val v1 = this.pop()
-            val v0 = this.pop()
-            return shortOf(v0, v1)
+            return shortOf(this.pop(), this.pop())
         }
 
         /**
          * Pop the top int from the stack
          */
         fun popInt(): Int {
-            val v3 = this.pop()
-            val v2 = this.pop()
-            val v1 = this.pop()
-            val v0 = this.pop()
-            return intOf(v0, v1, v2, v3)
+            return intOf(this.pop(), this.pop(), this.pop(), this.pop())
         }
 
         /**
          * Pop the top long from the stack
          */
         fun popLong(): Long {
-            val v7 = this.pop()
-            val v6 = this.pop()
-            val v5 = this.pop()
-            val v4 = this.pop()
-            val v3 = this.pop()
-            val v2 = this.pop()
-            val v1 = this.pop()
-            val v0 = this.pop()
-            return longOf(v0, v1, v2, v3, v4, v5, v6, v7)
+            return longOf(this.pop(), this.pop(), this.pop(), this.pop(), this.pop(), this.pop(), this.pop(), this.pop())
         }
 
         /**
          * Pop the top float from the stack
          */
-        fun popFloat(): Float
-                = Float.fromBits(this.popInt())
+        fun popFloat(): Float = Float.fromBits(this.popInt())
 
         /**
          * Pop the top double from the stack
          */
-        fun popDouble(): Double
-                = Double.fromBits(this.popLong())
+        fun popDouble(): Double = Double.fromBits(this.popLong())
 
     }
 

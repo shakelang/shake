@@ -7,7 +7,7 @@ import kotlin.test.assertEquals
 
 class ShasamblyInterpretingBaseTests {
 
-    class Instance(memorySize: Int, bytes: ByteArray) : ShasamblyInterpretingBase(memorySize, bytes, 0)
+    class Instance(memorySize: Int, bytes: ByteArray = byteArrayOf()) : ShasamblyInterpretingBase(memorySize, bytes, 0)
 
     @Test
     fun basicTest() {
@@ -17,7 +17,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *63.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(46).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -40,7 +40,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *(63).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(44).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -62,7 +62,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *63.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(48).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -82,7 +82,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *63.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -99,7 +99,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *63.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -125,7 +125,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -142,7 +142,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -166,7 +166,7 @@ class ShasamblyInterpretingBaseTests {
             *(60).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -200,7 +200,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -217,7 +217,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -241,7 +241,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -274,7 +274,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -291,7 +291,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -314,7 +314,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -344,7 +344,7 @@ class ShasamblyInterpretingBaseTests {
             *(80).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(100).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -383,7 +383,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *95.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -400,7 +400,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -428,7 +428,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -445,7 +445,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -469,7 +469,7 @@ class ShasamblyInterpretingBaseTests {
             *(60).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -507,7 +507,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -524,7 +524,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -547,7 +547,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -583,7 +583,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -600,7 +600,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(127).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -623,7 +623,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -653,7 +653,7 @@ class ShasamblyInterpretingBaseTests {
             *(80).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(100).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -735,7 +735,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *63.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -752,7 +752,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *63.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -775,7 +775,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *63.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -801,7 +801,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -818,7 +818,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -844,7 +844,7 @@ class ShasamblyInterpretingBaseTests {
             *(60).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -876,7 +876,7 @@ class ShasamblyInterpretingBaseTests {
             *(60).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -911,7 +911,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -929,7 +929,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -954,7 +954,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *(95).toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -990,7 +990,7 @@ class ShasamblyInterpretingBaseTests {
             *(-1).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(40).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -1008,7 +1008,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(60).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -1034,7 +1034,7 @@ class ShasamblyInterpretingBaseTests {
             *(40).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(80).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -1068,7 +1068,7 @@ class ShasamblyInterpretingBaseTests {
             *(80).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(100).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
@@ -1108,7 +1108,7 @@ class ShasamblyInterpretingBaseTests {
             *(80).toBytes().toTypedArray(), // Free table end pointer
             *127.toBytes().toTypedArray(), // Stack pointer
             *(-1).toBytes().toTypedArray(), // Local variables stack pointer
-            *(0).toBytes().toTypedArray(), // Instruction pointer
+            *(32).toBytes().toTypedArray(), // Instruction pointer
             *(100).toBytes().toTypedArray(), // Global stack pointer
             *(0).toBytes().toTypedArray(), // Unused memory location
             *(0).toBytes().toTypedArray(), // Unused memory location
