@@ -1,18 +1,17 @@
-package io.github.shakelang.shake.lexer.token.stream
+package io.github.shakelang.parseutils.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.lexer.token.Token
-import io.github.shakelang.shake.lexer.token.TokenType
-import io.github.shakelang.shake.lexer.token.tokenLength
+import io.github.shakelang.parseutils.lexer.token.TokenType
 
 /**
  * A [DataBasedTokenInputStream] provides the [Token]s for a Parser. It is
- * created by the [io.github.shakelang.shake.lexer.Lexer]
+ * created by a lexer
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
-class DataBasedTokenInputStream
+open class DataBasedTokenInputStream<TT: TokenType, T: Token<TT>>
 
 /**
  * Create a [DataBasedTokenInputStream] giving the [DataBasedTokenInputStream.source] and [DataBasedTokenInputStream.tokenTypes]
@@ -32,26 +31,35 @@ class DataBasedTokenInputStream
      * The source (mostly filename) of the [DataBasedTokenInputStream]
      */
     override val source: String,
+
     /**
      * The tokenTypes that are contained in the [DataBasedTokenInputStream]
      */
-    val tokenTypes: ByteArray,
+    open val tokenTypes: Array<TT>,
+
     /**
      * The values for the tokens that have values in the [DataBasedTokenInputStream]
      */
-    private val values: Array<String>,
+    protected open val values: Array<String>,
+
     /**
      * The positions of the tokens of the [DataBasedTokenInputStream]
      * (We just store the end-indexes of each token. We can calculate the start-index out of the token type &amp; value)
      */
-    private val positions: IntArray,
+    protected open val positions: IntArray,
+
     /**
      * The map for the token-positions
      * We have this map to resolve the column / line of an index. This is useful for error-generation.
      */
-    override val map: PositionMap
+    override val map: PositionMap,
 
-) : TokenInputStream {
+    /**
+     * Create a [Token] from its contents
+     */
+    val createToken: (TT, String?, Int, Int) -> T,
+
+) : TokenInputStream<TT, T> {
 
     private var pos: Int = -1
     private var valuePos = -1
@@ -70,8 +78,13 @@ class DataBasedTokenInputStream
 
             // resolve value-position
             valuePos = -1
-            for (i in 0..position) if (TokenType.hasValue(tokenTypes[i])) valuePos++
+            for (i in 0..position) if (tokenTypes[i].hasValue) valuePos++
         }
+
+    /**
+     * Get the amount of contained tokens
+     */
+    override val size: Int get() = tokenTypes.size
 
     /**
      * Getter for [tokenTypes] (Gives back an array of [Token]s)
@@ -80,28 +93,25 @@ class DataBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    val tokens: Array<Token?> get() {
+    open val tokens: List<T?> get() {
 
         // Create an array of tokens for all the tokens
-        val tokens = arrayOfNulls<Token>(tokenTypes.size)
-
-        // The positions
         var valuePosition = -1
-
-        // loop over the tokens array and fill it.
-        for (i in tokens.indices) {
-            if (TokenType.hasValue(this.tokenTypes[i])) {
-                tokens[i] = Token(
-                    this.tokenTypes[i],
+        val tokens = List(tokenTypes.size) {
+            if (this.tokenTypes[it].hasValue) {
+                createToken(
+                    this.tokenTypes[it],
                     values[++valuePosition],
-                    positions[i] - TokenType.getTokenLength(this.tokenTypes[i], values[valuePosition]),
-                    positions[i]
+                    positions[it] - this.tokenTypes[it].length(values[valuePosition]),
+                    positions[it]
                 )
-            } else tokens[i] = Token(
-                this.tokenTypes[i],
-                positions[i] - TokenType.getTokenLength(this.tokenTypes[i]),
-                positions[i]
+            } else createToken(
+                this.tokenTypes[it],
+                null,
+                positions[it] - this.tokenTypes[it].length(null),
+                positions[it]
             )
+
         }
         return tokens
     }
@@ -116,11 +126,11 @@ class DataBasedTokenInputStream
      */
     @Deprecated("Try to avoid using this method, it will be a performance bottleneck")
     @Suppress("deprecation")
-    operator fun get(position: Int): Token {
+    open operator fun get(position: Int): T {
         // test the position (throw error if a wrong position is provided)
         // and return the token at the position if no error is thrown
         testPosition(position)
-        return Token(getType(position), getValue(position), getStart(position), getEnd(position))
+        return createToken(getType(position), getValue(position), getStart(position), getEnd(position))
     }
 
     /**
@@ -131,7 +141,7 @@ class DataBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun getType(position: Int): Byte {
+    open fun getType(position: Int): TT {
         // test the position (throw error if a wrong position is provided)
         // and return the token-type at the position if no error is thrown
         testPosition(position)
@@ -154,24 +164,24 @@ class DataBasedTokenInputStream
       """
     )
     @Suppress("deprecation")
-    fun getStart(position: Int): Int {
+    open fun getStart(position: Int): Int {
         // test the position (throw error if a wrong position is provided)
         // and return the token-start at the position if no error is thrown
         testPosition(position)
         return getEnd(position) + 1 -
-                if (getHasValue(position)) TokenType.getTokenLength(getType(position), getValue(position))
-                else TokenType.getTokenLength(getType(position)).toInt()
+                if (getHasValue(position)) getType(position).length(getValue(position))
+                else getType(position).length(null)
     }
 
     /**
-     * Get the end of specific token from the [DataBasedTokenInputStream] by it's position
+     * Get the end of specific token from the [DataBasedTokenInputStream] by its position
      *
      * @param position the position to get
      * @return the token at the given position
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun getEnd(position: Int): Int {
+    open fun getEnd(position: Int): Int {
         // test the position (throw error if a wrong position is provided)
         // and return the token-end at the position if no error is thrown
         testPosition(position)
@@ -192,14 +202,14 @@ class DataBasedTokenInputStream
      
       """
     )
-    fun getValue(position: Int): String? {
+    open fun getValue(position: Int): String? {
         if(!getHasValue(position)) return null
 
         // We start the valueIndex at 0
         var valueIndex = 0
 
         /// loop up to the given position and count the valued tokens before (increase the valueIndex)
-        for (i in 0 until position) if (TokenType.hasValue(tokenTypes[i])) valueIndex++
+        for (i in 0 until position) if (tokenTypes[i].hasValue) valueIndex++
 
         // return the value at the given position
         return values[valueIndex]
@@ -213,9 +223,9 @@ class DataBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun getHasValue(position: Int): Boolean {
+    open fun getHasValue(position: Int): Boolean {
         // Check, if the token at the given position has a value
-        return TokenType.hasValue(tokenTypes[position])
+        return tokenTypes[position].hasValue
     }
 
     override fun has(num: Int): Boolean {
@@ -231,7 +241,7 @@ class DataBasedTokenInputStream
         return pos + 1 < tokenTypes.size
     }
 
-    override fun nextType(): Byte {
+    override fun nextType(): TT {
         // skip to next token and then return the actual token
         skip()
         return actualType
@@ -247,7 +257,7 @@ class DataBasedTokenInputStream
         // Check if the input has a next token. If so then increase the position. If not throw an error
         // also increase the valuePosition if the next token has a value
         if (hasNext()) {
-            if (TokenType.hasValue(tokenTypes[++pos])) valuePos++
+            if (tokenTypes[++pos].hasValue) valuePos++
         } else throw Error("Input already finished")
     }
 
@@ -255,15 +265,15 @@ class DataBasedTokenInputStream
         for(i in 0 until amount) skip()
     }
 
-    override val actual: Token
+    override val actual: T
         get() {
         // Just return the actual token
         // That is possible, because the position should never get
         // bigger than the token length.
-        return Token(actualType, actualValue, actualStart, actualEnd)
+        return createToken(actualType, actualValue, actualStart, actualEnd)
     }
 
-    override val actualType: Byte get() {
+    override val actualType: TT get() {
         // Just return the actual token-type
         // That is possible, because the position should never get
         // bigger than the token length.
@@ -275,8 +285,8 @@ class DataBasedTokenInputStream
         // That is possible, because the position should never get
         // bigger than the token length.
         return actualEnd + 1 -
-                if (actualHasValue) TokenType.getTokenLength(actualType, actualValue)
-                else TokenType.getTokenLength(actualType).toInt()
+                if (actualHasValue) actualType.length(actualValue)
+                else actualType.length(null)
     }
 
     override val actualEnd: Int get() {
@@ -290,16 +300,16 @@ class DataBasedTokenInputStream
         // Just return the actual token-value
         // That is possible, because the position should never get
         // bigger than the token length.
-        return if (TokenType.hasValue(tokenTypes[pos])) values[valuePos] else null
+        return if (actualHasValue) values[valuePos] else null
     }
 
     override val actualHasValue: Boolean get() {
         // just return if the actual token-type
-        return TokenType.hasValue(tokenTypes[pos])
+        return tokenTypes[pos].hasValue
     }
 
-    override fun peek(): Token {
-        return if (pos + 1 < tokenTypes.size) Token(
+    override fun peek(): T {
+        return if (pos + 1 < tokenTypes.size) createToken(
             peekType(),
             peekValue(),
             peekStart(),
@@ -307,14 +317,14 @@ class DataBasedTokenInputStream
         ) else throw Error("Not enough tokens left")
     }
 
-    override fun peekType(): Byte {
+    override fun peekType(): TT {
         return if (pos + 1 < tokenTypes.size) tokenTypes[pos + 1] else throw Error("Not enough tokens left")
     }
 
     override fun peekStart(): Int {
         return if (pos + 1 < tokenTypes.size) peekEnd() + 1 -
-                (if (peekHasValue()) TokenType.getTokenLength(peekType(), peekValue())
-                else TokenType.getTokenLength(peekType()).toInt())
+                (if (peekHasValue()) peekType().length(peekValue())
+                else peekType().length(null))
             else throw Error("Not enough tokens left")
     }
 
@@ -323,15 +333,15 @@ class DataBasedTokenInputStream
     }
 
     override fun peekValue(): String? {
-        return if (peekHasValue()) values[if (TokenType.hasValue(actualType)) valuePos + 2 else valuePos + 1] else null
+        return if (peekHasValue()) values[if (actualHasValue) valuePos + 2 else valuePos + 1] else null
     }
 
     override fun peekHasValue(): Boolean {
-        return if (pos + 1 < tokenTypes.size) TokenType.hasValue(peekType()) else throw Error("Not enough tokens left")
+        return if (pos + 1 < tokenTypes.size) peekType().hasValue else throw Error("Not enough tokens left")
     }
 
-    override fun peek(offset: Int): Token {
-        return if (pos + offset < tokenTypes.size) Token(
+    override fun peek(offset: Int): T {
+        return if (pos + offset < tokenTypes.size) createToken(
             peekType(offset),
             peekValue(offset),
             peekStart(offset),
@@ -339,13 +349,14 @@ class DataBasedTokenInputStream
         ) else throw Error("Not enough tokens left")
     }
 
-    override fun peekType(offset: Int): Byte {
+    override fun peekType(offset: Int): TT {
         return if (pos + offset < tokenTypes.size) tokenTypes[pos + offset] else throw Error("Not enough tokens left")
     }
 
     override fun peekStart(offset: Int): Int {
-        return if (pos + offset < tokenTypes.size)
-            peekEnd(offset) + 1 - peekType(offset).tokenLength(peekValue(offset))
+        return if (pos + offset < tokenTypes.size) peekEnd(offset) + 1 -
+                (if(peekHasValue(offset)) peekType(offset).length(peekValue(offset))
+                else peekType(offset).length(null))
         else throw Error("Not enough tokens left")
     }
 
@@ -357,7 +368,7 @@ class DataBasedTokenInputStream
         if (!has(offset)) throw Error("Not enough tokens left")
         var valuePos = valuePos
         for (i in 1 until offset + 1) {
-            if (TokenType.hasValue(tokenTypes[pos + i])) valuePos++
+            if (tokenTypes[pos + i].hasValue) valuePos++
         }
         return if (peekHasValue(offset)) values[valuePos] else null
     }
@@ -366,14 +377,14 @@ class DataBasedTokenInputStream
         if (!has(offset)) throw Error("Not enough tokens left")
         var valuePos = valuePos
         for (i in 0 until valuePos) {
-            if (pos + i >= 0 && TokenType.hasValue(tokenTypes[pos + i + 1])) valuePos++
+            if (pos + i >= 0 && tokenTypes[pos + i + 1].hasValue) valuePos++
         }
-        return if (pos + offset < tokenTypes.size) TokenType.hasValue(peekType(offset)) else throw Error("Not enough tokens left")
+        return if (pos + offset < tokenTypes.size) peekType(offset).hasValue else throw Error("Not enough tokens left")
     }
 
     override fun toString(): String {
         // Return a string-representation of the input just showing all the sub-elements
-        return "TokenInputStream{source='$source', tokens=${tokenTypes.map { TokenType.getName(it) }}, position=$pos}"
+        return "TokenInputStream{source='$source', tokens=${tokenTypes.map { it.name }}, position=$pos}"
     }
 
     /**
@@ -384,7 +395,7 @@ class DataBasedTokenInputStream
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    private fun testPosition(position: Int) {
+    protected open fun testPosition(position: Int) {
         // If the position is out of range of the tokens array throw an error
         if (position < 0) throw Error("Position mustn't be smaller than 0.")
         if (position >= tokenTypes.size) throw Error(

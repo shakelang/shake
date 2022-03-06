@@ -3,8 +3,8 @@ package io.github.shakelang.shake.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.source.CharacterSource
-import io.github.shakelang.shake.lexer.token.Token
-import io.github.shakelang.shake.lexer.token.TokenType
+import io.github.shakelang.shake.lexer.token.ShakeToken
+import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -14,14 +14,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testNextType() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testNextType()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextType()"),
@@ -29,15 +29,15 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(TokenType.KEYWORD_INT, dbtis.nextType())
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.nextType())
         assertEquals(2, dbtis.actualEnd)
-        assertEquals(TokenType.IDENTIFIER, dbtis.nextType())
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.nextType())
         assertEquals(4, dbtis.actualEnd)
-        assertEquals(TokenType.ASSIGN, dbtis.nextType())
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.nextType())
         assertEquals(6, dbtis.actualEnd)
-        assertEquals(TokenType.INTEGER, dbtis.nextType())
+        assertEquals(ShakeTokenType.INTEGER, dbtis.nextType())
         assertEquals(9, dbtis.actualEnd)
-        assertEquals(TokenType.SEMICOLON, dbtis.nextType())
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.nextType())
         assertEquals(10, dbtis.actualEnd)
 
     }
@@ -45,14 +45,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testNextValue() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testNextValue()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextValue()"),
@@ -76,14 +76,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testNextToken() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testNextToken()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextToken()"),
@@ -92,27 +92,27 @@ class TokenBasedTokenInputStreamTests {
         )
 
         var next = dbtis.next()
-        assertEquals(TokenType.KEYWORD_INT, next.type)
+        assertEquals(ShakeTokenType.KEYWORD_INT, next.type)
         assertEquals(2, next.end)
         assertEquals(null, next.value)
         assertEquals(0, next.start)
         next = dbtis.next()
-        assertEquals(TokenType.IDENTIFIER, next.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, next.type)
         assertEquals(4, next.end)
         assertEquals("i", next.value)
         assertEquals(4, next.start)
         next = dbtis.next()
-        assertEquals(TokenType.ASSIGN, next.type)
+        assertEquals(ShakeTokenType.ASSIGN, next.type)
         assertEquals(6, next.end)
         assertEquals(null, next.value)
         assertEquals(6, next.start)
         next = dbtis.next()
-        assertEquals(TokenType.INTEGER, next.type)
+        assertEquals(ShakeTokenType.INTEGER, next.type)
         assertEquals(9, next.end)
         assertEquals("10", next.value)
         assertEquals(8, next.start)
         next = dbtis.next()
-        assertEquals(TokenType.SEMICOLON, next.type)
+        assertEquals(ShakeTokenType.SEMICOLON, next.type)
         assertEquals(10, next.end)
         assertEquals(null, next.value)
         assertEquals(10, next.start)
@@ -121,14 +121,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testGetType() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetType()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetType()"),
@@ -136,25 +136,25 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(TokenType.KEYWORD_INT, dbtis.getType(0))
-        assertEquals(TokenType.IDENTIFIER, dbtis.getType(1))
-        assertEquals(TokenType.ASSIGN, dbtis.getType(2))
-        assertEquals(TokenType.INTEGER, dbtis.getType(3))
-        assertEquals(TokenType.SEMICOLON, dbtis.getType(4))
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.getType(0))
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.getType(1))
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.getType(2))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.getType(3))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.getType(4))
 
     }
 
     @Test
     fun testGetEnd() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetEnd()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetEnd()"),
@@ -173,14 +173,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testGetStart() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetStart()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetStart()"),
@@ -199,14 +199,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testGetValue() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetValue()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetValue()"),
@@ -225,14 +225,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testGetHasValue() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetHasValue()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetHasValue()"),
@@ -251,14 +251,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testSkip() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testSkip()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSkip()"),
@@ -282,14 +282,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testSetPosition() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testSetPosition()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSetPosition()"),
@@ -328,14 +328,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testHas() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHas()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHas()"),
@@ -360,14 +360,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testHasNext() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHasNext()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHasNext()"),
@@ -386,7 +386,7 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testHasNextWithEmpty() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHasNextWithEmpty()",
             arrayOf(),
             PositionMap.PositionMapImpl(
@@ -402,7 +402,7 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testHasNextWithEmptyAndPosition() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHasNextWithEmptyAndPosition()",
             arrayOf(),
             PositionMap.PositionMapImpl(
@@ -419,14 +419,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testActualEnd() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActualEnd()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualEnd()"),
@@ -450,14 +450,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testActualStart() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActualStart()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualStart()"),
@@ -481,14 +481,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testActualType() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActualType()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualType()"),
@@ -497,29 +497,29 @@ class TokenBasedTokenInputStreamTests {
         )
 
         dbtis.skip()
-        assertEquals(TokenType.KEYWORD_INT, dbtis.actualType)
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.actualType)
         dbtis.skip()
-        assertEquals(TokenType.IDENTIFIER, dbtis.actualType)
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.actualType)
         dbtis.skip()
-        assertEquals(TokenType.ASSIGN, dbtis.actualType)
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.actualType)
         dbtis.skip()
-        assertEquals(TokenType.INTEGER, dbtis.actualType)
+        assertEquals(ShakeTokenType.INTEGER, dbtis.actualType)
         dbtis.skip()
-        assertEquals(TokenType.SEMICOLON, dbtis.actualType)
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.actualType)
 
     }
 
     @Test
     fun testActualValue() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActualValue()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualValue()"),
@@ -543,14 +543,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testActual() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActual()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActual()"),
@@ -560,31 +560,31 @@ class TokenBasedTokenInputStreamTests {
 
         dbtis.skip()
         var actual = dbtis.actual
-        assertEquals(TokenType.KEYWORD_INT, actual.type)
+        assertEquals(ShakeTokenType.KEYWORD_INT, actual.type)
         assertEquals(null, actual.value)
         assertEquals(2, actual.end)
         assertEquals(0, actual.start)
         dbtis.skip()
         actual = dbtis.actual
-        assertEquals(TokenType.IDENTIFIER, actual.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, actual.type)
         assertEquals("i", actual.value)
         assertEquals(4, actual.end)
         assertEquals(4, actual.start)
         dbtis.skip()
         actual = dbtis.actual
-        assertEquals(TokenType.ASSIGN, actual.type)
+        assertEquals(ShakeTokenType.ASSIGN, actual.type)
         assertEquals(null, actual.value)
         assertEquals(6, actual.end)
         assertEquals(6, actual.start)
         dbtis.skip()
         actual = dbtis.actual
-        assertEquals(TokenType.INTEGER, actual.type)
+        assertEquals(ShakeTokenType.INTEGER, actual.type)
         assertEquals("10", actual.value)
         assertEquals(9, actual.end)
         assertEquals(8, actual.start)
         dbtis.skip()
         actual = dbtis.actual
-        assertEquals(TokenType.SEMICOLON, actual.type)
+        assertEquals(ShakeTokenType.SEMICOLON, actual.type)
         assertEquals(null, actual.value)
         assertEquals(10, actual.end)
         assertEquals(10, actual.start)
@@ -594,14 +594,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekType() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekType()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType()"),
@@ -609,29 +609,29 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(TokenType.KEYWORD_INT, dbtis.peekType())
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.peekType())
         dbtis.skip()
-        assertEquals(TokenType.IDENTIFIER, dbtis.peekType())
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.peekType())
         dbtis.skip()
-        assertEquals(TokenType.ASSIGN, dbtis.peekType())
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType())
         dbtis.skip()
-        assertEquals(TokenType.INTEGER, dbtis.peekType())
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType())
         dbtis.skip()
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType())
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType())
 
     }
 
     @Test
     fun testPeekEnd() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekEnd()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd()"),
@@ -654,14 +654,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekStart() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekStart()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart()"),
@@ -684,14 +684,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekValue() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekValue()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue()"),
@@ -714,14 +714,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeek() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeek()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek()"),
@@ -730,31 +730,31 @@ class TokenBasedTokenInputStreamTests {
         )
 
         var token = dbtis.peek()
-        assertEquals(TokenType.KEYWORD_INT, token.type)
+        assertEquals(ShakeTokenType.KEYWORD_INT, token.type)
         assertEquals(null, token.value)
         assertEquals(0, token.start)
         assertEquals(2, token.end)
         dbtis.skip()
         token = dbtis.peek()
-        assertEquals(TokenType.IDENTIFIER, token.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, token.type)
         assertEquals("i", token.value)
         assertEquals(4, token.start)
         assertEquals(4, token.end)
         dbtis.skip()
         token = dbtis.peek()
-        assertEquals(TokenType.ASSIGN, token.type)
+        assertEquals(ShakeTokenType.ASSIGN, token.type)
         assertEquals(null, token.value)
         assertEquals(6, token.start)
         assertEquals(6, token.end)
         dbtis.skip()
         token = dbtis.peek()
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         dbtis.skip()
         token = dbtis.peek()
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -764,14 +764,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekType2() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekType2()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType2()"),
@@ -779,31 +779,31 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(TokenType.KEYWORD_INT, dbtis.peekType(1))
-        assertEquals(TokenType.IDENTIFIER, dbtis.peekType(2))
-        assertEquals(TokenType.ASSIGN, dbtis.peekType(3))
-        assertEquals(TokenType.INTEGER, dbtis.peekType(4))
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(5))
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.peekType(2))
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType(3))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(4))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(5))
         dbtis.skip()
-        assertEquals(TokenType.IDENTIFIER, dbtis.peekType(1))
-        assertEquals(TokenType.ASSIGN, dbtis.peekType(2))
-        assertEquals(TokenType.INTEGER, dbtis.peekType(3))
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(4))
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType(2))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(3))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(4))
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
         dbtis.skip()
-        assertEquals(TokenType.ASSIGN, dbtis.peekType(1))
-        assertEquals(TokenType.INTEGER, dbtis.peekType(2))
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(3))
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(2))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(3))
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
         dbtis.skip()
-        assertEquals(TokenType.INTEGER, dbtis.peekType(1))
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(2))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(2))
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(3) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
         dbtis.skip()
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(1))
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(2) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(3) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
@@ -814,14 +814,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekEnd2() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekEnd2()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd2()"),
@@ -864,14 +864,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekStart2() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekStart2()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart2()"),
@@ -920,14 +920,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeekValue2() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekValue2()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue2()"),
@@ -976,14 +976,14 @@ class TokenBasedTokenInputStreamTests {
     @Test
     fun testPeek2() {
 
-        val dbtis = TokenBasedTokenInputStream(
+        val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeek2()",
             arrayOf(
-                Token(TokenType.KEYWORD_INT, 2),
-                Token(TokenType.IDENTIFIER, "i", 4),
-                Token(TokenType.ASSIGN, 6),
-                Token(TokenType.INTEGER, "10", 9),
-                Token(TokenType.SEMICOLON, 10),
+                ShakeToken(ShakeTokenType.KEYWORD_INT, 2),
+                ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4),
+                ShakeToken(ShakeTokenType.ASSIGN, 6),
+                ShakeToken(ShakeTokenType.INTEGER, "10", 9),
+                ShakeToken(ShakeTokenType.SEMICOLON, 10),
             ),
             PositionMap.PositionMapImpl(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek2()"),
@@ -992,27 +992,27 @@ class TokenBasedTokenInputStreamTests {
         )
 
         var token = dbtis.peek(1)
-        assertEquals(TokenType.KEYWORD_INT, token.type)
+        assertEquals(ShakeTokenType.KEYWORD_INT, token.type)
         assertEquals(null, token.value)
         assertEquals(0, token.start)
         assertEquals(2, token.end)
         token = dbtis.peek(2)
-        assertEquals(TokenType.IDENTIFIER, token.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, token.type)
         assertEquals("i", token.value)
         assertEquals(4, token.start)
         assertEquals(4, token.end)
         token = dbtis.peek(3)
-        assertEquals(TokenType.ASSIGN, token.type)
+        assertEquals(ShakeTokenType.ASSIGN, token.type)
         assertEquals(null, token.value)
         assertEquals(6, token.start)
         assertEquals(6, token.end)
         token = dbtis.peek(4)
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         token = dbtis.peek(5)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -1020,22 +1020,22 @@ class TokenBasedTokenInputStreamTests {
         dbtis.skip()
 
         token = dbtis.peek(1)
-        assertEquals(TokenType.IDENTIFIER, token.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, token.type)
         assertEquals("i", token.value)
         assertEquals(4, token.start)
         assertEquals(4, token.end)
         token = dbtis.peek(2)
-        assertEquals(TokenType.ASSIGN, token.type)
+        assertEquals(ShakeTokenType.ASSIGN, token.type)
         assertEquals(null, token.value)
         assertEquals(6, token.start)
         assertEquals(6, token.end)
         token = dbtis.peek(3)
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         token = dbtis.peek(4)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -1044,17 +1044,17 @@ class TokenBasedTokenInputStreamTests {
         dbtis.skip()
 
         token = dbtis.peek(1)
-        assertEquals(TokenType.ASSIGN, token.type)
+        assertEquals(ShakeTokenType.ASSIGN, token.type)
         assertEquals(null, token.value)
         assertEquals(6, token.start)
         assertEquals(6, token.end)
         token = dbtis.peek(2)
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         token = dbtis.peek(3)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -1064,12 +1064,12 @@ class TokenBasedTokenInputStreamTests {
         dbtis.skip()
 
         token = dbtis.peek(1)
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         token = dbtis.peek(2)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -1080,7 +1080,7 @@ class TokenBasedTokenInputStreamTests {
         dbtis.skip()
 
         token = dbtis.peek(1)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)

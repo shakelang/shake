@@ -3,7 +3,7 @@ package io.github.shakelang.shake.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.source.CharacterSource
-import io.github.shakelang.shake.lexer.token.TokenType
+import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -13,14 +13,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testNextType() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testNextType()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 7, 8),
@@ -30,15 +30,15 @@ class DataBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(TokenType.KEYWORD_INT, dbtis.nextType())
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.nextType())
         assertEquals(2, dbtis.actualEnd)
-        assertEquals(TokenType.IDENTIFIER, dbtis.nextType())
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.nextType())
         assertEquals(4, dbtis.actualEnd)
-        assertEquals(TokenType.ASSIGN, dbtis.nextType())
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.nextType())
         assertEquals(6, dbtis.actualEnd)
-        assertEquals(TokenType.INTEGER, dbtis.nextType())
+        assertEquals(ShakeTokenType.INTEGER, dbtis.nextType())
         assertEquals(7, dbtis.actualEnd)
-        assertEquals(TokenType.SEMICOLON, dbtis.nextType())
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.nextType())
         assertEquals(8, dbtis.actualEnd)
 
     }
@@ -46,14 +46,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testNextValue() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testNextValue()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 7, 8),
@@ -79,14 +79,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testNextToken() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testNextToken()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -97,27 +97,27 @@ class DataBasedTokenInputStreamTests {
         )
 
         var next = dbtis.next()
-        assertEquals(TokenType.KEYWORD_INT, next.type)
+        assertEquals(ShakeTokenType.KEYWORD_INT, next.type)
         assertEquals(2, next.end)
         assertEquals(null, next.value)
         assertEquals(0, next.start)
         next = dbtis.next()
-        assertEquals(TokenType.IDENTIFIER, next.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, next.type)
         assertEquals(4, next.end)
         assertEquals("i", next.value)
         assertEquals(4, next.start)
         next = dbtis.next()
-        assertEquals(TokenType.ASSIGN, next.type)
+        assertEquals(ShakeTokenType.ASSIGN, next.type)
         assertEquals(6, next.end)
         assertEquals(null, next.value)
         assertEquals(6, next.start)
         next = dbtis.next()
-        assertEquals(TokenType.INTEGER, next.type)
+        assertEquals(ShakeTokenType.INTEGER, next.type)
         assertEquals(9, next.end)
         assertEquals("10", next.value)
         assertEquals(8, next.start)
         next = dbtis.next()
-        assertEquals(TokenType.SEMICOLON, next.type)
+        assertEquals(ShakeTokenType.SEMICOLON, next.type)
         assertEquals(10, next.end)
         assertEquals(null, next.value)
         assertEquals(10, next.start)
@@ -126,14 +126,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testGetType() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testGetType()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -143,25 +143,25 @@ class DataBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(TokenType.KEYWORD_INT, dbtis.getType(0))
-        assertEquals(TokenType.IDENTIFIER, dbtis.getType(1))
-        assertEquals(TokenType.ASSIGN, dbtis.getType(2))
-        assertEquals(TokenType.INTEGER, dbtis.getType(3))
-        assertEquals(TokenType.SEMICOLON, dbtis.getType(4))
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.getType(0))
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.getType(1))
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.getType(2))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.getType(3))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.getType(4))
 
     }
 
     @Test
     fun testGetEnd() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testGetEnd()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -182,14 +182,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testGetStart() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testGetStart()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -210,14 +210,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testGetValue() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testGetValue()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -238,14 +238,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testGetHasValue() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testGetHasValue()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -266,14 +266,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testSkip() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testSkip()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -299,14 +299,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testSetPosition() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testSetPosition()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -347,14 +347,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testHas() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testHas()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -381,14 +381,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testHasNext() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testHasNext()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -409,9 +409,9 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testHasNextWithEmpty() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testHasNextWithEmpty()",
-            byteArrayOf(),
+            arrayOf(),
             arrayOf(),
             intArrayOf(),
             PositionMap.PositionMapImpl(
@@ -427,9 +427,9 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testHasNextWithEmptyAndPosition() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testHasNextWithEmptyAndPosition()",
-            byteArrayOf(),
+            arrayOf(),
             arrayOf(),
             intArrayOf(),
             PositionMap.PositionMapImpl(
@@ -446,14 +446,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testActualEnd() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testActualEnd()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -479,14 +479,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testActualStart() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testActualStart()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -512,14 +512,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testActualType() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testActualType()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -530,29 +530,29 @@ class DataBasedTokenInputStreamTests {
         )
 
         dbtis.skip()
-        assertEquals(TokenType.KEYWORD_INT, dbtis.actualType)
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.actualType)
         dbtis.skip()
-        assertEquals(TokenType.IDENTIFIER, dbtis.actualType)
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.actualType)
         dbtis.skip()
-        assertEquals(TokenType.ASSIGN, dbtis.actualType)
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.actualType)
         dbtis.skip()
-        assertEquals(TokenType.INTEGER, dbtis.actualType)
+        assertEquals(ShakeTokenType.INTEGER, dbtis.actualType)
         dbtis.skip()
-        assertEquals(TokenType.SEMICOLON, dbtis.actualType)
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.actualType)
 
     }
 
     @Test
     fun testActualValue() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testActualValue()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -578,14 +578,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testActual() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testActual()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -597,31 +597,31 @@ class DataBasedTokenInputStreamTests {
 
         dbtis.skip()
         var actual = dbtis.actual
-        assertEquals(TokenType.KEYWORD_INT, actual.type)
+        assertEquals(ShakeTokenType.KEYWORD_INT, actual.type)
         assertEquals(null, actual.value)
         assertEquals(2, actual.end)
         assertEquals(0, actual.start)
         dbtis.skip()
         actual = dbtis.actual
-        assertEquals(TokenType.IDENTIFIER, actual.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, actual.type)
         assertEquals("i", actual.value)
         assertEquals(4, actual.end)
         assertEquals(4, actual.start)
         dbtis.skip()
         actual = dbtis.actual
-        assertEquals(TokenType.ASSIGN, actual.type)
+        assertEquals(ShakeTokenType.ASSIGN, actual.type)
         assertEquals(null, actual.value)
         assertEquals(6, actual.end)
         assertEquals(6, actual.start)
         dbtis.skip()
         actual = dbtis.actual
-        assertEquals(TokenType.INTEGER, actual.type)
+        assertEquals(ShakeTokenType.INTEGER, actual.type)
         assertEquals("10", actual.value)
         assertEquals(9, actual.end)
         assertEquals(8, actual.start)
         dbtis.skip()
         actual = dbtis.actual
-        assertEquals(TokenType.SEMICOLON, actual.type)
+        assertEquals(ShakeTokenType.SEMICOLON, actual.type)
         assertEquals(null, actual.value)
         assertEquals(10, actual.end)
         assertEquals(10, actual.start)
@@ -631,14 +631,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testPeekType() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeekType()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -648,29 +648,29 @@ class DataBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(TokenType.KEYWORD_INT, dbtis.peekType())
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.peekType())
         dbtis.skip()
-        assertEquals(TokenType.IDENTIFIER, dbtis.peekType())
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.peekType())
         dbtis.skip()
-        assertEquals(TokenType.ASSIGN, dbtis.peekType())
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType())
         dbtis.skip()
-        assertEquals(TokenType.INTEGER, dbtis.peekType())
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType())
         dbtis.skip()
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType())
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType())
 
     }
 
     @Test
     fun testPeekEnd() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeekEnd()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -695,14 +695,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testPeekStart() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeekStart()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -727,14 +727,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testPeekValue() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeekValue()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -759,14 +759,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testPeek() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeek()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -777,31 +777,31 @@ class DataBasedTokenInputStreamTests {
         )
 
         var token = dbtis.peek()
-        assertEquals(TokenType.KEYWORD_INT, token.type)
+        assertEquals(ShakeTokenType.KEYWORD_INT, token.type)
         assertEquals(null, token.value)
         assertEquals(0, token.start)
         assertEquals(2, token.end)
         dbtis.skip()
         token = dbtis.peek()
-        assertEquals(TokenType.IDENTIFIER, token.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, token.type)
         assertEquals("i", token.value)
         assertEquals(4, token.start)
         assertEquals(4, token.end)
         dbtis.skip()
         token = dbtis.peek()
-        assertEquals(TokenType.ASSIGN, token.type)
+        assertEquals(ShakeTokenType.ASSIGN, token.type)
         assertEquals(null, token.value)
         assertEquals(6, token.start)
         assertEquals(6, token.end)
         dbtis.skip()
         token = dbtis.peek()
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         dbtis.skip()
         token = dbtis.peek()
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -811,14 +811,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testPeekType2() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeekType2()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -828,31 +828,31 @@ class DataBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(TokenType.KEYWORD_INT, dbtis.peekType(1))
-        assertEquals(TokenType.IDENTIFIER, dbtis.peekType(2))
-        assertEquals(TokenType.ASSIGN, dbtis.peekType(3))
-        assertEquals(TokenType.INTEGER, dbtis.peekType(4))
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(5))
+        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.peekType(2))
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType(3))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(4))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(5))
         dbtis.skip()
-        assertEquals(TokenType.IDENTIFIER, dbtis.peekType(1))
-        assertEquals(TokenType.ASSIGN, dbtis.peekType(2))
-        assertEquals(TokenType.INTEGER, dbtis.peekType(3))
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(4))
+        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType(2))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(3))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(4))
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
         dbtis.skip()
-        assertEquals(TokenType.ASSIGN, dbtis.peekType(1))
-        assertEquals(TokenType.INTEGER, dbtis.peekType(2))
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(3))
+        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(2))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(3))
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
         dbtis.skip()
-        assertEquals(TokenType.INTEGER, dbtis.peekType(1))
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(2))
+        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(2))
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(3) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
         dbtis.skip()
-        assertEquals(TokenType.SEMICOLON, dbtis.peekType(1))
+        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(1))
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(2) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(3) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
@@ -863,14 +863,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testPeekEnd2() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeekEnd2()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -915,14 +915,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testPeekStart2() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeekStart2()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -973,14 +973,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testPeekValue2() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeekValue2()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -1031,14 +1031,14 @@ class DataBasedTokenInputStreamTests {
     @Test
     fun testPeek2() {
 
-        val dbtis = DataBasedTokenInputStream(
+        val dbtis = ShakeDataBasedTokenInputStream(
             "DataBasedTokenInputStreamTests#testPeek2()",
-            byteArrayOf(
-                TokenType.KEYWORD_INT,
-                TokenType.IDENTIFIER,
-                TokenType.ASSIGN,
-                TokenType.INTEGER,
-                TokenType.SEMICOLON,
+            arrayOf(
+                ShakeTokenType.KEYWORD_INT,
+                ShakeTokenType.IDENTIFIER,
+                ShakeTokenType.ASSIGN,
+                ShakeTokenType.INTEGER,
+                ShakeTokenType.SEMICOLON,
             ),
             arrayOf("i", "10"),
             intArrayOf(2, 4, 6, 9, 10),
@@ -1049,27 +1049,27 @@ class DataBasedTokenInputStreamTests {
         )
 
         var token = dbtis.peek(1)
-        assertEquals(TokenType.KEYWORD_INT, token.type)
+        assertEquals(ShakeTokenType.KEYWORD_INT, token.type)
         assertEquals(null, token.value)
         assertEquals(0, token.start)
         assertEquals(2, token.end)
         token = dbtis.peek(2)
-        assertEquals(TokenType.IDENTIFIER, token.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, token.type)
         assertEquals("i", token.value)
         assertEquals(4, token.start)
         assertEquals(4, token.end)
         token = dbtis.peek(3)
-        assertEquals(TokenType.ASSIGN, token.type)
+        assertEquals(ShakeTokenType.ASSIGN, token.type)
         assertEquals(null, token.value)
         assertEquals(6, token.start)
         assertEquals(6, token.end)
         token = dbtis.peek(4)
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         token = dbtis.peek(5)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -1077,22 +1077,22 @@ class DataBasedTokenInputStreamTests {
         dbtis.skip()
 
         token = dbtis.peek(1)
-        assertEquals(TokenType.IDENTIFIER, token.type)
+        assertEquals(ShakeTokenType.IDENTIFIER, token.type)
         assertEquals("i", token.value)
         assertEquals(4, token.start)
         assertEquals(4, token.end)
         token = dbtis.peek(2)
-        assertEquals(TokenType.ASSIGN, token.type)
+        assertEquals(ShakeTokenType.ASSIGN, token.type)
         assertEquals(null, token.value)
         assertEquals(6, token.start)
         assertEquals(6, token.end)
         token = dbtis.peek(3)
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         token = dbtis.peek(4)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -1101,17 +1101,17 @@ class DataBasedTokenInputStreamTests {
         dbtis.skip()
 
         token = dbtis.peek(1)
-        assertEquals(TokenType.ASSIGN, token.type)
+        assertEquals(ShakeTokenType.ASSIGN, token.type)
         assertEquals(null, token.value)
         assertEquals(6, token.start)
         assertEquals(6, token.end)
         token = dbtis.peek(2)
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         token = dbtis.peek(3)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -1121,12 +1121,12 @@ class DataBasedTokenInputStreamTests {
         dbtis.skip()
 
         token = dbtis.peek(1)
-        assertEquals(TokenType.INTEGER, token.type)
+        assertEquals(ShakeTokenType.INTEGER, token.type)
         assertEquals("10", token.value)
         assertEquals(8, token.start)
         assertEquals(9, token.end)
         token = dbtis.peek(2)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
@@ -1137,7 +1137,7 @@ class DataBasedTokenInputStreamTests {
         dbtis.skip()
 
         token = dbtis.peek(1)
-        assertEquals(TokenType.SEMICOLON, token.type)
+        assertEquals(ShakeTokenType.SEMICOLON, token.type)
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)

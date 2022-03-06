@@ -1,15 +1,18 @@
-package io.github.shakelang.shake.lexer.token.stream
+package io.github.shakelang.parseutils.lexer.token.stream
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
-import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.lexer.LexingBase
+import io.github.shakelang.parseutils.lexer.LexingBase
+import io.github.shakelang.parseutils.lexer.token.TokenType
 import io.github.shakelang.shake.lexer.token.Token
 
-class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : LexingBase(inputStream), TokenInputStream {
+open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
+    private val lexingBase: LexingBase<TT, T>
+) : LexingBase<TT, T>(lexingBase.input), TokenInputStream<TT, T> {
 
-    val buffer: MutableList<Token> = mutableListOf()
-    override lateinit var actual: Token
-        private set
+    override val size: Int get() = throw UnsupportedOperationException()
+
+    val buffer: MutableList<T> = mutableListOf()
+    override lateinit var actual: T
 
     override val source: String
         get() = input.source.location
@@ -18,7 +21,6 @@ class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : Lexing
         get() = input.positionMaker
 
     override var position: Int = -1
-        private set
 
 
     override fun has(num: Int): Boolean {
@@ -49,7 +51,7 @@ class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : Lexing
         for(i in 0 until amount) skip()
     }
 
-    override fun peek(offset: Int): Token {
+    override fun peek(offset: Int): T {
         try {
             fillBuffer(offset)
         }  catch (e: IndexOutOfBoundsException) {
@@ -72,6 +74,10 @@ class OnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : Lexing
                 throw IllegalStateException("Not enough tokens left (${buffer.size}/$minAmount)")
             }
         }
+    }
+
+    override fun makeToken(): T {
+        return lexingBase.makeToken()
     }
 
 
