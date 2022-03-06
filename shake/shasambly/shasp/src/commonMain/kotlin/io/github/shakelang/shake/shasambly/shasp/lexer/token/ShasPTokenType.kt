@@ -1,12 +1,14 @@
 @file:Suppress("NOTHING_TO_INLINE")
 package io.github.shakelang.shake.shasambly.shasp.lexer.token
 
+import io.github.shakelang.parseutils.lexer.token.TokenType
+
 /**
  * These are the different types of tokens, that the lexer creates
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-enum class ShasPTokenType(private val size: Int, private val hasValue: Boolean = false) {
+enum class ShasPTokenType(private val size: Int, override val hasValue: Boolean = false): TokenType {
 
     /**
      * Identifier for variables, functions and classes
@@ -286,11 +288,11 @@ enum class ShasPTokenType(private val size: Int, private val hasValue: Boolean =
 
     ;
 
-    fun tokenLength(): Int {
+    fun length(): Int {
         return size
     }
 
-    fun tokenLength(value: String?): Int {
+    override fun length(value: String?): Int {
         return if (size == -1) value!!.length else size
     }
 

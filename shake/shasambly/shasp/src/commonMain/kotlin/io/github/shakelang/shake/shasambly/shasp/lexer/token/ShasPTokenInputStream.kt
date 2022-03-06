@@ -1,12 +1,48 @@
-package io.github.shakelang.shake.lexer.token.stream
+@file:Suppress("unused")
+package io.github.shakelang.shake.shasambly.shasp.lexer.token
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexingBase
+import io.github.shakelang.parseutils.lexer.token.stream.DataBasedTokenInputStream
+import io.github.shakelang.parseutils.lexer.token.stream.TokenBasedTokenInputStream
+import io.github.shakelang.parseutils.lexer.token.stream.TokenInputStream
 import io.github.shakelang.shake.lexer.token.ShasPToken
+import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexingBase
 
-class OnDemandLexingShasPTokenInputStream(inputStream: CharacterInputStream) : ShasPLexingBase(inputStream), ShasPTokenInputStream {
+/**
+ * A [ShasPTokenInputStream] provides the [ShasPToken]s for a Parser. It is
+ * created by a Lexer
+ *
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+ */
+@Suppress("unused")
+interface ShasPTokenInputStream : TokenInputStream<ShasPTokenType, ShasPToken>
 
+class ShasPTokenBasedInputStream (
+    tokens: Array<ShasPToken>,
+    map: PositionMap
+) : ShasPTokenInputStream, TokenBasedTokenInputStream<ShasPTokenType, ShasPToken>(tokens, map)
+
+class ShasPDataBasedInputStream (
+    source: String,
+    tokenTypes: Array<ShasPTokenType>,
+    values: Array<String>,
+    positions: IntArray,
+    map: PositionMap,
+) : ShasPTokenInputStream, DataBasedTokenInputStream<ShasPTokenType, ShasPToken>(
+    source,
+    tokenTypes,
+    values,
+    positions,
+    map,
+    { type, value, start, end -> ShasPToken(type, value, start, end) }
+)
+
+class OnDemandLexingShasPTokenInputStream (
+    input: CharacterInputStream
+): ShasPTokenInputStream, ShasPLexingBase(input) {
+
+    override val size get() = throw UnsupportedOperationException()
     val buffer: MutableList<ShasPToken> = mutableListOf()
     override lateinit var actual: ShasPToken
         private set
@@ -73,6 +109,4 @@ class OnDemandLexingShasPTokenInputStream(inputStream: CharacterInputStream) : S
             }
         }
     }
-
-
 }

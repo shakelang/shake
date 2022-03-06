@@ -3,7 +3,7 @@ package io.github.shakelang.shake.shasambly.shasp.parser
 import io.github.shakelang.parseutils.CompilerError
 import io.github.shakelang.parseutils.characters.Characters
 import io.github.shakelang.parseutils.characters.position.Position
-import io.github.shakelang.shake.lexer.token.stream.ShasPTokenInputStream
+import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenInputStream
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.*
 

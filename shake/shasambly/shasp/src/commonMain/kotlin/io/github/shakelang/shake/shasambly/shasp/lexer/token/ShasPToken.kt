@@ -4,106 +4,17 @@ import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 
 
 /**
- * The input of the [io.github.shakelang.shake.lexer.ShasPLexer] gets converted into [ShasPToken]s. These get parsed
- * by the parser
+ * A token representing a ShasP token.
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
-class ShasPToken
-/**
- * Constructor for [ShasPToken]
- *
- * @param type the [ShasPToken.type] of the [ShasPToken]
- * @param value the [ShasPToken.value] of the [ShasPToken]
- * @param start the [ShasPToken.start] of the [ShasPToken]
- * @param end the [ShasPToken.end] of the [ShasPToken]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
- *
- * @see ShasPToken
- * @see ShasPToken.type
- * @see ShasPToken.value
- * @see ShasPToken.start
- * @see ShasPToken.end
- *
- */(
-    /**
-     * The type of the [ShasPToken]
-     *
-     * @see ShasPToken
-     */
-    val type: ShasPTokenType,
+class ShasPToken : Token<ShasPTokenType> {
 
-    /**
-     * The value of the [ShasPToken] (This is for identifiers, strings or numbers. If not necessary this is null)
-     *
-     * @see ShasPToken
-     */
-    val value: String?,
-
-    /**
-     * The starting Position of the [ShasPToken]
-     *
-     * @see ShasPToken
-     */
-    val start: Int,
-
-    /**
-     * The ending Position of the [ShasPToken]
-     *
-     * @see ShasPToken
-     */
-    val end: Int
-) {
-
-    /**
-     * Constructor for [ShasPToken]
-     *
-     * @param type the [type] of the [ShasPToken]
-     * @param value the [value] of the [ShasPToken]
-     * @param end the [end] position of the [ShasPToken]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     *
-     * @see ShasPToken
-     * @see type
-     * @see value
-     * @see start
-     * @see end
-     */
-    constructor(type: ShasPTokenType, value: String?, end: Int) : this(type, value, end - type.tokenLength(value) + 1, end)
-
-    /**
-     * Constructor for [ShasPToken]
-     *
-     * @param type the [type] of the [ShasPToken]
-     * @param start the [start] of the [ShasPToken]
-     * @param end the [end] of the [ShasPToken]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     *
-     * @see ShasPToken
-     * @see type
-     * @see start
-     * @see end
-     */
-    constructor(type: ShasPTokenType, start: Int, end: Int) : this(type, null, start, end)
-
-    /**
-     * Constructor for [ShasPToken]
-     *
-     * @param type the [type] of the [ShasPToken]
-     * @param end the [end] position of the [ShasPToken]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     *
-     * @see ShasPToken
-     * @see type
-     * @see start
-     * @see end
-     */
-    constructor(type: ShasPTokenType, end: Int) : this(type, null, end)
+    constructor(type: ShasPTokenType, value: String?, start: Int, end: Int) : super(type, value, start, end)
+    constructor(type: ShasPTokenType, value: String?, position: Int) : super(type, value, position)
+    constructor(type: ShasPTokenType, start: Int, end: Int) : super(type, start, end)
+    constructor(type: ShasPTokenType, position: Int) : super(type, position)
 
     override fun toString(): String {
         return if (start == end) if (value != null) "" +
