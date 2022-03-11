@@ -210,6 +210,7 @@ class Parser(val input: ShakeTokenInputStream) {
                 ShakeTokenType.POW_ASSIGN -> ret = varPowAssignment(identifierNode)
                 ShakeTokenType.INCR -> ret = varIncrease(identifierNode)
                 ShakeTokenType.DECR -> ret = varDecrease(identifierNode)
+                else -> {}
             }
             if (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT) {
                 input.skip()

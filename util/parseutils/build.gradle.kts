@@ -1,3 +1,4 @@
+@file:Suppress("unused_variable")
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.dokka")
@@ -27,7 +28,7 @@ node {
     distBaseUrl.set("https://nodejs.org/dist")
 
     // The npm command executed by the npmInstall task
-    // By default it is install but it can be changed to ci
+    // By default it is install, but it can be changed to ci
     npmInstallCommand.set("ci")
 
     // The directory where Node.js is unpacked (when download is true)
@@ -88,7 +89,7 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
-                freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+                freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
             }
         }
         testRuns["test"].executionTask.configure {
@@ -98,7 +99,7 @@ kotlin {
     js(LEGACY) {
         compilations.all {
             kotlinOptions {
-                freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+                freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
             }
         }
         browser {
@@ -121,7 +122,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.6.10-RC")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10")
             }
         }
         val commonTest by getting {
