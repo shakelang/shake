@@ -1,6 +1,8 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.interpreter
 
+import io.github.shakelang.parseutils.ElementLoopController
+import io.github.shakelang.parseutils.IndexedElementLoopController
 import io.github.shakelang.parseutils.bytes.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import kotlin.experimental.and
@@ -149,116 +151,14 @@ abstract class ShasamblyInterpretingBase(
 
     fun declareGlobal(chunkSize: Int): Int {
         if(chunkSize < 4) throw Error("Chunk size must not be smaller than 4 (but is $chunkSize)")
-        var addr = getReusedAddress(chunkSize)
+        var addr = freeTable.getReusedAddress(chunkSize)
         if(addr == -1) addr = increaseGlobals(chunkSize)
         return addr
     }
 
-    // Free Table
-    //
-    // The free table is a list of addresses that are available for reuse.
-    // The free table contains firstly a linked list of the different sizes of chunks that are available.
-    // In this linked list the elements are sorted by chunk_size.
-    // These linked list is structured as follows:
-    //
-    // [Size: 20 bytes]
-    // u4 chunk_size: The size of the chunks
-    // u4 first_chunk: The first chunk
-    // u4 last_chunk: The last chunk
-    // u4 next_table: The next table in the list
-    // u4 prev_table: The previous table in the list
-    //
-    // The chunks are stored in a linked list then (The first chunk is stored in the chunk table)
-    // The chunk just contains four bytes of data, the address of the next chunk.
-    // The last chunk contains a zero address.
-    // The rest of the bytes are just ignored. When the chunk is reused, these addresses will also reused
-    // Caused by the link to the next element being 4 bytes in size it is not possible to add sectors that are
-    // smaller than 4 bytes.
-
-
-    fun findFreeTableWithSize(size: Int): Int {
-        var position = freeTableStartPointer
-        while(position != -1) {
-            val csize = memory.getInt(position)
-            if(csize == size) return position
-            position = memory.getInt(position + 12)
-        }
-        return -1
-    }
-
-    fun findClosestFreeTableBelow(size: Int): Int {
-        var position = freeTableEndPointer
-        while(position != -1) {
-            if(memory.getInt(position) <= size) return position
-            position = memory.getInt(position + 16)
-        }
-        return -1
-    }
-
-    fun findBestAboveMatch(size: Int): Int {
-        var position = freeTableEndPointer
-        var bestMatch = -1
-        while(position != -1) {
-            val csize = memory.getInt(position)
-            if(csize < size) break
-            if(csize == size) return position
-            if(csize >= size + 4) bestMatch = position
-            position = memory.getInt(position + 16)
-        }
-        return bestMatch
-    }
-
-    fun createFreeTable(size: Int): Int {
-        val closestFreeTable = findClosestFreeTableBelow(size)
-        if(closestFreeTable == -1) {
-            if(this.freeTableStartPointer == -1) { // This is the first defined free table
-                val addr = this.increaseGlobals(20)
-                this.memory.setInt(addr, size)
-                this.memory.setInt(addr + 4, -1)
-                this.memory.setInt(addr + 8, -1)
-                this.memory.setInt(addr + 12, -1)
-                this.memory.setInt(addr + 16, -1)
-                this.freeTableStartPointer = addr
-                this.freeTableEndPointer = addr
-                return addr
-            }
-            else { // There is already a free table, but this is the free table with the smallest size
-                val addr = declareGlobal(20)
-                this.memory.setInt(addr, size)
-                this.memory.setInt(addr + 4, -1)
-                this.memory.setInt(addr + 8, -1)
-                this.memory.setInt(addr + 12, this.freeTableStartPointer)
-                this.memory.setInt(addr + 16, -1)
-                this.memory.setInt(this.freeTableStartPointer + 16, addr)
-                this.freeTableStartPointer = addr
-                return addr
-            }
-        }
-        else { // There is a table with a smaller size than the one we want to create
-            val addr = declareGlobal(20)
-            val next = this.memory.getInt(closestFreeTable + 12)
-            this.memory.setInt(addr, size)
-            this.memory.setInt(addr + 4, -1)
-            this.memory.setInt(addr + 8, -1)
-            this.memory.setInt(addr + 12, next)
-            this.memory.setInt(addr + 16, closestFreeTable)
-            this.memory.setInt(closestFreeTable + 12, addr)
-            if(next == -1) this.freeTableEndPointer = addr
-            else this.memory.setInt(addr - 19, addr)
-            return addr
-        }
-    }
-
-    fun getFreeTable(size: Int): Int {
-        var addr = findFreeTableWithSize(size)
-        if(addr == -1) addr = createFreeTable(size)
-        return addr
-    }
-
-
     fun free(address: Int, csize: Int) {
         if(csize < 4) throw Error("Chunk size must be at least 4!")
-        val table = getFreeTable(csize)
+        val table = freeTable.getWithSize(csize)
         val lastElement = memory.getInt(table + 8)
         if(lastElement == -1) {
             memory.setInt(table + 4, address)
@@ -269,79 +169,6 @@ abstract class ShasamblyInterpretingBase(
             memory.setInt(table + 8, address)
         }
         memory.setInt(address, -1)
-    }
-
-    fun removeEmptyFreeTable(address: Int) {
-        val a = freeTableStartPointer == address
-        val b = freeTableEndPointer == address
-        if(a && b) {
-            freeTableStartPointer = -1
-            freeTableEndPointer = -1
-        }
-        else if(a && !b) {
-            freeTableStartPointer = memory.getInt(address + 12)
-            memory.setInt(freeTableStartPointer + 16, -1)
-        }
-        else if(b && !a) {
-            freeTableEndPointer = memory.getInt(address + 16)
-            memory.setInt(freeTableEndPointer + 12, -1)
-        }
-        else {
-            val next = memory.getInt(address + 12)
-            val before = memory.getInt(address + 16)
-            memory.setInt(next + 16, before)
-            memory.setInt(before + 12, next)
-        }
-        free(address, 20)
-    }
-
-    fun getReusedAddress(csize: Int): Int {
-        var table = findBestAboveMatch(csize)
-        var size: Int
-        var addr: Int
-        while (true) {
-            if (table == -1) return -1
-            size = memory.getInt(table)
-            addr = memory.getInt(table + 4)
-            if (addr == -1) {
-                table = findBestAboveMatch(size + 1)
-                continue
-            }
-            else break
-        }
-        val next = memory.getInt(addr)
-        if(next == -1) {
-            memory.setInt(table + 4, -1)
-            memory.setInt(table + 8, -1)
-            removeEmptyFreeTable(table)
-        }
-        else {
-            memory.setInt(table + 4, next)
-        }
-        val dif = size - csize
-        if(dif > 0) free(addr - csize, dif)
-        return addr
-    }
-
-    fun findFreeEntry(address: Int, startAddress: Int, csize: Int): Int {
-        var addr = startAddress
-        while(addr != -1) {
-            if(address in addr until addr +  csize) return addr
-            addr = memory.getInt(addr)
-        }
-        return -1
-    }
-
-    fun findFree(address: Int): IntArray {
-        var table = freeTableStartPointer
-        while(table != -1) {
-            val csize = memory.getInt(table)
-            val first = memory.getInt(table + 4)
-            val addr = findFreeEntry(address, first, csize)
-            if(addr != -1) return intArrayOf(addr, csize, table)
-            table = memory.getInt(table + 12)
-        }
-        return intArrayOf(-1, -1, -1)
     }
 
     fun byte() = memory[instructionPointer]
@@ -497,10 +324,289 @@ abstract class ShasamblyInterpretingBase(
 
     }
 
+    /**
+     * Free Table
+     *
+     * The free table is a list of addresses that are available for reuse.
+     * The free table contains firstly a linked list of the different sizes of chunks that are available.
+     * In this linked list the elements are sorted by chunk_size.
+     * This linked list is structured as follows:
+     *
+     * [Size: 20 bytes]
+     * u4 chunk_size: The size of the chunks
+     * u4 first_chunk: The first chunk
+     * u4 last_chunk: The last chunk
+     * u4 next_table: The next table in the list
+     * u4 prev_table: The previous table in the list
+     *
+     * The chunks are stored in a linked list then (The first chunk is stored in the chunk table)
+     * The chunk just contains four bytes of data, the address of the next chunk.
+     * The last chunk contains a zero address.
+     * The rest of the bytes are just ignored. When the chunk is reused, these addresses will also reused
+     * Caused by the link to the next element being 4 bytes in size it is not possible to add sectors that are
+     * smaller than 4 bytes.
+     */
     inner class FreeTableControllerObject {
 
+        /**
+         * Find a free-table with a given size
+         */
+        fun findWithSize(size: Int): Int {
+            var position = freeTableStartPointer
+            while(position != -1) {
+                val csize = memory.getInt(position)
+                if(csize == size) return position
+                position = memory.getInt(position + 12)
+            }
+            return -1
+        }
+
+        /**
+         * Finds the free table below that is closest to the given size
+         */
+        fun findClosestBelow(size: Int): Int {
+            var position = freeTableEndPointer
+            while(position != -1) {
+                if(memory.getInt(position) <= size) return position
+                position = memory.getInt(position + 16)
+            }
+            return -1
+        }
+
+        fun findBestAboveMatch(size: Int): Int {
+            var position = freeTableEndPointer
+            var bestMatch = -1
+            while(position != -1) {
+                val csize = memory.getInt(position)
+                if(csize < size) break
+                if(csize == size) return position
+                if(csize >= size + 4) bestMatch = position
+                position = memory.getInt(position + 16)
+            }
+            return bestMatch
+        }
+
+        fun create(size: Int): Int {
+            val closestFreeTable = findClosestBelow(size)
+            if(closestFreeTable == -1) {
+                if(freeTableStartPointer == -1) { // This is the first defined free table
+                    val addr = increaseGlobals(20)
+                    memory.setInt(addr, size)
+                    memory.setInt(addr + 4, -1)
+                    memory.setInt(addr + 8, -1)
+                    memory.setInt(addr + 12, -1)
+                    memory.setInt(addr + 16, -1)
+                    freeTableStartPointer = addr
+                    freeTableEndPointer = addr
+                    return addr
+                }
+                else { // There is already a free table, but this is the free table with the smallest size
+                    val addr = declareGlobal(20)
+                    memory.setInt(addr, size)
+                    memory.setInt(addr + 4, -1)
+                    memory.setInt(addr + 8, -1)
+                    memory.setInt(addr + 12, freeTableStartPointer)
+                    memory.setInt(addr + 16, -1)
+                    memory.setInt(freeTableStartPointer + 16, addr)
+                    freeTableStartPointer = addr
+                    return addr
+                }
+            }
+            else { // There is a table with a smaller size than the one we want to create
+                val addr = declareGlobal(20)
+                val next = memory.getInt(closestFreeTable + 12)
+                memory.setInt(addr, size)
+                memory.setInt(addr + 4, -1)
+                memory.setInt(addr + 8, -1)
+                memory.setInt(addr + 12, next)
+                memory.setInt(addr + 16, closestFreeTable)
+                memory.setInt(closestFreeTable + 12, addr)
+                if(next == -1) freeTableEndPointer = addr
+                else memory.setInt(addr - 19, addr)
+                return addr
+            }
+        }
+
+        fun getWithSize(size: Int): Int {
+            var addr = findWithSize(size)
+            if(addr == -1) addr = create(size)
+            return addr
+        }
+
+        operator fun get(size: Int): FreeTableEntry {
+            return FreeTableEntry(getWithSize(size))
+        }
+
+        fun removeEmptyFreeTable(address: Int) {
+            val a = freeTableStartPointer == address
+            val b = freeTableEndPointer == address
+            if(a && b) {
+                freeTableStartPointer = -1
+                freeTableEndPointer = -1
+            }
+            else if(a && !b) {
+                freeTableStartPointer = memory.getInt(address + 12)
+                memory.setInt(freeTableStartPointer + 16, -1)
+            }
+            else if(b && !a) {
+                freeTableEndPointer = memory.getInt(address + 16)
+                memory.setInt(freeTableEndPointer + 12, -1)
+            }
+            else {
+                val next = memory.getInt(address + 12)
+                val before = memory.getInt(address + 16)
+                memory.setInt(next + 16, before)
+                memory.setInt(before + 12, next)
+            }
+            free(address, 20)
+        }
+
+        fun getReusedAddress(csize: Int): Int {
+            var table = findBestAboveMatch(csize)
+            var size: Int
+            var addr: Int
+            while (true) {
+                if (table == -1) return -1
+                size = memory.getInt(table)
+                addr = memory.getInt(table + 4)
+                if (addr == -1) {
+                    table = findBestAboveMatch(size + 1)
+                    continue
+                }
+                else break
+            }
+            val next = memory.getInt(addr)
+            if(next == -1) {
+                memory.setInt(table + 4, -1)
+                memory.setInt(table + 8, -1)
+                removeEmptyFreeTable(table)
+            }
+            else {
+                memory.setInt(table + 4, next)
+            }
+            val dif = size - csize
+            if(dif > 0) free(addr - csize, dif)
+            return addr
+        }
+
+        fun findFreeEntry(address: Int, startAddress: Int, csize: Int): Int {
+            var addr = startAddress
+            while(addr != -1) {
+                if(address in addr until addr +  csize) return addr
+                addr = memory.getInt(addr)
+            }
+            return -1
+        }
+
+        fun findFree(address: Int): IntArray {
+            var table = freeTableStartPointer
+            while(table != -1) {
+                val csize = memory.getInt(table)
+                val first = memory.getInt(table + 4)
+                val addr = findFreeEntry(address, first, csize)
+                if(addr != -1) return intArrayOf(addr, csize, table)
+                table = memory.getInt(table + 12)
+            }
+            return intArrayOf(-1, -1, -1)
+        }
+
+        fun forEach(action: (FreeTableEntry) -> Unit) {
+            var address = freeTableStartPointer
+            while(address != -1) {
+                action(FreeTableEntry(address))
+                address = memory.getInt(address + 12)
+            }
+        }
+
+        fun forEachControlled(action: (ElementLoopController<FreeTableEntry>) -> Unit) {
+            var address = freeTableStartPointer
+            while(address != -1) {
+                val table = FreeTableEntry(address)
+                val controller = ElementLoopController(table)
+                action(controller)
+                if(controller.isBreak) break
+                address = memory.getInt(address + 12)
+            }
+        }
+
+        fun forEachIndexed(action: (IndexedElementLoopController<FreeTableEntry>) -> Unit) {
+            var address = freeTableStartPointer
+            var index = 0
+            while(address != -1) {
+                val table = FreeTableEntry(address)
+                val controller = IndexedElementLoopController(table, index)
+                action(controller)
+                if(controller.isBreak) break
+                address = memory.getInt(address + 12)
+                index++
+            }
+        }
+
+
+        open inner class FreeTableEntry (
+            val address: Int
+        ) {
+
+            var size
+                get() = memory.getInt(address)
+                set(value) { memory.setInt(address, value) }
+
+            var firstAddress
+                get() = memory.getInt(address + 4)
+                set(value) { memory.setInt(address + 4, value) }
+
+            var lastAddress
+                get() = memory.getInt(address + 8)
+                set(value) { memory.setInt(address + 8, value) }
+
+            var nextAddress
+                get() = memory.getInt(address + 12)
+                set(value) { memory.setInt(address + 12, value) }
+
+            var beforeAddress
+                get() = memory.getInt(address + 16)
+                set(value) { memory.setInt(address + 16, value) }
+
+            var next: FreeTableEntry?
+                get() = if(nextAddress == -1) null else FreeTableEntry(nextAddress)
+                set(value) { nextAddress = value?.address ?: -1 }
+
+            var before: FreeTableEntry?
+                get() = if(beforeAddress == -1) null else FreeTableEntry(beforeAddress)
+                set(value) { beforeAddress = value?.address ?: -1 }
+
+            fun forEach(action: (Int) -> Unit) {
+                var addr = firstAddress
+                while(addr != -1) {
+                    action(addr)
+                    addr = memory.getInt(addr)
+                }
+            }
+
+            fun forEachControlled(action: (ElementLoopController<Int>) -> Unit) {
+                var addr = firstAddress
+                while(addr != -1) {
+                    val controller = ElementLoopController(addr)
+                    action(controller)
+                    if(controller.isBreak) break
+                    addr = memory.getInt(addr)
+                }
+            }
+
+            fun forEachIndexed(action: (IndexedElementLoopController<Int>) -> Unit) {
+                var addr = firstAddress
+                var index = 0
+                while(addr != -1) {
+                    val controller = IndexedElementLoopController(addr, index)
+                    action(controller)
+                    if(controller.isBreak) break
+                    addr = memory.getInt(addr)
+                    index++
+                }
+            }
+
+        }
+
     }
-
-
 
 }

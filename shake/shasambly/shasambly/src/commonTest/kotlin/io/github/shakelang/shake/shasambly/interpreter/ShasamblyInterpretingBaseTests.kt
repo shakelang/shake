@@ -92,7 +92,7 @@ class ShasamblyInterpretingBaseTests {
 
             *Array(24) { 0 } // unused bytes
         ), it.memory.toList())
-        it.createFreeTable(10)
+        it.freeTable.create(10)
 
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
@@ -136,7 +136,7 @@ class ShasamblyInterpretingBaseTests {
             *Array( 56) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(10)
+        it.freeTable.create(10)
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -160,7 +160,7 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        it.createFreeTable(12)
+        it.freeTable.create(12)
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
             *(60).toBytes().toTypedArray(), // Free table end pointer
@@ -211,7 +211,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(56) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(10)
+        it.freeTable.create(10)
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -234,7 +234,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(36) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(8)
+        it.freeTable.create(8)
 
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
@@ -285,7 +285,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(88) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(10)
+        it.freeTable.create(10)
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -308,7 +308,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(68) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(8)
+        it.freeTable.create(8)
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -338,7 +338,7 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        it.createFreeTable(12)
+        it.freeTable.create(12)
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
             *(80).toBytes().toTypedArray(), // Free table end pointer
@@ -393,7 +393,7 @@ class ShasamblyInterpretingBaseTests {
 
             *Array(56) { 0 } // unused bytes
         ), it.memory.toList())
-        it.createFreeTable(10)
+        it.freeTable.create(10)
 
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
@@ -417,7 +417,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(36) { 0 } // unused bytes
         ), it.memory.toList())
 
-        assertEquals(40, it.findFreeTableWithSize(10))
+        assertEquals(40, it.freeTable.findWithSize(10))
     }
 
     @Test
@@ -439,7 +439,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(56) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(10)
+        it.freeTable.create(10)
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -463,7 +463,7 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        it.createFreeTable(12)
+        it.freeTable.create(12)
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
             *(60).toBytes().toTypedArray(), // Free table end pointer
@@ -493,8 +493,8 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        assertEquals(40, it.findFreeTableWithSize(10))
-        assertEquals(60, it.findFreeTableWithSize(12))
+        assertEquals(40, it.freeTable.findWithSize(10))
+        assertEquals(60, it.freeTable.findWithSize(12))
 
 
     }
@@ -518,7 +518,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(56) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(10)
+        it.freeTable.create(10)
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -541,7 +541,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(36) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(8)
+        it.freeTable.create(8)
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -571,8 +571,8 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        assertEquals(40, it.findFreeTableWithSize(10))
-        assertEquals(60, it.findFreeTableWithSize(8))
+        assertEquals(40, it.freeTable.findWithSize(10))
+        assertEquals(60, it.freeTable.findWithSize(8))
     }
 
     @Test
@@ -594,7 +594,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(88) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(10)
+        it.freeTable.create(10)
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -617,7 +617,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(68) { 0 } // unused bytes
         ), it.memory.toList())
 
-        it.createFreeTable(8)
+        it.freeTable.create(8)
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -647,7 +647,7 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        it.createFreeTable(12)
+        it.freeTable.create(12)
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
             *(80).toBytes().toTypedArray(), // Free table end pointer
@@ -683,47 +683,47 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        assertEquals(40, it.findFreeTableWithSize(10))
-        assertEquals(60, it.findFreeTableWithSize(8))
-        assertEquals(80, it.findFreeTableWithSize(12))
+        assertEquals(40, it.freeTable.findWithSize(10))
+        assertEquals(60, it.freeTable.findWithSize(8))
+        assertEquals(80, it.freeTable.findWithSize(12))
 
     }
 
     @Test
     fun testFindClosestFreeTableBelow() {
         val it = Instance(128, byteArrayOf())
-        val p10 = it.createFreeTable(10) // Position: 24
-        val p8 = it.createFreeTable(8) // Position: 44
-        val p12 = it.createFreeTable(12) // Position: 64
+        val p10 = it.freeTable.create(10) // Position: 24
+        val p8 = it.freeTable.create(8) // Position: 44
+        val p12 = it.freeTable.create(12) // Position: 64
 
-        assertEquals(p10, it.findClosestFreeTableBelow(10))
-        assertEquals(p8, it.findClosestFreeTableBelow(8))
-        assertEquals(p12, it.findClosestFreeTableBelow(12))
-        assertEquals(p12, it.findClosestFreeTableBelow(13))
-        assertEquals(p12, it.findClosestFreeTableBelow(14))
-        assertEquals(p10, it.findClosestFreeTableBelow(11))
-        assertEquals(p8, it.findClosestFreeTableBelow(9))
-        assertEquals(-1, it.findClosestFreeTableBelow(7))
+        assertEquals(p10, it.freeTable.findClosestBelow(10))
+        assertEquals(p8, it.freeTable.findClosestBelow(8))
+        assertEquals(p12, it.freeTable.findClosestBelow(12))
+        assertEquals(p12, it.freeTable.findClosestBelow(13))
+        assertEquals(p12, it.freeTable.findClosestBelow(14))
+        assertEquals(p10, it.freeTable.findClosestBelow(11))
+        assertEquals(p8, it.freeTable.findClosestBelow(9))
+        assertEquals(-1, it.freeTable.findClosestBelow(7))
     }
 
     @Test
     fun testFindBestAboveMatch() {
         val it = Instance(128, byteArrayOf())
-        val p10 = it.createFreeTable(10) // Position: 24
-        val p8 = it.createFreeTable(8) // Position: 44
-        val p12 = it.createFreeTable(12) // Position: 64
+        val p10 = it.freeTable.create(10) // Position: 24
+        val p8 = it.freeTable.create(8) // Position: 44
+        val p12 = it.freeTable.create(12) // Position: 64
 
-        assertEquals(p10, it.findBestAboveMatch(10))
-        assertEquals(p8, it.findBestAboveMatch(8))
-        assertEquals(p12, it.findBestAboveMatch(12))
-        assertEquals(-1, it.findBestAboveMatch(13))
-        assertEquals(-1, it.findBestAboveMatch(14))
-        assertEquals(-1, it.findBestAboveMatch(11))
-        assertEquals(-1, it.findBestAboveMatch(9))
-        assertEquals(p12, it.findBestAboveMatch(7))
-        assertEquals(p10, it.findBestAboveMatch(6))
-        assertEquals(p10, it.findBestAboveMatch(5))
-        assertEquals(p8, it.findBestAboveMatch(4))
+        assertEquals(p10, it.freeTable.findBestAboveMatch(10))
+        assertEquals(p8, it.freeTable.findBestAboveMatch(8))
+        assertEquals(p12, it.freeTable.findBestAboveMatch(12))
+        assertEquals(-1, it.freeTable.findBestAboveMatch(13))
+        assertEquals(-1, it.freeTable.findBestAboveMatch(14))
+        assertEquals(-1, it.freeTable.findBestAboveMatch(11))
+        assertEquals(-1, it.freeTable.findBestAboveMatch(9))
+        assertEquals(p12, it.freeTable.findBestAboveMatch(7))
+        assertEquals(p10, it.freeTable.findBestAboveMatch(6))
+        assertEquals(p10, it.freeTable.findBestAboveMatch(5))
+        assertEquals(p8, it.freeTable.findBestAboveMatch(4))
 
     }
 
@@ -745,7 +745,7 @@ class ShasamblyInterpretingBaseTests {
 
             *Array(24) { 0 } // unused bytes
         ), it.memory.toList())
-        assertEquals(40, it.getFreeTable(10))
+        assertEquals(40, it.freeTable.getWithSize(10))
 
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
@@ -768,7 +768,7 @@ class ShasamblyInterpretingBaseTests {
 
             *Array(4) { 0 } // unused bytes
         ), it.memory.toList())
-        assertEquals(40, it.getFreeTable(10))
+        assertEquals(40, it.freeTable.getWithSize(10))
 
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
@@ -812,7 +812,7 @@ class ShasamblyInterpretingBaseTests {
             *Array( 56) { 0 } // unused bytes
         ), it.memory.toList())
 
-        assertEquals(40, it.getFreeTable(10))
+        assertEquals(40, it.freeTable.getWithSize(10))
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
             *(40).toBytes().toTypedArray(), // Free table end pointer
@@ -836,8 +836,8 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        assertEquals(40, it.getFreeTable(10))
-        assertEquals(60, it.getFreeTable(12))
+        assertEquals(40, it.freeTable.getWithSize(10))
+        assertEquals(60, it.freeTable.getWithSize(12))
 
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
@@ -868,8 +868,8 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        assertEquals(40, it.getFreeTable(10))
-        assertEquals(60, it.getFreeTable(12))
+        assertEquals(40, it.freeTable.getWithSize(10))
+        assertEquals(60, it.freeTable.getWithSize(12))
 
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
@@ -922,7 +922,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(56) { 0 } // unused bytes
         ), it.memory.toList())
 
-        assertEquals(40, it.getFreeTable(10))
+        assertEquals(40, it.freeTable.getWithSize(10))
 
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
@@ -946,8 +946,8 @@ class ShasamblyInterpretingBaseTests {
             *Array(36) { 0 } // unused bytes
         ), it.memory.toList())
 
-        assertEquals(40, it.getFreeTable(10))
-        assertEquals(60, it.getFreeTable(8))
+        assertEquals(40, it.freeTable.getWithSize(10))
+        assertEquals(60, it.freeTable.getWithSize(8))
 
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
@@ -978,8 +978,8 @@ class ShasamblyInterpretingBaseTests {
 
         ), it.memory.toList())
 
-        assertEquals(40, it.getFreeTable(10))
-        assertEquals(60, it.getFreeTable(8))
+        assertEquals(40, it.freeTable.getWithSize(10))
+        assertEquals(60, it.freeTable.getWithSize(8))
     }
 
     @Test
@@ -1001,7 +1001,7 @@ class ShasamblyInterpretingBaseTests {
             *Array(88) { 0 } // unused bytes
         ), it.memory.toList())
 
-        assertEquals(40, it.getFreeTable(10))
+        assertEquals(40, it.freeTable.getWithSize(10))
 
         assertEquals(listOf(
             *(40).toBytes().toTypedArray(), // Free table start pointer
@@ -1026,8 +1026,8 @@ class ShasamblyInterpretingBaseTests {
         ), it.memory.toList())
 
 
-        assertEquals(40, it.getFreeTable(10))
-        assertEquals(60, it.getFreeTable(8))
+        assertEquals(40, it.freeTable.getWithSize(10))
+        assertEquals(60, it.freeTable.getWithSize(8))
 
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
@@ -1059,9 +1059,9 @@ class ShasamblyInterpretingBaseTests {
         ), it.memory.toList())
 
 
-        assertEquals(40, it.getFreeTable(10))
-        assertEquals(60, it.getFreeTable(8))
-        assertEquals(80, it.getFreeTable(12))
+        assertEquals(40, it.freeTable.getWithSize(10))
+        assertEquals(60, it.freeTable.getWithSize(8))
+        assertEquals(80, it.freeTable.getWithSize(12))
 
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
@@ -1099,9 +1099,9 @@ class ShasamblyInterpretingBaseTests {
         ), it.memory.toList())
 
 
-        assertEquals(40, it.getFreeTable(10))
-        assertEquals(60, it.getFreeTable(8))
-        assertEquals(80, it.getFreeTable(12))
+        assertEquals(40, it.freeTable.getWithSize(10))
+        assertEquals(60, it.freeTable.getWithSize(8))
+        assertEquals(80, it.freeTable.getWithSize(12))
 
         assertEquals(listOf(
             *(60).toBytes().toTypedArray(), // Free table start pointer
