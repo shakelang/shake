@@ -346,7 +346,7 @@ abstract class ShasamblyInterpretingBase(
      * Caused by the link to the next element being 4 bytes in size it is not possible to add sectors that are
      * smaller than 4 bytes.
      */
-    inner class FreeTableControllerObject {
+    inner class FreeTableControllerObject: MutableList<FreeTableControllerObject.FreeTableEntry> {
 
         /**
          * Find a free-table with a given size
@@ -433,8 +433,8 @@ abstract class ShasamblyInterpretingBase(
             return addr
         }
 
-        operator fun get(size: Int): FreeTableEntry {
-            return FreeTableEntry(getWithSize(size))
+        override operator fun get(index: Int): FreeTableEntry {
+            return FreeTableEntry(index)
         }
 
         fun removeEmptyFreeTable(address: Int) {
@@ -605,6 +605,212 @@ abstract class ShasamblyInterpretingBase(
                 }
             }
 
+            override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (other !is FreeTableEntry) return false
+                return address == other.address
+                        && size == other.size
+                        && firstAddress == other.firstAddress
+                        && lastAddress == other.lastAddress
+                        && nextAddress == other.nextAddress
+                        && beforeAddress == other.beforeAddress
+            }
+
+            override fun hashCode(): Int {
+                var result = address
+                result = 31 * result + size
+                result = 31 * result + firstAddress
+                result = 31 * result + lastAddress
+                result = 31 * result + nextAddress
+                result = 31 * result + beforeAddress
+                return result
+            }
+
+        }
+
+        override val size: Int
+            get() {
+                var address = freeTableStartPointer
+                var size = 0
+                while(address != -1) {
+                    size++
+                    address = memory.getInt(address + 12)
+                }
+                return size
+            }
+
+        override fun contains(element: FreeTableEntry): Boolean {
+            var address = freeTableStartPointer
+            while(address != -1) {
+                if(address == element.address) return true
+                address = memory.getInt(address + 12)
+            }
+            return false
+        }
+
+        override fun containsAll(elements: Collection<FreeTableEntry>): Boolean {
+            for(element in elements) {
+                if(!contains(element)) return false
+            }
+            return true
+        }
+
+        override fun indexOf(element: FreeTableEntry): Int {
+            var address = freeTableStartPointer
+            var index = 0
+            while(address != -1) {
+                if(address == element.address) return index
+                address = memory.getInt(address + 12)
+                index++
+            }
+            return -1
+        }
+
+        override fun isEmpty(): Boolean {
+            return freeTableStartPointer == -1
+        }
+
+        override fun iterator(): MutableIterator<FreeTableEntry> {
+            return object : MutableIterator<FreeTableEntry> {
+                var address = freeTableStartPointer
+                override fun hasNext(): Boolean {
+                    return address != -1
+                }
+
+                override fun next(): FreeTableEntry {
+                    val result = FreeTableEntry(address)
+                    address = memory.getInt(address + 12)
+                    return result
+                }
+
+                override fun remove() {
+                    throw UnsupportedOperationException()
+                }
+            }
+        }
+
+        override fun lastIndexOf(element: FreeTableEntry): Int {
+            return indexOf(element) // Every element is unique
+        }
+
+        override fun add(element: FreeTableEntry): Boolean {
+            throw UnsupportedOperationException()
+        }
+
+        override fun add(index: Int, element: FreeTableEntry) {
+            throw UnsupportedOperationException()
+        }
+
+        override fun addAll(index: Int, elements: Collection<FreeTableEntry>): Boolean {
+            throw UnsupportedOperationException()
+        }
+
+        override fun addAll(elements: Collection<FreeTableEntry>): Boolean {
+            throw UnsupportedOperationException()
+        }
+
+        override fun clear() {
+            throw UnsupportedOperationException()
+        }
+
+        override fun listIterator(): MutableListIterator<FreeTableEntry> {
+            return listIterator(0)
+        }
+
+        override fun listIterator(index: Int): MutableListIterator<FreeTableEntry> {
+            return object : MutableListIterator<FreeTableEntry> {
+                var address = freeTableStartPointer
+                var currentIndex = 0
+                override fun hasNext(): Boolean {
+                    return address != -1
+                }
+
+                override fun next(): FreeTableEntry {
+                    val result = FreeTableEntry(address)
+                    address = memory.getInt(address + 12)
+                    currentIndex++
+                    return result
+                }
+
+                override fun hasPrevious(): Boolean {
+                    return address != -1
+                }
+
+                override fun nextIndex(): Int {
+                    return currentIndex
+                }
+
+                override fun previous(): FreeTableEntry {
+                    throw UnsupportedOperationException()
+                }
+
+                override fun previousIndex(): Int {
+                    throw UnsupportedOperationException()
+                }
+
+                override fun remove() {
+                    throw UnsupportedOperationException()
+                }
+
+                override fun set(element: FreeTableEntry) {
+                    throw UnsupportedOperationException()
+                }
+
+                override fun add(element: FreeTableEntry) {
+                    throw UnsupportedOperationException()
+                }
+            }
+        }
+
+        override fun remove(element: FreeTableEntry): Boolean {
+            if(!contains(element)) {
+                return false
+            }
+            val before = element.before
+            val next = element.next
+            if(before != null && next != null) {
+                before.next = next
+                next.before = before
+            } else if (before != null) {
+                before.next = null
+                freeTableEndPointer
+            } else if (next != null) {
+                next.before = null
+                freeTableStartPointer = next.address
+            } else {
+                freeTableStartPointer = -1
+                freeTableEndPointer = -1
+            }
+            return true
+        }
+
+        override fun removeAll(elements: Collection<FreeTableEntry>): Boolean {
+            var result = false
+            for(element in elements) {
+                result = result || remove(element)
+            }
+            return result
+        }
+
+        override fun removeAt(index: Int): FreeTableEntry {
+            get(index).let {
+                remove(it)
+                return it
+            }
+        }
+
+        override fun retainAll(elements: Collection<FreeTableEntry>): Boolean {
+            return elements.any {
+                remove(it)
+            }
+        }
+
+        override fun set(index: Int, element: FreeTableEntry): FreeTableEntry {
+            throw UnsupportedOperationException()
+        }
+
+        override fun subList(fromIndex: Int, toIndex: Int): MutableList<FreeTableEntry> {
+            throw UnsupportedOperationException()
         }
 
     }
