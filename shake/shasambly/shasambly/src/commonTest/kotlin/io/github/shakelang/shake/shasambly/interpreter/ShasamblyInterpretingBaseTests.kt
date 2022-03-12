@@ -713,17 +713,17 @@ class ShasamblyInterpretingBaseTests {
         val p8 = it.freeTable.create(8) // Position: 44
         val p12 = it.freeTable.create(12) // Position: 64
 
-        assertEquals(p10, it.freeTable.findBestAboveMatch(10))
-        assertEquals(p8, it.freeTable.findBestAboveMatch(8))
-        assertEquals(p12, it.freeTable.findBestAboveMatch(12))
-        assertEquals(-1, it.freeTable.findBestAboveMatch(13))
-        assertEquals(-1, it.freeTable.findBestAboveMatch(14))
-        assertEquals(-1, it.freeTable.findBestAboveMatch(11))
-        assertEquals(-1, it.freeTable.findBestAboveMatch(9))
-        assertEquals(p12, it.freeTable.findBestAboveMatch(7))
-        assertEquals(p10, it.freeTable.findBestAboveMatch(6))
-        assertEquals(p10, it.freeTable.findBestAboveMatch(5))
-        assertEquals(p8, it.freeTable.findBestAboveMatch(4))
+        assertEquals(p10, it.freeTable.findBestAbove(10))
+        assertEquals(p8, it.freeTable.findBestAbove(8))
+        assertEquals(p12, it.freeTable.findBestAbove(12))
+        assertEquals(-1, it.freeTable.findBestAbove(13))
+        assertEquals(-1, it.freeTable.findBestAbove(14))
+        assertEquals(-1, it.freeTable.findBestAbove(11))
+        assertEquals(-1, it.freeTable.findBestAbove(9))
+        assertEquals(p12, it.freeTable.findBestAbove(7))
+        assertEquals(p10, it.freeTable.findBestAbove(6))
+        assertEquals(p10, it.freeTable.findBestAbove(5))
+        assertEquals(p8, it.freeTable.findBestAbove(4))
 
     }
 

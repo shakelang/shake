@@ -350,6 +350,12 @@ abstract class ShasamblyInterpretingBase(
 
         /**
          * Find a free-table with a given size
+         * Returns -1 if no table is found
+         * If you want to create a new table if it does not exist use [getWithSize]
+         *
+         * @param size The size of the table to find
+         * @return The index of the table or -1 if it does not exist
+         *
          * @see FreeTableControllerObject
          */
         fun findWithSize(size: Int): Int {
@@ -364,6 +370,10 @@ abstract class ShasamblyInterpretingBase(
 
         /**
          * Finds the free table below that is closest to the given size
+         *
+         * @param size The size to find the closest table to
+         * @return The index of the table or -1 if there is are no matching tables
+         *
          * @see FreeTableControllerObject
          */
         fun findClosestBelow(size: Int): Int {
@@ -376,9 +386,16 @@ abstract class ShasamblyInterpretingBase(
         }
 
         /**
-         * Finds the free table above that is closest to the given size
+         * Finds the free table above that is the best match
+         * (So it has to be exactly the given size or the given size + 4 + n (smaller n will be better))
+         * The Idea is that we need at least 4 bytes to store in the free table if we have data left.
+         *
+         * @param size The size to find the closest table to
+         * @return The index of the table or -1 if there is are no matching tables
+         *
+         * @see FreeTableControllerObject
          */
-        fun findBestAboveMatch(size: Int): Int {
+        fun findBestAbove(size: Int): Int {
             var position = freeTableEndPointer
             var bestMatch = -1
             while(position != -1) {
@@ -391,6 +408,15 @@ abstract class ShasamblyInterpretingBase(
             return bestMatch
         }
 
+        /**
+         * Creates a new free table element with the given size
+         * This method should normally not be used externally, use [getWithSize] instead
+         *
+         * @param size The size of the table to create
+         * @return The index of the table or -1 if it could not be created
+         *
+         * @see FreeTableControllerObject
+         */
         fun create(size: Int): Int {
             val closestFreeTable = findClosestBelow(size)
             if(closestFreeTable == -1) {
@@ -432,16 +458,40 @@ abstract class ShasamblyInterpretingBase(
             }
         }
 
+        /**
+         * Returns a free table with the given size
+         * If there is no free table with the given size, a new one will be created
+         *
+         * @param size The size of the table to get
+         * @return The index of the table
+         *
+         * @see FreeTableControllerObject
+         */
         fun getWithSize(size: Int): Int {
             var addr = findWithSize(size)
             if(addr == -1) addr = create(size)
             return addr
         }
 
+        /**
+         * Returns a free table at the given address
+         *
+         * @param index The address of the table to get
+         * @return The table
+         *
+         * @see FreeTableControllerObject
+         */
         override operator fun get(index: Int): FreeTableEntry {
             return FreeTableEntry(index)
         }
 
+        /**
+         * Removes an empty entry from the free table
+         *
+         * @param address The address of the table to remove
+         *
+         * @see FreeTableControllerObject
+         */
         fun removeEmptyFreeTable(address: Int) {
             val a = freeTableStartPointer == address
             val b = freeTableEndPointer == address
@@ -466,8 +516,17 @@ abstract class ShasamblyInterpretingBase(
             free(address, 20)
         }
 
+        /**
+         * Trys to reuse an address from the free table
+         * If there is no matching address, it will return -1
+         *
+         * @param csize the expected chunk size of the reused element
+         * @return the address of the reused element or -1 if there is no matching address
+         *
+         * @see FreeTableControllerObject
+         */
         fun getReusedAddress(csize: Int): Int {
-            var table = findBestAboveMatch(csize)
+            var table = findBestAbove(csize)
             var size: Int
             var addr: Int
             while (true) {
@@ -475,7 +534,7 @@ abstract class ShasamblyInterpretingBase(
                 size = memory.getInt(table)
                 addr = memory.getInt(table + 4)
                 if (addr == -1) {
-                    table = findBestAboveMatch(size + 1)
+                    table = findBestAbove(size + 1)
                     continue
                 }
                 else break
@@ -494,27 +553,55 @@ abstract class ShasamblyInterpretingBase(
             return addr
         }
 
-        fun findFreeEntry(address: Int, startAddress: Int, csize: Int): Int {
+        /**
+         * Runs through a free table entry and checks if a given address is contained
+         * If the address is contained, it will return the address of the start of the entry, otherwise it will return -1
+         *
+         * @param address The address to search
+         * @param startAddress The start address of the free table entry
+         * @param csize the chunk size of the entry
+         * @return The address of the start of the entry or [-1, -1] if the address is not contained
+         *
+         * @see FreeTableControllerObject
+         */
+        fun findFreeEntry(address: Int, startAddress: Int, csize: Int): IntArray {
             var addr = startAddress
+            var before = -1
             while(addr != -1) {
-                if(address in addr until addr +  csize) return addr
+                if(address in addr until addr +  csize) return intArrayOf(before, addr)
+                before = addr
                 addr = memory.getInt(addr)
             }
-            return -1
+            return intArrayOf(-1, -1)
         }
 
-        fun findFree(address: Int): IntArray {
+        /**
+         * Checks if a given address is contained in the free table
+         * If the address is contained, it will return the address of the start of the entry, the size of the chunk,
+         * the chained element before and the table-element, if not it will just return null
+         *
+         * @param address The address to search
+         * @return A FreeElement object containing the information about the entry or null if the address is not freed
+         *
+         * @see FreeTableControllerObject
+         */
+        fun findFree(address: Int): FreeElement? {
             var table = freeTableStartPointer
             while(table != -1) {
                 val csize = memory.getInt(table)
                 val first = memory.getInt(table + 4)
-                val addr = findFreeEntry(address, first, csize)
-                if(addr != -1) return intArrayOf(addr, csize, table)
+                val data = findFreeEntry(address, first, csize)
+                if(data[0] != -1) return FreeElement(address = data[0], size = csize, before = data[1], table = table)
                 table = memory.getInt(table + 12)
             }
-            return intArrayOf(-1, -1, -1)
+            return null
         }
 
+        /**
+         * Loops over the free table entries
+         *
+         * @param action The action to perform on each entry
+         */
         fun forEach(action: (FreeTableEntry) -> Unit) {
             var address = freeTableStartPointer
             while(address != -1) {
@@ -523,6 +610,11 @@ abstract class ShasamblyInterpretingBase(
             }
         }
 
+        /**
+         * Loops over the free table entries
+         *
+         * @param action The action to perform on each entry
+         */
         fun forEachControlled(action: (ElementLoopController<FreeTableEntry>) -> Unit) {
             var address = freeTableStartPointer
             while(address != -1) {
@@ -534,6 +626,11 @@ abstract class ShasamblyInterpretingBase(
             }
         }
 
+        /**
+         * Loops over the free table entries
+         *
+         * @param action The action to perform on each entry
+         */
         fun forEachIndexed(action: (IndexedElementLoopController<FreeTableEntry>) -> Unit) {
             var address = freeTableStartPointer
             var index = 0
@@ -547,39 +644,67 @@ abstract class ShasamblyInterpretingBase(
             }
         }
 
-
+        /**
+         * A Utility class to help you programmatically working with FreeTable entries
+         *
+         * @see FreeTableControllerObject for more information
+         */
         open inner class FreeTableEntry (
             val address: Int
         ) {
 
+            /**
+             * The size of the entry
+             */
             var size
                 get() = memory.getInt(address)
                 set(value) { memory.setInt(address, value) }
 
+            /**
+             * The address of the first child of the entry
+             */
             var firstAddress
                 get() = memory.getInt(address + 4)
                 set(value) { memory.setInt(address + 4, value) }
 
+            /**
+             * The address of the last child of the entry
+             */
             var lastAddress
                 get() = memory.getInt(address + 8)
                 set(value) { memory.setInt(address + 8, value) }
 
+            /**
+             * The address of the next entry in the free table
+             */
             var nextAddress
                 get() = memory.getInt(address + 12)
                 set(value) { memory.setInt(address + 12, value) }
 
+            /**
+             * The address of the previous entry in the free table
+             */
             var beforeAddress
                 get() = memory.getInt(address + 16)
                 set(value) { memory.setInt(address + 16, value) }
 
+            /**
+             * The next entry in the free table
+             */
             var next: FreeTableEntry?
                 get() = if(nextAddress == -1) null else FreeTableEntry(nextAddress)
                 set(value) { nextAddress = value?.address ?: -1 }
 
+            /**
+             * The previous entry in the free table
+             */
             var before: FreeTableEntry?
                 get() = if(beforeAddress == -1) null else FreeTableEntry(beforeAddress)
                 set(value) { beforeAddress = value?.address ?: -1 }
 
+            /**
+             * Loops over the chunks of this entry
+             */
             fun forEach(action: (Int) -> Unit) {
                 var addr = firstAddress
                 while(addr != -1) {
@@ -588,6 +713,9 @@ abstract class ShasamblyInterpretingBase(
                 }
             }
 
+            /**
+             * Loops over the chunks of this entry
+             */
             fun forEachControlled(action: (ElementLoopController<Int>) -> Unit) {
                 var addr = firstAddress
                 while(addr != -1) {
@@ -598,6 +726,9 @@ abstract class ShasamblyInterpretingBase(
                 }
             }
 
+            /**
+             * Loops over the chunks of this entry
+             */
             fun forEachIndexed(action: (IndexedElementLoopController<Int>) -> Unit) {
                 var addr = firstAddress
                 var index = 0
@@ -633,6 +764,9 @@ abstract class ShasamblyInterpretingBase(
 
         }
 
+        /**
+         * The amount of free table entries
+         */
         override val size: Int
             get() {
                 var address = freeTableStartPointer
@@ -816,6 +950,20 @@ abstract class ShasamblyInterpretingBase(
 
         override fun subList(fromIndex: Int, toIndex: Int): MutableList<FreeTableEntry> {
             throw UnsupportedOperationException()
+        }
+
+        inner class FreeElement (
+            val address: Int,
+            val size: Int,
+            val before: Int,
+            val table: Int
+        ) {
+            var next: Int
+                get() = memory.getInt(address)
+                set(value) {
+                    memory.setInt(address, value)
+                }
+
         }
 
     }
