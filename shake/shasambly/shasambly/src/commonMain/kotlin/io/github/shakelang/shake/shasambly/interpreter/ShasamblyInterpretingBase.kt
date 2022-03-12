@@ -350,6 +350,7 @@ abstract class ShasamblyInterpretingBase(
 
         /**
          * Find a free-table with a given size
+         * @see FreeTableControllerObject
          */
         fun findWithSize(size: Int): Int {
             var position = freeTableStartPointer
