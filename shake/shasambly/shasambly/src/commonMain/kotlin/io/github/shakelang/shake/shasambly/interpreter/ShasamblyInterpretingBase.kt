@@ -364,6 +364,7 @@ abstract class ShasamblyInterpretingBase(
 
         /**
          * Finds the free table below that is closest to the given size
+         * @see FreeTableControllerObject
          */
         fun findClosestBelow(size: Int): Int {
             var position = freeTableEndPointer
@@ -374,6 +375,9 @@ abstract class ShasamblyInterpretingBase(
             return -1
         }
 
+        /**
+         * Finds the free table above that is closest to the given size
+         */
         fun findBestAboveMatch(size: Int): Int {
             var position = freeTableEndPointer
             var bestMatch = -1

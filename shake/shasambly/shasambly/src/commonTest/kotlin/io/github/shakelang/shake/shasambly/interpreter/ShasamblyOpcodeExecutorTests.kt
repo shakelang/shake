@@ -34,7 +34,7 @@ class ShasamblyOpcodeExecutorTests {
             *(0).toBytes(), // Unused memory location
 
             0, 20, // Short 20
-            26, 0, 0, 0, 0, 6, // Default generated instruction to end the program
+            16, 0, 0, 0, 0, 4, // Default generated instruction to end the program
             0, 21, -1, -1, -1, -1, 0, 0, 0, 20,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
