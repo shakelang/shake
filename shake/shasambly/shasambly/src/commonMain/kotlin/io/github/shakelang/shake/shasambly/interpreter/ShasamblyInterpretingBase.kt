@@ -26,7 +26,7 @@ abstract class ShasamblyInterpretingBase(
     /**
      * The memory of the interpreter.
      *
-     * Memory Arangement:
+     * Memory Arrangement:
      *
      * 0x00 - 0x1f: Global variables:
      *
