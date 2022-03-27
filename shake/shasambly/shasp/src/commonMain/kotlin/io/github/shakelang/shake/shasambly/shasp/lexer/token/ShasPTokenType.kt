@@ -284,7 +284,12 @@ enum class ShasPTokenType(private val size: Int, override val hasValue: Boolean 
     /**
      * Unsigned keyword
      */
-    KEYWORD_UNSIGNED(2),
+    KEYWORD_UNSIGNED(8),
+
+    /**
+     * New keyword
+     */
+    KEYWORD_NEW(3),
 
     ;
 

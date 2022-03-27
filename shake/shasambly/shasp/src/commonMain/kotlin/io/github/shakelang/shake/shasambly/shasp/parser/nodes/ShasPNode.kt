@@ -455,9 +455,22 @@ open class ShasPReturn (val value: ShasPValuedNode?) : ShasPValuedStatement {
     }
 }
 
+open class ShasPArrayInitializer (
+    val type: ShasPType.ShasPArrayType,
+    val values: List<ShasPValuedNode>? = null
+) : ShasPValuedNode {
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "array_initializer",
+            "type" to type.toJson(),
+            "values" to values?.map { it.toJson() }
+        )
+    }
+}
+
 open class ShasPType (val name: String, val byteSize: Int) {
 
-    fun toJson(): Map<String, Any> {
+    open fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "type",
             "name" to name,
@@ -465,8 +478,8 @@ open class ShasPType (val name: String, val byteSize: Int) {
         )
     }
 
-    fun toJsonString(): String = json.stringify(toJson())
-    fun toJsonString(indent: Int) = json.stringify(toJson(), indent)
+    open fun toJsonString(): String = json.stringify(toJson())
+    open fun toJsonString(indent: Int) = json.stringify(toJson(), indent)
 
     companion object {
         val BYTE = ShasPType("byte", 1)
@@ -483,5 +496,38 @@ open class ShasPType (val name: String, val byteSize: Int) {
         val CHAR = ShasPType("char", 2)
         val UNKNOWN_INTEGER_LITERAL = ShasPType("int", 4)
         val UNKNOWN_DOUBLE_LITERAL = ShasPType("double", 8)
+
+        fun arrayOf(type: ShasPType, size: ShasPValuedNode? = null): ShasPArrayType {
+            return ShasPArrayType("$type[]", 4, type, size)
+        }
+    }
+
+    class ShasPArrayType(
+        name: String,
+        byteSize: Int,
+        val subType: ShasPType,
+        val size: ShasPValuedNode? = null
+    ) : ShasPType(name, byteSize) {
+
+        override fun toJson(): Map<String, Any?> {
+            return mapOf(
+                "type" to "sub_typed_type",
+                "name" to name,
+                "byteSize" to byteSize,
+                "subType" to subType.toJson(),
+                "size" to size?.toJson()
+            )
+        }
+
+        override fun equals(other: Any?): Boolean {
+            return other is ShasPArrayType && other.subType == subType && other.size == size
+        }
+
+        override fun hashCode(): Int {
+            var result = subType.hashCode()
+            result = 31 * result + (size?.hashCode() ?: 0)
+            return result
+        }
+
     }
 }

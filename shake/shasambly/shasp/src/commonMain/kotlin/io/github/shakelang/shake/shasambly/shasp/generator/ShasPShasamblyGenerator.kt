@@ -428,6 +428,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 is ShasPAnd -> this.generateValued(value, expectedType)
                 is ShasPOr -> this.generateValued(value, expectedType)
                 is ShasPNot -> this.generateValued(value, expectedType)
+                is ShasPArrayInitializer -> this.generateValued(value, expectedType)
                 else -> TODO(value::class.simpleName?:"null")
             }
         }
@@ -713,20 +714,20 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             val addr = lastLocalPointer
             val type = it.type
             val name = it.name
-            if(localTable.containsKey(name)) throw Error("Variable $it is already defined in this scope")
+            if(localTable.containsKey(name)) throw Error("Variable ${it.name} is already defined in this scope")
             localTable[name] = type to addr
             lastLocalPointer += type.byteSize
             if(it.value != null) setLocal(addr, type, it.value)
         }
 
         fun SimpleShasambly.generate(it: ShasPVariableAssignment) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             setLocal(addr.second, type, it.value)
         }
 
         fun SimpleShasambly.generate(it: ShasPVariableAddAssignment) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             getLocal(addr.second, type)
             generateValued(it.value, type)
@@ -735,7 +736,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generate(it: ShasPVariableSubAssignment) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             getLocal(addr.second, type)
             generateValued(it.value, type)
@@ -744,7 +745,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generate(it: ShasPVariableMulAssignment) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             getLocal(addr.second, type)
             generateValued(it.value, type)
@@ -753,7 +754,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generate(it: ShasPVariableDivAssignment) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             getLocal(addr.second, type)
             generateValued(it.value, type)
@@ -762,7 +763,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generate(it: ShasPVariableModAssignment) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             getLocal(addr.second, type)
             generateValued(it.value, type)
@@ -771,7 +772,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generate(it: ShasPVariableIncr) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             getLocal(addr.second, type)
             when(type) {
@@ -785,7 +786,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generate(it: ShasPVariableDecr) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             getLocal(addr.second, type)
             when(type) {
@@ -799,7 +800,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPVariableAddAssignment, type: ShasPType) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val rType = addr.first
             generate(it)
             getLocal(addr.second, type)
@@ -807,7 +808,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPVariableSubAssignment, type: ShasPType) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val rType = addr.first
             generate(it)
             getLocal(addr.second, type)
@@ -815,7 +816,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPVariableMulAssignment, type: ShasPType) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val rType = addr.first
             generate(it)
             getLocal(addr.second, type)
@@ -823,7 +824,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPVariableDivAssignment, type: ShasPType) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val rType = addr.first
             generate(it)
             getLocal(addr.second, type)
@@ -831,7 +832,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPVariableModAssignment, type: ShasPType) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val rType = addr.first
             generate(it)
             getLocal(addr.second, type)
@@ -839,7 +840,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPVariableIncr, type: ShasPType) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val rType = addr.first
             generate(it)
             getLocal(addr.second, type)
@@ -847,7 +848,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPVariableDecr, type: ShasPType) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val rType = addr.first
             generate(it)
             getLocal(addr.second, type)
@@ -856,7 +857,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
 
 
         fun SimpleShasambly.generateValued(it: ShasPVariableAssignment, type: ShasPType) {
-            val addr = localTable[it.name] ?: throw Error("Variable $it is not defined in this scope")
+            val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val rType = addr.first
             generate(it)
             getLocal(addr.second, type)
@@ -928,6 +929,14 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             val rType = addr.first
             getLocal(addr.second, type)
             convert(rType, type)
+        }
+
+        fun SimpleShasambly.generateValued(it: ShasPArrayInitializer, type: ShasPType) {
+            if(type !is ShasPType.ShasPArrayType) throw Error("Array initializer generates array result and not $type")
+            val size = it.type.subType.byteSize
+            //createLocalByteArray()
+            TODO()
+
         }
 
         fun SimpleShasambly.generate(it: ShasPIf) {

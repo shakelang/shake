@@ -24,7 +24,7 @@ class ShasPParser (
         val unsigned = input.actual.type == ShasPTokenType.KEYWORD_UNSIGNED
         if (unsigned) input.skip()
 
-        val type = when(input.actual.type) {
+        var type = when(input.actual.type) {
             ShasPTokenType.KEYWORD_BYTE -> if (unsigned) ShasPType.UBYTE else ShasPType.BYTE
             ShasPTokenType.KEYWORD_SHORT -> if (unsigned) ShasPType.USHORT else ShasPType.SHORT
             ShasPTokenType.KEYWORD_INT -> if (unsigned) ShasPType.UINT else ShasPType.INT
@@ -38,12 +38,19 @@ class ShasPParser (
             }
         }
 
-        if (input.peek().type != ShasPTokenType.IDENTIFIER) {
-            throw ParserError(
-                "Expected identifier after type name",
-                input.peekStart(),
-                input.peekEnd()
-            )
+        while(input.hasNext() && (input.peekType() == ShasPTokenType.LBRACKET)) {
+            input.skip()
+            if(!input.hasNext() || input.peekType() != ShasPTokenType.RBRACKET) {
+                val size = logicalOr()
+                if(!input.hasNext() || input.nextType() != ShasPTokenType.RBRACKET) {
+                    throw ParserError("Expected ']', got ${input.next().type}")
+                }
+                type = ShasPType.arrayOf(type, size)
+            }
+            else {
+                input.skip()
+                type = ShasPType.arrayOf(type)
+            }
         }
 
         return type
@@ -400,7 +407,8 @@ class ShasPParser (
             token.type == ShasPTokenType.KEYWORD_FLOAT ||
             token.type == ShasPTokenType.KEYWORD_DOUBLE ||
             token.type == ShasPTokenType.KEYWORD_CHAR ||
-            token.type == ShasPTokenType.KEYWORD_BOOLEAN) {
+            token.type == ShasPTokenType.KEYWORD_BOOLEAN ||
+            token.type == ShasPTokenType.KEYWORD_UNSIGNED) {
             return parseVariableDeclaration()
         }
         throw ParserError("Expected statement, but got ${token.type.name}")
@@ -495,7 +503,24 @@ class ShasPParser (
             input.skip()
             return ShasPCharLiteral(Characters.parseString(input.actualValue!!)[0])
         }
+        if(token == ShasPTokenType.KEYWORD_NEW) {
+            return parseNew()
+        }
         throw ParserError("Unexpected Token $token")
+    }
+
+    private fun parseNew(): ShasPValuedNode {
+
+        if(input.actualType != ShasPTokenType.KEYWORD_NEW) {
+            throw ParserError("Expected 'new'")
+        }
+
+        input.skip()
+
+        val type = parseType()
+        if(type !is ShasPType.ShasPArrayType) throw ParserError("Expected array type")
+        return ShasPArrayInitializer(type)
+
     }
 
     // Casting

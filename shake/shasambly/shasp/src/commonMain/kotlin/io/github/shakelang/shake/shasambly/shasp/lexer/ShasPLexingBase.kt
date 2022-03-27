@@ -147,12 +147,13 @@ abstract class ShasPLexingBase(
                 "if" -> ShasPTokenType.KEYWORD_IF
                 "int" -> ShasPTokenType.KEYWORD_INT
                 "long" -> ShasPTokenType.KEYWORD_LONG
+                "new" -> ShasPTokenType.KEYWORD_NEW
                 "return" -> ShasPTokenType.KEYWORD_RETURN
                 "short" -> ShasPTokenType.KEYWORD_SHORT
                 "true" -> ShasPTokenType.KEYWORD_TRUE
+                "unsigned" -> ShasPTokenType.KEYWORD_UNSIGNED
                 "void" -> ShasPTokenType.KEYWORD_VOID
                 "while" -> ShasPTokenType.KEYWORD_WHILE
-                "unsigned" -> ShasPTokenType.KEYWORD_UNSIGNED
                 else -> return ShasPToken(ShasPTokenType.IDENTIFIER, identifier.toString(), end)
             }, end
         )
