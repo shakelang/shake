@@ -3,7 +3,7 @@ package io.github.shakelang.shake.parser.node.variables
 import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.parseutils.characters.position.PositionMap
 
-class VariableAssignmentNode(map: PositionMap, val variable: ValuedNode, val value: Node, val operatorPosition: Int) :
+class VariableAssignmentNode(map: PositionMap, val variable: ValuedNode, val value: ValuedNode, val operatorPosition: Int) :
     ValuedNode(map) {
 
     override fun toJson(): Map<String, *> = mapOf(
