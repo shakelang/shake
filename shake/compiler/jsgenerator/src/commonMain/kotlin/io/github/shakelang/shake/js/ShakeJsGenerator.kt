@@ -18,7 +18,8 @@ import io.github.shakelang.shake.parser.node.variables.*
 
 class ShakeJsGenerator : ShakeGenerator<JsOutput>() {
     override fun visitTree(t: Tree): JsTree {
-        return JsTree(t.children.mapNotNull { visit(it).toStatement() })
+        val r = JsTree(t.children.mapNotNull { visit(it).toStatement() })
+        return r
     }
 
     override fun visitDoubleNode(n: DoubleNode): JsDouble {
