@@ -7,8 +7,9 @@ import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.Parser
 
 fun main() {
-    val inputStream =  SourceCharacterInputStream(CharacterSource.from("" +
-            "void test(int i) { println(i); }","test.shake"))
+    val inputStream =  SourceCharacterInputStream(CharacterSource.from(
+            "class Test { int i = 0; static int x = 42; void test() { int i = 0; } static void xxx() {} } void test(int i) { println(i); }",
+            "test.shake"))
     val lexer = ShakeLexer(inputStream)
     val tokens = lexer.makeTokens()
     val parser = Parser(tokens)
