@@ -471,7 +471,7 @@ class JsClassDeclaration(
 
     override val needsSemicolon: Boolean get() = false
 
-    val constructor: JsFunctionDeclaration get() {
+    val classConstructor: JsFunctionDeclaration get() {
         val statements = mutableListOf<JsStatement>()
         fields.forEach {
             if(it.value != null) {
@@ -487,7 +487,7 @@ class JsClassDeclaration(
             statement.append(" extends ${extends.generate(indentAmount, indent)}")
         }
         statement.append(" {\n")
-        statement.append(constructor.generateInClass(indentAmount + 1, indent))
+        statement.append(classConstructor.generateInClass(indentAmount + 1, indent))
         statement.append("\n")
         statement.append(functions.joinToString("\n") { it.generateInClass(indentAmount + 1, indent) })
         statement.append('\n').append(indent.repeat(indentAmount)).append("}")

@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.cli
 
-import io.github.shakelang.shake.util.Promise
+import io.github.shakelang.parseutils.Promise
 import java.util.*
 
 actual fun readLine(message: String): Promise<String?> =

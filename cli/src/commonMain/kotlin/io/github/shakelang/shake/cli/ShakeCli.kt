@@ -6,16 +6,15 @@
 
 package io.github.shakelang.shake.cli
 
+import io.github.shakelang.parseutils.File
+import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
+import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.interpreter.Interpreter
-import io.github.shakelang.shake.lexer.Lexer
+import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.Parser
 import io.github.shakelang.shake.parser.node.Tree
-import io.github.shakelang.shake.util.File
-import io.github.shakelang.shake.util.characterinput.characterinputstream.CharacterInputStream
-import io.github.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
-import io.github.shakelang.parseutils.characters.position.PositionMap
-import io.github.shakelang.shake.util.json.json
-import io.github.shakelang.shake.util.recursiveWhile
+import io.github.shakelang.shason.json
 import kotlin.jvm.JvmName
 
 /**
@@ -127,7 +126,7 @@ fun main(args: Array<String>) {
 private fun parse(input: CharacterInputStream): ParseResult {
 
     // Create a new Lexer from the CharacterInputStream
-    val lexer = Lexer(input)
+    val lexer = ShakeLexer(input)
 
     // Generate the tokens using the lexer
     val tokens = lexer.makeTokens()
