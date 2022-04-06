@@ -97,3 +97,8 @@ val startScriptShasP by tasks.register<CreateStartScripts>("startScriptShasP") {
     mainClassName = "io.github.shakelang.shake.shasambly.ShasPKt"
     classpath = classPath
 }
+
+val projectName = name
+tasks.named<Jar>("jar") {
+    archiveBaseName.set("shake-$projectName")
+}

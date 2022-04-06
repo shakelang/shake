@@ -55,14 +55,17 @@ kotlin {
         }
     }
 
-    /*js(LEGACY) {
+    js(LEGACY) {
+        compilations["main"].packageJson {
+            customField("browser", mapOf( "fs" to false, "path" to false, "os" to false))
+        }
         browser {
             commonWebpackConfig {
                 cssSupport.enabled = true
             }
         }
         nodejs {}
-    }*//*
+    }/*
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
     val nativeTarget = when {
@@ -94,4 +97,15 @@ kotlin {
         //val nativeMain by getting
         //val nativeTest by getting
     }
+}
+
+val projectName = name
+tasks.named<Jar>("jvmJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+tasks.named<Jar>("jsJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+tasks.named<Jar>("metadataJar") {
+    archiveBaseName.set("shake-$projectName")
 }

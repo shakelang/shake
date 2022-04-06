@@ -64,3 +64,8 @@ application {
     mainClass.set("io.github.shakelang.shake.cli.ShakeCli")
 }
 var classPath: FileCollection? = null
+
+val projectName = name
+tasks.named<Jar>("jar") {
+    archiveBaseName.set("shake-$projectName")
+}
