@@ -12,8 +12,8 @@ import kotlin.test.assertNotNull
 
 object ParserTestUtil {
     fun parse(source: String, input: String): Tree {
-        val input: CharacterInputStream = SourceCharacterInputStream(source, input)
-        val lexer = ShakeLexer(input)
+        val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
+        val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()
         val parser = Parser(tokens)
         return parser.parse()

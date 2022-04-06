@@ -6,7 +6,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 apply(plugin = "java-library")
 
 plugins {
-    kotlin("multiplatform") version "1.5.10"
+    kotlin("multiplatform")
     id("org.jetbrains.dokka")
     id("io.github.shakelang.shake.java-conventions")
     java
@@ -60,49 +60,6 @@ kotlin {
         }
 
         val main by compilations.getting
-        val fatJar by compilations.creating {
-            defaultSourceSet {
-                /*dependencies {
-                    main.compileDependencyFiles
-                }*/
-                this.dependsOn(sourceSets.commonMain.get())
-                this.dependsOn(sourceSets.getByName("jvmMain"))
-            }
-
-
-            tasks.register<Jar>("jvmFatJar") {
-                dependsOn("jvmFatJarClasses")
-                val classpath = compileDependencyFiles// + main.output.classesDirs
-
-                manifest {
-                    attributes (mapOf(
-                        "Implementation-Title" to "Gradle Jar File Example",
-                        "Implementation-Version" to archiveVersion,
-                        "Main-Class" to "io.github.shakelang.shake.cli.ShakeCli"
-                    ))
-                }
-
-                archiveAppendix.set("jvm-executable")
-
-                from(
-                    classpath.map { if (it.isDirectory) it else zipTree(it) }
-                ) {
-                    exclude("META-INF/DEPENDENCIES")
-                    exclude("META-INF/DEPENDENCIES.txt")
-                    exclude("META-INF/LICENSE")
-                    exclude("META-INF/LICENSE.txt")
-                    exclude("META-INF/license.txt")
-                    exclude("META-INF/NOTICE")
-                    exclude("META-INF/NOTICE.txt")
-                    exclude("META-INF/notice.txt")
-                    exclude("META-INF/INDEX.LIST")
-                    exclude("META-INF/versions")
-                    exclude("META-INF/versions/9/module-info.class")
-                }
-
-                from(output)
-            }
-        }
     }
 
     js(LEGACY) {
@@ -140,10 +97,12 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":util"))
-                implementation(project(":lexer"))
-                implementation(project(":parser"))
-                implementation(project(":interpreter"))
+                implementation(project(":util:parseutils"))
+                implementation(project(":util:shason"))
+                implementation(project(":shake:compiler:lexer"))
+                implementation(project(":shake:compiler:parser"))
+                implementation(project(":shake:compiler:jsgenerator"))
+                implementation(project(":shake:compiler:interpreter"))
             }
         }
         val commonTest by getting {
@@ -164,10 +123,6 @@ kotlin {
     }
 }
 
-tasks.jar {
-    dependsOn("jvmFatJar")
-}
-
 tasks.test {
     useJUnitPlatform()
 
@@ -177,4 +132,15 @@ tasks.test {
     filter {
         includeTestsMatching("io.github.shakelang.shake.*")
     }
+}
+
+val projectName = name
+tasks.named<Jar>("jvmJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+tasks.named<Jar>("jsJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+tasks.named<Jar>("metadataJar") {
+    archiveBaseName.set("shake-$projectName")
 }

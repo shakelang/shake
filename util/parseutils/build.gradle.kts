@@ -1,3 +1,4 @@
+@file:Suppress("unused_variable")
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.dokka")
@@ -8,6 +9,8 @@ plugins {
 group = "io.github.shakelang.util.parseutils"
 version = "0.1.0"
 description = "Utilities for parsing stuff with kotlin"
+
+val projectName = name
 
 repositories {
     mavenCentral()
@@ -27,7 +30,7 @@ node {
     distBaseUrl.set("https://nodejs.org/dist")
 
     // The npm command executed by the npmInstall task
-    // By default it is install but it can be changed to ci
+    // By default it is install, but it can be changed to ci
     npmInstallCommand.set("ci")
 
     // The directory where Node.js is unpacked (when download is true)
@@ -88,7 +91,7 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
-                freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+                freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
             }
         }
         testRuns["test"].executionTask.configure {
@@ -98,10 +101,13 @@ kotlin {
     js(LEGACY) {
         compilations.all {
             kotlinOptions {
-                freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+                freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
             }
         }
         browser {
+            compilations["main"].packageJson {
+                customField("browser", mapOf( "fs" to false, "path" to false, "os" to false))
+            }
             commonWebpackConfig {
                 cssSupport.enabled = true
             }
@@ -121,7 +127,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.6.10-RC")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10")
             }
         }
         val commonTest by getting {
@@ -182,4 +188,16 @@ tasks.register<Copy>("copyDokkaHtml") {
     dependsOn("dokkaHtml")
     from(file("build/docs/html"))
     into(file("docs/static/dokka/"))
+}
+
+tasks.named<Jar>("jvmJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+
+tasks.named<Jar>("jsJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+
+tasks.named<Jar>("metadataJar") {
+    archiveBaseName.set("shake-$projectName")
 }

@@ -210,6 +210,7 @@ class Parser(val input: ShakeTokenInputStream) {
                 ShakeTokenType.POW_ASSIGN -> ret = varPowAssignment(identifierNode)
                 ShakeTokenType.INCR -> ret = varIncrease(identifierNode)
                 ShakeTokenType.DECR -> ret = varDecrease(identifierNode)
+                else -> {}
             }
             if (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT) {
                 input.skip()
@@ -415,7 +416,7 @@ class Parser(val input: ShakeTokenInputStream) {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.ASSIGN) throw ParserError("Expecting '='")
         val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
-        return VariableAssignmentNode(map, variable, value, operatorPosition)
+        return VariableAssignmentNode(map, variable, value as ValuedNode, operatorPosition)
     }
 
     private fun varAddAssignment(variable: ValuedNode): VariableAddAssignmentNode {

@@ -57,6 +57,9 @@ kotlin {
 
     js(LEGACY) {
         browser {
+            compilations["main"].packageJson {
+                customField("browser", mapOf( "fs" to false, "path" to false, "os" to false))
+            }
             commonWebpackConfig {
                 cssSupport.enabled = true
             }
@@ -91,4 +94,15 @@ kotlin {
         //val nativeMain by getting
         //val nativeTest by getting
     }
+}
+
+val projectName = name
+tasks.named<Jar>("jvmJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+tasks.named<Jar>("jsJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+tasks.named<Jar>("metadataJar") {
+    archiveBaseName.set("shake-$projectName")
 }
