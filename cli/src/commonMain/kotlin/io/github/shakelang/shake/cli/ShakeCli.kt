@@ -11,6 +11,7 @@ import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.interpreter.Interpreter
+import io.github.shakelang.shake.js.ShakeJsGenerator
 import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.Parser
 import io.github.shakelang.shake.parser.node.Tree
@@ -21,6 +22,8 @@ import kotlin.jvm.JvmName
  * The interpreter for interpreting the code
  */
 val interpreter = Interpreter()
+
+val jsGenerator = ShakeJsGenerator()
 
 // ----------------------------------------------------------------
 //  Java Generator is not implemented yet
@@ -54,7 +57,7 @@ fun main(args: Array<String>) {
 
     // Define the options for the argumentParser
     argumentParser
-        .option("generator", "g", 1, arrayOf<String?>("interpreter"))
+        .option("generator", "g", 1, arrayOf("interpreter"))
         .option("debug", "d")
         .option("target", "t", 1, arrayOf(null))
 
@@ -169,6 +172,7 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
             if (src == null) println(">> ${json.stringify(pr.tree, indent = 2)}")
             else writeFile(File(target ?: "$targetFile.json"), json.stringify(pr.tree, indent = 2))
         "java" -> throw Error("Java is not available")
+        "js", "javascript" -> println(jsGenerator.visit(pr.tree).generate())
         //     if (src == null) println(">> ${java.visitProgram(pr.tree, "CliInput").toString("", "  ")}%n")
         //     else writeFile(File(target ?: targetFile + java.extension), java.visitProgram(pr.tree, baseName).toString("", "  "))
         else -> throw Error("Unknown generator!")

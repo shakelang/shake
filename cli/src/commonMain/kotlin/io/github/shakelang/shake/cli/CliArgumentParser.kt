@@ -4,12 +4,12 @@ import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
 class CliArgumentParser(
-    private val options: MutableList<io.github.shakelang.shake.cli.CliArgumentParser.CliOption> = mutableListOf()
+    private val options: MutableList<CliOption> = mutableListOf()
 ) {
-    constructor(options: Array<io.github.shakelang.shake.cli.CliArgumentParser.CliOption>) : this(mutableListOf(*options))
+    constructor(options: Array<CliOption>) : this(mutableListOf(*options))
 
-    fun parse(args: Array<String>): io.github.shakelang.shake.cli.CliArgumentParser.CliArguments {
-        val options: MutableList<io.github.shakelang.shake.cli.CliArgumentParser.ValuedCliOption> = ArrayList()
+    fun parse(args: Array<String>): CliArgumentParser.CliArguments {
+        val options: MutableList<ValuedCliOption> = ArrayList()
         val arguments: MutableList<String> = ArrayList()
         run {
             var i = 0
@@ -96,35 +96,35 @@ class CliArgumentParser(
      */
     private fun createValuedCliOption(
         args: Array<String>,
-        options: MutableList<io.github.shakelang.shake.cli.CliArgumentParser.ValuedCliOption>,
+        options: MutableList<ValuedCliOption>,
         i: Int,
         optionName: String,
-        option: io.github.shakelang.shake.cli.CliArgumentParser.CliOption
+        option: CliOption
     ): Int {
-        var i = i
+        var i1 = i
         val optionArguments = arrayOfNulls<String>(option.argumentAmount)
         for (c in 0 until option.argumentAmount) {
 
             // the index of the next option argument
-            val index = c + i + 1
+            val index = c + i1 + 1
 
             // check if the index exists, throw an error if not
             if (args.size <= index) throw Error("Not enough arguments given for option \"--$optionName\"")
             optionArguments[c] = args[index]
         }
         options.add(option.valued(optionArguments))
-        i += option.argumentAmount
-        return i
+        i1 += option.argumentAmount
+        return i1
     }
 
-    fun option(option: io.github.shakelang.shake.cli.CliArgumentParser.CliOption): io.github.shakelang.shake.cli.CliArgumentParser {
+    fun option(option: CliOption): CliArgumentParser {
         options.add(option)
         return this
     }
 
-    fun option(name: String, shortName: String, argumentAmount: Int, defaults: Array<String?>?): io.github.shakelang.shake.cli.CliArgumentParser {
+    fun option(name: String, shortName: String, argumentAmount: Int, defaults: Array<String?>?): CliArgumentParser {
         return this.option(
-            io.github.shakelang.shake.cli.CliArgumentParser.CliOption(
+            CliOption(
                 name,
                 shortName,
                 argumentAmount,
@@ -133,12 +133,12 @@ class CliArgumentParser(
         )
     }
 
-    fun option(name: String, shortName: String, argumentAmount: Int): io.github.shakelang.shake.cli.CliArgumentParser {
-        return this.option(io.github.shakelang.shake.cli.CliArgumentParser.CliOption(name, shortName, argumentAmount))
+    fun option(name: String, shortName: String, argumentAmount: Int): CliArgumentParser {
+        return this.option(CliOption(name, shortName, argumentAmount))
     }
 
-    fun option(name: String, shortName: String): io.github.shakelang.shake.cli.CliArgumentParser {
-        return this.option(io.github.shakelang.shake.cli.CliArgumentParser.CliOption(name, shortName))
+    fun option(name: String, shortName: String): CliArgumentParser {
+        return this.option(CliOption(name, shortName))
     }
 
     open class CliOption @JvmOverloads constructor(
@@ -147,12 +147,12 @@ class CliArgumentParser(
         val argumentAmount: Int = 0,
         private val default_value: Array<String?>? = null
     ) {
-        fun valued(value: Array<String?>?): io.github.shakelang.shake.cli.CliArgumentParser.ValuedCliOption {
-            return io.github.shakelang.shake.cli.CliArgumentParser.ValuedCliOption(this, value ?: default_value)
+        fun valued(value: Array<String?>?): ValuedCliOption {
+            return ValuedCliOption(this, value ?: default_value)
         }
 
-        fun valued(): io.github.shakelang.shake.cli.CliArgumentParser.ValuedCliOption {
-            return io.github.shakelang.shake.cli.CliArgumentParser.ValuedCliOption(this, default_value)
+        fun valued(): ValuedCliOption {
+            return ValuedCliOption(this, default_value)
         }
 
         init {
@@ -161,9 +161,9 @@ class CliArgumentParser(
     }
 
     class ValuedCliOption(name: String, shortName: String, argumentAmount: Int, val values: Array<String?>?) :
-        io.github.shakelang.shake.cli.CliArgumentParser.CliOption(name, shortName, argumentAmount) {
+        CliOption(name, shortName, argumentAmount) {
 
-        constructor(option: io.github.shakelang.shake.cli.CliArgumentParser.CliOption, values: Array<String?>?) : this(
+        constructor(option: CliOption, values: Array<String?>?) : this(
             option.name,
             option.shortName,
             option.argumentAmount,
@@ -175,8 +175,8 @@ class CliArgumentParser(
             get() = values != null
     }
 
-    inner class CliArguments(val options: List<io.github.shakelang.shake.cli.CliArgumentParser.ValuedCliOption>, val arguments: List<String>) {
-        fun getOption(name: String): io.github.shakelang.shake.cli.CliArgumentParser.ValuedCliOption? {
+    inner class CliArguments(val options: List<ValuedCliOption>, val arguments: List<String>) {
+        fun getOption(name: String): ValuedCliOption? {
             for (option in this.options) {
                 if (option.name == name) return option
             }

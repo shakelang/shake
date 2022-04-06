@@ -57,6 +57,9 @@ kotlin {
 
     js(LEGACY) {
         browser {
+            compilations["main"].packageJson {
+                customField("browser", mapOf( "fs" to false, "path" to false, "os" to false))
+            }
             commonWebpackConfig {
                 cssSupport.enabled = true
             }
