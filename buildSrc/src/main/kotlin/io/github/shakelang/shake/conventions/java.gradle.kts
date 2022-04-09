@@ -1,3 +1,9 @@
+package io.github.shakelang.shake.conventions
+
+import gradle.kotlin.dsl.accessors._bdd125900c342096ebc27a61977d96e4.java
+import gradle.kotlin.dsl.accessors._bdd125900c342096ebc27a61977d96e4.publishing
+import org.gradle.kotlin.dsl.*
+
 plugins {
     `java-library`
     `maven-publish`
