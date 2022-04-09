@@ -1,6 +1,6 @@
 group = "io.github.shakelang.shake"
 version = "0.1.0"
-description = "interpreter"
+description = "processer"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 apply(plugin = "java-library")
@@ -58,10 +58,7 @@ kotlin {
         testRuns["test"].executionTask.configure {
             useJUnit()
         }
-
-        val main by compilations.getting
     }
-
     js(LEGACY) {
         nodejs {
         }
@@ -69,7 +66,7 @@ kotlin {
             compilations {
                 "main" {
                     packageJson {
-                        customField("browser", mapOf( "fs" to false, "path" to false, "os" to false, "readline" to false))
+                        customField("browser", mapOf( "fs" to false, "path" to false, "os" to false))
                     }
                     kotlinOptions {
                         moduleKind = "commonjs"
@@ -94,16 +91,13 @@ kotlin {
     }
     */
 
+
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(project(":util:parseutils"))
-                implementation(project(":util:shason"))
                 implementation(project(":shake:compiler:lexer"))
                 implementation(project(":shake:compiler:parser"))
-                implementation(project(":shake:compiler:processor"))
-                implementation(project(":shake:compiler:jsgenerator"))
-                implementation(project(":shake:compiler:interpreter"))
             }
         }
         val commonTest by getting {
@@ -118,7 +112,11 @@ kotlin {
         }
         val jvmTest by getting
         val jsMain by getting
-        val jsTest by getting
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
         // val nativeMain by getting
         // val nativeTest by getting
     }

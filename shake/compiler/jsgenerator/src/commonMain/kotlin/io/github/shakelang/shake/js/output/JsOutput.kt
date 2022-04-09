@@ -1,5 +1,7 @@
 package io.github.shakelang.shake.js.output
 
+import io.github.shakelang.parseutils.characters.Characters
+
 interface JsOutput {
     fun generate(indentAmount: Int = 0, indent: String = "  "): String
     fun toStatement(): JsStatement? {
@@ -15,7 +17,7 @@ interface JsStatement : JsOutput {
 }
 interface JsValue : JsOutput {
     val needsParens: Boolean
-    open fun generateValue(indentAmount: Int = 0, indent: String = "  "): String {
+    fun generateValue(indentAmount: Int = 0, indent: String = "  "): String {
         return if(needsParens) "(${generate(indentAmount, indent)})" else generate(indentAmount, indent)
     }
 }
@@ -125,7 +127,7 @@ class JsFunctionCall(
 ) : JsValue, JsStatement {
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
-        return "${function.generate(indentAmount, indent)}(${args.joinToString(", ") { it.generate(indentAmount, indent) }})"
+        return "${function.generateValue(indentAmount, indent)}(${args.joinToString(", ") { it.generate(indentAmount, indent) }})"
     }
 }
 
@@ -429,7 +431,7 @@ class JsFunctionDeclaration(
         return indent.repeat(indentAmount) + "$name${baseGenerate(indentAmount, indent)}"
     }
 
-    fun inline(indentAmount: Int, indent: String): JsInlineFunction {
+    fun inline(): JsInlineFunction {
         return JsInlineFunction(parameters, body)
     }
 
@@ -452,11 +454,11 @@ class JsInlineFunction (
     override fun generate(indentAmount: Int, indent: String): String {
         return "function (${parameters.joinToString(", ") {
             if(it.value != null) {
-                "${it.name} = ${it.value.generate(indentAmount, indent)}"
+                "${it.name} = ${it.value.generate(indentAmount + 1, indent)}"
             } else {
                 it.name
             }
-        }}) " + if(body.children.isEmpty()) "{}" else "{\n${body.generate(indentAmount, indent)}\n}"
+        }}) " + if(body.children.isEmpty()) "{}" else "{\n${body.generate(indentAmount + 1, indent)}\n${indent.repeat(indentAmount)}}"
     }
 }
 
@@ -493,7 +495,7 @@ class JsClassDeclaration(
         statement.append('\n').append(indent.repeat(indentAmount)).append("}")
         staticFunctions.forEach {
             statement.append("\n")
-            statement.append(JsAssignment(JsField(it.name, JsField(this.name)), it.inline(indentAmount, indent)).generate(indentAmount, indent))
+            statement.append(JsAssignment(JsField(it.name, JsField(this.name)), it.inline()).generate(indentAmount, indent))
         }
         staticFields.forEach {
             statement.append("\n")
@@ -510,6 +512,37 @@ class JsNew(
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
         return "new ${type.generate(indentAmount, indent)}(${parameters.joinToString(", ") { it.generate(indentAmount, indent) }})"
+    }
+}
+
+class JsObject(
+    val fields: Map<JsValue, JsValue> = emptyMap()
+) : JsValue {
+    override val needsParens: Boolean get() = false
+    override fun generate(indentAmount: Int, indent: String): String {
+        val ind = indent.repeat(indentAmount + 1)
+        return if(fields.isEmpty()) "{}"
+            else "{\n$ind${fields.entries.joinToString(",\n$ind") {
+                "${it.key.generate(indentAmount + 1, indent)}: ${it.value.generate(indentAmount + 1, indent)}"
+            }}\n${indent.repeat(indentAmount)}}"
+    }
+}
+
+class JsStringLiteral(
+    val value: String
+) : JsValue {
+    override val needsParens: Boolean get() = false
+    override fun generate(indentAmount: Int, indent: String): String {
+        return Characters.escapeString(value)
+    }
+}
+
+class JsReturn(
+    val value: JsValue? = null
+) : JsStatement {
+    override val needsSemicolon: Boolean get() = true
+    override fun generate(indentAmount: Int, indent: String): String {
+        return "return ${value?.generate(indentAmount, indent) ?: ""}"
     }
 }
 

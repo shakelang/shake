@@ -15,6 +15,7 @@ import io.github.shakelang.shake.js.ShakeJsGenerator
 import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.Parser
 import io.github.shakelang.shake.parser.node.Tree
+import io.github.shakelang.shake.processor.ShakePackageBasedProcessor
 import io.github.shakelang.shason.json
 import kotlin.jvm.JvmName
 
@@ -53,7 +54,7 @@ const val VERSION = "0.1.0"
 fun main(args: Array<String>) {
 
     // Create a parser for the arguments
-    val argumentParser = io.github.shakelang.shake.cli.CliArgumentParser()
+    val argumentParser = CliArgumentParser()
 
     // Define the options for the argumentParser
     argumentParser
@@ -172,7 +173,11 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
             if (src == null) println(">> ${json.stringify(pr.tree, indent = 2)}")
             else writeFile(File(target ?: "$targetFile.json"), json.stringify(pr.tree, indent = 2))
         "java" -> throw Error("Java is not available")
-        "js", "javascript" -> println(jsGenerator.visit(pr.tree).generate())
+        "js", "javascript" -> {
+            val processor = ShakePackageBasedProcessor()
+            processor.loadSynthetic("stdin.ConsoleInput", pr.tree)
+            println(processor.generate(jsGenerator::generateSingleFile).generate())
+        }
         //     if (src == null) println(">> ${java.visitProgram(pr.tree, "CliInput").toString("", "  ")}%n")
         //     else writeFile(File(target ?: targetFile + java.extension), java.visitProgram(pr.tree, baseName).toString("", "  "))
         else -> throw Error("Unknown generator!")

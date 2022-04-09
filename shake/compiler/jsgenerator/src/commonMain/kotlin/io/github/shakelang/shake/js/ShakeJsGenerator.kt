@@ -15,6 +15,7 @@ import io.github.shakelang.shake.parser.node.loops.WhileNode
 import io.github.shakelang.shake.parser.node.objects.ClassConstructionNode
 import io.github.shakelang.shake.parser.node.objects.ClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.*
+import io.github.shakelang.shake.processor.ShakePackage
 
 class ShakeJsGenerator : ShakeGenerator<JsOutput>() {
     override fun visitTree(t: Tree): JsTree {
@@ -220,6 +221,49 @@ class ShakeJsGenerator : ShakeGenerator<JsOutput>() {
     override fun visitCastNode(n: CastNode): JsValue {
         return visit(n.value).toValue()
     }
+
+    fun generateSingleFile(src: ShakePackage): JsTree {
+        return JsTree(listOf(
+            JsVariableDeclaration("SHAKE_PACKAGE"),
+            JsAssignment(JsField("SHAKE_PACKAGE"), generateSingleFilePackage(src))
+        ))
+    }
+
+    fun generateSingleFilePackage(pkg: ShakePackage): JsObject {
+        return JsObject(mapOf(
+            JsStringLiteral("packages") to JsObject(
+                pkg.subpackages.associate {
+                    JsStringLiteral(it.name) to generateSingleFilePackage(it)
+                }
+            ),
+            JsStringLiteral("classes") to JsObject(
+                pkg.classes.values.associate {
+                    JsStringLiteral(it.name) to JsFunctionCall(
+                        JsInlineFunction(
+                            emptyList(),
+                            JsTree(listOf(
+                                visitClassDeclarationNode(it),
+                                JsReturn(JsField(it.name))
+                            ))
+                        ),
+                        emptyList()
+                    )
+                }
+            ),
+            JsStringLiteral("functions") to JsObject(
+                pkg.functions.values.associate {
+                    JsStringLiteral(it.name) to visitFunctionDeclarationNode(it).inline()
+                }
+            ),
+            JsStringLiteral("fields") to JsObject(
+                pkg.fields.values.associate {
+                    JsStringLiteral(it.name) to (visitVariableDeclarationNode(it).value ?: JsLiteral.NULL)
+                }
+            )
+        ))
+    }
+
+
 
     override val extension: String
         get() = "js"

@@ -98,6 +98,7 @@ kotlin {
                 implementation(project(":util:parseutils"))
                 implementation(project(":shake:compiler:lexer"))
                 implementation(project(":shake:compiler:parser"))
+                implementation(project(":shake:compiler:processor"))
             }
         }
         val commonTest by getting {
