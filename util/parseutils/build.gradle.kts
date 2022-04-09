@@ -1,4 +1,7 @@
 @file:Suppress("unused_variable")
+
+import io.github.shakelang.shake.conventions.mpp.dependencies
+
 plugins {
     id("io.github.shakelang.shake.conventions.mpp.all")
     id("com.github.node-gradle.node") version "3.1.1"
@@ -54,23 +57,9 @@ node {
 }
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10")
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-        val jvmMain by getting
-        val jvmTest by getting
-        val jsMain by getting
-        val jsTest by getting
-        //val nativeMain by getting
-        //val nativeTest by getting
+    dependencies {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10")
+        testImplementation(kotlin("test"))
     }
 }
 

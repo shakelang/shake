@@ -1,3 +1,5 @@
+import io.github.shakelang.shake.conventions.mpp.dependencies
+
 group = "io.github.shakelang.util.shason"
 version = "0.1.0"
 description = "A json parser implemented in kotlin (mpp)"
@@ -14,23 +16,9 @@ repositories {
 }
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":util:parseutils"))
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-        val jvmMain by getting
-        val jvmTest by getting
-        val jsMain by getting
-        val jsTest by getting
-        // val nativeMain by getting
-        // val nativeTest by getting
+    dependencies {
+        implementation(project(":util:parseutils"))
+        testImplementation(kotlin("test"))
     }
 }
 

@@ -1,3 +1,5 @@
+import io.github.shakelang.shake.conventions.mpp.dependencies
+
 group = "io.github.shakelang.shake"
 version = "0.1.0"
 description = "js-generator"
@@ -18,34 +20,12 @@ repositories {
 }
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":util:parseutils"))
-                implementation(project(":shake:compiler:lexer"))
-                implementation(project(":shake:compiler:parser"))
-                implementation(project(":shake:compiler:processor"))
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-                implementation("org.reflections:reflections:0.9.12")
-            }
-        }
-        val jvmTest by getting
-        val jsMain by getting
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-        // val nativeMain by getting
-        // val nativeTest by getting
+    dependencies {
+        implementation(project(":util:parseutils"))
+        implementation(project(":shake:compiler:lexer"))
+        implementation(project(":shake:compiler:parser"))
+        implementation(project(":shake:compiler:processor"))
+        testImplementation(kotlin("test"))
     }
 }
 

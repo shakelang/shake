@@ -1,3 +1,5 @@
+import io.github.shakelang.shake.conventions.mpp.dependencies
+
 plugins {
     id("io.github.shakelang.shake.conventions.mpp.all")
     id("com.github.node-gradle.node") version "3.1.1"
@@ -13,24 +15,10 @@ repositories {
 }
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":util:parseutils"))
-                implementation(project(":shake:shasambly:shasambly"))
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-        val jvmMain by getting
-        val jvmTest by getting
-        //val jsMain by getting
-        //val jsTest by getting
-        //val nativeMain by getting
-        //val nativeTest by getting
+    dependencies {
+        implementation(project(":util:parseutils"))
+        implementation(project(":shake:shasambly:shasambly"))
+        testImplementation(kotlin("test"))
     }
 }
 

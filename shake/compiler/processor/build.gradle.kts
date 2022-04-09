@@ -1,3 +1,5 @@
+import io.github.shakelang.shake.conventions.mpp.dependencies
+
 group = "io.github.shakelang.shake"
 version = "0.1.0"
 description = "processer"
@@ -18,33 +20,16 @@ repositories {
 }
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":util:parseutils"))
-                implementation(project(":shake:compiler:lexer"))
-                implementation(project(":shake:compiler:parser"))
-            }
+    dependencies {
+        common {
+            implementation(project(":util:parseutils"))
+            implementation(project(":shake:compiler:lexer"))
+            implementation(project(":shake:compiler:parser"))
+            testImplementation(kotlin("test"))
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
+        jvm {
+            implementation("org.reflections:reflections:0.9.12")
         }
-        val jvmMain by getting {
-            dependencies {
-                implementation("org.reflections:reflections:0.9.12")
-            }
-        }
-        val jvmTest by getting
-        val jsMain by getting
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-        // val nativeMain by getting
-        // val nativeTest by getting
     }
 }
 
