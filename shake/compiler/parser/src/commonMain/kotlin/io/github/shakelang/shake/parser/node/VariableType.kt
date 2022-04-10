@@ -40,28 +40,28 @@ class VariableType {
 
     companion object {
         @JvmField
-        var DYNAMIC = VariableType(Type.DYNAMIC)
+        val DYNAMIC = VariableType(Type.DYNAMIC)
         @JvmField
-        var BYTE = VariableType(Type.BYTE)
+        val BYTE = VariableType(Type.BYTE)
         @JvmField
-        var SHORT = VariableType(Type.SHORT)
+        val SHORT = VariableType(Type.SHORT)
         @JvmField
-        var INTEGER = VariableType(Type.INTEGER)
+        val INTEGER = VariableType(Type.INTEGER)
         @JvmField
-        var LONG = VariableType(Type.LONG)
+        val LONG = VariableType(Type.LONG)
         @JvmField
-        var FLOAT = VariableType(Type.FLOAT)
+        val FLOAT = VariableType(Type.FLOAT)
         @JvmField
-        var DOUBLE = VariableType(Type.DOUBLE)
+        val DOUBLE = VariableType(Type.DOUBLE)
         @JvmField
-        var BOOLEAN = VariableType(Type.BOOLEAN)
+        val BOOLEAN = VariableType(Type.BOOLEAN)
         @JvmField
-        var CHAR = VariableType(Type.CHAR)
+        val CHAR = VariableType(Type.CHAR)
         @JvmField
-        var ARRAY = VariableType(Type.ARRAY)
+        val ARRAY = VariableType(Type.ARRAY)
         @JvmField
-        var OBJECT = VariableType(Type.OBJECT)
+        val OBJECT = VariableType(Type.OBJECT)
         @JvmField
-        var VOID = VariableType(Type.VOID)
+        val VOID = VariableType(Type.VOID)
     }
 }

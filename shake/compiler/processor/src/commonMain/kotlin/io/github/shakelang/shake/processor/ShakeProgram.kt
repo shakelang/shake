@@ -1,7 +1,6 @@
 package io.github.shakelang.shake.processor
 
-import io.github.shakelang.shake.parser.node.AccessDescriber
-import io.github.shakelang.shake.parser.node.Tree
+import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.functions.FunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.objects.ClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.VariableDeclarationNode
@@ -56,19 +55,51 @@ open class ShakeProject(
         getPackage(pkg).putFile(file, contents)
     }
     private val classRequirements = mutableListOf<ClassRequirement>()
-    fun getClass(pkg: Array<String>, name: String, then: (ShakeClass) -> Unit) {
-        this.classRequirements.add(ClassRequirement(pkg, name, then))
+    fun getClass(name: String, then: (ShakeClass) -> Unit) {
+        this.classRequirements.add(ClassRequirement(name, then))
     }
     fun getClass(pkg: Array<String>, name: String): ShakeClass? {
         return this.getPackage(pkg).classes[name]
     }
+    fun getClass(clz: String): ShakeClass? {
+        val parts = clz.split(".")
+        val name = parts.last()
+        val pkg = parts.dropLast(1).toTypedArray()
+        return if(pkg.isEmpty()) this.classes[name]
+        else this.getPackage(pkg).classes[name]
+    }
+    fun getType(type: VariableType, then: (ShakeType) -> Unit) {
+        when (type.type) {
+            VariableType.Type.BYTE -> then(ShakeType.Primitives.BYTE)
+            VariableType.Type.SHORT -> then(ShakeType.Primitives.SHORT)
+            VariableType.Type.INTEGER -> then(ShakeType.Primitives.INT)
+            VariableType.Type.LONG -> then(ShakeType.Primitives.LONG)
+            VariableType.Type.FLOAT -> then(ShakeType.Primitives.FLOAT)
+            VariableType.Type.DOUBLE -> then(ShakeType.Primitives.DOUBLE)
+            VariableType.Type.BOOLEAN -> then(ShakeType.Primitives.BOOLEAN)
+            VariableType.Type.CHAR -> then(ShakeType.Primitives.CHAR)
+            VariableType.Type.OBJECT -> {
+                val clz = mutableListOf<String>()
+                var identifier: ValuedNode? = type.subtype!!
+                while(identifier != null) {
+                    if(identifier !is IdentifierNode) throw IllegalArgumentException("Invalid type ${type.subtype}")
+                    clz.add(identifier.name)
+                    identifier = identifier.parent
+                }
+                val clzName = clz.reversed().joinToString(".")
+                this.getClass(clzName) {
+                    then(ShakeType.objectType(it))
+                }
+            }
+        }
+    }
     fun finish() {
         classRequirements.forEach {
-            val cls = this.getClass(it.pkg, it.name)
+            val cls = this.getClass(it.name)
             it.then(cls!!)
         }
     }
-    private class ClassRequirement(val pkg: Array<String>, val name: String, val then: (ShakeClass) -> Unit)
+    private class ClassRequirement(val name: String, val then: (ShakeClass) -> Unit)
 }
 
 open class ShakePackage (
@@ -163,7 +194,7 @@ class ShakeClass (
     companion object {
         fun from(baseProject: ShakeProject, clz: ClassDeclarationNode): ShakeClass {
             val methods = clz.methods.filter { !it.isStatic }.map {
-                ShakeClassMethod(
+                val method = ShakeClassMethod(
                     it.name,
                     "",
                     it.isStatic,
@@ -175,9 +206,14 @@ class ShakeClass (
                     it.access == AccessDescriber.PROTECTED,
                     it.access == AccessDescriber.PUBLIC,
                 )
+                method.lateinitReturnType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
+                method
+                    .lateinitParameterTypes(it.args.map { p -> p.name })
+                    .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
+                method
             }
             val staticMethods = clz.methods.filter { it.isStatic }.map {
-                ShakeClassMethod(
+                val method = ShakeClassMethod(
                     it.name,
                     "",
                     it.isStatic,
@@ -189,9 +225,14 @@ class ShakeClass (
                     it.access == AccessDescriber.PROTECTED,
                     it.access == AccessDescriber.PUBLIC,
                 )
+                method.lateinitReturnType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
+                method
+                    .lateinitParameterTypes(it.args.map { p -> p.name })
+                    .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
+                method
             }
             val fields = clz.fields.filter { !it.isStatic }.map {
-                ShakeClassField(
+                val field = ShakeClassField(
                     it.name,
                     it.isStatic,
                     it.isFinal,
@@ -200,9 +241,11 @@ class ShakeClass (
                     it.access == AccessDescriber.PROTECTED,
                     it.access == AccessDescriber.PUBLIC,
                 )
+                field.lateinitType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
+                field
             }
             val staticFields = clz.fields.filter { it.isStatic }.map {
-                ShakeClassField(
+                val field = ShakeClassField(
                     it.name,
                     it.isStatic,
                     it.isFinal,
@@ -211,9 +254,11 @@ class ShakeClass (
                     it.access == AccessDescriber.PROTECTED,
                     it.access == AccessDescriber.PUBLIC,
                 )
+                field.lateinitType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
+                field
             }
             val constructors = clz.constructors.map {
-                ShakeConstructor(
+                val constr = ShakeConstructor(
                     it.name,
                     "",
                     false,
@@ -221,6 +266,9 @@ class ShakeClass (
                     it.access == AccessDescriber.PROTECTED,
                     it.access == AccessDescriber.PUBLIC,
                 )
+                constr.lateinitParameterTypes(it.args.map { p -> p.name })
+                    .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
+                constr
             }
             /*
             TODO Interface & Super
@@ -303,6 +351,15 @@ abstract class ShakeType (
         val UNSIGNED_LONG = Primitive("unsigned long", PrimitiveType.UNSIGNED_LONG)
         val VOID = Primitive("void", PrimitiveType.VOID)
     }
+
+    companion object {
+        fun array(elementType: ShakeType): ShakeType {
+            return Array("${elementType.name}[]", elementType)
+        }
+        fun objectType(clazz: ShakeClass): ShakeType {
+            return Object(clazz.name, clazz)
+        }
+    }
 }
 
 open class ShakeMethod (
@@ -369,7 +426,12 @@ open class ShakeMethod (
                 node.access == AccessDescriber.PRIVATE,
                 node.access == AccessDescriber.PROTECTED,
                 node.access == AccessDescriber.PUBLIC
-            )
+            ).let {
+                it.lateinitReturnType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
+                it.lateinitParameterTypes(node.args.map { p -> p.name })
+                    .forEachIndexed { i, run -> baseProject.getType(node.args[i].type) { t -> run(t) } }
+                it
+            }
         }
     }
 }
@@ -403,7 +465,10 @@ open class ShakeField (
                 node.access == AccessDescriber.PRIVATE,
                 node.access == AccessDescriber.PROTECTED,
                 node.access == AccessDescriber.PUBLIC
-            )
+            ).let {
+                it.lateinitType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
+                it
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ import kotlin.jvm.JvmOverloads
 class FunctionArgumentNode @JvmOverloads constructor(
     map: PositionMap,
     val name: String,
-    private val type: VariableType = VariableType.DYNAMIC
+    val type: VariableType = VariableType.DYNAMIC
 ) : Node(map) {
 
     override fun toJson(): Map<String, *> =
