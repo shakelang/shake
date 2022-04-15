@@ -15,7 +15,7 @@ import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.*
-import io.github.shakelang.shake.processor.ShakePackage
+import io.github.shakelang.shake.processor.program.ShakePackage
 
 class ShakeJsGenerator : ShakeGenerator<JsOutput>() {
     override fun visitTree(t: ShakeTree): JsTree {

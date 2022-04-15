@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.processor
+package io.github.shakelang.shake.processor.program
 
 import io.github.shakelang.shake.parser.node.ShakeTree
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode

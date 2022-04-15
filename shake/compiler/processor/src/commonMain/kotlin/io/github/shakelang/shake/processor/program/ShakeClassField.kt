@@ -1,24 +1,18 @@
-package io.github.shakelang.shake.processor
+package io.github.shakelang.shake.processor.program
 
-class ShakeClassMethod (
+class ShakeClassField (
     name: String,
-    body: String,
     isStatic: Boolean,
     isFinal: Boolean,
     isAbstract: Boolean,
-    isSynchronized: Boolean,
-    isStrict: Boolean,
     isPrivate: Boolean,
     isProtected: Boolean,
     isPublic: Boolean,
-) : ShakeMethod(
+): ShakeField(
     name,
-    body,
     isStatic,
     isFinal,
     isAbstract,
-    isSynchronized,
-    isStrict,
     isPrivate,
     isProtected,
     isPublic

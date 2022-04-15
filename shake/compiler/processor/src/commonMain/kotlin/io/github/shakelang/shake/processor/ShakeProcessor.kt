@@ -6,6 +6,7 @@ import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputS
 import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.ShakeParser
 import io.github.shakelang.shake.parser.node.*
+import io.github.shakelang.shake.processor.program.ShakeProject
 
 class ShakeProcessorOptions {
     var precalculate: Boolean = true

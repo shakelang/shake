@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.processor
+package io.github.shakelang.shake.processor.program
 
 abstract class ShakeType (
     val name: String,
