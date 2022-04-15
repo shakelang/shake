@@ -2,17 +2,20 @@ package io.github.shakelang.shake.processor.program
 
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import io.github.shakelang.shake.processor.program.code.values.ShakeFieldUsage
+import io.github.shakelang.shake.processor.program.code.ShakeScope
+import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
 
 open class ShakeField (
-    val name: String,
+    override val name: String,
     val isStatic: Boolean,
     val isFinal: Boolean,
     val isAbstract: Boolean,
     val isPrivate: Boolean,
     val isProtected: Boolean,
     val isPublic: Boolean,
-) {
-    lateinit var type: ShakeType
+): ShakeDeclaration {
+    final override lateinit var type: ShakeType
         private set
 
     fun lateinitType(): (ShakeType) -> ShakeType {
@@ -20,6 +23,10 @@ open class ShakeField (
             type = it
             it
         }
+    }
+
+    override fun use(scope: ShakeScope): ShakeUsage {
+        return ShakeFieldUsage(scope, this)
     }
 
     companion object {

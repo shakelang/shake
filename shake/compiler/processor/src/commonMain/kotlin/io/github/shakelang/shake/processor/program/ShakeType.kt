@@ -5,6 +5,8 @@ abstract class ShakeType (
 ) {
     abstract val kind: Kind
 
+    abstract fun compatibleTo(other: ShakeType): Boolean
+
     enum class Kind {
         PRIMITIVE,
         OBJECT,
@@ -31,6 +33,13 @@ abstract class ShakeType (
     ) : ShakeType(name) {
         override val kind: Kind
             get() = Kind.PRIMITIVE
+
+        override fun compatibleTo(other: ShakeType): Boolean {
+            return when (other) {
+                is Primitive -> type == other.type
+                else -> false
+            }
+        }
     }
 
     class Object (
@@ -39,6 +48,10 @@ abstract class ShakeType (
     ) : ShakeType(name) {
         override val kind: Kind
             get() = Kind.OBJECT
+
+        override fun compatibleTo(other: ShakeType): Boolean {
+            return other is Object && clazz.compatibleTo(other.clazz)
+        }
     }
 
     class Array (
@@ -47,6 +60,9 @@ abstract class ShakeType (
     ) : ShakeType(name) {
         override val kind: Kind
             get() = Kind.ARRAY
+        override fun compatibleTo(other: ShakeType): Boolean {
+            return other is Array && elementType.compatibleTo(other.elementType)
+        }
     }
 
     object Primitives {

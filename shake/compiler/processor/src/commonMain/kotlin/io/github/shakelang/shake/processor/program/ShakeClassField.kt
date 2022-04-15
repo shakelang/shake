@@ -1,5 +1,9 @@
 package io.github.shakelang.shake.processor.program
 
+import io.github.shakelang.shake.processor.program.code.values.ShakeFieldUsage
+import io.github.shakelang.shake.processor.program.code.ShakeScope
+import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
+
 class ShakeClassField (
     name: String,
     isStatic: Boolean,
@@ -19,4 +23,8 @@ class ShakeClassField (
 ) {
     lateinit var clazz: ShakeClass
         private set
+
+    override fun use(scope: ShakeScope): ShakeUsage {
+        return ShakeFieldUsage(scope, this)
+    }
 }

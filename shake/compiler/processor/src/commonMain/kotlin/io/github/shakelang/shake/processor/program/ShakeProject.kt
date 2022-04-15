@@ -11,7 +11,7 @@ import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationN
 open class ShakeProject(
     open val subpackages: MutableList<ShakePackage> = mutableListOf(),
     open val classes: MutableMap<String, ShakeClass> = mutableMapOf(),
-    open val functions: MutableMap<String, ShakeMethod> = mutableMapOf(),
+    open val functions: MutableMap<String, ShakeFunction> = mutableMapOf(),
     open val fields: MutableMap<String, ShakeField> = mutableMapOf()
 ) {
 
@@ -34,13 +34,13 @@ open class ShakeProject(
                     if(classes.containsKey(it.name)) {
                         throw Exception("Class ${it.name} already exists")
                     }
-                    classes[it.name] = ShakeClass.from(this, it)
+                    classes[it.name] = ShakeClass.from(this, null, it)
                 }
                 is ShakeFunctionDeclarationNode -> {
                     if(functions.containsKey(it.name)) {
                         throw Exception("Function ${it.name} already exists")
                     }
-                    functions[it.name] = ShakeMethod.from(this, it)
+                    functions[it.name] = ShakeFunction.from(this, it)
                 }
                 is ShakeVariableDeclarationNode -> {
                     if(fields.containsKey(it.name)) {
@@ -101,6 +101,7 @@ open class ShakeProject(
             val cls = this.getClass(it.name)
             it.then(cls!!)
         }
+        classRequirements.clear()
     }
     private class ClassRequirement(val name: String, val then: (ShakeClass) -> Unit)
 }
