@@ -7,48 +7,48 @@ import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import io.github.shakelang.shake.parser.node.*
-import io.github.shakelang.shake.parser.node.variables.VariableUsageNode
-import io.github.shakelang.shake.parser.node.objects.ClassConstructionNode
-import io.github.shakelang.shake.parser.node.functions.FunctionCallNode
-import io.github.shakelang.shake.parser.node.objects.ClassDeclarationNode
-import io.github.shakelang.shake.parser.node.variables.VariableDeclarationNode
-import io.github.shakelang.shake.parser.node.functions.FunctionDeclarationNode
-import io.github.shakelang.shake.parser.node.objects.ConstructorDeclarationNode
-import io.github.shakelang.shake.parser.node.functions.FunctionArgumentNode
-import io.github.shakelang.shake.parser.node.variables.VariableAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.VariableAddAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.VariableSubAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.VariableMulAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.VariableDivAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.VariableModAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.VariablePowAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.VariableIncreaseNode
-import io.github.shakelang.shake.parser.node.variables.VariableDecreaseNode
-import io.github.shakelang.shake.parser.node.loops.ForNode
-import io.github.shakelang.shake.parser.node.loops.DoWhileNode
-import io.github.shakelang.shake.parser.node.loops.WhileNode
-import io.github.shakelang.shake.parser.node.logical.LogicalTrueNode
-import io.github.shakelang.shake.parser.node.logical.LogicalFalseNode
-import io.github.shakelang.shake.parser.node.factor.IntegerNode
-import io.github.shakelang.shake.parser.node.factor.StringNode
-import io.github.shakelang.shake.parser.node.factor.CharacterNode
-import io.github.shakelang.shake.parser.node.CastNode.CastTarget
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
+import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import io.github.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableAssignmentNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableAddAssignmentNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableSubAssignmentNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableMulAssignmentNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableDivAssignmentNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableModAssignmentNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariablePowAssignmentNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableDecreaseNode
+import io.github.shakelang.shake.parser.node.loops.ShakeForNode
+import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
+import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalTrueNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalFalseNode
+import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import io.github.shakelang.shake.parser.node.factor.ShakeStringNode
+import io.github.shakelang.shake.parser.node.factor.ShakeCharacterNode
+import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
 import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.DoubleNode
-import io.github.shakelang.shake.parser.node.functions.ReturnNode
-import io.github.shakelang.shake.parser.node.logical.LogicalOrNode
-import io.github.shakelang.shake.parser.node.logical.LogicalXOrNode
-import io.github.shakelang.shake.parser.node.logical.LogicalAndNode
-import io.github.shakelang.shake.parser.node.logical.LogicalEqEqualsNode
-import io.github.shakelang.shake.parser.node.logical.LogicalBiggerEqualsNode
-import io.github.shakelang.shake.parser.node.logical.LogicalSmallerEqualsNode
-import io.github.shakelang.shake.parser.node.logical.LogicalBiggerNode
-import io.github.shakelang.shake.parser.node.logical.LogicalSmallerNode
+import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
+import io.github.shakelang.shake.parser.node.functions.ShakeReturnNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalOrNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalXOrNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalAndNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalEqEqualsNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalBiggerEqualsNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalSmallerEqualsNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalBiggerNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalSmallerNode
 
-class Parser(val input: ShakeTokenInputStream) {
+class ShakeParser(val input: ShakeTokenInputStream) {
     private val map: PositionMap = input.map
-    fun parse(): Tree {
-        if (!input.hasNext()) return Tree(map, arrayOf())
+    fun parse(): ShakeTree {
+        if (!input.hasNext()) return ShakeTree(map, arrayOf())
         val result = prog()
         if (input.hasNext()) throw ParserError("Input did not end")
         return result
@@ -56,8 +56,8 @@ class Parser(val input: ShakeTokenInputStream) {
 
     // ****************************************************************************
     // Basic Program
-    private fun prog(): Tree {
-        val nodes: MutableList<Node> = ArrayList()
+    private fun prog(): ShakeTree {
+        val nodes: MutableList<ShakeNode> = ArrayList()
         var position = -2
         skipSeparators()
         // TODO Require Separator
@@ -76,10 +76,10 @@ class Parser(val input: ShakeTokenInputStream) {
             // if(this.skipSeparators() > 0) separator = true;
             skipSeparators()
         }
-        return Tree(map, nodes)
+        return ShakeTree(map, nodes)
     }
 
-    private fun operation(): Node? {
+    private fun operation(): ShakeNode? {
         val token = input.peekType()
         if (token == ShakeTokenType.KEYWORD_WHILE) return whileLoop()
         if (token == ShakeTokenType.KEYWORD_DO) return doWhileLoop()
@@ -89,7 +89,7 @@ class Parser(val input: ShakeTokenInputStream) {
         return if (token == ShakeTokenType.KEYWORD_IMPORT) parseImport() else valuedOperation()
     }
 
-    private fun valuedOperation(): ValuedNode? {
+    private fun valuedOperation(): ShakeValuedNode? {
         val token = input.peekType()
         if (token == ShakeTokenType.KEYWORD_FUNCTION
             || token == ShakeTokenType.KEYWORD_VAR
@@ -142,24 +142,24 @@ class Parser(val input: ShakeTokenInputStream) {
     }
 
     private fun parseDeclaration(
-        access: AccessDescriber,
+        access: ShakeAccessDescriber,
         isInClass: Boolean,
         isStatic: Boolean,
         isFinal: Boolean
-    ): ValuedNode {
+    ): ShakeValuedNode {
         val input = input
         return when (input.peekType()) {
             ShakeTokenType.KEYWORD_PUBLIC -> {
                 input.skip()
-                parseDeclaration(AccessDescriber.PUBLIC, isInClass, isStatic, isFinal)
+                parseDeclaration(ShakeAccessDescriber.PUBLIC, isInClass, isStatic, isFinal)
             }
             ShakeTokenType.KEYWORD_PROTECTED -> {
                 input.skip()
-                parseDeclaration(AccessDescriber.PROTECTED, isInClass, isStatic, isFinal)
+                parseDeclaration(ShakeAccessDescriber.PROTECTED, isInClass, isStatic, isFinal)
             }
             ShakeTokenType.KEYWORD_PRIVATE -> {
                 input.skip()
-                parseDeclaration(AccessDescriber.PRIVATE, isInClass, isStatic, isFinal)
+                parseDeclaration(ShakeAccessDescriber.PRIVATE, isInClass, isStatic, isFinal)
             }
             ShakeTokenType.KEYWORD_STATIC -> {
                 if (!isInClass) throw ParserError("Static keyword is only for objects in classes")
@@ -184,14 +184,14 @@ class Parser(val input: ShakeTokenInputStream) {
         }
     }
 
-    private fun parseDeclaration(isInClass: Boolean = false): ValuedNode {
-        return parseDeclaration(AccessDescriber.PACKAGE, isInClass, isStatic = false, isFinal = false)
+    private fun parseDeclaration(isInClass: Boolean = false): ShakeValuedNode {
+        return parseDeclaration(ShakeAccessDescriber.PACKAGE, isInClass, isStatic = false, isFinal = false)
     }
 
-    private fun parseIdentifier(parent: ValuedNode?): ValuedNode {
+    private fun parseIdentifier(parent: ShakeValuedNode?): ShakeValuedNode {
         if (input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
-        val identifierNode = IdentifierNode(map, parent, expectNotNull(input.actualValue), input.actualStart)
-        var ret: ValuedNode? = null
+        val identifierNode = ShakeIdentifierNode(map, parent, expectNotNull(input.actualValue), input.actualStart)
+        var ret: ShakeValuedNode? = null
 
         // Assignments
         if (input.hasNext()) {
@@ -199,8 +199,8 @@ class Parser(val input: ShakeTokenInputStream) {
                 ShakeTokenType.LPAREN -> ret = functionCall(identifierNode)
                 ShakeTokenType.ASSIGN -> ret = varAssignment(identifierNode)
                 ShakeTokenType.IDENTIFIER -> ret = this.cStyleDeclaration(
-                    VariableType(identifierNode),
-                    AccessDescriber.PRIVATE, isInClass = false, isStatic = false, isFinal = false
+                    ShakeVariableType(identifierNode),
+                    ShakeAccessDescriber.PRIVATE, isInClass = false, isStatic = false, isFinal = false
                 )
                 ShakeTokenType.ADD_ASSIGN -> ret = varAddAssignment(identifierNode)
                 ShakeTokenType.SUB_ASSIGN -> ret = varSubAssignment(identifierNode)
@@ -215,24 +215,24 @@ class Parser(val input: ShakeTokenInputStream) {
             if (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT) {
                 input.skip()
                 input.skipIgnorable()
-                return parseIdentifier(ret ?: VariableUsageNode(map, identifierNode))
+                return parseIdentifier(ret ?: ShakeVariableUsageNode(map, identifierNode))
             }
             if (ret != null) return ret
         }
-        return VariableUsageNode(map, identifierNode)
+        return ShakeVariableUsageNode(map, identifierNode)
     }
 
-    private fun parseClassConstruction(): ClassConstructionNode {
+    private fun parseClassConstruction(): ShakeClassConstructionNode {
         input.skip()
         val newKeywordPosition = input.actualStart
         input.skipIgnorable()
         val start = input.actualStart
-        val node = parseIdentifier(null) as? FunctionCallNode
+        val node = parseIdentifier(null) as? ShakeFunctionCallNode
             ?: throw ParserError(
                 "Expecting a call after keyword new",
                 start, input.actualEnd
             )
-        return ClassConstructionNode(
+        return ShakeClassConstructionNode(
             map, node.function, node.args,
             newKeywordPosition
         )
@@ -240,51 +240,51 @@ class Parser(val input: ShakeTokenInputStream) {
 
     // ****************************************************************************
     // Imports
-    private fun parseImport(): ImportNode {
+    private fun parseImport(): ShakeImportNode {
         if (!input.hasNext() || input.peekType() != ShakeTokenType.KEYWORD_IMPORT) throw ParserError("Expecting import keyword")
         val list = mutableListOf<String>()
         do {
             input.skip()
             if (input.skipIgnorable().nextType() == ShakeTokenType.MUL) {
-                list.add(ImportNode.EVERYTHING)
+                list.add(ShakeImportNode.EVERYTHING)
                 break
             }
             if (input.actualType != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
             list.add(expectNotNull(input.actualValue))
         } while (input.hasNext() && input.skipIgnorable().peekType() == ShakeTokenType.DOT)
-        return ImportNode(map, list.toTypedArray())
+        return ShakeImportNode(map, list.toTypedArray())
     }
 
     // ****************************************************************************
     // Classes
     private fun classDeclaration(
-        access: AccessDescriber,
+        access: ShakeAccessDescriber,
         isInClass: Boolean,
         isStatic: Boolean,
         isFinal: Boolean
-    ): ClassDeclarationNode {
+    ): ShakeClassDeclarationNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_CLASS) throw ParserError("Expecting class keyword")
         if (!input.hasNext() || input.peekType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
         val name = input.nextValue()
-        val fields: MutableList<VariableDeclarationNode> = ArrayList()
-        val methods: MutableList<FunctionDeclarationNode> = ArrayList()
-        val classes: MutableList<ClassDeclarationNode> = ArrayList()
-        val constructors: MutableList<ConstructorDeclarationNode> = ArrayList()
+        val fields: MutableList<ShakeVariableDeclarationNode> = ArrayList()
+        val methods: MutableList<ShakeFunctionDeclarationNode> = ArrayList()
+        val classes: MutableList<ShakeClassDeclarationNode> = ArrayList()
+        val constructors: MutableList<ShakeConstructorDeclarationNode> = ArrayList()
 
         // TODO: extends, implements
         if (input.nextType() != ShakeTokenType.LCURL) throw ParserError("Expecting class-body")
         while (input.hasNext() && input.peekType() != ShakeTokenType.RCURL) {
             skipSeparators()
             when (val node = parseDeclaration(true)) {
-                is ClassDeclarationNode -> classes.add(node)
-                is FunctionDeclarationNode -> methods.add(node)
-                is VariableDeclarationNode -> fields.add(node)
-                is ConstructorDeclarationNode -> constructors.add(node)
+                is ShakeClassDeclarationNode -> classes.add(node)
+                is ShakeFunctionDeclarationNode -> methods.add(node)
+                is ShakeVariableDeclarationNode -> fields.add(node)
+                is ShakeConstructorDeclarationNode -> constructors.add(node)
             }
             skipSeparators()
         }
         if (input.nextType() != ShakeTokenType.RCURL) throw ParserError("Expecting class-body to end")
-        return ClassDeclarationNode(
+        return ShakeClassDeclarationNode(
             map, name!!, fields, methods, classes, constructors, access, isInClass,
             isStatic, isFinal
         )
@@ -293,33 +293,33 @@ class Parser(val input: ShakeTokenInputStream) {
     // ****************************************************************************
     // Functions
     private fun functionDeclaration(
-        access: AccessDescriber,
+        access: ShakeAccessDescriber,
         isInClass: Boolean,
         isStatic: Boolean,
         isFinal: Boolean
-    ): FunctionDeclarationNode {
+    ): ShakeFunctionDeclarationNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_FUNCTION) throw ParserError("Expecting function keyword")
         if (!input.hasNext() || input.peekType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
         val name = input.nextValue()!!
         val args = parseFunctionArguments()
         val body = parseBodyStatement()
-        return FunctionDeclarationNode(map, name, body, args, access, isInClass, isStatic, isFinal)
+        return ShakeFunctionDeclarationNode(map, name, body, args, access, isInClass, isStatic, isFinal)
     }
 
     private fun cStyleFunctionDeclaration(
-        type: VariableType, identifier: String?, access: AccessDescriber,
+        type: ShakeVariableType, identifier: String?, access: ShakeAccessDescriber,
         isInClass: Boolean, isStatic: Boolean, isFinal: Boolean
-    ): FunctionDeclarationNode {
+    ): ShakeFunctionDeclarationNode {
         val args = parseFunctionArguments()
         val body = parseBodyStatement()
-        return FunctionDeclarationNode(
+        return ShakeFunctionDeclarationNode(
             map, identifier!!, body, args, type,
             access, isInClass, isStatic, isFinal
         )
     }
 
-    private fun parseFunctionArguments(): Array<FunctionArgumentNode> {
-        val args = ArrayList<FunctionArgumentNode>()
+    private fun parseFunctionArguments(): Array<ShakeFunctionArgumentNode> {
+        val args = ArrayList<ShakeFunctionArgumentNode>()
         if (!input.hasNext() || input.nextType() != ShakeTokenType.LPAREN) throw ParserError("Expecting '('")
         if (input.hasNext() && input.peekType() != ShakeTokenType.RPAREN) {
             args.add(parseArgument())
@@ -334,8 +334,8 @@ class Parser(val input: ShakeTokenInputStream) {
         return args.toTypedArray()
     }
 
-    private fun functionCall(function: ValuedNode): FunctionCallNode {
-        val args: MutableList<ValuedNode> = ArrayList()
+    private fun functionCall(function: ShakeValuedNode): ShakeFunctionCallNode {
+        val args: MutableList<ShakeValuedNode> = ArrayList()
         if (!input.hasNext() || input.nextType() != ShakeTokenType.LPAREN) throw ParserError("Expecting '('")
         if (input.peekType() != ShakeTokenType.RPAREN) {
             args.add(expectNotNull(valuedOperation()))
@@ -346,29 +346,29 @@ class Parser(val input: ShakeTokenInputStream) {
             }
         }
         if (!input.hasNext() || input.nextType() != ShakeTokenType.RPAREN) throw ParserError("Expecting ')'")
-        return FunctionCallNode(map, function, args.toTypedArray())
+        return ShakeFunctionCallNode(map, function, args.toTypedArray())
     }
 
-    private fun parseArgument(): FunctionArgumentNode {
+    private fun parseArgument(): ShakeFunctionArgumentNode {
         val next = input.nextType()
         input.skipIgnorable()
         var peek: ShakeTokenType
         if (next == ShakeTokenType.IDENTIFIER && (!input.hasNext() || input.peekType()
                 .also { peek = it } != ShakeTokenType.IDENTIFIER && (peek != ShakeTokenType.DOT))
-        ) return FunctionArgumentNode(map, input.actualValue!!)
-        val type: VariableType
+        ) return ShakeFunctionArgumentNode(map, input.actualValue!!)
+        val type: ShakeVariableType
         when (next) {
-            ShakeTokenType.KEYWORD_DYNAMIC -> type = VariableType.DYNAMIC
-            ShakeTokenType.KEYWORD_BOOLEAN -> type = VariableType.BOOLEAN
-            ShakeTokenType.KEYWORD_CHAR -> type = VariableType.CHAR
-            ShakeTokenType.KEYWORD_BYTE -> type = VariableType.BYTE
-            ShakeTokenType.KEYWORD_SHORT -> type = VariableType.SHORT
-            ShakeTokenType.KEYWORD_INT -> type = VariableType.INTEGER
-            ShakeTokenType.KEYWORD_LONG -> type = VariableType.LONG
-            ShakeTokenType.KEYWORD_FLOAT -> type = VariableType.FLOAT
-            ShakeTokenType.KEYWORD_DOUBLE -> type = VariableType.DOUBLE
+            ShakeTokenType.KEYWORD_DYNAMIC -> type = ShakeVariableType.DYNAMIC
+            ShakeTokenType.KEYWORD_BOOLEAN -> type = ShakeVariableType.BOOLEAN
+            ShakeTokenType.KEYWORD_CHAR -> type = ShakeVariableType.CHAR
+            ShakeTokenType.KEYWORD_BYTE -> type = ShakeVariableType.BYTE
+            ShakeTokenType.KEYWORD_SHORT -> type = ShakeVariableType.SHORT
+            ShakeTokenType.KEYWORD_INT -> type = ShakeVariableType.INTEGER
+            ShakeTokenType.KEYWORD_LONG -> type = ShakeVariableType.LONG
+            ShakeTokenType.KEYWORD_FLOAT -> type = ShakeVariableType.FLOAT
+            ShakeTokenType.KEYWORD_DOUBLE -> type = ShakeVariableType.DOUBLE
             ShakeTokenType.IDENTIFIER -> {
-                var node = IdentifierNode(
+                var node = ShakeIdentifierNode(
                     map, input.actualValue!!,
                     input.position
                 )
@@ -376,30 +376,30 @@ class Parser(val input: ShakeTokenInputStream) {
                     input.skip()
                     input.skipIgnorable()
                     if (input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
-                    node = IdentifierNode(map, input.actualValue!!, input.actualStart)
+                    node = ShakeIdentifierNode(map, input.actualValue!!, input.actualStart)
                 }
-                type = VariableType(node)
+                type = ShakeVariableType(node)
             }
             else -> throw ParserError("Unknown variable-type token: " + next.name)
         }
         return if (input.hasNext() && input.peekType() == ShakeTokenType.IDENTIFIER) {
             val identifier = input.nextValue()
             input.skipIgnorable()
-            FunctionArgumentNode(map, identifier!!, type)
+            ShakeFunctionArgumentNode(map, identifier!!, type)
         } else throw ParserError("Expecting identifier")
     }
 
-    private fun returnStatement(): ReturnNode {
+    private fun returnStatement(): ShakeReturnNode {
         input.skip()
-        return ReturnNode(map, expectNotNull(valuedOperation()))
+        return ShakeReturnNode(map, expectNotNull(valuedOperation()))
     }
 
     private fun constructorDeclaration(
-        access: AccessDescriber,
+        access: ShakeAccessDescriber,
         isInClass: Boolean,
         isStatic: Boolean,
         isFinal: Boolean
-    ): ConstructorDeclarationNode {
+    ): ShakeConstructorDeclarationNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_CONSTRUCTOR) throw ParserError("Expecting function keyword")
         if (!isInClass) throw ParserError("A constructor must be inside of a class")
         if (isFinal) throw ParserError("A constructor must not be final")
@@ -407,76 +407,76 @@ class Parser(val input: ShakeTokenInputStream) {
         val name = if (input.skipIgnorable().peekType() == ShakeTokenType.IDENTIFIER) input.nextValue() else null
         val args = parseFunctionArguments()
         val body = parseBodyStatement()
-        return ConstructorDeclarationNode(map, name, body, args, access)
+        return ShakeConstructorDeclarationNode(map, name, body, args, access)
     }
 
     // ****************************************************************************
     // Variables
-    private fun varAssignment(variable: ValuedNode): VariableAssignmentNode {
+    private fun varAssignment(variable: ShakeValuedNode): ShakeVariableAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.ASSIGN) throw ParserError("Expecting '='")
         val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
-        return VariableAssignmentNode(map, variable, value as ValuedNode, operatorPosition)
+        return ShakeVariableAssignmentNode(map, variable, value as ShakeValuedNode, operatorPosition)
     }
 
-    private fun varAddAssignment(variable: ValuedNode): VariableAddAssignmentNode {
+    private fun varAddAssignment(variable: ShakeValuedNode): ShakeVariableAddAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.ADD_ASSIGN) throw ParserError("Expecting '+='")
         val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
-        return VariableAddAssignmentNode(map, variable, value, operatorPosition)
+        return ShakeVariableAddAssignmentNode(map, variable, value, operatorPosition)
     }
 
-    private fun varSubAssignment(variable: ValuedNode): VariableSubAssignmentNode {
+    private fun varSubAssignment(variable: ShakeValuedNode): ShakeVariableSubAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.SUB_ASSIGN) throw ParserError("Expecting '-='")
         val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
-        return VariableSubAssignmentNode(map, variable, value, operatorPosition)
+        return ShakeVariableSubAssignmentNode(map, variable, value, operatorPosition)
     }
 
-    private fun varMulAssignment(variable: ValuedNode): VariableMulAssignmentNode {
+    private fun varMulAssignment(variable: ShakeValuedNode): ShakeVariableMulAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.MUL_ASSIGN) throw ParserError("Expecting '*='")
         val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
-        return VariableMulAssignmentNode(map, variable, value, operatorPosition)
+        return ShakeVariableMulAssignmentNode(map, variable, value, operatorPosition)
     }
 
-    private fun varDivAssignment(variable: ValuedNode): VariableDivAssignmentNode {
+    private fun varDivAssignment(variable: ShakeValuedNode): ShakeVariableDivAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.DIV_ASSIGN) throw ParserError("Expecting '/='")
         val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
-        return VariableDivAssignmentNode(map, variable, value, operatorPosition)
+        return ShakeVariableDivAssignmentNode(map, variable, value, operatorPosition)
     }
 
-    private fun varModAssignment(variable: ValuedNode): VariableModAssignmentNode {
+    private fun varModAssignment(variable: ShakeValuedNode): ShakeVariableModAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.MOD_ASSIGN) throw ParserError("Expecting '%='")
         val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
-        return VariableModAssignmentNode(map, variable, value, operatorPosition)
+        return ShakeVariableModAssignmentNode(map, variable, value, operatorPosition)
     }
 
-    private fun varPowAssignment(variable: ValuedNode): VariablePowAssignmentNode {
+    private fun varPowAssignment(variable: ShakeValuedNode): ShakeVariablePowAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.POW_ASSIGN) throw ParserError("Expecting '**='")
         val operatorPosition = input.actualStart
         val value = expectNotNull(operation())
-        return VariablePowAssignmentNode(map, variable, value, operatorPosition)
+        return ShakeVariablePowAssignmentNode(map, variable, value, operatorPosition)
     }
 
-    private fun varIncrease(variable: ValuedNode): VariableIncreaseNode {
+    private fun varIncrease(variable: ShakeValuedNode): ShakeVariableIncreaseNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.INCR) throw ParserError("Expecting '++'")
-        return VariableIncreaseNode(map, variable, input.actualStart)
+        return ShakeVariableIncreaseNode(map, variable, input.actualStart)
     }
 
-    private fun varDecrease(variable: ValuedNode): VariableDecreaseNode {
+    private fun varDecrease(variable: ShakeValuedNode): ShakeVariableDecreaseNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.DECR) throw ParserError("Expecting '--'")
-        return VariableDecreaseNode(map, variable, input.actualStart)
+        return ShakeVariableDecreaseNode(map, variable, input.actualStart)
     }
 
     private fun varDeclaration1(
-        access: AccessDescriber,
+        access: ShakeAccessDescriber,
         isInClass: Boolean,
         isStatic: Boolean,
         isFinal: Boolean
-    ): VariableDeclarationNode {
+    ): ShakeVariableDeclarationNode {
         var final = isFinal
         if (!input.hasNext()) throw ParserError("Expecting var or const keyword")
         if (input.nextType() == ShakeTokenType.KEYWORD_CONST) {
@@ -489,16 +489,16 @@ class Parser(val input: ShakeTokenInputStream) {
         val identifier = expectNotNull(input.nextValue())
         val pos = input.actualStart
         return if (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.ASSIGN) {
-            VariableDeclarationNode(
-                map, identifier, VariableType.DYNAMIC,
-                varAssignment(IdentifierNode(map, identifier, pos)),
+            ShakeVariableDeclarationNode(
+                map, identifier, ShakeVariableType.DYNAMIC,
+                varAssignment(ShakeIdentifierNode(map, identifier, pos)),
                 access, isInClass, isStatic, final
             )
         } else {
-            VariableDeclarationNode(
+            ShakeVariableDeclarationNode(
                 map,
                 identifier,
-                VariableType.DYNAMIC,
+                ShakeVariableType.DYNAMIC,
                 null,
                 access,
                 isInClass,
@@ -509,21 +509,21 @@ class Parser(val input: ShakeTokenInputStream) {
     }
 
     private fun cStyleDeclaration(
-        access: AccessDescriber,
+        access: ShakeAccessDescriber,
         isInClass: Boolean,
         isStatic: Boolean,
         isFinal: Boolean
-    ): ValuedNode {
+    ): ShakeValuedNode {
         val t = input.nextType()
         val declarationNode =
-            if (t == ShakeTokenType.KEYWORD_DYNAMIC) VariableType.DYNAMIC else (if (t == ShakeTokenType.KEYWORD_BYTE) VariableType.BYTE else if (t == ShakeTokenType.KEYWORD_SHORT) VariableType.SHORT else if (t == ShakeTokenType.KEYWORD_INT) VariableType.INTEGER else if (t == ShakeTokenType.KEYWORD_LONG) VariableType.LONG else if (t == ShakeTokenType.KEYWORD_FLOAT) VariableType.FLOAT else if (t == ShakeTokenType.KEYWORD_DOUBLE) VariableType.DOUBLE else if (t == ShakeTokenType.KEYWORD_BOOLEAN) VariableType.BOOLEAN else if (t == ShakeTokenType.KEYWORD_CHAR) VariableType.CHAR else if (t == ShakeTokenType.KEYWORD_VOID) VariableType.VOID else if (t == ShakeTokenType.IDENTIFIER) VariableType.OBJECT else null)!!
+            if (t == ShakeTokenType.KEYWORD_DYNAMIC) ShakeVariableType.DYNAMIC else (if (t == ShakeTokenType.KEYWORD_BYTE) ShakeVariableType.BYTE else if (t == ShakeTokenType.KEYWORD_SHORT) ShakeVariableType.SHORT else if (t == ShakeTokenType.KEYWORD_INT) ShakeVariableType.INTEGER else if (t == ShakeTokenType.KEYWORD_LONG) ShakeVariableType.LONG else if (t == ShakeTokenType.KEYWORD_FLOAT) ShakeVariableType.FLOAT else if (t == ShakeTokenType.KEYWORD_DOUBLE) ShakeVariableType.DOUBLE else if (t == ShakeTokenType.KEYWORD_BOOLEAN) ShakeVariableType.BOOLEAN else if (t == ShakeTokenType.KEYWORD_CHAR) ShakeVariableType.CHAR else if (t == ShakeTokenType.KEYWORD_VOID) ShakeVariableType.VOID else if (t == ShakeTokenType.IDENTIFIER) ShakeVariableType.OBJECT else null)!!
         return cStyleDeclaration(declarationNode, access, isInClass, isStatic, isFinal)
     }
 
     private fun cStyleDeclaration(
-        type: VariableType, access: AccessDescriber, isInClass: Boolean, isStatic: Boolean,
+        type: ShakeVariableType, access: ShakeAccessDescriber, isInClass: Boolean, isStatic: Boolean,
         isFinal: Boolean
-    ): ValuedNode {
+    ): ShakeValuedNode {
 
         // TODO error on void variable type
         if (!input.skipIgnorable()
@@ -533,9 +533,9 @@ class Parser(val input: ShakeTokenInputStream) {
         val position = input.actualStart
         val hasNext = input.skipIgnorable().hasNext()
         return if (hasNext && input.peekType() == ShakeTokenType.ASSIGN) {
-            VariableDeclarationNode(
+            ShakeVariableDeclarationNode(
                 map, identifier!!, type,
-                varAssignment(IdentifierNode(map, identifier, position)), access, isInClass, isStatic, isFinal
+                varAssignment(ShakeIdentifierNode(map, identifier, position)), access, isInClass, isStatic, isFinal
             )
         } else if (hasNext && input.peekType() == ShakeTokenType.LPAREN) cStyleFunctionDeclaration(
             type,
@@ -544,7 +544,7 @@ class Parser(val input: ShakeTokenInputStream) {
             isInClass,
             isStatic,
             isFinal
-        ) else VariableDeclarationNode(
+        ) else ShakeVariableDeclarationNode(
             map, input.actualValue!!, type, null, access, isInClass,
             isStatic, isFinal
         )
@@ -552,7 +552,7 @@ class Parser(val input: ShakeTokenInputStream) {
 
     // ****************************************************************************
     // Loops & If
-    private fun forLoop(): Node {
+    private fun forLoop(): ShakeNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_FOR) throw ParserError("Expecting for keyword")
         if (!input.hasNext() || input.nextType() != ShakeTokenType.LPAREN) throw ParserError("Expecting '('")
         val declaration = operation()
@@ -562,26 +562,26 @@ class Parser(val input: ShakeTokenInputStream) {
         val round = operation()
         if (!input.hasNext() || input.nextType() != ShakeTokenType.RPAREN) throw ParserError("Expecting ')'")
         val body = parseBodyStatement()
-        return ForNode(map, body, declaration!!, expectNotNull(condition), expectNotNull(round))
+        return ShakeForNode(map, body, declaration!!, expectNotNull(condition), expectNotNull(round))
     }
 
-    private fun doWhileLoop(): Node {
+    private fun doWhileLoop(): ShakeNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_DO) throw ParserError("Expecting do keyword")
         val body = parseBodyStatement()
         skipSeparators()
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_WHILE) throw ParserError("Expecting while keyword")
         val condition = parseConditionStatement()
-        return DoWhileNode(map, body, condition)
+        return ShakeDoWhileNode(map, body, condition)
     }
 
-    private fun whileLoop(): Node {
+    private fun whileLoop(): ShakeNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_WHILE) throw ParserError("Expecting while keyword")
         val condition = parseConditionStatement()
         val body = parseBodyStatement()
-        return WhileNode(map, body, condition)
+        return ShakeWhileNode(map, body, condition)
     }
 
-    private fun ifStatement(): Node {
+    private fun ifStatement(): ShakeNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_IF) throw ParserError("Expecting if keyword")
         val condition = parseConditionStatement()
         val body = parseBodyStatement()
@@ -590,12 +590,12 @@ class Parser(val input: ShakeTokenInputStream) {
             if (!separator) throw ParserError("Awaited separator at this point")
             input.skip()
             val elseBody = parseBodyStatement()
-            return IfNode(map, body, elseBody, condition)
+            return ShakeIfNode(map, body, elseBody, condition)
         }
-        return IfNode(map, body, condition)
+        return ShakeIfNode(map, body, condition)
     }
 
-    private fun parseConditionStatement(): ValuedNode {
+    private fun parseConditionStatement(): ShakeValuedNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.LPAREN) throw ParserError(
             "Expecting '('"
         )
@@ -606,7 +606,7 @@ class Parser(val input: ShakeTokenInputStream) {
         return condition
     }
 
-    private fun parseBodyStatement(): Tree {
+    private fun parseBodyStatement(): ShakeTree {
         skipSeparators()
         return if (input.peekType() == ShakeTokenType.LCURL) {
             input.skip()
@@ -616,7 +616,7 @@ class Parser(val input: ShakeTokenInputStream) {
             )
             body
         } else {
-            Tree(
+            ShakeTree(
                 map,
                 arrayOf(expectNotNull(operation()))
             )
@@ -626,7 +626,7 @@ class Parser(val input: ShakeTokenInputStream) {
     // ****************************************************************************
     // Statements
     // (Factor)
-    private fun factor(): ValuedNode {
+    private fun factor(): ShakeValuedNode {
         val token = input.peekType()
         if (token == ShakeTokenType.LPAREN) {
             input.skip()
@@ -636,19 +636,19 @@ class Parser(val input: ShakeTokenInputStream) {
         }
         if (token == ShakeTokenType.KEYWORD_TRUE) {
             input.skip()
-            return LogicalTrueNode(map)
+            return ShakeLogicalTrueNode(map)
         }
         if (token == ShakeTokenType.KEYWORD_FALSE) {
             input.skip()
-            return LogicalFalseNode(map)
+            return ShakeLogicalFalseNode(map)
         }
         if (token == ShakeTokenType.INTEGER) {
             input.skip()
-            return IntegerNode(map, input.actualValue!!.toInt())
+            return ShakeIntegerNode(map, input.actualValue!!.toInt())
         }
         if (token == ShakeTokenType.DOUBLE) {
             input.skip()
-            return DoubleNode(map, input.actualValue!!.toDouble())
+            return ShakeDoubleNode(map, input.actualValue!!.toDouble())
         }
         if (token == ShakeTokenType.IDENTIFIER) {
             return parseIdentifier(null)
@@ -658,25 +658,25 @@ class Parser(val input: ShakeTokenInputStream) {
         }
         if (token == ShakeTokenType.ADD) {
             input.skip()
-            return AddNode(map, 0, factor(), input.position)
+            return ShakeAddNode(map, 0, factor(), input.position)
         }
         if (token == ShakeTokenType.SUB) {
             input.skip()
-            return SubNode(map, 0, factor(), input.position)
+            return ShakeSubNode(map, 0, factor(), input.position)
         }
         if (token == ShakeTokenType.STRING) {
             input.skip()
-            return StringNode(map, parseString(input.actualValue!!))
+            return ShakeStringNode(map, parseString(input.actualValue!!))
         }
         if (token == ShakeTokenType.CHARACTER) {
             input.skip()
-            return CharacterNode(map, parseString(input.actualValue!!)[0])
+            return ShakeCharacterNode(map, parseString(input.actualValue!!)[0])
         }
         throw ParserError(input.toString())
     }
 
     // Casting
-    private fun cast(): ValuedNode {
+    private fun cast(): ShakeValuedNode {
         var result = factor()
         while (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.KEYWORD_AS) {
             input.skip()
@@ -715,25 +715,25 @@ class Parser(val input: ShakeTokenInputStream) {
                     input.skip()
                 }
                 ShakeTokenType.IDENTIFIER -> {
-                    var node: IdentifierNode? = null
+                    var node: ShakeIdentifierNode? = null
                     do {
                         if (node != null) input.skip()
                         if (!input.skipIgnorable()
                                 .hasNext() && input.nextType() != ShakeTokenType.IDENTIFIER
                         ) throw ParserError("Expecting identifier")
-                        node = IdentifierNode(map, node, input.actualValue!!, input.actualStart)
+                        node = ShakeIdentifierNode(map, node, input.actualValue!!, input.actualStart)
                     } while (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT)
                     target = CastTarget(node)
                 }
                 else -> throw ParserError("Expecting cast-target")
             }
-            result = CastNode(map, result, target)
+            result = ShakeCastNode(map, result, target)
         }
         return result
     }
 
     // (Calculations)
-    private fun expr(): ValuedNode {
+    private fun expr(): ShakeValuedNode {
         var result = term()
         var tmpType: ShakeTokenType = ShakeTokenType.NONE
         while (input.hasNext() &&
@@ -742,15 +742,15 @@ class Parser(val input: ShakeTokenInputStream) {
             input.skip()
             val pos = input.actualStart
             result = if (tmpType == ShakeTokenType.ADD) {
-                AddNode(map, result, term(), pos)
+                ShakeAddNode(map, result, term(), pos)
             } else {
-                SubNode(map, result, term(), pos)
+                ShakeSubNode(map, result, term(), pos)
             }
         }
         return result
     }
 
-    private fun term(): ValuedNode {
+    private fun term(): ShakeValuedNode {
         var result = pow()
         var tmpType: ShakeTokenType = ShakeTokenType.NONE
         while (input.hasNext() &&
@@ -760,53 +760,53 @@ class Parser(val input: ShakeTokenInputStream) {
             input.skip()
             val pos = input.actualStart
             result = when (tmpType) {
-                ShakeTokenType.MUL -> MulNode(map, result, pow(), pos)
-                ShakeTokenType.DIV -> DivNode(map, result, pow(), pos)
-                else -> ModNode(map, result, pow(), pos)
+                ShakeTokenType.MUL -> ShakeMulNode(map, result, pow(), pos)
+                ShakeTokenType.DIV -> ShakeDivNode(map, result, pow(), pos)
+                else -> ShakeModNode(map, result, pow(), pos)
             }
         }
         return result
     }
 
-    private fun pow(): ValuedNode {
+    private fun pow(): ShakeValuedNode {
         var result = cast()
         while (input.hasNext() && input.peekType() == ShakeTokenType.POW) {
             input.skip()
             val pos = input.actualStart
-            result = PowNode(map, result, cast(), pos)
+            result = ShakePowNode(map, result, cast(), pos)
         }
         return result
     }
 
     // (Logical)
-    private fun logicalOr(): ValuedNode {
+    private fun logicalOr(): ShakeValuedNode {
         var result = logicalXOr()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LOGICAL_OR) {
             input.skip()
-            result = LogicalOrNode(map, result, logicalXOr())
+            result = ShakeLogicalOrNode(map, result, logicalXOr())
         }
         return result
     }
 
-    private fun logicalXOr(): ValuedNode {
+    private fun logicalXOr(): ShakeValuedNode {
         var result = logicalAnd()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LOGICAL_XOR) {
             input.skip()
-            result = LogicalXOrNode(map, result, logicalAnd())
+            result = ShakeLogicalXOrNode(map, result, logicalAnd())
         }
         return result
     }
 
-    private fun logicalAnd(): ValuedNode {
+    private fun logicalAnd(): ShakeValuedNode {
         var result = compare()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LOGICAL_AND) {
             input.skip()
-            result = LogicalAndNode(map, result, compare())
+            result = ShakeLogicalAndNode(map, result, compare())
         }
         return result
     }
 
-    private fun compare(): ValuedNode {
+    private fun compare(): ShakeValuedNode {
         var left = expr()
         var tmpType: ShakeTokenType = ShakeTokenType.NONE
         while (input.hasNext()
@@ -818,11 +818,11 @@ class Parser(val input: ShakeTokenInputStream) {
 
             input.skip()
             left = when (tmpType) {
-                ShakeTokenType.EQ_EQUALS -> return LogicalEqEqualsNode(map, left, logicalOr())
-                ShakeTokenType.BIGGER_EQUALS -> LogicalBiggerEqualsNode(map, left, logicalOr())
-                ShakeTokenType.SMALLER_EQUALS -> LogicalSmallerEqualsNode(map, left, logicalOr())
-                ShakeTokenType.BIGGER -> LogicalBiggerNode(map, left, logicalOr())
-                else -> LogicalSmallerNode(map, left, logicalOr())
+                ShakeTokenType.EQ_EQUALS -> return ShakeLogicalEqEqualsNode(map, left, logicalOr())
+                ShakeTokenType.BIGGER_EQUALS -> ShakeLogicalBiggerEqualsNode(map, left, logicalOr())
+                ShakeTokenType.SMALLER_EQUALS -> ShakeLogicalSmallerEqualsNode(map, left, logicalOr())
+                ShakeTokenType.BIGGER -> ShakeLogicalBiggerNode(map, left, logicalOr())
+                else -> ShakeLogicalSmallerNode(map, left, logicalOr())
             }
 
         }
