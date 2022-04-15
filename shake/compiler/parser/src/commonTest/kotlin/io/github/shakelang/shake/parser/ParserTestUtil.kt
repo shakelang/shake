@@ -2,8 +2,8 @@ package io.github.shakelang.shake.parser
 
 import io.github.shakelang.shake.assertType
 import io.github.shakelang.shake.lexer.ShakeLexer
-import io.github.shakelang.shake.parser.node.Node
-import io.github.shakelang.shake.parser.node.Tree
+import io.github.shakelang.shake.parser.node.ShakeNode
+import io.github.shakelang.shake.parser.node.ShakeTree
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import kotlin.reflect.KClass
@@ -11,16 +11,16 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 object ParserTestUtil {
-    fun parse(source: String, input: String): Tree {
+    fun parse(source: String, input: String): ShakeTree {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()
-        val parser = Parser(tokens)
+        val parser = ShakeParser(tokens)
         return parser.parse()
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Node> parseSingle(source: String, input: String, type: KClass<T>): T {
+    fun <T : ShakeNode> parseSingle(source: String, input: String, type: KClass<T>): T {
         val tree = parse(source, input)
         val nodes = tree.children
 

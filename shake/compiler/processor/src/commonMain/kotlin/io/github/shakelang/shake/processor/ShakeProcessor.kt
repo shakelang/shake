@@ -4,7 +4,7 @@ import io.github.shakelang.parseutils.File
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.lexer.ShakeLexer
-import io.github.shakelang.shake.parser.Parser
+import io.github.shakelang.shake.parser.ShakeParser
 import io.github.shakelang.shake.parser.node.*
 
 class ShakeProcessorOptions {
@@ -17,14 +17,14 @@ abstract class ShakeProcessor <T> {
 
     abstract val src: T
 
-    open fun parseFile(src: String): Tree {
+    open fun parseFile(src: String): ShakeTree {
 
         val file = File(src).contents
         val chars: CharacterInputStream = SourceCharacterInputStream(src, file)
 
         val lexer = ShakeLexer(chars)
         val tokens = lexer.makeTokens()
-        val parser = Parser(tokens)
+        val parser = ShakeParser(tokens)
         return parser.parse()
 
     }
@@ -42,7 +42,7 @@ open class ShakePackageBasedProcessor : ShakeProcessor<ShakeProject>() {
     override val src: ShakeProject
         get() = project
 
-    open fun loadSynthetic(src: String, contents: Tree) {
+    open fun loadSynthetic(src: String, contents: ShakeTree) {
         val reformatted = src.replace("\\", "/").replace(".", "/")
         project.putFile(reformatted.split("/").toTypedArray(), contents)
     }

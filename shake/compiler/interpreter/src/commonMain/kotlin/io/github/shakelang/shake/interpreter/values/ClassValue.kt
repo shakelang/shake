@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.interpreter.values
 
 import io.github.shakelang.shake.interpreter.*
-import io.github.shakelang.shake.parser.node.AccessDescriber
-import io.github.shakelang.shake.parser.node.objects.ClassConstructionNode
-import io.github.shakelang.shake.parser.node.variables.VariableDeclarationNode
+import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
+import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 
 /**
  * An [InterpreterValue] to store class-declarations
@@ -29,56 +29,56 @@ class ClassValue
  */
 (
 
-/**
+    /**
  * The name of the class
  *
  * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */
 val className: String,
 
-/**
+    /**
  * The static fields, classes and functions of the class
  *
  * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */
 val statics: VariableList,
 
-/**
+    /**
  * The fields of the class (they get initialized when creating a new instance of the class)
  *
  * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */
-val fields: Array<VariableDeclarationNode?>,
+val fields: Array<ShakeVariableDeclarationNode?>,
 
-/**
+    /**
  * The [Scope] the class is located in (this is used to access values of this scope in the class)
  *
  * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */
 val scope: Scope?,
 
-/**
+    /**
  * The interpreter the class is created with
  *
  * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */
 val interpreter: Interpreter,
 
-/**
+    /**
  * The prototype of the class (contains subclasses and functions)
  *
  * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */
 val prototype: VariableList,
 
-/**
+    /**
  * The access type of the class
  *
  * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */
-private val access: AccessDescriber,
+private val access: ShakeAccessDescriber,
 
-/**
+    /**
  * Is this class final?
  *
  * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
@@ -143,7 +143,7 @@ val isFinal: Boolean
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun newInstance(node: ClassConstructionNode, scope: Scope): InterpreterValue = ObjectValue(this)
+    override fun newInstance(node: ShakeClassConstructionNode, scope: Scope): InterpreterValue = ObjectValue(this)
 
 
     // *******************************

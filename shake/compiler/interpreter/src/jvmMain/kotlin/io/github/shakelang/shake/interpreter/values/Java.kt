@@ -3,8 +3,8 @@ package io.github.shakelang.shake.interpreter.values
 import io.github.shakelang.shake.interpreter.Scope
 import io.github.shakelang.shake.interpreter.UnformattedInterpreterError
 import io.github.shakelang.shake.interpreter.Variable
-import io.github.shakelang.shake.parser.node.functions.FunctionCallNode
-import io.github.shakelang.shake.parser.node.objects.ClassConstructionNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import org.reflections.Reflections
 import java.beans.Expression
 import java.lang.reflect.Modifier
@@ -127,7 +127,7 @@ class Java : InterpreterValue {
             return children.toTypedArray()
         }
 
-        override fun newInstance(node: ClassConstructionNode, scope: Scope): InterpreterValue {
+        override fun newInstance(node: ShakeClassConstructionNode, scope: Scope): InterpreterValue {
             val args = arrayOfNulls<Any>(node.args.size)
             for (i in 0 until node.args.size) {
                 args[i] = scope.interpreter.visit(node.args[i], scope).toJava()
@@ -201,7 +201,7 @@ class Java : InterpreterValue {
             obj = null
         }
 
-        override fun invoke(node: FunctionCallNode, scope: Scope): InterpreterValue {
+        override fun invoke(node: ShakeFunctionCallNode, scope: Scope): InterpreterValue {
             val args = arrayOfNulls<Any>(node.args.size)
             for (i in 0 until node.args.size) {
                 args[i] = scope.interpreter.visit(node.args[i], scope).toJava()

@@ -1,14 +1,14 @@
 package io.github.shakelang.shake.parser
 
-import io.github.shakelang.shake.parser.Parser.ParserError
-import io.github.shakelang.shake.parser.node.IfNode
+import io.github.shakelang.shake.parser.ShakeParser.ParserError
+import io.github.shakelang.shake.parser.node.ShakeIfNode
 import kotlin.test.*
 
 class TestErrors {
     @Test
     fun testLPAREN() {
         val error = assertFailsWith(ParserError::class) {
-            ParserTestUtil.parseSingle("<TestLPAREN>", "if test", IfNode::class)
+            ParserTestUtil.parseSingle("<TestLPAREN>", "if test", ShakeIfNode::class)
         }
 
         // System.out.println(error.toString());
@@ -25,7 +25,7 @@ class TestErrors {
     @Test
     fun testRPAREN() {
         val error = assertFailsWith(ParserError::class) {
-            ParserTestUtil.parseSingle("<TestRPAREN>", "if(test{", IfNode::class)
+            ParserTestUtil.parseSingle("<TestRPAREN>", "if(test{", ShakeIfNode::class)
         }
 
         // System.out.println(error.toString());
@@ -42,7 +42,7 @@ class TestErrors {
     @Test
     fun testLCURL() {
         val error = assertFailsWith(ParserError::class) {
-            ParserTestUtil.parseSingle("<TestLCURL>", "if(test) {", IfNode::class)
+            ParserTestUtil.parseSingle("<TestLCURL>", "if(test) {", ShakeIfNode::class)
         }
 
         // System.out.println(error.toString());
@@ -59,7 +59,7 @@ class TestErrors {
     @Test
     fun testExpectingSemicolon() {
         val error = assertFailsWith(ParserError::class) {
-            ParserTestUtil.parseSingle("<TestAwaitSemicolonError>", "for(var i = 0 i<10) {", IfNode::class)
+            ParserTestUtil.parseSingle("<TestAwaitSemicolonError>", "for(var i = 0 i<10) {", ShakeIfNode::class)
         }
 
         // System.out.println(error.toString());

@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.processor
 
 import io.github.shakelang.shake.parser.node.*
-import io.github.shakelang.shake.parser.node.functions.FunctionDeclarationNode
-import io.github.shakelang.shake.parser.node.objects.ClassDeclarationNode
-import io.github.shakelang.shake.parser.node.variables.VariableDeclarationNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 
 open class ShakeProject(
     open val subpackages: MutableList<ShakePackage> = mutableListOf(),
@@ -24,22 +24,22 @@ open class ShakeProject(
         return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
     }
 
-    open fun putFile(name: String, contents: Tree) {
+    open fun putFile(name: String, contents: ShakeTree) {
         contents.children.forEach {
             when (it) {
-                is ClassDeclarationNode -> {
+                is ShakeClassDeclarationNode -> {
                     if(classes.containsKey(it.name)) {
                         throw Exception("Class ${it.name} already exists")
                     }
                     classes[it.name] = ShakeClass.from(this, it)
                 }
-                is FunctionDeclarationNode -> {
+                is ShakeFunctionDeclarationNode -> {
                     if(functions.containsKey(it.name)) {
                         throw Exception("Function ${it.name} already exists")
                     }
                     functions[it.name] = ShakeMethod.from(this, it)
                 }
-                is VariableDeclarationNode -> {
+                is ShakeVariableDeclarationNode -> {
                     if(fields.containsKey(it.name)) {
                         throw Exception("Field ${it.name} already exists")
                     }
@@ -49,7 +49,7 @@ open class ShakeProject(
         }
     }
 
-    open fun putFile(name: Array<String>, contents: Tree) {
+    open fun putFile(name: Array<String>, contents: ShakeTree) {
         val pkg = name.sliceArray(0 until name.size - 1)
         val file = name.last()
         getPackage(pkg).putFile(file, contents)
@@ -68,21 +68,21 @@ open class ShakeProject(
         return if(pkg.isEmpty()) this.classes[name]
         else this.getPackage(pkg).classes[name]
     }
-    fun getType(type: VariableType, then: (ShakeType) -> Unit) {
+    fun getType(type: ShakeVariableType, then: (ShakeType) -> Unit) {
         when (type.type) {
-            VariableType.Type.BYTE -> then(ShakeType.Primitives.BYTE)
-            VariableType.Type.SHORT -> then(ShakeType.Primitives.SHORT)
-            VariableType.Type.INTEGER -> then(ShakeType.Primitives.INT)
-            VariableType.Type.LONG -> then(ShakeType.Primitives.LONG)
-            VariableType.Type.FLOAT -> then(ShakeType.Primitives.FLOAT)
-            VariableType.Type.DOUBLE -> then(ShakeType.Primitives.DOUBLE)
-            VariableType.Type.BOOLEAN -> then(ShakeType.Primitives.BOOLEAN)
-            VariableType.Type.CHAR -> then(ShakeType.Primitives.CHAR)
-            VariableType.Type.OBJECT -> {
+            ShakeVariableType.Type.BYTE -> then(ShakeType.Primitives.BYTE)
+            ShakeVariableType.Type.SHORT -> then(ShakeType.Primitives.SHORT)
+            ShakeVariableType.Type.INTEGER -> then(ShakeType.Primitives.INT)
+            ShakeVariableType.Type.LONG -> then(ShakeType.Primitives.LONG)
+            ShakeVariableType.Type.FLOAT -> then(ShakeType.Primitives.FLOAT)
+            ShakeVariableType.Type.DOUBLE -> then(ShakeType.Primitives.DOUBLE)
+            ShakeVariableType.Type.BOOLEAN -> then(ShakeType.Primitives.BOOLEAN)
+            ShakeVariableType.Type.CHAR -> then(ShakeType.Primitives.CHAR)
+            ShakeVariableType.Type.OBJECT -> {
                 val clz = mutableListOf<String>()
-                var identifier: ValuedNode? = type.subtype!!
+                var identifier: ShakeValuedNode? = type.subtype!!
                 while(identifier != null) {
-                    if(identifier !is IdentifierNode) throw IllegalArgumentException("Invalid type ${type.subtype}")
+                    if(identifier !is ShakeIdentifierNode) throw IllegalArgumentException("Invalid type ${type.subtype}")
                     clz.add(identifier.name)
                     identifier = identifier.parent
                 }
@@ -122,22 +122,22 @@ open class ShakePackage (
         return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
     }
 
-    open fun putFile(name: String, contents: Tree) {
+    open fun putFile(name: String, contents: ShakeTree) {
         contents.children.forEach {
             when (it) {
-                is ClassDeclarationNode -> {
+                is ShakeClassDeclarationNode -> {
                     if(classes.containsKey(it.name)) {
                         throw Exception("Class ${it.name} already exists")
                     }
                     classes[it.name] = ShakeClass.from(baseProject, it)
                 }
-                is FunctionDeclarationNode -> {
+                is ShakeFunctionDeclarationNode -> {
                     if(functions.containsKey(it.name)) {
                         throw Exception("Function ${it.name} already exists")
                     }
                     functions[it.name] = ShakeMethod.from(baseProject, it)
                 }
-                is VariableDeclarationNode -> {
+                is ShakeVariableDeclarationNode -> {
                     if(fields.containsKey(it.name)) {
                         throw Exception("Field ${it.name} already exists")
                     }
@@ -147,7 +147,7 @@ open class ShakePackage (
         }
     }
 
-    open fun putFile(name: Array<String>, contents: Tree) {
+    open fun putFile(name: Array<String>, contents: ShakeTree) {
         val pkg = name.sliceArray(0 until name.size - 1)
         val file = name.last()
         getPackage(pkg).putFile(file, contents)
@@ -156,7 +156,7 @@ open class ShakePackage (
 
 open class ShakeFile (
     open val name: String,
-    open val contents: Tree,
+    open val contents: ShakeTree,
 )
 
 class ShakeClass (
@@ -192,7 +192,7 @@ class ShakeClass (
     }
 
     companion object {
-        fun from(baseProject: ShakeProject, clz: ClassDeclarationNode): ShakeClass {
+        fun from(baseProject: ShakeProject, clz: ShakeClassDeclarationNode): ShakeClass {
             val methods = clz.methods.filter { !it.isStatic }.map {
                 val method = ShakeClassMethod(
                     it.name,
@@ -202,9 +202,9 @@ class ShakeClass (
                     false,
                     false,
                     false,
-                    it.access == AccessDescriber.PRIVATE,
-                    it.access == AccessDescriber.PROTECTED,
-                    it.access == AccessDescriber.PUBLIC,
+                    it.access == ShakeAccessDescriber.PRIVATE,
+                    it.access == ShakeAccessDescriber.PROTECTED,
+                    it.access == ShakeAccessDescriber.PUBLIC,
                 )
                 method.lateinitReturnType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
                 method
@@ -221,9 +221,9 @@ class ShakeClass (
                     false,
                     false,
                     false,
-                    it.access == AccessDescriber.PRIVATE,
-                    it.access == AccessDescriber.PROTECTED,
-                    it.access == AccessDescriber.PUBLIC,
+                    it.access == ShakeAccessDescriber.PRIVATE,
+                    it.access == ShakeAccessDescriber.PROTECTED,
+                    it.access == ShakeAccessDescriber.PUBLIC,
                 )
                 method.lateinitReturnType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
                 method
@@ -237,9 +237,9 @@ class ShakeClass (
                     it.isStatic,
                     it.isFinal,
                     false,
-                    it.access == AccessDescriber.PRIVATE,
-                    it.access == AccessDescriber.PROTECTED,
-                    it.access == AccessDescriber.PUBLIC,
+                    it.access == ShakeAccessDescriber.PRIVATE,
+                    it.access == ShakeAccessDescriber.PROTECTED,
+                    it.access == ShakeAccessDescriber.PUBLIC,
                 )
                 field.lateinitType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
                 field
@@ -250,9 +250,9 @@ class ShakeClass (
                     it.isStatic,
                     it.isFinal,
                     false,
-                    it.access == AccessDescriber.PRIVATE,
-                    it.access == AccessDescriber.PROTECTED,
-                    it.access == AccessDescriber.PUBLIC,
+                    it.access == ShakeAccessDescriber.PRIVATE,
+                    it.access == ShakeAccessDescriber.PROTECTED,
+                    it.access == ShakeAccessDescriber.PUBLIC,
                 )
                 field.lateinitType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
                 field
@@ -262,9 +262,9 @@ class ShakeClass (
                     it.name,
                     "",
                     false,
-                    it.access == AccessDescriber.PRIVATE,
-                    it.access == AccessDescriber.PROTECTED,
-                    it.access == AccessDescriber.PUBLIC,
+                    it.access == ShakeAccessDescriber.PRIVATE,
+                    it.access == ShakeAccessDescriber.PROTECTED,
+                    it.access == ShakeAccessDescriber.PUBLIC,
                 )
                 constr.lateinitParameterTypes(it.args.map { p -> p.name })
                     .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
@@ -414,7 +414,7 @@ open class ShakeMethod (
     }
 
     companion object {
-        fun from(baseProject: ShakeProject, node: FunctionDeclarationNode): ShakeMethod {
+        fun from(baseProject: ShakeProject, node: ShakeFunctionDeclarationNode): ShakeMethod {
             return ShakeMethod(
                 node.name,
                 "",
@@ -423,9 +423,9 @@ open class ShakeMethod (
                 false,
                 false,
                 false,
-                node.access == AccessDescriber.PRIVATE,
-                node.access == AccessDescriber.PROTECTED,
-                node.access == AccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PRIVATE,
+                node.access == ShakeAccessDescriber.PROTECTED,
+                node.access == ShakeAccessDescriber.PUBLIC
             ).let {
                 it.lateinitReturnType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
@@ -456,15 +456,15 @@ open class ShakeField (
     }
 
     companion object {
-        fun from(baseProject: ShakeProject, node: VariableDeclarationNode): ShakeField {
+        fun from(baseProject: ShakeProject, node: ShakeVariableDeclarationNode): ShakeField {
             return ShakeField(
                 node.name,
                 node.isStatic,
                 node.isFinal,
                 false,
-                node.access == AccessDescriber.PRIVATE,
-                node.access == AccessDescriber.PROTECTED,
-                node.access == AccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PRIVATE,
+                node.access == ShakeAccessDescriber.PROTECTED,
+                node.access == ShakeAccessDescriber.PUBLIC
             ).let {
                 it.lateinitType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
                 it

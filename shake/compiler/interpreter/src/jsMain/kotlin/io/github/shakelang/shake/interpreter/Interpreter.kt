@@ -2,9 +2,9 @@ package io.github.shakelang.shake.interpreter
 
 import io.github.shakelang.shake.interpreter.values.InterpreterValue
 import io.github.shakelang.shake.interpreter.values.StringValue
-import io.github.shakelang.shake.parser.node.AccessDescriber
-import io.github.shakelang.shake.parser.node.VariableType
-import io.github.shakelang.shake.parser.node.functions.FunctionCallNode
+import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
+import io.github.shakelang.shake.parser.node.ShakeVariableType
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 
 import kotlin.reflect.KFunction3
 
@@ -38,7 +38,7 @@ object DefaultFunctions {
         private val interpreter: Interpreter
     ) : InterpreterValue {
 
-        override fun invoke(node: FunctionCallNode, scope: Scope): InterpreterValue {
+        override fun invoke(node: ShakeFunctionCallNode, scope: Scope): InterpreterValue {
             if (node.args.size != 1) throw Error("Expecting 1 exactly one argument!")
             val v = this.interpreter.visit(node.args[0], scope)
             if (v !is StringValue) throw Error("Expecting an integer as argument for the exit function")
@@ -58,7 +58,7 @@ private object JsShakeScopeProxyHandler {
         = target.scopeVariables[path].let {
             val value = InterpreterValue.of(assignment_value)
             if (it!= null) it.value = value
-            else target.scopeVariables.declare(Variable.create(path, VariableType.DYNAMIC, AccessDescriber.PRIVATE, false, value))
+            else target.scopeVariables.declare(Variable.create(path, ShakeVariableType.DYNAMIC, ShakeAccessDescriber.PRIVATE, false, value))
         }
 
 }
