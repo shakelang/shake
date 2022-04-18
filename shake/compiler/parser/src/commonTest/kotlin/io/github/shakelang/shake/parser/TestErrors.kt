@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.parser
 
-import io.github.shakelang.shake.parser.ShakeParser.ParserError
+import io.github.shakelang.shake.parser.ShakeParserImpl.ParserError
 import io.github.shakelang.shake.parser.node.ShakeIfNode
 import kotlin.test.*
 

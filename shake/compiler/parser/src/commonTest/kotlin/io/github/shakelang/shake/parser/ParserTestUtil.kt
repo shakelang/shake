@@ -14,7 +14,7 @@ object ParserTestUtil {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()
-        val parser = ShakeParser(tokens)
+        val parser = ShakeParser.from(tokens)
         return parser.parse()
     }
 
@@ -22,7 +22,7 @@ object ParserTestUtil {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()
-        val parser = ShakeParser(tokens)
+        val parser = ShakeParser.from(tokens)
         return parser.parseAsStatements()
     }
 
@@ -30,7 +30,7 @@ object ParserTestUtil {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()
-        val parser = ShakeParser(tokens)
+        val parser = ShakeParser.from(tokens)
         return parser.expectValue()
     }
 
