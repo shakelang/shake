@@ -1,12 +1,10 @@
 package io.github.shakelang.shake.parser.node.loops
 
-import io.github.shakelang.shake.parser.node.ShakeNode
-import io.github.shakelang.shake.parser.node.ShakeTree
-import io.github.shakelang.shake.parser.node.ShakeValuedNode
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.parser.node.*
 
-class ShakeForNode(map: PositionMap, val body: ShakeTree, val declaration: ShakeNode, val condition: ShakeValuedNode, val round: ShakeNode) :
-    ShakeNode(map) {
+class ShakeForNode(map: PositionMap, val body: ShakeTree, val declaration: ShakeStatementNode, val condition: ShakeValuedNode, val round: ShakeStatementNode) :
+    ShakeStatementNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =
         mapOf(

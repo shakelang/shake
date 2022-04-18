@@ -1,7 +1,8 @@
 package io.github.shakelang.shake.parser.node.expression
 
-import io.github.shakelang.shake.parser.node.ShakeValuedNode
+import io.github.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.parser.node.ShakeValuedNode
 
 @Suppress("unused")
 abstract class ShakeExpressionNode(
@@ -9,6 +10,6 @@ abstract class ShakeExpressionNode(
     val left: ShakeValuedNode,
     val right: ShakeValuedNode,
     val operatorPosition: Int
-) : ShakeValuedNode(map) {
+) : ShakeValuedNodeImpl(map) {
     abstract val operator: Char
 }

@@ -5,7 +5,7 @@ import kotlin.jvm.JvmField
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
-class ShakeCastNode(map: PositionMap, val value: ShakeValuedNode, val castTarget: CastTarget) : ShakeValuedNode(map) {
+class ShakeCastNode(map: PositionMap, val value: ShakeValuedNode, val castTarget: CastTarget) : ShakeValuedNodeImpl(map) {
 
     class CastTarget @JvmOverloads constructor(val type: CastTargetType, val subtype: ShakeIdentifierNode? = null) {
 

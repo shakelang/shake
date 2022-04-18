@@ -6,9 +6,9 @@ import io.github.shakelang.parseutils.characters.position.PositionMap
 class ShakeVariableSubAssignmentNode(
     map: PositionMap,
     val variable: ShakeValuedNode,
-    val value: ShakeNode,
+    val value: ShakeValuedNode,
     val operatorPosition: Int
-) : ShakeValuedNode(map) {
+) : ShakeValuedStatementNodeImpl(map) {
 
     override fun toJson(): Map<String, *> = mapOf(
         "name" to "VariableSubAssignmentNode",

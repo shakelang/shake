@@ -86,7 +86,8 @@ class ShakeParser(val input: ShakeTokenInputStream) {
         if (token == ShakeTokenType.KEYWORD_FOR) return forLoop()
         if (token == ShakeTokenType.KEYWORD_IF) return ifStatement()
         if (token == ShakeTokenType.KEYWORD_RETURN) return returnStatement()
-        return if (token == ShakeTokenType.KEYWORD_IMPORT) parseImport() else valuedOperation()
+        if (token == ShakeTokenType.KEYWORD_IMPORT) return  parseImport()
+        return valuedOperation()
     }
 
     private fun valuedOperation(): ShakeValuedNode? {
@@ -415,49 +416,49 @@ class ShakeParser(val input: ShakeTokenInputStream) {
     private fun varAssignment(variable: ShakeValuedNode): ShakeVariableAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.ASSIGN) throw ParserError("Expecting '='")
         val operatorPosition = input.actualStart
-        val value = expectNotNull(operation())
-        return ShakeVariableAssignmentNode(map, variable, value as ShakeValuedNode, operatorPosition)
+        val value = expectNotNull(valuedOperation())
+        return ShakeVariableAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varAddAssignment(variable: ShakeValuedNode): ShakeVariableAddAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.ADD_ASSIGN) throw ParserError("Expecting '+='")
         val operatorPosition = input.actualStart
-        val value = expectNotNull(operation())
+        val value = expectNotNull(valuedOperation())
         return ShakeVariableAddAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varSubAssignment(variable: ShakeValuedNode): ShakeVariableSubAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.SUB_ASSIGN) throw ParserError("Expecting '-='")
         val operatorPosition = input.actualStart
-        val value = expectNotNull(operation())
+        val value = expectNotNull(valuedOperation())
         return ShakeVariableSubAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varMulAssignment(variable: ShakeValuedNode): ShakeVariableMulAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.MUL_ASSIGN) throw ParserError("Expecting '*='")
         val operatorPosition = input.actualStart
-        val value = expectNotNull(operation())
+        val value = expectNotNull(valuedOperation())
         return ShakeVariableMulAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varDivAssignment(variable: ShakeValuedNode): ShakeVariableDivAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.DIV_ASSIGN) throw ParserError("Expecting '/='")
         val operatorPosition = input.actualStart
-        val value = expectNotNull(operation())
+        val value = expectNotNull(valuedOperation())
         return ShakeVariableDivAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varModAssignment(variable: ShakeValuedNode): ShakeVariableModAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.MOD_ASSIGN) throw ParserError("Expecting '%='")
         val operatorPosition = input.actualStart
-        val value = expectNotNull(operation())
+        val value = expectNotNull(valuedOperation())
         return ShakeVariableModAssignmentNode(map, variable, value, operatorPosition)
     }
 
     private fun varPowAssignment(variable: ShakeValuedNode): ShakeVariablePowAssignmentNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.POW_ASSIGN) throw ParserError("Expecting '**='")
         val operatorPosition = input.actualStart
-        val value = expectNotNull(operation())
+        val value = expectNotNull(valuedOperation())
         return ShakeVariablePowAssignmentNode(map, variable, value, operatorPosition)
     }
 
@@ -552,20 +553,20 @@ class ShakeParser(val input: ShakeTokenInputStream) {
 
     // ****************************************************************************
     // Loops & If
-    private fun forLoop(): ShakeNode {
+    private fun forLoop(): ShakeForNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_FOR) throw ParserError("Expecting for keyword")
         if (!input.hasNext() || input.nextType() != ShakeTokenType.LPAREN) throw ParserError("Expecting '('")
-        val declaration = operation()
+        val declaration = operation() as ShakeStatementNode // TODO check if it is a statement
         expectSemicolon()
         val condition = valuedOperation()
         expectSemicolon()
         val round = operation()
         if (!input.hasNext() || input.nextType() != ShakeTokenType.RPAREN) throw ParserError("Expecting ')'")
         val body = parseBodyStatement()
-        return ShakeForNode(map, body, declaration!!, expectNotNull(condition), expectNotNull(round))
+        return ShakeForNode(map, body, declaration, expectNotNull(condition), expectNotNull(round) as ShakeStatementNode) // TODO check if it is a statement
     }
 
-    private fun doWhileLoop(): ShakeNode {
+    private fun doWhileLoop(): ShakeDoWhileNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_DO) throw ParserError("Expecting do keyword")
         val body = parseBodyStatement()
         skipSeparators()
@@ -574,14 +575,14 @@ class ShakeParser(val input: ShakeTokenInputStream) {
         return ShakeDoWhileNode(map, body, condition)
     }
 
-    private fun whileLoop(): ShakeNode {
+    private fun whileLoop(): ShakeWhileNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_WHILE) throw ParserError("Expecting while keyword")
         val condition = parseConditionStatement()
         val body = parseBodyStatement()
         return ShakeWhileNode(map, body, condition)
     }
 
-    private fun ifStatement(): ShakeNode {
+    private fun ifStatement(): ShakeIfNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_IF) throw ParserError("Expecting if keyword")
         val condition = parseConditionStatement()
         val body = parseBodyStatement()

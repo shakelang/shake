@@ -1,10 +1,10 @@
 package io.github.shakelang.shake.parser.node.objects
 
-import io.github.shakelang.shake.parser.node.ShakeValuedNode
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.ShakeTree
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
@@ -17,7 +17,7 @@ class ShakeConstructorDeclarationNode
     val args: Array<ShakeFunctionArgumentNode>,
     val access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE
 
-) : ShakeValuedNode(map) {
+) : ShakeValuedNodeImpl(map) {
 
     @JvmOverloads
     constructor(

@@ -1,10 +1,10 @@
 package io.github.shakelang.shake.parser.node.objects
 
-import io.github.shakelang.shake.parser.node.ShakeValuedNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
@@ -19,7 +19,7 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
     val isInClass: Boolean = false,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false
-) : ShakeValuedNode(map) {
+) : ShakeValuedNodeImpl(map) {
 
     constructor(
         map: PositionMap,

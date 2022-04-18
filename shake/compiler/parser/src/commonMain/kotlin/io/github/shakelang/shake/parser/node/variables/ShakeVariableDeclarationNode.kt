@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.parser.node.variables
 
-import io.github.shakelang.shake.parser.node.ShakeValuedNode
 import io.github.shakelang.shake.parser.node.ShakeVariableType
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.parser.node.ShakeValuedStatementNodeImpl
 import kotlin.jvm.JvmOverloads
 
 class ShakeVariableDeclarationNode @JvmOverloads constructor(
@@ -15,7 +15,7 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
     val isInClass: Boolean = false,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false
-) : ShakeValuedNode(map) {
+) : ShakeValuedStatementNodeImpl(map) {
 
     constructor(map: PositionMap, name: String, assignment: ShakeVariableAssignmentNode?) : this(
         map,

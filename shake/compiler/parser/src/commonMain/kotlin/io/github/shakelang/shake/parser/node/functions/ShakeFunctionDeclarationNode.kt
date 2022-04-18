@@ -1,10 +1,7 @@
 package io.github.shakelang.shake.parser.node.functions
 
-import io.github.shakelang.shake.parser.node.ShakeVariableType
-import io.github.shakelang.shake.parser.node.ShakeValuedNode
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.ShakeTree
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.parser.node.*
 import kotlin.jvm.JvmOverloads
 
 class ShakeFunctionDeclarationNode @JvmOverloads constructor(
@@ -17,7 +14,7 @@ class ShakeFunctionDeclarationNode @JvmOverloads constructor(
     val isInClass: Boolean = false,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false
-) : ShakeValuedNode(map) {
+) : ShakeValuedNodeImpl(map) {
 
     constructor(
         map: PositionMap, name: String, body: ShakeTree, args: Array<ShakeFunctionArgumentNode>,

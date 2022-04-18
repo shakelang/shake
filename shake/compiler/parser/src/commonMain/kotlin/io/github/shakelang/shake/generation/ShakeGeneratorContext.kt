@@ -36,7 +36,7 @@ import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
 
 @Suppress("unused")
 abstract class ShakeGeneratorContext<T, C> : ShakeGeneratorBase {
-    fun visit(n: ShakeNode, context: C): T {
+    fun visit(n: ShakeNodeImpl, context: C): T {
         if (n is ShakeTree) return visitTree(n, context)
         if (n is ShakeDoubleNode) return visitDoubleNode(n, context)
         if (n is ShakeIntegerNode) return visitIntegerNode(n, context)

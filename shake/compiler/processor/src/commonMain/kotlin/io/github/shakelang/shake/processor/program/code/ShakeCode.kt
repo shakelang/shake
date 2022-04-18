@@ -1,5 +1,6 @@
 package io.github.shakelang.shake.processor.program.code
 
+import io.github.shakelang.shake.parser.node.ShakeTree
 import io.github.shakelang.shake.processor.program.*
 import io.github.shakelang.shake.processor.program.code.values.ShakeVariableUsage
 
@@ -9,10 +10,25 @@ interface ShakeValue {
 }
 
 open class ShakeCode(
-    val statements: List<ShakeStatement>
+    open val statements: List<ShakeStatement>
 ) {
+
+    open class ShakeLateProcessCode (
+        open val tree: ShakeTree
+    ) : ShakeCode(emptyList()) {
+        override lateinit var statements: List<ShakeStatement>
+        fun process(program: ShakeScope) {
+            statements = tree.process(program)
+        }
+    }
+
     companion object {
+
         fun empty() = ShakeCode(emptyList())
+
+        fun fromTree(tree: ShakeTree): ShakeCode {
+            return ShakeLateProcessCode(tree)
+        }
     }
 
 }
@@ -63,4 +79,10 @@ open class ShakeVariableDeclaration : ShakeDeclaration, ShakeStatement {
     override fun use(scope: ShakeScope): ShakeVariableUsage {
         return ShakeVariableUsage(scope, this)
     }
+}
+
+open class ShakeLambdaDeclaration : ShakeExecutable(), ShakeValue {
+
+
+
 }

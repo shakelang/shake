@@ -2,7 +2,7 @@ package io.github.shakelang.shake.processor.program
 
 import io.github.shakelang.shake.parser.node.ShakeIdentifierNode
 import io.github.shakelang.shake.parser.node.ShakeTree
-import io.github.shakelang.shake.parser.node.ShakeValuedNode
+import io.github.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import io.github.shakelang.shake.parser.node.ShakeVariableType
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
@@ -83,7 +83,7 @@ open class ShakeProject(
             ShakeVariableType.Type.CHAR -> then(ShakeType.Primitives.CHAR)
             ShakeVariableType.Type.OBJECT -> {
                 val clz = mutableListOf<String>()
-                var identifier: ShakeValuedNode? = type.subtype!!
+                var identifier: ShakeValuedNodeImpl? = type.subtype!!
                 while(identifier != null) {
                     if(identifier !is ShakeIdentifierNode) throw IllegalArgumentException("Invalid type ${type.subtype}")
                     clz.add(identifier.name)

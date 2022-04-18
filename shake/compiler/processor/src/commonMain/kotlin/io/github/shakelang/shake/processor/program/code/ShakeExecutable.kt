@@ -7,4 +7,6 @@ abstract class ShakeExecutable(
 ) {
     lateinit var parameters: List<ShakeParameter>
         protected set
+
+    fun
 }
