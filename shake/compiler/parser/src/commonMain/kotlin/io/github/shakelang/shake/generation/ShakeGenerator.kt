@@ -11,7 +11,6 @@ import io.github.shakelang.shake.parser.node.variables.ShakeVariableModAssignmen
 import io.github.shakelang.shake.parser.node.variables.ShakeVariablePowAssignmentNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDecreaseNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableAssignmentNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
 import io.github.shakelang.shake.parser.node.logical.ShakeLogicalEqEqualsNode
 import io.github.shakelang.shake.parser.node.logical.ShakeLogicalBiggerEqualsNode
@@ -53,7 +52,7 @@ abstract class ShakeGenerator<T> : ShakeGeneratorBase {
         if (n is ShakeVariablePowAssignmentNode) return visitVariablePowAssignmentNode(n)
         if (n is ShakeVariableIncreaseNode) return visitVariableIncreaseNode(n)
         if (n is ShakeVariableDecreaseNode) return visitVariableDecreaseNode(n)
-        if (n is ShakeVariableAssignmentNode) return visitVariableAssignmentNode(n)
+        if (n is ShakeValuedNode) return visitVariableAssignmentNode(n)
         if (n is ShakeVariableUsageNode) return visitVariableUsageNode(n)
         if (n is ShakeLogicalEqEqualsNode) return visitEqEqualsNode(n)
         if (n is ShakeLogicalBiggerEqualsNode) return visitBiggerEqualsNode(n)
@@ -89,7 +88,7 @@ abstract class ShakeGenerator<T> : ShakeGeneratorBase {
     abstract fun visitModNode(n: ShakeModNode): T
     abstract fun visitPowNode(n: ShakePowNode): T
     abstract fun visitVariableDeclarationNode(n: ShakeVariableDeclarationNode): T
-    abstract fun visitVariableAssignmentNode(n: ShakeVariableAssignmentNode): T
+    abstract fun visitVariableAssignmentNode(n: ShakeValuedNode): T
     abstract fun visitVariableAddAssignmentNode(n: ShakeVariableAddAssignmentNode): T
     abstract fun visitVariableSubAssignmentNode(n: ShakeVariableSubAssignmentNode): T
     abstract fun visitVariableMulAssignmentNode(n: ShakeVariableMulAssignmentNode): T

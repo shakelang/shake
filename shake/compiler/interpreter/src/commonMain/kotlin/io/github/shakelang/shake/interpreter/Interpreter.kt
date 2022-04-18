@@ -136,7 +136,7 @@ class Interpreter : ShakeGeneratorBase {
         if (n is ShakeVariablePowAssignmentNode) return visitVariablePowAssignmentNode(n, scope)
         if (n is ShakeVariableIncreaseNode) return visitVariableIncreaseNode(n, scope)
         if (n is ShakeVariableDecreaseNode) return visitVariableDecreaseNode(n, scope)
-        if (n is ShakeVariableAssignmentNode) return visitVariableAssignmentNode(n, scope)
+        if (n is ShakeValuedNode) return visitVariableAssignmentNode(n, scope)
         if (n is ShakeVariableUsageNode) return visitVariableUsageNode(n, scope)
         if (n is ShakeLogicalEqEqualsNode) return visitEqEqualsNode(n, scope)
         if (n is ShakeLogicalBiggerEqualsNode) return visitBiggerEqualsNode(n, scope)
@@ -378,7 +378,7 @@ class Interpreter : ShakeGeneratorBase {
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableDeclarationNode(n: ShakeVariableDeclarationNode, scope: Scope): InterpreterValue {
-        val value = if (n.assignment != null) visit(n.assignment!!.value, scope) else null
+        val value = if (n.value != null) visit(n.value!!.value, scope) else null
         return if (!scope.scopeVariables.declare(
                 create(
                     n.name,
@@ -391,15 +391,15 @@ class Interpreter : ShakeGeneratorBase {
     }
 
     /**
-     * Visit a [ShakeVariableAssignmentNode]
+     * Visit a [ShakeValuedNode]
      *
-     * @param n the [ShakeVariableAssignmentNode] to visit
-     * @param scope the [Scope] for visiting the [ShakeVariableAssignmentNode]
+     * @param n the [ShakeValuedNode] to visit
+     * @param scope the [Scope] for visiting the [ShakeValuedNode]
      * @return The value that is assigned to the variable
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun visitVariableAssignmentNode(n: ShakeVariableAssignmentNode, scope: Scope): InterpreterValue {
+    fun visitVariableAssignmentNode(n: ShakeValuedNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
         val value = visit(n.value, scope)
         variable.value = value
@@ -1061,7 +1061,7 @@ class Interpreter : ShakeGeneratorBase {
 
                 // ...and apply the value (visit it's value)
                 // TODO Use Class Scope
-                statics[node.name]!!.value = visit(node.assignment!!.value, scope)
+                statics[node.name]!!.value = visit(node.value!!.value, scope)
 
                 // remove the field from the fields list
                 //

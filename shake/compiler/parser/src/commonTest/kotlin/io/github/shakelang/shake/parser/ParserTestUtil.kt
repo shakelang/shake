@@ -6,12 +6,13 @@ import io.github.shakelang.shake.parser.node.ShakeNode
 import io.github.shakelang.shake.parser.node.ShakeTree
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
+import io.github.shakelang.shake.parser.node.ShakeFile
 import kotlin.reflect.KClass
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 object ParserTestUtil {
-    fun parse(source: String, input: String): ShakeTree {
+    fun parse(source: String, input: String): ShakeFile {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()

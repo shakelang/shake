@@ -57,14 +57,14 @@ class ShakeJsGenerator : ShakeGenerator<JsOutput>() {
 
     override fun visitVariableDeclarationNode(n: ShakeVariableDeclarationNode): JsDeclaration {
         if(n.isFinal) {
-            if(n.assignment == null) throw IllegalStateException("Final variable must have an assignment")
-            return JsConstantDeclaration(n.name, visit(n.assignment!!.value).toValue())
+            if(n.value == null) throw IllegalStateException("Final variable must have an assignment")
+            return JsConstantDeclaration(n.name, visit(n.value!!.value).toValue())
         }
-        if(n.assignment == null) return JsVariableDeclaration(n.name)
-        return JsVariableDeclaration(n.name, visit(n.assignment!!.value).toValue())
+        if(n.value == null) return JsVariableDeclaration(n.name)
+        return JsVariableDeclaration(n.name, visit(n.value!!.value).toValue())
     }
 
-    override fun visitVariableAssignmentNode(n: ShakeVariableAssignmentNode): JsAssignment {
+    override fun visitVariableAssignmentNode(n: ShakeValuedNode): JsAssignment {
         if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
         return JsAssignment(JsField((n.variable as ShakeIdentifierNode).name), visit(n.value).toValue())
     }

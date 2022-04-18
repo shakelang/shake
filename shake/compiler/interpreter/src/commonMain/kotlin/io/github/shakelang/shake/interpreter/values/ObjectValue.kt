@@ -131,8 +131,8 @@ class ObjectValue
             thisObject.declare(
                 Variable.create(
                     node!!.name, node.type, node.isFinal,
-                    if (node.assignment != null) parent.interpreter.visit(
-                        node.assignment!!.value,  // << the value that is assigned to the variable
+                    if (node.value != null) parent.interpreter.visit(
+                        node.value!!.value,  // << the value that is assigned to the variable
                         scope // << The class-scope
                     ) else null
                 )

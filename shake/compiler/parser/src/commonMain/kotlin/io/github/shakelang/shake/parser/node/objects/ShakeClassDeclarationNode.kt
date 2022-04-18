@@ -4,6 +4,8 @@ import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationN
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.parser.node.ShakeFileChildNode
+import io.github.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import io.github.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import kotlin.jvm.JvmOverloads
 
@@ -19,7 +21,7 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
     val isInClass: Boolean = false,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false
-) : ShakeValuedNodeImpl(map) {
+) : ShakeFileChildNodeImpl(map) {
 
     constructor(
         map: PositionMap,

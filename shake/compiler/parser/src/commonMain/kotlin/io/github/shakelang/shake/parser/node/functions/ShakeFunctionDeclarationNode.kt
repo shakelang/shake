@@ -14,7 +14,7 @@ class ShakeFunctionDeclarationNode @JvmOverloads constructor(
     val isInClass: Boolean = false,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false
-) : ShakeValuedNodeImpl(map) {
+) : ShakeFileChildNodeImpl(map) {
 
     constructor(
         map: PositionMap, name: String, body: ShakeTree, args: Array<ShakeFunctionArgumentNode>,

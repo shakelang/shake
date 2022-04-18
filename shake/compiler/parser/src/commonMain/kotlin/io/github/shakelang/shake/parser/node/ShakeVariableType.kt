@@ -63,5 +63,8 @@ class ShakeVariableType {
         val OBJECT = ShakeVariableType(Type.OBJECT)
         @JvmField
         val VOID = ShakeVariableType(Type.VOID)
+
+        fun objectType(subtype: ShakeIdentifierNode): ShakeVariableType =
+            ShakeVariableType(subtype)
     }
 }

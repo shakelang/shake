@@ -11,7 +11,6 @@ import io.github.shakelang.shake.parser.node.variables.ShakeVariableModAssignmen
 import io.github.shakelang.shake.parser.node.variables.ShakeVariablePowAssignmentNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDecreaseNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableAssignmentNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
 import io.github.shakelang.shake.parser.node.logical.ShakeLogicalEqEqualsNode
 import io.github.shakelang.shake.parser.node.logical.ShakeLogicalBiggerEqualsNode
@@ -55,7 +54,7 @@ abstract class ShakeGeneratorContext<T, C> : ShakeGeneratorBase {
         if (n is ShakeVariablePowAssignmentNode) return visitVariablePowAssignmentNode(n, context)
         if (n is ShakeVariableIncreaseNode) return visitVariableIncreaseNode(n, context)
         if (n is ShakeVariableDecreaseNode) return visitVariableDecreaseNode(n, context)
-        if (n is ShakeVariableAssignmentNode) return visitVariableAssignmentNode(n, context)
+        if (n is ShakeValuedNode) return visitVariableAssignmentNode(n, context)
         if (n is ShakeVariableUsageNode) return visitVariableUsageNode(n, context)
         if (n is ShakeLogicalEqEqualsNode) return visitEqEqualsNode(n, context)
         if (n is ShakeLogicalBiggerEqualsNode) return visitBiggerEqualsNode(n, context)
@@ -91,7 +90,7 @@ abstract class ShakeGeneratorContext<T, C> : ShakeGeneratorBase {
     abstract fun visitModNode(n: ShakeModNode?, context: C): T
     abstract fun visitPowNode(n: ShakePowNode?, context: C): T
     abstract fun visitVariableDeclarationNode(n: ShakeVariableDeclarationNode?, context: C): T
-    abstract fun visitVariableAssignmentNode(n: ShakeVariableAssignmentNode?, context: C): T
+    abstract fun visitVariableAssignmentNode(n: ShakeValuedNode?, context: C): T
     abstract fun visitVariableAddAssignmentNode(n: ShakeVariableAddAssignmentNode?, context: C): T
     abstract fun visitVariableSubAssignmentNode(n: ShakeVariableSubAssignmentNode?, context: C): T
     abstract fun visitVariableMulAssignmentNode(n: ShakeVariableMulAssignmentNode?, context: C): T

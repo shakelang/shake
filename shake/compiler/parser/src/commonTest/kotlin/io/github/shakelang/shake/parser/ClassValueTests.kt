@@ -107,7 +107,7 @@ class ClassValueTests {
         val variable = node.fields[0]
         assertSame(ShakeVariableType.Type.DYNAMIC, variable.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
-        assertNotNull(variable.assignment)
+        assertNotNull(variable.value)
         assertEquals("i", variable.name)
         assertTrue(variable.isInClass)
         assertFalse(variable.isStatic)
@@ -132,7 +132,7 @@ class ClassValueTests {
         val variable = node.fields[0]
         assertSame(ShakeVariableType.Type.INTEGER, variable.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
-        assertNotNull(variable.assignment)
+        assertNotNull(variable.value)
         assertEquals("i", variable.name)
         assertTrue(variable.isInClass)
         assertFalse(variable.isStatic)
@@ -157,7 +157,7 @@ class ClassValueTests {
         var variable = node.fields[0]
         assertSame(ShakeVariableType.Type.INTEGER, variable.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
-        assertNotNull(variable.assignment)
+        assertNotNull(variable.value)
         assertEquals("i", variable.name)
         assertTrue(variable.isInClass)
         assertFalse(variable.isStatic)
@@ -166,7 +166,7 @@ class ClassValueTests {
         variable = node.fields[1]
         assertSame(ShakeVariableType.Type.INTEGER, variable.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
-        assertNotNull(variable.assignment)
+        assertNotNull(variable.value)
         assertEquals("i2", variable.name)
         assertTrue(variable.isInClass)
         assertFalse(variable.isStatic)
@@ -191,7 +191,7 @@ class ClassValueTests {
         val variable = node.fields[0]
         assertSame(ShakeVariableType.Type.INTEGER, variable.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
-        assertNotNull(variable.assignment)
+        assertNotNull(variable.value)
         assertEquals("i", variable.name)
         assertTrue(variable.isInClass)
         assertTrue(variable.isStatic)
@@ -216,7 +216,7 @@ class ClassValueTests {
         val variable = node.fields[0]
         assertSame(ShakeVariableType.Type.INTEGER, variable.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
-        assertNotNull(variable.assignment)
+        assertNotNull(variable.value)
         assertEquals("i", variable.name)
         assertTrue(variable.isInClass)
         assertFalse(variable.isStatic)
@@ -241,7 +241,7 @@ class ClassValueTests {
         val variable = node.fields[0]
         assertSame(ShakeVariableType.Type.INTEGER, variable.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
-        assertNotNull(variable.assignment)
+        assertNotNull(variable.value)
         assertEquals("i", variable.name)
         assertTrue(variable.isInClass)
         assertTrue(variable.isStatic)

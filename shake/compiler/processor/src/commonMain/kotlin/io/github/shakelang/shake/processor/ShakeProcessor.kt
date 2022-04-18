@@ -75,7 +75,7 @@ open class ShakePackageBasedProcessor : ShakeProcessor<ShakeProject>() {
 
 open class ShakeCodeProcessor {
 
-    fun visit(scope: ShakeScope, value: ShakeValuedNodeImpl): ShakeValue {
+    fun visit(scope: ShakeScope, value: io.github.shakelang.shake.parser.node.ShakeValuedNode): ShakeValue {
 
     }
 
@@ -125,7 +125,7 @@ open class ShakeCodeProcessor {
         TODO("Not yet implemented")
     }
 
-    fun visitVariableAssignmentNode(scope: ShakeScope, n: ShakeVariableAssignmentNode): Any {
+    fun visitVariableAssignmentNode(scope: ShakeScope, n: ShakeValuedNode): Any {
         TODO("Not yet implemented")
     }
 
