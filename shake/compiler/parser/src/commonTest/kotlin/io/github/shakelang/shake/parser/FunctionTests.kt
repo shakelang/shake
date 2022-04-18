@@ -403,7 +403,7 @@ class FunctionTests {
 
     @Test
     fun testReturn() {
-        val tree = ParserTestUtil.parse("<FunctionTest>", "return 10;")
+        val tree = ParserTestUtil.parseStatement("<FunctionTest>", "return 10;")
         assertEquals(1, tree.children.size)
         assertType(ShakeReturnNode::class, tree.children[0])
         val node = tree.children[0] as ShakeReturnNode

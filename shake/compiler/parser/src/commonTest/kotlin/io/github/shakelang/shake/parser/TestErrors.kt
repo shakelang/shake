@@ -8,7 +8,7 @@ class TestErrors {
     @Test
     fun testLPAREN() {
         val error = assertFailsWith(ParserError::class) {
-            ParserTestUtil.parseSingle("<TestLPAREN>", "if test", ShakeIfNode::class)
+            ParserTestUtil.parseStatement("<TestLPAREN>", "if test", ShakeIfNode::class)
         }
 
         // System.out.println(error.toString());
@@ -25,7 +25,7 @@ class TestErrors {
     @Test
     fun testRPAREN() {
         val error = assertFailsWith(ParserError::class) {
-            ParserTestUtil.parseSingle("<TestRPAREN>", "if(test{", ShakeIfNode::class)
+            ParserTestUtil.parseStatement("<TestRPAREN>", "if(test{", ShakeIfNode::class)
         }
 
         // System.out.println(error.toString());
@@ -42,7 +42,7 @@ class TestErrors {
     @Test
     fun testLCURL() {
         val error = assertFailsWith(ParserError::class) {
-            ParserTestUtil.parseSingle("<TestLCURL>", "if(test) {", ShakeIfNode::class)
+            ParserTestUtil.parseStatement("<TestLCURL>", "if(test) {", ShakeIfNode::class)
         }
 
         // System.out.println(error.toString());
@@ -59,7 +59,7 @@ class TestErrors {
     @Test
     fun testExpectingSemicolon() {
         val error = assertFailsWith(ParserError::class) {
-            ParserTestUtil.parseSingle("<TestAwaitSemicolonError>", "for(var i = 0 i<10) {", ShakeIfNode::class)
+            ParserTestUtil.parseStatement("<TestAwaitSemicolonError>", "for(var i = 0 i<10) {", ShakeIfNode::class)
         }
 
         // System.out.println(error.toString());

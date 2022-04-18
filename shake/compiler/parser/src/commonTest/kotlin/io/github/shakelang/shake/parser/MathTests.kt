@@ -10,7 +10,7 @@ import kotlin.test.*
 class MathTests {
     @Test
     fun testBasicNumber() {
-        val node = ParserTestUtil.parseSingle("<VariableUsageTest>", "10", ShakeIntegerNode::class)
+        val node = ParserTestUtil.parseValue("<VariableUsageTest>", "10", ShakeIntegerNode::class)
         assertEquals(10, node.number)
     }
 
@@ -34,7 +34,7 @@ class MathTests {
 
     @Test
     fun testPointBeforeLine() {
-        val add = ParserTestUtil.parseSingle("<PointBeforeLineTest>", "1 + 2 * 3 ** 4", ShakeAddNode::class)
+        val add = ParserTestUtil.parseValue("<PointBeforeLineTest>", "1 + 2 * 3 ** 4", ShakeAddNode::class)
         assertNotNull(add.left)
         assertType(ShakeIntegerNode::class, add.left)
         assertEquals(1, (add.left as ShakeIntegerNode).number)
@@ -57,7 +57,7 @@ class MathTests {
 
     @Test
     fun testBrackets() {
-        val node = ParserTestUtil.parseSingle("<BracketTest>", "2 * (4 + 3)", ShakeMulNode::class)
+        val node = ParserTestUtil.parseValue("<BracketTest>", "2 * (4 + 3)", ShakeMulNode::class)
         assertNotNull(node.left)
         assertType(ShakeIntegerNode::class, node.left)
         assertEquals(2, (node.left as ShakeIntegerNode).number)
@@ -73,7 +73,7 @@ class MathTests {
     }
 
     private fun <T : ShakeExpressionNode> testBasic(input: String, left: Double, right: Double, type: KClass<T>) {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             '<'.toString() + type.simpleName!!.substring(type.simpleName!!.length - 4) + "Test>",
             input,
             type

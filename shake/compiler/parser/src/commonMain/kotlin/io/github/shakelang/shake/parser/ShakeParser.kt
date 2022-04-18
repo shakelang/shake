@@ -44,6 +44,29 @@ class ShakeParser(val input: ShakeTokenInputStream) {
         return result
     }
 
+    fun parseAsStatements(): ShakeTree {
+        val nodes: MutableList<ShakeStatementNode> = ArrayList()
+        var position = -2
+        skipSeparators()
+        // TODO Require Separator
+        // boolean separator = true;
+        while (input.hasNext()) {
+
+            // if(!separator) throw new ParserError("AwaitSeparatorError", "Awaited separator at this point");
+            // separator = false;
+            if (position >= input.position) break
+            position = input.position
+            if (input.hasNext()) {
+                val result = expectStatement()
+                nodes.add(result)
+            }
+
+            // if(this.skipSeparators() > 0) separator = true;
+            skipSeparators()
+        }
+        return ShakeTree(map, nodes.toTypedArray())
+    }
+
     // ****************************************************************************
     // Basic Program
     private fun prog(): ShakeFile {
@@ -143,13 +166,14 @@ class ShakeParser(val input: ShakeTokenInputStream) {
             ShakeTokenType.KEYWORD_LONG,
             ShakeTokenType.KEYWORD_FLOAT,
             ShakeTokenType.KEYWORD_DOUBLE -> expectLocalDeclaration()
+            ShakeTokenType.IDENTIFIER -> handleIdentifierStatement()
             else -> {
                 throw ParserError("Unexpected token ($token)")
             }
         }
     }
 
-    private fun expectValue(): ShakeValuedNode = expectLogicalOr()
+    fun expectValue(): ShakeValuedNode = expectLogicalOr()
 
     // ****************************************************************************
     // Utils
@@ -228,6 +252,7 @@ class ShakeParser(val input: ShakeTokenInputStream) {
             final = true
             input.skip()
         }
+        if(input.peekType() == ShakeTokenType.KEYWORD_CONST) final = true
         return expectLocalDeclaration(expectType(), final)
     }
 
@@ -236,17 +261,19 @@ class ShakeParser(val input: ShakeTokenInputStream) {
             throw ParserError("Expecting identifier")
         val name = input.actualValue!!
 
-        if(input.peekType() != ShakeTokenType.ASSIGN)
-            return ShakeVariableDeclarationNode(map, name, type, null, ShakeAccessDescriber.PUBLIC, isInClass = false, isStatic = false, isFinal = final)
+        if(!input.hasNext() || input.peekType() != ShakeTokenType.ASSIGN)
+            return ShakeVariableDeclarationNode(map, name, type, null, ShakeAccessDescriber.PACKAGE, isInClass = false, isStatic = false, isFinal = final)
 
         input.skip()
         val value = expectValue()
 
-        return ShakeVariableDeclarationNode(map, name, type, value, ShakeAccessDescriber.PUBLIC, isInClass = false, isStatic = false, isFinal = final)
+        return ShakeVariableDeclarationNode(map, name, type, value, ShakeAccessDescriber.PACKAGE, isInClass = false, isStatic = false, isFinal = final)
     }
 
     private fun expectType(): ShakeVariableType {
         return when(input.nextType()) {
+            ShakeTokenType.KEYWORD_VAR -> ShakeVariableType.DYNAMIC
+            ShakeTokenType.KEYWORD_CONST -> ShakeVariableType.DYNAMIC
             ShakeTokenType.KEYWORD_DYNAMIC -> ShakeVariableType.DYNAMIC
             ShakeTokenType.KEYWORD_BOOLEAN -> ShakeVariableType.BOOLEAN
             ShakeTokenType.KEYWORD_CHAR -> ShakeVariableType.CHAR
@@ -632,7 +659,6 @@ class ShakeParser(val input: ShakeTokenInputStream) {
         isStatic: Boolean,
         isFinal: Boolean
     ): ShakeFileChildNode {
-
         // TODO error on void variable type
         if (!input.skipIgnorable()
                 .hasNext() || input.peekType() != ShakeTokenType.IDENTIFIER
@@ -719,8 +745,10 @@ class ShakeParser(val input: ShakeTokenInputStream) {
         return if (input.peekType() == ShakeTokenType.LCURL) {
             input.skip()
             val list = mutableListOf<ShakeStatementNode>()
+            skipSeparators()
             while (input.hasNext() && input.peekType() != ShakeTokenType.RCURL) {
                 list.add(expectStatement())
+                skipSeparators()
             }
             if (!input.hasNext() || input.nextType() != ShakeTokenType.RCURL) throw ParserError(
                 "Expecting '}'"

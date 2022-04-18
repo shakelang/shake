@@ -12,13 +12,13 @@ import kotlin.test.*
 class LogicalTests {
     @Test
     fun testTrue() {
-        assertNotNull(ParserTestUtil.parseSingle("<LogicalTrueTest>", "true", ShakeLogicalTrueNode::class))
+        assertNotNull(ParserTestUtil.parseValue("<LogicalTrueTest>", "true", ShakeLogicalTrueNode::class))
     }
 
     @Test
     fun testFalse() {
         assertNotNull(
-            ParserTestUtil.parseSingle(
+            ParserTestUtil.parseValue(
                 "<LogicalFalseTest>",
                 "false",
                 ShakeLogicalFalseNode::class
@@ -53,7 +53,7 @@ class LogicalTests {
 
     @Test
     fun testAnd() {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             "<LogicalAndTest>",
             "true && false",
             ShakeLogicalAndNode::class
@@ -66,7 +66,7 @@ class LogicalTests {
 
     @Test
     fun testOr() {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             "<LogicalOrTest>",
             "true || false",
             ShakeLogicalOrNode::class
@@ -79,7 +79,7 @@ class LogicalTests {
 
     @Test
     fun testXOr() {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             "<LogicalXOrTest>",
             "true ^ false",
             ShakeLogicalXOrNode::class
@@ -93,7 +93,7 @@ class LogicalTests {
     @Test
     fun testBrackets() {
         val node =
-            ParserTestUtil.parseSingle(
+            ParserTestUtil.parseValue(
                 "<LogicalBracketTest>",
                 "true && (false || true)",
                 ShakeLogicalAndNode::class
@@ -111,7 +111,7 @@ class LogicalTests {
 
     @Test
     fun testExpr() {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             "<LogicalExpressionTest>",
             "10 >= 5 + 9 * 2",
             ShakeLogicalBiggerEqualsNode::class
@@ -137,7 +137,7 @@ class LogicalTests {
     }
 
     private fun <T : ShakeLogicalCompareNode> testBasic(input: String, left: Double, right: Double, type: KClass<T>) {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             '<'.toString() + type.simpleName?.substring(type.simpleName?.length?.minus(4) ?: 0) + "Test>",
             input,
             type
