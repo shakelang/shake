@@ -10,19 +10,18 @@ import io.github.shakelang.shake.parser.node.expression.*
 import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.logical.*
 import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import io.github.shakelang.shake.parser.node.loops.ShakeForNode
 import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.*
+import io.github.shakelang.shake.processor.program.ShakeAssignable
 import io.github.shakelang.shake.processor.program.ShakeProject
-import io.github.shakelang.shake.processor.program.code.ShakeCode
-import io.github.shakelang.shake.processor.program.code.ShakeScope
-import io.github.shakelang.shake.processor.program.code.ShakeStatement
-import io.github.shakelang.shake.processor.program.code.ShakeValue
+import io.github.shakelang.shake.processor.program.ShakeType
+import io.github.shakelang.shake.processor.program.code.*
+import io.github.shakelang.shake.processor.program.code.statements.*
+import io.github.shakelang.shake.processor.program.code.values.*
 
 class ShakeProcessorOptions {
     var precalculate: Boolean = true
@@ -34,14 +33,14 @@ abstract class ShakeProcessor <T> {
 
     abstract val src: T
 
-    open fun parseFile(src: String): ShakeTree {
+    open fun parseFile(src: String): ShakeFile {
 
         val file = File(src).contents
         val chars: CharacterInputStream = SourceCharacterInputStream(src, file)
 
         val lexer = ShakeLexer(chars)
         val tokens = lexer.makeTokens()
-        val parser = ShakeParser(tokens)
+        val parser = ShakeParser.from(tokens)
         return parser.parse()
 
     }
@@ -59,7 +58,7 @@ open class ShakePackageBasedProcessor : ShakeProcessor<ShakeProject>() {
     override val src: ShakeProject
         get() = project
 
-    open fun loadSynthetic(src: String, contents: ShakeTree) {
+    open fun loadSynthetic(src: String, contents: ShakeFile) {
         val reformatted = src.replace("\\", "/").replace(".", "/")
         project.putFile(reformatted.split("/").toTypedArray(), contents)
     }
@@ -75,178 +74,314 @@ open class ShakePackageBasedProcessor : ShakeProcessor<ShakeProject>() {
 
 open class ShakeCodeProcessor {
 
-    fun visit(scope: ShakeScope, value: io.github.shakelang.shake.parser.node.ShakeValuedNode): ShakeValue {
+    fun visitValue(scope: ShakeScope, value: ShakeValuedNode): ShakeValue {
+        return if(value is ShakeIntegerNode) visitIntegerNode(scope, value)
+        else if(value is ShakeDoubleNode) visitDoubleNode(scope, value)
+        else if(value is ShakeLogicalTrueNode) visitLogicalTrueNode(scope, value)
+        else if(value is ShakeLogicalFalseNode) visitLogicalFalseNode(scope, value)
+        else if(value is ShakeLogicalAndNode) visitLogicalAndNode(scope, value)
+        else if(value is ShakeLogicalOrNode) visitLogicalOrNode(scope, value)
+        else if(value is ShakeLogicalEqEqualsNode) visitEqEqualsNode(scope, value)
+        else if(value is ShakeLogicalBiggerEqualsNode) visitBiggerEqualsNode(scope, value)
+        else if(value is ShakeLogicalSmallerEqualsNode) visitSmallerEqualsNode(scope, value)
+        else if(value is ShakeLogicalBiggerNode) visitBiggerNode(scope, value)
+        else if(value is ShakeLogicalSmallerNode) visitSmallerNode(scope, value)
+        else if(value is ShakeAddNode) visitAddNode(scope, value)
+        else if(value is ShakeSubNode) visitSubNode(scope, value)
+        else if(value is ShakeMulNode) visitMulNode(scope, value)
+        else if(value is ShakeDivNode) visitDivNode(scope, value)
+        else if(value is ShakeModNode) visitModNode(scope, value)
+        else if(value is ShakePowNode) visitPowNode(scope, value)
+        else if(value is ShakeVariableAssignmentNode) visitVariableAssignmentNode(scope, value)
+        else if(value is ShakeVariableAddAssignmentNode) visitVariableAddAssignmentNode(scope, value)
+        else if(value is ShakeVariableSubAssignmentNode) visitVariableSubAssignmentNode(scope, value)
+        else if(value is ShakeVariableMulAssignmentNode) visitVariableMulAssignmentNode(scope, value)
+        else if(value is ShakeVariableDivAssignmentNode) visitVariableDivAssignmentNode(scope, value)
+        else if(value is ShakeVariableModAssignmentNode) visitVariableModAssignmentNode(scope, value)
+        else if(value is ShakeVariablePowAssignmentNode) visitVariablePowAssignmentNode(scope, value)
+        else if(value is ShakeFunctionCallNode) visitFunctionCallNode(scope, value)
+        else throw IllegalArgumentException("Unsupported value type: ${value::class.qualifiedName}")
+
 
     }
 
-    fun visit(scope: ShakeScope, statement: ShakeStatement): ShakeStatement {
+    fun visitStatement(scope: ShakeScope, statement: ShakeStatementNode): ShakeStatement {
 
     }
 
-    fun visitTree(scope: ShakeScope, t: ShakeTree): Any {
+    fun visitTree(scope: ShakeScope, t: ShakeTree): ShakeCode {
         return ShakeCode(t.children.map {
-            visit(scope, it)
+            visitStatement(scope, it)
         })
     }
 
-    fun visitDoubleNode(scope: ShakeScope, n: ShakeDoubleNode): Any {
-        TODO("Not yet implemented")
+    fun visitType(scope: ShakeScope, t: ShakeVariableType): ShakeType? {
+        return when(t.type) {
+            ShakeVariableType.Type.DYNAMIC -> null
+            ShakeVariableType.Type.BYTE -> ShakeType.Primitives.BYTE
+            ShakeVariableType.Type.SHORT -> ShakeType.Primitives.SHORT
+            ShakeVariableType.Type.INTEGER -> ShakeType.Primitives.INT
+            ShakeVariableType.Type.LONG -> ShakeType.Primitives.LONG
+            ShakeVariableType.Type.FLOAT -> ShakeType.Primitives.FLOAT
+            ShakeVariableType.Type.DOUBLE -> ShakeType.Primitives.DOUBLE
+            ShakeVariableType.Type.BOOLEAN -> ShakeType.Primitives.BOOLEAN
+            else -> null
+        }
     }
 
-    fun visitIntegerNode(scope: ShakeScope, n: ShakeIntegerNode): Any {
-        TODO("Not yet implemented")
+    fun visitDoubleNode(scope: ShakeScope, n: ShakeDoubleNode): ShakeDoubleLiteral {
+        return ShakeDoubleLiteral(n.number)
     }
 
-    fun visitAddNode(scope: ShakeScope, n: ShakeAddNode): Any {
-        TODO("Not yet implemented")
+    fun visitIntegerNode(scope: ShakeScope, n: ShakeIntegerNode): ShakeIntegerLiteral {
+        return ShakeIntegerLiteral(n.number)
     }
 
-    fun visitSubNode(scope: ShakeScope, n: ShakeSubNode): Any {
-        TODO("Not yet implemented")
+    fun visitAddNode(scope: ShakeScope, n: ShakeAddNode): ShakeAddition {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        val type = left.type.additionType(right.type) ?: throw Exception("Cannot add ${left.type} and ${right.type}")
+        return ShakeAddition(left, right, type)
     }
 
-    fun visitMulNode(scope: ShakeScope, n: ShakeMulNode): Any {
-        TODO("Not yet implemented")
+    fun visitSubNode(scope: ShakeScope, n: ShakeSubNode): ShakeSubtraction {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        val type = left.type.subtractionType(right.type) ?: throw Exception("Cannot subtract ${left.type} and ${right.type}")
+        return ShakeSubtraction(left, right, type)
     }
 
-    fun visitDivNode(scope: ShakeScope, n: ShakeDivNode): Any {
-        TODO("Not yet implemented")
+    fun visitMulNode(scope: ShakeScope, n: ShakeMulNode): ShakeMultiplication {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        val type = left.type.multiplicationType(right.type) ?: throw Exception("Cannot multiply ${left.type} and ${right.type}")
+        return ShakeMultiplication(left, right, type)
     }
 
-    fun visitModNode(scope: ShakeScope, n: ShakeModNode): Any {
-        TODO("Not yet implemented")
+    fun visitDivNode(scope: ShakeScope, n: ShakeDivNode): ShakeDivision {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        val type = left.type.divisionType(right.type) ?: throw Exception("Cannot divide ${left.type} and ${right.type}")
+        return ShakeDivision(left, right, type)
     }
 
-    fun visitPowNode(scope: ShakeScope, n: ShakePowNode): Any {
-        TODO("Not yet implemented")
+    fun visitModNode(scope: ShakeScope, n: ShakeModNode): ShakeModulus {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        val type = left.type.modulusType(right.type) ?: throw Exception("Cannot modulus ${left.type} and ${right.type}")
+        return ShakeModulus(left, right, type)
     }
 
-    fun visitVariableDeclarationNode(scope: ShakeScope, n: ShakeVariableDeclarationNode): Any {
-        TODO("Not yet implemented")
+    fun visitPowNode(scope: ShakeScope, n: ShakePowNode): ShakePower {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        val type = left.type.powerType(right.type) ?: throw Exception("Cannot power ${left.type} and ${right.type}")
+        return ShakePower(left, right, type)
     }
 
-    fun visitVariableAssignmentNode(scope: ShakeScope, n: ShakeValuedNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableDeclarationNode(scope: ShakeScope, n: ShakeVariableDeclarationNode): ShakeVariableDeclaration {
+        val value = if(n.value != null) visitValue(scope, n.value!!) else null
+        val type = visitType(scope, n.type) ?: value?.type ?: throw Exception("Cannot infer type of variable ${n.name}")
+        return ShakeVariableDeclaration(scope, n.name, type, value)
     }
 
-    fun visitVariableAddAssignmentNode(scope: ShakeScope, n: ShakeVariableAddAssignmentNode): Any {
-        TODO("Not yet implemented")
+    fun getAssignable(scope: ShakeScope, n: ShakeValuedNode): ShakeAssignable? {
+        return if(n !is ShakeIdentifierNode) ShakeAssignable.wrap(visitValue(scope, n))
+        else if(n.parent != null) {
+            val parent = visitValue(scope, n.parent!!)
+            ShakeChild(scope, parent, n.name)
+        } else scope.get(n.name)
     }
 
-    fun visitVariableSubAssignmentNode(scope: ShakeScope, n: ShakeVariableSubAssignmentNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableAssignmentNode(scope: ShakeScope, n: ShakeVariableAssignmentNode): ShakeAssignment {
+        val value = visitValue(scope, n.value)
+        val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
+        if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
+        return variable.createAssignment(value)
     }
 
-    fun visitVariableMulAssignmentNode(scope: ShakeScope, n: ShakeVariableMulAssignmentNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableAddAssignmentNode(scope: ShakeScope, n: ShakeVariableAddAssignmentNode): ShakeAddAssignment {
+        val value = visitValue(scope, n.value)
+        val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
+        if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
+        return variable.createAddAssignment(value)
     }
 
-    fun visitVariableDivAssignmentNode(scope: ShakeScope, n: ShakeVariableDivAssignmentNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableSubAssignmentNode(scope: ShakeScope, n: ShakeVariableSubAssignmentNode): ShakeSubAssignment {
+        val value = visitValue(scope, n.value)
+        val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
+        if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
+        return variable.createSubtractAssignment(value)
     }
 
-    fun visitVariableModAssignmentNode(scope: ShakeScope, n: ShakeVariableModAssignmentNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableMulAssignmentNode(scope: ShakeScope, n: ShakeVariableMulAssignmentNode): ShakeMulAssignment {
+        val value = visitValue(scope, n.value)
+        val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
+        if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
+        return variable.createMultiplyAssignment(value)
     }
 
-    fun visitVariablePowAssignmentNode(scope: ShakeScope, n: ShakeVariablePowAssignmentNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableDivAssignmentNode(scope: ShakeScope, n: ShakeVariableDivAssignmentNode): ShakeDivAssignment {
+        val value = visitValue(scope, n.value)
+        val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
+        if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
+        return variable.createDivideAssignment(value)
     }
 
-    fun visitVariableIncreaseNode(scope: ShakeScope, n: ShakeVariableIncreaseNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableModAssignmentNode(scope: ShakeScope, n: ShakeVariableModAssignmentNode): ShakeModAssignment {
+        val value = visitValue(scope, n.value)
+        val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
+        if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
+        return variable.createModulusAssignment(value)
     }
 
-    fun visitVariableDecreaseNode(scope: ShakeScope, n: ShakeVariableDecreaseNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariablePowAssignmentNode(scope: ShakeScope, n: ShakeVariablePowAssignmentNode): ShakePowerAssignment {
+        val value = visitValue(scope, n.value)
+        val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
+        if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
+        return variable.createPowerAssignment(value)
     }
 
-    fun visitVariableUsageNode(scope: ShakeScope, n: ShakeVariableUsageNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableIncrementNode(scope: ShakeScope, n: ShakeVariableIncreaseNode): ShakeIncrementBefore {
+        val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
+        return variable.createIncrementBeforeAssignment()
     }
 
-    fun visitEqEqualsNode(scope: ShakeScope, n: ShakeLogicalEqEqualsNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableDecrementNode(scope: ShakeScope, n: ShakeVariableDecreaseNode): ShakeDecrementBefore {
+        val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
+        return variable.createDecrementBeforeAssignment()
     }
 
-    fun visitBiggerEqualsNode(scope: ShakeScope, n: ShakeLogicalBiggerEqualsNode): Any {
-        TODO("Not yet implemented")
+    fun visitVariableUsageNode(scope: ShakeScope, n: ShakeVariableUsageNode): ShakeValue {
+        val identifier = n.variable
+        if(identifier.parent != null) {
+            val parent = visitValue(scope, identifier.parent!!)
+            val type = parent.type.childType(identifier.name)
+                ?: throw Exception("Cannot access ${identifier.name} in ${parent.type}")
+            return ShakeChild(scope, parent, identifier.name).actualValue
+        }
+        val variable = scope.get(identifier.name) ?: throw Exception("Variable ${identifier.name} not declared")
+        return variable.actualValue ?: throw Exception("Variable ${identifier.name} not initialized") // TODO null value
     }
 
-    fun visitSmallerEqualsNode(scope: ShakeScope, n: ShakeLogicalSmallerEqualsNode): Any {
-        TODO("Not yet implemented")
+    fun visitEqEqualsNode(scope: ShakeScope, n: ShakeLogicalEqEqualsNode): ShakeEquals {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        return ShakeEquals(left, right, left.type.equalsType(right.type)
+            ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
-    fun visitBiggerNode(scope: ShakeScope, n: ShakeLogicalBiggerNode): Any {
-        TODO("Not yet implemented")
+    fun visitBiggerEqualsNode(scope: ShakeScope, n: ShakeLogicalBiggerEqualsNode): ShakeGreaterThanOrEqual {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        return ShakeGreaterThanOrEqual(left, right, left.type.equalsType(right.type)
+            ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
-    fun visitSmallerNode(scope: ShakeScope, n: ShakeLogicalSmallerNode): Any {
-        TODO("Not yet implemented")
+    fun visitSmallerEqualsNode(scope: ShakeScope, n: ShakeLogicalSmallerEqualsNode): ShakeLessThanOrEqual {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        return ShakeLessThanOrEqual(left, right, left.type.equalsType(right.type)
+            ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
-    fun visitLogicalAndNode(scope: ShakeScope, n: ShakeLogicalAndNode): Any {
-        TODO("Not yet implemented")
+    fun visitBiggerNode(scope: ShakeScope, n: ShakeLogicalBiggerNode): ShakeGreaterThan {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        return ShakeGreaterThan(left, right, left.type.equalsType(right.type)
+            ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
-    fun visitLogicalOrNode(scope: ShakeScope, n: ShakeLogicalOrNode): Any {
-        TODO("Not yet implemented")
+    fun visitSmallerNode(scope: ShakeScope, n: ShakeLogicalSmallerNode): ShakeLessThan {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        return ShakeLessThan(left, right, left.type.equalsType(right.type)
+            ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
+    }
+
+    fun visitLogicalAndNode(scope: ShakeScope, n: ShakeLogicalAndNode): ShakeAnd {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        return ShakeAnd(left, right, left.type.equalsType(right.type)
+            ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
+    }
+
+    fun visitLogicalOrNode(scope: ShakeScope, n: ShakeLogicalOrNode): ShakeOr {
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        return ShakeOr(left, right, left.type.equalsType(right.type)
+            ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
     fun visitLogicalXOrNode(scope: ShakeScope, n: ShakeLogicalXOrNode): Any {
-        TODO("Not yet implemented")
+        val left = visitValue(scope, n.left)
+        val right = visitValue(scope, n.right)
+        return ShakeXor(left, right, left.type.equalsType(right.type)
+            ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
-    fun visitWhileNode(scope: ShakeScope, n: ShakeWhileNode): Any {
-        TODO("Not yet implemented")
+    fun visitBoolean(scope: ShakeScope, n: ShakeValuedNode): ShakeValue {
+        val value = visitValue(scope, n)
+        return if(value.type == ShakeType.Primitives.BOOLEAN) value
+            else throw Exception("Cannot convert ${value.type} to boolean")
     }
 
-    fun visitDoWhileNode(scope: ShakeScope, n: ShakeDoWhileNode): Any {
-        TODO("Not yet implemented")
+    fun visitWhileNode(scope: ShakeScope, n: ShakeWhileNode): ShakeWhile {
+        val condition = visitBoolean(scope, n.condition)
+        val body = visitTree(scope, n.body)
+        return ShakeWhile(condition, body)
     }
 
-    fun visitForNode(scope: ShakeScope, n: ShakeForNode): Any {
-        TODO("Not yet implemented")
+    fun visitDoWhileNode(scope: ShakeScope, n: ShakeDoWhileNode): ShakeDoWhile {
+        val condition = visitBoolean(scope, n.condition)
+        val body = visitTree(scope, n.body)
+        return ShakeDoWhile(condition, body)
     }
 
-    fun visitIfNode(scope: ShakeScope, n: ShakeIfNode): Any {
-        TODO("Not yet implemented")
+    fun visitForNode(scope: ShakeScope, n: ShakeForNode): ShakeFor {
+        val init = visitStatement(scope, n.declaration)
+        val condition = visitBoolean(scope, n.condition)
+        val update = visitStatement(scope, n.round)
+        val body = visitTree(scope, n.body)
+        return ShakeFor(init, condition, update, body)
     }
 
-    fun visitFunctionDeclarationNode(scope: ShakeScope, n: ShakeFunctionDeclarationNode): Any {
-        TODO("Not yet implemented")
-    }
-
-    fun visitClassDeclarationNode(scope: ShakeScope, n: ShakeClassDeclarationNode): Any {
-        TODO("Not yet implemented")
+    fun visitIfNode(scope: ShakeScope, n: ShakeIfNode): ShakeIf {
+        val condition = visitBoolean(scope, n.condition)
+        val body = visitTree(scope, n.body)
+        if(n.elseBody != null) {
+            val elseBody = visitTree(scope, n.elseBody!!)
+            return ShakeIf(condition, body, elseBody)
+        }
+        return ShakeIf(condition, body)
     }
 
     fun visitClassConstruction(scope: ShakeScope, n: ShakeClassConstructionNode): Any {
-        TODO("Not yet implemented")
+
     }
 
-    fun visitFunctionCallNode(scope: ShakeScope, n: ShakeFunctionCallNode): Any {
-        TODO("Not yet implemented")
+    fun visitFunctionCallNode(scope: ShakeScope, n: ShakeFunctionCallNode): ShakeInvocation {
+        val function = n.function
+        if(function is ShakeIdentifierNode) {
+            if(function.parent != null) {
+                val parent = visitValue(scope, function.parent!!)
+                val name = function.name
+                val args = n.args.map { visitValue(scope, it) }
+                TODO("Find correct function")
+            }
+        }
     }
 
-    fun visitIdentifierNode(scope: ShakeScope, n: ShakeIdentifierNode): Any {
-        TODO("Not yet implemented")
+    fun visitLogicalTrueNode(scope: ShakeScope, n: ShakeLogicalTrueNode): ShakeValue {
+        return ShakeBooleanLiteral.TRUE
     }
 
-    fun visitLogicalTrueNode(scope: ShakeScope, n: ShakeLogicalTrueNode): Any {
-        TODO("Not yet implemented")
-    }
-
-    fun visitLogicalFalseNode(scope: ShakeScope, n: ShakeLogicalFalseNode): Any {
-        TODO("Not yet implemented")
-    }
-
-    fun visitImportNode(scope: ShakeScope, n: ShakeImportNode): Any {
-        TODO("Not yet implemented")
+    fun visitLogicalFalseNode(scope: ShakeScope, n: ShakeLogicalFalseNode): ShakeValue {
+        return ShakeBooleanLiteral.FALSE
     }
 
     fun visitCastNode(scope: ShakeScope, n: ShakeCastNode): Any {
-        TODO("Not yet implemented")
+
     }
 
 }

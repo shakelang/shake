@@ -4,38 +4,61 @@ import io.github.shakelang.shake.processor.program.ShakeType
 import io.github.shakelang.shake.processor.program.code.ShakeValue
 
 
-open class ShakeAddition(
+open class ShakeEquals(
     val left: ShakeValue,
     val right: ShakeValue,
     override val type: ShakeType
 ) : ShakeValue
 
-open class ShakeSubtraction(
+open class ShakeNotEquals(
     val left: ShakeValue,
     val right: ShakeValue,
     override val type: ShakeType
 ) : ShakeValue
 
-open class ShakeMultiplication(
+open class ShakeLessThan(
     val left: ShakeValue,
     val right: ShakeValue,
     override val type: ShakeType
 ) : ShakeValue
 
-open class ShakeDivision(
+open class ShakeLessThanOrEqual(
     val left: ShakeValue,
     val right: ShakeValue,
     override val type: ShakeType
 ) : ShakeValue
 
-open class ShakeModulo(
+open class ShakeGreaterThan(
     val left: ShakeValue,
     val right: ShakeValue,
     override val type: ShakeType
 ) : ShakeValue
 
-open class ShakePower(
+open class ShakeGreaterThanOrEqual(
     val left: ShakeValue,
     val right: ShakeValue,
+    override val type: ShakeType
+) : ShakeValue
+
+open class ShakeAnd(
+    val left: ShakeValue,
+    val right: ShakeValue,
+    override val type: ShakeType
+) : ShakeValue
+
+open class ShakeOr(
+    val left: ShakeValue,
+    val right: ShakeValue,
+    override val type: ShakeType
+) : ShakeValue
+
+open class ShakeXor(
+    val left: ShakeValue,
+    val right: ShakeValue,
+    override val type: ShakeType
+) : ShakeValue
+
+open class ShakeNot(
+    val value: ShakeValue,
     override val type: ShakeType
 ) : ShakeValue

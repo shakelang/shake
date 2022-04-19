@@ -4,6 +4,7 @@ import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.processor.program.code.values.ShakeFieldUsage
 import io.github.shakelang.shake.processor.program.code.ShakeScope
+import io.github.shakelang.shake.processor.program.code.ShakeValue
 import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
 
 open class ShakeField (
@@ -14,9 +15,28 @@ open class ShakeField (
     val isPrivate: Boolean,
     val isProtected: Boolean,
     val isPublic: Boolean,
-): ShakeDeclaration {
+): ShakeDeclaration, ShakeAssignable {
+
+    override val actualValue: ShakeValue?
+        get() = TODO("Not yet implemented")
+
+    override val actualType: ShakeType
+        get() = TODO("Not yet implemented")
+
     final override lateinit var type: ShakeType
         private set
+
+    override fun assignType(other: ShakeType): ShakeType = type.assignType(other) ?: other
+    override fun additionAssignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: type
+    override fun subtractionAssignType(other: ShakeType): ShakeType = type.subtractionAssignType(other) ?: type
+    override fun multiplicationAssignType(other: ShakeType): ShakeType = type.multiplicationAssignType(other) ?: type
+    override fun divisionAssignType(other: ShakeType): ShakeType = type.divisionAssignType(other) ?: type
+    override fun modulusAssignType(other: ShakeType): ShakeType = type.modulusAssignType(other) ?: type
+    override fun powerAssignType(other: ShakeType): ShakeType = type.powerAssignType(other) ?: type
+    override fun incrementBeforeType(): ShakeType = type.incrementBeforeType() ?: type
+    override fun incrementAfterType(): ShakeType = type.incrementAfterType() ?: type
+    override fun decrementBeforeType(): ShakeType? = type.decrementBeforeType() ?: type
+    override fun decrementAfterType(): ShakeType? = type.decrementAfterType() ?: type
 
     fun lateinitType(): (ShakeType) -> ShakeType {
         return {

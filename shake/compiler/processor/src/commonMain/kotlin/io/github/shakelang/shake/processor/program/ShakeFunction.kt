@@ -3,7 +3,7 @@ package io.github.shakelang.shake.processor.program
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.processor.program.code.ShakeCode
-import io.github.shakelang.shake.processor.program.code.ShakeExecutable
+import io.github.shakelang.shake.processor.program.code.ShakeInvokable
 
 open class ShakeFunction (
     val name: String,
@@ -16,8 +16,8 @@ open class ShakeFunction (
     val isPrivate: Boolean,
     val isProtected: Boolean,
     val isPublic: Boolean,
-): ShakeExecutable(body) {
-    lateinit var returnType: ShakeType
+): ShakeInvokable(body) {
+    final override lateinit var returnType: ShakeType
         private set
 
     constructor(
