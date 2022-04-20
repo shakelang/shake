@@ -1,25 +1,27 @@
 package io.github.shakelang.shake.processor.program
 
 open class ShakeConstructor (
-    val name: String?,
+    val clazz: ShakeClass,
     val body: String,
     val isStrict: Boolean,
     val isPrivate: Boolean,
     val isProtected: Boolean,
     val isPublic: Boolean,
+    val name: String? = null
 ) {
     lateinit var parameters: List<ShakeParameter>
         private set
 
     constructor(
-        name: String,
+        clazz: ShakeClass,
         parameters: List<ShakeParameter>,
         body: String,
         isStrict: Boolean,
         isPrivate: Boolean,
         isProtected: Boolean,
-        isPublic: Boolean
-    ): this(name, body, isStrict, isPrivate, isProtected, isPublic) {
+        isPublic: Boolean,
+        name: String? = null
+    ): this(clazz, body, isStrict, isPrivate, isProtected, isPublic, name) {
         this.parameters = parameters
     }
 

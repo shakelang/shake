@@ -49,7 +49,7 @@ class ShakeChildUsage (
         get() {
             val parentType = used.parent.type
             if(parentType is ShakeType.Object) {
-                return parentType.clazz.get(used.name)!! // TODO: check if this is correct
+                return parentType.clazz.fields.find { it.name == used.name }!! // TODO: check if this is correct
             }
             throw IllegalStateException("Child usage is not in an object")
         }

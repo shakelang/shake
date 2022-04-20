@@ -39,7 +39,9 @@ abstract class ShakeType (
 
     abstract val kind: Kind
 
-    abstract fun compatibleTo(other: ShakeType): Boolean
+    abstract fun castableTo(other: ShakeType): Boolean
+    open fun compatibleTo(other: ShakeType): Boolean = compatibilityDistance(other) > 0
+    abstract fun compatibilityDistance(other: ShakeType): Int
 
     enum class Kind {
         PRIMITIVE,
@@ -69,12 +71,19 @@ abstract class ShakeType (
         override val kind: Kind
             get() = Kind.PRIMITIVE
 
-        override fun compatibleTo(other: ShakeType): Boolean {
-            return when (other) {
-                is Primitive -> type == other.type
-                else -> false
-            }
-        }
+        override fun castableTo(other: ShakeType): Boolean =
+            other is Primitive &&
+                    (other.type == PrimitiveType.BYTE
+                            || other.type == PrimitiveType.SHORT
+                            || other.type == PrimitiveType.INT
+                            || other.type == PrimitiveType.LONG
+                            || other.type == PrimitiveType.FLOAT
+                            || other.type == PrimitiveType.DOUBLE
+                            || other.type == PrimitiveType.UNSIGNED_BYTE
+                            || other.type == PrimitiveType.UNSIGNED_SHORT
+                            || other.type == PrimitiveType.UNSIGNED_INT
+                            || other.type == PrimitiveType.UNSIGNED_LONG
+                            || other.type == PrimitiveType.CHAR)
 
         companion object {
 
@@ -137,6 +146,11 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun castableTo(other: ShakeType): Boolean =
+                    other is Primitive && other.type == PrimitiveType.BOOLEAN
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other is Primitive && other.type == PrimitiveType.BOOLEAN) 0 else -1
             }
 
             val BYTE: Primitive = object : Primitive("byte", PrimitiveType.BYTE) {
@@ -173,6 +187,17 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.BYTE -> 0
+                        PrimitiveType.SHORT -> 1
+                        PrimitiveType.INT -> 2
+                        PrimitiveType.LONG -> 3
+                        PrimitiveType.FLOAT -> 4
+                        PrimitiveType.DOUBLE -> 4
+                        else -> -1
+                    }
             }
 
             val SHORT: Primitive = object : Primitive("short", PrimitiveType.SHORT) {
@@ -209,6 +234,16 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.SHORT -> 0
+                        PrimitiveType.INT -> 1
+                        PrimitiveType.LONG -> 2
+                        PrimitiveType.FLOAT -> 3
+                        PrimitiveType.DOUBLE -> 4
+                        else -> -1
+                    }
             }
 
             val INT: Primitive = object : Primitive("int", PrimitiveType.INT) {
@@ -245,6 +280,15 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.INT -> 0
+                        PrimitiveType.LONG -> 1
+                        PrimitiveType.FLOAT -> 2
+                        PrimitiveType.DOUBLE -> 3
+                        else -> -1
+                    }
             }
 
             val LONG: Primitive = object : Primitive("long", PrimitiveType.LONG) {
@@ -281,6 +325,14 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.LONG -> 0
+                        PrimitiveType.FLOAT -> 1
+                        PrimitiveType.DOUBLE -> 2
+                        else -> -1
+                    }
             }
 
             val FLOAT: Primitive = object : Primitive("float", PrimitiveType.FLOAT) {
@@ -317,6 +369,13 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.FLOAT -> 0
+                        PrimitiveType.DOUBLE -> 1
+                        else -> -1
+                    }
             }
 
             val DOUBLE: Primitive = object : Primitive("double", PrimitiveType.DOUBLE) {
@@ -349,6 +408,12 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.DOUBLE -> 0
+                        else -> -1
+                    }
             }
 
             val UNSIGNED_BYTE: Primitive = object : Primitive("unsigned_byte", PrimitiveType.UNSIGNED_BYTE) {
@@ -385,6 +450,20 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.UNSIGNED_BYTE -> 0
+                        PrimitiveType.UNSIGNED_SHORT -> 1
+                        PrimitiveType.UNSIGNED_INT -> 2
+                        PrimitiveType.UNSIGNED_LONG -> 3
+                        PrimitiveType.SHORT -> 4
+                        PrimitiveType.INT -> 5
+                        PrimitiveType.LONG -> 6
+                        PrimitiveType.FLOAT -> 7
+                        PrimitiveType.DOUBLE -> 8
+                        else -> -1
+                    }
             }
 
             val UNSIGNED_SHORT: Primitive = object : Primitive("unsigned_short", PrimitiveType.UNSIGNED_SHORT) {
@@ -421,6 +500,20 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.UNSIGNED_SHORT -> 0
+                        PrimitiveType.UNSIGNED_INT -> 1
+                        PrimitiveType.UNSIGNED_LONG -> 2
+                        PrimitiveType.BYTE -> 3
+                        PrimitiveType.SHORT -> 4
+                        PrimitiveType.INT -> 5
+                        PrimitiveType.LONG -> 6
+                        PrimitiveType.FLOAT -> 7
+                        PrimitiveType.DOUBLE -> 8
+                        else -> -1
+                    }
             }
 
             val UNSIGNED_INT: Primitive = object : Primitive("unsigned_int", PrimitiveType.UNSIGNED_INT) {
@@ -457,6 +550,19 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.UNSIGNED_INT -> 0
+                        PrimitiveType.UNSIGNED_LONG -> 1
+                        PrimitiveType.BYTE -> 2
+                        PrimitiveType.SHORT -> 3
+                        PrimitiveType.INT -> 4
+                        PrimitiveType.LONG -> 5
+                        PrimitiveType.FLOAT -> 6
+                        PrimitiveType.DOUBLE -> 7
+                        else -> -1
+                    }
             }
 
             val UNSIGNED_LONG: Primitive = object : Primitive("unsigned_long", PrimitiveType.UNSIGNED_LONG) {
@@ -493,6 +599,18 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.UNSIGNED_LONG -> 0
+                        PrimitiveType.BYTE -> 1
+                        PrimitiveType.SHORT -> 2
+                        PrimitiveType.INT -> 3
+                        PrimitiveType.LONG -> 4
+                        PrimitiveType.FLOAT -> 5
+                        PrimitiveType.DOUBLE -> 6
+                        else -> -1
+                    }
             }
 
             val CHAR = object : Primitive("char", PrimitiveType.CHAR) {
@@ -529,6 +647,20 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.CHAR -> 0
+                        PrimitiveType.SHORT -> 1
+                        PrimitiveType.UNSIGNED_SHORT -> 1
+                        PrimitiveType.INT -> 2
+                        PrimitiveType.UNSIGNED_INT -> 2
+                        PrimitiveType.LONG -> 3
+                        PrimitiveType.UNSIGNED_LONG -> 3
+                        PrimitiveType.FLOAT -> 5
+                        PrimitiveType.DOUBLE -> 6
+                        else -> -1
+                    }
             }
 
             val VOID = object : Primitive("void", PrimitiveType.VOID) {
@@ -546,13 +678,19 @@ abstract class ShakeType (
                 override fun andType(other: ShakeType): ShakeType = bool()
                 override fun orType(other: ShakeType): ShakeType = bool()
                 override fun notType(): ShakeType = bool()
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        PrimitiveType.VOID -> 0
+                        else -> -1
+                    }
             }
         }
     }
 
     class Object (
-        name: String,
-        val clazz: ShakeClass
+        val clazz: ShakeClass,
+        name: String = clazz.qualifiedName,
     ) : ShakeType(name) {
         override fun additionType(other: ShakeType): ShakeType? = null
         override fun subtractionType(other: ShakeType): ShakeType? = null
@@ -578,8 +716,16 @@ abstract class ShakeType (
         override val kind: Kind
             get() = Kind.OBJECT
 
+        override fun castableTo(other: ShakeType): Boolean {
+            return other is Object && other.clazz.compatibleTo(clazz)
+        }
+
         override fun compatibleTo(other: ShakeType): Boolean {
             return other is Object && clazz.compatibleTo(other.clazz)
+        }
+
+        override fun compatibilityDistance(other: ShakeType): Int {
+            return if(other is Object) clazz.compatibilityDistance(other.clazz) else -1
         }
     }
 
@@ -605,8 +751,17 @@ abstract class ShakeType (
 
         override val kind: Kind
             get() = Kind.ARRAY
+
+        override fun castableTo(other: ShakeType): Boolean {
+            return other is Array && other.elementType.castableTo(elementType)
+        }
+
         override fun compatibleTo(other: ShakeType): Boolean {
             return other is Array && elementType.compatibleTo(other.elementType)
+        }
+
+        override fun compatibilityDistance(other: ShakeType): Int {
+            return if(other is Array) elementType.compatibilityDistance(other.elementType) else -1
         }
     }
 
@@ -633,9 +788,20 @@ abstract class ShakeType (
 
         override val kind: Kind
             get() = Kind.LAMBDA
+
+        override fun castableTo(other: ShakeType): Boolean {
+            // TODO: Check parameters
+            return other is Lambda && other.parameters.size == parameters.size && other.returnType.castableTo(returnType)
+        }
+
         override fun compatibleTo(other: ShakeType): Boolean {
             // TODO: Check parameters
             return other is Lambda && returnType.compatibleTo(other.returnType)
+        }
+
+        override fun compatibilityDistance(other: ShakeType): Int {
+            // TODO: Check parameters
+            return if(other is Lambda) returnType.compatibilityDistance(other.returnType) else -1
         }
     }
 
@@ -664,7 +830,7 @@ abstract class ShakeType (
             return Array("${elementType.name}[]", elementType)
         }
         fun objectType(clazz: ShakeClass): ShakeType {
-            return Object(clazz.name, clazz)
+            return Object(clazz, clazz.name)
         }
     }
 }

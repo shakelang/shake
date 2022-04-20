@@ -5,18 +5,22 @@ import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.code.ShakeCode
 import io.github.shakelang.shake.processor.program.code.ShakeScope
+import kotlin.math.min
 
-class ShakeClass (
-    val pkg: ShakePackage?,
-    val name: String,
-    val methods: List<ShakeMethod>,
-    val fields: List<ShakeClassField>,
-    val classes: List<ShakeClass>,
-    val staticMethods: List<ShakeMethod>,
-    val staticFields: List<ShakeClassField>,
-    val staticClasses: List<ShakeClass>,
-    val constructors: List<ShakeConstructor> = listOf(),
-) {
+class ShakeClass {
+    val pkg: ShakePackage?
+    val name: String
+    val methods: List<ShakeMethod>
+    val fields: List<ShakeClassField>
+    val classes: List<ShakeClass>
+    val staticMethods: List<ShakeMethod>
+    val staticFields: List<ShakeClassField>
+    val staticClasses: List<ShakeClass>
+    val constructors: List<ShakeConstructor>
+
+    val qualifiedName: String
+        get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
+
     var superClass: ShakeClass? = null
         private set
 
@@ -25,6 +29,99 @@ class ShakeClass (
 
     val interfaces: List<ShakeClass>
         get() = _interfaces.map { it!! }
+
+    constructor(
+        pkg: ShakePackage?,
+        name: String,
+        methods: List<ShakeMethod>,
+        fields: List<ShakeClassField>,
+        classes: List<ShakeClass>,
+        staticMethods: List<ShakeMethod>,
+        staticFields: List<ShakeClassField>,
+        staticClasses: List<ShakeClass>,
+        constructors: List<ShakeConstructor> = listOf()
+    ) {
+        this.pkg = pkg
+        this.name = name
+        this.methods = methods
+        this.fields = fields
+        this.classes = classes
+        this.staticMethods = staticMethods
+        this.staticFields = staticFields
+        this.staticClasses = staticClasses
+        this.constructors = constructors
+    }
+    private constructor(
+        baseProject: ShakeProject,
+        pkg: ShakePackage?,
+        clz: ShakeClassDeclarationNode
+    ) {
+        this.pkg = pkg
+        this.name = clz.name
+
+        val mtds = clz.methods.map {
+            val method = ShakeMethod(
+                it.name,
+                ShakeCode.empty(),
+                it.isStatic,
+                it.isFinal,
+                false,
+                false,
+                false,
+                it.access == ShakeAccessDescriber.PRIVATE,
+                it.access == ShakeAccessDescriber.PROTECTED,
+                it.access == ShakeAccessDescriber.PUBLIC,
+            )
+            method.lateinitReturnType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
+            method
+                .lateinitParameterTypes(it.args.map { p -> p.name })
+                .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
+            method
+        }
+        this.methods = mtds.filter { !it.isStatic }
+        this.staticMethods = mtds.filter { it.isStatic }
+        val flds = clz.fields.map {
+            val field = ShakeClassField(
+                it.name,
+                it.isStatic,
+                it.isFinal,
+                false,
+                it.access == ShakeAccessDescriber.PRIVATE,
+                it.access == ShakeAccessDescriber.PROTECTED,
+                it.access == ShakeAccessDescriber.PUBLIC,
+            )
+            field.lateinitType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
+            field
+        }
+        this.fields = flds.filter { !it.isStatic }
+        this.staticFields = flds.filter { it.isStatic }
+
+        // TODO inner classes
+
+        this.constructors = clz.constructors.map {
+            val constr = ShakeConstructor(
+                this,
+                "",
+                false,
+                it.access == ShakeAccessDescriber.PRIVATE,
+                it.access == ShakeAccessDescriber.PROTECTED,
+                it.access == ShakeAccessDescriber.PUBLIC,
+                name = it.name
+            )
+            constr.lateinitParameterTypes(it.args.map { p -> p.name })
+                .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
+            constr
+        }
+        /*
+        TODO Interface & Super
+        val superClass = cl.lateinitSuper()
+        val interfaces = cl.lateinitInterfaces(clz..size)
+         *
+         */
+
+        this.classes = emptyList()
+        this.staticClasses = emptyList()
+    }
 
     fun lateinitSuper(): (ShakeClass?) -> ShakeClass? {
         return {
@@ -47,6 +144,19 @@ class ShakeClass (
         if (this == other) return true
         if (this.superClass != null && this.superClass!!.compatibleTo(other)) return true
         return this.interfaces.any { it.compatibleTo(other) }
+    }
+
+    fun compatibilityDistance(other: ShakeClass): Int {
+        if (this == other) return 0
+        val scd = (this.superClass?.compatibilityDistance(other) ?: -1) + 1
+        val intDistance = (this.interfaces.minOfOrNull { it.compatibilityDistance(other) } ?: -2) + 1
+        if(scd < 0) return intDistance
+        if(intDistance < 0) return scd
+        return min(scd, intDistance)
+    }
+
+    fun asType(): ShakeType {
+        return ShakeType.Object(this)
     }
 
     inner class StaticScope (
@@ -116,74 +226,7 @@ class ShakeClass (
 
     companion object {
         fun from(baseProject: ShakeProject, pkg: ShakePackage?, clz: ShakeClassDeclarationNode): ShakeClass {
-            val mtds = clz.methods.map {
-                val method = ShakeMethod(
-                    it.name,
-                    ShakeCode.empty(),
-                    it.isStatic,
-                    it.isFinal,
-                    false,
-                    false,
-                    false,
-                    it.access == ShakeAccessDescriber.PRIVATE,
-                    it.access == ShakeAccessDescriber.PROTECTED,
-                    it.access == ShakeAccessDescriber.PUBLIC,
-                )
-                method.lateinitReturnType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
-                method
-                    .lateinitParameterTypes(it.args.map { p -> p.name })
-                    .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
-                method
-            }
-            val methods = mtds.filter { !it.isStatic }
-            val staticMethods = mtds.filter { it.isStatic }
-            val flds = clz.fields.map {
-                val field = ShakeClassField(
-                    it.name,
-                    it.isStatic,
-                    it.isFinal,
-                    false,
-                    it.access == ShakeAccessDescriber.PRIVATE,
-                    it.access == ShakeAccessDescriber.PROTECTED,
-                    it.access == ShakeAccessDescriber.PUBLIC,
-                )
-                field.lateinitType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
-                field
-            }
-            val fields = flds.filter { !it.isStatic }
-            val staticFields = flds.filter { it.isStatic }
-
-            // TODO inner classes
-
-            val constructors = clz.constructors.map {
-                val constr = ShakeConstructor(
-                    it.name,
-                    "",
-                    false,
-                    it.access == ShakeAccessDescriber.PRIVATE,
-                    it.access == ShakeAccessDescriber.PROTECTED,
-                    it.access == ShakeAccessDescriber.PUBLIC,
-                )
-                constr.lateinitParameterTypes(it.args.map { p -> p.name })
-                    .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
-                constr
-            }
-            /*
-            TODO Interface & Super
-            val superClass = cl.lateinitSuper()
-            val interfaces = cl.lateinitInterfaces(clz..size)
-             */
-            return ShakeClass(
-                pkg,
-                clz.name,
-                methods,
-                fields,
-                emptyList(),
-                staticMethods,
-                staticFields,
-                emptyList(),
-                constructors,
-            )
+            return ShakeClass(baseProject, pkg, clz)
         }
     }
 }

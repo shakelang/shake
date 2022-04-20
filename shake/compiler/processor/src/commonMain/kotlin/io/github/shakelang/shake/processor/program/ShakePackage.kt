@@ -10,14 +10,17 @@ import io.github.shakelang.shake.processor.program.code.ShakeScope
 open class ShakePackage (
     open val baseProject: ShakeProject,
     open val name: String,
+    open val parent: ShakePackage? = null,
     open val subpackages: MutableList<ShakePackage> = mutableListOf(),
     open val classes: MutableList<ShakeClass> = mutableListOf(),
     open val functions: MutableList<ShakeFunction> = mutableListOf(),
     open val fields: MutableList<ShakeField> = mutableListOf(),
 ) {
 
+    val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + (name)
+
     open fun getPackage(name: String): ShakePackage {
-        return subpackages.find { it.name == name } ?: ShakePackage(baseProject, name).let {
+        return subpackages.find { it.name == name } ?: ShakePackage(baseProject, name, this).let {
             subpackages.add(it)
             it
         }
@@ -45,7 +48,7 @@ open class ShakePackage (
                         throw IllegalStateException("Field ${it.name} already exists")
                     fields.add(ShakeField.from(baseProject, it))
                 }
-                else -> throw IllegalStateException("Unknown node type ${it::class.qualifiedName}")
+                else -> throw IllegalStateException("Unknown node type ${it::class}")
             }
         }
     }
