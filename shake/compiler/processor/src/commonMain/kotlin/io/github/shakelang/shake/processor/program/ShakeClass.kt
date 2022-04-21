@@ -7,7 +7,11 @@ import io.github.shakelang.shake.processor.program.code.ShakeCode
 import io.github.shakelang.shake.processor.program.code.ShakeScope
 import kotlin.math.min
 
-class ShakeClass {
+open class ShakeClass {
+    val staticScope = StaticScope()
+    val instanceScope = InstanceScope()
+
+    val prj: ShakeProject
     val pkg: ShakePackage?
     val name: String
     val methods: List<ShakeMethod>
@@ -31,6 +35,7 @@ class ShakeClass {
         get() = _interfaces.map { it!! }
 
     constructor(
+        prj: ShakeProject,
         pkg: ShakePackage?,
         name: String,
         methods: List<ShakeMethod>,
@@ -41,6 +46,7 @@ class ShakeClass {
         staticClasses: List<ShakeClass>,
         constructors: List<ShakeConstructor> = listOf()
     ) {
+        this.prj = prj
         this.pkg = pkg
         this.name = name
         this.methods = methods
@@ -56,13 +62,15 @@ class ShakeClass {
         pkg: ShakePackage?,
         clz: ShakeClassDeclarationNode
     ) {
+        prj = baseProject
         this.pkg = pkg
         this.name = clz.name
 
         val mtds = clz.methods.map {
             val method = ShakeMethod(
+                this,
                 it.name,
-                ShakeCode.empty(),
+                ShakeCode.ShakeLateProcessCode(it.body),
                 it.isStatic,
                 it.isFinal,
                 false,
@@ -101,7 +109,7 @@ class ShakeClass {
         this.constructors = clz.constructors.map {
             val constr = ShakeConstructor(
                 this,
-                "",
+                ShakeCode.ShakeLateProcessCode(it.body),
                 false,
                 it.access == ShakeAccessDescriber.PRIVATE,
                 it.access == ShakeAccessDescriber.PROTECTED,
@@ -159,15 +167,29 @@ class ShakeClass {
         return ShakeType.Object(this)
     }
 
-    inner class StaticScope (
-        override val parent: ShakeScope,
-    ) : ShakeScope {
+    open fun processCode() {
+        this.methods.forEach { it.processCode() }
+        this.staticMethods.forEach { it.processCode() }
+        this.fields.forEach { it.processCode() }
+        this.staticFields.forEach { it.processCode() }
+        this.constructors.forEach { it.processCode() }
+        this.classes.forEach { it.processCode() }
+        this.staticClasses.forEach { it.processCode() }
+    }
+
+    inner class StaticScope : ShakeScope {
+
+        override val processor: ShakeCodeProcessor
+            get() = parent.processor
+
+        override val parent: ShakeScope
+            get() = pkg?.scope ?: prj.projectScope
 
         override fun get(name: String): ShakeAssignable? {
             return staticFields.find { it.name == name } ?: parent.get(name)
         }
 
-        override fun set(name: String, value: ShakeDeclaration) {
+        override fun set(value: ShakeDeclaration) {
             throw IllegalStateException("Cannot set in this scope")
         }
 
@@ -175,7 +197,7 @@ class ShakeClass {
             return staticMethods.filter { it.name == name } + parent.getFunctions(name)
         }
 
-        override fun setFunctions(name: String, function: ShakeFunction) {
+        override fun setFunctions(function: ShakeFunction) {
             throw IllegalStateException("Cannot set in this scope")
         }
 
@@ -183,26 +205,25 @@ class ShakeClass {
             return staticClasses.find { it.name == name } ?: parent.getClass(name)
         }
 
-        override fun setClass(name: String, klass: ShakeClass) {
+        override fun setClass(klass: ShakeClass) {
             throw IllegalStateException("Cannot set in this scope")
         }
 
-        override val processor: ShakeCodeProcessor
-            get() = parent.processor
-
     }
 
-    inner class ObjectScope (
-        override val parent: ShakeScope,
-    ) : ShakeScope {
+    inner class InstanceScope : ShakeScope {
 
         override val processor: ShakeCodeProcessor
             get() = parent.processor
+
+        override val parent: ShakeScope
+            get() = pkg?.scope ?: prj.projectScope
+
         override fun get(name: String): ShakeAssignable? {
             return fields.find { it.name == name } ?: staticFields.find { it.name == name } ?: parent.get(name)
         }
 
-        override fun set(name: String, value: ShakeDeclaration) {
+        override fun set(value: ShakeDeclaration) {
             throw IllegalStateException("Cannot set in this scope")
         }
 
@@ -210,7 +231,7 @@ class ShakeClass {
             return methods.filter { it.name == name } + staticMethods.filter { it.name == name } + parent.getFunctions(name)
         }
 
-        override fun setFunctions(name: String, function: ShakeFunction) {
+        override fun setFunctions(function: ShakeFunction) {
             throw IllegalStateException("Cannot set in this scope")
         }
 
@@ -218,7 +239,7 @@ class ShakeClass {
             return classes.find { it.name == name } ?: parent.getClass(name)
         }
 
-        override fun setClass(name: String, klass: ShakeClass) {
+        override fun setClass(klass: ShakeClass) {
             throw IllegalStateException("Cannot set in this scope")
         }
 

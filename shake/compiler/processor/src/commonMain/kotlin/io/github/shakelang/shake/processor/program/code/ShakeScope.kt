@@ -9,11 +9,11 @@ import io.github.shakelang.shake.processor.program.ShakeFunction
 interface ShakeScope {
     val parent: ShakeScope?
     fun get(name: String): ShakeAssignable?
-    fun set(name: String, value: ShakeDeclaration)
+    fun set(value: ShakeDeclaration)
     fun getFunctions(name: String): List<ShakeFunction>
-    fun setFunctions(name: String, function: ShakeFunction)
+    fun setFunctions(function: ShakeFunction)
     fun getClass(name: String): ShakeClass?
-    fun setClass(name: String, klass: ShakeClass)
+    fun setClass(klass: ShakeClass)
     fun getInvokable(name: String): List<ShakeInvokable> {
         val functions = getFunctions(name)
         val variable = get(name)

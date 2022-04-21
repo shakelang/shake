@@ -18,6 +18,7 @@ open class ShakePackage (
 ) {
 
     val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + (name)
+    val scope: ShakeScope get() = Scope()
 
     open fun getPackage(name: String): ShakePackage {
         return subpackages.find { it.name == name } ?: ShakePackage(baseProject, name, this).let {
@@ -41,7 +42,7 @@ open class ShakePackage (
                 is ShakeFunctionDeclarationNode -> {
                     if(functions.any { func -> func.name == it.name })
                         throw IllegalStateException("Function ${it.name} already exists") // TODO Functions with different signatures
-                    functions.add(ShakeFunction.from(baseProject, it))
+                    functions.add(ShakeFunction.from(baseProject, this, it))
                 }
                 is ShakeVariableDeclarationNode -> {
                     if(fields.any { field -> field.name == it.name })
@@ -59,35 +60,41 @@ open class ShakePackage (
         getPackage(pkg).putFile(file, contents)
     }
 
-    private inner class Scope(
-        override val parent: ShakeScope,
-    ) : ShakeScope {
+    private inner class Scope : ShakeScope {
+        override val parent: ShakeScope get() = baseProject.projectScope
 
         override fun get(name: String): ShakeAssignable? {
-            return fields.find { it.name == name }
+            return fields.find { it.name == name } ?: parent.get(name)
         }
 
-        override fun set(name: String, value: ShakeDeclaration) {
+        override fun set(value: ShakeDeclaration) {
             throw IllegalStateException("Cannot set a value in a package scope")
         }
 
         override fun getFunctions(name: String): List<ShakeFunction> {
-            return functions.filter { it.name == name }
+            return functions.filter { it.name == name } + parent.getFunctions(name)
         }
 
-        override fun setFunctions(name: String, function: ShakeFunction) {
+        override fun setFunctions(function: ShakeFunction) {
             throw IllegalStateException("Cannot set a function in a package scope")
         }
 
         override fun getClass(name: String): ShakeClass? {
-            return classes.find { it.name == name }
+            return classes.find { it.name == name } ?: parent.getClass(name)
         }
 
-        override fun setClass(name: String, klass: ShakeClass) {
+        override fun setClass(klass: ShakeClass) {
             throw IllegalStateException("Cannot set a class in a package scope")
         }
 
         override val processor: ShakeCodeProcessor
             get() = TODO("Not yet implemented")
+    }
+
+    fun processCode() {
+        classes.forEach { it.processCode() }
+        functions.forEach { it.processCode() }
+        fields.forEach { it.processCode() }
+        subpackages.forEach { it.processCode() }
     }
 }

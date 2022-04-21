@@ -17,9 +17,8 @@ import io.github.shakelang.shake.parser.node.loops.ShakeForNode
 import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import io.github.shakelang.shake.parser.node.variables.*
-import io.github.shakelang.shake.processor.program.ShakeAssignable
-import io.github.shakelang.shake.processor.program.ShakeProject
-import io.github.shakelang.shake.processor.program.ShakeType
+import io.github.shakelang.shake.processor.program.*
+import io.github.shakelang.shake.processor.program.ShakeDeclaration
 import io.github.shakelang.shake.processor.program.code.*
 import io.github.shakelang.shake.processor.program.code.statements.*
 import io.github.shakelang.shake.processor.program.code.values.*
@@ -47,6 +46,7 @@ abstract class ShakeProcessor <T> {
     }
 
     abstract fun loadFile(directory: String, src: String)
+
     fun <O> generate(f: (T) -> O): O {
         return f(src)
     }
@@ -55,7 +55,8 @@ abstract class ShakeProcessor <T> {
 }
 open class ShakePackageBasedProcessor : ShakeProcessor<ShakeProject>() {
 
-    open val project = ShakeProject()
+    val codeProcessor = ShakeCodeProcessor()
+    open val project = ShakeProject(codeProcessor)
     override val src: ShakeProject
         get() = project
 
@@ -83,6 +84,7 @@ open class ShakeCodeProcessor {
             is ShakeLogicalFalseNode -> visitLogicalFalseNode(scope, value)
             is ShakeLogicalAndNode -> visitLogicalAndNode(scope, value)
             is ShakeLogicalOrNode -> visitLogicalOrNode(scope, value)
+            is ShakeLogicalXOrNode -> visitLogicalXOrNode(scope, value)
             is ShakeLogicalEqEqualsNode -> visitEqEqualsNode(scope, value)
             is ShakeLogicalBiggerEqualsNode -> visitBiggerEqualsNode(scope, value)
             is ShakeLogicalSmallerEqualsNode -> visitSmallerEqualsNode(scope, value)
@@ -101,18 +103,21 @@ open class ShakeCodeProcessor {
             is ShakeVariableDivAssignmentNode -> visitVariableDivAssignmentNode(scope, value)
             is ShakeVariableModAssignmentNode -> visitVariableModAssignmentNode(scope, value)
             is ShakeVariablePowAssignmentNode -> visitVariablePowAssignmentNode(scope, value)
+            is ShakeVariableIncreaseNode -> visitVariableIncrementNode(scope, value)
+            is ShakeVariableDecreaseNode -> visitVariableDecrementNode(scope, value)
+            is ShakeVariableUsageNode -> visitVariableUsageNode(scope, value)
             is ShakeCastNode -> visitCastNode(scope, value)
             is ShakeFunctionCallNode -> visitFunctionCallNode(scope, value)
+            is ShakeClassConstructionNode -> visitClassConstruction(scope, value)
             else -> throw IllegalArgumentException("Unsupported value type: ${value::class}")
         }
-
-
     }
 
     fun visitStatement(scope: ShakeScope, statement: ShakeStatementNode): ShakeStatement {
         return when(statement) {
             is ShakeIfNode -> visitIfNode(scope, statement)
             is ShakeWhileNode -> visitWhileNode(scope, statement)
+            is ShakeDoWhileNode -> visitDoWhileNode(scope, statement)
             is ShakeForNode -> visitForNode(scope, statement)
             is ShakeReturnNode -> visitReturnNode(scope, statement)
             is ShakeVariableDeclarationNode -> visitVariableDeclarationNode(scope, statement)
@@ -123,7 +128,10 @@ open class ShakeCodeProcessor {
             is ShakeVariableDivAssignmentNode -> visitVariableDivAssignmentNode(scope, statement)
             is ShakeVariableModAssignmentNode -> visitVariableModAssignmentNode(scope, statement)
             is ShakeVariablePowAssignmentNode -> visitVariablePowAssignmentNode(scope, statement)
+            is ShakeVariableIncreaseNode -> visitVariableIncrementNode(scope, statement)
+            is ShakeVariableDecreaseNode -> visitVariableDecrementNode(scope, statement)
             is ShakeFunctionCallNode -> visitFunctionCallNode(scope, statement)
+            is ShakeClassConstructionNode -> visitClassConstruction(scope, statement)
             else -> throw IllegalArgumentException("Unsupported statement type: ${statement::class}")
         }
     }
@@ -332,7 +340,7 @@ open class ShakeCodeProcessor {
             ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
-    fun visitLogicalXOrNode(scope: ShakeScope, n: ShakeLogicalXOrNode): Any {
+    fun visitLogicalXOrNode(scope: ShakeScope, n: ShakeLogicalXOrNode): ShakeXor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return ShakeXor(left, right, left.type.equalsType(right.type)
@@ -375,7 +383,7 @@ open class ShakeCodeProcessor {
         return ShakeIf(condition, body)
     }
 
-    fun visitClassConstruction(scope: ShakeScope, n: ShakeClassConstructionNode): Any {
+    fun visitClassConstruction(scope: ShakeScope, n: ShakeClassConstructionNode): ShakeNew {
         val classNode = n.type
         if(classNode is ShakeIdentifierNode) {
             if(classNode.parent != null) {

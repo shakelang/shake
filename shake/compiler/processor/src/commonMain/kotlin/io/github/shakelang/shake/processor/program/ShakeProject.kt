@@ -4,13 +4,49 @@ import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import io.github.shakelang.shake.processor.ShakeCodeProcessor
+import io.github.shakelang.shake.processor.program.code.ShakeScope
 
 open class ShakeProject(
+    processor: ShakeCodeProcessor,
     open val subpackages: MutableList<ShakePackage> = mutableListOf(),
     open val classes: MutableList<ShakeClass> = mutableListOf(),
     open val functions: MutableList<ShakeFunction> = mutableListOf(),
     open val fields: MutableList<ShakeField> = mutableListOf()
 ) {
+
+    private val classRequirements = mutableListOf<ClassRequirement>()
+
+    val projectScope = object : ShakeScope {
+        override val parent: ShakeScope?
+            get() = null
+
+        override val processor: ShakeCodeProcessor = processor
+
+        override fun get(name: String): ShakeAssignable? {
+            return fields.find { it.name == name }
+        }
+
+        override fun set(value: ShakeDeclaration) {
+            throw IllegalStateException("Cannot set a value in the project scope")
+        }
+
+        override fun getFunctions(name: String): List<ShakeFunction> {
+            return functions.filter { it.name == name }
+        }
+
+        override fun setFunctions(function: ShakeFunction) {
+            throw IllegalStateException("Cannot set a function in the project scope")
+        }
+
+        override fun getClass(name: String): ShakeClass? {
+            return classes.find { it.name == name }
+        }
+
+        override fun setClass(klass: ShakeClass) {
+            throw IllegalStateException("Cannot set a class in the project scope")
+        }
+    }
 
     open fun getPackage(name: String): ShakePackage {
         return subpackages.find { it.name == name } ?: ShakePackage(this, name).let {
@@ -35,7 +71,7 @@ open class ShakeProject(
                 is ShakeFunctionDeclarationNode -> {
                     if(functions.any { func -> func.name == it.name })
                         throw IllegalArgumentException("Function ${it.name} already exists")
-                    functions.add(ShakeFunction.from(this, it))
+                    functions.add(ShakeFunction.from(this, null, it))
                 }
                 is ShakeVariableDeclarationNode -> {
                     if(fields.any { field -> field.name == it.name })
@@ -52,13 +88,15 @@ open class ShakeProject(
         val file = name.last()
         getPackage(pkg).putFile(file, contents)
     }
-    private val classRequirements = mutableListOf<ClassRequirement>()
+
     fun getClass(name: String, then: (ShakeClass) -> Unit) {
         this.classRequirements.add(ClassRequirement(name, then))
     }
+
     fun getClass(pkg: Array<String>, name: String): ShakeClass? {
         return this.getPackage(pkg).classes.find { it.name == name }
     }
+
     fun getClass(clz: String): ShakeClass? {
         val parts = clz.split(".")
         val name = parts.last()
@@ -66,6 +104,7 @@ open class ShakeProject(
         return if(pkg.isEmpty()) this.classes.find { it.name == name }
         else this.getPackage(pkg).classes.find { it.name == name }
     }
+
     fun getType(type: ShakeVariableType, then: (ShakeType) -> Unit) {
         when (type.type) {
             ShakeVariableType.Type.BYTE -> then(ShakeType.Primitives.BYTE)
@@ -91,12 +130,22 @@ open class ShakeProject(
             }
         }
     }
+
     fun finish() {
+
         classRequirements.forEach {
             val cls = this.getClass(it.name)
             it.then(cls!!)
         }
+
         classRequirements.clear()
+
+        this.classes.forEach { it.processCode() }
+        this.functions.forEach { it.processCode() }
+        this.fields.forEach { it.processCode() }
+        this.subpackages.forEach { it.processCode() }
+
     }
+
     private class ClassRequirement(val name: String, val then: (ShakeClass) -> Unit)
 }

@@ -49,6 +49,10 @@ open class ShakeField (
         return ShakeFieldUsage(scope, this)
     }
 
+    open fun processCode() {
+        // TODO process code
+    }
+
     companion object {
         fun from(baseProject: ShakeProject, node: ShakeVariableDeclarationNode): ShakeField {
             return ShakeField(

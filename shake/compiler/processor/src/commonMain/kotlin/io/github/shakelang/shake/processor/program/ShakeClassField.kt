@@ -27,4 +27,8 @@ class ShakeClassField (
     override fun use(scope: ShakeScope): ShakeUsage {
         return ShakeFieldUsage(scope, this)
     }
+
+    override fun processCode() {
+        //TODO: process value
+    }
 }

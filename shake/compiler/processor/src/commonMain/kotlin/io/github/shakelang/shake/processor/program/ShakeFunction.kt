@@ -2,10 +2,15 @@ package io.github.shakelang.shake.processor.program
 
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.code.ShakeCode
 import io.github.shakelang.shake.processor.program.code.ShakeInvokable
+import io.github.shakelang.shake.processor.program.code.ShakeScope
+import io.github.shakelang.shake.processor.program.code.statements.ShakeVariableDeclaration
 
 open class ShakeFunction (
+    val prj: ShakeProject,
+    val pkg: ShakePackage?,
     val name: String,
     body: ShakeCode,
     val isStatic: Boolean,
@@ -21,6 +26,8 @@ open class ShakeFunction (
         private set
 
     constructor(
+        prj: ShakeProject,
+        pkg: ShakePackage?,
         name: String,
         parameters: List<ShakeParameter>,
         returnType: ShakeType,
@@ -33,10 +40,12 @@ open class ShakeFunction (
         isPrivate: Boolean,
         isProtected: Boolean,
         isPublic: Boolean
-    ): this(name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic) {
+    ): this(prj, pkg, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic) {
         this.parameters = parameters
         this.returnType = returnType
     }
+
+    open val scope : ShakeScope = ShakeFunctionScope()
 
     fun lateinitReturnType(): (ShakeType) -> ShakeType {
         return {
@@ -54,9 +63,53 @@ open class ShakeFunction (
         }
     }
 
+    open fun processCode() {
+        if(body is ShakeCode.ShakeLateProcessCode) (body as ShakeCode.ShakeLateProcessCode).process(scope)
+    }
+
+    inner class ShakeFunctionScope: ShakeScope {
+
+        val variables = mutableListOf<ShakeVariableDeclaration>()
+
+        override val parent: ShakeScope
+            get() = pkg?.scope ?: prj.projectScope
+
+        override fun get(name: String): ShakeAssignable? {
+            return variables.find { it.name == name } ?: parent.get(name)
+        }
+
+        override fun set(value: ShakeDeclaration) {
+            if(value !is ShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
+            if(variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
+            variables.add(value)
+        }
+
+        override fun getFunctions(name: String): List<ShakeFunction> {
+            return parent.getFunctions(name)
+        }
+
+        override fun setFunctions(function: ShakeFunction) {
+            throw IllegalArgumentException("Cannot set a function in a method scope")
+        }
+
+        override fun getClass(name: String): ShakeClass? {
+            return parent.getClass(name)
+        }
+
+        override fun setClass(klass: ShakeClass) {
+            throw IllegalArgumentException("Cannot set a class in a method scope")
+        }
+
+        override val processor: ShakeCodeProcessor
+            get() = prj.projectScope.processor
+
+    }
+
     companion object {
-        fun from(baseProject: ShakeProject, node: ShakeFunctionDeclarationNode): ShakeFunction {
+        fun from(baseProject: ShakeProject, pkg: ShakePackage?, node: ShakeFunctionDeclarationNode): ShakeFunction {
             return ShakeFunction(
+                baseProject,
+                pkg,
                 node.name,
                 ShakeCode.empty(),
                 node.isStatic,
