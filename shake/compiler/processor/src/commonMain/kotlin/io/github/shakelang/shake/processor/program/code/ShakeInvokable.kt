@@ -6,6 +6,9 @@ import io.github.shakelang.shake.processor.program.ShakeType
 abstract class ShakeInvokable (
     open val body: ShakeCode
 ) {
+
+    abstract val qualifiedName: String
+
     lateinit var parameters: List<ShakeParameter>
         protected set
     abstract val returnType: ShakeType
@@ -16,4 +19,6 @@ abstract class ShakeInvokable (
     ) : this(body) {
         this.parameters = parameters
     }
+
+    abstract fun toJson(): Map<String, Any?>
 }

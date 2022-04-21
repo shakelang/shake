@@ -23,6 +23,7 @@ kotlin {
     dependencies {
         common {
             implementation(project(":util:parseutils"))
+            implementation(project(":util:shason"))
             implementation(project(":shake:compiler:lexer"))
             implementation(project(":shake:compiler:parser"))
             testImplementation(kotlin("test"))

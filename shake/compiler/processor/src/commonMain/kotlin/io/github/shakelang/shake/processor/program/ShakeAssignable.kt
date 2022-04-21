@@ -75,6 +75,8 @@ interface ShakeAssignable {
         return ShakeDecrementAfter(this, type)
     }
 
+    fun toJson(): Map<String, Any?>
+
     companion object {
         fun wrap(v: ShakeValue): ShakeAssignable {
             return object : ShakeAssignable {
@@ -131,6 +133,13 @@ interface ShakeAssignable {
 
                 override val type: ShakeType
                     get() = v.type
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf(
+                        "type" to "anonymous-assignable",
+                        "value" to v.toJson()
+                    )
+                }
             }
         }
     }

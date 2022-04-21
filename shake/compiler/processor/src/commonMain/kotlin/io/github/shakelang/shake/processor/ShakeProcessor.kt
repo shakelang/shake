@@ -61,16 +61,21 @@ open class ShakePackageBasedProcessor : ShakeProcessor<ShakeProject>() {
         get() = project
 
     open fun loadSynthetic(src: String, contents: ShakeFile) {
-        val reformatted = src.replace("\\", "/").replace(".", "/")
+        val reformatted = src.replace("\\", "/")
         project.putFile(reformatted.split("/").toTypedArray(), contents)
     }
 
     override fun loadFile(directory: String, src: String) {
 
-        val reformatted = src.replace("\\", "/").replace(".", "/")
+        val reformatted = src.replace("\\", "/")
         val contents = parseFile("$directory/$src")
         project.putFile(reformatted.split("/").toTypedArray(), contents)
 
+    }
+
+    fun finish() : ShakeProject {
+        project.finish()
+        return project
     }
 }
 
@@ -209,7 +214,9 @@ open class ShakeCodeProcessor {
     fun visitVariableDeclarationNode(scope: ShakeScope, n: ShakeVariableDeclarationNode): ShakeVariableDeclaration {
         val value = if(n.value != null) visitValue(scope, n.value!!) else null
         val type = visitType(scope, n.type) ?: value?.type ?: throw Exception("Cannot infer type of variable ${n.name}")
-        return ShakeVariableDeclaration(scope, n.name, type, value)
+        val decl = ShakeVariableDeclaration(scope, n.name, type, value)
+        scope.set(decl)
+        return decl
     }
 
     fun getAssignable(scope: ShakeScope, n: ShakeValuedNode): ShakeAssignable? {

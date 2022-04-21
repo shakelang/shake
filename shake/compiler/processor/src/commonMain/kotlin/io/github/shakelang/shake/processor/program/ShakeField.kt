@@ -8,6 +8,8 @@ import io.github.shakelang.shake.processor.program.code.ShakeValue
 import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
 
 open class ShakeField (
+    val project: ShakeProject,
+    val pkg: ShakePackage?,
     override val name: String,
     val isStatic: Boolean,
     val isFinal: Boolean,
@@ -16,6 +18,9 @@ open class ShakeField (
     val isProtected: Boolean,
     val isPublic: Boolean,
 ): ShakeDeclaration, ShakeAssignable {
+
+    override val qualifiedName: String
+        get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
 
     override val actualValue: ShakeValue?
         get() = TODO("Not yet implemented")
@@ -53,9 +58,24 @@ open class ShakeField (
         // TODO process code
     }
 
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "name" to name,
+            "isStatic" to isStatic,
+            "isFinal" to isFinal,
+            "isAbstract" to isAbstract,
+            "isPrivate" to isPrivate,
+            "isProtected" to isProtected,
+            "isPublic" to isPublic,
+            "type" to type.toJson()
+        )
+    }
+
     companion object {
-        fun from(baseProject: ShakeProject, node: ShakeVariableDeclarationNode): ShakeField {
+        fun from(baseProject: ShakeProject, pkg: ShakePackage?, node: ShakeVariableDeclarationNode): ShakeField {
             return ShakeField(
+                baseProject,
+                pkg,
                 node.name,
                 node.isStatic,
                 node.isFinal,

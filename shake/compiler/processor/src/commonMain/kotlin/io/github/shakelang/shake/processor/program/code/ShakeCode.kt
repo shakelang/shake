@@ -3,9 +3,12 @@ package io.github.shakelang.shake.processor.program.code
 import io.github.shakelang.shake.parser.node.ShakeTree
 import io.github.shakelang.shake.processor.program.*
 
-interface ShakeStatement
+interface ShakeStatement {
+    fun toJson(): Map<String, Any?>
+}
 interface ShakeValue {
     val type: ShakeType
+    fun toJson(): Map<String, Any?>
 }
 
 open class ShakeCode(
@@ -25,9 +28,15 @@ open class ShakeCode(
         }
     }
 
+    fun toJson(): Map<String, Any> {
+        return mapOf(
+            "statements" to statements.map { it.toJson() }
+        )
+    }
+
     companion object {
 
-        fun empty() = ShakeCode(emptyList())
+        //fun empty() = ShakeCode(emptyList())
 
         fun fromTree(tree: ShakeTree): ShakeCode {
             return ShakeLateProcessCode(tree)

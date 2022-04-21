@@ -47,7 +47,7 @@ open class ShakePackage (
                 is ShakeVariableDeclarationNode -> {
                     if(fields.any { field -> field.name == it.name })
                         throw IllegalStateException("Field ${it.name} already exists")
-                    fields.add(ShakeField.from(baseProject, it))
+                    fields.add(ShakeField.from(baseProject, this, it))
                 }
                 else -> throw IllegalStateException("Unknown node type ${it::class}")
             }
@@ -58,6 +58,17 @@ open class ShakePackage (
         val pkg = name.sliceArray(0 until name.size - 1)
         val file = name.last()
         getPackage(pkg).putFile(file, contents)
+    }
+
+    fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "name" to name,
+            "parent" to parent?.name,
+            "subpackages" to subpackages.map { it.toJson() },
+            "classes" to classes.map { it.toJson() },
+            "functions" to functions.map { it.toJson() },
+            "fields" to fields.map { it.toJson() },
+        )
     }
 
     private inner class Scope : ShakeScope {

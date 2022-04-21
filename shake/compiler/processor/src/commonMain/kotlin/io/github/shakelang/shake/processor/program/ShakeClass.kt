@@ -70,7 +70,7 @@ open class ShakeClass {
             val method = ShakeMethod(
                 this,
                 it.name,
-                ShakeCode.ShakeLateProcessCode(it.body),
+                ShakeCode.fromTree(it.body),
                 it.isStatic,
                 it.isFinal,
                 false,
@@ -90,6 +90,7 @@ open class ShakeClass {
         this.staticMethods = mtds.filter { it.isStatic }
         val flds = clz.fields.map {
             val field = ShakeClassField(
+                this,
                 it.name,
                 it.isStatic,
                 it.isFinal,
@@ -109,7 +110,7 @@ open class ShakeClass {
         this.constructors = clz.constructors.map {
             val constr = ShakeConstructor(
                 this,
-                ShakeCode.ShakeLateProcessCode(it.body),
+                ShakeCode.fromTree(it.body),
                 false,
                 it.access == ShakeAccessDescriber.PRIVATE,
                 it.access == ShakeAccessDescriber.PROTECTED,
@@ -175,6 +176,21 @@ open class ShakeClass {
         this.constructors.forEach { it.processCode() }
         this.classes.forEach { it.processCode() }
         this.staticClasses.forEach { it.processCode() }
+    }
+
+    open fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "name" to this.name,
+            "super" to this.superClass?.name,
+            "interfaces" to this.interfaces.map { it.name },
+            "methods" to this.methods.map { it.toJson() },
+            "staticMethods" to this.staticMethods.map { it.toJson() },
+            "fields" to this.fields.map { it.toJson() },
+            "staticFields" to this.staticFields.map { it.toJson() },
+            "constructors" to this.constructors.map { it.toJson() },
+            "classes" to this.classes.map { it.toJson() },
+            "staticClasses" to this.staticClasses.map { it.toJson() },
+        )
     }
 
     inner class StaticScope : ShakeScope {

@@ -10,6 +10,13 @@ class ShakeDoubleLiteral(val value: Double) : ShakeValue {
 
     override fun toString(): String = value.toString()
 
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "double",
+            "value" to value
+        )
+    }
+
 }
 
 class ShakeIntegerLiteral(val value: Int) : ShakeValue {
@@ -19,6 +26,13 @@ class ShakeIntegerLiteral(val value: Int) : ShakeValue {
 
     override fun toString(): String = value.toString()
 
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "int",
+            "value" to value
+        )
+    }
+
 }
 
 class ShakeBooleanLiteral(val value: Boolean) : ShakeValue {
@@ -27,6 +41,13 @@ class ShakeBooleanLiteral(val value: Boolean) : ShakeValue {
         get() = ShakeType.Primitives.BOOLEAN
 
     override fun toString(): String = value.toString()
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "boolean",
+            "value" to value
+        )
+    }
 
     companion object {
         val TRUE = ShakeBooleanLiteral(true)
@@ -41,5 +62,12 @@ class ShakeCharacterLiteral(val value: Char) : ShakeValue {
         get() = ShakeType.Primitives.CHAR
 
     override fun toString(): String = value.toString()
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "char",
+            "value" to value
+        )
+    }
 
 }

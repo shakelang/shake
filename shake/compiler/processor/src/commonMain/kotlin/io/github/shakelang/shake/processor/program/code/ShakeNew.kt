@@ -13,4 +13,12 @@ class ShakeNew (
         get() = reference.clazz.asType()
     val name get() = reference.name?.let { "${reference.clazz.name}.$it" } ?: reference.clazz.name
 
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "new",
+            "name" to name,
+            "arguments" to arguments.map { it.toJson() }
+        )
+    }
+
 }

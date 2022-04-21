@@ -5,6 +5,7 @@ import io.github.shakelang.shake.processor.program.code.ShakeScope
 import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
 
 class ShakeClassField (
+    val clazz: ShakeClass,
     name: String,
     isStatic: Boolean,
     isFinal: Boolean,
@@ -13,6 +14,8 @@ class ShakeClassField (
     isProtected: Boolean,
     isPublic: Boolean,
 ): ShakeField(
+    clazz.prj,
+    clazz.pkg,
     name,
     isStatic,
     isFinal,
@@ -21,8 +24,9 @@ class ShakeClassField (
     isProtected,
     isPublic
 ) {
-    lateinit var clazz: ShakeClass
-        private set
+    override val qualifiedName: String
+        get() = "${clazz.qualifiedName}.$name"
+
 
     override fun use(scope: ShakeScope): ShakeUsage {
         return ShakeFieldUsage(scope, this)

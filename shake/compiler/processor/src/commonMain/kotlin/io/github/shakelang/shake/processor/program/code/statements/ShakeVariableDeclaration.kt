@@ -16,6 +16,9 @@ open class ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeSt
     var latestValue: ShakeValue?
     var latestType: ShakeType
 
+    override val qualifiedName: String
+        get() = "local $name"
+
     constructor(scope: ShakeScope, name: String, initialValue: ShakeValue) {
         this.scope = scope
         this.name = name
@@ -134,6 +137,16 @@ open class ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeSt
 
     override fun decrementAfterType(): ShakeType? {
         TODO("Not yet implemented")
+    }
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "name" to name,
+            "type" to type.toJson(),
+            "initialValue" to initialValue?.toJson(),
+            "latestValue" to latestValue?.toJson(),
+            "latestType" to latestType.toJson()
+        )
     }
 
 }

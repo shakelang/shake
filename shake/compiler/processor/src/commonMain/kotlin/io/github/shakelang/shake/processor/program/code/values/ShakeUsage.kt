@@ -23,6 +23,15 @@ open class ShakeClassFieldUsage(
     val name get() = declaration.name
     override val type get() = declaration.type
 
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "classField",
+            "name" to name,
+            "receiver" to receiver?.toJson(),
+            "type" to type.toJson()
+        )
+    }
+
 }
 
 open class ShakeStaticClassFieldUsage(
@@ -32,6 +41,14 @@ open class ShakeStaticClassFieldUsage(
 
     val name get() = declaration.name
     override val type get() = declaration.type
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "staticClassField",
+            "name" to name,
+            "type" to type.toJson()
+        )
+    }
 
 }
 
@@ -50,6 +67,15 @@ open class ShakeFieldUsage(
                 throw IllegalArgumentException("Field $name is not static")
             }
         }
+    }
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "field",
+            "name" to name,
+            "receiver" to receiver?.toJson(),
+            "type" to type.toJson()
+        )
     }
 
     companion object {
@@ -78,4 +104,12 @@ open class ShakeVariableUsage(
 ) : ShakeUsage() {
     override val type get() = declaration.type
     val name get() = declaration.name
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "variable",
+            "name" to name,
+            "type" to type.toJson()
+        )
+    }
 }

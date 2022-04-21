@@ -6,6 +6,7 @@ import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.code.ShakeScope
+import io.github.shakelang.shason.json
 
 open class ShakeProject(
     processor: ShakeCodeProcessor,
@@ -76,7 +77,7 @@ open class ShakeProject(
                 is ShakeVariableDeclarationNode -> {
                     if(fields.any { field -> field.name == it.name })
                         throw IllegalArgumentException("Field ${it.name} already exists")
-                    fields.add(ShakeField.from(this, it))
+                    fields.add(ShakeField.from(this, null, it))
                 }
                 else -> throw IllegalArgumentException("Unknown node type ${it::class.simpleName}")
             }
@@ -86,7 +87,8 @@ open class ShakeProject(
     open fun putFile(name: Array<String>, contents: ShakeFile) {
         val pkg = name.sliceArray(0 until name.size - 1)
         val file = name.last()
-        getPackage(pkg).putFile(file, contents)
+        if(pkg.isEmpty()) putFile(file, contents)
+        else getPackage(pkg).putFile(file, contents)
     }
 
     fun getClass(name: String, then: (ShakeClass) -> Unit) {
@@ -145,6 +147,19 @@ open class ShakeProject(
         this.fields.forEach { it.processCode() }
         this.subpackages.forEach { it.processCode() }
 
+    }
+
+    fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "classes" to classes.map { it.toJson() },
+            "functions" to functions.map { it.toJson() },
+            "fields" to fields.map { it.toJson() },
+            "subpackages" to subpackages.map { it.toJson() }
+        )
+    }
+
+    fun toJsonString(format: Boolean = false): String {
+        return json.stringify(toJson(), format)
     }
 
     private class ClassRequirement(val name: String, val then: (ShakeClass) -> Unit)

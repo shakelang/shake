@@ -14,4 +14,13 @@ class ShakeInvocation (
     val name get() = if(callable is ShakeFunction) callable.name else "anonymous"
     val isAnonymous get() = callable !is ShakeFunction
 
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "invocation",
+            "callable" to callable.qualifiedName,
+            "arguments" to arguments.map { it.toJson() },
+            "parent" to parent?.toJson()
+        )
+    }
+
 }

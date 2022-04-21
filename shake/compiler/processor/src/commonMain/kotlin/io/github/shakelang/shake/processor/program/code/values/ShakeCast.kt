@@ -9,4 +9,12 @@ class ShakeCast(
 ) : ShakeValue {
     override val type: ShakeType
         get() = castTarget
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "cast",
+            "value" to value.toJson(),
+            "castTarget" to castTarget.toJson(),
+        )
+    }
 }

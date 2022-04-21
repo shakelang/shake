@@ -45,6 +45,19 @@ open class ShakeConstructor (
         if(body is ShakeCode.ShakeLateProcessCode) body.process(scope)
     }
 
+    open fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "constructor",
+            "name" to name,
+            "parameters" to parameters.map { it.toJson() },
+            "body" to body.toJson(),
+            "isStrict" to isStrict,
+            "isPrivate" to isPrivate,
+            "isProtected" to isProtected,
+            "isPublic" to isPublic
+        )
+    }
+
     inner class ShakeConstructorScope : ShakeScope {
         override val parent: ShakeScope
             get() = clazz.instanceScope

@@ -22,6 +22,10 @@ open class ShakeFunction (
     val isProtected: Boolean,
     val isPublic: Boolean,
 ): ShakeInvokable(body) {
+
+    override val qualifiedName: String
+        get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
+
     final override lateinit var returnType: ShakeType
         private set
 
@@ -65,6 +69,23 @@ open class ShakeFunction (
 
     open fun processCode() {
         if(body is ShakeCode.ShakeLateProcessCode) (body as ShakeCode.ShakeLateProcessCode).process(scope)
+    }
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "name" to name,
+            "isStatic" to isStatic,
+            "isFinal" to isFinal,
+            "isAbstract" to isAbstract,
+            "isSynchronized" to isSynchronized,
+            "isStrict" to isStrict,
+            "isPrivate" to isPrivate,
+            "isProtected" to isProtected,
+            "isPublic" to isPublic,
+            "returnType" to returnType.toJson(),
+            "parameters" to parameters.map { it.toJson() },
+            "body" to body.toJson()
+        )
     }
 
     inner class ShakeFunctionScope: ShakeScope {
@@ -111,7 +132,7 @@ open class ShakeFunction (
                 baseProject,
                 pkg,
                 node.name,
-                ShakeCode.empty(),
+                ShakeCode.fromTree(node.body),
                 node.isStatic,
                 node.isFinal,
                 false,

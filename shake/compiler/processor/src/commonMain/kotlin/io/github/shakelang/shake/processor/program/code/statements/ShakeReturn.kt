@@ -5,4 +5,11 @@ import io.github.shakelang.shake.processor.program.code.ShakeValue
 
 class ShakeReturn (
     val value: ShakeValue?
-) : ShakeStatement
+) : ShakeStatement {
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "return",
+            "value" to value?.toJson()
+        )
+    }
+}

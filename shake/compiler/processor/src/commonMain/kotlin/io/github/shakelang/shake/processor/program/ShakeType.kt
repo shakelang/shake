@@ -1,7 +1,5 @@
 package io.github.shakelang.shake.processor.program
 
-import io.github.shakelang.shake.processor.program.code.ShakeInvokable
-
 abstract class ShakeType (
     val name: String,
 ) {
@@ -40,8 +38,10 @@ abstract class ShakeType (
     abstract val kind: Kind
 
     abstract fun castableTo(other: ShakeType): Boolean
-    open fun compatibleTo(other: ShakeType): Boolean = compatibilityDistance(other) > 0
+    open fun compatibleTo(other: ShakeType): Boolean = compatibilityDistance(other) >= 0
     abstract fun compatibilityDistance(other: ShakeType): Int
+
+    abstract fun toJson(): Map<String, Any?>
 
     enum class Kind {
         PRIMITIVE,
@@ -151,6 +151,10 @@ abstract class ShakeType (
                     other is Primitive && other.type == PrimitiveType.BOOLEAN
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other is Primitive && other.type == PrimitiveType.BOOLEAN) 0 else -1
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "boolean")
+                }
             }
 
             val BYTE: Primitive = object : Primitive("byte", PrimitiveType.BYTE) {
@@ -198,6 +202,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 4
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "byte")
+                }
             }
 
             val SHORT: Primitive = object : Primitive("short", PrimitiveType.SHORT) {
@@ -244,6 +252,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 4
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "short")
+                }
             }
 
             val INT: Primitive = object : Primitive("int", PrimitiveType.INT) {
@@ -289,6 +301,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 3
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "int")
+                }
             }
 
             val LONG: Primitive = object : Primitive("long", PrimitiveType.LONG) {
@@ -333,6 +349,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 2
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "long")
+                }
             }
 
             val FLOAT: Primitive = object : Primitive("float", PrimitiveType.FLOAT) {
@@ -376,6 +396,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 1
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "float")
+                }
             }
 
             val DOUBLE: Primitive = object : Primitive("double", PrimitiveType.DOUBLE) {
@@ -414,6 +438,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 0
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "double")
+                }
             }
 
             val UNSIGNED_BYTE: Primitive = object : Primitive("unsigned_byte", PrimitiveType.UNSIGNED_BYTE) {
@@ -464,6 +492,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 8
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "unsigned_byte")
+                }
             }
 
             val UNSIGNED_SHORT: Primitive = object : Primitive("unsigned_short", PrimitiveType.UNSIGNED_SHORT) {
@@ -514,6 +546,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 8
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "unsigned_short")
+                }
             }
 
             val UNSIGNED_INT: Primitive = object : Primitive("unsigned_int", PrimitiveType.UNSIGNED_INT) {
@@ -563,6 +599,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 7
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "unsigned_int")
+                }
             }
 
             val UNSIGNED_LONG: Primitive = object : Primitive("unsigned_long", PrimitiveType.UNSIGNED_LONG) {
@@ -611,6 +651,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 6
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "unsigned_long")
+                }
             }
 
             val CHAR = object : Primitive("char", PrimitiveType.CHAR) {
@@ -661,6 +705,10 @@ abstract class ShakeType (
                         PrimitiveType.DOUBLE -> 6
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "char")
+                }
             }
 
             val VOID = object : Primitive("void", PrimitiveType.VOID) {
@@ -684,6 +732,10 @@ abstract class ShakeType (
                         PrimitiveType.VOID -> 0
                         else -> -1
                     }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "void")
+                }
             }
         }
     }
@@ -727,6 +779,10 @@ abstract class ShakeType (
         override fun compatibilityDistance(other: ShakeType): Int {
             return if(other is Object) clazz.compatibilityDistance(other.clazz) else -1
         }
+
+        override fun toJson(): Map<String, Any?> {
+            return mapOf("type" to "object", "class" to clazz.qualifiedName)
+        }
     }
 
     class Array (
@@ -762,6 +818,10 @@ abstract class ShakeType (
 
         override fun compatibilityDistance(other: ShakeType): Int {
             return if(other is Array) elementType.compatibilityDistance(other.elementType) else -1
+        }
+
+        override fun toJson(): Map<String, Any?> {
+            return mapOf("type" to "array", "elementType" to elementType.toJson())
         }
     }
 
@@ -802,6 +862,10 @@ abstract class ShakeType (
         override fun compatibilityDistance(other: ShakeType): Int {
             // TODO: Check parameters
             return if(other is Lambda) returnType.compatibilityDistance(other.returnType) else -1
+        }
+
+        override fun toJson(): Map<String, Any?> {
+            return mapOf("type" to "lambda", "parameters" to parameters.map { it.toJson() }, "returnType" to returnType.toJson())
         }
     }
 

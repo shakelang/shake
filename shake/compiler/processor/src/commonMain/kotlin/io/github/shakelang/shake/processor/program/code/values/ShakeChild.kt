@@ -31,6 +31,14 @@ class ShakeChild (
     override fun decrementBeforeType(): ShakeType = type.decrementBeforeType() ?: type
     override fun decrementAfterType(): ShakeType = type.decrementAfterType() ?: type
 
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "child",
+            "name" to name,
+            "parent" to parent.toJson(),
+        )
+    }
+
 }
 
 class ShakeChildUsage (
@@ -53,6 +61,14 @@ class ShakeChildUsage (
             }
             throw IllegalStateException("Child usage is not in an object")
         }
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "child",
+            "parent" to used.parent.toJson(),
+            "name" to used.name
+        )
+    }
 
 
 

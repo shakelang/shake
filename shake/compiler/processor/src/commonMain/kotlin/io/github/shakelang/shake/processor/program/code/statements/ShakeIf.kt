@@ -10,4 +10,15 @@ class ShakeIf (
     val body: ShakeCode,
     val elseBody: ShakeCode? = null
 
-) : ShakeStatement
+) : ShakeStatement {
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "if",
+            "condition" to condition.toJson(),
+            "body" to body.toJson(),
+            "else" to elseBody?.toJson()
+        )
+    }
+
+}

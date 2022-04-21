@@ -16,4 +16,11 @@ class ShakeParameter (
             it
         }
     }
+
+    fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "name" to name,
+            "type" to type.toJson(),
+        )
+    }
 }

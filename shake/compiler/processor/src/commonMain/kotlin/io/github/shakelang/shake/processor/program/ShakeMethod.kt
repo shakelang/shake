@@ -38,6 +38,14 @@ class ShakeMethod (
         if(body is ShakeCode.ShakeLateProcessCode) body.process(scope)
     }
 
+    override fun toJson(): Map<String, Any?> {
+        return super.toJson() + mapOf(
+            "type" to "method",
+            "class" to clazz.name,
+            "body" to body.toJson()
+        )
+    }
+
     inner class ShakeMethodScope : ShakeScope {
         override val parent: ShakeScope
             get() = if(isStatic) clazz.staticScope else clazz.instanceScope

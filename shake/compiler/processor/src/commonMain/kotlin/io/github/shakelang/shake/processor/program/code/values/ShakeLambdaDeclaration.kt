@@ -13,5 +13,15 @@ class ShakeLambdaDeclaration(
 ) : ShakeInvokable(content, parameters), ShakeValue {
 
     override val type: ShakeType = ShakeType.Lambda("lambda${parameters.size}", parameters, returnType)
+    override val qualifiedName: String
+        get() = "anonymous${parameters.size}"
 
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "lambda",
+            "parameters" to parameters.map { it.toJson() },
+            "returnType" to returnType.toJson(),
+            "content" to content.toJson(),
+        )
+    }
 }
