@@ -214,7 +214,7 @@ open class ShakeCodeProcessor {
     fun visitVariableDeclarationNode(scope: ShakeScope, n: ShakeVariableDeclarationNode): ShakeVariableDeclaration {
         val value = if(n.value != null) visitValue(scope, n.value!!) else null
         val type = visitType(scope, n.type) ?: value?.type ?: throw Exception("Cannot infer type of variable ${n.name}")
-        val decl = ShakeVariableDeclaration(scope, n.name, type, value)
+        val decl = ShakeVariableDeclaration(scope, n.name, type, value, n.isFinal)
         scope.set(decl)
         return decl
     }

@@ -2,273 +2,453 @@ package io.github.shakelang.shake.js
 
 import io.github.shakelang.shake.generation.ShakeGenerator
 import io.github.shakelang.shake.js.output.*
-import io.github.shakelang.shake.parser.node.*
-import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import io.github.shakelang.shake.parser.node.logical.*
-import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import io.github.shakelang.shake.parser.node.loops.ShakeForNode
-import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import io.github.shakelang.shake.parser.node.variables.*
-import io.github.shakelang.shake.processor.program.ShakePackage
+import io.github.shakelang.shake.processor.program.*
+import io.github.shakelang.shake.processor.program.code.*
+import io.github.shakelang.shake.processor.program.code.statements.*
+import io.github.shakelang.shake.processor.program.code.values.*
 
-class ShakeJsGenerator : ShakeGenerator<JsOutput>() {
-    override fun visitTree(t: ShakeTree): JsTree {
-        val r = JsTree(t.children.mapNotNull { visit(it).toStatement() })
-        return r
-    }
+class ShakeJsGenerator {
 
-    override fun visitDoubleNode(n: ShakeDoubleNode): JsDouble {
-        return JsDouble(n.number)
-    }
-
-    override fun visitIntegerNode(n: ShakeIntegerNode): JsOutput {
-        return JsInteger(n.number)
-    }
-
-    override fun visitAddNode(n: ShakeAddNode): JsAdd {
-        return JsAdd(visit(n.left).toValue(), visit(n.right).toValue())
-    }
-
-    override fun visitSubNode(n: ShakeSubNode): JsSubtract {
-        return JsSubtract(visit(n.left).toValue(), visit(n.right).toValue())
-    }
-
-    override fun visitMulNode(n: ShakeMulNode): JsMultiply {
-        return JsMultiply(visit(n.left).toValue(), visit(n.right).toValue())
-    }
-
-    override fun visitDivNode(n: ShakeDivNode): JsDivide {
-        return JsDivide(visit(n.left).toValue(), visit(n.right).toValue())
-    }
-
-    override fun visitModNode(n: ShakeModNode): JsModulo {
-        return JsModulo(visit(n.left).toValue(), visit(n.right).toValue())
-    }
-
-    override fun visitPowNode(n: ShakePowNode): JsOutput {
-        return JsFunctionCall(JsField("pow", parent = JsField("Math")), args = listOf(visit(n.left).toValue(), visit(n.right).toValue()))
-    }
-
-    override fun visitVariableDeclarationNode(n: ShakeVariableDeclarationNode): JsDeclaration {
-        if(n.isFinal) {
-            if(n.value == null) throw IllegalStateException("Final variable must have an assignment")
-            return JsConstantDeclaration(n.name, visit(n.value!!.value).toValue())
+    fun visitValue(v: ShakeValue): JsValue {
+        return when(v) {
+            is ShakeDoubleLiteral -> visitDouble(v)
+            is ShakeIntegerLiteral -> visitInteger(v)
+            is ShakeBooleanLiteral -> visitBoolean(v)
+            is ShakeAddition -> visitAddition(v)
+            is ShakeSubtraction -> visitSubtraction(v)
+            is ShakeMultiplication -> visitMultiplication(v)
+            is ShakeDivision -> visitDivision(v)
+            is ShakeModulus -> visitModulus(v)
+            is ShakePower -> visitPower(v)
+            is ShakeAssignment -> visitAssignment(v)
+            is ShakeAddAssignment -> visitAdditionAssignment(v)
+            is ShakeSubAssignment -> visitSubtractionAssignment(v)
+            is ShakeMulAssignment -> visitMultiplicationAssignment(v)
+            is ShakeDivAssignment -> visitDivisionAssignment(v)
+            is ShakeModAssignment -> visitModulusAssignment(v)
+            is ShakePowerAssignment -> visitPowerAssignment(v)
+            is ShakeIncrementBefore -> visitIncrementBefore(v)
+            is ShakeIncrementAfter -> visitIncrementAfter(v)
+            is ShakeDecrementBefore -> visitDecrementBefore(v)
+            is ShakeDecrementAfter -> visitDecrementAfter(v)
+            is ShakeUsage -> visitUsage(v)
+            is ShakeEquals -> visitEquals(v)
+            is ShakeNotEquals -> visitNotEquals(v)
+            is ShakeGreaterThan -> visitGreaterThan(v)
+            is ShakeGreaterThanOrEqual -> visitGreaterThanOrEqual(v)
+            is ShakeLessThan -> visitLessThan(v)
+            is ShakeLessThanOrEqual -> visitLessThanOrEqual(v)
+            is ShakeAnd -> visitAnd(v)
+            is ShakeOr -> visitOr(v)
+            is ShakeNot -> visitNot(v)
+            is ShakeInvocation -> visitInvocation(v)
+            is ShakeNew -> visitNew(v)
+            is ShakeCast -> visitCast(v)
+            else -> throw IllegalArgumentException("Unsupported value type: ${v::class.simpleName}")
         }
-        if(n.value == null) return JsVariableDeclaration(n.name)
-        return JsVariableDeclaration(n.name, visit(n.value!!.value).toValue())
     }
 
-    override fun visitVariableAssignmentNode(n: ShakeValuedNode): JsAssignment {
-        if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
-        return JsAssignment(JsField((n.variable as ShakeIdentifierNode).name), visit(n.value).toValue())
+    fun visitStatement(s: ShakeStatement): JsStatement {
+        return when(s) {
+            is ShakePower -> visitPower(s)
+            is ShakeAssignment -> visitAssignment(s)
+            is ShakeAddAssignment -> visitAdditionAssignment(s)
+            is ShakeSubAssignment -> visitSubtractionAssignment(s)
+            is ShakeMulAssignment -> visitMultiplicationAssignment(s)
+            is ShakeDivAssignment -> visitDivisionAssignment(s)
+            is ShakeModAssignment -> visitModulusAssignment(s)
+            is ShakePowerAssignment -> visitPowerAssignment(s)
+            is ShakeIncrementBefore -> visitIncrementBefore(s)
+            is ShakeIncrementAfter -> visitIncrementAfter(s)
+            is ShakeDecrementBefore -> visitDecrementBefore(s)
+            is ShakeDecrementAfter -> visitDecrementAfter(s)
+            is ShakeInvocation -> visitInvocation(s)
+            is ShakeNew -> visitNew(s)
+            is ShakeDoWhile -> visitDoWhile(s)
+            is ShakeWhile -> visitWhile(s)
+            is ShakeFor -> visitFor(s)
+            is ShakeIf -> visitIf(s)
+            is ShakeReturn -> visitReturn(s)
+            is ShakeVariableDeclaration -> visitVariableDeclaration(s)
+            else -> throw IllegalArgumentException("Unsupported value type: ${s::class.simpleName}")
+        }
+
     }
 
-    override fun visitVariableAddAssignmentNode(n: ShakeVariableAddAssignmentNode): JsAddAssignment {
-        if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
-        return JsAddAssignment(JsField((n.variable as ShakeIdentifierNode).name), visit(n.value).toValue())
+    fun visitCode(t: ShakeCode): JsTree {
+        return JsTree(t.statements.map { visitStatement(it) })
     }
 
-    override fun visitVariableSubAssignmentNode(n: ShakeVariableSubAssignmentNode): JsSubtractAssignment {
-        if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
-        return JsSubtractAssignment(JsField((n.variable as ShakeIdentifierNode).name), visit(n.value).toValue())
+    fun visitDouble(n: ShakeDoubleLiteral): JsDouble {
+        return JsDouble(n.value)
     }
 
-    override fun visitVariableMulAssignmentNode(n: ShakeVariableMulAssignmentNode): JsMultiplyAssignment {
-        if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
-        return JsMultiplyAssignment(JsField((n.variable as ShakeIdentifierNode).name), visit(n.value).toValue())
+    fun visitInteger(n: ShakeIntegerLiteral): JsInteger {
+        return JsInteger(n.value)
     }
 
-    override fun visitVariableDivAssignmentNode(n: ShakeVariableDivAssignmentNode): JsDivideAssignment {
-        if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
-        return JsDivideAssignment(JsField((n.variable as ShakeIdentifierNode).name), visit(n.value).toValue())
+    fun visitBoolean(n: ShakeBooleanLiteral): JsLiteral {
+        return if(n.value) JsLiteral.TRUE else JsLiteral.FALSE
     }
 
-    override fun visitVariableModAssignmentNode(n: ShakeVariableModAssignmentNode): JsModuloAssignment {
-        if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
-        return JsModuloAssignment(JsField((n.variable as ShakeIdentifierNode).name), visit(n.value).toValue())
+    fun visitAddition(n: ShakeAddition): JsAdd {
+        return JsAdd(visitValue(n.left).toValue(), visitValue(n.right).toValue())
     }
 
-    override fun visitVariablePowAssignmentNode(n: ShakeVariablePowAssignmentNode): JsAssignment {
-        if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
-        return JsAssignment(JsField((n.variable as ShakeIdentifierNode).name),
-            JsFunctionCall(JsField("pow",
-                parent = JsField((n.variable as ShakeIdentifierNode).name)),
-                args = listOf(visit(n.value).toValue())
-        ))
+    fun visitSubtraction(n: ShakeSubtraction): JsSubtract {
+        return JsSubtract(visitValue(n.left).toValue(), visitValue(n.right).toValue())
     }
 
-    override fun visitVariableIncreaseNode(n: ShakeVariableIncreaseNode): JsIncrement {
-        if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
-        return JsIncrement(JsField((n.variable as ShakeIdentifierNode).name))
+    fun visitMultiplication(n: ShakeMultiplication): JsMultiply {
+        return JsMultiply(visitValue(n.left).toValue(), visitValue(n.right).toValue())
     }
 
-    override fun visitVariableDecreaseNode(n: ShakeVariableDecreaseNode): JsDecrement {
-        if(n.variable !is ShakeIdentifierNode) throw IllegalStateException("Variable assignment must be to an identifier")
-        return JsDecrement(JsField((n.variable as ShakeIdentifierNode).name))
+    fun visitDivision(n: ShakeDivision): JsDivide {
+        return JsDivide(visitValue(n.left).toValue(), visitValue(n.right).toValue())
     }
 
-    override fun visitVariableUsageNode(n: ShakeVariableUsageNode): JsField {
-        return JsField(n.variable.name, parent = n.variable.parent?.let { visit(it).toValue() })
+    fun visitModulus(n: ShakeModulus): JsModulo {
+        return JsModulo(visitValue(n.left).toValue(), visitValue(n.right).toValue())
     }
 
-    override fun visitEqEqualsNode(n: ShakeLogicalEqEqualsNode): JsEquals {
-        return JsEquals(visit(n.left).toValue(), visit(n.right).toValue())
+    fun visitPower(n: ShakePower): JsFunctionCall {
+        return JsFunctionCall(JsField("pow", parent = JsField("Math")),
+            args = listOf(visitValue(n.left).toValue(), visitValue(n.right).toValue()))
     }
 
-    override fun visitBiggerEqualsNode(n: ShakeLogicalBiggerEqualsNode): JsGreaterThanOrEquals {
-        return JsGreaterThanOrEquals(visit(n.left).toValue(), visit(n.right).toValue())
+    fun visitVariableDeclaration(n: ShakeVariableDeclaration): JsDeclaration {
+        if(n.isFinal) {
+            if(n.initialValue == null) throw IllegalStateException("Final variable must have an assignment")
+            return JsConstantDeclaration(n.name, visitValue(n.initialValue!!).toValue())
+        }
+        if(n.initialValue == null) return JsVariableDeclaration(n.name)
+        return JsVariableDeclaration(n.name, visitValue(n.initialValue!!).toValue())
     }
 
-    override fun visitSmallerEqualsNode(n: ShakeLogicalSmallerEqualsNode): JsLessThanOrEquals {
-        return JsLessThanOrEquals(visit(n.left).toValue(), visit(n.right).toValue())
+    fun visitAssignable(a: ShakeAssignable): JsAssignable {
+        if(a is ShakeVariableDeclaration) return JsAssignable(JsField(a.name))
+        if(a is ShakeClassField) {
+            if(a.isStatic) return JsAssignable(JsField(a.name, parent = JsField(a.clazz.name)))
+            return JsAssignable(JsField(a.name, parent = JsField("this")))
+        }
+        if(a is ShakeField) {
+            return JsAssignable(JsField(a.name))
+        }
+        TODO("not implemented")
     }
 
-    override fun visitBiggerNode(n: ShakeLogicalBiggerNode): JsGreaterThan {
-        return JsGreaterThan(visit(n.left).toValue(), visit(n.right).toValue())
+    fun visitAssignment(n: ShakeAssignment): JsAssignment {
+        val variable = visitAssignable(n.variable)
+        return variable.assign(visitValue(n.value))
     }
 
-    override fun visitSmallerNode(n: ShakeLogicalSmallerNode): JsLessThan {
-        return JsLessThan(visit(n.left).toValue(), visit(n.right).toValue())
+    fun visitAdditionAssignment(n: ShakeAddAssignment): JsAddAssignment {
+        val variable = visitAssignable(n.variable)
+        return variable.addAssign(visitValue(n.value))
     }
 
-    override fun visitLogicalAndNode(n: ShakeLogicalAndNode): JsAnd {
-        return JsAnd(visit(n.left).toValue(), visit(n.right).toValue())
+    fun visitSubtractionAssignment(n: ShakeSubAssignment): JsSubtractAssignment {
+        val variable = visitAssignable(n.variable)
+        return variable.subtractAssign(visitValue(n.value))
     }
 
-    override fun visitLogicalOrNode(n: ShakeLogicalOrNode): JsOr {
-        return JsOr(visit(n.left).toValue(), visit(n.right).toValue())
+    fun visitMultiplicationAssignment(n: ShakeMulAssignment): JsMultiplyAssignment {
+        val variable = visitAssignable(n.variable)
+        return variable.multiplyAssign(visitValue(n.value))
     }
 
-    override fun visitLogicalXOrNode(n: ShakeLogicalXOrNode): JsXOr {
-        return JsXOr(visit(n.left).toValue(), visit(n.right).toValue())
+    fun visitDivisionAssignment(n: ShakeDivAssignment): JsDivideAssignment {
+        val variable = visitAssignable(n.variable)
+        return variable.divideAssign(visitValue(n.value))
     }
 
-    override fun visitWhileNode(n: ShakeWhileNode): JsWhile {
-        return JsWhile(visit(n.condition).toValue(), visitTree(n.body))
+    fun visitModulusAssignment(n: ShakeModAssignment): JsModuloAssignment {
+        val variable = visitAssignable(n.variable)
+        return variable.moduloAssign(visitValue(n.value))
     }
 
-    override fun visitDoWhileNode(n: ShakeDoWhileNode): JsDoWhile {
-        return JsDoWhile(visit(n.condition).toValue(), visitTree(n.body))
+    fun visitPowerAssignment(n: ShakePowerAssignment): JsAssignment {
+        val variable = visitAssignable(n.variable)
+        return variable.assign(JsFunctionCall(JsField("pow", parent = JsField("Math")),
+            args = listOf(visitValue(n.value).toValue(), visitValue(n.value).toValue())))
     }
 
-    override fun visitForNode(n: ShakeForNode): JsFor {
-        return JsFor(
-            visit(n.declaration).toStatement()!!,
-            visit(n.condition).toValue(),
-            visit(n.round).toStatement()!!,
-            visitTree(n.body)
-        )
+    fun visitIncrementBefore(n: ShakeIncrementBefore): JsBeforeIncrement {
+        val variable = visitAssignable(n.variable)
+        return variable.incrementBefore()
     }
 
-    override fun visitIfNode(n: ShakeIfNode): JsIf {
-        return JsIf(visit(n.condition).toValue(), visitTree(n.body), n.elseBody?.let { visitTree(it) })
+    fun visitIncrementAfter(n: ShakeIncrementAfter): JsAfterIncrement {
+        val variable = visitAssignable(n.variable)
+        return variable.incrementAfter()
     }
 
-    override fun visitFunctionDeclarationNode(n: ShakeFunctionDeclarationNode): JsFunctionDeclaration {
-        return JsFunctionDeclaration(n.name, n.args.map { JsVariableDeclaration(it.name) }, visitTree(n.body))
+    fun visitDecrementBefore(n: ShakeDecrementBefore): JsBeforeDecrement {
+        val variable = visitAssignable(n.variable)
+        return variable.decrementBefore()
     }
 
-    override fun visitClassDeclarationNode(n: ShakeClassDeclarationNode): JsClassDeclaration {
+    fun visitDecrementAfter(n: ShakeDecrementAfter): JsAfterDecrement {
+        val variable = visitAssignable(n.variable)
+        return variable.decrementAfter()
+    }
+
+    fun visitUsage(n: ShakeUsage): JsField {
+        if(n is ShakeVariableUsage) return JsField(n.name)
+        if(n is ShakeClassFieldUsage) {
+            if(n.receiver != null) return JsField(n.name, parent = visitValue(n.receiver!!))
+            if(n.declaration.isStatic) return JsField(n.name, parent = JsField(n.declaration.clazz.name))
+            return JsField(n.name, parent = JsField("this"))
+        }
+        if(n is ShakeFieldUsage) {
+            return JsField(n.name)
+        }
+        throw IllegalStateException("Unknown usage: $n")
+    }
+
+    fun visitEquals(n: ShakeEquals): JsEquals {
+        return JsEquals(visitValue(n.left), visitValue(n.right))
+    }
+
+    fun visitNotEquals(n: ShakeNotEquals): JsNotEquals {
+        return JsNotEquals(visitValue(n.left), visitValue(n.right))
+    }
+
+    fun visitLessThan(n: ShakeLessThan): JsLessThan {
+        return JsLessThan(visitValue(n.left), visitValue(n.right))
+    }
+
+    fun visitLessThanOrEqual(n: ShakeLessThanOrEqual): JsLessThanOrEqual {
+        return JsLessThanOrEqual(visitValue(n.left), visitValue(n.right))
+    }
+
+    fun visitGreaterThan(n: ShakeGreaterThan): JsGreaterThan {
+        return JsGreaterThan(visitValue(n.left), visitValue(n.right))
+    }
+
+    fun visitGreaterThanOrEqual(n: ShakeGreaterThanOrEqual): JsGreaterThanOrEqual {
+        return JsGreaterThanOrEqual(visitValue(n.left), visitValue(n.right))
+    }
+
+    fun visitAnd(n: ShakeAnd): JsAnd {
+        return JsAnd(visitValue(n.left), visitValue(n.right))
+    }
+
+    fun visitOr(n: ShakeOr): JsOr {
+        return JsOr(visitValue(n.left), visitValue(n.right))
+    }
+
+    fun visitXor(n: ShakeXor): JsXor {
+        return JsXor(visitValue(n.left), visitValue(n.right))
+    }
+
+    fun visitNot(n: ShakeNot): JsNot {
+        return JsNot(visitValue(n.value))
+    }
+
+
+    fun visitWhile(n: ShakeWhile): JsWhile {
+        return JsWhile(visitValue(n.condition), visitCode(n.body))
+    }
+
+    fun visitDoWhile(n: ShakeDoWhile): JsDoWhile {
+        return JsDoWhile(visitValue(n.condition), visitCode(n.body))
+    }
+
+    fun visitFor(n: ShakeFor): JsFor {
+        return JsFor(visitStatement(n.init), visitValue(n.condition), visitStatement(n.update), visitCode(n.body))
+    }
+
+    fun visitIf(n: ShakeIf): JsIf {
+        return JsIf(visitValue(n.condition), visitCode(n.body), n.elseBody?.let { visitCode(it) })
+    }
+
+    fun visitParameter(n: ShakeParameter): JsParameter {
+        // TODO Default values
+        return JsParameter(n.name)
+    }
+
+    fun visitFunctionDeclaration(n: ShakeFunction): JsFunctionDeclaration {
+        val name = n.name
+        val parameters = n.parameters.map { visitParameter(it) }
+        val body = visitCode(n.body)
+        return JsFunctionDeclaration(name, parameters, body)
+    }
+
+    fun visitMethodDeclaration(n: ShakeMethod): JsFunctionDeclaration {
+        val name = n.name
+        val parameters = n.parameters.map { visitParameter(it) }
+        val body = visitCode(n.body)
+        return JsFunctionDeclaration(name, parameters, body)
+    }
+
+    fun visitFieldDeclaration(n: ShakeField): JsDeclaration {
+        if(n.isFinal) {
+            if(n.initialValue == null) throw IllegalStateException("Final field must have initial value")
+            return JsConstantDeclaration(n.name, visitValue(n.initialValue!!))
+        }
+        if(n.initialValue != null) return JsVariableDeclaration(n.name, visitValue(n.initialValue!!))
+        return JsVariableDeclaration(n.name)
+    }
+
+
+    fun visitClassDeclaration(n: ShakeClass): JsClassDeclaration {
         return JsClassDeclaration(
             n.name,
-            functions = n.methods
-                .filter { !it.isStatic }
-                .map { visitFunctionDeclarationNode(it) },
-            staticFunctions = n.methods
-                .filter { it.isStatic }
-                .map { visitFunctionDeclarationNode(it) },
-            fields = n.fields.filter { !it.isStatic }
-                .map { visitVariableDeclarationNode(it) },
-            staticFields = n.fields
-                .filter { it.isStatic }
-                .map { visitVariableDeclarationNode(it) }
+            functions = n.methods.map { visitMethodDeclaration(it) },
+            staticFunctions = n.staticMethods.map { visitMethodDeclaration(it) },
+            fields = n.fields.map { visitFieldDeclaration(it) },
+            staticFields = n.staticFields.map { visitFieldDeclaration(it) }
         )
     }
 
-    override fun visitClassConstruction(n: ShakeClassConstructionNode): JsNew {
-        return JsNew(visit(n.type).toValue(), n.args.map { visit(it).toValue() })
+    fun visitNew(n: ShakeNew): JsNew {
+        // TODO: Implement
+        return JsNew(JsField(n.reference.clazz.name), n.arguments.map { visitValue(it) })
     }
 
-    override fun visitFunctionCallNode(n: ShakeFunctionCallNode): JsFunctionCall {
-        return JsFunctionCall(visit(n.function).toValue(), n.args.map { visit(it).toValue() })
-    }
+    fun visitInvocation(n: ShakeInvocation): JsFunctionCall {
 
-    override fun visitIdentifierNode(n: ShakeIdentifierNode): JsOutput {
-        if(n.parent != null) {
-            return JsField(n.name, parent = visit(n.parent!!).toValue())
+        val callable = n.callable
+
+        when(callable) {
+            is ShakeMethod -> {
+
+                if(callable.isStatic)
+                    return JsFunctionCall(JsField(callable.name, JsField(callable.clazz.name)), n.arguments.map { visitValue(it) })
+
+                if(n.parent != null)
+                    return JsFunctionCall(JsField(callable.name, visitValue(n.parent!!)), n.arguments.map { visitValue(it) })
+
+                return JsFunctionCall(JsField(callable.name, JsField("this")), n.arguments.map { visitValue(it) })
+
+            }
+            is ShakeFunction -> return JsFunctionCall(JsField(callable.name), n.arguments.map { visitValue(it) })
+            is ShakeLambdaDeclaration -> TODO()
+            // is ShakeLambdaDeclaration -> return JsFunctionCall(callable, n.arguments.map { visitValue(it) })
+            else -> throw IllegalStateException("Unknown callable type")
         }
-        return JsField(n.name)
     }
 
-    override fun visitLogicalTrueNode(n: ShakeLogicalTrueNode): JsOutput {
-        return JsLiteral.TRUE
+    fun visitCast(n: ShakeCast): JsValue {
+        return visitValue(n.value)
     }
 
-    override fun visitLogicalFalseNode(n: ShakeLogicalFalseNode): JsOutput {
-        return JsLiteral.FALSE
+    fun visitReturn(n: ShakeReturn): JsReturn {
+        return JsReturn(n.value?.let { visitValue(it) })
     }
 
-    override fun visitImportNode(n: ShakeImportNode): JsOutput {
-        TODO("Not yet implemented")
+    fun visitPackage(prj: JsProject, parent: JsPackage?, n: ShakePackage): JsPackage {
+        return JsPackage(prj, parent, n.name, n.subpackages.toTypedArray(), n.classes.toTypedArray(), n.functions.toTypedArray(), n.fields.toTypedArray())
     }
 
-    override fun visitCastNode(n: ShakeCastNode): JsValue {
-        return visit(n.value).toValue()
+    fun visitProject(n: ShakeProject): JsProject {
+        return JsProject(this, n.subpackages.toTypedArray(), n.classes.toTypedArray(), n.functions.toTypedArray(), n.fields.toTypedArray())
     }
 
-    fun generateSingleFile(src: ShakePackage): JsTree {
-        return JsTree(listOf(
-            JsVariableDeclaration("SHAKE_PACKAGE"),
-            JsAssignment(JsField("SHAKE_PACKAGE"), generateSingleFilePackage(src))
-        ))
+}
+
+class JsProject {
+
+    val gen: ShakeJsGenerator
+    val subpackages: List<JsPackage>
+    val classes: List<JsClassDeclaration>
+    val functions: List<JsFunctionDeclaration>
+    val fields: List<JsDeclaration>
+
+    constructor(
+        generator: ShakeJsGenerator,
+        subpackages: List<JsPackage>,
+        classes: List<JsClassDeclaration>,
+        functions: List<JsFunctionDeclaration>,
+        fields: List<JsDeclaration>
+    ) {
+        this.gen = generator
+        this.subpackages = subpackages
+        this.classes = classes
+        this.functions = functions
+        this.fields = fields
     }
 
-    fun generateSingleFilePackage(pkg: ShakePackage): JsObject {
-        return JsObject(mapOf(
-            JsStringLiteral("packages") to JsObject(
-                pkg.subpackages.associate {
-                    JsStringLiteral(it.name) to generateSingleFilePackage(it)
-                }
-            ),
-            JsStringLiteral("classes") to JsObject(
-                pkg.classes.values.associate {
-                    JsStringLiteral(it.name) to JsFunctionCall(
-                        JsInlineFunction(
-                            emptyList(),
-                            JsTree(listOf(
-                                visitClassDeclarationNode(it),
-                                JsReturn(JsField(it.name))
-                            ))
-                        ),
-                        emptyList()
-                    )
-                }
-            ),
-            JsStringLiteral("functions") to JsObject(
-                pkg.functions.values.associate {
-                    JsStringLiteral(it.name) to visitFunctionDeclarationNode(it).inline()
-                }
-            ),
-            JsStringLiteral("fields") to JsObject(
-                pkg.fields.values.associate {
-                    JsStringLiteral(it.name) to (visitVariableDeclarationNode(it).value ?: JsLiteral.NULL)
-                }
-            )
-        ))
+    constructor(
+        generator: ShakeJsGenerator,
+        subpackages: Array<ShakePackage>,
+        classes: Array<ShakeClass>,
+        functions: Array<ShakeFunction>,
+        fields: Array<ShakeField>
+    ) {
+        this.gen = generator
+        this.subpackages = subpackages.map { generator.visitPackage(this, null, it) }
+        this.classes = classes.map { generator.visitClassDeclaration(it) }
+        this.functions = functions.map { generator.visitFunctionDeclaration(it) }
+        this.fields = fields.map { generator.visitFieldDeclaration(it) }
     }
 
+    fun toMap(): Map<String, Any> {
+        return mapOf(
+            "packages" to subpackages.map { it.toMap() },
+            "classes" to classes.map { it.generate(2) },
+            "functions" to functions.map { it.generate(2) },
+            "fields" to fields.map { it.generate(2) }
+        )
+    }
+}
 
+class JsPackage {
 
-    override val extension: String
-        get() = "js"
+    val prj: JsProject
+    val parent: JsPackage?
+    val name: String
+    val subpackages: List<JsPackage>
+    val classes: List<JsClassDeclaration>
+    val functions: List<JsFunctionDeclaration>
+    val fields: List<JsDeclaration>
 
-    override val name: String
-        get() = "bundle"
+    constructor(
+        prj: JsProject,
+        parent: JsPackage?,
+        name: String,
+        subpackages: List<JsPackage>,
+        classes: List<JsClassDeclaration>,
+        functions: List<JsFunctionDeclaration>,
+        fields: List<JsDeclaration>
+    ) {
+        this.prj = prj
+        this.parent = parent
+        this.name = name
+        this.subpackages = subpackages
+        this.classes = classes
+        this.functions = functions
+        this.fields = fields
+    }
+
+    constructor(
+        prj: JsProject,
+        parent: JsPackage?,
+        name: String,
+        subpackages: Array<ShakePackage>,
+        classes: Array<ShakeClass>,
+        functions: Array<ShakeFunction>,
+        fields: Array<ShakeField>
+    ) {
+        this.prj = prj
+        this.parent = parent
+        this.name = name
+        this.subpackages = subpackages.map { prj.gen.visitPackage(prj, this, it) }
+        this.classes = classes.map { prj.gen.visitClassDeclaration(it) }
+        this.functions = functions.map { prj.gen.visitFunctionDeclaration(it) }
+        this.fields = fields.map { prj.gen.visitFieldDeclaration(it) }
+    }
+
+    fun toMap(): Map<String, Any> {
+        return mapOf(
+            "name" to name,
+            "subpackages" to subpackages.map { it.toMap() },
+            "classes" to classes.map { it.generate(2) },
+            "functions" to functions.map { it.generate(2) },
+            "fields" to fields.map { it.generate(2) }
+        )
+    }
+
 
 }

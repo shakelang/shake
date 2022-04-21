@@ -15,32 +15,36 @@ open class ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeSt
     final override var type: ShakeType
     var latestValue: ShakeValue?
     var latestType: ShakeType
+    val isFinal: Boolean
 
     override val qualifiedName: String
         get() = "local $name"
 
-    constructor(scope: ShakeScope, name: String, initialValue: ShakeValue) {
+    constructor(scope: ShakeScope, name: String, initialValue: ShakeValue, isFinal: Boolean) {
         this.scope = scope
         this.name = name
         this.initialValue = initialValue
+        this.isFinal = isFinal
         this.type = initialValue.type
         this.latestValue = initialValue
         this.latestType = initialValue.type
     }
 
-    constructor(scope: ShakeScope, name: String, type: ShakeType) {
+    constructor(scope: ShakeScope, name: String, type: ShakeType, isFinal: Boolean) {
         this.scope = scope
         this.name = name
         this.initialValue = null
+        this.isFinal = isFinal
         this.type = type
         this.latestValue = null
         this.latestType = type
     }
 
-    constructor(scope: ShakeScope, name: String, type: ShakeType, initialValue: ShakeValue?) {
+    constructor(scope: ShakeScope, name: String, type: ShakeType, initialValue: ShakeValue?, isFinal: Boolean) {
         this.scope = scope
         this.name = name
         this.initialValue = initialValue
+        this.isFinal = isFinal
         this.type = type
         this.latestValue = initialValue
         this.latestType = type

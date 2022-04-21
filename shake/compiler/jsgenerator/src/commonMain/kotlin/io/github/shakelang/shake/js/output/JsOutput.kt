@@ -215,7 +215,7 @@ class JsModuloAssignment(
     }
 }
 
-class JsIncrement(
+class JsAfterIncrement(
     val name: JsField
 ) : JsStatement, JsValue {
     override val needsParens: Boolean get() = true
@@ -233,7 +233,7 @@ class JsBeforeIncrement(
     }
 }
 
-class JsDecrement(
+class JsAfterDecrement(
     val name: JsField
 ) : JsStatement, JsValue {
     override val needsParens: Boolean get() = true
@@ -281,7 +281,7 @@ class JsLessThan(
     }
 }
 
-class JsLessThanOrEquals(
+class JsLessThanOrEqual(
     val left: JsValue,
     val right: JsValue
 ) : JsValue {
@@ -301,7 +301,7 @@ class JsGreaterThan(
     }
 }
 
-class JsGreaterThanOrEquals(
+class JsGreaterThanOrEqual(
     val left: JsValue,
     val right: JsValue
 ) : JsValue {
@@ -331,7 +331,7 @@ class JsOr(
     }
 }
 
-class JsXOr(
+class JsXor(
     val left: JsValue,
     val right: JsValue
 ) : JsValue {
@@ -415,9 +415,18 @@ class JsFor(
     }
 }
 
+class JsParameter(
+    val name: String,
+    val default: JsValue? = null
+) : JsStatement {
+    override fun generate(indentAmount: Int, indent: String): String {
+        return name + (default?.let { " = ${it.generate(indentAmount, indent)}" } ?: "")
+    }
+}
+
 class JsFunctionDeclaration(
     val name: String,
-    val parameters: List<JsVariableDeclaration>,
+    val parameters: List<JsParameter>,
     val body: JsTree
 ) : JsStatement {
 
@@ -437,8 +446,8 @@ class JsFunctionDeclaration(
 
     private fun baseGenerate(indentAmount: Int, indent: String): String {
         return "(${parameters.joinToString(", ") {
-            if(it.value != null) {
-                "${it.name} = ${it.value.generate(indentAmount, indent)}"
+            if(it.default != null) {
+                "${it.name} = ${it.default.generate(indentAmount, indent)}"
             } else {
                 it.name
             }
@@ -447,14 +456,14 @@ class JsFunctionDeclaration(
 }
 
 class JsInlineFunction (
-    val parameters: List<JsVariableDeclaration>,
+    val parameters: List<JsParameter>,
     val body: JsTree
 ) : JsValue {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "function (${parameters.joinToString(", ") {
-            if(it.value != null) {
-                "${it.name} = ${it.value.generate(indentAmount + 1, indent)}"
+            if(it.default != null) {
+                "${it.name} = ${it.default.generate(indentAmount + 1, indent)}"
             } else {
                 it.name
             }
@@ -508,7 +517,7 @@ class JsClassDeclaration(
 class JsNew(
     val type: JsValue,
     val parameters: List<JsValue> = emptyList(),
-) : JsValue {
+) : JsValue, JsStatement {
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
         return "new ${type.generate(indentAmount, indent)}(${parameters.joinToString(", ") { it.generate(indentAmount, indent) }})"
@@ -553,4 +562,50 @@ enum class JsLiteral : JsValue {
     override fun generate(indentAmount: Int, indent: String): String {
         return name.lowercase()
     }
+}
+
+class JsAssignable (
+    val field: JsField,
+)  {
+
+    fun assign(value: JsValue): JsAssignment {
+        return JsAssignment(field, value)
+    }
+
+    fun addAssign(value: JsValue): JsAddAssignment {
+        return JsAddAssignment(field, value)
+    }
+
+    fun subtractAssign(value: JsValue): JsSubtractAssignment {
+        return JsSubtractAssignment(field, value)
+    }
+
+    fun multiplyAssign(value: JsValue): JsMultiplyAssignment {
+        return JsMultiplyAssignment(field, value)
+    }
+
+    fun divideAssign(value: JsValue): JsDivideAssignment {
+        return JsDivideAssignment(field, value)
+    }
+
+    fun moduloAssign(value: JsValue): JsModuloAssignment {
+        return JsModuloAssignment(field, value)
+    }
+
+    fun incrementBefore(): JsBeforeIncrement {
+        return JsBeforeIncrement(field)
+    }
+
+    fun incrementAfter(): JsAfterIncrement {
+        return JsAfterIncrement(field)
+    }
+
+    fun decrementBefore(): JsBeforeDecrement {
+        return JsBeforeDecrement(field)
+    }
+
+    fun decrementAfter(): JsAfterDecrement {
+        return JsAfterDecrement(field)
+    }
+
 }

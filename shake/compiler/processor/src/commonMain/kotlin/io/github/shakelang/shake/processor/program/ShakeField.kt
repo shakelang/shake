@@ -17,6 +17,7 @@ open class ShakeField (
     val isPrivate: Boolean,
     val isProtected: Boolean,
     val isPublic: Boolean,
+    val initialValue: ShakeValue? = null,
 ): ShakeDeclaration, ShakeAssignable {
 
     override val qualifiedName: String
