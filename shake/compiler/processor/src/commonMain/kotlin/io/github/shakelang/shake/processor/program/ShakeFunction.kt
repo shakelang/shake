@@ -11,6 +11,7 @@ import io.github.shakelang.shake.processor.program.code.statements.ShakeVariable
 open class ShakeFunction (
     val prj: ShakeProject,
     val pkg: ShakePackage?,
+    val parentScope: ShakeScope,
     val name: String,
     body: ShakeCode,
     val isStatic: Boolean,
@@ -32,6 +33,7 @@ open class ShakeFunction (
     constructor(
         prj: ShakeProject,
         pkg: ShakePackage?,
+        parentScope: ShakeScope,
         name: String,
         parameters: List<ShakeParameter>,
         returnType: ShakeType,
@@ -44,7 +46,7 @@ open class ShakeFunction (
         isPrivate: Boolean,
         isProtected: Boolean,
         isPublic: Boolean
-    ): this(prj, pkg, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic) {
+    ): this(prj, pkg, parentScope, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic) {
         this.parameters = parameters
         this.returnType = returnType
     }
@@ -127,10 +129,11 @@ open class ShakeFunction (
     }
 
     companion object {
-        fun from(baseProject: ShakeProject, pkg: ShakePackage?, node: ShakeFunctionDeclarationNode): ShakeFunction {
+        fun from(baseProject: ShakeProject, pkg: ShakePackage?, parentScope: ShakeScope, node: ShakeFunctionDeclarationNode): ShakeFunction {
             return ShakeFunction(
                 baseProject,
                 pkg,
+                parentScope,
                 node.name,
                 ShakeCode.fromTree(node.body),
                 node.isStatic,

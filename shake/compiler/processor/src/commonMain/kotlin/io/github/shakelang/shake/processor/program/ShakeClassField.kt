@@ -7,6 +7,7 @@ import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
 
 class ShakeClassField (
     val clazz: ShakeClass,
+    parentScope: ShakeScope,
     name: String,
     isStatic: Boolean,
     isFinal: Boolean,
@@ -18,6 +19,7 @@ class ShakeClassField (
 ): ShakeField(
     clazz.prj,
     clazz.pkg,
+    parentScope,
     name,
     isStatic,
     isFinal,

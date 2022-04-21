@@ -7,6 +7,7 @@ import io.github.shakelang.shake.processor.program.code.statements.ShakeVariable
 
 class ShakeMethod (
     val clazz: ShakeClass,
+    parentScope: ShakeScope,
     name: String,
     body: ShakeCode,
     isStatic: Boolean,
@@ -20,6 +21,7 @@ class ShakeMethod (
 ) : ShakeFunction(
     clazz.prj,
     clazz.pkg,
+    parentScope,
     name,
     body,
     isStatic,

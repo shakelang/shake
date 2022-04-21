@@ -1,6 +1,7 @@
 package io.github.shakelang.shake.processor.program
 
 import io.github.shakelang.shake.parser.node.ShakeFile
+import io.github.shakelang.shake.parser.node.ShakeImportNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
@@ -18,7 +19,7 @@ open class ShakePackage (
 ) {
 
     val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + (name)
-    val scope: ShakeScope get() = Scope()
+    val scope: ShakeScope = Scope()
 
     open fun getPackage(name: String): ShakePackage {
         return subpackages.find { it.name == name } ?: ShakePackage(baseProject, name, this).let {
@@ -32,22 +33,79 @@ open class ShakePackage (
     }
 
     open fun putFile(name: String, contents: ShakeFile) {
+
+        val imports = contents.children.filterIsInstance<ShakeImportNode>()
+        val imported = arrayOfNulls<ShakePackage>(imports.size)
+
+        imports.forEachIndexed { i, import ->
+            baseProject.getPackage(import.import.dropLast(1).joinToString(".")) {
+                imported[i] = it
+            }
+        }
+
+        val fileScope = object : ShakeScope {
+            override val parent: ShakeScope get() = scope
+
+            override fun get(name: String): ShakeAssignable? {
+                return imports.zip(imported).filter {
+                    val last = it.first.import.last()
+                    last == name || last == "*"
+                }.firstNotNullOfOrNull {
+                    it.second!!.fields.find { f -> f.name == name }
+                }
+            }
+
+            override fun set(value: ShakeDeclaration) {
+                throw IllegalStateException("Cannot set a value in a file scope")
+            }
+
+            override fun getFunctions(name: String): List<ShakeFunction> {
+                return imports.zip(imported).filter {
+                    val last = it.first.import.last()
+                    last == name || last == "*"
+                }.flatMap {
+                    it.second!!.functions.filter { f -> f.name == name }
+                }
+            }
+
+            override fun setFunctions(function: ShakeFunction) {
+                throw IllegalStateException("Cannot set a function in a file scope")
+            }
+
+            override fun getClass(name: String): ShakeClass? {
+                return imports.zip(imported).filter {
+                    val last = it.first.import.last()
+                    last == name || last == "*"
+                }.firstNotNullOfOrNull {
+                    it.second!!.classes.find { c -> c.name == name }
+                }
+            }
+
+            override fun setClass(klass: ShakeClass) {
+                throw IllegalStateException("Cannot set a class in a file scope")
+            }
+
+            override val processor: ShakeCodeProcessor
+                get() = parent.processor
+
+        }
+
         contents.children.forEach {
             when (it) {
                 is ShakeClassDeclarationNode -> {
                     if(classes.any { clz -> clz.name == it.name })
                         throw IllegalStateException("Class ${it.name} already exists")
-                    classes.add(ShakeClass.from(baseProject, this, it))
+                    classes.add(ShakeClass.from(baseProject, this, fileScope, it))
                 }
                 is ShakeFunctionDeclarationNode -> {
                     if(functions.any { func -> func.name == it.name })
                         throw IllegalStateException("Function ${it.name} already exists") // TODO Functions with different signatures
-                    functions.add(ShakeFunction.from(baseProject, this, it))
+                    functions.add(ShakeFunction.from(baseProject, this, fileScope, it))
                 }
                 is ShakeVariableDeclarationNode -> {
                     if(fields.any { field -> field.name == it.name })
                         throw IllegalStateException("Field ${it.name} already exists")
-                    fields.add(ShakeField.from(baseProject, this, it))
+                    fields.add(ShakeField.from(baseProject, this, fileScope, it))
                 }
                 else -> throw IllegalStateException("Unknown node type ${it::class}")
             }

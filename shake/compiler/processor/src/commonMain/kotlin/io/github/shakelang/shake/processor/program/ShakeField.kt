@@ -10,6 +10,7 @@ import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
 open class ShakeField (
     val project: ShakeProject,
     val pkg: ShakePackage?,
+    val parentScope: ShakeScope,
     override val name: String,
     val isStatic: Boolean,
     val isFinal: Boolean,
@@ -73,10 +74,11 @@ open class ShakeField (
     }
 
     companion object {
-        fun from(baseProject: ShakeProject, pkg: ShakePackage?, node: ShakeVariableDeclarationNode): ShakeField {
+        fun from(baseProject: ShakeProject, pkg: ShakePackage?, parentScope: ShakeScope, node: ShakeVariableDeclarationNode): ShakeField {
             return ShakeField(
                 baseProject,
                 pkg,
+                parentScope,
                 node.name,
                 node.isStatic,
                 node.isFinal,

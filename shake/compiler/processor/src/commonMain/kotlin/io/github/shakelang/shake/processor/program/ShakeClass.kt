@@ -10,9 +10,9 @@ import kotlin.math.min
 open class ShakeClass {
     val staticScope = StaticScope()
     val instanceScope = InstanceScope()
-
     val prj: ShakeProject
     val pkg: ShakePackage?
+    val parentScope: ShakeScope
     val name: String
     val methods: List<ShakeMethod>
     val fields: List<ShakeClassField>
@@ -37,6 +37,7 @@ open class ShakeClass {
     constructor(
         prj: ShakeProject,
         pkg: ShakePackage?,
+        parentScope: ShakeScope,
         name: String,
         methods: List<ShakeMethod>,
         fields: List<ShakeClassField>,
@@ -48,6 +49,7 @@ open class ShakeClass {
     ) {
         this.prj = prj
         this.pkg = pkg
+        this.parentScope = parentScope
         this.name = name
         this.methods = methods
         this.fields = fields
@@ -60,15 +62,18 @@ open class ShakeClass {
     private constructor(
         baseProject: ShakeProject,
         pkg: ShakePackage?,
+        parentScope: ShakeScope,
         clz: ShakeClassDeclarationNode
     ) {
-        prj = baseProject
+        this.prj = baseProject
         this.pkg = pkg
         this.name = clz.name
+        this.parentScope = parentScope
 
         val mtds = clz.methods.map {
             val method = ShakeMethod(
                 this,
+                if(it.isStatic) staticScope else instanceScope,
                 it.name,
                 ShakeCode.fromTree(it.body),
                 it.isStatic,
@@ -91,6 +96,7 @@ open class ShakeClass {
         val flds = clz.fields.map {
             val field = ShakeClassField(
                 this,
+                if(it.isStatic) staticScope else instanceScope,
                 it.name,
                 it.isStatic,
                 it.isFinal,
@@ -262,8 +268,8 @@ open class ShakeClass {
     }
 
     companion object {
-        fun from(baseProject: ShakeProject, pkg: ShakePackage?, clz: ShakeClassDeclarationNode): ShakeClass {
-            return ShakeClass(baseProject, pkg, clz)
+        fun from(baseProject: ShakeProject, pkg: ShakePackage?, parentScope: ShakeScope, clz: ShakeClassDeclarationNode): ShakeClass {
+            return ShakeClass(baseProject, pkg, parentScope, clz)
         }
     }
 }
