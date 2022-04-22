@@ -387,9 +387,9 @@ class JsProject {
     fun toMap(): Map<String, Any> {
         return mapOf(
             "packages" to subpackages.map { it.toMap() },
-            "classes" to classes.map { it.generate(2) },
-            "functions" to functions.map { it.generate(2) },
-            "fields" to fields.map { it.generate(2) }
+            "classes" to classes.map { it.generate() },
+            "functions" to functions.map { it.generate() },
+            "fields" to fields.map { it.generate() }
         )
     }
 
@@ -398,9 +398,9 @@ class JsProject {
     }
 
     fun generatePackageFile(): String {
-        return (classes.map { it.generate(2) } +
-                functions.map { it.generate(2) } +
-                fields.map { it.generate(2) }).joinToString("\n")
+        return (classes.map { it.generate() } +
+                functions.map { it.generate() } +
+                fields.map { it.generate() }).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {
@@ -461,9 +461,9 @@ class JsPackage {
         return mapOf(
             "name" to name,
             "subpackages" to subpackages.map { it.toMap() },
-            "classes" to classes.map { it.generate(2) },
-            "functions" to functions.map { it.generate(2) },
-            "fields" to fields.map { it.generate(2) }
+            "classes" to classes.map { it.generate() },
+            "functions" to functions.map { it.generate() },
+            "fields" to fields.map { it.generate() }
         )
     }
 
@@ -472,9 +472,9 @@ class JsPackage {
     }
 
     fun generatePackageFile(): String {
-        return (classes.map { it.generate(2) } +
-                functions.map { it.generate(2) } +
-                fields.map { it.generate(2) }).joinToString("\n")
+        return (classes.map { it.generate() } +
+                functions.map { it.generate() } +
+                fields.map { it.generate() }).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {
