@@ -4,7 +4,10 @@ import io.github.shakelang.shake.assertType
 import io.github.shakelang.shake.parser.node.ShakeIdentifierNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class IdentifierTests {
     @Test

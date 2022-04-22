@@ -5,7 +5,10 @@ import io.github.shakelang.shake.parser.node.expression.*
 import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import kotlin.reflect.KClass
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class MathTests {
     @Test

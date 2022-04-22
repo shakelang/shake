@@ -2,7 +2,10 @@ package io.github.shakelang.shake.parser
 
 import io.github.shakelang.shake.parser.ShakeParserImpl.ParserError
 import io.github.shakelang.shake.parser.node.ShakeIfNode
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertSame
 
 class TestErrors {
     @Test

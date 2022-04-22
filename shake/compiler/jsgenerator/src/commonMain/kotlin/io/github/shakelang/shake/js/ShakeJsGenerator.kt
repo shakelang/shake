@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.js
 
-import io.github.shakelang.shake.generation.ShakeGenerator
 import io.github.shakelang.shake.js.output.*
 import io.github.shakelang.shake.processor.program.*
 import io.github.shakelang.shake.processor.program.code.*

@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.processor.program.code
 
 import io.github.shakelang.shake.parser.node.ShakeTree
-import io.github.shakelang.shake.processor.program.*
+import io.github.shakelang.shake.processor.program.ShakeType
 
 interface ShakeStatement {
     fun toJson(): Map<String, Any?>

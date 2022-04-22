@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.parser
 
-import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
+import io.github.shakelang.shake.assertType
+import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.node.*
 import kotlin.reflect.KClass
 import kotlin.test.assertEquals

@@ -1,36 +1,18 @@
 package io.github.shakelang.shake.generation
 
 import io.github.shakelang.shake.parser.node.*
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableAddAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableSubAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableMulAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableDivAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableModAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariablePowAssignmentNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableDecreaseNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalEqEqualsNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalBiggerEqualsNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalSmallerEqualsNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalBiggerNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalSmallerNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalAndNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalOrNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalXOrNode
-import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
-import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import io.github.shakelang.shake.parser.node.loops.ShakeForNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalTrueNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalFalseNode
 import io.github.shakelang.shake.parser.node.expression.*
 import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
+import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import io.github.shakelang.shake.parser.node.logical.*
+import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
+import io.github.shakelang.shake.parser.node.loops.ShakeForNode
+import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
+import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import io.github.shakelang.shake.parser.node.variables.*
 
 abstract class ShakeGenerator<T> : ShakeGeneratorBase {
     fun visit(n: ShakeNodeImpl): T {

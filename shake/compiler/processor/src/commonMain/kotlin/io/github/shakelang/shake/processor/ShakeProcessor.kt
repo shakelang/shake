@@ -17,8 +17,9 @@ import io.github.shakelang.shake.parser.node.loops.ShakeForNode
 import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import io.github.shakelang.shake.parser.node.variables.*
-import io.github.shakelang.shake.processor.program.*
-import io.github.shakelang.shake.processor.program.ShakeDeclaration
+import io.github.shakelang.shake.processor.program.ShakeAssignable
+import io.github.shakelang.shake.processor.program.ShakeProject
+import io.github.shakelang.shake.processor.program.ShakeType
 import io.github.shakelang.shake.processor.program.code.*
 import io.github.shakelang.shake.processor.program.code.statements.*
 import io.github.shakelang.shake.processor.program.code.values.*

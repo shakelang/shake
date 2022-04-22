@@ -2,7 +2,6 @@
 
 package io.github.shakelang.shake
 
-import kotlin.jvm.JvmName
 import kotlin.reflect.KClass
 import kotlin.test.assertSame
 import kotlin.test.assertTrue

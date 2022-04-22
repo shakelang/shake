@@ -1,7 +1,10 @@
 package io.github.shakelang.shake.parser.node.loops
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
-import io.github.shakelang.shake.parser.node.*
+import io.github.shakelang.shake.parser.node.ShakeStatementNode
+import io.github.shakelang.shake.parser.node.ShakeStatementNodeImpl
+import io.github.shakelang.shake.parser.node.ShakeTree
+import io.github.shakelang.shake.parser.node.ShakeValuedNode
 
 class ShakeForNode(map: PositionMap, val body: ShakeTree, val declaration: ShakeStatementNode, val condition: ShakeValuedNode, val round: ShakeStatementNode) :
     ShakeStatementNodeImpl(map) {

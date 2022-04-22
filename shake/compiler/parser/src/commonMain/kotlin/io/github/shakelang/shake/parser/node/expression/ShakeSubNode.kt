@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.parser.node.expression
 
-import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.ShakeValuedNode
+import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
+import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
 
 @Suppress("unused")
 class ShakeSubNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :

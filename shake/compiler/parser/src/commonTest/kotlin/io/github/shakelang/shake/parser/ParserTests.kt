@@ -13,7 +13,6 @@ import io.github.shakelang.shake.parser.node.loops.ShakeForNode
 import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
 import kotlin.test.*
 
 class ParserTests {
