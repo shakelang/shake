@@ -62,4 +62,5 @@ function packageSystem(description) {
 module.exports = {
   packageSystem,
   require: (path) => () => require(`${path}`),
+  object: (obj) => () => obj,
 }
