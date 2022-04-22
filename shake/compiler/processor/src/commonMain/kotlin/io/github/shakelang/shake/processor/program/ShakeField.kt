@@ -45,6 +45,10 @@ open class ShakeField (
     override fun decrementBeforeType(): ShakeType? = type.decrementBeforeType() ?: type
     override fun decrementAfterType(): ShakeType? = type.decrementAfterType() ?: type
 
+    override fun access(scope: ShakeScope): ShakeValue {
+        return ShakeFieldUsage(scope, this)
+    }
+
     fun lateinitType(): (ShakeType) -> ShakeType {
         return {
             type = it

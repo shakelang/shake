@@ -6,6 +6,7 @@ import io.github.shakelang.shake.processor.program.code.values.ShakeFieldUsage
 import io.github.shakelang.shake.processor.program.code.ShakeScope
 import io.github.shakelang.shake.processor.program.code.ShakeValue
 import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
+import io.github.shakelang.shake.processor.program.code.values.ShakeVariableUsage
 
 open class ShakeClassField (
     val clazz: ShakeClass,
@@ -37,6 +38,20 @@ open class ShakeClassField (
 
     override fun use(scope: ShakeScope): ShakeUsage {
         return ShakeFieldUsage(scope, this)
+    }
+
+    override fun access(scope: ShakeScope): ShakeValue {
+        if(!isStatic) {
+            throw IllegalStateException("Cannot access non-static field $qualifiedName in static context")
+        }
+        return ShakeFieldUsage(scope, this)
+    }
+
+    fun access(scope: ShakeScope, value: ShakeValue): ShakeValue {
+        if(!isStatic) {
+            throw IllegalStateException("Cannot access non-static field $qualifiedName in static context")
+        }
+        return ShakeFieldUsage(scope, this, value)
     }
 
     override fun processCode() {}

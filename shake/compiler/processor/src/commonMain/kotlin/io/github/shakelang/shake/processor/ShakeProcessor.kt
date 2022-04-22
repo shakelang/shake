@@ -292,10 +292,10 @@ open class ShakeCodeProcessor {
             val parent = visitValue(scope, identifier.parent!!)
             val type = parent.type.childType(identifier.name)
                 ?: throw Exception("Cannot access ${identifier.name} in ${parent.type}")
-            return ShakeChild(scope, parent, identifier.name).actualValue
+            return ShakeChild(scope, parent, identifier.name).access(scope)
         }
         val variable = scope.get(identifier.name) ?: throw Exception("Variable ${identifier.name} not declared")
-        return variable.actualValue ?: throw Exception("Variable ${identifier.name} not initialized") // TODO null value
+        return variable.access(scope) // TODO null value
     }
 
     fun visitEqEqualsNode(scope: ShakeScope, n: ShakeLogicalEqEqualsNode): ShakeEquals {
@@ -427,6 +427,7 @@ open class ShakeCodeProcessor {
             val args = n.args.map { visitValue(scope, it) }
             val types = args.map { it.type }
             val functions = scope.getFunctions(name)
+            if(functions.isEmpty()) throw Exception("No function named $name")
             val function = ShakeSelect.selectFunction(functions, types)
                 ?: throw Exception("No function named $name with arguments $types")
             return ShakeInvocation(function, args, null)

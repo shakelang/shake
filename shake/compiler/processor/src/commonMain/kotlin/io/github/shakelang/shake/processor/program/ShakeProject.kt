@@ -20,8 +20,7 @@ open class ShakeProject(
     private val packageRequirements = mutableListOf<PackageRequirement>()
 
     val projectScope = object : ShakeScope {
-        override val parent: ShakeScope?
-            get() = null
+        override val parent: ShakeScope? = null
 
         override val processor: ShakeCodeProcessor = processor
 
@@ -51,6 +50,7 @@ open class ShakeProject(
     }
 
     open fun getPackage(name: String): ShakePackage {
+        if(name.contains(".")) return getPackage(name.split(".").toTypedArray())
         return subpackages.find { it.name == name } ?: ShakePackage(this, name).let {
             subpackages.add(it)
             it
@@ -78,19 +78,20 @@ open class ShakeProject(
         }
 
         val fileScope = object : ShakeScope {
-            override val parent: ShakeScope get() = projectScope
+            override val parent: ShakeScope = projectScope
 
             override fun get(name: String): ShakeAssignable? {
+                println("Try to get $name")
                 return imports.zip(imported).filter {
                     val last = it.first.import.last()
                     last == name || last == "*"
                 }.firstNotNullOfOrNull {
                     it.second!!.fields.find { f -> f.name == name }
-                }
+                } ?: parent.get(name)
             }
 
             override fun set(value: ShakeDeclaration) {
-                throw IllegalStateException("Cannot set a value in a file scope")
+                parent.set(value)
             }
 
             override fun getFunctions(name: String): List<ShakeFunction> {
@@ -99,11 +100,11 @@ open class ShakeProject(
                     last == name || last == "*"
                 }.flatMap {
                     it.second!!.functions.filter { f -> f.name == name }
-                }
+                } + parent.getFunctions(name)
             }
 
             override fun setFunctions(function: ShakeFunction) {
-                throw IllegalStateException("Cannot set a function in a file scope")
+                parent.setFunctions(function)
             }
 
             override fun getClass(name: String): ShakeClass? {
@@ -112,11 +113,11 @@ open class ShakeProject(
                     last == name || last == "*"
                 }.firstNotNullOfOrNull {
                     it.second!!.classes.find { c -> c.name == name }
-                }
+                } ?: parent.getClass(name)
             }
 
             override fun setClass(klass: ShakeClass) {
-                throw IllegalStateException("Cannot set a class in a file scope")
+                parent.setClass(klass)
             }
 
             override val processor: ShakeCodeProcessor
@@ -142,6 +143,7 @@ open class ShakeProject(
                         throw IllegalArgumentException("Field ${it.name} already exists")
                     fields.add(ShakeField.from(this, null, fileScope, it))
                 }
+                is ShakeImportNode -> {}
                 else -> throw IllegalArgumentException("Unknown node type ${it::class.simpleName}")
             }
         }

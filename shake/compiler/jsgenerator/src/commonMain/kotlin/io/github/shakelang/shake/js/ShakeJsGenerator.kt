@@ -392,6 +392,22 @@ class JsProject {
             "fields" to fields.map { it.generate(2) }
         )
     }
+
+    fun hasContents(): Boolean {
+        return classes.isNotEmpty() || functions.isNotEmpty() || fields.isNotEmpty()
+    }
+
+    fun generatePackageFile(): String {
+        return (classes.map { it.generate(2) } +
+                functions.map { it.generate(2) } +
+                fields.map { it.generate(2) }).joinToString("\n")
+    }
+
+    fun generatePackageFiles(): Map<String, String> {
+        val files = subpackages.flatMap { it.generatePackageFiles().toList() }.toMap().toMutableMap()
+        if(hasContents()) files += mapOf("index.js" to generatePackageFile())
+        return files
+    }
 }
 
 class JsPackage {
@@ -403,6 +419,7 @@ class JsPackage {
     val classes: List<JsClassDeclaration>
     val functions: List<JsFunctionDeclaration>
     val fields: List<JsDeclaration>
+    val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + name
 
     constructor(
         prj: JsProject,
@@ -450,5 +467,19 @@ class JsPackage {
         )
     }
 
+    fun hasContents(): Boolean {
+        return classes.isNotEmpty() || functions.isNotEmpty() || fields.isNotEmpty()
+    }
 
+    fun generatePackageFile(): String {
+        return (classes.map { it.generate(2) } +
+                functions.map { it.generate(2) } +
+                fields.map { it.generate(2) }).joinToString("\n")
+    }
+
+    fun generatePackageFiles(): Map<String, String> {
+        val files = subpackages.flatMap { it.generatePackageFiles().toList() }.toMap().toMutableMap()
+        if(hasContents()) files += mapOf("$qualifiedName.js" to generatePackageFile())
+        return files
+    }
 }

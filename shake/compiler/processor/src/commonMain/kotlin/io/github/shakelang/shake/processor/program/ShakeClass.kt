@@ -191,11 +191,8 @@ open class ShakeClass {
 
     inner class StaticScope : ShakeScope {
 
-        override val processor: ShakeCodeProcessor
-            get() = parent.processor
-
-        override val parent: ShakeScope
-            get() = pkg?.scope ?: prj.projectScope
+        override val processor: ShakeCodeProcessor get() = parent.processor
+        override val parent: ShakeScope get() = parentScope
 
         override fun get(name: String): ShakeAssignable? {
             return staticFields.find { it.name == name } ?: parent.get(name)
@@ -225,11 +222,8 @@ open class ShakeClass {
 
     inner class InstanceScope : ShakeScope {
 
-        override val processor: ShakeCodeProcessor
-            get() = parent.processor
-
-        override val parent: ShakeScope
-            get() = pkg?.scope ?: prj.projectScope
+        override val processor: ShakeCodeProcessor get() = parent.processor
+        override val parent: ShakeScope get() = parentScope
 
         override fun get(name: String): ShakeAssignable? {
             return fields.find { it.name == name } ?: staticFields.find { it.name == name } ?: parent.get(name)

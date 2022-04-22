@@ -18,6 +18,7 @@ class ShakeChild (
     override val actualValue: ShakeChildUsage get() = ShakeChildUsage(this)
     override val actualType: ShakeType
         get() = actualValue.type
+    val access : ShakeValue get() = ShakeChildUsage(this)
 
     override fun assignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: other
     override fun additionAssignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: type
@@ -30,6 +31,10 @@ class ShakeChild (
     override fun incrementAfterType(): ShakeType = type.incrementAfterType() ?: type
     override fun decrementBeforeType(): ShakeType = type.decrementBeforeType() ?: type
     override fun decrementAfterType(): ShakeType = type.decrementAfterType() ?: type
+
+    override fun access(scope: ShakeScope): ShakeValue {
+        return access
+    }
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(

@@ -49,8 +49,7 @@ class ShakeMethod (
     }
 
     inner class ShakeMethodScope : ShakeScope {
-        override val parent: ShakeScope
-            get() = if(isStatic) clazz.staticScope else clazz.instanceScope
+        override val parent: ShakeScope = if(isStatic) clazz.staticScope else clazz.instanceScope
 
         val variables = mutableListOf<ShakeVariableDeclaration>()
 

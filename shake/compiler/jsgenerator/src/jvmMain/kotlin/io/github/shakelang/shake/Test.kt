@@ -8,6 +8,7 @@ fun main(args: Array<String>) {
 
     val processor = ShakePackageBasedProcessor()
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "test.shake")
+    processor.loadFile("shake/compiler/processor/src/commonTest/resources", "io/github/shakelang/test.shake")
     val project = processor.finish()
 
     println(project.toJsonString())
@@ -16,5 +17,6 @@ fun main(args: Array<String>) {
     val jsProject = generator.visitProject(project)
 
     println(json.stringify(jsProject.toMap()))
+    println(json.stringify(jsProject.generatePackageFiles()))
 
 }

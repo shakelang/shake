@@ -59,8 +59,7 @@ open class ShakeConstructor (
     }
 
     inner class ShakeConstructorScope : ShakeScope {
-        override val parent: ShakeScope
-            get() = clazz.instanceScope
+        override val parent: ShakeScope = clazz.instanceScope
 
         val variables = mutableListOf<ShakeVariableDeclaration>()
 

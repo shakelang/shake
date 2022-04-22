@@ -646,11 +646,10 @@ class ShakeParserImpl (
         val identifier = expectNotNull(input.nextValue())
         val pos = input.actualStart
         return if (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.ASSIGN) {
+            input.skip()
             ShakeVariableDeclarationNode(
                 map, identifier, ShakeVariableType.DYNAMIC,
-                expectVariableAssignment(ShakeIdentifierNode(map, identifier, pos)),
-                access, isInClass, isStatic, final
-            )
+                expectValue(), access, isInClass, isStatic, final)
         } else {
             ShakeVariableDeclarationNode(
                 map,
@@ -692,9 +691,10 @@ class ShakeParserImpl (
         val position = input.actualStart
         val hasNext = input.skipIgnorable().hasNext()
         return if (hasNext && input.peekType() == ShakeTokenType.ASSIGN) {
+            input.skip()
             ShakeVariableDeclarationNode(
                 map, identifier!!, type,
-                expectVariableAssignment(ShakeIdentifierNode(map, identifier, position)), access, isInClass, isStatic, isFinal
+                expectValue(), access, isInClass, isStatic, isFinal
             )
         } else if (hasNext && input.peekType() == ShakeTokenType.LPAREN) expectCStyleFunctionDeclaration(
             type,

@@ -143,6 +143,10 @@ open class ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeSt
         TODO("Not yet implemented")
     }
 
+    override fun access(scope: ShakeScope): ShakeValue {
+        return ShakeVariableUsage(scope, this)
+    }
+
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to name,

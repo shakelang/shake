@@ -94,8 +94,7 @@ open class ShakeFunction (
 
         val variables = mutableListOf<ShakeVariableDeclaration>()
 
-        override val parent: ShakeScope
-            get() = pkg?.scope ?: prj.projectScope
+        override val parent: ShakeScope = parentScope
 
         override fun get(name: String): ShakeAssignable? {
             return variables.find { it.name == name } ?: parent.get(name)

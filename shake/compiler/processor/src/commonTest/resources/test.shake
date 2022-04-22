@@ -1,3 +1,5 @@
+import io.github.shakelang.*;
+
 int test (int i) {
 
 }
@@ -5,4 +7,5 @@ int test (int i) {
 int main() {
     int i = 10;
     test(i);
+    a();
 }

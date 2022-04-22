@@ -44,7 +44,7 @@ open class ShakePackage (
         }
 
         val fileScope = object : ShakeScope {
-            override val parent: ShakeScope get() = scope
+            override val parent: ShakeScope = scope
 
             override fun get(name: String): ShakeAssignable? {
                 return imports.zip(imported).filter {
@@ -52,11 +52,11 @@ open class ShakePackage (
                     last == name || last == "*"
                 }.firstNotNullOfOrNull {
                     it.second!!.fields.find { f -> f.name == name }
-                }
+                } ?: parent.get(name)
             }
 
             override fun set(value: ShakeDeclaration) {
-                throw IllegalStateException("Cannot set a value in a file scope")
+                parent.set(value)
             }
 
             override fun getFunctions(name: String): List<ShakeFunction> {
@@ -65,11 +65,11 @@ open class ShakePackage (
                     last == name || last == "*"
                 }.flatMap {
                     it.second!!.functions.filter { f -> f.name == name }
-                }
+                } + parent.getFunctions(name)
             }
 
             override fun setFunctions(function: ShakeFunction) {
-                throw IllegalStateException("Cannot set a function in a file scope")
+                parent.setFunctions(function)
             }
 
             override fun getClass(name: String): ShakeClass? {
@@ -78,11 +78,11 @@ open class ShakePackage (
                     last == name || last == "*"
                 }.firstNotNullOfOrNull {
                     it.second!!.classes.find { c -> c.name == name }
-                }
+                } ?: parent.getClass(name)
             }
 
             override fun setClass(klass: ShakeClass) {
-                throw IllegalStateException("Cannot set a class in a file scope")
+                parent.setClass(klass)
             }
 
             override val processor: ShakeCodeProcessor
@@ -157,7 +157,7 @@ open class ShakePackage (
         }
 
         override val processor: ShakeCodeProcessor
-            get() = TODO("Not yet implemented")
+            get() = parent.processor
     }
 
     fun processCode() {

@@ -8,6 +8,8 @@ interface ShakeAssignable {
     val actualType: ShakeType
     val type: ShakeType
 
+    fun access(scope: ShakeScope): ShakeValue
+
     fun assignType(other: ShakeType): ShakeType?
     fun additionAssignType(other: ShakeType): ShakeType?
     fun subtractionAssignType(other: ShakeType): ShakeType?
@@ -80,6 +82,10 @@ interface ShakeAssignable {
     companion object {
         fun wrap(v: ShakeValue): ShakeAssignable {
             return object : ShakeAssignable {
+
+                override fun access(scope: ShakeScope): ShakeValue {
+                    return v
+                }
 
                 override fun assignType(other: ShakeType): ShakeType? {
                     return v.type.assignType(other)
