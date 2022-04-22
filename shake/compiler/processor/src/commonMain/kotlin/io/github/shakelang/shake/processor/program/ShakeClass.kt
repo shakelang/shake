@@ -94,17 +94,7 @@ open class ShakeClass {
         this.methods = mtds.filter { !it.isStatic }
         this.staticMethods = mtds.filter { it.isStatic }
         val flds = clz.fields.map {
-            val field = ShakeClassField(
-                this,
-                if(it.isStatic) staticScope else instanceScope,
-                it.name,
-                it.isStatic,
-                it.isFinal,
-                false,
-                it.access == ShakeAccessDescriber.PRIVATE,
-                it.access == ShakeAccessDescriber.PROTECTED,
-                it.access == ShakeAccessDescriber.PUBLIC,
-            )
+            val field = ShakeClassField.from(this, if(it.isStatic) staticScope else instanceScope, it)
             field.lateinitType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
             field
         }

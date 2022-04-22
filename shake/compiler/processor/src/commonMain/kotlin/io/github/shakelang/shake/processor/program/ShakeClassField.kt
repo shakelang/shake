@@ -1,11 +1,13 @@
 package io.github.shakelang.shake.processor.program
 
+import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.processor.program.code.values.ShakeFieldUsage
 import io.github.shakelang.shake.processor.program.code.ShakeScope
 import io.github.shakelang.shake.processor.program.code.ShakeValue
 import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
 
-class ShakeClassField (
+open class ShakeClassField (
     val clazz: ShakeClass,
     parentScope: ShakeScope,
     name: String,
@@ -37,7 +39,60 @@ class ShakeClassField (
         return ShakeFieldUsage(scope, this)
     }
 
-    override fun processCode() {
-        //TODO: process value
+    override fun processCode() {}
+
+    companion object {
+        fun from(
+            clazz: ShakeClass,
+            parentScope: ShakeScope,
+            name: String,
+            isStatic: Boolean,
+            isFinal: Boolean,
+            isAbstract: Boolean,
+            isPrivate: Boolean,
+            isProtected: Boolean,
+            isPublic: Boolean,
+            initialValue: ShakeValue? = null
+        ): ShakeClassField {
+            return ShakeClassField(
+                clazz,
+                parentScope,
+                name,
+                isStatic,
+                isFinal,
+                isAbstract,
+                isPrivate,
+                isProtected,
+                isPublic,
+                initialValue
+            )
+        }
+
+        fun from(
+            clazz: ShakeClass,
+            parentScope: ShakeScope,
+            node: ShakeVariableDeclarationNode
+        ): ShakeClassField {
+            return object : ShakeClassField(
+                clazz,
+                parentScope,
+                node.name,
+                node.isStatic,
+                node.isFinal,
+                false,
+                node.access == ShakeAccessDescriber.PRIVATE,
+                node.access == ShakeAccessDescriber.PROTECTED,
+                node.access == ShakeAccessDescriber.PUBLIC
+            ) {
+
+                override var initialValue: ShakeValue? = null
+                    private set
+
+                override fun processCode() {
+                    initialValue = node.value?.let { this.parentScope.processor.visitValue(parentScope, it) }
+                }
+
+            }
+        }
     }
 }

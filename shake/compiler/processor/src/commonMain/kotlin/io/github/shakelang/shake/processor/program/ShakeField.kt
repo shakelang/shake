@@ -2,9 +2,9 @@ package io.github.shakelang.shake.processor.program
 
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import io.github.shakelang.shake.processor.program.code.values.ShakeFieldUsage
 import io.github.shakelang.shake.processor.program.code.ShakeScope
 import io.github.shakelang.shake.processor.program.code.ShakeValue
+import io.github.shakelang.shake.processor.program.code.values.ShakeFieldUsage
 import io.github.shakelang.shake.processor.program.code.values.ShakeUsage
 
 open class ShakeField (
@@ -18,7 +18,7 @@ open class ShakeField (
     val isPrivate: Boolean,
     val isProtected: Boolean,
     val isPublic: Boolean,
-    val initialValue: ShakeValue? = null,
+    open val initialValue: ShakeValue? = null,
 ): ShakeDeclaration, ShakeAssignable {
 
     override val qualifiedName: String
@@ -56,9 +56,7 @@ open class ShakeField (
         return ShakeFieldUsage(scope, this)
     }
 
-    open fun processCode() {
-        // TODO process code
-    }
+    open fun processCode() {}
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(
@@ -75,7 +73,7 @@ open class ShakeField (
 
     companion object {
         fun from(baseProject: ShakeProject, pkg: ShakePackage?, parentScope: ShakeScope, node: ShakeVariableDeclarationNode): ShakeField {
-            return ShakeField(
+            return object : ShakeField(
                 baseProject,
                 pkg,
                 parentScope,
@@ -86,10 +84,20 @@ open class ShakeField (
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
                 node.access == ShakeAccessDescriber.PUBLIC
-            ).let {
+            ) {
+
+                override var initialValue: ShakeValue? = null
+                    private set
+
+                override fun processCode() {
+                    initialValue = node.value?.let { this.parentScope.processor.visitValue(parentScope, it) }
+                }
+
+            }.let {
                 it.lateinitType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
                 it
             }
         }
     }
+
 }
