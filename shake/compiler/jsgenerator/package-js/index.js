@@ -55,11 +55,15 @@ function packageSystem(description) {
         current = current[parts[i]];
       }
       return current["$it"];
+    },
+    add(packages) {
+      deepMerge(this.packages, resolvePackages(packages));
     }
   };
 }
 
 module.exports = {
+  packages: packageSystem({}),
   packageSystem,
   require: (path) => () => require(`${path}`),
   object: (obj) => () => obj,
