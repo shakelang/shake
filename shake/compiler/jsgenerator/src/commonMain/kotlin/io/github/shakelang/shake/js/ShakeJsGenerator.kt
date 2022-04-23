@@ -363,6 +363,8 @@ class JsProject {
     val functions: List<JsFunctionDeclaration>
     val fields: List<JsDeclaration>
 
+    val packages: List<String> get() = subpackages.flatMap { it.packages }
+
     constructor(
         generator: ShakeJsGenerator,
         subpackages: List<JsPackage>,
@@ -416,6 +418,18 @@ class JsProject {
     fun generatePackageFiles(): Map<String, String> {
         val files = subpackages.flatMap { it.generatePackageFiles().toList() }.toMap().toMutableMap()
         if(hasContents()) files += mapOf("index.js" to generatePackageFile())
+        files += mapOf(
+            "structure.js" to "const {packages,require,import}=function(){return function(){try{return require(name)}catch(a){if(\"MODULE_NOT_FOUND\"===a.code)return!1;throw a}}()||function(){function a(a){return a&&\"object\"==typeof a&&!Array.isArray(a)}function b(c,...d){if(!d.length)return c;const e=d.shift();if(a(c)&&a(e))for(const d in e)a(e[d])?(c[d]||Object.assign(c,{[d]:{}}),b(c[d],e[d])):Object.assign(c,{[d]:e[d]});return b(c,...d)}function c(a){const d={};return Object.keys(a).forEach(e=>{const f=e.split(/[.\\/]/g),g=a[e];let h=d;for(let a=0;a<f.length;a++)h[f[a]]||(h[f[a]]={}),h=h[f[a]];\"function\"==typeof g?Object.defineProperty(h,\"\$it\",{get:function(){const a=g();return Object.defineProperty(h,\"\$it\",{value:a}),a},configurable:!0}):b(h,c(g[e]))}),d}function d(a){const d=a?.packages||{},e=c(d);return{packages:e,import(a){const b=a.split(/[.\\/]/g);let c=this.packages;for(let d=0;d<b.length;d++){if(!c[b[d]])return;c=c[b[d]]}return c.\$it},add(a){b(this.packages,c(a))}}}return{packages:d({}),createPackageSystem:d,require:a=>()=>require(`\${a}`),object:a=>()=>a}}()}();\n\n" +
+                    JsTree(listOf(
+                        JsFunctionCall(JsField("add", JsField("packages")), listOf(JsObject(
+                            packages.map {
+                                JsStringLiteral(it) to JsFunctionCall(JsField("require"), listOf(JsStringLiteral("$it.js")))
+                            }.toTypedArray().toMap()
+                        ))),
+                        export(listOf("import"))
+                    )).generate()
+
+        )
         return files
     }
 }
@@ -430,6 +444,8 @@ class JsPackage {
     val functions: List<JsFunctionDeclaration>
     val fields: List<JsDeclaration>
     val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + name
+
+    val packages: List<String> get() = subpackages.flatMap { it.packages } + if(hasContents()) listOf(qualifiedName) else listOf()
 
     constructor(
         prj: JsProject,

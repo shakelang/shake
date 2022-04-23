@@ -542,7 +542,7 @@ class JsStringLiteral(
 ) : JsValue {
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
-        return Characters.escapeString(value)
+        return "\"${Characters.escapeString(value)}\""
     }
 }
 
