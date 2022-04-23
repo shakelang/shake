@@ -347,6 +347,14 @@ class ShakeJsGenerator {
 
 }
 
+fun export(values: Map<JsValue, JsValue>): JsAssignment {
+    return JsAssignment(JsField("exports", JsField("module")), JsObject(values))
+}
+
+fun export(values: List<String>): JsAssignment {
+    return export(values.associate { JsField(it) to JsField(it) })
+}
+
 class JsProject {
 
     val gen: ShakeJsGenerator
@@ -397,9 +405,12 @@ class JsProject {
     }
 
     fun generatePackageFile(): String {
-        return (classes.map { it.generate() } +
-                functions.map { it.generate() } +
-                fields.map { it.generate() }).joinToString("\n")
+        return (
+            classes.map { it.generate() } +
+            functions.map { it.generate() } +
+            fields.map { it.generate() } +
+            export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
+        ).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {
@@ -471,9 +482,12 @@ class JsPackage {
     }
 
     fun generatePackageFile(): String {
-        return (classes.map { it.generate() } +
-                functions.map { it.generate() } +
-                fields.map { it.generate() }).joinToString("\n")
+        return (
+            classes.map { it.generate() } +
+            functions.map { it.generate() } +
+            fields.map { it.generate() } +
+            export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
+        ).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {
