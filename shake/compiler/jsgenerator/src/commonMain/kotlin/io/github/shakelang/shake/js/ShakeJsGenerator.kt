@@ -1,10 +1,10 @@
 package io.github.shakelang.shake.js
 
 import io.github.shakelang.shake.js.output.*
-import io.github.shakelang.shake.processor.program.*
-import io.github.shakelang.shake.processor.program.code.*
-import io.github.shakelang.shake.processor.program.code.statements.*
-import io.github.shakelang.shake.processor.program.code.values.*
+import io.github.shakelang.shake.processor.program.mutable.*
+import io.github.shakelang.shake.processor.program.mutable.code.*
+import io.github.shakelang.shake.processor.program.mutable.code.statements.*
+import io.github.shakelang.shake.processor.program.mutable.code.values.*
 
 class ShakeJsGenerator {
 

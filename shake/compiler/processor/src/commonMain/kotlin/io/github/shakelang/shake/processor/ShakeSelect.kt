@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.processor
 
-import io.github.shakelang.shake.processor.program.ShakeConstructor
-import io.github.shakelang.shake.processor.program.ShakeType
-import io.github.shakelang.shake.processor.program.code.ShakeInvokable
+import io.github.shakelang.shake.processor.program.mutable.ShakeConstructor
+import io.github.shakelang.shake.processor.program.mutable.ShakeType
+import io.github.shakelang.shake.processor.program.mutable.code.ShakeInvokable
 
 object ShakeSelect {
 
