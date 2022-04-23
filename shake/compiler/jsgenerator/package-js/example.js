@@ -1,6 +1,6 @@
 const it = require('./index.js');
 
-const pkg = it.packageSystem({
+const pkg = it.createPackageSystem({
     packages: {
         "io.github.shakelang.packagejs.test" : it.require(`${__dirname}/test.js`)
     }
