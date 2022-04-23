@@ -1,4 +1,4 @@
-(function Module() {
+module.exports = (function Module() {
   function required_module() {
     try {
       return require(name);
