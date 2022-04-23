@@ -4,8 +4,7 @@ import io.github.shakelang.shake.processor.program.ShakeAssignable
 import io.github.shakelang.shake.processor.program.ShakeDeclaration
 import io.github.shakelang.shake.processor.program.ShakeType
 import io.github.shakelang.shake.processor.program.code.ShakeScope
-import io.github.shakelang.shake.processor.program.code.ShakeStatement
-import io.github.shakelang.shake.processor.program.code.ShakeValue
+import io.github.shakelang.shake.processor.program.code.values.ShakeValue
 import io.github.shakelang.shake.processor.program.code.values.ShakeVariableUsage
 
 open class ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeStatement {

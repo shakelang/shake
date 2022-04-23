@@ -1,7 +1,6 @@
 package io.github.shakelang.shake.processor.program.code.statements
 
-import io.github.shakelang.shake.processor.program.code.ShakeStatement
-import io.github.shakelang.shake.processor.program.code.ShakeValue
+import io.github.shakelang.shake.processor.program.code.values.ShakeValue
 
 class ShakeReturn (
     val value: ShakeValue?

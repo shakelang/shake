@@ -1,15 +1,7 @@
 package io.github.shakelang.shake.processor.program.code
 
 import io.github.shakelang.shake.parser.node.ShakeTree
-import io.github.shakelang.shake.processor.program.ShakeType
-
-interface ShakeStatement {
-    fun toJson(): Map<String, Any?>
-}
-interface ShakeValue {
-    val type: ShakeType
-    fun toJson(): Map<String, Any?>
-}
+import io.github.shakelang.shake.processor.program.code.statements.ShakeStatement
 
 open class ShakeCode(
     open val statements: List<ShakeStatement>

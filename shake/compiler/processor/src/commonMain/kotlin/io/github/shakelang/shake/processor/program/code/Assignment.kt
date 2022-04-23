@@ -2,6 +2,8 @@ package io.github.shakelang.shake.processor.program.code
 
 import io.github.shakelang.shake.processor.program.ShakeAssignable
 import io.github.shakelang.shake.processor.program.ShakeType
+import io.github.shakelang.shake.processor.program.code.statements.ShakeStatement
+import io.github.shakelang.shake.processor.program.code.values.ShakeValue
 
 open class ShakeAssignment(
     val variable: ShakeAssignable,

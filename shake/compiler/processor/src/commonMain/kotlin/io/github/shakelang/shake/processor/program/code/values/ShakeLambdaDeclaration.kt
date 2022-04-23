@@ -4,7 +4,6 @@ import io.github.shakelang.shake.processor.program.ShakeParameter
 import io.github.shakelang.shake.processor.program.ShakeType
 import io.github.shakelang.shake.processor.program.code.ShakeCode
 import io.github.shakelang.shake.processor.program.code.ShakeInvokable
-import io.github.shakelang.shake.processor.program.code.ShakeValue
 
 class ShakeLambdaDeclaration(
     parameters: List<ShakeParameter>,

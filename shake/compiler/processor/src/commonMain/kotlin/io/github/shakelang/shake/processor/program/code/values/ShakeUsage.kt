@@ -5,7 +5,6 @@ import io.github.shakelang.shake.processor.program.ShakeDeclaration
 import io.github.shakelang.shake.processor.program.ShakeField
 import io.github.shakelang.shake.processor.program.ShakeType
 import io.github.shakelang.shake.processor.program.code.ShakeScope
-import io.github.shakelang.shake.processor.program.code.ShakeValue
 import io.github.shakelang.shake.processor.program.code.statements.ShakeVariableDeclaration
 
 abstract class ShakeUsage : ShakeValue {

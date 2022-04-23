@@ -4,7 +4,6 @@ import io.github.shakelang.shake.processor.program.ShakeAssignable
 import io.github.shakelang.shake.processor.program.ShakeDeclaration
 import io.github.shakelang.shake.processor.program.ShakeType
 import io.github.shakelang.shake.processor.program.code.ShakeScope
-import io.github.shakelang.shake.processor.program.code.ShakeValue
 
 class ShakeChild (
 
@@ -12,7 +11,7 @@ class ShakeChild (
     val parent : ShakeValue,
     val name: String,
 
-) : ShakeAssignable {
+    ) : ShakeAssignable {
 
     override val type : ShakeType = parent.type.childType(name)!!
     override val actualValue: ShakeChildUsage get() = ShakeChildUsage(this)
