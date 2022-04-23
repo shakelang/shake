@@ -1,4 +1,4 @@
-const it = require('./index.js');
+const it = require('.');
 
 const pkg = it.createPackageSystem({
     packages: {
