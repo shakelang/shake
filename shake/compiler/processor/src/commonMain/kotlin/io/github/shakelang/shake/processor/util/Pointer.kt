@@ -12,8 +12,13 @@ interface Pointer<T> {
         }
         fun <T> late(): Pointer<T> = object : LateInitPointer<T> {
             var realValue: T? = null
+
             override val value: T
-                get() = realValue!!
+                get() = realValue ?: throw IllegalStateException("Value of lateinit pointer is not initialized")
+
+            override val isInitialized: Boolean
+                get() = realValue != null
+
             override fun init(value: T) {
                 this.realValue = value
             }
@@ -21,10 +26,14 @@ interface Pointer<T> {
         fun <T> lateMutable(): MutablePointer<T> = object : LateInitMutablePointer<T> {
             var realValue: T? = null
             override var value: T
-                get() = realValue!!
+                get() = realValue ?: throw IllegalStateException("Value of lateinit pointer is not initialized")
                 set(value) {
                     realValue = value
                 }
+
+            override val isInitialized: Boolean
+                get() = realValue != null
+
             override fun init(value: T) {
                 this.realValue = value
             }
@@ -38,6 +47,7 @@ interface MutablePointer<T> : Pointer<T> {
 
 interface LateInitPointer<T> : Pointer<T> {
     override val value: T
+    val isInitialized: Boolean
     fun init(value: T)
 }
 
