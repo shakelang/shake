@@ -16,5 +16,4 @@ interface ShakeScope {
     fun setClass(klass: ShakeClass)
     fun getInvokable(name: String): List<ShakeInvokable>
     fun use(name: String) 
-    val processor : ShakeCodeProcessor
 }

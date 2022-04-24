@@ -6,10 +6,10 @@ interface ShakePackage {
     val baseProject: ShakeProject
     val name: String
     val parent: ShakePackage?
-    val subpackages: MutableList<ShakePackage>
-    val classes: MutableList<ShakeClass>
-    val functions: MutableList<ShakeFunction>
-    val fields: MutableList<ShakeField>
+    val subpackages: List<ShakePackage>
+    val classes: List<ShakeClass>
+    val functions: List<ShakeFunction>
+    val fields: List<ShakeField>
 
     val qualifiedName: String
     val scope: ShakeScope

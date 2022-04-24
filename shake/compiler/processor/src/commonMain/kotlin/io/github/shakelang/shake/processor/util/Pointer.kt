@@ -41,6 +41,11 @@ interface Pointer<T> {
     }
 }
 
+fun <T> point(value: T): Pointer<T> = Pointer.of(value)
+fun <T> mutablePoint(value: T): MutablePointer<T> = Pointer.mutableOf(value)
+fun <T> latePoint(): Pointer<T> = Pointer.late()
+fun <T> lateMutablePoint(): MutablePointer<T> = Pointer.lateMutable()
+
 interface MutablePointer<T> : Pointer<T> {
     override var value: T
 }

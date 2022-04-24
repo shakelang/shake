@@ -25,6 +25,5 @@ interface ShakeClass {
     fun compatibleTo(other: ShakeClass): Boolean
     fun compatibilityDistance(other: ShakeClass): Int
 
-    fun processCode()
     fun toJson(): Map<String, Any?>
 }

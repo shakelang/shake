@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.processor.program.immutable
 
-import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
@@ -13,7 +12,4 @@ interface ImmutableShakeScope : ShakeScope {
     override fun use(name: String) {
 
     }
-
-    override val processor: ShakeCodeProcessor
-        get() = parent!!.processor
 }

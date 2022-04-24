@@ -6,22 +6,29 @@ import io.github.shakelang.shake.processor.program.types.*
 import io.github.shakelang.shake.processor.program.types.ShakeDeclaration
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import io.github.shakelang.shake.processor.util.Pointer
+import io.github.shakelang.shake.processor.util.latePoint
+import io.github.shakelang.shake.processor.util.point
 import io.github.shakelang.shason.json
 
 open class ImmutableShakeProject : ShakeProject {
-    final override val subpackages: List<ShakePackage>
+    final override val subpackages: List<ImmutableShakePackage>
     final override val classes: List<ShakeClass>
     final override val functions: List<ShakeFunction>
     final override val fields: List<ShakeField>
 
     override val projectScope: ShakeScope
+    var initFinished: Boolean private set
+    private var classPointers: MutableMap<String, Pointer<ShakeClass>> = mutableMapOf()
+    private var packagePointers: MutableMap<String, Pointer<ImmutableShakePackage>> = mutableMapOf()
 
     constructor(
-        subpackages: List<ShakePackage>,
+        subpackages: List<ImmutableShakePackage>,
         classes: List<ShakeClass>,
         functions: List<ShakeFunction>,
         fields: List<ShakeField>
     ) {
+        this.initFinished = false
         this.subpackages = subpackages
         this.classes = classes
         this.functions = functions
@@ -54,16 +61,24 @@ open class ImmutableShakeProject : ShakeProject {
                 throw IllegalStateException("Cannot set a class in the project scope")
             }
         }
+
+        this.initFinished = true
     }
 
-    override fun getPackage(name: String): ShakePackage {
+    override fun getPackage(name: String): ImmutableShakePackage {
         if(name.contains(".")) return getPackage(name.split(".").toTypedArray())
         return subpackages.find { it.name == name } ?: throw Error("Package $name not found")
     }
 
-    override fun getPackage(name: Array<String>): ShakePackage {
+    override fun getPackage(name: Array<String>): ImmutableShakePackage {
         if(name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
         return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
+   }
+
+    fun getShakePackagePointer(name: String): Pointer<ImmutableShakePackage> {
+        return packagePointers.getOrPut(name) {
+            if(initFinished) point(getPackage(name)) else latePoint()
+        }
     }
 
     override fun getClass(pkg: Array<String>, name: String): ShakeClass? {
@@ -76,6 +91,13 @@ open class ImmutableShakeProject : ShakeProject {
         val pkg = parts.dropLast(1).toTypedArray()
         return if(pkg.isEmpty()) this.classes.find { it.name == name }
         else this.getPackage(pkg).classes.find { it.name == name }
+    }
+
+    fun getClassPointer(clz: String): Pointer<ShakeClass> {
+        return classPointers.getOrPut(clz) {
+            if(initFinished) point(getClass(clz) ?: throw Error("Class $clz not found"))
+            else latePoint()
+        }
     }
 
     override fun toJson(): Map<String, Any?> {
