@@ -4,38 +4,46 @@ interface Pointer<T> {
     val value: T
 
     companion object {
-        fun <T> of(value: T): Pointer<T> = object : Pointer<T> {
+        fun <T> of(value: T) = object : Pointer<T> {
             override val value: T = value
         }
-        fun <T> mutableOf(value: T): MutablePointer<T> = object : MutablePointer<T> {
+        fun <T> mutableOf(value: T) = object : MutablePointer<T> {
             override var value: T = value
         }
-        fun <T> late(): Pointer<T> = object : LateInitPointer<T> {
+        fun <T> late() = object : LateInitPointer<T> {
             var realValue: T? = null
 
-            override val value: T
-                get() = realValue ?: throw IllegalStateException("Value of lateinit pointer is not initialized")
+            override var isInitialized = false
+                private set
 
-            override val isInitialized: Boolean
-                get() = realValue != null
+            @Suppress("UNCHECKED_CAST")
+            override val value: T
+                get() = if(isInitialized) realValue as T else throw IllegalStateException("late init pointer is not initialized")
 
             override fun init(value: T) {
+                if(isInitialized) throw IllegalStateException("late init pointer is already initialized")
                 this.realValue = value
+                isInitialized = true
             }
         }
-        fun <T> lateMutable(): MutablePointer<T> = object : LateInitMutablePointer<T> {
+        fun <T> lateMutable() = object : LateInitMutablePointer<T> {
             var realValue: T? = null
+
+            override var isInitialized = false
+                private set
+
+            @Suppress("UNCHECKED_CAST")
             override var value: T
-                get() = realValue ?: throw IllegalStateException("Value of lateinit pointer is not initialized")
+                get() = if(isInitialized) realValue as T else throw IllegalStateException("late init pointer is not initialized")
                 set(value) {
                     realValue = value
+                    isInitialized = true
                 }
 
-            override val isInitialized: Boolean
-                get() = realValue != null
-
             override fun init(value: T) {
+                if(isInitialized) throw IllegalStateException("late init pointer is already initialized")
                 this.realValue = value
+                isInitialized = true
             }
         }
     }
