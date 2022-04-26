@@ -18,7 +18,7 @@ interface ShakeClass {
     val constructors: List<ShakeConstructor>
 
     val qualifiedName: String
-    var superClass: ShakeClass?
+    val superClass: ShakeClass?
 
     val interfaces: List<ShakeClass>
 

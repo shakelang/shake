@@ -13,18 +13,18 @@ import io.github.shakelang.shason.json
 
 open class ImmutableShakeProject : ShakeProject {
     final override val subpackages: List<ImmutableShakePackage>
-    final override val classes: List<ShakeClass>
+    final override val classes: List<ImmutableShakeClass>
     final override val functions: List<ShakeFunction>
     final override val fields: List<ShakeField>
 
-    override val projectScope: ShakeScope
+    override val projectScope: ImmutableShakeScope
     var initFinished: Boolean private set
-    private var classPointers: MutableMap<String, Pointer<ShakeClass>> = mutableMapOf()
+    private var classPointers: MutableMap<String, Pointer<ImmutableShakeClass>> = mutableMapOf()
     private var packagePointers: MutableMap<String, Pointer<ImmutableShakePackage>> = mutableMapOf()
 
     constructor(
         subpackages: List<ImmutableShakePackage>,
-        classes: List<ShakeClass>,
+        classes: List<ImmutableShakeClass>,
         functions: List<ShakeFunction>,
         fields: List<ShakeField>
     ) {
@@ -53,7 +53,7 @@ open class ImmutableShakeProject : ShakeProject {
                 throw IllegalStateException("Cannot set a function in the project scope")
             }
 
-            override fun getClass(name: String): ShakeClass? {
+            override fun getClass(name: String): ImmutableShakeClass? {
                 return classes.find { it.name == name }
             }
 
@@ -85,7 +85,7 @@ open class ImmutableShakeProject : ShakeProject {
         return this.getPackage(pkg).classes.find { it.name == name }
     }
 
-    override fun getClass(clz: String): ShakeClass? {
+    override fun getClass(clz: String): ImmutableShakeClass? {
         val parts = clz.split(".")
         val name = parts.last()
         val pkg = parts.dropLast(1).toTypedArray()
@@ -93,7 +93,7 @@ open class ImmutableShakeProject : ShakeProject {
         else this.getPackage(pkg).classes.find { it.name == name }
     }
 
-    fun getClassPointer(clz: String): Pointer<ShakeClass> {
+    fun getClassPointer(clz: String): Pointer<ImmutableShakeClass> {
         return classPointers.getOrPut(clz) {
             if(initFinished) point(getClass(clz) ?: throw Error("Class $clz not found"))
             else latePoint()

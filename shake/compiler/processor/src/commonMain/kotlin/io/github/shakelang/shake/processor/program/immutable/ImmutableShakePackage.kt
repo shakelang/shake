@@ -8,7 +8,7 @@ open class ImmutableShakePackage : ShakePackage {
     override val name: String
     override val parent: ImmutableShakePackage?
     override val subpackages: List<ImmutableShakePackage>
-    override val classes: List<ShakeClass>
+    override val classes: List<ImmutableShakeClass>
     override val functions: List<ShakeFunction>
     override val fields: List<ShakeField>
 
@@ -20,7 +20,7 @@ open class ImmutableShakePackage : ShakePackage {
         name: String,
         parent: ImmutableShakePackage?,
         subpackages: List<ImmutableShakePackage>,
-        classes: List<ShakeClass>,
+        classes: List<ImmutableShakeClass>,
         functions: List<ShakeFunction>,
         fields: List<ShakeField>
     ) {
@@ -53,7 +53,7 @@ open class ImmutableShakePackage : ShakePackage {
     }
 
     private inner class Scope : ImmutableShakeScope {
-        override val parent: ShakeScope get() = baseProject.projectScope
+        override val parent: ImmutableShakeScope get() = baseProject.projectScope
 
         override fun get(name: String): ShakeAssignable? {
             return fields.find { it.name == name } ?: parent.get(name)
@@ -71,7 +71,7 @@ open class ImmutableShakePackage : ShakePackage {
             throw IllegalStateException("Cannot set a function in a package scope")
         }
 
-        override fun getClass(name: String): ShakeClass? {
+        override fun getClass(name: String): ImmutableShakeClass? {
             return classes.find { it.name == name } ?: parent.getClass(name)
         }
 
