@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.processor.program.types.code
 
-import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.types.ShakeAssignable
 import io.github.shakelang.shake.processor.program.types.ShakeClass
 import io.github.shakelang.shake.processor.program.types.ShakeDeclaration

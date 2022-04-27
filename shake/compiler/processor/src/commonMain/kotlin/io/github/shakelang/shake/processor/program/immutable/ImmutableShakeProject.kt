@@ -1,10 +1,6 @@
 package io.github.shakelang.shake.processor.program.immutable
 
-import io.github.shakelang.shake.parser.node.*
-import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.types.*
-import io.github.shakelang.shake.processor.program.types.ShakeDeclaration
-import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 import io.github.shakelang.shake.processor.util.Pointer
 import io.github.shakelang.shake.processor.util.latePoint
@@ -14,7 +10,7 @@ import io.github.shakelang.shason.json
 open class ImmutableShakeProject : ShakeProject {
     final override val subpackages: List<ImmutableShakePackage>
     final override val classes: List<ImmutableShakeClass>
-    final override val functions: List<ShakeFunction>
+    final override val functions: List<ImmutableShakeFunction>
     final override val fields: List<ShakeField>
 
     override val projectScope: ImmutableShakeScope
@@ -25,7 +21,7 @@ open class ImmutableShakeProject : ShakeProject {
     constructor(
         subpackages: List<ImmutableShakePackage>,
         classes: List<ImmutableShakeClass>,
-        functions: List<ShakeFunction>,
+        functions: List<ImmutableShakeFunction>,
         fields: List<ShakeField>
     ) {
         this.initFinished = false
@@ -45,7 +41,7 @@ open class ImmutableShakeProject : ShakeProject {
                 throw IllegalStateException("Cannot set a value in the project scope")
             }
 
-            override fun getFunctions(name: String): List<ShakeFunction> {
+            override fun getFunctions(name: String): List<ImmutableShakeFunction> {
                 return functions.filter { it.name == name }
             }
 

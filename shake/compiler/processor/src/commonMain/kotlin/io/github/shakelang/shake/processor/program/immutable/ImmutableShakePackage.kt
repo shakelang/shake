@@ -9,7 +9,7 @@ open class ImmutableShakePackage : ShakePackage {
     override val parent: ImmutableShakePackage?
     override val subpackages: List<ImmutableShakePackage>
     override val classes: List<ImmutableShakeClass>
-    override val functions: List<ShakeFunction>
+    override val functions: List<ImmutableShakeFunction>
     override val fields: List<ShakeField>
 
     override val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + (name)
@@ -21,7 +21,7 @@ open class ImmutableShakePackage : ShakePackage {
         parent: ImmutableShakePackage?,
         subpackages: List<ImmutableShakePackage>,
         classes: List<ImmutableShakeClass>,
-        functions: List<ShakeFunction>,
+        functions: List<ImmutableShakeFunction>,
         fields: List<ShakeField>
     ) {
         this.baseProject = baseProject
@@ -63,7 +63,7 @@ open class ImmutableShakePackage : ShakePackage {
             throw IllegalStateException("Cannot set a value in a package scope")
         }
 
-        override fun getFunctions(name: String): List<ShakeFunction> {
+        override fun getFunctions(name: String): List<ImmutableShakeFunction> {
             return functions.filter { it.name == name } + parent.getFunctions(name)
         }
 
