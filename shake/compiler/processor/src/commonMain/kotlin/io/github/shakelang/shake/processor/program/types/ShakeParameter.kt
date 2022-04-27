@@ -2,6 +2,6 @@ package io.github.shakelang.shake.processor.program.types
 
 interface ShakeParameter {
     val name: String
-    var type: ShakeType
+    val type: ShakeType
     fun toJson(): Map<String, Any?>
 }
