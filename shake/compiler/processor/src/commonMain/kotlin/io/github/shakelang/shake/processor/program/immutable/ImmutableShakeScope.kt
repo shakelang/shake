@@ -7,6 +7,8 @@ import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
 interface ImmutableShakeScope : ShakeScope {
 
+    override val parent: ImmutableShakeScope?
+
     override fun getClass(name: String): ImmutableShakeClass?
 
     override fun getFunctions(name: String): List<ImmutableShakeFunction>
