@@ -1,5 +1,4 @@
 rootProject.name = "Shake"
-
 include("cli")
 include("jvm")
 include(":util:parseutils")

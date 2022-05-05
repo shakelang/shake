@@ -31,7 +31,7 @@ open class ImmutableShakeProject : ShakeProject {
         this.fields = fields
 
         projectScope = object : ImmutableShakeScope {
-            override val parent: ShakeScope? = null
+            override val parent: ImmutableShakeScope? = null
 
             override fun get(name: String): ShakeAssignable? {
                 return fields.find { it.name == name }
