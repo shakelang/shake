@@ -5,7 +5,6 @@ import io.github.shakelang.shake.processor.program.types.ShakeDeclaration
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeVariableUsage
 
 interface ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeStatement {
     val scope: ShakeScope
@@ -15,5 +14,5 @@ interface ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeSta
     val isFinal: Boolean
 
     fun valueCompatible(value: ShakeValue): Boolean
-    override fun use(scope: ShakeScope): ShakeVariableUsage
+    //override fun use(scope: ShakeScope): ShakeVariableUsage
 }

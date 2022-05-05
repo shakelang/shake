@@ -9,7 +9,7 @@ interface ShakeAssignable {
     val actualType: ShakeType
     val type: ShakeType
 
-    fun access(scope: ShakeScope): ShakeValue
+    //fun access(scope: ShakeScope): ShakeValue
 
     fun assignType(other: ShakeType): ShakeType?
     fun additionAssignType(other: ShakeType): ShakeType?
