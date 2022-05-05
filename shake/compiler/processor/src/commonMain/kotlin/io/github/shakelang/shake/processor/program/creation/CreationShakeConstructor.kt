@@ -1,0 +1,96 @@
+package io.github.shakelang.shake.processor.program.creation
+
+import io.github.shakelang.shake.processor.ShakeCodeProcessor
+import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
+import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
+import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+
+open class CreationShakeConstructor (
+    val clazz: CreationShakeClass,
+    val body: CreationShakeCode,
+    val isStrict: Boolean,
+    val isPrivate: Boolean,
+    val isProtected: Boolean,
+    val isPublic: Boolean,
+    val name: String? = null
+) {
+    lateinit var parameters: List<CreationShakeParameter>
+        private set
+
+    constructor(
+        clazz: CreationShakeClass,
+        parameters: List<CreationShakeParameter>,
+        body: CreationShakeCode,
+        isStrict: Boolean,
+        isPrivate: Boolean,
+        isProtected: Boolean,
+        isPublic: Boolean,
+        name: String? = null
+    ): this(clazz, body, isStrict, isPrivate, isProtected, isPublic, name) {
+        this.parameters = parameters
+    }
+
+    val scope: CreationShakeScope = ShakeConstructorScope()
+
+    fun lateinitParameterTypes(names: List<String>): List<(CreationShakeType) -> CreationShakeType> {
+        this.parameters = names.map {
+            CreationShakeParameter(it)
+        }
+        return this.parameters.map {
+            it.lateinitType()
+        }
+    }
+
+    fun processCode() {
+        if(body is CreationShakeCode.ShakeLateProcessCode) body.process(scope)
+    }
+
+    open fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "constructor",
+            "name" to name,
+            "parameters" to parameters.map { it.toJson() },
+            "body" to body.toJson(),
+            "isStrict" to isStrict,
+            "isPrivate" to isPrivate,
+            "isProtected" to isProtected,
+            "isPublic" to isPublic
+        )
+    }
+
+    inner class ShakeConstructorScope : CreationShakeScope {
+        override val parent: CreationShakeScope = clazz.instanceScope
+
+        val variables = mutableListOf<CreationShakeVariableDeclaration>()
+
+        override fun get(name: String): CreationShakeAssignable? {
+            return variables.find { it.name == name } ?: parent.get(name)
+        }
+
+        override fun set(value: CreationShakeDeclaration) {
+            if(value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
+            if(variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
+            variables.add(value)
+        }
+
+        override fun getFunctions(name: String): List<CreationShakeFunction> {
+            return parent.getFunctions(name)
+        }
+
+        override fun setFunctions(function: CreationShakeFunction) {
+            throw IllegalStateException("Cannot set function in method scope")
+        }
+
+        override fun getClass(name: String): CreationShakeClass? {
+            return parent.getClass(name)
+        }
+
+        override fun setClass(klass: CreationShakeClass) {
+            throw IllegalStateException("Cannot set class in method scope")
+        }
+
+        override val processor: ShakeCodeProcessor
+            get() = parent.processor
+
+    }
+}
