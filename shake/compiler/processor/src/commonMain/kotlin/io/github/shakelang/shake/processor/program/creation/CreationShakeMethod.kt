@@ -2,11 +2,11 @@ package io.github.shakelang.shake.processor.program.creation
 
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+import io.github.shakelang.shake.processor.program.types.ShakeMethod
 
 class CreationShakeMethod (
-    val clazz: CreationShakeClass,
+    override val clazz: CreationShakeClass,
     parentScope: CreationShakeScope,
     name: String,
     body: CreationShakeCode,
@@ -32,7 +32,7 @@ class CreationShakeMethod (
     isPrivate,
     isProtected,
     isPublic
-) {
+), ShakeMethod {
 
     override val scope = ShakeMethodScope()
 

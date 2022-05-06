@@ -5,24 +5,24 @@ import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationN
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+import io.github.shakelang.shake.processor.program.types.ShakeFunction
 
 open class CreationShakeFunction (
-    val prj: CreationShakeProject,
-    val pkg: CreationShakePackage?,
-    val parentScope: CreationShakeScope,
-    val name: String,
+    override val prj: CreationShakeProject,
+    override val pkg: CreationShakePackage?,
+    override val parentScope: CreationShakeScope,
+    override val name: String,
     body: CreationShakeCode,
-    val isStatic: Boolean,
-    val isFinal: Boolean,
-    val isAbstract: Boolean,
-    val isSynchronized: Boolean,
-    val isStrict: Boolean,
-    val isPrivate: Boolean,
-    val isProtected: Boolean,
-    val isPublic: Boolean,
-): CreationShakeInvokable(body) {
+    override val isStatic: Boolean,
+    override val isFinal: Boolean,
+    override val isAbstract: Boolean,
+    override val isSynchronized: Boolean,
+    override val isStrict: Boolean,
+    override val isPrivate: Boolean,
+    override val isProtected: Boolean,
+    override val isPublic: Boolean,
+): CreationShakeInvokable(body), ShakeFunction {
 
     override val qualifiedName: String
         get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
@@ -51,7 +51,7 @@ open class CreationShakeFunction (
         this.returnType = returnType
     }
 
-    open val scope : CreationShakeScope = ShakeFunctionScope()
+    override val scope : CreationShakeScope = ShakeFunctionScope()
 
     fun lateinitReturnType(): (CreationShakeType) -> CreationShakeType {
         return {

@@ -1,11 +1,13 @@
 package io.github.shakelang.shake.processor.program.creation.code
 
 import io.github.shakelang.shake.parser.node.ShakeTree
+import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
+import io.github.shakelang.shake.processor.program.types.code.ShakeCode
 
 open class CreationShakeCode(
-    open val statements: List<CreationShakeStatement>
-) {
+    override val statements: List<CreationShakeStatement>
+): ShakeCode {
 
     open class ShakeLateProcessCode (
         open val tree: ShakeTree
@@ -20,7 +22,7 @@ open class CreationShakeCode(
         }
     }
 
-    fun toJson(): Map<String, Any> {
+    override fun toJson(): Map<String, Any> {
         return mapOf(
             "statements" to statements.map { it.toJson() }
         )

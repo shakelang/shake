@@ -2,16 +2,17 @@ package io.github.shakelang.shake.processor.program.creation.code
 
 import io.github.shakelang.shake.processor.program.creation.CreationShakeParameter
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
+import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
 
 abstract class CreationShakeInvokable (
-    open val body: CreationShakeCode
-) {
+    override val body: CreationShakeCode
+) : ShakeInvokable {
 
-    abstract val qualifiedName: String
+    abstract override val qualifiedName: String
 
-    lateinit var parameters: List<CreationShakeParameter>
+    override lateinit var parameters: List<CreationShakeParameter>
         protected set
-    abstract val returnType: CreationShakeType
+    abstract override val returnType: CreationShakeType
 
     constructor(
         body: CreationShakeCode,
@@ -20,5 +21,5 @@ abstract class CreationShakeInvokable (
         this.parameters = parameters
     }
 
-    abstract fun toJson(): Map<String, Any?>
+    abstract override fun toJson(): Map<String, Any?>
 }

@@ -4,16 +4,17 @@ import io.github.shakelang.shake.processor.program.creation.CreationShakeConstru
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import io.github.shakelang.shake.processor.program.types.code.ShakeNew
 
 class CreationShakeNew (
-    val reference: CreationShakeConstructor,
-    val arguments: List<CreationShakeValue>,
-    val parent: CreationShakeValue? = null
-) : CreationShakeValue, CreationShakeStatement {
+    override val reference: CreationShakeConstructor,
+    override val arguments: List<CreationShakeValue>,
+    override val parent: CreationShakeValue? = null
+) : CreationShakeValue, CreationShakeStatement, ShakeNew {
 
     override val type: CreationShakeType
         get() = reference.clazz.asType()
-    val name get() = reference.name?.let { "${reference.clazz.name}.$it" } ?: reference.clazz.name
+    override val name get() = reference.name?.let { "${reference.clazz.name}.$it" } ?: reference.clazz.name
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(

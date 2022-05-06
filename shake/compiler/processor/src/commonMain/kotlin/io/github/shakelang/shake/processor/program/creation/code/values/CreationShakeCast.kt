@@ -1,11 +1,12 @@
 package io.github.shakelang.shake.processor.program.creation.code.values
 
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
+import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 class CreationShakeCast(
     val value: CreationShakeValue,
     val castTarget: CreationShakeType,
-) : CreationShakeValue {
+) : CreationShakeValue, ShakeValue {
     override val type: CreationShakeType
         get() = castTarget
 

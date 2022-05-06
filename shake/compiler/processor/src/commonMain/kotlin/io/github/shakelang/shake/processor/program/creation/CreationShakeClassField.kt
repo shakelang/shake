@@ -2,13 +2,13 @@ package io.github.shakelang.shake.processor.program.creation
 
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeFieldUsage
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
+import io.github.shakelang.shake.processor.program.types.ShakeClassField
 
 open class CreationShakeClassField (
-    val clazz: CreationShakeClass,
+    override val clazz: CreationShakeClass,
     parentScope: CreationShakeScope,
     name: String,
     isStatic: Boolean,
@@ -30,7 +30,7 @@ open class CreationShakeClassField (
     isProtected,
     isPublic,
     initialValue
-) {
+), ShakeClassField {
     override val qualifiedName: String
         get() = "${clazz.qualifiedName}.$name"
 

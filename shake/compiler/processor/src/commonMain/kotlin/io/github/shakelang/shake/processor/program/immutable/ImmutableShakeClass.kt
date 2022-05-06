@@ -101,24 +101,12 @@ open class ImmutableShakeClass : ShakeClass {
             return staticFields.find { it.name == name } ?: parent.get(name)
         }
 
-        override fun set(value: ShakeDeclaration) {
-            throw IllegalStateException("Cannot set in this scope")
-        }
-
         override fun getFunctions(name: String): List<ImmutableShakeFunction> {
             return staticMethods.filter { it.name == name } + parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: ShakeFunction) {
-            throw IllegalStateException("Cannot set in this scope")
-        }
-
         override fun getClass(name: String): ImmutableShakeClass? {
             return staticClasses.find { it.name == name } ?: parent.getClass(name)
-        }
-
-        override fun setClass(klass: ShakeClass) {
-            throw IllegalStateException("Cannot set in this scope")
         }
 
         override fun getInvokable(name: String): List<ShakeInvokable> {
@@ -139,24 +127,12 @@ open class ImmutableShakeClass : ShakeClass {
             return fields.find { it.name == name } ?: staticFields.find { it.name == name } ?: parent.get(name)
         }
 
-        override fun set(value: ShakeDeclaration) {
-            throw IllegalStateException("Cannot set in this scope")
-        }
-
         override fun getFunctions(name: String): List<ImmutableShakeFunction> {
             return methods.filter { it.name == name } + staticMethods.filter { it.name == name } + parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: ShakeFunction) {
-            throw IllegalStateException("Cannot set in this scope")
-        }
-
         override fun getClass(name: String): ImmutableShakeClass? {
             return classes.find { it.name == name } ?: parent.getClass(name)
-        }
-
-        override fun setClass(klass: ShakeClass) {
-            throw IllegalStateException("Cannot set in this scope")
         }
 
         override fun getInvokable(name: String): List<ShakeInvokable> {

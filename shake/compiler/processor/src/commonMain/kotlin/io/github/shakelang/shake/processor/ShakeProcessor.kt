@@ -17,9 +17,7 @@ import io.github.shakelang.shake.parser.node.loops.ShakeForNode
 import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import io.github.shakelang.shake.parser.node.variables.*
-import io.github.shakelang.shake.processor.program.creation.CreationShakeAssignable
-import io.github.shakelang.shake.processor.program.creation.CreationShakeProject
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
+import io.github.shakelang.shake.processor.program.creation.*
 import io.github.shakelang.shake.processor.program.creation.code.*
 import io.github.shakelang.shake.processor.program.creation.code.statements.*
 import io.github.shakelang.shake.processor.program.creation.code.values.*
@@ -228,61 +226,61 @@ open class ShakeCodeProcessor {
         } else scope.get(n.name)
     }
 
-    fun visitVariableAssignmentNode(scope: CreationShakeScope, n: ShakeVariableAssignmentNode): ShakeAssignment {
+    fun visitVariableAssignmentNode(scope: CreationShakeScope, n: ShakeVariableAssignmentNode): CreationShakeAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
         return variable.createAssignment(value)
     }
 
-    fun visitVariableAddAssignmentNode(scope: CreationShakeScope, n: ShakeVariableAddAssignmentNode): ShakeAddAssignment {
+    fun visitVariableAddAssignmentNode(scope: CreationShakeScope, n: ShakeVariableAddAssignmentNode): CreationShakeAddAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
         return variable.createAddAssignment(value)
     }
 
-    fun visitVariableSubAssignmentNode(scope: CreationShakeScope, n: ShakeVariableSubAssignmentNode): ShakeSubAssignment {
+    fun visitVariableSubAssignmentNode(scope: CreationShakeScope, n: ShakeVariableSubAssignmentNode): CreationShakeSubAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
         return variable.createSubtractAssignment(value)
     }
 
-    fun visitVariableMulAssignmentNode(scope: CreationShakeScope, n: ShakeVariableMulAssignmentNode): ShakeMulAssignment {
+    fun visitVariableMulAssignmentNode(scope: CreationShakeScope, n: ShakeVariableMulAssignmentNode): CreationShakeMulAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
         return variable.createMultiplyAssignment(value)
     }
 
-    fun visitVariableDivAssignmentNode(scope: CreationShakeScope, n: ShakeVariableDivAssignmentNode): ShakeDivAssignment {
+    fun visitVariableDivAssignmentNode(scope: CreationShakeScope, n: ShakeVariableDivAssignmentNode): CreationShakeDivAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
         return variable.createDivideAssignment(value)
     }
 
-    fun visitVariableModAssignmentNode(scope: CreationShakeScope, n: ShakeVariableModAssignmentNode): ShakeModAssignment {
+    fun visitVariableModAssignmentNode(scope: CreationShakeScope, n: ShakeVariableModAssignmentNode): CreationShakeModAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
         return variable.createModulusAssignment(value)
     }
 
-    fun visitVariablePowAssignmentNode(scope: CreationShakeScope, n: ShakeVariablePowAssignmentNode): ShakePowerAssignment {
+    fun visitVariablePowAssignmentNode(scope: CreationShakeScope, n: ShakeVariablePowAssignmentNode): CreationShakePowerAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
         return variable.createPowerAssignment(value)
     }
 
-    fun visitVariableIncrementNode(scope: CreationShakeScope, n: ShakeVariableIncreaseNode): ShakeIncrementBefore {
+    fun visitVariableIncrementNode(scope: CreationShakeScope, n: ShakeVariableIncreaseNode): CreationShakeIncrementBefore {
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         return variable.createIncrementBeforeAssignment()
     }
 
-    fun visitVariableDecrementNode(scope: CreationShakeScope, n: ShakeVariableDecreaseNode): ShakeDecrementBefore {
+    fun visitVariableDecrementNode(scope: CreationShakeScope, n: ShakeVariableDecreaseNode): CreationShakeDecrementBefore {
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         return variable.createDecrementBeforeAssignment()
     }
@@ -418,7 +416,7 @@ open class ShakeCodeProcessor {
                 val name = functionNode.name
                 val args = n.args.map { visitValue(scope, it) }
                 val types = args.map { it.type }
-                val functions = parent.type.childFunctions(name) ?: throw Exception("No function named $name in ${parent.type}")
+                val functions = (parent.type.childFunctions(name) ?: throw Exception("No function named $name in ${parent.type}")) as List<CreationShakeFunction> // TODO
                 val function = ShakeSelect.selectFunction(functions, types)
                     ?: throw Exception("No function named $name with arguments $types in ${parent.type}")
                 return CreationShakeInvocation(function, args, parent)

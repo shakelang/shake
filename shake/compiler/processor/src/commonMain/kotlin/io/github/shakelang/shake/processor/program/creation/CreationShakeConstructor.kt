@@ -2,19 +2,19 @@ package io.github.shakelang.shake.processor.program.creation
 
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+import io.github.shakelang.shake.processor.program.types.ShakeConstructor
 
 open class CreationShakeConstructor (
-    val clazz: CreationShakeClass,
-    val body: CreationShakeCode,
-    val isStrict: Boolean,
-    val isPrivate: Boolean,
-    val isProtected: Boolean,
-    val isPublic: Boolean,
-    val name: String? = null
-) {
-    lateinit var parameters: List<CreationShakeParameter>
+    override val clazz: CreationShakeClass,
+    override val body: CreationShakeCode,
+    override val isStrict: Boolean,
+    override val isPrivate: Boolean,
+    override val isProtected: Boolean,
+    override val isPublic: Boolean,
+    override val name: String? = null
+): ShakeConstructor {
+    final override lateinit var parameters: List<CreationShakeParameter>
         private set
 
     constructor(
@@ -30,7 +30,7 @@ open class CreationShakeConstructor (
         this.parameters = parameters
     }
 
-    val scope: CreationShakeScope = ShakeConstructorScope()
+    override val scope: CreationShakeScope = ShakeConstructorScope()
 
     fun lateinitParameterTypes(names: List<String>): List<(CreationShakeType) -> CreationShakeType> {
         this.parameters = names.map {
@@ -42,10 +42,10 @@ open class CreationShakeConstructor (
     }
 
     fun processCode() {
-        if(body is CreationShakeCode.ShakeLateProcessCode) body.process(scope)
+        if(body is CreationShakeCode.ShakeLateProcessCode) (body as CreationShakeCode.ShakeLateProcessCode).process(scope)
     }
 
-    open fun toJson(): Map<String, Any?> {
+    override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "constructor",
             "name" to name,

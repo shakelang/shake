@@ -4,12 +4,14 @@ import io.github.shakelang.shake.processor.program.creation.CreationShakeAssigna
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import io.github.shakelang.shake.processor.program.types.ShakeType
+import io.github.shakelang.shake.processor.program.types.code.*
 
-open class ShakeAssignment(
-    val variable: CreationShakeAssignable,
-    val value: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeAssignment (
+    override val variable: CreationShakeAssignable,
+    override val value: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeAssignment {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -19,11 +21,11 @@ open class ShakeAssignment(
     }
 }
 
-open class ShakeAddAssignment(
-    val variable: CreationShakeAssignable,
-    val value: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeAddAssignment(
+    override val variable: CreationShakeAssignable,
+    override val value: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeAddAssignment {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -33,11 +35,11 @@ open class ShakeAddAssignment(
     }
 }
 
-open class ShakeSubAssignment(
-    val variable: CreationShakeAssignable,
-    val value: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeSubAssignment(
+    override val variable: CreationShakeAssignable,
+    override val value: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeSubAssignment {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -47,11 +49,11 @@ open class ShakeSubAssignment(
     }
 }
 
-open class ShakeMulAssignment(
-    val variable: CreationShakeAssignable,
-    val value: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeMulAssignment(
+    override val variable: CreationShakeAssignable,
+    override val value: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeMulAssignment {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -61,11 +63,11 @@ open class ShakeMulAssignment(
     }
 }
 
-open class ShakeDivAssignment(
-    val variable: CreationShakeAssignable,
-    val value: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeDivAssignment(
+    override val variable: CreationShakeAssignable,
+    override val value: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeDivAssignment {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -75,11 +77,11 @@ open class ShakeDivAssignment(
     }
 }
 
-open class ShakeModAssignment(
-    val variable: CreationShakeAssignable,
-    val value: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeModAssignment(
+    override val variable: CreationShakeAssignable,
+    override val value: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeModAssignment {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -89,11 +91,11 @@ open class ShakeModAssignment(
     }
 }
 
-open class ShakePowerAssignment(
-    val variable: CreationShakeAssignable,
-    val value: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakePowerAssignment(
+    override val variable: CreationShakeAssignable,
+    override val value: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakePowAssignment {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -103,10 +105,10 @@ open class ShakePowerAssignment(
     }
 }
 
-open class ShakeIncrementBefore(
-    val variable: CreationShakeAssignable,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeIncrementBefore(
+    override val variable: CreationShakeAssignable,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeIncrementBefore {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -115,10 +117,10 @@ open class ShakeIncrementBefore(
     }
 }
 
-open class ShakeIncrementAfter(
-    val variable: CreationShakeAssignable,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeIncrementAfter(
+    override val variable: CreationShakeAssignable,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeIncrementAfter {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -127,10 +129,10 @@ open class ShakeIncrementAfter(
     }
 }
 
-open class ShakeDecrementBefore(
-    val variable: CreationShakeAssignable,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeDecrementBefore(
+    override val variable: CreationShakeAssignable,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeDecrementBefore {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",
@@ -139,10 +141,10 @@ open class ShakeDecrementBefore(
     }
 }
 
-open class ShakeDecrementAfter(
-    val variable: CreationShakeAssignable,
-    override val type: CreationShakeType
-) : CreationShakeValue, CreationShakeStatement {
+open class CreationShakeDecrementAfter(
+    override val variable: CreationShakeAssignable,
+    override val type: ShakeType
+) : CreationShakeValue, CreationShakeStatement, ShakeDecrementAfter {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "assignment",

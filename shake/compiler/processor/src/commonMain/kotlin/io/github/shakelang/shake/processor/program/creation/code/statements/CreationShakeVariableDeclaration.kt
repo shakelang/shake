@@ -3,18 +3,21 @@ package io.github.shakelang.shake.processor.program.creation.code.statements
 import io.github.shakelang.shake.processor.program.creation.CreationShakeAssignable
 import io.github.shakelang.shake.processor.program.creation.CreationShakeDeclaration
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
+import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeVariableUsage
+import io.github.shakelang.shake.processor.program.types.ShakeType
+import io.github.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
+import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 
-open class CreationShakeVariableDeclaration : CreationShakeDeclaration, CreationShakeAssignable, CreationShakeStatement {
-    val scope: CreationShakeScope
+open class CreationShakeVariableDeclaration : CreationShakeDeclaration, CreationShakeAssignable, CreationShakeStatement, ShakeVariableDeclaration {
+    override val scope: CreationShakeScope
     final override val name: String
-    val initialValue: CreationShakeValue?
-    final override var type: CreationShakeType
-    var latestValue: CreationShakeValue?
-    var latestType: CreationShakeType
-    val isFinal: Boolean
+    override val initialValue: CreationShakeValue?
+    final override var type: ShakeType
+    override var latestValue: CreationShakeValue?
+    override var latestType: ShakeType
+    override val isFinal: Boolean
 
     override val qualifiedName: String
         get() = "local $name"
@@ -29,7 +32,7 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         this.latestType = initialValue.type
     }
 
-    constructor(scope: CreationShakeScope, name: String, type: CreationShakeType, isFinal: Boolean) {
+    constructor(scope: CreationShakeScope, name: String, type: ShakeType, isFinal: Boolean) {
         this.scope = scope
         this.name = name
         this.initialValue = null
@@ -39,7 +42,7 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         this.latestType = type
     }
 
-    constructor(scope: CreationShakeScope, name: String, type: CreationShakeType, initialValue: CreationShakeValue?, isFinal: Boolean) {
+    constructor(scope: CreationShakeScope, name: String, type: ShakeType, initialValue: CreationShakeValue?, isFinal: Boolean) {
         this.scope = scope
         this.name = name
         this.initialValue = initialValue
@@ -49,7 +52,7 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         this.latestType = type
     }
 
-    fun valueCompatible(value: CreationShakeValue): Boolean {
+    override fun valueCompatible(value: ShakeValue): Boolean {
         return type.compatibleTo(value.type)
     }
 
@@ -60,10 +63,10 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
     override val actualValue: CreationShakeValue?
         get() = latestValue ?: initialValue
 
-    override val actualType: CreationShakeType
+    override val actualType: ShakeType
         get() = latestType
 
-    override fun assignType(other: CreationShakeType): CreationShakeType? {
+    override fun assignType(other: ShakeType): ShakeType? {
         val typeAssign = type.assignType(other)
         if (typeAssign != null) {
             latestType = typeAssign
@@ -72,7 +75,7 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return other
     }
 
-    override fun additionAssignType(other: CreationShakeType): CreationShakeType? {
+    override fun additionAssignType(other: ShakeType): ShakeType? {
         val typeAssign = type.additionAssignType(other)
         if (typeAssign != null) {
             latestType = typeAssign
@@ -81,7 +84,7 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun subtractionAssignType(other: CreationShakeType): CreationShakeType? {
+    override fun subtractionAssignType(other: ShakeType): ShakeType? {
         val typeAssign = type.subtractionAssignType(other)
         if (typeAssign != null) {
             latestType = typeAssign
@@ -90,7 +93,7 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun multiplicationAssignType(other: CreationShakeType): CreationShakeType? {
+    override fun multiplicationAssignType(other: ShakeType): ShakeType? {
         val typeAssign = type.multiplicationAssignType(other)
         if (typeAssign != null) {
             latestType = typeAssign
@@ -99,7 +102,7 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun divisionAssignType(other: CreationShakeType): CreationShakeType? {
+    override fun divisionAssignType(other: ShakeType): ShakeType? {
         val typeAssign = type.divisionAssignType(other)
         if (typeAssign != null) {
             latestType = typeAssign
@@ -108,7 +111,7 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun modulusAssignType(other: CreationShakeType): CreationShakeType? {
+    override fun modulusAssignType(other: ShakeType): ShakeType? {
         val typeAssign = type.modulusAssignType(other)
         if (typeAssign != null) {
             latestType = typeAssign
@@ -117,7 +120,7 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun powerAssignType(other: CreationShakeType): CreationShakeType? {
+    override fun powerAssignType(other: ShakeType): ShakeType? {
         val typeAssign = type.powerAssignType(other)
         if (typeAssign != null) {
             latestType = typeAssign

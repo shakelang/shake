@@ -4,34 +4,34 @@ import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
+import io.github.shakelang.shake.processor.program.types.ShakeClass
 import kotlin.math.min
 
-open class CreationShakeClass {
-    val staticScope = StaticScope()
-    val instanceScope = InstanceScope()
-    val prj: CreationShakeProject
-    val pkg: CreationShakePackage?
-    val parentScope: CreationShakeScope
-    val name: String
-    val methods: List<CreationShakeMethod>
-    val fields: List<CreationShakeClassField>
-    val classes: List<CreationShakeClass>
-    val staticMethods: List<CreationShakeMethod>
-    val staticFields: List<CreationShakeClassField>
-    val staticClasses: List<CreationShakeClass>
-    val constructors: List<CreationShakeConstructor>
+open class CreationShakeClass: ShakeClass {
+    override val staticScope = StaticScope()
+    override val instanceScope = InstanceScope()
+    override val prj: CreationShakeProject
+    override val pkg: CreationShakePackage?
+    override val parentScope: CreationShakeScope
+    override val name: String
+    override val methods: List<CreationShakeMethod>
+    override val fields: List<CreationShakeClassField>
+    override val classes: List<CreationShakeClass>
+    override val staticMethods: List<CreationShakeMethod>
+    override val staticFields: List<CreationShakeClassField>
+    override val staticClasses: List<CreationShakeClass>
+    override val constructors: List<CreationShakeConstructor>
 
-    val qualifiedName: String
+    override val qualifiedName: String
         get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
 
-    var superClass: CreationShakeClass? = null
+    final override var superClass: CreationShakeClass? = null
         private set
 
     private var _interfaces: List<CreationShakeClass?> = listOf()
         private set
 
-    val interfaces: List<CreationShakeClass>
+    override val interfaces: List<CreationShakeClass>
         get() = _interfaces.map { it!! }
 
     constructor(
@@ -145,13 +145,13 @@ open class CreationShakeClass {
         }
     }
 
-    fun compatibleTo(other: CreationShakeClass): Boolean {
+    override fun compatibleTo(other: ShakeClass): Boolean {
         if (this == other) return true
         if (this.superClass != null && this.superClass!!.compatibleTo(other)) return true
         return this.interfaces.any { it.compatibleTo(other) }
     }
 
-    fun compatibilityDistance(other: CreationShakeClass): Int {
+    override fun compatibilityDistance(other: ShakeClass): Int {
         if (this == other) return 0
         val scd = (this.superClass?.compatibilityDistance(other) ?: -1) + 1
         val intDistance = (this.interfaces.minOfOrNull { it.compatibilityDistance(other) } ?: -2) + 1
@@ -174,7 +174,7 @@ open class CreationShakeClass {
         this.staticClasses.forEach { it.processCode() }
     }
 
-    open fun toJson(): Map<String, Any?> {
+    override fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to this.name,
             "super" to this.superClass?.name,

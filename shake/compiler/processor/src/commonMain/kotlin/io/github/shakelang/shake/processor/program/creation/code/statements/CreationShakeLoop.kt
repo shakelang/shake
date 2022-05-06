@@ -2,11 +2,14 @@ package io.github.shakelang.shake.processor.program.creation.code.statements
 
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import io.github.shakelang.shake.processor.program.types.code.statements.ShakeDoWhile
+import io.github.shakelang.shake.processor.program.types.code.statements.ShakeFor
+import io.github.shakelang.shake.processor.program.types.code.statements.ShakeWhile
 
 class CreationShakeWhile (
-    val condition: CreationShakeValue,
-    val body: CreationShakeCode
-) : CreationShakeStatement {
+    override val condition: CreationShakeValue,
+    override val body: CreationShakeCode
+) : CreationShakeStatement, ShakeWhile {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "while",
@@ -17,9 +20,9 @@ class CreationShakeWhile (
 }
 
 class CreationShakeDoWhile (
-    val condition: CreationShakeValue,
-    val body: CreationShakeCode
-) : CreationShakeStatement {
+    override val condition: CreationShakeValue,
+    override val body: CreationShakeCode
+) : CreationShakeStatement, ShakeDoWhile {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "do-while",
@@ -30,11 +33,11 @@ class CreationShakeDoWhile (
 }
 
 class CreationShakeFor(
-    val init: CreationShakeStatement,
-    val condition: CreationShakeValue,
-    val update: CreationShakeStatement,
-    val body: CreationShakeCode
-) : CreationShakeStatement {
+    override val init: CreationShakeStatement,
+    override val condition: CreationShakeValue,
+    override val update: CreationShakeStatement,
+    override val body: CreationShakeCode
+) : CreationShakeStatement, ShakeFor {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "for",

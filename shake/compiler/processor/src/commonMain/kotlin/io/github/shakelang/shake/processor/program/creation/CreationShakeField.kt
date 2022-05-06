@@ -2,24 +2,25 @@ package io.github.shakelang.shake.processor.program.creation
 
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeFieldUsage
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
+import io.github.shakelang.shake.processor.program.types.ShakeField
+import io.github.shakelang.shake.processor.program.types.ShakeType
 
 open class CreationShakeField (
-    val project: CreationShakeProject,
-    val pkg: CreationShakePackage?,
-    val parentScope: CreationShakeScope,
+    override val project: CreationShakeProject,
+    override val pkg: CreationShakePackage?,
+    override val parentScope: CreationShakeScope,
     override val name: String,
-    val isStatic: Boolean,
-    val isFinal: Boolean,
-    val isAbstract: Boolean,
-    val isPrivate: Boolean,
-    val isProtected: Boolean,
-    val isPublic: Boolean,
-    open val initialValue: CreationShakeValue? = null,
-): CreationShakeDeclaration, CreationShakeAssignable {
+    override val isStatic: Boolean,
+    override val isFinal: Boolean,
+    override val isAbstract: Boolean,
+    override val isPrivate: Boolean,
+    override val isProtected: Boolean,
+    override val isPublic: Boolean,
+    override val initialValue: CreationShakeValue? = null,
+): CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
 
     override val qualifiedName: String
         get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
@@ -33,13 +34,13 @@ open class CreationShakeField (
     final override lateinit var type: CreationShakeType
         private set
 
-    override fun assignType(other: CreationShakeType): CreationShakeType = type.assignType(other) ?: other
-    override fun additionAssignType(other: CreationShakeType): CreationShakeType = type.additionAssignType(other) ?: type
-    override fun subtractionAssignType(other: CreationShakeType): CreationShakeType = type.subtractionAssignType(other) ?: type
-    override fun multiplicationAssignType(other: CreationShakeType): CreationShakeType = type.multiplicationAssignType(other) ?: type
-    override fun divisionAssignType(other: CreationShakeType): CreationShakeType = type.divisionAssignType(other) ?: type
-    override fun modulusAssignType(other: CreationShakeType): CreationShakeType = type.modulusAssignType(other) ?: type
-    override fun powerAssignType(other: CreationShakeType): CreationShakeType = type.powerAssignType(other) ?: type
+    override fun assignType(other: ShakeType): ShakeType = type.assignType(other) ?: other
+    override fun additionAssignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: type
+    override fun subtractionAssignType(other: ShakeType): ShakeType = type.subtractionAssignType(other) ?: type
+    override fun multiplicationAssignType(other: ShakeType): ShakeType = type.multiplicationAssignType(other) ?: type
+    override fun divisionAssignType(other: ShakeType): ShakeType = type.divisionAssignType(other) ?: type
+    override fun modulusAssignType(other: ShakeType): ShakeType = type.modulusAssignType(other) ?: type
+    override fun powerAssignType(other: ShakeType): ShakeType = type.powerAssignType(other) ?: type
     override fun incrementBeforeType(): CreationShakeType = type.incrementBeforeType() ?: type
     override fun incrementAfterType(): CreationShakeType = type.incrementAfterType() ?: type
     override fun decrementBeforeType(): CreationShakeType? = type.decrementBeforeType() ?: type

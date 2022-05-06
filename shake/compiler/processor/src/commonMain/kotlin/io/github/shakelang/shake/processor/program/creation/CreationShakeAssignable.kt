@@ -2,80 +2,83 @@ package io.github.shakelang.shake.processor.program.creation
 
 import io.github.shakelang.shake.processor.program.creation.code.*
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import io.github.shakelang.shake.processor.program.types.ShakeAssignable
+import io.github.shakelang.shake.processor.program.types.ShakeType
+import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 
-interface CreationShakeAssignable {
+interface CreationShakeAssignable : ShakeAssignable {
 
-    val actualValue: CreationShakeValue?
-    val actualType: CreationShakeType
-    val type: CreationShakeType
+    override val actualValue: CreationShakeValue?
+    override val actualType: ShakeType
+    override val type: ShakeType
 
     fun access(scope: CreationShakeScope): CreationShakeValue
 
-    fun assignType(other: CreationShakeType): CreationShakeType?
-    fun additionAssignType(other: CreationShakeType): CreationShakeType?
-    fun subtractionAssignType(other: CreationShakeType): CreationShakeType?
-    fun multiplicationAssignType(other: CreationShakeType): CreationShakeType?
-    fun divisionAssignType(other: CreationShakeType): CreationShakeType?
-    fun modulusAssignType(other: CreationShakeType): CreationShakeType?
-    fun powerAssignType(other: CreationShakeType): CreationShakeType?
-    fun incrementBeforeType(): CreationShakeType?
-    fun incrementAfterType(): CreationShakeType?
-    fun decrementBeforeType(): CreationShakeType?
-    fun decrementAfterType(): CreationShakeType?
+    override fun assignType(other: ShakeType): ShakeType?
+    override fun additionAssignType(other: ShakeType): ShakeType?
+    override fun subtractionAssignType(other: ShakeType): ShakeType?
+    override fun multiplicationAssignType(other: ShakeType): ShakeType?
+    override fun divisionAssignType(other: ShakeType): ShakeType?
+    override fun modulusAssignType(other: ShakeType): ShakeType?
+    override fun powerAssignType(other: ShakeType): ShakeType?
+    override fun incrementBeforeType(): ShakeType?
+    override fun incrementAfterType(): ShakeType?
+    override fun decrementBeforeType(): ShakeType?
+    override fun decrementAfterType(): ShakeType?
 
-    fun createAssignment(value: CreationShakeValue): ShakeAssignment {
+    fun createAssignment(value: CreationShakeValue): CreationShakeAssignment {
         val type = assignType(value.type) ?: throw Exception("Cannot assign ${value.type} to ${this.type}")
-        return ShakeAssignment(this, value, type)
+        return CreationShakeAssignment(this, value, type)
     }
 
-    fun createAddAssignment(value: CreationShakeValue): ShakeAddAssignment {
+    fun createAddAssignment(value: CreationShakeValue): CreationShakeAddAssignment {
         val type = additionAssignType(value.type) ?: throw Exception("Cannot add ${value.type} to ${this.type}")
-        return ShakeAddAssignment(this, value, type)
+        return CreationShakeAddAssignment(this, value, type)
     }
 
-    fun createSubtractAssignment(value: CreationShakeValue): ShakeSubAssignment {
+    fun createSubtractAssignment(value: CreationShakeValue): CreationShakeSubAssignment {
         val type = subtractionAssignType(value.type) ?: throw Exception("Cannot subtract ${value.type} from ${this.type}")
-        return ShakeSubAssignment(this, value, type)
+        return CreationShakeSubAssignment(this, value, type)
     }
 
-    fun createMultiplyAssignment(value: CreationShakeValue): ShakeMulAssignment {
+    fun createMultiplyAssignment(value: CreationShakeValue): CreationShakeMulAssignment {
         val type = multiplicationAssignType(value.type) ?: throw Exception("Cannot multiply ${value.type} with ${this.type}")
-        return ShakeMulAssignment(this, value, type)
+        return CreationShakeMulAssignment(this, value, type)
     }
 
-    fun createDivideAssignment(value: CreationShakeValue): ShakeDivAssignment {
+    fun createDivideAssignment(value: CreationShakeValue): CreationShakeDivAssignment {
         val type = divisionAssignType(value.type) ?: throw Exception("Cannot divide ${value.type} by ${this.type}")
-        return ShakeDivAssignment(this, value, type)
+        return CreationShakeDivAssignment(this, value, type)
     }
 
-    fun createModulusAssignment(value: CreationShakeValue): ShakeModAssignment {
+    fun createModulusAssignment(value: CreationShakeValue): CreationShakeModAssignment {
         val type = modulusAssignType(value.type) ?: throw Exception("Cannot modulus ${value.type} by ${this.type}")
-        return ShakeModAssignment(this, value, type)
+        return CreationShakeModAssignment(this, value, type)
     }
 
-    fun createPowerAssignment(value: CreationShakeValue): ShakePowerAssignment {
+    fun createPowerAssignment(value: CreationShakeValue): CreationShakePowerAssignment {
         val type = powerAssignType(value.type) ?: throw Exception("Cannot power ${value.type} by ${this.type}")
-        return ShakePowerAssignment(this, value, type)
+        return CreationShakePowerAssignment(this, value, type)
     }
 
-    fun createIncrementBeforeAssignment(): ShakeIncrementBefore {
+    fun createIncrementBeforeAssignment(): CreationShakeIncrementBefore {
         val type = incrementBeforeType() ?: throw Exception("Cannot increase ${this.type} before")
-        return ShakeIncrementBefore(this, type)
+        return CreationShakeIncrementBefore(this, type)
     }
 
-    fun createIncrementAfterAssignment(): ShakeIncrementAfter {
+    fun createIncrementAfterAssignment(): CreationShakeIncrementAfter {
         val type = incrementAfterType() ?: throw Exception("Cannot increase ${this.type} after")
-        return ShakeIncrementAfter(this, type)
+        return CreationShakeIncrementAfter(this, type)
     }
 
-    fun createDecrementBeforeAssignment(): ShakeDecrementBefore {
+    fun createDecrementBeforeAssignment(): CreationShakeDecrementBefore {
         val type = decrementBeforeType() ?: throw Exception("Cannot decrease ${this.type} before")
-        return ShakeDecrementBefore(this, type)
+        return CreationShakeDecrementBefore(this, type)
     }
 
-    fun createDecrementAfterAssignment(): ShakeDecrementAfter {
+    fun createDecrementAfterAssignment(): CreationShakeDecrementAfter {
         val type = decrementAfterType() ?: throw Exception("Cannot decrease ${this.type} after")
-        return ShakeDecrementAfter(this, type)
+        return CreationShakeDecrementAfter(this, type)
     }
 
     fun toJson(): Map<String, Any?>
@@ -88,57 +91,57 @@ interface CreationShakeAssignable {
                     return v
                 }
 
-                override fun assignType(other: CreationShakeType): CreationShakeType? {
+                override fun assignType(other: ShakeType): ShakeType? {
                     return v.type.assignType(other)
                 }
 
-                override fun additionAssignType(other: CreationShakeType): CreationShakeType? {
+                override fun additionAssignType(other: ShakeType): ShakeType? {
                     return v.type.additionAssignType(other)
                 }
 
-                override fun subtractionAssignType(other: CreationShakeType): CreationShakeType? {
+                override fun subtractionAssignType(other: ShakeType): ShakeType? {
                     return v.type.subtractionAssignType(other)
                 }
 
-                override fun multiplicationAssignType(other: CreationShakeType): CreationShakeType? {
+                override fun multiplicationAssignType(other: ShakeType): ShakeType? {
                     return v.type.multiplicationAssignType(other)
                 }
 
-                override fun divisionAssignType(other: CreationShakeType): CreationShakeType? {
+                override fun divisionAssignType(other: ShakeType): ShakeType? {
                     return v.type.divisionAssignType(other)
                 }
 
-                override fun modulusAssignType(other: CreationShakeType): CreationShakeType? {
+                override fun modulusAssignType(other: ShakeType): ShakeType? {
                     return v.type.modulusAssignType(other)
                 }
 
-                override fun powerAssignType(other: CreationShakeType): CreationShakeType? {
+                override fun powerAssignType(other: ShakeType): ShakeType? {
                     return v.type.powerAssignType(other)
                 }
 
-                override fun incrementBeforeType(): CreationShakeType? {
+                override fun incrementBeforeType(): ShakeType? {
                     return v.type.incrementBeforeType()
                 }
 
-                override fun incrementAfterType(): CreationShakeType? {
+                override fun incrementAfterType(): ShakeType? {
                     return v.type.incrementAfterType()
                 }
 
-                override fun decrementBeforeType(): CreationShakeType? {
+                override fun decrementBeforeType(): ShakeType? {
                     return v.type.decrementBeforeType()
                 }
 
-                override fun decrementAfterType(): CreationShakeType? {
+                override fun decrementAfterType(): ShakeType? {
                     return v.type.decrementAfterType()
                 }
 
-                override val actualType: CreationShakeType
+                override val actualType: ShakeType
                     get() = v.type
 
                 override val actualValue: CreationShakeValue
                     get() = v
 
-                override val type: CreationShakeType
+                override val type: ShakeType
                     get() = v.type
 
                 override fun toJson(): Map<String, Any?> {

@@ -1,12 +1,13 @@
 package io.github.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
+import io.github.shakelang.shake.processor.program.types.ShakeDeclaration
+import io.github.shakelang.shake.processor.program.types.ShakeType
 
-interface CreationShakeDeclaration {
-    val name: String
-    val type: CreationShakeType
-    val qualifiedName: String
+interface CreationShakeDeclaration : ShakeDeclaration {
+    override val name: String
+    override val type: ShakeType
+    override val qualifiedName: String
     fun use(scope: CreationShakeScope): CreationShakeUsage
-    fun toJson(): Map<String, Any?>
+    override fun toJson(): Map<String, Any?>
 }

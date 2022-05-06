@@ -19,17 +19,17 @@ class ShakeJsGenerator {
             is CreationShakeDivision -> visitDivision(v)
             is CreationShakeModulus -> visitModulus(v)
             is CreationShakePower -> visitPower(v)
-            is ShakeAssignment -> visitAssignment(v)
-            is ShakeAddAssignment -> visitAdditionAssignment(v)
-            is ShakeSubAssignment -> visitSubtractionAssignment(v)
-            is ShakeMulAssignment -> visitMultiplicationAssignment(v)
-            is ShakeDivAssignment -> visitDivisionAssignment(v)
-            is ShakeModAssignment -> visitModulusAssignment(v)
-            is ShakePowerAssignment -> visitPowerAssignment(v)
-            is ShakeIncrementBefore -> visitIncrementBefore(v)
-            is ShakeIncrementAfter -> visitIncrementAfter(v)
-            is ShakeDecrementBefore -> visitDecrementBefore(v)
-            is ShakeDecrementAfter -> visitDecrementAfter(v)
+            is CreationShakeAssignment -> visitAssignment(v)
+            is CreationShakeAddAssignment -> visitAdditionAssignment(v)
+            is CreationShakeSubAssignment -> visitSubtractionAssignment(v)
+            is CreationShakeMulAssignment -> visitMultiplicationAssignment(v)
+            is CreationShakeDivAssignment -> visitDivisionAssignment(v)
+            is CreationShakeModAssignment -> visitModulusAssignment(v)
+            is CreationShakePowerAssignment -> visitPowerAssignment(v)
+            is CreationShakeIncrementBefore -> visitIncrementBefore(v)
+            is CreationShakeIncrementAfter -> visitIncrementAfter(v)
+            is CreationShakeDecrementBefore -> visitDecrementBefore(v)
+            is CreationShakeDecrementAfter -> visitDecrementAfter(v)
             is CreationShakeUsage -> visitUsage(v)
             is CreationShakeEquals -> visitEquals(v)
             is CreationShakeNotEquals -> visitNotEquals(v)
@@ -50,17 +50,17 @@ class ShakeJsGenerator {
     fun visitStatement(s: CreationShakeStatement): JsStatement {
         return when(s) {
             is CreationShakePower -> visitPower(s)
-            is ShakeAssignment -> visitAssignment(s)
-            is ShakeAddAssignment -> visitAdditionAssignment(s)
-            is ShakeSubAssignment -> visitSubtractionAssignment(s)
-            is ShakeMulAssignment -> visitMultiplicationAssignment(s)
-            is ShakeDivAssignment -> visitDivisionAssignment(s)
-            is ShakeModAssignment -> visitModulusAssignment(s)
-            is ShakePowerAssignment -> visitPowerAssignment(s)
-            is ShakeIncrementBefore -> visitIncrementBefore(s)
-            is ShakeIncrementAfter -> visitIncrementAfter(s)
-            is ShakeDecrementBefore -> visitDecrementBefore(s)
-            is ShakeDecrementAfter -> visitDecrementAfter(s)
+            is CreationShakeAssignment -> visitAssignment(s)
+            is CreationShakeAddAssignment -> visitAdditionAssignment(s)
+            is CreationShakeSubAssignment -> visitSubtractionAssignment(s)
+            is CreationShakeMulAssignment -> visitMultiplicationAssignment(s)
+            is CreationShakeDivAssignment -> visitDivisionAssignment(s)
+            is CreationShakeModAssignment -> visitModulusAssignment(s)
+            is CreationShakePowerAssignment -> visitPowerAssignment(s)
+            is CreationShakeIncrementBefore -> visitIncrementBefore(s)
+            is CreationShakeIncrementAfter -> visitIncrementAfter(s)
+            is CreationShakeDecrementBefore -> visitDecrementBefore(s)
+            is CreationShakeDecrementAfter -> visitDecrementAfter(s)
             is CreationShakeInvocation -> visitInvocation(s)
             is CreationShakeNew -> visitNew(s)
             is CreationShakeDoWhile -> visitDoWhile(s)
@@ -136,58 +136,58 @@ class ShakeJsGenerator {
         TODO("not implemented")
     }
 
-    fun visitAssignment(n: ShakeAssignment): JsAssignment {
+    fun visitAssignment(n: CreationShakeAssignment): JsAssignment {
         val variable = visitAssignable(n.variable)
         return variable.assign(visitValue(n.value))
     }
 
-    fun visitAdditionAssignment(n: ShakeAddAssignment): JsAddAssignment {
+    fun visitAdditionAssignment(n: CreationShakeAddAssignment): JsAddAssignment {
         val variable = visitAssignable(n.variable)
         return variable.addAssign(visitValue(n.value))
     }
 
-    fun visitSubtractionAssignment(n: ShakeSubAssignment): JsSubtractAssignment {
+    fun visitSubtractionAssignment(n: CreationShakeSubAssignment): JsSubtractAssignment {
         val variable = visitAssignable(n.variable)
         return variable.subtractAssign(visitValue(n.value))
     }
 
-    fun visitMultiplicationAssignment(n: ShakeMulAssignment): JsMultiplyAssignment {
+    fun visitMultiplicationAssignment(n: CreationShakeMulAssignment): JsMultiplyAssignment {
         val variable = visitAssignable(n.variable)
         return variable.multiplyAssign(visitValue(n.value))
     }
 
-    fun visitDivisionAssignment(n: ShakeDivAssignment): JsDivideAssignment {
+    fun visitDivisionAssignment(n: CreationShakeDivAssignment): JsDivideAssignment {
         val variable = visitAssignable(n.variable)
         return variable.divideAssign(visitValue(n.value))
     }
 
-    fun visitModulusAssignment(n: ShakeModAssignment): JsModuloAssignment {
+    fun visitModulusAssignment(n: CreationShakeModAssignment): JsModuloAssignment {
         val variable = visitAssignable(n.variable)
         return variable.moduloAssign(visitValue(n.value))
     }
 
-    fun visitPowerAssignment(n: ShakePowerAssignment): JsAssignment {
+    fun visitPowerAssignment(n: CreationShakePowerAssignment): JsAssignment {
         val variable = visitAssignable(n.variable)
         return variable.assign(JsFunctionCall(JsField("pow", parent = JsField("Math")),
             args = listOf(visitValue(n.value).toValue(), visitValue(n.value).toValue())))
     }
 
-    fun visitIncrementBefore(n: ShakeIncrementBefore): JsBeforeIncrement {
+    fun visitIncrementBefore(n: CreationShakeIncrementBefore): JsBeforeIncrement {
         val variable = visitAssignable(n.variable)
         return variable.incrementBefore()
     }
 
-    fun visitIncrementAfter(n: ShakeIncrementAfter): JsAfterIncrement {
+    fun visitIncrementAfter(n: CreationShakeIncrementAfter): JsAfterIncrement {
         val variable = visitAssignable(n.variable)
         return variable.incrementAfter()
     }
 
-    fun visitDecrementBefore(n: ShakeDecrementBefore): JsBeforeDecrement {
+    fun visitDecrementBefore(n: CreationShakeDecrementBefore): JsBeforeDecrement {
         val variable = visitAssignable(n.variable)
         return variable.decrementBefore()
     }
 
-    fun visitDecrementAfter(n: ShakeDecrementAfter): JsAfterDecrement {
+    fun visitDecrementAfter(n: CreationShakeDecrementAfter): JsAfterDecrement {
         val variable = visitAssignable(n.variable)
         return variable.decrementAfter()
     }

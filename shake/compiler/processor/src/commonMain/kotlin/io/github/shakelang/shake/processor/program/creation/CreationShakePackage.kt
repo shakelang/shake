@@ -6,29 +6,29 @@ import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationN
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
+import io.github.shakelang.shake.processor.program.types.ShakePackage
 
 open class CreationShakePackage (
-    open val baseProject: CreationShakeProject,
-    open val name: String,
-    open val parent: CreationShakePackage? = null,
-    open val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
-    open val classes: MutableList<CreationShakeClass> = mutableListOf(),
-    open val functions: MutableList<CreationShakeFunction> = mutableListOf(),
-    open val fields: MutableList<CreationShakeField> = mutableListOf(),
-) {
+    override val baseProject: CreationShakeProject,
+    override val name: String,
+    override val parent: CreationShakePackage? = null,
+    override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
+    override val classes: MutableList<CreationShakeClass> = mutableListOf(),
+    override val functions: MutableList<CreationShakeFunction> = mutableListOf(),
+    override val fields: MutableList<CreationShakeField> = mutableListOf(),
+): ShakePackage {
 
-    val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + (name)
-    val scope: CreationShakeScope = Scope()
+    override val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + (name)
+    override val scope: CreationShakeScope = Scope()
 
-    open fun getPackage(name: String): CreationShakePackage {
+    override fun getPackage(name: String): CreationShakePackage {
         return subpackages.find { it.name == name } ?: CreationShakePackage(baseProject, name, this).let {
             subpackages.add(it)
             it
         }
     }
 
-    open fun getPackage(name: Array<String>): CreationShakePackage {
+    override fun getPackage(name: Array<String>): CreationShakePackage {
         return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
     }
 
@@ -118,7 +118,7 @@ open class CreationShakePackage (
         getPackage(pkg).putFile(file, contents)
     }
 
-    fun toJson(): Map<String, Any?> {
+    override fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to name,
             "parent" to parent?.name,

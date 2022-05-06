@@ -1,13 +1,15 @@
 package io.github.shakelang.shake.processor.program.creation.code.values
 
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
+import io.github.shakelang.shake.processor.program.types.ShakeType
+import io.github.shakelang.shake.processor.program.types.code.values.*
 
 
 open class CreationShakeAddition(
-    val left: CreationShakeValue,
-    val right: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue {
+    override val left: CreationShakeValue,
+    override val right: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, ShakeAddition {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "addition",
@@ -18,10 +20,10 @@ open class CreationShakeAddition(
 }
 
 open class CreationShakeSubtraction(
-    val left: CreationShakeValue,
-    val right: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue {
+    override val left: CreationShakeValue,
+    override val right: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, ShakeSubtraction {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "subtraction",
@@ -32,10 +34,10 @@ open class CreationShakeSubtraction(
 }
 
 open class CreationShakeMultiplication(
-    val left: CreationShakeValue,
-    val right: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue {
+    override val left: CreationShakeValue,
+    override val right: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, ShakeMultiplication {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "multiplication",
@@ -46,10 +48,10 @@ open class CreationShakeMultiplication(
 }
 
 open class CreationShakeDivision(
-    val left: CreationShakeValue,
-    val right: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue {
+    override val left: CreationShakeValue,
+    override val right: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, ShakeDivision {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "division",
@@ -60,10 +62,10 @@ open class CreationShakeDivision(
 }
 
 open class CreationShakeModulus(
-    val left: CreationShakeValue,
-    val right: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue {
+    override val left: CreationShakeValue,
+    override val right: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, ShakeModulus {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "modulus",
@@ -74,10 +76,10 @@ open class CreationShakeModulus(
 }
 
 open class CreationShakePower(
-    val left: CreationShakeValue,
-    val right: CreationShakeValue,
-    override val type: CreationShakeType
-) : CreationShakeValue {
+    override val left: CreationShakeValue,
+    override val right: CreationShakeValue,
+    override val type: ShakeType
+) : CreationShakeValue, ShakePower {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "power",

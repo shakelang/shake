@@ -5,21 +5,21 @@ import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationN
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
+import io.github.shakelang.shake.processor.program.types.ShakeProject
 import io.github.shakelang.shason.json
 
 open class CreationShakeProject(
     processor: ShakeCodeProcessor,
-    open val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
-    open val classes: MutableList<CreationShakeClass> = mutableListOf(),
-    open val functions: MutableList<CreationShakeFunction> = mutableListOf(),
-    open val fields: MutableList<CreationShakeField> = mutableListOf()
-) {
+    override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
+    override val classes: MutableList<CreationShakeClass> = mutableListOf(),
+    override val functions: MutableList<CreationShakeFunction> = mutableListOf(),
+    override val fields: MutableList<CreationShakeField> = mutableListOf()
+): ShakeProject {
 
     private val classRequirements = mutableListOf<ClassRequirement>()
     private val packageRequirements = mutableListOf<PackageRequirement>()
 
-    val projectScope = object : CreationShakeScope {
+    override val projectScope = object : CreationShakeScope {
         override val parent: CreationShakeScope? = null
 
         override val processor: ShakeCodeProcessor = processor
@@ -49,7 +49,7 @@ open class CreationShakeProject(
         }
     }
 
-    open fun getPackage(name: String): CreationShakePackage {
+    override fun getPackage(name: String): CreationShakePackage {
         if(name.contains(".")) return getPackage(name.split(".").toTypedArray())
         return subpackages.find { it.name == name } ?: CreationShakePackage(this, name).let {
             subpackages.add(it)
@@ -57,7 +57,7 @@ open class CreationShakeProject(
         }
     }
 
-    open fun getPackage(name: Array<String>): CreationShakePackage {
+    override fun getPackage(name: Array<String>): CreationShakePackage {
         if(name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
         return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
     }
@@ -160,11 +160,11 @@ open class CreationShakeProject(
         this.classRequirements.add(ClassRequirement(name, then))
     }
 
-    fun getClass(pkg: Array<String>, name: String): CreationShakeClass? {
+    override fun getClass(pkg: Array<String>, name: String): CreationShakeClass? {
         return this.getPackage(pkg).classes.find { it.name == name }
     }
 
-    fun getClass(clz: String): CreationShakeClass? {
+    override fun getClass(clz: String): CreationShakeClass? {
         val parts = clz.split(".")
         val name = parts.last()
         val pkg = parts.dropLast(1).toTypedArray()
@@ -221,7 +221,7 @@ open class CreationShakeProject(
 
     }
 
-    fun toJson(): Map<String, Any?> {
+    override fun toJson(): Map<String, Any?> {
         return mapOf(
             "classes" to classes.map { it.toJson() },
             "functions" to functions.map { it.toJson() },
@@ -230,7 +230,7 @@ open class CreationShakeProject(
         )
     }
 
-    fun toJsonString(format: Boolean = false): String {
+    override fun toJsonString(format: Boolean): String {
         return json.stringify(toJson(), format)
     }
 

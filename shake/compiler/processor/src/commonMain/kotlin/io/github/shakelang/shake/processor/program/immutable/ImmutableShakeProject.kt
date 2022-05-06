@@ -37,24 +37,12 @@ open class ImmutableShakeProject : ShakeProject {
                 return fields.find { it.name == name }
             }
 
-            override fun set(value: ShakeDeclaration) {
-                throw IllegalStateException("Cannot set a value in the project scope")
-            }
-
             override fun getFunctions(name: String): List<ImmutableShakeFunction> {
                 return functions.filter { it.name == name }
             }
 
-            override fun setFunctions(function: ShakeFunction) {
-                throw IllegalStateException("Cannot set a function in the project scope")
-            }
-
             override fun getClass(name: String): ImmutableShakeClass? {
                 return classes.find { it.name == name }
-            }
-
-            override fun setClass(klass: ShakeClass) {
-                throw IllegalStateException("Cannot set a class in the project scope")
             }
         }
 

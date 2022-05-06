@@ -59,24 +59,12 @@ open class ImmutableShakePackage : ShakePackage {
             return fields.find { it.name == name } ?: parent.get(name)
         }
 
-        override fun set(value: ShakeDeclaration) {
-            throw IllegalStateException("Cannot set a value in a package scope")
-        }
-
         override fun getFunctions(name: String): List<ImmutableShakeFunction> {
             return functions.filter { it.name == name } + parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: ShakeFunction) {
-            throw IllegalStateException("Cannot set a function in a package scope")
-        }
-
         override fun getClass(name: String): ImmutableShakeClass? {
             return classes.find { it.name == name } ?: parent.getClass(name)
-        }
-
-        override fun setClass(klass: ShakeClass) {
-            throw IllegalStateException("Cannot set a class in a package scope")
         }
     }
 }

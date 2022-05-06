@@ -4,22 +4,24 @@ import io.github.shakelang.shake.processor.program.creation.CreationShakeClassFi
 import io.github.shakelang.shake.processor.program.creation.CreationShakeDeclaration
 import io.github.shakelang.shake.processor.program.creation.CreationShakeField
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeScope
+import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+import io.github.shakelang.shake.processor.program.types.ShakeType
+import io.github.shakelang.shake.processor.program.types.code.values.*
 
-abstract class CreationShakeUsage : CreationShakeValue {
-    abstract val scope: CreationShakeScope
-    abstract override val type: CreationShakeType
-    abstract val declaration: CreationShakeDeclaration
+abstract class CreationShakeUsage : CreationShakeValue, ShakeUsage {
+    abstract override val scope: CreationShakeScope
+    abstract override val type: ShakeType
+    abstract override val declaration: CreationShakeDeclaration
 }
 
 open class CreationShakeClassFieldUsage(
     override val scope: CreationShakeScope,
     final override val declaration: CreationShakeClassField,
-    val receiver: CreationShakeValue? = null
-) : CreationShakeUsage() {
+    override val receiver: CreationShakeValue? = null
+) : CreationShakeUsage(), ShakeClassFieldUsage {
 
-    val name get() = declaration.name
+    override val name get() = declaration.name
     override val type get() = declaration.type
 
     override fun toJson(): Map<String, Any?> {
@@ -36,9 +38,9 @@ open class CreationShakeClassFieldUsage(
 open class CreationShakeStaticClassFieldUsage(
     override val scope: CreationShakeScope,
     final override val declaration: CreationShakeClassField
-) : CreationShakeUsage() {
+) : CreationShakeUsage(), ShakeStaticClassFieldUsage {
 
-    val name get() = declaration.name
+    override val name get() = declaration.name
     override val type get() = declaration.type
 
     override fun toJson(): Map<String, Any?> {
@@ -54,10 +56,10 @@ open class CreationShakeStaticClassFieldUsage(
 open class CreationShakeFieldUsage(
     override val scope: CreationShakeScope,
     final override val declaration: CreationShakeField,
-    val receiver: CreationShakeValue? = null
-) : CreationShakeUsage() {
+    override val receiver: CreationShakeValue? = null
+) : CreationShakeUsage(), ShakeFieldUsage {
 
-    val name get() = declaration.name
+    override val name get() = declaration.name
     override val type get() = declaration.type
 
     init {
@@ -100,9 +102,9 @@ open class CreationShakeFieldUsage(
 open class CreationShakeVariableUsage(
     override val scope: CreationShakeScope,
     override val declaration: CreationShakeVariableDeclaration
-) : CreationShakeUsage() {
+) : CreationShakeUsage(), ShakeVariableUsage {
     override val type get() = declaration.type
-    val name get() = declaration.name
+    override val name get() = declaration.name
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(

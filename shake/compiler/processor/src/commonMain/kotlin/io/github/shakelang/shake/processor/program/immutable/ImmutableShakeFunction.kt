@@ -76,26 +76,12 @@ open class ImmutableShakeFunction (
             return variables.find { it.name == name } ?: parent.get(name)
         }
 
-        override fun set(value: ShakeDeclaration) {
-            if(value !is ShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
-            if(variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
-            variables.add(value)
-        }
-
         override fun getFunctions(name: String): List<ImmutableShakeFunction> {
             return parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: ShakeFunction) {
-            throw IllegalArgumentException("Cannot set a function in a method scope")
-        }
-
         override fun getClass(name: String): ImmutableShakeClass? {
             return parent.getClass(name)
-        }
-
-        override fun setClass(klass: ShakeClass) {
-            throw IllegalArgumentException("Cannot set a class in a method scope")
         }
 
     }

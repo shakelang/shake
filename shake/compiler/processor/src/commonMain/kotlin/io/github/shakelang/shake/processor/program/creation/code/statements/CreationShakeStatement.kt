@@ -1,5 +1,7 @@
 package io.github.shakelang.shake.processor.program.creation.code.statements
 
-interface CreationShakeStatement {
-    fun toJson(): Map<String, Any?>
+import io.github.shakelang.shake.processor.program.types.code.statements.ShakeStatement
+
+interface CreationShakeStatement: ShakeStatement {
+    override fun toJson(): Map<String, Any?>
 }
