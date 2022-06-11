@@ -49,15 +49,19 @@
 | field_references[]   | References to fields in the package          | 4 bytes each |
 
 ## Classes
-| Key                  | Description                                  | Byte Size    |
-|----------------------|----------------------------------------------|--------------|
-| name                 | Class name (index to constant pool)          | 4 bytes      |
-| subclass_amount      | Amount of subclasses of this class           | 4 bytes      |
-| subclass_references  | References to subclasses of this class       | 4 bytes each |
-| method_amount        | Amount of methods in this class              | 4 bytes      |
-| method_references    | References to methods in this class          | 4 bytes each |
-| field_amount         | Amount of fields in this class               | 4 bytes      |
-| field_references     | References to fields in this class           | 4 bytes each |
+| Key                   | Description                               | Byte Size    |
+|-----------------------|-------------------------------------------|--------------|
+| name                  | Class name (index to constant pool)       | 4 bytes      |
+| attributes            | Attributes of the class                   | 1 byte       |
+| super_class           | Super class name (index to constant pool) | 4 bytes      |
+| interfaces_amount     | Amount of interfaces in the class         | 4 bytes      |
+| interfaces_references | References to interfaces in the class     | 4 bytes each |
+| subclass_amount       | Amount of subclasses of this class        | 4 bytes      |
+| subclass_references   | References to subclasses of this class    | 4 bytes each |
+| method_amount         | Amount of methods in this class           | 4 bytes      |
+| method_references     | References to methods in this class       | 4 bytes each |
+| field_amount          | Amount of fields in this class            | 4 bytes      |
+| field_references      | References to fields in this class        | 4 bytes each |
 
 ## Methods
 | Key               | Description                                   | Byte Size    |
