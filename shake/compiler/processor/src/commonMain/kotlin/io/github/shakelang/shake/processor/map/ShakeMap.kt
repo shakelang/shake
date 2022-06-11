@@ -3,6 +3,7 @@ package io.github.shakelang.shake.processor.map
 import io.github.shakelang.parseutils.bytes.toBytes
 import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.parseutils.streaming.output.OutputStream
+import io.github.shakelang.shake.processor.program.types.*
 
 class ShakeMap(
 
@@ -21,35 +22,99 @@ class ShakeMap(
     val magic = 0x3082d75f
     val version = 0x00000001
 
+     companion object {
+         fun from(project: ShakeProject): ShakeMap {
+             val creator = ShakeMapCreator()
+             creator.visit(project)
+             return creator.export()
+         }
+     }
+
+    fun write(output: OutputStream) {
+        output.write(magic.toBytes())
+        output.write(version.toBytes())
+        output.write(constants.size.toBytes())
+        constants.forEach { it.write(output) }
+        output.write(packages.size.toBytes())
+        packages.forEach { it.write(output) }
+        output.write(classes.size.toBytes())
+        classes.forEach { it.write(output) }
+        output.write(methods.size.toBytes())
+        methods.forEach { it.write(output) }
+        output.write(fields.size.toBytes())
+        fields.forEach { it.write(output) }
+        output.write(project_packages.size.toBytes())
+        project_packages.forEach { output.write(it.toBytes()) }
+        output.write(project_classes.size.toBytes())
+        project_classes.forEach { output.write(it.toBytes()) }
+        output.write(project_methods.size.toBytes())
+        project_methods.forEach { output.write(it.toBytes()) }
+        output.write(project_fields.size.toBytes())
+        project_fields.forEach { output.write(it.toBytes()) }
+    }
+
+    fun getBytes(): ByteArray {
+        val output = ByteArrayOutputStream()
+        write(output)
+        return output.toByteArray()
+    }
+
+    fun toJson(): Map<String, *> = mapOf(
+        "magic" to magic,
+        "version" to version,
+        "constants" to constants.map { it.toJson() },
+        "packages" to packages.map { it.toJson() },
+        "classes" to classes.map { it.toJson() },
+        "methods" to methods.map { it.toJson() },
+        "fields" to fields.map { it.toJson() },
+        "project_packages" to project_packages.map { it },
+        "project_classes" to project_classes.map { it },
+        "project_methods" to project_methods.map { it },
+        "project_fields" to project_fields.map { it }
+    )
+
 }
+
 
 interface ShakeMapConstant {
     val type: ShakeClassConstantTag
 
     fun getBytes(): ByteArray
     fun write(stream: OutputStream) = stream.write(getBytes())
-}
+    fun toJson(): Map<String, *>
 
-class ShakeUtf8Constant(val value: String) : ShakeMapConstant {
-    override val type = ShakeClassConstantTag.UTF8
-    override fun getBytes(): ByteArray {
-        val stream = ByteArrayOutputStream()
-        write(stream)
-        return stream.toByteArray()
+
+    enum class ShakeClassConstantTag(val TAG: Byte) {
+        UTF8(0x01),
+        ;
     }
 
-    override fun write(stream: OutputStream) {
-        stream.write(type.TAG.toBytes())
-        stream.write(value.length.toBytes())
-        stream.write(value.toBytes())
+    class ShakeUtf8Constant(val value: String) : ShakeMapConstant {
+        override val type = ShakeClassConstantTag.UTF8
+        override fun getBytes(): ByteArray {
+            val stream = ByteArrayOutputStream()
+            write(stream)
+            return stream.toByteArray()
+        }
+
+        override fun write(stream: OutputStream) {
+            stream.write(type.TAG.toBytes())
+            stream.write(value.length.toBytes())
+            stream.write(value.toBytes())
+        }
+
+        override fun toJson(): Map<String, *> = mapOf(
+            "type" to type.TAG,
+            "value" to value
+        )
+    }
+
+    companion object {
+        fun utf8(value: String): ShakeUtf8Constant {
+            return ShakeUtf8Constant(value)
+        }
     }
 }
-
-enum class ShakeClassConstantTag(val TAG: Byte) {
-    UTF8(0x01),
-    ;
-}
-
 class ShakeMapPackage(
     val name: Int,
     val package_references: Array<Int>,
@@ -74,6 +139,14 @@ class ShakeMapPackage(
         stream.write(field_references.size.toBytes())
         field_references.forEach { stream.write(it.toBytes()) }
     }
+
+    fun toJson(): Map<String, *> = mapOf(
+        "name" to name,
+        "package_references" to package_references.map { it },
+        "class_references" to class_references.map { it },
+        "method_references" to method_references.map { it },
+        "field_references" to field_references.map { it }
+    )
 }
 
 class ShakeMapClass(
@@ -111,6 +184,16 @@ class ShakeMapClass(
         stream.write(field_references.size.toBytes())
         field_references.forEach { stream.write(it.toBytes()) }
     }
+
+    fun toJson(): Map<String, *> = mapOf(
+        "name" to name,
+        "attributes" to attributes,
+        "super_class" to super_class,
+        "interface_references" to interface_references.map { it },
+        "subclass_references" to subclass_references.map { it },
+        "method_references" to method_references.map { it },
+        "field_references" to field_references.map { it }
+    )
 }
 
 class ShakeMapMethod(
@@ -142,6 +225,14 @@ class ShakeMapMethod(
         stream.write(parameter_types.size.toBytes())
         parameter_types.forEach { stream.write(it.toBytes()) }
     }
+
+    fun toJson(): Map<String, *> = mapOf(
+        "name" to name,
+        "attributes" to attributes,
+        "return_type" to return_type,
+        "parameter_names" to parameter_names.map { it },
+        "parameter_types" to parameter_types.map { it }
+    )
 }
 
 class ShakeMapField(
@@ -168,6 +259,12 @@ class ShakeMapField(
         stream.write(attributes.toBytes())
         stream.write(type.toBytes())
     }
+
+    fun toJson(): Map<String, *> = mapOf(
+        "name" to name,
+        "attributes" to attributes,
+        "type" to type
+    )
 }
 
 val Int.bit0: Boolean get() = (this and 0x01) != 0
@@ -187,3 +284,201 @@ val Byte.bit4: Boolean get() = this.toInt().bit4
 val Byte.bit5: Boolean get() = this.toInt().bit5
 val Byte.bit6: Boolean get() = this.toInt().bit6
 val Byte.bit7: Boolean get() = this.toInt().bit7
+
+
+
+class ShakeMapCreator {
+
+    val constants = mutableListOf<ShakeMapConstant>()
+    val packages = mutableListOf<ShakeMapPackage>()
+    val classes = mutableListOf<ShakeMapClass>()
+    val methods = mutableListOf<ShakeMapMethod>()
+    val fields = mutableListOf<ShakeMapField>()
+    val project_packages = mutableListOf<Int>()
+    val project_classes = mutableListOf<Int>()
+    val project_methods = mutableListOf<Int>()
+    val project_fields = mutableListOf<Int>()
+
+    fun visit(project: ShakeProject) {
+        project.subpackages.forEach { this.project_packages.add(visit(it)) }
+        project.classes.forEach { this.project_classes.add(visit(it)) }
+        project.functions.forEach { this.project_methods.add(visit(it)) }
+        project.fields.forEach { this.project_fields.add(visit(it)) }
+    }
+
+    fun visit(package_: ShakePackage): Int {
+
+        val name = utf8(package_.name)
+
+        val packages = mutableListOf<Int>()
+        val classes = mutableListOf<Int>()
+        val methods = mutableListOf<Int>()
+        val fields = mutableListOf<Int>()
+
+        package_.subpackages.forEach { packages.add(visit(it)) }
+        package_.classes.forEach { classes.add(visit(it)) }
+        package_.functions.forEach { methods.add(visit(it)) }
+        package_.fields.forEach { fields.add(visit(it)) }
+
+        this.packages.add(
+            ShakeMapPackage(
+                name,
+                packages.toTypedArray(),
+                classes.toTypedArray(),
+                methods.toTypedArray(),
+                fields.toTypedArray()
+            )
+        )
+
+        return this.packages.size - 1
+    }
+
+    fun visit(class_: ShakeClass): Int {
+
+        val name = utf8(class_.name)
+        val superclass = if (class_.superClass != null) utf8(class_.superClass!!.qualifiedName) else -1
+        val interfaces = class_.interfaces.map { utf8(it.qualifiedName) }.toTypedArray()
+        val attributes = composeAttributes(class_)
+
+        val classes = mutableListOf<Int>()
+        val methods = mutableListOf<Int>()
+        val fields = mutableListOf<Int>()
+
+        class_.classes.forEach { classes.add(visit(it)) }
+        class_.methods.forEach { methods.add(visit(it)) }
+        class_.fields.forEach { fields.add(visit(it)) }
+
+        this.classes.add(
+            ShakeMapClass(
+                name,
+                attributes,
+                superclass,
+                interfaces,
+                classes.toTypedArray(),
+                methods.toTypedArray(),
+                fields.toTypedArray()
+            )
+        )
+
+        return this.classes.size - 1
+    }
+
+    fun visit(method: ShakeMethod): Int {
+
+        val name = utf8(method.name)
+        val attributes = composeAttributes(method)
+        val return_type = utf8(method.returnType.qualifiedName)
+        val parameter_names = method.parameters.map { utf8(it.name) }.toTypedArray()
+        val parameter_types = method.parameters.map { utf8(it.type.qualifiedName) }.toTypedArray()
+
+        this.methods.add(
+            ShakeMapMethod(
+                name,
+                attributes,
+                return_type,
+                parameter_names,
+                parameter_types
+            )
+        )
+
+        return this.methods.size - 1
+    }
+
+    fun visit(method: ShakeFunction): Int {
+
+        val name = utf8(method.name)
+        val attributes = composeAttributes(method)
+        val return_type = utf8(method.returnType.qualifiedName)
+        val parameter_names = method.parameters.map { utf8(it.name) }.toTypedArray()
+        val parameter_types = method.parameters.map { utf8(it.type.qualifiedName) }.toTypedArray()
+
+        this.methods.add(
+            ShakeMapMethod(
+                name,
+                attributes,
+                return_type,
+                parameter_names,
+                parameter_types
+            )
+        )
+
+        return this.methods.size - 1
+    }
+
+    fun visit(field: ShakeClassField): Int {
+
+        val name = utf8(field.name)
+        val attributes = composeAttributes(field)
+        val type = utf8(field.type.qualifiedName)
+
+        this.fields.add(
+            ShakeMapField(
+                name,
+                attributes,
+                type
+            )
+        )
+
+        return this.fields.size - 1
+
+    }
+
+    fun visit(field: ShakeField): Int {
+
+        val name = utf8(field.name)
+        val attributes = composeAttributes(field)
+        val type = utf8(field.type.qualifiedName)
+
+        this.fields.add(
+            ShakeMapField(
+                name,
+                attributes,
+                type
+            )
+        )
+
+        return this.fields.size - 1
+
+    }
+
+    fun utf8(string: String): Int {
+        val i = constants.indexOfFirst { it is ShakeMapConstant.ShakeUtf8Constant && it.value == string }
+        if (i != -1) return i
+        constants.add(ShakeMapConstant.ShakeUtf8Constant(string))
+        return constants.size - 1
+    }
+
+    fun composeAttributes(class_: ShakeClass): Byte {
+        return 0
+    }
+
+    fun composeAttributes(method: ShakeMethod): Byte {
+        return 0
+    }
+
+    fun composeAttributes(function: ShakeFunction): Byte {
+        return 0
+    }
+
+    fun composeAttributes(field: ShakeClassField): Byte {
+        return 0
+    }
+
+    fun composeAttributes(field: ShakeField): Byte {
+        return 0
+    }
+
+    fun export(): ShakeMap {
+        return ShakeMap(
+            this.constants.toTypedArray(),
+            this.packages.toTypedArray(),
+            this.classes.toTypedArray(),
+            this.methods.toTypedArray(),
+            this.fields.toTypedArray(),
+            this.project_packages.toTypedArray(),
+            this.project_classes.toTypedArray(),
+            this.project_methods.toTypedArray(),
+            this.project_fields.toTypedArray()
+        )
+    }
+}

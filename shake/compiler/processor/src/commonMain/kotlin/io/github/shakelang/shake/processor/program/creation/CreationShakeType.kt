@@ -136,6 +136,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "boolean")
                 }
+
+                override val qualifiedName: String get() = "b"
             }
 
             val BYTE: Primitive = object : Primitive("byte", ShakeType.PrimitiveType.BYTE) {
@@ -187,6 +189,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "byte")
                 }
+
+                override val qualifiedName: String get() = "B"
             }
 
             val SHORT: Primitive = object : Primitive("short", ShakeType.PrimitiveType.SHORT) {
@@ -237,6 +241,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "short")
                 }
+
+                override val qualifiedName: String get() = "S"
             }
 
             val INT: Primitive = object : Primitive("int", ShakeType.PrimitiveType.INT) {
@@ -286,6 +292,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "int")
                 }
+
+                override val qualifiedName: String get() = "I"
             }
 
             val LONG: Primitive = object : Primitive("long", ShakeType.PrimitiveType.LONG) {
@@ -334,6 +342,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "long")
                 }
+
+                override val qualifiedName: String get() = "L"
             }
 
             val FLOAT: Primitive = object : Primitive("float", ShakeType.PrimitiveType.FLOAT) {
@@ -381,6 +391,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "float")
                 }
+
+                override val qualifiedName: String get() = "F"
             }
 
             val DOUBLE: Primitive = object : Primitive("double", ShakeType.PrimitiveType.DOUBLE) {
@@ -423,6 +435,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "double")
                 }
+
+                override val qualifiedName: String get() = "D"
             }
 
             val UNSIGNED_BYTE: Primitive = object : Primitive("unsigned_byte", ShakeType.PrimitiveType.UNSIGNED_BYTE) {
@@ -477,6 +491,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "unsigned_byte")
                 }
+
+                override val qualifiedName: String get() = "UB"
             }
 
             val UNSIGNED_SHORT: Primitive = object : Primitive("unsigned_short", ShakeType.PrimitiveType.UNSIGNED_SHORT) {
@@ -531,6 +547,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "unsigned_short")
                 }
+
+                override val qualifiedName: String get() = "US"
             }
 
             val UNSIGNED_INT: Primitive = object : Primitive("unsigned_int", ShakeType.PrimitiveType.UNSIGNED_INT) {
@@ -584,6 +602,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "unsigned_int")
                 }
+
+                override val qualifiedName: String get() = "UI"
             }
 
             val UNSIGNED_LONG: Primitive = object : Primitive("unsigned_long", ShakeType.PrimitiveType.UNSIGNED_LONG) {
@@ -636,6 +656,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "unsigned_long")
                 }
+
+                override val qualifiedName: String get() = "UL"
             }
 
             val CHAR = object : Primitive("char", ShakeType.PrimitiveType.CHAR) {
@@ -690,6 +712,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "char")
                 }
+
+                override val qualifiedName: String get() = "C"
             }
 
             val VOID = object : Primitive("void", ShakeType.PrimitiveType.VOID) {
@@ -717,6 +741,8 @@ abstract class CreationShakeType (
                 override fun toJson(): Map<String, Any?> {
                     return mapOf("type" to "void")
                 }
+
+                override val qualifiedName: String get() = "V"
             }
         }
     }
@@ -764,6 +790,9 @@ abstract class CreationShakeType (
         override fun toJson(): Map<String, Any?> {
             return mapOf("type" to "object", "class" to clazz.qualifiedName)
         }
+
+        override val qualifiedName: String
+            get() = "L${clazz.qualifiedName};"
     }
 
     class Array (
@@ -804,6 +833,9 @@ abstract class CreationShakeType (
         override fun toJson(): Map<String, Any?> {
             return mapOf("type" to "array", "elementType" to elementType.toJson())
         }
+
+        override val qualifiedName: String
+            get() = "[${elementType.qualifiedName}"
     }
 
     class Lambda (
@@ -848,6 +880,9 @@ abstract class CreationShakeType (
         override fun toJson(): Map<String, Any?> {
             return mapOf("type" to "lambda", "parameters" to parameters.map { it.toJson() }, "returnType" to returnType.toJson())
         }
+
+        override val qualifiedName: String
+            get() = "(${parameters.joinToString(", ") { it.type.qualifiedName }} -> ${returnType.qualifiedName})"
     }
 
     object Primitives {

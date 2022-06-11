@@ -3,6 +3,7 @@ package io.github.shakelang.shake.processor.program.types
 interface ShakeType {
 
     val name: String
+    val qualifiedName: String
 
     fun assignType(other: ShakeType): ShakeType?
     fun additionAssignType(other: ShakeType): ShakeType?
