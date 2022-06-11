@@ -1,5 +1,9 @@
 package io.github.shakelang.shake.processor.map
 
+import io.github.shakelang.parseutils.bytes.toBytes
+import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.parseutils.streaming.output.OutputStream
+
 class ShakeMap(
 
     val constants: Array<ShakeMapConstant>,
@@ -21,10 +25,24 @@ class ShakeMap(
 
 interface ShakeMapConstant {
     val type: ShakeClassConstantTag
+
+    fun getBytes(): ByteArray
+    fun write(stream: OutputStream) = stream.write(getBytes())
 }
 
 class ShakeUtf8Constant(val value: String) : ShakeMapConstant {
     override val type = ShakeClassConstantTag.UTF8
+    override fun getBytes(): ByteArray {
+        val stream = ByteArrayOutputStream()
+        write(stream)
+        return stream.toByteArray()
+    }
+
+    override fun write(stream: OutputStream) {
+        stream.write(type.TAG.toBytes())
+        stream.write(value.length.toBytes())
+        stream.write(value.toBytes())
+    }
 }
 
 enum class ShakeClassConstantTag(val TAG: Byte) {
@@ -38,7 +56,25 @@ class ShakeMapPackage(
     val class_references: Array<Int>,
     val method_references: Array<Int>,
     val field_references: Array<Int>,
-)
+) {
+    fun getBytes(): ByteArray {
+        val stream = ByteArrayOutputStream()
+        write(stream)
+        return stream.toByteArray()
+    }
+
+    fun write(stream: OutputStream) {
+        stream.write(name.toBytes())
+        stream.write(package_references.size.toBytes())
+        package_references.forEach { stream.write(it.toBytes()) }
+        stream.write(class_references.size.toBytes())
+        class_references.forEach { stream.write(it.toBytes()) }
+        stream.write(method_references.size.toBytes())
+        method_references.forEach { stream.write(it.toBytes()) }
+        stream.write(field_references.size.toBytes())
+        field_references.forEach { stream.write(it.toBytes()) }
+    }
+}
 
 class ShakeMapClass(
     val name: Int,
@@ -56,6 +92,25 @@ class ShakeMapClass(
     val isPrivate = attributes.bit2
     val isAbstract = attributes.bit1
 
+    fun getBytes(): ByteArray {
+        val stream = ByteArrayOutputStream()
+        write(stream)
+        return stream.toByteArray()
+    }
+
+    fun write(stream: OutputStream) {
+        stream.write(name.toBytes())
+        stream.write(attributes.toBytes())
+        stream.write(super_class.toBytes())
+        stream.write(interface_references.size.toBytes())
+        interface_references.forEach { stream.write(it.toBytes()) }
+        stream.write(subclass_references.size.toBytes())
+        subclass_references.forEach { stream.write(it.toBytes()) }
+        stream.write(method_references.size.toBytes())
+        method_references.forEach { stream.write(it.toBytes()) }
+        stream.write(field_references.size.toBytes())
+        field_references.forEach { stream.write(it.toBytes()) }
+    }
 }
 
 class ShakeMapMethod(
@@ -72,6 +127,21 @@ class ShakeMapMethod(
     val isPrivate = attributes.bit2
     val isAbstract = attributes.bit1
 
+    fun getBytes(): ByteArray {
+        val stream = ByteArrayOutputStream()
+        write(stream)
+        return stream.toByteArray()
+    }
+
+    fun write(stream: OutputStream) {
+        stream.write(name.toBytes())
+        stream.write(attributes.toBytes())
+        stream.write(return_type.toBytes())
+        stream.write(parameter_names.size.toBytes())
+        parameter_names.forEach { stream.write(it.toBytes()) }
+        stream.write(parameter_types.size.toBytes())
+        parameter_types.forEach { stream.write(it.toBytes()) }
+    }
 }
 
 class ShakeMapField(
@@ -86,6 +156,18 @@ class ShakeMapField(
     val isProtected = attributes.bit3
     val isPrivate = attributes.bit2
     val isAbstract = attributes.bit1
+
+    fun getBytes(): ByteArray {
+        val stream = ByteArrayOutputStream()
+        write(stream)
+        return stream.toByteArray()
+    }
+
+    fun write(stream: OutputStream) {
+        stream.write(name.toBytes())
+        stream.write(attributes.toBytes())
+        stream.write(type.toBytes())
+    }
 }
 
 val Int.bit0: Boolean get() = (this and 0x01) != 0
