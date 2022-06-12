@@ -139,6 +139,7 @@ abstract class ShakeLexingBase(
         val end = input.position
         return ShakeToken(
             when (result) {
+                "abstract" -> ShakeTokenType.KEYWORD_ABSTRACT
                 "as" -> ShakeTokenType.KEYWORD_AS
                 "boolean" -> ShakeTokenType.KEYWORD_BOOLEAN
                 "byte" -> ShakeTokenType.KEYWORD_BYTE
@@ -150,6 +151,7 @@ abstract class ShakeLexingBase(
                 "double" -> ShakeTokenType.KEYWORD_DOUBLE
                 "dynamic" -> ShakeTokenType.KEYWORD_DYNAMIC
                 "else" -> ShakeTokenType.KEYWORD_ELSE
+                "enum" -> ShakeTokenType.KEYWORD_ENUM
                 "extends" -> ShakeTokenType.KEYWORD_EXTENDS
                 "false" -> ShakeTokenType.KEYWORD_FALSE
                 "final" -> ShakeTokenType.KEYWORD_FINAL
@@ -160,8 +162,12 @@ abstract class ShakeLexingBase(
                 "implements" -> ShakeTokenType.KEYWORD_IMPLEMENTS
                 "import" -> ShakeTokenType.KEYWORD_IMPORT
                 "int" -> ShakeTokenType.KEYWORD_INT
+                "interface" -> ShakeTokenType.KEYWORD_INTERFACE
                 "long" -> ShakeTokenType.KEYWORD_LONG
                 "new" -> ShakeTokenType.KEYWORD_NEW
+                "null" -> ShakeTokenType.KEYWORD_NULL
+                "object" -> ShakeTokenType.KEYWORD_OBJECT
+                "package" -> ShakeTokenType.KEYWORD_PACKAGE
                 "private" -> ShakeTokenType.KEYWORD_PRIVATE
                 "protected" -> ShakeTokenType.KEYWORD_PROTECTED
                 "public" -> ShakeTokenType.KEYWORD_PUBLIC
