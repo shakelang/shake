@@ -3,14 +3,14 @@ package io.github.shakelang.shake.parser.node.functions
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.ShakeFileChildNodeImpl
-import io.github.shakelang.shake.parser.node.ShakeTree
+import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.parser.node.ShakeVariableType
 import kotlin.jvm.JvmOverloads
 
 class ShakeFunctionDeclarationNode @JvmOverloads constructor(
     map: PositionMap,
     val name: String,
-    val body: ShakeTree,
+    val body: ShakeBlockNode,
     val args: Array<ShakeFunctionArgumentNode>,
     val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
     val access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE,
@@ -20,7 +20,7 @@ class ShakeFunctionDeclarationNode @JvmOverloads constructor(
 ) : ShakeFileChildNodeImpl(map) {
 
     constructor(
-        map: PositionMap, name: String, body: ShakeTree, args: Array<ShakeFunctionArgumentNode>,
+        map: PositionMap, name: String, body: ShakeBlockNode, args: Array<ShakeFunctionArgumentNode>,
         access: ShakeAccessDescriber?, isInClass: Boolean, isStatic: Boolean, isFinal: Boolean
     ) : this(map, name, body, args, ShakeVariableType.DYNAMIC, access, isInClass, isStatic, isFinal)
 

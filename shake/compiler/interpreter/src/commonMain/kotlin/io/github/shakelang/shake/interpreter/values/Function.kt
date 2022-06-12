@@ -4,7 +4,7 @@ import io.github.shakelang.shake.interpreter.Interpreter
 import io.github.shakelang.shake.interpreter.Scope
 import io.github.shakelang.shake.interpreter.Variable
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.ShakeTree
+import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 
@@ -34,7 +34,7 @@ class Function
     /**
      * The body of the function
      */
-    val body: ShakeTree,
+    val body: ShakeBlockNode,
 
     /**
      * The scope the function is declared in

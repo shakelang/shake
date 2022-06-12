@@ -116,7 +116,7 @@ class Interpreter : ShakeGeneratorBase {
     @JvmOverloads
     fun visit(n: ShakeNode?, scope: Scope = global): InterpreterValue {
         // Check all the node-types and call the function to process it
-        if (n is ShakeTree) return visitTree(n, scope)
+        if (n is ShakeBlockNode) return visitTree(n, scope)
         if (n is ShakeDoubleNode) return visitDoubleNode(n)
         if (n is ShakeIntegerNode) return visitIntegerNode(n)
         if (n is ShakeStringNode) return visitStringNode(n)
@@ -173,15 +173,15 @@ class Interpreter : ShakeGeneratorBase {
     // visit function
 
     /**
-     * Visit a [ShakeTree]
+     * Visit a [ShakeBlockNode]
      *
-     * @param t the [ShakeTree] to visit
-     * @param scope the scope to use for visiting the [ShakeTree]
+     * @param t the [ShakeBlockNode] to visit
+     * @param scope the scope to use for visiting the [ShakeBlockNode]
      * @return the latest [InterpreterValue] of the tree
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun visitTree(t: ShakeTree, scope: Scope): InterpreterValue {
+    fun visitTree(t: ShakeBlockNode, scope: Scope): InterpreterValue {
 
         // Visit all the children but the last one
         for (i in 0 until t.children.size - 1) {

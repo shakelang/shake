@@ -32,7 +32,7 @@ abstract class ShakeProcessor <T> {
 
     abstract val src: T
 
-    open fun parseFile(src: String): ShakeFile {
+    open fun parseFile(src: String): ShakeFileNode {
 
         val file = File(src).contents
         val chars: CharacterInputStream = SourceCharacterInputStream(src, file)
@@ -59,7 +59,7 @@ open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
     override val src: CreationShakeProject
         get() = project
 
-    open fun loadSynthetic(src: String, contents: ShakeFile) {
+    open fun loadSynthetic(src: String, contents: ShakeFileNode) {
         val reformatted = src.replace("\\", "/")
         project.putFile(reformatted.split("/").toTypedArray(), contents)
     }
@@ -140,7 +140,7 @@ open class ShakeCodeProcessor {
         }
     }
 
-    fun visitTree(scope: CreationShakeScope, t: ShakeTree): CreationShakeCode {
+    fun visitTree(scope: CreationShakeScope, t: ShakeBlockNode): CreationShakeCode {
         return CreationShakeCode(t.children.map {
             visitStatement(scope, it)
         })

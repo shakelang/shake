@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.parser.node.ShakeFile
+import io.github.shakelang.shake.parser.node.ShakeFileNode
 import io.github.shakelang.shake.parser.node.ShakeImportNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
@@ -36,7 +36,7 @@ open class CreationShakePackage (
         return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
     }
 
-    open fun putFile(name: String, contents: ShakeFile) {
+    open fun putFile(name: String, contents: ShakeFileNode) {
 
         val imports = contents.children.filterIsInstance<ShakeImportNode>()
         val imported = arrayOfNulls<CreationShakePackage>(imports.size)
@@ -116,7 +116,7 @@ open class CreationShakePackage (
         }
     }
 
-    open fun putFile(name: Array<String>, contents: ShakeFile) {
+    open fun putFile(name: Array<String>, contents: ShakeFileNode) {
         val pkg = name.sliceArray(0 until name.size - 1)
         val file = name.last()
         getPackage(pkg).putFile(file, contents)

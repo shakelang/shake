@@ -2,7 +2,7 @@ package io.github.shakelang.shake.parser.node.objects
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.ShakeTree
+import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
 import kotlin.jvm.JvmOverloads
@@ -13,7 +13,7 @@ class ShakeConstructorDeclarationNode
 
     map: PositionMap,
     val name: String?,
-    val body: ShakeTree,
+    val body: ShakeBlockNode,
     val args: Array<ShakeFunctionArgumentNode>,
     val access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE
 
@@ -22,7 +22,7 @@ class ShakeConstructorDeclarationNode
     @JvmOverloads
     constructor(
         map: PositionMap,
-        body: ShakeTree,
+        body: ShakeBlockNode,
         args: Array<ShakeFunctionArgumentNode>,
         access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE
     ) : this(map, null, body, args, access)

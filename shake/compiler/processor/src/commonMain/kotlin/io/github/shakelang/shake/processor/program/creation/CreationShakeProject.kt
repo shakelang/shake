@@ -70,7 +70,7 @@ open class CreationShakeProject(
         this.packageRequirements.add(PackageRequirement(name, then))
     }
 
-    open fun putFile(name: String, contents: ShakeFile) {
+    open fun putFile(name: String, contents: ShakeFileNode) {
 
         val imports = contents.children.filterIsInstance<ShakeImportNode>()
         val imported = arrayOfNulls<CreationShakePackage>(imports.size)
@@ -153,7 +153,7 @@ open class CreationShakeProject(
         }
     }
 
-    open fun putFile(name: Array<String>, contents: ShakeFile) {
+    open fun putFile(name: Array<String>, contents: ShakeFileNode) {
         val pkg = name.sliceArray(0 until name.size - 1)
         val file = name.last()
         if(pkg.isEmpty()) putFile(file, contents)

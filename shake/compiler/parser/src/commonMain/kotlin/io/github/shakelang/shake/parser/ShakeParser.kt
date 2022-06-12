@@ -31,8 +31,8 @@ abstract class ShakeParser {
     abstract val input: ShakeTokenInputStream
     abstract val map: PositionMap
 
-    abstract fun parse(): ShakeFile
-    abstract fun parseAsStatements(): ShakeTree
+    abstract fun parse(): ShakeFileNode
+    abstract fun parseAsStatements(): ShakeBlockNode
     abstract fun expectValue(): ShakeNode
 
     companion object {
@@ -51,14 +51,14 @@ class ShakeParserImpl (
 
     override val map: PositionMap = input.map
 
-    override fun parse(): ShakeFile {
-        if (!input.hasNext()) return ShakeFile(map, arrayOf())
+    override fun parse(): ShakeFileNode {
+        if (!input.hasNext()) return ShakeFileNode(map, arrayOf())
         val result = doParseProgram()
         if (input.hasNext()) throw ParserError("Input did not end")
         return result
     }
 
-    override fun parseAsStatements(): ShakeTree {
+    override fun parseAsStatements(): ShakeBlockNode {
         val nodes: MutableList<ShakeStatementNode> = ArrayList()
         var position = -2
         skipSeparators()
@@ -78,14 +78,14 @@ class ShakeParserImpl (
             // if(this.skipSeparators() > 0) separator = true;
             skipSeparators()
         }
-        return ShakeTree(map, nodes.toTypedArray())
+        return ShakeBlockNode(map, nodes.toTypedArray())
     }
 
 
     // ****************************************************************************
     // Basic Program
 
-    fun doParseProgram(): ShakeFile {
+    fun doParseProgram(): ShakeFileNode {
         val nodes: MutableList<ShakeFileChildNode> = ArrayList()
         var position = -2
         skipSeparators()
@@ -105,7 +105,7 @@ class ShakeParserImpl (
             // if(this.skipSeparators() > 0) separator = true;
             skipSeparators()
         }
-        return ShakeFile(map, nodes)
+        return ShakeFileNode(map, nodes)
     }
 
     fun expectShakeFileChild(): ShakeFileChildNode {
@@ -756,7 +756,7 @@ class ShakeParserImpl (
         return condition
     }
 
-    fun expectParseBodyStatement(): ShakeTree {
+    fun expectParseBodyStatement(): ShakeBlockNode {
         skipSeparators()
         return if (input.peekType() == ShakeTokenType.LCURL) {
             input.skip()
@@ -769,9 +769,9 @@ class ShakeParserImpl (
             if (!input.hasNext() || input.nextType() != ShakeTokenType.RCURL) throw ParserError(
                 "Expecting '}'"
             )
-            ShakeTree(map, list)
+            ShakeBlockNode(map, list)
         } else {
-            ShakeTree(
+            ShakeBlockNode(
                 map,
                 arrayOf(expectNotNull(expectStatement()))
             )
