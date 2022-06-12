@@ -1,11 +1,11 @@
 package io.github.shakelang.shake.parser
 
 import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.AccessDescriber
-import io.github.shakelang.shake.parser.node.VariableType
-import io.github.shakelang.shake.parser.node.factor.IntegerNode
-import io.github.shakelang.shake.parser.node.functions.FunctionDeclarationNode
-import io.github.shakelang.shake.parser.node.functions.ReturnNode
+import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
+import io.github.shakelang.shake.parser.node.ShakeVariableType
+import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import io.github.shakelang.shake.parser.node.functions.ShakeReturnNode
 import kotlin.test.*
 
 class FunctionTests {
@@ -13,12 +13,12 @@ class FunctionTests {
     fun testFunction() {
         val tree = ParserTestUtil.parse("<FunctionTest>", "function f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.DYNAMIC, node.type)
+        assertSame(ShakeVariableType.DYNAMIC, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -28,12 +28,12 @@ class FunctionTests {
     fun testFunctionChildren() {
         val tree = ParserTestUtil.parse("<FunctionChildrenTest>", "function f() { print(10); }")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(1, node.body.children.size)
-        assertSame(VariableType.DYNAMIC, node.type)
+        assertSame(ShakeVariableType.DYNAMIC, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -43,12 +43,12 @@ class FunctionTests {
     fun testPublicFunction() {
         val tree = ParserTestUtil.parse("<PublicFunctionTest>", "public function f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.DYNAMIC, node.type)
+        assertSame(ShakeVariableType.DYNAMIC, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -58,12 +58,12 @@ class FunctionTests {
     fun testProtectedFunction() {
         val tree = ParserTestUtil.parse("<ProtectedFunctionTest>", "protected function f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.DYNAMIC, node.type)
+        assertSame(ShakeVariableType.DYNAMIC, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -73,12 +73,12 @@ class FunctionTests {
     fun testPrivateFunction() {
         val tree = ParserTestUtil.parse("<PrivateFunctionTest>", "private function f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.DYNAMIC, node.type)
+        assertSame(ShakeVariableType.DYNAMIC, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -88,12 +88,12 @@ class FunctionTests {
     fun testFinalFunction() {
         val tree = ParserTestUtil.parse("<FinalFunctionTest>", "final function f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.DYNAMIC, node.type)
+        assertSame(ShakeVariableType.DYNAMIC, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -103,12 +103,12 @@ class FunctionTests {
     fun testPublicFinalFunction() {
         val tree = ParserTestUtil.parse("<PublicFinalFunctionTest>", "public final function f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.DYNAMIC, node.type)
+        assertSame(ShakeVariableType.DYNAMIC, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -118,12 +118,12 @@ class FunctionTests {
     fun testProtectedFinalFunction() {
         val tree = ParserTestUtil.parse("<ProtectedFinalFunctionTest>", "protected final function f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.DYNAMIC, node.type)
+        assertSame(ShakeVariableType.DYNAMIC, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -133,12 +133,12 @@ class FunctionTests {
     fun testPrivateFinalFunction() {
         val tree = ParserTestUtil.parse("<PrivateFinalFunctionTest>", "private final function f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.DYNAMIC, node.type)
+        assertSame(ShakeVariableType.DYNAMIC, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -150,12 +150,12 @@ class FunctionTests {
     fun testCStyleFunction() {
         val tree = ParserTestUtil.parse("<CStyleFunctionTest>", "int f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.INTEGER, node.type)
+        assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -165,12 +165,12 @@ class FunctionTests {
     fun testCStyleFunctionChildren() {
         val tree = ParserTestUtil.parse("<CStyleFunctionChildrenTest>", "int f() { print(10); }")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(1, node.body.children.size)
-        assertSame(VariableType.INTEGER, node.type)
+        assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -180,12 +180,12 @@ class FunctionTests {
     fun testCStylePublicFunction() {
         val tree = ParserTestUtil.parse("<CStylePublicFunctionTest>", "public int f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.INTEGER, node.type)
+        assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -195,12 +195,12 @@ class FunctionTests {
     fun testCStyleProtectedFunction() {
         val tree = ParserTestUtil.parse("<CStyleProtectedFunctionTest>", "protected int f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.INTEGER, node.type)
+        assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -210,12 +210,12 @@ class FunctionTests {
     fun testCStylePrivateFunction() {
         val tree = ParserTestUtil.parse("<CStylePrivateFunctionTest>", "private int f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.INTEGER, node.type)
+        assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -225,12 +225,12 @@ class FunctionTests {
     fun testCStyleFinalFunction() {
         val tree = ParserTestUtil.parse("<CStyleFinalFunctionTest>", "final int f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.INTEGER, node.type)
+        assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -240,12 +240,12 @@ class FunctionTests {
     fun testCStylePublicFinalFunction() {
         val tree = ParserTestUtil.parse("<CStylePublicFinalFunctionTest>", "public final int f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.INTEGER, node.type)
+        assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -255,12 +255,12 @@ class FunctionTests {
     fun testCStyleProtectedFinalFunction() {
         val tree = ParserTestUtil.parse("<CStyleProtectedFinalFunctionTest>", "protected final int f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.INTEGER, node.type)
+        assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -270,12 +270,12 @@ class FunctionTests {
     fun testCStylePrivateFinalFunction() {
         val tree = ParserTestUtil.parse("<CStylePrivateFinalFunctionTest>", "private final int f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.INTEGER, node.type)
+        assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -285,12 +285,12 @@ class FunctionTests {
     fun testCStyleFunctionByte() {
         val tree = ParserTestUtil.parse("<CStyleFunctionByteTest>", "byte f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.BYTE, node.type)
+        assertSame(ShakeVariableType.BYTE, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -300,12 +300,12 @@ class FunctionTests {
     fun testCStyleFunctionShort() {
         val tree = ParserTestUtil.parse("<CStyleFunctionShortTest>", "short f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.SHORT, node.type)
+        assertSame(ShakeVariableType.SHORT, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -315,12 +315,12 @@ class FunctionTests {
     fun testCStyleFunctionLong() {
         val tree = ParserTestUtil.parse("<CStyleFunctionLongTest>", "long f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.LONG, node.type)
+        assertSame(ShakeVariableType.LONG, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -330,12 +330,12 @@ class FunctionTests {
     fun testCStyleFunctionFloat() {
         val tree = ParserTestUtil.parse("<CStyleFunctionFloatTest>", "float f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.FLOAT, node.type)
+        assertSame(ShakeVariableType.FLOAT, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -345,12 +345,12 @@ class FunctionTests {
     fun testCStyleFunctionDouble() {
         val tree = ParserTestUtil.parse("<CStyleFunctionDoubleTest>", "double f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.DOUBLE, node.type)
+        assertSame(ShakeVariableType.DOUBLE, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -360,12 +360,12 @@ class FunctionTests {
     fun testCStyleFunctionChar() {
         val tree = ParserTestUtil.parse("<CStyleFunctionCharTest>", "char f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.CHAR, node.type)
+        assertSame(ShakeVariableType.CHAR, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -375,12 +375,12 @@ class FunctionTests {
     fun testCStyleFunctionBoolean() {
         val tree = ParserTestUtil.parse("<CStyleFunctionBooleanTest>", "boolean f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.BOOLEAN, node.type)
+        assertSame(ShakeVariableType.BOOLEAN, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -390,12 +390,12 @@ class FunctionTests {
     fun testCStyleFunctionVoid() {
         val tree = ParserTestUtil.parse("<CStyleFunctionVoidTest>", "void f() {}")
         assertEquals(1, tree.children.size)
-        assertType(FunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as FunctionDeclarationNode
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeFunctionDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
-        assertSame(VariableType.VOID, node.type)
+        assertSame(ShakeVariableType.VOID, node.type)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -403,10 +403,10 @@ class FunctionTests {
 
     @Test
     fun testReturn() {
-        val tree = ParserTestUtil.parse("<FunctionTest>", "return 10;")
+        val tree = ParserTestUtil.parseStatement("<FunctionTest>", "return 10;")
         assertEquals(1, tree.children.size)
-        assertType(ReturnNode::class, tree.children[0])
-        val node = tree.children[0] as ReturnNode
-        assertType(IntegerNode::class, node.value)
+        assertType(ShakeReturnNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeReturnNode
+        assertType(ShakeIntegerNode::class, node.value)
     }
 }

@@ -3,10 +3,10 @@ package io.github.shakelang.shake.interpreter.values
 import io.github.shakelang.shake.interpreter.Interpreter
 import io.github.shakelang.shake.interpreter.Scope
 import io.github.shakelang.shake.interpreter.Variable
-import io.github.shakelang.shake.parser.node.AccessDescriber
-import io.github.shakelang.shake.parser.node.Tree
-import io.github.shakelang.shake.parser.node.functions.FunctionArgumentNode
-import io.github.shakelang.shake.parser.node.functions.FunctionCallNode
+import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
+import io.github.shakelang.shake.parser.node.ShakeTree
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 
 /**
  * An [InterpreterValue] for function-declarations
@@ -29,12 +29,12 @@ class Function
     /**
      * The function arguments
      */
-    val args: Array<FunctionArgumentNode>,
+    val args: Array<ShakeFunctionArgumentNode>,
 
     /**
      * The body of the function
      */
-    val body: Tree,
+    val body: ShakeTree,
 
     /**
      * The scope the function is declared in
@@ -49,7 +49,7 @@ class Function
     /**
      * The function access
      */
-    val access: AccessDescriber,
+    val access: ShakeAccessDescriber,
 
     /**
      * Is this function final?
@@ -80,7 +80,7 @@ class Function
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun invoke(node: FunctionCallNode, scope: Scope): InterpreterValue {
+    override fun invoke(node: ShakeFunctionCallNode, scope: Scope): InterpreterValue {
         // TODO return statements
 
         // Create function scope (for the function execution)

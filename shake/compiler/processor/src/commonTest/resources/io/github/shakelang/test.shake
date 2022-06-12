@@ -1,0 +1,5 @@
+int i = 0;
+int a() {
+  int i = 0 + 1;
+  return i;
+}

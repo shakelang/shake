@@ -3,8 +3,8 @@ version = "0.1.0"
 description = "Shake"
 
 plugins {
-    id("org.jetbrains.dokka") version "1.4.32"
-    kotlin("multiplatform") version "1.5.10" apply false
+    id("org.jetbrains.dokka")
+    kotlin("multiplatform") apply false
 }
 
 repositories {

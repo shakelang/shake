@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.interpreter.values
 
-import io.github.shakelang.shake.parser.node.CastNode.CastTarget
+import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
 import kotlin.math.pow
 
 class CharacterValue(val value: Char) : InterpreterValue {

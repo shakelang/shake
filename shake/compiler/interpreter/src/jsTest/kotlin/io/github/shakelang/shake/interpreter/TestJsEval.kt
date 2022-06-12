@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.interpreter
 import io.github.shakelang.shake.lexer.ShakeLexer
-import io.github.shakelang.shake.parser.Parser
-import io.github.shakelang.shake.parser.node.Tree
+import io.github.shakelang.shake.parser.ShakeParser
+import io.github.shakelang.shake.parser.node.ShakeTree
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.parseutils.characters.position.PositionMap
@@ -31,7 +31,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val tokens = lexer.makeTokens()
 
     // Create a new Parser from the tokens
-    val parser = Parser(tokens)
+    val parser = ShakeParser(tokens)
 
     // Let the parser parse the tokens into a Tree
     val tree = parser.parse()
@@ -40,4 +40,4 @@ private fun parse(input: CharacterInputStream): ParseResult {
     return ParseResult(tree, tokens.map)
 }
 
-private class ParseResult(val tree: Tree, val map: PositionMap)
+private class ParseResult(val tree: ShakeTree, val map: PositionMap)

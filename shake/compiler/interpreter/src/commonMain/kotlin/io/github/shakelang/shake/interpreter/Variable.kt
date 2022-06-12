@@ -2,10 +2,10 @@ package io.github.shakelang.shake.interpreter
 
 import io.github.shakelang.shake.interpreter.values.*
 import io.github.shakelang.shake.interpreter.values.Function
-import io.github.shakelang.shake.parser.node.AccessDescriber
-import io.github.shakelang.shake.parser.node.VariableType
-import io.github.shakelang.shake.parser.node.functions.FunctionCallNode
-import io.github.shakelang.shake.parser.node.objects.ClassConstructionNode
+import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
+import io.github.shakelang.shake.parser.node.ShakeVariableType
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
@@ -27,7 +27,7 @@ class Variable
     /**
      * The access of the variable
      */
-    val access: AccessDescriber,
+    val access: ShakeAccessDescriber,
 
     /**
      * The type of the variable
@@ -78,7 +78,7 @@ class Variable
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(identifier: String, type: KClass<*>, value: InterpreterValue) :
-            this(identifier, AccessDescriber.PACKAGE, type, value)
+            this(identifier, ShakeAccessDescriber.PACKAGE, type, value)
 
     /**
      * Constructor for [Variable]
@@ -88,7 +88,7 @@ class Variable
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    constructor(identifier: String, access: AccessDescriber, type: KClass<*>, finalVariable: Boolean) :
+    constructor(identifier: String, access: ShakeAccessDescriber, type: KClass<*>, finalVariable: Boolean) :
             this(identifier, access, type, null, finalVariable)
 
     /**
@@ -98,7 +98,7 @@ class Variable
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    constructor(identifier: String, type: KClass<*>) : this(identifier, AccessDescriber.PACKAGE, type)
+    constructor(identifier: String, type: KClass<*>) : this(identifier, ShakeAccessDescriber.PACKAGE, type)
 
 
     // *******************************
@@ -297,7 +297,7 @@ class Variable
      *
      * @return the function result
      */
-    override fun invoke(node: FunctionCallNode, scope: Scope): InterpreterValue {
+    override fun invoke(node: ShakeFunctionCallNode, scope: Scope): InterpreterValue {
         // redirect operator to the value
         return this.value.invoke(node, scope)
     }
@@ -311,7 +311,7 @@ class Variable
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    override fun newInstance(node: ClassConstructionNode, scope: Scope): InterpreterValue =
+    override fun newInstance(node: ShakeClassConstructionNode, scope: Scope): InterpreterValue =
         this.value.newInstance(node, scope)
 
 
@@ -423,44 +423,44 @@ class Variable
          */
         fun create(
             name: String,
-            type: VariableType,
-            access: AccessDescriber,
+            type: ShakeVariableType,
+            access: ShakeAccessDescriber,
             finalVariable: Boolean,
             value: InterpreterValue?
         ): Variable {
             return when (type.type) {
-                VariableType.Type.BYTE, VariableType.Type.SHORT, VariableType.Type.INTEGER, VariableType.Type.LONG ->
+                ShakeVariableType.Type.BYTE, ShakeVariableType.Type.SHORT, ShakeVariableType.Type.INTEGER, ShakeVariableType.Type.LONG ->
                     Variable(
                     name, access, IntegerValue::class, value?.to(
                         IntegerValue::class
                     ), finalVariable
                 )
-                VariableType.Type.FLOAT, VariableType.Type.DOUBLE -> Variable(
+                ShakeVariableType.Type.FLOAT, ShakeVariableType.Type.DOUBLE -> Variable(
                     name, access, DoubleValue::class, value?.to(
                         DoubleValue::class
                     ), finalVariable
                 )
-                VariableType.Type.BOOLEAN -> Variable(
+                ShakeVariableType.Type.BOOLEAN -> Variable(
                     name, access, BooleanValue::class, value?.to(
                         BooleanValue::class
                     ), finalVariable
                 )
-                VariableType.Type.OBJECT -> Variable(
+                ShakeVariableType.Type.OBJECT -> Variable(
                     name, access, ObjectValue::class, value?.to(
                         ObjectValue::class
                     ), finalVariable
                 ) // TODO object-subtypes
-                VariableType.Type.DYNAMIC -> Variable(
+                ShakeVariableType.Type.DYNAMIC -> Variable(
                     name, access, InterpreterValue::class, value?.to(
                         InterpreterValue::class
                     ), finalVariable
                 )
-                VariableType.Type.CHAR -> Variable(
+                ShakeVariableType.Type.CHAR -> Variable(
                     name, access, CharacterValue::class, value?.to(
                         CharacterValue::class
                     ), finalVariable
                 )
-                VariableType.Type.ARRAY -> throw Error("Not implemented yet")
+                ShakeVariableType.Type.ARRAY -> throw Error("Not implemented yet")
                 else -> throw Error("Wrong input: ${type.type}")
             }
         }
@@ -478,14 +478,14 @@ class Variable
         @JvmOverloads
         fun create(
             name: String,
-            type: VariableType,
+            type: ShakeVariableType,
             finalVariable: Boolean,
             value: InterpreterValue? = null
-        ): Variable = create(name, type, AccessDescriber.PACKAGE, finalVariable, value)
+        ): Variable = create(name, type, ShakeAccessDescriber.PACKAGE, finalVariable, value)
 
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
         fun finalOf(name: String, v: InterpreterValue): Variable =
-                    Variable(name, AccessDescriber.PUBLIC, v::class, v)
+                    Variable(name, ShakeAccessDescriber.PUBLIC, v::class, v)
     }
 }

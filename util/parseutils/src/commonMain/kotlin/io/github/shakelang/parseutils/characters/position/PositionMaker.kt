@@ -130,4 +130,8 @@ class PositionMaker : PositionMap, PositionMarker {
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun createPositionAtLocation(): Position = Position(createPositionMap(), index, column, line)
+
+    override fun toString(): String {
+        return "PositionMaker(index=$index, column=$column, line=$line, lineSeparators=$lineSeparatorsList)"
+    }
 }

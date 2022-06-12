@@ -3,9 +3,9 @@ package io.github.shakelang.shake.interpreter.values
 import io.github.shakelang.shake.interpreter.Scope
 import io.github.shakelang.shake.interpreter.UnformattedInterpreterError
 import io.github.shakelang.shake.interpreter.Variable
-import io.github.shakelang.shake.parser.node.CastNode.CastTarget
-import io.github.shakelang.shake.parser.node.functions.FunctionCallNode
-import io.github.shakelang.shake.parser.node.objects.ClassConstructionNode
+import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 
@@ -279,7 +279,7 @@ interface InterpreterValue {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    operator fun invoke(node: FunctionCallNode, scope: Scope): InterpreterValue {
+    operator fun invoke(node: ShakeFunctionCallNode, scope: Scope): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
         throw UnformattedInterpreterError("Can't invoke type $name")
@@ -294,7 +294,7 @@ interface InterpreterValue {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun newInstance(node: ClassConstructionNode, scope: Scope): InterpreterValue {
+    fun newInstance(node: ShakeClassConstructionNode, scope: Scope): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
         // This function will be overridden by all InterpreterValues that do support this operation
         throw UnformattedInterpreterError("Can't create a new instance of type $name")

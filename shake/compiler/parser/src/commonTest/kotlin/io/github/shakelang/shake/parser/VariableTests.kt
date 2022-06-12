@@ -1,12 +1,12 @@
 package io.github.shakelang.shake.parser
 
 import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.AccessDescriber
-import io.github.shakelang.shake.parser.node.IdentifierNode
-import io.github.shakelang.shake.parser.node.VariableType
-import io.github.shakelang.shake.parser.node.factor.DoubleNode
-import io.github.shakelang.shake.parser.node.factor.IntegerNode
-import io.github.shakelang.shake.parser.node.logical.LogicalTrueNode
+import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
+import io.github.shakelang.shake.parser.node.ShakeIdentifierNode
+import io.github.shakelang.shake.parser.node.ShakeVariableType
+import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
+import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import io.github.shakelang.shake.parser.node.logical.ShakeLogicalTrueNode
 import io.github.shakelang.shake.parser.node.variables.*
 import kotlin.test.*
 
@@ -18,106 +18,100 @@ class VariableTests {
     
     @Test
     fun testVariableAssignment() {
-        var node = ParserTestUtil.parseSingle("<VariableAssignmentTest>", "i = 0", VariableAssignmentNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        var node = ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = 0", ShakeVariableAssignmentNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
         assertNotNull(node.value)
-        assertType(IntegerNode::class, node.value)
-        node = ParserTestUtil.parseSingle("<VariableAssignmentTest>", "i = 0.1", VariableAssignmentNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        assertType(ShakeIntegerNode::class, node.value)
+        node = ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = 0.1", ShakeVariableAssignmentNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
         assertNotNull(node.value)
-        assertType(DoubleNode::class, node.value)
-        node = ParserTestUtil.parseSingle("<VariableAssignmentTest>", "i = true", VariableAssignmentNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        assertType(ShakeDoubleNode::class, node.value)
+        node = ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = true", ShakeVariableAssignmentNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
         assertNotNull(node.value)
-        assertType(LogicalTrueNode::class, node.value)
+        assertType(ShakeLogicalTrueNode::class, node.value)
     }
 
     @Test
     fun testVariableAddAssignment() {
-        val node =
-            ParserTestUtil.parseSingle("<VariableAddAssignmentTest>", "i += 0", VariableAddAssignmentNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        val node = ParserTestUtil.parseStatement("<VariableAddAssignmentTest>", "i += 0", ShakeVariableAddAssignmentNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
         assertNotNull(node.value)
-        assertType(IntegerNode::class, node.value)
+        assertType(ShakeIntegerNode::class, node.value)
     }
 
     @Test
     fun testVariableSubAssignment() {
-        val node =
-            ParserTestUtil.parseSingle("<VariableSubAssignmentTest>", "i -= 0", VariableSubAssignmentNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        val node = ParserTestUtil.parseStatement("<VariableSubAssignmentTest>", "i -= 0", ShakeVariableSubAssignmentNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
         assertNotNull(node.value)
-        assertType(IntegerNode::class, node.value)
+        assertType(ShakeIntegerNode::class, node.value)
     }
 
     @Test
     fun testVariableMulAssignment() {
-        val node =
-            ParserTestUtil.parseSingle("<VariableMulAssignmentTest>", "i *= 0", VariableMulAssignmentNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        val node = ParserTestUtil.parseStatement("<VariableMulAssignmentTest>", "i *= 0", ShakeVariableMulAssignmentNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
         assertNotNull(node.value)
-        assertType(IntegerNode::class, node.value)
+        assertType(ShakeIntegerNode::class, node.value)
     }
 
     @Test
     fun testVariableDivAssignment() {
-        val node =
-            ParserTestUtil.parseSingle("<VariableDivAssignmentTest>", "i /= 1", VariableDivAssignmentNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        val node = ParserTestUtil.parseStatement("<VariableDivAssignmentTest>", "i /= 1", ShakeVariableDivAssignmentNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
         assertNotNull(node.value)
-        assertType(IntegerNode::class, node.value)
+        assertType(ShakeIntegerNode::class, node.value)
     }
 
     @Test
     fun testVariableModAssignment() {
-        val node =
-            ParserTestUtil.parseSingle("<VariableModAssignmentTest>", "i %= 1", VariableModAssignmentNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        val node = ParserTestUtil.parseStatement("<VariableModAssignmentTest>", "i %= 1", ShakeVariableModAssignmentNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
         assertNotNull(node.value)
-        assertType(IntegerNode::class, node.value)
+        assertType(ShakeIntegerNode::class, node.value)
     }
 
     @Test
     fun testVariablePowAssignment() {
-        val node =
-            ParserTestUtil.parseSingle("<VariablePowAssignmentTest>", "i **= 0", VariablePowAssignmentNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        val node = ParserTestUtil.parseStatement("<VariablePowAssignmentTest>", "i **= 0", ShakeVariablePowAssignmentNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
         assertNotNull(node.value)
-        assertType(IntegerNode::class, node.value)
+        assertType(ShakeIntegerNode::class, node.value)
     }
 
     @Test
     fun testVariableIncrease() {
-        val node = ParserTestUtil.parseSingle("<VariableIncreaseTest>", "i ++", VariableIncreaseNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        val node = ParserTestUtil.parseStatement("<VariableIncreaseTest>", "i ++", ShakeVariableIncreaseNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
     }
 
     @Test
     fun testVariableDecrease() {
-        val node = ParserTestUtil.parseSingle("<VariableDecreaseTest>", "i --", VariableDecreaseNode::class)
-        assertType(IdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as IdentifierNode).name)
-        assertNull((node.variable as IdentifierNode).parent)
+        val node = ParserTestUtil.parseStatement("<VariableDecreaseTest>", "i --", ShakeVariableDecreaseNode::class)
+        assertType(ShakeIdentifierNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
+        assertNull((node.variable as ShakeIdentifierNode).parent)
     }
 
     
@@ -126,19 +120,19 @@ class VariableTests {
     
     @Test
     fun testVariableDeclaration() {
-        var node = ParserTestUtil.parseSingle("<VariableDeclarationTest>", "var i", VariableDeclarationNode::class)
+        var node = ParserTestUtil.parseStatement("<VariableDeclarationTest>", "var i", ShakeVariableDeclarationNode::class)
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
-        node = ParserTestUtil.parseSingle("<VariableDeclarationTest>", "var i = 0", VariableDeclarationNode::class)
+        node = ParserTestUtil.parseStatement("<VariableDeclarationTest>", "var i = 0", ShakeVariableDeclarationNode::class)
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNotNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNotNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
@@ -146,21 +140,19 @@ class VariableTests {
 
     @Test
     fun testVariableLetDeclaration() {
-        var node =
-            ParserTestUtil.parseSingle("<VariableLetDeclarationTest>", "let i", VariableDeclarationNode::class)
+        var node = ParserTestUtil.parseStatement("<VariableLetDeclarationTest>", "let i", ShakeVariableDeclarationNode::class)
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
-        node =
-            ParserTestUtil.parseSingle("<VariableLetDeclarationTest>", "let i = 0", VariableDeclarationNode::class)
+        node = ParserTestUtil.parseStatement("<VariableLetDeclarationTest>", "let i = 0", ShakeVariableDeclarationNode::class)
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNotNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNotNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
@@ -168,24 +160,23 @@ class VariableTests {
 
     @Test
     fun testVariableConstDeclaration() {
-        var node =
-            ParserTestUtil.parseSingle("<VariableConstDeclarationTest>", "const i", VariableDeclarationNode::class)
+        var node = ParserTestUtil.parseStatement("<VariableConstDeclarationTest>", "const i", ShakeVariableDeclarationNode::class)
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         node = ParserTestUtil.parseSingle(
             "<VariableConstDeclarationTest>",
             "const i = 0",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNotNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNotNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
         assertFalse(node.isStatic)
@@ -196,12 +187,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<FinalVariableDeclarationTest>",
             "final var i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -212,12 +203,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicVariableDeclarationTest>",
             "public var i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -228,12 +219,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalDynamicVariableDeclarationTest>",
             "public final var i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -244,12 +235,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedVariableDeclarationTest>",
             "protected var i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -260,12 +251,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalVariableDeclarationTest>",
             "protected final var i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -276,12 +267,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateVariableDeclarationTest>",
             "private var i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -292,12 +283,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalVariableDeclarationTest>",
             "private final var i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -308,19 +299,19 @@ class VariableTests {
         var node = ParserTestUtil.parseSingle(
             "<DynamicVariableDeclarationTest>",
             "dynamic d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
         node = ParserTestUtil.parseSingle(
             "<DynamicVariableDeclarationTest>",
             "dynamic d = 0",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNotNull(node.assignment)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNotNull(node.value)
     }
 
     @Test
@@ -328,12 +319,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<FinalDynamicVariableDeclarationTest>",
             "final dynamic d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -344,12 +335,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicDynamicVariableDeclarationTest>",
             "public dynamic d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -360,12 +351,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalDynamicVariableDeclarationTest>",
             "public final dynamic d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -376,12 +367,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedDynamicVariableDeclarationTest>",
             "protected dynamic d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -392,12 +383,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalDynamicVariableDeclarationTest>",
             "protected final dynamic d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -408,12 +399,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateDynamicVariableDeclarationTest>",
             "private dynamic d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -424,12 +415,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalDynamicVariableDeclarationTest>",
             "private final dynamic d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -440,19 +431,19 @@ class VariableTests {
         var node = ParserTestUtil.parseSingle(
             "<BooleanVariableDeclarationTest>",
             "boolean b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BOOLEAN, node.type.type)
-        assertNull(node.assignment)
+        assertSame(ShakeVariableType.Type.BOOLEAN, node.type.type)
+        assertNull(node.value)
         node = ParserTestUtil.parseSingle(
             "<BooleanDeclarationTest>",
             "boolean b = true",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BOOLEAN, node.type.type)
-        assertNotNull(node.assignment)
+        assertSame(ShakeVariableType.Type.BOOLEAN, node.type.type)
+        assertNotNull(node.value)
     }
 
     @Test
@@ -460,12 +451,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<FinalBooleanVariableDeclarationTest>",
             "final boolean b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BOOLEAN, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.BOOLEAN, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -476,12 +467,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicBooleanVariableDeclarationTest>",
             "public boolean b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BOOLEAN, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.BOOLEAN, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -492,12 +483,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalBooleanVariableDeclarationTest>",
             "public final boolean b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BOOLEAN, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.BOOLEAN, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -508,12 +499,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedBooleanVariableDeclarationTest>",
             "protected boolean b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BOOLEAN, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.BOOLEAN, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -524,12 +515,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalBooleanVariableDeclarationTest>",
             "protected final boolean b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BOOLEAN, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.BOOLEAN, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -540,12 +531,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateBooleanVariableDeclarationTest>",
             "private boolean b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BOOLEAN, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.BOOLEAN, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -556,12 +547,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalBooleanVariableDeclarationTest>",
             "private final boolean b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BOOLEAN, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.BOOLEAN, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -572,19 +563,19 @@ class VariableTests {
         var node = ParserTestUtil.parseSingle(
             "<CharacterVariableDeclarationTest>",
             "char c",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("c", node.name)
-        assertSame(VariableType.Type.CHAR, node.type.type)
-        assertNull(node.assignment)
+        assertSame(ShakeVariableType.Type.CHAR, node.type.type)
+        assertNull(node.value)
         node = ParserTestUtil.parseSingle(
             "<CharacterVariableDeclarationTest>",
             "char c = 12",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("c", node.name)
-        assertSame(VariableType.Type.CHAR, node.type.type)
-        assertNotNull(node.assignment)
+        assertSame(ShakeVariableType.Type.CHAR, node.type.type)
+        assertNotNull(node.value)
     }
 
     @Test
@@ -592,12 +583,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<FinalCharacterVariableDeclarationTest>",
             "final char c",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("c", node.name)
-        assertSame(VariableType.Type.CHAR, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.CHAR, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -608,12 +599,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicCharacterVariableDeclarationTest>",
             "public char c",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("c", node.name)
-        assertSame(VariableType.Type.CHAR, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.CHAR, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -624,12 +615,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalCharacterVariableDeclarationTest>",
             "public final char c",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("c", node.name)
-        assertSame(VariableType.Type.CHAR, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.CHAR, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -640,12 +631,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedCharacterVariableDeclarationTest>",
             "protected char c",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("c", node.name)
-        assertSame(VariableType.Type.CHAR, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.CHAR, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -656,12 +647,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalCharacterVariableDeclarationTest>",
             "protected final char c",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("c", node.name)
-        assertSame(VariableType.Type.CHAR, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.CHAR, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -672,12 +663,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateCharacterVariableDeclarationTest>",
             "private char c",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("c", node.name)
-        assertSame(VariableType.Type.CHAR, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.CHAR, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -688,12 +679,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalCharacterVariableDeclarationTest>",
             "private final char c",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("c", node.name)
-        assertSame(VariableType.Type.CHAR, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.CHAR, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -702,14 +693,14 @@ class VariableTests {
     @Test
     fun testByteVariableDeclaration() {
         var node =
-            ParserTestUtil.parseSingle("<ByteVariableDeclarationTest>", "byte b", VariableDeclarationNode::class)
+            ParserTestUtil.parseSingle("<ByteVariableDeclarationTest>", "byte b", ShakeVariableDeclarationNode::class)
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BYTE, node.type.type)
-        assertNull(node.assignment)
-        node = ParserTestUtil.parseSingle("<ByteDeclarationTest>", "byte b = 12", VariableDeclarationNode::class)
+        assertSame(ShakeVariableType.Type.BYTE, node.type.type)
+        assertNull(node.value)
+        node = ParserTestUtil.parseSingle("<ByteDeclarationTest>", "byte b = 12", ShakeVariableDeclarationNode::class)
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BYTE, node.type.type)
-        assertNotNull(node.assignment)
+        assertSame(ShakeVariableType.Type.BYTE, node.type.type)
+        assertNotNull(node.value)
     }
 
     @Test
@@ -717,12 +708,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<FinalByteVariableDeclarationTest>",
             "final byte b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BYTE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.BYTE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -733,12 +724,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicByteVariableDeclarationTest>",
             "public byte b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BYTE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.BYTE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -749,12 +740,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalByteVariableDeclarationTest>",
             "public final byte b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BYTE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.BYTE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -765,12 +756,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedByteVariableDeclarationTest>",
             "protected byte b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BYTE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.BYTE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -781,12 +772,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalByteVariableDeclarationTest>",
             "protected final byte b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BYTE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.BYTE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -797,12 +788,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateByteVariableDeclarationTest>",
             "private byte b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BYTE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.BYTE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -813,12 +804,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalByteVariableDeclarationTest>",
             "private final byte b",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("b", node.name)
-        assertSame(VariableType.Type.BYTE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.BYTE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -827,18 +818,18 @@ class VariableTests {
     @Test
     fun testShortVariableDeclaration() {
         var node =
-            ParserTestUtil.parseSingle("<ShortVariableDeclarationTest>", "short s", VariableDeclarationNode::class)
+            ParserTestUtil.parseSingle("<ShortVariableDeclarationTest>", "short s", ShakeVariableDeclarationNode::class)
         assertEquals("s", node.name)
-        assertSame(VariableType.Type.SHORT, node.type.type)
-        assertNull(node.assignment)
+        assertSame(ShakeVariableType.Type.SHORT, node.type.type)
+        assertNull(node.value)
         node = ParserTestUtil.parseSingle(
             "<ShortVariableDeclarationTest>",
             "short s = 12",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("s", node.name)
-        assertSame(VariableType.Type.SHORT, node.type.type)
-        assertNotNull(node.assignment)
+        assertSame(ShakeVariableType.Type.SHORT, node.type.type)
+        assertNotNull(node.value)
     }
 
     @Test
@@ -846,12 +837,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<FinalShortVariableDeclarationTest>",
             "final short s",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("s", node.name)
-        assertSame(VariableType.Type.SHORT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.SHORT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -862,12 +853,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicShortVariableDeclarationTest>",
             "public short s",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("s", node.name)
-        assertSame(VariableType.Type.SHORT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.SHORT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -878,12 +869,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalShortVariableDeclarationTest>",
             "public final short s",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("s", node.name)
-        assertSame(VariableType.Type.SHORT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.SHORT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -894,12 +885,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedShortVariableDeclarationTest>",
             "protected short s",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("s", node.name)
-        assertSame(VariableType.Type.SHORT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.SHORT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -910,12 +901,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalShortVariableDeclarationTest>",
             "protected final short s",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("s", node.name)
-        assertSame(VariableType.Type.SHORT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.SHORT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -926,12 +917,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateShortVariableDeclarationTest>",
             "private short s",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("s", node.name)
-        assertSame(VariableType.Type.SHORT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.SHORT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -942,12 +933,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalShortVariableDeclarationTest>",
             "private final short s",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("s", node.name)
-        assertSame(VariableType.Type.SHORT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.SHORT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -956,18 +947,18 @@ class VariableTests {
     @Test
     fun testIntegerVariableDeclaration() {
         var node =
-            ParserTestUtil.parseSingle("<IntegerVariableDeclarationTest>", "int i", VariableDeclarationNode::class)
+            ParserTestUtil.parseSingle("<IntegerVariableDeclarationTest>", "int i", ShakeVariableDeclarationNode::class)
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.INTEGER, node.type.type)
-        assertNull(node.assignment)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
+        assertNull(node.value)
         node = ParserTestUtil.parseSingle(
             "<IntegerVariableDeclarationTest>",
             "int i = 12",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.INTEGER, node.type.type)
-        assertNotNull(node.assignment)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
+        assertNotNull(node.value)
     }
 
     @Test
@@ -975,12 +966,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<FinalIntegerVariableDeclarationTest>",
             "final int i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.INTEGER, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -991,12 +982,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicIntegerVariableDeclarationTest>",
             "public int i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.INTEGER, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1007,12 +998,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalIntegerVariableDeclarationTest>",
             "public final int i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.INTEGER, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1023,12 +1014,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedIntegerVariableDeclarationTest>",
             "protected int i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.INTEGER, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1039,12 +1030,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalIntegerVariableDeclarationTest>",
             "protected final int i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.INTEGER, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1055,12 +1046,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateIntegerVariableDeclarationTest>",
             "private int i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.INTEGER, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1071,12 +1062,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalIntegerVariableDeclarationTest>",
             "private final int i",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(VariableType.Type.INTEGER, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1085,18 +1076,18 @@ class VariableTests {
     @Test
     fun testLongVariableDeclaration() {
         var node =
-            ParserTestUtil.parseSingle("<LongVariableDeclarationTest>", "long l", VariableDeclarationNode::class)
+            ParserTestUtil.parseSingle("<LongVariableDeclarationTest>", "long l", ShakeVariableDeclarationNode::class)
         assertEquals("l", node.name)
-        assertSame(VariableType.Type.LONG, node.type.type)
-        assertNull(node.assignment)
+        assertSame(ShakeVariableType.Type.LONG, node.type.type)
+        assertNull(node.value)
         node = ParserTestUtil.parseSingle(
             "<LongVariableDeclarationTest>",
             "long l = 12",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("l", node.name)
-        assertSame(VariableType.Type.LONG, node.type.type)
-        assertNotNull(node.assignment)
+        assertSame(ShakeVariableType.Type.LONG, node.type.type)
+        assertNotNull(node.value)
     }
 
     @Test
@@ -1104,12 +1095,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<FinalLongVariableDeclarationTest>",
             "final long l",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("l", node.name)
-        assertSame(VariableType.Type.LONG, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.LONG, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1120,12 +1111,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicLongVariableDeclarationTest>",
             "public long l",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("l", node.name)
-        assertSame(VariableType.Type.LONG, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.LONG, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1136,12 +1127,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalLongVariableDeclarationTest>",
             "public final long l",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("l", node.name)
-        assertSame(VariableType.Type.LONG, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.LONG, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1152,12 +1143,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedLongVariableDeclarationTest>",
             "protected long l",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("l", node.name)
-        assertSame(VariableType.Type.LONG, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.LONG, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1168,12 +1159,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalLongVariableDeclarationTest>",
             "protected final long l",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("l", node.name)
-        assertSame(VariableType.Type.LONG, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.LONG, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1184,12 +1175,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateLongVariableDeclarationTest>",
             "private long l",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("l", node.name)
-        assertSame(VariableType.Type.LONG, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.LONG, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1200,12 +1191,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalLongVariableDeclarationTest>",
             "private final long l",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("l", node.name)
-        assertSame(VariableType.Type.LONG, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.LONG, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1214,23 +1205,23 @@ class VariableTests {
     @Test
     fun testFloatVariableDeclaration() {
         var node =
-            ParserTestUtil.parseSingle("<FloatVariableDeclarationTest>", "float f", VariableDeclarationNode::class)
+            ParserTestUtil.parseSingle("<FloatVariableDeclarationTest>", "float f", ShakeVariableDeclarationNode::class)
         assertEquals("f", node.name)
-        assertSame(VariableType.Type.FLOAT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.FLOAT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
         node = ParserTestUtil.parseSingle(
             "<FloatVariableDeclarationTest>",
             "float f = 12",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("f", node.name)
-        assertSame(VariableType.Type.FLOAT, node.type.type)
-        assertNotNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.FLOAT, node.type.type)
+        assertNotNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1241,12 +1232,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<FinalFloatVariableDeclarationTest>",
             "final float f",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("f", node.name)
-        assertSame(VariableType.Type.FLOAT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.FLOAT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1257,12 +1248,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalFloatVariableDeclarationTest>",
             "public float f",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("f", node.name)
-        assertSame(VariableType.Type.FLOAT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.FLOAT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1273,12 +1264,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalFloatVariableDeclarationTest>",
             "public final float f",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("f", node.name)
-        assertSame(VariableType.Type.FLOAT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.FLOAT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1289,12 +1280,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFloatVariableDeclarationTest>",
             "protected float f",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("f", node.name)
-        assertSame(VariableType.Type.FLOAT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.FLOAT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1305,12 +1296,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalFloatVariableDeclarationTest>",
             "protected final float f",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("f", node.name)
-        assertSame(VariableType.Type.FLOAT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.FLOAT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1321,12 +1312,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFloatVariableDeclarationTest>",
             "private float f",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("f", node.name)
-        assertSame(VariableType.Type.FLOAT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.FLOAT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1337,12 +1328,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalFloatVariableDeclarationTest>",
             "private final float f",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("f", node.name)
-        assertSame(VariableType.Type.FLOAT, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.FLOAT, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1353,19 +1344,19 @@ class VariableTests {
         var node = ParserTestUtil.parseSingle(
             "<DoubleVariableDeclarationTest>",
             "double d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DOUBLE, node.type.type)
-        assertNull(node.assignment)
+        assertSame(ShakeVariableType.Type.DOUBLE, node.type.type)
+        assertNull(node.value)
         node = ParserTestUtil.parseSingle(
             "<DoubleVariableDeclarationTest>",
             "double d = 12",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DOUBLE, node.type.type)
-        assertNotNull(node.assignment)
+        assertSame(ShakeVariableType.Type.DOUBLE, node.type.type)
+        assertNotNull(node.value)
     }
 
     @Test
@@ -1373,12 +1364,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<DoubleVariableDeclarationTest>",
             "final double d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DOUBLE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PACKAGE, node.access)
+        assertSame(ShakeVariableType.Type.DOUBLE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1389,12 +1380,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicDoubleVariableDeclarationTest>",
             "public double d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DOUBLE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.DOUBLE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1405,12 +1396,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalDoubleVariableDeclarationTest>",
             "public final double d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DOUBLE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PUBLIC, node.access)
+        assertSame(ShakeVariableType.Type.DOUBLE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1421,12 +1412,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedDoubleVariableDeclarationTest>",
             "protected double d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DOUBLE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.DOUBLE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1437,12 +1428,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalDoubleVariableDeclarationTest>",
             "protected final double d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DOUBLE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PROTECTED, node.access)
+        assertSame(ShakeVariableType.Type.DOUBLE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1453,12 +1444,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateDoubleVariableDeclarationTest>",
             "private double d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DOUBLE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.DOUBLE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertFalse(node.isInClass)
@@ -1469,12 +1460,12 @@ class VariableTests {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalDoubleVariableDeclarationTest>",
             "private final double d",
-            VariableDeclarationNode::class
+            ShakeVariableDeclarationNode::class
         )
         assertEquals("d", node.name)
-        assertSame(VariableType.Type.DOUBLE, node.type.type)
-        assertNull(node.assignment)
-        assertSame(AccessDescriber.PRIVATE, node.access)
+        assertSame(ShakeVariableType.Type.DOUBLE, node.type.type)
+        assertNull(node.value)
+        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertFalse(node.isInClass)
@@ -1484,10 +1475,10 @@ class VariableTests {
     //// Variable Usage
     @Test
     fun testVariableUsage() {
-        val node = ParserTestUtil.parseSingle("<VariableUsageTest>", "i", VariableUsageNode::class)
+        val node = ParserTestUtil.parseValue("<VariableUsageTest>", "i", ShakeVariableUsageNode::class)
 
         // Variable names
-        assertType(IdentifierNode::class, node.variable)
+        assertType(ShakeIdentifierNode::class, node.variable)
         assertEquals("i", node.variable.name)
         assertNull(node.variable.parent)
     }

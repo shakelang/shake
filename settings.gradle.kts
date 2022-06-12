@@ -1,5 +1,4 @@
 rootProject.name = "Shake"
-
 include("cli")
 include("jvm")
 include(":util:parseutils")
@@ -9,6 +8,7 @@ include(":shake:compiler:lexer")
 include(":shake:compiler:parser")
 include(":shake:compiler:interpreter")
 include(":shake:compiler:jsgenerator")
+include(":shake:compiler:processor")
 include(":shake:shasambly:shastools")
 include(":shake:shasambly:shasambly")
 include(":shake:shasambly:shasp")

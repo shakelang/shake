@@ -1,158 +1,161 @@
 package io.github.shakelang.shake.parser
 
 import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.expression.AddNode
-import io.github.shakelang.shake.parser.node.expression.MulNode
-import io.github.shakelang.shake.parser.node.factor.DoubleNode
-import io.github.shakelang.shake.parser.node.factor.IntegerNode
+import io.github.shakelang.shake.parser.node.expression.ShakeAddNode
+import io.github.shakelang.shake.parser.node.expression.ShakeMulNode
+import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
+import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import io.github.shakelang.shake.parser.node.logical.*
 import kotlin.reflect.KClass
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class LogicalTests {
     @Test
     fun testTrue() {
-        assertNotNull(ParserTestUtil.parseSingle("<LogicalTrueTest>", "true", LogicalTrueNode::class))
+        assertNotNull(ParserTestUtil.parseValue("<LogicalTrueTest>", "true", ShakeLogicalTrueNode::class))
     }
 
     @Test
     fun testFalse() {
         assertNotNull(
-            ParserTestUtil.parseSingle(
+            ParserTestUtil.parseValue(
                 "<LogicalFalseTest>",
                 "false",
-                LogicalFalseNode::class
+                ShakeLogicalFalseNode::class
             )
         )
     }
 
     @Test
     fun testEqEquals() {
-        testBasic("10==10", 10.0, 10.0, LogicalEqEqualsNode::class)
+        testBasic("10==10", 10.0, 10.0, ShakeLogicalEqEqualsNode::class)
     }
 
     @Test
     fun testBiggerEquals() {
-        testBasic("10>=10", 10.0, 10.0, LogicalBiggerEqualsNode::class)
+        testBasic("10>=10", 10.0, 10.0, ShakeLogicalBiggerEqualsNode::class)
     }
 
     @Test
     fun testSmallerEquals() {
-        testBasic("10<=10", 10.0, 10.0, LogicalSmallerEqualsNode::class)
+        testBasic("10<=10", 10.0, 10.0, ShakeLogicalSmallerEqualsNode::class)
     }
 
     @Test
     fun testBigger() {
-        testBasic("10>10", 10.0, 10.0, LogicalBiggerNode::class)
+        testBasic("10>10", 10.0, 10.0, ShakeLogicalBiggerNode::class)
     }
 
     @Test
     fun testSmaller() {
-        testBasic("10<10", 10.0, 10.0, LogicalSmallerNode::class)
+        testBasic("10<10", 10.0, 10.0, ShakeLogicalSmallerNode::class)
     }
 
     @Test
     fun testAnd() {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             "<LogicalAndTest>",
             "true && false",
-            LogicalAndNode::class
+            ShakeLogicalAndNode::class
         )
         assertNotNull(node.left)
-        assertType(LogicalTrueNode::class, node.left)
+        assertType(ShakeLogicalTrueNode::class, node.left)
         assertNotNull(node.right)
-        assertType(LogicalFalseNode::class, node.right)
+        assertType(ShakeLogicalFalseNode::class, node.right)
     }
 
     @Test
     fun testOr() {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             "<LogicalOrTest>",
             "true || false",
-            LogicalOrNode::class
+            ShakeLogicalOrNode::class
         )
         assertNotNull(node.left)
-        assertType(LogicalTrueNode::class, node.left)
+        assertType(ShakeLogicalTrueNode::class, node.left)
         assertNotNull(node.right)
-        assertType(LogicalFalseNode::class, node.right)
+        assertType(ShakeLogicalFalseNode::class, node.right)
     }
 
     @Test
     fun testXOr() {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             "<LogicalXOrTest>",
             "true ^ false",
-            LogicalXOrNode::class
+            ShakeLogicalXOrNode::class
         )
         assertNotNull(node.left)
-        assertType(LogicalTrueNode::class, node.left)
+        assertType(ShakeLogicalTrueNode::class, node.left)
         assertNotNull(node.right)
-        assertType(LogicalFalseNode::class, node.right)
+        assertType(ShakeLogicalFalseNode::class, node.right)
     }
 
     @Test
     fun testBrackets() {
         val node =
-            ParserTestUtil.parseSingle(
+            ParserTestUtil.parseValue(
                 "<LogicalBracketTest>",
                 "true && (false || true)",
-                LogicalAndNode::class
+                ShakeLogicalAndNode::class
             )
         assertNotNull(node.left)
-        assertType(LogicalTrueNode::class, node.left)
+        assertType(ShakeLogicalTrueNode::class, node.left)
         assertNotNull(node.right)
-        assertType(LogicalOrNode::class, node.right)
-        val or = node.right as LogicalOrNode
+        assertType(ShakeLogicalOrNode::class, node.right)
+        val or = node.right as ShakeLogicalOrNode
         assertNotNull(or.left)
-        assertType(LogicalFalseNode::class, or.left)
+        assertType(ShakeLogicalFalseNode::class, or.left)
         assertNotNull(or.right)
-        assertType(LogicalTrueNode::class, or.right)
+        assertType(ShakeLogicalTrueNode::class, or.right)
     }
 
     @Test
     fun testExpr() {
-        val node = ParserTestUtil.parseSingle(
+        val node = ParserTestUtil.parseValue(
             "<LogicalExpressionTest>",
             "10 >= 5 + 9 * 2",
-            LogicalBiggerEqualsNode::class
+            ShakeLogicalBiggerEqualsNode::class
         )
         assertNotNull(node.left)
-        assertType(IntegerNode::class, node.left)
-        assertEquals(10, (node.left as IntegerNode).number)
+        assertType(ShakeIntegerNode::class, node.left)
+        assertEquals(10, (node.left as ShakeIntegerNode).number)
         assertNotNull(node.right)
-        assertType(AddNode::class, node.right)
-        val add = node.right as AddNode
+        assertType(ShakeAddNode::class, node.right)
+        val add = node.right as ShakeAddNode
         assertNotNull(add.left)
-        assertType(IntegerNode::class, add.left)
-        assertEquals(5, (add.left as IntegerNode).number)
+        assertType(ShakeIntegerNode::class, add.left)
+        assertEquals(5, (add.left as ShakeIntegerNode).number)
         assertNotNull(add.right)
-        assertType(MulNode::class, add.right)
-        val mul = add.right as MulNode
+        assertType(ShakeMulNode::class, add.right)
+        val mul = add.right as ShakeMulNode
         assertNotNull(mul.left)
-        assertType(IntegerNode::class, mul.left)
-        assertEquals(9, (mul.left as IntegerNode).number)
+        assertType(ShakeIntegerNode::class, mul.left)
+        assertEquals(9, (mul.left as ShakeIntegerNode).number)
         assertNotNull(mul.right)
-        assertType(IntegerNode::class, mul.right)
-        assertEquals(2, (mul.right as IntegerNode).number)
+        assertType(ShakeIntegerNode::class, mul.right)
+        assertEquals(2, (mul.right as ShakeIntegerNode).number)
     }
 
-    private fun <T : LogicalCompareNode> testBasic(input: String, left: Double, right: Double, type: KClass<T>) {
-        val node = ParserTestUtil.parseSingle(
+    private fun <T : ShakeLogicalCompareNode> testBasic(input: String, left: Double, right: Double, type: KClass<T>) {
+        val node = ParserTestUtil.parseValue(
             '<'.toString() + type.simpleName?.substring(type.simpleName?.length?.minus(4) ?: 0) + "Test>",
             input,
             type
         )
         assertNotNull(node.left)
-        assertTrue(node.left is DoubleNode || node.left is IntegerNode)
-        if (node.left is DoubleNode) assertEquals(
+        assertTrue(node.left is ShakeDoubleNode || node.left is ShakeIntegerNode)
+        if (node.left is ShakeDoubleNode) assertEquals(
             left,
-            (node.left as DoubleNode).number
-        ) else assertEquals(left, (node.left as IntegerNode).number.toDouble())
+            (node.left as ShakeDoubleNode).number
+        ) else assertEquals(left, (node.left as ShakeIntegerNode).number.toDouble())
         assertNotNull(node.right)
-        assertTrue(node.right is DoubleNode || node.right is IntegerNode)
-        if (node.right is DoubleNode) assertEquals(
+        assertTrue(node.right is ShakeDoubleNode || node.right is ShakeIntegerNode)
+        if (node.right is ShakeDoubleNode) assertEquals(
             right,
-            (node.right as DoubleNode).number
-        ) else assertEquals(right, (node.right as IntegerNode).number.toDouble())
+            (node.right as ShakeDoubleNode).number
+        ) else assertEquals(right, (node.right as ShakeIntegerNode).number.toDouble())
     }
 }

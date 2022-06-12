@@ -2,7 +2,7 @@ package io.github.shakelang.shake.interpreter.values
 
 import io.github.shakelang.shake.interpreter.UnformattedInterpreterError
 import io.github.shakelang.shake.interpreter.values.BooleanValue.Companion.from
-import io.github.shakelang.shake.parser.node.CastNode.CastTarget
+import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
 import kotlin.jvm.JvmField
 import kotlin.math.pow
 import kotlin.reflect.KClass

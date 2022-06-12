@@ -1,51 +1,45 @@
 package io.github.shakelang.shake.parser
 
 import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.IdentifierNode
-import io.github.shakelang.shake.parser.node.functions.FunctionCallNode
-import io.github.shakelang.shake.parser.node.variables.VariableUsageNode
-import kotlin.test.*
+import io.github.shakelang.shake.parser.node.ShakeIdentifierNode
+import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import io.github.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class IdentifierTests {
     @Test
     fun testBasicIdentifier() {
-        val tree = ParserTestUtil.parse("<BasicIdentifierTest>", "test")
-        assertEquals(1, tree.children.size)
-        assertType(VariableUsageNode::class, tree.children[0])
-        val node = tree.children[0] as VariableUsageNode
+        val node = ParserTestUtil.parseValue("<BasicIdentifierTest>", "test", ShakeVariableUsageNode::class)
         assertEquals("test", node.variable.name)
         assertNull(node.variable.parent)
     }
 
     @Test
     fun testComplexIdentifier() {
-        val tree = ParserTestUtil.parse("<BasicIdentifierTest>", "test.test2")
-        assertEquals(1, tree.children.size)
-        assertType(VariableUsageNode::class, tree.children[0])
-        var node = tree.children[0] as VariableUsageNode
+        var node = ParserTestUtil.parseValue("<BasicIdentifierTest>", "test.test2", ShakeVariableUsageNode::class)
         assertEquals("test2", node.variable.name)
         assertNotNull(node.variable.parent)
-        assertType(VariableUsageNode::class, node.variable.parent!!)
-        node = node.variable.parent as VariableUsageNode
+        assertType(ShakeVariableUsageNode::class, node.variable.parent!!)
+        node = node.variable.parent as ShakeVariableUsageNode
         assertEquals("test", node.variable.name)
         assertNull(node.variable.parent)
     }
 
     @Test
     fun testComplexIdentifierWithFunctions() {
-        val tree = ParserTestUtil.parse("<BasicIdentifierTest>", "aaa.test().test2")
-        assertEquals(1, tree.children.size)
-        assertType(VariableUsageNode::class, tree.children[0])
-        var node = tree.children[0] as VariableUsageNode
+        var node = ParserTestUtil.parseValue("<BasicIdentifierTest>", "aaa.test().test2", ShakeVariableUsageNode::class)
         assertEquals("test2", node.variable.name)
         assertNotNull(node.variable.parent)
-        assertType(FunctionCallNode::class, node.variable.parent!!)
-        val node2 = node.variable.parent as FunctionCallNode
+        assertType(ShakeFunctionCallNode::class, node.variable.parent!!)
+        val node2 = node.variable.parent as ShakeFunctionCallNode
         assertNotNull(node.variable.parent)
-        assertType(IdentifierNode::class, node2.function)
-        assertEquals("test", (node2.function as IdentifierNode).name)
-        assertType(VariableUsageNode::class, (node2.function as IdentifierNode).parent!!)
-        node = (node2.function as IdentifierNode).parent as VariableUsageNode
+        assertType(ShakeIdentifierNode::class, node2.function)
+        assertEquals("test", (node2.function as ShakeIdentifierNode).name)
+        assertType(ShakeVariableUsageNode::class, (node2.function as ShakeIdentifierNode).parent!!)
+        node = (node2.function as ShakeIdentifierNode).parent as ShakeVariableUsageNode
         assertEquals("aaa", node.variable.name)
         assertNull(node.variable.parent)
     }
