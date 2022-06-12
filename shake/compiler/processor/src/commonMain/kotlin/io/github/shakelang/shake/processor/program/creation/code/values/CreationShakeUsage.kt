@@ -1,9 +1,7 @@
 package io.github.shakelang.shake.processor.program.creation.code.values
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeClassField
 import io.github.shakelang.shake.processor.program.creation.CreationShakeDeclaration
 import io.github.shakelang.shake.processor.program.creation.CreationShakeField
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.ShakeType
@@ -17,7 +15,7 @@ abstract class CreationShakeUsage : CreationShakeValue, ShakeUsage {
 
 open class CreationShakeClassFieldUsage(
     override val scope: CreationShakeScope,
-    final override val declaration: CreationShakeClassField,
+    final override val declaration: CreationShakeField,
     override val receiver: CreationShakeValue? = null
 ) : CreationShakeUsage(), ShakeClassFieldUsage {
 
@@ -37,7 +35,7 @@ open class CreationShakeClassFieldUsage(
 
 open class CreationShakeStaticClassFieldUsage(
     override val scope: CreationShakeScope,
-    final override val declaration: CreationShakeClassField
+    final override val declaration: CreationShakeField
 ) : CreationShakeUsage(), ShakeStaticClassFieldUsage {
 
     override val name get() = declaration.name
@@ -53,7 +51,7 @@ open class CreationShakeStaticClassFieldUsage(
 
 }
 
-open class CreationShakeFieldUsage(
+class CreationShakeFieldUsage(
     override val scope: CreationShakeScope,
     final override val declaration: CreationShakeField,
     override val receiver: CreationShakeValue? = null
@@ -63,11 +61,8 @@ open class CreationShakeFieldUsage(
     override val type get() = declaration.type
 
     init {
-        if(declaration is CreationShakeClassField && !declaration.isStatic) {
-            if(receiver == null) {
-                throw IllegalArgumentException("Field $name is not static")
-            }
-        }
+        if(!declaration.isStatic && receiver == null) throw IllegalArgumentException("Field $name is not static")
+        if(declaration.isStatic && receiver != null) throw IllegalArgumentException("Field $name is static")
     }
 
     override fun toJson(): Map<String, Any?> {
@@ -81,22 +76,18 @@ open class CreationShakeFieldUsage(
 
     companion object {
 
-        fun from(scope: CreationShakeScope, declaration: CreationShakeClassField, receiver: CreationShakeValue? = null): CreationShakeUsage {
-            if(declaration.isStatic) {
-                if(receiver != null) throw IllegalArgumentException("Static field $declaration cannot have a receiver")
-                return CreationShakeStaticClassFieldUsage(scope, declaration)
-            }
-            if(receiver == null) throw IllegalArgumentException("Field $declaration is not static")
-            return CreationShakeClassFieldUsage(scope, declaration, receiver)
-        }
-
         fun from(scope: CreationShakeScope, declaration: CreationShakeField, receiver: CreationShakeValue? = null): CreationShakeUsage {
-            return if(declaration is CreationShakeClassField) from(scope, declaration, receiver)
+            return if(declaration.clazz != null) {
+                if(declaration.isStatic) {
+                    if(receiver != null) throw IllegalArgumentException("Static field $declaration cannot have a receiver")
+                    CreationShakeStaticClassFieldUsage(scope, declaration)
+                }
+                else if(receiver == null) throw IllegalArgumentException("Field $declaration is not static")
+                else CreationShakeClassFieldUsage(scope, declaration, receiver)
+            }
             else CreationShakeFieldUsage(scope, declaration, receiver)
         }
-
     }
-
 }
 
 open class CreationShakeVariableUsage(

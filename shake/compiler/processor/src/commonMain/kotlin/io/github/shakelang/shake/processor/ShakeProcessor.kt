@@ -416,7 +416,7 @@ open class ShakeCodeProcessor {
                 val name = functionNode.name
                 val args = n.args.map { visitValue(scope, it) }
                 val types = args.map { it.type }
-                val functions = (parent.type.childFunctions(name) ?: throw Exception("No function named $name in ${parent.type}")) as List<CreationShakeFunction> // TODO
+                val functions = (parent.type.childFunctions(name) ?: throw Exception("No function named $name in ${parent.type}")) as List<CreationShakeMethod> // TODO
                 val function = ShakeSelect.selectFunction(functions, types)
                     ?: throw Exception("No function named $name with arguments $types in ${parent.type}")
                 return CreationShakeInvocation(function, args, parent)

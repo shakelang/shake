@@ -8,8 +8,8 @@ interface CreationShakeScope : ShakeScope {
     override val parent: CreationShakeScope?
     override fun get(name: String): CreationShakeAssignable?
     fun set(value: CreationShakeDeclaration)
-    override fun getFunctions(name: String): List<CreationShakeFunction>
-    fun setFunctions(function: CreationShakeFunction)
+    override fun getFunctions(name: String): List<CreationShakeMethod>
+    fun setFunctions(function: CreationShakeMethod)
     override fun getClass(name: String): CreationShakeClass?
     fun setClass(klass: CreationShakeClass)
     override fun getInvokable(name: String): List<CreationShakeInvokable> {

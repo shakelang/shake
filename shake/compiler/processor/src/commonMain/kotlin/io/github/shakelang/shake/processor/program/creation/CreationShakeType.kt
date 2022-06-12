@@ -34,8 +34,8 @@ abstract class CreationShakeType (
     abstract override fun orType(other: ShakeType): CreationShakeType?
     abstract override fun notType(): CreationShakeType?
     override fun childType(name: String): CreationShakeType? = null
-    override fun childFunctions(name: String): List<CreationShakeFunction>? = null
-    override fun childInvokable(name: String): List<CreationShakeFunction>? = childFunctions(name)
+    override fun childFunctions(name: String): List<CreationShakeMethod>? = null
+    override fun childInvokable(name: String): List<CreationShakeMethod>? = childFunctions(name)
 
     abstract override val kind: ShakeType.Kind
 
@@ -137,7 +137,7 @@ abstract class CreationShakeType (
                     return mapOf("type" to "boolean")
                 }
 
-                override val qualifiedName: String get() = "b"
+                override val qualifiedName: String get() = "Z"
             }
 
             val BYTE: Primitive = object : Primitive("byte", ShakeType.PrimitiveType.BYTE) {
@@ -343,7 +343,7 @@ abstract class CreationShakeType (
                     return mapOf("type" to "long")
                 }
 
-                override val qualifiedName: String get() = "L"
+                override val qualifiedName: String get() = "J"
             }
 
             val FLOAT: Primitive = object : Primitive("float", ShakeType.PrimitiveType.FLOAT) {
@@ -657,7 +657,7 @@ abstract class CreationShakeType (
                     return mapOf("type" to "unsigned_long")
                 }
 
-                override val qualifiedName: String get() = "UL"
+                override val qualifiedName: String get() = "UJ"
             }
 
             val CHAR = object : Primitive("char", ShakeType.PrimitiveType.CHAR) {
@@ -748,9 +748,9 @@ abstract class CreationShakeType (
     }
 
     class Object (
-        val clazz: CreationShakeClass,
+        override val clazz: CreationShakeClass,
         name: String = clazz.qualifiedName,
-    ) : CreationShakeType(name) {
+    ) : CreationShakeType(name), ShakeType.Object {
         override fun additionType(other: ShakeType): CreationShakeType? = null
         override fun subtractionType(other: ShakeType): CreationShakeType? = null
         override fun multiplicationType(other: ShakeType): CreationShakeType? = null
@@ -768,7 +768,7 @@ abstract class CreationShakeType (
         override fun notType(): CreationShakeType? = null
 
         override fun childType(name: String): CreationShakeType? = clazz.fields.find { it.name == name }?.type
-        override fun childFunctions(name: String): List<CreationShakeFunction> {
+        override fun childFunctions(name: String): List<CreationShakeMethod> {
             return clazz.methods.filter { it.name == name }
         }
 
@@ -792,7 +792,7 @@ abstract class CreationShakeType (
         }
 
         override val qualifiedName: String
-            get() = "L${clazz.qualifiedName};"
+            get() = "L${clazz.qualifiedName}"
     }
 
     class Array (
@@ -886,7 +886,7 @@ abstract class CreationShakeType (
     }
 
     object Primitives {
-        val BOOLEAN = Primitive.BYTE
+        val BOOLEAN = Primitive.BOOLEAN
         val BYTE = Primitive.BYTE
         val SHORT = Primitive.SHORT
         val INT = Primitive.INT

@@ -11,6 +11,7 @@ import io.github.shakelang.shake.processor.program.types.ShakeType
 open class CreationShakeField (
     override val project: CreationShakeProject,
     override val pkg: CreationShakePackage?,
+    override val clazz: CreationShakeClass?,
     override val parentScope: CreationShakeScope,
     override val name: String,
     override val isStatic: Boolean,
@@ -81,6 +82,7 @@ open class CreationShakeField (
             return object : CreationShakeField(
                 baseProject,
                 pkg,
+                null,
                 parentScope,
                 node.name,
                 node.isStatic,
@@ -103,6 +105,33 @@ open class CreationShakeField (
                 it
             }
         }
-    }
 
+        fun from(clazz: CreationShakeClass, parentScope: CreationShakeScope, node: ShakeVariableDeclarationNode): CreationShakeField {
+            return object : CreationShakeField(
+                clazz.prj,
+                clazz.pkg,
+                clazz,
+                parentScope,
+                node.name,
+                node.isStatic,
+                node.isFinal,
+                false,
+                node.access == ShakeAccessDescriber.PRIVATE,
+                node.access == ShakeAccessDescriber.PROTECTED,
+                node.access == ShakeAccessDescriber.PUBLIC
+            ) {
+
+                override var initialValue: CreationShakeValue? = null
+                    private set
+
+                override fun processCode() {
+                    initialValue = node.value?.let { this.parentScope.processor.visitValue(parentScope, it) }
+                }
+
+            }.let {
+                it.lateinitType().let { run -> clazz.prj.getType(node.type) { t -> run(t) } }
+                it
+            }
+        }
+    }
 }

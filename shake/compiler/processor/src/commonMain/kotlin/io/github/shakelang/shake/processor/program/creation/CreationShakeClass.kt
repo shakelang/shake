@@ -5,9 +5,8 @@ import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import io.github.shakelang.shake.processor.program.types.ShakeClass
-import kotlin.math.min
 
-open class CreationShakeClass: ShakeClass {
+class CreationShakeClass: ShakeClass {
     override val staticScope = StaticScope()
     override val instanceScope = InstanceScope()
     override val prj: CreationShakeProject
@@ -15,21 +14,30 @@ open class CreationShakeClass: ShakeClass {
     override val parentScope: CreationShakeScope
     override val name: String
     override val methods: List<CreationShakeMethod>
-    override val fields: List<CreationShakeClassField>
+    override val fields: List<CreationShakeField>
     override val classes: List<CreationShakeClass>
-    override val staticMethods: List<CreationShakeMethod>
-    override val staticFields: List<CreationShakeClassField>
-    override val staticClasses: List<CreationShakeClass>
     override val constructors: List<CreationShakeConstructor>
 
-    override val qualifiedName: String
-        get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
+    override val isAbstract: Boolean
+    override val isFinal: Boolean
+    override val isStatic: Boolean
+    override val isPublic: Boolean
+    override val isPrivate: Boolean
+    override val isProtected: Boolean
+
+    override val instanceClasses: List<ShakeClass> get() = classes.filter { !it.isStatic }
+    override val instanceMethods: List<CreationShakeMethod> get() = methods.filter { !it.isStatic }
+    override val instanceFields: List<CreationShakeField> get() = fields.filter { !it.isStatic }
+
+    override val staticMethods: List<CreationShakeMethod> get() = methods.filter { it.isStatic }
+    override val staticFields: List<CreationShakeField> get() = fields.filter { it.isStatic }
+    override val staticClasses: List<CreationShakeClass> get() = classes.filter { it.isStatic }
+
 
     final override var superClass: CreationShakeClass? = null
         private set
 
     private var _interfaces: List<CreationShakeClass?> = listOf()
-        private set
 
     override val interfaces: List<CreationShakeClass>
         get() = _interfaces.map { it!! }
@@ -40,12 +48,15 @@ open class CreationShakeClass: ShakeClass {
         parentScope: CreationShakeScope,
         name: String,
         methods: List<CreationShakeMethod>,
-        fields: List<CreationShakeClassField>,
+        fields: List<CreationShakeField>,
         classes: List<CreationShakeClass>,
-        staticMethods: List<CreationShakeMethod>,
-        staticFields: List<CreationShakeClassField>,
-        staticClasses: List<CreationShakeClass>,
-        constructors: List<CreationShakeConstructor> = listOf()
+        constructors: List<CreationShakeConstructor> = listOf(),
+        isAbstract: Boolean = false,
+        isFinal: Boolean = false,
+        isStatic: Boolean = false,
+        isPublic: Boolean = false,
+        isPrivate: Boolean = false,
+        isProtected: Boolean = false
     ) {
         this.prj = prj
         this.pkg = pkg
@@ -54,10 +65,13 @@ open class CreationShakeClass: ShakeClass {
         this.methods = methods
         this.fields = fields
         this.classes = classes
-        this.staticMethods = staticMethods
-        this.staticFields = staticFields
-        this.staticClasses = staticClasses
         this.constructors = constructors
+        this.isAbstract = isAbstract
+        this.isFinal = isFinal
+        this.isStatic = isStatic
+        this.isPublic = isPublic
+        this.isPrivate = isPrivate
+        this.isProtected = isProtected
     }
     private constructor(
         baseProject: CreationShakeProject,
@@ -70,8 +84,17 @@ open class CreationShakeClass: ShakeClass {
         this.name = clz.name
         this.parentScope = parentScope
 
-        val mtds = clz.methods.map {
+        this.isAbstract = false // TODO implement abstract
+        this.isFinal = clz.isFinal
+        this.isStatic = clz.isStatic
+        this.isPublic = clz.access == ShakeAccessDescriber.PUBLIC
+        this.isPrivate = clz.access == ShakeAccessDescriber.PRIVATE
+        this.isProtected = clz.access == ShakeAccessDescriber.PROTECTED
+
+        this.methods = clz.methods.map {
             val method = CreationShakeMethod(
+                this.prj,
+                this.pkg,
                 this,
                 if(it.isStatic) staticScope else instanceScope,
                 it.name,
@@ -91,15 +114,12 @@ open class CreationShakeClass: ShakeClass {
                 .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
             method
         }
-        this.methods = mtds.filter { !it.isStatic }
-        this.staticMethods = mtds.filter { it.isStatic }
-        val flds = clz.fields.map {
-            val field = CreationShakeClassField.from(this, if (it.isStatic) staticScope else instanceScope, it)
+
+        this.fields = clz.fields.map {
+            val field = CreationShakeField.from(this, if (it.isStatic) staticScope else instanceScope, it)
             field.lateinitType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
             field
         }
-        this.fields = flds.filter { !it.isStatic }
-        this.staticFields = flds.filter { it.isStatic }
 
         // TODO inner classes
 
@@ -125,7 +145,6 @@ open class CreationShakeClass: ShakeClass {
          */
 
         this.classes = emptyList()
-        this.staticClasses = emptyList()
     }
 
     fun lateinitSuper(): (CreationShakeClass?) -> CreationShakeClass? {
@@ -145,21 +164,6 @@ open class CreationShakeClass: ShakeClass {
         }
     }
 
-    override fun compatibleTo(other: ShakeClass): Boolean {
-        if (this == other) return true
-        if (this.superClass != null && this.superClass!!.compatibleTo(other)) return true
-        return this.interfaces.any { it.compatibleTo(other) }
-    }
-
-    override fun compatibilityDistance(other: ShakeClass): Int {
-        if (this == other) return 0
-        val scd = (this.superClass?.compatibilityDistance(other) ?: -1) + 1
-        val intDistance = (this.interfaces.minOfOrNull { it.compatibilityDistance(other) } ?: -2) + 1
-        if(scd < 0) return intDistance
-        if(intDistance < 0) return scd
-        return min(scd, intDistance)
-    }
-
     fun asType(): CreationShakeType {
         return CreationShakeType.Object(this)
     }
@@ -172,21 +176,6 @@ open class CreationShakeClass: ShakeClass {
         this.constructors.forEach { it.processCode() }
         this.classes.forEach { it.processCode() }
         this.staticClasses.forEach { it.processCode() }
-    }
-
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "name" to this.name,
-            "super" to this.superClass?.name,
-            "interfaces" to this.interfaces.map { it.name },
-            "methods" to this.methods.map { it.toJson() },
-            "staticMethods" to this.staticMethods.map { it.toJson() },
-            "fields" to this.fields.map { it.toJson() },
-            "staticFields" to this.staticFields.map { it.toJson() },
-            "constructors" to this.constructors.map { it.toJson() },
-            "classes" to this.classes.map { it.toJson() },
-            "staticClasses" to this.staticClasses.map { it.toJson() },
-        )
     }
 
     inner class StaticScope : CreationShakeScope {
@@ -202,11 +191,11 @@ open class CreationShakeClass: ShakeClass {
             throw IllegalStateException("Cannot set in this scope")
         }
 
-        override fun getFunctions(name: String): List<CreationShakeFunction> {
+        override fun getFunctions(name: String): List<CreationShakeMethod> {
             return staticMethods.filter { it.name == name } + parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: CreationShakeFunction) {
+        override fun setFunctions(function: CreationShakeMethod) {
             throw IllegalStateException("Cannot set in this scope")
         }
 
@@ -233,11 +222,11 @@ open class CreationShakeClass: ShakeClass {
             throw IllegalStateException("Cannot set in this scope")
         }
 
-        override fun getFunctions(name: String): List<CreationShakeFunction> {
+        override fun getFunctions(name: String): List<CreationShakeMethod> {
             return methods.filter { it.name == name } + staticMethods.filter { it.name == name } + parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: CreationShakeFunction) {
+        override fun setFunctions(function: CreationShakeMethod) {
             throw IllegalStateException("Cannot set in this scope")
         }
 

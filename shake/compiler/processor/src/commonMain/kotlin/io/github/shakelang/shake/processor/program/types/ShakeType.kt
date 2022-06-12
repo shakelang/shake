@@ -1,40 +1,41 @@
 package io.github.shakelang.shake.processor.program.types
 
+
 interface ShakeType {
 
     val name: String
     val qualifiedName: String
 
-    fun assignType(other: ShakeType): ShakeType?
-    fun additionAssignType(other: ShakeType): ShakeType?
-    fun subtractionAssignType(other: ShakeType): ShakeType?
-    fun multiplicationAssignType(other: ShakeType): ShakeType?
-    fun divisionAssignType(other: ShakeType): ShakeType?
-    fun modulusAssignType(other: ShakeType): ShakeType?
-    fun powerAssignType(other: ShakeType): ShakeType?
-    fun incrementBeforeType(): ShakeType?
-    fun incrementAfterType(): ShakeType?
-    fun decrementBeforeType(): ShakeType?
-    fun decrementAfterType(): ShakeType?
+    fun assignType(other: ShakeType): ShakeType? = null
+    fun additionAssignType(other: ShakeType): ShakeType? = null
+    fun subtractionAssignType(other: ShakeType): ShakeType? = null
+    fun multiplicationAssignType(other: ShakeType): ShakeType? = null
+    fun divisionAssignType(other: ShakeType): ShakeType? = null
+    fun modulusAssignType(other: ShakeType): ShakeType? = null
+    fun powerAssignType(other: ShakeType): ShakeType? = null
+    fun incrementBeforeType(): ShakeType? = null
+    fun incrementAfterType(): ShakeType? = null
+    fun decrementBeforeType(): ShakeType? = null
+    fun decrementAfterType(): ShakeType? = null
 
-    fun additionType(other: ShakeType): ShakeType?
-    fun subtractionType(other: ShakeType): ShakeType?
-    fun multiplicationType(other: ShakeType): ShakeType?
-    fun divisionType(other: ShakeType): ShakeType?
-    fun modulusType(other: ShakeType): ShakeType?
-    fun powerType(other: ShakeType): ShakeType?
-    fun equalsType(other: ShakeType): ShakeType?
-    fun notEqualsType(other: ShakeType): ShakeType?
-    fun greaterThanType(other: ShakeType): ShakeType?
-    fun greaterThanOrEqualType(other: ShakeType): ShakeType?
-    fun lessThanType(other: ShakeType): ShakeType?
-    fun lessThanOrEqualType(other: ShakeType): ShakeType?
-    fun andType(other: ShakeType): ShakeType?
-    fun orType(other: ShakeType): ShakeType?
-    fun notType(): ShakeType?
-    fun childType(name: String): ShakeType?
-    fun childFunctions(name: String): List<ShakeFunction>?
-    fun childInvokable(name: String): List<ShakeFunction>?
+    fun additionType(other: ShakeType): ShakeType? = null
+    fun subtractionType(other: ShakeType): ShakeType? = null
+    fun multiplicationType(other: ShakeType): ShakeType? = null
+    fun divisionType(other: ShakeType): ShakeType? = null
+    fun modulusType(other: ShakeType): ShakeType? = null
+    fun powerType(other: ShakeType): ShakeType? = null
+    fun equalsType(other: ShakeType): ShakeType? = null
+    fun notEqualsType(other: ShakeType): ShakeType? = null
+    fun greaterThanType(other: ShakeType): ShakeType? = null
+    fun greaterThanOrEqualType(other: ShakeType): ShakeType? = null
+    fun lessThanType(other: ShakeType): ShakeType? = null
+    fun lessThanOrEqualType(other: ShakeType): ShakeType? = null
+    fun andType(other: ShakeType): ShakeType? = null
+    fun orType(other: ShakeType): ShakeType? = null
+    fun notType(): ShakeType? = null
+    fun childType(name: String): ShakeType? = null
+    fun childFunctions(name: String): List<ShakeMethod>? = null
+    fun childInvokable(name: String): List<ShakeMethod>? = null
 
     val kind: Kind
 
@@ -89,10 +90,88 @@ interface ShakeType {
 
     interface Object : ShakeType {
         val clazz: ShakeClass
+        override val kind: Kind get() = Kind.OBJECT
+
+        override fun additionType(other: ShakeType): ShakeType? = null
+        override fun subtractionType(other: ShakeType): ShakeType? = null
+        override fun multiplicationType(other: ShakeType): ShakeType? = null
+        override fun divisionType(other: ShakeType): ShakeType? = null
+        override fun modulusType(other: ShakeType): ShakeType? = null
+        override fun powerType(other: ShakeType): ShakeType? = null
+        override fun equalsType(other: ShakeType): ShakeType? = null
+        override fun notEqualsType(other: ShakeType): ShakeType? = null
+        override fun greaterThanType(other: ShakeType): ShakeType? = null
+        override fun greaterThanOrEqualType(other: ShakeType): ShakeType? = null
+        override fun lessThanType(other: ShakeType): ShakeType? = null
+        override fun lessThanOrEqualType(other: ShakeType): ShakeType? = null
+        override fun andType(other: ShakeType): ShakeType? = null
+        override fun orType(other: ShakeType): ShakeType? = null
+        override fun notType(): ShakeType? = null
+
+        override fun childType(name: String): ShakeType? = clazz.fields.find { it.name == name }?.type
+        override fun childFunctions(name: String): List<ShakeMethod> {
+            return clazz.methods.filter { it.name == name }
+        }
+
+        override fun castableTo(other: ShakeType): Boolean {
+            return other is Object && other.clazz.compatibleTo(clazz)
+        }
+
+        override fun compatibleTo(other: ShakeType): Boolean {
+            return other is Object && clazz.compatibleTo(other.clazz)
+        }
+
+        override fun compatibilityDistance(other: ShakeType): Int {
+            return if(other is Object) clazz.compatibilityDistance(other.clazz) else -1
+        }
+
+        override fun toJson(): Map<String, Any?> {
+            return mapOf("type" to "object", "class" to clazz.qualifiedName)
+        }
+
+        override val qualifiedName: String
+            get() = "L${clazz.qualifiedName}"
     }
 
     interface Array : ShakeType {
         val elementType: ShakeType
+        override fun additionType(other: ShakeType): ShakeType? = null
+        override fun subtractionType(other: ShakeType): ShakeType? = null
+        override fun multiplicationType(other: ShakeType): ShakeType? = null
+        override fun divisionType(other: ShakeType): ShakeType? = null
+        override fun modulusType(other: ShakeType): ShakeType? = null
+        override fun powerType(other: ShakeType): ShakeType? = null
+        override fun equalsType(other: ShakeType): ShakeType? = null
+        override fun notEqualsType(other: ShakeType): ShakeType? = null
+        override fun greaterThanType(other: ShakeType): ShakeType? = null
+        override fun greaterThanOrEqualType(other: ShakeType): ShakeType? = null
+        override fun lessThanType(other: ShakeType): ShakeType? = null
+        override fun lessThanOrEqualType(other: ShakeType): ShakeType? = null
+        override fun andType(other: ShakeType): ShakeType? = null
+        override fun orType(other: ShakeType): ShakeType? = null
+        override fun notType(): ShakeType? = null
+
+        override val kind: Kind
+            get() = Kind.ARRAY
+
+        override fun castableTo(other: ShakeType): Boolean {
+            return other is Array && other.elementType.castableTo(elementType)
+        }
+
+        override fun compatibleTo(other: ShakeType): Boolean {
+            return other is Array && elementType.compatibleTo(other.elementType)
+        }
+
+        override fun compatibilityDistance(other: ShakeType): Int {
+            return if(other is Array) elementType.compatibilityDistance(other.elementType) else -1
+        }
+
+        override fun toJson(): Map<String, Any?> {
+            return mapOf("type" to "array", "elementType" to elementType.toJson())
+        }
+
+        override val qualifiedName: String
+            get() = "[${elementType.qualifiedName}"
     }
 
     interface Lambda : ShakeType {

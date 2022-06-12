@@ -267,7 +267,7 @@ class ShakeJsGenerator {
         return JsParameter(n.name)
     }
 
-    fun visitFunctionDeclaration(n: CreationShakeFunction): JsFunctionDeclaration {
+    fun visitFunctionDeclaration(n: CreationShakeMethod): JsFunctionDeclaration {
         val name = n.name
         val parameters = n.parameters.map { visitParameter(it) }
         val body = visitCode(n.body)
@@ -322,7 +322,7 @@ class ShakeJsGenerator {
                 return JsFunctionCall(JsField(callable.name, JsField("this")), n.arguments.map { visitValue(it) })
 
             }
-            is CreationShakeFunction -> return JsFunctionCall(JsField(callable.name), n.arguments.map { visitValue(it) })
+            is CreationShakeMethod -> return JsFunctionCall(JsField(callable.name), n.arguments.map { visitValue(it) })
             is CreationShakeLambdaDeclaration -> TODO()
             // is ShakeLambdaDeclaration -> return JsFunctionCall(callable, n.arguments.map { visitValue(it) })
             else -> throw IllegalStateException("Unknown callable type")
@@ -383,7 +383,7 @@ class JsProject {
         generator: ShakeJsGenerator,
         subpackages: Array<CreationShakePackage>,
         classes: Array<CreationShakeClass>,
-        functions: Array<CreationShakeFunction>,
+        functions: Array<CreationShakeMethod>,
         fields: Array<CreationShakeField>
     ) {
         this.gen = generator
@@ -471,7 +471,7 @@ class JsPackage {
         name: String,
         subpackages: Array<CreationShakePackage>,
         classes: Array<CreationShakeClass>,
-        functions: Array<CreationShakeFunction>,
+        functions: Array<CreationShakeMethod>,
         fields: Array<CreationShakeField>
     ) {
         this.prj = prj

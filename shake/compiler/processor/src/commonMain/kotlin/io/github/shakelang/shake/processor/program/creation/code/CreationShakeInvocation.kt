@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.processor.program.creation.code
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeFunction
+import io.github.shakelang.shake.processor.program.creation.CreationShakeMethod
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
@@ -14,8 +14,8 @@ class CreationShakeInvocation (
 
     override val type: CreationShakeType
         get() = callable.returnType
-    override val name get() = if(callable is CreationShakeFunction) callable.name else "anonymous"
-    override val isAnonymous get() = callable !is CreationShakeFunction
+    override val name get() = if(callable is CreationShakeMethod) callable.name else "anonymous"
+    override val isAnonymous get() = callable !is CreationShakeMethod
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(

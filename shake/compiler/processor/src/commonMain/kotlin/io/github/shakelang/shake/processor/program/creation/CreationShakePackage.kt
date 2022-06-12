@@ -14,11 +14,11 @@ open class CreationShakePackage (
     override val parent: CreationShakePackage? = null,
     override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
     override val classes: MutableList<CreationShakeClass> = mutableListOf(),
-    override val functions: MutableList<CreationShakeFunction> = mutableListOf(),
+    override val functions: MutableList<CreationShakeMethod> = mutableListOf(),
     override val fields: MutableList<CreationShakeField> = mutableListOf(),
 ): ShakePackage {
 
-    override val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + (name)
+    override val qualifiedName: String get() = "${parent?.qualifiedName ?: ""}.$name"
     override val scope: CreationShakeScope = Scope()
 
     override fun getPackage(name: String): CreationShakePackage {
@@ -29,6 +29,10 @@ open class CreationShakePackage (
     }
 
     override fun getPackage(name: Array<String>): CreationShakePackage {
+        return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
+    }
+
+    override fun getPackage(name: List<String>): ShakePackage? {
         return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
     }
 
@@ -59,7 +63,7 @@ open class CreationShakePackage (
                 parent.set(value)
             }
 
-            override fun getFunctions(name: String): List<CreationShakeFunction> {
+            override fun getFunctions(name: String): List<CreationShakeMethod> {
                 return imports.zip(imported).filter {
                     val last = it.first.import.last()
                     last == name || last == "*"
@@ -68,7 +72,7 @@ open class CreationShakePackage (
                 } + parent.getFunctions(name)
             }
 
-            override fun setFunctions(function: CreationShakeFunction) {
+            override fun setFunctions(function: CreationShakeMethod) {
                 parent.setFunctions(function)
             }
 
@@ -100,7 +104,7 @@ open class CreationShakePackage (
                 is ShakeFunctionDeclarationNode -> {
                     if(functions.any { func -> func.name == it.name })
                         throw IllegalStateException("Function ${it.name} already exists") // TODO Functions with different signatures
-                    functions.add(CreationShakeFunction.from(baseProject, this, fileScope, it))
+                    functions.add(CreationShakeMethod.from(baseProject, this, fileScope, it))
                 }
                 is ShakeVariableDeclarationNode -> {
                     if(fields.any { field -> field.name == it.name })
@@ -118,17 +122,6 @@ open class CreationShakePackage (
         getPackage(pkg).putFile(file, contents)
     }
 
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "name" to name,
-            "parent" to parent?.name,
-            "subpackages" to subpackages.map { it.toJson() },
-            "classes" to classes.map { it.toJson() },
-            "functions" to functions.map { it.toJson() },
-            "fields" to fields.map { it.toJson() },
-        )
-    }
-
     private inner class Scope : CreationShakeScope {
         override val parent: CreationShakeScope get() = baseProject.projectScope
 
@@ -140,11 +133,11 @@ open class CreationShakePackage (
             throw IllegalStateException("Cannot set a value in a package scope")
         }
 
-        override fun getFunctions(name: String): List<CreationShakeFunction> {
+        override fun getFunctions(name: String): List<CreationShakeMethod> {
             return functions.filter { it.name == name } + parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: CreationShakeFunction) {
+        override fun setFunctions(function: CreationShakeMethod) {
             throw IllegalStateException("Cannot set a function in a package scope")
         }
 

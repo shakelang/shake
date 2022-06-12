@@ -45,19 +45,6 @@ open class CreationShakeConstructor (
         if(body is CreationShakeCode.ShakeLateProcessCode) (body as CreationShakeCode.ShakeLateProcessCode).process(scope)
     }
 
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "type" to "constructor",
-            "name" to name,
-            "parameters" to parameters.map { it.toJson() },
-            "body" to body.toJson(),
-            "isStrict" to isStrict,
-            "isPrivate" to isPrivate,
-            "isProtected" to isProtected,
-            "isPublic" to isPublic
-        )
-    }
-
     inner class ShakeConstructorScope : CreationShakeScope {
         override val parent: CreationShakeScope = clazz.instanceScope
 
@@ -73,11 +60,11 @@ open class CreationShakeConstructor (
             variables.add(value)
         }
 
-        override fun getFunctions(name: String): List<CreationShakeFunction> {
+        override fun getFunctions(name: String): List<CreationShakeMethod> {
             return parent.getFunctions(name)
         }
 
-        override fun setFunctions(function: CreationShakeFunction) {
+        override fun setFunctions(function: CreationShakeMethod) {
             throw IllegalStateException("Cannot set function in method scope")
         }
 

@@ -6,13 +6,12 @@ import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.types.ShakeProject
-import io.github.shakelang.shason.json
 
 open class CreationShakeProject(
     processor: ShakeCodeProcessor,
     override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
     override val classes: MutableList<CreationShakeClass> = mutableListOf(),
-    override val functions: MutableList<CreationShakeFunction> = mutableListOf(),
+    override val functions: MutableList<CreationShakeMethod> = mutableListOf(),
     override val fields: MutableList<CreationShakeField> = mutableListOf()
 ): ShakeProject {
 
@@ -32,11 +31,11 @@ open class CreationShakeProject(
             throw IllegalStateException("Cannot set a value in the project scope")
         }
 
-        override fun getFunctions(name: String): List<CreationShakeFunction> {
+        override fun getFunctions(name: String): List<CreationShakeMethod> {
             return functions.filter { it.name == name }
         }
 
-        override fun setFunctions(function: CreationShakeFunction) {
+        override fun setFunctions(function: CreationShakeMethod) {
             throw IllegalStateException("Cannot set a function in the project scope")
         }
 
@@ -58,6 +57,11 @@ open class CreationShakeProject(
     }
 
     override fun getPackage(name: Array<String>): CreationShakePackage {
+        if(name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
+        return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
+    }
+
+    override fun getPackage(name: List<String>): CreationShakePackage {
         if(name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
         return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
     }
@@ -94,7 +98,7 @@ open class CreationShakeProject(
                 parent.set(value)
             }
 
-            override fun getFunctions(name: String): List<CreationShakeFunction> {
+            override fun getFunctions(name: String): List<CreationShakeMethod> {
                 return imports.zip(imported).filter {
                     val last = it.first.import.last()
                     last == name || last == "*"
@@ -103,7 +107,7 @@ open class CreationShakeProject(
                 } + parent.getFunctions(name)
             }
 
-            override fun setFunctions(function: CreationShakeFunction) {
+            override fun setFunctions(function: CreationShakeMethod) {
                 parent.setFunctions(function)
             }
 
@@ -136,7 +140,7 @@ open class CreationShakeProject(
                 is ShakeFunctionDeclarationNode -> {
                     if(functions.any { func -> func.name == it.name })
                         throw IllegalArgumentException("Function ${it.name} already exists")
-                    functions.add(CreationShakeFunction.from(this, null, fileScope, it))
+                    functions.add(CreationShakeMethod.from(this, null, fileScope, it))
                 }
                 is ShakeVariableDeclarationNode -> {
                     if(fields.any { field -> field.name == it.name })
@@ -219,19 +223,6 @@ open class CreationShakeProject(
         this.fields.forEach { it.processCode() }
         this.subpackages.forEach { it.processCode() }
 
-    }
-
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "classes" to classes.map { it.toJson() },
-            "functions" to functions.map { it.toJson() },
-            "fields" to fields.map { it.toJson() },
-            "subpackages" to subpackages.map { it.toJson() }
-        )
-    }
-
-    override fun toJsonString(format: Boolean): String {
-        return json.stringify(toJson(), format)
     }
 
     private class ClassRequirement(val name: String, val then: (CreationShakeClass) -> Unit)
