@@ -16,9 +16,10 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
     val classes: Array<ShakeClassDeclarationNode>,
     val constructors: Array<ShakeConstructorDeclarationNode>,
     val access: ShakeAccessDescriber = ShakeAccessDescriber.PACKAGE,
-    val isInClass: Boolean = false,
+    val type: ShakeClassType = ShakeClassType.CLASS,
     val isStatic: Boolean = false,
-    val isFinal: Boolean = false
+    val isFinal: Boolean = false,
+    val isAbstract: Boolean = false,
 ) : ShakeFileChildNodeImpl(map) {
 
     constructor(
@@ -29,9 +30,10 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
         classes: List<ShakeClassDeclarationNode>,
         constructors: List<ShakeConstructorDeclarationNode>,
         access: ShakeAccessDescriber,
-        isInClass: Boolean,
+        type: ShakeClassType,
         isStatic: Boolean,
-        isFinal: Boolean
+        isFinal: Boolean,
+        isAbstract: Boolean,
     ) : this(
         map,
         name,
@@ -40,9 +42,10 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
         classes.toTypedArray(),
         constructors.toTypedArray(),
         access,
-        isInClass,
+        type,
         isStatic,
-        isFinal
+        isFinal,
+        isAbstract,
     )
 
     constructor(
@@ -51,7 +54,7 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
         fields: List<ShakeVariableDeclarationNode>,
         methods: List<ShakeFunctionDeclarationNode>,
         classes: List<ShakeClassDeclarationNode>,
-        constructors: List<ShakeConstructorDeclarationNode>
+        constructors: List<ShakeConstructorDeclarationNode>,
     ) : this(
         map,
         name,
@@ -64,7 +67,6 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
     override fun toJson(): Map<String, *> =
         mapOf(
             "name" to "ClassDeclarationNode",
-            "is_in_class" to isInClass,
             "is_static" to isStatic,
             "is_final" to isFinal,
             "access" to access.toString(),
@@ -73,4 +75,11 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
             "classes" to classes.map { it.json },
             "constructors" to constructors.map { it.json }
         )
+}
+
+enum class ShakeClassType {
+    CLASS,
+    INTERFACE,
+    ENUM,
+    OBJECT
 }

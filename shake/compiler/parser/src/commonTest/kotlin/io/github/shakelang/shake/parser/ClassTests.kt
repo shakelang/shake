@@ -8,7 +8,7 @@ import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import kotlin.test.*
 
-class ClassValueTests {
+class ClassTests {
     @Test
     fun testFinalClass() {
         val tree = ParserTestUtil.parse("<ClassTest>", "final class test {}")
@@ -16,7 +16,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
         assertEquals("test", node.name)
@@ -32,7 +31,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -48,7 +46,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -64,7 +61,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -80,7 +76,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -91,37 +86,11 @@ class ClassValueTests {
 
     @Test
     fun testClassField1() {
-        val tree = ParserTestUtil.parse("<ClassField1Test>", "class test { var i = 0; }")
+        val tree = ParserTestUtil.parse("<ClassField1Test>", "class test { int i = 0; }")
         assertEquals(1, tree.children.size)
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertFalse(node.isFinal)
-        assertEquals("test", node.name)
-        assertSame(1, node.fields.size)
-        assertSame(0, node.methods.size)
-        assertSame(0, node.classes.size)
-        assertType(ShakeVariableDeclarationNode::class, node.fields[0])
-        val variable = node.fields[0]
-        assertSame(ShakeVariableType.Type.DYNAMIC, variable.type.type)
-        assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
-        assertNotNull(variable.value)
-        assertEquals("i", variable.name)
-        assertTrue(variable.isInClass)
-        assertFalse(variable.isStatic)
-        assertFalse(variable.isFinal)
-    }
-
-    @Test
-    fun testClassField2() {
-        val tree = ParserTestUtil.parse("<ClassField2Test>", "class test { int i = 0; }")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeClassDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeClassDeclarationNode
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -134,7 +103,29 @@ class ClassValueTests {
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
         assertNotNull(variable.value)
         assertEquals("i", variable.name)
-        assertTrue(variable.isInClass)
+        assertFalse(variable.isStatic)
+        assertFalse(variable.isFinal)
+    }
+
+    @Test
+    fun testClassField2() {
+        val tree = ParserTestUtil.parse("<ClassField2Test>", "class test { int i = 0; }")
+        assertEquals(1, tree.children.size)
+        assertType(ShakeClassDeclarationNode::class, tree.children[0])
+        val node = tree.children[0] as ShakeClassDeclarationNode
+        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
+        assertFalse(node.isStatic)
+        assertFalse(node.isFinal)
+        assertEquals("test", node.name)
+        assertSame(1, node.fields.size)
+        assertSame(0, node.methods.size)
+        assertSame(0, node.classes.size)
+        assertType(ShakeVariableDeclarationNode::class, node.fields[0])
+        val variable = node.fields[0]
+        assertSame(ShakeVariableType.Type.INTEGER, variable.type.type)
+        assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
+        assertNotNull(variable.value)
+        assertEquals("i", variable.name)
         assertFalse(variable.isStatic)
         assertFalse(variable.isFinal)
     }
@@ -146,7 +137,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -159,7 +149,6 @@ class ClassValueTests {
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
         assertNotNull(variable.value)
         assertEquals("i", variable.name)
-        assertTrue(variable.isInClass)
         assertFalse(variable.isStatic)
         assertFalse(variable.isFinal)
         assertType(ShakeVariableDeclarationNode::class, node.fields[0])
@@ -168,7 +157,6 @@ class ClassValueTests {
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
         assertNotNull(variable.value)
         assertEquals("i2", variable.name)
-        assertTrue(variable.isInClass)
         assertFalse(variable.isStatic)
         assertFalse(variable.isFinal)
     }
@@ -180,7 +168,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -193,7 +180,6 @@ class ClassValueTests {
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
         assertNotNull(variable.value)
         assertEquals("i", variable.name)
-        assertTrue(variable.isInClass)
         assertTrue(variable.isStatic)
         assertFalse(variable.isFinal)
     }
@@ -205,7 +191,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -218,7 +203,6 @@ class ClassValueTests {
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
         assertNotNull(variable.value)
         assertEquals("i", variable.name)
-        assertTrue(variable.isInClass)
         assertFalse(variable.isStatic)
         assertTrue(variable.isFinal)
     }
@@ -230,7 +214,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -243,19 +226,17 @@ class ClassValueTests {
         assertSame(ShakeAccessDescriber.PACKAGE, variable.access)
         assertNotNull(variable.value)
         assertEquals("i", variable.name)
-        assertTrue(variable.isInClass)
         assertTrue(variable.isStatic)
         assertTrue(variable.isFinal)
     }
 
     @Test
     fun testClassFunction() {
-        val tree = ParserTestUtil.parse("<ClassFunctionTest>", "class test { function f() {} }")
+        val tree = ParserTestUtil.parse("<ClassFunctionTest>", "class test { void f() {} }")
         assertEquals(1, tree.children.size)
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -264,23 +245,21 @@ class ClassValueTests {
         assertSame(0, node.classes.size)
         assertType(ShakeFunctionDeclarationNode::class, node.methods[0])
         val function = node.methods[0]
-        assertSame(ShakeVariableType.Type.DYNAMIC, function.type.type)
+        assertSame(ShakeVariableType.Type.VOID, function.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, function.access)
         assertSame(0, function.args.size)
         assertEquals("f", function.name)
-        assertTrue(function.isInClass)
         assertFalse(function.isStatic)
         assertFalse(function.isFinal)
     }
 
     @Test
     fun testClassMultiFunction() {
-        val tree = ParserTestUtil.parse("<ClassMultiFunctionTest>", "class test { function f() {}\nfunction g() {} }")
+        val tree = ParserTestUtil.parse("<ClassMultiFunctionTest>", "class test { void f() {}\nvoid g() {} }")
         assertEquals(1, tree.children.size)
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -289,32 +268,29 @@ class ClassValueTests {
         assertSame(0, node.classes.size)
         assertType(ShakeFunctionDeclarationNode::class, node.methods[0])
         var function = node.methods[0]
-        assertSame(ShakeVariableType.Type.DYNAMIC, function.type.type)
+        assertSame(ShakeVariableType.Type.VOID, function.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, function.access)
         assertSame(0, function.args.size)
         assertEquals("f", function.name)
-        assertTrue(function.isInClass)
         assertFalse(function.isStatic)
         assertFalse(function.isFinal)
         assertType(ShakeFunctionDeclarationNode::class, node.methods[1])
         function = node.methods[1]
-        assertSame(ShakeVariableType.Type.DYNAMIC, function.type.type)
+        assertSame(ShakeVariableType.Type.VOID, function.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, function.access)
         assertSame(0, function.args.size)
         assertEquals("g", function.name)
-        assertTrue(function.isInClass)
         assertFalse(function.isStatic)
         assertFalse(function.isFinal)
     }
 
     @Test
     fun testClassStaticFunction() {
-        val tree = ParserTestUtil.parse("<ClassStaticFunctionTest>", "class test { static function f() {} }")
+        val tree = ParserTestUtil.parse("<ClassStaticFunctionTest>", "class test { static void f() {} }")
         assertEquals(1, tree.children.size)
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -323,23 +299,21 @@ class ClassValueTests {
         assertSame(0, node.classes.size)
         assertType(ShakeFunctionDeclarationNode::class, node.methods[0])
         val function = node.methods[0]
-        assertSame(ShakeVariableType.Type.DYNAMIC, function.type.type)
+        assertSame(ShakeVariableType.Type.VOID, function.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, function.access)
         assertSame(0, function.args.size)
         assertEquals("f", function.name)
-        assertTrue(function.isInClass)
         assertTrue(function.isStatic)
         assertFalse(function.isFinal)
     }
 
     @Test
     fun testClassFinalFunction() {
-        val tree = ParserTestUtil.parse("<ClassFinalFunctionTest>", "class test { final function f() {} }")
+        val tree = ParserTestUtil.parse("<ClassFinalFunctionTest>", "class test { final void f() {} }")
         assertEquals(1, tree.children.size)
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -348,23 +322,21 @@ class ClassValueTests {
         assertSame(0, node.classes.size)
         assertType(ShakeFunctionDeclarationNode::class, node.methods[0])
         val function = node.methods[0]
-        assertSame(ShakeVariableType.Type.DYNAMIC, function.type.type)
+        assertSame(ShakeVariableType.Type.VOID, function.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, function.access)
         assertSame(0, function.args.size)
         assertEquals("f", function.name)
-        assertTrue(function.isInClass)
         assertFalse(function.isStatic)
         assertTrue(function.isFinal)
     }
 
     @Test
     fun testClassStaticFinalFunction() {
-        val tree = ParserTestUtil.parse("<ClassStaticFinalFunctionTest>", "class test { static final function f() {} }")
+        val tree = ParserTestUtil.parse("<ClassStaticFinalFunctionTest>", "class test { static final void f() {} }")
         assertEquals(1, tree.children.size)
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -373,11 +345,10 @@ class ClassValueTests {
         assertSame(0, node.classes.size)
         assertType(ShakeFunctionDeclarationNode::class, node.methods[0])
         val function = node.methods[0]
-        assertSame(ShakeVariableType.Type.DYNAMIC, function.type.type)
+        assertSame(ShakeVariableType.Type.VOID, function.type.type)
         assertSame(ShakeAccessDescriber.PACKAGE, function.access)
         assertSame(0, function.args.size)
         assertEquals("f", function.name)
-        assertTrue(function.isInClass)
         assertTrue(function.isStatic)
         assertTrue(function.isFinal)
     }
@@ -389,7 +360,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -403,7 +373,6 @@ class ClassValueTests {
         assertSame(0, aclass.methods.size)
         assertSame(0, aclass.fields.size)
         assertEquals("c", aclass.name)
-        assertTrue(aclass.isInClass)
         assertFalse(aclass.isStatic)
         assertFalse(aclass.isFinal)
     }
@@ -415,7 +384,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -429,7 +397,6 @@ class ClassValueTests {
         assertSame(0, aclass.methods.size)
         assertSame(0, aclass.fields.size)
         assertEquals("c", aclass.name)
-        assertTrue(aclass.isInClass)
         assertFalse(aclass.isStatic)
         assertFalse(aclass.isFinal)
         assertType(ShakeClassDeclarationNode::class, node.classes[1])
@@ -439,7 +406,6 @@ class ClassValueTests {
         assertSame(0, aclass.methods.size)
         assertSame(0, aclass.fields.size)
         assertEquals("c2", aclass.name)
-        assertTrue(aclass.isInClass)
         assertFalse(aclass.isStatic)
         assertFalse(aclass.isFinal)
     }
@@ -451,7 +417,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -465,7 +430,6 @@ class ClassValueTests {
         assertSame(0, aclass.methods.size)
         assertSame(0, aclass.fields.size)
         assertEquals("c", aclass.name)
-        assertTrue(aclass.isInClass)
         assertTrue(aclass.isStatic)
         assertFalse(aclass.isFinal)
     }
@@ -477,7 +441,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -491,7 +454,6 @@ class ClassValueTests {
         assertSame(0, aclass.methods.size)
         assertSame(0, aclass.fields.size)
         assertEquals("c", aclass.name)
-        assertTrue(aclass.isInClass)
         assertFalse(aclass.isStatic)
         assertTrue(aclass.isFinal)
     }
@@ -503,7 +465,6 @@ class ClassValueTests {
         assertType(ShakeClassDeclarationNode::class, tree.children[0])
         val node = tree.children[0] as ShakeClassDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
         assertEquals("test", node.name)
@@ -517,7 +478,6 @@ class ClassValueTests {
         assertSame(0, aclass.methods.size)
         assertSame(0, aclass.fields.size)
         assertEquals("c", aclass.name)
-        assertTrue(aclass.isInClass)
         assertTrue(aclass.isStatic)
         assertTrue(aclass.isFinal)
     }

@@ -9,140 +9,6 @@ import io.github.shakelang.shake.parser.node.functions.ShakeReturnNode
 import kotlin.test.*
 
 class FunctionTests {
-    @Test
-    fun testFunction() {
-        val tree = ParserTestUtil.parse("<FunctionTest>", "function f() {}")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeFunctionDeclarationNode
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
-        assertSame(ShakeVariableType.DYNAMIC, node.type)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertFalse(node.isFinal)
-    }
-
-    @Test
-    fun testFunctionChildren() {
-        val tree = ParserTestUtil.parse("<FunctionChildrenTest>", "function f() { print(10); }")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeFunctionDeclarationNode
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertEquals("f", node.name)
-        assertSame(1, node.body.children.size)
-        assertSame(ShakeVariableType.DYNAMIC, node.type)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertFalse(node.isFinal)
-    }
-
-    @Test
-    fun testPublicFunction() {
-        val tree = ParserTestUtil.parse("<PublicFunctionTest>", "public function f() {}")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeFunctionDeclarationNode
-        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
-        assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
-        assertSame(ShakeVariableType.DYNAMIC, node.type)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertFalse(node.isFinal)
-    }
-
-    @Test
-    fun testProtectedFunction() {
-        val tree = ParserTestUtil.parse("<ProtectedFunctionTest>", "protected function f() {}")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeFunctionDeclarationNode
-        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
-        assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
-        assertSame(ShakeVariableType.DYNAMIC, node.type)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertFalse(node.isFinal)
-    }
-
-    @Test
-    fun testPrivateFunction() {
-        val tree = ParserTestUtil.parse("<PrivateFunctionTest>", "private function f() {}")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeFunctionDeclarationNode
-        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
-        assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
-        assertSame(ShakeVariableType.DYNAMIC, node.type)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertFalse(node.isFinal)
-    }
-
-    @Test
-    fun testFinalFunction() {
-        val tree = ParserTestUtil.parse("<FinalFunctionTest>", "final function f() {}")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeFunctionDeclarationNode
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
-        assertSame(ShakeVariableType.DYNAMIC, node.type)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertTrue(node.isFinal)
-    }
-
-    @Test
-    fun testPublicFinalFunction() {
-        val tree = ParserTestUtil.parse("<PublicFinalFunctionTest>", "public final function f() {}")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeFunctionDeclarationNode
-        assertSame(ShakeAccessDescriber.PUBLIC, node.access)
-        assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
-        assertSame(ShakeVariableType.DYNAMIC, node.type)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertTrue(node.isFinal)
-    }
-
-    @Test
-    fun testProtectedFinalFunction() {
-        val tree = ParserTestUtil.parse("<ProtectedFinalFunctionTest>", "protected final function f() {}")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeFunctionDeclarationNode
-        assertSame(ShakeAccessDescriber.PROTECTED, node.access)
-        assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
-        assertSame(ShakeVariableType.DYNAMIC, node.type)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertTrue(node.isFinal)
-    }
-
-    @Test
-    fun testPrivateFinalFunction() {
-        val tree = ParserTestUtil.parse("<PrivateFinalFunctionTest>", "private final function f() {}")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeFunctionDeclarationNode::class, tree.children[0])
-        val node = tree.children[0] as ShakeFunctionDeclarationNode
-        assertSame(ShakeAccessDescriber.PRIVATE, node.access)
-        assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
-        assertSame(ShakeVariableType.DYNAMIC, node.type)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        assertTrue(node.isFinal)
-    }
 
     // ********************************************************************
     // C-Style
@@ -156,7 +22,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -171,7 +36,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(1, node.body.children.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -186,7 +50,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -201,7 +64,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -216,7 +78,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -231,7 +92,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
     }
@@ -246,7 +106,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
     }
@@ -261,7 +120,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
     }
@@ -276,7 +134,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
     }
@@ -291,7 +148,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.BYTE, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -306,7 +162,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.SHORT, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -321,7 +176,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.LONG, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -336,7 +190,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.FLOAT, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -351,7 +204,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.DOUBLE, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -366,7 +218,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.CHAR, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -381,7 +232,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.BOOLEAN, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }
@@ -396,7 +246,6 @@ class FunctionTests {
         assertEquals("f", node.name)
         assertSame(0, node.body.children.size)
         assertSame(ShakeVariableType.VOID, node.type)
-        assertFalse(node.isInClass)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
     }

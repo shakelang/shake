@@ -10,7 +10,6 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
     val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
     val value: ShakeValuedNode? = null,
     val access: ShakeAccessDescriber = ShakeAccessDescriber.PACKAGE,
-    val isInClass: Boolean = false,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {
@@ -29,7 +28,6 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
             "type" to type.toString(),
             "access" to access.toString(),
             "assignment" to this.value?.toJson(),
-            "is_in_class" to isInClass,
             "is_static" to isStatic,
             "is_final" to isFinal
         )

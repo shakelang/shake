@@ -117,181 +117,110 @@ class VariableTests {
     
     //// *************************************************************
     //// Variable Declaration
-    
-    @Test
-    fun testVariableDeclaration() {
-        var node = ParserTestUtil.parseStatement("<VariableDeclarationTest>", "var i", ShakeVariableDeclarationNode::class)
-        assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.value)
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        node = ParserTestUtil.parseStatement("<VariableDeclarationTest>", "var i = 0", ShakeVariableDeclarationNode::class)
-        assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
-        assertNotNull(node.value)
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-    }
-
-    @Test
-    fun testVariableLetDeclaration() {
-        var node = ParserTestUtil.parseStatement("<VariableLetDeclarationTest>", "let i", ShakeVariableDeclarationNode::class)
-        assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.value)
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        node = ParserTestUtil.parseStatement("<VariableLetDeclarationTest>", "let i = 0", ShakeVariableDeclarationNode::class)
-        assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
-        assertNotNull(node.value)
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-    }
-
-    @Test
-    fun testVariableConstDeclaration() {
-        var node = ParserTestUtil.parseStatement("<VariableConstDeclarationTest>", "const i", ShakeVariableDeclarationNode::class)
-        assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
-        assertNull(node.value)
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-        node = ParserTestUtil.parseSingle(
-            "<VariableConstDeclarationTest>",
-            "const i = 0",
-            ShakeVariableDeclarationNode::class
-        )
-        assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
-        assertNotNull(node.value)
-        assertSame(ShakeAccessDescriber.PACKAGE, node.access)
-        assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
-        assertFalse(node.isStatic)
-    }
 
     @Test
     fun testFinalVariableDeclaration() {
         val node = ParserTestUtil.parseSingle(
             "<FinalVariableDeclarationTest>",
-            "final var i",
+            "final int i",
             ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
         assertNull(node.value)
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
     fun testPublicVariableDeclaration() {
         val node = ParserTestUtil.parseSingle(
             "<PublicVariableDeclarationTest>",
-            "public var i",
+            "public int i",
             ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
         assertNull(node.value)
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
     fun testPublicFinalVariableDeclaration() {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalDynamicVariableDeclarationTest>",
-            "public final var i",
+            "public final int i",
             ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
         assertNull(node.value)
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
     fun testProtectedVariableDeclaration() {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedVariableDeclarationTest>",
-            "protected var i",
+            "protected int i",
             ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
         assertNull(node.value)
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
     fun testProtectedFinalVariableDeclaration() {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalVariableDeclarationTest>",
-            "protected final var i",
+            "protected final int i",
             ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
         assertNull(node.value)
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
     fun testPrivateVariableDeclaration() {
         val node = ParserTestUtil.parseSingle(
             "<PrivateVariableDeclarationTest>",
-            "private var i",
+            "private int i",
             ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
         assertNull(node.value)
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
     fun testPrivateFinalVariableDeclaration() {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalVariableDeclarationTest>",
-            "private final var i",
+            "private final int i",
             ShakeVariableDeclarationNode::class
         )
         assertEquals("i", node.name)
-        assertSame(ShakeVariableType.Type.DYNAMIC, node.type.type)
+        assertSame(ShakeVariableType.Type.INTEGER, node.type.type)
         assertNull(node.value)
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -327,7 +256,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -343,7 +271,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -359,7 +286,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -375,7 +301,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -391,7 +316,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -407,7 +331,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -423,7 +346,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -459,7 +381,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -475,7 +396,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -491,7 +411,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -507,7 +426,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -523,7 +441,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -539,7 +456,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -555,7 +471,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -591,7 +506,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -607,7 +521,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -623,7 +536,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -639,7 +551,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -655,7 +566,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -671,7 +581,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -687,7 +596,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -716,7 +624,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -732,7 +639,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -748,7 +654,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -764,7 +669,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -780,7 +684,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -796,7 +699,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -812,7 +714,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -845,7 +746,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -861,7 +761,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -877,7 +776,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -893,7 +791,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -909,7 +806,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -925,7 +821,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -941,7 +836,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -974,7 +868,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -990,7 +883,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1006,7 +898,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1022,7 +913,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1038,7 +928,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1054,7 +943,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1070,7 +958,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1103,7 +990,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1119,7 +1005,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1135,7 +1020,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1151,7 +1035,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1167,7 +1050,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1183,7 +1065,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1199,7 +1080,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1212,7 +1092,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
         node = ParserTestUtil.parseSingle(
             "<FloatVariableDeclarationTest>",
             "float f = 12",
@@ -1224,7 +1103,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1240,7 +1118,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1256,7 +1133,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1272,7 +1148,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1288,7 +1163,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1304,7 +1178,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1320,7 +1193,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1336,7 +1208,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1372,7 +1243,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1388,7 +1258,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1404,7 +1273,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1420,7 +1288,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1436,7 +1303,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1452,7 +1318,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     @Test
@@ -1468,7 +1333,6 @@ class VariableTests {
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
-        assertFalse(node.isInClass)
     }
 
     //// *************************************************************
