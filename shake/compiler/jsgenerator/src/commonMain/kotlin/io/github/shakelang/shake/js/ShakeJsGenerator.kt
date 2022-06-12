@@ -126,12 +126,10 @@ class ShakeJsGenerator {
 
     fun visitAssignable(a: CreationShakeAssignable): JsAssignable {
         if(a is CreationShakeVariableDeclaration) return JsAssignable(JsField(a.name))
-        if(a is CreationShakeClassField) {
-            if(a.isStatic) return JsAssignable(JsField(a.name, parent = JsField(a.clazz.name)))
-            return JsAssignable(JsField(a.name, parent = JsField("this")))
-        }
         if(a is CreationShakeField) {
-            return JsAssignable(JsField(a.name))
+            if(a.clazz == null) return JsAssignable(JsField(a.name))
+            if (a.isStatic) return JsAssignable(JsField(a.name, parent = JsField(a.clazz!!.name)))
+            return JsAssignable(JsField(a.name, parent = JsField("this")))
         }
         TODO("not implemented")
     }
@@ -196,7 +194,7 @@ class ShakeJsGenerator {
         if(n is CreationShakeVariableUsage) return JsField(n.name)
         if(n is CreationShakeClassFieldUsage) {
             if(n.receiver != null) return JsField(n.name, parent = visitValue(n.receiver!!))
-            if(n.declaration.isStatic) return JsField(n.name, parent = JsField(n.declaration.clazz.name))
+            if(n.declaration.isStatic) return JsField(n.name, parent = JsField(n.declaration.clazz?.name ?: throw IllegalStateException("Static field must have a class")))
             return JsField(n.name, parent = JsField("this"))
         }
         if(n is CreationShakeFieldUsage) {
@@ -313,8 +311,10 @@ class ShakeJsGenerator {
         when(callable) {
             is CreationShakeMethod -> {
 
+                if(callable.clazz == null) return JsFunctionCall(JsField(callable.name), n.arguments.map { visitValue(it) })
+
                 if(callable.isStatic)
-                    return JsFunctionCall(JsField(callable.name, JsField(callable.clazz.name)), n.arguments.map { visitValue(it) })
+                    return JsFunctionCall(JsField(callable.name, JsField(callable.clazz!!.name)), n.arguments.map { visitValue(it) })
 
                 if(n.parent != null)
                     return JsFunctionCall(JsField(callable.name, visitValue(n.parent!!)), n.arguments.map { visitValue(it) })
@@ -322,7 +322,6 @@ class ShakeJsGenerator {
                 return JsFunctionCall(JsField(callable.name, JsField("this")), n.arguments.map { visitValue(it) })
 
             }
-            is CreationShakeMethod -> return JsFunctionCall(JsField(callable.name), n.arguments.map { visitValue(it) })
             is CreationShakeLambdaDeclaration -> TODO()
             // is ShakeLambdaDeclaration -> return JsFunctionCall(callable, n.arguments.map { visitValue(it) })
             else -> throw IllegalStateException("Unknown callable type")
