@@ -1,6 +1,9 @@
 package io.github.shakelang.shake.processor.map
 
 import io.github.shakelang.parseutils.bytes.toBytes
+import io.github.shakelang.parseutils.streaming.input.ByteArrayInputStream
+import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
 import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.parseutils.streaming.output.OutputStream
 import io.github.shakelang.shake.processor.program.types.*
@@ -21,14 +24,6 @@ class ShakeMap(
 
     val magic = 0x3082d75f
     val version = 0x00000001
-
-     companion object {
-         fun from(project: ShakeProject): ShakeMap {
-             val creator = ShakeMapCreator()
-             creator.visit(project)
-             return creator.export()
-         }
-     }
 
     fun write(output: OutputStream) {
         output.write(magic.toBytes())
@@ -73,6 +68,60 @@ class ShakeMap(
         "project_fields" to project_fields.map { it }
     )
 
+    companion object {
+        fun from(project: ShakeProject): ShakeMap {
+            val creator = ShakeMapCreator()
+            creator.visit(project)
+            return creator.export()
+        }
+
+        fun fromBytes(bytes: ByteArray): ShakeMap {
+            val input = ByteArrayInputStream(bytes)
+            return from(input)
+        }
+
+        fun from(input: DataInputStream): ShakeMap {
+            val magic = input.readInt()
+            val version = input.readInt()
+            val constants = input.readInt()
+            val constants_ = Array(constants) { ShakeMapConstant.from(input) }
+            val packages = input.readInt()
+            val packages_ = Array(packages) { ShakeMapPackage.from(input) }
+            val classes = input.readInt()
+            val classes_ = Array(classes) { ShakeMapClass.from(input) }
+            val methods = input.readInt()
+            val methods_ = Array(methods) { ShakeMapMethod.from(input) }
+            val fields = input.readInt()
+            val fields_ = Array(fields) { ShakeMapField.from(input) }
+            val project_packages = input.readInt()
+            val project_packages_ = Array(project_packages) { input.readInt() }
+            val project_classes = input.readInt()
+            val project_classes_ = Array(project_classes) { input.readInt() }
+            val project_methods = input.readInt()
+            val project_methods_ = Array(project_methods) { input.readInt() }
+            val project_fields = input.readInt()
+            val project_fields_ = Array(project_fields) { input.readInt() }
+            return ShakeMap(
+                constants_,
+                packages_,
+                classes_,
+                methods_,
+                fields_,
+                project_packages_,
+                project_classes_,
+                project_methods_,
+                project_fields_
+            )
+        }
+
+        fun from(input: InputStream): ShakeMap {
+            return from(DataInputStream(input))
+        }
+
+        fun from(bytes: ByteArray) = from(ByteArrayInputStream(bytes))
+
+    }
+
 }
 
 
@@ -107,11 +156,27 @@ interface ShakeMapConstant {
             "type" to type.TAG,
             "value" to value
         )
+
+        companion object {
+            fun from(input: DataInputStream): ShakeMapConstant {
+                val length = input.readInt()
+                val chars = input.readUTF(length)
+                return ShakeUtf8Constant(chars)
+            }
+        }
     }
 
     companion object {
         fun utf8(value: String): ShakeUtf8Constant {
             return ShakeUtf8Constant(value)
+        }
+
+        fun from(input: DataInputStream): ShakeMapConstant {
+            val type = input.readByte()
+            when (type) {
+                0x01.toByte() -> return ShakeUtf8Constant.from(input)
+                else -> throw IllegalArgumentException("Unknown constant type: $type")
+            }
         }
     }
 }
@@ -147,6 +212,27 @@ class ShakeMapPackage(
         "method_references" to method_references.map { it },
         "field_references" to field_references.map { it }
     )
+
+    companion object {
+        fun from(input: DataInputStream): ShakeMapPackage {
+            val name = input.readInt()
+            val package_references = input.readInt()
+            val package_references_ = Array(package_references) { input.readInt() }
+            val class_references = input.readInt()
+            val class_references_ = Array(class_references) { input.readInt() }
+            val method_references = input.readInt()
+            val method_references_ = Array(method_references) { input.readInt() }
+            val field_references = input.readInt()
+            val field_references_ = Array(field_references) { input.readInt() }
+            return ShakeMapPackage(
+                name,
+                package_references_,
+                class_references_,
+                method_references_,
+                field_references_
+            )
+        }
+    }
 }
 
 class ShakeMapClass(
@@ -194,6 +280,31 @@ class ShakeMapClass(
         "method_references" to method_references.map { it },
         "field_references" to field_references.map { it }
     )
+
+    companion object {
+        fun from(input: DataInputStream): ShakeMapClass {
+            val name = input.readInt()
+            val attributes = input.readByte()
+            val super_class = input.readInt()
+            val interface_references = input.readInt()
+            val interface_references_ = Array(interface_references) { input.readInt() }
+            val subclass_references = input.readInt()
+            val subclass_references_ = Array(subclass_references) { input.readInt() }
+            val method_references = input.readInt()
+            val method_references_ = Array(method_references) { input.readInt() }
+            val field_references = input.readInt()
+            val field_references_ = Array(field_references) { input.readInt() }
+            return ShakeMapClass(
+                name,
+                attributes,
+                super_class,
+                interface_references_,
+                subclass_references_,
+                method_references_,
+                field_references_
+            )
+        }
+    }
 }
 
 class ShakeMapMethod(
@@ -233,6 +344,25 @@ class ShakeMapMethod(
         "parameter_names" to parameter_names.map { it },
         "parameter_types" to parameter_types.map { it }
     )
+
+    companion object {
+        fun from(input: DataInputStream): ShakeMapMethod {
+            val name = input.readInt()
+            val attributes = input.readByte()
+            val return_type = input.readInt()
+            val parameter_names = input.readInt()
+            val parameter_names_ = Array(parameter_names) { input.readInt() }
+            val parameter_types = input.readInt()
+            val parameter_types_ = Array(parameter_types) { input.readInt() }
+            return ShakeMapMethod(
+                name,
+                attributes,
+                return_type,
+                parameter_names_,
+                parameter_types_
+            )
+        }
+    }
 }
 
 class ShakeMapField(
@@ -265,6 +395,19 @@ class ShakeMapField(
         "attributes" to attributes,
         "type" to type
     )
+
+    companion object {
+        fun from(input: DataInputStream): ShakeMapField {
+            val name = input.readInt()
+            val attributes = input.readByte()
+            val type = input.readInt()
+            return ShakeMapField(
+                name,
+                attributes,
+                type
+            )
+        }
+    }
 }
 
 val Int.bit0: Boolean get() = (this and 0x01) != 0
