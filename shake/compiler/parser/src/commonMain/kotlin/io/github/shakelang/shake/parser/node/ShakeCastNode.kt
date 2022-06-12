@@ -7,9 +7,9 @@ import kotlin.jvm.JvmOverloads
 @Suppress("unused")
 class ShakeCastNode(map: PositionMap, val value: ShakeValuedNode, val castTarget: CastTarget) : ShakeValuedNodeImpl(map) {
 
-    class CastTarget @JvmOverloads constructor(val type: CastTargetType, val subtype: ShakeIdentifierNode? = null) {
+    class CastTarget @JvmOverloads constructor(val type: CastTargetType, val subtype: ShakeNamespaceNode? = null) {
 
-        constructor(type: ShakeIdentifierNode?) : this(CastTargetType.OBJECT, type)
+        constructor(type: ShakeNamespaceNode?) : this(CastTargetType.OBJECT, type)
 
         enum class CastTargetType {
             BYTE, SHORT, INT, LONG, FLOAT, DOUBLE, BOOLEAN, CHAR, STRING, OBJECT

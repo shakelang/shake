@@ -3,6 +3,7 @@ package io.github.shakelang.shake.parser.node.objects
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.ShakeFileChildNodeImpl
+import io.github.shakelang.shake.parser.node.ShakeNamespaceNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import kotlin.jvm.JvmOverloads
@@ -11,6 +12,8 @@ import kotlin.jvm.JvmOverloads
 class ShakeClassDeclarationNode @JvmOverloads constructor(
     map: PositionMap,
     val name: String,
+    val extends: ShakeNamespaceNode?,
+    val implements: Array<ShakeNamespaceNode>,
     val fields: Array<ShakeVariableDeclarationNode>,
     val methods: Array<ShakeFunctionDeclarationNode>,
     val classes: Array<ShakeClassDeclarationNode>,
@@ -25,6 +28,8 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
     constructor(
         map: PositionMap,
         name: String,
+        extends: ShakeNamespaceNode?,
+        implements: List<ShakeNamespaceNode>,
         fields: List<ShakeVariableDeclarationNode>,
         methods: List<ShakeFunctionDeclarationNode>,
         classes: List<ShakeClassDeclarationNode>,
@@ -37,6 +42,8 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
     ) : this(
         map,
         name,
+        extends,
+        implements.toTypedArray(),
         fields.toTypedArray(),
         methods.toTypedArray(),
         classes.toTypedArray(),
@@ -51,6 +58,8 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
     constructor(
         map: PositionMap,
         name: String,
+        extends: ShakeNamespaceNode?,
+        implements: List<ShakeNamespaceNode>,
         fields: List<ShakeVariableDeclarationNode>,
         methods: List<ShakeFunctionDeclarationNode>,
         classes: List<ShakeClassDeclarationNode>,
@@ -58,6 +67,8 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
     ) : this(
         map,
         name,
+        extends,
+        implements.toTypedArray(),
         fields.toTypedArray(),
         methods.toTypedArray(),
         classes.toTypedArray(),

@@ -455,8 +455,8 @@ open class ShakeCodeProcessor {
             ShakeCastNode.CastTarget.CastTargetType.BOOLEAN -> CreationShakeType.Primitives.BOOLEAN
             ShakeCastNode.CastTarget.CastTargetType.OBJECT -> {
                 val st = n.castTarget.subtype ?: throw Exception("No subtype for object cast")
-                if(st.parent != null) TODO()
-                val type = scope.getClass(st.name) ?: throw Exception("No class named ${st.name} for object cast")
+                if(n.castTarget.subtype!!.parts.size != 1) TODO()
+                val type = scope.getClass(n.castTarget.subtype!!.parts[0]) ?: throw Exception("No class named ${n.castTarget.subtype!!.parts[0]} for object cast")
                 type.asType()
             }
             else -> throw Exception("Unsupported cast target type ${n.castTarget.type}")

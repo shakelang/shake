@@ -455,7 +455,51 @@ class ShakeParserImpl (
         val classes: MutableList<ShakeClassDeclarationNode> = ArrayList()
         val constructors: MutableList<ShakeConstructorDeclarationNode> = ArrayList()
 
-        // TODO: extends, implements
+        var extends: ShakeNamespaceNode? = null
+        var implements: MutableList<ShakeNamespaceNode>? = null
+
+        if(type == ShakeClassType.OBJECT || type == ShakeClassType.CLASS) {
+            while (input.skipIgnorable().hasNext() &&
+                (input.peekType() == ShakeTokenType.KEYWORD_EXTENDS
+                        || input.peekType() == ShakeTokenType.KEYWORD_IMPLEMENTS)) {
+
+                if (input.nextType() == ShakeTokenType.KEYWORD_EXTENDS) {
+                    if (extends != null) throw ParserError("Class/Object can only extend one class")
+                    extends = expectNamespace()
+                } else {
+                    if (implements != null) throw ParserError("Class/Object can only use implements once")
+                    implements = mutableListOf()
+
+                    var a = false
+
+                    do {
+                        if (a) {
+                            input.skip()
+                            input.skipIgnorable()
+                        } else a = true
+                        implements.add(expectNamespace())
+
+                    } while (input.skipIgnorable().peekType() == ShakeTokenType.COMMA)
+                }
+            }
+        }
+        else if(type == ShakeClassType.INTERFACE) {
+            if (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.KEYWORD_EXTENDS) {
+                if (implements != null) throw ParserError("Interface can only use extends once")
+                implements = mutableListOf()
+
+                var a = false
+
+                do {
+                    if (a) {
+                        input.skip()
+                        input.skipIgnorable()
+                    } else a = true
+                    implements.add(expectNamespace())
+                } while (input.skipIgnorable().peekType() == ShakeTokenType.COMMA)
+            }
+        }
+
         if (input.nextType() != ShakeTokenType.LCURL) throw ParserError("Expecting class-body")
         while (input.hasNext() && input.peekType() != ShakeTokenType.RCURL) {
             skipSeparators()
@@ -478,6 +522,8 @@ class ShakeParserImpl (
         return ShakeClassDeclarationNode(
             map,
             name,
+            extends,
+            implements?.toTypedArray() ?: emptyArray(),
             fields.toTypedArray(),
             methods.toTypedArray(),
             classes.toTypedArray(),
@@ -702,7 +748,6 @@ class ShakeParserImpl (
                 .hasNext() || input.peekType() != ShakeTokenType.IDENTIFIER
         ) throw ParserError("Expecting identifier")
         val identifier = input.nextValue() ?: throw ParserError("Expecting identifier to contain value")
-        val position = input.actualStart
         val hasNext = input.skipIgnorable().hasNext()
         return if (hasNext && input.peekType() == ShakeTokenType.ASSIGN) {
             input.skip()
@@ -886,17 +931,7 @@ class ShakeParserImpl (
                     target = CastTarget.CHAR
                     input.skip()
                 }
-                ShakeTokenType.IDENTIFIER -> {
-                    var node: ShakeIdentifierNode? = null
-                    do {
-                        if (node != null) input.skip()
-                        if (!input.skipIgnorable()
-                                .hasNext() && input.nextType() != ShakeTokenType.IDENTIFIER
-                        ) throw ParserError("Expecting identifier")
-                        node = ShakeIdentifierNode(map, node, input.actualValue!!, input.actualStart)
-                    } while (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT)
-                    target = CastTarget(node)
-                }
+                ShakeTokenType.IDENTIFIER -> target = CastTarget(expectNamespace())
                 else -> throw ParserError("Expecting cast-target")
             }
             result = ShakeCastNode(map, result, target)
@@ -1005,6 +1040,15 @@ class ShakeParserImpl (
     fun <T> expectNotNull(v: T?): T {
         if(v == null) throw ParserError("Expecting value")
         return v
+    }
+
+    fun expectNamespace(): ShakeNamespaceNode {
+        val name = mutableListOf<String>()
+        do {
+            if (!input.skipIgnorable().hasNext() && input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
+            name.add(input.actualValue ?: throw ParserError("Expecting identifier to have value"))
+        } while (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT)
+        return ShakeNamespaceNode(map, name.toTypedArray())
     }
 
     // ****************************************************************************
