@@ -4,7 +4,6 @@ import io.github.shakelang.shake.processor.program.creation.code.*
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.types.ShakeAssignable
 import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 interface CreationShakeAssignable : ShakeAssignable {
 

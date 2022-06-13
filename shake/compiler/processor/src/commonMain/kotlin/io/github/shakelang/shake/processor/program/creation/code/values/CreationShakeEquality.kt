@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.processor.program.creation.code.values
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.values.*
 

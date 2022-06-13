@@ -1,7 +1,6 @@
 package io.github.shakelang.shake.interpreter
 
 import io.github.shakelang.shake.interpreter.values.*
-import io.github.shakelang.shake.interpreter.values.Function
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.ShakeVariableType
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode

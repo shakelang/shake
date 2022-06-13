@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.processor.program.types
 
-import io.github.shakelang.shake.processor.program.types.code.*
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 interface ShakeAssignable {

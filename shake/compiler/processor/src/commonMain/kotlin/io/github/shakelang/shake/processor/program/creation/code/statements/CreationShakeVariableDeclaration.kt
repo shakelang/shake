@@ -2,8 +2,8 @@ package io.github.shakelang.shake.processor.program.creation.code.statements
 
 import io.github.shakelang.shake.processor.program.creation.CreationShakeAssignable
 import io.github.shakelang.shake.processor.program.creation.CreationShakeDeclaration
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
+import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeVariableUsage
 import io.github.shakelang.shake.processor.program.types.ShakeType

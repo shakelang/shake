@@ -4,7 +4,6 @@ import io.github.shakelang.parseutils.CompilerError
 import io.github.shakelang.parseutils.characters.Characters.parseString
 import io.github.shakelang.parseutils.characters.position.Position
 import io.github.shakelang.parseutils.characters.position.PositionMap
-import io.github.shakelang.shake.lexer.token.ShakeToken
 import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import io.github.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import io.github.shakelang.shake.parser.node.*
@@ -22,9 +21,9 @@ import io.github.shakelang.shake.parser.node.logical.*
 import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import io.github.shakelang.shake.parser.node.loops.ShakeForNode
 import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassType
 import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import io.github.shakelang.shake.parser.node.objects.ShakeClassType
 import io.github.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.*
 

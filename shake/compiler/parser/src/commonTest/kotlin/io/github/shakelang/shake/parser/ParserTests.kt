@@ -2,9 +2,9 @@ package io.github.shakelang.shake.parser
 
 import io.github.shakelang.shake.assertArrayEquals
 import io.github.shakelang.shake.assertType
+import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.parser.node.ShakeIfNode
 import io.github.shakelang.shake.parser.node.ShakeImportNode
-import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 import io.github.shakelang.shake.parser.node.logical.ShakeLogicalSmallerNode
 import io.github.shakelang.shake.parser.node.logical.ShakeLogicalTrueNode

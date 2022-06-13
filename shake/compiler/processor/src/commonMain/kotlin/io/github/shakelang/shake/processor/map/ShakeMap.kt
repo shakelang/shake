@@ -6,13 +6,15 @@ import io.github.shakelang.parseutils.streaming.input.DataInputStream
 import io.github.shakelang.parseutils.streaming.input.InputStream
 import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.parseutils.streaming.output.OutputStream
-import io.github.shakelang.shake.processor.program.creation.CreationShakeClass
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.types.*
 import io.github.shakelang.shake.processor.program.types.code.ShakeCode
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
-import io.github.shakelang.shake.processor.util.*
+import io.github.shakelang.shake.processor.util.Pointer
+import io.github.shakelang.shake.processor.util.PointerList
+import io.github.shakelang.shake.processor.util.latePoint
+import io.github.shakelang.shake.processor.util.values
 
 class ShakeMap(
 

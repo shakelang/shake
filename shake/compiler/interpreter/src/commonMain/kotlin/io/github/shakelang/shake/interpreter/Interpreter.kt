@@ -5,7 +5,6 @@ import io.github.shakelang.shake.interpreter.Variable.Companion.create
 import io.github.shakelang.shake.interpreter.Variable.Companion.finalOf
 import io.github.shakelang.shake.interpreter.values.*
 import io.github.shakelang.shake.interpreter.values.BooleanValue.Companion.from
-import io.github.shakelang.shake.interpreter.values.Function
 import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.expression.*
 import io.github.shakelang.shake.parser.node.factor.ShakeCharacterNode
@@ -22,9 +21,6 @@ import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.*
-import kotlin.Error
-import kotlin.String
-import kotlin.Suppress
 import kotlin.jvm.JvmOverloads
 
 /**
