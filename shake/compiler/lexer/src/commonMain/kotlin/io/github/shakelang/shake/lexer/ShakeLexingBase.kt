@@ -182,6 +182,39 @@ abstract class ShakeLexingBase(
         )
     }
 
+    private fun makeIdentifier2(): ShakeToken {
+        val string = StringBuilder()
+        if (input.actual() == '`') {
+            while (input.hasNext() && input.next() != '`') {
+                if (input.actual() == '\\') {
+                    when (input.next()) {
+                        't' -> string.append("\\t")
+                        'b' -> string.append("\\b")
+                        'n' -> string.append("\\n")
+                        'r' -> string.append("\\r")
+                        'f' -> string.append("\\f")
+                        '\'' -> string.append("\\'")
+                        '"' -> string.append("\\\"")
+                        '\\' -> string.append("\\\\")
+                        'u' -> {
+                            string.append("\\u")
+                            var i = 0
+                            while (i < 4) {
+                                val c = input.next()
+                                if (!Characters.isHexCharacter(c)) throw LexerError("Expecting hex char")
+                                string.append(c)
+                                i++
+                            }
+                        }
+                        else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
+                    }
+                } else string.append(input.actual())
+            }
+            if (input.actual() != '`') throw LexerError("Token name must be enclosed in '`'")
+        }
+        return ShakeToken(ShakeTokenType.IDENTIFIER, string.toString(), input.position)
+    }
+
     private fun makeString(): ShakeToken {
         val string = StringBuilder()
         if (input.actual() == '"') {
