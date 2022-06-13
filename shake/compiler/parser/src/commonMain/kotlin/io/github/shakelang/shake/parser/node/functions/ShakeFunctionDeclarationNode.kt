@@ -20,8 +20,15 @@ class ShakeFunctionDeclarationNode @JvmOverloads constructor(
 ) : ShakeFileChildNodeImpl(map) {
 
     constructor(
-        map: PositionMap, name: String, body: ShakeBlockNode, args: Array<ShakeFunctionArgumentNode>,
-        access: ShakeAccessDescriber?, isInClass: Boolean, isStatic: Boolean, isFinal: Boolean
+        map: PositionMap,
+        name: String,
+        body: ShakeBlockNode,
+        args: Array<ShakeFunctionArgumentNode>,
+        access: ShakeAccessDescriber?,
+        isInClass: Boolean,
+        isStatic: Boolean,
+        isFinal: Boolean,
+        isNative: Boolean,
     ) : this(map, name, body, args, ShakeVariableType.DYNAMIC, access, isInClass, isStatic, isFinal)
 
     override fun toJson(): Map<String, *> =

@@ -11,7 +11,9 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
     val value: ShakeValuedNode? = null,
     val access: ShakeAccessDescriber = ShakeAccessDescriber.PACKAGE,
     val isStatic: Boolean = false,
-    val isFinal: Boolean = false
+    val isFinal: Boolean = false,
+    val isConst: Boolean = false,
+    val isNative: Boolean = false,
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {
 
     constructor(map: PositionMap, name: String, assignment: ShakeValuedNode?) : this(

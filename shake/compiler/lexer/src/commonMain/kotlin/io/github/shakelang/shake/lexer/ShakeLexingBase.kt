@@ -164,6 +164,7 @@ abstract class ShakeLexingBase(
                 "int" -> ShakeTokenType.KEYWORD_INT
                 "interface" -> ShakeTokenType.KEYWORD_INTERFACE
                 "long" -> ShakeTokenType.KEYWORD_LONG
+                "native" -> ShakeTokenType.KEYWORD_NATIVE
                 "new" -> ShakeTokenType.KEYWORD_NEW
                 "null" -> ShakeTokenType.KEYWORD_NULL
                 "object" -> ShakeTokenType.KEYWORD_OBJECT
@@ -174,6 +175,9 @@ abstract class ShakeLexingBase(
                 "return" -> ShakeTokenType.KEYWORD_RETURN
                 "short" -> ShakeTokenType.KEYWORD_SHORT
                 "static" -> ShakeTokenType.KEYWORD_STATIC
+                "super" -> ShakeTokenType.KEYWORD_SUPER
+                "synchronized" -> ShakeTokenType.KEYWORD_SYNCHRONIZED
+                "this" -> ShakeTokenType.KEYWORD_THIS
                 "true" -> ShakeTokenType.KEYWORD_TRUE
                 "void" -> ShakeTokenType.KEYWORD_VOID
                 "while" -> ShakeTokenType.KEYWORD_WHILE
