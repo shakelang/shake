@@ -374,7 +374,7 @@ class Interpreter : ShakeGeneratorBase {
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableDeclarationNode(n: ShakeVariableDeclarationNode, scope: Scope): InterpreterValue {
-        val value = if (n.value != null) visit(n.value!!.value, scope) else null
+        val value = if (n.value != null) visit(n.value!!, scope) else null
         return if (!scope.scopeVariables.declare(
                 create(
                     n.name,
@@ -395,7 +395,7 @@ class Interpreter : ShakeGeneratorBase {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun visitVariableAssignmentNode(n: ShakeValuedNode, scope: Scope): InterpreterValue {
+    fun visitVariableAssignmentNode(n: ShakeVariableAssignmentNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
         val value = visit(n.value, scope)
         variable.value = value

@@ -2,6 +2,7 @@ package io.github.shakelang.shake.processor.program.creation
 
 import io.github.shakelang.shake.parser.node.ShakeFileNode
 import io.github.shakelang.shake.parser.node.ShakeImportNode
+import io.github.shakelang.shake.parser.node.ShakePackageNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
@@ -111,7 +112,8 @@ open class CreationShakePackage (
                         throw IllegalStateException("Field ${it.name} already exists")
                     fields.add(CreationShakeField.from(baseProject, this, fileScope, it))
                 }
-                else -> throw IllegalStateException("Unknown node type ${it::class}")
+                is ShakePackageNode -> {}
+                else -> throw IllegalStateException("Unknown node type ${it::class.simpleName}")
             }
         }
     }

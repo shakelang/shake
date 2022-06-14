@@ -243,9 +243,12 @@ open class CompilerError : Error {
          */
         private fun createPositionMarker(
             maxLength: Int = Companion.maxLength,
-            pos1: Position,
-            pos2: Position
+            p1: Position,
+            p2: Position
         ): ErrorMarker {
+
+            var pos1 = p1
+            var pos2 = p2
 
             try {
 
@@ -253,6 +256,22 @@ open class CompilerError : Error {
                 if (pos1.source != pos2.source) throw Error("The two have to be located in the same source")
                 if (pos1.line != pos2.line) throw Error("The two positions that should be marked have to be in the same line")
                 if (pos1.column > pos2.column) throw Error("Position 1 must be before Position 2")
+
+                if(pos1.source.lineSeparators.contains(pos1.index)) {
+                    var pos = pos1.index
+                    while(pos1.source.lineSeparators.contains(pos)) {
+                        pos--
+                    }
+                    pos1 = pos1.source.resolve(pos)
+                }
+
+                if(pos2.source.lineSeparators.contains(pos2.index)) {
+                    var pos = pos2.index
+                    while(pos2.source.lineSeparators.contains(pos)) {
+                        pos--
+                    }
+                    pos2 = pos2.source.resolve(pos)
+                }
 
 
                 // Line start (linenumber + 2 spaces)

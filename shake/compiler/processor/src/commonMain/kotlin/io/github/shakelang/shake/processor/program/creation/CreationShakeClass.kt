@@ -98,7 +98,7 @@ class CreationShakeClass: ShakeClass {
                 this,
                 if(it.isStatic) staticScope else instanceScope,
                 it.name,
-                CreationShakeCode.fromTree(it.body),
+                it.body?.let { it1 -> CreationShakeCode.fromTree(it1) },
                 it.isStatic,
                 it.isFinal,
                 false,

@@ -3,6 +3,7 @@ package io.github.shakelang.shake.parser.node.variables
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.*
 import kotlin.jvm.JvmOverloads
+import kotlin.jvm.Synchronized
 
 class ShakeVariableDeclarationNode @JvmOverloads constructor(
     map: PositionMap,
@@ -10,18 +11,11 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
     val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
     val value: ShakeValuedNode? = null,
     val access: ShakeAccessDescriber = ShakeAccessDescriber.PACKAGE,
-    val isStatic: Boolean = false,
-    val isFinal: Boolean = false,
-    val isConst: Boolean = false,
-    val isNative: Boolean = false,
+    val isStatic: Boolean,
+    val isFinal: Boolean,
+    val isNative: Boolean,
+    val isConst: Boolean,
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {
-
-    constructor(map: PositionMap, name: String, assignment: ShakeValuedNode?) : this(
-        map,
-        name,
-        ShakeVariableType.DYNAMIC,
-        assignment
-    )
 
     override fun toJson(): Map<String, *> =
         mapOf(

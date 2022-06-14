@@ -154,7 +154,8 @@ open class CreationShakeProject(
     }
 
     open fun putFile(name: Array<String>, contents: ShakeFileNode) {
-        val pkg = name.sliceArray(0 until name.size - 1)
+        val pkg = (contents.children.find { it is ShakePackageNode } as? ShakePackageNode)?.pkg
+            ?: name.sliceArray(0 until name.size - 1)
         val file = name.last()
         if(pkg.isEmpty()) putFile(file, contents)
         else getPackage(pkg).putFile(file, contents)
@@ -188,7 +189,7 @@ open class CreationShakeProject(
             ShakeVariableType.Type.CHAR -> then(CreationShakeType.Primitives.CHAR)
             ShakeVariableType.Type.OBJECT -> {
                 val clz = mutableListOf<String>()
-                var identifier: ShakeValuedNode? = type.subtype!!
+                var identifier: ShakeValuedNode? = type.subtype ?: throw IllegalArgumentException("Object type must have subtype")
                 while(identifier != null) {
                     if(identifier !is ShakeIdentifierNode) throw IllegalArgumentException("Invalid type ${type.subtype}")
                     clz.add(identifier.name)
@@ -199,6 +200,9 @@ open class CreationShakeProject(
                     then(CreationShakeType.objectType(it))
                 }
             }
+            ShakeVariableType.Type.DYNAMIC -> TODO()
+            ShakeVariableType.Type.ARRAY -> TODO()
+            ShakeVariableType.Type.VOID -> TODO()
         }
     }
 

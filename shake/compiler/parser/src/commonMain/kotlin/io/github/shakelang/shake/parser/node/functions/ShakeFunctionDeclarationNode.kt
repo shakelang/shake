@@ -10,13 +10,16 @@ import kotlin.jvm.JvmOverloads
 class ShakeFunctionDeclarationNode @JvmOverloads constructor(
     map: PositionMap,
     val name: String,
-    val body: ShakeBlockNode,
+    val body: ShakeBlockNode?,
     val args: Array<ShakeFunctionArgumentNode>,
     val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
     val access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE,
     val isStatic: Boolean = false,
     val isFinal: Boolean = false,
     val isAbstract: Boolean = false,
+    val isOverride: Boolean = false,
+    val isSynchronized: Boolean = false,
+    val isNative: Boolean = false,
 ) : ShakeFileChildNodeImpl(map) {
 
     constructor(
@@ -36,7 +39,7 @@ class ShakeFunctionDeclarationNode @JvmOverloads constructor(
             "name" to "FunctionDeclarationNode",
             "function_name" to name,
             "args" to args.map { it.json },
-            "body" to body.json,
+            "body" to body?.json,
             "type" to type.toString(),
             "access" to access.toString(),
             "is_static" to isStatic,

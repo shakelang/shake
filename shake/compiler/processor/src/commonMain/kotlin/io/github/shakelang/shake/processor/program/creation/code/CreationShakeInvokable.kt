@@ -5,7 +5,7 @@ import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
 
 abstract class CreationShakeInvokable (
-    override val body: CreationShakeCode
+    override val body: CreationShakeCode?
 ) : ShakeInvokable {
 
     abstract override val qualifiedName: String

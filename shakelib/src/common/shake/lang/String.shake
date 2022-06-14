@@ -1,0 +1,16 @@
+package shake.lang;
+
+native class String {
+
+    //native static String valueOf(byte[] bytes)
+    //native static String valueOf(byte[] bytes, int offset, int length)
+    //native static String valueOf(char[] chars)
+    //native static String valueOf(char[] chars, int offset, int length)
+    native static String valueOf(byte b)
+    native static String valueOf(short c)
+    native static String valueOf(int i)
+    native static String valueOf(long l)
+    native static String valueOf(float f)
+    native static String valueOf(double d)
+
+}

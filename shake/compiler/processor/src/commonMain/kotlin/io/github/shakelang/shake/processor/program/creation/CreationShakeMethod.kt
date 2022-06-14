@@ -14,7 +14,7 @@ class CreationShakeMethod (
     override val clazz: CreationShakeClass?,
     override val parentScope: CreationShakeScope,
     override val name: String,
-    body: CreationShakeCode,
+    body: CreationShakeCode?,
     override val isStatic: Boolean,
     override val isFinal: Boolean,
     override val isAbstract: Boolean,
@@ -88,7 +88,7 @@ class CreationShakeMethod (
             "isPublic" to isPublic,
             "returnType" to returnType.toJson(),
             "parameters" to parameters.map { it.toJson() },
-            "body" to body.toJson()
+            "body" to body?.toJson()
         )
     }
     inner class ShakeFunctionScope: CreationShakeScope {
@@ -136,7 +136,7 @@ class CreationShakeMethod (
                 null,
                 parentScope,
                 node.name,
-                CreationShakeCode.fromTree(node.body),
+                node.body?.let { CreationShakeCode.fromTree(it) },
                 node.isStatic,
                 node.isFinal,
                 false,
@@ -160,7 +160,7 @@ class CreationShakeMethod (
                 clazz,
                 parentScope,
                 node.name,
-                CreationShakeCode.fromTree(node.body),
+                node.body?.let { CreationShakeCode.fromTree(it) },
                 node.isStatic,
                 node.isFinal,
                 false,
