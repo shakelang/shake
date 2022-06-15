@@ -188,14 +188,8 @@ open class CreationShakeProject(
             ShakeVariableType.Type.BOOLEAN -> then(CreationShakeType.Primitives.BOOLEAN)
             ShakeVariableType.Type.CHAR -> then(CreationShakeType.Primitives.CHAR)
             ShakeVariableType.Type.OBJECT -> {
-                val clz = mutableListOf<String>()
-                var identifier: ShakeValuedNode? = type.subtype ?: throw IllegalArgumentException("Object type must have subtype")
-                while(identifier != null) {
-                    if(identifier !is ShakeIdentifierNode) throw IllegalArgumentException("Invalid type ${type.subtype}")
-                    clz.add(identifier.name)
-                    identifier = identifier.parent
-                }
-                val clzName = clz.reversed().joinToString(".")
+                val namespace = type.subtype ?: throw IllegalArgumentException("Object type must have subtype")
+                val clzName = namespace.parts.joinToString (".")
                 this.getClass(clzName) {
                     then(CreationShakeType.objectType(it))
                 }
@@ -210,7 +204,7 @@ open class CreationShakeProject(
 
         classRequirements.forEach {
             val cls = this.getClass(it.name)
-            it.then(cls!!)
+            it.then(cls ?: throw IllegalArgumentException("Class ${it.name} not found"))
         }
 
         classRequirements.clear()

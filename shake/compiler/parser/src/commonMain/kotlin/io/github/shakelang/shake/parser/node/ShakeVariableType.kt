@@ -6,9 +6,9 @@ import kotlin.jvm.JvmField
 @Suppress("unused")
 class ShakeVariableType {
     val type: Type
-    val subtype: ShakeIdentifierNode?
+    val subtype: ShakeNamespaceNode?
 
-    constructor(subtype: ShakeIdentifierNode?) {
+    constructor(subtype: ShakeNamespaceNode?) {
         type = Type.OBJECT
         this.subtype = subtype
     }
@@ -60,11 +60,23 @@ class ShakeVariableType {
         @JvmField
         val ARRAY = ShakeVariableType(Type.ARRAY)
         @JvmField
-        val OBJECT = ShakeVariableType(Type.OBJECT)
-        @JvmField
         val VOID = ShakeVariableType(Type.VOID)
 
-        fun objectType(subtype: ShakeIdentifierNode): ShakeVariableType =
+        fun OBJECT(subtype: ShakeNamespaceNode): ShakeVariableType =
             ShakeVariableType(subtype)
+
+        fun OBJECT(subtype: ShakeIdentifierNode): ShakeVariableType {
+            val namespace = mutableListOf<String>()
+            var node: ShakeValuedNode? = subtype
+            while (node is ShakeIdentifierNode) {
+                namespace += node.name
+                node = node.parent
+            }
+            if(node != null) {
+                throw IllegalArgumentException("Invalid subtype for OBJECT type")
+            }
+            return OBJECT(ShakeNamespaceNode(subtype.map, namespace.reversed().toTypedArray()))
+
+        }
     }
 }
