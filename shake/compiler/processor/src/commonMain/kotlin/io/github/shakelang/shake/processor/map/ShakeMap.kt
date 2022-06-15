@@ -924,7 +924,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.method_references.map { methodPointers[it] },
                     info.field_references.map { fieldPointers[it] },
                     info.constructor_references.map { constructorPointers[it] },
-                    classPointers[info.super_class],
+                    if(info.super_class != -1) classPointers[info.super_class] else null,
                     info.interface_references.map { classPointers[it] },
                     info.isAbstract,
                     info.isFinal,
