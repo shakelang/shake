@@ -643,8 +643,7 @@ class ShakeParserImpl (
         }
 
         if (input.nextType() != ShakeTokenType.LCURL) throw ParserError("Expecting class-body")
-        while (input.hasNext() && input.peekType() != ShakeTokenType.RCURL) {
-            skipSeparators()
+        while (input.skipIgnorable().hasNext() && input.peekType() != ShakeTokenType.RCURL) {
             when (val node = expectDeclaration(
                 when(type) {
                     ShakeClassType.CLASS -> DeclarationScope.CLASS
