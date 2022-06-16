@@ -7,6 +7,7 @@ import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCo
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.ShakeMethod
+import io.github.shakelang.shake.processor.program.types.ShakeProject
 
 class CreationShakeMethod (
     override val prj: CreationShakeProject,
@@ -91,11 +92,12 @@ class CreationShakeMethod (
             "body" to body?.toJson()
         )
     }
-    inner class ShakeFunctionScope: CreationShakeScope {
+    inner class ShakeFunctionScope: CreationShakeScope() {
 
         val variables = mutableListOf<CreationShakeVariableDeclaration>()
 
         override val parent: CreationShakeScope = parentScope
+        override val project get() = prj
 
         override fun get(name: String): CreationShakeAssignable? {
             return variables.find { it.name == name } ?: parent.get(name)
@@ -146,9 +148,9 @@ class CreationShakeMethod (
                 node.access == ShakeAccessDescriber.PROTECTED,
                 node.access == ShakeAccessDescriber.PUBLIC
             ).let {
-                it.lateinitReturnType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
+                it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
-                    .forEachIndexed { i, run -> baseProject.getType(node.args[i].type) { t -> run(t) } }
+                    .forEachIndexed { i, run -> parentScope.getType(node.args[i].type) { t -> run(t) } }
                 it
             }
         }
@@ -170,9 +172,9 @@ class CreationShakeMethod (
                 node.access == ShakeAccessDescriber.PROTECTED,
                 node.access == ShakeAccessDescriber.PUBLIC
             ).let {
-                it.lateinitReturnType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
+                it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
-                    .forEachIndexed { i, run -> baseProject.getType(node.args[i].type) { t -> run(t) } }
+                    .forEachIndexed { i, run -> parentScope.getType(node.args[i].type) { t -> run(t) } }
                 it
             }
         }

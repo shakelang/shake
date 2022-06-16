@@ -7,8 +7,8 @@ import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCo
 import io.github.shakelang.shake.processor.program.types.ShakeClass
 
 class CreationShakeClass: ShakeClass {
-    override val staticScope = StaticScope()
-    override val instanceScope = InstanceScope()
+    override val staticScope: StaticScope
+    override val instanceScope: InstanceScope
     override val prj: CreationShakeProject
     override val pkg: CreationShakePackage?
     override val parentScope: CreationShakeScope
@@ -34,7 +34,7 @@ class CreationShakeClass: ShakeClass {
     override val staticClasses: List<CreationShakeClass> get() = classes.filter { it.isStatic }
 
 
-    final override var superClass: CreationShakeClass? = null
+    override var superClass: CreationShakeClass? = null
         private set
 
     private var _interfaces: List<CreationShakeClass?> = listOf()
@@ -61,6 +61,8 @@ class CreationShakeClass: ShakeClass {
         this.prj = prj
         this.pkg = pkg
         this.parentScope = parentScope
+        this.staticScope = StaticScope()
+        this.instanceScope = InstanceScope()
         this.name = name
         this.methods = methods
         this.fields = fields
@@ -83,6 +85,8 @@ class CreationShakeClass: ShakeClass {
         this.pkg = pkg
         this.name = clz.name
         this.parentScope = parentScope
+        this.staticScope = StaticScope()
+        this.instanceScope = InstanceScope()
 
         this.isAbstract = false // TODO implement abstract
         this.isFinal = clz.isFinal
@@ -108,16 +112,16 @@ class CreationShakeClass: ShakeClass {
                 it.access == ShakeAccessDescriber.PROTECTED,
                 it.access == ShakeAccessDescriber.PUBLIC,
             )
-            method.lateinitReturnType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
+            method.lateinitReturnType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
             method
                 .lateinitParameterTypes(it.args.map { p -> p.name })
-                .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
+                .forEachIndexed { i, run -> instanceScope.getType(it.args[i].type) { type -> run(type) } }
             method
         }
 
         this.fields = clz.fields.map {
             val field = CreationShakeField.from(this, if (it.isStatic) staticScope else instanceScope, it)
-            field.lateinitType().let { run -> baseProject.getType(it.type) { type -> run(type) } }
+            field.lateinitType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
             field
         }
 
@@ -134,7 +138,7 @@ class CreationShakeClass: ShakeClass {
                 name = it.name
             )
             constr.lateinitParameterTypes(it.args.map { p -> p.name })
-                .forEachIndexed { i, run -> baseProject.getType(it.args[i].type) { type -> run(type) } }
+                .forEachIndexed { i, run -> instanceScope.getType(it.args[i].type) { type -> run(type) } }
             constr
         }
         /*
@@ -168,7 +172,7 @@ class CreationShakeClass: ShakeClass {
         return CreationShakeType.Object(this)
     }
 
-    open fun processCode() {
+    fun processCode() {
         this.methods.forEach { it.processCode() }
         this.staticMethods.forEach { it.processCode() }
         this.fields.forEach { it.processCode() }
@@ -178,10 +182,11 @@ class CreationShakeClass: ShakeClass {
         this.staticClasses.forEach { it.processCode() }
     }
 
-    inner class StaticScope : CreationShakeScope {
+    inner class StaticScope : CreationShakeScope() {
 
         override val processor: ShakeCodeProcessor get() = parent.processor
         override val parent: CreationShakeScope get() = parentScope
+        override val project get() = prj
 
         override fun get(name: String): CreationShakeAssignable? {
             return staticFields.find { it.name == name } ?: parent.get(name)
@@ -209,10 +214,11 @@ class CreationShakeClass: ShakeClass {
 
     }
 
-    inner class InstanceScope : CreationShakeScope {
+    inner class InstanceScope : CreationShakeScope() {
 
         override val processor: ShakeCodeProcessor get() = parent.processor
         override val parent: CreationShakeScope get() = parentScope
+        override val project get() = parent.project
 
         override fun get(name: String): CreationShakeAssignable? {
             return fields.find { it.name == name } ?: staticFields.find { it.name == name } ?: parent.get(name)

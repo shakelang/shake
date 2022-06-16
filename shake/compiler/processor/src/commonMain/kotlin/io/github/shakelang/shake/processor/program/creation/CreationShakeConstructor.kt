@@ -4,6 +4,7 @@ import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.ShakeConstructor
+import io.github.shakelang.shake.processor.program.types.ShakeProject
 
 open class CreationShakeConstructor (
     override val clazz: CreationShakeClass,
@@ -45,9 +46,9 @@ open class CreationShakeConstructor (
         if(body is CreationShakeCode.ShakeLateProcessCode) (body as CreationShakeCode.ShakeLateProcessCode).process(scope)
     }
 
-    inner class ShakeConstructorScope : CreationShakeScope {
+    inner class ShakeConstructorScope : CreationShakeScope() {
         override val parent: CreationShakeScope = clazz.instanceScope
-
+        override val project get() = clazz.prj
         val variables = mutableListOf<CreationShakeVariableDeclaration>()
 
         override fun get(name: String): CreationShakeAssignable? {

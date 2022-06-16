@@ -17,9 +17,11 @@ open class CreationShakeProject(
 
     private val classRequirements = mutableListOf<ClassRequirement>()
     private val packageRequirements = mutableListOf<PackageRequirement>()
+    private val scopes = mutableListOf<CreationShakeScope>()
 
-    override val projectScope = object : CreationShakeScope {
+    override val projectScope = object : CreationShakeScope() {
         override val parent: CreationShakeScope? = null
+        override val project: CreationShakeProject get() = this@CreationShakeProject
 
         override val processor: ShakeCodeProcessor = processor
 
@@ -81,54 +83,7 @@ open class CreationShakeProject(
             }
         }
 
-        val fileScope = object : CreationShakeScope {
-            override val parent: CreationShakeScope = projectScope
-
-            override fun get(name: String): CreationShakeAssignable? {
-                println("Try to get $name")
-                return imports.zip(imported).filter {
-                    val last = it.first.import.last()
-                    last == name || last == "*"
-                }.firstNotNullOfOrNull {
-                    it.second!!.fields.find { f -> f.name == name }
-                } ?: parent.get(name)
-            }
-
-            override fun set(value: CreationShakeDeclaration) {
-                parent.set(value)
-            }
-
-            override fun getFunctions(name: String): List<CreationShakeMethod> {
-                return imports.zip(imported).filter {
-                    val last = it.first.import.last()
-                    last == name || last == "*"
-                }.flatMap {
-                    it.second!!.functions.filter { f -> f.name == name }
-                } + parent.getFunctions(name)
-            }
-
-            override fun setFunctions(function: CreationShakeMethod) {
-                parent.setFunctions(function)
-            }
-
-            override fun getClass(name: String): CreationShakeClass? {
-                return imports.zip(imported).filter {
-                    val last = it.first.import.last()
-                    last == name || last == "*"
-                }.firstNotNullOfOrNull {
-                    it.second!!.classes.find { c -> c.name == name }
-                } ?: parent.getClass(name)
-            }
-
-            override fun setClass(klass: CreationShakeClass) {
-                parent.setClass(klass)
-            }
-
-            override val processor: ShakeCodeProcessor
-                get() = parent.processor
-
-        }
-
+        val fileScope = CreationFileScope(this, projectScope, imports, imported)
 
         contents.children.forEach {
             when (it) {
@@ -161,6 +116,7 @@ open class CreationShakeProject(
         else getPackage(pkg).putFile(file, contents)
     }
 
+    @Deprecated("Use Scope.getClass() instead!")
     fun getClass(name: String, then: (CreationShakeClass) -> Unit) {
         this.classRequirements.add(ClassRequirement(name, then))
     }
@@ -177,6 +133,7 @@ open class CreationShakeProject(
         else this.getPackage(pkg).classes.find { it.name == name }
     }
 
+    @Deprecated("Use Scope.getType() instead")
     fun getType(type: ShakeVariableType, then: (CreationShakeType) -> Unit) {
         when (type.type) {
             ShakeVariableType.Type.BYTE -> then(CreationShakeType.Primitives.BYTE)
@@ -216,6 +173,11 @@ open class CreationShakeProject(
 
         packageRequirements.clear()
 
+        this.scopes.forEach {
+            it.finish()
+        }
+        this.scopes.clear()
+
         this.classes.forEach { it.processCode() }
         this.functions.forEach { it.processCode() }
         this.fields.forEach { it.processCode() }
@@ -223,6 +185,10 @@ open class CreationShakeProject(
 
     }
 
-    private class ClassRequirement(val name: String, val then: (CreationShakeClass) -> Unit)
+    fun addScope(creationShakeScope: CreationShakeScope) {
+        this.scopes.add(creationShakeScope)
+    }
+
+    class ClassRequirement(val name: String, val then: (CreationShakeClass) -> Unit)
     private class PackageRequirement(val name: String, val then: (CreationShakePackage) -> Unit)
 }

@@ -910,6 +910,13 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             )
         }
 
+        // set parent packages
+        shakeMap.packages.forEachIndexed { i, pkg ->
+            pkg.package_references.forEach {
+                packages[it].parent = packages[i]
+            }
+        }
+
         classPointers.forEachIndexed { index, point ->
             val info = shakeMap.classes[index]
             point.init(
@@ -934,6 +941,21 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isPrivate,
                 )
             )
+        }
+
+        // set parent packages
+        shakeMap.packages.forEachIndexed { i, pkg ->
+            pkg.class_references.forEach {
+                classes[it].pkg = packages[i]
+            }
+        }
+
+        // set parent classes
+        shakeMap.classes.forEachIndexed { i, cls ->
+            cls.subclass_references.forEach {
+                //classes[i].parent = classes[it]
+                // TODO: implement
+            }
         }
 
         methodPointers.forEachIndexed { index, point ->
@@ -966,6 +988,22 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             )
         }
 
+
+
+        // set parent packages
+        shakeMap.packages.forEachIndexed {i, pkg ->
+            pkg.method_references.forEach {
+                methods[it].pkg = packages[i]
+            }
+        }
+
+        // set parent classes
+        shakeMap.classes.forEachIndexed {i, cls ->
+            cls.method_references.forEach {
+                methods[it].clazz = classes[i]
+            }
+        }
+
         constructorPointers.forEachIndexed { index, point ->
             val info = shakeMap.constructors[index]
             point.init(
@@ -986,6 +1024,13 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isStrict
                 )
             )
+        }
+
+        // set parent classes
+        shakeMap.classes.forEachIndexed { i, cls ->
+            cls.field_references.forEach {
+                fields[it].clazz = classes[i]
+            }
         }
 
         fieldPointers.forEachIndexed { index, point ->
@@ -1014,15 +1059,6 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
 
         // set parent packages
         shakeMap.packages.forEachIndexed {i, pkg ->
-            pkg.package_references.forEach {
-                packages[i].parent = packages[it]
-            }
-            pkg.class_references.forEach {
-                classes[it].pkg = packages[i]
-            }
-            pkg.method_references.forEach {
-                methods[it].pkg = packages[i]
-            }
             pkg.field_references.forEach {
                 fields[it].pkg = packages[i]
             }
@@ -1030,16 +1066,6 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
 
         // set parent classes
         shakeMap.classes.forEachIndexed { i, cls ->
-            cls.subclass_references.forEach {
-                //classes[i].parent = classes[it]
-                // TODO: implement
-            }
-            cls.method_references.forEach {
-                methods[it].clazz = classes[i]
-            }
-            cls.field_references.forEach {
-                fields[it].clazz = classes[i]
-            }
             cls.constructor_references.forEach {
                 constructors[it].clazz = classes[i]
             }
@@ -1065,7 +1091,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             else -> {
                 if(type.startsWith("L")) {
                     val className = type.substring(1, type.length)
-                    val classPointer = classes.find { it.name == className } ?: error("Class $className not found")
+                    val classPointer = classes.find { it.qualifiedName == className } ?: error("Class $className not found")
                     ShakeAssembledObjectType(classPointer)
                 } else if(type.startsWith("[")) {
                     val componentType = findType(type.substring(1))

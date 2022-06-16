@@ -101,7 +101,7 @@ open class CreationShakeField (
                 }
 
             }.let {
-                it.lateinitType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
+                it.lateinitType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 it
             }
         }
@@ -129,7 +129,7 @@ open class CreationShakeField (
                 }
 
             }.let {
-                it.lateinitType().let { run -> clazz.prj.getType(node.type) { t -> run(t) } }
+                it.lateinitType().let { run -> clazz.instanceScope.getType(node.type) { t -> run(t) } }
                 it
             }
         }
