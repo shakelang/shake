@@ -19,7 +19,7 @@ open class CreationShakePackage (
     override val fields: MutableList<CreationShakeField> = mutableListOf(),
 ): ShakePackage {
 
-    override val qualifiedName: String get() = "${parent?.qualifiedName ?: ""}.$name"
+    override val qualifiedName: String get() = "${parent?.qualifiedName?.plus(".") ?: ""}$name"
     override val scope: CreationShakeScope = Scope()
 
     override fun getPackage(name: String): CreationShakePackage {
@@ -48,52 +48,7 @@ open class CreationShakePackage (
             }
         }
 
-        val fileScope = object : CreationShakeScope {
-            override val parent: CreationShakeScope = scope
-
-            override fun get(name: String): CreationShakeAssignable? {
-                return imports.zip(imported).filter {
-                    val last = it.first.import.last()
-                    last == name || last == "*"
-                }.firstNotNullOfOrNull {
-                    it.second!!.fields.find { f -> f.name == name }
-                } ?: parent.get(name)
-            }
-
-            override fun set(value: CreationShakeDeclaration) {
-                parent.set(value)
-            }
-
-            override fun getFunctions(name: String): List<CreationShakeMethod> {
-                return imports.zip(imported).filter {
-                    val last = it.first.import.last()
-                    last == name || last == "*"
-                }.flatMap {
-                    it.second!!.functions.filter { f -> f.name == name }
-                } + parent.getFunctions(name)
-            }
-
-            override fun setFunctions(function: CreationShakeMethod) {
-                parent.setFunctions(function)
-            }
-
-            override fun getClass(name: String): CreationShakeClass? {
-                return imports.zip(imported).filter {
-                    val last = it.first.import.last()
-                    last == name || last == "*"
-                }.firstNotNullOfOrNull {
-                    it.second!!.classes.find { c -> c.name == name }
-                } ?: parent.getClass(name)
-            }
-
-            override fun setClass(klass: CreationShakeClass) {
-                parent.setClass(klass)
-            }
-
-            override val processor: ShakeCodeProcessor
-                get() = parent.processor
-
-        }
+        val fileScope = CreationFileScope(baseProject, scope, imports, imported)
 
         contents.children.forEach {
             when (it) {
@@ -124,8 +79,9 @@ open class CreationShakePackage (
         getPackage(pkg).putFile(file, contents)
     }
 
-    private inner class Scope : CreationShakeScope {
+    private inner class Scope : CreationShakeScope() {
         override val parent: CreationShakeScope get() = baseProject.projectScope
+        override val project get() = baseProject
 
         override fun get(name: String): CreationShakeAssignable? {
             return fields.find { it.name == name } ?: parent.get(name)
