@@ -1028,8 +1028,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
 
         // set parent classes
         shakeMap.classes.forEachIndexed { i, cls ->
-            cls.field_references.forEach {
-                fields[it].clazz = classes[i]
+            cls.constructor_references.forEach {
+                constructors[it].clazz = classes[i]
             }
         }
 
@@ -1066,8 +1066,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
 
         // set parent classes
         shakeMap.classes.forEachIndexed { i, cls ->
-            cls.constructor_references.forEach {
-                constructors[it].clazz = classes[i]
+            cls.field_references.forEach {
+                fields[it].clazz = classes[i]
             }
         }
 
