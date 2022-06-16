@@ -14,8 +14,9 @@ fun main(args: Array<String>) {
     val project = processor.finish()
 
     println(json.stringify(ShakeMap.from(project).toJson()))
-    println(ShakeMap.from(ShakeMap.from(project).getBytes()).assemble().toJsonString())
     println(project.toJsonString())
+    println(ShakeMap.from(ShakeMap.from(project).getBytes()).assemble().toJsonString())
+    println(ShakeMap.fromJson(ShakeMap.from(project).toJson()).assemble().toJsonString())
 
 
 }

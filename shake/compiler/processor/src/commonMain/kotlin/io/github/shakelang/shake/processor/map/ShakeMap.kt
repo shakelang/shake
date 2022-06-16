@@ -15,6 +15,7 @@ import io.github.shakelang.shake.processor.util.Pointer
 import io.github.shakelang.shake.processor.util.PointerList
 import io.github.shakelang.shake.processor.util.latePoint
 import io.github.shakelang.shake.processor.util.values
+import io.github.shakelang.shason.json
 
 class ShakeMap(
 
@@ -72,6 +73,7 @@ class ShakeMap(
         "packages" to packages.map { it.toJson() },
         "classes" to classes.map { it.toJson() },
         "methods" to methods.map { it.toJson() },
+        "constructors" to constructors.map { it.toJson() },
         "fields" to fields.map { it.toJson() },
         "project_packages" to project_packages.map { it },
         "project_classes" to project_classes.map { it },
@@ -138,6 +140,99 @@ class ShakeMap(
 
         fun from(bytes: ByteArray) = from(ByteArrayInputStream(bytes))
 
+        fun fromJson(str: String): ShakeMap {
+            val map = json.parse(str) as Map<*, *>
+            return fromJson(map)
+        }
+
+        fun fromJson(map: Map<*, *>): ShakeMap {
+            if (map["constants"] == null) throw IllegalArgumentException("Missing constants")
+            if (map["packages"] == null) throw IllegalArgumentException("Missing packages")
+            if (map["classes"] == null) throw IllegalArgumentException("Missing classes")
+            if (map["methods"] == null) throw IllegalArgumentException("Missing methods")
+            if (map["fields"] == null) throw IllegalArgumentException("Missing fields")
+            if (map["project_packages"] == null) throw IllegalArgumentException("Missing project_packages")
+            if (map["project_classes"] == null) throw IllegalArgumentException("Missing project_classes")
+            if (map["project_methods"] == null) throw IllegalArgumentException("Missing project_methods")
+            if (map["project_fields"] == null) throw IllegalArgumentException("Missing project_fields")
+
+            if (map["magic"] != 0x3082d75f) throw IllegalArgumentException("Invalid magic")
+            if (map["version"] != 0x00000001) throw IllegalArgumentException("Invalid version")
+
+            if (map["constants"] !is List<*>) throw IllegalArgumentException("Invalid constants")
+            if (map["packages"] !is List<*>) throw IllegalArgumentException("Invalid packages")
+            if (map["classes"] !is List<*>) throw IllegalArgumentException("Invalid classes")
+            if (map["methods"] !is List<*>) throw IllegalArgumentException("Invalid methods")
+            if (map["fields"] !is List<*>) throw IllegalArgumentException("Invalid fields")
+            if (map["project_packages"] !is List<*>) throw IllegalArgumentException("Invalid project_packages")
+            if (map["project_classes"] !is List<*>) throw IllegalArgumentException("Invalid project_classes")
+            if (map["project_methods"] !is List<*>) throw IllegalArgumentException("Invalid project_methods")
+            if (map["project_fields"] !is List<*>) throw IllegalArgumentException("Invalid project_fields")
+
+            val constants_ = map["constants"] as List<*>
+            val packages_ = map["packages"] as List<*>
+            val classes_ = map["classes"] as List<*>
+            val methods_ = map["methods"] as List<*>
+            val constructors_ = map["constructors"] as List<*>
+            val fields_ = map["fields"] as List<*>
+            val project_packages_ = map["project_packages"] as List<*>
+            val project_classes_ = map["project_classes"] as List<*>
+            val project_methods_ = map["project_methods"] as List<*>
+            val project_fields_ = map["project_fields"] as List<*>
+
+            val constants = constants_.map {
+                if (it !is Map<*, *>) throw IllegalArgumentException("Invalid constant")
+                ShakeMapConstant.fromJson(it)
+            }
+            val packages = packages_.map {
+                if (it !is Map<*, *>) throw IllegalArgumentException("Invalid package")
+                ShakeMapPackage.fromJson(it)
+            }
+            val classes = classes_.map {
+                if (it !is Map<*, *>) throw IllegalArgumentException("Invalid class")
+                ShakeMapClass.fromJson(it)
+            }
+            val methods = methods_.map {
+                if (it !is Map<*, *>) throw IllegalArgumentException("Invalid method")
+                ShakeMapMethod.fromJson(it)
+            }
+            val constructors = constructors_.map {
+                if (it !is Map<*, *>) throw IllegalArgumentException("Invalid constructor")
+                ShakeMapConstructor.fromJson(it)
+            }
+            val fields = fields_.map {
+                if (it !is Map<*, *>) throw IllegalArgumentException("Invalid field")
+                ShakeMapField.fromJson(it)
+            }
+            val project_packages = project_packages_.map {
+                if (it !is Int) throw IllegalArgumentException("Invalid project_package")
+                it
+            }
+            val project_classes = project_classes_.map {
+                if (it !is Int) throw IllegalArgumentException("Invalid project_class")
+                it
+            }
+            val project_methods = project_methods_.map {
+                if (it !is Int) throw IllegalArgumentException("Invalid project_method")
+                it
+            }
+            val project_fields = project_fields_.map {
+                if (it !is Int) throw IllegalArgumentException("Invalid project_field")
+                it
+            }
+            return ShakeMap(
+                constants.toTypedArray(),
+                packages.toTypedArray(),
+                classes.toTypedArray(),
+                methods.toTypedArray(),
+                constructors.toTypedArray(),
+                fields.toTypedArray(),
+                project_packages.toTypedArray(),
+                project_classes.toTypedArray(),
+                project_methods.toTypedArray(),
+                project_fields.toTypedArray()
+            )
+        }
     }
 
 }
@@ -196,6 +291,19 @@ interface ShakeMapConstant {
                 else -> throw IllegalArgumentException("Unknown constant type: $type")
             }
         }
+
+        fun fromJson(it: Map<*, *>): ShakeUtf8Constant {
+            if(it["type"] == null) throw IllegalArgumentException("Missing type")
+            if(it["value"] == null) throw IllegalArgumentException("Missing value")
+            if(it["type"] !is Number) throw IllegalArgumentException("Invalid type: ${it["type"]!!::class.simpleName}")
+            if(it["value"] !is String) throw IllegalArgumentException("Invalid value")
+            val type = (it["type"] as Number).toInt()
+            val value = it["value"] as String
+            when (type) {
+                0x01 -> return utf8(value)
+                else -> throw IllegalArgumentException("Unknown constant type: $type")
+            }
+        }
     }
 }
 class ShakeMapPackage(
@@ -250,6 +358,41 @@ class ShakeMapPackage(
                 field_references_
             )
         }
+
+        fun fromJson(str: String) = fromJson(json.parse(str) as Map<*, *>)
+
+        fun fromJson(it: Map<*, *>): ShakeMapPackage {
+            if (it["name"] == null) throw IllegalArgumentException("Missing name")
+            if (it["package_references"] == null) throw IllegalArgumentException("Missing package_references")
+            if (it["class_references"] == null) throw IllegalArgumentException("Missing class_references")
+            if (it["method_references"] == null) throw IllegalArgumentException("Missing method_references")
+            if (it["field_references"] == null) throw IllegalArgumentException("Missing field_references")
+            if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
+            if (it["package_references"] !is List<*>) throw IllegalArgumentException("Invalid package_references")
+            if (it["class_references"] !is List<*>) throw IllegalArgumentException("Invalid class_references")
+            if (it["method_references"] !is List<*>) throw IllegalArgumentException("Invalid method_references")
+            if (it["field_references"] !is List<*>) throw IllegalArgumentException("Invalid field_references")
+
+            val name = it["name"] as Int
+            val package_references = it["package_references"] as List<*>
+            val class_references = it["class_references"] as List<*>
+            val method_references = it["method_references"] as List<*>
+            val field_references = it["field_references"] as List<*>
+
+            val package_references_ = package_references.filterIsInstance<Int>().toTypedArray()
+            val class_references_ = class_references.filterIsInstance<Int>().toTypedArray()
+            val method_references_ = method_references.filterIsInstance<Int>().toTypedArray()
+            val field_references_ = field_references.filterIsInstance<Int>().toTypedArray()
+
+            return ShakeMapPackage(
+                name,
+                package_references_,
+                class_references_,
+                method_references_,
+                field_references_,
+            )
+        }
+
     }
 }
 
@@ -299,6 +442,7 @@ class ShakeMapClass(
         "interface_references" to interface_references.map { it },
         "subclass_references" to subclass_references.map { it },
         "method_references" to method_references.map { it },
+        "constructor_references" to constructor_references.map { it },
         "field_references" to field_references.map { it }
     )
 
@@ -317,6 +461,52 @@ class ShakeMapClass(
             val constructor_references_ = Array(constructor_references) { input.readInt() }
             val field_references = input.readInt()
             val field_references_ = Array(field_references) { input.readInt() }
+            return ShakeMapClass(
+                name,
+                attributes,
+                super_class,
+                interface_references_,
+                subclass_references_,
+                method_references_,
+                constructor_references_,
+                field_references_
+            )
+        }
+
+        fun fromJson(str: String) = ShakeMapPackage.fromJson(json.parse(str) as Map<*, *>)
+
+        fun fromJson(it: Map<*, *>): ShakeMapClass {
+            if (it["name"] == null) throw IllegalArgumentException("Missing name")
+            if (it["attributes"] == null) throw IllegalArgumentException("Missing attributes")
+            if (it["super_class"] == null) throw IllegalArgumentException("Missing super_class")
+            if (it["interface_references"] == null) throw IllegalArgumentException("Missing interface_references")
+            if (it["subclass_references"] == null) throw IllegalArgumentException("Missing subclass_references")
+            if (it["method_references"] == null) throw IllegalArgumentException("Missing method_references")
+            if (it["field_references"] == null) throw IllegalArgumentException("Missing field_references")
+
+            if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
+            if (it["attributes"] !is Byte) throw IllegalArgumentException("Invalid attributes")
+            if (it["super_class"] !is Int) throw IllegalArgumentException("Invalid super_class")
+            if (it["interface_references"] !is List<*>) throw IllegalArgumentException("Invalid interface_references")
+            if (it["subclass_references"] !is List<*>) throw IllegalArgumentException("Invalid subclass_references")
+            if (it["method_references"] !is List<*>) throw IllegalArgumentException("Invalid method_references")
+            if (it["field_references"] !is List<*>) throw IllegalArgumentException("Invalid field_references")
+
+            val name = it["name"] as Int
+            val attributes = it["attributes"] as Byte
+            val super_class = it["super_class"] as Int
+            val interface_references = it["interface_references"] as List<*>
+            val subclass_references = it["subclass_references"] as List<*>
+            val method_references = it["method_references"] as List<*>
+            val constructor_references = it["constructor_references"] as List<*>
+            val field_references = it["field_references"] as List<*>
+
+            val interface_references_ = interface_references.filterIsInstance<Int>().toTypedArray()
+            val subclass_references_ = subclass_references.filterIsInstance<Int>().toTypedArray()
+            val method_references_ = method_references.filterIsInstance<Int>().toTypedArray()
+            val constructor_references_ = constructor_references.filterIsInstance<Int>().toTypedArray()
+            val field_references_ = field_references.filterIsInstance<Int>().toTypedArray()
+
             return ShakeMapClass(
                 name,
                 attributes,
@@ -388,6 +578,37 @@ class ShakeMapMethod(
                 parameter_types_
             )
         }
+
+        fun fromJson(str: String) = ShakeMapPackage.fromJson(json.parse(str) as Map<*, *>)
+
+        fun fromJson(it: Map<*, *>): ShakeMapMethod {
+            if (it["name"] == null) throw IllegalArgumentException("Missing name")
+            if (it["attributes"] == null) throw IllegalArgumentException("Missing attributes")
+            if (it["return_type"] == null) throw IllegalArgumentException("Missing return_type")
+            if (it["parameter_names"] == null) throw IllegalArgumentException("Missing parameter_names")
+            if (it["parameter_types"] == null) throw IllegalArgumentException("Missing parameter_types")
+
+            if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
+            if (it["attributes"] !is Byte) throw IllegalArgumentException("Invalid attributes")
+            if (it["return_type"] !is Int) throw IllegalArgumentException("Invalid return_type")
+            if (it["parameter_names"] !is List<*>) throw IllegalArgumentException("Invalid parameter_names")
+            if (it["parameter_types"] !is List<*>) throw IllegalArgumentException("Invalid parameter_types")
+
+            val name = it["name"] as Int
+            val attributes = it["attributes"] as Byte
+            val return_type = it["return_type"] as Int
+            val parameter_names = it["parameter_names"] as List<*>
+            val parameter_names_ = parameter_names.filterIsInstance<Int>().toTypedArray()
+            val parameter_types = it["parameter_types"] as List<*>
+            val parameter_types_ = parameter_types.filterIsInstance<Int>().toTypedArray()
+            return ShakeMapMethod(
+                name,
+                attributes,
+                return_type,
+                parameter_names_,
+                parameter_types_
+            )
+        }
     }
 }
 
@@ -439,6 +660,33 @@ class ShakeMapConstructor(
                 parameter_types_
             )
         }
+
+        fun fromJson(str: String) = ShakeMapPackage.fromJson(json.parse(str) as Map<*, *>)
+
+        fun fromJson(it: Map<*, *>): ShakeMapConstructor {
+            if (it["name"] == null) throw IllegalArgumentException("Missing name")
+            if (it["attributes"] == null) throw IllegalArgumentException("Missing attributes")
+            if (it["parameter_names"] == null) throw IllegalArgumentException("Missing parameter_names")
+            if (it["parameter_types"] == null) throw IllegalArgumentException("Missing parameter_types")
+
+            if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
+            if (it["attributes"] !is Byte) throw IllegalArgumentException("Invalid attributes")
+            if (it["parameter_names"] !is List<*>) throw IllegalArgumentException("Invalid parameter_names")
+            if (it["parameter_types"] !is List<*>) throw IllegalArgumentException("Invalid parameter_types")
+
+            val name = it["name"] as Int
+            val attributes = it["attributes"] as Byte
+            val parameter_names = it["parameter_names"] as List<*>
+            val parameter_names_ = parameter_names.filterIsInstance<Int>().toTypedArray()
+            val parameter_types = it["parameter_types"] as List<*>
+            val parameter_types_ = parameter_types.filterIsInstance<Int>().toTypedArray()
+            return ShakeMapConstructor(
+                name,
+                attributes,
+                parameter_names_,
+                parameter_types_
+            )
+        }
     }
 }
 
@@ -478,6 +726,27 @@ class ShakeMapField(
             val name = input.readInt()
             val attributes = input.readByte()
             val type = input.readInt()
+            return ShakeMapField(
+                name,
+                attributes,
+                type
+            )
+        }
+
+        fun fromJson(str: String) = ShakeMapPackage.fromJson(json.parse(str) as Map<*, *>)
+
+        fun fromJson(it: Map<*, *>): ShakeMapField {
+            if (it["name"] == null) throw IllegalArgumentException("Missing name")
+            if (it["attributes"] == null) throw IllegalArgumentException("Missing attributes")
+            if (it["type"] == null) throw IllegalArgumentException("Missing type")
+
+            if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
+            if (it["attributes"] !is Byte) throw IllegalArgumentException("Invalid attributes")
+            if (it["type"] !is Int) throw IllegalArgumentException("Invalid type")
+
+            val name = it["name"] as Int
+            val attributes = it["attributes"] as Byte
+            val type = it["type"] as Int
             return ShakeMapField(
                 name,
                 attributes,
