@@ -12,5 +12,21 @@ native class String {
     native static String valueOf(long l)
     native static String valueOf(float f)
     native static String valueOf(double d)
+    native static String valueOf(boolean b)
+    native static String valueOf(Object obj)
 
+    native int length
+    native char charAt(int index)
+    native int indexOf(String s)
+    native int indexOf(String s, int fromIndex)
+    native int lastIndexOf(String s)
+    native int lastIndexOf(String s, int fromIndex)
+    native String substring(int beginIndex)
+    native String substring(int beginIndex, int endIndex)
+    native String toLowerCase()
+    native String toUpperCase()
+    native String trim()
+    native String replace(char oldChar, char newChar)
+    native String replace(String oldStr, String newStr)
+    native String concat(String str)
 }

@@ -993,7 +993,8 @@ class ShakeParserImpl (
         if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier, but got ${input.actualType}")
         val identifier = input.actualValue ?: throw ParserError("Expecting identifier to contain value")
         val hasNext = input.skipIgnorable().hasNext()
-        return if (hasNext && input.peekType() == ShakeTokenType.ASSIGN) {
+        val peekType = if(hasNext) input.peekType() else null
+        return if (hasNext && peekType == ShakeTokenType.ASSIGN) {
             input.skip()
             if(isSynchronized) throw ParserError("Synchronized variables are not supported")
             ShakeVariableDeclarationNode(
@@ -1007,7 +1008,7 @@ class ShakeParserImpl (
                 isConst = isConst,
                 isNative = isNative,
             )
-        } else if (hasNext && input.peekType() == ShakeTokenType.LPAREN) expectCStyleFunctionDeclaration(
+        } else if (hasNext && peekType == ShakeTokenType.LPAREN) expectCStyleFunctionDeclaration(
             type,
             identifier,
             access,
@@ -1017,17 +1018,19 @@ class ShakeParserImpl (
             isSynchronized = isSynchronized,
             isConst = isConst,
             isNative = isNative,
-        ) else ShakeVariableDeclarationNode(
-            map,
-            input.actualValue!!,
-            type,
-            null,
-            access,
-            isStatic = isStatic,
-            isFinal = isFinal,
-            isConst = isConst,
-            isNative = isNative,
-        )
+        ) else {
+            ShakeVariableDeclarationNode(
+                map,
+                identifier,
+                type,
+                null,
+                access,
+                isStatic = isStatic,
+                isFinal = isFinal,
+                isConst = isConst,
+                isNative = isNative,
+            )
+        }
     }
 
     // ****************************************************************************
