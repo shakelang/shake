@@ -10,6 +10,7 @@ fun main(args: Array<String>) {
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "test.shake")
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "io/github/shakelang/test.shake")
     processor.loadFile("shakelib/src/common", "shake/lang/String.shake")
+    processor.loadFile("shakelib/src/common", "shake/lang/Object.shake")
     val project = processor.finish()
 
     println(json.stringify(ShakeMap.from(project).toJson()))
