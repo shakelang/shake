@@ -29,4 +29,11 @@ native class String {
     native String replace(char oldChar, char newChar)
     native String replace(String oldStr, String newStr)
     native String concat(String str)
+    native String[] split(String regex)
+    native String[] split(String regex, int limit)
+    native String toString()
+    native byte[] getBytes()
+    native char[] toCharArray()
+    native override boolean equals(Object obj)
+    native override int hashCode()
 }

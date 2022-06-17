@@ -172,6 +172,7 @@ class ShakeParserImpl (
         isSynchronized: Boolean,
         isConst: Boolean,
         isNative: Boolean,
+        isOverride: Boolean,
     ): ShakeNode {
         return when (input.peekType()) {
             ShakeTokenType.KEYWORD_PUBLIC -> {
@@ -185,7 +186,8 @@ class ShakeParserImpl (
                     isAbstract = isAbstract,
                     isSynchronized = isSynchronized,
                     isConst = isConst,
-                    isNative = isNative
+                    isNative = isNative,
+                    isOverride = isOverride
                 )
             }
             ShakeTokenType.KEYWORD_PROTECTED -> {
@@ -199,7 +201,8 @@ class ShakeParserImpl (
                     isAbstract = isAbstract,
                     isSynchronized = isSynchronized,
                     isConst = isConst,
-                    isNative = isNative
+                    isNative = isNative,
+                    isOverride = isOverride
                 )
             }
             ShakeTokenType.KEYWORD_PRIVATE -> {
@@ -213,7 +216,8 @@ class ShakeParserImpl (
                     isAbstract = isAbstract,
                     isSynchronized = isSynchronized,
                     isConst = isConst,
-                    isNative = isNative
+                    isNative = isNative,
+                    isOverride = isOverride
                 )
             }
             ShakeTokenType.KEYWORD_STATIC -> {
@@ -231,7 +235,8 @@ class ShakeParserImpl (
                     isAbstract = isAbstract,
                     isSynchronized = isSynchronized,
                     isConst = isConst,
-                    isNative = isNative
+                    isNative = isNative,
+                    isOverride = isOverride
                 )
             }
             ShakeTokenType.KEYWORD_FINAL -> {
@@ -245,7 +250,8 @@ class ShakeParserImpl (
                     isAbstract = isAbstract,
                     isSynchronized = isSynchronized,
                     isConst = isConst,
-                    isNative = isNative
+                    isNative = isNative,
+                    isOverride = isOverride
                 )
             }
             ShakeTokenType.KEYWORD_ABSTRACT -> {
@@ -259,7 +265,8 @@ class ShakeParserImpl (
                     isAbstract = true,
                     isSynchronized = isSynchronized,
                     isConst = isConst,
-                    isNative = isNative
+                    isNative = isNative,
+                    isOverride = isOverride
                 )
             }
             ShakeTokenType.KEYWORD_SYNCHRONIZED -> {
@@ -273,7 +280,8 @@ class ShakeParserImpl (
                     isAbstract = isAbstract,
                     isSynchronized = true,
                     isConst = isConst,
-                    isNative = isNative
+                    isNative = isNative,
+                    isOverride = isOverride
                 )
             }
             ShakeTokenType.KEYWORD_CONST -> {
@@ -287,7 +295,8 @@ class ShakeParserImpl (
                     isAbstract = isAbstract,
                     isSynchronized = isSynchronized,
                     isConst = true,
-                    isNative = isNative
+                    isNative = isNative,
+                    isOverride = isOverride
                 )
             }
             ShakeTokenType.KEYWORD_NATIVE -> {
@@ -301,7 +310,23 @@ class ShakeParserImpl (
                     isAbstract = isAbstract,
                     isSynchronized = isSynchronized,
                     isConst = isConst,
-                    isNative = true
+                    isNative = true,
+                    isOverride = isOverride
+                )
+            }
+            ShakeTokenType.KEYWORD_OVERRIDE -> {
+                input.skip()
+                if (isOverride) throw ParserError("Override keyword is only allowed once")
+                expectDeclaration(
+                    declarationScope,
+                    access,
+                    isStatic = isStatic,
+                    isFinal = isFinal,
+                    isAbstract = isAbstract,
+                    isSynchronized = isSynchronized,
+                    isConst = isConst,
+                    isNative = isNative,
+                    isOverride = true
                 )
             }
             ShakeTokenType.KEYWORD_CLASS -> expectClassDeclaration(
@@ -322,7 +347,8 @@ class ShakeParserImpl (
                 isAbstract = isAbstract,
                 isSynchronized = isSynchronized,
                 isConst = isConst,
-                isNative = isNative
+                isNative = isNative,
+                isOverride = isOverride
             )
             ShakeTokenType.KEYWORD_OBJECT -> expectObjectDeclaration(
                 access,
@@ -332,7 +358,8 @@ class ShakeParserImpl (
                 isAbstract = isAbstract,
                 isSynchronized = isSynchronized,
                 isConst = isConst,
-                isNative = isNative
+                isNative = isNative,
+                isOverride = isOverride
             )
             ShakeTokenType.KEYWORD_ENUM -> expectEnumDeclaration(
                 access,
@@ -342,7 +369,8 @@ class ShakeParserImpl (
                 isAbstract = isAbstract,
                 isSynchronized = isSynchronized,
                 isConst = isConst,
-                isNative = isNative
+                isNative = isNative,
+                isOverride = isOverride
             )
             ShakeTokenType.KEYWORD_CONSTRUCTOR -> {
                 if(declarationScope != DeclarationScope.CLASS
@@ -356,7 +384,8 @@ class ShakeParserImpl (
                     isAbstract = isAbstract,
                     isSynchronized = isSynchronized,
                     isConst = isConst,
-                    isNative = isNative
+                    isNative = isNative,
+                    isOverride = isOverride
                 )
             }
             ShakeTokenType.KEYWORD_DYNAMIC,
@@ -377,6 +406,7 @@ class ShakeParserImpl (
                 isConst = isConst,
                 isNative = isNative,
                 isSynchronized = isSynchronized,
+                isOverride = isOverride
             )
             else -> throw ParserError("Unexpected token (" + input.peekType() + ')')
         }
@@ -493,7 +523,8 @@ class ShakeParserImpl (
             isAbstract = false,
             isSynchronized = false,
             isConst = false,
-            isNative = false
+            isNative = false,
+            isOverride = false
         )
     }
 
@@ -723,7 +754,8 @@ class ShakeParserImpl (
         isAbstract: Boolean,
         isSynchronized: Boolean,
         isConst: Boolean,
-        isNative: Boolean
+        isNative: Boolean,
+        isOverride: Boolean
     ): ShakeClassDeclarationNode {
 
         if(isSynchronized) throw ParserError("Synchronized interfaces are not supported")
@@ -791,7 +823,8 @@ class ShakeParserImpl (
         isAbstract: Boolean,
         isSynchronized: Boolean,
         isConst: Boolean,
-        isNative: Boolean
+        isNative: Boolean,
+        isOverride: Boolean
     ): ShakeClassDeclarationNode {
 
         TODO("Not implemented")
@@ -806,7 +839,8 @@ class ShakeParserImpl (
         isAbstract: Boolean,
         isSynchronized: Boolean,
         isConst: Boolean,
-        isNative: Boolean
+        isNative: Boolean,
+        isOverride: Boolean
     ): ShakeClassDeclarationNode {
 
         TODO("Not implemented")
@@ -900,6 +934,7 @@ class ShakeParserImpl (
         isSynchronized: Boolean,
         isConst: Boolean,
         isNative: Boolean,
+        isOverride: Boolean,
     ): ShakeConstructorDeclarationNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_CONSTRUCTOR) throw ParserError("Expecting function keyword")
         if (declarationScope != DeclarationScope.CLASS && declarationScope != DeclarationScope.ENUM)    throw ParserError("A constructor must be inside of a class")
@@ -984,6 +1019,7 @@ class ShakeParserImpl (
         isSynchronized: Boolean,
         isConst: Boolean,
         isNative: Boolean,
+        isOverride: Boolean,
     ): ShakeFileChildNode {
         val type = expectType()
         return expectCStyleDeclaration(type, access, isStatic, isFinal, isAbstract, isSynchronized, isConst, isNative)

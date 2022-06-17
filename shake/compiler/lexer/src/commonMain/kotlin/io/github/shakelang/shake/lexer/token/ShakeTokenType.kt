@@ -54,6 +54,7 @@ enum class ShakeTokenType(private val length: Int) : TokenType {
     KEYWORD_NEW(3),
     KEYWORD_NULL(4),
     KEYWORD_OBJECT(6),
+    KEYWORD_OVERRIDE(8),
     KEYWORD_PACKAGE(7),
     KEYWORD_PRIVATE(7),
     KEYWORD_PROTECTED(9),
