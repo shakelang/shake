@@ -337,7 +337,8 @@ class ShakeParserImpl (
                 isAbstract = isAbstract,
                 isSynchronized = isSynchronized,
                 isConst = isConst,
-                isNative = isNative
+                isNative = isNative,
+                isOverride = isOverride
             )
             ShakeTokenType.KEYWORD_INTERFACE -> expectInterfaceDeclaration(
                 access,
@@ -643,21 +644,13 @@ class ShakeParserImpl (
         isAbstract: Boolean,
         isSynchronized: Boolean,
         isConst: Boolean,
-        isNative: Boolean
+        isNative: Boolean,
+        isOverride: Boolean
     ): ShakeClassDeclarationNode {
-
-        val type = when (input.skipIgnorable().nextType()) {
-            ShakeTokenType.KEYWORD_CLASS -> ShakeClassType.CLASS
-            ShakeTokenType.KEYWORD_INTERFACE -> ShakeClassType.INTERFACE
-            ShakeTokenType.KEYWORD_ENUM -> ShakeClassType.ENUM
-            ShakeTokenType.KEYWORD_OBJECT -> ShakeClassType.OBJECT
-            else -> throw ParserError("Expecting class or interface keyword")
-        }
 
         if(isSynchronized) throw ParserError("Synchronized classes are not supported")
         if(isConst) throw ParserError("Const classes are not supported")
-
-        if(type == ShakeClassType.INTERFACE && isFinal) throw ParserError("Interfaces cannot be final")
+        if(isNative) throw ParserError("Native classes are not supported")
 
         if (!input.hasNext() || input.peekType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
         val name = input.nextValue() ?: throw ParserError("Identifier has no value")
@@ -669,34 +662,15 @@ class ShakeParserImpl (
         var extends: ShakeNamespaceNode? = null
         var implements: MutableList<ShakeNamespaceNode>? = null
 
-        if(type == ShakeClassType.OBJECT || type == ShakeClassType.CLASS) {
-            while (input.skipIgnorable().hasNext() &&
-                (input.peekType() == ShakeTokenType.KEYWORD_EXTENDS
-                        || input.peekType() == ShakeTokenType.KEYWORD_IMPLEMENTS)) {
+        while (input.skipIgnorable().hasNext() &&
+            (input.peekType() == ShakeTokenType.KEYWORD_EXTENDS
+                    || input.peekType() == ShakeTokenType.KEYWORD_IMPLEMENTS)) {
 
-                if (input.nextType() == ShakeTokenType.KEYWORD_EXTENDS) {
-                    if (extends != null) throw ParserError("Class/Object can only extend one class")
-                    extends = expectNamespace()
-                } else {
-                    if (implements != null) throw ParserError("Class/Object can only use implements once")
-                    implements = mutableListOf()
-
-                    var a = false
-
-                    do {
-                        if (a) {
-                            input.skip()
-                            input.skipIgnorable()
-                        } else a = true
-                        implements.add(expectNamespace())
-
-                    } while (input.skipIgnorable().peekType() == ShakeTokenType.COMMA)
-                }
-            }
-        }
-        else if(type == ShakeClassType.INTERFACE) {
-            if (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.KEYWORD_EXTENDS) {
-                if (implements != null) throw ParserError("Interface can only use extends once")
+            if (input.nextType() == ShakeTokenType.KEYWORD_EXTENDS) {
+                if (extends != null) throw ParserError("Class/Object can only extend one class")
+                extends = expectNamespace()
+            } else {
+                if (implements != null) throw ParserError("Class/Object can only use implements once")
                 implements = mutableListOf()
 
                 var a = false
@@ -707,20 +681,14 @@ class ShakeParserImpl (
                         input.skipIgnorable()
                     } else a = true
                     implements.add(expectNamespace())
+
                 } while (input.skipIgnorable().peekType() == ShakeTokenType.COMMA)
             }
         }
 
         if (input.nextType() != ShakeTokenType.LCURL) throw ParserError("Expecting class-body")
         while (input.skipIgnorable().hasNext() && input.peekType() != ShakeTokenType.RCURL) {
-            when (val node = expectDeclaration(
-                when(type) {
-                    ShakeClassType.CLASS -> DeclarationScope.CLASS
-                    ShakeClassType.INTERFACE -> DeclarationScope.INTERFACE
-                    ShakeClassType.ENUM -> DeclarationScope.ENUM
-                    ShakeClassType.OBJECT -> DeclarationScope.OBJECT
-                }
-            )) {
+            when (val node = expectDeclaration(DeclarationScope.CLASS)) {
                 is ShakeClassDeclarationNode -> classes.add(node)
                 is ShakeFunctionDeclarationNode -> methods.add(node)
                 is ShakeVariableDeclarationNode -> fields.add(node)
@@ -739,9 +707,11 @@ class ShakeParserImpl (
             classes.toTypedArray(),
             constructors.toTypedArray(),
             access,
-            type,
+            ShakeClassType.CLASS,
             isStatic,
-            isFinal
+            isFinal,
+            isAbstract,
+            isNative
         )
     }
 
@@ -762,6 +732,7 @@ class ShakeParserImpl (
         if(isConst) throw ParserError("Const interfaces are not supported")
         if(isAbstract) throw ParserError("Abstract interfaces are not supported")
         if(isFinal) throw ParserError("Final interfaces are not supported")
+if(isOverride) throw ParserError("Override interfaces are not supported")
 
         if (!input.hasNext() || input.peekType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
         val name = input.nextValue() ?: throw ParserError("Identifier has no value")
@@ -811,7 +782,9 @@ class ShakeParserImpl (
             access,
             ShakeClassType.INTERFACE,
             isStatic,
-            isFinal
+            isFinal,
+            isAbstract = false,
+            isNative,
         )
     }
 

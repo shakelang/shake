@@ -20,9 +20,10 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
     val constructors: Array<ShakeConstructorDeclarationNode>,
     val access: ShakeAccessDescriber = ShakeAccessDescriber.PACKAGE,
     val type: ShakeClassType = ShakeClassType.CLASS,
-    val isStatic: Boolean = false,
-    val isFinal: Boolean = false,
-    val isAbstract: Boolean = false,
+    val isStatic: Boolean,
+    val isFinal: Boolean,
+    val isAbstract: Boolean,
+    val isNative: Boolean,
 ) : ShakeFileChildNodeImpl(map) {
 
     constructor(
@@ -39,6 +40,7 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
         isStatic: Boolean,
         isFinal: Boolean,
         isAbstract: Boolean,
+        isNative: Boolean,
     ) : this(
         map,
         name,
@@ -53,26 +55,7 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
         isStatic,
         isFinal,
         isAbstract,
-    )
-
-    constructor(
-        map: PositionMap,
-        name: String,
-        extends: ShakeNamespaceNode?,
-        implements: List<ShakeNamespaceNode>,
-        fields: List<ShakeVariableDeclarationNode>,
-        methods: List<ShakeFunctionDeclarationNode>,
-        classes: List<ShakeClassDeclarationNode>,
-        constructors: List<ShakeConstructorDeclarationNode>,
-    ) : this(
-        map,
-        name,
-        extends,
-        implements.toTypedArray(),
-        fields.toTypedArray(),
-        methods.toTypedArray(),
-        classes.toTypedArray(),
-        constructors.toTypedArray()
+        isNative,
     )
 
     override fun toJson(): Map<String, *> =
