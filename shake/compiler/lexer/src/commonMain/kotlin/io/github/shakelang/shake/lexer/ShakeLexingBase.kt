@@ -108,6 +108,8 @@ abstract class ShakeLexingBase(
         else if (next == ')') ShakeToken(ShakeTokenType.RPAREN, input.position)
         else if (next == '{') ShakeToken(ShakeTokenType.LCURL, input.position)
         else if (next == '}') return ShakeToken(ShakeTokenType.RCURL, input.position)
+        else if (next == '[') ShakeToken(ShakeTokenType.LSQBR, input.position)
+        else if (next == ']') ShakeToken(ShakeTokenType.RSQBR, input.position)
         else throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
     }
 
