@@ -4,18 +4,15 @@ import io.github.shakelang.shason.JSON
 import kotlin.jvm.JvmField
 
 @Suppress("unused")
-class ShakeVariableType {
+open class ShakeVariableType {
     val type: Type
-    val subtype: ShakeNamespaceNode?
 
     constructor(subtype: ShakeNamespaceNode?) {
         type = Type.OBJECT
-        this.subtype = subtype
     }
 
     constructor(type: Type) {
         this.type = type
-        subtype = null
     }
 
     override fun toString(): String = JSON.stringify(this.json)
@@ -27,8 +24,10 @@ class ShakeVariableType {
         mapOf(
             "name" to "VariableType",
             "type" to type,
-            "subtype" to subtype,
         )
+
+    class Object (val namespace: ShakeNamespaceNode?) : ShakeVariableType(Type.OBJECT)
+    class Array (val subtype: ShakeVariableType) : ShakeVariableType(Type.ARRAY)
 
     enum class Type {
         DYNAMIC, BYTE, SHORT, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, CHAR, ARRAY, OBJECT, VOID;
@@ -58,14 +57,11 @@ class ShakeVariableType {
         @JvmField
         val CHAR = ShakeVariableType(Type.CHAR)
         @JvmField
-        val ARRAY = ShakeVariableType(Type.ARRAY)
-        @JvmField
         val VOID = ShakeVariableType(Type.VOID)
 
-        fun OBJECT(subtype: ShakeNamespaceNode): ShakeVariableType =
-            ShakeVariableType(subtype)
+        fun objectType(subtype: ShakeNamespaceNode): ShakeVariableType = Object(subtype)
 
-        fun OBJECT(subtype: ShakeIdentifierNode): ShakeVariableType {
+        fun objectType(subtype: ShakeIdentifierNode): ShakeVariableType {
             val namespace = mutableListOf<String>()
             var node: ShakeValuedNode? = subtype
             while (node is ShakeIdentifierNode) {
@@ -75,8 +71,9 @@ class ShakeVariableType {
             if(node != null) {
                 throw IllegalArgumentException("Invalid subtype for OBJECT type")
             }
-            return OBJECT(ShakeNamespaceNode(subtype.map, namespace.reversed().toTypedArray()))
-
+            return objectType(ShakeNamespaceNode(subtype.map, namespace.reversed().toTypedArray()))
         }
+
+        fun arrayType(subtype: ShakeVariableType): ShakeVariableType = Array(subtype)
     }
 }

@@ -428,7 +428,7 @@ class ShakeParserImpl (
 
     fun expectType(): ShakeVariableType {
         val t = input.peekType()
-        return if (t == ShakeTokenType.KEYWORD_DYNAMIC) {
+        var type = if (t == ShakeTokenType.KEYWORD_DYNAMIC) {
             input.skip()
             ShakeVariableType.DYNAMIC
         }
@@ -469,9 +469,19 @@ class ShakeParserImpl (
             ShakeVariableType.VOID
         }
         else if (t == ShakeTokenType.IDENTIFIER) {
-            ShakeVariableType.OBJECT(expectNamespace())
+            ShakeVariableType.objectType(expectNamespace())
         }
         else throw ParserError("Expecting a variable type")
+
+        while (input.peekType() == ShakeTokenType.LSQBR) {
+            input.skip()
+            if(input.peekType() != ShakeTokenType.RSQBR)
+                throw ParserError("Expecting ']'")
+            type = ShakeVariableType.arrayType(type)
+            input.skip()
+        }
+
+        return type
     }
 
     fun expectDeclaration(declarationScope: DeclarationScope): ShakeNode {
@@ -496,7 +506,7 @@ class ShakeParserImpl (
             when (input.peekType()) {
                 ShakeTokenType.LPAREN -> ret = expectFunctionCall(identifierNode)
                 ShakeTokenType.ASSIGN -> ret = expectVariableAssignment(identifierNode)
-                ShakeTokenType.IDENTIFIER -> ret = this.expectLocalDeclaration(ShakeVariableType.OBJECT(identifierNode), false)
+                ShakeTokenType.IDENTIFIER -> ret = this.expectLocalDeclaration(ShakeVariableType.objectType(identifierNode), false)
                 ShakeTokenType.ADD_ASSIGN -> ret = expectVariableAddAssignment(identifierNode)
                 ShakeTokenType.SUB_ASSIGN -> ret = expectVariableSubAssignment(identifierNode)
                 ShakeTokenType.MUL_ASSIGN -> ret = expectVariableMulAssignment(identifierNode)

@@ -48,14 +48,19 @@ abstract class CreationShakeScope : ShakeScope {
             ShakeVariableType.Type.BOOLEAN -> then(CreationShakeType.Primitives.BOOLEAN)
             ShakeVariableType.Type.CHAR -> then(CreationShakeType.Primitives.CHAR)
             ShakeVariableType.Type.OBJECT -> {
-                val namespace = type.subtype ?: throw IllegalArgumentException("Object type must have subtype")
+                val namespace = (type as ShakeVariableType.Object).namespace ?: throw IllegalArgumentException("Object type must have subtype")
                 val clzName = namespace.parts.joinToString (".")
                 this.getClass(clzName) {
                     then(CreationShakeType.objectType(it))
                 }
             }
             ShakeVariableType.Type.DYNAMIC -> TODO()
-            ShakeVariableType.Type.ARRAY -> TODO()
+            ShakeVariableType.Type.ARRAY -> {
+                val subtype = (type as ShakeVariableType.Array).subtype
+                this.getType(subtype) {
+                    then(CreationShakeType.array(it))
+                }
+            }
             ShakeVariableType.Type.VOID -> TODO()
         }
     }
