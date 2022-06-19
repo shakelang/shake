@@ -8,5 +8,5 @@ const pkg = it.createPackageSystem({
 
 console.log("Example package loaded");
 
-const testImport = pkg.import("io.github.shakelang.packagejs.test");
+const testImport = pkg.pImport("io.github.shakelang.packagejs.test");
 
