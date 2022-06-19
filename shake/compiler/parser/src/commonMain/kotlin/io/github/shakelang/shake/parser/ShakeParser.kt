@@ -650,7 +650,9 @@ class ShakeParserImpl (
 
         if(isSynchronized) throw ParserError("Synchronized classes are not supported")
         if(isConst) throw ParserError("Const classes are not supported")
-        if(isNative) throw ParserError("Native classes are not supported")
+        if(isOverride) throw ParserError("Override classes are not supported")
+
+        if(input.nextType() != ShakeTokenType.KEYWORD_CLASS) throw ParserError("Expecting class keyword")
 
         if (!input.hasNext() || input.peekType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
         val name = input.nextValue() ?: throw ParserError("Identifier has no value")
