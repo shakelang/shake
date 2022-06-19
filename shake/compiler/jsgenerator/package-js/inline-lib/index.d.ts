@@ -12,11 +12,14 @@ export interface PackageContainer {
 
 export interface PackageSystem {
     packages: PackageContainer;
-    import(path: string): any;
+    pImport(path: string): any;
     add(descriptor: PackageContentDescriptor): void;
 }
 
-export const packages: PackageSystem;
+export const packages: PackageContainer;
+export function pImport(path: string): any;
+export function add(descriptor: PackageContentDescriptor): void;
+
 export const createPackageSystem: (PackageDescriptor) => PackageSystem;
 export function require(path: string): () => DeclarationFunction<any>;
 export function object<T>(any: T): DeclarationFunction<T>;

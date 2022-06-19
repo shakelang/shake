@@ -1,4 +1,4 @@
-module.exports = (function Module() {
+module.exports = global.packageJsLibrary = global.packageJsLibrary || (function Module() {
   function required_module() {
     try {
       return require(name);
@@ -58,11 +58,12 @@ module.exports = (function Module() {
     function createPackageSystem(description) {
       const packages = description?.packages || {};
       const resolved = resolvePackages(packages);
-      return {
+      let it;
+      return it = {
         packages: resolved,
-        import(path) {
+        pImport(path) {
           const parts = path.split(/[.\/]/g);
-          let current = this.packages;
+          let current = it.packages;
           for (let i = 0; i < parts.length; i++) {
             if (!current[parts[i]]) return undefined;
             current = current[parts[i]];
@@ -70,17 +71,18 @@ module.exports = (function Module() {
           return current["$it"];
         },
         add(packages) {
-          deepMerge(this.packages, resolvePackages(packages));
+          deepMerge(it.packages, resolvePackages(packages));
         }
       };
     }
 
-    return {
-      packages: createPackageSystem({}),
+    const packages = createPackageSystem({});
+
+    return Object.assign(packages, {
       createPackageSystem,
       require: (path) => () => require(`${path}`),
       object: (obj) => () => obj,
-    }
+    });
   }
 
   return required_module() || inline_module();
