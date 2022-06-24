@@ -1,5 +1,6 @@
 package io.github.shakelang.shake.js.native.shake.lang
 
+import io.github.shakelang.shake.js.ShakeJsGenerator
 import io.github.shakelang.shake.js.native.NativeClass
 import io.github.shakelang.shake.js.native.NativeField
 import io.github.shakelang.shake.js.native.NativeFunction
@@ -57,49 +58,56 @@ class String : NativeClass {
     // valueOf(byte[] bytes)
     class FunctionValueOf0 : NativeFunction {
         override val signature: String = "valueOf(byte[] bytes)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if(args.size != 1) {
-                throw IllegalArgumentException("String.valueOf(byte[] bytes) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("fromCharCode", JsField("String")), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if(invokation.arguments.size != 1) throw IllegalArgumentException("Expected 1 argument, got ${invokation.arguments.size}")
+            if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
         }
     }
 
     // valueOf(byte[] bytes, int offset, int length)
     class FunctionValueOf1 : NativeFunction {
         override val signature: String = "valueOf(byte[] bytes, int offset, int length)"
-         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-             if(args.size != 3) {
-                 throw IllegalArgumentException("String.valueOf(byte[] bytes, int offset, int length) takes exactly 4 arguments")
-             }
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if(invokation.arguments.size != 3) throw IllegalArgumentException("String.valueOf(byte[] bytes, int offset, int length) takes exactly 4 arguments")
+            if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val arg1 = generator.visitValue(invokation.arguments[1])
+            val arg2 = generator.visitValue(invokation.arguments[2])
+
             return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(
-                JsFunctionCall(JsField("slice", args[0]), listOf(args[1], JsSubtract(args[2], args[1])))
+                JsFunctionCall(JsField("slice", arg0), listOf(arg1, JsSubtract(arg2, arg1)))
             ))
-         }
+        }
     }
 
     // valueOf(char[] chars)
     class FunctionValueOf2 : NativeFunction {
         override val signature: String = "valueOf(char[] chars)"
-         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-             if(args.size != 1) {
-                 throw IllegalArgumentException("String.valueOf(char[] chars) takes exactly 2 arguments")
-             }
-             return JsFunctionCall(JsField("join", args[0]), listOf(JsStringLiteral("")))
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if(invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(char[] chars) takes exactly 1 argument")
+            if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            return JsFunctionCall(JsField("join", arg0), listOf(JsStringLiteral("")))
          }
     }
 
     // valueOf(char[] chars, int offset, int length)
     class FunctionValueOf3 : NativeFunction {
         override val signature: String = "valueOf(char[] chars, int offset, int length)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 3) {
-                throw IllegalArgumentException("String.valueOf(char[] chars, int offset, int length) takes exactly 4 arguments")
-            }
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 3) throw IllegalArgumentException("String.valueOf(char[] chars, int offset, int length) takes exactly 4 arguments")
+            if (invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val arg1 = generator.visitValue(invokation.arguments[1])
+            val arg2 = generator.visitValue(invokation.arguments[2])
+
             return JsFunctionCall(
                 JsField(
                     "join",
-                    JsFunctionCall(JsField("slice", args[0]), listOf(args[1], JsSubtract(args[2], args[1])))
+                    JsFunctionCall(JsField("slice", arg0), listOf(arg1, JsSubtract(arg2, arg1)))
                 ),
                 listOf()
             )
@@ -109,88 +117,88 @@ class String : NativeClass {
     // valueOf(byte b)
     class FunctionValueOf4 : NativeFunction {
         override val signature: String = "valueOf(byte b)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.valueOf(byte b) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("toString", args[0]), listOf())
+         override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+             if(invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(byte b) takes exactly 1 argument")
+             if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+             val arg0 = generator.visitValue(invokation.arguments[0])
+             return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
         }
     }
 
     // valueOf(short c)
     class FunctionValueOf5 : NativeFunction {
         override val signature: String = "valueOf(short c)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.valueOf(short c) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("toString", args[0]), listOf())
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if(invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(short c) takes exactly 1 argument")
+            if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
         }
     }
 
     // valueOf(int i)
     class FunctionValueOf6 : NativeFunction {
         override val signature: String = "valueOf(int i)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.valueOf(int i) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("toString", args[0]), listOf())
-        }
+         override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+             if(invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(int i) takes exactly 1 argument")
+             if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+             val arg0 = generator.visitValue(invokation.arguments[0])
+             return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
+         }
     }
 
     // valueOf(long l)
     class FunctionValueOf7 : NativeFunction {
         override val signature: String = "valueOf(long l)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.valueOf(long l) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("toString", args[0]), listOf())
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if(invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(long l) takes exactly 1 argument")
+            if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
         }
     }
 
     // valueOf(float f)
     class FunctionValueOf8 : NativeFunction {
         override val signature: String = "valueOf(float f)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.valueOf(float f) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("toString", args[0]), listOf())
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if(invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(float f) takes exactly 1 argument")
+            if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
         }
     }
 
     // valueOf(double d)
     class FunctionValueOf9 : NativeFunction {
         override val signature: String = "valueOf(double d)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.valueOf(double d) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("toString", args[0]), listOf())
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if(invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(double d) takes exactly 1 argument")
+            if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
         }
     }
 
     // valueOf(boolean b)
     class FunctionValueOf10 : NativeFunction {
         override val signature: String = "valueOf(boolean b)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.valueOf(boolean b) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("toString", args[0]), listOf())
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if(invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(boolean b) takes exactly 1 argument")
+            if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
         }
     }
 
     // valueOf(char c)
     class FunctionValueOf11 : NativeFunction {
         override val signature: String = "valueOf(char c)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.valueOf(Object obj) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("toString", args[0]), listOf())
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if(invokation.arguments.size != 1) throw IllegalArgumentException("String.valueOf(char c) takes exactly 1 argument")
+            if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
         }
     }
 
@@ -200,8 +208,9 @@ class String : NativeClass {
     // length
     class FieldLength : NativeField {
         override val signature: String = "length"
-        override fun handle(fieldUsage: ShakeFieldUsage, receiver: JsValue?): JsValue {
-            return JsField("length", receiver)
+        override fun handle(generator: ShakeJsGenerator, fieldUsage: ShakeFieldUsage): JsValue {
+            if(fieldUsage.receiver == null) throw IllegalArgumentException("Cannot access instance field without receiver")
+            return JsField("length", generator.visitValue(fieldUsage.receiver!!))
         }
     }
 
@@ -210,87 +219,97 @@ class String : NativeClass {
     // charAt(int index)
     class MethodCharAt : NativeFunction {
         override val signature: String = "charAt(int index)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.charAt(int index) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("charAt", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 1) throw IllegalArgumentException("String.charAt(int index) takes exactly 1 argument")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("charAt", receiver), listOf(arg0))
         }
     }
 
     // indexOf(String str)
     class MethodIndexOf : NativeFunction {
         override val signature: String = "indexOf(String str)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.indexOf(String str) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("indexOf", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 1) throw IllegalArgumentException("String.indexOf(String str) takes exactly 1 argument")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("indexOf", receiver), listOf(arg0))
         }
     }
 
     // indexOf(String str, int fromIndex)
     class MethodIndexOf2 : NativeFunction {
         override val signature: String = "indexOf(String str, int fromIndex)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 2) {
-                throw IllegalArgumentException("String.indexOf(String str, int fromIndex) takes exactly 2 arguments")
-            }
-            return JsFunctionCall(JsField("indexOf", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 2) throw IllegalArgumentException("String.indexOf(String str, int fromIndex) takes exactly 2 arguments")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val arg1 = generator.visitValue(invokation.arguments[1])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("indexOf", receiver), listOf(arg0, arg1))
         }
     }
 
     // lastIndexOf(String str)
     class MethodLastIndexOf : NativeFunction {
         override val signature: String = "lastIndexOf(String str)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.lastIndexOf(String str) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("lastIndexOf", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 1) throw IllegalArgumentException("String.lastIndexOf(String str) takes exactly 1 argument")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("lastIndexOf", receiver), listOf(arg0))
         }
     }
 
     // lastIndexOf(String str, int fromIndex)
     class MethodLastIndexOf2 : NativeFunction {
         override val signature: String = "lastIndexOf(String str, int fromIndex)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 2) {
-                throw IllegalArgumentException("String.lastIndexOf(String str, int fromIndex) takes exactly 2 arguments")
-            }
-            return JsFunctionCall(JsField("lastIndexOf", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 2) throw IllegalArgumentException("String.lastIndexOf(String str, int fromIndex) takes exactly 2 arguments")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val arg1 = generator.visitValue(invokation.arguments[1])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("lastIndexOf", receiver), listOf(arg0, arg1))
         }
     }
 
     // substring(int beginIndex)
     class MethodSubstring : NativeFunction {
         override val signature: String = "substring(int beginIndex)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.substring(int beginIndex) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("substring", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 1) throw IllegalArgumentException("String.substring(int beginIndex) takes exactly 1 argument")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("substring", receiver), listOf(arg0))
         }
     }
 
     // substring(int beginIndex, int endIndex)
     class MethodSubstring2 : NativeFunction {
         override val signature: String = "substring(int beginIndex, int endIndex)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 2) {
-                throw IllegalArgumentException("String.substring(int beginIndex, int endIndex) takes exactly 2 arguments")
-            }
-            return JsFunctionCall(JsField("substring", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+if (invokation.arguments.size != 2) throw IllegalArgumentException("String.substring(int beginIndex, int endIndex) takes exactly 2 arguments")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val arg1 = generator.visitValue(invokation.arguments[1])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("substring", receiver), listOf(arg0, arg1))
         }
     }
 
     // toLowerCase()
     class MethodToLowerCase : NativeFunction {
         override val signature: String = "toLowerCase()"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.isNotEmpty()) {
-                throw IllegalArgumentException("String.toLowerCase() takes exactly 0 arguments")
-            }
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 0) throw IllegalArgumentException("String.toLowerCase() takes exactly 0 arguments")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val receiver = generator.visitValue(invokation.parent!!)
             return JsFunctionCall(JsField("toLowerCase", receiver), listOf())
         }
     }
@@ -298,10 +317,10 @@ class String : NativeClass {
     // toUpperCase()
     class MethodToUpperCase : NativeFunction {
         override val signature: String = "toUpperCase()"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.isNotEmpty()) {
-                throw IllegalArgumentException("String.toUpperCase() takes exactly 0 arguments")
-            }
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 0) throw IllegalArgumentException("String.toUpperCase() takes exactly 0 arguments")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val receiver = generator.visitValue(invokation.parent!!)
             return JsFunctionCall(JsField("toUpperCase", receiver), listOf())
         }
     }
@@ -309,10 +328,10 @@ class String : NativeClass {
     // trim()
     class MethodTrim : NativeFunction {
         override val signature: String = "trim()"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.isNotEmpty()) {
-                throw IllegalArgumentException("String.trim() takes exactly 0 arguments")
-            }
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 0) throw IllegalArgumentException("String.trim() takes exactly 0 arguments")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val receiver = generator.visitValue(invokation.parent!!)
             return JsFunctionCall(JsField("trim", receiver), listOf())
         }
     }
@@ -320,54 +339,60 @@ class String : NativeClass {
     // replace(String oldSubstring, String newSubstring) TODO regex
     class MethodReplace : NativeFunction {
         override val signature: String = "replace(String oldSubstring, String newSubstring)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 2) {
-                throw IllegalArgumentException("String.replace(String oldSubstring, String newSubstring) takes exactly 2 arguments")
-            }
-            return JsFunctionCall(JsField("replace", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 2) throw IllegalArgumentException("String.replace(String oldSubstring, String newSubstring) takes exactly 2 arguments")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val arg1 = generator.visitValue(invokation.arguments[1])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("replace", receiver), listOf(arg0, arg1))
         }
     }
 
     // concat(String str)
     class MethodConcat : NativeFunction {
         override val signature: String = "concat(String str)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.concat(String str) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("concat", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 1) throw IllegalArgumentException("String.concat(String str) takes exactly 1 argument")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("concat", receiver), listOf(arg0))
         }
     }
 
     // split(String regex) TODO regex
     class MethodSplit : NativeFunction {
         override val signature: String = "split(String regex)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 1) {
-                throw IllegalArgumentException("String.split(String regex) takes exactly 1 argument")
-            }
-            return JsFunctionCall(JsField("split", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 1) throw IllegalArgumentException("String.split(String regex) takes exactly 1 argument")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("split", receiver), listOf(arg0))
         }
     }
 
     // split(String regex, int limit) TODO regex
     class MethodSplit2 : NativeFunction {
         override val signature: String = "split(String regex, int limit)"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.size != 2) {
-                throw IllegalArgumentException("String.split(String regex, int limit) takes exactly 2 arguments")
-            }
-            return JsFunctionCall(JsField("split", receiver), args)
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 2) throw IllegalArgumentException("String.split(String regex, int limit) takes exactly 2 arguments")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val arg1 = generator.visitValue(invokation.arguments[1])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsFunctionCall(JsField("split", receiver), listOf(arg0, arg1))
         }
     }
 
     // toString()
     class MethodToString : NativeFunction {
         override val signature: String = "toString()"
-        override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
-            if (args.isNotEmpty()) {
-                throw IllegalArgumentException("String.toString() takes exactly 0 arguments")
-            }
+        override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
+            if (invokation.arguments.size != 0) throw IllegalArgumentException("String.toString() takes exactly 0 arguments")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val receiver = generator.visitValue(invokation.parent!!)
             return JsFunctionCall(JsField("toString", receiver), listOf())
         }
     }
