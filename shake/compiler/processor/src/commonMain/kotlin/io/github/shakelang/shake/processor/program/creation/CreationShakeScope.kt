@@ -4,7 +4,6 @@ import io.github.shakelang.shake.parser.node.ShakeImportNode
 import io.github.shakelang.shake.parser.node.ShakeVariableType
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
-import io.github.shakelang.shake.processor.program.types.ShakeProject
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
 abstract class CreationShakeScope : ShakeScope {
@@ -63,6 +62,13 @@ abstract class CreationShakeScope : ShakeScope {
             }
             ShakeVariableType.Type.VOID -> TODO()
         }
+    }
+
+    fun getType(clzName: String, then: (CreationShakeType) -> Unit) {
+        this.getClass(clzName) {
+            then(CreationShakeType.objectType(it))
+        }
+
     }
 
     fun finish() {

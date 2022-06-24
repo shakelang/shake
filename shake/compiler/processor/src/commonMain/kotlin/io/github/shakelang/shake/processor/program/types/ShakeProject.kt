@@ -8,6 +8,7 @@ interface ShakeProject {
     val classes: List<ShakeClass>
     val functions: List<ShakeMethod>
     val fields: List<ShakeField>
+    val cores: Cores
 
     val projectScope: ShakeScope
 
@@ -47,4 +48,11 @@ interface ShakeProject {
     fun toJsonString(format: Boolean = false): String {
         return json.stringify(toJson(), format)
     }
+}
+
+interface Cores {
+    val ObjectClass: ShakeClass
+    val Object: ShakeType
+    val StringClass: ShakeClass
+    val String: ShakeType
 }

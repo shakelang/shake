@@ -5,7 +5,9 @@ import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationN
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
+import io.github.shakelang.shake.processor.program.types.Cores
 import io.github.shakelang.shake.processor.program.types.ShakeProject
+import io.github.shakelang.shake.processor.program.types.ShakeType
 
 open class CreationShakeProject(
     processor: ShakeCodeProcessor,
@@ -18,6 +20,17 @@ open class CreationShakeProject(
     private val classRequirements = mutableListOf<ClassRequirement>()
     private val packageRequirements = mutableListOf<PackageRequirement>()
     private val scopes = mutableListOf<CreationShakeScope>()
+
+    override val cores: Cores = object : Cores {
+        override val ObjectClass get() = getClass("shake.lang.Object") ?: error("Object class not found")
+        override val StringClass get() = getClass("shake.lang.String") ?: error("String class not found")
+
+        override val Object: ShakeType get() = CreationShakeType.objectType(ObjectClass)
+        override val String: ShakeType get() = CreationShakeType.objectType(StringClass)
+
+        fun pointString(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.String", init)
+        fun pointObject(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.Object", init)
+    }
 
     override val projectScope = object : CreationShakeScope() {
         override val parent: CreationShakeScope? = null

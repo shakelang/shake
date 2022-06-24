@@ -4,6 +4,7 @@ import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
+import io.github.shakelang.shake.processor.program.types.Cores
 import io.github.shakelang.shake.processor.program.types.ShakeClass
 
 class CreationShakeClass: ShakeClass {
@@ -155,23 +156,6 @@ class CreationShakeClass: ShakeClass {
          */
 
         this.classes = emptyList()
-    }
-
-    fun lateinitSuper(): (CreationShakeClass?) -> CreationShakeClass? {
-        return {
-            superClass = it
-            it
-        }
-    }
-
-    fun lateinitInterfaces(number: Int): List<(CreationShakeClass) -> CreationShakeClass> {
-        val interfaces = MutableList<CreationShakeClass?>(number) { null }
-        this._interfaces = interfaces
-        return interfaces.indices.map { i -> {
-                interfaces[i] = it
-                it
-            }
-        }
     }
 
     fun asType(): CreationShakeType {
