@@ -21,6 +21,7 @@ interface ShakeMethod : ShakeInvokable {
     val isNative: Boolean
 
     override val qualifiedName: String get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus(".")}$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
+    val signature: String get() = "$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
     override val returnType: ShakeType
     val scope : ShakeScope
 

@@ -20,6 +20,8 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
     override val qualifiedName: String
         get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus(".")}$name"
 
+    val signature: String get() = name
+
     override fun assignType(other: ShakeType): ShakeType = type.assignType(other) ?: other
     override fun additionAssignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: type
     override fun subtractionAssignType(other: ShakeType): ShakeType = type.subtractionAssignType(other) ?: type

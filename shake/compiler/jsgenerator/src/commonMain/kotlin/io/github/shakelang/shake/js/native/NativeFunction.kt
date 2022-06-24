@@ -8,4 +8,5 @@ interface NativeFunction {
 
     fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?) : JsValuedStatement
 
+    val signature: String
 }

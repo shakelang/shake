@@ -34,6 +34,7 @@ interface ShakeClass {
     val constructors: List<ShakeConstructor>
 
     val qualifiedName: String get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
+    val signature: String get() = qualifiedName
     val superClass: ShakeClass?
 
     val interfaces: List<ShakeClass>

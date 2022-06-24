@@ -1,5 +1,6 @@
 package io.github.shakelang.shake.js
 
+import io.github.shakelang.shake.js.native.JsNatives
 import io.github.shakelang.shake.js.output.*
 import io.github.shakelang.shake.processor.program.creation.*
 import io.github.shakelang.shake.processor.program.creation.code.*
@@ -304,12 +305,21 @@ class ShakeJsGenerator {
         return JsNew(JsField(n.reference.clazz.name), n.arguments.map { visitValue(it) })
     }
 
-    fun visitInvocation(n: CreationShakeInvocation): JsFunctionCall {
+    fun visitInvocation(n: CreationShakeInvocation): JsValuedStatement {
 
         val callable = n.callable
 
         when(callable) {
             is CreationShakeMethod -> {
+
+                if(callable.isNative) {
+
+                    if(callable.clazz == null || callable.isStatic)
+                        JsNatives.getNativeFunction(callable).handle(n, n.arguments.map { visitValue(it) }, null)
+
+                    JsNatives.getNativeFunction(callable).handle(n, n.arguments.map { visitValue(it) }, visitValue(n.parent!!))
+
+                }
 
                 if(callable.clazz == null) return JsFunctionCall(JsField(callable.name), n.arguments.map { visitValue(it) })
 

@@ -6,6 +6,7 @@ import io.github.shakelang.shake.js.native.NativeFunction
 import io.github.shakelang.shake.js.output.*
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeFieldUsage
+import kotlin.String
 
 // package shake.lang;
 //
@@ -49,10 +50,13 @@ import io.github.shakelang.shake.processor.program.types.code.values.ShakeFieldU
 
 class String : NativeClass {
 
+    override val qualifiedName: String = "shake.lang.String"
+
     /// Static methods
 
     // valueOf(byte[] bytes)
     class FunctionValueOf0 : NativeFunction {
+        override val signature: String = "valueOf(byte[] bytes)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if(args.size != 1) {
                 throw IllegalArgumentException("String.valueOf(byte[] bytes) takes exactly 1 argument")
@@ -63,6 +67,7 @@ class String : NativeClass {
 
     // valueOf(byte[] bytes, int offset, int length)
     class FunctionValueOf1 : NativeFunction {
+        override val signature: String = "valueOf(byte[] bytes, int offset, int length)"
          override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
              if(args.size != 3) {
                  throw IllegalArgumentException("String.valueOf(byte[] bytes, int offset, int length) takes exactly 4 arguments")
@@ -75,6 +80,7 @@ class String : NativeClass {
 
     // valueOf(char[] chars)
     class FunctionValueOf2 : NativeFunction {
+        override val signature: String = "valueOf(char[] chars)"
          override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
              if(args.size != 1) {
                  throw IllegalArgumentException("String.valueOf(char[] chars) takes exactly 2 arguments")
@@ -85,6 +91,7 @@ class String : NativeClass {
 
     // valueOf(char[] chars, int offset, int length)
     class FunctionValueOf3 : NativeFunction {
+        override val signature: String = "valueOf(char[] chars, int offset, int length)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 3) {
                 throw IllegalArgumentException("String.valueOf(char[] chars, int offset, int length) takes exactly 4 arguments")
@@ -101,6 +108,7 @@ class String : NativeClass {
 
     // valueOf(byte b)
     class FunctionValueOf4 : NativeFunction {
+        override val signature: String = "valueOf(byte b)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.valueOf(byte b) takes exactly 1 argument")
@@ -111,6 +119,7 @@ class String : NativeClass {
 
     // valueOf(short c)
     class FunctionValueOf5 : NativeFunction {
+        override val signature: String = "valueOf(short c)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.valueOf(short c) takes exactly 1 argument")
@@ -121,6 +130,7 @@ class String : NativeClass {
 
     // valueOf(int i)
     class FunctionValueOf6 : NativeFunction {
+        override val signature: String = "valueOf(int i)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.valueOf(int i) takes exactly 1 argument")
@@ -131,6 +141,7 @@ class String : NativeClass {
 
     // valueOf(long l)
     class FunctionValueOf7 : NativeFunction {
+        override val signature: String = "valueOf(long l)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.valueOf(long l) takes exactly 1 argument")
@@ -141,6 +152,7 @@ class String : NativeClass {
 
     // valueOf(float f)
     class FunctionValueOf8 : NativeFunction {
+        override val signature: String = "valueOf(float f)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.valueOf(float f) takes exactly 1 argument")
@@ -151,6 +163,7 @@ class String : NativeClass {
 
     // valueOf(double d)
     class FunctionValueOf9 : NativeFunction {
+        override val signature: String = "valueOf(double d)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.valueOf(double d) takes exactly 1 argument")
@@ -161,6 +174,7 @@ class String : NativeClass {
 
     // valueOf(boolean b)
     class FunctionValueOf10 : NativeFunction {
+        override val signature: String = "valueOf(boolean b)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.valueOf(boolean b) takes exactly 1 argument")
@@ -171,6 +185,7 @@ class String : NativeClass {
 
     // valueOf(char c)
     class FunctionValueOf11 : NativeFunction {
+        override val signature: String = "valueOf(char c)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.valueOf(Object obj) takes exactly 1 argument")
@@ -184,6 +199,7 @@ class String : NativeClass {
 
     // length
     class FieldLength : NativeField {
+        override val signature: String = "length"
         override fun handle(fieldUsage: ShakeFieldUsage, receiver: JsValue?): JsValue {
             return JsField("length", receiver)
         }
@@ -193,6 +209,7 @@ class String : NativeClass {
 
     // charAt(int index)
     class MethodCharAt : NativeFunction {
+        override val signature: String = "charAt(int index)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.charAt(int index) takes exactly 1 argument")
@@ -203,6 +220,7 @@ class String : NativeClass {
 
     // indexOf(String str)
     class MethodIndexOf : NativeFunction {
+        override val signature: String = "indexOf(String str)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.indexOf(String str) takes exactly 1 argument")
@@ -213,6 +231,7 @@ class String : NativeClass {
 
     // indexOf(String str, int fromIndex)
     class MethodIndexOf2 : NativeFunction {
+        override val signature: String = "indexOf(String str, int fromIndex)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 2) {
                 throw IllegalArgumentException("String.indexOf(String str, int fromIndex) takes exactly 2 arguments")
@@ -223,6 +242,7 @@ class String : NativeClass {
 
     // lastIndexOf(String str)
     class MethodLastIndexOf : NativeFunction {
+        override val signature: String = "lastIndexOf(String str)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.lastIndexOf(String str) takes exactly 1 argument")
@@ -233,6 +253,7 @@ class String : NativeClass {
 
     // lastIndexOf(String str, int fromIndex)
     class MethodLastIndexOf2 : NativeFunction {
+        override val signature: String = "lastIndexOf(String str, int fromIndex)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 2) {
                 throw IllegalArgumentException("String.lastIndexOf(String str, int fromIndex) takes exactly 2 arguments")
@@ -243,6 +264,7 @@ class String : NativeClass {
 
     // substring(int beginIndex)
     class MethodSubstring : NativeFunction {
+        override val signature: String = "substring(int beginIndex)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.substring(int beginIndex) takes exactly 1 argument")
@@ -253,6 +275,7 @@ class String : NativeClass {
 
     // substring(int beginIndex, int endIndex)
     class MethodSubstring2 : NativeFunction {
+        override val signature: String = "substring(int beginIndex, int endIndex)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 2) {
                 throw IllegalArgumentException("String.substring(int beginIndex, int endIndex) takes exactly 2 arguments")
@@ -263,6 +286,7 @@ class String : NativeClass {
 
     // toLowerCase()
     class MethodToLowerCase : NativeFunction {
+        override val signature: String = "toLowerCase()"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.isNotEmpty()) {
                 throw IllegalArgumentException("String.toLowerCase() takes exactly 0 arguments")
@@ -273,6 +297,7 @@ class String : NativeClass {
 
     // toUpperCase()
     class MethodToUpperCase : NativeFunction {
+        override val signature: String = "toUpperCase()"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.isNotEmpty()) {
                 throw IllegalArgumentException("String.toUpperCase() takes exactly 0 arguments")
@@ -283,6 +308,7 @@ class String : NativeClass {
 
     // trim()
     class MethodTrim : NativeFunction {
+        override val signature: String = "trim()"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.isNotEmpty()) {
                 throw IllegalArgumentException("String.trim() takes exactly 0 arguments")
@@ -293,6 +319,7 @@ class String : NativeClass {
 
     // replace(String oldSubstring, String newSubstring) TODO regex
     class MethodReplace : NativeFunction {
+        override val signature: String = "replace(String oldSubstring, String newSubstring)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 2) {
                 throw IllegalArgumentException("String.replace(String oldSubstring, String newSubstring) takes exactly 2 arguments")
@@ -303,6 +330,7 @@ class String : NativeClass {
 
     // concat(String str)
     class MethodConcat : NativeFunction {
+        override val signature: String = "concat(String str)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.concat(String str) takes exactly 1 argument")
@@ -313,6 +341,7 @@ class String : NativeClass {
 
     // split(String regex) TODO regex
     class MethodSplit : NativeFunction {
+        override val signature: String = "split(String regex)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 1) {
                 throw IllegalArgumentException("String.split(String regex) takes exactly 1 argument")
@@ -323,6 +352,7 @@ class String : NativeClass {
 
     // split(String regex, int limit) TODO regex
     class MethodSplit2 : NativeFunction {
+        override val signature: String = "split(String regex, int limit)"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.size != 2) {
                 throw IllegalArgumentException("String.split(String regex, int limit) takes exactly 2 arguments")
@@ -333,6 +363,7 @@ class String : NativeClass {
 
     // toString()
     class MethodToString : NativeFunction {
+        override val signature: String = "toString()"
         override fun handle(invokation: ShakeInvocation, args: List<JsValue>, receiver: JsValue?): JsValuedStatement {
             if (args.isNotEmpty()) {
                 throw IllegalArgumentException("String.toString() takes exactly 0 arguments")
@@ -340,5 +371,39 @@ class String : NativeClass {
             return JsFunctionCall(JsField("toString", receiver), listOf())
         }
     }
+
+    override val functions: List<NativeFunction> = listOf(
+        FunctionValueOf0(),
+        FunctionValueOf1(),
+        FunctionValueOf2(),
+        FunctionValueOf3(),
+        FunctionValueOf4(),
+        FunctionValueOf5(),
+        FunctionValueOf6(),
+        FunctionValueOf7(),
+        FunctionValueOf8(),
+        FunctionValueOf9(),
+        FunctionValueOf10(),
+        FunctionValueOf11(),
+        MethodCharAt(),
+        MethodIndexOf(),
+        MethodIndexOf2(),
+        MethodLastIndexOf(),
+        MethodLastIndexOf2(),
+        MethodSubstring(),
+        MethodSubstring2(),
+        MethodToLowerCase(),
+        MethodToUpperCase(),
+        MethodTrim(),
+        MethodReplace(),
+        MethodSplit(),
+        MethodSplit2(),
+        MethodConcat(),
+        MethodToString()
+    )
+
+    override val fields: List<NativeField> = listOf(
+        FieldLength()
+    )
 
 }

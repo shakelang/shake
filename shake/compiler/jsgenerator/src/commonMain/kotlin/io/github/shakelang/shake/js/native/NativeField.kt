@@ -7,4 +7,5 @@ interface NativeField {
 
     fun handle(fieldUsage: ShakeFieldUsage, receiver: JsValue?) : JsValue
 
+    val signature: String
 }
