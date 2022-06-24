@@ -4,7 +4,6 @@ import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
-import io.github.shakelang.shake.processor.program.types.Cores
 import io.github.shakelang.shake.processor.program.types.ShakeClass
 
 class CreationShakeClass: ShakeClass {
@@ -36,7 +35,7 @@ class CreationShakeClass: ShakeClass {
     override val staticClasses: List<CreationShakeClass> get() = classes.filter { it.isStatic }
 
 
-    override var superClass: CreationShakeClass? = null
+    override lateinit var superClass: CreationShakeClass
         private set
 
     private var _interfaces: List<CreationShakeClass?> = listOf()
@@ -148,6 +147,10 @@ class CreationShakeClass: ShakeClass {
                 .forEachIndexed { i, run -> instanceScope.getType(it.args[i].type) { type -> run(type) } }
             constr
         }
+
+        if(clz.extends != null) parentScope.getClass(clz.extends.toString()) { this.superClass = it }
+        else prj.cores.pointObjectClass { this.superClass = it }
+
         /*
         TODO Interface & Super
         val superClass = cl.lateinitSuper()

@@ -1105,7 +1105,7 @@ class MapAssembledClass(
     val methodPointers: PointerList<ShakeMethod>,
     val fieldPointers: PointerList<ShakeField>,
     val constructorPointers: PointerList<ShakeConstructor>,
-    val superClassPointer: Pointer<ShakeClass>?,
+    val superClassPointer: Pointer<ShakeClass>,
     val interfacePointers: PointerList<ShakeClass>,
     override val isAbstract: Boolean,
     override val isFinal: Boolean,
@@ -1119,7 +1119,7 @@ class MapAssembledClass(
     override val methods: List<ShakeMethod> = methodPointers.values()
     override val fields: List<ShakeField> = fieldPointers.values()
     override val constructors: List<ShakeConstructor> = constructorPointers.values()
-    override val superClass: ShakeClass? get() = superClassPointer?.value
+    override val superClass: ShakeClass get() = superClassPointer.value
     override val interfaces: List<ShakeClass> = interfacePointers.values()
 }
 
@@ -1278,7 +1278,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.method_references.map { methodPointers[it] },
                     info.field_references.map { fieldPointers[it] },
                     info.constructor_references.map { constructorPointers[it] },
-                    if(info.super_class != -1) classPointers[info.super_class] else null,
+                    classPointers[info.super_class],
                     info.interface_references.map { classPointers[it] },
                     info.isAbstract,
                     info.isFinal,

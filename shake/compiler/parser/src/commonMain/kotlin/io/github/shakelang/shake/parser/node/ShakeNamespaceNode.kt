@@ -12,4 +12,8 @@ class ShakeNamespaceNode (
             "parts" to parts
         )
     }
+
+override fun toString(): String {
+        return parts.joinToString(".")
+    }
 }

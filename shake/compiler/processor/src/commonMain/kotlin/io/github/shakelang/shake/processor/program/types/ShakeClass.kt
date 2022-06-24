@@ -35,13 +35,13 @@ interface ShakeClass {
 
     val qualifiedName: String get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
     val signature: String get() = qualifiedName
-    val superClass: ShakeClass?
+    val superClass: ShakeClass
 
     val interfaces: List<ShakeClass>
 
     fun compatibleTo(other: ShakeClass): Boolean {
         if (this == other) return true
-        if (this.superClass != null && this.superClass!!.compatibleTo(other)) return true
+        if (this.superClass.compatibleTo(other)) return true
         return this.interfaces.any { it.compatibleTo(other) }
     }
 

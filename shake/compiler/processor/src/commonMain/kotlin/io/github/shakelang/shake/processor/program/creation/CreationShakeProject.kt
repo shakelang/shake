@@ -1,11 +1,13 @@
 package io.github.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.parser.node.*
+import io.github.shakelang.shake.parser.node.ShakeFileNode
+import io.github.shakelang.shake.parser.node.ShakeImportNode
+import io.github.shakelang.shake.parser.node.ShakePackageNode
+import io.github.shakelang.shake.parser.node.ShakeVariableType
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
-import io.github.shakelang.shake.processor.program.types.Cores
 import io.github.shakelang.shake.processor.program.types.ShakeProject
 import io.github.shakelang.shake.processor.program.types.ShakeType
 
@@ -21,16 +23,7 @@ open class CreationShakeProject(
     private val packageRequirements = mutableListOf<PackageRequirement>()
     private val scopes = mutableListOf<CreationShakeScope>()
 
-    override val cores: Cores = object : Cores {
-        override val ObjectClass get() = getClass("shake.lang.Object") ?: error("Object class not found")
-        override val StringClass get() = getClass("shake.lang.String") ?: error("String class not found")
-
-        override val Object: ShakeType get() = CreationShakeType.objectType(ObjectClass)
-        override val String: ShakeType get() = CreationShakeType.objectType(StringClass)
-
-        fun pointString(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.String", init)
-        fun pointObject(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.Object", init)
-    }
+    val cores = Cores()
 
     override val projectScope = object : CreationShakeScope() {
         override val parent: CreationShakeScope? = null
@@ -204,4 +197,18 @@ open class CreationShakeProject(
 
     class ClassRequirement(val name: String, val then: (CreationShakeClass) -> Unit)
     private class PackageRequirement(val name: String, val then: (CreationShakePackage) -> Unit)
+
+    inner class Cores {
+        val ObjectClass get() = getClass("shake.lang.Object") ?: error("Object class not found")
+        val StringClass get() = getClass("shake.lang.String") ?: error("String class not found")
+
+        val Object: ShakeType get() = CreationShakeType.objectType(ObjectClass)
+        val String: ShakeType get() = CreationShakeType.objectType(StringClass)
+
+        fun pointString(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.String", init)
+        fun pointObject(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.Object", init)
+
+        fun pointStringClass(init: (CreationShakeClass) -> Unit) = projectScope.getClass("shake.lang.String", init)
+        fun pointObjectClass(init: (CreationShakeClass) -> Unit) = projectScope.getClass("shake.lang.Object", init)
+    }
 }
