@@ -4,9 +4,11 @@ import io.github.shakelang.shake.processor.program.creation.CreationShakeMethod
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import io.github.shakelang.shake.processor.program.types.ShakeProject
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
 
 class CreationShakeInvocation (
+    override val project: ShakeProject,
     override val callable: CreationShakeInvokable,
     override val arguments: List<CreationShakeValue>,
     override val parent: CreationShakeValue? = null

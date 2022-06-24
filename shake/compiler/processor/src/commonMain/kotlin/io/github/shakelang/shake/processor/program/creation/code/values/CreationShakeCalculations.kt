@@ -1,10 +1,12 @@
 package io.github.shakelang.shake.processor.program.creation.code.values
 
+import io.github.shakelang.shake.processor.program.creation.CreationShakeProject
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.values.*
 
 
 open class CreationShakeAddition(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -19,6 +21,7 @@ open class CreationShakeAddition(
 }
 
 open class CreationShakeSubtraction(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -33,6 +36,7 @@ open class CreationShakeSubtraction(
 }
 
 open class CreationShakeMultiplication(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -47,6 +51,7 @@ open class CreationShakeMultiplication(
 }
 
 open class CreationShakeDivision(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -61,6 +66,7 @@ open class CreationShakeDivision(
 }
 
 open class CreationShakeModulus(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -75,6 +81,7 @@ open class CreationShakeModulus(
 }
 
 open class CreationShakePower(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType

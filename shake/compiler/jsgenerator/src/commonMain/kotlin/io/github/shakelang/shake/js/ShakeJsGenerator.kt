@@ -315,9 +315,9 @@ class ShakeJsGenerator {
                 if(callable.isNative) {
 
                     if(callable.clazz == null || callable.isStatic)
-                        JsNatives.getNativeFunction(callable).handle(n, n.arguments.map { visitValue(it) }, null)
+                        JsNatives.getNativeFunction(callable).handle(n)
 
-                    JsNatives.getNativeFunction(callable).handle(n, n.arguments.map { visitValue(it) }, visitValue(n.parent!!))
+                    JsNatives.getNativeFunction(callable).handle(n)
 
                 }
 

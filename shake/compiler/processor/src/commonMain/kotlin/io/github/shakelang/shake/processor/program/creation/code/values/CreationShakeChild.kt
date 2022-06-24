@@ -1,15 +1,14 @@
 package io.github.shakelang.shake.processor.program.creation.code.values
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeAssignable
-import io.github.shakelang.shake.processor.program.creation.CreationShakeDeclaration
-import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
+import io.github.shakelang.shake.processor.program.creation.*
+import io.github.shakelang.shake.processor.program.types.ShakeProject
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeChild
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeChildUsage
 
 class CreationShakeChild (
 
+    override val project: CreationShakeProject,
     override val scope: CreationShakeScope,
     override val parent : CreationShakeValue,
     override val name: String,
@@ -17,10 +16,10 @@ class CreationShakeChild (
 ) : CreationShakeAssignable, ShakeChild {
 
     override val type : ShakeType = parent.type.childType(name)!!
-    override val actualValue: CreationShakeChildUsage get() = CreationShakeChildUsage(this)
+    override val actualValue: CreationShakeChildUsage get() = CreationShakeChildUsage(project, this)
     override val actualType: ShakeType
         get() = actualValue.type
-    override val access : CreationShakeValue get() = CreationShakeChildUsage(this)
+    override val access : CreationShakeValue get() = CreationShakeChildUsage(project, this)
 
     override fun assignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: other
     override fun additionAssignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: type
@@ -50,6 +49,7 @@ class CreationShakeChild (
 
 class CreationShakeChildUsage (
 
+    override val project: CreationShakeProject,
     override val used: CreationShakeChild
 
 ) : CreationShakeUsage(), ShakeChildUsage {

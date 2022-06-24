@@ -1,10 +1,12 @@
 package io.github.shakelang.shake.processor.program.creation.code.values
 
+import io.github.shakelang.shake.processor.program.creation.CreationShakeProject
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.values.*
 
 
 open class CreationShakeEquals(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -19,6 +21,7 @@ open class CreationShakeEquals(
 }
 
 open class CreationShakeNotEquals(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -33,6 +36,7 @@ open class CreationShakeNotEquals(
 }
 
 open class CreationShakeLessThan(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -47,6 +51,7 @@ open class CreationShakeLessThan(
 }
 
 open class CreationShakeLessThanOrEqual(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -61,6 +66,7 @@ open class CreationShakeLessThanOrEqual(
 }
 
 open class CreationShakeGreaterThan(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -75,6 +81,7 @@ open class CreationShakeGreaterThan(
 }
 
 open class CreationShakeGreaterThanOrEqual(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -89,6 +96,7 @@ open class CreationShakeGreaterThanOrEqual(
 }
 
 open class CreationShakeAnd(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -103,6 +111,7 @@ open class CreationShakeAnd(
 }
 
 open class CreationShakeOr(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -117,6 +126,7 @@ open class CreationShakeOr(
 }
 
 open class CreationShakeXor(
+    override val project: CreationShakeProject,
     override val left: CreationShakeValue,
     override val right: CreationShakeValue,
     override val type: ShakeType
@@ -131,6 +141,7 @@ open class CreationShakeXor(
 }
 
 open class CreationShakeNot(
+    override val project: CreationShakeProject,
     override val value: CreationShakeValue,
     override val type: ShakeType
 ) : CreationShakeValue, ShakeNot {

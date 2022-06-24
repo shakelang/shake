@@ -202,8 +202,8 @@ open class CreationShakeProject(
         val ObjectClass get() = getClass("shake.lang.Object") ?: error("Object class not found")
         val StringClass get() = getClass("shake.lang.String") ?: error("String class not found")
 
-        val Object: ShakeType get() = CreationShakeType.objectType(ObjectClass)
-        val String: ShakeType get() = CreationShakeType.objectType(StringClass)
+        val Object: CreationShakeType get() = CreationShakeType.objectType(ObjectClass)
+        val String: CreationShakeType get() = CreationShakeType.objectType(StringClass)
 
         fun pointString(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.String", init)
         fun pointObject(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.Object", init)

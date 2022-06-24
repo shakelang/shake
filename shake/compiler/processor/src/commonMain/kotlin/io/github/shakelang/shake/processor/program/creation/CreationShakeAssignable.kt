@@ -7,6 +7,7 @@ import io.github.shakelang.shake.processor.program.types.ShakeType
 
 interface CreationShakeAssignable : ShakeAssignable {
 
+    val project: CreationShakeProject
     override val actualValue: CreationShakeValue?
     override val actualType: ShakeType
     override val type: ShakeType
@@ -27,64 +28,66 @@ interface CreationShakeAssignable : ShakeAssignable {
 
     fun createAssignment(value: CreationShakeValue): CreationShakeAssignment {
         val type = assignType(value.type) ?: throw Exception("Cannot assign ${value.type} to ${this.type}")
-        return CreationShakeAssignment(this, value, type)
+        return CreationShakeAssignment(project, this, value, type)
     }
 
     fun createAddAssignment(value: CreationShakeValue): CreationShakeAddAssignment {
         val type = additionAssignType(value.type) ?: throw Exception("Cannot add ${value.type} to ${this.type}")
-        return CreationShakeAddAssignment(this, value, type)
+        return CreationShakeAddAssignment(project, this, value, type)
     }
 
     fun createSubtractAssignment(value: CreationShakeValue): CreationShakeSubAssignment {
         val type = subtractionAssignType(value.type) ?: throw Exception("Cannot subtract ${value.type} from ${this.type}")
-        return CreationShakeSubAssignment(this, value, type)
+        return CreationShakeSubAssignment(project, this, value, type)
     }
 
     fun createMultiplyAssignment(value: CreationShakeValue): CreationShakeMulAssignment {
         val type = multiplicationAssignType(value.type) ?: throw Exception("Cannot multiply ${value.type} with ${this.type}")
-        return CreationShakeMulAssignment(this, value, type)
+        return CreationShakeMulAssignment(project, this, value, type)
     }
 
     fun createDivideAssignment(value: CreationShakeValue): CreationShakeDivAssignment {
         val type = divisionAssignType(value.type) ?: throw Exception("Cannot divide ${value.type} by ${this.type}")
-        return CreationShakeDivAssignment(this, value, type)
+        return CreationShakeDivAssignment(project, this, value, type)
     }
 
     fun createModulusAssignment(value: CreationShakeValue): CreationShakeModAssignment {
         val type = modulusAssignType(value.type) ?: throw Exception("Cannot modulus ${value.type} by ${this.type}")
-        return CreationShakeModAssignment(this, value, type)
+        return CreationShakeModAssignment(project, this, value, type)
     }
 
     fun createPowerAssignment(value: CreationShakeValue): CreationShakePowerAssignment {
         val type = powerAssignType(value.type) ?: throw Exception("Cannot power ${value.type} by ${this.type}")
-        return CreationShakePowerAssignment(this, value, type)
+        return CreationShakePowerAssignment(project, this, value, type)
     }
 
     fun createIncrementBeforeAssignment(): CreationShakeIncrementBefore {
         val type = incrementBeforeType() ?: throw Exception("Cannot increase ${this.type} before")
-        return CreationShakeIncrementBefore(this, type)
+        return CreationShakeIncrementBefore(project, this, type)
     }
 
     fun createIncrementAfterAssignment(): CreationShakeIncrementAfter {
         val type = incrementAfterType() ?: throw Exception("Cannot increase ${this.type} after")
-        return CreationShakeIncrementAfter(this, type)
+        return CreationShakeIncrementAfter(project, this, type)
     }
 
     fun createDecrementBeforeAssignment(): CreationShakeDecrementBefore {
         val type = decrementBeforeType() ?: throw Exception("Cannot decrease ${this.type} before")
-        return CreationShakeDecrementBefore(this, type)
+        return CreationShakeDecrementBefore(project, this, type)
     }
 
     fun createDecrementAfterAssignment(): CreationShakeDecrementAfter {
         val type = decrementAfterType() ?: throw Exception("Cannot decrease ${this.type} after")
-        return CreationShakeDecrementAfter(this, type)
+        return CreationShakeDecrementAfter(project, this, type)
     }
 
     fun toJson(): Map<String, Any?>
 
     companion object {
-        fun wrap(v: CreationShakeValue): CreationShakeAssignable {
+        fun wrap(project: CreationShakeProject, v: CreationShakeValue): CreationShakeAssignable {
             return object : CreationShakeAssignable {
+
+                override val project: CreationShakeProject = project
 
                 override fun access(scope: CreationShakeScope): CreationShakeValue {
                     return v
