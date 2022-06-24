@@ -144,8 +144,8 @@ class JsVariableDeclaration (
     override val value: JsValue? = null
 ) : JsDeclaration() {
     override fun generate(indentAmount: Int, indent: String): String {
-        return if(value == null) "var $name"
-        else "var $name = ${value.generate(indentAmount, indent)}"
+        return if(value == null) "let $name"
+        else "let $name = ${value.generate(indentAmount, indent)}"
     }
 }
 
