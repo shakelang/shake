@@ -24,6 +24,7 @@ class CreationShakeClass: ShakeClass {
     override val isPublic: Boolean
     override val isPrivate: Boolean
     override val isProtected: Boolean
+    override val isNative: Boolean
 
     override val instanceClasses: List<ShakeClass> get() = classes.filter { !it.isStatic }
     override val instanceMethods: List<CreationShakeMethod> get() = methods.filter { !it.isStatic }
@@ -56,7 +57,8 @@ class CreationShakeClass: ShakeClass {
         isStatic: Boolean = false,
         isPublic: Boolean = false,
         isPrivate: Boolean = false,
-        isProtected: Boolean = false
+        isProtected: Boolean = false,
+        isNative: Boolean = false,
     ) {
         this.prj = prj
         this.pkg = pkg
@@ -74,6 +76,7 @@ class CreationShakeClass: ShakeClass {
         this.isPublic = isPublic
         this.isPrivate = isPrivate
         this.isProtected = isProtected
+        this.isNative = isNative
     }
     private constructor(
         baseProject: CreationShakeProject,
@@ -94,6 +97,7 @@ class CreationShakeClass: ShakeClass {
         this.isPublic = clz.access == ShakeAccessDescriber.PUBLIC
         this.isPrivate = clz.access == ShakeAccessDescriber.PRIVATE
         this.isProtected = clz.access == ShakeAccessDescriber.PROTECTED
+        this.isNative = clz.isNative
 
         this.methods = clz.methods.map {
             val method = CreationShakeMethod(
@@ -111,6 +115,7 @@ class CreationShakeClass: ShakeClass {
                 it.access == ShakeAccessDescriber.PRIVATE,
                 it.access == ShakeAccessDescriber.PROTECTED,
                 it.access == ShakeAccessDescriber.PUBLIC,
+                it.isNative
             )
             method.lateinitReturnType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
             method
@@ -135,6 +140,7 @@ class CreationShakeClass: ShakeClass {
                 it.access == ShakeAccessDescriber.PRIVATE,
                 it.access == ShakeAccessDescriber.PROTECTED,
                 it.access == ShakeAccessDescriber.PUBLIC,
+                it.isNative,
                 name = it.name
             )
             constr.lateinitParameterTypes(it.args.map { p -> p.name })

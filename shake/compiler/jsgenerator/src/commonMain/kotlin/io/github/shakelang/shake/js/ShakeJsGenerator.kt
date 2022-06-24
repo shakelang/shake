@@ -268,14 +268,14 @@ class ShakeJsGenerator {
     fun visitFunctionDeclaration(n: CreationShakeMethod): JsFunctionDeclaration {
         val name = n.name
         val parameters = n.parameters.map { visitParameter(it) }
-        val body = visitCode(n.body)
+        val body = visitCode(n.body ?: throw IllegalStateException("Method must have a body"))
         return JsFunctionDeclaration(name, parameters, body)
     }
 
     fun visitMethodDeclaration(n: CreationShakeMethod): JsFunctionDeclaration {
         val name = n.name
         val parameters = n.parameters.map { visitParameter(it) }
-        val body = visitCode(n.body)
+        val body = visitCode(n.body ?: throw IllegalStateException("Method must have a body"))
         return JsFunctionDeclaration(name, parameters, body)
     }
 
@@ -292,10 +292,10 @@ class ShakeJsGenerator {
     fun visitClassDeclaration(n: CreationShakeClass): JsClassDeclaration {
         return JsClassDeclaration(
             n.name,
-            functions = n.methods.map { visitMethodDeclaration(it) },
-            staticFunctions = n.staticMethods.map { visitMethodDeclaration(it) },
-            fields = n.fields.map { visitFieldDeclaration(it) },
-            staticFields = n.staticFields.map { visitFieldDeclaration(it) }
+            functions = n.methods.filter { !it.isNative }.map { visitMethodDeclaration(it) },
+            staticFunctions = n.staticMethods.filter { !it.isNative }.map { visitMethodDeclaration(it) },
+            fields = n.fields.filter { !it.isNative }.map { visitFieldDeclaration(it) },
+            staticFields = n.staticFields.filter { !it.isNative }.map { visitFieldDeclaration(it) }
         )
     }
 
@@ -337,11 +337,25 @@ class ShakeJsGenerator {
     }
 
     fun visitPackage(prj: JsProject, parent: JsPackage?, n: CreationShakePackage): JsPackage {
-        return JsPackage(prj, parent, n.name, n.subpackages.toTypedArray(), n.classes.toTypedArray(), n.functions.toTypedArray(), n.fields.toTypedArray())
+        return JsPackage(
+            prj,
+            parent,
+            n.name,
+            n.subpackages.toTypedArray(),
+            n.classes.filter { !it.isNative }.toTypedArray(),
+            n.functions.filter { !it.isNative }.toTypedArray(),
+            n.fields.filter { !it.isNative }.toTypedArray()
+        )
     }
 
     fun visitProject(n: CreationShakeProject): JsProject {
-        return JsProject(this, n.subpackages.toTypedArray(), n.classes.toTypedArray(), n.functions.toTypedArray(), n.fields.toTypedArray())
+        return JsProject(
+            this,
+            n.subpackages.toTypedArray(),
+            n.classes.filter { !it.isNative }.toTypedArray(),
+            n.functions.filter { !it.isNative }.toTypedArray(),
+            n.fields.filter { !it.isNative }.toTypedArray()
+        )
     }
 
 }

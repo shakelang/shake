@@ -54,7 +54,7 @@
 | Key                    | Description                               | Byte Size    |
 |------------------------|-------------------------------------------|--------------|
 | name                   | Class name (index to constant pool)       | 4 bytes      |
-| attributes             | Attributes of the class                   | 1 byte       |
+| attributes             | Attributes of the class                   | 2 bytes      |
 | super_class            | Super class name (index to constant pool) | 4 bytes      |
 | interfaces_amount      | Amount of interfaces in the class         | 4 bytes      |
 | interfaces_references  | References to interfaces in the class     | 4 bytes each |
@@ -71,7 +71,7 @@
 | Key               | Description                                   | Byte Size    |
 |-------------------|-----------------------------------------------|--------------|
 | name              | Method name (index to constant pool)          | 4 bytes      |
-| attributes        | Attributes of the method                      | 1 byte       |
+| attributes        | Attributes of the method                      | 2 bytes      |
 | return_type       | Return type (index to constant pool)          | 4 bytes      |
 | parameter_amount  | Amount of parameters in this method           | 4 bytes      |
 | parameter_names[] | Parameter names (index to constant pool)      | 4 bytes each |
@@ -81,14 +81,14 @@
 | Key               | Description                               | Byte Size    |
 |-------------------|-------------------------------------------|--------------|
 | name              | Constructor name (index to constant pool) | 4 bytes      |
-| attributes        | Attributes of the constructor             | 1 byte       |
+| attributes        | Attributes of the constructor             | 2 bytes      |
 | parameter_amount  | Amount of parameters in this constructor  | 4 bytes      |
 | parameter_names[] | Parameter names (index to constant pool)  | 4 bytes each |
 | parameter_types[] | Parameter types (index to constant pool)  | 4 bytes each |
 
 ## Fields
-| Key                  | Description                         | Byte Size    |
-|----------------------|-------------------------------------|--------------|
-| name                 | Field name (index to constant pool) | 4 bytes      |
-| attributes           | Attributes of the field             | 1 byte       |
-| type                 | Field type (index to constant pool) | 4 bytes      |
+| Key                  | Description                         | Byte Size |
+|----------------------|-------------------------------------|-----------|
+| name                 | Field name (index to constant pool) | 4 bytes   |
+| attributes           | Attributes of the field             | 2 bytes   |
+| type                 | Field type (index to constant pool) | 4 bytes   |

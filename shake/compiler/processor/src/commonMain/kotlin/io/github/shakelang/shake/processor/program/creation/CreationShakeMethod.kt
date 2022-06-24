@@ -24,6 +24,7 @@ class CreationShakeMethod (
     override val isPrivate: Boolean,
     override val isProtected: Boolean,
     override val isPublic: Boolean,
+    override val isNative: Boolean,
 ): CreationShakeInvokable(body), ShakeMethod {
 
     override val qualifiedName: String
@@ -48,8 +49,9 @@ class CreationShakeMethod (
         isStrict: Boolean,
         isPrivate: Boolean,
         isProtected: Boolean,
-        isPublic: Boolean
-    ): this(prj, pkg, clazz, parentScope, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic) {
+        isPublic: Boolean,
+        isNative: Boolean,
+    ): this(prj, pkg, clazz, parentScope, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic, isNative) {
         this.parameters = parameters
         this.returnType = returnType
     }
@@ -146,7 +148,8 @@ class CreationShakeMethod (
                 false,
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
             ).let {
                 it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
@@ -170,7 +173,8 @@ class CreationShakeMethod (
                 false,
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
             ).let {
                 it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })

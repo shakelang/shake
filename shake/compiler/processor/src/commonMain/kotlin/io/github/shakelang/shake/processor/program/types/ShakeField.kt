@@ -14,6 +14,7 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
     val isPrivate: Boolean
     val isProtected: Boolean
     val isPublic: Boolean
+    val isNative: Boolean
     val initialValue: ShakeValue?
 
     override val qualifiedName: String

@@ -21,6 +21,7 @@ interface ShakeClass {
     val isPublic: Boolean
     val isPrivate: Boolean
     val isProtected: Boolean
+    val isNative: Boolean
 
     val instanceMethods: List<ShakeMethod> get() = methods.filter { !it.isStatic }
     val instanceFields: List<ShakeField> get() = fields.filter { !it.isStatic }

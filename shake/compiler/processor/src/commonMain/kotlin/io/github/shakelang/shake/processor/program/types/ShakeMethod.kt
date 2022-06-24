@@ -18,6 +18,7 @@ interface ShakeMethod : ShakeInvokable {
     val isPrivate: Boolean
     val isProtected: Boolean
     val isPublic: Boolean
+    val isNative: Boolean
 
     override val qualifiedName: String get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus(".")}$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
     override val returnType: ShakeType

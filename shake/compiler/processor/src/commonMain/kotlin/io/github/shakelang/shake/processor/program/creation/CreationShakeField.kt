@@ -20,6 +20,7 @@ open class CreationShakeField (
     override val isPrivate: Boolean,
     override val isProtected: Boolean,
     override val isPublic: Boolean,
+    override val isNative: Boolean,
     override val initialValue: CreationShakeValue? = null,
 ): CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
 
@@ -90,7 +91,8 @@ open class CreationShakeField (
                 false,
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
             ) {
 
                 override var initialValue: CreationShakeValue? = null
@@ -118,7 +120,8 @@ open class CreationShakeField (
                 false,
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
             ) {
 
                 override var initialValue: CreationShakeValue? = null

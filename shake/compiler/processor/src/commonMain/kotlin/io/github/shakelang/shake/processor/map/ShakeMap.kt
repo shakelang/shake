@@ -398,7 +398,7 @@ class ShakeMapPackage(
 
 class ShakeMapClass(
     val name: Int,
-    val attributes: Byte,
+    val attributes: Short,
     val super_class: Int,
     val interface_references: Array<Int>,
     val subclass_references: Array<Int>,
@@ -406,12 +406,13 @@ class ShakeMapClass(
     val constructor_references: Array<Int>,
     val field_references: Array<Int>
 ) {
-    val isStatic = attributes.bit7
-    val isFinal = attributes.bit6
-    val isPublic = attributes.bit4
-    val isProtected = attributes.bit3
-    val isPrivate = attributes.bit2
-    val isAbstract = attributes.bit1
+    val isNative get() = attributes.bit8
+    val isStatic get() = attributes.bit7
+    val isFinal get() = attributes.bit6
+    val isPublic get() = attributes.bit4
+    val isProtected get() = attributes.bit3
+    val isPrivate get() = attributes.bit2
+    val isAbstract get() = attributes.bit1
 
     fun getBytes(): ByteArray {
         val stream = ByteArrayOutputStream()
@@ -449,7 +450,7 @@ class ShakeMapClass(
     companion object {
         fun from(input: DataInputStream): ShakeMapClass {
             val name = input.readInt()
-            val attributes = input.readByte()
+            val attributes = input.readShort()
             val super_class = input.readInt()
             val interface_references = input.readInt()
             val interface_references_ = Array(interface_references) { input.readInt() }
@@ -485,7 +486,7 @@ class ShakeMapClass(
             if (it["field_references"] == null) throw IllegalArgumentException("Missing field_references")
 
             if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
-            if (it["attributes"] !is Byte) throw IllegalArgumentException("Invalid attributes")
+            if (it["attributes"] !is Short) throw IllegalArgumentException("Invalid attributes")
             if (it["super_class"] !is Int) throw IllegalArgumentException("Invalid super_class")
             if (it["interface_references"] !is List<*>) throw IllegalArgumentException("Invalid interface_references")
             if (it["subclass_references"] !is List<*>) throw IllegalArgumentException("Invalid subclass_references")
@@ -493,7 +494,7 @@ class ShakeMapClass(
             if (it["field_references"] !is List<*>) throw IllegalArgumentException("Invalid field_references")
 
             val name = it["name"] as Int
-            val attributes = it["attributes"] as Byte
+            val attributes = it["attributes"] as Short
             val super_class = it["super_class"] as Int
             val interface_references = it["interface_references"] as List<*>
             val subclass_references = it["subclass_references"] as List<*>
@@ -523,19 +524,20 @@ class ShakeMapClass(
 
 class ShakeMapMethod(
     val name: Int,
-    val attributes: Byte,
+    val attributes: Short,
     val return_type: Int,
     val parameter_names: Array<Int>,
     val parameter_types: Array<Int>,
 ) {
-    val isStatic = attributes.bit7
-    val isFinal = attributes.bit6
-    val isStrict = attributes.bit5
-    val isPublic = attributes.bit4
-    val isProtected = attributes.bit3
-    val isPrivate = attributes.bit2
-    val isAbstract = attributes.bit1
-    val isSynchronized = attributes.bit0
+    val isNative get() = attributes.bit8
+    val isStatic get() = attributes.bit7
+    val isFinal get() = attributes.bit6
+    val isStrict get() = attributes.bit5
+    val isPublic get() = attributes.bit4
+    val isProtected get() = attributes.bit3
+    val isPrivate get() = attributes.bit2
+    val isAbstract get() = attributes.bit1
+    val isSynchronized get() = attributes.bit0
 
     fun getBytes(): ByteArray {
         val stream = ByteArrayOutputStream()
@@ -564,7 +566,7 @@ class ShakeMapMethod(
     companion object {
         fun from(input: DataInputStream): ShakeMapMethod {
             val name = input.readInt()
-            val attributes = input.readByte()
+            val attributes = input.readShort()
             val return_type = input.readInt()
             val parameter_names = input.readInt()
             val parameter_names_ = Array(parameter_names) { input.readInt() }
@@ -589,13 +591,13 @@ class ShakeMapMethod(
             if (it["parameter_types"] == null) throw IllegalArgumentException("Missing parameter_types")
 
             if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
-            if (it["attributes"] !is Byte) throw IllegalArgumentException("Invalid attributes")
+            if (it["attributes"] !is Short) throw IllegalArgumentException("Invalid attributes")
             if (it["return_type"] !is Int) throw IllegalArgumentException("Invalid return_type")
             if (it["parameter_names"] !is List<*>) throw IllegalArgumentException("Invalid parameter_names")
             if (it["parameter_types"] !is List<*>) throw IllegalArgumentException("Invalid parameter_types")
 
             val name = it["name"] as Int
-            val attributes = it["attributes"] as Byte
+            val attributes = it["attributes"] as Short
             val return_type = it["return_type"] as Int
             val parameter_names = it["parameter_names"] as List<*>
             val parameter_names_ = parameter_names.filterIsInstance<Int>().toTypedArray()
@@ -614,14 +616,15 @@ class ShakeMapMethod(
 
 class ShakeMapConstructor(
     val name: Int,
-    val attributes: Byte,
+    val attributes: Short,
     val parameter_names: Array<Int>,
     val parameter_types: Array<Int>,
 ) {
-    val isStrict: Boolean = attributes.bit5
-    val isPublic = attributes.bit4
-    val isProtected = attributes.bit3
-    val isPrivate = attributes.bit2
+    val isNative get() = attributes.bit8
+    val isStrict: Boolean get() = attributes.bit5
+    val isPublic get() = attributes.bit4
+    val isProtected get() = attributes.bit3
+    val isPrivate get() = attributes.bit2
 
     fun getBytes(): ByteArray {
         val stream = ByteArrayOutputStream()
@@ -648,7 +651,7 @@ class ShakeMapConstructor(
     companion object {
         fun from(input: DataInputStream): ShakeMapConstructor {
             val name = input.readInt()
-            val attributes = input.readByte()
+            val attributes = input.readShort()
             val parameter_names = input.readInt()
             val parameter_names_ = Array(parameter_names) { input.readInt() }
             val parameter_types = input.readInt()
@@ -670,12 +673,12 @@ class ShakeMapConstructor(
             if (it["parameter_types"] == null) throw IllegalArgumentException("Missing parameter_types")
 
             if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
-            if (it["attributes"] !is Byte) throw IllegalArgumentException("Invalid attributes")
+            if (it["attributes"] !is Short) throw IllegalArgumentException("Invalid attributes")
             if (it["parameter_names"] !is List<*>) throw IllegalArgumentException("Invalid parameter_names")
             if (it["parameter_types"] !is List<*>) throw IllegalArgumentException("Invalid parameter_types")
 
             val name = it["name"] as Int
-            val attributes = it["attributes"] as Byte
+            val attributes = it["attributes"] as Short
             val parameter_names = it["parameter_names"] as List<*>
             val parameter_names_ = parameter_names.filterIsInstance<Int>().toTypedArray()
             val parameter_types = it["parameter_types"] as List<*>
@@ -692,16 +695,17 @@ class ShakeMapConstructor(
 
 class ShakeMapField(
     val name: Int,
-    val attributes: Byte,
+    val attributes: Short,
     val type: Int,
 ) {
-    val isStatic = attributes.bit7
-    val isFinal = attributes.bit6
-    val isConst = attributes.bit5
-    val isPublic = attributes.bit4
-    val isProtected = attributes.bit3
-    val isPrivate = attributes.bit2
-    val isAbstract = attributes.bit1
+    val isNative get() = attributes.bit8
+    val isStatic get() = attributes.bit7
+    val isFinal get() = attributes.bit6
+    val isConst get() = attributes.bit5
+    val isPublic get() = attributes.bit4
+    val isProtected get() = attributes.bit3
+    val isPrivate get() = attributes.bit2
+    val isAbstract get() = attributes.bit1
 
     fun getBytes(): ByteArray {
         val stream = ByteArrayOutputStream()
@@ -724,7 +728,7 @@ class ShakeMapField(
     companion object {
         fun from(input: DataInputStream): ShakeMapField {
             val name = input.readInt()
-            val attributes = input.readByte()
+            val attributes = input.readShort()
             val type = input.readInt()
             return ShakeMapField(
                 name,
@@ -741,11 +745,11 @@ class ShakeMapField(
             if (it["type"] == null) throw IllegalArgumentException("Missing type")
 
             if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
-            if (it["attributes"] !is Byte) throw IllegalArgumentException("Invalid attributes")
+            if (it["attributes"] !is Short) throw IllegalArgumentException("Invalid attributes")
             if (it["type"] !is Int) throw IllegalArgumentException("Invalid type")
 
             val name = it["name"] as Int
-            val attributes = it["attributes"] as Byte
+            val attributes = it["attributes"] as Short
             val type = it["type"] as Int
             return ShakeMapField(
                 name,
@@ -764,6 +768,30 @@ val Int.bit4: Boolean get() = (this and 0x10) != 0
 val Int.bit5: Boolean get() = (this and 0x20) != 0
 val Int.bit6: Boolean get() = (this and 0x40) != 0
 val Int.bit7: Boolean get() = (this and 0x80) != 0
+val Int.bit8: Boolean get() = (this and 0x100) != 0
+val Int.bit9: Boolean get() = (this and 0x200) != 0
+val Int.bit10: Boolean get() = (this and 0x400) != 0
+val Int.bit11: Boolean get() = (this and 0x800) != 0
+val Int.bit12: Boolean get() = (this and 0x1000) != 0
+val Int.bit13: Boolean get() = (this and 0x2000) != 0
+val Int.bit14: Boolean get() = (this and 0x4000) != 0
+val Int.bit15: Boolean get() = (this and 0x8000) != 0
+val Int.bit16: Boolean get() = (this and 0x10000) != 0
+val Int.bit17: Boolean get() = (this and 0x20000) != 0
+val Int.bit18: Boolean get() = (this and 0x40000) != 0
+val Int.bit19: Boolean get() = (this and 0x80000) != 0
+val Int.bit20: Boolean get() = (this and 0x100000) != 0
+val Int.bit21: Boolean get() = (this and 0x200000) != 0
+val Int.bit22: Boolean get() = (this and 0x400000) != 0
+val Int.bit23: Boolean get() = (this and 0x800000) != 0
+val Int.bit24: Boolean get() = (this and 0x1000000) != 0
+val Int.bit25: Boolean get() = (this and 0x2000000) != 0
+val Int.bit26: Boolean get() = (this and 0x4000000) != 0
+val Int.bit27: Boolean get() = (this and 0x8000000) != 0
+val Int.bit28: Boolean get() = (this and 0x10000000) != 0
+val Int.bit29: Boolean get() = (this and 0x20000000) != 0
+val Int.bit30: Boolean get() = (this and 0x40000000) != 0
+val Int.bit31: Boolean get() = (this and 0x80000000u.toInt()) != 0
 
 val Byte.bit0: Boolean get() = this.toInt().bit0
 val Byte.bit1: Boolean get() = this.toInt().bit1
@@ -772,16 +800,58 @@ val Byte.bit3: Boolean get() = this.toInt().bit3
 val Byte.bit4: Boolean get() = this.toInt().bit4
 val Byte.bit5: Boolean get() = this.toInt().bit5
 val Byte.bit6: Boolean get() = this.toInt().bit6
-val Byte.bit7: Boolean get() = this.toInt().bit7
+val Byte.bit7: Boolean get() = this.toUByte().toInt().bit7
 
-fun Int.setBit0(value: Boolean): Int = if (value) this or 0x01 else this and 0xFE
-fun Int.setBit1(value: Boolean): Int = if (value) this or 0x02 else this and 0xFD
-fun Int.setBit2(value: Boolean): Int = if (value) this or 0x04 else this and 0xFB
-fun Int.setBit3(value: Boolean): Int = if (value) this or 0x08 else this and 0xF7
-fun Int.setBit4(value: Boolean): Int = if (value) this or 0x10 else this and 0xEF
-fun Int.setBit5(value: Boolean): Int = if (value) this or 0x20 else this and 0xDF
-fun Int.setBit6(value: Boolean): Int = if (value) this or 0x40 else this and 0xBF
-fun Int.setBit7(value: Boolean): Int = if (value) this or 0x80 else this and 0x7F
+val Short.bit0: Boolean get() = this.toInt().bit0
+val Short.bit1: Boolean get() = this.toInt().bit1
+val Short.bit2: Boolean get() = this.toInt().bit2
+val Short.bit3: Boolean get() = this.toInt().bit3
+val Short.bit4: Boolean get() = this.toInt().bit4
+val Short.bit5: Boolean get() = this.toInt().bit5
+val Short.bit6: Boolean get() = this.toInt().bit6
+val Short.bit7: Boolean get() = this.toInt().bit7
+val Short.bit8: Boolean get() = this.toInt().bit8
+val Short.bit9: Boolean get() = this.toInt().bit9
+val Short.bit10: Boolean get() = this.toInt().bit10
+val Short.bit11: Boolean get() = this.toInt().bit11
+val Short.bit12: Boolean get() = this.toInt().bit12
+val Short.bit13: Boolean get() = this.toInt().bit13
+val Short.bit14: Boolean get() = this.toInt().bit14
+val Short.bit15: Boolean get() = this.toUShort().toInt().bit15
+
+fun Int.setBit0(value: Boolean): Int = if (value) this or 0x01 else this and 0xFFFFFFFEu.toInt()
+fun Int.setBit1(value: Boolean): Int = if (value) this or 0x02 else this and 0xFFFFFFFDu.toInt()
+fun Int.setBit2(value: Boolean): Int = if (value) this or 0x04 else this and 0xFFFFFFFBu.toInt()
+fun Int.setBit3(value: Boolean): Int = if (value) this or 0x08 else this and 0xFFFFFFF7u.toInt()
+fun Int.setBit4(value: Boolean): Int = if (value) this or 0x10 else this and 0xFFFFFFEFu.toInt()
+fun Int.setBit5(value: Boolean): Int = if (value) this or 0x20 else this and 0xFFFFFFDFu.toInt()
+fun Int.setBit6(value: Boolean): Int = if (value) this or 0x40 else this and 0xFFFFFFBFu.toInt()
+fun Int.setBit7(value: Boolean): Int = if (value) this or 0x80 else this and 0xFFFFFF7Fu.toInt()
+fun Int.setBit8(value: Boolean): Int = if (value) this or 0x100 else this and 0xFFFFFEFFu.toInt()
+fun Int.setBit9(value: Boolean): Int = if (value) this or 0x200 else this and 0xFFFFFDFFu.toInt()
+fun Int.setBit10(value: Boolean): Int = if (value) this or 0x400 else this and 0xFFFFFBFFu.toInt()
+fun Int.setBit11(value: Boolean): Int = if (value) this or 0x800 else this and 0xFFFFF7FFu.toInt()
+fun Int.setBit12(value: Boolean): Int = if (value) this or 0x1000 else this and 0xFFFFEFFFu.toInt()
+fun Int.setBit13(value: Boolean): Int = if (value) this or 0x2000 else this and 0xFFFFFBFFu.toInt()
+fun Int.setBit14(value: Boolean): Int = if (value) this or 0x4000 else this and 0xFFFFF7FFu.toInt()
+fun Int.setBit15(value: Boolean): Int = if (value) this or 0x8000 else this and 0xFFFF7FFFu.toInt()
+fun Int.setBit16(value: Boolean): Int = if (value) this or 0x10000 else this and 0xFFFEFFFFu.toInt()
+fun Int.setBit17(value: Boolean): Int = if (value) this or 0x20000 else this and 0xFFFDFFFFu.toInt()
+fun Int.setBit18(value: Boolean): Int = if (value) this or 0x40000 else this and 0xFFFBFFFFu.toInt()
+fun Int.setBit19(value: Boolean): Int = if (value) this or 0x80000 else this and 0xFFF7FFFFu.toInt()
+fun Int.setBit20(value: Boolean): Int = if (value) this or 0x100000 else this and 0xFFEFFFFFu.toInt()
+fun Int.setBit21(value: Boolean): Int = if (value) this or 0x200000 else this and 0xFFDFFFFFu.toInt()
+fun Int.setBit22(value: Boolean): Int = if (value) this or 0x400000 else this and 0xFFBFFFFFu.toInt()
+fun Int.setBit23(value: Boolean): Int = if (value) this or 0x800000 else this and 0xFF7FFFFFu.toInt()
+fun Int.setBit24(value: Boolean): Int = if (value) this or 0x1000000 else this and 0xFEFFFFFFu.toInt()
+fun Int.setBit25(value: Boolean): Int = if (value) this or 0x2000000 else this and 0xFDFFFFFFu.toInt()
+fun Int.setBit26(value: Boolean): Int = if (value) this or 0x4000000 else this and 0xFBFFFFFFu.toInt()
+fun Int.setBit27(value: Boolean): Int = if (value) this or 0x8000000 else this and 0xF7FFFFFFu.toInt()
+fun Int.setBit28(value: Boolean): Int = if (value) this or 0x10000000 else this and 0xEFFFFFFFu.toInt()
+fun Int.setBit29(value: Boolean): Int = if (value) this or 0x20000000 else this and 0xDFFFFFFFu.toInt()
+fun Int.setBit30(value: Boolean): Int = if (value) this or 0x40000000 else this and 0xBFFFFFFFu.toInt()
+fun Int.setBit31(value: Boolean): Int = if (value) this or 0x80000000u.toInt() else this and 0x7FFFFFFFu.toInt()
+
 
 
 
@@ -930,38 +1000,42 @@ class ShakeMapCreator {
         return constants.size - 1
     }
 
-    fun composeAttributes(clazz: ShakeClass): Byte {
+    fun composeAttributes(clazz: ShakeClass): Short {
         var attributes = 0
+        if(clazz.isNative) attributes = attributes.setBit8(true)
         if(clazz.isStatic) attributes = attributes.setBit7(true)
         if(clazz.isFinal) attributes = attributes.setBit6(true)
         if(clazz.isPublic) attributes = attributes.setBit4(true)
         if(clazz.isProtected) attributes = attributes.setBit3(true)
         if(clazz.isPrivate) attributes = attributes.setBit2(true)
         if(clazz.isAbstract) attributes = attributes.setBit1(true)
-        return attributes.toByte()
+        return attributes.toUShort().toShort()
     }
 
-    fun composeAttributes(function: ShakeMethod): Byte {
+    fun composeAttributes(function: ShakeMethod): Short {
         var attributes = 0
+        if(function.isNative) attributes = attributes.setBit8(true)
         if(function.isStatic) attributes = attributes.setBit7(true)
         if(function.isFinal) attributes = attributes.setBit6(true)
         if(function.isPublic) attributes = attributes.setBit4(true)
         if(function.isProtected) attributes = attributes.setBit3(true)
         if(function.isPrivate) attributes = attributes.setBit2(true)
         if(function.isAbstract) attributes = attributes.setBit1(true)
-        return attributes.toByte()
+        return attributes.toUShort().toShort()
     }
 
-    fun composeAttributes(field: ShakeConstructor): Byte {
+    fun composeAttributes(field: ShakeConstructor): Short {
         var attributes = 0
+        if(field.isNative) attributes = attributes.setBit8(true)
         if(field.isPublic) attributes = attributes.setBit4(true)
         if(field.isProtected) attributes = attributes.setBit3(true)
         if(field.isPrivate) attributes = attributes.setBit2(true)
-        return attributes.toByte()
+        return attributes.toUShort().toShort()
     }
 
-    fun composeAttributes(field: ShakeField): Byte {
+    fun composeAttributes(field: ShakeField): Short {
         var attributes = 0
+        if(field.isNative) attributes = attributes.setBit8(true)
         if(field.isStatic) attributes = attributes.setBit7(true)
         if(field.isFinal) attributes = attributes.setBit6(true)
         if(field.isFinal) attributes = attributes.setBit5(true)
@@ -969,7 +1043,7 @@ class ShakeMapCreator {
         if(field.isProtected) attributes = attributes.setBit3(true)
         if(field.isPrivate) attributes = attributes.setBit2(true)
         if(field.isAbstract) attributes = attributes.setBit1(true)
-        return attributes.toByte()
+        return attributes.toShort()
     }
 
     fun export(): ShakeMap {
@@ -1039,6 +1113,7 @@ class MapAssembledClass(
     override val isPublic: Boolean,
     override val isProtected: Boolean,
     override val isPrivate: Boolean,
+    override val isNative: Boolean
 ): ShakeClass {
     override val classes: List<ShakeClass> = classPointers.values()
     override val methods: List<ShakeMethod> = methodPointers.values()
@@ -1066,6 +1141,7 @@ class MapAssembledMethod (
     override val isStrict: Boolean,
     override val scope: ShakeScope,
     override val body: ShakeCode? = null,
+    override val isNative: Boolean,
 ) : ShakeMethod
 
 class MapAssembledConstructor (
@@ -1078,6 +1154,7 @@ class MapAssembledConstructor (
     override val isPrivate: Boolean,
     override val body: ShakeCode? = null,
     override val isStrict: Boolean,
+    override val isNative: Boolean,
 ): ShakeConstructor {
     override var clazz: ShakeClass get() = clazz_!!
         set(value) { clazz_ = value }
@@ -1097,6 +1174,7 @@ class MapAssembledField (
     override val isPublic: Boolean,
     override val isProtected: Boolean,
     override val isPrivate: Boolean,
+    override val isNative: Boolean,
     override val actualValue: ShakeValue? = null,
     override val actualType: ShakeType = type,
     override val qualifiedName: String,
@@ -1208,6 +1286,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isPublic,
                     info.isProtected,
                     info.isPrivate,
+                    info.isNative,
                 )
             )
         }
@@ -1253,6 +1332,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isStrict,
                     scopeUnit,
                     null,
+                    info.isNative,
                 )
             )
         }
@@ -1290,7 +1370,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isProtected,
                     info.isPrivate,
                     null,
-                    info.isStrict
+                    info.isStrict,
+                    info.isNative,
                 )
             )
         }
@@ -1318,6 +1399,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isPublic,
                     info.isProtected,
                     info.isPrivate,
+                    info.isNative,
                     null,
                     findType(info.type),
                     getUtf(info.name),
