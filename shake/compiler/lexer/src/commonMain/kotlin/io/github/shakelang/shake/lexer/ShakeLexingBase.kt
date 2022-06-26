@@ -170,6 +170,7 @@ abstract class ShakeLexingBase(
                 "new" -> ShakeTokenType.KEYWORD_NEW
                 "null" -> ShakeTokenType.KEYWORD_NULL
                 "object" -> ShakeTokenType.KEYWORD_OBJECT
+                "operator" -> ShakeTokenType.KEYWORD_OPERATOR
                 "override" -> ShakeTokenType.KEYWORD_OVERRIDE
                 "package" -> ShakeTokenType.KEYWORD_PACKAGE
                 "private" -> ShakeTokenType.KEYWORD_PRIVATE
