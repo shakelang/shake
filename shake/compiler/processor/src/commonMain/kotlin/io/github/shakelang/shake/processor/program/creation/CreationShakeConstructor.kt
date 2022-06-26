@@ -4,7 +4,6 @@ import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.ShakeConstructor
-import io.github.shakelang.shake.processor.program.types.ShakeProject
 
 open class CreationShakeConstructor (
     override val clazz: CreationShakeClass,

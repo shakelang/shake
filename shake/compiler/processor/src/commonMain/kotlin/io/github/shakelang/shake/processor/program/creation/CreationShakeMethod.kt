@@ -7,7 +7,6 @@ import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCo
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.ShakeMethod
-import io.github.shakelang.shake.processor.program.types.ShakeProject
 
 class CreationShakeMethod (
     override val prj: CreationShakeProject,

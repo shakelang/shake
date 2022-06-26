@@ -3,7 +3,6 @@ package io.github.shakelang.shake.parser.node.variables
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.*
 import kotlin.jvm.JvmOverloads
-import kotlin.jvm.Synchronized
 
 class ShakeVariableDeclarationNode @JvmOverloads constructor(
     map: PositionMap,
