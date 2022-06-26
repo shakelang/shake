@@ -12,27 +12,16 @@ class ShakeFunctionDeclarationNode @JvmOverloads constructor(
     val name: String,
     val body: ShakeBlockNode?,
     val args: Array<ShakeFunctionArgumentNode>,
-    val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
-    val access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE,
-    val isStatic: Boolean = false,
-    val isFinal: Boolean = false,
-    val isAbstract: Boolean = false,
-    val isOverride: Boolean = false,
-    val isSynchronized: Boolean = false,
-    val isNative: Boolean = false,
+    val type: ShakeVariableType,
+    val access: ShakeAccessDescriber?,
+    val isStatic: Boolean,
+    val isFinal: Boolean,
+    val isAbstract: Boolean,
+    val isOverride: Boolean,
+    val isSynchronized: Boolean,
+    val isNative: Boolean,
+    val isOperator: Boolean
 ) : ShakeFileChildNodeImpl(map) {
-
-    constructor(
-        map: PositionMap,
-        name: String,
-        body: ShakeBlockNode,
-        args: Array<ShakeFunctionArgumentNode>,
-        access: ShakeAccessDescriber?,
-        isInClass: Boolean,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isNative: Boolean,
-    ) : this(map, name, body, args, ShakeVariableType.DYNAMIC, access, isInClass, isStatic, isFinal)
 
     override fun toJson(): Map<String, *> =
         mapOf(

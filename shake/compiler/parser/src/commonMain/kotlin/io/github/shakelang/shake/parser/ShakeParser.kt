@@ -232,6 +232,12 @@ class ShakeParserImpl (
                 info.isOverride = true
                 expectDeclaration(info)
             }
+            ShakeTokenType.KEYWORD_OPERATOR -> {
+                input.skip()
+                if(info.isOperator) throw ParserError("Operator keyword is only allowed once")
+                info.isOperator = true
+                expectDeclaration(info)
+            }
             ShakeTokenType.KEYWORD_CLASS -> expectClassDeclaration(info)
             ShakeTokenType.KEYWORD_INTERFACE -> expectInterfaceDeclaration(info)
             ShakeTokenType.KEYWORD_OBJECT -> expectObjectDeclaration(info)
@@ -260,6 +266,7 @@ class ShakeParserImpl (
                 return if (hasNext && peekType == ShakeTokenType.ASSIGN) {
                     input.skip()
                     if(info.isSynchronized) throw ParserError("Synchronized variables are not supported")
+                    if(info.isOperator) throw ParserError("Operator variables are not supported")
                     ShakeVariableDeclarationNode(
                         map,
                         identifier,
@@ -273,7 +280,6 @@ class ShakeParserImpl (
                         isOverride = info.isOverride,
                     )
                 } else if (hasNext && peekType == ShakeTokenType.LPAREN) {
-
                     if(info.isConst) throw ParserError("Const functions are not supported")
                     val args = expectFunctionArguments()
                     val body = if(!info.isAbstract && !info.isNative) expectParseBodyStatement2() else null
@@ -288,9 +294,10 @@ class ShakeParserImpl (
                         isFinal = info.isFinal,
                         isAbstract = info.isAbstract,
                         isSynchronized = info.isSynchronized,
-                        isNative = info.isNative
+                        isNative = info.isNative,
+                        isOverride = info.isOverride,
+                        isOperator = info.isOperator,
                     )
-
                 } else {
                     ShakeVariableDeclarationNode(
                         map,
@@ -607,6 +614,7 @@ class ShakeParserImpl (
         if(info.isAbstract) throw ParserError("Abstract interfaces are not supported")
         if(info.isFinal) throw ParserError("Final interfaces are not supported")
         if(info.isOverride) throw ParserError("Override interfaces are not supported")
+        if(info.isOperator) throw ParserError("Operator interfaces are not supported")
 
         if (!input.hasNext() || input.peekType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
         val name = input.nextValue() ?: throw ParserError("Identifier has no value")
