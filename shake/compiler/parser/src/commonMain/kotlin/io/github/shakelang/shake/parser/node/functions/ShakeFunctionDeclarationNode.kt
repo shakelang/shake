@@ -9,6 +9,7 @@ import kotlin.jvm.JvmOverloads
 
 class ShakeFunctionDeclarationNode @JvmOverloads constructor(
     map: PositionMap,
+    val extendedType: ShakeVariableType,
     val name: String,
     val body: ShakeBlockNode?,
     val args: Array<ShakeFunctionArgumentNode>,

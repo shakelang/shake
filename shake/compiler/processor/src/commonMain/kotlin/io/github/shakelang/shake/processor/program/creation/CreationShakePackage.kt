@@ -58,9 +58,12 @@ open class CreationShakePackage (
                     classes.add(CreationShakeClass.from(baseProject, this, fileScope, it))
                 }
                 is ShakeFunctionDeclarationNode -> {
-                    if(functions.any { func -> func.name == it.name })
-                        throw IllegalStateException("Function ${it.name} already exists") // TODO Functions with different signatures
-                    functions.add(CreationShakeMethod.from(baseProject, this, fileScope, it))
+                    val method = CreationShakeMethod.from(baseProject, this, fileScope, it)
+                    /* TODO: check if method already exists
+                    if(functions.any { func -> func.signature == method.signature })
+                        throw IllegalStateException("Method ${method.signature} already exists")
+                    */
+                    functions.add(method)
                 }
                 is ShakeVariableDeclarationNode -> {
                     if(fields.any { field -> field.name == it.name })

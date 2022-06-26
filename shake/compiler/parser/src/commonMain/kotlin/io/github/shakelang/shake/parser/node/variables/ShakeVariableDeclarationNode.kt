@@ -6,6 +6,7 @@ import kotlin.jvm.JvmOverloads
 
 class ShakeVariableDeclarationNode @JvmOverloads constructor(
     map: PositionMap,
+    val extendedType: ShakeVariableType?,
     val name: String,
     val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
     val value: ShakeValuedNode? = null,
