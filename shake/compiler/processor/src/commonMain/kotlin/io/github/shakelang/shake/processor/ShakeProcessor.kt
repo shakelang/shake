@@ -9,6 +9,7 @@ import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.expression.*
 import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import io.github.shakelang.shake.parser.node.factor.ShakeStringNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 import io.github.shakelang.shake.parser.node.functions.ShakeReturnNode
 import io.github.shakelang.shake.parser.node.logical.*
@@ -84,6 +85,7 @@ open class ShakeCodeProcessor {
         return when(value) {
             is ShakeIntegerNode -> visitIntegerNode(scope, value)
             is ShakeDoubleNode -> visitDoubleNode(scope, value)
+            is ShakeStringNode -> visitStringNode(scope, value)
             is ShakeLogicalTrueNode -> visitLogicalTrueNode(scope, value)
             is ShakeLogicalFalseNode -> visitLogicalFalseNode(scope, value)
             is ShakeLogicalAndNode -> visitLogicalAndNode(scope, value)
@@ -113,7 +115,7 @@ open class ShakeCodeProcessor {
             is ShakeCastNode -> visitCastNode(scope, value)
             is ShakeFunctionCallNode -> visitFunctionCallNode(scope, value)
             is ShakeClassConstructionNode -> visitClassConstruction(scope, value)
-            else -> throw IllegalArgumentException("Unsupported value type: ${value::class}")
+            else -> throw IllegalArgumentException("Unsupported value type: ${value::class.simpleName}")
         }
     }
 
@@ -166,6 +168,10 @@ open class ShakeCodeProcessor {
 
     fun visitIntegerNode(scope: CreationShakeScope, n: ShakeIntegerNode): CreationShakeIntegerLiteral {
         return CreationShakeIntegerLiteral(scope.project, n.number)
+    }
+
+    fun visitStringNode(scope: CreationShakeScope, n: ShakeStringNode): CreationShakeStringLiteral {
+        return CreationShakeStringLiteral(scope.project, n.value)
     }
 
     fun visitAddNode(scope: CreationShakeScope, n: ShakeAddNode): CreationShakeAddition {

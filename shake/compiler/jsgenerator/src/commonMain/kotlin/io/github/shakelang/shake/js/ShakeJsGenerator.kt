@@ -13,6 +13,7 @@ class ShakeJsGenerator {
         return when(v) {
             is ShakeDoubleLiteral -> visitDouble(v)
             is ShakeIntLiteral -> visitInteger(v)
+            is ShakeStringLiteral -> visitString(v)
             is ShakeBooleanLiteral -> visitBoolean(v)
             is ShakeAddition -> visitAddition(v)
             is ShakeSubtraction -> visitSubtraction(v)
@@ -85,6 +86,10 @@ class ShakeJsGenerator {
 
     fun visitInteger(n: ShakeIntLiteral): JsInteger {
         return JsInteger(n.value)
+    }
+
+    fun visitString(n: ShakeStringLiteral): JsStringLiteral {
+        return JsStringLiteral(n.value)
     }
 
     fun visitBoolean(n: ShakeBooleanLiteral): JsLiteral {
