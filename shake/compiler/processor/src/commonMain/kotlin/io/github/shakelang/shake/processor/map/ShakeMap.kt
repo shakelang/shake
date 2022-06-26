@@ -80,6 +80,8 @@ class ShakeMap(
         "project_fields" to project_fields.map { it }
     )
 
+    fun toJsonString(): String = json.stringify(toJson())
+
     fun assemble(): ShakeProject {
         return ShakeMapAssembler(this).get()
     }

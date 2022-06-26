@@ -2,6 +2,7 @@ package io.github.shakelang.shake
 
 import io.github.shakelang.shake.js.ShakeJsGenerator
 import io.github.shakelang.shake.processor.ShakePackageBasedProcessor
+import io.github.shakelang.shake.processor.map.ShakeMap
 import io.github.shakelang.shason.json
 import java.io.File
 
@@ -13,11 +14,18 @@ fun main(args: Array<String>) {
     processor.loadFile("shakelib/src/common", "shake/lang/Object.shake")
     processor.loadFile("shakelib/src/common", "shake/lang/String.shake")
     processor.loadFile("shakelib/src/common", "shake/lang/Byte.shake")
+    processor.loadFile("shakelib/src/common", "shake/lang/Short.shake")
+    processor.loadFile("shakelib/src/common", "shake/lang/Int.shake")
+    processor.loadFile("shakelib/src/common", "shake/lang/Long.shake")
+    processor.loadFile("shakelib/src/common", "shake/lang/Float.shake")
+    processor.loadFile("shakelib/src/common", "shake/lang/Double.shake")
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "test.shake")
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "io/github/shakelang/test.shake")
     val project = processor.finish()
 
     println(project.toJsonString())
+
+    println(ShakeMap.from(project).toJsonString())
 
     val generator = ShakeJsGenerator()
     val jsProject = generator.visitProject(project)
