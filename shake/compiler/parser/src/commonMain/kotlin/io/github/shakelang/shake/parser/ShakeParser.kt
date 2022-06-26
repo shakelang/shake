@@ -251,7 +251,61 @@ class ShakeParserImpl (
             ShakeTokenType.KEYWORD_FLOAT,
             ShakeTokenType.KEYWORD_DOUBLE,
             ShakeTokenType.KEYWORD_VOID,
-            ShakeTokenType.IDENTIFIER -> expectCStyleTypeExpectingDeclaration(info)
+            ShakeTokenType.IDENTIFIER -> {
+                val type = expectType()
+                if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier, but got ${input.actualType}")
+                val identifier = input.actualValue ?: throw ParserError("Expecting identifier to contain value")
+                val hasNext = input.skipIgnorable().hasNext()
+                val peekType = if(hasNext) input.peekType() else null
+                return if (hasNext && peekType == ShakeTokenType.ASSIGN) {
+                    input.skip()
+                    if(info.isSynchronized) throw ParserError("Synchronized variables are not supported")
+                    ShakeVariableDeclarationNode(
+                        map,
+                        identifier,
+                        type,
+                        expectValue(),
+                        info.access,
+                        isStatic = info.isStatic,
+                        isFinal = info.isFinal,
+                        isConst = info.isConst,
+                        isNative = info.isNative,
+                        isOverride = info.isOverride,
+                    )
+                } else if (hasNext && peekType == ShakeTokenType.LPAREN) {
+
+                    if(info.isConst) throw ParserError("Const functions are not supported")
+                    val args = expectFunctionArguments()
+                    val body = if(!info.isAbstract && !info.isNative) expectParseBodyStatement2() else null
+                    return ShakeFunctionDeclarationNode(
+                        map,
+                        identifier,
+                        body,
+                        args,
+                        type,
+                        info.access,
+                        isStatic = info.isStatic,
+                        isFinal = info.isFinal,
+                        isAbstract = info.isAbstract,
+                        isSynchronized = info.isSynchronized,
+                        isNative = info.isNative
+                    )
+
+                } else {
+                    ShakeVariableDeclarationNode(
+                        map,
+                        identifier,
+                        type,
+                        null,
+                        info.access,
+                        isStatic = info.isStatic,
+                        isFinal = info.isFinal,
+                        isConst = info.isConst,
+                        isNative = info.isNative,
+                        isOverride = info.isOverride,
+                    )
+                }
+            }
             else -> throw ParserError("Unexpected token (" + input.peekType() + ')')
         }
     }
@@ -627,36 +681,6 @@ class ShakeParserImpl (
     // ****************************************************************************
     // Functions
 
-    fun expectCStyleFunctionDeclaration(
-        type: ShakeVariableType,
-        identifier: String,
-        access: ShakeAccessDescriber,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isAbstract: Boolean,
-        isSynchronized: Boolean,
-        isConst: Boolean,
-        isNative: Boolean,
-        isOverride: Boolean
-    ): ShakeFunctionDeclarationNode {
-        if(isConst) throw ParserError("Const functions are not supported")
-        val args = expectFunctionArguments()
-        val body = if(!isAbstract && !isNative) expectParseBodyStatement2() else null
-        return ShakeFunctionDeclarationNode(
-            map,
-            identifier,
-            body,
-            args,
-            type,
-            access,
-            isStatic = isStatic,
-            isFinal = isFinal,
-            isAbstract = isAbstract,
-            isSynchronized = isSynchronized,
-            isNative = isNative
-        )
-    }
-
     fun expectFunctionArguments(): Array<ShakeFunctionArgumentNode> {
         val args = ArrayList<ShakeFunctionArgumentNode>()
         if (!input.hasNext() || input.nextType() != ShakeTokenType.LPAREN) throw ParserError("Expecting '('")
@@ -780,64 +804,6 @@ class ShakeParserImpl (
     fun expectVariableDecrease(variable: ShakeValuedNode): ShakeVariableDecreaseNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.DECR) throw ParserError("Expecting '--'")
         return ShakeVariableDecreaseNode(map, variable, input.actualStart)
-    }
-
-    fun expectCStyleTypeExpectingDeclaration(
-        info : DeclarationContextInformation
-    ): ShakeFileChildNode {
-        val type = expectType()
-        return expectCStyleTypedDeclaration(type, info)
-    }
-
-    fun expectCStyleTypedDeclaration(
-        type: ShakeVariableType,
-        info : DeclarationContextInformation
-    ): ShakeFileChildNode {
-        // TODO error on void variable type
-        if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier, but got ${input.actualType}")
-        val identifier = input.actualValue ?: throw ParserError("Expecting identifier to contain value")
-        val hasNext = input.skipIgnorable().hasNext()
-        val peekType = if(hasNext) input.peekType() else null
-        return if (hasNext && peekType == ShakeTokenType.ASSIGN) {
-            input.skip()
-            if(info.isSynchronized) throw ParserError("Synchronized variables are not supported")
-            ShakeVariableDeclarationNode(
-                map,
-                identifier,
-                type,
-                expectValue(),
-                info.access,
-                isStatic = info.isStatic,
-                isFinal = info.isFinal,
-                isConst = info.isConst,
-                isNative = info.isNative,
-                isOverride = info.isOverride,
-            )
-        } else if (hasNext && peekType == ShakeTokenType.LPAREN) expectCStyleFunctionDeclaration(
-            type,
-            identifier,
-            info.access,
-            isStatic = info.isStatic,
-            isFinal = info.isFinal,
-            isAbstract = info.isAbstract,
-            isSynchronized = info.isSynchronized,
-            isConst = info.isConst,
-            isNative = info.isNative,
-            isOverride = info.isOverride,
-        ) else {
-            ShakeVariableDeclarationNode(
-                map,
-                identifier,
-                type,
-                null,
-                info.access,
-                isStatic = info.isStatic,
-                isFinal = info.isFinal,
-                isConst = info.isConst,
-                isNative = info.isNative,
-                isOverride = info.isOverride,
-            )
-        }
     }
 
     // ****************************************************************************
@@ -1194,9 +1160,7 @@ enum class DeclarationScope {
 class DeclarationContextInformation(
     val scope: DeclarationScope
 ) {
-    var name: String? = null
     var access: ShakeAccessDescriber = ShakeAccessDescriber.PACKAGE
-    var type: ShakeVariableType? = null
     var isStatic: Boolean = false
     var isFinal: Boolean = false
     var isConst: Boolean = false
