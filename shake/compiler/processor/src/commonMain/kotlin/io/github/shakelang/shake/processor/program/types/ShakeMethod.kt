@@ -20,6 +20,7 @@ interface ShakeMethod : ShakeInvokable {
     val isPublic: Boolean
     val isNative: Boolean
     val isOperator: Boolean
+    val expanding: ShakeType?
 
     override val qualifiedName: String get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus(".")}$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
     val signature: String get() = "$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"

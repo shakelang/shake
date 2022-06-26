@@ -16,6 +16,7 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
     val isPublic: Boolean
     val isNative: Boolean
     val initialValue: ShakeValue?
+    val expanding: ShakeType?
 
     override val qualifiedName: String
         get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus(".")}$name"

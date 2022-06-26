@@ -21,7 +21,7 @@ open class CreationShakeField (
     override val isProtected: Boolean,
     override val isPublic: Boolean,
     override val isNative: Boolean,
-    override val initialValue: CreationShakeValue? = null,
+    override val initialValue: CreationShakeValue?,
 ): CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
 
     override val qualifiedName: String
@@ -34,6 +34,9 @@ open class CreationShakeField (
         get() = TODO("Not yet implemented")
 
     final override lateinit var type: CreationShakeType
+        private set
+
+    final override var expanding: ShakeType? = null
         private set
 
     override fun assignType(other: ShakeType): ShakeType = type.assignType(other) ?: other
@@ -56,6 +59,13 @@ open class CreationShakeField (
         return {
             type = it
             it
+        }
+    }
+
+    fun lateinitExpanding(): (ShakeType) -> CreationShakeType {
+        return {
+            expanding = it
+            type
         }
     }
 
@@ -93,6 +103,7 @@ open class CreationShakeField (
                 node.access == ShakeAccessDescriber.PROTECTED,
                 node.access == ShakeAccessDescriber.PUBLIC,
                 node.isNative,
+                null
             ) {
 
                 override var initialValue: CreationShakeValue? = null
@@ -104,6 +115,7 @@ open class CreationShakeField (
 
             }.let {
                 it.lateinitType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
+                node.expandedType?.let { it1 -> it.lateinitExpanding().let { run -> parentScope.getType(it1) { t -> run(t) } } }
                 it
             }
         }
@@ -122,8 +134,8 @@ open class CreationShakeField (
                 node.access == ShakeAccessDescriber.PROTECTED,
                 node.access == ShakeAccessDescriber.PUBLIC,
                 node.isNative,
+                null
             ) {
-
                 override var initialValue: CreationShakeValue? = null
                     private set
 

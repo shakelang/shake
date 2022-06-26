@@ -7,6 +7,7 @@ import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCo
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.ShakeMethod
+import io.github.shakelang.shake.processor.program.types.ShakeType
 
 class CreationShakeMethod (
     override val prj: CreationShakeProject,
@@ -33,6 +34,9 @@ class CreationShakeMethod (
     override lateinit var returnType: CreationShakeType
         private set
 
+    override var expanding: ShakeType? = null
+        private set
+
     constructor(
         prj: CreationShakeProject,
         pkg: CreationShakePackage?,
@@ -52,9 +56,11 @@ class CreationShakeMethod (
         isPublic: Boolean,
         isNative: Boolean,
         isOperator: Boolean,
+        expanding: ShakeType?
     ): this(prj, pkg, clazz, parentScope, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic, isNative, isOperator) {
         this.parameters = parameters
         this.returnType = returnType
+        this.expanding = expanding
     }
 
     override val scope : CreationShakeScope = ShakeFunctionScope()
@@ -62,6 +68,13 @@ class CreationShakeMethod (
     fun lateinitReturnType(): (CreationShakeType) -> CreationShakeType {
         return {
             returnType = it
+            it
+        }
+    }
+
+    fun lateinitExpanding(): (ShakeType?) -> ShakeType? {
+        return {
+            expanding = it
             it
         }
     }
@@ -154,6 +167,7 @@ class CreationShakeMethod (
                 node.isOperator
             ).let {
                 it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
+                node.expandedType?.let { it1 -> it.lateinitExpanding().let { run -> parentScope.getType(it1) { t -> run(t) } } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
                     .forEachIndexed { i, run -> parentScope.getType(node.args[i].type) { t -> run(t) } }
                 it
@@ -169,8 +183,8 @@ class CreationShakeMethod (
                 node.body?.let { CreationShakeCode.fromTree(it) },
                 node.isStatic,
                 node.isFinal,
-                false,
-                false,
+                node.isAbstract,
+                node.isSynchronized,
                 false,
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
@@ -179,6 +193,7 @@ class CreationShakeMethod (
                 node.isOperator
             ).let {
                 it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
+                it.lateinitExpanding().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
                     .forEachIndexed { i, run -> parentScope.getType(node.args[i].type) { t -> run(t) } }
                 it

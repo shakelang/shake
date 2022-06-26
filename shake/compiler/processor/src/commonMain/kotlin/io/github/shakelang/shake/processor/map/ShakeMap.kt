@@ -527,6 +527,7 @@ class ShakeMapMethod(
     val return_type: Int,
     val parameter_names: Array<Int>,
     val parameter_types: Array<Int>,
+    val expanding: Int,
 ) {
     val isOperator get() = attributes.bit9
     val isNative get() = attributes.bit8
@@ -553,6 +554,7 @@ class ShakeMapMethod(
         parameter_names.forEach { stream.write(it.toBytes()) }
         stream.write(parameter_types.size.toBytes())
         parameter_types.forEach { stream.write(it.toBytes()) }
+        stream.write(expanding.toBytes())
     }
 
     fun toJson(): Map<String, *> = mapOf(
@@ -560,7 +562,8 @@ class ShakeMapMethod(
         "attributes" to attributes,
         "return_type" to return_type,
         "parameter_names" to parameter_names.map { it },
-        "parameter_types" to parameter_types.map { it }
+        "parameter_types" to parameter_types.map { it },
+        "expanding" to expanding,
     )
 
     companion object {
@@ -572,12 +575,14 @@ class ShakeMapMethod(
             val parameter_names_ = Array(parameter_names) { input.readInt() }
             val parameter_types = input.readInt()
             val parameter_types_ = Array(parameter_types) { input.readInt() }
+            val expanding = input.readInt()
             return ShakeMapMethod(
                 name,
                 attributes,
                 return_type,
                 parameter_names_,
-                parameter_types_
+                parameter_types_,
+                expanding
             )
         }
 
@@ -589,12 +594,14 @@ class ShakeMapMethod(
             if (it["return_type"] == null) throw IllegalArgumentException("Missing return_type")
             if (it["parameter_names"] == null) throw IllegalArgumentException("Missing parameter_names")
             if (it["parameter_types"] == null) throw IllegalArgumentException("Missing parameter_types")
+            if (it["expanding"] == null) throw IllegalArgumentException("Missing expanding")
 
             if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
             if (it["attributes"] !is Short) throw IllegalArgumentException("Invalid attributes")
             if (it["return_type"] !is Int) throw IllegalArgumentException("Invalid return_type")
             if (it["parameter_names"] !is List<*>) throw IllegalArgumentException("Invalid parameter_names")
             if (it["parameter_types"] !is List<*>) throw IllegalArgumentException("Invalid parameter_types")
+            if (it["expanding"] !is Int) throw IllegalArgumentException("Invalid expanding")
 
             val name = it["name"] as Int
             val attributes = it["attributes"] as Short
@@ -603,12 +610,14 @@ class ShakeMapMethod(
             val parameter_names_ = parameter_names.filterIsInstance<Int>().toTypedArray()
             val parameter_types = it["parameter_types"] as List<*>
             val parameter_types_ = parameter_types.filterIsInstance<Int>().toTypedArray()
+            val expanding = it["expanding"] as Int
             return ShakeMapMethod(
                 name,
                 attributes,
                 return_type,
                 parameter_names_,
-                parameter_types_
+                parameter_types_,
+                expanding,
             )
         }
     }
@@ -697,6 +706,7 @@ class ShakeMapField(
     val name: Int,
     val attributes: Short,
     val type: Int,
+    val expanding: Int,
 ) {
     val isNative get() = attributes.bit8
     val isStatic get() = attributes.bit7
@@ -717,12 +727,14 @@ class ShakeMapField(
         stream.write(name.toBytes())
         stream.write(attributes.toBytes())
         stream.write(type.toBytes())
+        stream.write(expanding.toBytes())
     }
 
     fun toJson(): Map<String, *> = mapOf(
         "name" to name,
         "attributes" to attributes,
-        "type" to type
+        "type" to type,
+        "expanding" to expanding
     )
 
     companion object {
@@ -733,7 +745,8 @@ class ShakeMapField(
             return ShakeMapField(
                 name,
                 attributes,
-                type
+                type,
+                input.readInt(),
             )
         }
 
@@ -743,18 +756,22 @@ class ShakeMapField(
             if (it["name"] == null) throw IllegalArgumentException("Missing name")
             if (it["attributes"] == null) throw IllegalArgumentException("Missing attributes")
             if (it["type"] == null) throw IllegalArgumentException("Missing type")
+            if (it["expanding"] == null) throw IllegalArgumentException("Missing expanding")
 
             if (it["name"] !is Int) throw IllegalArgumentException("Invalid name")
             if (it["attributes"] !is Short) throw IllegalArgumentException("Invalid attributes")
             if (it["type"] !is Int) throw IllegalArgumentException("Invalid type")
+            if (it["expanding"] !is Int) throw IllegalArgumentException("Invalid expanding")
 
             val name = it["name"] as Int
             val attributes = it["attributes"] as Short
             val type = it["type"] as Int
+            val expanding = it["expanding"] as Int
             return ShakeMapField(
                 name,
                 attributes,
-                type
+                type,
+                expanding,
             )
         }
     }
@@ -943,6 +960,7 @@ class ShakeMapCreator {
         val return_type = utf8(method.returnType.qualifiedName)
         val parameter_names = method.parameters.map { utf8(it.name) }.toTypedArray()
         val parameter_types = method.parameters.map { utf8(it.type.qualifiedName) }.toTypedArray()
+        val expanding = method.expanding?.qualifiedName?.let { utf8(it) } ?: -1
 
         this.methods.add(
             ShakeMapMethod(
@@ -950,7 +968,8 @@ class ShakeMapCreator {
                 attributes,
                 return_type,
                 parameter_names,
-                parameter_types
+                parameter_types,
+                expanding
             )
         )
 
@@ -980,12 +999,14 @@ class ShakeMapCreator {
         val name = utf8(field.name)
         val attributes = composeAttributes(field)
         val type = utf8(field.type.qualifiedName)
+        val expanding = field.expanding?.qualifiedName?.let { utf8(it) } ?: -1
 
         this.fields.add(
             ShakeMapField(
                 name,
                 attributes,
-                type
+                type,
+                expanding
             )
         )
 
@@ -1143,6 +1164,7 @@ class MapAssembledMethod (
     override val body: ShakeCode? = null,
     override val isNative: Boolean,
     override val isOperator: Boolean,
+    override val expanding: ShakeType?,
 ) : ShakeMethod
 
 class MapAssembledConstructor (
@@ -1180,6 +1202,7 @@ class MapAssembledField (
     override val actualType: ShakeType = type,
     override val qualifiedName: String,
     override val initialValue: ShakeValue?,
+    override val expanding: ShakeType?,
 ): ShakeField
 
 class ShakeAssembledObjectType(
@@ -1344,6 +1367,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     null,
                     info.isNative,
                     info.isOperator,
+                    if(info.expanding != -1) findType(info.expanding) else null,
                 )
             )
         }
@@ -1415,6 +1439,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     findType(info.type),
                     getUtf(info.name),
                     null,
+                    if(info.expanding != -1) findType(info.expanding) else null,
                 )
             )
         }

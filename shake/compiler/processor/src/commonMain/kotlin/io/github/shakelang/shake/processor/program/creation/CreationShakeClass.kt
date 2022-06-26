@@ -119,6 +119,7 @@ class CreationShakeClass: ShakeClass {
                 it.isOperator,
             )
             method.lateinitReturnType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
+            it.expandedType?.let { it1 -> method.lateinitExpanding().let { run -> instanceScope.getType(it1) { type -> run(type) } } }
             method
                 .lateinitParameterTypes(it.args.map { p -> p.name })
                 .forEachIndexed { i, run -> instanceScope.getType(it.args[i].type) { type -> run(type) } }
@@ -128,6 +129,7 @@ class CreationShakeClass: ShakeClass {
         this.fields = clz.fields.map {
             val field = CreationShakeField.from(this, if (it.isStatic) staticScope else instanceScope, it)
             field.lateinitType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
+            it.expandedType?.let { it1 -> field.lateinitExpanding().let { run -> instanceScope.getType(it1) { type -> run(type) } } }
             field
         }
 

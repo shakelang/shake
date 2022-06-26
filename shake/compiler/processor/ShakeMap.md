@@ -68,14 +68,15 @@
 | field_references       | References to fields in this class        | 4 bytes each |
 
 ## Methods
-| Key               | Description                                   | Byte Size    |
-|-------------------|-----------------------------------------------|--------------|
-| name              | Method name (index to constant pool)          | 4 bytes      |
-| attributes        | Attributes of the method                      | 2 bytes      |
-| return_type       | Return type (index to constant pool)          | 4 bytes      |
-| parameter_amount  | Amount of parameters in this method           | 4 bytes      |
-| parameter_names[] | Parameter names (index to constant pool)      | 4 bytes each |
-| parameter_types[] | Parameter types (index to constant pool)      | 4 bytes each |
+| Key               | Description                              | Byte Size    |
+|-------------------|------------------------------------------|--------------|
+| name              | Method name (index to constant pool)     | 4 bytes      |
+| attributes        | Attributes of the method                 | 2 bytes      |
+| return_type       | Return type (index to constant pool)     | 4 bytes      |
+| parameter_amount  | Amount of parameters in this method      | 4 bytes      |
+| parameter_names[] | Parameter names (index to constant pool) | 4 bytes each |
+| parameter_types[] | Parameter types (index to constant pool) | 4 bytes each |
+| expanding         | Expanded Type (String)                   | 4 bytes      |
 
 ## Constructors
 | Key               | Description                               | Byte Size    |
@@ -92,3 +93,4 @@
 | name                 | Field name (index to constant pool) | 4 bytes   |
 | attributes           | Attributes of the field             | 2 bytes   |
 | type                 | Field type (index to constant pool) | 4 bytes   |
+| expanding            | Expanded Type (String)              | 4 bytes   |

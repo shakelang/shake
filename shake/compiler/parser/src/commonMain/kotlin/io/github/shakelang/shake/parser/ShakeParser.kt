@@ -265,7 +265,7 @@ class ShakeParserImpl (
                 if (!input.skipIgnorable().hasNext()) throw ParserError("Expecting identifier, but got ${input.actualType}")
 
                 val next = input.peekType()
-                var extendedType: ShakeVariableType? = null
+                var expandedType: ShakeVariableType? = null
                 lateinit var identifier: String
 
                 if(
@@ -279,7 +279,7 @@ class ShakeParserImpl (
                     next == ShakeTokenType.KEYWORD_FLOAT ||
                     next == ShakeTokenType.KEYWORD_DOUBLE
                 ) {
-                    extendedType = when(next) {
+                    expandedType = when(next) {
                         ShakeTokenType.KEYWORD_DYNAMIC -> ShakeVariableType.DYNAMIC
                         ShakeTokenType.KEYWORD_BOOLEAN -> ShakeVariableType.BOOLEAN
                         ShakeTokenType.KEYWORD_CHAR -> ShakeVariableType.CHAR
@@ -303,7 +303,9 @@ class ShakeParserImpl (
                 else if(next == ShakeTokenType.IDENTIFIER) {
                     val namespace = expectNamespace()
                     identifier = namespace.parts.last()
-                    extendedType = ShakeVariableType.objectType(ShakeNamespaceNode(map, namespace.parts.dropLast(1).toTypedArray()))
+                    if(namespace.parts.size > 1)
+                        expandedType = ShakeVariableType.objectType(ShakeNamespaceNode(map,
+                            namespace.parts.dropLast(1).toTypedArray()))
                 }
                 else throw ParserError("Expecting type, but got ${input.actualType}")
 
@@ -315,7 +317,7 @@ class ShakeParserImpl (
                     if(info.isOperator) throw ParserError("Operator variables are not supported")
                     ShakeVariableDeclarationNode(
                         map,
-                        extendedType,
+                        expandedType,
                         identifier,
                         type,
                         expectValue(),
@@ -332,7 +334,7 @@ class ShakeParserImpl (
                     val body = if(!info.isAbstract && !info.isNative) expectParseBodyStatement2() else null
                     return ShakeFunctionDeclarationNode(
                         map,
-                        extendedType,
+                        expandedType,
                         identifier,
                         body,
                         args,
@@ -349,7 +351,7 @@ class ShakeParserImpl (
                 } else {
                     ShakeVariableDeclarationNode(
                         map,
-                        extendedType,
+                        expandedType,
                         identifier,
                         type,
                         null,
