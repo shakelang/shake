@@ -14,6 +14,7 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
     val isFinal: Boolean,
     val isNative: Boolean,
     val isConst: Boolean,
+    isOverride: Boolean,
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {
 
     override fun toJson(): Map<String, *> =

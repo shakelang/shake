@@ -164,230 +164,82 @@ class ShakeParserImpl (
     }
 
     fun expectDeclaration(
-        declarationScope: DeclarationScope,
-        access: ShakeAccessDescriber,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isAbstract: Boolean,
-        isSynchronized: Boolean,
-        isConst: Boolean,
-        isNative: Boolean,
-        isOverride: Boolean,
+        info: DeclarationContextInformation
     ): ShakeNode {
         return when (input.peekType()) {
             ShakeTokenType.KEYWORD_PUBLIC -> {
                 input.skip()
-                if(access != ShakeAccessDescriber.PACKAGE) throw ParserError("Access modifier is only allowed once")
-                expectDeclaration(
-                    declarationScope,
-                    ShakeAccessDescriber.PUBLIC,
-                    isStatic = isStatic,
-                    isFinal = isFinal,
-                    isAbstract = isAbstract,
-                    isSynchronized = isSynchronized,
-                    isConst = isConst,
-                    isNative = isNative,
-                    isOverride = isOverride
-                )
+                if(info.access != ShakeAccessDescriber.PACKAGE) throw ParserError("Access modifier is only allowed once")
+                info.access = ShakeAccessDescriber.PUBLIC
+                expectDeclaration(info)
             }
             ShakeTokenType.KEYWORD_PROTECTED -> {
                 input.skip()
-                if(access != ShakeAccessDescriber.PACKAGE) throw ParserError("Access modifier is only allowed once")
-                expectDeclaration(
-                    declarationScope,
-                    ShakeAccessDescriber.PROTECTED,
-                    isStatic = isStatic,
-                    isFinal = isFinal,
-                    isAbstract = isAbstract,
-                    isSynchronized = isSynchronized,
-                    isConst = isConst,
-                    isNative = isNative,
-                    isOverride = isOverride
-                )
+                if(info.access != ShakeAccessDescriber.PACKAGE) throw ParserError("Access modifier is only allowed once")
+                info.access = ShakeAccessDescriber.PROTECTED
+                expectDeclaration(info)
             }
             ShakeTokenType.KEYWORD_PRIVATE -> {
                 input.skip()
-                if(access != ShakeAccessDescriber.PACKAGE) throw ParserError("Access modifier is only allowed once")
-                expectDeclaration(
-                    declarationScope,
-                    ShakeAccessDescriber.PRIVATE,
-                    isStatic = isStatic,
-                    isFinal = isFinal,
-                    isAbstract = isAbstract,
-                    isSynchronized = isSynchronized,
-                    isConst = isConst,
-                    isNative = isNative,
-                    isOverride = isOverride
-                )
+                if(info.access != ShakeAccessDescriber.PACKAGE) throw ParserError("Access modifier is only allowed once")
+                info.access = ShakeAccessDescriber.PRIVATE
+                expectDeclaration(info)
             }
             ShakeTokenType.KEYWORD_STATIC -> {
                 input.skip()
-                if (declarationScope != DeclarationScope.CLASS
-                    && declarationScope != DeclarationScope.INTERFACE
-                    && declarationScope != DeclarationScope.OBJECT
-                    && declarationScope != DeclarationScope.ENUM)
+                if (info.scope != DeclarationScope.CLASS
+                    && info.scope != DeclarationScope.INTERFACE
+                    && info.scope != DeclarationScope.OBJECT
+                    && info.scope != DeclarationScope.ENUM)
                         throw ParserError("Static keyword is only for objects in classes, interfaces or enums")
-                expectDeclaration(
-                    declarationScope,
-                    access,
-                    isStatic = true,
-                    isFinal = isFinal,
-                    isAbstract = isAbstract,
-                    isSynchronized = isSynchronized,
-                    isConst = isConst,
-                    isNative = isNative,
-                    isOverride = isOverride
-                )
+                if(info.isStatic) throw ParserError("Static keyword is only allowed once")
+                info.isStatic = true
+                expectDeclaration(info)
             }
             ShakeTokenType.KEYWORD_FINAL -> {
                 input.skip()
-                if(isFinal) throw ParserError("Final keyword is only allowed once")
-                expectDeclaration(
-                    declarationScope,
-                    access,
-                    isStatic = isStatic,
-                    isFinal = true,
-                    isAbstract = isAbstract,
-                    isSynchronized = isSynchronized,
-                    isConst = isConst,
-                    isNative = isNative,
-                    isOverride = isOverride
-                )
+                if(info.isFinal) throw ParserError("Final keyword is only allowed once")
+                info.isFinal = true
+                expectDeclaration(info)
             }
             ShakeTokenType.KEYWORD_ABSTRACT -> {
                 input.skip()
-                if(isAbstract) throw ParserError("Abstract keyword is only allowed once")
-                expectDeclaration(
-                    declarationScope,
-                    access,
-                    isStatic = isStatic,
-                    isFinal = isFinal,
-                    isAbstract = true,
-                    isSynchronized = isSynchronized,
-                    isConst = isConst,
-                    isNative = isNative,
-                    isOverride = isOverride
-                )
+                if(info.isAbstract) throw ParserError("Abstract keyword is only allowed once")
+                info.isAbstract = true
+                expectDeclaration(info)
             }
             ShakeTokenType.KEYWORD_SYNCHRONIZED -> {
                 input.skip()
-                if(isSynchronized) throw ParserError("Synchronized keyword is only allowed once")
-                expectDeclaration(
-                    declarationScope,
-                    access,
-                    isStatic = isStatic,
-                    isFinal = isFinal,
-                    isAbstract = isAbstract,
-                    isSynchronized = true,
-                    isConst = isConst,
-                    isNative = isNative,
-                    isOverride = isOverride
-                )
+                if(info.isSynchronized) throw ParserError("Synchronized keyword is only allowed once")
+                info.isSynchronized = true
+                expectDeclaration(info)
             }
             ShakeTokenType.KEYWORD_CONST -> {
                 input.skip()
-                if(isConst) throw ParserError("Const keyword is only allowed once")
-                expectDeclaration(
-                    declarationScope,
-                    access,
-                    isStatic = isStatic,
-                    isFinal = isFinal,
-                    isAbstract = isAbstract,
-                    isSynchronized = isSynchronized,
-                    isConst = true,
-                    isNative = isNative,
-                    isOverride = isOverride
-                )
+                if(info.isConst) throw ParserError("Const keyword is only allowed once")
+                info.isConst = true
+                expectDeclaration(info)
             }
             ShakeTokenType.KEYWORD_NATIVE -> {
                 input.skip()
-                if(isNative) throw ParserError("Native keyword is only allowed once")
-                expectDeclaration(
-                    declarationScope,
-                    access,
-                    isStatic = isStatic,
-                    isFinal = isFinal,
-                    isAbstract = isAbstract,
-                    isSynchronized = isSynchronized,
-                    isConst = isConst,
-                    isNative = true,
-                    isOverride = isOverride
-                )
+                if(info.isNative) throw ParserError("Native keyword is only allowed once")
+                info.isNative = true
+                expectDeclaration(info)
             }
             ShakeTokenType.KEYWORD_OVERRIDE -> {
                 input.skip()
-                if (isOverride) throw ParserError("Override keyword is only allowed once")
-                expectDeclaration(
-                    declarationScope,
-                    access,
-                    isStatic = isStatic,
-                    isFinal = isFinal,
-                    isAbstract = isAbstract,
-                    isSynchronized = isSynchronized,
-                    isConst = isConst,
-                    isNative = isNative,
-                    isOverride = true
-                )
+                if(info.isOverride) throw ParserError("Override keyword is only allowed once")
+                info.isOverride = true
+                expectDeclaration(info)
             }
-            ShakeTokenType.KEYWORD_CLASS -> expectClassDeclaration(
-                access,
-                declarationScope,
-                isStatic = isStatic,
-                isFinal = isFinal,
-                isAbstract = isAbstract,
-                isSynchronized = isSynchronized,
-                isConst = isConst,
-                isNative = isNative,
-                isOverride = isOverride
-            )
-            ShakeTokenType.KEYWORD_INTERFACE -> expectInterfaceDeclaration(
-                access,
-                declarationScope,
-                isStatic = isStatic,
-                isFinal = isFinal,
-                isAbstract = isAbstract,
-                isSynchronized = isSynchronized,
-                isConst = isConst,
-                isNative = isNative,
-                isOverride = isOverride
-            )
-            ShakeTokenType.KEYWORD_OBJECT -> expectObjectDeclaration(
-                access,
-                declarationScope,
-                isStatic = isStatic,
-                isFinal = isFinal,
-                isAbstract = isAbstract,
-                isSynchronized = isSynchronized,
-                isConst = isConst,
-                isNative = isNative,
-                isOverride = isOverride
-            )
-            ShakeTokenType.KEYWORD_ENUM -> expectEnumDeclaration(
-                access,
-                declarationScope,
-                isStatic = isStatic,
-                isFinal = isFinal,
-                isAbstract = isAbstract,
-                isSynchronized = isSynchronized,
-                isConst = isConst,
-                isNative = isNative,
-                isOverride = isOverride
-            )
+            ShakeTokenType.KEYWORD_CLASS -> expectClassDeclaration(info)
+            ShakeTokenType.KEYWORD_INTERFACE -> expectInterfaceDeclaration(info)
+            ShakeTokenType.KEYWORD_OBJECT -> expectObjectDeclaration(info)
+            ShakeTokenType.KEYWORD_ENUM -> expectEnumDeclaration(info)
             ShakeTokenType.KEYWORD_CONSTRUCTOR -> {
-                if(declarationScope != DeclarationScope.CLASS
-                    && declarationScope != DeclarationScope.ENUM)
+                if(info.scope != DeclarationScope.CLASS && info.scope != DeclarationScope.ENUM)
                     throw ParserError("Constructor is only allowed in classes")
-                expectConstructorDeclaration(
-                    access,
-                    declarationScope,
-                    isStatic = isStatic,
-                    isFinal = isFinal,
-                    isAbstract = isAbstract,
-                    isSynchronized = isSynchronized,
-                    isConst = isConst,
-                    isNative = isNative,
-                    isOverride = isOverride
-                )
+                expectConstructorDeclaration(info)
             }
             ShakeTokenType.KEYWORD_DYNAMIC,
             ShakeTokenType.KEYWORD_BOOLEAN,
@@ -399,16 +251,7 @@ class ShakeParserImpl (
             ShakeTokenType.KEYWORD_FLOAT,
             ShakeTokenType.KEYWORD_DOUBLE,
             ShakeTokenType.KEYWORD_VOID,
-            ShakeTokenType.IDENTIFIER -> expectCStyleDeclaration(
-                access,
-                isStatic = isStatic,
-                isFinal = isFinal,
-                isAbstract = isAbstract,
-                isConst = isConst,
-                isNative = isNative,
-                isSynchronized = isSynchronized,
-                isOverride = isOverride
-            )
+            ShakeTokenType.IDENTIFIER -> expectCStyleTypeExpectingDeclaration(info)
             else -> throw ParserError("Unexpected token (" + input.peekType() + ')')
         }
     }
@@ -435,10 +278,11 @@ class ShakeParserImpl (
                 type,
                 null,
                 ShakeAccessDescriber.PACKAGE,
-                isConst = const,
                 isStatic = false,
+                isFinal = const,
                 isNative = false,
-                isFinal = const
+                isConst = const,
+                isOverride = false
             )
 
         input.skip()
@@ -450,10 +294,11 @@ class ShakeParserImpl (
             type,
             value,
             ShakeAccessDescriber.PACKAGE,
-            isConst = const,
             isStatic = false,
+            isFinal = const,
             isNative = false,
-            isFinal = const
+            isConst = const,
+            isOverride = false
         )
     }
 
@@ -516,17 +361,7 @@ class ShakeParserImpl (
     }
 
     fun expectDeclaration(declarationScope: DeclarationScope): ShakeNode {
-        return expectDeclaration(
-            declarationScope,
-            ShakeAccessDescriber.PACKAGE,
-            isStatic = false,
-            isFinal = false,
-            isAbstract = false,
-            isSynchronized = false,
-            isConst = false,
-            isNative = false,
-            isOverride = false
-        )
+        return expectDeclaration(DeclarationContextInformation(declarationScope))
     }
 
     fun expectIdentifierStatement(parent: ShakeValuedNode? = null): ShakeStatementNode {
@@ -636,21 +471,12 @@ class ShakeParserImpl (
     // ****************************************************************************
     // Classes
 
-    fun expectClassDeclaration(
-        access: ShakeAccessDescriber,
-        declarationScope: DeclarationScope,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isAbstract: Boolean,
-        isSynchronized: Boolean,
-        isConst: Boolean,
-        isNative: Boolean,
-        isOverride: Boolean
-    ): ShakeClassDeclarationNode {
+    fun expectClassDeclaration(ctx: DeclarationContextInformation): ShakeClassDeclarationNode {
 
-        if(isSynchronized) throw ParserError("Synchronized classes are not supported")
-        if(isConst) throw ParserError("Const classes are not supported")
-        if(isOverride) throw ParserError("Override classes are not supported")
+        if(ctx.isSynchronized) throw ParserError("Synchronized classes are not supported")
+        if(ctx.isConst) throw ParserError("Const classes are not supported")
+        if(ctx.isOverride) throw ParserError("Override classes are not supported")
+        if(ctx.isOperator) throw ParserError("Operator classes are not supported")
 
         if(input.nextType() != ShakeTokenType.KEYWORD_CLASS) throw ParserError("Expecting class keyword")
 
@@ -708,33 +534,25 @@ class ShakeParserImpl (
             methods.toTypedArray(),
             classes.toTypedArray(),
             constructors.toTypedArray(),
-            access,
+            ctx.access,
             ShakeClassType.CLASS,
-            isStatic,
-            isFinal,
-            isAbstract,
-            isNative
+            ctx.isStatic,
+            ctx.isFinal,
+            ctx.isAbstract,
+            ctx.isNative
         )
     }
 
 
     fun expectInterfaceDeclaration(
-        access: ShakeAccessDescriber,
-        declarationScope: DeclarationScope,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isAbstract: Boolean,
-        isSynchronized: Boolean,
-        isConst: Boolean,
-        isNative: Boolean,
-        isOverride: Boolean
+        info: DeclarationContextInformation
     ): ShakeClassDeclarationNode {
 
-        if(isSynchronized) throw ParserError("Synchronized interfaces are not supported")
-        if(isConst) throw ParserError("Const interfaces are not supported")
-        if(isAbstract) throw ParserError("Abstract interfaces are not supported")
-        if(isFinal) throw ParserError("Final interfaces are not supported")
-if(isOverride) throw ParserError("Override interfaces are not supported")
+        if(info.isSynchronized) throw ParserError("Synchronized interfaces are not supported")
+        if(info.isConst) throw ParserError("Const interfaces are not supported")
+        if(info.isAbstract) throw ParserError("Abstract interfaces are not supported")
+        if(info.isFinal) throw ParserError("Final interfaces are not supported")
+        if(info.isOverride) throw ParserError("Override interfaces are not supported")
 
         if (!input.hasNext() || input.peekType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
         val name = input.nextValue() ?: throw ParserError("Identifier has no value")
@@ -781,25 +599,17 @@ if(isOverride) throw ParserError("Override interfaces are not supported")
             methods.toTypedArray(),
             classes.toTypedArray(),
             constructors.toTypedArray(),
-            access,
+            info.access,
             ShakeClassType.INTERFACE,
-            isStatic,
-            isFinal,
+            info.isStatic,
+            info.isFinal,
             isAbstract = false,
-            isNative,
+            info.isNative,
         )
     }
 
     fun expectEnumDeclaration(
-        access: ShakeAccessDescriber,
-        declarationScope: DeclarationScope,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isAbstract: Boolean,
-        isSynchronized: Boolean,
-        isConst: Boolean,
-        isNative: Boolean,
-        isOverride: Boolean
+        info: DeclarationContextInformation
     ): ShakeClassDeclarationNode {
 
         TODO("Not implemented")
@@ -807,15 +617,7 @@ if(isOverride) throw ParserError("Override interfaces are not supported")
     }
 
     fun expectObjectDeclaration(
-        access: ShakeAccessDescriber,
-        declarationScope: DeclarationScope,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isAbstract: Boolean,
-        isSynchronized: Boolean,
-        isConst: Boolean,
-        isNative: Boolean,
-        isOverride: Boolean
+        info: DeclarationContextInformation
     ): ShakeClassDeclarationNode {
 
         TODO("Not implemented")
@@ -834,7 +636,8 @@ if(isOverride) throw ParserError("Override interfaces are not supported")
         isAbstract: Boolean,
         isSynchronized: Boolean,
         isConst: Boolean,
-        isNative: Boolean
+        isNative: Boolean,
+        isOverride: Boolean
     ): ShakeFunctionDeclarationNode {
         if(isConst) throw ParserError("Const functions are not supported")
         val args = expectFunctionArguments()
@@ -901,28 +704,21 @@ if(isOverride) throw ParserError("Override interfaces are not supported")
     }
 
     fun expectConstructorDeclaration(
-        access: ShakeAccessDescriber,
-        declarationScope: DeclarationScope,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isAbstract: Boolean,
-        isSynchronized: Boolean,
-        isConst: Boolean,
-        isNative: Boolean,
-        isOverride: Boolean,
+        info: DeclarationContextInformation
     ): ShakeConstructorDeclarationNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_CONSTRUCTOR) throw ParserError("Expecting function keyword")
-        if (declarationScope != DeclarationScope.CLASS && declarationScope != DeclarationScope.ENUM)    throw ParserError("A constructor must be inside of a class")
-        if (isFinal) throw ParserError("A constructor must not be final")
-        if (isStatic) throw ParserError("A constructor must not be static")
-        if (isAbstract) throw ParserError("A constructor must not be abstract")
-        if (isSynchronized) throw ParserError("A constructor must not be synchronized")
-        if (isConst) throw ParserError("A constructor must not be const")
+        if (info.scope != DeclarationScope.CLASS && info.scope != DeclarationScope.ENUM)
+            throw ParserError("A constructor must be inside of a class")
+        if (info.isFinal) throw ParserError("A constructor must not be final")
+        if (info.isStatic) throw ParserError("A constructor must not be static")
+        if (info.isAbstract) throw ParserError("A constructor must not be abstract")
+        if (info.isSynchronized) throw ParserError("A constructor must not be synchronized")
+        if (info.isConst) throw ParserError("A constructor must not be const")
 
         val name = if (input.skipIgnorable().peekType() == ShakeTokenType.IDENTIFIER) input.nextValue() else null
         val args = expectFunctionArguments()
         val body = expectParseBodyStatement2()
-        return ShakeConstructorDeclarationNode(map, name, body, args, access, isSynchronized = isSynchronized, isNative = isNative)
+        return ShakeConstructorDeclarationNode(map, name, body, args, info.access, isSynchronized = info.isSynchronized, isNative = info.isNative)
     }
 
     // ****************************************************************************
@@ -986,29 +782,16 @@ if(isOverride) throw ParserError("Override interfaces are not supported")
         return ShakeVariableDecreaseNode(map, variable, input.actualStart)
     }
 
-    fun expectCStyleDeclaration(
-        access: ShakeAccessDescriber,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isAbstract: Boolean,
-        isSynchronized: Boolean,
-        isConst: Boolean,
-        isNative: Boolean,
-        isOverride: Boolean,
+    fun expectCStyleTypeExpectingDeclaration(
+        info : DeclarationContextInformation
     ): ShakeFileChildNode {
         val type = expectType()
-        return expectCStyleDeclaration(type, access, isStatic, isFinal, isAbstract, isSynchronized, isConst, isNative)
+        return expectCStyleTypedDeclaration(type, info)
     }
 
-    fun expectCStyleDeclaration(
+    fun expectCStyleTypedDeclaration(
         type: ShakeVariableType,
-        access: ShakeAccessDescriber,
-        isStatic: Boolean,
-        isFinal: Boolean,
-        isAbstract: Boolean,
-        isSynchronized: Boolean,
-        isConst: Boolean,
-        isNative: Boolean,
+        info : DeclarationContextInformation
     ): ShakeFileChildNode {
         // TODO error on void variable type
         if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier, but got ${input.actualType}")
@@ -1017,39 +800,42 @@ if(isOverride) throw ParserError("Override interfaces are not supported")
         val peekType = if(hasNext) input.peekType() else null
         return if (hasNext && peekType == ShakeTokenType.ASSIGN) {
             input.skip()
-            if(isSynchronized) throw ParserError("Synchronized variables are not supported")
+            if(info.isSynchronized) throw ParserError("Synchronized variables are not supported")
             ShakeVariableDeclarationNode(
                 map,
                 identifier,
                 type,
                 expectValue(),
-                access,
-                isStatic = isStatic,
-                isFinal = isFinal,
-                isConst = isConst,
-                isNative = isNative,
+                info.access,
+                isStatic = info.isStatic,
+                isFinal = info.isFinal,
+                isConst = info.isConst,
+                isNative = info.isNative,
+                isOverride = info.isOverride,
             )
         } else if (hasNext && peekType == ShakeTokenType.LPAREN) expectCStyleFunctionDeclaration(
             type,
             identifier,
-            access,
-            isStatic = isStatic,
-            isFinal = isFinal,
-            isAbstract = isAbstract,
-            isSynchronized = isSynchronized,
-            isConst = isConst,
-            isNative = isNative,
+            info.access,
+            isStatic = info.isStatic,
+            isFinal = info.isFinal,
+            isAbstract = info.isAbstract,
+            isSynchronized = info.isSynchronized,
+            isConst = info.isConst,
+            isNative = info.isNative,
+            isOverride = info.isOverride,
         ) else {
             ShakeVariableDeclarationNode(
                 map,
                 identifier,
                 type,
                 null,
-                access,
-                isStatic = isStatic,
-                isFinal = isFinal,
-                isConst = isConst,
-                isNative = isNative,
+                info.access,
+                isStatic = info.isStatic,
+                isFinal = info.isFinal,
+                isConst = info.isConst,
+                isNative = info.isNative,
+                isOverride = info.isOverride,
             )
         }
     }
@@ -1402,4 +1188,21 @@ enum class DeclarationScope {
     INTERFACE,
     ENUM,
     BLOCK,
+}
+
+
+class DeclarationContextInformation(
+    val scope: DeclarationScope
+) {
+    var name: String? = null
+    var access: ShakeAccessDescriber = ShakeAccessDescriber.PACKAGE
+    var type: ShakeVariableType? = null
+    var isStatic: Boolean = false
+    var isFinal: Boolean = false
+    var isConst: Boolean = false
+    var isAbstract: Boolean = false
+    var isOverride: Boolean = false
+    var isOperator: Boolean = false
+    var isNative: Boolean = false
+    var isSynchronized: Boolean = false
 }
