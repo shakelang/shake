@@ -319,7 +319,7 @@ class ShakeJsGenerator {
 
                 if(callable.isNative) {
 
-                    JsNatives.getNativeFunction(callable).handle(this, n)
+                    return JsNatives.getNativeFunction(callable).handle(this, n)
 
                 }
 

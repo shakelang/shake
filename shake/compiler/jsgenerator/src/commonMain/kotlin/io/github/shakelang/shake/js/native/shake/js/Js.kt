@@ -9,7 +9,7 @@ import io.github.shakelang.shake.processor.program.types.code.values.ShakeString
 class Js : NativeFunction {
 
     override val signature: String
-        get() = "shake.js.js(LString)DY"
+        get() = "shake.js.js(Lshake.lang.String)?"
 
     override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
         return object : JsValuedStatement {

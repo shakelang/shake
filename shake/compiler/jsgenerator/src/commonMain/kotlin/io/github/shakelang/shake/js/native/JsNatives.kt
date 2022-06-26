@@ -9,7 +9,9 @@ object JsNatives {
         io.github.shakelang.shake.js.native.shake.lang.String(),
     )
 
-    val nativeFunctions = listOf<NativeFunction>()
+    val nativeFunctions = listOf<NativeFunction>(
+        io.github.shakelang.shake.js.native.shake.js.Js()
+    )
     val nativeFields = listOf<NativeField>()
 
     fun getNativeClass(qualifiedName: String): NativeClass? {
@@ -30,10 +32,14 @@ object JsNatives {
         if(fn.clazz != null) {
             return getNativeClass(fn.clazz!!)
                 .functions
-                .firstOrNull { it.signature == fn.name }
+                .firstOrNull {
+
+                    it.signature == fn.name }
                     ?: throw IllegalArgumentException("No matching native function found")
         }
-        return nativeFunctions.firstOrNull { it.signature == fn.qualifiedName }
+        return nativeFunctions.firstOrNull {
+            it.signature == fn.qualifiedSignature
+        }
             ?: throw IllegalArgumentException("No matching native function found")
     }
 

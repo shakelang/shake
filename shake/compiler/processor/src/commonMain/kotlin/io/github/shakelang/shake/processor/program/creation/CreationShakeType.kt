@@ -492,7 +492,7 @@ abstract class CreationShakeType (
                     return mapOf("type" to "unsigned_byte")
                 }
 
-                override val qualifiedName: String get() = "UB"
+                override val qualifiedName: String get() = "b"
             }
 
             val UNSIGNED_SHORT: Primitive = object : Primitive("unsigned_short", ShakeType.PrimitiveType.UNSIGNED_SHORT) {
@@ -548,7 +548,7 @@ abstract class CreationShakeType (
                     return mapOf("type" to "unsigned_short")
                 }
 
-                override val qualifiedName: String get() = "US"
+                override val qualifiedName: String get() = "s"
             }
 
             val UNSIGNED_INT: Primitive = object : Primitive("unsigned_int", ShakeType.PrimitiveType.UNSIGNED_INT) {
@@ -603,7 +603,7 @@ abstract class CreationShakeType (
                     return mapOf("type" to "unsigned_int")
                 }
 
-                override val qualifiedName: String get() = "UI"
+                override val qualifiedName: String get() = "i"
             }
 
             val UNSIGNED_LONG: Primitive = object : Primitive("unsigned_long", ShakeType.PrimitiveType.UNSIGNED_LONG) {
@@ -657,7 +657,7 @@ abstract class CreationShakeType (
                     return mapOf("type" to "unsigned_long")
                 }
 
-                override val qualifiedName: String get() = "UJ"
+                override val qualifiedName: String get() = "j"
             }
 
             val CHAR = object : Primitive("char", ShakeType.PrimitiveType.CHAR) {
@@ -743,6 +743,43 @@ abstract class CreationShakeType (
                 }
 
                 override val qualifiedName: String get() = "V"
+            }
+
+            val DYNAMIC = object : Primitive("dynamic", ShakeType.PrimitiveType.DYNAMIC) {
+                override fun additionType(other: ShakeType): CreationShakeType? = null
+                override fun subtractionType(other: ShakeType): CreationShakeType? = null
+                override fun multiplicationType(other: ShakeType): CreationShakeType? = null
+                override fun divisionType(other: ShakeType): CreationShakeType? = null
+                override fun modulusType(other: ShakeType): CreationShakeType? = null
+                override fun powerType(other: ShakeType): CreationShakeType? = null
+
+                override fun greaterThanType(other: ShakeType): CreationShakeType? = null
+                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType? = null
+                override fun lessThanType(other: ShakeType): CreationShakeType? = null
+                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType? = null
+                override fun andType(other: ShakeType): CreationShakeType? = null
+                override fun orType(other: ShakeType): CreationShakeType? = null
+                override fun notType(): CreationShakeType? = null
+
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        ShakeType.PrimitiveType.DYNAMIC -> 0
+                        else -> -1
+                    }
+
+                override fun compatibleTo(other: ShakeType): Boolean {
+                    return other == this
+                }
+
+                override fun castableTo(other: ShakeType): Boolean {
+                    return true
+                }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "dynamic")
+                }
+
+                override val qualifiedName: String get() = "?"
             }
         }
     }
@@ -903,6 +940,7 @@ abstract class CreationShakeType (
         val ULONG = UNSIGNED_LONG
         val CHAR = Primitive.CHAR
         val VOID = Primitive.VOID
+        val DYNAMIC = Primitive.DYNAMIC
     }
 
     companion object {

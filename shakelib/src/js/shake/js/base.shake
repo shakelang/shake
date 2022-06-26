@@ -1,3 +1,3 @@
 package shake.js;
 
-native dynamic js();
+native dynamic js(String s);

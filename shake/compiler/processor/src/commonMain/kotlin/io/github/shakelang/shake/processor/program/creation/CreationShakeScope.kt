@@ -53,14 +53,14 @@ abstract class CreationShakeScope : ShakeScope {
                     then(CreationShakeType.objectType(it))
                 }
             }
-            ShakeVariableType.Type.DYNAMIC -> TODO()
+            ShakeVariableType.Type.DYNAMIC -> then(CreationShakeType.Primitives.DYNAMIC)
             ShakeVariableType.Type.ARRAY -> {
                 val subtype = (type as ShakeVariableType.Array).subtype
                 this.getType(subtype) {
                     then(CreationShakeType.array(it))
                 }
             }
-            ShakeVariableType.Type.VOID -> TODO()
+            ShakeVariableType.Type.VOID -> then(CreationShakeType.Primitives.VOID)
         }
     }
 

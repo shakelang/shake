@@ -66,6 +66,7 @@ interface ShakeType {
         UNSIGNED_INT,
         UNSIGNED_LONG,
         VOID,
+        DYNAMIC,
     }
 
     interface Primitive : ShakeType {

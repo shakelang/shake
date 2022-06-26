@@ -10,5 +10,5 @@ int main() {
     a();
     String s = "Hello";
     String s2 = "World";
-    String s3 = s + s2;
+    println(s);
 }

@@ -85,7 +85,7 @@ class CreationShakeStringLiteral(
     override val value: String
 ) : CreationShakeValue, ShakeStringLiteral {
 
-    override val type: CreationShakeType get() = project.cores.Object
+    override val type: CreationShakeType get() = project.cores.String
 
     override fun toString(): String = value
 
