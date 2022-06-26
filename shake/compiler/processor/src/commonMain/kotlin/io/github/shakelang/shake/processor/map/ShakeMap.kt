@@ -1105,8 +1105,6 @@ class MapAssembledClass(
     val methodPointers: PointerList<ShakeMethod>,
     val fieldPointers: PointerList<ShakeField>,
     val constructorPointers: PointerList<ShakeConstructor>,
-    val superClassPointer: Pointer<ShakeClass>,
-    val interfacePointers: PointerList<ShakeClass>,
     override val isAbstract: Boolean,
     override val isFinal: Boolean,
     override val isStatic: Boolean,
@@ -1119,8 +1117,9 @@ class MapAssembledClass(
     override val methods: List<ShakeMethod> = methodPointers.values()
     override val fields: List<ShakeField> = fieldPointers.values()
     override val constructors: List<ShakeConstructor> = constructorPointers.values()
-    override val superClass: ShakeClass get() = superClassPointer.value
-    override val interfaces: List<ShakeClass> = interfacePointers.values()
+
+    override lateinit var interfaces: List<ShakeClass>
+    override lateinit var superClass: ShakeClass
 }
 
 class MapAssembledMethod (
@@ -1278,8 +1277,6 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.method_references.map { methodPointers[it] },
                     info.field_references.map { fieldPointers[it] },
                     info.constructor_references.map { constructorPointers[it] },
-                    classPointers[info.super_class],
-                    info.interface_references.map { classPointers[it] },
                     info.isAbstract,
                     info.isFinal,
                     info.isStatic,
@@ -1303,6 +1300,17 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             cls.subclass_references.forEach {
                 //classes[i].parent = classes[it]
                 // TODO: implement
+            }
+        }
+
+        // set superclasses and interfaces
+        shakeMap.classes.forEachIndexed { i, cls ->
+            val superclass = getUtf(cls.super_class)
+            classes[i].superClass = classes.find { it.qualifiedName == superclass } ?: error("Superclass $superclass not found")
+
+            classes[i].interfaces = cls.interface_references.map {inf ->
+                val interfaceName = getUtf(inf)
+                classes.find { it.qualifiedName == interfaceName } ?: error("Interface $interfaceName not found")
             }
         }
 

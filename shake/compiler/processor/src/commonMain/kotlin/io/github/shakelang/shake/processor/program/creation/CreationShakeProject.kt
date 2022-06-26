@@ -48,7 +48,7 @@ open class CreationShakeProject(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
-            return classes.find { it.name == name }
+            return classes.find { it.name == name } ?: this@CreationShakeProject.getClass(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {

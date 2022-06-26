@@ -1,3 +1,5 @@
+package shake.lang;
+
 native class Object {
 
     public native String toString();
