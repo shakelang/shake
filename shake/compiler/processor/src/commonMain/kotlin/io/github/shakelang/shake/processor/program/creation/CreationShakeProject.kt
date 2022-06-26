@@ -9,9 +9,8 @@ import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.types.ShakeProject
-import io.github.shakelang.shake.processor.program.types.ShakeType
 
-open class CreationShakeProject(
+class CreationShakeProject(
     processor: ShakeCodeProcessor,
     override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
     override val classes: MutableList<CreationShakeClass> = mutableListOf(),
@@ -31,8 +30,19 @@ open class CreationShakeProject(
 
         override val processor: ShakeCodeProcessor = processor
 
+        val imported: Array<CreationShakePackage> = arrayOf(
+            getPackage("shake.lang"),
+            getPackage("shake.js"),
+        )
+
         override fun get(name: String): CreationShakeAssignable? {
-            return fields.find { it.name == name }
+            val localField = fields.find { it.name == name }
+            if (localField != null) return localField
+            for (import in imported) {
+                val field = import.fields.find { it.name == name }
+                if (field != null) return field
+            }
+            return null
         }
 
         override fun set(value: CreationShakeDeclaration) {
@@ -40,7 +50,13 @@ open class CreationShakeProject(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
-            return functions.filter { it.name == name }
+            val localFunction = functions.find { it.name == name }
+            if (localFunction != null) return listOf(localFunction)
+            for (import in imported) {
+                val function = import.functions.find { it.name == name }
+                if (function != null) return listOf(function)
+            }
+            return listOf()
         }
 
         override fun setFunctions(function: CreationShakeMethod) {
@@ -48,7 +64,13 @@ open class CreationShakeProject(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
-            return classes.find { it.name == name } ?: this@CreationShakeProject.getClass(name)
+            val localClass = classes.find { it.name == name }
+            if (localClass != null) return localClass
+            for (import in imported) {
+                val class_ = import.classes.find { it.name == name }
+                if (class_ != null) return class_
+            }
+            return this@CreationShakeProject.getClass(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {
