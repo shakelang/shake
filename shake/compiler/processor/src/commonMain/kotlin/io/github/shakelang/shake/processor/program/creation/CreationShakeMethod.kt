@@ -24,6 +24,7 @@ class CreationShakeMethod (
     override val isProtected: Boolean,
     override val isPublic: Boolean,
     override val isNative: Boolean,
+    override val isOperator: Boolean,
 ): CreationShakeInvokable(body), ShakeMethod {
 
     override val qualifiedName: String
@@ -50,7 +51,8 @@ class CreationShakeMethod (
         isProtected: Boolean,
         isPublic: Boolean,
         isNative: Boolean,
-    ): this(prj, pkg, clazz, parentScope, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic, isNative) {
+        isOperator: Boolean,
+    ): this(prj, pkg, clazz, parentScope, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic, isNative, isOperator) {
         this.parameters = parameters
         this.returnType = returnType
     }
@@ -149,6 +151,7 @@ class CreationShakeMethod (
                 node.access == ShakeAccessDescriber.PROTECTED,
                 node.access == ShakeAccessDescriber.PUBLIC,
                 node.isNative,
+                node.isOperator
             ).let {
                 it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
@@ -157,7 +160,6 @@ class CreationShakeMethod (
             }
         }
         fun from(clazz: CreationShakeClass, parentScope: CreationShakeScope, node: ShakeFunctionDeclarationNode): CreationShakeMethod {
-            val baseProject = clazz.prj
             return CreationShakeMethod(
                 clazz.prj,
                 clazz.pkg,
@@ -174,6 +176,7 @@ class CreationShakeMethod (
                 node.access == ShakeAccessDescriber.PROTECTED,
                 node.access == ShakeAccessDescriber.PUBLIC,
                 node.isNative,
+                node.isOperator
             ).let {
                 it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })

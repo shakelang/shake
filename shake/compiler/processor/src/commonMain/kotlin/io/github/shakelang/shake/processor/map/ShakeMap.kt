@@ -528,6 +528,7 @@ class ShakeMapMethod(
     val parameter_names: Array<Int>,
     val parameter_types: Array<Int>,
 ) {
+    val isOperator get() = attributes.bit9
     val isNative get() = attributes.bit8
     val isStatic get() = attributes.bit7
     val isFinal get() = attributes.bit6
@@ -1013,6 +1014,7 @@ class ShakeMapCreator {
 
     fun composeAttributes(function: ShakeMethod): Short {
         var attributes = 0
+        if(function.isOperator) attributes = attributes.setBit9(true)
         if(function.isNative) attributes = attributes.setBit8(true)
         if(function.isStatic) attributes = attributes.setBit7(true)
         if(function.isFinal) attributes = attributes.setBit6(true)
@@ -1140,6 +1142,7 @@ class MapAssembledMethod (
     override val scope: ShakeScope,
     override val body: ShakeCode? = null,
     override val isNative: Boolean,
+    override val isOperator: Boolean,
 ) : ShakeMethod
 
 class MapAssembledConstructor (
@@ -1340,6 +1343,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     scopeUnit,
                     null,
                     info.isNative,
+                    info.isOperator,
                 )
             )
         }

@@ -1,5 +1,6 @@
 package io.github.shakelang.shake.processor.program.creation
 
+import io.github.shakelang.shake.processor.ShakeSelect
 import io.github.shakelang.shake.processor.program.types.ShakeType
 
 abstract class CreationShakeType (
@@ -788,21 +789,82 @@ abstract class CreationShakeType (
         override val clazz: CreationShakeClass,
         name: String = clazz.qualifiedName,
     ) : CreationShakeType(name), ShakeType.Object {
-        override fun additionType(other: ShakeType): CreationShakeType? = null
-        override fun subtractionType(other: ShakeType): CreationShakeType? = null
-        override fun multiplicationType(other: ShakeType): CreationShakeType? = null
-        override fun divisionType(other: ShakeType): CreationShakeType? = null
-        override fun modulusType(other: ShakeType): CreationShakeType? = null
-        override fun powerType(other: ShakeType): CreationShakeType? = null
-        override fun equalsType(other: ShakeType): CreationShakeType? = null
-        override fun notEqualsType(other: ShakeType): CreationShakeType? = null
-        override fun greaterThanType(other: ShakeType): CreationShakeType? = null
-        override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType? = null
-        override fun lessThanType(other: ShakeType): CreationShakeType? = null
-        override fun lessThanOrEqualType(other: ShakeType): CreationShakeType? = null
-        override fun andType(other: ShakeType): CreationShakeType? = null
-        override fun orType(other: ShakeType): CreationShakeType? = null
-        override fun notType(): CreationShakeType? = null
+
+        override fun additionType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "plus" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun subtractionType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "minus" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun multiplicationType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "multiply" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun divisionType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "divide" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun modulusType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "modulus" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun powerType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "power" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun equalsType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "equals" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun notEqualsType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "notEquals" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun greaterThanType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "greaterThan" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "greaterThanOrEqual" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun lessThanType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "lessThan" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun lessThanOrEqualType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "lessThanOrEqual" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun andType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "and" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun orType(other: ShakeType): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "or" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, listOf(other))
+            return fn?.returnType
+        }
+        override fun notType(): CreationShakeType? {
+            val methods = clazz.methods.filter { it.name == "not" && it.isOperator }
+            val fn = ShakeSelect.selectFunction(methods, emptyList())
+            return fn?.returnType
+        }
 
         override fun childType(name: String): CreationShakeType? = clazz.fields.find { it.name == name }?.type
         override fun childFunctions(name: String): List<CreationShakeMethod> {

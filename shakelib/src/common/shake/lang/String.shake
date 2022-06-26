@@ -36,4 +36,15 @@ native class String {
     native char[] toCharArray()
     native override boolean equals(Object obj)
     native override int hashCode()
+
+    native operator String plus(String str)
+    native operator String plus(char c)
+    native operator String plus(byte b)
+    native operator String plus(short s)
+    native operator String plus(int i)
+    native operator String plus(long l)
+    native operator String plus(float f)
+    native operator String plus(double d)
+    native operator String plus(boolean b)
+    native operator String plus(Object obj)
 }

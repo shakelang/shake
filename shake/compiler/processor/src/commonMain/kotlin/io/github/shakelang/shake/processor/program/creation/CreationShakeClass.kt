@@ -115,7 +115,8 @@ class CreationShakeClass: ShakeClass {
                 it.access == ShakeAccessDescriber.PRIVATE,
                 it.access == ShakeAccessDescriber.PROTECTED,
                 it.access == ShakeAccessDescriber.PUBLIC,
-                it.isNative
+                it.isNative,
+                it.isOperator,
             )
             method.lateinitReturnType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
             method
