@@ -30,6 +30,7 @@ abstract class ShakeLexingBase(
         else if (Characters.isNumberCharacter(next)) makeNumber()
         else if (Characters.isIdentifierStartCharacter(next)) makeIdentifier()
         else if (next == '"') makeString()
+        else if (next == '`') makeIdentifier2()
         else if (next == '\'') makeCharacter()
         else if (next == '/' && peek == '/') {
             singleLineComment()
@@ -163,6 +164,9 @@ abstract class ShakeLexingBase(
                 "if" -> ShakeTokenType.KEYWORD_IF
                 "implements" -> ShakeTokenType.KEYWORD_IMPLEMENTS
                 "import" -> ShakeTokenType.KEYWORD_IMPORT
+                "in" -> ShakeTokenType.KEYWORD_IN
+                "inline" -> ShakeTokenType.KEYWORD_INLINE
+                "instanceof" -> ShakeTokenType.KEYWORD_INSTANCEOF
                 "int" -> ShakeTokenType.KEYWORD_INT
                 "interface" -> ShakeTokenType.KEYWORD_INTERFACE
                 "long" -> ShakeTokenType.KEYWORD_LONG
