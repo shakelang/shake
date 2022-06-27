@@ -51,7 +51,7 @@ import kotlin.String
 
 class String : NativeClass {
 
-    override val qualifiedName: String = "shake.lang.String"
+    override val qualifiedName: String = "shake.lang\$String"
 
     /// Static methods
 

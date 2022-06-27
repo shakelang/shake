@@ -35,12 +35,12 @@ object JsNatives {
                 .firstOrNull {
 
                     it.signature == fn.name }
-                    ?: throw IllegalArgumentException("No matching native function found")
+                    ?: throw IllegalArgumentException("No matching native function found ${fn.qualifiedSignature}")
         }
         return nativeFunctions.firstOrNull {
             it.signature == fn.qualifiedSignature
         }
-            ?: throw IllegalArgumentException("No matching native function found")
+            ?: throw IllegalArgumentException("No matching native function found for ${fn.qualifiedSignature}")
     }
 
     fun getNativeField(field: ShakeMethod): NativeField {
