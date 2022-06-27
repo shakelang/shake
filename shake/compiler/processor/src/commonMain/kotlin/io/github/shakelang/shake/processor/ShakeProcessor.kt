@@ -177,42 +177,45 @@ open class ShakeCodeProcessor {
     fun visitAddNode(scope: CreationShakeScope, n: ShakeAddNode): CreationShakeAddition {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.additionType(right.type) ?: throw Exception("Cannot add ${left.type} and ${right.type}")
+        val t = left.type.additionType(right.type, scope)
+        val ov = left.type.additionOverloads(scope)
+        val ov2 = right.type.additionOverload(right.type, scope)
+        val type = left.type.additionType(right.type, scope) ?: throw Exception("Cannot add ${left.type} and ${right.type}")
         return CreationShakeAddition(scope.project, left, right, type)
     }
 
     fun visitSubNode(scope: CreationShakeScope, n: ShakeSubNode): CreationShakeSubtraction {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.subtractionType(right.type) ?: throw Exception("Cannot subtract ${left.type} and ${right.type}")
+        val type = left.type.subtractionType(right.type, scope) ?: throw Exception("Cannot subtract ${left.type} and ${right.type}")
         return CreationShakeSubtraction(scope.project, left, right, type)
     }
 
     fun visitMulNode(scope: CreationShakeScope, n: ShakeMulNode): CreationShakeMultiplication {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.multiplicationType(right.type) ?: throw Exception("Cannot multiply ${left.type} and ${right.type}")
+        val type = left.type.multiplicationType(right.type, scope) ?: throw Exception("Cannot multiply ${left.type} and ${right.type}")
         return CreationShakeMultiplication(scope.project, left, right, type)
     }
 
     fun visitDivNode(scope: CreationShakeScope, n: ShakeDivNode): CreationShakeDivision {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.divisionType(right.type) ?: throw Exception("Cannot divide ${left.type} and ${right.type}")
+        val type = left.type.divisionType(right.type, scope) ?: throw Exception("Cannot divide ${left.type} and ${right.type}")
         return CreationShakeDivision(scope.project, left, right, type)
     }
 
     fun visitModNode(scope: CreationShakeScope, n: ShakeModNode): CreationShakeModulus {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.modulusType(right.type) ?: throw Exception("Cannot modulus ${left.type} and ${right.type}")
+        val type = left.type.modulusType(right.type, scope) ?: throw Exception("Cannot modulus ${left.type} and ${right.type}")
         return CreationShakeModulus(scope.project, left, right, type)
     }
 
     fun visitPowNode(scope: CreationShakeScope, n: ShakePowNode): CreationShakePower {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.powerType(right.type) ?: throw Exception("Cannot power ${left.type} and ${right.type}")
+        val type = left.type.powerType(right.type, scope) ?: throw Exception("Cannot power ${left.type} and ${right.type}")
         return CreationShakePower(scope.project, left, right, type)
     }
 
@@ -236,66 +239,66 @@ open class ShakeCodeProcessor {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
-        return variable.createAssignment(value)
+        return variable.createAssignment(value, scope)
     }
 
     fun visitVariableAddAssignmentNode(scope: CreationShakeScope, n: ShakeVariableAddAssignmentNode): CreationShakeAddAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
-        return variable.createAddAssignment(value)
+        return variable.createAddAssignment(value, scope)
     }
 
     fun visitVariableSubAssignmentNode(scope: CreationShakeScope, n: ShakeVariableSubAssignmentNode): CreationShakeSubAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
-        return variable.createSubtractAssignment(value)
+        return variable.createSubtractAssignment(value, scope)
     }
 
     fun visitVariableMulAssignmentNode(scope: CreationShakeScope, n: ShakeVariableMulAssignmentNode): CreationShakeMulAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
-        return variable.createMultiplyAssignment(value)
+        return variable.createMultiplyAssignment(value, scope)
     }
 
     fun visitVariableDivAssignmentNode(scope: CreationShakeScope, n: ShakeVariableDivAssignmentNode): CreationShakeDivAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
-        return variable.createDivideAssignment(value)
+        return variable.createDivideAssignment(value, scope)
     }
 
     fun visitVariableModAssignmentNode(scope: CreationShakeScope, n: ShakeVariableModAssignmentNode): CreationShakeModAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
-        return variable.createModulusAssignment(value)
+        return variable.createModulusAssignment(value, scope)
     }
 
     fun visitVariablePowAssignmentNode(scope: CreationShakeScope, n: ShakeVariablePowAssignmentNode): CreationShakePowerAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         if(variable.type != value.type) throw Exception("Cannot assign ${value.type} to ${variable.type}")
-        return variable.createPowerAssignment(value)
+        return variable.createPowerAssignment(value, scope)
     }
 
     fun visitVariableIncrementNode(scope: CreationShakeScope, n: ShakeVariableIncreaseNode): CreationShakeIncrementBefore {
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
-        return variable.createIncrementBeforeAssignment()
+        return variable.createIncrementBeforeAssignment(scope)
     }
 
     fun visitVariableDecrementNode(scope: CreationShakeScope, n: ShakeVariableDecreaseNode): CreationShakeDecrementBefore {
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
-        return variable.createDecrementBeforeAssignment()
+        return variable.createDecrementBeforeAssignment(scope)
     }
 
     fun visitVariableUsageNode(scope: CreationShakeScope, n: ShakeVariableUsageNode): CreationShakeValue {
         val identifier = n.variable
         if(identifier.parent != null) {
             val parent = visitValue(scope, identifier.parent!!)
-            val type = parent.type.childType(identifier.name)
+            val type = parent.type.childType(identifier.name, scope)
                 ?: throw Exception("Cannot access ${identifier.name} in ${parent.type}")
             return CreationShakeChild(scope.project, scope, parent, identifier.name).access(scope)
         }
@@ -306,56 +309,56 @@ open class ShakeCodeProcessor {
     fun visitEqEqualsNode(scope: CreationShakeScope, n: ShakeLogicalEqEqualsNode): CreationShakeEquals {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        return CreationShakeEquals(scope.project, left, right, left.type.equalsType(right.type)
+        return CreationShakeEquals(scope.project, left, right, left.type.equalsType(right.type, scope)
             ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
     fun visitBiggerEqualsNode(scope: CreationShakeScope, n: ShakeLogicalBiggerEqualsNode): CreationShakeGreaterThanOrEqual {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        return CreationShakeGreaterThanOrEqual(scope.project, left, right, left.type.equalsType(right.type)
+        return CreationShakeGreaterThanOrEqual(scope.project, left, right, left.type.equalsType(right.type, scope)
             ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
     fun visitSmallerEqualsNode(scope: CreationShakeScope, n: ShakeLogicalSmallerEqualsNode): CreationShakeLessThanOrEqual {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        return CreationShakeLessThanOrEqual(scope.project, left, right, left.type.equalsType(right.type)
+        return CreationShakeLessThanOrEqual(scope.project, left, right, left.type.equalsType(right.type, scope)
             ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
     fun visitBiggerNode(scope: CreationShakeScope, n: ShakeLogicalBiggerNode): CreationShakeGreaterThan {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        return CreationShakeGreaterThan(scope.project, left, right, left.type.equalsType(right.type)
+        return CreationShakeGreaterThan(scope.project, left, right, left.type.equalsType(right.type, scope)
             ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
     fun visitSmallerNode(scope: CreationShakeScope, n: ShakeLogicalSmallerNode): CreationShakeLessThan {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        return CreationShakeLessThan(scope.project, left, right, left.type.equalsType(right.type)
+        return CreationShakeLessThan(scope.project, left, right, left.type.equalsType(right.type, scope)
             ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
     fun visitLogicalAndNode(scope: CreationShakeScope, n: ShakeLogicalAndNode): CreationShakeAnd {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        return CreationShakeAnd(scope.project, left, right, left.type.equalsType(right.type)
+        return CreationShakeAnd(scope.project, left, right, left.type.equalsType(right.type, scope)
             ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
     fun visitLogicalOrNode(scope: CreationShakeScope, n: ShakeLogicalOrNode): CreationShakeOr {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        return CreationShakeOr(scope.project, left, right, left.type.equalsType(right.type)
+        return CreationShakeOr(scope.project, left, right, left.type.equalsType(right.type, scope)
             ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
     fun visitLogicalXOrNode(scope: CreationShakeScope, n: ShakeLogicalXOrNode): CreationShakeXor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        return CreationShakeXor(scope.project, left, right, left.type.equalsType(right.type)
+        return CreationShakeXor(scope.project, left, right, left.type.equalsType(right.type, scope)
             ?: throw Exception("Cannot compare ${left.type} to ${right.type}"))
     }
 
@@ -422,7 +425,7 @@ open class ShakeCodeProcessor {
                 val name = functionNode.name
                 val args = n.args.map { visitValue(scope, it) }
                 val types = args.map { it.type }
-                val functions = (parent.type.childFunctions(name) ?: throw Exception("No function named $name in ${parent.type}")) as List<CreationShakeMethod> // TODO
+                val functions = parent.type.childFunctions(name, scope) ?: throw Exception("No function named $name in ${parent.type}")
                 val function = ShakeSelect.selectFunction(functions, types)
                     ?: throw Exception("No function named $name with arguments $types in ${parent.type}")
                 return CreationShakeInvocation(scope.project, function, args, parent)

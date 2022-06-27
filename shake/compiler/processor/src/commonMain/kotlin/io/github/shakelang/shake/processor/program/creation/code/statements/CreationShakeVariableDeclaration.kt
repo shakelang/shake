@@ -4,6 +4,7 @@ import io.github.shakelang.shake.processor.program.creation.*
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeVariableUsage
 import io.github.shakelang.shake.processor.program.types.ShakeType
+import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 import io.github.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 
@@ -66,8 +67,8 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
     override val actualType: ShakeType
         get() = latestType
 
-    override fun assignType(other: ShakeType): ShakeType? {
-        val typeAssign = type.assignType(other)
+    override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        val typeAssign = type.assignType(other, scope)
         if (typeAssign != null) {
             latestType = typeAssign
             return typeAssign
@@ -75,8 +76,8 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return other
     }
 
-    override fun additionAssignType(other: ShakeType): ShakeType? {
-        val typeAssign = type.additionAssignType(other)
+    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        val typeAssign = type.additionAssignType(other, scope)
         if (typeAssign != null) {
             latestType = typeAssign
             return typeAssign
@@ -84,8 +85,8 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun subtractionAssignType(other: ShakeType): ShakeType? {
-        val typeAssign = type.subtractionAssignType(other)
+    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        val typeAssign = type.subtractionAssignType(other, scope)
         if (typeAssign != null) {
             latestType = typeAssign
             return typeAssign
@@ -93,8 +94,8 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun multiplicationAssignType(other: ShakeType): ShakeType? {
-        val typeAssign = type.multiplicationAssignType(other)
+    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        val typeAssign = type.multiplicationAssignType(other, scope)
         if (typeAssign != null) {
             latestType = typeAssign
             return typeAssign
@@ -102,8 +103,8 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun divisionAssignType(other: ShakeType): ShakeType? {
-        val typeAssign = type.divisionAssignType(other)
+    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        val typeAssign = type.divisionAssignType(other, scope)
         if (typeAssign != null) {
             latestType = typeAssign
             return typeAssign
@@ -111,8 +112,8 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun modulusAssignType(other: ShakeType): ShakeType? {
-        val typeAssign = type.modulusAssignType(other)
+    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        val typeAssign = type.modulusAssignType(other, scope)
         if (typeAssign != null) {
             latestType = typeAssign
             return typeAssign
@@ -120,8 +121,8 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun powerAssignType(other: ShakeType): ShakeType? {
-        val typeAssign = type.powerAssignType(other)
+    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        val typeAssign = type.powerAssignType(other, scope)
         if (typeAssign != null) {
             latestType = typeAssign
             return typeAssign
@@ -129,19 +130,19 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         return type
     }
 
-    override fun incrementBeforeType(): CreationShakeType? {
+    override fun incrementBeforeType(scope: ShakeScope): ShakeType? {
         TODO("Not yet implemented")
     }
 
-    override fun incrementAfterType(): CreationShakeType? {
+    override fun incrementAfterType(scope: ShakeScope): ShakeType? {
         TODO("Not yet implemented")
     }
 
-    override fun decrementBeforeType(): CreationShakeType? {
+    override fun decrementBeforeType(scope: ShakeScope): ShakeType? {
         TODO("Not yet implemented")
     }
 
-    override fun decrementAfterType(): CreationShakeType? {
+    override fun decrementAfterType(scope: ShakeScope): ShakeType? {
         TODO("Not yet implemented")
     }
 

@@ -1,3 +1,5 @@
+package shake.lang;
+
 native operator float float.plus(byte b)
 native operator float float.minus(byte b)
 native operator float float.times(byte b)

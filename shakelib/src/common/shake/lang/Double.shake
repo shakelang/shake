@@ -1,3 +1,5 @@
+package shake.lang;
+
 native operator double double.plus(byte b)
 native operator double double.minus(byte b)
 native operator double double.times(byte b)

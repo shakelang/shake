@@ -1,3 +1,5 @@
+package shake.lang;
+
 native operator long long.plus(byte b)
 native operator long long.minus(byte b)
 native operator long long.times(byte b)

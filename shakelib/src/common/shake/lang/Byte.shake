@@ -1,3 +1,5 @@
+package shake.lang;
+
 native operator byte byte.plus(byte b)
 native operator byte byte.minus(byte b)
 native operator byte byte.times(byte b)

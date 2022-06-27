@@ -50,13 +50,11 @@ class CreationShakeProject(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
-            val localFunction = functions.find { it.name == name }
-            if (localFunction != null) return listOf(localFunction)
+            val functions = functions.filter { it.name == name }.toMutableList()
             for (import in imported) {
-                val function = import.functions.find { it.name == name }
-                if (function != null) return listOf(function)
+                functions += import.functions.filter { it.name == name }
             }
-            return listOf()
+            return functions
         }
 
         override fun setFunctions(function: CreationShakeMethod) {

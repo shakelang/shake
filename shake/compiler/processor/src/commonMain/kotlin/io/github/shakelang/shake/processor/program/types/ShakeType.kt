@@ -1,6 +1,7 @@
 package io.github.shakelang.shake.processor.program.types
 
 import io.github.shakelang.shake.processor.ShakeSelect
+import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
 
 interface ShakeType {
@@ -8,36 +9,89 @@ interface ShakeType {
     val name: String
     val qualifiedName: String
 
-    fun assignType(other: ShakeType): ShakeType? = null
-    fun additionAssignType(other: ShakeType): ShakeType? = null
-    fun subtractionAssignType(other: ShakeType): ShakeType? = null
-    fun multiplicationAssignType(other: ShakeType): ShakeType? = null
-    fun divisionAssignType(other: ShakeType): ShakeType? = null
-    fun modulusAssignType(other: ShakeType): ShakeType? = null
-    fun powerAssignType(other: ShakeType): ShakeType? = null
-    fun incrementBeforeType(): ShakeType? = null
-    fun incrementAfterType(): ShakeType? = null
-    fun decrementBeforeType(): ShakeType? = null
-    fun decrementAfterType(): ShakeType? = null
+    fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
+    fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
+    fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
+    fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
+    fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
+    fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
+    fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
+    fun incrementBeforeType(scope: ShakeScope): ShakeType? = incrementBeforeOverload(scope)?.returnType
+    fun incrementAfterType(scope: ShakeScope): ShakeType? = incrementAfterOverload(scope)?.returnType
+    fun decrementBeforeType(scope: ShakeScope): ShakeType? = decrementBeforeOverload(scope)?.returnType
+    fun decrementAfterType(scope: ShakeScope): ShakeType? = decrementAfterOverload(scope)?.returnType
+    fun additionType(other: ShakeType, scope: ShakeScope): ShakeType? = additionOverload(other, scope)?.returnType
+    fun subtractionType(other: ShakeType, scope: ShakeScope): ShakeType? = subtractionOverload(other, scope)?.returnType
+    fun multiplicationType(other: ShakeType, scope: ShakeScope): ShakeType? = multiplicationOverload(other, scope)?.returnType
+    fun divisionType(other: ShakeType, scope: ShakeScope): ShakeType? = divisionOverload(other, scope)?.returnType
+    fun modulusType(other: ShakeType, scope: ShakeScope): ShakeType? = modulusOverload(other, scope)?.returnType
+    fun powerType(other: ShakeType, scope: ShakeScope): ShakeType? = powerOverload(other, scope)?.returnType
+    fun equalsType(other: ShakeType, scope: ShakeScope): ShakeType? = equalsOverload(other, scope)?.returnType
+    fun notEqualsType(other: ShakeType, scope: ShakeScope): ShakeType? = notEqualsOverload(other, scope)?.returnType
+    fun greaterThanType(other: ShakeType, scope: ShakeScope): ShakeType? = greaterThanOverload(other, scope)?.returnType
+    fun greaterThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? = greaterThanOrEqualOverload(other, scope)?.returnType
+    fun lessThanType(other: ShakeType, scope: ShakeScope): ShakeType? = lessThanOverload(other, scope)?.returnType
+    fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? = lessThanOrEqualOverload(other, scope)?.returnType
+    fun andType(other: ShakeType, scope: ShakeScope): ShakeType? = andOverload(other, scope)?.returnType
+    fun orType(other: ShakeType, scope: ShakeScope): ShakeType? = orOverload(other, scope)?.returnType
+    fun notType(scope: ShakeScope): ShakeType? = notOverload(scope)?.returnType
+    fun childType(name: String, scope: ShakeScope): ShakeType? = null
+    fun childFunctions(name: String, scope: ShakeScope): List<ShakeMethod>? = scope.getFunctions(name).filter { it.expanding == this }
+    fun childInvokable(name: String, scope: ShakeScope): List<ShakeMethod>? = childFunctions(name, scope)
 
-    fun additionType(other: ShakeType): ShakeType? = null
-    fun subtractionType(other: ShakeType): ShakeType? = null
-    fun multiplicationType(other: ShakeType): ShakeType? = null
-    fun divisionType(other: ShakeType): ShakeType? = null
-    fun modulusType(other: ShakeType): ShakeType? = null
-    fun powerType(other: ShakeType): ShakeType? = null
-    fun equalsType(other: ShakeType): ShakeType? = null
-    fun notEqualsType(other: ShakeType): ShakeType? = null
-    fun greaterThanType(other: ShakeType): ShakeType? = null
-    fun greaterThanOrEqualType(other: ShakeType): ShakeType? = null
-    fun lessThanType(other: ShakeType): ShakeType? = null
-    fun lessThanOrEqualType(other: ShakeType): ShakeType? = null
-    fun andType(other: ShakeType): ShakeType? = null
-    fun orType(other: ShakeType): ShakeType? = null
-    fun notType(): ShakeType? = null
-    fun childType(name: String): ShakeType? = null
-    fun childFunctions(name: String): List<ShakeMethod>? = null
-    fun childInvokable(name: String): List<ShakeMethod>? = null
+    fun assignOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("assign").filter { it.expanding == this && it.isOperator }
+    fun additionAssignOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("additionAssign").filter { it.expanding == this && it.isOperator }
+    fun subtractionAssignOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("subtractionAssign").filter { it.expanding == this && it.isOperator }
+    fun multiplicationAssignOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("multiplicationAssign").filter { it.expanding == this && it.isOperator }
+    fun divisionAssignOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("divisionAssign").filter { it.expanding == this && it.isOperator }
+    fun modulusAssignOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("modulusAssign").filter { it.expanding == this && it.isOperator }
+    fun powerAssignOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("powerAssign").filter { it.expanding == this && it.isOperator }
+    fun incrementBeforeOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("incrementBefore").filter { it.expanding == this && it.isOperator }
+    fun incrementAfterOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("incrementAfter").filter { it.expanding == this && it.isOperator }
+    fun decrementBeforeOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("decrementBefore").filter { it.expanding == this && it.isOperator }
+    fun decrementAfterOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("decrementAfter").filter { it.expanding == this && it.isOperator }
+    fun additionOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("plus").filter { it.expanding == this && it.isOperator }
+    fun subtractionOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("minus").filter { it.expanding == this && it.isOperator }
+    fun multiplicationOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("times").filter { it.expanding == this && it.isOperator }
+    fun divisionOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("div").filter { it.expanding == this && it.isOperator }
+    fun modulusOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("mod").filter { it.expanding == this && it.isOperator }
+    fun powerOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("pow").filter { it.expanding == this && it.isOperator }
+    fun equalsOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("equals").filter { it.expanding == this && it.isOperator }
+    fun notEqualsOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("notEquals").filter { it.expanding == this && it.isOperator }
+    fun greaterThanOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("greaterThan").filter { it.expanding == this && it.isOperator }
+    fun greaterThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("greaterThanOrEqual").filter { it.expanding == this && it.isOperator }
+    fun lessThanOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("lessThan").filter { it.expanding == this && it.isOperator }
+    fun lessThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("lessThanOrEqual").filter { it.expanding == this && it.isOperator }
+    fun andOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("and").filter { it.expanding == this && it.isOperator }
+    fun orOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("or").filter { it.expanding == this && it.isOperator }
+    fun notOverloads(scope: ShakeScope): List<ShakeMethod> = scope.getFunctions("not").filter { it.expanding == this && it.isOperator }
+
+    fun assignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(assignOverloads(scope), listOf(other))
+    fun additionAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(additionAssignOverloads(scope), listOf(other))
+    fun subtractionAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(subtractionAssignOverloads(scope), listOf(other))
+    fun multiplicationAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(multiplicationAssignOverloads(scope), listOf(other))
+    fun divisionAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(divisionAssignOverloads(scope), listOf(other))
+    fun modulusAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(modulusAssignOverloads(scope), listOf(other))
+    fun powerAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(powerAssignOverloads(scope), listOf(other))
+    fun incrementBeforeOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(incrementBeforeOverloads(scope), emptyList())
+    fun incrementAfterOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(incrementAfterOverloads(scope), emptyList())
+    fun decrementBeforeOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(decrementBeforeOverloads(scope), emptyList())
+    fun decrementAfterOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(decrementAfterOverloads(scope), emptyList())
+    fun additionOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(additionOverloads(scope), listOf(other))
+    fun subtractionOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(subtractionOverloads(scope), listOf(other))
+    fun multiplicationOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(multiplicationOverloads(scope), listOf(other))
+    fun divisionOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(divisionOverloads(scope), listOf(other))
+    fun modulusOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(modulusOverloads(scope), listOf(other))
+    fun powerOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(powerOverloads(scope), listOf(other))
+    fun equalsOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(equalsOverloads(scope), listOf(other))
+    fun notEqualsOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(notEqualsOverloads(scope), listOf(other))
+    fun greaterThanOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(greaterThanOverloads(scope), listOf(other))
+    fun greaterThanOrEqualOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(greaterThanOrEqualOverloads(scope), listOf(other))
+    fun lessThanOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(lessThanOverloads(scope), listOf(other))
+    fun lessThanOrEqualOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(lessThanOrEqualOverloads(scope), listOf(other))
+    fun andOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(andOverloads(scope), listOf(other))
+    fun orOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(orOverloads(scope), listOf(other))
+    fun notOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(notOverloads(scope), emptyList())
 
     val kind: Kind
 
@@ -95,85 +149,87 @@ interface ShakeType {
         val clazz: ShakeClass
         override val kind: Kind get() = Kind.OBJECT
 
-        override fun additionType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "plus" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun subtractionType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "minus" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun multiplicationType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "multiply" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun divisionType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "divide" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun modulusType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "modulus" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun powerType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "power" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun equalsType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "equals" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun notEqualsType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "notEquals" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun greaterThanType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "greaterThan" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun greaterThanOrEqualType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "greaterThanOrEqual" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun lessThanType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "lessThan" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun lessThanOrEqualType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "lessThanOrEqual" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun andType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "and" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun orType(other: ShakeType): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "or" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, listOf(other))
-            return fn?.returnType
-        }
-        override fun notType(): ShakeType? {
-            val methods = clazz.methods.filter { it.name == "not" && it.isOperator }
-            val fn = ShakeSelect.selectFunction(methods, emptyList())
-            return fn?.returnType
-        }
+        override fun assignOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "plus" && it.isOperator } + super.assignOverloads(scope)
 
-        override fun childType(name: String): ShakeType? = clazz.fields.find { it.name == name }?.type
-        override fun childFunctions(name: String): List<ShakeMethod> {
-            return clazz.methods.filter { it.name == name }
+        override fun additionAssignOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "plus" && it.isOperator } + super.additionAssignOverloads(scope)
+
+        override fun subtractionAssignOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "minus" && it.isOperator } + super.subtractionAssignOverloads(scope)
+
+        override fun multiplicationAssignOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "times" && it.isOperator } + super.multiplicationAssignOverloads(scope)
+
+        override fun divisionAssignOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "div" && it.isOperator } + super.divisionAssignOverloads(scope)
+
+        override fun modulusAssignOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "mod" && it.isOperator } + super.modulusAssignOverloads(scope)
+
+        override fun powerAssignOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "pow" && it.isOperator } + super.powerAssignOverloads(scope)
+
+        override fun incrementBeforeOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "inc" && it.isOperator } + super.incrementBeforeOverloads(scope)
+
+        override fun incrementAfterOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "inc" && it.isOperator } + super.incrementAfterOverloads(scope)
+
+        override fun decrementBeforeOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "dec" && it.isOperator } + super.decrementBeforeOverloads(scope)
+
+        override fun decrementAfterOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "dec" && it.isOperator } + super.decrementAfterOverloads(scope)
+
+        override fun additionOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "plus" && it.isOperator } + super.additionOverloads(scope)
+
+        override fun subtractionOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "minus" && it.isOperator } + super.subtractionOverloads(scope)
+
+        override fun multiplicationOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "times" && it.isOperator } + super.multiplicationOverloads(scope)
+
+        override fun divisionOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "div" && it.isOperator } + super.divisionOverloads(scope)
+
+        override fun modulusOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "mod" && it.isOperator } + super.modulusOverloads(scope)
+
+        override fun powerOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "pow" && it.isOperator } + super.powerOverloads(scope)
+
+        override fun equalsOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "equals" && it.isOperator } + super.equalsOverloads(scope)
+
+        override fun notEqualsOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "notEquals" && it.isOperator } + super.notEqualsOverloads(scope)
+
+        override fun greaterThanOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "greaterThan" && it.isOperator } + super.greaterThanOverloads(scope)
+
+        override fun greaterThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "greaterThanOrEqual" && it.isOperator } + super.greaterThanOrEqualOverloads(scope)
+
+        override fun lessThanOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "lessThan" && it.isOperator } + super.lessThanOverloads(scope)
+
+        override fun lessThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "lessThanOrEqual" && it.isOperator } + super.lessThanOrEqualOverloads(scope)
+
+        override fun andOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "and" && it.isOperator } + super.andOverloads(scope)
+
+        override fun orOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "or" && it.isOperator } + super.orOverloads(scope)
+
+        override fun notOverloads(scope: ShakeScope): List<ShakeMethod>
+            = clazz.methods.filter { it.name == "not" && it.isOperator } + super.notOverloads(scope)
+
+        override fun childType(name: String, scope: ShakeScope): ShakeType? = clazz.fields.find { it.name == name }?.type
+        override fun childFunctions(name: String, scope: ShakeScope): List<ShakeMethod> {
+            return clazz.methods.filter { it.name == name } + scope.getFunctions(name).filter { it.expanding == this }
         }
 
         override fun castableTo(other: ShakeType): Boolean {
@@ -198,21 +254,21 @@ interface ShakeType {
 
     interface Array : ShakeType {
         val elementType: ShakeType
-        override fun additionType(other: ShakeType): ShakeType? = null
-        override fun subtractionType(other: ShakeType): ShakeType? = null
-        override fun multiplicationType(other: ShakeType): ShakeType? = null
-        override fun divisionType(other: ShakeType): ShakeType? = null
-        override fun modulusType(other: ShakeType): ShakeType? = null
-        override fun powerType(other: ShakeType): ShakeType? = null
-        override fun equalsType(other: ShakeType): ShakeType? = null
-        override fun notEqualsType(other: ShakeType): ShakeType? = null
-        override fun greaterThanType(other: ShakeType): ShakeType? = null
-        override fun greaterThanOrEqualType(other: ShakeType): ShakeType? = null
-        override fun lessThanType(other: ShakeType): ShakeType? = null
-        override fun lessThanOrEqualType(other: ShakeType): ShakeType? = null
-        override fun andType(other: ShakeType): ShakeType? = null
-        override fun orType(other: ShakeType): ShakeType? = null
-        override fun notType(): ShakeType? = null
+        override fun additionType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun subtractionType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun multiplicationType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun divisionType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun modulusType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun powerType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun equalsType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun notEqualsType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun greaterThanType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun greaterThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun lessThanType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun andType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun orType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun notType(scope: ShakeScope): ShakeType? = null
 
         override val kind: Kind
             get() = Kind.ARRAY
