@@ -238,6 +238,12 @@ class ShakeParserImpl (
                 info.isOperator = true
                 expectDeclaration(info)
             }
+            ShakeTokenType.KEYWORD_INLINE -> {
+                input.skip()
+                if(info.isInline) throw ParserError("Inline keyword is only allowed once")
+                info.isInline = true
+                expectDeclaration(info)
+            }
             ShakeTokenType.KEYWORD_CLASS -> expectClassDeclaration(info)
             ShakeTokenType.KEYWORD_INTERFACE -> expectInterfaceDeclaration(info)
             ShakeTokenType.KEYWORD_OBJECT -> expectObjectDeclaration(info)
@@ -327,6 +333,7 @@ class ShakeParserImpl (
                         isConst = info.isConst,
                         isNative = info.isNative,
                         isOverride = info.isOverride,
+                        isInline = info.isInline,
                     )
                 } else if (hasNext && peekType == ShakeTokenType.LPAREN) {
                     if(info.isConst) throw ParserError("Const functions are not supported")
@@ -347,6 +354,7 @@ class ShakeParserImpl (
                         isNative = info.isNative,
                         isOverride = info.isOverride,
                         isOperator = info.isOperator,
+                        isInline = info.isInline,
                     )
                 } else {
                     ShakeVariableDeclarationNode(
@@ -361,6 +369,7 @@ class ShakeParserImpl (
                         isConst = info.isConst,
                         isNative = info.isNative,
                         isOverride = info.isOverride,
+                        isInline = info.isInline,
                     )
                 }
             }
@@ -395,7 +404,8 @@ class ShakeParserImpl (
                 isFinal = const,
                 isNative = false,
                 isConst = const,
-                isOverride = false
+                isOverride = false,
+                isInline = false,
             )
 
         input.skip()
@@ -412,7 +422,8 @@ class ShakeParserImpl (
             isFinal = const,
             isNative = false,
             isConst = const,
-            isOverride = false
+            isOverride = false,
+            isInline = false,
         )
     }
 
@@ -1230,4 +1241,5 @@ class DeclarationContextInformation(
     var isOperator: Boolean = false
     var isNative: Boolean = false
     var isSynchronized: Boolean = false
+    var isInline: Boolean = false
 }
