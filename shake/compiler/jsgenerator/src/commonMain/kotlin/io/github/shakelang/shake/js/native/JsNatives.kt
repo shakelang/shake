@@ -250,7 +250,6 @@ object JsNatives {
             return getNativeClass(fn.clazz!!)
                 .functions
                 .firstOrNull {
-                    println("${it.signature} == ${fn.signature}")
                     it.signature == fn.signature }
                     ?: throw IllegalArgumentException("No matching native function found ${fn.qualifiedSignature}")
         }
