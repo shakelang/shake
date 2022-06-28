@@ -177,9 +177,6 @@ open class ShakeCodeProcessor {
     fun visitAddNode(scope: CreationShakeScope, n: ShakeAddNode): CreationShakeAddition {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val t = left.type.additionType(right.type, scope)
-        val ov = left.type.additionOverloads(scope)
-        val ov2 = right.type.additionOverload(right.type, scope)
         val type = left.type.additionType(right.type, scope) ?: throw Exception("Cannot add ${left.type} and ${right.type}")
         return CreationShakeAddition(scope.project, left, right, type)
     }
