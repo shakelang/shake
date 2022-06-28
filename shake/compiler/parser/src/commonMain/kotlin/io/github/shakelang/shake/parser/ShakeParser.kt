@@ -253,6 +253,7 @@ class ShakeParserImpl (
                     throw ParserError("Constructor is only allowed in classes")
                 expectConstructorDeclaration(info)
             }
+            ShakeTokenType.KEYWORD_UNSIGNED,
             ShakeTokenType.KEYWORD_DYNAMIC,
             ShakeTokenType.KEYWORD_BOOLEAN,
             ShakeTokenType.KEYWORD_CHAR,
@@ -283,21 +284,10 @@ class ShakeParserImpl (
                     next == ShakeTokenType.KEYWORD_INT ||
                     next == ShakeTokenType.KEYWORD_LONG ||
                     next == ShakeTokenType.KEYWORD_FLOAT ||
+                    next == ShakeTokenType.KEYWORD_UNSIGNED ||
                     next == ShakeTokenType.KEYWORD_DOUBLE
                 ) {
-                    expandedType = when(next) {
-                        ShakeTokenType.KEYWORD_DYNAMIC -> ShakeVariableType.DYNAMIC
-                        ShakeTokenType.KEYWORD_BOOLEAN -> ShakeVariableType.BOOLEAN
-                        ShakeTokenType.KEYWORD_CHAR -> ShakeVariableType.CHAR
-                        ShakeTokenType.KEYWORD_BYTE -> ShakeVariableType.BYTE
-                        ShakeTokenType.KEYWORD_SHORT -> ShakeVariableType.SHORT
-                        ShakeTokenType.KEYWORD_INT -> ShakeVariableType.INTEGER
-                        ShakeTokenType.KEYWORD_LONG -> ShakeVariableType.LONG
-                        ShakeTokenType.KEYWORD_FLOAT -> ShakeVariableType.FLOAT
-                        ShakeTokenType.KEYWORD_DOUBLE -> ShakeVariableType.DOUBLE
-                        else -> error("wtf, this should never happen")
-                    }
-                    input.skip()
+                    expandedType = expectType()
                     if(!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.DOT)
                         throw ParserError("Expecting '.' after type, but got ${input.actualType}")
 
@@ -428,48 +418,61 @@ class ShakeParserImpl (
     }
 
     fun expectType(): ShakeVariableType {
-        val t = input.peekType()
+        var t = input.peekType()
+
+        val unsigned = if(t == ShakeTokenType.KEYWORD_UNSIGNED) {
+            input.skip()
+            t = input.peekType()
+            true
+        } else false
         var type = if (t == ShakeTokenType.KEYWORD_DYNAMIC) {
+            if(unsigned) throw ParserError("Unsigned dynamic is not supported")
             input.skip()
             ShakeVariableType.DYNAMIC
         }
         else if (t == ShakeTokenType.KEYWORD_BYTE) {
             input.skip()
-            ShakeVariableType.BYTE
+            if(unsigned) ShakeVariableType.UNSIGNED_BYTE else ShakeVariableType.BYTE
         }
         else if (t == ShakeTokenType.KEYWORD_SHORT) {
             input.skip()
-            ShakeVariableType.SHORT
+            if(unsigned) ShakeVariableType.UNSIGNED_SHORT else ShakeVariableType.SHORT
         }
         else if (t == ShakeTokenType.KEYWORD_INT) {
             input.skip()
-            ShakeVariableType.INTEGER
+            if(unsigned) ShakeVariableType.UNSIGNED_INTEGER else ShakeVariableType.INTEGER
         }
         else if (t == ShakeTokenType.KEYWORD_LONG) {
             input.skip()
-            ShakeVariableType.LONG
+            if(unsigned) ShakeVariableType.UNSIGNED_LONG else ShakeVariableType.LONG
         }
         else if (t == ShakeTokenType.KEYWORD_FLOAT) {
+            if(unsigned) throw ParserError("Unsigned float is not supported")
             input.skip()
             ShakeVariableType.FLOAT
         }
         else if (t == ShakeTokenType.KEYWORD_DOUBLE) {
+            if(unsigned) throw ParserError("Unsigned double is not supported")
             input.skip()
             ShakeVariableType.DOUBLE
         }
         else if (t == ShakeTokenType.KEYWORD_CHAR) {
+            if(unsigned) throw ParserError("Unsigned char is not supported")
             input.skip()
             ShakeVariableType.CHAR
         }
         else if (t == ShakeTokenType.KEYWORD_BOOLEAN) {
+            if(unsigned) throw ParserError("Unsigned boolean is not supported")
             input.skip()
             ShakeVariableType.BOOLEAN
         }
         else if(t == ShakeTokenType.KEYWORD_VOID) {
+            if(unsigned) throw ParserError("Unsigned void is not supported")
             input.skip()
             ShakeVariableType.VOID
         }
         else if (t == ShakeTokenType.IDENTIFIER) {
+            if(unsigned) throw ParserError("Unsigned object is not supported")
             ShakeVariableType.objectType(expectNamespace())
         }
         else throw ParserError("Expecting a variable type")
@@ -1242,4 +1245,5 @@ class DeclarationContextInformation(
     var isNative: Boolean = false
     var isSynchronized: Boolean = false
     var isInline: Boolean = false
+    var isUnsigned: Boolean = false
 }

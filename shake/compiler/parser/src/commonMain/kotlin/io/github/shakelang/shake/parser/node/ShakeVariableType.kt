@@ -1,7 +1,6 @@
 package io.github.shakelang.shake.parser.node
 
 import io.github.shakelang.shason.JSON
-import kotlin.jvm.JvmField
 
 @Suppress("unused")
 open class ShakeVariableType {
@@ -30,7 +29,22 @@ open class ShakeVariableType {
     class Array (val subtype: ShakeVariableType) : ShakeVariableType(Type.ARRAY)
 
     enum class Type {
-        DYNAMIC, BYTE, SHORT, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, CHAR, ARRAY, OBJECT, VOID;
+        DYNAMIC,
+        BYTE,
+        SHORT,
+        INTEGER,
+        LONG,
+        FLOAT,
+        DOUBLE,
+        UNSIGNED_BYTE,
+        UNSIGNED_SHORT,
+        UNSIGNED_INTEGER,
+        UNSIGNED_LONG,
+        BOOLEAN,
+        CHAR,
+        ARRAY,
+        OBJECT,
+        VOID;
 
         override fun toString(): String {
             return name.lowercase()
@@ -38,25 +52,20 @@ open class ShakeVariableType {
     }
 
     companion object {
-        @JvmField
+
         val DYNAMIC = ShakeVariableType(Type.DYNAMIC)
-        @JvmField
         val BYTE = ShakeVariableType(Type.BYTE)
-        @JvmField
         val SHORT = ShakeVariableType(Type.SHORT)
-        @JvmField
         val INTEGER = ShakeVariableType(Type.INTEGER)
-        @JvmField
         val LONG = ShakeVariableType(Type.LONG)
-        @JvmField
         val FLOAT = ShakeVariableType(Type.FLOAT)
-        @JvmField
         val DOUBLE = ShakeVariableType(Type.DOUBLE)
-        @JvmField
+        val UNSIGNED_BYTE = ShakeVariableType(Type.BYTE)
+        val UNSIGNED_SHORT = ShakeVariableType(Type.SHORT)
+        val UNSIGNED_INTEGER = ShakeVariableType(Type.INTEGER)
+        val UNSIGNED_LONG = ShakeVariableType(Type.LONG)
         val BOOLEAN = ShakeVariableType(Type.BOOLEAN)
-        @JvmField
         val CHAR = ShakeVariableType(Type.CHAR)
-        @JvmField
         val VOID = ShakeVariableType(Type.VOID)
 
         fun objectType(subtype: ShakeNamespaceNode): ShakeVariableType = Object(subtype)
