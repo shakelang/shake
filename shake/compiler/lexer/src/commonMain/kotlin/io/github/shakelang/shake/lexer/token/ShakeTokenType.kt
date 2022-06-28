@@ -70,6 +70,7 @@ enum class ShakeTokenType(private val length: Int) : TokenType {
     KEYWORD_SYNCHRONIZED(12),
     KEYWORD_THIS(4),
     KEYWORD_TRUE(4),
+    KEYWORD_UNSIGNED(8),
     KEYWORD_VOID(4),
     KEYWORD_WHILE(5),
     LCURL(1),
