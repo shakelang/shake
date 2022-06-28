@@ -1473,10 +1473,10 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             "J" -> CreationShakeType.Primitives.LONG
             "F" -> CreationShakeType.Primitives.FLOAT
             "D" -> CreationShakeType.Primitives.DOUBLE
-            "UB" -> CreationShakeType.Primitives.UBYTE
-            "US" -> CreationShakeType.Primitives.USHORT
-            "UI" -> CreationShakeType.Primitives.UINT
-            "UJ" -> CreationShakeType.Primitives.ULONG
+            "b" -> CreationShakeType.Primitives.UBYTE
+            "s" -> CreationShakeType.Primitives.USHORT
+            "i" -> CreationShakeType.Primitives.UINT
+            "j" -> CreationShakeType.Primitives.ULONG
             else -> {
                 if(type.startsWith("L")) {
                     val className = type.substring(1, type.length)

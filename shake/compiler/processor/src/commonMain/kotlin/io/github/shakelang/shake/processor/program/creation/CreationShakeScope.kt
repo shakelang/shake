@@ -44,6 +44,10 @@ abstract class CreationShakeScope : ShakeScope {
             ShakeVariableType.Type.LONG -> then(CreationShakeType.Primitives.LONG)
             ShakeVariableType.Type.FLOAT -> then(CreationShakeType.Primitives.FLOAT)
             ShakeVariableType.Type.DOUBLE -> then(CreationShakeType.Primitives.DOUBLE)
+            ShakeVariableType.Type.UNSIGNED_BYTE -> then(CreationShakeType.Primitives.UBYTE)
+            ShakeVariableType.Type.UNSIGNED_SHORT -> then(CreationShakeType.Primitives.USHORT)
+            ShakeVariableType.Type.UNSIGNED_INTEGER -> then(CreationShakeType.Primitives.UINT)
+            ShakeVariableType.Type.UNSIGNED_LONG -> then(CreationShakeType.Primitives.ULONG)
             ShakeVariableType.Type.BOOLEAN -> then(CreationShakeType.Primitives.BOOLEAN)
             ShakeVariableType.Type.CHAR -> then(CreationShakeType.Primitives.CHAR)
             ShakeVariableType.Type.OBJECT -> {
