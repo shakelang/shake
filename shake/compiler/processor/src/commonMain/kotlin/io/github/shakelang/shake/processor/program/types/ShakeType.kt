@@ -93,6 +93,150 @@ interface ShakeType {
     fun orOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(orOverloads(scope), listOf(other))
     fun notOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(notOverloads(scope), emptyList())
 
+    fun assignOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = assignOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun additionAssignOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = additionAssignOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun subtractionAssignOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = subtractionAssignOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun multiplicationAssignOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = multiplicationAssignOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun divisionAssignOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = divisionAssignOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun modulusAssignOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = modulusAssignOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun powerAssignOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = powerAssignOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun incrementBeforeOperator(scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = incrementBeforeOverload(scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun incrementAfterOperator(scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = incrementAfterOverload(scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun decrementBeforeOperator(scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = decrementBeforeOverload(scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun decrementAfterOperator(scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = decrementAfterOverload(scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun additionOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = additionOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun subtractionOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = subtractionOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun multiplicationOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = multiplicationOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun divisionOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = divisionOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun modulusOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = modulusOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun powerOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = powerOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun greaterThanOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = greaterThanOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun greaterThanOrEqualOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = greaterThanOrEqualOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun lessThanOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = lessThanOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun lessThanOrEqualOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = lessThanOrEqualOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun andOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = andOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun orOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = orOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun notOperator(scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = notOverload(scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
     val kind: Kind
 
     fun castableTo(other: ShakeType): Boolean
@@ -302,3 +446,8 @@ interface ShakeType {
         }
     }
 }
+
+class ShakeOperatorRequestResult(
+    val returnType: ShakeType?,
+    val overload: ShakeMethod?,
+)

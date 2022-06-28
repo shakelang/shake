@@ -42,7 +42,7 @@ class ShakeJsGenerator {
             is ShakeAnd -> visitAnd(v)
             is ShakeOr -> visitOr(v)
             is ShakeNot -> visitNot(v)
-            is ShakeInvocation -> visitInvocation(v)
+            is ShakeInvocation -> visitInvocationValue(v)
             is ShakeNew -> visitNew(v)
             is ShakeCast -> visitCast(v)
             else -> throw IllegalArgumentException("Unsupported value type: ${v::class.simpleName}")
@@ -63,7 +63,7 @@ class ShakeJsGenerator {
             is ShakeIncrementAfter -> visitIncrementAfter(s)
             is ShakeDecrementBefore -> visitDecrementBefore(s)
             is ShakeDecrementAfter -> visitDecrementAfter(s)
-            is ShakeInvocation -> visitInvocation(s)
+            is ShakeInvocation -> visitInvocationStatement(s)
             is ShakeNew -> visitNew(s)
             is ShakeDoWhile -> visitDoWhile(s)
             is ShakeWhile -> visitWhile(s)
@@ -310,7 +310,7 @@ class ShakeJsGenerator {
         return JsNew(JsField(n.reference.clazz.name), n.arguments.map { visitValue(it) })
     }
 
-    fun visitInvocation(n: ShakeInvocation): JsValuedStatement {
+    fun visitInvocationValue(n: ShakeInvocation): JsValue {
 
         val callable = n.callable
 
@@ -319,7 +319,37 @@ class ShakeJsGenerator {
 
                 if(callable.isNative) {
 
-                    return JsNatives.getNativeFunction(callable).handle(this, n)
+                    return JsNatives.getNativeFunction(callable).handleValue(this, n)
+
+                }
+
+                if(callable.clazz == null) return JsFunctionCall(JsField(callable.name), n.arguments.map { visitValue(it) })
+
+                if(callable.isStatic)
+                    return JsFunctionCall(JsField(callable.name, JsField(callable.clazz!!.name)), n.arguments.map { visitValue(it) })
+
+                if(n.parent != null)
+                    return JsFunctionCall(JsField(callable.name, visitValue(n.parent!!)), n.arguments.map { visitValue(it) })
+
+                return JsFunctionCall(JsField(callable.name, JsField("this")), n.arguments.map { visitValue(it) })
+
+            }
+            is ShakeLambdaDeclaration -> TODO()
+            // is ShakeLambdaDeclaration -> return JsFunctionCall(callable, n.arguments.map { visitValue(it) })
+            else -> throw IllegalStateException("Unknown callable type")
+        }
+    }
+
+    fun visitInvocationStatement(n: ShakeInvocation): JsStatement {
+
+        val callable = n.callable
+
+        when(callable) {
+            is ShakeMethod -> {
+
+                if(callable.isNative) {
+
+                    return JsNatives.getNativeFunction(callable).handleStatement(this, n)
 
                 }
 

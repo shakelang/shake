@@ -174,46 +174,52 @@ open class ShakeCodeProcessor {
         return CreationShakeStringLiteral(scope.project, n.value)
     }
 
-    fun visitAddNode(scope: CreationShakeScope, n: ShakeAddNode): CreationShakeAddition {
+    fun visitAddNode(scope: CreationShakeScope, n: ShakeAddNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.additionType(right.type, scope) ?: throw Exception("Cannot add ${left.type} and ${right.type}")
-        return CreationShakeAddition(scope.project, left, right, type)
+        val aw = left.type.additionOperator(right.type, scope)
+        return if(aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        else CreationShakeAddition(scope.project, left, right, aw.returnType ?: throw IllegalStateException("No return type for addition"))
     }
 
-    fun visitSubNode(scope: CreationShakeScope, n: ShakeSubNode): CreationShakeSubtraction {
+    fun visitSubNode(scope: CreationShakeScope, n: ShakeSubNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.subtractionType(right.type, scope) ?: throw Exception("Cannot subtract ${left.type} and ${right.type}")
-        return CreationShakeSubtraction(scope.project, left, right, type)
+        val aw = left.type.subtractionOperator(right.type, scope)
+        return if(aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        else CreationShakeSubtraction(scope.project, left, right, aw.returnType ?: throw IllegalStateException("No return type for subtraction"))
     }
 
-    fun visitMulNode(scope: CreationShakeScope, n: ShakeMulNode): CreationShakeMultiplication {
+    fun visitMulNode(scope: CreationShakeScope, n: ShakeMulNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.multiplicationType(right.type, scope) ?: throw Exception("Cannot multiply ${left.type} and ${right.type}")
-        return CreationShakeMultiplication(scope.project, left, right, type)
+        val aw = left.type.multiplicationOperator(right.type, scope)
+        return if(aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        else CreationShakeMultiplication(scope.project, left, right, aw.returnType ?: throw IllegalStateException("No return type for multiplication"))
     }
 
-    fun visitDivNode(scope: CreationShakeScope, n: ShakeDivNode): CreationShakeDivision {
+    fun visitDivNode(scope: CreationShakeScope, n: ShakeDivNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.divisionType(right.type, scope) ?: throw Exception("Cannot divide ${left.type} and ${right.type}")
-        return CreationShakeDivision(scope.project, left, right, type)
+        val aw = left.type.divisionOperator(right.type, scope)
+        return if(aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        else CreationShakeDivision(scope.project, left, right, aw.returnType ?: throw IllegalStateException("No return type for division"))
     }
 
-    fun visitModNode(scope: CreationShakeScope, n: ShakeModNode): CreationShakeModulus {
+    fun visitModNode(scope: CreationShakeScope, n: ShakeModNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.modulusType(right.type, scope) ?: throw Exception("Cannot modulus ${left.type} and ${right.type}")
-        return CreationShakeModulus(scope.project, left, right, type)
+        val aw = left.type.modulusOperator(right.type, scope)
+        return if(aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        else CreationShakeModulus(scope.project, left, right, aw.returnType ?: throw IllegalStateException("No return type for modulus"))
     }
 
-    fun visitPowNode(scope: CreationShakeScope, n: ShakePowNode): CreationShakePower {
+    fun visitPowNode(scope: CreationShakeScope, n: ShakePowNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
-        val type = left.type.powerType(right.type, scope) ?: throw Exception("Cannot power ${left.type} and ${right.type}")
-        return CreationShakePower(scope.project, left, right, type)
+        val aw = left.type.powerOperator(right.type, scope)
+        return if(aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        else CreationShakePower(scope.project, left, right, aw.returnType ?: throw IllegalStateException("No return type for power"))
     }
 
     fun visitVariableDeclarationNode(scope: CreationShakeScope, n: ShakeVariableDeclarationNode): CreationShakeVariableDeclaration {

@@ -51,13 +51,17 @@ import kotlin.String
 
 class String : NativeClass {
 
-    override val qualifiedName: String = "shake.lang\$String"
+    override val qualifiedName: String = "shake.lang.String"
+
+    companion object {
+        val str = "Lshake.lang.String"
+    }
 
     /// Static methods
 
     // valueOf(byte[] bytes)
     class FunctionValueOf0 : NativeFunction {
-        override val signature: String = "valueOf(byte[] bytes)"
+        override val signature: String = "valueOf([B)"
         override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
             if(invokation.arguments.size != 1) throw IllegalArgumentException("Expected 1 argument, got ${invokation.arguments.size}")
             if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
@@ -68,7 +72,7 @@ class String : NativeClass {
 
     // valueOf(byte[] bytes, int offset, int length)
     class FunctionValueOf1 : NativeFunction {
-        override val signature: String = "valueOf(byte[] bytes, int offset, int length)"
+        override val signature: String = "valueOf([B, I, I)"
         override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
             if(invokation.arguments.size != 3) throw IllegalArgumentException("String.valueOf(byte[] bytes, int offset, int length) takes exactly 4 arguments")
             if(invokation.parent != null) throw IllegalArgumentException("Cannot invoke static method from instance")
@@ -388,12 +392,23 @@ if (invokation.arguments.size != 2) throw IllegalArgumentException("String.subst
 
     // toString()
     class MethodToString : NativeFunction {
-        override val signature: String = "toString()"
+        override val signature: String = "toString()Lshake.lang.String"
         override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
             if (invokation.arguments.size != 0) throw IllegalArgumentException("String.toString() takes exactly 0 arguments")
             if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
             val receiver = generator.visitValue(invokation.parent!!)
             return JsFunctionCall(JsField("toString", receiver), listOf())
+        }
+    }
+
+    class MethodPlus : NativeFunction {
+        override val signature: String = "plus($str)$str"
+        override fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue {
+            if (invokation.arguments.size != 1) throw IllegalArgumentException("String.plus(String str) takes exactly 1 argument, but got ${invokation.arguments.size}")
+            if (invokation.parent == null) throw IllegalArgumentException("Cannot invoke instance method from static context")
+            val arg0 = generator.visitValue(invokation.arguments[0])
+            val receiver = generator.visitValue(invokation.parent!!)
+            return JsAdd(receiver, arg0)
         }
     }
 
@@ -424,7 +439,8 @@ if (invokation.arguments.size != 2) throw IllegalArgumentException("String.subst
         MethodSplit(),
         MethodSplit2(),
         MethodConcat(),
-        MethodToString()
+        MethodToString(),
+        MethodPlus()
     )
 
     override val fields: List<NativeField> = listOf(
