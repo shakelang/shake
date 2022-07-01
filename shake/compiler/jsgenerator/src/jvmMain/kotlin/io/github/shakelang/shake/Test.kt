@@ -13,19 +13,14 @@ fun main(args: Array<String>) {
     processor.loadFile("shakelib/src/js", "shake/js/print.shake")
     processor.loadFile("shakelib/src/common", "shake/lang/Object.shake")
     processor.loadFile("shakelib/src/common", "shake/lang/String.shake")
-    processor.loadFile("shakelib/src/common", "shake/lang/Byte.shake")
-    processor.loadFile("shakelib/src/common", "shake/lang/Short.shake")
-    processor.loadFile("shakelib/src/common", "shake/lang/Int.shake")
-    processor.loadFile("shakelib/src/common", "shake/lang/Long.shake")
-    processor.loadFile("shakelib/src/common", "shake/lang/Float.shake")
-    processor.loadFile("shakelib/src/common", "shake/lang/Double.shake")
+    processor.loadFile("shakelib/src/common", "shake/lang/Numbers.shake")
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "test.shake")
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "io/github/shakelang/test.shake")
     val project = processor.finish()
 
-    println(project.toJsonString())
-
-    println(ShakeMap.from(project).toJsonString())
+    val map = ShakeMap.from(project)
+    File("map.smap").writeBytes(map.getBytes())
+    File("map.smap.json").writeText(map.toJsonString())
 
     val generator = ShakeJsGenerator()
     val jsProject = generator.visitProject(project)
