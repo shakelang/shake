@@ -2,35 +2,37 @@ package io.github.shakelang.shake.parser.node
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 
-class TypeArgumentsNode (
+class ShakeTypeArgumentsDeclarationNode (
 
     map: PositionMap,
-    val typeArguments: List<TypeArgumentNode>
+    val typeArguments: Array<ShakeTypeArgumentDeclarationNode>
 
 ) : ShakeNodeImpl(map) {
-
     override fun toJson(): Map<String, *> {
         return mapOf(
-            "type" to "TypeArguments",
+            "type" to "TypeArgumentsDeclarationNode",
             "typeArguments" to typeArguments.map { it.toJson() }
         )
     }
 
 }
 
-class TypeArgumentNode (
+class ShakeTypeArgumentDeclarationNode (
 
 
     map: PositionMap,
-    val type: ShakeVariableType,
+    val name: String,
+    val extends: ShakeVariableType?,
 
 ) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> {
         return mapOf(
-            "type" to "TypeArgument",
-            "type" to type.toJson()
+            "type" to "TypeArgumentDeclarationNode",
+            "name" to name,
+            "extends" to extends?.toJson()
         )
     }
+
 
 }

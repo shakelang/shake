@@ -1170,6 +1170,44 @@ class ShakeParserImpl (
     }
 
 
+
+    // Type arguments
+    fun expectTypeArgumentsDeclaration(): ShakeTypeArgumentsDeclarationNode {
+        if(!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.SMALLER)
+            throw ParserError("Expecting '<'")
+        if(!input.skipIgnorable().hasNext()) throw ParserError("Expecting type argument")
+        if(input.peekType() == ShakeTokenType.BIGGER) return ShakeTypeArgumentsDeclarationNode(map, emptyArray())
+
+        val arguments = mutableListOf<ShakeTypeArgumentDeclarationNode>()
+
+        while(input.skipIgnorable().hasNext() && input.peekType() != ShakeTokenType.BIGGER) {
+            arguments.add(expectTypeArgumentDeclaration())
+            if(input.peekType() == ShakeTokenType.COMMA) input.skip()
+            else break
+        }
+
+        if(input.peekType() != ShakeTokenType.BIGGER) throw ParserError("Expecting '>'")
+
+        return ShakeTypeArgumentsDeclarationNode(map, arguments.toTypedArray())
+
+    }
+
+    fun expectTypeArgumentDeclaration(): ShakeTypeArgumentDeclarationNode {
+        if(!input.hasNext()  || input.nextType() != ShakeTokenType.IDENTIFIER) {
+            throw ParserError("Expecting type argument declaration")
+        }
+        val name = input.actualValue ?: throw ParserError("Identifier needs a value")
+
+        if(!input.skipIgnorable().hasNext()) throw ParserError("Expecting '>'")
+        if(input.peekType() == ShakeTokenType.KEYWORD_EXTENDS) { // TODO Replace with COLON?
+            input.skip()
+            return ShakeTypeArgumentDeclarationNode(map, name, expectType())
+        }
+
+        return ShakeTypeArgumentDeclarationNode(map, name, null)
+    }
+
+
     fun <T> expectNotNull(v: T?): T {
         if(v == null) throw ParserError("Expecting value")
         return v
