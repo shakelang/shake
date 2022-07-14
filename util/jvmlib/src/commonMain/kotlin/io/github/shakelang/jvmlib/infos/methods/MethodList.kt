@@ -4,32 +4,23 @@ import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
+import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
+import io.github.shakelang.parseutils.streaming.output.OutputStream
 import io.github.shakelang.shason.json
 
-class MethodList(methods: Array<MethodInfo>) : List<MethodInfo>, ConstantUser {
+class MethodList(val methods: List<MethodInfo>) : List<MethodInfo> by methods, ConstantUser {
 
     override val uses : Array<ConstantInfo> get() = methods.map { it.uses.toList() }.flatten().toTypedArray()
     override val users = methods.map { it.users.toList() }.flatten().toTypedArray()
 
     private lateinit var clazz: ClassInfo
 
-    val methods: List<MethodInfo> = methods.toList()
-
-    override val size: Int
-        get() = methods.size
-
-    override fun contains(element: MethodInfo): Boolean = methods.contains(element)
-    override fun containsAll(elements: Collection<MethodInfo>): Boolean = methods.containsAll(elements)
-    override fun get(index: Int): MethodInfo = methods[index]
-    override fun indexOf(element: MethodInfo): Int = methods.indexOf(element)
-    override fun isEmpty(): Boolean = methods.isEmpty()
-    override fun iterator(): Iterator<MethodInfo> = methods.iterator()
-    override fun lastIndexOf(element: MethodInfo): Int = methods.lastIndexOf(element)
-    override fun listIterator(): ListIterator<MethodInfo> = methods.listIterator()
-    override fun listIterator(index: Int): ListIterator<MethodInfo> = methods.listIterator(index)
-    override fun subList(fromIndex: Int, toIndex: Int): List<MethodInfo> = methods.subList(fromIndex, toIndex)
+    constructor(methods: Array<MethodInfo>): this(methods.toList())
 
     fun init(clazz: ClassInfo) {
         this.clazz = clazz
@@ -44,11 +35,32 @@ class MethodList(methods: Array<MethodInfo>) : List<MethodInfo>, ConstantUser {
         methods.forEach { it.dump(out) }
     }
 
+    fun dump(out: OutputStream) {
+        dump(DataOutputStream(out))
+    }
+
+    fun toBytes(): ByteArray {
+        val out = ByteArrayOutputStream()
+        dump(out)
+        return out.toByteArray()
+    }
+
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): MethodList {
             val count = stream.readUnsignedShort()
             val fields = Array(count.toInt()) { MethodInfo.fromStream(pool, stream) }
             return MethodList(fields)
+        }
+
+        fun fromStream(pool: ConstantPool, stream: InputStream): MethodList {
+            return fromStream(pool, stream.dataStream)
+        }
+
+        fun fromBytes(pool: ConstantPool, bytes: ByteArray): MethodList {
+            val stream = bytes.dataStream()
+            val list = fromStream(pool, stream)
+            if(stream.available() > 0) throw IllegalArgumentException("Not all bytes have been used")
+            return list
         }
     }
 

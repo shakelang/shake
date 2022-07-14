@@ -5,8 +5,13 @@ import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.input.dataStream
+import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
+import io.github.shakelang.parseutils.streaming.output.OutputStream
 import io.github.shakelang.shason.json
 
 class MethodInfo(
@@ -83,6 +88,16 @@ class MethodInfo(
         attributes.dump(out)
     }
 
+    fun dump(out: OutputStream) {
+        dump(DataOutputStream(out))
+    }
+
+    fun toBytes(): ByteArray {
+        val stream = ByteArrayOutputStream()
+        dump(stream)
+        return stream.toByteArray()
+    }
+
     companion object {
 
         fun fromStream(pool: ConstantPool, stream: DataInputStream): MethodInfo {
@@ -95,6 +110,14 @@ class MethodInfo(
             val attributes = AttributeMap.fromStream(pool, stream)
             return MethodInfo(accessFlags, name, descriptor, attributes)
 
+        }
+
+        fun fromStream(pool: ConstantPool, stream: InputStream): MethodInfo {
+            return fromStream(pool, stream.dataStream)
+        }
+
+        fun fromBytes(pool: ConstantPool, bytes: ByteArray): MethodInfo {
+            return fromStream(pool, bytes.dataStream())
         }
 
     }

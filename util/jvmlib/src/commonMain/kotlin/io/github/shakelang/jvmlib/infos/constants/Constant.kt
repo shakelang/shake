@@ -12,7 +12,7 @@ object Constant {
     fun fieldRef(classRef: UShort, nameAndTypeRef: UShort): ConstantFieldrefInfo = ConstantFieldrefInfo(classRef, nameAndTypeRef)
     fun methodRef(classRef: UShort, nameAndTypeRef: UShort): ConstantMethodrefInfo = ConstantMethodrefInfo(classRef, nameAndTypeRef)
     fun interfaceMethodRef(classRef: UShort, nameAndTypeRef: UShort): ConstantInterfaceMethodrefInfo = ConstantInterfaceMethodrefInfo(classRef, nameAndTypeRef)
-    fun nameAndType(name: UShort, descriptor: UShort): ConstantNameAndTypeInfo = ConstantNameAndTypeInfo(name, descriptor)
+    fun nameAndType(name: UShort, descriptor: UShort): ConstantNameAndTypeInfo = ConstantNameAndTypeInfo(descriptor, name)
     fun methodHandle(referenceKind: Byte, reference: UShort): ConstantMethodHandleInfo = ConstantMethodHandleInfo(referenceKind, reference)
     fun methodType(descriptor: UShort): ConstantMethodTypeInfo = ConstantMethodTypeInfo(descriptor)
     fun invokeDynamic(bootstrapMethod: UShort, nameAndType: UShort): ConstantInvokeDynamicInfo = ConstantInvokeDynamicInfo(bootstrapMethod, nameAndType)

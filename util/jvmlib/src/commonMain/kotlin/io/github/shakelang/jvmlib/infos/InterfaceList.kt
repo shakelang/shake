@@ -4,19 +4,23 @@ import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
+import io.github.shakelang.parseutils.bytes.dataStream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.parseutils.streaming.input.InputStream
+import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
+import io.github.shakelang.parseutils.streaming.output.OutputStream
 import io.github.shakelang.shason.json
 
 
-class InterfaceList(interfaces: Array<ConstantUtf8Info>) : List<ConstantUtf8Info>, ConstantUser {
+class InterfaceList(val interfaces: List<ConstantUtf8Info>) : List<ConstantUtf8Info> by interfaces, ConstantUser {
 
     override val uses: Array<ConstantInfo> get() = interfaces.toTypedArray()
 
     private lateinit var clazz: ClassInfo
     val classInfo : ClassInfo get() = clazz
 
-    val interfaces: List<ConstantUtf8Info> = interfaces.toList()
+    constructor(interfaces: Array<ConstantUtf8Info>) : this(interfaces.toList())
 
     override val size: Int
         get() = interfaces.size
@@ -46,6 +50,16 @@ class InterfaceList(interfaces: Array<ConstantUtf8Info>) : List<ConstantUtf8Info
         }
     }
 
+    fun dump(out: OutputStream) {
+        dump(DataOutputStream(out))
+    }
+
+    fun toBytes(): ByteArray {
+        val stream = ByteArrayOutputStream()
+        dump(stream)
+        return stream.toByteArray()
+    }
+
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): InterfaceList {
             val count = stream.readUnsignedShort()
@@ -54,6 +68,12 @@ class InterfaceList(interfaces: Array<ConstantUtf8Info>) : List<ConstantUtf8Info
                 pool.getUtf8((pos + 1u).toInt())
             }
             return InterfaceList(interfaces)
+        }
+        fun fromStream(pool: ConstantPool, stream: InputStream): InterfaceList {
+            return fromStream(pool, stream)
+        }
+        fun fromBytes(pool: ConstantPool, bytes: ByteArray): InterfaceList {
+            return fromStream(pool, bytes.dataStream())
         }
     }
 
