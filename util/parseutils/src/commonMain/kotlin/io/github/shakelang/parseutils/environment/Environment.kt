@@ -65,8 +65,6 @@ abstract class Environment (
         fun getEnvironment(): Environment = getRunningEnvironment()
 
     }
-
-
 }
 
 
