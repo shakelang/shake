@@ -15,12 +15,15 @@ interface JsOutput {
 interface JsStatement : JsOutput {
     val needsSemicolon: Boolean get() = true
 }
+
 interface JsValue : JsOutput {
     val needsParens: Boolean
     fun generateValue(indentAmount: Int = 0, indent: String = "  "): String {
         return if(needsParens) "(${generate(indentAmount, indent)})" else generate(indentAmount, indent)
     }
 }
+
+interface JsValuedStatement : JsStatement, JsValue
 
 class JsTree(
     val children: List<JsStatement> = emptyList(),
@@ -124,7 +127,7 @@ class JsField (
 class JsFunctionCall(
     val function: JsValue,
     val args: List<JsValue>,
-) : JsValue, JsStatement {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
         return "${function.generateValue(indentAmount, indent)}(${args.joinToString(", ") { it.generate(indentAmount, indent) }})"
@@ -141,8 +144,8 @@ class JsVariableDeclaration (
     override val value: JsValue? = null
 ) : JsDeclaration() {
     override fun generate(indentAmount: Int, indent: String): String {
-        return if(value == null) "var $name"
-        else "var $name = ${value.generate(indentAmount, indent)}"
+        return if(value == null) "let $name"
+        else "let $name = ${value.generate(indentAmount, indent)}"
     }
 }
 
@@ -158,7 +161,7 @@ class JsConstantDeclaration (
 class JsAssignment(
     val name: JsField,
     val value: JsValue
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "${name.generate(indentAmount, indent)} = ${value.generate(indentAmount, indent)}"
@@ -168,7 +171,7 @@ class JsAssignment(
 class JsAddAssignment(
     val name: JsField,
     val value: JsValue
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "$name += ${value.generate(indentAmount, indent)}"
@@ -178,7 +181,7 @@ class JsAddAssignment(
 class JsSubtractAssignment(
     val name: JsField,
     val value: JsValue
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "$name -= ${value.generate(indentAmount, indent)}"
@@ -188,7 +191,7 @@ class JsSubtractAssignment(
 class JsMultiplyAssignment(
     val name: JsField,
     val value: JsValue
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "$name *= ${value.generate(indentAmount, indent)}"
@@ -198,7 +201,7 @@ class JsMultiplyAssignment(
 class JsDivideAssignment(
     val name: JsField,
     val value: JsValue
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "$name /= ${value.generate(indentAmount, indent)}"
@@ -208,7 +211,7 @@ class JsDivideAssignment(
 class JsModuloAssignment(
     val name: JsField,
     val value: JsValue
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "$name %= ${value.generate(indentAmount, indent)}"
@@ -217,7 +220,7 @@ class JsModuloAssignment(
 
 class JsAfterIncrement(
     val name: JsField
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "$name++"
@@ -226,7 +229,7 @@ class JsAfterIncrement(
 
 class JsBeforeIncrement(
     val name: JsField
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "++$name"
@@ -235,7 +238,7 @@ class JsBeforeIncrement(
 
 class JsAfterDecrement(
     val name: JsField
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "$name--"
@@ -244,7 +247,7 @@ class JsAfterDecrement(
 
 class JsBeforeDecrement(
     val name: JsField
-) : JsStatement, JsValue {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
         return "--$name"
@@ -517,7 +520,7 @@ class JsClassDeclaration(
 class JsNew(
     val type: JsValue,
     val parameters: List<JsValue> = emptyList(),
-) : JsValue, JsStatement {
+) : JsValuedStatement {
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
         return "new ${type.generate(indentAmount, indent)}(${parameters.joinToString(", ") { it.generate(indentAmount, indent) }})"

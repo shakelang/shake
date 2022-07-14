@@ -3,6 +3,7 @@ package io.github.shakelang.jvmlib.infos.constants
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
 import io.github.shakelang.parseutils.streaming.output.DataOutputStream
+import io.github.shakelang.shason.json
 
 class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<ConstantInfo> by constants, ConstantUser {
 
@@ -20,7 +21,6 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     constructor(constants: Array<ConstantInfo>) : this(constants.toMutableList())
 
     override fun get(index: Int): ConstantInfo = if(index == 0) ConstantNullPointer.INSTANCE else constants[index-1]
-
     operator fun get(index: UShort) : ConstantInfo = get(index.toInt())
 
     fun toJson(): List<Map<String, Any>> {
@@ -32,7 +32,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     override fun toString(): String {
-        return constants.toString()
+        return json.stringify(this.toJson())
     }
 
     fun getUtf8(nameIndex: Int) = this[nameIndex].toUtf8()
@@ -103,7 +103,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun findFieldRef(classRef: ConstantClassInfo, nameTypeRef: ConstantNameAndTypeInfo): ConstantFieldrefInfo? {
         for(constant in constants) {
             if(constant is ConstantFieldrefInfo) {
-                if(constant.classRef == classRef && constant.nameTypeRef == nameTypeRef) {
+                if(constant.classRef === classRef && constant.nameTypeRef === nameTypeRef) {
                     return constant
                 }
             }
@@ -114,7 +114,8 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun findFieldRef(classRef: ConstantClassInfo, name: String, descriptor: String): ConstantFieldrefInfo? {
         for(constant in constants) {
             if(constant is ConstantFieldrefInfo) {
-                if(constant.classRef == classRef
+
+                if(constant.classRef === classRef
                     && constant.nameTypeRef.name.value == name
                     && constant.nameTypeRef.type.value == descriptor) {
                     return constant
@@ -343,14 +344,30 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         return null
     }
 
+    fun findInvokeDynamic(bootstrapMethod: UShort, name: String, type: String): ConstantInvokeDynamicInfo? {
+        for(constant in constants) {
+            if(constant is ConstantInvokeDynamicInfo) {
+                if(constant.bootstrapMethodAttributeIndex == bootstrapMethod
+                    && constant.nameAndType.name.value == name
+                    && constant.nameAndType.type.value == type) {
+                    return constant
+                }
+            }
+        }
+        return null
+    }
+
 
 
 
     fun expectUtf8(value: String): ConstantUtf8Info
         = findUtf8(value) ?: throw Exception("No utf8 constant found for value: $value")
 
-    fun expectClass(value: String): ConstantClassInfo
+    fun expectClass(value: ConstantUtf8Info): ConstantClassInfo
         = findClass(value) ?: throw Exception("No class constant found for value: $value")
+
+    fun expectClass(value: String): ConstantClassInfo
+            = findClass(value) ?: throw Exception("No class constant found for value: $value")
 
     fun expectFieldRef(classRef: String, name: String, descriptor: String): ConstantFieldrefInfo
         = findFieldRef(classRef, name, descriptor) ?: throw Exception("No fieldref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")

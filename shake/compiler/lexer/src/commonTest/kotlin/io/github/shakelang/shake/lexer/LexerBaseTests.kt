@@ -125,8 +125,6 @@ class LexerBaseTests {
     @Test fun testDouble() = testKeyword(KeywordTest.DOUBLE)
     @Test fun testChar() = testKeyword(KeywordTest.CHAR)
     @Test fun testBoolean() = testKeyword(KeywordTest.BOOLEAN)
-    @Test fun testVar() = testKeyword(KeywordTest.VAR)
-    @Test fun testLet() = testKeyword(KeywordTest.LET)
     @Test fun testConst() = testKeyword(KeywordTest.CONST)
     @Test fun testFunction() = testKeyword(KeywordTest.FUNCTION)
     @Test fun testReturn() = testKeyword(KeywordTest.RETURN)
@@ -190,8 +188,6 @@ class LexerBaseTests {
         DOUBLE("double", ShakeTokenType.KEYWORD_DOUBLE),
         CHAR("char", ShakeTokenType.KEYWORD_CHAR),
         BOOLEAN("boolean", ShakeTokenType.KEYWORD_BOOLEAN),
-        VAR("var", ShakeTokenType.KEYWORD_VAR),
-        LET("let", ShakeTokenType.KEYWORD_VAR),
         CONST("const", ShakeTokenType.KEYWORD_CONST),
         FUNCTION("function", ShakeTokenType.KEYWORD_FUNCTION),
         RETURN("return", ShakeTokenType.KEYWORD_RETURN),

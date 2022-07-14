@@ -18,7 +18,7 @@ import io.github.shakelang.shake.parser.node.variables.*
 @Suppress("unused")
 abstract class ShakeGeneratorContext<T, C> : ShakeGeneratorBase {
     fun visit(n: ShakeNodeImpl, context: C): T {
-        if (n is ShakeTree) return visitTree(n, context)
+        if (n is ShakeBlockNode) return visitTree(n, context)
         if (n is ShakeDoubleNode) return visitDoubleNode(n, context)
         if (n is ShakeIntegerNode) return visitIntegerNode(n, context)
         if (n is ShakeAddNode) return visitAddNode(n, context)
@@ -62,7 +62,7 @@ abstract class ShakeGeneratorContext<T, C> : ShakeGeneratorBase {
         throw Error("It looks like that node is not implemented in the generator: $n")
     }
 
-    abstract fun visitTree(t: ShakeTree?, context: C): T
+    abstract fun visitTree(t: ShakeBlockNode?, context: C): T
     abstract fun visitDoubleNode(n: ShakeDoubleNode?, context: C): T
     abstract fun visitIntegerNode(n: ShakeIntegerNode?, context: C): T
     abstract fun visitAddNode(n: ShakeAddNode?, context: C): T

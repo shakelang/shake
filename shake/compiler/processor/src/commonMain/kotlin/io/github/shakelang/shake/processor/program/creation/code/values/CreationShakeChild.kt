@@ -1,38 +1,37 @@
 package io.github.shakelang.shake.processor.program.creation.code.values
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeAssignable
-import io.github.shakelang.shake.processor.program.creation.CreationShakeDeclaration
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
-import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
+import io.github.shakelang.shake.processor.program.creation.*
 import io.github.shakelang.shake.processor.program.types.ShakeType
+import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeChild
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeChildUsage
 
 class CreationShakeChild (
 
+    override val project: CreationShakeProject,
     override val scope: CreationShakeScope,
     override val parent : CreationShakeValue,
     override val name: String,
 
 ) : CreationShakeAssignable, ShakeChild {
 
-    override val type : ShakeType = parent.type.childType(name)!!
-    override val actualValue: CreationShakeChildUsage get() = CreationShakeChildUsage(this)
+    override val type : ShakeType = parent.type.childType(name, scope)!!
+    override val actualValue: CreationShakeChildUsage get() = CreationShakeChildUsage(project, this)
     override val actualType: ShakeType
         get() = actualValue.type
-    override val access : CreationShakeValue get() = CreationShakeChildUsage(this)
+    override val access : CreationShakeValue get() = CreationShakeChildUsage(project, this)
 
-    override fun assignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: other
-    override fun additionAssignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: type
-    override fun subtractionAssignType(other: ShakeType): ShakeType = type.subtractionAssignType(other) ?: type
-    override fun multiplicationAssignType(other: ShakeType): ShakeType = type.multiplicationAssignType(other) ?: type
-    override fun divisionAssignType(other: ShakeType): ShakeType = type.divisionAssignType(other) ?: type
-    override fun modulusAssignType(other: ShakeType): ShakeType = type.modulusAssignType(other) ?: type
-    override fun powerAssignType(other: ShakeType): ShakeType = type.powerAssignType(other) ?: type
-    override fun incrementBeforeType(): ShakeType = type.incrementBeforeType() ?: type
-    override fun incrementAfterType(): ShakeType = type.incrementAfterType() ?: type
-    override fun decrementBeforeType(): ShakeType = type.decrementBeforeType() ?: type
-    override fun decrementAfterType(): ShakeType = type.decrementAfterType() ?: type
+    override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType = type.additionAssignType(other, scope) ?: other
+    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.additionAssignType(other, scope) ?: type
+    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.subtractionAssignType(other, scope) ?: type
+    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.multiplicationAssignType(other, scope) ?: type
+    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.divisionAssignType(other, scope) ?: type
+    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.modulusAssignType(other, scope) ?: type
+    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.powerAssignType(other, scope) ?: type
+    override fun incrementBeforeType(scope: ShakeScope): ShakeType = type.incrementBeforeType(scope) ?: type
+    override fun incrementAfterType(scope: ShakeScope): ShakeType = type.incrementAfterType(scope) ?: type
+    override fun decrementBeforeType(scope: ShakeScope): ShakeType = type.decrementBeforeType(scope) ?: type
+    override fun decrementAfterType(scope: ShakeScope): ShakeType = type.decrementAfterType(scope) ?: type
 
     override fun access(scope: CreationShakeScope): CreationShakeValue {
         return access
@@ -50,6 +49,7 @@ class CreationShakeChild (
 
 class CreationShakeChildUsage (
 
+    override val project: CreationShakeProject,
     override val used: CreationShakeChild
 
 ) : CreationShakeUsage(), ShakeChildUsage {

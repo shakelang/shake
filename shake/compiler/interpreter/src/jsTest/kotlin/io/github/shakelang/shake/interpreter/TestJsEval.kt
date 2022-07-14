@@ -1,11 +1,12 @@
 package io.github.shakelang.shake.interpreter
-import io.github.shakelang.shake.lexer.ShakeLexer
-import io.github.shakelang.shake.parser.ShakeParser
-import io.github.shakelang.shake.parser.node.ShakeTree
+import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
-import io.github.shakelang.parseutils.characters.position.PositionMap
-import kotlin.test.*
+import io.github.shakelang.shake.lexer.ShakeLexer
+import io.github.shakelang.shake.parser.ShakeParser
+import io.github.shakelang.shake.parser.node.ShakeBlockNode
+import kotlin.test.Ignore
+import kotlin.test.Test
 
 class TestJsEval {
 
@@ -40,4 +41,4 @@ private fun parse(input: CharacterInputStream): ParseResult {
     return ParseResult(tree, tokens.map)
 }
 
-private class ParseResult(val tree: ShakeTree, val map: PositionMap)
+private class ParseResult(val tree: ShakeBlockNode, val map: PositionMap)

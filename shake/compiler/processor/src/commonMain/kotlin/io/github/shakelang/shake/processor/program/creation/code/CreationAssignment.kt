@@ -1,13 +1,14 @@
 package io.github.shakelang.shake.processor.program.creation.code
 
 import io.github.shakelang.shake.processor.program.creation.CreationShakeAssignable
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
+import io.github.shakelang.shake.processor.program.creation.CreationShakeProject
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.*
 
 open class CreationShakeAssignment (
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val value: CreationShakeValue,
     override val type: ShakeType
@@ -22,6 +23,7 @@ open class CreationShakeAssignment (
 }
 
 open class CreationShakeAddAssignment(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val value: CreationShakeValue,
     override val type: ShakeType
@@ -36,6 +38,7 @@ open class CreationShakeAddAssignment(
 }
 
 open class CreationShakeSubAssignment(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val value: CreationShakeValue,
     override val type: ShakeType
@@ -50,6 +53,7 @@ open class CreationShakeSubAssignment(
 }
 
 open class CreationShakeMulAssignment(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val value: CreationShakeValue,
     override val type: ShakeType
@@ -64,6 +68,7 @@ open class CreationShakeMulAssignment(
 }
 
 open class CreationShakeDivAssignment(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val value: CreationShakeValue,
     override val type: ShakeType
@@ -78,6 +83,7 @@ open class CreationShakeDivAssignment(
 }
 
 open class CreationShakeModAssignment(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val value: CreationShakeValue,
     override val type: ShakeType
@@ -92,6 +98,7 @@ open class CreationShakeModAssignment(
 }
 
 open class CreationShakePowerAssignment(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val value: CreationShakeValue,
     override val type: ShakeType
@@ -106,6 +113,7 @@ open class CreationShakePowerAssignment(
 }
 
 open class CreationShakeIncrementBefore(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val type: ShakeType
 ) : CreationShakeValue, CreationShakeStatement, ShakeIncrementBefore {
@@ -118,6 +126,7 @@ open class CreationShakeIncrementBefore(
 }
 
 open class CreationShakeIncrementAfter(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val type: ShakeType
 ) : CreationShakeValue, CreationShakeStatement, ShakeIncrementAfter {
@@ -130,6 +139,7 @@ open class CreationShakeIncrementAfter(
 }
 
 open class CreationShakeDecrementBefore(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val type: ShakeType
 ) : CreationShakeValue, CreationShakeStatement, ShakeDecrementBefore {
@@ -142,6 +152,7 @@ open class CreationShakeDecrementBefore(
 }
 
 open class CreationShakeDecrementAfter(
+    override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val type: ShakeType
 ) : CreationShakeValue, CreationShakeStatement, ShakeDecrementAfter {

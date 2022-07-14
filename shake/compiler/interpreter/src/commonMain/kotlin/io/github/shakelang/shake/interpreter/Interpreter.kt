@@ -5,7 +5,6 @@ import io.github.shakelang.shake.interpreter.Variable.Companion.create
 import io.github.shakelang.shake.interpreter.Variable.Companion.finalOf
 import io.github.shakelang.shake.interpreter.values.*
 import io.github.shakelang.shake.interpreter.values.BooleanValue.Companion.from
-import io.github.shakelang.shake.interpreter.values.Function
 import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.expression.*
 import io.github.shakelang.shake.parser.node.factor.ShakeCharacterNode
@@ -22,9 +21,6 @@ import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.*
-import kotlin.Error
-import kotlin.String
-import kotlin.Suppress
 import kotlin.jvm.JvmOverloads
 
 /**
@@ -116,7 +112,7 @@ class Interpreter : ShakeGeneratorBase {
     @JvmOverloads
     fun visit(n: ShakeNode?, scope: Scope = global): InterpreterValue {
         // Check all the node-types and call the function to process it
-        if (n is ShakeTree) return visitTree(n, scope)
+        if (n is ShakeBlockNode) return visitTree(n, scope)
         if (n is ShakeDoubleNode) return visitDoubleNode(n)
         if (n is ShakeIntegerNode) return visitIntegerNode(n)
         if (n is ShakeStringNode) return visitStringNode(n)
@@ -173,15 +169,15 @@ class Interpreter : ShakeGeneratorBase {
     // visit function
 
     /**
-     * Visit a [ShakeTree]
+     * Visit a [ShakeBlockNode]
      *
-     * @param t the [ShakeTree] to visit
-     * @param scope the scope to use for visiting the [ShakeTree]
+     * @param t the [ShakeBlockNode] to visit
+     * @param scope the scope to use for visiting the [ShakeBlockNode]
      * @return the latest [InterpreterValue] of the tree
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun visitTree(t: ShakeTree, scope: Scope): InterpreterValue {
+    fun visitTree(t: ShakeBlockNode, scope: Scope): InterpreterValue {
 
         // Visit all the children but the last one
         for (i in 0 until t.children.size - 1) {
@@ -378,7 +374,7 @@ class Interpreter : ShakeGeneratorBase {
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableDeclarationNode(n: ShakeVariableDeclarationNode, scope: Scope): InterpreterValue {
-        val value = if (n.value != null) visit(n.value!!.value, scope) else null
+        val value = if (n.value != null) visit(n.value!!, scope) else null
         return if (!scope.scopeVariables.declare(
                 create(
                     n.name,
@@ -399,7 +395,7 @@ class Interpreter : ShakeGeneratorBase {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun visitVariableAssignmentNode(n: ShakeValuedNode, scope: Scope): InterpreterValue {
+    fun visitVariableAssignmentNode(n: ShakeVariableAssignmentNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
         val value = visit(n.value, scope)
         variable.value = value

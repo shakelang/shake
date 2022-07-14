@@ -10,6 +10,7 @@ interface ShakeConstructor {
     val isPrivate: Boolean
     val isProtected: Boolean
     val isPublic: Boolean
+    val isNative: Boolean
     val name: String?
     val parameters: List<ShakeParameter>
     val scope: ShakeScope

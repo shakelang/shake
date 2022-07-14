@@ -1,7 +1,8 @@
 package io.github.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.parser.node.ShakeFile
+import io.github.shakelang.shake.parser.node.ShakeFileNode
 import io.github.shakelang.shake.parser.node.ShakeImportNode
+import io.github.shakelang.shake.parser.node.ShakePackageNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
@@ -18,7 +19,7 @@ open class CreationShakePackage (
     override val fields: MutableList<CreationShakeField> = mutableListOf(),
 ): ShakePackage {
 
-    override val qualifiedName: String get() = "${parent?.qualifiedName ?: ""}.$name"
+    override val qualifiedName: String get() = "${parent?.qualifiedName?.plus(".") ?: ""}$name"
     override val scope: CreationShakeScope = Scope()
 
     override fun getPackage(name: String): CreationShakePackage {
@@ -36,7 +37,7 @@ open class CreationShakePackage (
         return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
     }
 
-    open fun putFile(name: String, contents: ShakeFile) {
+    open fun putFile(name: String, contents: ShakeFileNode) {
 
         val imports = contents.children.filterIsInstance<ShakeImportNode>()
         val imported = arrayOfNulls<CreationShakePackage>(imports.size)
@@ -47,52 +48,7 @@ open class CreationShakePackage (
             }
         }
 
-        val fileScope = object : CreationShakeScope {
-            override val parent: CreationShakeScope = scope
-
-            override fun get(name: String): CreationShakeAssignable? {
-                return imports.zip(imported).filter {
-                    val last = it.first.import.last()
-                    last == name || last == "*"
-                }.firstNotNullOfOrNull {
-                    it.second!!.fields.find { f -> f.name == name }
-                } ?: parent.get(name)
-            }
-
-            override fun set(value: CreationShakeDeclaration) {
-                parent.set(value)
-            }
-
-            override fun getFunctions(name: String): List<CreationShakeMethod> {
-                return imports.zip(imported).filter {
-                    val last = it.first.import.last()
-                    last == name || last == "*"
-                }.flatMap {
-                    it.second!!.functions.filter { f -> f.name == name }
-                } + parent.getFunctions(name)
-            }
-
-            override fun setFunctions(function: CreationShakeMethod) {
-                parent.setFunctions(function)
-            }
-
-            override fun getClass(name: String): CreationShakeClass? {
-                return imports.zip(imported).filter {
-                    val last = it.first.import.last()
-                    last == name || last == "*"
-                }.firstNotNullOfOrNull {
-                    it.second!!.classes.find { c -> c.name == name }
-                } ?: parent.getClass(name)
-            }
-
-            override fun setClass(klass: CreationShakeClass) {
-                parent.setClass(klass)
-            }
-
-            override val processor: ShakeCodeProcessor
-                get() = parent.processor
-
-        }
+        val fileScope = CreationFileScope(baseProject, scope, imports, imported)
 
         contents.children.forEach {
             when (it) {
@@ -102,28 +58,33 @@ open class CreationShakePackage (
                     classes.add(CreationShakeClass.from(baseProject, this, fileScope, it))
                 }
                 is ShakeFunctionDeclarationNode -> {
-                    if(functions.any { func -> func.name == it.name })
-                        throw IllegalStateException("Function ${it.name} already exists") // TODO Functions with different signatures
-                    functions.add(CreationShakeMethod.from(baseProject, this, fileScope, it))
+                    val method = CreationShakeMethod.from(baseProject, this, fileScope, it)
+                    /* TODO: check if method already exists
+                    if(functions.any { func -> func.signature == method.signature })
+                        throw IllegalStateException("Method ${method.signature} already exists")
+                    */
+                    functions.add(method)
                 }
                 is ShakeVariableDeclarationNode -> {
                     if(fields.any { field -> field.name == it.name })
                         throw IllegalStateException("Field ${it.name} already exists")
                     fields.add(CreationShakeField.from(baseProject, this, fileScope, it))
                 }
-                else -> throw IllegalStateException("Unknown node type ${it::class}")
+                is ShakePackageNode -> {}
+                else -> throw IllegalStateException("Unknown node type ${it::class.simpleName}")
             }
         }
     }
 
-    open fun putFile(name: Array<String>, contents: ShakeFile) {
+    open fun putFile(name: Array<String>, contents: ShakeFileNode) {
         val pkg = name.sliceArray(0 until name.size - 1)
         val file = name.last()
         getPackage(pkg).putFile(file, contents)
     }
 
-    private inner class Scope : CreationShakeScope {
+    private inner class Scope : CreationShakeScope() {
         override val parent: CreationShakeScope get() = baseProject.projectScope
+        override val project get() = baseProject
 
         override fun get(name: String): CreationShakeAssignable? {
             return fields.find { it.name == name } ?: parent.get(name)

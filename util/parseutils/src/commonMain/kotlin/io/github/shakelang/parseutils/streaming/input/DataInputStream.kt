@@ -113,7 +113,7 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      * Reads a single unsigned byte from the InputStream.
      */
     fun readUnsignedByte(): UByte {
-        return readNBytes(1).toUnsignedByte()
+        return readByte().toUByte()
     }
 
     /**

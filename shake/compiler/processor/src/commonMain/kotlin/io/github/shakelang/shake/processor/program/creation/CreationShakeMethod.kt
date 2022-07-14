@@ -7,6 +7,7 @@ import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCo
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.ShakeMethod
+import io.github.shakelang.shake.processor.program.types.ShakeType
 
 class CreationShakeMethod (
     override val prj: CreationShakeProject,
@@ -14,7 +15,7 @@ class CreationShakeMethod (
     override val clazz: CreationShakeClass?,
     override val parentScope: CreationShakeScope,
     override val name: String,
-    body: CreationShakeCode,
+    body: CreationShakeCode?,
     override val isStatic: Boolean,
     override val isFinal: Boolean,
     override val isAbstract: Boolean,
@@ -23,12 +24,17 @@ class CreationShakeMethod (
     override val isPrivate: Boolean,
     override val isProtected: Boolean,
     override val isPublic: Boolean,
+    override val isNative: Boolean,
+    override val isOperator: Boolean,
 ): CreationShakeInvokable(body), ShakeMethod {
 
     override val qualifiedName: String
         get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
 
     override lateinit var returnType: CreationShakeType
+        private set
+
+    override var expanding: ShakeType? = null
         private set
 
     constructor(
@@ -47,10 +53,14 @@ class CreationShakeMethod (
         isStrict: Boolean,
         isPrivate: Boolean,
         isProtected: Boolean,
-        isPublic: Boolean
-    ): this(prj, pkg, clazz, parentScope, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic) {
+        isPublic: Boolean,
+        isNative: Boolean,
+        isOperator: Boolean,
+        expanding: ShakeType?
+    ): this(prj, pkg, clazz, parentScope, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic, isNative, isOperator) {
         this.parameters = parameters
         this.returnType = returnType
+        this.expanding = expanding
     }
 
     override val scope : CreationShakeScope = ShakeFunctionScope()
@@ -58,6 +68,13 @@ class CreationShakeMethod (
     fun lateinitReturnType(): (CreationShakeType) -> CreationShakeType {
         return {
             returnType = it
+            it
+        }
+    }
+
+    fun lateinitExpanding(): (ShakeType?) -> ShakeType? {
+        return {
+            expanding = it
             it
         }
     }
@@ -88,14 +105,15 @@ class CreationShakeMethod (
             "isPublic" to isPublic,
             "returnType" to returnType.toJson(),
             "parameters" to parameters.map { it.toJson() },
-            "body" to body.toJson()
+            "body" to body?.toJson()
         )
     }
-    inner class ShakeFunctionScope: CreationShakeScope {
+    inner class ShakeFunctionScope: CreationShakeScope() {
 
         val variables = mutableListOf<CreationShakeVariableDeclaration>()
 
         override val parent: CreationShakeScope = parentScope
+        override val project get() = prj
 
         override fun get(name: String): CreationShakeAssignable? {
             return variables.find { it.name == name } ?: parent.get(name)
@@ -136,7 +154,7 @@ class CreationShakeMethod (
                 null,
                 parentScope,
                 node.name,
-                CreationShakeCode.fromTree(node.body),
+                node.body?.let { CreationShakeCode.fromTree(it) },
                 node.isStatic,
                 node.isFinal,
                 false,
@@ -144,35 +162,40 @@ class CreationShakeMethod (
                 false,
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
+                node.isOperator
             ).let {
-                it.lateinitReturnType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
+                it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
+                node.expandedType?.let { it1 -> it.lateinitExpanding().let { run -> parentScope.getType(it1) { t -> run(t) } } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
-                    .forEachIndexed { i, run -> baseProject.getType(node.args[i].type) { t -> run(t) } }
+                    .forEachIndexed { i, run -> parentScope.getType(node.args[i].type) { t -> run(t) } }
                 it
             }
         }
         fun from(clazz: CreationShakeClass, parentScope: CreationShakeScope, node: ShakeFunctionDeclarationNode): CreationShakeMethod {
-            val baseProject = clazz.prj
             return CreationShakeMethod(
                 clazz.prj,
                 clazz.pkg,
                 clazz,
                 parentScope,
                 node.name,
-                CreationShakeCode.fromTree(node.body),
+                node.body?.let { CreationShakeCode.fromTree(it) },
                 node.isStatic,
                 node.isFinal,
-                false,
-                false,
+                node.isAbstract,
+                node.isSynchronized,
                 false,
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
+                node.isOperator
             ).let {
-                it.lateinitReturnType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
+                it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
+                it.lateinitExpanding().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
-                    .forEachIndexed { i, run -> baseProject.getType(node.args[i].type) { t -> run(t) } }
+                    .forEachIndexed { i, run -> parentScope.getType(node.args[i].type) { t -> run(t) } }
                 it
             }
         }

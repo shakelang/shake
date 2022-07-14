@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 object ParserTestUtil {
-    fun parse(source: String, input: String): ShakeFile {
+    fun parse(source: String, input: String): ShakeFileNode {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()
@@ -18,7 +18,7 @@ object ParserTestUtil {
         return parser.parse()
     }
 
-    fun parseStatement(source: String, input: String): ShakeTree {
+    fun parseStatement(source: String, input: String): ShakeBlockNode {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()

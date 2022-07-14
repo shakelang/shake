@@ -6,21 +6,18 @@ import kotlin.jvm.JvmOverloads
 
 class ShakeVariableDeclarationNode @JvmOverloads constructor(
     map: PositionMap,
+    val expandedType: ShakeVariableType?,
     val name: String,
     val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
     val value: ShakeValuedNode? = null,
     val access: ShakeAccessDescriber = ShakeAccessDescriber.PACKAGE,
-    val isInClass: Boolean = false,
-    val isStatic: Boolean = false,
-    val isFinal: Boolean = false
+    val isStatic: Boolean,
+    val isFinal: Boolean,
+    val isNative: Boolean,
+    val isConst: Boolean,
+    val isOverride: Boolean,
+    val isInline: Boolean,
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {
-
-    constructor(map: PositionMap, name: String, assignment: ShakeValuedNode?) : this(
-        map,
-        name,
-        ShakeVariableType.DYNAMIC,
-        assignment
-    )
 
     override fun toJson(): Map<String, *> =
         mapOf(
@@ -29,7 +26,6 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
             "type" to type.toString(),
             "access" to access.toString(),
             "assignment" to this.value?.toJson(),
-            "is_in_class" to isInClass,
             "is_static" to isStatic,
             "is_final" to isFinal
         )

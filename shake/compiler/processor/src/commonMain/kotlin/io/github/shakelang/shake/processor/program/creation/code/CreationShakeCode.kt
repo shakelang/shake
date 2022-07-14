@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.processor.program.creation.code
 
-import io.github.shakelang.shake.parser.node.ShakeTree
+import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
 import io.github.shakelang.shake.processor.program.types.code.ShakeCode
@@ -10,7 +10,7 @@ open class CreationShakeCode(
 ): ShakeCode {
 
     open class ShakeLateProcessCode (
-        open val tree: ShakeTree
+        open val tree: ShakeBlockNode
     ) : CreationShakeCode(emptyList()) {
 
         override lateinit var statements: List<CreationShakeStatement>
@@ -32,7 +32,7 @@ open class CreationShakeCode(
 
         //fun empty() = ShakeCode(emptyList())
 
-        fun fromTree(tree: ShakeTree): CreationShakeCode {
+        fun fromTree(tree: ShakeBlockNode): CreationShakeCode {
             return ShakeLateProcessCode(tree)
         }
     }

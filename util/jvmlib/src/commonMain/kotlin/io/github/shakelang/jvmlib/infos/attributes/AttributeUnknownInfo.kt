@@ -28,7 +28,7 @@ class AttributeUnknownInfo(name: ConstantUtf8Info, override val bytes: ByteArray
         }
 
         fun contentsFromBytes(pool: ConstantPool, bytes: ByteArray, name: ConstantUtf8Info, length: Int): AttributeUnknownInfo {
-            return AttributeUnknownInfo(name, bytes.getBytes(6, length))
+            return AttributeUnknownInfo(name, bytes.getBytes(0, length))
         }
 
         fun fromStream(pool: ConstantPool, stream: DataInputStream): AttributeUnknownInfo {

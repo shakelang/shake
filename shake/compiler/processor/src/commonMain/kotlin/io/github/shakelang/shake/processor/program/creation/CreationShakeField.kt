@@ -2,11 +2,12 @@ package io.github.shakelang.shake.processor.program.creation
 
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeFieldUsage
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
+import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.types.ShakeField
 import io.github.shakelang.shake.processor.program.types.ShakeType
+import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
 open class CreationShakeField (
     override val project: CreationShakeProject,
@@ -20,7 +21,8 @@ open class CreationShakeField (
     override val isPrivate: Boolean,
     override val isProtected: Boolean,
     override val isPublic: Boolean,
-    override val initialValue: CreationShakeValue? = null,
+    override val isNative: Boolean,
+    override val initialValue: CreationShakeValue?,
 ): CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
 
     override val qualifiedName: String
@@ -35,17 +37,20 @@ open class CreationShakeField (
     final override lateinit var type: CreationShakeType
         private set
 
-    override fun assignType(other: ShakeType): ShakeType = type.assignType(other) ?: other
-    override fun additionAssignType(other: ShakeType): ShakeType = type.additionAssignType(other) ?: type
-    override fun subtractionAssignType(other: ShakeType): ShakeType = type.subtractionAssignType(other) ?: type
-    override fun multiplicationAssignType(other: ShakeType): ShakeType = type.multiplicationAssignType(other) ?: type
-    override fun divisionAssignType(other: ShakeType): ShakeType = type.divisionAssignType(other) ?: type
-    override fun modulusAssignType(other: ShakeType): ShakeType = type.modulusAssignType(other) ?: type
-    override fun powerAssignType(other: ShakeType): ShakeType = type.powerAssignType(other) ?: type
-    override fun incrementBeforeType(): CreationShakeType = type.incrementBeforeType() ?: type
-    override fun incrementAfterType(): CreationShakeType = type.incrementAfterType() ?: type
-    override fun decrementBeforeType(): CreationShakeType? = type.decrementBeforeType() ?: type
-    override fun decrementAfterType(): CreationShakeType? = type.decrementAfterType() ?: type
+    final override var expanding: ShakeType? = null
+        private set
+
+    override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType = type.assignType(other, scope) ?: other
+    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.additionAssignType(other, scope) ?: type
+    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.subtractionAssignType(other, scope) ?: type
+    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.multiplicationAssignType(other, scope) ?: type
+    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.divisionAssignType(other, scope) ?: type
+    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.modulusAssignType(other, scope) ?: type
+    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.powerAssignType(other, scope) ?: type
+    override fun incrementBeforeType(scope: ShakeScope): ShakeType = type.incrementBeforeType(scope) ?: type
+    override fun incrementAfterType(scope: ShakeScope): ShakeType = type.incrementAfterType(scope) ?: type
+    override fun decrementBeforeType(scope: ShakeScope): ShakeType? = type.decrementBeforeType(scope) ?: type
+    override fun decrementAfterType(scope: ShakeScope): ShakeType? = type.decrementAfterType(scope) ?: type
 
     override fun access(scope: CreationShakeScope): CreationShakeValue {
         return CreationShakeFieldUsage(scope, this)
@@ -55,6 +60,13 @@ open class CreationShakeField (
         return {
             type = it
             it
+        }
+    }
+
+    fun lateinitExpanding(): (ShakeType) -> CreationShakeType {
+        return {
+            expanding = it
+            type
         }
     }
 
@@ -90,7 +102,9 @@ open class CreationShakeField (
                 false,
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
+                null
             ) {
 
                 override var initialValue: CreationShakeValue? = null
@@ -101,7 +115,8 @@ open class CreationShakeField (
                 }
 
             }.let {
-                it.lateinitType().let { run -> baseProject.getType(node.type) { t -> run(t) } }
+                it.lateinitType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
+                node.expandedType?.let { it1 -> it.lateinitExpanding().let { run -> parentScope.getType(it1) { t -> run(t) } } }
                 it
             }
         }
@@ -118,9 +133,10 @@ open class CreationShakeField (
                 false,
                 node.access == ShakeAccessDescriber.PRIVATE,
                 node.access == ShakeAccessDescriber.PROTECTED,
-                node.access == ShakeAccessDescriber.PUBLIC
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
+                null
             ) {
-
                 override var initialValue: CreationShakeValue? = null
                     private set
 
@@ -129,7 +145,7 @@ open class CreationShakeField (
                 }
 
             }.let {
-                it.lateinitType().let { run -> clazz.prj.getType(node.type) { t -> run(t) } }
+                it.lateinitType().let { run -> clazz.instanceScope.getType(node.type) { t -> run(t) } }
                 it
             }
         }

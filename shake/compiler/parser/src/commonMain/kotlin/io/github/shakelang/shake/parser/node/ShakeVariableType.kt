@@ -1,21 +1,17 @@
 package io.github.shakelang.shake.parser.node
 
 import io.github.shakelang.shason.JSON
-import kotlin.jvm.JvmField
 
 @Suppress("unused")
-class ShakeVariableType {
+open class ShakeVariableType {
     val type: Type
-    val subtype: ShakeIdentifierNode?
 
-    constructor(subtype: ShakeIdentifierNode?) {
+    constructor(subtype: ShakeNamespaceNode?) {
         type = Type.OBJECT
-        this.subtype = subtype
     }
 
     constructor(type: Type) {
         this.type = type
-        subtype = null
     }
 
     override fun toString(): String = JSON.stringify(this.json)
@@ -27,11 +23,28 @@ class ShakeVariableType {
         mapOf(
             "name" to "VariableType",
             "type" to type,
-            "subtype" to subtype,
         )
 
+    class Object (val namespace: ShakeNamespaceNode?) : ShakeVariableType(Type.OBJECT)
+    class Array (val subtype: ShakeVariableType) : ShakeVariableType(Type.ARRAY)
+
     enum class Type {
-        DYNAMIC, BYTE, SHORT, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, CHAR, ARRAY, OBJECT, VOID;
+        DYNAMIC,
+        BYTE,
+        SHORT,
+        INTEGER,
+        LONG,
+        FLOAT,
+        DOUBLE,
+        UNSIGNED_BYTE,
+        UNSIGNED_SHORT,
+        UNSIGNED_INTEGER,
+        UNSIGNED_LONG,
+        BOOLEAN,
+        CHAR,
+        ARRAY,
+        OBJECT,
+        VOID;
 
         override fun toString(): String {
             return name.lowercase()
@@ -39,32 +52,37 @@ class ShakeVariableType {
     }
 
     companion object {
-        @JvmField
+
         val DYNAMIC = ShakeVariableType(Type.DYNAMIC)
-        @JvmField
         val BYTE = ShakeVariableType(Type.BYTE)
-        @JvmField
         val SHORT = ShakeVariableType(Type.SHORT)
-        @JvmField
         val INTEGER = ShakeVariableType(Type.INTEGER)
-        @JvmField
         val LONG = ShakeVariableType(Type.LONG)
-        @JvmField
         val FLOAT = ShakeVariableType(Type.FLOAT)
-        @JvmField
         val DOUBLE = ShakeVariableType(Type.DOUBLE)
-        @JvmField
+        val UNSIGNED_BYTE = ShakeVariableType(Type.BYTE)
+        val UNSIGNED_SHORT = ShakeVariableType(Type.SHORT)
+        val UNSIGNED_INTEGER = ShakeVariableType(Type.INTEGER)
+        val UNSIGNED_LONG = ShakeVariableType(Type.LONG)
         val BOOLEAN = ShakeVariableType(Type.BOOLEAN)
-        @JvmField
         val CHAR = ShakeVariableType(Type.CHAR)
-        @JvmField
-        val ARRAY = ShakeVariableType(Type.ARRAY)
-        @JvmField
-        val OBJECT = ShakeVariableType(Type.OBJECT)
-        @JvmField
         val VOID = ShakeVariableType(Type.VOID)
 
-        fun objectType(subtype: ShakeIdentifierNode): ShakeVariableType =
-            ShakeVariableType(subtype)
+        fun objectType(subtype: ShakeNamespaceNode): ShakeVariableType = Object(subtype)
+
+        fun objectType(subtype: ShakeIdentifierNode): ShakeVariableType {
+            val namespace = mutableListOf<String>()
+            var node: ShakeValuedNode? = subtype
+            while (node is ShakeIdentifierNode) {
+                namespace += node.name
+                node = node.parent
+            }
+            if(node != null) {
+                throw IllegalArgumentException("Invalid subtype for OBJECT type")
+            }
+            return objectType(ShakeNamespaceNode(subtype.map, namespace.reversed().toTypedArray()))
+        }
+
+        fun arrayType(subtype: ShakeVariableType): ShakeVariableType = Array(subtype)
     }
 }

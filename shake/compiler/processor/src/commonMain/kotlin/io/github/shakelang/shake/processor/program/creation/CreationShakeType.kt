@@ -1,41 +1,11 @@
 package io.github.shakelang.shake.processor.program.creation
 
 import io.github.shakelang.shake.processor.program.types.ShakeType
+import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
 abstract class CreationShakeType (
     override val name: String,
 ): ShakeType {
-
-    override fun assignType(other: ShakeType): CreationShakeType? = null
-    override fun additionAssignType(other: ShakeType): CreationShakeType? = null
-    override fun subtractionAssignType(other: ShakeType): CreationShakeType? = null
-    override fun multiplicationAssignType(other: ShakeType): CreationShakeType? = null
-    override fun divisionAssignType(other: ShakeType): CreationShakeType? = null
-    override fun modulusAssignType(other: ShakeType): CreationShakeType? = null
-    override fun powerAssignType(other: ShakeType): CreationShakeType? = null
-    override fun incrementBeforeType(): CreationShakeType? = null
-    override fun incrementAfterType(): CreationShakeType? = null
-    override fun decrementBeforeType(): CreationShakeType? = null
-    override fun decrementAfterType(): CreationShakeType? = null
-
-    abstract override fun additionType(other: ShakeType): CreationShakeType?
-    abstract override fun subtractionType(other: ShakeType): CreationShakeType?
-    abstract override fun multiplicationType(other: ShakeType): CreationShakeType?
-    abstract override fun divisionType(other: ShakeType): CreationShakeType?
-    abstract override fun modulusType(other: ShakeType): CreationShakeType?
-    abstract override fun powerType(other: ShakeType): CreationShakeType?
-    override fun equalsType(other: ShakeType): CreationShakeType? = Primitives.BOOLEAN
-    override fun notEqualsType(other: ShakeType): CreationShakeType? = Primitives.BOOLEAN
-    abstract override fun greaterThanType(other: ShakeType): CreationShakeType?
-    abstract override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType?
-    abstract override fun lessThanType(other: ShakeType): CreationShakeType?
-    abstract override fun lessThanOrEqualType(other: ShakeType): CreationShakeType?
-    abstract override fun andType(other: ShakeType): CreationShakeType?
-    abstract override fun orType(other: ShakeType): CreationShakeType?
-    abstract override fun notType(): CreationShakeType?
-    override fun childType(name: String): CreationShakeType? = null
-    override fun childFunctions(name: String): List<CreationShakeMethod>? = null
-    override fun childInvokable(name: String): List<CreationShakeMethod>? = childFunctions(name)
 
     abstract override val kind: ShakeType.Kind
 
@@ -44,6 +14,21 @@ abstract class CreationShakeType (
     abstract override fun compatibilityDistance(other: ShakeType): Int
 
     abstract override fun toJson(): Map<String, Any?>
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is CreationShakeType) return false
+        return qualifiedName == other.qualifiedName
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + kind.hashCode() + qualifiedName.hashCode()
+        return result
+    }
+
+    override fun toString(): String {
+        return name
+    }
 
     abstract class Primitive (
         name: String,
@@ -113,20 +98,20 @@ abstract class CreationShakeType (
             }
 
             val BOOLEAN: Primitive = object : Primitive("boolean", ShakeType.PrimitiveType.BOOLEAN) {
-                override fun additionType(other: ShakeType): CreationShakeType? = null
-                override fun subtractionType(other: ShakeType): CreationShakeType? = null
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = null
-                override fun divisionType(other: ShakeType): CreationShakeType? = null
-                override fun modulusType(other: ShakeType): CreationShakeType? = null
-                override fun powerType(other: ShakeType): CreationShakeType? = null
+                override fun additionType(other: ShakeType, scope: ShakeScope): CreationShakeType? = null
+                override fun subtractionType(other: ShakeType, scope: ShakeScope): CreationShakeType? = null
+                override fun multiplicationType(other: ShakeType, scope: ShakeScope): CreationShakeType? = null
+                override fun divisionType(other: ShakeType, scope: ShakeScope): CreationShakeType? = null
+                override fun modulusType(other: ShakeType, scope: ShakeScope): CreationShakeType? = null
+                override fun powerType(other: ShakeType, scope: ShakeScope): CreationShakeType? = null
 
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
+                override fun greaterThanType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun greaterThanOrEqualType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun lessThanType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun andType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun orType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun notType(scope: ShakeScope): CreationShakeType = bool()
 
                 override fun castableTo(other: ShakeType): Boolean =
                     other is Primitive && other.type == ShakeType.PrimitiveType.BOOLEAN
@@ -141,40 +126,6 @@ abstract class CreationShakeType (
             }
 
             val BYTE: Primitive = object : Primitive("byte", ShakeType.PrimitiveType.BYTE) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE -> byte()
-                            ShakeType.PrimitiveType.SHORT -> short()
-                            ShakeType.PrimitiveType.INT -> int()
-                            ShakeType.PrimitiveType.LONG -> long()
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE -> short()
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> int()
-                            ShakeType.PrimitiveType.UNSIGNED_INT,
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> long()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.BYTE -> 0
@@ -194,40 +145,6 @@ abstract class CreationShakeType (
             }
 
             val SHORT: Primitive = object : Primitive("short", ShakeType.PrimitiveType.SHORT) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE,
-                            ShakeType.PrimitiveType.SHORT -> short()
-                            ShakeType.PrimitiveType.INT -> int()
-                            ShakeType.PrimitiveType.LONG -> long()
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE -> short()
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> int()
-                            ShakeType.PrimitiveType.UNSIGNED_INT,
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> long()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.SHORT -> 0
@@ -246,40 +163,6 @@ abstract class CreationShakeType (
             }
 
             val INT: Primitive = object : Primitive("int", ShakeType.PrimitiveType.INT) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE,
-                            ShakeType.PrimitiveType.SHORT,
-                            ShakeType.PrimitiveType.INT -> int()
-                            ShakeType.PrimitiveType.LONG -> long()
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE -> int()
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> int()
-                            ShakeType.PrimitiveType.UNSIGNED_INT,
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> long()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.INT -> 0
@@ -297,40 +180,6 @@ abstract class CreationShakeType (
             }
 
             val LONG: Primitive = object : Primitive("long", ShakeType.PrimitiveType.LONG) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE,
-                            ShakeType.PrimitiveType.SHORT,
-                            ShakeType.PrimitiveType.INT,
-                            ShakeType.PrimitiveType.LONG -> long()
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE,
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT,
-                            ShakeType.PrimitiveType.UNSIGNED_INT,
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> long()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.LONG -> 0
@@ -347,40 +196,6 @@ abstract class CreationShakeType (
             }
 
             val FLOAT: Primitive = object : Primitive("float", ShakeType.PrimitiveType.FLOAT) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE,
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT,
-                            ShakeType.PrimitiveType.UNSIGNED_INT,
-                            ShakeType.PrimitiveType.UNSIGNED_LONG,
-                            ShakeType.PrimitiveType.BYTE,
-                            ShakeType.PrimitiveType.SHORT,
-                            ShakeType.PrimitiveType.INT,
-                            ShakeType.PrimitiveType.LONG,
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.FLOAT -> 0
@@ -396,36 +211,6 @@ abstract class CreationShakeType (
             }
 
             val DOUBLE: Primitive = object : Primitive("double", ShakeType.PrimitiveType.DOUBLE) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE -> double()
-                            ShakeType.PrimitiveType.SHORT -> double()
-                            ShakeType.PrimitiveType.INT -> double()
-                            ShakeType.PrimitiveType.LONG -> double()
-                            ShakeType.PrimitiveType.FLOAT -> double()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.DOUBLE -> 0
@@ -440,40 +225,6 @@ abstract class CreationShakeType (
             }
 
             val UNSIGNED_BYTE: Primitive = object : Primitive("unsigned_byte", ShakeType.PrimitiveType.UNSIGNED_BYTE) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE -> short()
-                            ShakeType.PrimitiveType.SHORT -> int()
-                            ShakeType.PrimitiveType.INT -> long()
-                            ShakeType.PrimitiveType.LONG -> long()
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE -> unsignedByte()
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> unsignedShort()
-                            ShakeType.PrimitiveType.UNSIGNED_INT -> unsignedInt()
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> unsignedLong()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.UNSIGNED_BYTE -> 0
@@ -492,44 +243,10 @@ abstract class CreationShakeType (
                     return mapOf("type" to "unsigned_byte")
                 }
 
-                override val qualifiedName: String get() = "UB"
+                override val qualifiedName: String get() = "b"
             }
 
             val UNSIGNED_SHORT: Primitive = object : Primitive("unsigned_short", ShakeType.PrimitiveType.UNSIGNED_SHORT) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE -> short()
-                            ShakeType.PrimitiveType.SHORT -> int()
-                            ShakeType.PrimitiveType.INT -> long()
-                            ShakeType.PrimitiveType.LONG -> long()
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE -> unsignedByte()
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> unsignedShort()
-                            ShakeType.PrimitiveType.UNSIGNED_INT -> unsignedInt()
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> unsignedLong()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.UNSIGNED_SHORT -> 0
@@ -548,44 +265,10 @@ abstract class CreationShakeType (
                     return mapOf("type" to "unsigned_short")
                 }
 
-                override val qualifiedName: String get() = "US"
+                override val qualifiedName: String get() = "s"
             }
 
             val UNSIGNED_INT: Primitive = object : Primitive("unsigned_int", ShakeType.PrimitiveType.UNSIGNED_INT) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE -> int()
-                            ShakeType.PrimitiveType.SHORT -> long()
-                            ShakeType.PrimitiveType.INT -> long()
-                            ShakeType.PrimitiveType.LONG -> long()
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE -> unsignedByte()
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> unsignedShort()
-                            ShakeType.PrimitiveType.UNSIGNED_INT -> unsignedInt()
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> unsignedLong()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.UNSIGNED_INT -> 0
@@ -603,44 +286,10 @@ abstract class CreationShakeType (
                     return mapOf("type" to "unsigned_int")
                 }
 
-                override val qualifiedName: String get() = "UI"
+                override val qualifiedName: String get() = "i"
             }
 
             val UNSIGNED_LONG: Primitive = object : Primitive("unsigned_long", ShakeType.PrimitiveType.UNSIGNED_LONG) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE -> long()
-                            ShakeType.PrimitiveType.SHORT -> long()
-                            ShakeType.PrimitiveType.INT -> long()
-                            ShakeType.PrimitiveType.LONG -> long()
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE -> unsignedByte()
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> unsignedShort()
-                            ShakeType.PrimitiveType.UNSIGNED_INT -> unsignedInt()
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> unsignedLong()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.UNSIGNED_LONG -> 0
@@ -657,44 +306,10 @@ abstract class CreationShakeType (
                     return mapOf("type" to "unsigned_long")
                 }
 
-                override val qualifiedName: String get() = "UJ"
+                override val qualifiedName: String get() = "j"
             }
 
             val CHAR = object : Primitive("char", ShakeType.PrimitiveType.CHAR) {
-                private fun gType(other: ShakeType): CreationShakeType? {
-                    if (other is Primitive) {
-                        return when (other.type) {
-                            ShakeType.PrimitiveType.BYTE,
-                            ShakeType.PrimitiveType.SHORT,
-                            ShakeType.PrimitiveType.INT -> int()
-                            ShakeType.PrimitiveType.LONG -> long()
-                            ShakeType.PrimitiveType.FLOAT -> float()
-                            ShakeType.PrimitiveType.DOUBLE -> double()
-                            ShakeType.PrimitiveType.UNSIGNED_BYTE,
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT,
-                            ShakeType.PrimitiveType.UNSIGNED_INT -> unsignedInt()
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> unsignedLong()
-                            else -> null
-                        }
-                    }
-                    return null
-                }
-
-                override fun additionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun subtractionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun divisionType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun modulusType(other: ShakeType): CreationShakeType? = gType(other)
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.CHAR -> 0
@@ -717,21 +332,6 @@ abstract class CreationShakeType (
             }
 
             val VOID = object : Primitive("void", ShakeType.PrimitiveType.VOID) {
-                override fun additionType(other: ShakeType): CreationShakeType? = null
-                override fun subtractionType(other: ShakeType): CreationShakeType? = null
-                override fun multiplicationType(other: ShakeType): CreationShakeType? = null
-                override fun divisionType(other: ShakeType): CreationShakeType? = null
-                override fun modulusType(other: ShakeType): CreationShakeType? = null
-                override fun powerType(other: ShakeType): CreationShakeType = double()
-
-                override fun greaterThanType(other: ShakeType): CreationShakeType = bool()
-                override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanType(other: ShakeType): CreationShakeType = bool()
-                override fun lessThanOrEqualType(other: ShakeType): CreationShakeType = bool()
-                override fun andType(other: ShakeType): CreationShakeType = bool()
-                override fun orType(other: ShakeType): CreationShakeType = bool()
-                override fun notType(): CreationShakeType = bool()
-
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if(other !is Primitive) -1 else when(other.type) {
                         ShakeType.PrimitiveType.VOID -> 0
@@ -744,33 +344,34 @@ abstract class CreationShakeType (
 
                 override val qualifiedName: String get() = "V"
             }
+
+            val DYNAMIC = object : Primitive("dynamic", ShakeType.PrimitiveType.DYNAMIC) {
+                override fun compatibilityDistance(other: ShakeType): Int =
+                    if(other !is Primitive) -1 else when(other.type) {
+                        ShakeType.PrimitiveType.DYNAMIC -> 0
+                        else -> -1
+                    }
+
+                override fun compatibleTo(other: ShakeType): Boolean {
+                    return other == this
+                }
+
+                override fun castableTo(other: ShakeType): Boolean {
+                    return true
+                }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "dynamic")
+                }
+
+                override val qualifiedName: String get() = "?"
+            }
         }
     }
 
     class Object (
         override val clazz: CreationShakeClass,
-        name: String = clazz.qualifiedName,
-    ) : CreationShakeType(name), ShakeType.Object {
-        override fun additionType(other: ShakeType): CreationShakeType? = null
-        override fun subtractionType(other: ShakeType): CreationShakeType? = null
-        override fun multiplicationType(other: ShakeType): CreationShakeType? = null
-        override fun divisionType(other: ShakeType): CreationShakeType? = null
-        override fun modulusType(other: ShakeType): CreationShakeType? = null
-        override fun powerType(other: ShakeType): CreationShakeType? = null
-        override fun equalsType(other: ShakeType): CreationShakeType? = null
-        override fun notEqualsType(other: ShakeType): CreationShakeType? = null
-        override fun greaterThanType(other: ShakeType): CreationShakeType? = null
-        override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType? = null
-        override fun lessThanType(other: ShakeType): CreationShakeType? = null
-        override fun lessThanOrEqualType(other: ShakeType): CreationShakeType? = null
-        override fun andType(other: ShakeType): CreationShakeType? = null
-        override fun orType(other: ShakeType): CreationShakeType? = null
-        override fun notType(): CreationShakeType? = null
-
-        override fun childType(name: String): CreationShakeType? = clazz.fields.find { it.name == name }?.type
-        override fun childFunctions(name: String): List<CreationShakeMethod> {
-            return clazz.methods.filter { it.name == name }
-        }
+    ) : CreationShakeType(clazz.qualifiedName), ShakeType.Object {
 
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.OBJECT
@@ -799,21 +400,6 @@ abstract class CreationShakeType (
         name: String,
         val elementType: CreationShakeType
     ) : CreationShakeType(name) {
-        override fun additionType(other: ShakeType): CreationShakeType? = null
-        override fun subtractionType(other: ShakeType): CreationShakeType? = null
-        override fun multiplicationType(other: ShakeType): CreationShakeType? = null
-        override fun divisionType(other: ShakeType): CreationShakeType? = null
-        override fun modulusType(other: ShakeType): CreationShakeType? = null
-        override fun powerType(other: ShakeType): CreationShakeType? = null
-        override fun equalsType(other: ShakeType): CreationShakeType? = null
-        override fun notEqualsType(other: ShakeType): CreationShakeType? = null
-        override fun greaterThanType(other: ShakeType): CreationShakeType? = null
-        override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType? = null
-        override fun lessThanType(other: ShakeType): CreationShakeType? = null
-        override fun lessThanOrEqualType(other: ShakeType): CreationShakeType? = null
-        override fun andType(other: ShakeType): CreationShakeType? = null
-        override fun orType(other: ShakeType): CreationShakeType? = null
-        override fun notType(): CreationShakeType? = null
 
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.ARRAY
@@ -843,21 +429,6 @@ abstract class CreationShakeType (
         val parameters: List<CreationShakeParameter>,
         val returnType: CreationShakeType
     ) : CreationShakeType(name) {
-        override fun additionType(other: ShakeType): CreationShakeType? = null
-        override fun subtractionType(other: ShakeType): CreationShakeType? = null
-        override fun multiplicationType(other: ShakeType): CreationShakeType? = null
-        override fun divisionType(other: ShakeType): CreationShakeType? = null
-        override fun modulusType(other: ShakeType): CreationShakeType? = null
-        override fun powerType(other: ShakeType): CreationShakeType? = null
-        override fun equalsType(other: ShakeType): CreationShakeType? = null
-        override fun notEqualsType(other: ShakeType): CreationShakeType? = null
-        override fun greaterThanType(other: ShakeType): CreationShakeType? = null
-        override fun greaterThanOrEqualType(other: ShakeType): CreationShakeType? = null
-        override fun lessThanType(other: ShakeType): CreationShakeType? = null
-        override fun lessThanOrEqualType(other: ShakeType): CreationShakeType? = null
-        override fun andType(other: ShakeType): CreationShakeType? = null
-        override fun orType(other: ShakeType): CreationShakeType? = null
-        override fun notType(): CreationShakeType? = null
 
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.LAMBDA
@@ -903,6 +474,7 @@ abstract class CreationShakeType (
         val ULONG = UNSIGNED_LONG
         val CHAR = Primitive.CHAR
         val VOID = Primitive.VOID
+        val DYNAMIC = Primitive.DYNAMIC
     }
 
     companion object {
@@ -910,7 +482,7 @@ abstract class CreationShakeType (
             return Array("${elementType.name}[]", elementType)
         }
         fun objectType(clazz: CreationShakeClass): CreationShakeType {
-            return Object(clazz, clazz.name)
+            return Object(clazz)
         }
     }
 }

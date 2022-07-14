@@ -1,12 +1,13 @@
 package io.github.shakelang.shake.processor.program.creation.code.values
 
+import io.github.shakelang.shake.processor.program.creation.CreationShakeProject
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeBooleanLiteral
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeCharacterLiteral
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeDoubleLiteral
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeIntLiteral
+import io.github.shakelang.shake.processor.program.types.code.values.*
 
-class CreationShakeDoubleLiteral(override val value: Double) : CreationShakeValue, ShakeDoubleLiteral {
+class CreationShakeDoubleLiteral(
+    override val project: CreationShakeProject,
+    override val value: Double
+) : CreationShakeValue, ShakeDoubleLiteral {
 
     override val type: CreationShakeType
         get() = CreationShakeType.Primitives.DOUBLE
@@ -22,7 +23,10 @@ class CreationShakeDoubleLiteral(override val value: Double) : CreationShakeValu
 
 }
 
-class CreationShakeIntegerLiteral(override val value: Int) : CreationShakeValue, ShakeIntLiteral {
+class CreationShakeIntegerLiteral(
+    override val project: CreationShakeProject,
+    override val value: Int
+) : CreationShakeValue, ShakeIntLiteral {
 
     override val type: CreationShakeType
         get() = CreationShakeType.Primitives.INT
@@ -38,7 +42,10 @@ class CreationShakeIntegerLiteral(override val value: Int) : CreationShakeValue,
 
 }
 
-class CreationShakeBooleanLiteral(override val value: Boolean) : CreationShakeValue, ShakeBooleanLiteral {
+class CreationShakeBooleanLiteral(
+    override val project: CreationShakeProject,
+    override val value: Boolean
+) : CreationShakeValue, ShakeBooleanLiteral {
 
     override val type: CreationShakeType
         get() = CreationShakeType.Primitives.BOOLEAN
@@ -52,14 +59,12 @@ class CreationShakeBooleanLiteral(override val value: Boolean) : CreationShakeVa
         )
     }
 
-    companion object {
-        val TRUE = CreationShakeBooleanLiteral(true)
-        val FALSE = CreationShakeBooleanLiteral(false)
-    }
-
 }
 
-class CreationShakeCharacterLiteral(override val value: Char) : CreationShakeValue, ShakeCharacterLiteral {
+class CreationShakeCharacterLiteral(
+    override val project: CreationShakeProject,
+    override val value: Char
+) : CreationShakeValue, ShakeCharacterLiteral {
 
     override val type: CreationShakeType
         get() = CreationShakeType.Primitives.CHAR
@@ -69,6 +74,24 @@ class CreationShakeCharacterLiteral(override val value: Char) : CreationShakeVal
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "char",
+            "value" to value
+        )
+    }
+
+}
+
+class CreationShakeStringLiteral(
+    override val project: CreationShakeProject,
+    override val value: String
+) : CreationShakeValue, ShakeStringLiteral {
+
+    override val type: CreationShakeType get() = project.cores.String
+
+    override fun toString(): String = value
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "string",
             "value" to value
         )
     }

@@ -30,6 +30,7 @@ abstract class ShakeLexingBase(
         else if (Characters.isNumberCharacter(next)) makeNumber()
         else if (Characters.isIdentifierStartCharacter(next)) makeIdentifier()
         else if (next == '"') makeString()
+        else if (next == '`') makeIdentifier2()
         else if (next == '\'') makeCharacter()
         else if (next == '/' && peek == '/') {
             singleLineComment()
@@ -108,6 +109,8 @@ abstract class ShakeLexingBase(
         else if (next == ')') ShakeToken(ShakeTokenType.RPAREN, input.position)
         else if (next == '{') ShakeToken(ShakeTokenType.LCURL, input.position)
         else if (next == '}') return ShakeToken(ShakeTokenType.RCURL, input.position)
+        else if (next == '[') ShakeToken(ShakeTokenType.LSQBR, input.position)
+        else if (next == ']') ShakeToken(ShakeTokenType.RSQBR, input.position)
         else throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
     }
 
@@ -139,6 +142,7 @@ abstract class ShakeLexingBase(
         val end = input.position
         return ShakeToken(
             when (result) {
+                "abstract" -> ShakeTokenType.KEYWORD_ABSTRACT
                 "as" -> ShakeTokenType.KEYWORD_AS
                 "boolean" -> ShakeTokenType.KEYWORD_BOOLEAN
                 "byte" -> ShakeTokenType.KEYWORD_BYTE
@@ -150,6 +154,7 @@ abstract class ShakeLexingBase(
                 "double" -> ShakeTokenType.KEYWORD_DOUBLE
                 "dynamic" -> ShakeTokenType.KEYWORD_DYNAMIC
                 "else" -> ShakeTokenType.KEYWORD_ELSE
+                "enum" -> ShakeTokenType.KEYWORD_ENUM
                 "extends" -> ShakeTokenType.KEYWORD_EXTENDS
                 "false" -> ShakeTokenType.KEYWORD_FALSE
                 "final" -> ShakeTokenType.KEYWORD_FINAL
@@ -159,22 +164,68 @@ abstract class ShakeLexingBase(
                 "if" -> ShakeTokenType.KEYWORD_IF
                 "implements" -> ShakeTokenType.KEYWORD_IMPLEMENTS
                 "import" -> ShakeTokenType.KEYWORD_IMPORT
+                "in" -> ShakeTokenType.KEYWORD_IN
+                "inline" -> ShakeTokenType.KEYWORD_INLINE
+                "instanceof" -> ShakeTokenType.KEYWORD_INSTANCEOF
                 "int" -> ShakeTokenType.KEYWORD_INT
+                "interface" -> ShakeTokenType.KEYWORD_INTERFACE
                 "long" -> ShakeTokenType.KEYWORD_LONG
+                "native" -> ShakeTokenType.KEYWORD_NATIVE
                 "new" -> ShakeTokenType.KEYWORD_NEW
+                "null" -> ShakeTokenType.KEYWORD_NULL
+                "object" -> ShakeTokenType.KEYWORD_OBJECT
+                "operator" -> ShakeTokenType.KEYWORD_OPERATOR
+                "override" -> ShakeTokenType.KEYWORD_OVERRIDE
+                "package" -> ShakeTokenType.KEYWORD_PACKAGE
                 "private" -> ShakeTokenType.KEYWORD_PRIVATE
                 "protected" -> ShakeTokenType.KEYWORD_PROTECTED
                 "public" -> ShakeTokenType.KEYWORD_PUBLIC
                 "return" -> ShakeTokenType.KEYWORD_RETURN
                 "short" -> ShakeTokenType.KEYWORD_SHORT
                 "static" -> ShakeTokenType.KEYWORD_STATIC
+                "super" -> ShakeTokenType.KEYWORD_SUPER
+                "synchronized" -> ShakeTokenType.KEYWORD_SYNCHRONIZED
+                "this" -> ShakeTokenType.KEYWORD_THIS
                 "true" -> ShakeTokenType.KEYWORD_TRUE
-                "var", "let" -> ShakeTokenType.KEYWORD_VAR
+                "unsigned" -> ShakeTokenType.KEYWORD_UNSIGNED
                 "void" -> ShakeTokenType.KEYWORD_VOID
                 "while" -> ShakeTokenType.KEYWORD_WHILE
                 else -> return ShakeToken(ShakeTokenType.IDENTIFIER, identifier.toString(), end)
             }, end
         )
+    }
+
+    private fun makeIdentifier2(): ShakeToken {
+        val string = StringBuilder()
+        if (input.actual() == '`') {
+            while (input.hasNext() && input.next() != '`') {
+                if (input.actual() == '\\') {
+                    when (input.next()) {
+                        't' -> string.append("\\t")
+                        'b' -> string.append("\\b")
+                        'n' -> string.append("\\n")
+                        'r' -> string.append("\\r")
+                        'f' -> string.append("\\f")
+                        '\'' -> string.append("\\'")
+                        '"' -> string.append("\\\"")
+                        '\\' -> string.append("\\\\")
+                        'u' -> {
+                            string.append("\\u")
+                            var i = 0
+                            while (i < 4) {
+                                val c = input.next()
+                                if (!Characters.isHexCharacter(c)) throw LexerError("Expecting hex char")
+                                string.append(c)
+                                i++
+                            }
+                        }
+                        else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
+                    }
+                } else string.append(input.actual())
+            }
+            if (input.actual() != '`') throw LexerError("Token name must be enclosed in '`'")
+        }
+        return ShakeToken(ShakeTokenType.IDENTIFIER, string.toString(), input.position)
     }
 
     private fun makeString(): ShakeToken {

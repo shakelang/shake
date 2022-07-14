@@ -12,6 +12,7 @@ open class CreationShakeConstructor (
     override val isPrivate: Boolean,
     override val isProtected: Boolean,
     override val isPublic: Boolean,
+    override val isNative: Boolean,
     override val name: String? = null
 ): ShakeConstructor {
     final override lateinit var parameters: List<CreationShakeParameter>
@@ -25,8 +26,9 @@ open class CreationShakeConstructor (
         isPrivate: Boolean,
         isProtected: Boolean,
         isPublic: Boolean,
+        isNative: Boolean,
         name: String? = null
-    ): this(clazz, body, isStrict, isPrivate, isProtected, isPublic, name) {
+    ): this(clazz, body, isStrict, isPrivate, isProtected, isPublic, isNative, name) {
         this.parameters = parameters
     }
 
@@ -45,9 +47,9 @@ open class CreationShakeConstructor (
         if(body is CreationShakeCode.ShakeLateProcessCode) (body as CreationShakeCode.ShakeLateProcessCode).process(scope)
     }
 
-    inner class ShakeConstructorScope : CreationShakeScope {
+    inner class ShakeConstructorScope : CreationShakeScope() {
         override val parent: CreationShakeScope = clazz.instanceScope
-
+        override val project get() = clazz.prj
         val variables = mutableListOf<CreationShakeVariableDeclaration>()
 
         override fun get(name: String): CreationShakeAssignable? {

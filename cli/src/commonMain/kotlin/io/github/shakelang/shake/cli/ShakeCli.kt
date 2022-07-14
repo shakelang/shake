@@ -14,7 +14,7 @@ import io.github.shakelang.shake.interpreter.Interpreter
 import io.github.shakelang.shake.js.ShakeJsGenerator
 import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.ShakeParser
-import io.github.shakelang.shake.parser.node.ShakeTree
+import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.processor.ShakePackageBasedProcessor
 import io.github.shakelang.shason.json
 import kotlin.jvm.JvmName
@@ -123,7 +123,7 @@ fun main(args: Array<String>) {
  * This function parses a [CharacterInputStream] into a Tree
  *
  * @param input the [CharacterInputStream] to parse
- * @return the parsed [ShakeTree]
+ * @return the parsed [ShakeBlockNode]
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
@@ -152,7 +152,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
 }
 
 /**
- * This function executes a [ShakeTree] using a specified generator
+ * This function executes a [ShakeBlockNode] using a specified generator
  *
  * @param pr the [ParseResult] to execute
  * @param generator the generator to use (just give the name of it)
@@ -190,4 +190,4 @@ private fun writeFile(f: File, content: String) {
     f.write(content)
 }
 
-private class ParseResult(val tree: ShakeTree, val map: PositionMap)
+private class ParseResult(val tree: ShakeBlockNode, val map: PositionMap)

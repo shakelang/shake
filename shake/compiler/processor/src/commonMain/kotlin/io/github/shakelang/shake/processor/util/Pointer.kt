@@ -40,7 +40,7 @@ interface Pointer<out T> {
 
             @Suppress("UNCHECKED_CAST")
             override val value: T
-                get() = if(isInitialized) realValue as T else throw IllegalStateException("late init pointer is not initialized")
+                get() = if(isInitialized) realValue as T else throw IllegalStateException("lateinit pointer is not initialized")
 
             override fun init(value: T) {
                 if(isInitialized) throw IllegalStateException("late init pointer is already initialized")

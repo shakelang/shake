@@ -13,6 +13,8 @@
 | class[]                | Classes (Contains Class Objects)                    | ? bytes      |
 | method_amount          | Amount of methods                                   | 4 bytes      |
 | method[]               | Methods (Contains Method Objects)                   | ? bytes      |
+| constructor_amount     | Amount of constructors                              | 4 bytes      |
+| constructor[]          | Constructors (Contains Constructor Objects)         | ? bytes      |
 | field_amount           | Amount of fields                                    | 4 bytes      |
 | field[]                | Fields (Contains Field Objects)                     | ? bytes      |
 | project_package_amount | Amount of project packages                          | 4 bytes      |
@@ -49,33 +51,46 @@
 | field_references[]   | References to fields in the package          | 4 bytes each |
 
 ## Classes
-| Key                   | Description                               | Byte Size    |
-|-----------------------|-------------------------------------------|--------------|
-| name                  | Class name (index to constant pool)       | 4 bytes      |
-| attributes            | Attributes of the class                   | 1 byte       |
-| super_class           | Super class name (index to constant pool) | 4 bytes      |
-| interfaces_amount     | Amount of interfaces in the class         | 4 bytes      |
-| interfaces_references | References to interfaces in the class     | 4 bytes each |
-| subclass_amount       | Amount of subclasses of this class        | 4 bytes      |
-| subclass_references   | References to subclasses of this class    | 4 bytes each |
-| method_amount         | Amount of methods in this class           | 4 bytes      |
-| method_references     | References to methods in this class       | 4 bytes each |
-| field_amount          | Amount of fields in this class            | 4 bytes      |
-| field_references      | References to fields in this class        | 4 bytes each |
+| Key                    | Description                               | Byte Size    |
+|------------------------|-------------------------------------------|--------------|
+| name                   | Class name (index to constant pool)       | 4 bytes      |
+| attributes             | Attributes of the class                   | 2 bytes      |
+| super_class            | Super class name (index to constant pool) | 4 bytes      |
+| interfaces_amount      | Amount of interfaces in the class         | 4 bytes      |
+| interfaces_references  | References to interfaces in the class     | 4 bytes each |
+| subclass_amount        | Amount of subclasses of this class        | 4 bytes      |
+| subclass_references    | References to subclasses of this class    | 4 bytes each |
+| method_amount          | Amount of methods in this class           | 4 bytes      |
+| method_references      | References to methods in this class       | 4 bytes each |
+| constructor_amount     | Amount of constructors in this class      | 4 bytes      |
+| constructor_references | References to constructors in this class  | 4 bytes each |
+| field_amount           | Amount of fields in this class            | 4 bytes      |
+| field_references       | References to fields in this class        | 4 bytes each |
 
 ## Methods
-| Key               | Description                                   | Byte Size    |
-|-------------------|-----------------------------------------------|--------------|
-| name              | Method name (index to constant pool)          | 4 bytes      |
-| attributes        | Attributes of the method                      | 1 byte       |
-| return_type       | Return type (index to constant pool)          | 4 bytes      |
-| parameter_amount  | Amount of parameters in this method           | 4 bytes      |
-| parameter_names[] | Parameter names (index to constant pool)      | 4 bytes each |
-| parameter_types[] | Parameter types (index to constant pool)      | 4 bytes each |
+| Key               | Description                              | Byte Size    |
+|-------------------|------------------------------------------|--------------|
+| name              | Method name (index to constant pool)     | 4 bytes      |
+| attributes        | Attributes of the method                 | 2 bytes      |
+| return_type       | Return type (index to constant pool)     | 4 bytes      |
+| parameter_amount  | Amount of parameters in this method      | 4 bytes      |
+| parameter_names[] | Parameter names (index to constant pool) | 4 bytes each |
+| parameter_types[] | Parameter types (index to constant pool) | 4 bytes each |
+| expanding         | Expanded Type (String)                   | 4 bytes      |
+
+## Constructors
+| Key               | Description                               | Byte Size    |
+|-------------------|-------------------------------------------|--------------|
+| name              | Constructor name (index to constant pool) | 4 bytes      |
+| attributes        | Attributes of the constructor             | 2 bytes      |
+| parameter_amount  | Amount of parameters in this constructor  | 4 bytes      |
+| parameter_names[] | Parameter names (index to constant pool)  | 4 bytes each |
+| parameter_types[] | Parameter types (index to constant pool)  | 4 bytes each |
 
 ## Fields
-| Key                  | Description                         | Byte Size    |
-|----------------------|-------------------------------------|--------------|
-| name                 | Field name (index to constant pool) | 4 bytes      |
-| attributes           | Attributes of the field             | 1 byte       |
-| type                 | Field type (index to constant pool) | 4 bytes      |
+| Key                  | Description                         | Byte Size |
+|----------------------|-------------------------------------|-----------|
+| name                 | Field name (index to constant pool) | 4 bytes   |
+| attributes           | Attributes of the field             | 2 bytes   |
+| type                 | Field type (index to constant pool) | 4 bytes   |
+| expanding            | Expanded Type (String)              | 4 bytes   |

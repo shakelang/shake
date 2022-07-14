@@ -4,6 +4,7 @@ import io.github.shakelang.shake.processor.program.creation.CreationShakeDeclara
 import io.github.shakelang.shake.processor.program.creation.CreationShakeField
 import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+import io.github.shakelang.shake.processor.program.types.ShakeProject
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.values.*
 
@@ -18,6 +19,9 @@ open class CreationShakeClassFieldUsage(
     final override val declaration: CreationShakeField,
     override val receiver: CreationShakeValue? = null
 ) : CreationShakeUsage(), ShakeClassFieldUsage {
+
+    override val project: ShakeProject
+        get() = scope.project
 
     override val name get() = declaration.name
     override val type get() = declaration.type
@@ -38,6 +42,9 @@ open class CreationShakeStaticClassFieldUsage(
     final override val declaration: CreationShakeField
 ) : CreationShakeUsage(), ShakeStaticClassFieldUsage {
 
+    override val project: ShakeProject
+        get() = scope.project
+
     override val name get() = declaration.name
     override val type get() = declaration.type
 
@@ -53,9 +60,12 @@ open class CreationShakeStaticClassFieldUsage(
 
 class CreationShakeFieldUsage(
     override val scope: CreationShakeScope,
-    final override val declaration: CreationShakeField,
+    override val declaration: CreationShakeField,
     override val receiver: CreationShakeValue? = null
 ) : CreationShakeUsage(), ShakeFieldUsage {
+
+    override val project: ShakeProject
+        get() = scope.project
 
     override val name get() = declaration.name
     override val type get() = declaration.type
@@ -94,6 +104,10 @@ open class CreationShakeVariableUsage(
     override val scope: CreationShakeScope,
     override val declaration: CreationShakeVariableDeclaration
 ) : CreationShakeUsage(), ShakeVariableUsage {
+
+    override val project: ShakeProject
+        get() = scope.project
+
     override val type get() = declaration.type
     override val name get() = declaration.name
 
