@@ -5,6 +5,7 @@ description = "Shake"
 plugins {
     id("org.jetbrains.dokka")
     kotlin("multiplatform") apply false
+    id("org.jetbrains.kotlinx.kover")
 }
 
 repositories {
@@ -81,3 +82,4 @@ tasks.register("dokka") {
     group = "documentation"
     dependsOn("dokkaHtml", "dokkaGfm")
 }
+

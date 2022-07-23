@@ -57,6 +57,18 @@ node {
 }
 
 kotlin {
+
+    js {
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useFirefoxHeadless()
+                }
+            }
+        }
+    }
+
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10")
         testImplementation(kotlin("test"))

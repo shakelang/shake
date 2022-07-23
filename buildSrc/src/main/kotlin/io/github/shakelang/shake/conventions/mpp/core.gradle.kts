@@ -64,3 +64,11 @@ kotlin {
     }
     */
 }
+
+tasks.named("jvmTest") {
+    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+        isDisabled = false
+        binaryReportFile.set(file("$buildDir/reports/kover/result.bin"))
+        includes = listOf("*")
+    }
+}

@@ -1,8 +1,5 @@
 package io.github.shakelang.parseutils.environment
 
-import kotlin.jvm.JvmStatic
-
-
 /**
  * Describes an Environment of the multiplatform project execution
  *
@@ -61,7 +58,6 @@ abstract class Environment (
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        @JvmStatic
         fun getEnvironment(): Environment = getRunningEnvironment()
 
     }
