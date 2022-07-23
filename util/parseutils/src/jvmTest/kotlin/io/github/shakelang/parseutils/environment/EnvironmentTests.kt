@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertSame
 
-class Environment {
+class EnvironmentTests {
 
     @Test
     fun test() {
