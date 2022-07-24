@@ -19,7 +19,7 @@ interface PositionMap {
 
         override fun resolve(index: Int): Position {
             for (i in lineSeparators.indices) {
-                if (index < lineSeparators[i]) {
+                if (index < lineSeparators[i] + 1) {
                     return if (i == 0) Position(
                         this,
                         index,
@@ -35,7 +35,7 @@ interface PositionMap {
             }
             return Position(
                 this, index,
-                index - (if (lineSeparators.size > 0) lineSeparators[lineSeparators.size - 1] else 0) + 1,
+                index - (if (lineSeparators.size > 0) lineSeparators[lineSeparators.size - 1] else 0),
                 lineSeparators.size + 1
             )
         }
