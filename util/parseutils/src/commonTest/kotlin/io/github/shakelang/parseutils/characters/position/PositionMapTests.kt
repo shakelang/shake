@@ -28,7 +28,7 @@ class PositionMapTests {
     @Test
     fun testImplementationWithoutNewline() {
         val src = CharacterSource.from("abc", "PositionMapTests#testImplementationWithoutNewline")
-        val map = PositionMap.PositionMapImpl(src, intArrayOf(3, 7))
+        val map = PositionMap.PositionMapImpl(src, intArrayOf())
 
         assertEquals(Position(map, 0, 1, 1), map.resolve(0))
         assertEquals(Position(map, 1, 2, 1), map.resolve(1))
