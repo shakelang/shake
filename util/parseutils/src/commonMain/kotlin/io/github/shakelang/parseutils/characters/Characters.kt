@@ -1,8 +1,6 @@
 package io.github.shakelang.parseutils.characters
 
 import kotlin.js.JsName
-import kotlin.jvm.JvmStatic
-
 
 /**
  * Utilities for wirking with characters
@@ -14,7 +12,6 @@ object Characters {
     /**
      * All characters that are used to encode base16 integers (for encoding and decoding unicodes)
      */
-    @JvmStatic
     private val base16chars = "0123456789abcdef".toCharArray()
 
     /**
@@ -22,7 +19,6 @@ object Characters {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
     @JsName("isHexCharacter")
     fun isHexCharacter(c: Char): Boolean = c in '0'..'9' || c in 'A'..'F' || c in 'a'..'f'
 
@@ -31,7 +27,6 @@ object Characters {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
     @JsName("isNumberCharacter")
     fun isNumberCharacter(c: Char): Boolean = c in '0'..'9'
 
@@ -40,7 +35,6 @@ object Characters {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
     @JsName("isNumberOrDotCharacter")
     fun isNumberOrDotCharacter(c: Char): Boolean = c in '0'..'9' || c == '.'
 
@@ -49,7 +43,6 @@ object Characters {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
     @JsName("isWhitespaceCharacter")
     fun isWhitespaceCharacter(c: Char): Boolean = c == '\r' || c == '\t' || c == ' '
 
@@ -58,7 +51,6 @@ object Characters {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
     @JsName("isIdentifierCharacter")
     fun isIdentifierCharacter(c: Char): Boolean = c in '0'..'9' || c in 'A'..'Z' || c in 'a'..'z' || c == '_'
 
@@ -67,7 +59,6 @@ object Characters {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
     @JsName("isIdentifierStartCharacter")
     fun isIdentifierStartCharacter(c: Char): Boolean = c in 'A'..'Z' || c in 'a'..'z' || c == '_'
 
@@ -84,7 +75,6 @@ object Characters {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
     @JsName("parseString")
     fun parseString(s: String): String {
 
@@ -115,10 +105,11 @@ object Characters {
                         // Get the next 4 hex characters
                         val to = i + 4
                         while (i < to) {
-                            c = s[++i]
+                            if(s.length <= ++i) throw IllegalArgumentException("Invalid unicode escape sequence")
+                            c = s[i]
 
                             // Throw an error if the character is not a hex character
-                            if (!isHexCharacter(c)) throw Error("Expecting hex char, got $c")
+                            if (!isHexCharacter(c)) throw IllegalArgumentException("Expecting hex char, got $c")
 
                             unicode.append(c)
 
@@ -129,7 +120,7 @@ object Characters {
                     }
 
                     // When we don't know the escape sequence we throw an error
-                    else -> throw Error("Unknown escape sequence '\\${s[i]}'")
+                    else -> throw IllegalArgumentException("Unknown escape sequence '\\${s[i]}'")
                 }
 
 
@@ -152,16 +143,15 @@ object Characters {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
-    fun escapeString(str: String): String = str.toCharArray().joinToString("") { escapeString(it) }
+    fun escapeString(str: String): String = str.toCharArray().joinToString("") { escapeCharacter(it) }
 
     /**
      * Escape a character
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
-    fun escapeString(c: Char): String {
+    fun escapeCharacter(c: Char): String {
+        println(c.code)
         return when {
             c == '\\' -> "\\\\"
             c == '\t' -> "\\t"
@@ -170,7 +160,7 @@ object Characters {
             c == '\r' -> "\\r"
             c == '\'' -> "\\'"
             c == '\"' -> "\\\""
-            c.code > 255 -> toUnicode(c)
+            c.code < 0x20 || c.code > 0x7e -> toUnicode(c)
             else -> c.toString()
         }
     }
@@ -180,33 +170,29 @@ object Characters {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
-    fun toUnicode(char: Char) = "\\u${toBase16(char.code)}"
+    fun toUnicode(char: Char) = "\\u${toBase16(char.code, 4)}"
 
     /**
      * Get a base 16 char equivalent of an integer
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;]
      */
-    @JvmStatic
     fun getBase16Character(number: Int) =
-        if (number !in 0..15) throw Error("Input $number should be in range 1..15") else base16chars[number]
+        if (number !in 0..15) throw IllegalArgumentException("Input $number should be in range 0..15") else base16chars[number]
 
     /**
      * Generate number to base 16
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    @JvmStatic
-    fun toBase16(number: Int): String {
-        var i = number
-        var x = 65536
-        var base16chars = ""
-        while (x > 1) {
-            base16chars += getBase16Character(i / x)
-            i %= x
-            x /= 16
+    fun toBase16(number: Int, digits: Int = 1): String {
+        val sb = StringBuilder()
+        var n = number
+        while (n > 0) {
+            sb.append(getBase16Character(n % 16))
+            n /= 16
         }
-        return base16chars
+        while (sb.length < digits) sb.append('0')
+        return sb.reverse().toString()
     }
 }

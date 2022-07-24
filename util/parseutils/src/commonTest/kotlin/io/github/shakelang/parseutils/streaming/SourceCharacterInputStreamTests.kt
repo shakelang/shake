@@ -1,6 +1,7 @@
-package io.github.shakelang.parseutils.characters.streaming
+package io.github.shakelang.parseutils.streaming
 
 import io.github.shakelang.parseutils.characters.source.CharacterSource
+import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import kotlin.test.*
 
 /**
