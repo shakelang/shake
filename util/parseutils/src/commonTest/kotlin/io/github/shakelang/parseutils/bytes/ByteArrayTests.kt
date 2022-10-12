@@ -737,7 +737,7 @@ class ByteArrayTests {
         val byteArray = byteArrayOf(0x00u, 0xFFu)
         val stream = byteArray.stream()
         assertEquals(0x00, stream.read())
-        assertEquals(-1, stream.read())
+        assertEquals(0xFF, stream.read())
     }
 
     @Test
@@ -745,15 +745,15 @@ class ByteArrayTests {
         val byteArray = byteArrayOf(0x00u, 0xFFu)
         val stream = byteArray.dataStream()
         assertEquals(0x00, stream.read())
-        assertEquals(-1, stream.read())
+        assertEquals(0xFF, stream.read())
     }
 
     @Test
     fun testByteArrayCountingInputStream() {
-        val byteArray = byteArrayOf(0x00u, 0xFFu)
+        val byteArray = byteArrayOf(0x00, -1)
         val stream = byteArray.countingStream()
         assertEquals(0x00, stream.read())
-        assertEquals(-1, stream.read())
+        assertEquals(0xFF, stream.read())
         assertEquals(2, stream.getCount())
     }
 
