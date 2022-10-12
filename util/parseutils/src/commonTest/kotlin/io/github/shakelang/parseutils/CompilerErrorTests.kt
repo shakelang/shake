@@ -1,5 +1,7 @@
 package io.github.shakelang.parseutils
 
+import io.github.shakelang.colorlib.functional.invert
+import io.github.shakelang.colorlib.functional.red
 import io.github.shakelang.parseutils.characters.position.Position
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.source.CharacterSource
@@ -21,8 +23,7 @@ class CompilerErrorTests {
         assertEquals("1  012345678901234567890123456789", error.marker.preview)
         assertEquals("             ^", error.marker.marker)
         assertEquals(
-            "1  0123456789" + Formatting.INVERT + Formatting.FGColor.RED + "0" +
-                    Formatting.RESET + "1234567890123456789", error.marker.colorPreview
+            "1  0123456789" + invert(red("0")) + "1234567890123456789", error.marker.colorPreview
         )
     }
 
@@ -41,8 +42,7 @@ class CompilerErrorTests {
         assertEquals("1  0123456789012345678901234567890...+28", error.marker.preview)
         assertEquals("             ^", error.marker.marker)
         assertEquals(
-            "1  0123456789" + Formatting.INVERT + Formatting.FGColor.RED + "0" +
-                    Formatting.RESET + "12345678901234567890...+28", error.marker.colorPreview
+            "1  0123456789" + invert(red("0")) + "12345678901234567890...+28", error.marker.colorPreview
         )
     }
 
@@ -59,8 +59,7 @@ class CompilerErrorTests {
         assertEquals("1  +18...890123456789012345678901234567890123456789", error.marker.preview)
         assertEquals("                              ^", error.marker.marker)
         assertEquals(
-            "1  +18...890123456789012345678" + Formatting.INVERT + Formatting.FGColor.RED + "9" +
-                    Formatting.RESET + "01234567890123456789", error.marker.colorPreview
+            "1  +18...890123456789012345678" + invert(red("9")) + "01234567890123456789", error.marker.colorPreview
         )
     }
 
@@ -77,8 +76,8 @@ class CompilerErrorTests {
         assertEquals("1  +28...890123456789012345678901234567890123456789...+29", error.marker.preview)
         assertEquals("                              ^", error.marker.marker)
         assertEquals(
-            "1  +28...890123456789012345678" + Formatting.INVERT + Formatting.FGColor.RED + "9" +
-                    Formatting.RESET + "01234567890123456789...+29", error.marker.colorPreview
+            "1  +28...890123456789012345678" + invert(red("9" ))
+                    + "01234567890123456789...+29", error.marker.colorPreview
         )
     }
 
@@ -96,8 +95,7 @@ class CompilerErrorTests {
         assertEquals("1  012345678901234567890123456789012345678", error.marker.preview)
         assertEquals("            ^^^^^^", error.marker.marker)
         assertEquals(
-            "1  012345678" + Formatting.INVERT + Formatting.FGColor.RED + "901234" +
-                    Formatting.RESET + "567890123456789012345678", error.marker.colorPreview
+            "1  012345678" + invert(red("901234")) + "567890123456789012345678", error.marker.colorPreview
         )
     }
 
@@ -124,8 +122,7 @@ class CompilerErrorTests {
         assertEquals("3  012345678901234567890123456789012...+7", error.marker.preview)
         assertEquals("             ^", error.marker.marker)
         assertEquals(
-            "3  0123456789" + Formatting.INVERT + Formatting.FGColor.RED + "0" +
-                    Formatting.RESET + "1234567890123456789012...+7", error.marker.colorPreview
+            "3  0123456789" + invert(red("0")) + "1234567890123456789012...+7", error.marker.colorPreview
         )
 
     }

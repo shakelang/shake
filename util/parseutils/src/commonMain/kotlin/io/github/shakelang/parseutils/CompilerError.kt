@@ -1,6 +1,6 @@
 package io.github.shakelang.parseutils
 
-import io.github.shakelang.parseutils.Formatting.FGColor
+import io.github.shakelang.colorlib.functional.*
 import io.github.shakelang.parseutils.characters.position.Position
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import kotlin.js.JsName
@@ -329,11 +329,14 @@ open class CompilerError : Error {
 
                 // Generate end-string
                 return ErrorMarker(
-                    pos1.source.location + ':' + pos1.line + ':' + pos1.column,
-                    start + Formatting.INVERT + FGColor.RED
-                            + pos1.source.source[pos1.index, pos2.index + 1].concatToString() + Formatting.RESET + end,
-                    start + pos1.source.source[pos1.index, pos2.index + 1].concatToString() + end,
-                    ' '.repeat(start.length) + '^'.repeat(highlighted)
+                    join(pos1.source.location, ":", pos1.line.toString(), ":", pos1.column.toString()),
+                    join(start, invert(red(
+                        pos1.source.source[pos1.index, pos2.index + 1].concatToString()
+                            .replace("\t".toRegex(), " ")
+                            .replace("\n".toRegex(), " ")
+                        )) + end),
+                    join(start, pos1.source.source[pos1.index, pos2.index + 1].concatToString(), end),
+                    join(' '.repeat(start.length), '^'.repeat(highlighted))
                 )
             }
             catch (e: Throwable) {
@@ -341,7 +344,7 @@ open class CompilerError : Error {
                 e.printStackTrace()
                 return ErrorMarker(
                     "${pos1.source.location}:${pos1.line}:${pos1.column}",
-                    "${FGColor.RED}Error while creating position marker: ${e.message}${Formatting.RESET}",
+                    red("Error while creating position marker: ${e.message}"),
                     "Error while creating position marker: ${e.message}",
                     ""
                 )

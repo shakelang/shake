@@ -70,6 +70,7 @@ kotlin {
     }
 
     dependencies {
+        implementation(project(":util:colorlib"))
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10")
         testImplementation(kotlin("test"))
     }

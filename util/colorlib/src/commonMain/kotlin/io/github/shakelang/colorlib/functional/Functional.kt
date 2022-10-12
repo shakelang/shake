@@ -1,6 +1,6 @@
 package io.github.shakelang.colorlib.functional
 
-import io.github.shakelang.parseutils.Formatting
+import io.github.shakelang.colorlib.Formatting
 
 /**
  * Make your foreground color black
@@ -312,4 +312,18 @@ fun italic(contents: String) = "${Formatting.ITALIC}$contents${Formatting.RESET}
  * @param contents the contents to make underlined
  */
 fun underline(contents: String) = "${Formatting.UNDERLINE}$contents${Formatting.RESET}"
+
+/**
+ * Make your text reverse
+ * @param contents the contents to make reverse
+ */
+fun reverse(contents: String) = contents.reversed()
+
+/**
+ * Invert colors
+ * @param contents the contents to invert
+ */
+fun invert(contents: String) = "${Formatting.INVERT}$contents${Formatting.RESET}"
+
+fun join(vararg strings: String) = strings.joinToString("")
 
