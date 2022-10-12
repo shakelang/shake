@@ -227,7 +227,7 @@ fun List<Byte>.getFloat(index: Int): Float = Float.fromBits(this.getInt(index))
 fun List<Byte>.getDouble(index: Int): Double = Double.fromBits(this.getLong(index))
 
 /**
- * Get specific unsigned char from a byte array at a given position
+ * Get specific unsigned byte from a byte array at a given position
  */
 fun List<Byte>.getUnsignedByte(index: Int): UByte = this[index].toUByte()
 

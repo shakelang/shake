@@ -4,7 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class ByteList {
+class ByteListTests {
 
     @Test
     fun testToByte() {
@@ -126,7 +126,6 @@ class ByteList {
             bytes2.toUnsignedLong()
         }
     }
-
     @Test
     fun testSetBytes() {
         val bytes = mutableListOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
@@ -134,6 +133,9 @@ class ByteList {
         assertEquals(listOf<Byte>(9, 10, 11, 12, 5, 6, 7, 8), bytes)
 
         bytes.setBytes(4, listOf(13, 14, 15, 16))
+        assertEquals(listOf<Byte>(9, 10, 11, 12, 13, 14, 15, 16), bytes)
+
+        bytes.setBytes(4, kotlin.byteArrayOf(13, 14, 15, 16))
         assertEquals(listOf<Byte>(9, 10, 11, 12, 13, 14, 15, 16), bytes)
 
         assertFailsWith(IndexOutOfBoundsException::class, "Index 8 out of bounds for length 8") {
@@ -346,6 +348,46 @@ class ByteList {
             bytes.getDouble(1)
         }
     }
+
+    @Test
+    fun testGetUnsignedByte() {
+        val bytes = listOf(1, 2, 3, 4, 5, 6, 7, 255u.toByte())
+        assertEquals(1u, bytes.getUnsignedByte(0))
+        assertEquals(2u, bytes.getUnsignedByte(1))
+        assertEquals(3u, bytes.getUnsignedByte(2))
+        assertEquals(4u, bytes.getUnsignedByte(3))
+        assertEquals(5u, bytes.getUnsignedByte(4))
+        assertEquals(6u, bytes.getUnsignedByte(5))
+        assertEquals(7u, bytes.getUnsignedByte(6))
+        assertEquals(255u, bytes.getUnsignedByte(7))
+    }
+
+    @Test
+    fun testGetUnsignedShort() {
+        val bytes = listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
+        assertEquals(0x0102u, bytes.getUnsignedShort(0))
+        assertEquals(0x0304u, bytes.getUnsignedShort(2))
+        assertEquals(0x0506u, bytes.getUnsignedShort(4))
+        assertEquals(0x0708u, bytes.getUnsignedShort(6))
+        assertEquals(0x0203u, bytes.getUnsignedShort(1))
+    }
+
+    @Test
+    fun testGetUnsignedInt() {
+        val bytes = listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
+        assertEquals(0x01020304u, bytes.getUnsignedInt(0))
+        assertEquals(0x05060708u, bytes.getUnsignedInt(4))
+        assertEquals(0x02030405u, bytes.getUnsignedInt(1))
+    }
+
+    @Test
+    fun testGetUnsignedLong() {
+        val bytes = listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
+        assertEquals(0x0102030405060708uL, bytes.getUnsignedLong(0))
+    }
+
+
+
 
     @Test
     fun testRemoveLastByte() {
