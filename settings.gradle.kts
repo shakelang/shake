@@ -1,6 +1,7 @@
 rootProject.name = "Shake"
 include("cli")
 include("jvm")
+include(":util:colorlib")
 include(":util:parseutils")
 include(":util:shason")
 include(":util:jvmlib")
