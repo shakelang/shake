@@ -108,29 +108,3 @@ listOf(
         this.workingDir.set(file("${project.rootDir}/docs"))
     }
 }
-
-tasks.register("createDokkaInDocs") {
-    dependsOn("copyDokkaHtml")
-}
-
-tasks.register<Copy>("copyDokkaHtml") {
-    dependsOn("dokkaHtml")
-    from(file("build/docs/html"))
-    into(file("docs/static/dokka/"))
-}
-
-tasks.named<Jar>("jvmJar") {
-    archiveBaseName.set("shake-$projectName")
-}
-
-tasks.named<Jar>("jsJar") {
-    archiveBaseName.set("shake-$projectName")
-}
-
-tasks.named<Jar>("metadataJar") {
-    archiveBaseName.set("shake-$projectName")
-}
-
-tasks.jvmTest {
-    ignoreFailures = true
-}

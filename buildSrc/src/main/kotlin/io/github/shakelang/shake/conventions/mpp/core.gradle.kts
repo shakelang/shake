@@ -4,6 +4,7 @@ import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.kotlin
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
 plugins {
     kotlin("multiplatform")
@@ -71,4 +72,22 @@ tasks.named("jvmTest") {
         binaryReportFile.set(file("$buildDir/reports/kover/result.bin"))
         includes = listOf("*")
     }
+}
+
+val projectName = name
+
+tasks.named<Jar>("jvmJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+
+tasks.named<Jar>("jsJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+
+tasks.named<Jar>("metadataJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+
+tasks.named<KotlinJvmTest>("jvmTest") {
+    ignoreFailures = true
 }
