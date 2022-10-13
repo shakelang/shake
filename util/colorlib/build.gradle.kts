@@ -1,5 +1,3 @@
-@file:Suppress("unused_variable")
-
 import io.github.shakelang.shake.conventions.mpp.dependencies
 
 plugins {
