@@ -19,7 +19,12 @@ class CompilerErrorTests {
             "message", "TestingError", "Some details",
             map.resolve(10), map.resolve(10)
         )
-        assertEquals("<source>:1:10", error.marker.source)
+
+        assertEquals(10, error.start.index)
+        assertEquals(error.start.line, 1)
+        assertEquals(error.start.column, 11)
+
+        assertEquals("<source>:1:11", error.marker.source)
         assertEquals("1  012345678901234567890123456789", error.marker.preview)
         assertEquals("             ^", error.marker.marker)
         assertEquals(
@@ -91,7 +96,11 @@ class CompilerErrorTests {
             map.resolve(14)
         )
 
-        assertEquals("<source>:1:9", error.marker.source)
+        assertEquals(9, error.start.index)
+        assertEquals(error.start.line, 1)
+        assertEquals(error.start.column, 10)
+
+        assertEquals("<source>:1:10", error.marker.source)
         assertEquals("1  012345678901234567890123456789012345678", error.marker.preview)
         assertEquals("            ^^^^^^", error.marker.marker)
         assertEquals(
