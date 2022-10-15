@@ -447,396 +447,396 @@ inline operator fun UByte.plus(other: Long): Long = this.toLong() + other
 /**
  * Add an unsigned short and an unsigned byte to get an integer.
  */
-inline operator fun UShort.plus(other: Byte): UShort = (this.toInt() + other).toUShort()
+inline operator fun UShort.plus(other: Byte): Int = this.toInt() + other
 
 /**
  * Add an unsigned short and a short to get an integer.
  */
-inline operator fun UShort.plus(other: Short): UShort = (this.toInt() + other).toUShort()
+inline operator fun UShort.plus(other: Short): Int = this.toInt() + other
 
 /**
  * Add an unsigned short and an int to get a long.
  */
-inline operator fun UShort.plus(other: Int): ULong = (this.toLong() + other).toULong()
+inline operator fun UShort.plus(other: Int): Long = this.toLong() + other
 
 /**
  * Add an unsigned short and a long to get a long.
  */
-inline operator fun UShort.plus(other: Long): ULong = (this.toLong() + other).toULong()
+inline operator fun UShort.plus(other: Long): Long = this.toLong() + other
 
 
 /**
  * Add an unsigned integer and an unsigned byte to get an integer.
  */
-inline operator fun UInt.plus(other: Byte): UInt = (this.toLong() + other).toUInt()
+inline operator fun UInt.plus(other: Byte): Long = this.toLong() + other
 
 /**
  * Add an unsigned integer and a short to get an integer.
  */
-inline operator fun UInt.plus(other: Short): UInt = (this.toLong() + other).toUInt()
+inline operator fun UInt.plus(other: Short): Long = this.toLong() + other
 
 /**
  * Add an unsigned integer and an int to get a long.
  */
-inline operator fun UInt.plus(other: Int): ULong = (this.toLong() + other).toULong()
+inline operator fun UInt.plus(other: Int): Long = this.toLong() + other
 
 /**
  * Add an unsigned integer and a long to get a long.
  */
-inline operator fun UInt.plus(other: Long): ULong = (this.toLong() + other).toULong()
+inline operator fun UInt.plus(other: Long): Long = this.toLong() + other
 
 /**
  * Add an unsigned long and an unsigned byte to get a long.
  */
-inline operator fun ULong.plus(other: Byte): ULong = (this.toLong() + other).toULong()
+inline operator fun ULong.plus(other: Byte): Long = this.toLong() + other
 
 /**
  * Add an unsigned long and a short to get a long.
  */
-inline operator fun ULong.plus(other: Short): ULong = (this.toLong() + other).toULong()
+inline operator fun ULong.plus(other: Short): Long = this.toLong() + other
 
 /**
  * Add an unsigned long and an int to get a long.
  */
-inline operator fun ULong.plus(other: Int): ULong = (this.toLong() + other).toULong()
+inline operator fun ULong.plus(other: Int): Long = this.toLong() + other
 
 /**
  * Add an unsigned long and a long to get a long.
  */
-inline operator fun ULong.plus(other: Long): ULong = (this.toLong() + other).toULong()
+inline operator fun ULong.plus(other: Long): Long = this.toLong() + other
 
 
 /**
- * Subtract an unsigned byte and a byte to get a integer.
+ * Subtract an unsigned byte and a byte to get an integer.
  */
-inline operator fun UByte.minus(other: Byte): UByte = (this.toShort() - other).toUByte()
+inline operator fun UByte.minus(other: Byte): Int = this.toShort() - other
 
 /**
  * Subtract an unsigned byte and a short to get an integer.
  */
-inline operator fun UByte.minus(other: Short): UByte = (this.toInt() - other).toUByte()
+inline operator fun UByte.minus(other: Short): Int = this.toInt() - other
 
 /**
  * Subtract an unsigned byte and an int to get a long.
  */
-inline operator fun UByte.minus(other: Int): ULong = (this.toLong() - other).toULong()
+inline operator fun UByte.minus(other: Int): Long = this.toLong() - other
 
 /**
  * Subtract an unsigned byte and a long to get a long.
  */
-inline operator fun UByte.minus(other: Long): ULong = (this.toLong() - other).toULong()
+inline operator fun UByte.minus(other: Long): Long = this.toLong() - other
 
 
 /**
  * Subtract an unsigned short and an unsigned byte to get an integer.
  */
-inline operator fun UShort.minus(other: Byte): UShort = (this.toInt() - other).toUShort()
+inline operator fun UShort.minus(other: Byte): Int = this.toInt() - other
 
 /**
  * Subtract an unsigned short and a short to get an integer.
  */
-inline operator fun UShort.minus(other: Short): UShort = (this.toInt() - other).toUShort()
+inline operator fun UShort.minus(other: Short): Int = this.toInt() - other
 
 /**
  * Subtract an unsigned short and an int to get a long.
  */
-inline operator fun UShort.minus(other: Int): ULong = (this.toLong() - other).toULong()
+inline operator fun UShort.minus(other: Int): Long = this.toLong() - other
 
 /**
  * Subtract an unsigned short and a long to get a long.
  */
-inline operator fun UShort.minus(other: Long): ULong = (this.toLong() - other).toULong()
+inline operator fun UShort.minus(other: Long): Long = this.toLong() - other
 
 
 /**
  * Subtract an unsigned integer and an unsigned byte to get an integer.
  */
-inline operator fun UInt.minus(other: Byte): UInt = (this.toLong() - other).toUInt()
+inline operator fun UInt.minus(other: Byte): Long = this.toLong() - other
 
 /**
  * Subtract an unsigned integer and a short to get an integer.
  */
-inline operator fun UInt.minus(other: Short): UInt = (this.toLong() - other).toUInt()
+inline operator fun UInt.minus(other: Short): Long = this.toLong() - other
 
 /**
  * Subtract an unsigned integer and an int to get a long.
  */
-inline operator fun UInt.minus(other: Int): ULong = (this.toLong() - other).toULong()
+inline operator fun UInt.minus(other: Int): Long = this.toLong() - other
 
 /**
  * Subtract an unsigned integer and a long to get a long.
  */
-inline operator fun UInt.minus(other: Long): ULong = (this.toLong() - other).toULong()
+inline operator fun UInt.minus(other: Long): Long = this.toLong() - other
 
 
 /**
  * Subtract an unsigned long and an unsigned byte to get a long.
  */
-inline operator fun ULong.minus(other: Byte): ULong = (this.toLong() - other).toULong()
+inline operator fun ULong.minus(other: Byte): Long = this.toLong() - other
 
 /**
  * Subtract an unsigned long and a short to get a long.
  */
-inline operator fun ULong.minus(other: Short): ULong = (this.toLong() - other).toULong()
+inline operator fun ULong.minus(other: Short): Long = this.toLong() - other
 
 /**
  * Subtract an unsigned long and an int to get a long.
  */
-inline operator fun ULong.minus(other: Int): ULong = (this.toLong() - other).toULong()
+inline operator fun ULong.minus(other: Int): Long = this.toLong() - other
 
 /**
  * Subtract an unsigned long and a long to get a long.
  */
-inline operator fun ULong.minus(other: Long): ULong = (this.toLong() - other).toULong()
+inline operator fun ULong.minus(other: Long): Long = this.toLong() - other
 
 
 /**
- * Multiply an unsigned byte and a byte to get a integer.
+ * Multiply an unsigned byte and a byte to get an integer.
  */
-inline operator fun UByte.times(other: Byte): UByte = (this.toShort() * other).toUByte()
+inline operator fun UByte.times(other: Byte): Int = this.toShort() * other
 
 /**
  * Multiply an unsigned byte and a short to get an integer.
  */
-inline operator fun UByte.times(other: Short): UShort = (this.toInt() * other).toUShort()
+inline operator fun UByte.times(other: Short): Int = this.toInt() * other
 
 /**
  * Multiply an unsigned byte and an int to get a long.
  */
-inline operator fun UByte.times(other: Int): UInt = (this.toLong() * other).toUInt()
+inline operator fun UByte.times(other: Int): Long = this.toLong() * other
 
 /**
  * Multiply an unsigned byte and a long to get a long.
  */
-inline operator fun UByte.times(other: Long): ULong = (this.toLong() * other).toULong()
+inline operator fun UByte.times(other: Long): Long = this.toLong() * other
 
 
 /**
  * Multiply an unsigned short and an unsigned byte to get an integer.
  */
-inline operator fun UShort.times(other: Byte): UShort = (this.toInt() * other).toUShort()
+inline operator fun UShort.times(other: Byte): Int = this.toInt() * other
 
 /**
  * Multiply an unsigned short and a short to get an integer.
  */
-inline operator fun UShort.times(other: Short): UShort = (this.toInt() * other).toUShort()
+inline operator fun UShort.times(other: Short): Int = this.toInt() * other
 
 /**
  * Multiply an unsigned short and an int to get a long.
  */
-inline operator fun UShort.times(other: Int): UInt = (this.toLong() * other).toUInt()
+inline operator fun UShort.times(other: Int): Long = this.toLong() * other
 
 /**
  * Multiply an unsigned short and a long to get a long.
  */
-inline operator fun UShort.times(other: Long): ULong = (this.toLong() * other).toULong()
+inline operator fun UShort.times(other: Long): Long = this.toLong() * other
 
 
 /**
  * Multiply an unsigned integer and an unsigned byte to get an integer.
  */
-inline operator fun UInt.times(other: Byte): UInt = (this.toLong() * other).toUInt()
+inline operator fun UInt.times(other: Byte): Long = this.toLong() * other
 
 /**
  * Multiply an unsigned integer and a short to get an integer.
  */
-inline operator fun UInt.times(other: Short): UInt = (this.toLong() * other).toUInt()
+inline operator fun UInt.times(other: Short): Long = this.toLong() * other
 
 /**
  * Multiply an unsigned integer and an int to get a long.
  */
-inline operator fun UInt.times(other: Int): UInt = (this.toLong() * other).toUInt()
+inline operator fun UInt.times(other: Int): Long = this.toLong() * other
 
 /**
  * Multiply an unsigned integer and a long to get a long.
  */
-inline operator fun UInt.times(other: Long): ULong = (this.toLong() * other).toULong()
+inline operator fun UInt.times(other: Long): Long = this.toLong() * other
 
 
 /**
  * Multiply an unsigned long and an unsigned byte to get a long.
  */
-inline operator fun ULong.times(other: Byte): ULong = (this.toLong() * other).toULong()
+inline operator fun ULong.times(other: Byte): Long = this.toLong() * other
 
 /**
  * Multiply an unsigned long and a short to get a long.
  */
-inline operator fun ULong.times(other: Short): ULong = (this.toLong() * other).toULong()
+inline operator fun ULong.times(other: Short): Long = this.toLong() * other
 
 /**
  * Multiply an unsigned long and an int to get a long.
  */
-inline operator fun ULong.times(other: Int): ULong = (this.toLong() * other).toULong()
+inline operator fun ULong.times(other: Int): Long = this.toLong() * other
 
 /**
  * Multiply an unsigned long and a long to get a long.
  */
-inline operator fun ULong.times(other: Long): ULong = (this.toLong() * other).toULong()
+inline operator fun ULong.times(other: Long): Long = this.toLong() * other
 
 
 /**
  * Divide an unsigned byte and a byte to get a integer.
  */
-inline operator fun UByte.div(other: Byte): UByte = (this.toShort() / other).toUByte()
+inline operator fun UByte.div(other: Byte): Int = this.toShort() / other
 
 /**
  * Divide an unsigned byte and a short to get an integer.
  */
-inline operator fun UByte.div(other: Short): UShort = (this.toInt() / other).toUShort()
+inline operator fun UByte.div(other: Short): Int = this.toInt() / other
 
 /**
  * Divide an unsigned byte and an int to get a long.
  */
-inline operator fun UByte.div(other: Int): UInt = (this.toLong() / other).toUInt()
+inline operator fun UByte.div(other: Int): Long = this.toLong() / other
 
 /**
  * Divide an unsigned byte and a long to get a long.
  */
-inline operator fun UByte.div(other: Long): ULong = (this.toLong() / other).toULong()
+inline operator fun UByte.div(other: Long): Long = this.toLong() / other
 
 
 /**
  * Divide an unsigned short and an unsigned byte to get an integer.
  */
-inline operator fun UShort.div(other: Byte): UShort = (this.toInt() / other).toUShort()
+inline operator fun UShort.div(other: Byte): Int = this.toInt() / other
 
 /**
  * Divide an unsigned short and a short to get an integer.
  */
-inline operator fun UShort.div(other: Short): UShort = (this.toInt() / other).toUShort()
+inline operator fun UShort.div(other: Short): Int = this.toInt() / other
 
 /**
  * Divide an unsigned short and an int to get a long.
  */
-inline operator fun UShort.div(other: Int): UInt = (this.toLong() / other).toUInt()
+inline operator fun UShort.div(other: Int): Long = this.toLong() / other
 
 /**
  * Divide an unsigned short and a long to get a long.
  */
-inline operator fun UShort.div(other: Long): ULong = (this.toLong() / other).toULong()
+inline operator fun UShort.div(other: Long): Long = this.toLong() / other
 
 
 /**
  * Divide an unsigned integer and an unsigned byte to get an integer.
  */
-inline operator fun UInt.div(other: Byte): UInt = (this.toLong() / other).toUInt()
+inline operator fun UInt.div(other: Byte): Long = this.toLong() / other
 
 /**
  * Divide an unsigned integer and a short to get an integer.
  */
-inline operator fun UInt.div(other: Short): UInt = (this.toLong() / other).toUInt()
+inline operator fun UInt.div(other: Short): Long = this.toLong() / other
 
 /**
  * Divide an unsigned integer and an int to get a long.
  */
-inline operator fun UInt.div(other: Int): UInt = (this.toLong() / other).toUInt()
+inline operator fun UInt.div(other: Int): Long = this.toLong() / other
 
 /**
  * Divide an unsigned integer and a long to get a long.
  */
-inline operator fun UInt.div(other: Long): ULong = (this.toLong() / other).toULong()
+inline operator fun UInt.div(other: Long): Long = this.toLong() / other
 
 
 /**
  * Divide an unsigned long and an unsigned byte to get a long.
  */
-inline operator fun ULong.div(other: Byte): ULong = (this.toLong() / other).toULong()
+inline operator fun ULong.div(other: Byte): Long = this.toLong() / other
 
 /**
  * Divide an unsigned long and a short to get a long.
  */
-inline operator fun ULong.div(other: Short): ULong = (this.toLong() / other).toULong()
+inline operator fun ULong.div(other: Short): Long = this.toLong() / other
 
 /**
  * Divide an unsigned long and an int to get a long.
  */
-inline operator fun ULong.div(other: Int): ULong = (this.toLong() / other).toULong()
+inline operator fun ULong.div(other: Int): Long = this.toLong() / other
 
 /**
  * Divide an unsigned long and a long to get a long.
  */
-inline operator fun ULong.div(other: Long): ULong = (this.toLong() / other).toULong()
+inline operator fun ULong.div(other: Long): Long = this.toLong() / other
 
 
 /**
  * Modulo an unsigned byte and a byte to get a integer.
  */
-inline operator fun UByte.rem(other: Byte): UByte = (this.toShort() % other).toUByte()
+inline operator fun UByte.rem(other: Byte): Int = this.toShort() % other
 
 /**
  * Modulo an unsigned byte and a short to get an integer.
  */
-inline operator fun UByte.rem(other: Short): UShort = (this.toInt() % other).toUShort()
+inline operator fun UByte.rem(other: Short): Int = this.toInt() % other
 
 /**
  * Modulo an unsigned byte and an int to get a long.
  */
-inline operator fun UByte.rem(other: Int): UInt = (this.toLong() % other).toUInt()
+inline operator fun UByte.rem(other: Int): Long = this.toLong() % other
 
 /**
  * Modulo an unsigned byte and a long to get a long.
  */
-inline operator fun UByte.rem(other: Long): ULong = (this.toLong() % other).toULong()
+inline operator fun UByte.rem(other: Long): Long = this.toLong() % other
 
 
 /**
  * Modulo an unsigned short and an unsigned byte to get an integer.
  */
-inline operator fun UShort.rem(other: Byte): UShort = (this.toInt() % other).toUShort()
+inline operator fun UShort.rem(other: Byte): Int = this.toInt() % other
 
 /**
  * Modulo an unsigned short and a short to get an integer.
  */
-inline operator fun UShort.rem(other: Short): UShort = (this.toInt() % other).toUShort()
+inline operator fun UShort.rem(other: Short): Int = this.toInt() % other
 
 /**
  * Modulo an unsigned short and an int to get a long.
  */
-inline operator fun UShort.rem(other: Int): UInt = (this.toLong() % other).toUInt()
+inline operator fun UShort.rem(other: Int): Long = this.toLong() % other
 
 /**
  * Modulo an unsigned short and a long to get a long.
  */
-inline operator fun UShort.rem(other: Long): ULong = (this.toLong() % other).toULong()
+inline operator fun UShort.rem(other: Long): Long = this.toLong() % other
 
 
 /**
  * Modulo an unsigned integer and an unsigned byte to get an integer.
  */
-inline operator fun UInt.rem(other: Byte): UInt = (this.toLong() % other).toUInt()
+inline operator fun UInt.rem(other: Byte): Long = this.toLong() % other
 
 /**
  * Modulo an unsigned integer and a short to get an integer.
  */
-inline operator fun UInt.rem(other: Short): UInt = (this.toLong() % other).toUInt()
+inline operator fun UInt.rem(other: Short): Long = this.toLong() % other
 
 /**
  * Modulo an unsigned integer and an int to get a long.
  */
-inline operator fun UInt.rem(other: Int): UInt = (this.toLong() % other).toUInt()
+inline operator fun UInt.rem(other: Int): Long = this.toLong() % other
 
 /**
  * Modulo an unsigned integer and a long to get a long.
  */
-inline operator fun UInt.rem(other: Long): ULong = (this.toLong() % other).toULong()
+inline operator fun UInt.rem(other: Long): Long = this.toLong() % other
 
 
 /**
  * Modulo an unsigned long and an unsigned byte to get a long.
  */
-inline operator fun ULong.rem(other: Byte): ULong = (this.toLong() % other).toULong()
+inline operator fun ULong.rem(other: Byte): Long = this.toLong() % other
 
 /**
  * Modulo an unsigned long and a short to get a long.
  */
-inline operator fun ULong.rem(other: Short): ULong = (this.toLong() % other).toULong()
+inline operator fun ULong.rem(other: Short): Long = this.toLong() % other
 
 /**
  * Modulo an unsigned long and an int to get a long.
  */
-inline operator fun ULong.rem(other: Int): ULong = (this.toLong() % other).toULong()
+inline operator fun ULong.rem(other: Int): Long = this.toLong() % other
 
 /**
  * Modulo an unsigned long and a long to get a long.
  */
-inline operator fun ULong.rem(other: Long): ULong = (this.toLong() % other).toULong()
+inline operator fun ULong.rem(other: Long): Long = this.toLong() % other
