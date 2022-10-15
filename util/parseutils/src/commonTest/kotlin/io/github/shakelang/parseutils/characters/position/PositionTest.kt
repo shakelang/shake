@@ -35,6 +35,7 @@ class PositionTest {
         assertEquals(position.index, copy.index)
     }
 
+    @Test
     fun testEquals() {
         val src = CharacterSource.from("abc", "PositionTest#testEquals")
         val map = PositionMap.PositionMapImpl(src, intArrayOf(3, 7))

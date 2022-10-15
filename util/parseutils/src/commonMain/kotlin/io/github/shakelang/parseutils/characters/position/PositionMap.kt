@@ -31,6 +31,7 @@ interface PositionMap {
     }
 
     fun getAfterInLine(p: Position): Int
+    fun getAfterInLine(index: Int): Int = getAfterInLine(resolve(index))
 
     open class PositionMapImpl(
         override val source: CharacterSource,
