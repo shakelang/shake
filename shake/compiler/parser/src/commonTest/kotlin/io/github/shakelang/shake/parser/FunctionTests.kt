@@ -20,7 +20,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -34,7 +34,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(1, node.body.children.size)
+        assertSame(1, node.body?.children?.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -48,7 +48,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -62,7 +62,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -76,7 +76,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -90,7 +90,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -104,7 +104,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PUBLIC, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -118,7 +118,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PROTECTED, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -132,7 +132,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PRIVATE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.INTEGER, node.type)
         assertFalse(node.isStatic)
         assertTrue(node.isFinal)
@@ -146,7 +146,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.BYTE, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -160,7 +160,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.SHORT, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -174,7 +174,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.LONG, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -188,7 +188,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.FLOAT, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -202,7 +202,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.DOUBLE, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -216,7 +216,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.CHAR, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -230,7 +230,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.BOOLEAN, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
@@ -244,7 +244,7 @@ class FunctionTests {
         val node = tree.children[0] as ShakeFunctionDeclarationNode
         assertSame(ShakeAccessDescriber.PACKAGE, node.access)
         assertEquals("f", node.name)
-        assertSame(0, node.body.children.size)
+        assertSame(0, node.body?.children?.size)
         assertSame(ShakeVariableType.VOID, node.type)
         assertFalse(node.isStatic)
         assertFalse(node.isFinal)
