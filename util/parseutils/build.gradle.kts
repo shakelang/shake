@@ -58,7 +58,7 @@ node {
 
 kotlin {
 
-    js {
+    js(IR) {
         browser {
             testTask {
                 useKarma {
@@ -71,7 +71,7 @@ kotlin {
 
     dependencies {
         implementation(project(":util:colorlib"))
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10")
         testImplementation(kotlin("test"))
     }
 }

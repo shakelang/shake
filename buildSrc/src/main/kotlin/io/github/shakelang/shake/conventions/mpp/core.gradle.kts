@@ -33,7 +33,7 @@ kotlin {
         val main by compilations.getting
     }
 
-    js(LEGACY) {
+    js(IR) {
         nodejs {
         }
         browser {
@@ -50,7 +50,6 @@ kotlin {
                 }
             }
             commonWebpackConfig {
-                cssSupport.enabled = true
             }
         }
     }
@@ -67,11 +66,11 @@ kotlin {
 }
 
 tasks.named("jvmTest") {
-    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-        isDisabled = false
-        binaryReportFile.set(file("$buildDir/reports/kover/result.bin"))
-        includes = listOf("*")
-    }
+//    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+//        isDisabled = false
+//        binaryReportFile.set(file("$buildDir/reports/kover/result.bin"))
+//        includes = listOf("*")
+//    }
 }
 
 val projectName = name
@@ -84,9 +83,9 @@ tasks.named<Jar>("jsJar") {
     archiveBaseName.set("shake-$projectName")
 }
 
-tasks.named<Jar>("metadataJar") {
-    archiveBaseName.set("shake-$projectName")
-}
+//tasks.named<Jar>("metadataJar") {
+//    archiveBaseName.set("shake-$projectName")
+//}
 
 tasks.named<KotlinJvmTest>("jvmTest") {
     ignoreFailures = true

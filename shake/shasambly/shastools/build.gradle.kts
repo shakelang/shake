@@ -29,6 +29,6 @@ tasks.named<Jar>("jvmJar") {
 tasks.named<Jar>("jsJar") {
     archiveBaseName.set("shake-$projectName")
 }
-tasks.named<Jar>("metadataJar") {
-    archiveBaseName.set("shake-$projectName")
-}
+//tasks.named<Jar>("metadataJar") {
+//    archiveBaseName.set("shake-$projectName")
+//}
