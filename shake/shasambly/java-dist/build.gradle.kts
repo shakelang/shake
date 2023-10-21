@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     application
     kotlin("jvm")
@@ -60,6 +62,11 @@ kotlin {
             }
         }
     }
+
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_16)
+    }
+
 }
 
 application {
