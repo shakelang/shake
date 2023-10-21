@@ -37,6 +37,10 @@ kotlin {
         nodejs {
         }
         browser {
+            dependencies {
+                implementation(npm("path-browserify", "1.0.1"))
+            }
+
             compilations {
                 "main" {
                     packageJson {
@@ -47,6 +51,7 @@ kotlin {
                         sourceMap = true
                         sourceMapEmbedSources = "always"
                     }
+
                 }
             }
             commonWebpackConfig {
