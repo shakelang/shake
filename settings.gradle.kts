@@ -1,4 +1,4 @@
-rootProject.name = "Shake"
+rootProject.name = "shake"
 //include("cli")
 //include("jvm")
 include(":util:colorlib")
