@@ -50,12 +50,11 @@ jobs:
       - name: Build with Gradle
         run: |
           ./gradlew build
-          ./gradlew allTests
 
       - if: success() || failure()
         name: Generate Test Reports
         run: |
-          ./gradlew genReport koverXmlReport koverHtmlReport
+          ./gradlew jvmTest genReport koverXmlReport koverHtmlReport
           zip -r build/reports/kover/html.zip build/reports/kover/html
 
 #      - name: Test Report
