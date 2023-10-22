@@ -67,6 +67,7 @@ jobs:
         run: |
           ./gradlew koverXmlReport
           ./gradlew koverHtmlReport
+          zip -r build/reports/kover/html.zip build/reports/kover/html
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v2
@@ -80,7 +81,7 @@ jobs:
         if: success() || failure()
         with:
           name: Kover Report
-          path: build/reports/kover/html
+          path: build/reports/kover/html.zip
 
 
       - name: Upload Coverage Report to CodeCov
