@@ -10,6 +10,8 @@ val jvmTarget = "16"
 
 plugins {
     kotlin("multiplatform")
+//    id("org.junit.platform:junit-platform-reporting:1.10.0")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 repositories {

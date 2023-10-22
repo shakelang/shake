@@ -1,20 +1,16 @@
 import io.github.shakelang.shake.conventions.mpp.dependencies
 
-group = "io.github.shakelang.shake"
-version = "0.1.0"
-description = "parser"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-
-apply(plugin = "java-library")
-
 plugins {
     id("io.github.shakelang.shake.conventions.mpp.all")
-    java
-    `maven-publish`
+    id("com.github.node-gradle.node") version "3.1.1"
+    id("maven-publish")
 }
 
+group = "io.github.shakelang.shake"
+version = "0.1.0"
+description = "Utilities for parsing stuff with kotlin"
+
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -24,16 +20,5 @@ kotlin {
         implementation(project(":util:shason"))
         implementation(project(":shake:compiler:lexer"))
         testImplementation(kotlin("test"))
-    }
-}
-
-tasks.test {
-    useJUnitPlatform()
-
-    testLogging.showExceptions = true
-    maxHeapSize = "1G"
-    // ignoreFailures = true
-    filter {
-        includeTestsMatching("io.github.shakelang.shake.*")
     }
 }
