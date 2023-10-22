@@ -62,10 +62,32 @@ jobs:
 #          path: build/test-results/**/*.xml
 #          reporter: java-junit
 
+      - name: Generate CodeCov Report
+        if: success() || failure()
+        run: |
+          ./gradlew koverXmlReport
+          ./gradlew koverHtmlReport
+
       - name: Upload Test Report
         uses: actions/upload-artifact@v2
         if: success() || failure()
         with:
           name: Test Report
           path: build/reports/tests
+
+      - name: Upload Kover Report
+        uses: actions/upload-artifact@v2
+        if: success() || failure()
+        with:
+          name: Kover Report
+          path: build/reports/kover/html
+
+
+      - name: Upload Coverage Report to CodeCov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          flags: unittests
+          files: build/reports/kover/report.xml
 

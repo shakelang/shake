@@ -1,8 +1,22 @@
-import java.util.ArrayList
-
 group = "io.github.shakelang.shake"
 version = "0.1.0"
 description = "Shake"
+
+dependencies {
+
+    kover(project(":util:colorlib"))
+    kover(project(":util:parseutils"))
+    kover(project(":util:shason"))
+    kover(project(":util:jvmlib"))
+    kover(project(":shake:compiler:lexer"))
+    kover(project(":shake:compiler:parser"))
+    kover(project(":shake:compiler:processor"))
+    kover(project(":shake:shasambly:shastools"))
+    kover(project(":shake:shasambly:shasambly"))
+    kover(project(":shake:shasambly:shasp"))
+//    kover(project(":shake:shasambly:java-dist"))
+
+}
 
 plugins {
     id("org.jetbrains.dokka")
