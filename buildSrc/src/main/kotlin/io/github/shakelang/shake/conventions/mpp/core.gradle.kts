@@ -6,6 +6,8 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
+val jvmTarget = "16"
+
 plugins {
     kotlin("multiplatform")
 }
@@ -24,12 +26,10 @@ repositories {
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "16"
+            kotlinOptions.jvmTarget = jvmTarget
         }
         testRuns["test"].executionTask.configure {
-            useJUnitPlatform {
-
-            }
+            useJUnitPlatform()
         }
 
         val main by compilations.getting
