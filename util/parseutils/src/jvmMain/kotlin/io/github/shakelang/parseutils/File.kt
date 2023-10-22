@@ -22,10 +22,10 @@ actual class File actual constructor(
         get() = file.isAbsolute
 
     actual val isFile: Boolean
-        get() = this.file.isFile
+        get() = this.file.exists() && this.file.isFile
 
     actual val isDirectory: Boolean
-        get() = this.file.isDirectory
+        get() = this.file.exists() && this.file.isDirectory
 
     actual val parent: File
         get() = File(this.file.parent)
@@ -45,6 +45,8 @@ actual class File actual constructor(
     actual val contentsString: String
         get() = contents.concatToString()
 
+    actual val exists: Boolean = this.file.exists()
+
     actual fun mkdir() { this.file.mkdir() }
     actual fun mkdirs() { this.file.mkdirs() }
     actual fun write(content: String) {
@@ -59,3 +61,5 @@ actual class File actual constructor(
     }
 
 }
+
+actual fun resourceFile(path: String): File = File::class.java.classLoader.getResource(path)?.let { File(it.path) } ?: throw Error("Resource not found: $path")
