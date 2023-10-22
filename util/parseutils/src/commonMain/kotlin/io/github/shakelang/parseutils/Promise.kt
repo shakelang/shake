@@ -98,4 +98,17 @@ expect open class Promise<out T>(
      */
     open fun <S> catch(onRejected: RejectedFunction<S>): Promise<S>
 
+    companion object {
+        fun <T> resolve(v: T): Promise<T>
+        fun <T> reject(e: Throwable): Promise<T>
+    }
+
+}
+
+fun <T> promiseResolve(v: T) = Promise {
+    resolve, _ -> resolve(v)
+}
+
+fun <T> promiseReject(e: Throwable) = Promise<T> {
+    _, reject -> reject(e)
 }
