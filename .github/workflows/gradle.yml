@@ -48,11 +48,15 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: |
+          ./gradlew build
+          ./gradlew allTests
 
       - if: success() || failure()
         name: Generate Test Reports
-        run: ./gradlew genReport
+        run: |
+          ./gradlew genReport koverXmlReport koverHtmlReport
+          zip -r build/reports/kover/html.zip build/reports/kover/html
 
 #      - name: Test Report
 #        uses: dorny/test-reporter@v1
@@ -61,13 +65,6 @@ jobs:
 #          name: Test Report
 #          path: build/test-results/**/*.xml
 #          reporter: java-junit
-
-      - name: Generate CodeCov Report
-        if: success() || failure()
-        run: |
-          ./gradlew koverXmlReport
-          ./gradlew koverHtmlReport
-          zip -r build/reports/kover/html.zip build/reports/kover/html
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v2
