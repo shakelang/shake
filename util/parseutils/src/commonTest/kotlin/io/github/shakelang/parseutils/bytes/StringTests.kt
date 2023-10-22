@@ -25,4 +25,23 @@ class StringTests {
         assertEquals('!'.code.toByte(), bytes[12])
     }
 
+    @Test
+    fun testByteInputStream() {
+        val str = "Hello, world!"
+        val stream = str.byteInputStream()
+        assertEquals('H'.code, stream.read())
+        assertEquals('e'.code, stream.read())
+        assertEquals('l'.code, stream.read())
+        assertEquals('l'.code, stream.read())
+        assertEquals('o'.code, stream.read())
+        assertEquals(','.code, stream.read())
+        assertEquals(' '.code, stream.read())
+        assertEquals('w'.code, stream.read())
+        assertEquals('o'.code, stream.read())
+        assertEquals('r'.code, stream.read())
+        assertEquals('l'.code, stream.read())
+        assertEquals('d'.code, stream.read())
+        assertEquals('!'.code, stream.read())
+    }
+
 }

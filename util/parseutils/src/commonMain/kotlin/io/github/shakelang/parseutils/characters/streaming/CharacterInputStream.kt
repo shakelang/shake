@@ -107,9 +107,7 @@ interface CharacterInputStream {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun peek(): Char {
-        return peek(1)
-    }
+    fun peek(): Char
 
     /**
      * Gives back a character of the [CharacterInputStream]

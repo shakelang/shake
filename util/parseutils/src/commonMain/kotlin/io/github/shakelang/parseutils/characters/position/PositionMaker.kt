@@ -39,20 +39,6 @@ class PositionMaker : PositionMap, PositionMarker {
     override val location: String
         get() = source.location
 
-    override fun resolve(index: Int): Position {
-        for (i in lineSeparatorsList.indices) {
-            if (index < lineSeparators[i]) {
-                return if (i == 0) Position(this, index, index + 1, 1)
-                else Position(this, index, index - lineSeparators[i - 1], i + 1)
-            }
-        }
-        return Position(
-            this, index,
-            index - (if (lineSeparators.size > 0) lineSeparators[lineSeparators.size - 1] else 0) + 1,
-            lineSeparators.size + 1
-        )
-    }
-
     override fun getAfterInLine(p: Position): Int {
         return if (p.line - 1 == lineSeparators.size) source.length - p.column else lineSeparators[p.line - 1] - p.index
     }
@@ -77,6 +63,24 @@ class PositionMaker : PositionMap, PositionMarker {
         this.column = column
         this.line = line
         this.source = source
+    }
+
+    /**
+     * Constructor for the [PositionMaker]
+     *
+     * @param index The [PositionMaker.index] of the position
+     * @param column The [PositionMaker.column] of the position
+     * @param line The [PositionMaker.line] of the position
+     * @param source the [CharacterSource] the chars come from
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
+    constructor(index: Int, column: Int, line: Int, lineSeparators: IntArray, source: CharacterSource) {
+        this.index = index
+        this.column = column
+        this.line = line
+        this.source = source
+        this.lineSeparatorsList.addAll(lineSeparators.toList())
     }
 
     /**
@@ -129,7 +133,7 @@ class PositionMaker : PositionMap, PositionMarker {
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
-    fun createPositionAtLocation(): Position = Position(createPositionMap(), index, column, line)
+    fun createPositionAtLocation(): Position = Position(this, index, column, line)
 
     override fun toString(): String {
         return "PositionMaker(index=$index, column=$column, line=$line, lineSeparators=$lineSeparatorsList)"

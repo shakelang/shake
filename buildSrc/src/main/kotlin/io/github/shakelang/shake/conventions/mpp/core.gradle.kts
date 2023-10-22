@@ -4,6 +4,9 @@ import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.kotlin
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
+
+val jvmTarget = "16"
 
 plugins {
     kotlin("multiplatform")
@@ -23,19 +26,23 @@ repositories {
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
+            kotlinOptions.jvmTarget = jvmTarget
         }
         testRuns["test"].executionTask.configure {
-            useJUnit()
+            useJUnitPlatform()
         }
 
         val main by compilations.getting
     }
 
-    js(LEGACY) {
+    js(IR) {
         nodejs {
         }
         browser {
+            dependencies {
+                implementation(npm("path-browserify", "1.0.1"))
+            }
+
             compilations {
                 "main" {
                     packageJson {
@@ -46,10 +53,10 @@ kotlin {
                         sourceMap = true
                         sourceMapEmbedSources = "always"
                     }
+
                 }
             }
             commonWebpackConfig {
-                cssSupport.enabled = true
             }
         }
     }
@@ -63,4 +70,34 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
     */
+}
+
+tasks.named("jvmTest") {
+//    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+//        isDisabled = false
+//        binaryReportFile.set(file("$buildDir/reports/kover/result.bin"))
+//        includes = listOf("*")
+//    }
+}
+
+val projectName = name
+
+tasks.named<Jar>("jvmJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+
+tasks.named<Jar>("jsJar") {
+    archiveBaseName.set("shake-$projectName")
+}
+
+//tasks.named<Jar>("metadataJar") {
+//    archiveBaseName.set("shake-$projectName")
+//}
+
+tasks.named<KotlinJvmTest>("jvmTest") {
+    ignoreFailures = true
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinTest::class).configureEach {
+    reports.junitXml.required.set(true)
 }

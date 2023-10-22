@@ -1,4 +1,4 @@
-package io.github.shakelang.parseutils
+package io.github.shakelang.colorlib
 
 
 /**

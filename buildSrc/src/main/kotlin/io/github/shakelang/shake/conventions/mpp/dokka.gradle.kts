@@ -37,3 +37,13 @@ tasks.named<DokkaTask>("dokkaGfm").configure {
         }
     }
 }
+
+tasks.register("createDokkaInDocs") {
+    dependsOn("copyDokkaHtml")
+}
+
+tasks.register<Copy>("copyDokkaHtml") {
+    dependsOn("dokkaHtml")
+    from(file("build/docs/html"))
+    into(file("docs/static/dokka/"))
+}

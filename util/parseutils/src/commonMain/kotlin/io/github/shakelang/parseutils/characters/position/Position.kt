@@ -31,17 +31,17 @@ class Position
     /**
      * The index of the position
      */
-    override val index: Int = -1,
+    override val index: Int,
 
     /**
      * The column of the position
      */
-    override val column: Int = 0,
+    override val column: Int,
 
     /**
      * The line of the position
      */
-    override val line: Int = 1
+    override val line: Int,
 
 ) : PositionMarker {
 
@@ -65,5 +65,25 @@ class Position
      */
     override fun toString(): String {
         return "$source:$line:$column"
+    }
+
+    /**
+     * Compares the position to another position
+     *
+     * @param other The other position
+     * @return true if the positions are equal
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Position) return false
+
+        if (source != other.source) return false
+        if (index != other.index) return false
+        if (column != other.column) return false
+        if (line != other.line) return false
+
+        return true
     }
 }

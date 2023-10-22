@@ -1,163 +1,181 @@
 package io.github.shakelang.parseutils.characters.streaming
 
 import io.github.shakelang.parseutils.characters.source.CharacterSource
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
-/**
- * Tests for [SourceCharacterInputStream]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
- */
 class SourceCharacterInputStreamTests {
 
     @Test
-    fun testSourceCharacterInputStreamContent() {
+    fun testConstructors() {
+        run {
+            val source = CharacterSource.from("Hello World!", "SourceCharacterInputStreamTests#testConstructors")
+            val stream = SourceCharacterInputStream(source)
 
-        val stream = createSourceCharacterInputStream(
-            "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamContent()"
-        )
+            assertEquals(source, stream.source)
+            assertEquals(-1, stream.position)
+            assertEquals("Hello World!", stream.content.concatToString())
+        }
 
-        assertEquals("hello", stream.content.concatToString())
+        run {
+            val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#testConstructors", "Hello World!",)
 
+            assertEquals(-1, stream.position)
+            assertEquals("Hello World!", stream.content.concatToString())
+        }
+
+        run {
+            val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#testConstructors", "Hello World!".toCharArray())
+
+            assertEquals(-1, stream.position)
+            assertEquals("Hello World!", stream.content.concatToString())
+        }
     }
 
     @Test
-    fun testSourceCharacterInputStreamNext() {
+    fun testSkip() {
+        val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#testSkip", "Hello \nWorld!")
 
-        val stream = createSourceCharacterInputStream(
-            "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamNext()"
-        )
+        assertEquals(-1, stream.position)
+        stream.skip()
+        assertEquals(0, stream.position)
+        stream.skip()
+        assertEquals(1, stream.position)
+        stream.skip()
+        assertEquals(2, stream.position)
+        stream.skip()
+        assertEquals(3, stream.position)
+        stream.skip(3)
+        assertEquals(6, stream.position)
+    }
 
-        assertEquals('h', stream.next())
+    @Test
+    fun testActual() {
+        val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#testActual", "Hello World!")
+
+        assertEquals(-1, stream.position)
+        stream.skip()
+        assertEquals('H', stream.actual())
+        stream.skip()
+        assertEquals('e', stream.actual())
+        stream.skip()
+        assertEquals('l', stream.actual())
+        stream.skip()
+        assertEquals('l', stream.actual())
+        stream.skip()
+        assertEquals('o', stream.actual())
+        stream.skip()
+        assertEquals(' ', stream.actual())
+        stream.skip()
+        assertEquals('W', stream.actual())
+        stream.skip()
+        assertEquals('o', stream.actual())
+        stream.skip()
+        assertEquals('r', stream.actual())
+        stream.skip()
+        assertEquals('l', stream.actual())
+        stream.skip()
+        assertEquals('d', stream.actual())
+        stream.skip()
+        assertEquals('!', stream.actual())
+    }
+
+    @Test
+    fun testNext() {
+        val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#testNext", "Hello World!")
+
+        assertEquals(-1, stream.position)
+
+        assertEquals('H', stream.next())
         assertEquals('e', stream.next())
         assertEquals('l', stream.next())
         assertEquals('l', stream.next())
         assertEquals('o', stream.next())
-
-        assertFailsWith<Error>("Error: Not enough characters left") {
-            stream.next()
-        }
-
+        assertEquals(' ', stream.next())
+        assertEquals('W', stream.next())
+        assertEquals('o', stream.next())
+        assertEquals('r', stream.next())
+        assertEquals('l', stream.next())
+        assertEquals('d', stream.next())
+        assertEquals('!', stream.next())
     }
 
     @Test
-    fun testSourceCharacterInputStreamPeek() {
+    fun checkHasNext() {
+        val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#checkHasNext", "Hello World!")
 
-        val stream = createSourceCharacterInputStream(
-            "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamPeek()"
-        )
+        assertEquals(-1, stream.position)
 
-        assertEquals('h', stream.peek())
-        stream.skip()
-        assertEquals('e', stream.peek())
-        stream.skip()
-        assertEquals('l', stream.peek())
-        stream.skip()
-        assertEquals('l', stream.peek())
-        stream.skip()
-        assertEquals('o', stream.peek())
-        stream.skip()
-
-        assertFailsWith<Error>("Error: Not enough characters left") {
-            stream.peek()
-        }
-
-    }
-
-    @Test
-    fun testSourceCharacterInputStreamSkip() {
-
-        val stream = createSourceCharacterInputStream(
-            "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamSkip()"
-        )
-
-        stream.skip()
-        assertEquals('h', stream.actual())
-        stream.skip()
-        assertEquals('e', stream.actual())
-        stream.skip(3)
-
-        assertFailsWith<Error>("Error: Not enough characters left") {
+        for (i in 0..11) {
+            assertEquals(true, stream.hasNext())
             stream.skip()
         }
 
-    }
-
-    @Test
-    fun testSourceCharacterInputStreamActual() {
-
-        val stream = createSourceCharacterInputStream(
-            "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamActual()"
-        )
-
-        stream.skip()
-        assertEquals('h', stream.actual())
+        assertEquals(false, stream.hasNext())
 
     }
 
     @Test
-    fun testSourceCharacterInputStreamPosition() {
+    fun checkHas() {
+        val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#checkHas", "Hello World!")
 
-        val stream = createSourceCharacterInputStream(
-            "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamPosition()"
-        )
+        assertEquals(-1, stream.position)
 
-        assertSame(-1, stream.position)
-        stream.skip()
-        assertSame(0, stream.position)
-        stream.skip()
-        assertSame(1, stream.position)
-
-    }
-
-    @Test
-    fun testSourceCharacterInputStreamHas() {
-
-        val stream = createSourceCharacterInputStream(
-            "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamHas()"
-        )
-
-        assertFailsWith<Error>("The given number must be 1 or bigger") {
-            stream.has(-10)
-        }
-        assertFailsWith<Error>("The given number must be 1 or bigger") {
-            stream.has(-1)
-        }
         assertFailsWith<Error>("The given number must be 1 or bigger") {
             stream.has(0)
         }
 
-        assertTrue(stream.has(1))
-        assertTrue(stream.has(5))
-        assertFalse(stream.has(6))
-
+        for(i in 0..11) {
+            for(j in 1..30) {
+                assertEquals(j < 13 - i, stream.has(j))
+            }
+            stream.skip()
+        }
     }
 
     @Test
-    fun testSourceCharacterInputStreamHasNext() {
+    fun testPeek() {
 
-        val stream = createSourceCharacterInputStream(
-            "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamHasNext()"
-        )
+        val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#checkHas", "Hello World!")
 
-        assertTrue(stream.hasNext())
-        stream.skip(4)
-        assertTrue(stream.hasNext())
-        stream.skip()
-        assertFalse(stream.hasNext())
+        assertEquals(-1, stream.position)
 
+        assertEquals('H', stream.peek())
+        assertEquals('e', stream.peek(2))
+        assertEquals('l', stream.peek(3))
+        assertEquals(' ', stream.peek(6))
+        assertEquals('W', stream.peek(7))
+        assertEquals('!', stream.peek(12))
 
+        assertFailsWith<Error>("Not enough characters left") {
+            stream.peek(13)
+        }
+
+        assertEquals("Hello", stream.peek(1, 5))
+
+        assertFailsWith<Error>("Peek argument must not be smaller than 0") {
+            stream.peek(-1, 6)
+        }
+
+        assertFailsWith<Error>("To-argument must be bigger than from-argument") {
+            stream.peek(2, 1)
+        }
+
+        assertFailsWith<Error>("Not enough characters left") {
+            stream.peek(2, 13)
+        }
+
+        stream.skip(1)
+
+        assertEquals('e', stream.peek())
+        assertEquals('l', stream.peek(2))
+        assertEquals('l', stream.peek(3))
+
+        assertEquals("ello ", stream.peek(1, 5))
     }
 
-    fun createSourceCharacterInputStream(content: String, source: String) =
-        SourceCharacterInputStream(CharacterSource.from(content, source))
+
+
 
 }

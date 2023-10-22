@@ -57,8 +57,21 @@ node {
 }
 
 kotlin {
+
+    js(IR) {
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useFirefoxHeadless()
+                }
+            }
+        }
+    }
+
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10")
+        implementation(project(":util:colorlib"))
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10")
         testImplementation(kotlin("test"))
     }
 }
@@ -97,26 +110,4 @@ listOf(
         this.yarnCommand.set(listOf(it))
         this.workingDir.set(file("${project.rootDir}/docs"))
     }
-}
-
-tasks.register("createDokkaInDocs") {
-    dependsOn("copyDokkaHtml")
-}
-
-tasks.register<Copy>("copyDokkaHtml") {
-    dependsOn("dokkaHtml")
-    from(file("build/docs/html"))
-    into(file("docs/static/dokka/"))
-}
-
-tasks.named<Jar>("jvmJar") {
-    archiveBaseName.set("shake-$projectName")
-}
-
-tasks.named<Jar>("jsJar") {
-    archiveBaseName.set("shake-$projectName")
-}
-
-tasks.named<Jar>("metadataJar") {
-    archiveBaseName.set("shake-$projectName")
 }

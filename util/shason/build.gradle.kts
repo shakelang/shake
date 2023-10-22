@@ -21,14 +21,3 @@ kotlin {
         testImplementation(kotlin("test"))
     }
 }
-
-val projectName = name
-tasks.named<Jar>("jvmJar") {
-    archiveBaseName.set("shake-$projectName")
-}
-tasks.named<Jar>("jsJar") {
-    archiveBaseName.set("shake-$projectName")
-}
-tasks.named<Jar>("metadataJar") {
-    archiveBaseName.set("shake-$projectName")
-}

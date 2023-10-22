@@ -83,6 +83,14 @@ fun MutableList<Byte>.setBytes(startIndex: Int, bytes: ByteArray): MutableList<B
 }
 
 /**
+ * Set specific bytes in a byte array to a byte array
+ */
+fun MutableList<Byte>.setBytes(startIndex: Int, bytes: List<Byte>): MutableList<Byte> {
+    for (i in startIndex until startIndex + bytes.size) this[i] = bytes[i - startIndex]
+    return this
+}
+
+/**
  * Set specific bytes in a byte array to a byte
  */
 fun MutableList<Byte>.setByte(index: Int, byte: Byte): MutableList<Byte> {
@@ -219,7 +227,7 @@ fun List<Byte>.getFloat(index: Int): Float = Float.fromBits(this.getInt(index))
 fun List<Byte>.getDouble(index: Int): Double = Double.fromBits(this.getLong(index))
 
 /**
- * Get specific unsigned char from a byte array at a given position
+ * Get specific unsigned byte from a byte array at a given position
  */
 fun List<Byte>.getUnsignedByte(index: Int): UByte = this[index].toUByte()
 
@@ -258,7 +266,7 @@ inline fun MutableList<Byte>.removeLastFloat(): Float {
     return floatOf(bytes[3], bytes[2], bytes[1], bytes[0])
 }
 inline fun MutableList<Byte>.removeLastDouble(): Double {
-    val bytes = ByteArray(4) { this.removeLast() }
+    val bytes = ByteArray(8) { this.removeLast() }
     return doubleOf(bytes[7], bytes[6], bytes[5], bytes[4], bytes[3], bytes[2], bytes[1], bytes[0])
 }
 
@@ -272,7 +280,7 @@ inline fun MutableList<Byte>.removeLastUnsignedInt(): UInt {
     return unsignedIntOf(bytes[3], bytes[2], bytes[1], bytes[0])
 }
 inline fun MutableList<Byte>.removeLastUnsignedLong(): ULong {
-    val bytes = ByteArray(4) { this.removeLast() }
+    val bytes = ByteArray(8) { this.removeLast() }
     return unsignedLongOf(bytes[7], bytes[6], bytes[5], bytes[4], bytes[3], bytes[2], bytes[1], bytes[0])
 }
 
