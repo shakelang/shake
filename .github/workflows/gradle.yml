@@ -45,4 +45,10 @@ jobs:
           name: Test Report
           path: build/test-results/**/*.xml
           reporter: jest-junit
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v2
+        if: success() || failure()
+        with:
+          name: Test Report
+          path: build/reports/tests
 
