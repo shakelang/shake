@@ -1,0 +1,51 @@
+[0x00000004] incr_stack 104
+[0x00000007] i_push 0x00000014 [numeric: 20]
+[0x0000000c] i_store_local 0x0064 [numeric: 100]
+[0x0000000f] jump_static 0x00000019 [numeric: 25]
+[0x00000014] jump_static 0x0000005c [numeric: 92]
+[0x00000019] i_push 0x00000000 [numeric: 0]
+[0x0000001e] i_store_local 0x0000 [numeric: 0]
+[0x00000021] i_get_local 0x0000 [numeric: 0]
+[0x00000024] i_push 0x000003e8 [numeric: 1000]
+[0x00000029] i_smaller
+[0x0000002a] not
+[0x0000002b] jump_if 0x00000057
+[0x00000030] i_get_local 0x0000 [numeric: 0]
+[0x00000033] incr_stack 8
+[0x00000036] i_store_local 0x0000 [numeric: 0]
+[0x00000039] i_push 0x00000046 [numeric: 70]
+[0x0000003e] i_store_local 0x0004 [numeric: 4]
+[0x00000041] jump_static 0x00000061 [numeric: 97]
+[0x00000046] i_get_local 0x0000 [numeric: 0]
+[0x00000049] i_push 0x00000001 [numeric: 1]
+[0x0000004e] iadd
+[0x0000004f] i_store_local 0x0000 [numeric: 0]
+[0x00000052] jump_static 0x00000021 [numeric: 33]
+[0x00000057] i_get_local 0x0064 [numeric: 100]
+[0x0000005a] decr_stack
+[0x0000005b] jump_dynamic
+[0x0000005c] jump_static 0x0000008c [numeric: 140]
+[0x00000061] i_get_local 0x0000 [numeric: 0]
+[0x00000064] incr_stack 8
+[0x00000067] i_store_local 0x0000 [numeric: 0]
+[0x0000006a] i_push 0x00000077 [numeric: 119]
+[0x0000006f] i_store_local 0x0004 [numeric: 4]
+[0x00000072] jump_static 0x00000091 [numeric: 145]
+[0x00000077] incr_stack 4
+[0x0000007a] i_push 0x00000087 [numeric: 135]
+[0x0000007f] i_store_local 0x0000 [numeric: 0]
+[0x00000082] jump_static 0x000000a1 [numeric: 161]
+[0x00000087] i_get_local 0x0004 [numeric: 4]
+[0x0000008a] decr_stack
+[0x0000008b] jump_dynamic
+[0x0000008c] jump_static 0x0000009c [numeric: 156]
+[0x00000091] i_get_local 0x0000 [numeric: 0]
+[0x00000094] invoke_native print_int
+[0x00000097] i_get_local 0x0004 [numeric: 4]
+[0x0000009a] decr_stack
+[0x0000009b] jump_dynamic
+[0x0000009c] jump_static 0x000000a9 [numeric: 169]
+[0x000000a1] invoke_native print_line_ending
+[0x000000a4] i_get_local 0x0000 [numeric: 0]
+[0x000000a7] decr_stack
+[0x000000a8] jump_dynamic

@@ -1,13 +1,13 @@
-import com.github.shakelang.shake.interpreter.Interpreter
-import com.github.shakelang.shake.lexer.Lexer
-import com.github.shakelang.shake.parser.Parser
-import com.github.shakelang.shake.parser.node.Tree
-import com.github.shakelang.shake.util.Promise
-import com.github.shakelang.shake.util.Request
-import com.github.shakelang.shake.util.characterinput.characterinputstream.CharacterInputStream
-import com.github.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
-import com.github.shakelang.shake.util.characterinput.charactersource.CharacterSource
-import com.github.shakelang.shake.util.characterinput.position.PositionMap
+import io.github.shakelang.shake.interpreter.Interpreter
+import io.github.shakelang.shake.lexer.Lexer
+import io.github.shakelang.shake.parser.Parser
+import io.github.shakelang.shake.parser.node.Tree
+import io.github.shakelang.shake.util.Promise
+import io.github.shakelang.shake.util.Request
+import io.github.shakelang.shake.util.characterinput.characterinputstream.CharacterInputStream
+import io.github.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
+import io.github.shakelang.shake.util.characterinput.charactersource.CharacterSource
+import io.github.shakelang.parseutils.characters.position.PositionMap
 
 
 /**

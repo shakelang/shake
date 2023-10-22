@@ -1,0 +1,14 @@
+import io.github.shakelang.*;
+
+int test (int i) {
+
+}
+
+int main() {
+    int i = 10;
+    test(i);
+    a();
+    String s = "Hello";
+    String s2 = "World";
+    println(s + " " + s2);
+}

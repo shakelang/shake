@@ -1,0 +1,61 @@
+import java.java.lang.System;
+import java.io.github.nsc.de.shake.cli.ShakeCli;
+
+
+private class ConsoleOutput {
+
+  void write ( e ) {
+    System.out.print ( e );
+  }
+
+  void writeLine ( e ) {
+    System.out.println ( e );
+  }
+
+}
+
+const stdout = new ConsoleOutput();
+
+public class Console {
+
+  function log ( e ) {
+    stdout.writeLine ( e );
+  }
+
+}
+
+public const console = new Console();
+
+public void print ( content ) {
+
+  stdout.write ( content );
+
+}
+
+public void println ( content ) {
+
+  stdout.writeLine ( content );
+
+}
+
+public void exit ( ) {
+
+  System.exit(0);
+
+}
+
+private class ShakeInterpreterAPI {
+	
+	public void reset() {
+		
+		ShakeCli.interpreter.resetGlobals();
+		
+	}
+	
+}
+
+public class Shake {
+	
+	public static ShakeInterpreterAPI interpreter = new ShakeInterpreterAPI();
+	
+}

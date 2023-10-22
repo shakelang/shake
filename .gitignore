@@ -15,6 +15,7 @@ Compiler.userlibraries
 .project
 
 *.jar
+*.log
 
 # Gradle
 .gradle/

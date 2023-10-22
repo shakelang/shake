@@ -1,9 +1,27 @@
-group = "com.github.shakelang.shake"
+group = "io.github.shakelang.shake"
 version = "0.1.0"
 description = "Shake"
 
+dependencies {
+
+    kover(project(":util:colorlib"))
+    kover(project(":util:parseutils"))
+    kover(project(":util:shason"))
+    kover(project(":util:jvmlib"))
+    kover(project(":shake:compiler:lexer"))
+    kover(project(":shake:compiler:parser"))
+    kover(project(":shake:compiler:processor"))
+    kover(project(":shake:shasambly:shastools"))
+    kover(project(":shake:shasambly:shasambly"))
+    kover(project(":shake:shasambly:shasp"))
+//    kover(project(":shake:shasambly:java-dist"))
+
+}
+
 plugins {
-    id("org.jetbrains.dokka") version "1.4.32"
+    id("org.jetbrains.dokka")
+    kotlin("multiplatform") apply false
+    id("org.jetbrains.kotlinx.kover")
 }
 
 repositories {
@@ -79,4 +97,11 @@ tasks.dokkaGfm.configure {
 tasks.register("dokka") {
     group = "documentation"
     dependsOn("dokkaHtml", "dokkaGfm")
+}
+
+tasks.register<TestReport>("genReport") {
+    val testTasks = allprojects.flatMap { it.tasks.withType(Test::class) }
+    dependsOn(testTasks)
+    destinationDir = file("$buildDir/reports/tests")
+    reportOn(testTasks)
 }

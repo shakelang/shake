@@ -1,0 +1,7 @@
+[0x00000010] incr_stack 100
+[0x00000013] i_push 0x0000000a [numeric: 10]
+[0x00000018] i_store_local 0x0000 [numeric: 0]
+[0x0000001b] i_push 0x0000000a [numeric: 10]
+[0x00000020] invoke_native print_int
+[0x00000023] i_push 0x00000000 [numeric: 0]
+[0x00000028] invoke_native exit
