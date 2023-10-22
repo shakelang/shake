@@ -1,3 +1,5 @@
+import java.util.ArrayList
+
 group = "io.github.shakelang.shake"
 version = "0.1.0"
 description = "Shake"
@@ -83,3 +85,9 @@ tasks.register("dokka") {
     dependsOn("dokkaHtml", "dokkaGfm")
 }
 
+tasks.register<TestReport>("genReport") {
+    val testTasks = allprojects.flatMap { it.tasks.withType(Test::class) }
+    dependsOn(testTasks)
+    destinationDir = file("$buildDir/reports/tests")
+    reportOn(testTasks)
+}

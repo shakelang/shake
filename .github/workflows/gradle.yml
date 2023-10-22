@@ -35,7 +35,13 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Build with Gradle
         run: ./gradlew build
-      - name: Cleanup Gradle Cache
-        run: |
-          rm -f ~/.gradle/caches/modules-2/modules-2.lock
-          rm -f ~/.gradle/caches/modules-2/gc.properties
+      - name: Generate Test Reports
+        run: ./gradlew genReports
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: Test Report           # Name of the test report
+          path: build/test-results/**/*.xml    # Path to test results
+          reporter: jest-junit        # Format of test results
+

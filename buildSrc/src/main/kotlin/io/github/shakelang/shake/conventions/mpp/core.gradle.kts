@@ -27,7 +27,9 @@ kotlin {
             kotlinOptions.jvmTarget = "16"
         }
         testRuns["test"].executionTask.configure {
-            useJUnit()
+            useJUnitPlatform {
+
+            }
         }
 
         val main by compilations.getting
@@ -94,4 +96,8 @@ tasks.named<Jar>("jsJar") {
 
 tasks.named<KotlinJvmTest>("jvmTest") {
     ignoreFailures = true
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinTest::class).configureEach {
+    reports.junitXml.required.set(true)
 }
