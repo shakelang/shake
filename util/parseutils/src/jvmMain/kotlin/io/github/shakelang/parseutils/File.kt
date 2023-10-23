@@ -62,4 +62,8 @@ actual class File actual constructor(
 
 }
 
-actual fun resourceFile(path: String): File = File::class.java.classLoader.getResource(path)?.let { File(it.path) } ?: throw Error("Resource not found: $path")
+actual fun resourceFile(path: String): String = File::class.java.classLoader
+        .getResourceAsStream(path)
+        ?.reader()
+        ?.readText()
+            ?: throw Error("Can't find resource '$path'")

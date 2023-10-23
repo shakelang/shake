@@ -61,4 +61,4 @@ actual class File actual constructor(
 
 }
 
-actual fun resourceFile(path: String): File = File(require.resolve(path) as String)
+actual fun resourceFile(path: String): String = require(path) as String

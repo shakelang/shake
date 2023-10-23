@@ -106,4 +106,4 @@ expect class File
 
 }
 
-expect fun resourceFile(path: String): File
+expect fun resourceFile(path: String): String
