@@ -2,11 +2,9 @@ package io.github.shakelang.shake.conventions.mpp
 
 import org.gradle.kotlin.dsl.invoke
 import org.gradle.kotlin.dsl.kotlin
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
-val jvmTarget = "16"
+val jvmTarget = JVM_TARGET
 
 plugins {
     kotlin("multiplatform")

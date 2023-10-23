@@ -1,4 +1,4 @@
-package io.github.shakelang.parseutils
+package io.github.shakelang.promise
 
 external fun setTimeout(exec: suspend () -> Unit, timout: Int)
 

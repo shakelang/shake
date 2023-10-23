@@ -1,14 +1,13 @@
-@file:Suppress("unused_variable")
-
 import io.github.shakelang.shake.conventions.mpp.dependencies
 
 plugins {
     id("io.github.shakelang.shake.conventions.mpp.all")
     id("com.github.node-gradle.node") version "3.1.1"
     id("maven-publish")
+    id("org.jetbrains.kotlinx.kover")
 }
 
-group = "io.github.shakelang.util.parseutils"
+group = "io.github.shakelang.util.colorlib"
 version = "0.1.0"
 description = "Utilities for parsing stuff with kotlin"
 
@@ -60,7 +59,7 @@ kotlin {
 
     js(IR) {
         browser {
-            testTask (Action {
+            testTask (Action{
                 useKarma {
                     useChromeHeadless()
                     useFirefoxHeadless()
@@ -70,7 +69,6 @@ kotlin {
     }
 
     dependencies {
-        implementation(project(":util:colorlib"))
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10")
         testImplementation(kotlin("test"))
         testImplementation(project(":util:testlib"))

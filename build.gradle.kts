@@ -4,6 +4,8 @@ description = "Shake"
 
 dependencies {
 
+    kover(project(":util:testlib"))
+    kover(project(":util:promise"))
     kover(project(":util:colorlib"))
     kover(project(":util:parseutils"))
     kover(project(":util:shason"))
