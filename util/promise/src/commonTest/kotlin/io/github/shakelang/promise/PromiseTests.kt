@@ -1,4 +1,4 @@
-package io.github.shakelang.parseutils
+package io.github.shakelang.promise
 
 import io.github.shakelang.testlib.CallCounter
 import kotlin.test.Test
@@ -21,16 +21,10 @@ class PromiseTests {
     fun testPromise2() {
         val fn = CallCounter()
 
-        var rs : ResolveFunction<String>? = null
-
-        val promise = Promise { resolve, _ ->
-            rs = resolve
-        }
+        val promise = Promise.resolve("Hello World")
 
         promise.then { fn() }
         promise.then { fn() }
-
-        rs?.let { it("Hello World") }
 
         assertEquals(2, fn.calls)
     }

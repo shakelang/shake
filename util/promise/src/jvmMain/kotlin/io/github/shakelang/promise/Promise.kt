@@ -1,8 +1,8 @@
-package io.github.shakelang.parseutils
+package io.github.shakelang.promise
 
 @Suppress("ACTUAL_TYPE_ALIAS_TO_CLASS_WITH_DECLARATION_SITE_VARIANCE", "unused")
 actual open class Promise<out T> actual constructor(
-    private val executor: PromiseExecutor<T>
+        private val executor: PromiseExecutor<T>
 ) {
 
     /**
@@ -169,11 +169,11 @@ actual open class Promise<out T> actual constructor(
             return Promise { resolve, reject ->
                 val results = mutableListOf<S>()
                 var finished = 0
-                for((i, p) in promise.withIndex()) {
+                for ((i, p) in promise.withIndex()) {
                     p.then {
                         results.add(it)
                         finished++
-                        if(finished == promise.size) resolve(results.toList())
+                        if (finished == promise.size) resolve(results.toList())
                     }.catch {
                         reject(it)
                     }
@@ -183,7 +183,7 @@ actual open class Promise<out T> actual constructor(
 
         actual fun <S> race(promise: Array<out Promise<S>>): Promise<S> {
             return Promise { resolve, reject ->
-                for(p in promise) {
+                for (p in promise) {
                     p.then {
                         resolve(it)
                     }.catch {
