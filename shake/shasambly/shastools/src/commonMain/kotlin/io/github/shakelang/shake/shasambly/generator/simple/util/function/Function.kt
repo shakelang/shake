@@ -7,7 +7,10 @@ import io.github.shakelang.parseutils.bytes.removeLastLong
 import io.github.shakelang.parseutils.bytes.removeLastShort
 import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcode
 import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcodeJumpStaticToIndex
-import io.github.shakelang.shake.shasambly.generator.simple.*
+import io.github.shakelang.shake.shasambly.generator.simple.RelativeShasamblyGeneratorPart
+import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
+import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGenerator
+import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGeneratorFunction
 
 typealias SimpleRoutineShasamblyGenerator = SimpleRoutineShasambly.() -> Unit
 

@@ -1,7 +1,5 @@
 package io.github.shakelang.shake.conventions.mpp
 
-import org.gradle.kotlin.dsl.invoke
-import org.gradle.kotlin.dsl.kotlin
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
 val jvmTarget = JVM_TARGET

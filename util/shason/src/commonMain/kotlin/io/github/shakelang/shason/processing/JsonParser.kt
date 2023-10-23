@@ -3,8 +3,8 @@ package io.github.shakelang.shason.processing
 import io.github.shakelang.parseutils.CompilerError
 import io.github.shakelang.parseutils.characters.Characters
 import io.github.shakelang.parseutils.characters.position.Position
-import io.github.shakelang.shason.processing.JsonTokenType.*
 import io.github.shakelang.shason.elements.*
+import io.github.shakelang.shason.processing.JsonTokenType.*
 
 
 /**

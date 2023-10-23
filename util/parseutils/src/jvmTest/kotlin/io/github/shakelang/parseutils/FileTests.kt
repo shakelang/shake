@@ -1,8 +1,5 @@
 package io.github.shakelang.parseutils
 
-import io.github.shakelang.parseutils.File
-import io.github.shakelang.parseutils.bytes.toBytes
-import io.github.shakelang.parseutils.resourceFile
 import kotlin.test.*
 
 class FileTests {

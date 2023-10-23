@@ -1,7 +1,6 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.bytes.dataStream
-import io.github.shakelang.parseutils.bytes.stream
 import io.github.shakelang.parseutils.streaming.input.DataInputStream
 import io.github.shakelang.parseutils.streaming.input.InputStream
 import io.github.shakelang.parseutils.streaming.input.dataStream
