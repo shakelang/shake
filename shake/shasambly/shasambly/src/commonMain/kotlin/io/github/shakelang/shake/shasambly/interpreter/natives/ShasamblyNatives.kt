@@ -5,7 +5,7 @@ import io.github.shakelang.parseutils.bytes.getByte
 import io.github.shakelang.parseutils.bytes.getInt
 import io.github.shakelang.parseutils.bytes.getLong
 import io.github.shakelang.parseutils.bytes.getShort
-import io.github.shakelang.shake.shasambly.interpreter.*
+import io.github.shakelang.shake.shasambly.interpreter.ShasamblyOpcodeExecutor
 
 val nativeFunctions = arrayOfNulls<ShasamblyNative>((UShort.MAX_VALUE).toInt() + 1)
 

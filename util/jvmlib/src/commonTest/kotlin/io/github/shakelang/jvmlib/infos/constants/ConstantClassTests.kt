@@ -1,7 +1,6 @@
 package io.github.shakelang.jvmlib.infos.constants
 
 import io.github.shakelang.parseutils.bytes.stream
-import io.github.shakelang.parseutils.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

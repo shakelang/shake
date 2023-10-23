@@ -1,7 +1,9 @@
 package io.github.shakelang.shason.processing
 
 import io.github.shakelang.shason.processing.TestUtilities.makeTokens
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertSame
 
 class JsonLexerTests {
 
