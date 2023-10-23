@@ -19,6 +19,8 @@ fun KotlinMultiplatformExtension.dependencies(configure: KotlinMultiplatformExte
 val KotlinMultiplatformExtension.dependencies: KotlinMultiplatformExtensionDependencies
     get() = KotlinMultiplatformExtensionDependencies(this)
 
+
+
 class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExtension) {
     val commonMain: KotlinSourceSet by extension.sourceSets.getting
     val commonTest: KotlinSourceSet by extension.sourceSets.getting

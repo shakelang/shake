@@ -2,8 +2,6 @@ import io.github.shakelang.shake.conventions.mpp.dependencies
 
 plugins {
     id("io.github.shakelang.shake.conventions.mpp.all")
-    id("com.github.node-gradle.node") version "3.1.1"
-    id("maven-publish")
 }
 
 group = "io.github.shakelang.shake"
