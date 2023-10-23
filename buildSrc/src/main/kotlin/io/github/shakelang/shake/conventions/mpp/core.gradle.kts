@@ -154,10 +154,3 @@ tasks.named<KotlinJvmTest>("jvmTest") {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinTest::class).configureEach {
     reports.junitXml.required.set(true)
 }
-
-tasks.create<Copy>("copyAssets") {
-    from("src/commonMain/resources") {
-        include("**/*")
-        to(tasks.named<Jar>("jsMainClasses").get().destinationDirectory)
-    }
-}
