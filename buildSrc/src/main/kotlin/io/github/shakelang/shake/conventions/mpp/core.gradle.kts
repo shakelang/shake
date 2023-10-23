@@ -1,8 +1,11 @@
 package io.github.shakelang.shake.conventions.mpp
 
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
+import java.util.*
 
 val jvmTarget = JVM_TARGET
+val packageName = name.lowercase().replace("_", "")
+val packageCapitalized = packageName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
 plugins {
     kotlin("multiplatform")
@@ -10,20 +13,19 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
     id("com.github.node-gradle.node")
     id("maven-publish")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 repositories {
     mavenLocal()
-    maven {
-        url = uri("https://repo1.maven.org/maven2/")
-    }
-
-    maven {
-        url = uri("https://repo.maven.apache.org/maven2/")
-    }
+    mavenCentral()
 }
 
 kotlin {
+//    dependencies {
+//        implementation("dev.icerock.moko:resources:0.23.0")
+//        testImplementation("dev.icerock.moko:resources-test:0.23.0")
+//    }
     jvm { }
     js(IR) {
         browser {
@@ -75,8 +77,18 @@ node {
     // nodeProxySettings.set(ProxySettings.SMART)
 }
 
+multiplatformResources {
+    multiplatformResourcesPackage = "io.github.shakelang.shake.$packageName.resources"
+    multiplatformResourcesClassName = "${packageCapitalized}Resources"
+    iosBaseLocalizationRegion = "en" // optional, default "en"
+    multiplatformResourcesSourceSet = "commonMain"  // optional, default "commonMain"
+}
 
 kotlin {
+    dependencies {
+        implementation("dev.icerock.moko:resources:0.23.0")
+        testImplementation("dev.icerock.moko:resources-test:0.23.0")
+    }
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = jvmTarget
@@ -108,8 +120,6 @@ kotlin {
                     }
 
                 }
-            }
-            commonWebpackConfig {
             }
         }
     }
