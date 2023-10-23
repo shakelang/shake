@@ -21,14 +21,23 @@ actual open class Promise<out T> actual constructor(
     private var error: Throwable? = null
 
     /**
-     * The onFulfilled function of the [Promise]
+     * The onFulfilled functions of the [Promise]
      */
     private var onFulfilled = mutableListOf<FulfilledFunction<T, *>>()
 
     /**
-     * The onRejected function of the [Promise]
+     * The onRejected functions of the [Promise]
      */
     private var onRejected = mutableListOf<RejectedFunction<*>>()
+
+    /**
+     * The onFinally functions of the [Promise]
+     */
+    private var onFinally = mutableListOf<FinallyFunction>()
+
+    /**
+     * The onFinally functions of the [Promise]
+     */
 
     init {
         execute()
@@ -124,11 +133,17 @@ actual open class Promise<out T> actual constructor(
 
     }
 
+    actual open fun finally(onFinally: FinallyFunction): Promise<T> {
+        this.onFinally.add(onFinally)
+        return this
+    }
+
     private fun resolve(value: T) {
 
         this.value = value
         this.finished = true
         for(f in onFulfilled) f(value)
+        for(f in onFinally) f()
 
     }
 
@@ -137,6 +152,7 @@ actual open class Promise<out T> actual constructor(
         this.error = error
         this.finished = true
         for(r in onRejected) r(error)
+        for(f in onFinally) f()
 
     }
 
@@ -149,7 +165,54 @@ actual open class Promise<out T> actual constructor(
     }
 
     actual companion object {
-        actual fun <T> resolve(v: T): Promise<T> = Promise { rs, _ -> rs(v) }
-        actual fun <T> reject(e: Throwable): Promise<T> = Promise { _, rj -> rj(e) }
+        actual fun <S> all(promise: Array<out Promise<S>>): Promise<Array<out S>> {
+            return Promise { resolve, reject ->
+                val results = mutableListOf<S>()
+                var finished = 0
+                for((i, p) in promise.withIndex()) {
+                    p.then {
+                        results.add(it)
+                        finished++
+                        if(finished == promise.size) resolve(results.toList())
+                    }.catch {
+                        reject(it)
+                    }
+                }
+            }
+        }
+
+        actual fun <S> race(promise: Array<out Promise<S>>): Promise<S> {
+            return Promise { resolve, reject ->
+                for(p in promise) {
+                    p.then {
+                        resolve(it)
+                    }.catch {
+                        reject(it)
+                    }
+                }
+            }
+        }
+
+        actual fun reject(e: Throwable): Promise<Nothing> {
+            return Promise { _, reject ->
+                reject(e)
+            }
+        }
+
+        actual fun <S> resolve(e: S): Promise<S> {
+            return Promise { resolve, _ ->
+                resolve(e)
+            }
+        }
+
+        actual fun <S> resolve(e: Promise<S>): Promise<S> {
+            return Promise { resolve, reject ->
+                e.then {
+                    resolve(it)
+                }.catch {
+                    reject(it)
+                }
+            }
+        }
     }
 }

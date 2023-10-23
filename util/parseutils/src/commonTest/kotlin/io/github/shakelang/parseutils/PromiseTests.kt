@@ -23,7 +23,9 @@ class PromiseTests {
 
         var rs : ResolveFunction<String>? = null
 
-        val promise = Promise.resolve("Hello World")
+        val promise = Promise { resolve, _ ->
+            rs = resolve
+        }
 
         promise.then { fn() }
         promise.then { fn() }

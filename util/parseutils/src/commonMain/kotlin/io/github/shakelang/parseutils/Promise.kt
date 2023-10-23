@@ -3,8 +3,10 @@ package io.github.shakelang.parseutils
 typealias ResolveFunction<T> = (T) -> Unit
 typealias RejectFunction = (Throwable) -> Unit
 typealias FulfilledFunction<T, S> = ((T) -> S)
+typealias FinallyFunction = (() -> Unit)
 typealias RejectedFunction<T> = ((Throwable) -> T)
 typealias PromiseExecutor<T> = (resolve: ResolveFunction<T>, reject: RejectFunction) -> Unit
+
 
 /**
  * Argument for [promisify]'s executor
@@ -98,12 +100,20 @@ expect open class Promise<out T>(
      */
     open fun <S> catch(onRejected: RejectedFunction<S>): Promise<S>
 
-    companion object {
-        fun <T> resolve(v: T): Promise<T>
-        fun <T> reject(e: Throwable): Promise<T>
-    }
+    open fun finally(onFinally: FinallyFunction): Promise<T>
 
+    companion object {
+        fun <S> all(promise: Array<out Promise<S>>): Promise<Array<out S>>
+
+        fun <S> race(promise: Array<out Promise<S>>): Promise<S>
+
+        fun reject(e: Throwable): Promise<Nothing>
+
+        fun <S> resolve(e: S): Promise<S>
+        fun <S> resolve(e: Promise<S>): Promise<S>
+    }
 }
+
 
 fun <T> promiseResolve(v: T) = Promise {
     resolve, _ -> resolve(v)
