@@ -10,8 +10,8 @@ fun main(args: Array<String>) {
     val processor = ShakePackageBasedProcessor()
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "test.shake")
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "io/github/shakelang/test.shake")
-    processor.loadFile("shakelib/src/common", "shake/lang/String.shake")
-    processor.loadFile("shakelib/src/common", "shake/lang/Object.shake")
+    processor.loadFile("MR/files/src/common", "shake/lang/String.shake")
+    processor.loadFile("MR/files/src/common", "shake/lang/Object.shake")
     //processor.loadFile("shakelib/src/js", "shake/js/base.shake")
     val project = processor.finish()
 
