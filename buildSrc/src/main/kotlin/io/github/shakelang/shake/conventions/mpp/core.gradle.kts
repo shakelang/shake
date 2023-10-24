@@ -4,8 +4,6 @@ import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 import java.util.*
 
 val jvmTarget = JVM_TARGET
-val packageName = name.lowercase().replace("_", "")
-val packageCapitalized = packageName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
 plugins {
     kotlin("multiplatform")
@@ -13,7 +11,6 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
     id("com.github.node-gradle.node")
     id("maven-publish")
-    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 repositories {
@@ -77,18 +74,18 @@ node {
     // nodeProxySettings.set(ProxySettings.SMART)
 }
 
-multiplatformResources {
-    multiplatformResourcesPackage = "io.github.shakelang.shake.$packageName.resources"
-    multiplatformResourcesClassName = "${packageCapitalized}Resources"
-    iosBaseLocalizationRegion = "en" // optional, default "en"
-    multiplatformResourcesSourceSet = "commonMain"  // optional, default "commonMain"
-}
+//multiplatformResources {
+//    multiplatformResourcesPackage = "io.github.shakelang.shake.$packageName.resources"
+//    multiplatformResourcesClassName = "${packageCapitalized}Resources"
+//    iosBaseLocalizationRegion = "en" // optional, default "en"
+//    multiplatformResourcesSourceSet = "commonMain"  // optional, default "commonMain"
+//}
 
 kotlin {
-    dependencies {
-        implementation("dev.icerock.moko:resources:0.23.0")
-        testImplementation("dev.icerock.moko:resources-test:0.23.0")
-    }
+//    dependencies {
+//        implementation("dev.icerock.moko:resources:0.23.0")
+//        testImplementation("dev.icerock.moko:resources-test:0.23.0")
+//    }
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = jvmTarget
@@ -134,6 +131,34 @@ kotlin {
     }
     */
 }
+//
+//tasks.named("compileKotlinJs").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("compileKotlinJvm").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("compileKotlinMetadata").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("compileTestKotlinJs").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("compileTestKotlinJvm").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("jsProcessResources").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("jvmProcessResources").configure {
+//    dependsOn("generateMRcommonMain")
+//}
 
 tasks.named("jvmTest") {
 //    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {

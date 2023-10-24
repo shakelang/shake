@@ -24,10 +24,18 @@ val KotlinMultiplatformExtension.dependencies: KotlinMultiplatformExtensionDepen
 class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExtension) {
     val commonMain: KotlinSourceSet by extension.sourceSets.getting
     val commonTest: KotlinSourceSet by extension.sourceSets.getting
-    val jvmMain: KotlinSourceSet by extension.sourceSets.getting
-    val jvmTest: KotlinSourceSet by extension.sourceSets.getting
-    val jsMain: KotlinSourceSet by extension.sourceSets.getting
-    val jsTest: KotlinSourceSet by extension.sourceSets.getting
+    val jvmMain: KotlinSourceSet by extension.sourceSets.getting {
+        dependsOn(commonMain)
+    }
+    val jvmTest: KotlinSourceSet by extension.sourceSets.getting {
+        dependsOn(commonTest)
+    }
+    val jsMain: KotlinSourceSet by extension.sourceSets.getting {
+        dependsOn(commonMain)
+    }
+    val jsTest: KotlinSourceSet by extension.sourceSets.getting {
+        dependsOn(commonTest)
+    }
     //val nativeMain: KotlinSourceSet by extension.sourceSets.getting
     //val nativeTest: KotlinSourceSet by extension.sourceSets.getting
 
