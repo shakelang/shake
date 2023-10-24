@@ -10,7 +10,9 @@ plugins {
     java
 }
 
-val javaCompilations = arrayOf("6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16")
+val javaCompilationOutputDir = "src/commonTest/resources/classes/java"
+
+val javaCompilations = (6..21).map { it.toString() }
 
 // Create java compilations source sets
 sourceSets {
@@ -29,7 +31,7 @@ javaCompilations.forEach {
         group = "test-resource-build"
         source = sourceSets["java$it"].java
         classpath = sourceSets["java$it"].compileClasspath
-        destinationDir = file("build/classes/java$it")
+        destinationDir = file("$javaCompilationOutputDir/java$it")
     }
 }
 
