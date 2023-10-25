@@ -1,7 +1,9 @@
 package io.github.shakelang.shason.processing
 
-import io.github.shakelang.shason.elements.*
-import kotlin.test.*
+import io.github.shakelang.shason.elements.JsonPrimitive
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class JsonParserTests {
 

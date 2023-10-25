@@ -2,7 +2,10 @@ package io.github.shakelang.parseutils.bytes
 
 import kotlin.math.abs
 import kotlin.math.max
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalUnsignedTypes::class)
 class ByteArrayTests {

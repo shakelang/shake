@@ -71,6 +71,10 @@ expect class File
      */
     val contentsString: String
 
+    /**
+     * Does the file exist? ([Boolean] value)
+     */
+    val exists: Boolean
 
     /**
      * Create the file as directory
@@ -101,3 +105,5 @@ expect class File
     fun write(content: CharArray)
 
 }
+
+expect fun resourceFile(path: String): String

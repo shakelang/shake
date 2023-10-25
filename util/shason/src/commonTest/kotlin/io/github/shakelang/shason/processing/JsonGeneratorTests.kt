@@ -1,6 +1,7 @@
 package io.github.shakelang.shason.processing
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class JsonGeneratorTests {
 

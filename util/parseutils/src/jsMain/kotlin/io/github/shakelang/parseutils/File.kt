@@ -3,6 +3,7 @@ package io.github.shakelang.parseutils
 import io.github.shakelang.parseutils.environment.Environment
 
 external fun require(name: String): dynamic
+external val require: dynamic
 
 val nodeJsAvailable = Environment.getEnvironment().isJavaScriptNode
 external val process: dynamic
@@ -25,10 +26,10 @@ actual class File actual constructor(
         get() = node_path.isAbsolute(path) as Boolean
 
     actual val isFile: Boolean
-        get() = this.lstats.isFile() as Boolean
+        get() = this.exists && this.lstats.isFile() as Boolean
 
     actual val isDirectory: Boolean
-        get() = this.lstats.isDirectory() as Boolean
+        get() = this.exists && this.lstats.isDirectory() as Boolean
 
     actual val parent: File
         get() = File(this.parentPath)
@@ -45,6 +46,9 @@ actual class File actual constructor(
     actual val contentsString: String
         get() = node_fs.readFileSync(path) as String
 
+    actual val exists: Boolean
+        get() = node_fs.existsSync(path) as Boolean
+
     init {
         if(node_fs == null || node_path == null) throw Error(
             "Can't use file API because node seems to be not available (you are probably in browser)")
@@ -56,3 +60,5 @@ actual class File actual constructor(
     actual fun write(content: CharArray) = this.write(content.concatToString())
 
 }
+
+actual fun resourceFile(path: String): String = require(path) as String

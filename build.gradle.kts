@@ -4,6 +4,7 @@ description = "Shake"
 
 dependencies {
 
+    kover(project(":util:testlib"))
     kover(project(":util:colorlib"))
     kover(project(":util:parseutils"))
     kover(project(":util:shason"))
@@ -14,7 +15,6 @@ dependencies {
     kover(project(":shake:shasambly:shastools"))
     kover(project(":shake:shasambly:shasambly"))
     kover(project(":shake:shasambly:shasp"))
-//    kover(project(":shake:shasambly:java-dist"))
 
 }
 
@@ -44,7 +44,7 @@ tasks.dokkaHtml.configure {
 
     outputDirectory.set(buildDir.resolve("docs/html"))
 
-    dependsOn (findDokkaHtmlProjects().map { it.tasks.getByName("dokkaHtml") })
+    dependsOn("copyDokkaHtml")
 
     doFirst {
         val dokkaProjects = findDokkaHtmlProjects()
@@ -71,7 +71,7 @@ tasks.dokkaGfm.configure {
 
     outputDirectory.set(buildDir.resolve("docs/markdown"))
 
-    dependsOn (findDokkaGfmProjects().map { it.tasks.getByName("dokkaGfm") })
+    dependsOn("copyDokkaGfm")
 
     doFirst {
         val dokkaProjects = findDokkaGfmProjects()
@@ -100,8 +100,23 @@ tasks.register("dokka") {
 }
 
 tasks.register<TestReport>("genReport") {
+    group = "verification"
     val testTasks = allprojects.flatMap { it.tasks.withType(Test::class) }
     dependsOn(testTasks)
-    destinationDir = file("$buildDir/reports/tests")
+    destinationDir = file("${layout.buildDirectory}/reports/tests")
     reportOn(testTasks)
+}
+
+tasks.register("copyDokkaGfm") {
+    group = "documentation"
+    findDokkaGfmProjects().forEach {
+        dependsOn("${it.path}:dokkaGfm")
+    }
+}
+
+tasks.register("copyDokkaHtml") {
+    group = "documentation"
+    findDokkaHtmlProjects().forEach {
+        dependsOn("${it.path}:dokkaHtml")
+    }
 }

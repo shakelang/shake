@@ -1,41 +1,18 @@
 package io.github.shakelang.shake.conventions.mpp
 
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.named
 import org.jetbrains.dokka.gradle.DokkaTask
+
+val rootProjectDir = project.rootProject.rootDir
+val projectName = project.name
 
 apply(plugin = "org.jetbrains.dokka")
 
 tasks.named<DokkaTask>("dokkaHtml").configure {
-    outputDirectory.set(buildDir.resolve("docs/html"))
-
-    doFirst {
-        dokkaSourceSets.create("common") {
-            sourceRoots.setFrom("src/commonMain")
-        }
-        dokkaSourceSets.create("jvm") {
-            sourceRoots.setFrom("src/jvmMain")
-        }
-        dokkaSourceSets.create("js") {
-            sourceRoots.setFrom("src/jsMain")
-        }
-    }
+    outputDirectory.set(layout.buildDirectory.dir("docs/html"))
 }
 
 tasks.named<DokkaTask>("dokkaGfm").configure {
-    outputDirectory.set(buildDir.resolve("docs/markdown"))
-
-    doFirst {
-        dokkaSourceSets.create("common") {
-            sourceRoots.setFrom("src/commonMain")
-        }
-        dokkaSourceSets.create("jvm") {
-            sourceRoots.setFrom("src/jvmMain")
-        }
-        dokkaSourceSets.create("js") {
-            sourceRoots.setFrom("src/jsMain")
-        }
-    }
+    outputDirectory.set(layout.buildDirectory.dir("docs/markdown"))
 }
 
 tasks.register("createDokkaInDocs") {
@@ -43,7 +20,15 @@ tasks.register("createDokkaInDocs") {
 }
 
 tasks.register<Copy>("copyDokkaHtml") {
+    group = "documentation"
     dependsOn("dokkaHtml")
     from(file("build/docs/html"))
-    into(file("docs/static/dokka/"))
+    into(file("$rootProjectDir/build/docs/html/$projectName/"))
+}
+
+tasks.register<Copy>("copyDokkaGfm") {
+    group = "documentation"
+    dependsOn("dokkaGfm")
+    from(file("build/docs/markdown"))
+    into(file("$rootProjectDir/build/docs/markdown/$projectName/"))
 }

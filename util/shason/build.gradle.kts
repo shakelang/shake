@@ -7,12 +7,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 plugins {
     id("io.github.shakelang.shake.conventions.mpp.all")
-    `maven-publish`
-}
-
-repositories {
-    mavenLocal()
-    mavenCentral()
+    id("io.github.shakelang.shake.conventions.mpp.publishing")
 }
 
 kotlin {

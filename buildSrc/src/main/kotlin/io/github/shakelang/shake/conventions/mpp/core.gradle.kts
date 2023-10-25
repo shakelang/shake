@@ -1,31 +1,89 @@
 package io.github.shakelang.shake.conventions.mpp
 
-import org.gradle.kotlin.dsl.invoke
-import org.gradle.kotlin.dsl.kotlin
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
-val jvmTarget = "16"
+val jvmTarget = JVM_TARGET
 
 plugins {
     kotlin("multiplatform")
 //    id("org.junit.platform:junit-platform-reporting:1.10.0")
     id("org.jetbrains.kotlinx.kover")
+    id("com.github.node-gradle.node")
 }
 
 repositories {
     mavenLocal()
-    maven {
-        url = uri("https://repo1.maven.org/maven2/")
-    }
-
-    maven {
-        url = uri("https://repo.maven.apache.org/maven2/")
-    }
+    mavenCentral()
 }
 
 kotlin {
+//    dependencies {
+//        implementation("dev.icerock.moko:resources:0.23.0")
+//        testImplementation("dev.icerock.moko:resources-test:0.23.0")
+//    }
+    jvm { }
+    js(IR) {
+        browser {
+            testTask(Action {
+                useKarma {
+                    useChromeHeadless()
+                    useFirefoxHeadless()
+                }
+            })
+        }
+    }
+}
+
+node {
+    // Whether to download and install a specific Node.js version or not
+    // If false, it will use the globally installed Node.js
+    // If true, it will download node using above parameters
+    // Note that npm is bundled with Node.js
+    download.set(false)
+
+    // Base URL for fetching node distributions
+    // Only used if download is true
+    // Change it if you want to use a mirror
+    // Or set to null if you want to add the repository on your own.
+    distBaseUrl.set("https://nodejs.org/dist")
+
+    // The npm command executed by the npmInstall task
+    // By default it is install, but it can be changed to ci
+    npmInstallCommand.set("ci")
+
+    // The directory where Node.js is unpacked (when download is true)
+    workDir.set(file("${project.rootDir}/.gradle/nodejs"))
+
+    // The directory where npm is installed (when a specific version is defined)
+    npmWorkDir.set(file("${project.rootDir}/.gradle/npm"))
+
+    // The directory where yarn is installed (when a Yarn task is used)
+    yarnWorkDir.set(file("${project.rootDir}/.gradle/yarn"))
+
+    // The Node.js project directory location
+    // This is where the package.json file and node_modules directory are located
+    // By default it is at the root of the current project
+    nodeProjectDir.set(file("${project.rootDir}/docs"))
+
+    // Whether the plugin automatically should add the proxy configuration to npm and yarn commands
+    // according the proxy configuration defined for Gradle
+    // Disable this option if you want to configure the proxy for npm or yarn on your own
+    // (in the .npmrc file for instance)
+    // nodeProxySettings.set(ProxySettings.SMART)
+}
+
+//multiplatformResources {
+//    multiplatformResourcesPackage = "io.github.shakelang.shake.$packageName.resources"
+//    multiplatformResourcesClassName = "${packageCapitalized}Resources"
+//    iosBaseLocalizationRegion = "en" // optional, default "en"
+//    multiplatformResourcesSourceSet = "commonMain"  // optional, default "commonMain"
+//}
+
+kotlin {
+//    dependencies {
+//        implementation("dev.icerock.moko:resources:0.23.0")
+//        testImplementation("dev.icerock.moko:resources-test:0.23.0")
+//    }
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = jvmTarget
@@ -58,8 +116,6 @@ kotlin {
 
                 }
             }
-            commonWebpackConfig {
-            }
         }
     }
     /*
@@ -73,6 +129,34 @@ kotlin {
     }
     */
 }
+//
+//tasks.named("compileKotlinJs").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("compileKotlinJvm").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("compileKotlinMetadata").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("compileTestKotlinJs").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("compileTestKotlinJvm").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("jsProcessResources").configure {
+//    dependsOn("generateMRcommonMain")
+//}
+//
+//tasks.named("jvmProcessResources").configure {
+//    dependsOn("generateMRcommonMain")
+//}
 
 tasks.named("jvmTest") {
 //    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
