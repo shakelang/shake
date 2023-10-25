@@ -10,7 +10,6 @@ plugins {
 //    id("org.junit.platform:junit-platform-reporting:1.10.0")
     id("org.jetbrains.kotlinx.kover")
     id("com.github.node-gradle.node")
-    id("maven-publish")
 }
 
 repositories {
