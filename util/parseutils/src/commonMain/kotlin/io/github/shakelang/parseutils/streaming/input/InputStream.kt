@@ -273,3 +273,24 @@ inline fun InputStream.asBufferedInputStream(): BufferedInputStream {
  */
 inline val InputStream.bufferedStream: BufferedInputStream
     get() = BufferedInputStream(this)
+
+/**
+ * Returns a BufferedInputStream that reads from this input stream.
+ *
+ * @param bufferSize the size of the buffer
+ * @return a BufferedInputStream that reads from this input stream.
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ * @author Nicolas Schmidt &lt;@nsc-de&gt;
+ */
+val InputStream.readFully: ByteArray
+    get() {
+        val list = mutableListOf<Byte>()
+        while (true) {
+            val i = read()
+            if (i == -1) break
+            list.add(i.toByte())
+        }
+        return list.toByteArray()
+    }
