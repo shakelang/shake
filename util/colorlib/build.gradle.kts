@@ -6,7 +6,7 @@ plugins {
 
 group = "io.github.shakelang.util.colorlib"
 version = "0.1.0"
-description = "Utilities for parsing stuff with kotlin"
+description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
 
 val projectName = name
 
