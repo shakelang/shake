@@ -2,7 +2,7 @@ package io.github.shakelang.parseutils.streaming.input
 
 import io.github.shakelang.parseutils.bytes.*
 
-class DataInputStream(private val data: InputStream) : InputStream() {
+class DataInputStream(private val data: InputStream) : InputStream {
 
     /**
      * Reads the next byte of data from the input stream.

@@ -5,7 +5,7 @@ import kotlin.math.min
 class BufferedInputStream (
     private val input: InputStream,
     maxBuffer: Int = 8192
-) : InputStream() {
+) : InputStream {
     private val buffer = ByteArray(maxBuffer)
     private var bufferSize = 0
     private var bufferPos = 0
