@@ -7,7 +7,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches:
-    - main
+    - master
     - release/*
 
   # Allows you to run this workflow manually from the Actions tab
@@ -42,15 +42,21 @@ jobs:
             ${{ runner.os }}-gradle-
             
       - name: Build docs with Gradle
-        run: ./gradlew dokkaHtml
+        run: |
+          ./gradlew dokkaHtml
+          ./gradlew copyDokkaHtml
         
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: docs
-          FOLDER: build/docs/html
-          CLEAN: true
+          path: './build/docs/html'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
           
       - name: Cleanup Gradle Cache
         run: |
