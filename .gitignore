@@ -22,3 +22,6 @@ Compiler.userlibraries
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
+
+# Secrets
+secrets.properties
