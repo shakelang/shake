@@ -12,7 +12,7 @@ publishing {
             url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
 
             if (project.properties["sonatype.username"] == null || project.properties["sonatype.password"] == null) {
-                println("No Sonatype credentials found, skipping Sonatype publishing configuration")
+                logger.log(LogLevel.WARN, "No Sonatype credentials found, skipping Sonatype publishing configuration")
                 return@maven
             }
 
@@ -28,7 +28,7 @@ publishing {
 
 
             if (project.properties["github.username"] == null || project.properties["github.token"] == null) {
-                println("No GitHub credentials found, skipping GitHub publishing configuration")
+                logger.log(LogLevel.WARN, "No GitHub credentials found, skipping GitHub publishing configuration")
                 return@maven
             }
 
