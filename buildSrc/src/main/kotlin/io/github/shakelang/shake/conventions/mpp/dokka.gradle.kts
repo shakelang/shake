@@ -8,11 +8,11 @@ val projectName = project.name
 apply(plugin = "org.jetbrains.dokka")
 
 tasks.named<DokkaTask>("dokkaHtml").configure {
-    outputDirectory.set(buildDir.resolve("docs/html"))
+    outputDirectory.set(layout.buildDirectory.dir("docs/html"))
 }
 
 tasks.named<DokkaTask>("dokkaGfm").configure {
-    outputDirectory.set(buildDir.resolve("docs/markdown"))
+    outputDirectory.set(layout.buildDirectory.dir("docs/markdown"))
 }
 
 tasks.register("createDokkaInDocs") {

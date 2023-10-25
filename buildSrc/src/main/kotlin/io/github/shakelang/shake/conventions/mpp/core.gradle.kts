@@ -1,7 +1,6 @@
 package io.github.shakelang.shake.conventions.mpp
 
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
-import java.util.*
 
 val jvmTarget = JVM_TARGET
 
