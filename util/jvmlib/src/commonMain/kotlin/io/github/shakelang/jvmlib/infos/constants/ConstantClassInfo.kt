@@ -8,7 +8,10 @@ import io.github.shakelang.parseutils.streaming.output.DataOutputStream
 
 class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
 
+    val className: String get() = value.value
+
     lateinit var value: ConstantUtf8Info
+        private set
     val valueIndex: UShort get() = value.index
 
     override val uses: Array<ConstantInfo> get() = arrayOf(value)

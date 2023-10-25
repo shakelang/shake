@@ -43,8 +43,8 @@ abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
             val name = pool.getUtf8(nameIndex)
             val length = stream.readInt()
             val bytes = stream.readNBytes(length)
-            println("AttributeInfo: $name")
-            println("AttributeBytes: ${bytes.map{it.toUByte().toString(16)}}")
+//            println("AttributeInfo: $name")
+//            println("AttributeBytes: ${bytes.map{it.toUByte().toString(16)}}")
 
             val attrStream = DataInputStream(ByteArrayInputStream(bytes))
             try {
@@ -61,7 +61,7 @@ abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
                 }
             }
             catch (e: Throwable) {
-                println("AttributeInfo: $name, $length bytes")
+//                println("AttributeInfo: $name, $length bytes")
                 throw e
             }
         }

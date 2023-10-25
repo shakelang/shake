@@ -48,6 +48,8 @@ class ClassInfo(
     val isEnum: Boolean
         get() = accessFlags.toInt() and 0x4000 != 0
 
+    val name: String get() = thisClass.className
+
     val users get() = arrayOf(
         *constantPool.users,
         interfaces,
