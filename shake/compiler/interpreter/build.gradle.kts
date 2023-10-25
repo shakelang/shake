@@ -10,7 +10,6 @@ apply(plugin = "java-library")
 plugins {
     id("io.github.shakelang.shake.conventions.mpp.all")
     java
-    `maven-publish`
 }
 
 repositories {
