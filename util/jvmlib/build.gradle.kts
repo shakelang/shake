@@ -19,7 +19,6 @@ sourceSets {
         val javaCompilation = create("java$it") {
             java.srcDir("src/resourceSources/java")
             resources.srcDir("src/resourceSources/resources")
-            compileClasspath += sourceSets["main"].compileClasspath
         }
     }
 }
