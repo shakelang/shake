@@ -27,12 +27,29 @@ class ClassFileReaderTests {
         val classFile = File(java, "HelloWorld.class")
         val clazz = ClassFileReader.readClass(classFile.inputStream())
 
-        assertEquals(clazz.minorVersion, 0u)
-        assertEquals(clazz.majorVersion, 52u)
-        assertEquals(clazz.accessFlags, 33u)
+        assertEquals(0u, clazz.minorVersion)
+        assertEquals(52u, clazz.majorVersion)
+        assertEquals("HelloWorld", clazz.name)
+        assertEquals("java/lang/Object", clazz.superClass.className)
+        assertEquals(0, clazz.interfaces.size)
+        assertEquals(0, clazz.fieldInfos.size)
+        assertEquals(2, clazz.methodInfos.size)
+        assertEquals(1, clazz.attributeInfos.size)
+
+        assertEquals(true, clazz.isPublic)
+        assertEquals(false, clazz.isFinal)
+        assertEquals(true, clazz.isSuper)
+        assertEquals(false, clazz.isInterface)
+        assertEquals(false, clazz.isAbstract)
+        assertEquals(false, clazz.isSynthetic)
+        assertEquals(false, clazz.isAnnotation)
+        assertEquals(false, clazz.isEnum)
 
     }
 
-    @Test
-    fun testjava6HelloWorld() = testHelloWorldClass(javaLocations["java6"]!!)
+    @Test fun testjava6HelloWorld() = testHelloWorldClass(javaLocations["java6"]!!)
+    @Test fun testjava7HelloWorld() = testHelloWorldClass(javaLocations["java7"]!!)
+    @Test fun testjava8HelloWorld() = testHelloWorldClass(javaLocations["java8"]!!)
+    @Test fun testjava9HelloWorld() = testHelloWorldClass(javaLocations["java9"]!!)
+
 }
