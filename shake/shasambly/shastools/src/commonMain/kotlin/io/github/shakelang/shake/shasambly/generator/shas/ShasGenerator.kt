@@ -48,7 +48,7 @@ class ShasGenerator(input: InputStream) {
     }
 
     fun print_opcode() {
-        oprint("[0x${(counter.getCount() + Util.START_BYTES).toUInt().toBytes().toHexString()}] ")
+        oprint("[0x${(counter.count + Util.START_BYTES).toUInt().toBytes().toHexString()}] ")
         when(val opcode = input.readByte()) {
             Opcodes.INCR_STACK -> oprintln("incr_stack ${input.readUnsignedShort()}")
             Opcodes.DECR_STACK -> oprintln("decr_stack")
@@ -201,7 +201,7 @@ class ShasGenerator(input: InputStream) {
             Opcodes.F_ABS -> oprintln("fabs")
             Opcodes.D_ABS -> oprintln("dabs")
             else -> throw Error("Wrong opcode 0x${opcode.toBytes().toHexString()} at position " +
-                    "0x${(counter.getCount()-1).toUInt().toBytes().toHexString()}")
+                    "0x${(counter.count-1).toUInt().toBytes().toHexString()}")
         }
     }
 

@@ -11,7 +11,7 @@ import io.github.shakelang.parseutils.bytes.*
  * @version 0.1.1
  * @author Nicolas Schmidt &lt;@nsc-de&gt;
  */
-class DataInputStream(private val data: InputStream) : InputStream {
+class DataInputStream(private val data: InputStream) : InputStream() {
 
     /**
      * Reads the next byte of data from the input stream.

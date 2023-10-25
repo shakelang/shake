@@ -27,7 +27,7 @@ class BufferedInputStream (
      */
     private val input: InputStream,
     maxBuffer: Int = 8192
-) : InputStream {
+) : InputStream() {
 
     /**
      * The buffer of the [BufferedInputStream]

@@ -757,11 +757,8 @@ class ByteArrayTests {
         val stream = byteArray.countingStream()
         assertEquals(0x00, stream.read())
         assertEquals(0xFF, stream.read())
-        assertEquals(2, stream.getCount())
+        assertEquals(2, stream.count)
     }
-
-
-
 }
 
 fun assertCompare(expected: Float, actual: Float) {

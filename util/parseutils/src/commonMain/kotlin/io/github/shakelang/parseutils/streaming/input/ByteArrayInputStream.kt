@@ -2,7 +2,7 @@ package io.github.shakelang.parseutils.streaming.input
 
 class ByteArrayInputStream(
     private var buf: ByteArray
-) : InputStream {
+) : InputStream() {
 
     private var pos = 0
     private var mark = 0

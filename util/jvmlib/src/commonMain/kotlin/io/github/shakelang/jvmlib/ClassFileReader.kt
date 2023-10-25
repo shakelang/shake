@@ -16,7 +16,7 @@ object ClassFileReader
         try {
             return ClassInfo.fromStream(stream)
         } catch (e: Throwable) {
-            throw RuntimeException("Error at position 0x${counter.getCount().toString(16)} while parsing class", e)
+            throw RuntimeException("Error at position 0x${counter.count.toString(16)} while parsing class", e)
         }
 
     }

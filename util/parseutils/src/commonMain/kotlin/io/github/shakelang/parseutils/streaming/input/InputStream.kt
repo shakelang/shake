@@ -11,7 +11,7 @@ import kotlin.jvm.JvmName
  * @since 0.1.0
  * @version 0.1.0
  */
-expect interface InputStream {
+expect abstract class InputStream() {
     /**
      * Returns an estimate of the number of bytes that can be read (or skipped over) from
      * this input
