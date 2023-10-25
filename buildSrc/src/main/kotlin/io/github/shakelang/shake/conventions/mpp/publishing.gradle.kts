@@ -1,12 +1,8 @@
 package io.github.shakelang.shake.conventions.mpp
 
-import org.jetbrains.kotlin.gradle.tasks.throwExceptionIfCompilationFailed
-import java.util.Properties
-import java.io.FileInputStream
-
 plugins {
-    `maven-publish`
-    signing
+    id("maven-publish")
+    id("signing")
 }
 
 publishing {
@@ -14,6 +10,11 @@ publishing {
         maven("Sonatype") {
             name = "Sonatype"
             url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+
+            if (project.properties["sonatype.username"] == null || project.properties["sonatype.password"] == null) {
+                println("No Sonatype credentials found, skipping Sonatype publishing configuration")
+                return@maven
+            }
 
             credentials {
                 username = project.property("sonatype.username") as String
@@ -25,8 +26,14 @@ publishing {
             name = "GitHub"
             url = uri("https://maven.pkg.github.com/shakelang/shake")
 
+
+            if (project.properties["github.username"] == null || project.properties["github.token"] == null) {
+                println("No GitHub credentials found, skipping GitHub publishing configuration")
+                return@maven
+            }
+
             credentials {
-                username = project.property("github.username") as String
+                username = project.properties["github.username"] as String
                 password = project.property("github.token") as String
             }
         }
