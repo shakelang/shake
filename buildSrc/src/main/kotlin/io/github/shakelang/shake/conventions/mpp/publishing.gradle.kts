@@ -1,5 +1,6 @@
 package io.github.shakelang.shake.conventions.mpp
 
+import org.jetbrains.kotlin.gradle.tasks.throwExceptionIfCompilationFailed
 import java.util.Properties
 import java.io.FileInputStream
 
@@ -8,31 +9,50 @@ plugins {
     signing
 }
 
-val secretsFile = rootProject.file("secrets.properties")
-if (secretsFile.exists()) {
-    val secrets = Properties()
-    secrets.load(FileInputStream(secretsFile))
+publishing {
+    repositories {
+        maven("Sonatype") {
+            name = "Sonatype"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
 
-    publishing {
-        publications {
-            create("mavenJava", MavenPublication::class) {
-                from(components["java"])
+            credentials {
+                username = project.property("sonatype.username") as String
+                password = project.property("sonatype.password") as String
             }
-//            create<MavenPublication> {
-//                // ...
-//                credentials {
-//                    username = secrets["sonatypeUsername"]?.toString()
-//                    password = secrets["sonatypePassword"]?.toString()
-//                }
-//            }
+        }
+
+        maven("GitHub") {
+            name = "GitHub"
+            url = uri("https://maven.pkg.github.com/shakelang/shake")
+
+            credentials {
+                username = project.property("github.username") as String
+                password = project.property("github.token") as String
+            }
         }
     }
+}
 
-    signing {
-        sign(publishing.publications)
-//        useInMemoryPgpKeys {
-//            keyId = secrets["signing.keyId"]?.toString()
-//            keyPassword = secrets["signing.password"]?.toString()
-//        }
-    }
+//tasks.withType(PublishToMavenRepository::class.java) {
+//    println(this.name)
+//
+//}
+
+signing {
+//    val signingKey: String? by project
+//    val signingPassword: String? by project
+//    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications)
+}
+
+tasks.named("signJsPublication") {
+    group = "signing"
+}
+
+tasks.named("signJvmPublication") {
+    group = "signing"
+}
+
+tasks.named("signKotlinMultiplatformPublication") {
+    group = "signing"
 }

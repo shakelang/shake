@@ -1,5 +1,4 @@
 import io.github.shakelang.shake.conventions.mpp.dependencies
-
 plugins {
     id("io.github.shakelang.shake.conventions.mpp.all")
     id("io.github.shakelang.shake.conventions.mpp.publishing")
