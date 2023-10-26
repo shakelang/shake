@@ -126,6 +126,81 @@ class CountingInputStream (
     }
 
     /**
+     * Reads bytes from the input stream
+     * and increases the count by the number of read bytes
+     *
+     * @return the number of read bytes or -1 if the end of the stream is reached
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun readNBytes(n: Int): ByteArray {
+        operationCount++
+        val read = data.readNBytes(n)
+        byteCount += read.size
+        return read
+    }
+
+    /**
+     * Reads bytes from the input streamand increases the count by the number
+     * of read bytes
+     *
+     * @return the number of read bytes or -1 if the end of the stream is reached
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun readNBytes(b: ByteArray, off: Int, len: Int): Int {
+        operationCount++
+        val read = data.readNBytes(b, off, len)
+        byteCount += read
+        return read
+    }
+
+    /**
+     * Checks if the input stream supports marking/resetting
+     *
+     * @return true if the input stream supports marking/resetting
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun markSupported(): Boolean {
+        operationCount++
+        return data.markSupported()
+    }
+
+    /**
+     * Marks the current position in the input stream
+     *
+     * @param readlimit the maximum limit of bytes that can be read before
+     * the mark position becomes invalid
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun mark(readlimit: Int) {
+        operationCount++
+        data.mark(readlimit)
+    }
+
+    /**
+     * Resets the input stream to the last marked position
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun reset() {
+        operationCount++
+        data.reset()
+    }
+
+    /**
      * Gets the number of bytes that can be read from the input stream
      * without blocking and without increasing the count
      *
