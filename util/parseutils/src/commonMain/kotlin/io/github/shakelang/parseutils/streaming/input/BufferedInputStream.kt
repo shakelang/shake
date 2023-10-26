@@ -95,6 +95,144 @@ class BufferedInputStream (
     }
 
     /**
+     * Reads bytes from the [BufferedInputStream] into the given array
+     * @param b the array to read into
+     * @return the number of bytes read or -1 if the end of the stream is reached
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun read(b: ByteArray): Int {
+        return read(b, 0, b.size)
+    }
+
+    /**
+     * Skips over and discards n bytes of data from this input stream.
+     *
+     * @param n the number of bytes to be skipped.
+     * @return the actual number of bytes skipped.
+     * @throws IOException if an I/O error occurs.
+     * @throws UnsupportedOperationException if this method is not supported.
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun skip(n: Long): Long {
+        var skipped = 0L
+        while (skipped < n) {
+            if (bufferPos == bufferSize) {
+                bufferSize = input.read(buffer)
+                bufferPos = 0
+            }
+            if (bufferSize == -1) break
+            val skip = min(bufferSize - bufferPos, (n - skipped).toInt())
+            bufferPos += skip
+            skipped += skip
+        }
+        return skipped
+    }
+
+    /**
+     * Reads bytes from the [BufferedInputStream] into the given array
+     * @param n the number of bytes to read
+     * @return the number of bytes read or -1 if the end of the stream is reached
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun readNBytes(n: Int): ByteArray {
+        val bytes = ByteArray(n)
+        read(bytes)
+        return bytes
+    }
+
+    /**
+     * Resets this input stream to the position at the time the mark method was last called on this
+     * input stream.
+     *
+     * @throws IOException if an I/O error occurs.
+     * @throws UnsupportedOperationException if this method is not supported.
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun reset() {
+        input.reset()
+        bufferPos = 0
+        bufferSize = 0
+    }
+
+    /**
+     * Marks the current position in this input stream.
+     *
+     * @param readlimit the maximum limit of bytes that can be read before the mark position becomes invalid.
+     * @throws IOException if an I/O error occurs.
+     * @throws UnsupportedOperationException if this method is not supported.
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun mark(readlimit: Int) {
+        input.mark(readlimit)
+    }
+
+    /**
+     * Checks if the input stream supports marking/resetting
+     *
+     * @return true if the input stream supports marking/resetting
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun markSupported(): Boolean {
+        // TODO: This marks the input stream, but we already have stuff in the buffer
+        return input.markSupported()
+    }
+
+    /**
+     * Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without
+     * blocking by the next invocation of a method for this input stream.
+     *
+     * @return an estimate of the number of bytes that can be read (or skipped over) f
+     * rom this input stream without blocking or 0 when it reaches the end of the input stream.
+     * @throws IOException if an I/O error occurs.
+     * @throws UnsupportedOperationException if this method is not supported.
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun available(): Int {
+        return bufferSize - bufferPos + input.available()
+    }
+
+    /**
+     * Reads up to len bytes of data from the input stream into an array of bytes.
+     *
+     * @throws IOException if an I/O error occurs.
+     * @throws UnsupportedOperationException if this method is not supported.
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     */
+    override fun readNBytes(b: ByteArray, off: Int, len: Int): Int {
+        var read = 0
+        while (read < len) {
+            val r = read(b, off + read, len - read)
+            if (r == -1) break
+            read += r
+        }
+        return read
+    }
+
+    /**
      * Closes the [BufferedInputStream] and the [InputStream] it was created from
      *
      * @since 0.1.0
