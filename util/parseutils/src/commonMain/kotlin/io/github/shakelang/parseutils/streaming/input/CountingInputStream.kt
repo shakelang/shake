@@ -8,7 +8,7 @@ package io.github.shakelang.parseutils.streaming.input
  * @constructor Creates a new CountingInputStream
  *
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.1.1
  * @author Nicolas Schmidt &lt;@nsc-de&gt;
  */
 class CountingInputStream (
@@ -17,7 +17,7 @@ class CountingInputStream (
      * The input stream to count the read bytes from
      *
      * @since 0.1.0
-     * @version 0.1.0
+     * @version 0.1.1
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     private val data: InputStream
@@ -28,10 +28,30 @@ class CountingInputStream (
      * The count of read bytes from the input stream
      *
      * @since 0.1.0
-     * @version 0.1.0
+     * @version 0.1.1
+     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     *
+     * @deprecated Use [byteCount] instead.
+     */
+    val count get() = byteCount
+
+    /**
+     * The count of read bytes from the input stream
+     *
+     * @since 0.1.1
+     * @version 0.1.1
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
-    var count = 0L
+    var byteCount: Long = 0L
+        private set
+
+    /**
+     * The count of read operations from the input stream
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
+    var operationCount: Long = 0L
         private set
 
     /**
@@ -41,15 +61,16 @@ class CountingInputStream (
      * @return the read byte or -1 if the end of the stream is reached
      *
      * @since 0.1.0
-     * @version 0.1.0
+     * @version 0.1.1
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      *
      * @see InputStream.read
      * @see InputStream.readNBytes
      */
     override fun read(): Int {
+        operationCount++
         val read = data.read()
-        if (read != -1) count++
+        if (read != -1) byteCount++
         return read
     }
 
@@ -60,12 +81,13 @@ class CountingInputStream (
      * @return the number of read bytes or -1 if the end of the stream is reached
      *
      * @since 0.1.0
-     * @version 0.1.0
+     * @version 0.1.1
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun read(b: ByteArray): Int {
+        operationCount++
         val read = data.read(b)
-        if (read != -1) count += read
+        if (read != -1) byteCount += read
         return read
     }
 
@@ -76,12 +98,13 @@ class CountingInputStream (
      * @return the number of read bytes or -1 if the end of the stream is reached
      *
      * @since 0.1.0
-     * @version 0.1.0
+     * @version 0.1.1
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun read(b: ByteArray, off: Int, len: Int): Int {
+        operationCount++
         val read = data.read(b, off, len)
-        if (read != -1) count += read
+        if (read != -1) byteCount += read
         return read
     }
 
@@ -92,12 +115,13 @@ class CountingInputStream (
      * @return the number of skipped bytes or -1 if the end of the stream is reached
      *
      * @since 0.1.0
-     * @version 0.1.0
+     * @version 0.1.1
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun skip(n: Long): Long {
+        operationCount++
         val skipped = data.skip(n)
-        count += skipped
+        byteCount += skipped
         return skipped
     }
 
@@ -108,7 +132,7 @@ class CountingInputStream (
      * @return the number of bytes that can be read from the input stream
      *
      * @since 0.1.0
-     * @version 0.1.0
+     * @version 0.1.1
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun available(): Int {
@@ -119,7 +143,7 @@ class CountingInputStream (
      * Closes the input stream
      *
      * @since 0.1.0
-     * @version 0.1.0
+     * @version 0.1.1
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun close() {
