@@ -154,9 +154,9 @@ class CountingInputStreamTests {
         assertEquals(4, stream.byteCount)
         assertEquals(2, stream.operationCount)
 
-        assertContentEquals(byteArrayOf(111), stream.readNBytes(2))
+        assertContentEquals(byteArrayOf(111), stream.readNBytes(1))
 
-        assertEquals(6, stream.byteCount)
+        assertEquals(5, stream.byteCount)
         assertEquals(3, stream.operationCount)
     }
 
