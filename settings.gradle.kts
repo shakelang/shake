@@ -2,10 +2,12 @@ rootProject.name = "shake"
 //include("cli")
 //include("jvm")
 include(":util:colorlib")
+include(":util:common-io")
 include(":util:testlib")
 include(":util:parseutils")
 include(":util:shason")
 include(":util:jvmlib")
+
 include(":shake:compiler:shakelib")
 include(":shake:compiler:lexer")
 include(":shake:compiler:parser")

@@ -1,5 +1,7 @@
 package io.github.shakelang.parseutils.streaming.input
 
+import io.github.shakelang.io.IOException
+
 /**
  * A [ByteArrayInputStream] is an [InputStream] that reads from a [ByteArray]
  *

@@ -1,6 +1,7 @@
 package io.github.shakelang.parseutils.streaming.input
 
 import kotlin.math.min
+import io.github.shakelang.io.IOException
 
 /**
  * A [BufferedInputStream] is created from an [InputStream] and buffers the data

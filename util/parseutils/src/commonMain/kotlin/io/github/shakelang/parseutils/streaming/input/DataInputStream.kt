@@ -1,6 +1,7 @@
 package io.github.shakelang.parseutils.streaming.input
 
 import io.github.shakelang.parseutils.bytes.*
+import io.github.shakelang.io.IOException
 
 /**
  * A [DataInputStream] is a [InputStream] that can read data from a [InputStream]
@@ -157,7 +158,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the next byte of data, or -1 if the end of the stream is reached.
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws UnsupportedOperationException if this method is not supported.
      *
@@ -174,7 +174,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the short that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid short
      * @throws UnsupportedOperationException if this method is not supported.
@@ -192,7 +191,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the int that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid int
      * @throws UnsupportedOperationException if this method is not supported.
@@ -210,7 +208,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the long that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long
      * @throws UnsupportedOperationException if this method is not supported.
@@ -228,7 +225,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the float that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long
      * @throws UnsupportedOperationException if this method is not supported.
@@ -246,7 +242,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the double that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long
      * @throws UnsupportedOperationException if this method is not supported.
@@ -264,7 +259,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the boolean that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long
      * @throws UnsupportedOperationException if this method is not supported.
@@ -282,7 +276,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the unsigned short that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long
      * @throws UnsupportedOperationException if this method is not supported.
@@ -300,7 +293,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the unsigned int that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long
      * @throws UnsupportedOperationException if this method is not supported.
@@ -318,7 +310,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the unsigned long that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the stream is not a valid long
      * @throws UnsupportedOperationException if this method is not supported.
@@ -337,7 +328,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      * @param length the length of the string to read
      * @return the string that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the length is negative
      * @throws IllegalArgumentException if the stream is not a valid UTF-8 encoded string
@@ -356,7 +346,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @return the string that was read
      * @throws IOException if an I/O error occurs.
-     * @throws EOFException if the end of the stream is reached
      * @throws IllegalStateException if the stream is closed
      * @throws IllegalArgumentException if the length is negative
      * @throws IllegalArgumentException if the stream is not a valid UTF-8 encoded string

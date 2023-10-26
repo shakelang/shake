@@ -1,5 +1,7 @@
 package io.github.shakelang.parseutils.streaming.input
 
+import io.github.shakelang.io.IOException
+
 /**
  * This class is an input stream that reads from another input stream
  * and counts the read bytes
@@ -59,6 +61,7 @@ class CountingInputStream (
      * and increases the count by one
      *
      * @return the read byte or -1 if the end of the stream is reached
+     * @throws IOException if an I/O error occurs
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -79,6 +82,7 @@ class CountingInputStream (
      * and increases the count by the number of read bytes
      *
      * @return the number of read bytes or -1 if the end of the stream is reached
+     * @throws IOException if an I/O error occurs
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -96,6 +100,7 @@ class CountingInputStream (
      * and increases the count by the number of read bytes
      *
      * @return the number of read bytes or -1 if the end of the stream is reached
+     * @throws IOException if an I/O error occurs
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -113,6 +118,7 @@ class CountingInputStream (
      * and increases the count by the number of skipped bytes
      *
      * @return the number of skipped bytes or -1 if the end of the stream is reached
+     * @throws IOException if an I/O error occurs
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -130,6 +136,7 @@ class CountingInputStream (
      * and increases the count by the number of read bytes
      *
      * @return the number of read bytes or -1 if the end of the stream is reached
+     * @throws IOException if an I/O error occurs
      *
      * @since 0.1.1
      * @version 0.1.1
@@ -147,6 +154,7 @@ class CountingInputStream (
      * of read bytes
      *
      * @return the number of read bytes or -1 if the end of the stream is reached
+     * @throws IOException if an I/O error occurs
      *
      * @since 0.1.1
      * @version 0.1.1

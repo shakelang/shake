@@ -1,8 +1,7 @@
-@file:Suppress("NOTHING_TO_INLINE")
-@file:JvmName("InputStreamCommons")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package io.github.shakelang.parseutils.streaming.input
 
-import kotlin.jvm.JvmName
+import io.github.shakelang.io.IOException
 
 /**
  * This class is an abstract class for all input streams
@@ -158,7 +157,6 @@ expect abstract class InputStream() {
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      *
      * @see InputStream.skip
-     * @see InputStream.skipNBytes
      */
     open fun skip(n: Long): Long
 
@@ -277,7 +275,6 @@ inline val InputStream.bufferedStream: BufferedInputStream
 /**
  * Returns a BufferedInputStream that reads from this input stream.
  *
- * @param bufferSize the size of the buffer
  * @return a BufferedInputStream that reads from this input stream.
  *
  * @since 0.1.1
