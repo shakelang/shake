@@ -1,13 +1,13 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.shas
 
-import io.github.shakelang.parseutils.bytes.toBytes
-import io.github.shakelang.parseutils.bytes.toHexString
-import io.github.shakelang.parseutils.streaming.input.InputStream
-import io.github.shakelang.parseutils.streaming.input.asCountingInputStream
-import io.github.shakelang.parseutils.streaming.input.asDataInputStream
-import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.parseutils.streaming.output.OutputStream
+import io.github.shakelang.primitives.bytes.toBytes
+import io.github.shakelang.primitives.bytes.toHexString
+import io.github.shakelang.io.streaming.input.InputStream
+import io.github.shakelang.io.streaming.input.asCountingInputStream
+import io.github.shakelang.io.streaming.input.asDataInputStream
+import io.github.shakelang.io.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.io.streaming.output.OutputStream
 import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions

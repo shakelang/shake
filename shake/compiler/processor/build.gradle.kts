@@ -13,6 +13,8 @@ kotlin {
     dependencies {
         implementation(project(":util:parseutils"))
         implementation(project(":util:shason"))
+        implementation(project(":util:common-io"))
+        implementation(project(":util:primitives"))
         implementation(project(":shake:compiler:lexer"))
         implementation(project(":shake:compiler:parser"))
 
