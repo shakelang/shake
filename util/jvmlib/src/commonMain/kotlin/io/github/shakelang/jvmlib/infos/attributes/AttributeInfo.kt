@@ -1,15 +1,15 @@
 package io.github.shakelang.jvmlib.infos.attributes
 
+import io.github.shakelang.io.streaming.input.ByteArrayInputStream
+import io.github.shakelang.io.streaming.input.DataInputStream
+import io.github.shakelang.io.streaming.output.DataOutputStream
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.parseutils.bytes.setBytes
-import io.github.shakelang.parseutils.bytes.setInt
-import io.github.shakelang.parseutils.bytes.setUnsignedShort
-import io.github.shakelang.parseutils.streaming.input.ByteArrayInputStream
-import io.github.shakelang.parseutils.streaming.input.DataInputStream
-import io.github.shakelang.parseutils.streaming.output.DataOutputStream
+import io.github.shakelang.primitives.bytes.setBytes
+import io.github.shakelang.primitives.bytes.setInt
+import io.github.shakelang.primitives.bytes.setUnsignedShort
 
 abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
 

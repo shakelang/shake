@@ -1,13 +1,13 @@
 package io.github.shakelang.jvmlib.infos.attributes
 
+import io.github.shakelang.io.streaming.input.DataInputStream
 import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.parseutils.bytes.getBytes
-import io.github.shakelang.parseutils.bytes.getInt
-import io.github.shakelang.parseutils.bytes.getUnsignedShort
-import io.github.shakelang.parseutils.bytes.toHexString
-import io.github.shakelang.parseutils.streaming.input.DataInputStream
+import io.github.shakelang.primitives.bytes.getBytes
+import io.github.shakelang.primitives.bytes.getInt
+import io.github.shakelang.primitives.bytes.getUnsignedShort
+import io.github.shakelang.primitives.bytes.toHexString
 
 class AttributeUnknownInfo(name: ConstantUtf8Info, override val bytes: ByteArray) : AttributeInfo(name) {
 

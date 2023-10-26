@@ -12,6 +12,8 @@ description = "Shake's own bytecode format interpreter"
 kotlin {
     dependencies {
         implementation(project(":util:parseutils"))
+        implementation(project(":util:common-io"))
+        implementation(project(":util:primitives"))
         testImplementation(kotlin("test"))
     }
 }

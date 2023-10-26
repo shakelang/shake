@@ -7,9 +7,9 @@ import io.github.shakelang.parseutils.characters.Characters.isIdentifierStartCha
 import io.github.shakelang.parseutils.characters.Characters.isNumberCharacter
 import io.github.shakelang.parseutils.characters.Characters.isNumberOrDotCharacter
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.parseutils.streaming.output.DataOutputStream
-import io.github.shakelang.parseutils.streaming.output.OutputStream
+import io.github.shakelang.io.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.io.streaming.output.DataOutputStream
+import io.github.shakelang.io.streaming.output.OutputStream
 import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions

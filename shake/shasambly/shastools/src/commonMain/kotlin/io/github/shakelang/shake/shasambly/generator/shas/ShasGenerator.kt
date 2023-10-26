@@ -1,13 +1,13 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.shas
 
-import io.github.shakelang.parseutils.bytes.toBytes
-import io.github.shakelang.parseutils.bytes.toHexString
-import io.github.shakelang.parseutils.streaming.input.InputStream
-import io.github.shakelang.parseutils.streaming.input.asCountingInputStream
-import io.github.shakelang.parseutils.streaming.input.asDataInputStream
-import io.github.shakelang.parseutils.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.parseutils.streaming.output.OutputStream
+import io.github.shakelang.primitives.bytes.toBytes
+import io.github.shakelang.primitives.bytes.toHexString
+import io.github.shakelang.io.streaming.input.InputStream
+import io.github.shakelang.io.streaming.input.asCountingInputStream
+import io.github.shakelang.io.streaming.input.asDataInputStream
+import io.github.shakelang.io.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.io.streaming.output.OutputStream
 import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
@@ -48,7 +48,7 @@ class ShasGenerator(input: InputStream) {
     }
 
     fun print_opcode() {
-        oprint("[0x${(counter.getCount() + Util.START_BYTES).toUInt().toBytes().toHexString()}] ")
+        oprint("[0x${(counter.count + Util.START_BYTES).toUInt().toBytes().toHexString()}] ")
         when(val opcode = input.readByte()) {
             Opcodes.INCR_STACK -> oprintln("incr_stack ${input.readUnsignedShort()}")
             Opcodes.DECR_STACK -> oprintln("decr_stack")
@@ -201,7 +201,7 @@ class ShasGenerator(input: InputStream) {
             Opcodes.F_ABS -> oprintln("fabs")
             Opcodes.D_ABS -> oprintln("dabs")
             else -> throw Error("Wrong opcode 0x${opcode.toBytes().toHexString()} at position " +
-                    "0x${(counter.getCount()-1).toUInt().toBytes().toHexString()}")
+                    "0x${(counter.count-1).toUInt().toBytes().toHexString()}")
         }
     }
 
