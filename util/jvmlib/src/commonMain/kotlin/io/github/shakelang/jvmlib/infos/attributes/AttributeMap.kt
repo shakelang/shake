@@ -1,12 +1,12 @@
 package io.github.shakelang.jvmlib.infos.attributes
 
+import io.github.shakelang.io.streaming.input.DataInputStream
+import io.github.shakelang.io.streaming.output.DataOutputStream
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser
-import io.github.shakelang.parseutils.bytes.toBytes
-import io.github.shakelang.parseutils.streaming.input.DataInputStream
-import io.github.shakelang.parseutils.streaming.output.DataOutputStream
+import io.github.shakelang.primitives.bytes.toBytes
 
 open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, AttributeInfo>, ConstantUser {
 

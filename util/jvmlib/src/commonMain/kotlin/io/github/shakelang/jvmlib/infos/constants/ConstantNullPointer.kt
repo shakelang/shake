@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.infos.constants
 
-import io.github.shakelang.parseutils.streaming.output.DataOutputStream
+import io.github.shakelang.io.streaming.output.DataOutputStream
 
 class ConstantNullPointer private constructor() : ConstantInfo() {
     override val tag: Byte get() = 0x00

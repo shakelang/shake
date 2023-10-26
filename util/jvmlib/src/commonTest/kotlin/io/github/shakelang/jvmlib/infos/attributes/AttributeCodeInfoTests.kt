@@ -1,8 +1,8 @@
 package io.github.shakelang.jvmlib.infos.attributes
 
+import io.github.shakelang.io.streaming.input.dataStream
 import io.github.shakelang.jvmlib.infos.constants.Constant
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
-import io.github.shakelang.parseutils.bytes.dataStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertSame

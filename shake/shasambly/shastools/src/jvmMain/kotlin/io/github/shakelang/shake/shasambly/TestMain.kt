@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.shasambly
 
-import io.github.shakelang.parseutils.bytes.stream
+import io.github.shakelang.io.streaming.input.stream
 import io.github.shakelang.shake.shasambly.generator.shas.ShasGenerator
 import io.github.shakelang.shake.shasambly.generator.simple.shasambly
 import io.github.shakelang.shake.shasambly.generator.simple.util.function.declareRoutine

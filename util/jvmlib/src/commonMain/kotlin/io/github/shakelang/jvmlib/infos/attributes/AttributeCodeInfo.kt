@@ -1,12 +1,12 @@
 package io.github.shakelang.jvmlib.infos.attributes
 
+import io.github.shakelang.io.streaming.input.DataInputStream
+import io.github.shakelang.io.streaming.input.InputStream
+import io.github.shakelang.io.streaming.input.dataStream
 import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.parseutils.bytes.*
-import io.github.shakelang.parseutils.streaming.input.DataInputStream
-import io.github.shakelang.parseutils.streaming.input.InputStream
-import io.github.shakelang.parseutils.streaming.input.dataStream
+import io.github.shakelang.primitives.bytes.*
 
 class AttributeCodeInfo (
 

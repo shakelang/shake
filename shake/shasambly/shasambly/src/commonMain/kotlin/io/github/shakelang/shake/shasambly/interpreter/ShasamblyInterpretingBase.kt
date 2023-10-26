@@ -3,7 +3,7 @@ package io.github.shakelang.shake.shasambly.interpreter
 
 import io.github.shakelang.parseutils.ElementLoopController
 import io.github.shakelang.parseutils.IndexedElementLoopController
-import io.github.shakelang.parseutils.bytes.*
+import io.github.shakelang.primitives.bytes.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import kotlin.experimental.and
 
