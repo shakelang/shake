@@ -169,7 +169,6 @@ class CountingInputStream (
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun markSupported(): Boolean {
-        operationCount++
         return data.markSupported()
     }
 
@@ -184,7 +183,6 @@ class CountingInputStream (
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun mark(readlimit: Int) {
-        operationCount++
         data.mark(readlimit)
     }
 
@@ -196,7 +194,8 @@ class CountingInputStream (
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun reset() {
-        operationCount++
+        operationCount = 0
+        byteCount = 0
         data.reset()
     }
 
@@ -223,5 +222,9 @@ class CountingInputStream (
      */
     override fun close() {
         data.close()
+    }
+
+    override fun toString(): String {
+        return "CountingInputStream(data=$data, byteCount=$byteCount, operationCount=$operationCount)"
     }
 }
