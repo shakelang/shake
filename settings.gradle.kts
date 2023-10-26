@@ -5,6 +5,7 @@ include(":util:colorlib")
 include(":util:common-io")
 include(":util:testlib")
 include(":util:parseutils")
+include(":util:primitives")
 include(":util:shason")
 include(":util:jvmlib")
 
