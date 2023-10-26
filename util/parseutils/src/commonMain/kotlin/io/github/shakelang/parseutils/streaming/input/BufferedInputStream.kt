@@ -84,14 +84,7 @@ class BufferedInputStream (
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun read(b: ByteArray, off: Int, len: Int): Int {
-        if (bufferPos == bufferSize) {
-            bufferSize = input.read(buffer)
-            bufferPos = 0
-        }
-        val read = min(bufferSize - bufferPos, len)
-        buffer.copyInto(b, off, bufferPos, bufferPos + read)
-        bufferPos += read
-        return read
+        return this.readNBytes(b, off, len)
     }
 
     /**
@@ -224,10 +217,11 @@ class BufferedInputStream (
      */
     override fun readNBytes(b: ByteArray, off: Int, len: Int): Int {
         var read = 0
-        while (read < len) {
-            val r = read(b, off + read, len - read)
+        for (i in 0 until len) {
+            val r = read()
             if (r == -1) break
-            read += r
+            b[off + i] = r.toByte()
+            read++
         }
         return read
     }
@@ -241,5 +235,9 @@ class BufferedInputStream (
      */
     override fun close() {
         input.close()
+    }
+
+    override fun toString(): String {
+        return "BufferedInputStream(input=$input, bufferSize=$bufferSize, bufferPos=$bufferPos)"
     }
 }
