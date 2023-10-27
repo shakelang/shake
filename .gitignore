@@ -25,3 +25,6 @@ gradle-app.setting
 
 # Secrets
 secrets.properties
+
+# Mac
+.DS_Store
