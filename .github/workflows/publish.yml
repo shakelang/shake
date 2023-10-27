@@ -106,16 +106,14 @@ jobs:
           passphrase: ${{ secrets.RELEASE_GPG_PASS }}
           git_user_signingkey: true
           git_commit_gpgsign: true
-      - name: Export Key Ring
-        run: gpg --export-secret-keys --armor ${{ secrets.RELEASE_GPG_KEY_ID }} > private.key
 
       - name: Build
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
 
-      - name: Publish to GitHub GPR
+      - name: Publish to gpr
         env:
-          GRADLE_GITHUB_USERNAME: ${{ secrets.GITHUB_ACTOR }}
-          GRADLE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GRADLE_GITHUB_USERNAME: ${{ github.actor }}
+          GRADLE_GITHUB_TOKEN: ${{ github.token }}
           GRADLE_SONATYPE_USERNAME: ${{ secrets.SONARTYPE_NEXUS_USERNAME }}
           GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_NEXUS_PASSWORD }}
           GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
@@ -132,6 +130,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v6
         with:
@@ -139,18 +138,16 @@ jobs:
           passphrase: ${{ secrets.RELEASE_GPG_PASS }}
           git_user_signingkey: true
           git_commit_gpgsign: true
-      - name: Export Key Ring
-        run: gpg --export-secret-keys --armor ${{ secrets.RELEASE_GPG_KEY_ID }} > private.key
 
       - name: Build
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
 
-      - name: Publish to GitHub GPR
+      - name: Publish to Sonartype
         env:
-          GRADLE_GITHUB_USERNAME: ${{ secrets.GITHUB_ACTOR }}
-          GRADLE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GRADLE_SONATYPE_USERNAME: ${{ secrets.SONARTYPE_NEXUS_USERNAME }}
-          GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_NEXUS_PASSWORD }}
+          GRADLE_GITHUB_USERNAME: ${{ github.actor }}
+          GRADLE_GITHUB_TOKEN: ${{ github.token }}
+          GRADLE_SONATYPE_USERNAME: ${{ secrets.SONARTYPE_USERNAME }}
+          GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_PASSWORD }}
           GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
           GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToSonatypeRepository
