@@ -31,7 +31,6 @@ jobs:
       - name: Dump Release Info
         run: |
           echo "Extracted Release Info from Tag: ${GITHUB_REF}"
-          echo "Tag: ${TAG}"
           echo "Release Type: ${{ steps.extract_info.outputs.release_type }}"
           echo "Version: ${{ steps.extract_info.outputs.version }}"
           echo "Release Path: ${{ steps.extract_info.outputs.release_path }}"
@@ -89,26 +88,67 @@ jobs:
           makeLatest: false
           name: ${{needs.extract_info.outputs.release_type}}/${{needs.extract_info.outputs.version}}
           token: ${{ secrets.GITHUB_TOKEN }}
-#  publish-gpr:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#      - name: Import GPG key
-#        uses: crazy-max/ghaction-import-gpg@v6
-#        with:
-#          gpg_private_key: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
-#          passphrase: ${{ secrets.RELEASE_GPG_PASS }}
-#          git_user_signingkey: true
-#          git_commit_gpgsign: true
-#      - name: Export Key Ring
-#        run: gpg --export-secret-keys --armor ${{ secrets.RELEASE_GPG_KEY_ID }} > private.key
-#
-#      - name: Restore gradle.properties
-#        env:
-#          GRADLE_PROPERTIES: ${{ secrets.GRADLE_PROPERTIES }}
-#        shell: bash
-#        run: |
-#          mkdir -p ~/.gradle/
-#          echo "::set-env name=GRADLE_USER_HOME::$HOME/.gradle"
-#          echo ${GRADLE_PROPERTIES} > ~/.gradle/gradle.properties
+
+  publish-gpr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      discussions: write
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.RELEASE_GPG_PASS }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+      - name: Export Key Ring
+        run: gpg --export-secret-keys --armor ${{ secrets.RELEASE_GPG_KEY_ID }} > private.key
+
+      - name: Build
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+
+      - name: Publish to GitHub GPR
+        env:
+          GRADLE_GITHUB_USERNAME: ${{ secrets.GITHUB_ACTOR }}
+          GRADLE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GRADLE_SONATYPE_USERNAME: ${{ secrets.SONARTYPE_NEXUS_USERNAME }}
+          GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_NEXUS_PASSWORD }}
+          GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToGitHubRepository
+
+  publish-sonartype:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      discussions: write
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.RELEASE_GPG_PASS }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+      - name: Export Key Ring
+        run: gpg --export-secret-keys --armor ${{ secrets.RELEASE_GPG_KEY_ID }} > private.key
+
+      - name: Build
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+
+      - name: Publish to GitHub GPR
+        env:
+          GRADLE_GITHUB_USERNAME: ${{ secrets.GITHUB_ACTOR }}
+          GRADLE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GRADLE_SONATYPE_USERNAME: ${{ secrets.SONARTYPE_NEXUS_USERNAME }}
+          GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_NEXUS_PASSWORD }}
+          GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToSonatypeRepository
