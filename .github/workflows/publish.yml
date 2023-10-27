@@ -22,7 +22,7 @@ jobs:
           TAG=${GITHUB_REF#refs/tags/release/}
           RELEASE_PATH=${TAG%%/v*}
           VERSION=${TAG#*/v}
-          RELEASE_TYPE=${RELEASE_PACKAGE_PATH//\//:}
+          RELEASE_TYPE=${RELEASE_PATH//\//:}
 
           echo "release_type=${RELEASE_TYPE}" >> $GITHUB_OUTPUT
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
@@ -30,7 +30,11 @@ jobs:
 
       - name: Dump Release Info
         run: |
-          echo "Release Type: ${{ steps.extract_info.outputs.release_type }} Version: ${{ steps.extract_info.outputs.version }} extracted from ${GITHUB_REF}"
+          echo "Extracted Release Info from Tag: ${GITHUB_REF}"
+          echo "Tag: ${TAG}"
+          echo "Release Type: ${{ steps.extract_info.outputs.release_type }}"
+          echo "Version: ${{ steps.extract_info.outputs.version }}"
+          echo "Release Path: ${{ steps.extract_info.outputs.release_path }}"
 
   build:
     name: Build 🛠️
