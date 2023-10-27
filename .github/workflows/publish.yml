@@ -20,9 +20,9 @@ jobs:
         id: extract_info
         run: |
           TAG=${GITHUB_REF#refs/tags/release/}
-          RELEASE_TYPE=${TAG%%/v*}
+          RELEASE_PATH=${TAG%%/v*}
           VERSION=${TAG#*/v}
-          RELEASE_PATH=${RELEASE_PACKAGE_PATH//:/\/}
+          RELEASE_TYPE=${RELEASE_PACKAGE_PATH//\//:}
 
           echo "release_type=${RELEASE_TYPE}" >> $GITHUB_OUTPUT
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
