@@ -1,0 +1,110 @@
+name: "Release 🚀"
+
+on:
+  push:
+    tags:
+      - "release/*/v*"
+
+jobs:
+  extract_info:
+    name: Extract Release Type and Version 📋
+    runs-on: ubuntu-latest
+
+    outputs:
+      release_type: ${{ steps.extract_info.outputs.release_type }}
+      version: ${{ steps.extract_info.outputs.version }}
+      release_path: ${{ steps.extract_info.outputs.release_path }}
+
+    steps:
+      - name: Extract Release Type and Version 📋
+        id: extract_info
+        run: |
+          TAG=${GITHUB_REF#refs/tags/release/}
+          RELEASE_TYPE=${TAG%%/v*}
+          VERSION=${TAG#*/v}
+          RELEASE_PATH=${RELEASE_PACKAGE_PATH//:/\/}
+
+          echo "release_type=${RELEASE_TYPE}" >> $GITHUB_OUTPUT
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "release_path=${RELEASE_PATH}" >> $GITHUB_OUTPUT
+
+      - name: Dump Release Info
+        run: |
+          echo "Release Type: ${{ steps.extract_info.outputs.release_type }} Version: ${{ steps.extract_info.outputs.version }} extracted from ${GITHUB_REF}"
+
+  build:
+    name: Build 🛠️
+    runs-on: ubuntu-latest
+    needs: extract_info
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Gradle 📦
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.2
+
+      - name: Allow Gradle Wrapper to be executable 💪
+        run: chmod +x gradlew
+
+      - name: Build 🔨
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+
+  draft-release:
+    name: Draft Release for tag 📦
+    needs: [build, extract_info]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      discussions: write
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Gradle 📦
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.2
+
+      - name: Allow Gradle Wrapper to be executable 💪
+        run: chmod +x gradlew
+
+      - name: Build 🔨
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+
+      - name: Create Release 📦
+        id: create_release
+        uses: ncipollo/release-action@v1
+
+        with:
+          artifacts: |
+            ${{needs.extract_info.outputs.release_path}}/build/libs/*.jar
+          allowUpdates: true
+          makeLatest: false
+          name: ${{needs.extract_info.outputs.release_type}}/${{needs.extract_info.outputs.version}}
+          token: ${{ secrets.GITHUB_TOKEN }}
+#  publish-gpr:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#      - name: Import GPG key
+#        uses: crazy-max/ghaction-import-gpg@v6
+#        with:
+#          gpg_private_key: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+#          passphrase: ${{ secrets.RELEASE_GPG_PASS }}
+#          git_user_signingkey: true
+#          git_commit_gpgsign: true
+#      - name: Export Key Ring
+#        run: gpg --export-secret-keys --armor ${{ secrets.RELEASE_GPG_KEY_ID }} > private.key
+#
+#      - name: Restore gradle.properties
+#        env:
+#          GRADLE_PROPERTIES: ${{ secrets.GRADLE_PROPERTIES }}
+#        shell: bash
+#        run: |
+#          mkdir -p ~/.gradle/
+#          echo "::set-env name=GRADLE_USER_HOME::$HOME/.gradle"
+#          echo ${GRADLE_PROPERTIES} > ~/.gradle/gradle.properties
