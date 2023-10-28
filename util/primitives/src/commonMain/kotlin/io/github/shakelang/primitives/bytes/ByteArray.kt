@@ -163,7 +163,7 @@ fun ByteArray.setBytes(startIndex: Int, bytes: ByteArray): ByteArray {
 /**
  * Set specific bytes in a byte array to a byte
  *
- * @throws IllegalArgumentException if the array is not of size 1
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
@@ -183,7 +183,7 @@ fun ByteArray.setByte(index: Int, byte: Byte): ByteArray {
 /**
  * Set specific bytes in a byte array to a short
  *
- * @throws IllegalArgumentException if the array is not of size 2
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
@@ -205,7 +205,7 @@ fun ByteArray.setShort(index: Int, short: Short): ByteArray {
 /**
  * Set specific bytes in a byte array to an int
  *
- * @throws IllegalArgumentException if the array is not of size 4
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
@@ -228,7 +228,7 @@ fun ByteArray.setInt(index: Int, int: Int): ByteArray {
 /**
  * Set specific bytes in a byte array to a long
  *
- * @throws IllegalArgumentException if the array is not of size 8
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
@@ -256,7 +256,7 @@ fun ByteArray.setLong(index: Int, long: Long): ByteArray {
 /**
  * Set specific bytes in a byte array to a float
  *
- * @throws IllegalArgumentException if the array is not of size 4
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
@@ -271,7 +271,7 @@ fun ByteArray.setFloat(index: Int, float: Float): ByteArray {
 /**
  * Set specific bytes in a byte array to a double
  *
- * @throws IllegalArgumentException if the array is not of size 8
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
@@ -286,7 +286,7 @@ fun ByteArray.setDouble(index: Int, double: Double): ByteArray {
 /**
  * Set specific bytes in a byte array to an unsigned char
  *
- * @throws IllegalArgumentException if the array is not of size 1
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
@@ -306,7 +306,7 @@ fun ByteArray.setUnsignedByte(index: Int, unsignedByte: UByte): ByteArray {
 /**
  * Set specific bytes in a byte array to an unsigned short
  *
- * @throws IllegalArgumentException if the array is not of size 2
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
@@ -327,7 +327,7 @@ fun ByteArray.setUnsignedShort(index: Int, unsignedShort: UShort): ByteArray {
 /**
  * Set specific bytes in a byte array to an unsigned int
  *
- * @throws IllegalArgumentException if the array is not of size 4
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
@@ -350,7 +350,7 @@ fun ByteArray.setUnsignedInt(index: Int, unsignedInt: UInt): ByteArray {
 /**
  * Set specific bytes in a byte array to an unsigned long
  *
- * @throws IllegalArgumentException if the array is not of size 8
+ * @throws IllegalArgumentException if the array is not big enough
  * @return the byte array
  *
  * @since 0.1.0
