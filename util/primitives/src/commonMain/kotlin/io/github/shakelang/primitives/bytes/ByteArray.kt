@@ -387,7 +387,7 @@ fun ByteArray.setUnsignedLong(index: Int, unsignedLong: ULong): ByteArray {
  */
 fun ByteArray.getByte(index: Int): Byte {
 
-    if (this.size > index + 1)
+    if(this.size < index + 1)
         throw IllegalArgumentException("ByteArray must be of size ${index + 1}, but is ${this.size}")
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
@@ -406,7 +406,7 @@ fun ByteArray.getByte(index: Int): Byte {
  */
 fun ByteArray.getShort(index: Int): Short {
 
-    if (this.size > index + 2)
+    if(this.size < index + 2)
         throw IllegalArgumentException("ByteArray must be of size ${index + 2}, but is ${this.size}")
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
@@ -426,7 +426,7 @@ fun ByteArray.getShort(index: Int): Short {
  */
 fun ByteArray.getInt(index: Int): Int {
 
-        if (this.size > index + 4)
+        if (this.size < index + 4)
             throw IllegalArgumentException("ByteArray must be of size ${index + 4}, but is ${this.size}")
         if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
@@ -446,7 +446,7 @@ fun ByteArray.getInt(index: Int): Int {
  */
 fun ByteArray.getLong(index: Int): Long {
 
-        if (this.size > index + 8)
+        if (this.size < index + 8)
             throw IllegalArgumentException("ByteArray must be of size ${index + 8}, but is ${this.size}")
         if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
