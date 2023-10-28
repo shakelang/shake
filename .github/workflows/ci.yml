@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
 
@@ -35,6 +35,7 @@ jobs:
       - name: Build with Gradle
         run: |
           ./gradlew build
+          ./gradlew allTests
 
       - if: success() || failure()
         name: Generate Test Reports
