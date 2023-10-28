@@ -1,10 +1,10 @@
-@file:OptIn(ExperimentalUnsignedTypes::class)
 package io.github.shakelang.io.streaming.input
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import io.github.shakelang.primitives.bytes.byteArrayOf
 
+@OptIn(ExperimentalUnsignedTypes::class)
 class DataInputStreamTests {
 
     @Test
@@ -186,6 +186,60 @@ class DataInputStreamTests {
         assertEquals("hello world", stream.readUTF())
         assertEquals("hello 2", stream.readUTF(7))
 
+    }
+
+    @Test
+    fun testClose() {
+        val bytes = ByteArrayInputStream(byteArrayOf(0x00u, 0x01u, 0x02u, 0x03u))
+        val stream = DataInputStream(bytes)
+        stream.close()
+        assertEquals(-1, stream.read())
+    }
+
+    @Test
+    fun testMark() {
+        val bytes = ByteArrayInputStream(byteArrayOf(0x00u, 0x01u, 0x02u, 0x03u))
+        val stream = DataInputStream(bytes)
+        stream.mark(2)
+        assertEquals(0x00, stream.read())
+        assertEquals(0x01, stream.read())
+        stream.reset()
+        assertEquals(0x00, stream.read())
+        assertEquals(0x01, stream.read())
+    }
+
+    @Test
+    fun testReset() {
+        val bytes = ByteArrayInputStream(byteArrayOf(0x00u, 0x01u, 0x02u, 0x03u))
+        val stream = DataInputStream(bytes)
+        stream.mark(2)
+        assertEquals(0x00, stream.read())
+        assertEquals(0x01, stream.read())
+        stream.reset()
+        assertEquals(0x00, stream.read())
+        assertEquals(0x01, stream.read())
+    }
+
+    @Test
+    fun testMarkSupported() {
+        val bytes = ByteArrayInputStream(byteArrayOf(0x00u, 0x01u, 0x02u, 0x03u))
+        val stream = DataInputStream(bytes)
+        assertEquals(true, stream.markSupported())
+    }
+
+    @Test
+    fun testAvailable() {
+        val bytes = ByteArrayInputStream(byteArrayOf(0x00u, 0x01u, 0x02u, 0x03u))
+        val stream = DataInputStream(bytes)
+        assertEquals(4, stream.available())
+        stream.read()
+        assertEquals(3, stream.available())
+        stream.read()
+        assertEquals(2, stream.available())
+        stream.read()
+        assertEquals(1, stream.available())
+        stream.read()
+        assertEquals(0, stream.available())
     }
 
 }
