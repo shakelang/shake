@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.shasambly
 
-import io.github.shakelang.parseutils.bytes.stream
+import io.github.shakelang.io.streaming.input.stream
 import io.github.shakelang.parseutils.characters.source.CharacterSource
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.shasambly.generator.shas.ShasCompiler

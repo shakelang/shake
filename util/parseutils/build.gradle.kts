@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.shakelang.util.parseutils"
-version = "0.1.0"
+version = "0.1.1"
 description = "Utilities for parsing stuff with kotlin"
 
 val projectName = name
