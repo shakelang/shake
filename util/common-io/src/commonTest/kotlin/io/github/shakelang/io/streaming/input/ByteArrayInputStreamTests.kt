@@ -7,6 +7,7 @@ import kotlin.test.assertEquals
 
 class ByteArrayInputStreamTests {
 
+    @Test
     fun testConstructor() {
         val stream = "Hello".toBytes().stream()
         assertEquals(5, stream.available())
