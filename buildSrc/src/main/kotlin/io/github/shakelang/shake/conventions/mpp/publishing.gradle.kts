@@ -1,8 +1,11 @@
 package io.github.shakelang.shake.conventions.mpp
 
+import org.gradle.crypto.checksum.Checksum
+
 plugins {
     id("maven-publish")
     id("signing")
+    id("org.gradle.crypto.checksum")
 }
 
 publishing {
@@ -72,4 +75,22 @@ tasks.named("signJvmPublication") {
 
 tasks.named("signKotlinMultiplatformPublication") {
     group = "signing"
+}
+
+tasks.create("signAllPublications") {
+    group = "signing"
+    dependsOn("signJsPublication")
+    dependsOn("signJvmPublication")
+    dependsOn("signKotlinMultiplatformPublication")
+}
+
+tasks.create<Checksum>("createChecksums") {
+    group = "checksums"
+    dependsOn("build", "signAllPublications")
+
+    val dir = file("build/libs")
+    val files = dir.listFiles { _, name -> name.endsWith(".jar") }
+
+    inputFiles.setFrom(files)
+    outputDirectory.set(file("build/libs"))
 }

@@ -77,13 +77,22 @@ jobs:
       - name: Build 🔨
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
 
+      - name: Sign Release 📝
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:signAllPublications
+        env:
+          GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
+
+      - name: Genereate Checksums 📝
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:createChecksums
+
       - name: Create Release 📦
         id: create_release
         uses: ncipollo/release-action@v1
 
         with:
           artifacts: |
-            ${{needs.extract_info.outputs.release_path}}/build/libs/*.jar
+            ${{needs.extract_info.outputs.release_path}}/build/libs/*
           allowUpdates: true
           makeLatest: false
           name: ${{needs.extract_info.outputs.release_type}}/${{needs.extract_info.outputs.version}}
