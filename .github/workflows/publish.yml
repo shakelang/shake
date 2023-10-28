@@ -3,7 +3,7 @@ name: "Release 🚀"
 on:
   push:
     tags:
-      - "release/*/v*"
+      - "release/**/v*"
 
 jobs:
   extract_info:
@@ -20,9 +20,9 @@ jobs:
         id: extract_info
         run: |
           TAG=${GITHUB_REF#refs/tags/release/}
-          RELEASE_TYPE=${TAG%%/v*}
+          RELEASE_PATH=${TAG%%/v*}
           VERSION=${TAG#*/v}
-          RELEASE_PATH=${RELEASE_PACKAGE_PATH//:/\/}
+          RELEASE_TYPE=${RELEASE_PATH//\//:}
 
           echo "release_type=${RELEASE_TYPE}" >> $GITHUB_OUTPUT
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
@@ -30,7 +30,10 @@ jobs:
 
       - name: Dump Release Info
         run: |
-          echo "Release Type: ${{ steps.extract_info.outputs.release_type }} Version: ${{ steps.extract_info.outputs.version }} extracted from ${GITHUB_REF}"
+          echo "Extracted Release Info from Tag: ${GITHUB_REF}"
+          echo "Release Type: ${{ steps.extract_info.outputs.release_type }}"
+          echo "Version: ${{ steps.extract_info.outputs.version }}"
+          echo "Release Path: ${{ steps.extract_info.outputs.release_path }}"
 
   build:
     name: Build 🛠️
@@ -47,6 +50,16 @@ jobs:
 
       - name: Allow Gradle Wrapper to be executable 💪
         run: chmod +x gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build 🔨
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
@@ -71,8 +84,30 @@ jobs:
       - name: Allow Gradle Wrapper to be executable 💪
         run: chmod +x gradlew
 
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Build 🔨
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+
+      - name: Sign Release 📝
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:signAllPublications
+        env:
+          GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
+
+      - name: Genereate Checksums 📝
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:createChecksums
+        env:
+          GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
 
       - name: Create Release 📦
         id: create_release
@@ -80,31 +115,82 @@ jobs:
 
         with:
           artifacts: |
-            ${{needs.extract_info.outputs.release_path}}/build/libs/*.jar
+            ${{needs.extract_info.outputs.release_path}}/build/libs/*
           allowUpdates: true
           makeLatest: false
           name: ${{needs.extract_info.outputs.release_type}}/${{needs.extract_info.outputs.version}}
           token: ${{ secrets.GITHUB_TOKEN }}
-#  publish-gpr:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#      - name: Import GPG key
-#        uses: crazy-max/ghaction-import-gpg@v6
-#        with:
-#          gpg_private_key: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
-#          passphrase: ${{ secrets.RELEASE_GPG_PASS }}
-#          git_user_signingkey: true
-#          git_commit_gpgsign: true
-#      - name: Export Key Ring
-#        run: gpg --export-secret-keys --armor ${{ secrets.RELEASE_GPG_KEY_ID }} > private.key
-#
-#      - name: Restore gradle.properties
-#        env:
-#          GRADLE_PROPERTIES: ${{ secrets.GRADLE_PROPERTIES }}
-#        shell: bash
-#        run: |
-#          mkdir -p ~/.gradle/
-#          echo "::set-env name=GRADLE_USER_HOME::$HOME/.gradle"
-#          echo ${GRADLE_PROPERTIES} > ~/.gradle/gradle.properties
+
+  publish-gpr:
+    needs: [build, extract_info, draft-release]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      discussions: write
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Allow Gradle Wrapper to be executable 💪
+        run: chmod +x gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+
+      - name: Publish to gpr
+        env:
+          GRADLE_GITHUB_USERNAME: ${{ github.actor }}
+          GRADLE_GITHUB_TOKEN: ${{ github.token }}
+          GRADLE_SONATYPE_USERNAME: ${{ secrets.SONARTYPE_NEXUS_USERNAME }}
+          GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_NEXUS_PASSWORD }}
+          GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToGitHubRepository
+
+  publish-sonartype:
+    needs: [build, extract_info, draft-release]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      discussions: write
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Allow Gradle Wrapper to be executable 💪
+        run: chmod +x gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+
+      - name: Publish to Sonartype
+        env:
+          GRADLE_GITHUB_USERNAME: ${{ github.actor }}
+          GRADLE_GITHUB_TOKEN: ${{ github.token }}
+          GRADLE_SONATYPE_USERNAME: ${{ secrets.SONARTYPE_USERNAME }}
+          GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_PASSWORD }}
+          GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
+        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToSonatypeRepository
