@@ -20,7 +20,7 @@ dependencies {
     kover(project(":shake:shasambly:shastools"))
     kover(project(":shake:shasambly:shasambly"))
     kover(project(":shake:shasambly:shasp"))
-    kover(project(":shake:shasambly:java-dist"))
+//    kover(project(":shake:shasambly:java-dist"))
 }
 
 plugins {

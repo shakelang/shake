@@ -34,8 +34,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          ./gradlew build
-          ./gradlew allTests
+          ./gradlew build allTests
 
       - if: success() || failure()
         name: Generate Test Reports
