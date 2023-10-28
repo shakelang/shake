@@ -9,7 +9,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testRead() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -43,7 +43,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testReadWithByteArray() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -81,7 +81,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testReadWithByteArrayAndOffset() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -125,7 +125,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testSkip() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -154,7 +154,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testReadNBytes() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -181,7 +181,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testReadNBytesWithOffset() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -225,7 +225,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testMarkSupported() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -240,7 +240,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testMark() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -285,7 +285,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testAvailable() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -324,7 +324,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testReset() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -359,7 +359,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testClose() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(0, stream.byteCount)
         assertEquals(0, stream.count)
@@ -380,7 +380,7 @@ class CountingInputStreamTests {
 
     @Test
     fun testToString() {
-        val stream = "Hello".toBytes().stream().countingStream
+        val stream = "Hello".toBytes().inputStream().countingStream
 
         assertEquals(
             "CountingInputStream(data=ByteArrayInputStream(pos=0, mark=0, count=5), byteCount=0," +

@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.infos.constants
 
-import io.github.shakelang.io.streaming.input.stream
+import io.github.shakelang.io.streaming.input.inputStream
 import io.github.shakelang.primitives.bytes.toBytes
 import kotlin.math.abs
 import kotlin.math.max
@@ -20,7 +20,7 @@ class ConstantDoubleTests {
 
     @Test
     fun testContentFromStream() {
-        val inputStream = 1.0.toBytes().stream()
+        val inputStream = 1.0.toBytes().inputStream()
         val constant = ConstantDoubleInfo.contentsFromStream(inputStream)
         assertCompare(1.0, constant.value)
         assertEquals(6, constant.tag)
@@ -29,7 +29,7 @@ class ConstantDoubleTests {
 
     @Test
     fun testFromStream() {
-        val inputStream = byteArrayOf(0x06, *1.0.toBytes()).stream()
+        val inputStream = byteArrayOf(0x06, *1.0.toBytes()).inputStream()
         val constant = ConstantDoubleInfo.fromStream(inputStream)
         assertCompare(1.0, constant.value)
         assertEquals(6, constant.tag)

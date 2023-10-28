@@ -87,7 +87,7 @@ inline val InputStream.bufferedStream: BufferedInputStream
  * @version 0.1.1
  * @author Nicolas Schmidt &lt;@nsc-de&gt;
  */
-val InputStream.readFully: ByteArray
+inline val InputStream.readFully: ByteArray
     get() {
         val list = mutableListOf<Byte>()
         while (true) {
@@ -98,68 +98,70 @@ val InputStream.readFully: ByteArray
         return list.toByteArray()
     }
 
-
 /**
  * Byte array to ByteArrayInputStream
  */
-inline fun ByteArray.stream(): ByteArrayInputStream = ByteArrayInputStream(this)
+inline fun ByteArray.inputStream(): ByteArrayInputStream = ByteArrayInputStream(this)
 
 /**
  * Byte array to DataInputStream
  */
-inline fun ByteArray.dataStream(): DataInputStream = DataInputStream(this.stream())
+inline fun ByteArray.dataStream(): DataInputStream = DataInputStream(this.inputStream())
 
 /**
  * Byte array to CountingInputStream
  */
-inline fun ByteArray.countingStream(): CountingInputStream = CountingInputStream(this.stream())
+inline fun ByteArray.countingStream(): CountingInputStream = CountingInputStream(this.inputStream())
 
 /**
  * Byte array to BufferedInputStream
  * @deprecated A buffered stream of a byte array is useless
  */
-inline fun ByteArray.bufferedStream(): BufferedInputStream = BufferedInputStream(this.stream())
-
-
+inline fun ByteArray.bufferedStream(): BufferedInputStream = BufferedInputStream(this.inputStream())
 
 /**
  * Byte array to ByteArrayInputStream
  */
-fun List<Byte>.inputStream(): ByteArrayInputStream = ByteArrayInputStream(this.toByteArray())
+inline fun List<Byte>.inputStream(): ByteArrayInputStream = ByteArrayInputStream(this.toByteArray())
 
 /**
  * Byte array to DataInputStream
  */
-fun List<Byte>.dataStream(): DataInputStream = DataInputStream(this.inputStream())
+inline fun List<Byte>.dataStream(): DataInputStream = DataInputStream(this.inputStream())
 
 /**
  * Byte array to CountingInputStream
  */
-fun List<Byte>.countingStream(): CountingInputStream = CountingInputStream(this.inputStream())
+inline fun List<Byte>.countingStream(): CountingInputStream = CountingInputStream(this.inputStream())
 
 /**
  * Byte array to BufferedInputStream
  * @deprecated A buffered stream of a byte array is useless
  */
-fun List<Byte>.bufferedStream(): BufferedInputStream = BufferedInputStream(this.inputStream())
+inline fun List<Byte>.bufferedStream(): BufferedInputStream = BufferedInputStream(this.inputStream())
 
 /**
  * Byte array to ByteArrayInputStream
  */
-fun CharSequence.byteInputStream() = ByteArrayInputStream(this.toBytes())
+inline fun CharSequence.byteStream() = ByteArrayInputStream(this.toBytes())
+
+/**
+ * Byte array to ByteArrayInputStream
+ */
+inline fun CharSequence.byteInputStream() = ByteArrayInputStream(this.toBytes())
 
 /**
  * Byte array to DataInputStream
  */
-fun CharSequence.byteDataStream() = DataInputStream(this.byteInputStream())
+inline fun CharSequence.byteDataStream() = DataInputStream(this.byteInputStream())
 
 /**
  * Byte array to CountingInputStream
  */
-fun CharSequence.byteCountingStream() = CountingInputStream(this.byteInputStream())
+inline fun CharSequence.byteCountingStream() = CountingInputStream(this.byteInputStream())
 
 /**
  * Byte array to BufferedInputStream
  * @deprecated A buffered stream of a byte array is useless
  */
-fun CharSequence.byteBufferedStream() = BufferedInputStream(this.byteInputStream())
+inline fun CharSequence.byteBufferedStream() = BufferedInputStream(this.byteInputStream())

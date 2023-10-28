@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.infos.constants
 
-import io.github.shakelang.io.streaming.input.stream
+import io.github.shakelang.io.streaming.input.inputStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -22,7 +22,7 @@ class ConstantNameAndTypeTests {
 
     @Test
     fun testContentFromStream() {
-        val inputStream = byteArrayOf(0x00, 0x03, 0x00, 0x02).stream()
+        val inputStream = byteArrayOf(0x00, 0x03, 0x00, 0x02).inputStream()
         val constant = ConstantNameAndTypeInfo.contentsFromStream(inputStream)
         val pool = ConstantPool(mutableListOf(constant, *testConstants))
         assertEquals(pool[2], constant.name)
@@ -35,7 +35,7 @@ class ConstantNameAndTypeTests {
 
     @Test
     fun testFromStream() {
-        val inputStream = byteArrayOf(0x0c, 0x00, 0x03, 0x00, 0x02).stream()
+        val inputStream = byteArrayOf(0x0c, 0x00, 0x03, 0x00, 0x02).inputStream()
         val constant = ConstantNameAndTypeInfo.fromStream(inputStream)
         val pool = ConstantPool(mutableListOf(constant, *testConstants))
         assertEquals(pool[2], constant.name)

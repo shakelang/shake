@@ -9,7 +9,7 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testConstructor() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         assertEquals(5, stream.available())
         assertEquals('H'.code, stream.read())
 
@@ -24,7 +24,7 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testRead() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
 
         assertEquals('H'.code, stream.read())
         assertEquals('e'.code, stream.read())
@@ -36,7 +36,7 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testReadWithByteArray() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         val buffer = ByteArray(2)
         assertEquals(2, stream.read(buffer))
         assertEquals('H'.code.toByte(), buffer[0])
@@ -51,7 +51,7 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testReadWithByteArrayAndOffset() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         val buffer = ByteArray(4)
         assertEquals(2, stream.read(buffer, 1, 2))
         assertEquals(0, buffer[0])
@@ -72,26 +72,26 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testSkip() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         assertEquals(2, stream.skip(2))
         assertEquals('l'.code, stream.read())
         assertEquals(2, stream.skip(2))
         assertEquals(-1, stream.read())
 
         // Test with to many bytes to skip
-        val stream2 = "Hello".toBytes().stream()
+        val stream2 = "Hello".toBytes().inputStream()
         assertEquals(5, stream2.skip(10))
         assertEquals(-1, stream2.read())
 
         // Test with negative amount of bytes to skip
-        val stream3 = "Hello".toBytes().stream()
+        val stream3 = "Hello".toBytes().inputStream()
         assertEquals(0, stream3.skip(-10))
         assertEquals('H'.code, stream3.read())
     }
 
     @Test
     fun testReadNBytes() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         assertContentEquals("He".toBytes(), stream.readNBytes(2))
         assertContentEquals("ll".toBytes(), stream.readNBytes(2))
         assertContentEquals(byteArrayOf(111), stream.readNBytes(1))
@@ -99,7 +99,7 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testReadNBytesWithOffset() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         val buffer = ByteArray(4)
         assertEquals(2, stream.readNBytes(buffer, 1, 2))
         assertEquals(0, buffer[0])
@@ -120,13 +120,13 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testMarkSupported() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         assertEquals(true, stream.markSupported())
     }
 
     @Test
     fun testMark() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         stream.mark(2)
         assertEquals('H'.code, stream.read())
         assertEquals('e'.code, stream.read())
@@ -137,7 +137,7 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testAvailable() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         assertEquals(5, stream.available())
         stream.read()
         assertEquals(4, stream.available())
@@ -149,7 +149,7 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testReset() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         stream.read()
         stream.read()
         stream.read()
@@ -165,7 +165,7 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testClose() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
         stream.read()
         stream.read()
         stream.read()
@@ -176,7 +176,7 @@ class ByteArrayInputStreamTests {
 
     @Test
     fun testToString() {
-        val stream = "Hello".toBytes().stream()
+        val stream = "Hello".toBytes().inputStream()
 
         assertEquals(
             "ByteArrayInputStream(pos=0, mark=0, count=5)",
