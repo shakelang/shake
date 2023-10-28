@@ -1,6 +1,5 @@
 package io.github.shakelang.io.streaming.output
 
-import io.github.shakelang.io.streaming.output.CountingOutputStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

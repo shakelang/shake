@@ -1,8 +1,8 @@
 package io.github.shakelang.io.streaming.input
 
+import io.github.shakelang.primitives.bytes.byteArrayOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import io.github.shakelang.primitives.bytes.byteArrayOf
 
 @OptIn(ExperimentalUnsignedTypes::class)
 class DataInputStreamTests {

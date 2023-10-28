@@ -1,7 +1,5 @@
 package io.github.shakelang.io.streaming.input
 
-import io.github.shakelang.io.streaming.input.bufferedStream
-import io.github.shakelang.io.streaming.input.countingStream
 import io.github.shakelang.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertContentEquals

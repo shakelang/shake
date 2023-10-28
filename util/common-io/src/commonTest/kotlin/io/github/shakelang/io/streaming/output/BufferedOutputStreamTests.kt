@@ -1,6 +1,5 @@
 package io.github.shakelang.io.streaming.output
 
-import io.github.shakelang.io.streaming.output.BufferedOutputStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

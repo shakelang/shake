@@ -1,7 +1,7 @@
 package io.github.shakelang.io.streaming.input
 
-import io.github.shakelang.primitives.bytes.*
 import io.github.shakelang.io.IOException
+import io.github.shakelang.primitives.bytes.*
 
 /**
  * A [DataInputStream] is a [InputStream] that can read data from a [InputStream]
