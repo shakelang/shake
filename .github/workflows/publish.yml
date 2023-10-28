@@ -51,6 +51,16 @@ jobs:
       - name: Allow Gradle Wrapper to be executable 💪
         run: chmod +x gradlew
 
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Build 🔨
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
 
@@ -73,6 +83,16 @@ jobs:
 
       - name: Allow Gradle Wrapper to be executable 💪
         run: chmod +x gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build 🔨
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
@@ -111,13 +131,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v6
+
+      - name: Allow Gradle Wrapper to be executable 💪
+        run: chmod +x gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
         with:
-          gpg_private_key: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.RELEASE_GPG_PASS }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
@@ -143,13 +169,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v6
+      - name: Allow Gradle Wrapper to be executable 💪
+        run: chmod +x gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
         with:
-          gpg_private_key: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.RELEASE_GPG_PASS }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
