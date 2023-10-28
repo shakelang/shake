@@ -68,7 +68,7 @@ class ByteArrayInputStream(
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     constructor(buf: ByteArray, offset: Int, length: Int) : this(buf) {
-        this.count = length
+        this.count = length + offset
         this.pos = offset
         this.mark = offset
     }

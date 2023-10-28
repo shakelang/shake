@@ -1,6 +1,5 @@
 package io.github.shakelang.io.streaming.input
 
-import io.github.shakelang.io.streaming.input.countingStream
 import io.github.shakelang.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -13,16 +12,19 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         assertEquals('H'.code, stream.read())
 
         assertEquals(1, stream.byteCount)
+        assertEquals(1, stream.count)
         assertEquals(1, stream.operationCount)
 
         assertEquals('e'.code, stream.read())
 
         assertEquals(2, stream.byteCount)
+        assertEquals(2, stream.count)
         assertEquals(2, stream.operationCount)
 
         assertEquals('l'.code, stream.read())
@@ -33,6 +35,7 @@ class CountingInputStreamTests {
         assertEquals('o'.code, stream.read())
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(5, stream.operationCount)
 
         assertEquals(-1, stream.read())
@@ -43,6 +46,7 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         val buffer = ByteArray(2)
@@ -50,6 +54,7 @@ class CountingInputStreamTests {
         assertEquals(2, stream.read(buffer))
 
         assertEquals(2, stream.byteCount)
+        assertEquals(2, stream.count)
         assertEquals(1, stream.operationCount)
 
         assertEquals('H'.code.toByte(), buffer[0])
@@ -58,6 +63,7 @@ class CountingInputStreamTests {
         assertEquals(2, stream.read(buffer))
 
         assertEquals(4, stream.byteCount)
+        assertEquals(4, stream.count)
         assertEquals(2, stream.operationCount)
 
         assertEquals('l'.code.toByte(), buffer[0])
@@ -66,6 +72,7 @@ class CountingInputStreamTests {
         assertEquals(1, stream.read(buffer))
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(3, stream.operationCount)
 
         assertEquals('o'.code.toByte(), buffer[0])
@@ -77,6 +84,7 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         val buffer = ByteArray(4)
@@ -84,6 +92,7 @@ class CountingInputStreamTests {
         assertEquals(2, stream.read(buffer, 1, 2))
 
         assertEquals(2, stream.byteCount)
+        assertEquals(2, stream.count)
         assertEquals(1, stream.operationCount)
 
         assertEquals(0, buffer[0])
@@ -94,6 +103,7 @@ class CountingInputStreamTests {
         assertEquals(2, stream.read(buffer, 1, 2))
 
         assertEquals(4, stream.byteCount)
+        assertEquals(4, stream.count)
         assertEquals(2, stream.operationCount)
 
         assertEquals(0, buffer[0])
@@ -104,6 +114,7 @@ class CountingInputStreamTests {
         assertEquals(1, stream.read(buffer, 1, 2))
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(3, stream.operationCount)
 
         assertEquals(0, buffer[0])
@@ -117,21 +128,25 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         assertEquals(2, stream.skip(2))
 
         assertEquals(2, stream.byteCount)
+        assertEquals(2, stream.count)
         assertEquals(1, stream.operationCount)
 
         assertEquals('l'.code, stream.read())
 
         assertEquals(3, stream.byteCount)
+        assertEquals(3, stream.count)
         assertEquals(2, stream.operationCount)
 
         assertEquals(2, stream.skip(2))
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(3, stream.operationCount)
 
         assertEquals(-1, stream.read())
@@ -142,21 +157,25 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         assertContentEquals("He".toBytes(), stream.readNBytes(2))
 
         assertEquals(2, stream.byteCount)
+        assertEquals(2, stream.count)
         assertEquals(1, stream.operationCount)
 
         assertContentEquals("ll".toBytes(), stream.readNBytes(2))
 
         assertEquals(4, stream.byteCount)
+        assertEquals(4, stream.count)
         assertEquals(2, stream.operationCount)
 
         assertContentEquals(byteArrayOf(111), stream.readNBytes(1))
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(3, stream.operationCount)
     }
 
@@ -165,6 +184,7 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         val buffer = ByteArray(4)
@@ -172,6 +192,7 @@ class CountingInputStreamTests {
         assertEquals(2, stream.readNBytes(buffer, 1, 2))
 
         assertEquals(2, stream.byteCount)
+        assertEquals(2, stream.count)
         assertEquals(1, stream.operationCount)
 
         assertEquals(0, buffer[0])
@@ -182,6 +203,7 @@ class CountingInputStreamTests {
         assertEquals(2, stream.readNBytes(buffer, 1, 2))
 
         assertEquals(4, stream.byteCount)
+        assertEquals(4, stream.count)
         assertEquals(2, stream.operationCount)
 
         assertEquals(0, buffer[0])
@@ -192,6 +214,7 @@ class CountingInputStreamTests {
         assertEquals(1, stream.readNBytes(buffer, 1, 2))
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(3, stream.operationCount)
 
         assertEquals(0, buffer[0])
@@ -205,11 +228,13 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         assertEquals(true, stream.markSupported())
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
     }
 
@@ -218,36 +243,43 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         stream.mark(2)
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         assertEquals('H'.code, stream.read())
 
         assertEquals(1, stream.byteCount)
+        assertEquals(1, stream.count)
         assertEquals(1, stream.operationCount)
 
         assertEquals('e'.code, stream.read())
 
         assertEquals(2, stream.byteCount)
+        assertEquals(2, stream.count)
         assertEquals(2, stream.operationCount)
 
         stream.reset()
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         assertEquals('H'.code, stream.read())
 
         assertEquals(1, stream.byteCount)
+        assertEquals(1, stream.count)
         assertEquals(1, stream.operationCount)
 
         assertEquals('e'.code, stream.read())
 
         assertEquals(2, stream.byteCount)
+        assertEquals(2, stream.count)
         assertEquals(2, stream.operationCount)
     }
 
@@ -256,11 +288,13 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         assertEquals(5, stream.available())
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         stream.read()
@@ -268,6 +302,7 @@ class CountingInputStreamTests {
         assertEquals(4, stream.available())
 
         assertEquals(1, stream.byteCount)
+        assertEquals(1, stream.count)
         assertEquals(1, stream.operationCount)
 
         stream.readNBytes(2)
@@ -275,6 +310,7 @@ class CountingInputStreamTests {
         assertEquals(2, stream.available())
 
         assertEquals(3, stream.byteCount)
+        assertEquals(3, stream.count)
         assertEquals(2, stream.operationCount)
 
         stream.skip(2)
@@ -282,6 +318,7 @@ class CountingInputStreamTests {
         assertEquals(0, stream.available())
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(3, stream.operationCount)
     }
 
@@ -290,6 +327,7 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         stream.read()
@@ -299,11 +337,13 @@ class CountingInputStreamTests {
         stream.read()
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(5, stream.operationCount)
 
         stream.reset()
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         stream.read()
@@ -313,6 +353,7 @@ class CountingInputStreamTests {
         stream.read()
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(5, stream.operationCount)
     }
 
@@ -321,6 +362,7 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(0, stream.byteCount)
+        assertEquals(0, stream.count)
         assertEquals(0, stream.operationCount)
 
         stream.read()
@@ -330,6 +372,7 @@ class CountingInputStreamTests {
         stream.read()
 
         assertEquals(5, stream.byteCount)
+        assertEquals(5, stream.count)
         assertEquals(5, stream.operationCount)
 
         stream.close()
