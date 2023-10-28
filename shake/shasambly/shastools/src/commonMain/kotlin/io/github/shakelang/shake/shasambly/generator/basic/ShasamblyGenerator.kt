@@ -1,8 +1,8 @@
 @file: Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.basic
 
-import io.github.shakelang.parseutils.bytes.toBytes
-import io.github.shakelang.parseutils.bytes.toHexString
+import io.github.shakelang.primitives.bytes.toBytes
+import io.github.shakelang.primitives.bytes.toHexString
 import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 
 /**

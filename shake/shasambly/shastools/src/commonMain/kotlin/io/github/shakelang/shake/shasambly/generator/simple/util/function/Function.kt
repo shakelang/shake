@@ -1,10 +1,10 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.simple.util.function
 
-import io.github.shakelang.parseutils.bytes.removeLastByte
-import io.github.shakelang.parseutils.bytes.removeLastInt
-import io.github.shakelang.parseutils.bytes.removeLastLong
-import io.github.shakelang.parseutils.bytes.removeLastShort
+import io.github.shakelang.primitives.bytes.removeLastByte
+import io.github.shakelang.primitives.bytes.removeLastInt
+import io.github.shakelang.primitives.bytes.removeLastLong
+import io.github.shakelang.primitives.bytes.removeLastShort
 import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcode
 import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcodeJumpStaticToIndex
 import io.github.shakelang.shake.shasambly.generator.simple.RelativeShasamblyGeneratorPart

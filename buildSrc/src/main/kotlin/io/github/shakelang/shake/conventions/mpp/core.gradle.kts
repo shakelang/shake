@@ -1,7 +1,6 @@
 package io.github.shakelang.shake.conventions.mpp
 
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
-import java.util.*
 
 val jvmTarget = JVM_TARGET
 
@@ -10,7 +9,6 @@ plugins {
 //    id("org.junit.platform:junit-platform-reporting:1.10.0")
     id("org.jetbrains.kotlinx.kover")
     id("com.github.node-gradle.node")
-    id("maven-publish")
 }
 
 repositories {

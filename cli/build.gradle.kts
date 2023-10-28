@@ -8,7 +8,6 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 plugins {
     id("io.github.shakelang.shake.conventions.mpp.all")
     java
-    `maven-publish`
 }
 
 kotlin {

@@ -2,7 +2,6 @@ plugins {
     application
     kotlin("jvm")
     id("org.jetbrains.dokka")
-    id("maven-publish")
 }
 
 group = "io.github.shakelang.shake"

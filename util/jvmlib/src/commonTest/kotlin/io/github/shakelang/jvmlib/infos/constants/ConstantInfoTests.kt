@@ -1,12 +1,12 @@
 @file:Suppress("unused_variable")
 package io.github.shakelang.jvmlib.infos.constants
 
+import io.github.shakelang.io.streaming.input.stream
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.InterfaceList
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
 import io.github.shakelang.jvmlib.infos.fields.FieldList
 import io.github.shakelang.jvmlib.infos.methods.MethodList
-import io.github.shakelang.parseutils.bytes.stream
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

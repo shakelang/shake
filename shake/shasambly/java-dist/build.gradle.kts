@@ -4,7 +4,6 @@ plugins {
     application
     kotlin("jvm")
     id("org.jetbrains.dokka")
-    id("maven-publish")
 }
 
 group = "io.github.shakelang.shake"
@@ -51,6 +50,8 @@ kotlin {
     sourceSets {
         val main by getting {
             dependencies {
+                implementation(project(":util:primitives"))
+                implementation(project(":util:common-io"))
                 implementation(project(":util:parseutils"))
                 implementation(project(":shake:shasambly:shasambly"))
                 implementation(project(":shake:shasambly:shastools"))

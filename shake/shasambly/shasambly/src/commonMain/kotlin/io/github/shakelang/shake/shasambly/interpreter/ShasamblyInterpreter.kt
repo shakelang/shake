@@ -1,8 +1,9 @@
 @file:Suppress("nothing_to_inline", "unused")
 package io.github.shakelang.shake.shasambly.interpreter
 
-import io.github.shakelang.parseutils.bytes.toBytes
-import io.github.shakelang.parseutils.bytes.toHexString
+import io.github.shakelang.primitives.bytes.toBytes
+import io.github.shakelang.primitives.bytes.toHexString
+
 
 class ShasamblyInterpreter(
     memorySize: Int,
