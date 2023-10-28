@@ -340,7 +340,7 @@ class CountingInputStreamTests {
         val stream = "Hello".toBytes().stream().countingStream
 
         assertEquals(
-            "CountingInputStream(data=ByteArrayInputStream[pos=0, mark=0, count=5], byteCount=0," +
+            "CountingInputStream(data=ByteArrayInputStream(pos=0, mark=0, count=5), byteCount=0," +
                     " operationCount=0)",
             stream.toString()
         )
@@ -352,7 +352,7 @@ class CountingInputStreamTests {
         stream.read()
 
         assertEquals(
-            "CountingInputStream(data=ByteArrayInputStream[pos=5, mark=0, count=5], byteCount=5, " +
+            "CountingInputStream(data=ByteArrayInputStream(pos=5, mark=0, count=5), byteCount=5, " +
                     "operationCount=5)",
             stream.toString()
         )

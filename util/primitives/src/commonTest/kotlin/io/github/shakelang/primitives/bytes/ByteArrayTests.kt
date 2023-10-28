@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalUnsignedTypes::class)
 package io.github.shakelang.primitives.bytes
 
 import kotlin.math.abs
@@ -7,7 +8,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalUnsignedTypes::class)
 class ByteArrayTests {
 
     @Test

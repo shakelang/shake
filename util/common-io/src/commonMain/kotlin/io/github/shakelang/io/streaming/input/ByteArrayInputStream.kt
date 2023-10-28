@@ -219,7 +219,7 @@ class ByteArrayInputStream(
      * @author Nicolas Schmidt &lt;@nsc-de&gt;
      */
     override fun toString(): String {
-        return "ByteArrayInputStream[pos=$pos, mark=$mark, count=$count]"
+        return "ByteArrayInputStream(pos=$pos, mark=$mark, count=$count)"
     }
 
 }
