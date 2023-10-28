@@ -7,6 +7,20 @@ import kotlin.test.assertEquals
 
 class ByteArrayInputStreamTests {
 
+    fun testConstructor() {
+        val stream = "Hello".toBytes().stream()
+        assertEquals(5, stream.available())
+        assertEquals('H'.code, stream.read())
+
+        // Test with offset and length
+        val stream2 = ByteArrayInputStream("Hello".toBytes(), 1, 3)
+        assertEquals(3, stream2.available())
+        assertEquals('e'.code, stream2.read())
+        assertEquals('l'.code, stream2.read())
+        assertEquals('l'.code, stream2.read())
+        assertEquals(-1, stream2.read())
+    }
+
     @Test
     fun testRead() {
         val stream = "Hello".toBytes().stream()
@@ -62,6 +76,16 @@ class ByteArrayInputStreamTests {
         assertEquals('l'.code, stream.read())
         assertEquals(2, stream.skip(2))
         assertEquals(-1, stream.read())
+
+        // Test with to many bytes to skip
+        val stream2 = "Hello".toBytes().stream()
+        assertEquals(5, stream2.skip(10))
+        assertEquals(-1, stream2.read())
+
+        // Test with negative amount of bytes to skip
+        val stream3 = "Hello".toBytes().stream()
+        assertEquals(0, stream3.skip(-10))
+        assertEquals('H'.code, stream3.read())
     }
 
     @Test
