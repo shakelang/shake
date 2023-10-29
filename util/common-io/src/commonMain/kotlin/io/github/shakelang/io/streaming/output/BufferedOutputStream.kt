@@ -32,7 +32,7 @@ open class BufferedOutputStream (
 
     /** Flush the internal buffer  */
     private fun flushBuffer(array: ByteArray = byteArrayOf()) {
-        if (count > 0) {
+        if (count + array.size > 0) {
             out.write(byteArrayOf(*buf.copyOfRange(0, count), *array))
             count = 0
         }
@@ -42,12 +42,24 @@ open class BufferedOutputStream (
      * Writes the specified byte to this buffered output stream.
      *
      * @param b the byte to be written.
+     * @throws IOException if an I/O error occurs.
      */
     @Synchronized
     override fun write(b: Int) {
         if (count >= buf.size)
             flushBuffer()
         buf[count++] = b.toByte()
+    }
+
+    /**
+     * Writes `b.length` bytes from the specified byte array
+     * to this buffered output stream.
+     *
+     * @param b the data.
+     * @throws IOException if an I/O error occurs.
+     */
+    override fun write(b: ByteArray) {
+        this.write(b, 0, b.size)
     }
 
     /**
@@ -69,7 +81,8 @@ open class BufferedOutputStream (
      */
     @Synchronized
     override fun write(b: ByteArray, off: Int, len: Int) {
-        if (len >= (buf.size + count)) {
+        println("write, count: $count, bytes: ${b.size}")
+        if (len + count >= buf.size) {
             // When the request length exceeds the remaining space in
             // the buffer, flush it and then write the data directly.
             flushBuffer(b)
