@@ -81,7 +81,6 @@ open class Token<T : TokenType>
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if(other is Byte) return other == this.type
         if (other == null || other !is Token<*>) return false
         return type == other.type &&
                 value == other.value
