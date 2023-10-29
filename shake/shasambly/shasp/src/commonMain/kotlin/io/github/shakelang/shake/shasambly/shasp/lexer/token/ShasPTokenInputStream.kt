@@ -3,7 +3,6 @@ package io.github.shakelang.shake.shasambly.shasp.lexer.token
 
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.parseutils.lexer.token.stream.DataBasedTokenInputStream
 import io.github.shakelang.parseutils.lexer.token.stream.TokenBasedTokenInputStream
 import io.github.shakelang.parseutils.lexer.token.stream.TokenInputStream
 import io.github.shakelang.shake.lexer.token.ShasPToken
@@ -22,21 +21,6 @@ class ShasPTokenBasedInputStream (
     tokens: Array<ShasPToken>,
     map: PositionMap
 ) : ShasPTokenInputStream, TokenBasedTokenInputStream<ShasPTokenType, ShasPToken>(tokens, map)
-
-class ShasPDataBasedInputStream (
-    source: String,
-    tokenTypes: Array<ShasPTokenType>,
-    values: Array<String>,
-    positions: IntArray,
-    map: PositionMap,
-) : ShasPTokenInputStream, DataBasedTokenInputStream<ShasPTokenType, ShasPToken>(
-    source,
-    tokenTypes,
-    values,
-    positions,
-    map,
-    { type, value, start, end -> ShasPToken(type, value, start, end) }
-)
 
 class OnDemandLexingShasPTokenInputStream (
     input: CharacterInputStream
