@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.shasambly
 
-import io.github.shakelang.io.streaming.input.stream
 import io.github.shakelang.parseutils.characters.source.CharacterSource
 import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.shasambly.generator.shas.ShasCompiler
@@ -23,7 +22,7 @@ fun main(args: Array<String>) {
     val output = if(args.size == 1) args[0] else args[1]
     println("Generating file \"${File(output).absolutePath}\"...")
     val out = FileOutputStream(output).buffered()
-    val generator = ShasGenerator(compiler.parse().stream())
+    val generator = ShasGenerator(compiler.parse().inputStream())
     generator.dumpParse(out)
     out.flush()
     out.close()
