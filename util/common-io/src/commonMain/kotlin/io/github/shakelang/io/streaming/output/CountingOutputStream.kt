@@ -25,11 +25,31 @@ class CountingOutputStream(
     /**
      * The amount of bytes written to the [OutputStream]
      *
+     * @deprecated Use [byteCount] instead
+     *
      * @since 0.1.0
      * @version 0.1.1
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
-    var count: Long = 0
+    val count: Long get() = byteCount
+
+    /**
+     * The count of written bytes to the output stream
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
+     */
+    var byteCount: Long = 0L
+        private set
+
+    /**
+     * The count of write operations to the output stream
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
+    var operationCount: Long = 0L
         private set
 
     /**
@@ -43,7 +63,8 @@ class CountingOutputStream(
      */
     override fun write(b: Int) {
         out.write(b)
-        count++
+        byteCount++
+        operationCount++
     }
 
     /**
@@ -57,7 +78,8 @@ class CountingOutputStream(
      */
     override fun write(b: ByteArray) {
         out.write(b)
-        count += b.size.toLong()
+        byteCount += b.size.toLong()
+        operationCount++
     }
 
     /**
@@ -73,7 +95,8 @@ class CountingOutputStream(
      */
     override fun write(b: ByteArray, off: Int, len: Int) {
         out.write(b, off, len)
-        count += len.toLong()
+        byteCount += len.toLong()
+        operationCount++
     }
 
     /**

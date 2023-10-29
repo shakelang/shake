@@ -1,3 +1,4 @@
+@file:Suppress("nothing_to_inline")
 package io.github.shakelang.io.streaming.input
 
 import io.github.shakelang.primitives.bytes.toBytes
