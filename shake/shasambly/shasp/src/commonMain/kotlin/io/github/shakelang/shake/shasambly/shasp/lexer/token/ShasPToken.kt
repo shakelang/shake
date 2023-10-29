@@ -12,9 +12,7 @@ import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 class ShasPToken : Token<ShasPTokenType> {
 
     constructor(type: ShasPTokenType, value: String?, start: Int, end: Int) : super(type, value, start, end)
-    constructor(type: ShasPTokenType, value: String?, position: Int) : super(type, value, position)
     constructor(type: ShasPTokenType, start: Int, end: Int) : super(type, start, end)
-    constructor(type: ShasPTokenType, position: Int) : super(type, position)
 
     override fun toString(): String {
         return if (start == end) if (value != null) "" +

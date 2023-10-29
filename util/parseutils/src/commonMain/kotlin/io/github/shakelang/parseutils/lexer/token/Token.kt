@@ -9,7 +9,6 @@ import io.github.shakelang.parseutils.lexer.token.TokenType
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-@Suppress("unused")
 open class Token<T : TokenType>
 /**
  * Constructor for [Token]
@@ -60,55 +59,24 @@ open class Token<T : TokenType>
     /**
      * Constructor for [Token]
      *
-     * @param type the [type] of the [Token]
-     * @param value the [value] of the [Token]
-     * @param end the [end] position of the [Token]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     * @param type the [Token.type] of the [Token]
+     * @param start the [Token.start] of the [Token]
+     * @param end the [Token.end] of the [Token]
      *
      * @see Token
-     * @see type
-     * @see value
-     * @see start
-     * @see end
+     * @see Token.type
+     * @see Token.start
+     * @see Token.end
+     *
      */
-    constructor(type: T, value: String?, end: Int) : this(type, value, end - type.length(value) + 1, end)
-
-    /**
-     * Constructor for [Token]
-     *
-     * @param type the [type] of the [Token]
-     * @param start the [start] of the [Token]
-     * @param end the [end] of the [Token]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     *
-     * @see Token
-     * @see type
-     * @see start
-     * @see end
-     */
-    constructor(type: T, start: Int, end: Int) : this(type, null, start, end)
-
-    /**
-     * Constructor for [Token]
-     *
-     * @param type the [type] of the [Token]
-     * @param end the [end] position of the [Token]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     *
-     * @see Token
-     * @see type
-     * @see start
-     * @see end
-     */
-    constructor(type: T, end: Int) : this(type, null, end)
+    constructor(
+        type: T,
+        start: Int,
+        end: Int
+    ) : this(type, null, start, end)
 
     override fun toString(): String {
-        return if (start == end) if (value != null) "" +
-                "Token{" + "type=" + type + ", value=" + value + ", position=" + start + '}' else "Token{type=$type, position=$start}" else if (value != null) "" +
-                "Token{" + "type=" + type + ", value=" + value + ", start=" + start + ", end=" + end + '}' else "Token{type=$type, position=$start, end=$end}"
+        return "Token{type=$type, value=$value, start=$start, end=$end}"
     }
 
     override fun equals(other: Any?): Boolean {

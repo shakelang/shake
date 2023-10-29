@@ -21,9 +21,9 @@ abstract class ShasPLexingBase(
         val peek: Char = if (input.hasNext()) input.peek() else (0).toChar()
         val start = input.position
 
-        return if (next == ';') ShasPToken(ShasPTokenType.SEMICOLON, start)
-        else if (next == ',') ShasPToken(ShasPTokenType.COMMA, start)
-        else if (next == '.') ShasPToken(ShasPTokenType.DOT, start)
+        return if (next == ';') ShasPToken(ShasPTokenType.SEMICOLON, start, start)
+        else if (next == ',') ShasPToken(ShasPTokenType.COMMA, start, start)
+        else if (next == '.') ShasPToken(ShasPTokenType.DOT, start, start)
         else if (Characters.isNumberCharacter(next)) makeNumber()
         else if (Characters.isIdentifierStartCharacter(next)) makeIdentifier()
         else if (next == '"') makeString()
@@ -31,78 +31,63 @@ abstract class ShasPLexingBase(
         else if (next == '/' && peek == '/') {
             singleLineComment()
             makeToken()
-        }
-        else if (next == '/' && peek == '*') {
+        } else if (next == '/' && peek == '*') {
             multiLineComment()
             makeToken()
-        }
-        else if (next == '%' && peek == '=') {
+        } else if (next == '%' && peek == '=') {
             input.skip()
-            ShasPToken(ShasPTokenType.MOD_ASSIGN, input.position)
-        }
-        else if (next == '/' && peek == '=') {
+            ShasPToken(ShasPTokenType.MOD_ASSIGN, input.position, input.position)
+        } else if (next == '/' && peek == '=') {
             input.skip()
-            ShasPToken(ShasPTokenType.DIV_ASSIGN, input.position)
-        }
-        else if (next == '*' && peek == '=') {
+            ShasPToken(ShasPTokenType.DIV_ASSIGN, input.position, input.position)
+        } else if (next == '*' && peek == '=') {
             input.skip()
-            ShasPToken(ShasPTokenType.MUL_ASSIGN, input.position)
-        }
-        else if (next == '-' && peek == '=') {
+            ShasPToken(ShasPTokenType.MUL_ASSIGN, input.position, input.position)
+        } else if (next == '-' && peek == '=') {
             input.skip()
-            ShasPToken(ShasPTokenType.SUB_ASSIGN, input.position)
-        }
-        else if (next == '+' && peek == '=') {
+            ShasPToken(ShasPTokenType.SUB_ASSIGN, input.position, input.position)
+        } else if (next == '+' && peek == '=') {
             input.skip()
-            ShasPToken(ShasPTokenType.ADD_ASSIGN, input.position)
-        }
-        else if (next == '+' && peek == '+') {
+            ShasPToken(ShasPTokenType.ADD_ASSIGN, input.position, input.position)
+        } else if (next == '+' && peek == '+') {
             input.skip()
-            ShasPToken(ShasPTokenType.INCR, input.position)
-        }
-        else if (next == '-' && peek == '-') {
+            ShasPToken(ShasPTokenType.INCR, input.position, input.position)
+        } else if (next == '-' && peek == '-') {
             input.skip()
-            ShasPToken(ShasPTokenType.DECR, input.position)
-        }
-        else if (next == '%') ShasPToken(ShasPTokenType.MOD, input.position)
-        else if (next == '/') ShasPToken(ShasPTokenType.DIV, input.position)
-        else if (next == '*') ShasPToken(ShasPTokenType.MUL, input.position)
-        else if (next == '-') ShasPToken(ShasPTokenType.SUB, input.position)
-        else if (next == '+') ShasPToken(ShasPTokenType.ADD, input.position)
-        else if (next == '^') ShasPToken(ShasPTokenType.LOGICAL_XOR, input.position)
+            ShasPToken(ShasPTokenType.DECR, input.position, input.position)
+        } else if (next == '%') ShasPToken(ShasPTokenType.MOD, input.position, input.position)
+        else if (next == '/') ShasPToken(ShasPTokenType.DIV, input.position, input.position)
+        else if (next == '*') ShasPToken(ShasPTokenType.MUL, input.position, input.position)
+        else if (next == '-') ShasPToken(ShasPTokenType.SUB, input.position, input.position)
+        else if (next == '+') ShasPToken(ShasPTokenType.ADD, input.position, input.position)
+        else if (next == '^') ShasPToken(ShasPTokenType.LOGICAL_XOR, input.position, input.position)
         else if (next == '|' && peek == '|') {
             input.skip()
-            ShasPToken(ShasPTokenType.LOGICAL_OR, input.position)
-        }
-        else if (next == '&' && peek == '&') {
+            ShasPToken(ShasPTokenType.LOGICAL_OR, input.position, input.position)
+        } else if (next == '&' && peek == '&') {
             input.skip()
-            ShasPToken(ShasPTokenType.LOGICAL_AND, input.position)
-        }
-        else if (next == '=' && peek == '=') {
+            ShasPToken(ShasPTokenType.LOGICAL_AND, input.position, input.position)
+        } else if (next == '=' && peek == '=') {
             input.skip()
-            ShasPToken(ShasPTokenType.EQ_EQUALS, input.position)
-        }
-        else if (next == '!' && peek == '=') {
+            ShasPToken(ShasPTokenType.EQ_EQUALS, input.position, input.position)
+        } else if (next == '!' && peek == '=') {
             input.skip()
-            ShasPToken(ShasPTokenType.NOT_EQUALS, input.position)
-        }
-        else if (next == '>' && peek == '=') {
+            ShasPToken(ShasPTokenType.NOT_EQUALS, input.position, input.position)
+        } else if (next == '>' && peek == '=') {
             input.skip()
-            ShasPToken(ShasPTokenType.BIGGER_EQUALS, input.position)
-        }
-        else if (next == '<' && peek == '=') {
+            ShasPToken(ShasPTokenType.BIGGER_EQUALS, input.position, input.position)
+        } else if (next == '<' && peek == '=') {
             input.skip()
-            ShasPToken(ShasPTokenType.SMALLER_EQUALS, input.position)
-        }
-        else if (next == '>') ShasPToken(ShasPTokenType.BIGGER, input.position)
-        else if (next == '<') ShasPToken(ShasPTokenType.SMALLER, input.position)
-        else if (next == '=') ShasPToken(ShasPTokenType.ASSIGN, input.position)
-        else if (next == '(') ShasPToken(ShasPTokenType.LPAREN, input.position)
-        else if (next == ')') ShasPToken(ShasPTokenType.RPAREN, input.position)
-        else if (next == '{') ShasPToken(ShasPTokenType.LCURL, input.position)
-        else if (next == '}') return ShasPToken(ShasPTokenType.RCURL, input.position)
-        else if (next == '[') return ShasPToken(ShasPTokenType.LBRACKET, input.position)
-        else if (next == ']') return ShasPToken(ShasPTokenType.RBRACKET, input.position)
+            ShasPToken(ShasPTokenType.SMALLER_EQUALS, input.position, input.position)
+        } else if (next == '>') ShasPToken(ShasPTokenType.BIGGER, input.position, input.position)
+        else if (next == '<') ShasPToken(ShasPTokenType.SMALLER, input.position, input.position)
+        else if (next == '=') ShasPToken(ShasPTokenType.ASSIGN, input.position, input.position)
+        else if (next == '(') ShasPToken(ShasPTokenType.LPAREN, input.position, input.position)
+        else if (next == ')') ShasPToken(ShasPTokenType.RPAREN, input.position, input.position)
+        else if (next == '{') ShasPToken(ShasPTokenType.LCURL, input.position, input.position)
+        else if (next == '}') return ShasPToken(ShasPTokenType.RCURL, input.position, input.position)
+        else if (next == '[') return ShasPToken(ShasPTokenType.LBRACKET, input.position, input.position)
+        else if (next == ']') return ShasPToken(ShasPTokenType.RBRACKET, input.position, input.position)
         else throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
     }
 
@@ -117,10 +102,15 @@ abstract class ShasPLexingBase(
             }
             numStr.append(input.next())
         }
-        return if (dot) ShasPToken(ShasPTokenType.DOUBLE, numStr.toString(), input.position) else ShasPToken(
-            ShasPTokenType.INTEGER,
+        return if (dot) ShasPToken(
+            ShasPTokenType.DOUBLE,
             numStr.toString(),
             input.position,
+            input.position
+        ) else ShasPToken(
+            ShasPTokenType.INTEGER,
+            numStr.toString(),
+            input.position, input.position
         )
     }
 
@@ -154,8 +144,8 @@ abstract class ShasPLexingBase(
                 "unsigned" -> ShasPTokenType.KEYWORD_UNSIGNED
                 "void" -> ShasPTokenType.KEYWORD_VOID
                 "while" -> ShasPTokenType.KEYWORD_WHILE
-                else -> return ShasPToken(ShasPTokenType.IDENTIFIER, identifier.toString(), end)
-            }, end
+                else -> return ShasPToken(ShasPTokenType.IDENTIFIER, identifier.toString(), end, end)
+            }, end, end
         )
     }
 
@@ -183,13 +173,14 @@ abstract class ShasPLexingBase(
                                 i++
                             }
                         }
+
                         else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
                     }
                 } else string.append(input.actual())
             }
             if (input.actual() != '"') throw LexerError("String must end with a '\"'")
         }
-        return ShasPToken(ShasPTokenType.STRING, string.toString(), input.position)
+        return ShasPToken(ShasPTokenType.STRING, string.toString(), input.position, input.position)
     }
 
     private fun makeCharacter(): ShasPToken {
@@ -214,11 +205,12 @@ abstract class ShasPLexingBase(
                     }
                     s.toString()
                 }
+
                 else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
             }
         } else input.actual().toString()
         if (input.next() != '\'') throw LexerError("Char must end with a \"'\"")
-        return ShasPToken(ShasPTokenType.CHARACTER, c, input.position)
+        return ShasPToken(ShasPTokenType.CHARACTER, c, input.position, input.position)
     }
 
     private fun singleLineComment() {
