@@ -1,7 +1,18 @@
 package io.github.shakelang.io.streaming.output
 
 import kotlin.jvm.Synchronized
+import io.github.shakelang.io.IOException
 
+/**
+ * The class implements a buffered output stream. By setting up such
+ * an output stream, an application can write bytes to the underlying
+ * output stream without necessarily causing a call to the underlying
+ * system for each byte written.
+ *
+ * @param out the underlying output stream.
+ * @param bufferSize the buffer size.
+ * @constructor Creates a new buffered output stream to write data to the
+ */
 open class BufferedOutputStream (
     val out: OutputStream,
     bufferSize: Int = 8192
@@ -9,7 +20,7 @@ open class BufferedOutputStream (
     /**
      * The internal buffer where data is stored.
      */
-    protected val buf: ByteArray = ByteArray(bufferSize)
+    private val buf: ByteArray = ByteArray(bufferSize)
 
     /**
      * The number of valid bytes in the buffer. This value is always
@@ -20,9 +31,9 @@ open class BufferedOutputStream (
     protected var count = 0
 
     /** Flush the internal buffer  */
-    private fun flushBuffer() {
+    private fun flushBuffer(array: ByteArray = byteArrayOf()) {
         if (count > 0) {
-            out.write(buf, 0, count)
+            out.write(byteArrayOf(*buf.copyOfRange(0, count), *array))
             count = 0
         }
     }
@@ -34,9 +45,8 @@ open class BufferedOutputStream (
      */
     @Synchronized
     override fun write(b: Int) {
-        if (count >= buf.size) {
+        if (count >= buf.size)
             flushBuffer()
-        }
         buf[count++] = b.toByte()
     }
 
@@ -55,19 +65,15 @@ open class BufferedOutputStream (
      * @param      b     the data.
      * @param      off   the start offset in the data.
      * @param      len   the number of bytes to write.
+     * @throws
      */
     @Synchronized
     override fun write(b: ByteArray, off: Int, len: Int) {
-        if (len >= buf.size) {
-            /* If the request length exceeds the size of the output buffer,
-               flush the output buffer and then write the data directly.
-               In this way buffered streams will cascade harmlessly. */
-            flushBuffer()
-            out.write(b, off, len)
+        if (len >= (buf.size + count)) {
+            // When the request length exceeds the remaining space in
+            // the buffer, flush it and then write the data directly.
+            flushBuffer(b)
             return
-        }
-        if (len > buf.size - count) {
-            flushBuffer()
         }
         b.copyInto(buf, count, off, off + len)
         count += len
@@ -76,6 +82,8 @@ open class BufferedOutputStream (
     /**
      * Flushes this buffered output stream. This forces any buffered
      * output bytes to be written out to the underlying output stream.
+     *
+     * @throws IOException if an I/O error occurs.
      */
     @Synchronized
     override fun flush() {
@@ -83,4 +91,16 @@ open class BufferedOutputStream (
         out.flush()
     }
 
+    /**
+     * Closes this buffered output stream. This method simply flushes
+     * this stream and then calls the underlying output stream's
+     * `close` method, which releases the underlying output
+     * stream's resources.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
+    override fun close() {
+        flush()
+        out.close()
+    }
 }
