@@ -7,7 +7,7 @@ package io.github.shakelang.io.streaming.output
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author Nicolas Schmidt &lt;@nsc-de&gt;
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 class ByteArrayOutputStream : OutputStream() {
 
@@ -16,7 +16,7 @@ class ByteArrayOutputStream : OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private var buf: ByteArray = ByteArray(8192)
 
@@ -25,7 +25,7 @@ class ByteArrayOutputStream : OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private var count: Int = 0
 
@@ -36,7 +36,7 @@ class ByteArrayOutputStream : OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun write(b: Byte) {
         if (count == buf.size) {
@@ -54,7 +54,7 @@ class ByteArrayOutputStream : OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun write(b: ByteArray) {
         for (i in b.indices) write(b[i])
@@ -69,7 +69,7 @@ class ByteArrayOutputStream : OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun write(b: ByteArray, off: Int, len: Int) {
         for (i in off until off + len) write(b[i])
@@ -82,7 +82,7 @@ class ByteArrayOutputStream : OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun write(b: Int) {
         write(b.toByte())
@@ -95,7 +95,7 @@ class ByteArrayOutputStream : OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun toByteArray(): ByteArray {
         val newbuf = ByteArray(count)
@@ -108,7 +108,7 @@ class ByteArrayOutputStream : OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun reset() {
         count = 0
@@ -122,7 +122,7 @@ class ByteArrayOutputStream : OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author Nicolas Schmidt &lt;@nsc-de&gt;
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun size(): Int {
         return count
