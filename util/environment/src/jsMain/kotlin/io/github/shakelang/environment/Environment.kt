@@ -1,6 +1,6 @@
-package io.github.shakelang.parseutils.environment
+package io.github.shakelang.environment
 
-import io.github.shakelang.parseutils.process
+external val process: dynamic
 
 actual class JavaEnvironment : Environment(EnvironmentType.JAVA) {
     actual val javaVersion: String get() = throw Error("No java available in javascript!")

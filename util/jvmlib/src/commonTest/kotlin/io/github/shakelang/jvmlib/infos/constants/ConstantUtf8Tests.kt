@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.infos.constants
 
-import io.github.shakelang.io.streaming.input.stream
+import io.github.shakelang.io.streaming.input.inputStream
 import io.github.shakelang.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,7 +17,7 @@ class ConstantUtf8Tests {
 
     @Test
     fun testContentFromStream() {
-        val inputStream = byteArrayOf(0x00, 0x0d, *"Hello, World!".toBytes()).stream()
+        val inputStream = byteArrayOf(0x00, 0x0d, *"Hello, World!".toBytes()).inputStream()
         val constant = ConstantUtf8Info.contentsFromStream(inputStream)
         assertEquals("Hello, World!", constant.value)
         assertEquals(1, constant.tag)
@@ -26,7 +26,7 @@ class ConstantUtf8Tests {
 
     @Test
     fun testFromStream() {
-        val inputStream = byteArrayOf(0x01, 0x00, 0x0d, *"Hello, World!".toBytes()).stream()
+        val inputStream = byteArrayOf(0x01, 0x00, 0x0d, *"Hello, World!".toBytes()).inputStream()
         val constant = ConstantUtf8Info.fromStream(inputStream)
         assertEquals("Hello, World!", constant.value)
         assertEquals(1, constant.tag)

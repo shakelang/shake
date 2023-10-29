@@ -1,4 +1,4 @@
-package io.github.shakelang.parseutils.environment
+package io.github.shakelang.environment
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

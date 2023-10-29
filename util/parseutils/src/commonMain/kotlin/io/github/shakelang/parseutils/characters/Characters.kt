@@ -151,7 +151,6 @@ object Characters {
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun escapeCharacter(c: Char): String {
-        println(c.code)
         return when {
             c == '\\' -> "\\\\"
             c == '\t' -> "\\t"

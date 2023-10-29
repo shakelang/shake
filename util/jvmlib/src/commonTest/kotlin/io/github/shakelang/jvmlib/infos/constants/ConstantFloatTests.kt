@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.infos.constants
 
-import io.github.shakelang.io.streaming.input.stream
+import io.github.shakelang.io.streaming.input.inputStream
 import io.github.shakelang.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,7 +17,7 @@ class ConstantFloatTests {
 
     @Test
     fun testContentFromStream() {
-        val inputStream = 1.0f.toBytes().stream()
+        val inputStream = 1.0f.toBytes().inputStream()
         val constant = ConstantFloatInfo.contentsFromStream(inputStream)
         assertCompare(1.0f, constant.value)
         assertEquals(4, constant.tag)
@@ -26,7 +26,7 @@ class ConstantFloatTests {
 
     @Test
     fun testFromStream() {
-        val inputStream = byteArrayOf(0x04, *1.0f.toBytes()).stream()
+        val inputStream = byteArrayOf(0x04, *1.0f.toBytes()).inputStream()
         val constant = ConstantFloatInfo.fromStream(inputStream)
         assertCompare(1.0f, constant.value)
         assertEquals(4, constant.tag)

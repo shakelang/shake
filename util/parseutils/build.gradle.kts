@@ -16,6 +16,7 @@ kotlin {
         kotlin("stdlib-common")
         implementation(project(":util:colorlib"))
         implementation(project(":util:common-io"))
+        implementation(project(":util:environment"))
         testImplementation(kotlin("test"))
         testImplementation(project(":util:testlib"))
     }

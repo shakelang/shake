@@ -14,7 +14,6 @@ class FileTests {
     @Test
     fun testIsFile() {
         assertFalse ( File("./src").isFile )
-        println(File("./src/commonTest/resources/test").absolutePath)
         assertTrue ( File("./src/commonTest/resources/test").isFile )
     }
 

@@ -1,7 +1,5 @@
 package io.github.shakelang.io.streaming.input
 
-import io.github.shakelang.io.streaming.input.bufferedStream
-import io.github.shakelang.io.streaming.input.countingStream
 import io.github.shakelang.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -11,7 +9,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testRead() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -47,7 +45,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testReadWithByteArray() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -82,7 +80,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testReadWithByteArrayAndOffset() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -123,7 +121,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testSkip() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -149,7 +147,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testReadNBytes() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -173,7 +171,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testReadNBytesWithOffset() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -214,7 +212,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testMarkSupported() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -228,7 +226,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testMark() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -267,7 +265,7 @@ class BufferedInputStreamTests {
 
    @Test
     fun testAvailable() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -302,7 +300,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testReset() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -334,7 +332,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testClose() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(0, counter.byteCount)
@@ -354,7 +352,7 @@ class BufferedInputStreamTests {
 
     @Test
     fun testToString() {
-        val counter = "Hello".toBytes().stream().countingStream
+        val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream
 
         assertEquals(
