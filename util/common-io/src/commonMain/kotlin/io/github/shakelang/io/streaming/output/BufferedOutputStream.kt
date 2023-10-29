@@ -12,13 +12,29 @@ import io.github.shakelang.io.IOException
  * @param out the underlying output stream.
  * @param bufferSize the buffer size.
  * @constructor Creates a new buffered output stream to write data to the
+ *
+ * @since 0.1.0
+ * @version 0.1.1
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 open class BufferedOutputStream (
+
+    /**
+     * The underlying output stream to be filtered.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
+     */
     val out: OutputStream,
     bufferSize: Int = 8192
 ) : OutputStream() {
     /**
      * The internal buffer where data is stored.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private val buf: ByteArray = ByteArray(bufferSize)
 
@@ -27,10 +43,23 @@ open class BufferedOutputStream (
      * in the range `0` through `buf.length`; elements
      * `buf[0]` through `buf[count-1]` contain valid
      * byte data.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     protected var count = 0
 
-    /** Flush the internal buffer  */
+    /**
+     * Flush the internal buffer
+     *
+     * @param array something to append to the buffer before flushing it
+     * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
+     */
     private fun flushBuffer(array: ByteArray = byteArrayOf()) {
         if (count + array.size > 0) {
             out.write(byteArrayOf(*buf.copyOfRange(0, count), *array))
@@ -43,6 +72,10 @@ open class BufferedOutputStream (
      *
      * @param b the byte to be written.
      * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     @Synchronized
     override fun write(b: Int) {
@@ -57,6 +90,10 @@ open class BufferedOutputStream (
      *
      * @param b the data.
      * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun write(b: ByteArray) {
         this.write(b, 0, b.size)
@@ -77,7 +114,11 @@ open class BufferedOutputStream (
      * @param      b     the data.
      * @param      off   the start offset in the data.
      * @param      len   the number of bytes to write.
-     * @throws
+     * @throws IOException
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     @Synchronized
     override fun write(b: ByteArray, off: Int, len: Int) {
@@ -96,6 +137,10 @@ open class BufferedOutputStream (
      * output bytes to be written out to the underlying output stream.
      *
      * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     @Synchronized
     override fun flush() {
@@ -110,6 +155,10 @@ open class BufferedOutputStream (
      * stream's resources.
      *
      * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun close() {
         flush()

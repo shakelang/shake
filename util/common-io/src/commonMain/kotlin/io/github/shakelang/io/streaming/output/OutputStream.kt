@@ -1,5 +1,7 @@
 package io.github.shakelang.io.streaming.output
 
+import io.github.shakelang.io.IOException
+
 expect abstract class OutputStream() {
 
     /**
@@ -17,6 +19,10 @@ expect abstract class OutputStream() {
      * @throws     IOException  if an I/O error occurs. In particular,
      * an `IOException` may be thrown if the
      * output stream has been closed.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     abstract fun write(b: Int)
 
@@ -28,7 +34,10 @@ expect abstract class OutputStream() {
      *
      * @param      b   the data.
      * @throws     IOException  if an I/O error occurs.
-     * @see java.io.OutputStream.write
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     open fun write(b: ByteArray)
 
@@ -62,6 +71,10 @@ expect abstract class OutputStream() {
      * @throws     IOException  if an I/O error occurs. In particular,
      * an `IOException` is thrown if the output
      * stream is closed.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     open fun write(b: ByteArray, off: Int, len: Int)
 
@@ -84,6 +97,10 @@ expect abstract class OutputStream() {
      * The `flush` method of `OutputStream` does nothing.
      *
      * @throws     IOException  if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     open fun flush()
 
@@ -97,6 +114,10 @@ expect abstract class OutputStream() {
      * The `close` method of `OutputStream` does nothing.
      *
      * @throws     IOException  if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     open fun close()
 }

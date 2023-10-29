@@ -48,6 +48,7 @@ class CountingOutputStream(
      *
      * @since 0.1.1
      * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     var operationCount: Long = 0L
         private set
