@@ -4,7 +4,7 @@ plugins {
     id("io.github.shakelang.shake.conventions.mpp.publishing")
 }
 
-group = "io.github.shakelang.util.colorlib"
+group = "io.github.shakelang.util.environment"
 version = "0.1.0"
 description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
 
