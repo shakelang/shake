@@ -5,7 +5,7 @@ import io.github.shakelang.parseutils.characters.source.CharacterSource
 interface PositionMap {
     val source: CharacterSource
     val lineSeparators: IntArray
-    val location: String
+    val location: String get() = source.location
 
     fun resolve(index: Int): Position {
         for (i in lineSeparators.indices) {
@@ -30,7 +30,9 @@ interface PositionMap {
         )
     }
 
-    fun getAfterInLine(p: Position): Int
+    fun getAfterInLine(p: Position): Int {
+        return if (p.line - 1 == lineSeparators.size) source.length - p.column else lineSeparators[p.line - 1] - p.index
+    }
     fun getAfterInLine(index: Int): Int = getAfterInLine(resolve(index))
 
     open class PositionMapImpl(
