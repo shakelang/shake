@@ -81,7 +81,6 @@ open class BufferedOutputStream (
      */
     @Synchronized
     override fun write(b: ByteArray, off: Int, len: Int) {
-        println("write, count: $count, bytes: ${b.size}")
         if (len + count >= buf.size) {
             // When the request length exceeds the remaining space in
             // the buffer, flush it and then write the data directly.
