@@ -3,7 +3,8 @@ package io.github.shakelang.io.streaming.output
 class CountingOutputStream(
     val out: OutputStream,
 ) : OutputStream() {
-    private var count: Long = 0
+    var count: Long = 0
+        private set
 
     override fun write(b: Int) {
         out.write(b)
@@ -26,9 +27,5 @@ class CountingOutputStream(
 
     override fun close() {
         out.close()
-    }
-
-    fun getCount(): Long {
-        return count
     }
 }
