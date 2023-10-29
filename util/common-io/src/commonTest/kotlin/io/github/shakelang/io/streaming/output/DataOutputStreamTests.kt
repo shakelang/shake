@@ -204,7 +204,7 @@ class DataOutputStreamTests {
     fun testWriteByteArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeByteArray(byteArrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
+        stream.writeByteArray(arrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
             0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18))
         assertEquals(byteArrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
             0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18).toList(), baseStream.toByteArray().toList())
@@ -214,7 +214,7 @@ class DataOutputStreamTests {
     fun testWriteOffsetByteArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeByteArray(byteArrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
+        stream.writeByteArray(arrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
             0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18), 1, 2)
         assertEquals(byteArrayOf(0x02, 0x03).toList(), baseStream.toByteArray().toList())
     }
@@ -239,7 +239,7 @@ class DataOutputStreamTests {
     fun testWriteShortArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeShortArray(shortArrayOf(0x0102, 0x0304, 0x0506, 0x0708))
+        stream.writeShortArray(arrayOf(0x0102, 0x0304, 0x0506, 0x0708))
         assertEquals(byteArrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08).toList(), baseStream.toByteArray().toList())
     }
 
@@ -247,7 +247,7 @@ class DataOutputStreamTests {
     fun testWriteOffsetShortArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeShortArray(shortArrayOf(0x0102, 0x0304, 0x0506, 0x0708), 1, 2)
+        stream.writeShortArray(arrayOf(0x0102, 0x0304, 0x0506, 0x0708), 1, 2)
         assertEquals(byteArrayOf( 0x03, 0x04, 0x05, 0x06).toList(), baseStream.toByteArray().toList())
     }
 
@@ -272,7 +272,7 @@ class DataOutputStreamTests {
     fun testWriteIntArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeIntArray(intArrayOf(0x01020304, 0x05060708, 0x090A0B0C, 0x0D0E0F10))
+        stream.writeIntArray(arrayOf(0x01020304, 0x05060708, 0x090A0B0C, 0x0D0E0F10))
         assertEquals(byteArrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
             0x0F, 0x10).toList(), baseStream.toByteArray().toList())
     }
@@ -281,7 +281,7 @@ class DataOutputStreamTests {
     fun testWriteOffsetIntArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeIntArray(intArrayOf(0x01020304, 0x05060708, 0x090A0B0C, 0x0D0E0F10), 1, 2)
+        stream.writeIntArray(arrayOf(0x01020304, 0x05060708, 0x090A0B0C, 0x0D0E0F10), 1, 2)
         assertEquals(byteArrayOf(0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c).toList(), baseStream.toByteArray().toList())
     }
 
@@ -307,7 +307,7 @@ class DataOutputStreamTests {
     fun testWriteLongArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeLongArray(longArrayOf(0x0102030405060708L, 0x090A0B0C0D0E0F10L, 0x1112131415161718L))
+        stream.writeLongArray(arrayOf(0x0102030405060708L, 0x090A0B0C0D0E0F10L, 0x1112131415161718L))
         assertEquals(byteArrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
             0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18).toList(), baseStream.toByteArray().toList())
     }
@@ -316,7 +316,7 @@ class DataOutputStreamTests {
     fun testWriteOffsetLongArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeLongArray(longArrayOf(0x0102030405060708L, 0x090A0B0C0D0E0F10L, 0x1112131415161718L), 1, 2)
+        stream.writeLongArray(arrayOf(0x0102030405060708L, 0x090A0B0C0D0E0F10L, 0x1112131415161718L), 1, 2)
         assertEquals(byteArrayOf(0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16,
             0x17, 0x18).toList(), baseStream.toByteArray().toList())
     }
@@ -342,7 +342,7 @@ class DataOutputStreamTests {
     fun testWriteFloatArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeFloatArray(floatArrayOf(1.0f, 2.0f, 3.0f))
+        stream.writeFloatArray(arrayOf(1.0f, 2.0f, 3.0f))
         assertEquals(byteArrayOf(0x3F, 0x80u.toByte(), 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00)
             .toList(), baseStream.toByteArray().toList())
     }
@@ -351,7 +351,7 @@ class DataOutputStreamTests {
     fun testWriteOffsetFloatArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeFloatArray(floatArrayOf(1.0f, 2.0f, 3.0f), 1, 2)
+        stream.writeFloatArray(arrayOf(1.0f, 2.0f, 3.0f), 1, 2)
         assertEquals(byteArrayOf(0x40, 0x00, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00).toList(), baseStream.toByteArray().toList())
     }
 
@@ -376,16 +376,24 @@ class DataOutputStreamTests {
     fun testWriteDoubleArray2() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeDoubleArray(doubleArrayOf(1.0, 2.0, 3.0))
+        stream.writeDoubleArray(arrayOf(1.0, 2.0, 3.0))
         assertEquals(byteArrayOf(0x3F, 0xF0u.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x40, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00).toList(), baseStream.toByteArray().toList())
+    }
+
+    @Test
+    fun testWriteOffsetDoubleArray2() {
+        val baseStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(baseStream)
+        stream.writeDoubleArray(arrayOf(1.0, 2.0, 3.0), 1, 2)
+        assertEquals(byteArrayOf(0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00).toList(), baseStream.toByteArray().toList())
     }
 
     @Test
     fun writeUnsignedByteArray() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeUnsignedByteArray(arrayOf<UByte>(0x01u, 0x02u, 0x03u).toUByteArray())
+        stream.writeUnsignedByteArray(ubyteArrayOf(0x01u, 0x02u, 0x03u).toUByteArray())
         assertEquals(byteArrayOf(0x01, 0x02, 0x03).toList(), baseStream.toByteArray().toList())
     }
 
@@ -393,7 +401,7 @@ class DataOutputStreamTests {
     fun writeOffsetUnsignedByteArray() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeUnsignedByteArray(arrayOf<UByte>(0x01u, 0x02u, 0x03u, 0x04u).toUByteArray(), 1, 2)
+        stream.writeUnsignedByteArray(ubyteArrayOf(0x01u, 0x02u, 0x03u, 0x04u).toUByteArray(), 1, 2)
         assertEquals(byteArrayOf(0x02, 0x03).toList(), baseStream.toByteArray().toList())
     }
 
@@ -417,7 +425,7 @@ class DataOutputStreamTests {
     fun writeUnsignedShortArray() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeUnsignedShortArray(arrayOf<UShort>(0x01u, 0x02u, 0x03u).toUShortArray())
+        stream.writeUnsignedShortArray(ushortArrayOf(0x01u, 0x02u, 0x03u).toUShortArray())
         assertEquals(byteArrayOf(0x00, 0x01, 0x00, 0x02, 0x00, 0x03).toList(), baseStream.toByteArray().toList())
     }
 
@@ -425,7 +433,7 @@ class DataOutputStreamTests {
     fun writeOffsetUnsignedShortArray() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeUnsignedShortArray(arrayOf<UShort>(0x01u, 0x02u, 0x03u, 0x04u).toUShortArray(), 1, 2)
+        stream.writeUnsignedShortArray(ushortArrayOf(0x01u, 0x02u, 0x03u, 0x04u).toUShortArray(), 1, 2)
         assertEquals(byteArrayOf(0x00, 0x02, 0x00, 0x03).toList(), baseStream.toByteArray().toList())
     }
 
@@ -449,7 +457,7 @@ class DataOutputStreamTests {
     fun writeUnsignedIntArray() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeUnsignedIntArray(arrayOf(0x01u, 0x02u, 0x03u).toUIntArray())
+        stream.writeUnsignedIntArray(uintArrayOf(0x01u, 0x02u, 0x03u).toUIntArray())
         assertEquals(byteArrayOf(0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x03).toList(),
             baseStream.toByteArray().toList())
     }
@@ -458,7 +466,7 @@ class DataOutputStreamTests {
     fun writeOffsetUnsignedIntArray() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeUnsignedIntArray(arrayOf(0x01u, 0x02u, 0x03u, 0x04u).toUIntArray(), 1, 2)
+        stream.writeUnsignedIntArray(uintArrayOf(0x01u, 0x02u, 0x03u, 0x04u).toUIntArray(), 1, 2)
         assertEquals(byteArrayOf(0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x03).toList(),
             baseStream.toByteArray().toList())
     }
@@ -485,7 +493,7 @@ class DataOutputStreamTests {
     fun writeUnsignedLongArray() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeUnsignedLongArray(arrayOf<ULong>(0x01u, 0x02u, 0x03u).toULongArray())
+        stream.writeUnsignedLongArray(ulongArrayOf(0x01u, 0x02u, 0x03u).toULongArray())
         assertEquals(byteArrayOf(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03).toList(), baseStream.toByteArray().toList())
     }
@@ -494,7 +502,7 @@ class DataOutputStreamTests {
     fun writeOffsetUnsignedLongArray() {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
-        stream.writeUnsignedLongArray(arrayOf<ULong>(0x01u, 0x02u, 0x03u, 0x04u).toULongArray(), 1, 2)
+        stream.writeUnsignedLongArray(ulongArrayOf(0x01u, 0x02u, 0x03u, 0x04u).toULongArray(), 1, 2)
         assertEquals(byteArrayOf(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x03).toList(), baseStream.toByteArray().toList())
     }
@@ -581,6 +589,53 @@ class DataOutputStreamTests {
         assertEquals(byteArrayOf(0x00, 0x62, 0x00, 0x63).toList(), baseStream.toByteArray().toList())
     }
 
+    @Test
+    fun testWriteUTF8() {
+        val baseStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(baseStream)
+        stream.writeUTF8("abc")
+        assertEquals(byteArrayOf(0x00, 0x03, 0x61, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
+    }
 
+    @Test
+    fun testWriteOffsetUTF8() {
+        val baseStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(baseStream)
+        stream.writeUTF8("abcd", 1, 2)
+        assertEquals(byteArrayOf(0x00, 0x02, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
+    }
 
+    @Test
+    fun testWriteStringUTF8() {
+        val baseStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(baseStream)
+        stream.writeStringUTF8("abc")
+        assertEquals(byteArrayOf(0x00, 0x03, 0x61, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
+    }
+
+    @Test
+    fun testWriteOffsetStringUTF8() {
+        val baseStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(baseStream)
+        stream.writeStringUTF8("abcd", 1, 2)
+        assertEquals(byteArrayOf(0x00, 0x02, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
+    }
+
+    @Test
+    fun testFlush() {
+        val baseStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(baseStream)
+        stream.writeBoolean(true)
+        stream.flush()
+        assertEquals(byteArrayOf(0x01).toList(), baseStream.toByteArray().toList())
+    }
+
+    @Test
+    fun testClose() {
+        val baseStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(baseStream)
+        stream.writeBoolean(true)
+        stream.close()
+        assertEquals(byteArrayOf(0x01).toList(), baseStream.toByteArray().toList())
+    }
 }
