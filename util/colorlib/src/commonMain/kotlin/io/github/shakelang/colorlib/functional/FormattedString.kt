@@ -2,9 +2,30 @@ package io.github.shakelang.colorlib.functional
 
 import io.github.shakelang.colorlib.Formatting
 
+interface FormattedStringObject {
+    override fun toString(): String
+    fun string() = toString()
+    fun extends(format: FormattedString): FormattedStringObject
+
+
+    companion object {
+        fun wrap(string: String) = FormattedStringObjectString(string)
+    }
+}
+
+class FormattedStringObjectString (
+    val value: String
+) : FormattedStringObject {
+    override fun toString(): String {
+        return this.value
+    }
+
+    override fun extends(format: FormattedString) = this
+}
+
 class FormattedString(
 
-    val strings: Array<String>,
+    contents: List<FormattedStringObject>,
     isBold: Boolean? = null,
     isItalic: Boolean? = null,
     isUnderlined: Boolean? = null,
@@ -13,8 +34,9 @@ class FormattedString(
     val color: Formatting.FGColor? = null,
     val backgroundColor: Formatting.BGColor? = null
 
-) {
+) : FormattedStringObject {
 
+    val strings = contents.map { it.extends(this) }
     private val _isBold: Boolean? = isBold
     private val _isItalic: Boolean? = isItalic
     private val _isUnderlined: Boolean? = isUnderlined
@@ -48,7 +70,7 @@ class FormattedString(
                 || backgroundColor != null
 
     override fun toString(): String {
-        var str = strings.asList()
+        var str = strings.map { it.string() }
 
         if (isBold) str = str.map { "${Formatting.BOLD}$it" }
         if (isItalic) str = str.map { "${Formatting.ITALIC}$it" }
@@ -61,8 +83,6 @@ class FormattedString(
 
         return str.joinToString()
     }
-
-    fun string() = toString()
 
     fun reset() = FormattedString(
         this,
@@ -143,7 +163,7 @@ class FormattedString(
     fun bgBrightCyan() = backgroundColor(Formatting.BGColor.BRIGHT_CYAN)
     fun bgBrightWhite() = backgroundColor(Formatting.BGColor.BRIGHT_WHITE)
 
-    fun extends(other: FormattedString) = FormattedString(
+    override fun extends(other: FormattedString) = FormattedString(
         this,
         isBold = _isBold ?: other._isBold,
         isItalic = _isItalic ?: other._isItalic,
@@ -164,7 +184,7 @@ fun String.format(
     color: Formatting.FGColor? = null,
     backgroundColor: Formatting.BGColor? = null
 ) = FormattedString(
-    arrayOf(this),
+    listOf(FormattedStringObject.wrap(this)),
     isBold,
     isItalic,
     isUnderlined,
