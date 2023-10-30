@@ -46,7 +46,7 @@ class FunctionalTests {
 
     @Test
     fun testFgGray() =
-        assertEquals("${Formatting.FGColor.BRIGHT_BLACK}hello world${Formatting.RESET}", fgGray("hello world"))
+        assertEquals("${Formatting.FGColor.BRIGHT_BLACK}hello world${Formatting.RESET}", fgGrey("hello world"))
 
     @Test
     fun testFgBrightRed() =
@@ -131,7 +131,7 @@ class FunctionalTests {
 
     @Test
     fun testGray() =
-        assertEquals("${Formatting.FGColor.BRIGHT_BLACK}hello world${Formatting.RESET}", gray("hello world"))
+        assertEquals("${Formatting.FGColor.BRIGHT_BLACK}hello world${Formatting.RESET}", grey("hello world"))
 
     @Test
     fun testBrightRed() =

@@ -62,10 +62,11 @@ class FormattedString(
     ) : this(from.strings, isBold, isItalic, isUnderlined, isStrikethrough, isInverted, color, backgroundColor)
 
     val isFormatted: Boolean
-        get() = isBold ?: false
-                || isItalic  ?: false
-                || isUnderlined  ?: false
-                || isStrikethrough  ?: false
+        get() = isBold
+                || isItalic
+                || isUnderlined
+                || isStrikethrough
+                || isInverted
                 || color != null
                 || backgroundColor != null
 
@@ -79,7 +80,7 @@ class FormattedString(
         if (isInverted) str = str.map { "${Formatting.INVERT}$it" }
         if (color != null) str = str.map { "${color}$it" }
         if (backgroundColor != null) str = str.map { "${backgroundColor}$it" }
-        if (isFormatted) str = str.map { "${Formatting.RESET}$it" }
+        if (isFormatted) str = str.map { "$it${Formatting.RESET}" }
 
         return str.joinToString()
     }
@@ -117,7 +118,7 @@ class FormattedString(
     fun purple() = color(Formatting.FGColor.PURPLE)
     fun cyan() = color(Formatting.FGColor.CYAN)
     fun white() = color(Formatting.FGColor.WHITE)
-    fun gray() = color(Formatting.FGColor.BRIGHT_BLACK)
+    fun grey() = color(Formatting.FGColor.BRIGHT_BLACK)
     fun brightBlack() = color(Formatting.FGColor.BRIGHT_BLACK)
     fun brightRed() = color(Formatting.FGColor.BRIGHT_RED)
     fun brightGreen() = color(Formatting.FGColor.BRIGHT_GREEN)
@@ -135,7 +136,7 @@ class FormattedString(
     fun fgPurple() = color(Formatting.FGColor.PURPLE)
     fun fgCyan() = color(Formatting.FGColor.CYAN)
     fun fgWhite() = color(Formatting.FGColor.WHITE)
-    fun fgGray() = color(Formatting.FGColor.BRIGHT_BLACK)
+    fun fgGrey() = color(Formatting.FGColor.BRIGHT_BLACK)
     fun fgBrightBlack() = color(Formatting.FGColor.BRIGHT_BLACK)
     fun fgBrightRed() = color(Formatting.FGColor.BRIGHT_RED)
     fun fgBrightGreen() = color(Formatting.FGColor.BRIGHT_GREEN)
@@ -153,7 +154,7 @@ class FormattedString(
     fun bgPurple() = backgroundColor(Formatting.BGColor.PURPLE)
     fun bgCyan() = backgroundColor(Formatting.BGColor.CYAN)
     fun bgWhite() = backgroundColor(Formatting.BGColor.WHITE)
-    fun bgGray() = backgroundColor(Formatting.BGColor.BRIGHT_BLACK)
+    fun bgGrey() = backgroundColor(Formatting.BGColor.BRIGHT_BLACK)
     fun bgBrightBlack() = backgroundColor(Formatting.BGColor.BRIGHT_BLACK)
     fun bgBrightRed() = backgroundColor(Formatting.BGColor.BRIGHT_RED)
     fun bgBrightGreen() = backgroundColor(Formatting.BGColor.BRIGHT_GREEN)
@@ -173,6 +174,15 @@ class FormattedString(
         color = color ?: other.color,
         backgroundColor = backgroundColor ?: other.backgroundColor
     )
+
+    companion object {
+        fun wrap(string: String) = FormattedString(listOf(FormattedStringObject.wrap(string)))
+        fun wrap(vararg strings: String) = FormattedString(strings.map { FormattedStringObject.wrap(it) })
+
+        fun from(string: String) = wrap(string)
+        fun from(vararg strings: String) = wrap(*strings)
+
+    }
 }
 
 fun String.format(
@@ -215,7 +225,7 @@ fun String.blue() = format(color = Formatting.FGColor.BLUE)
 fun String.purple() = format(color = Formatting.FGColor.PURPLE)
 fun String.cyan() = format(color = Formatting.FGColor.CYAN)
 fun String.white() = format(color = Formatting.FGColor.WHITE)
-fun String.gray() = format(color = Formatting.FGColor.BRIGHT_BLACK)
+fun String.grey() = format(color = Formatting.FGColor.BRIGHT_BLACK)
 fun String.brightBlack() = format(color = Formatting.FGColor.BRIGHT_BLACK)
 fun String.brightRed() = format(color = Formatting.FGColor.BRIGHT_RED)
 fun String.brightGreen() = format(color = Formatting.FGColor.BRIGHT_GREEN)
@@ -233,7 +243,7 @@ fun String.fgBlue() = format(color = Formatting.FGColor.BLUE)
 fun String.fgPurple() = format(color = Formatting.FGColor.PURPLE)
 fun String.fgCyan() = format(color = Formatting.FGColor.CYAN)
 fun String.fgWhite() = format(color = Formatting.FGColor.WHITE)
-fun String.fgGray() = format(color = Formatting.FGColor.BRIGHT_BLACK)
+fun String.fgGrey() = format(color = Formatting.FGColor.BRIGHT_BLACK)
 fun String.fgBrightBlack() = format(color = Formatting.FGColor.BRIGHT_BLACK)
 fun String.fgBrightRed() = format(color = Formatting.FGColor.BRIGHT_RED)
 fun String.fgBrightGreen() = format(color = Formatting.FGColor.BRIGHT_GREEN)
@@ -251,7 +261,7 @@ fun String.bgBlue() = format(backgroundColor = Formatting.BGColor.BLUE)
 fun String.bgPurple() = format(backgroundColor = Formatting.BGColor.PURPLE)
 fun String.bgCyan() = format(backgroundColor = Formatting.BGColor.CYAN)
 fun String.bgWhite() = format(backgroundColor = Formatting.BGColor.WHITE)
-fun String.bgGray() = format(backgroundColor = Formatting.BGColor.BRIGHT_BLACK)
+fun String.bgGrey() = format(backgroundColor = Formatting.BGColor.BRIGHT_BLACK)
 fun String.bgBrightBlack() = format(backgroundColor = Formatting.BGColor.BRIGHT_BLACK)
 fun String.bgBrightRed() = format(backgroundColor = Formatting.BGColor.BRIGHT_RED)
 fun String.bgBrightGreen() = format(backgroundColor = Formatting.BGColor.BRIGHT_GREEN)

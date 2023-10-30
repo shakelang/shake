@@ -61,7 +61,7 @@ fun fgBrightBlack(contents: String) = "${Formatting.FGColor.BRIGHT_BLACK}$conten
  * Make your foreground color gray
  * @param contents the contents to make gray
  */
-fun fgGray(contents: String) = fgBrightBlack(contents)
+fun fgGrey(contents: String) = fgBrightBlack(contents)
 
 /**
  * Make your foreground color bright red
@@ -157,7 +157,7 @@ fun white(contents: String) = fgWhite(contents)
  * Make your foreground color gray
  * @param contents the contents to make gray
  */
-fun gray(contents: String) = fgGray(contents)
+fun grey(contents: String) = fgGrey(contents)
 
 /**
  * Make your foreground color bright red
