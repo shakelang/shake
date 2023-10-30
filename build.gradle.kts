@@ -109,7 +109,7 @@ tasks.register<TestReport>("genReport") {
     group = "verification"
     val testTasks = allprojects.flatMap { it.tasks.withType(Test::class) }
     dependsOn(testTasks)
-    destinationDir = file("${layout.buildDirectory}/reports/tests")
+    destinationDirectory.set(file("${layout.buildDirectory}/reports/tests"))
     reportOn(testTasks)
 }
 
