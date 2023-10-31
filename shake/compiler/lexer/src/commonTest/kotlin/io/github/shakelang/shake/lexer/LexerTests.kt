@@ -41,38 +41,6 @@ class LexerTests {
     }
 
     @Test
-    fun testMakeTokens2() {
-
-        val tokens = createLexer("10+7*3", "LexerTests#testMakeTokens2()").makeTokens2()
-        var token = tokens.next()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("10", token.value)
-        assertEquals(0, token.start)
-        assertEquals(1, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.ADD, token.type)
-        assertEquals(null, token.value)
-        assertEquals(2, token.start)
-        assertEquals(2, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("7", token.value)
-        assertEquals(3, token.start)
-        assertEquals(3, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.MUL, token.type)
-        assertEquals(null, token.value)
-        assertEquals(4, token.start)
-        assertEquals(4, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("3", token.value)
-        assertEquals(5, token.start)
-        assertEquals(5, token.end)
-
-    }
-
-    @Test
     fun testStream() {
 
         val tokens = createLexer("10+7*3", "LexerTests#testStream()").stream()

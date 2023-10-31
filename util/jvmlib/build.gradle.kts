@@ -29,7 +29,7 @@ javaCompilations.forEach {
         group = "test-resource-build"
         source = sourceSets["java$it"].java
         classpath = sourceSets["java$it"].compileClasspath
-        destinationDir = file("$javaCompilationOutputDir/java$it")
+        destinationDirectory.set(file("$javaCompilationOutputDir/java$it"))
     }
 }
 
