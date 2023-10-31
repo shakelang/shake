@@ -164,15 +164,15 @@ class FormattedString(
     fun bgBrightCyan() = backgroundColor(Formatting.BGColor.BRIGHT_CYAN)
     fun bgBrightWhite() = backgroundColor(Formatting.BGColor.BRIGHT_WHITE)
 
-    override fun extends(other: FormattedString) = FormattedString(
+    override fun extends(format: FormattedString) = FormattedString(
         this,
-        isBold = _isBold ?: other._isBold,
-        isItalic = _isItalic ?: other._isItalic,
-        isUnderlined = _isUnderlined ?: other._isUnderlined,
-        isStrikethrough = _isStrikethrough ?: other._isStrikethrough,
-        isInverted = _isInverted ?: other._isInverted,
-        color = color ?: other.color,
-        backgroundColor = backgroundColor ?: other.backgroundColor
+        isBold = _isBold ?: format._isBold,
+        isItalic = _isItalic ?: format._isItalic,
+        isUnderlined = _isUnderlined ?: format._isUnderlined,
+        isStrikethrough = _isStrikethrough ?: format._isStrikethrough,
+        isInverted = _isInverted ?: format._isInverted,
+        color = color ?: format.color,
+        backgroundColor = backgroundColor ?: format.backgroundColor
     )
 
     companion object {
@@ -210,6 +210,7 @@ fun String.fgColor(color: Formatting.FGColor) = format(color = color)
 
 fun String.bg(color: Formatting.BGColor) = format(backgroundColor = color)
 fun String.bgColor(color: Formatting.BGColor) = format(backgroundColor = color)
+fun String.backgroundColor(color: Formatting.BGColor) = format(backgroundColor = color)
 
 fun String.bold() = format(isBold = true)
 fun String.italic() = format(isItalic = true)
