@@ -1,6 +1,7 @@
 import conventions.dependencies
+import conventions.projectGroup
 
-group = "io.github.shakelang.shake"
+group = projectGroup("compiler.jsgenerator")
 version = "0.1.0"
 description = "js-generator"
 java.sourceCompatibility = JavaVersion.VERSION_1_8

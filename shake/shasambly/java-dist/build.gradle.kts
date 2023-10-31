@@ -1,3 +1,4 @@
+import conventions.projectGroup
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,7 +7,7 @@ plugins {
     id("org.jetbrains.dokka")
 }
 
-group = "io.github.shakelang.shake"
+group = projectGroup("shasambly.java-dist")
 version = "0.1.0"
 description = "Java distribution commands for Shasambly"
 

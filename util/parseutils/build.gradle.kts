@@ -1,11 +1,12 @@
 import conventions.dependencies
+import conventions.projectGroup
 
 plugins {
     id("conventions.all")
     id("conventions.publishing")
 }
 
-group = "io.github.shakelang.util.parseutils"
+group = projectGroup("util.parseutils")
 version = "0.1.2"
 description = "Utilities for parsing stuff with kotlin"
 

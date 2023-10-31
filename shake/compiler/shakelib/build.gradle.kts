@@ -1,5 +1,6 @@
 import dev.icerock.gradle.MRVisibility
 import conventions.dependencies
+import conventions.projectGroup
 
 plugins {
     id("conventions.all")
@@ -7,7 +8,7 @@ plugins {
     id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
 }
 
-group = "io.github.shakelang.shake.shakelib"
+group = projectGroup("compiler.shakelib")
 version = "0.1.0"
 description = "Utilities for parsing stuff with kotlin"
 

@@ -1,13 +1,11 @@
 import conventions.dependencies
 
-group = "io.github.shakelang.shake"
+group = projectName("compiler.interpreter")
 version = "0.1.0"
 description = "interpreter"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 plugins {
     id("conventions.all")
-    java
 }
 
 kotlin {

@@ -1,6 +1,7 @@
 import conventions.dependencies
+import conventions.projectGroup
 
-group = "io.github.shakelang.jvmlib"
+group = projectGroup("util.jvmlib")
 version = "0.1.0"
 description = "A library for jvm stuff in java"
 

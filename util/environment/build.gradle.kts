@@ -1,10 +1,12 @@
 import conventions.dependencies
+import conventions.projectGroup
+
 plugins {
     id("conventions.all")
     id("conventions.publishing")
 }
 
-group = "io.github.shakelang.util.environment"
+group = projectGroup("util.environment")
 version = "0.1.0"
 description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
 
