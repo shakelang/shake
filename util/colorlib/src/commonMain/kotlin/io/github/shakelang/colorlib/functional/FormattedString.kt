@@ -46,6 +46,9 @@ interface FormattedStringObject {
      */
     fun extends(format: FormattedString): FormattedStringObject
 
+    val formatsItself: Boolean
+        get() = false
+
 
     companion object {
 
@@ -191,6 +194,9 @@ class FormattedString(
 
 ) : FormattedStringObject {
 
+    override val formatsItself: Boolean
+        get() = true
+
     /**
      * If the [FormattedString] is bold
      *
@@ -326,18 +332,25 @@ class FormattedString(
      * @version 0.1.1
      */
     override fun toString(): String {
-        var str = contents.map { it.extends(this).string() }
 
-        if (isBold) str = str.map { "${Formatting.BOLD}$it" }
-        if (isItalic) str = str.map { "${Formatting.ITALIC}$it" }
-        if (isUnderlined) str = str.map { "${Formatting.UNDERLINE}$it" }
-        if (isStrikethrough) str = str.map { "${Formatting.STRIKETHROUGH}$it" }
-        if (isInverted) str = str.map { "${Formatting.INVERT}$it" }
-        if (color != null) str = str.map { "${color}$it" }
-        if (backgroundColor != null) str = str.map { "${backgroundColor}$it" }
-        if (isFormatted) str = str.map { "$it${Formatting.RESET}" }
+        val formatting = StringBuilder()
 
-        return str.joinToString()
+        if (isBold) formatting.append(Formatting.BOLD)
+        if (isItalic) formatting.append(Formatting.ITALIC)
+        if (isUnderlined) formatting.append(Formatting.UNDERLINE)
+        if (isStrikethrough) formatting.append(Formatting.STRIKETHROUGH)
+        if (isInverted) formatting.append(Formatting.INVERT)
+        if (color != null) formatting.append(color)
+        if (backgroundColor != null) formatting.append(backgroundColor)
+
+        val formattingEnd = if (isFormatted) Formatting.RESET else ""
+
+        val str = contents.map {
+            if (!it.formatsItself) formatting.toString() + it.extends(this).string() + formattingEnd
+            else it.extends(this).string()
+        }
+
+        return str.joinToString("")
     }
 
     /**
@@ -1009,6 +1022,9 @@ class FormattedString(
         backgroundColor = backgroundColor ?: format.backgroundColor
     )
 
+    operator fun plus(other: String) = wrap(this, FormattedStringObject.wrap(other))
+    operator fun plus(other: FormattedStringObject) = wrap(this, other)
+
     companion object {
 
         /**
@@ -1042,7 +1058,7 @@ class FormattedString(
          * @since 0.1.1
          * @version 0.1.1
          */
-        fun wrap(string: FormattedString) = FormattedString(listOf(string))
+        fun wrap(string: FormattedStringObject) = FormattedString(listOf(string))
 
         /**
          * Wrap [FormattedString]s into a formatted string with no style.
@@ -1053,7 +1069,7 @@ class FormattedString(
          * @since 0.1.1
          * @version 0.1.1
          */
-        fun wrap(vararg strings: FormattedString) = FormattedString(strings.toList())
+        fun wrap(vararg strings: FormattedStringObject) = FormattedString(strings.toList())
 
     }
 }
