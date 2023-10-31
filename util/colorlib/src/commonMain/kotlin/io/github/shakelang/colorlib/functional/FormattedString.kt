@@ -819,24 +819,185 @@ class FormattedString(
     fun fgBrightWhite() = color(Formatting.FGColor.BRIGHT_WHITE)
 
 
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BLACK]
+     *
+     * @return the resulting [FormattedString]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBlack() = backgroundColor(Formatting.BGColor.BLACK)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.RED]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgRed() = backgroundColor(Formatting.BGColor.RED)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.GREEN]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgGreen() = backgroundColor(Formatting.BGColor.GREEN)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.YELLOW]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgYellow() = backgroundColor(Formatting.BGColor.YELLOW)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BLUE]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBlue() = backgroundColor(Formatting.BGColor.BLUE)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.PURPLE]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgPurple() = backgroundColor(Formatting.BGColor.PURPLE)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.CYAN]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgCyan() = backgroundColor(Formatting.BGColor.CYAN)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.WHITE]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgWhite() = backgroundColor(Formatting.BGColor.WHITE)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_BLACK]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgGrey() = backgroundColor(Formatting.BGColor.BRIGHT_BLACK)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_BLACK]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBrightBlack() = backgroundColor(Formatting.BGColor.BRIGHT_BLACK)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_RED]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBrightRed() = backgroundColor(Formatting.BGColor.BRIGHT_RED)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_GREEN]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBrightGreen() = backgroundColor(Formatting.BGColor.BRIGHT_GREEN)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_YELLOW]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBrightYellow() = backgroundColor(Formatting.BGColor.BRIGHT_YELLOW)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_BLUE]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBrightBlue() = backgroundColor(Formatting.BGColor.BRIGHT_BLUE)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_PURPLE]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBrightPurple() = backgroundColor(Formatting.BGColor.BRIGHT_PURPLE)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_CYAN]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBrightCyan() = backgroundColor(Formatting.BGColor.BRIGHT_CYAN)
+
+    /**
+     * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.WHITE]
+     *
+     * @return the resulting [Formatting]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     fun bgBrightWhite() = backgroundColor(Formatting.BGColor.BRIGHT_WHITE)
 
+    /**
+     * Extend this [FormattedString] with the given [format]
+     *
+     * @param format the [FormattedString] to extend this [FormattedString] with
+     * @return the resulting [FormattedString]
+     *
+     * @since 0.1.1
+     * @version 0.1.1
+     */
     override fun extends(format: FormattedString) = FormattedString(
         this,
         isBold = _isBold ?: format._isBold,
@@ -849,10 +1010,50 @@ class FormattedString(
     )
 
     companion object {
+
+        /**
+         * Wrap a string into a formatted string with no style.
+         *
+         * @param string the string to wrap
+         * @returns the resulting [FormattedString]
+         *
+         * @since 0.1.1
+         * @version 0.1.1
+         */
         fun wrap(string: String) = FormattedString(listOf(FormattedStringObject.wrap(string)))
+
+        /**
+         * Wrap strings into a formatted string with no style.
+         *
+         * @param strings the strings to wrap
+         * @returns the resulting [FormattedString]
+         *
+         * @since 0.1.1
+         * @version 0.1.1
+         */
         fun wrap(vararg strings: String) = FormattedString(strings.map { FormattedStringObject.wrap(it) })
 
+
+        /**
+         * Wrap a string into a formatted string with no style.
+         *
+         * @param string the string to wrap
+         * @returns the resulting [FormattedString]
+         *
+         * @since 0.1.1
+         * @version 0.1.1
+         */
         fun from(string: String) = wrap(string)
+
+        /**
+         * Wrap strings into a formatted string with no style.
+         *
+         * @param strings the strings to wrap
+         * @returns the resulting [FormattedString]
+         *
+         * @since 0.1.1
+         * @version 0.1.1
+         */
         fun from(vararg strings: String) = wrap(*strings)
 
     }
