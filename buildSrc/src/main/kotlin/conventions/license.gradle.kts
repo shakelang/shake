@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.conventions.mpp
+package conventions
 
 plugins {
 //    id("com.github.hierynomus.license")

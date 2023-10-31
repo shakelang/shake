@@ -1,9 +1,9 @@
 import dev.icerock.gradle.MRVisibility
-import io.github.shakelang.shake.conventions.mpp.dependencies
+import conventions.dependencies
 
 plugins {
-    id("io.github.shakelang.shake.conventions.mpp.all")
-    id("io.github.shakelang.shake.conventions.mpp.publishing")
+    id("conventions.all")
+    id("conventions.publishing")
     id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
 }
 

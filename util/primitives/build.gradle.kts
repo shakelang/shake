@@ -1,7 +1,7 @@
-import io.github.shakelang.shake.conventions.mpp.dependencies
+import conventions.dependencies
 plugins {
-    id("io.github.shakelang.shake.conventions.mpp.all")
-    id("io.github.shakelang.shake.conventions.mpp.publishing")
+    id("conventions.all")
+    id("conventions.publishing")
 }
 
 group = "io.github.shakelang.util.primitives"

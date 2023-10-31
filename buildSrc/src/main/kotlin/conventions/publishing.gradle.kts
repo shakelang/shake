@@ -1,6 +1,10 @@
-package io.github.shakelang.shake.conventions.mpp
+package conventions
 
+import gradle.kotlin.dsl.accessors._4ad077ad74816558e52d7069eb18a2f7.publishing
+import gradle.kotlin.dsl.accessors._4ad077ad74816558e52d7069eb18a2f7.signing
 import org.gradle.crypto.checksum.Checksum
+import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.maven
 
 plugins {
     id("maven-publish")
