@@ -1058,6 +1058,21 @@ class FormattedString(
     }
 }
 
+/**
+ * Format a string with the given format
+ *
+ * @param isBold whether the string should be bold
+ * @param isItalic whether the string should be italic
+ * @param isUnderlined whether the string should be underlined
+ * @param isStrikethrough whether the string should be strikethrough
+ * @param isInverted whether the string should be inverted
+ * @param color the [Formatting.FGColor] to format the string with
+ * @param backgroundColor the [Formatting.BGColor] to format the string with
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.format(
     isBold: Boolean? = null,
     isItalic: Boolean? = null,
@@ -1077,70 +1092,634 @@ fun String.format(
     backgroundColor
 )
 
+
+/**
+ * Format a string with the given color
+ *
+ * @param color the [Formatting.FGColor] to format the string with
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.color(color: Formatting.FGColor) = format(color = color)
+
+/**
+ * Format a string with the given color
+ *
+ * @param color the [Formatting.FGColor] to format the string with
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fg(color: Formatting.FGColor) = format(color = color)
+
+/**
+ * Format a string with the given color
+ *
+ * @param color the [Formatting.FGColor] to format the string with
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgColor(color: Formatting.FGColor) = format(color = color)
 
+
+/**
+ * Format a string with the given background color
+ *
+ * @param color the [Formatting.BGColor] to format the string with
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bg(color: Formatting.BGColor) = format(backgroundColor = color)
+
+/**
+ * Format a string with the given background color
+ *
+ * @param color the [Formatting.BGColor] to format the string with
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgColor(color: Formatting.BGColor) = format(backgroundColor = color)
+
+/**
+ * Format a string with the given background color
+ *
+ * @param color the [Formatting.BGColor] to format the string with
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.backgroundColor(color: Formatting.BGColor) = format(backgroundColor = color)
 
+
+/**
+ * Make the string bold
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bold() = format(isBold = true)
+
+/**
+ * Make the string italic
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.italic() = format(isItalic = true)
+
+/**
+ * Make the string underlined
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.underline() = format(isUnderlined = true)
+
+/**
+ * Make the string strikethrough
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.strikethrough() = format(isStrikethrough = true)
+
+/**
+ * Invert the string
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.invert() = format(isInverted = true)
 
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BLACK]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.black() = format(color = Formatting.FGColor.BLACK)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.RED]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.red() = format(color = Formatting.FGColor.RED)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.GREEN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.green() = format(color = Formatting.FGColor.GREEN)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.YELLOW]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.yellow() = format(color = Formatting.FGColor.YELLOW)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BLUE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.blue() = format(color = Formatting.FGColor.BLUE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.PURPLE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.purple() = format(color = Formatting.FGColor.PURPLE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.CYAN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.cyan() = format(color = Formatting.FGColor.CYAN)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.WHITE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.white() = format(color = Formatting.FGColor.WHITE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_BLACK]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.grey() = format(color = Formatting.FGColor.BRIGHT_BLACK)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_BLACK]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.brightBlack() = format(color = Formatting.FGColor.BRIGHT_BLACK)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_RED]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.brightRed() = format(color = Formatting.FGColor.BRIGHT_RED)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_GREEN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.brightGreen() = format(color = Formatting.FGColor.BRIGHT_GREEN)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_YELLOW]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.brightYellow() = format(color = Formatting.FGColor.BRIGHT_YELLOW)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_BLUE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.brightBlue() = format(color = Formatting.FGColor.BRIGHT_BLUE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_PURPLE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.brightPurple() = format(color = Formatting.FGColor.BRIGHT_PURPLE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_CYAN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.brightCyan() = format(color = Formatting.FGColor.BRIGHT_CYAN)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_WHITE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.brightWhite() = format(color = Formatting.FGColor.BRIGHT_WHITE)
 
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BLACK]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBlack() = format(color = Formatting.FGColor.BLACK)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.RED]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgRed() = format(color = Formatting.FGColor.RED)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.GREEN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgGreen() = format(color = Formatting.FGColor.GREEN)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.YELLOW]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgYellow() = format(color = Formatting.FGColor.YELLOW)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BLUE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBlue() = format(color = Formatting.FGColor.BLUE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.PURPLE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgPurple() = format(color = Formatting.FGColor.PURPLE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.CYAN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgCyan() = format(color = Formatting.FGColor.CYAN)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.WHITE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgWhite() = format(color = Formatting.FGColor.WHITE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_BLACK]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgGrey() = format(color = Formatting.FGColor.BRIGHT_BLACK)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_BLACK]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBrightBlack() = format(color = Formatting.FGColor.BRIGHT_BLACK)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_RED]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBrightRed() = format(color = Formatting.FGColor.BRIGHT_RED)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_GREEN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBrightGreen() = format(color = Formatting.FGColor.BRIGHT_GREEN)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_YELLOW]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBrightYellow() = format(color = Formatting.FGColor.BRIGHT_YELLOW)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_BLUE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBrightBlue() = format(color = Formatting.FGColor.BRIGHT_BLUE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_PURPLE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBrightPurple() = format(color = Formatting.FGColor.BRIGHT_PURPLE)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_CYAN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBrightCyan() = format(color = Formatting.FGColor.BRIGHT_CYAN)
+
+/**
+ * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BRIGHT_WHITE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.fgBrightWhite() = format(color = Formatting.FGColor.BRIGHT_WHITE)
 
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BLACK]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBlack() = format(backgroundColor = Formatting.BGColor.BLACK)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.RED]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgRed() = format(backgroundColor = Formatting.BGColor.RED)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.GREEN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgGreen() = format(backgroundColor = Formatting.BGColor.GREEN)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.YELLOW]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgYellow() = format(backgroundColor = Formatting.BGColor.YELLOW)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BLUE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBlue() = format(backgroundColor = Formatting.BGColor.BLUE)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.PURPLE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgPurple() = format(backgroundColor = Formatting.BGColor.PURPLE)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.CYAN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgCyan() = format(backgroundColor = Formatting.BGColor.CYAN)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.WHITE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgWhite() = format(backgroundColor = Formatting.BGColor.WHITE)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_BLACK]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgGrey() = format(backgroundColor = Formatting.BGColor.BRIGHT_BLACK)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_BLACK]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBrightBlack() = format(backgroundColor = Formatting.BGColor.BRIGHT_BLACK)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_RED]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBrightRed() = format(backgroundColor = Formatting.BGColor.BRIGHT_RED)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_GREEN]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBrightGreen() = format(backgroundColor = Formatting.BGColor.BRIGHT_GREEN)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_YELLOW]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBrightYellow() = format(backgroundColor = Formatting.BGColor.BRIGHT_YELLOW)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_BLUE]
+ *
+ * @return the resulting [FormattedString]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBrightBlue() = format(backgroundColor = Formatting.BGColor.BRIGHT_BLUE)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_PURPLE]
+ *
+ * @return the resulting [Formatting]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBrightPurple() = format(backgroundColor = Formatting.BGColor.BRIGHT_PURPLE)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BRIGHT_CYAN]
+ *
+ * @return the resulting [Formatting]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBrightCyan() = format(backgroundColor = Formatting.BGColor.BRIGHT_CYAN)
+
+/**
+ * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.WHITE]
+ *
+ * @return the resulting [Formatting]
+ *
+ * @since 0.1.1
+ * @version 0.1.1
+ */
 fun String.bgBrightWhite() = format(backgroundColor = Formatting.BGColor.BRIGHT_WHITE)
