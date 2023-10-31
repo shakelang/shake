@@ -326,7 +326,7 @@ class FormattedString(
      * @version 0.1.1
      */
     override fun toString(): String {
-        var str = contents.map { it.string() }
+        var str = contents.map { it.extends(this).string() }
 
         if (isBold) str = str.map { "${Formatting.BOLD}$it" }
         if (isItalic) str = str.map { "${Formatting.ITALIC}$it" }
@@ -1033,9 +1033,8 @@ class FormattedString(
          */
         fun wrap(vararg strings: String) = FormattedString(strings.map { FormattedStringObject.wrap(it) })
 
-
         /**
-         * Wrap a string into a formatted string with no style.
+         * Wrap a [FormattedString]s into a formatted string with no style.
          *
          * @param string the string to wrap
          * @returns the resulting [FormattedString]
@@ -1043,10 +1042,10 @@ class FormattedString(
          * @since 0.1.1
          * @version 0.1.1
          */
-        fun from(string: String) = wrap(string)
+        fun wrap(string: FormattedString) = FormattedString(listOf(string))
 
         /**
-         * Wrap strings into a formatted string with no style.
+         * Wrap [FormattedString]s into a formatted string with no style.
          *
          * @param strings the strings to wrap
          * @returns the resulting [FormattedString]
@@ -1054,7 +1053,7 @@ class FormattedString(
          * @since 0.1.1
          * @version 0.1.1
          */
-        fun from(vararg strings: String) = wrap(*strings)
+        fun wrap(vararg strings: FormattedString) = FormattedString(strings.toList())
 
     }
 }
