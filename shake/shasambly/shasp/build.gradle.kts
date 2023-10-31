@@ -1,11 +1,12 @@
-import io.github.shakelang.shake.conventions.mpp.dependencies
+import conventions.dependencies
+import conventions.projectGroup
 
 plugins {
-    id("io.github.shakelang.shake.conventions.mpp.all")
-    id("io.github.shakelang.shake.conventions.mpp.publishing")
+    id("conventions.all")
+    id("conventions.publishing")
 }
 
-group = "io.github.shakelang.shake"
+group = projectGroup("shasambly.shasp")
 version = "0.1.0"
 description = "Shasp is a very simple programming language that outputs shasambly bytecode."
 
