@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.conventions.mpp
+package conventions
 
 import groovy.lang.Closure
 import org.gradle.api.artifacts.Dependency

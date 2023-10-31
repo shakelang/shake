@@ -1,13 +1,14 @@
 import dev.icerock.gradle.MRVisibility
-import io.github.shakelang.shake.conventions.mpp.dependencies
+import conventions.dependencies
+import conventions.projectGroup
 
 plugins {
-    id("io.github.shakelang.shake.conventions.mpp.all")
-    id("io.github.shakelang.shake.conventions.mpp.publishing")
+    id("conventions.all")
+    id("conventions.publishing")
     id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
 }
 
-group = "io.github.shakelang.shake.shakelib"
+group = projectGroup("compiler.shakelib")
 version = "0.1.0"
 description = "Utilities for parsing stuff with kotlin"
 
