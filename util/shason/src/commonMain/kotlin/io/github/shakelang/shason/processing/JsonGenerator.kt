@@ -1,6 +1,6 @@
 package io.github.shakelang.shason.processing
 
-import io.github.shakelang.parseutils.characters.Characters
+import io.github.shakelang.shake.util.parseutils.characters.Characters
 
 /**
  * API for generating json

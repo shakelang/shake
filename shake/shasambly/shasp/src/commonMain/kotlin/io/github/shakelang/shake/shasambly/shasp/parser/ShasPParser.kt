@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.shasambly.shasp.parser
 
-import io.github.shakelang.parseutils.CompilerError
-import io.github.shakelang.parseutils.characters.Characters
-import io.github.shakelang.parseutils.characters.position.Position
+import io.github.shakelang.shake.util.parseutils.CompilerError
+import io.github.shakelang.shake.util.parseutils.characters.Characters
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenInputStream
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.*
@@ -652,7 +652,7 @@ class ShasPParser (
 
 
     inner class ParserError(message: String?, name: String?, details: String?, start: Position?, end: Position?) :
-        CompilerError(
+        io.github.shakelang.shake.util.parseutils.CompilerError(
             message!!, name!!, details!!, start!!, end!!
         ) {
         constructor(

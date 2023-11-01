@@ -7,7 +7,7 @@ import io.github.shakelang.shake.util.Request
 import io.github.shakelang.shake.util.characterinput.characterinputstream.CharacterInputStream
 import io.github.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
 import io.github.shakelang.shake.util.characterinput.charactersource.CharacterSource
-import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 
 /**

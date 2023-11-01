@@ -1,12 +1,12 @@
 package io.github.shakelang.shason.processing
 
-import io.github.shakelang.parseutils.CompilerError
-import io.github.shakelang.parseutils.characters.Characters.isHexCharacter
-import io.github.shakelang.parseutils.characters.Characters.isIdentifierCharacter
-import io.github.shakelang.parseutils.characters.Characters.isIdentifierStartCharacter
-import io.github.shakelang.parseutils.characters.Characters.isNumberOrDotCharacter
-import io.github.shakelang.parseutils.characters.position.Position
-import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
+import io.github.shakelang.shake.util.parseutils.CompilerError
+import io.github.shakelang.shake.util.parseutils.characters.Characters.isHexCharacter
+import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierCharacter
+import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierStartCharacter
+import io.github.shakelang.shake.util.parseutils.characters.Characters.isNumberOrDotCharacter
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import kotlin.jvm.JvmOverloads
 
 
@@ -238,7 +238,7 @@ class JsonLexer (
         details: String,
         start: Position,
         end: Position
-    ) : CompilerError(message, name, details, start, end) {
+    ) : io.github.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
 
         /**
          * Constructor for [JsonTokenLexerError]

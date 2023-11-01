@@ -6,10 +6,10 @@
 
 package io.github.shakelang.shake.cli
 
-import io.github.shakelang.parseutils.File
-import io.github.shakelang.parseutils.characters.position.PositionMap
-import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
+import io.github.shakelang.shake.util.parseutils.File
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.interpreter.Interpreter
 import io.github.shakelang.shake.js.ShakeJsGenerator
 import io.github.shakelang.shake.lexer.ShakeLexer

@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.interpreter
 
-import io.github.shakelang.parseutils.characters.source.CharacterSource.Companion.from
-import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource.Companion.from
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.interpreter.values.Java
 import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.ShakeParser

@@ -1,8 +1,8 @@
 package io.github.shakelang.shason.processing
 
-import io.github.shakelang.parseutils.CompilerError
-import io.github.shakelang.parseutils.characters.Characters
-import io.github.shakelang.parseutils.characters.position.Position
+import io.github.shakelang.shake.util.parseutils.CompilerError
+import io.github.shakelang.shake.util.parseutils.characters.Characters
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shason.elements.*
 import io.github.shakelang.shason.processing.JsonTokenType.*
 
@@ -113,7 +113,7 @@ class JsonParser(
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     inner class ParserError(message: String, name: String, details: String, start: Position, end: Position) :
-        CompilerError(message, name, details, start, end) {
+        io.github.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
 
         /**
          * Constructor for [ParserError]

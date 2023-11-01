@@ -1,7 +1,7 @@
 package io.github.shakelang.shason
 
-import io.github.shakelang.parseutils.characters.source.CharacterSource
-import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shason.processing.JsonGenerator
 import io.github.shakelang.shason.processing.JsonLexer
 import io.github.shakelang.shason.processing.JsonParser

@@ -1,9 +1,9 @@
 package io.github.shakelang.shason.processing
 
-import io.github.shakelang.parseutils.characters.position.PositionMap
-import io.github.shakelang.parseutils.lexer.token.TokenType
-import io.github.shakelang.parseutils.lexer.token.stream.TokenBasedTokenInputStream
-import io.github.shakelang.parseutils.lexer.token.stream.TokenInputStream
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
+import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
+import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenInputStream
 import io.github.shakelang.shake.lexer.token.Token
 
 /**

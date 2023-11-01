@@ -1,6 +1,6 @@
 package io.github.shakelang.shason.processing
 
-import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shason.elements.JsonElement
 
 object TestUtilities {
