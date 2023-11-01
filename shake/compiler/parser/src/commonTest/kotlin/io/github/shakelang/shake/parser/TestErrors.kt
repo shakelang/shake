@@ -14,6 +14,8 @@ class TestErrors {
             ParserTestUtil.parseStatement("<TestLPAREN>", "if test", ShakeIfNode::class)
         }
 
+        println(error.toString())
+
         // System.out.println(error.toString());
         assertSame(3, error.start.index)
         assertSame(6, error.end.index)

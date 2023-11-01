@@ -1,12 +1,13 @@
-import io.github.shakelang.shake.conventions.mpp.dependencies
+import conventions.dependencies
+import conventions.projectGroup
 
-group = "io.github.shakelang.jvmlib"
+group = projectGroup("util.jvmlib")
 version = "0.1.0"
 description = "A library for jvm stuff in java"
 
 plugins {
-    id("io.github.shakelang.shake.conventions.mpp.all")
-    id("io.github.shakelang.shake.conventions.mpp.publishing")
+    id("conventions.all")
+    id("conventions.publishing")
 }
 
 val javaCompilationOutputDir = "src/commonTest/resources/classes/java"
@@ -29,7 +30,7 @@ javaCompilations.forEach {
         group = "test-resource-build"
         source = sourceSets["java$it"].java
         classpath = sourceSets["java$it"].compileClasspath
-        destinationDir = file("$javaCompilationOutputDir/java$it")
+        destinationDirectory.set(file("$javaCompilationOutputDir/java$it"))
     }
 }
 

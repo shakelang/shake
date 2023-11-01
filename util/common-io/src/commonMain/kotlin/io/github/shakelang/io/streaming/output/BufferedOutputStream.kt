@@ -1,28 +1,68 @@
 package io.github.shakelang.io.streaming.output
 
 import kotlin.jvm.Synchronized
+import io.github.shakelang.io.IOException
 
+/**
+ * The class implements a buffered output stream. By setting up such
+ * an output stream, an application can write bytes to the underlying
+ * output stream without necessarily causing a call to the underlying
+ * system for each byte written.
+ *
+ * @param out the underlying output stream.
+ * @param bufferSize the buffer size.
+ * @constructor Creates a new buffered output stream to write data to the
+ *
+ * @since 0.1.0
+ * @version 0.1.1
+ * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
+ */
 open class BufferedOutputStream (
+
+    /**
+     * The underlying output stream to be filtered.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
+     */
     val out: OutputStream,
     bufferSize: Int = 8192
 ) : OutputStream() {
     /**
      * The internal buffer where data is stored.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
-    protected val buf: ByteArray = ByteArray(bufferSize)
+    private val buf: ByteArray = ByteArray(bufferSize)
 
     /**
      * The number of valid bytes in the buffer. This value is always
      * in the range `0` through `buf.length`; elements
      * `buf[0]` through `buf[count-1]` contain valid
      * byte data.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     protected var count = 0
 
-    /** Flush the internal buffer  */
-    private fun flushBuffer() {
-        if (count > 0) {
-            out.write(buf, 0, count)
+    /**
+     * Flush the internal buffer
+     *
+     * @param array something to append to the buffer before flushing it
+     * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
+     */
+    private fun flushBuffer(array: ByteArray = byteArrayOf()) {
+        if (count + array.size > 0) {
+            out.write(byteArrayOf(*buf.copyOfRange(0, count), *array))
             count = 0
         }
     }
@@ -31,13 +71,32 @@ open class BufferedOutputStream (
      * Writes the specified byte to this buffered output stream.
      *
      * @param b the byte to be written.
+     * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     @Synchronized
     override fun write(b: Int) {
-        if (count >= buf.size) {
+        if (count >= buf.size)
             flushBuffer()
-        }
         buf[count++] = b.toByte()
+    }
+
+    /**
+     * Writes `b.length` bytes from the specified byte array
+     * to this buffered output stream.
+     *
+     * @param b the data.
+     * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
+     */
+    override fun write(b: ByteArray) {
+        this.write(b, 0, b.size)
     }
 
     /**
@@ -55,19 +114,19 @@ open class BufferedOutputStream (
      * @param      b     the data.
      * @param      off   the start offset in the data.
      * @param      len   the number of bytes to write.
+     * @throws IOException
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     @Synchronized
     override fun write(b: ByteArray, off: Int, len: Int) {
-        if (len >= buf.size) {
-            /* If the request length exceeds the size of the output buffer,
-               flush the output buffer and then write the data directly.
-               In this way buffered streams will cascade harmlessly. */
-            flushBuffer()
-            out.write(b, off, len)
+        if (len + count >= buf.size) {
+            // When the request length exceeds the remaining space in
+            // the buffer, flush it and then write the data directly.
+            flushBuffer(b)
             return
-        }
-        if (len > buf.size - count) {
-            flushBuffer()
         }
         b.copyInto(buf, count, off, off + len)
         count += len
@@ -76,6 +135,12 @@ open class BufferedOutputStream (
     /**
      * Flushes this buffered output stream. This forces any buffered
      * output bytes to be written out to the underlying output stream.
+     *
+     * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     @Synchronized
     override fun flush() {
@@ -83,4 +148,20 @@ open class BufferedOutputStream (
         out.flush()
     }
 
+    /**
+     * Closes this buffered output stream. This method simply flushes
+     * this stream and then calls the underlying output stream's
+     * `close` method, which releases the underlying output
+     * stream's resources.
+     *
+     * @throws IOException if an I/O error occurs.
+     *
+     * @since 0.1.0
+     * @version 0.1.1
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
+     */
+    override fun close() {
+        flush()
+        out.close()
+    }
 }

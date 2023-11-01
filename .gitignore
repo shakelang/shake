@@ -10,6 +10,7 @@
 # Compilation results
 **/target/
 **/build/
+**/reports/
 !**/src/**/build/
 Compiler.userlibraries
 .project

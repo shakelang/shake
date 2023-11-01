@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 @Test
 fun testByteArrayStream() {
     val byteArray = byteArrayOf(0x00u, 0xFFu)
-    val stream = byteArray.stream()
+    val stream = byteArray.inputStream()
     assertEquals(0x00, stream.read())
     assertEquals(0xFF, stream.read())
 }

@@ -1,11 +1,13 @@
-import io.github.shakelang.shake.conventions.mpp.dependencies
+import conventions.dependencies
+import conventions.projectGroup
+
 plugins {
-    id("io.github.shakelang.shake.conventions.mpp.all")
-    id("io.github.shakelang.shake.conventions.mpp.publishing")
+    id("conventions.all")
+    id("conventions.publishing")
 }
 
-group = "io.github.shakelang.util.common-io"
-version = "0.1.0"
+group = projectGroup("util.common-io")
+version = "0.1.1"
 description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
 
 val projectName = name

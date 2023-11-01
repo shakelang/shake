@@ -1,16 +1,9 @@
-import io.github.shakelang.shake.conventions.mpp.dependencies
+import conventions.dependencies
+import conventions.projectGroup
 
-group = "io.github.shakelang.shake"
+group = projectGroup("compiler.interpreter")
 version = "0.1.0"
 description = "interpreter"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-
-apply(plugin = "java-library")
-
-plugins {
-    id("io.github.shakelang.shake.conventions.mpp.all")
-    java
-}
 
 repositories {
     mavenLocal()

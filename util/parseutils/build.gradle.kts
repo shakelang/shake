@@ -1,12 +1,13 @@
-import io.github.shakelang.shake.conventions.mpp.dependencies
+import conventions.dependencies
+import conventions.projectGroup
 
 plugins {
-    id("io.github.shakelang.shake.conventions.mpp.all")
-    id("io.github.shakelang.shake.conventions.mpp.publishing")
+    id("conventions.all")
+    id("conventions.publishing")
 }
 
-group = "io.github.shakelang.util.parseutils"
-version = "0.1.1"
+group = projectGroup("util.parseutils")
+version = "0.1.2"
 description = "Utilities for parsing stuff with kotlin"
 
 val projectName = name
@@ -16,6 +17,7 @@ kotlin {
         kotlin("stdlib-common")
         implementation(project(":util:colorlib"))
         implementation(project(":util:common-io"))
+        implementation(project(":util:environment"))
         testImplementation(kotlin("test"))
         testImplementation(project(":util:testlib"))
     }

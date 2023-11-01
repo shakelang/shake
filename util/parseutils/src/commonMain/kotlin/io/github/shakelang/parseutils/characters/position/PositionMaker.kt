@@ -39,10 +39,6 @@ class PositionMaker : PositionMap, PositionMarker {
     override val location: String
         get() = source.location
 
-    override fun getAfterInLine(p: Position): Int {
-        return if (p.line - 1 == lineSeparators.size) source.length - p.column else lineSeparators[p.line - 1] - p.index
-    }
-
     /**
      * The source of the [PositionMaker]
      */

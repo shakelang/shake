@@ -23,10 +23,10 @@ abstract class ShakeLexingBase(
         val start = input.position
 
         // Linebreaks
-        return if (next == '\n') ShakeToken(ShakeTokenType.LINE_SEPARATOR, start)
-        else if (next == ';') ShakeToken(ShakeTokenType.SEMICOLON, start)
-        else if (next == ',') ShakeToken(ShakeTokenType.COMMA, start)
-        else if (next == '.') ShakeToken(ShakeTokenType.DOT, start)
+        return if (next == '\n') ShakeToken(ShakeTokenType.LINE_SEPARATOR, start, start)
+        else if (next == ';') ShakeToken(ShakeTokenType.SEMICOLON, start, start)
+        else if (next == ',') ShakeToken(ShakeTokenType.COMMA, start, start)
+        else if (next == '.') ShakeToken(ShakeTokenType.DOT, start, start)
         else if (Characters.isNumberCharacter(next)) makeNumber()
         else if (Characters.isIdentifierStartCharacter(next)) makeIdentifier()
         else if (next == '"') makeString()
@@ -42,81 +42,82 @@ abstract class ShakeLexingBase(
         }
         else if (input.has(2) && next == '*' && peek == '*' && input.peek(2) == '=') {
             input.skip(2)
-             ShakeToken(ShakeTokenType.POW_ASSIGN, input.position)
+             ShakeToken(ShakeTokenType.POW_ASSIGN, input.position, input.position)
         }
         else if (next == '%' && peek == '=') {
             input.skip()
-            ShakeToken(ShakeTokenType.MOD_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.MOD_ASSIGN, input.position, input.position)
         }
         else if (next == '/' && peek == '=') {
             input.skip()
-            ShakeToken(ShakeTokenType.DIV_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.DIV_ASSIGN, input.position, input.position)
         }
         else if (next == '*' && peek == '=') {
             input.skip()
-            ShakeToken(ShakeTokenType.MUL_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.MUL_ASSIGN, input.position, input.position)
         }
         else if (next == '-' && peek == '=') {
             input.skip()
-            ShakeToken(ShakeTokenType.SUB_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.SUB_ASSIGN, input.position, input.position)
         }
         else if (next == '+' && peek == '=') {
             input.skip()
-            ShakeToken(ShakeTokenType.ADD_ASSIGN, input.position)
+            ShakeToken(ShakeTokenType.ADD_ASSIGN, input.position, input.position)
         }
         else if (next == '+' && peek == '+') {
             input.skip()
-            ShakeToken(ShakeTokenType.INCR, input.position)
+            ShakeToken(ShakeTokenType.INCR, input.position, input.position)
         }
         else if (next == '-' && peek == '-') {
             input.skip()
-            ShakeToken(ShakeTokenType.DECR, input.position)
+            ShakeToken(ShakeTokenType.DECR, input.position, input.position)
         }
         else if (next == '*' && peek == '*') {
             input.skip()
-            ShakeToken(ShakeTokenType.POW, input.position)
+            ShakeToken(ShakeTokenType.POW, input.position, input.position)
         }
-        else if (next == '%') ShakeToken(ShakeTokenType.MOD, input.position)
-        else if (next == '/') ShakeToken(ShakeTokenType.DIV, input.position)
-        else if (next == '*') ShakeToken(ShakeTokenType.MUL, input.position)
-        else if (next == '-') ShakeToken(ShakeTokenType.SUB, input.position)
-        else if (next == '+') ShakeToken(ShakeTokenType.ADD, input.position)
-        else if (next == '^') ShakeToken(ShakeTokenType.LOGICAL_XOR, input.position)
+        else if (next == '%') ShakeToken(ShakeTokenType.MOD, input.position, input.position)
+        else if (next == '/') ShakeToken(ShakeTokenType.DIV, input.position, input.position)
+        else if (next == '*') ShakeToken(ShakeTokenType.MUL, input.position, input.position)
+        else if (next == '-') ShakeToken(ShakeTokenType.SUB, input.position, input.position)
+        else if (next == '+') ShakeToken(ShakeTokenType.ADD, input.position, input.position)
+        else if (next == '^') ShakeToken(ShakeTokenType.LOGICAL_XOR, input.position, input.position)
         else if (next == '|' && peek == '|') {
             input.skip()
-            ShakeToken(ShakeTokenType.LOGICAL_OR, input.position)
+            ShakeToken(ShakeTokenType.LOGICAL_OR, input.position, input.position)
         }
         else if (next == '&' && peek == '&') {
             input.skip()
-            ShakeToken(ShakeTokenType.LOGICAL_AND, input.position)
+            ShakeToken(ShakeTokenType.LOGICAL_AND, input.position, input.position)
         }
         else if (next == '=' && peek == '=') {
             input.skip()
-            ShakeToken(ShakeTokenType.EQ_EQUALS, input.position)
+            ShakeToken(ShakeTokenType.EQ_EQUALS, input.position, input.position)
         }
         else if (next == '>' && peek == '=') {
             input.skip()
-            ShakeToken(ShakeTokenType.BIGGER_EQUALS, input.position)
+            ShakeToken(ShakeTokenType.BIGGER_EQUALS, input.position, input.position)
         }
         else if (next == '<' && peek == '=') {
             input.skip()
-            ShakeToken(ShakeTokenType.SMALLER_EQUALS, input.position)
+            ShakeToken(ShakeTokenType.SMALLER_EQUALS, input.position, input.position)
         }
-        else if (next == '>') ShakeToken(ShakeTokenType.BIGGER, input.position)
-        else if (next == '<') ShakeToken(ShakeTokenType.SMALLER, input.position)
-        else if (next == '=') ShakeToken(ShakeTokenType.ASSIGN, input.position)
-        else if (next == '(') ShakeToken(ShakeTokenType.LPAREN, input.position)
-        else if (next == ')') ShakeToken(ShakeTokenType.RPAREN, input.position)
-        else if (next == '{') ShakeToken(ShakeTokenType.LCURL, input.position)
-        else if (next == '}') return ShakeToken(ShakeTokenType.RCURL, input.position)
-        else if (next == '[') ShakeToken(ShakeTokenType.LSQBR, input.position)
-        else if (next == ']') ShakeToken(ShakeTokenType.RSQBR, input.position)
+        else if (next == '>') ShakeToken(ShakeTokenType.BIGGER, input.position, input.position)
+        else if (next == '<') ShakeToken(ShakeTokenType.SMALLER, input.position, input.position)
+        else if (next == '=') ShakeToken(ShakeTokenType.ASSIGN, input.position, input.position)
+        else if (next == '(') ShakeToken(ShakeTokenType.LPAREN, input.position, input.position)
+        else if (next == ')') ShakeToken(ShakeTokenType.RPAREN, input.position, input.position)
+        else if (next == '{') ShakeToken(ShakeTokenType.LCURL, input.position, input.position)
+        else if (next == '}') return ShakeToken(ShakeTokenType.RCURL, input.position, input.position)
+        else if (next == '[') ShakeToken(ShakeTokenType.LSQBR, input.position, input.position)
+        else if (next == ']') ShakeToken(ShakeTokenType.RSQBR, input.position, input.position)
         else throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
     }
 
     private fun makeNumber(): ShakeToken {
         val numStr = StringBuilder()
         var dot = false
+        val start = input.position
         numStr.append(input.actual())
         while (input.hasNext() && Characters.isNumberOrDotCharacter(input.peek())) {
             if (input.peek() == '.') {
@@ -125,14 +126,12 @@ abstract class ShakeLexingBase(
             }
             numStr.append(input.next())
         }
-        return if (dot) ShakeToken(ShakeTokenType.DOUBLE, numStr.toString(), input.position) else ShakeToken(
-            ShakeTokenType.INTEGER,
-            numStr.toString(),
-            input.position,
-        )
+        return if (dot) ShakeToken(ShakeTokenType.DOUBLE, numStr.toString(), start, input.position)
+            else ShakeToken(ShakeTokenType.INTEGER, numStr.toString(), start, input.position)
     }
 
     private fun makeIdentifier(): ShakeToken {
+        val start = input.position
         val identifier = StringBuilder()
         identifier.append(input.actual())
         while (input.hasNext() && Characters.isIdentifierCharacter(input.peek())) {
@@ -190,13 +189,14 @@ abstract class ShakeLexingBase(
                 "unsigned" -> ShakeTokenType.KEYWORD_UNSIGNED
                 "void" -> ShakeTokenType.KEYWORD_VOID
                 "while" -> ShakeTokenType.KEYWORD_WHILE
-                else -> return ShakeToken(ShakeTokenType.IDENTIFIER, identifier.toString(), end)
-            }, end
+                else -> return ShakeToken(ShakeTokenType.IDENTIFIER, identifier.toString(), start, end)
+            }, start, end
         )
     }
 
     private fun makeIdentifier2(): ShakeToken {
         val string = StringBuilder()
+        val start = input.position
         if (input.actual() == '`') {
             while (input.hasNext() && input.next() != '`') {
                 if (input.actual() == '\\') {
@@ -225,11 +225,12 @@ abstract class ShakeLexingBase(
             }
             if (input.actual() != '`') throw LexerError("Token name must be enclosed in '`'")
         }
-        return ShakeToken(ShakeTokenType.IDENTIFIER, string.toString(), input.position)
+        return ShakeToken(ShakeTokenType.IDENTIFIER, string.toString(), start, input.position)
     }
 
     private fun makeString(): ShakeToken {
         val string = StringBuilder()
+        val start = input.position
         if (input.actual() == '"') {
             while (input.hasNext() && input.next() != '"') {
                 if (input.actual() == '\\') {
@@ -258,10 +259,11 @@ abstract class ShakeLexingBase(
             }
             if (input.actual() != '"') throw LexerError("String must end with a '\"'")
         }
-        return ShakeToken(ShakeTokenType.STRING, string.toString(), input.position)
+        return ShakeToken(ShakeTokenType.STRING, string.toString(), start, input.position)
     }
 
     private fun makeCharacter(): ShakeToken {
+        val start = input.position
         val c: String = if (input.next() == '\\') {
             when (input.next()) {
                 't' -> "\\t"
@@ -287,7 +289,7 @@ abstract class ShakeLexingBase(
             }
         } else input.actual().toString()
         if (input.next() != '\'') throw LexerError("Char must end with a \"'\"")
-        return ShakeToken(ShakeTokenType.CHARACTER, c, input.position)
+        return ShakeToken(ShakeTokenType.CHARACTER, c, start, input.position)
     }
 
     private fun singleLineComment() {

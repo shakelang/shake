@@ -3,19 +3,25 @@ version = "0.1.0"
 description = "Shake"
 
 dependencies {
-
-    kover(project(":util:testlib"))
     kover(project(":util:colorlib"))
-    kover(project(":util:parseutils"))
-    kover(project(":util:shason"))
+    kover(project(":util:common-io"))
+    kover(project(":util:environment"))
     kover(project(":util:jvmlib"))
+    kover(project(":util:parseutils"))
+    kover(project(":util:primitives"))
+    kover(project(":util:shason"))
+    kover(project(":util:testlib"))
+
     kover(project(":shake:compiler:lexer"))
     kover(project(":shake:compiler:parser"))
+    kover(project(":shake:compiler:shakelib"))
+
+    kover(project(":shake:compiler:jsgenerator"))
     kover(project(":shake:compiler:processor"))
-    kover(project(":shake:shasambly:shastools"))
     kover(project(":shake:shasambly:shasambly"))
     kover(project(":shake:shasambly:shasp"))
-
+    kover(project(":shake:shasambly:shastools"))
+//    kover(project(":shake:shasambly:java-dist"))
 }
 
 plugins {
@@ -103,7 +109,7 @@ tasks.register<TestReport>("genReport") {
     group = "verification"
     val testTasks = allprojects.flatMap { it.tasks.withType(Test::class) }
     dependsOn(testTasks)
-    destinationDir = file("${layout.buildDirectory}/reports/tests")
+    destinationDirectory.set(file("${layout.buildDirectory}/reports/tests"))
     reportOn(testTasks)
 }
 

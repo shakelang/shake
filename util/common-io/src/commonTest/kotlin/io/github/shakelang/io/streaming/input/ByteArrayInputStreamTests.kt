@@ -1,53 +1,198 @@
 package io.github.shakelang.io.streaming.input
 
+import io.github.shakelang.primitives.bytes.toBytes
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
 class ByteArrayInputStreamTests {
 
     @Test
-    fun test() {
-        val input = ByteArrayInputStream(byteArrayOf(1, 2, 3, 4, 5, -1, -2, -3, -4, -5))
-        assertEquals(1, input.read().toUByte().toByte())
-        assertEquals(2, input.read().toUByte().toByte())
-        assertEquals(3, input.read().toUByte().toByte())
-        assertEquals(4, input.read().toUByte().toByte())
-        assertEquals(5, input.read().toUByte().toByte())
-        assertEquals(-1, input.read().toUByte().toByte())
-        assertEquals(-2, input.read().toUByte().toByte())
-        assertEquals(-3, input.read().toUByte().toByte())
-        assertEquals(-4, input.read().toUByte().toByte())
-        assertEquals(-5, input.read().toUByte().toByte())
+    fun testConstructor() {
+        val stream = "Hello".toBytes().inputStream()
+        assertEquals(5, stream.available())
+        assertEquals('H'.code, stream.read())
+
+        // Test with offset and length
+        val stream2 = ByteArrayInputStream("Hello".toBytes(), 1, 3)
+        assertEquals(3, stream2.available())
+        assertEquals('e'.code, stream2.read())
+        assertEquals('l'.code, stream2.read())
+        assertEquals('l'.code, stream2.read())
+        assertEquals(-1, stream2.read())
     }
 
     @Test
-    fun bulkReadTest() {
-        val input = ByteArrayInputStream(byteArrayOf(1, 2, 3, 4, 5, -1, -2, -3, -4, -5))
-        val buffer = ByteArray(5)
-        assertEquals(5, input.read(buffer))
-        assertEquals(1, buffer[0])
-        assertEquals(2, buffer[1])
-        assertEquals(3, buffer[2])
-        assertEquals(4, buffer[3])
-        assertEquals(5, buffer[4])
-        assertEquals(5, input.read(buffer))
-        assertEquals(-1, buffer[0])
-        assertEquals(-2, buffer[1])
-        assertEquals(-3, buffer[2])
-        assertEquals(-4, buffer[3])
-        assertEquals(-5, buffer[4])
+    fun testRead() {
+        val stream = "Hello".toBytes().inputStream()
+
+        assertEquals('H'.code, stream.read())
+        assertEquals('e'.code, stream.read())
+        assertEquals('l'.code, stream.read())
+        assertEquals('l'.code, stream.read())
+        assertEquals('o'.code, stream.read())
+        assertEquals(-1, stream.read())
+    }
+
+    @Test
+    fun testReadWithByteArray() {
+        val stream = "Hello".toBytes().inputStream()
+        val buffer = ByteArray(2)
+        assertEquals(2, stream.read(buffer))
+        assertEquals('H'.code.toByte(), buffer[0])
+        assertEquals('e'.code.toByte(), buffer[1])
+        assertEquals(2, stream.read(buffer))
+        assertEquals('l'.code.toByte(), buffer[0])
+        assertEquals('l'.code.toByte(), buffer[1])
+        assertEquals(1, stream.read(buffer))
+        assertEquals('o'.code.toByte(), buffer[0])
+        assertEquals(108, buffer[1])
+    }
+
+    @Test
+    fun testReadWithByteArrayAndOffset() {
+        val stream = "Hello".toBytes().inputStream()
+        val buffer = ByteArray(4)
+        assertEquals(2, stream.read(buffer, 1, 2))
+        assertEquals(0, buffer[0])
+        assertEquals('H'.code.toByte(), buffer[1])
+        assertEquals('e'.code.toByte(), buffer[2])
+        assertEquals(0, buffer[3])
+        assertEquals(2, stream.read(buffer, 1, 2))
+        assertEquals(0, buffer[0])
+        assertEquals('l'.code.toByte(), buffer[1])
+        assertEquals('l'.code.toByte(), buffer[2])
+        assertEquals(0, buffer[3])
+        assertEquals(1, stream.read(buffer, 1, 2))
+        assertEquals(0, buffer[0])
+        assertEquals('o'.code.toByte(), buffer[1])
+        assertEquals(108, buffer[2])
+        assertEquals(0, buffer[3])
     }
 
     @Test
     fun testSkip() {
-        val stream = ByteArrayInputStream(byteArrayOf(0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F))
-        assertEquals(0x00, stream.read())
-        stream.skip(3)
-        assertEquals(0x04, stream.read())
-        stream.skip(4)
-        assertEquals(0x09, stream.read())
-        stream.skip(5)
-        assertEquals(0x0F, stream.read())
+        val stream = "Hello".toBytes().inputStream()
+        assertEquals(2, stream.skip(2))
+        assertEquals('l'.code, stream.read())
+        assertEquals(2, stream.skip(2))
+        assertEquals(-1, stream.read())
+
+        // Test with to many bytes to skip
+        val stream2 = "Hello".toBytes().inputStream()
+        assertEquals(5, stream2.skip(10))
+        assertEquals(-1, stream2.read())
+
+        // Test with negative amount of bytes to skip
+        val stream3 = "Hello".toBytes().inputStream()
+        assertEquals(0, stream3.skip(-10))
+        assertEquals('H'.code, stream3.read())
+    }
+
+    @Test
+    fun testReadNBytes() {
+        val stream = "Hello".toBytes().inputStream()
+        assertContentEquals("He".toBytes(), stream.readNBytes(2))
+        assertContentEquals("ll".toBytes(), stream.readNBytes(2))
+        assertContentEquals(byteArrayOf(111), stream.readNBytes(1))
+    }
+
+    @Test
+    fun testReadNBytesWithOffset() {
+        val stream = "Hello".toBytes().inputStream()
+        val buffer = ByteArray(4)
+        assertEquals(2, stream.readNBytes(buffer, 1, 2))
+        assertEquals(0, buffer[0])
+        assertEquals('H'.code.toByte(), buffer[1])
+        assertEquals('e'.code.toByte(), buffer[2])
+        assertEquals(0, buffer[3])
+        assertEquals(2, stream.readNBytes(buffer, 1, 2))
+        assertEquals(0, buffer[0])
+        assertEquals('l'.code.toByte(), buffer[1])
+        assertEquals('l'.code.toByte(), buffer[2])
+        assertEquals(0, buffer[3])
+        assertEquals(1, stream.readNBytes(buffer, 1, 2))
+        assertEquals(0, buffer[0])
+        assertEquals('o'.code.toByte(), buffer[1])
+        assertEquals(108, buffer[2])
+        assertEquals(0, buffer[3])
+    }
+
+    @Test
+    fun testMarkSupported() {
+        val stream = "Hello".toBytes().inputStream()
+        assertEquals(true, stream.markSupported())
+    }
+
+    @Test
+    fun testMark() {
+        val stream = "Hello".toBytes().inputStream()
+        stream.mark(2)
+        assertEquals('H'.code, stream.read())
+        assertEquals('e'.code, stream.read())
+        stream.reset()
+        assertEquals('H'.code, stream.read())
+        assertEquals('e'.code, stream.read())
+    }
+
+    @Test
+    fun testAvailable() {
+        val stream = "Hello".toBytes().inputStream()
+        assertEquals(5, stream.available())
+        stream.read()
+        assertEquals(4, stream.available())
+        stream.readNBytes(2)
+        assertEquals(2, stream.available())
+        stream.skip(2)
+        assertEquals(0, stream.available())
+    }
+
+    @Test
+    fun testReset() {
+        val stream = "Hello".toBytes().inputStream()
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.reset()
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.read()
+    }
+
+    @Test
+    fun testClose() {
+        val stream = "Hello".toBytes().inputStream()
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.close()
+    }
+
+    @Test
+    fun testToString() {
+        val stream = "Hello".toBytes().inputStream()
+
+        assertEquals(
+            "ByteArrayInputStream(pos=0, mark=0, count=5)",
+            stream.toString()
+        )
+
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.read()
+        stream.read()
+
+        assertEquals(
+            "ByteArrayInputStream(pos=5, mark=0, count=5)",
+            stream.toString()
+        )
     }
 
 }

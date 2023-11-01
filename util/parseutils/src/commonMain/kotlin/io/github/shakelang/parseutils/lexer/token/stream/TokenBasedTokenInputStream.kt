@@ -34,6 +34,7 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     open operator fun get(position: Int): T {
+        if(position < 0 || position >= tokens.size) throw Error("Invalid position")
         return tokens[position]
     }
 
