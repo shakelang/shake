@@ -1,5 +1,9 @@
 # Changelog of `parseutils`
 
+## 0.1.3 (2023-11-01)
+
+- Move `io.github.shakelang.parseutils` to `io.github.shakelang.shake.util.parseutils`
+
 ## 0.1.2
 
 - Move `environment` to its own subpackage

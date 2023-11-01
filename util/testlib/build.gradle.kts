@@ -7,7 +7,7 @@ plugins {
 }
 
 group = projectGroup("testlib")
-version = "0.1.0"
+version = "0.1.1"
 description = "Utilities for parsing stuff with kotlin"
 
 val projectName = name

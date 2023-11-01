@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.processor
 
-import io.github.shakelang.parseutils.File
-import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
+import io.github.shakelang.shake.util.parseutils.File
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.ShakeParser
 import io.github.shakelang.shake.parser.node.*

@@ -1,10 +1,11 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.interpreter
 
-import io.github.shakelang.parseutils.ElementLoopController
-import io.github.shakelang.parseutils.IndexedElementLoopController
-import io.github.shakelang.primitives.bytes.*
+import io.github.shakelang.shake.util.parseutils.ElementLoopController
+import io.github.shakelang.shake.util.parseutils.IndexedElementLoopController
+import io.github.shakelang.shake.util.primitives.bytes.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+import io.github.shakelang.shake.util.primitives.bytes.*
 import kotlin.experimental.and
 
 /**

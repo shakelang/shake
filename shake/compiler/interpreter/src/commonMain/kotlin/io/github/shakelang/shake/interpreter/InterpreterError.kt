@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.interpreter
 
-import io.github.shakelang.parseutils.CompilerError
-import io.github.shakelang.parseutils.characters.position.Position
-import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.parseutils.CompilerError
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 @Suppress("unused")
 class InterpreterError : CompilerError {
