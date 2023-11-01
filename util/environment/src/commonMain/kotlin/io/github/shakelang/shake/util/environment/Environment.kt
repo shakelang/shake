@@ -1,4 +1,4 @@
-package io.github.shakelang.environment
+package io.github.shakelang.shake.util.environment
 
 /**
  * Describes an Environment of the multiplatform project execution

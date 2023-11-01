@@ -1,6 +1,6 @@
 package io.github.shakelang.parseutils
 
-import io.github.shakelang.environment.Environment
+import io.github.shakelang.shake.util.environment.Environment
 
 external fun require(name: String): dynamic
 external val require: dynamic

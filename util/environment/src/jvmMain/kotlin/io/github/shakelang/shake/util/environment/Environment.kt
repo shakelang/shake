@@ -1,4 +1,4 @@
-package io.github.shakelang.environment
+package io.github.shakelang.shake.util.environment
 
 actual class JavaEnvironment : Environment(EnvironmentType.JAVA) {
     actual val javaVersion: String get() = System.getProperty("java.version")

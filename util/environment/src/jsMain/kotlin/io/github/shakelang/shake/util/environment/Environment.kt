@@ -1,4 +1,4 @@
-package io.github.shakelang.environment
+package io.github.shakelang.shake.util.environment
 
 external val process: dynamic
 external val window: dynamic

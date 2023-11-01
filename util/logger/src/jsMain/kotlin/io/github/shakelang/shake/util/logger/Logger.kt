@@ -4,7 +4,7 @@ import io.github.shakelang.shake.util.colorlib.functional.blue
 import io.github.shakelang.shake.util.colorlib.functional.cyan
 import io.github.shakelang.shake.util.colorlib.functional.red
 import io.github.shakelang.shake.util.colorlib.functional.yellow
-import io.github.shakelang.environment.getRunningEnvironment
+import io.github.shakelang.shake.util.environment.getRunningEnvironment
 import kotlin.js.Console
 
 inline fun Console.debug(vararg message: String): Unit = asDynamic().debug(message) as Unit
