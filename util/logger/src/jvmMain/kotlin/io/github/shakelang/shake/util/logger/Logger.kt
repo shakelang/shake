@@ -3,6 +3,7 @@ package io.github.shakelang.shake.util.logger
 object JavaColoredConsoleLogger {
     private fun printInfo(message: String) = println(message)
     private fun printDebug(message: String) = println(message)
+    private fun printSuccess(message: String) = println(message)
     private fun printWarn(message: String) = println(message)
     private fun printError(message: String) = System.err.println(message)
     private fun printFatal(message: String) = System.err.println(message)
@@ -11,6 +12,7 @@ object JavaColoredConsoleLogger {
         "",
         infoOutput = ::printInfo,
         debugOutput = ::printDebug,
+        successOutput = ::printSuccess,
         warnOutput = ::printWarn,
         errorOutput = ::printError,
         fatalOutput = ::printFatal,
@@ -21,6 +23,7 @@ object JavaColoredConsoleLogger {
 object JavaConsoleLogger {
     private fun printInfo(message: String) = println(message)
     private fun printDebug(message: String) = println(message)
+    private fun printSuccess(message: String) = println(message)
     private fun printWarn(message: String) = println(message)
     private fun printError(message: String) = System.err.println(message)
     private fun printFatal(message: String) = System.err.println(message)
@@ -29,6 +32,7 @@ object JavaConsoleLogger {
         "",
         infoOutput = ::printInfo,
         debugOutput = ::printDebug,
+        successOutput = ::printSuccess,
         warnOutput = ::printWarn,
         errorOutput = ::printError,
         fatalOutput = ::printFatal,
