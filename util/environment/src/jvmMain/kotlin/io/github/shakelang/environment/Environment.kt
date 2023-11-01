@@ -5,7 +5,9 @@ actual class JavaEnvironment : Environment(EnvironmentType.JAVA) {
 }
 
 actual class JavaScriptEnvironment : Environment(EnvironmentType.JAVASCRIPT) {
-    actual val isNodeAvailable: Boolean = throw Error("No javascript available in java!")
+    actual val isNodeAvailable: Boolean get() = throw Error("No javascript available in java!")
+    actual val nodeVersion: String get() = throw Error("No javascript available in java!")
+    actual val isBrowser: Boolean get() = throw Error("No javascript available in java!")
 }
 
 actual fun getRunningEnvironment(): Environment = JavaEnvironment()

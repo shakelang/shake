@@ -7,6 +7,7 @@ dependencies {
     kover(project(":util:common-io"))
     kover(project(":util:environment"))
     kover(project(":util:jvmlib"))
+    kover(project(":util:logger"))
     kover(project(":util:parseutils"))
     kover(project(":util:primitives"))
     kover(project(":util:shason"))

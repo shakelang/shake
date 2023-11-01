@@ -30,6 +30,14 @@ abstract class Environment (
     val isJavaScriptNode: Boolean get() = isJavaScript && toJavaScript().isNodeAvailable
 
     /**
+     * Is the Environment a JavaScript Environment inside a browser
+     *
+     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
+     */
+    val isJavaScriptBrowser: Boolean get() = isJavaScript && toJavaScript().isBrowser
+
+
+    /**
      * Is the Environment a JVM Environment
      *
      * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
@@ -90,6 +98,16 @@ expect class JavaScriptEnvironment : Environment {
      * Is Node available in the [JavaScriptEnvironment]
      */
     val isNodeAvailable: Boolean
+
+    /**
+     * The node version of the [JavaScriptEnvironment]
+     */
+    val nodeVersion: String
+
+    /**
+     * Is the [JavaScriptEnvironment] running in a browser
+     */
+    val isBrowser: Boolean
 
 }
 
