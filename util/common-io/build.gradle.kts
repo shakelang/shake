@@ -7,7 +7,7 @@ plugins {
 }
 
 group = projectGroup("util.common-io")
-version = "0.1.1"
+version = "0.1.2"
 description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
 
 val projectName = name

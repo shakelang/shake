@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.shasp.parser.nodes
 
-import io.github.shakelang.shason.json
+import io.github.shakelang.shake.util.shason.json
 
 interface ShasPNode {
     fun toJson(): Map<String, Any?>?

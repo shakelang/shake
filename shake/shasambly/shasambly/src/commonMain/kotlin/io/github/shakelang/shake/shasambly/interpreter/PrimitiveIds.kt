@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.shasambly.interpreter
 
-import io.github.shakelang.parseutils.generateUInt
+import io.github.shakelang.shake.util.parseutils.generateUInt
 
 object PrimitiveIds {
 

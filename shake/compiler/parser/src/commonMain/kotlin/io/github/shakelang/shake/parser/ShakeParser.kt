@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.parser
 
-import io.github.shakelang.parseutils.CompilerError
-import io.github.shakelang.parseutils.characters.Characters.parseString
-import io.github.shakelang.parseutils.characters.position.Position
-import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.parseutils.CompilerError
+import io.github.shakelang.shake.util.parseutils.characters.Characters.parseString
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import io.github.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import io.github.shakelang.shake.parser.node.*
@@ -1364,7 +1364,7 @@ class ShakeParserImpl (
 
 
     inner class ParserError(message: String?, name: String?, details: String?, start: Position?, end: Position?) :
-        CompilerError(
+        io.github.shakelang.shake.util.parseutils.CompilerError(
             message!!, name!!, details!!, start!!, end!!
         ) {
         constructor(

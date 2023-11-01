@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.shasambly
 
-import io.github.shakelang.parseutils.characters.source.CharacterSource
-import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.shasambly.shasp.generator.ShasPShasamblyGenerator
 import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexer
 import io.github.shakelang.shake.shasambly.shasp.parser.ShasPParser

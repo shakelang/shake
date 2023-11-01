@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.parser.node
 
-import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 class ShakePackageNode(map: PositionMap, val pkg: Array<String>) : ShakeFileChildNodeImpl(map) {
 

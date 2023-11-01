@@ -1,7 +1,7 @@
 @file:Suppress("NOTHING_TO_INLINE")
 package io.github.shakelang.shake.lexer.token
 
-import io.github.shakelang.parseutils.lexer.token.TokenType
+import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
 
 /**
  * These are the different types of tokens, that the lexer creates

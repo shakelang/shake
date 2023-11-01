@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.shasambly.interpreter
 
-import io.github.shakelang.parseutils.bGenerateUByte
+import io.github.shakelang.shake.util.parseutils.bGenerateUByte
 
 object Opcodes {
 

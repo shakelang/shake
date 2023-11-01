@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.parser.node.objects
 
-import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import io.github.shakelang.shake.parser.node.ShakeNamespaceNode
