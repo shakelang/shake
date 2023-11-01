@@ -17,10 +17,8 @@ kotlin {
         implementation(project(":util:environment"))
         implementation(project(":util:colorlib"))
         testImplementation(kotlin("test"))
-    }
 
-    js {
-        dependencies {
+        this.js {
             implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.9.1")
         }
     }

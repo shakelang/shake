@@ -127,3 +127,15 @@ tasks.register("copyDokkaHtml") {
         dependsOn("${it.path}:dokkaHtml")
     }
 }
+
+
+val testAggregate = tasks.register<TestReport>("testAggregate") {
+    group = "verification"
+
+    subprojects.forEach {
+        if (it.tasks.none { task -> "allTests" == task.name }) return@forEach
+        dependsOn("${it.path}:allTests")
+    }
+    destinationDirectory.set(file("$buildDir/reports/tests/aggregate"))
+    reportOn(subprojects.flatMap { it.tasks.withType<Test>() })
+}
