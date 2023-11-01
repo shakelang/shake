@@ -5,42 +5,21 @@ import io.github.shakelang.colorlib.functional.cyan
 import io.github.shakelang.colorlib.functional.red
 import io.github.shakelang.colorlib.functional.yellow
 
-object CommonColoredConsoleLogger {
-    private fun printInfo(message: String) = println(message.cyan().string())
-    private fun printDebug(message: String) = println(message.blue().string())
-    private fun printSuccess(message: String) = println(message.blue().string())
-    private fun printWarn(message: String) = println(message.yellow().string())
-    private fun printError(message: String) = println(message.red().string())
-    private fun printFatal(message: String) = println(message.red().string())
-
-    val logger = Logger(
-        "",
-        infoOutput = ::printInfo,
-        debugOutput = ::printDebug,
-        successOutput = ::printSuccess,
-        warnOutput = ::printWarn,
-        errorOutput = ::printError,
-        fatalOutput = ::printFatal
-    )
+object CommonColoredConsoleLogger : LoggerPipe() {
+    override fun log(level: LogLevel, message: String) {
+        when (level) {
+            LogLevel.DEBUG -> println(message.cyan())
+            LogLevel.INFO -> println(message.blue())
+            LogLevel.SUCCESS -> println(message)
+            LogLevel.WARN -> println(message.yellow())
+            LogLevel.ERROR -> println(message.red())
+            LogLevel.FATAL -> println(message.red())
+        }
+    }
 }
 
-object CommonConsoleLogger {
-    private fun printInfo(message: String) = println(message)
-    private fun printDebug(message: String) = println(message)
-    private fun printSuccess(message: String) = println(message)
-    private fun printWarn(message: String) = println(message)
-    private fun printError(message: String) = println(message)
-    private fun printFatal(message: String) = println(message)
-
-    val logger = Logger(
-        "",
-        infoOutput = ::printInfo,
-        debugOutput = ::printDebug,
-        successOutput = ::printSuccess,
-        warnOutput = ::printWarn,
-        errorOutput = ::printError,
-        fatalOutput = ::printFatal
-    )
+object CommonConsoleLogger : LoggerPipe() {
+    override fun log(level: LogLevel, message: String) = println(message)
 }
 
 class Logger (
@@ -53,12 +32,7 @@ class Logger (
     var printWarn: Boolean = true,
     var printError: Boolean = true,
     var printFatal: Boolean = true,
-    private val infoOutput: (String) -> Unit = { println(it) },
-    private val debugOutput: (String) -> Unit = { println(it) },
-    private val successOutput: (String) -> Unit = { println(it) },
-    private val warnOutput: (String) -> Unit = { println(it) },
-    private val errorOutput: (String) -> Unit = { println(it) },
-    private val fatalOutput: (String) -> Unit = { println(it) }
+    val pipes: MutableList<LoggerPipe> = mutableListOf(),
 ) {
 
     // We'll mainly write to this list
@@ -68,57 +42,41 @@ class Logger (
     val logs: List<LogEntry> get() = entries.toList()
 
     fun log(level: LogLevel, message: String) {
-        when (level) {
-            LogLevel.DEBUG -> if (printDebug) debug(message)
-            LogLevel.INFO -> if (printInfo) info(message)
-            LogLevel.SUCCESS -> if (printInfo) success(message)
-            LogLevel.WARN -> if (printWarn) warn(message)
-            LogLevel.ERROR -> if (printError) error(message)
-            LogLevel.FATAL -> if (printFatal) fatal(message)
+        this.entries.add(LogEntry(level, message))
+        this.pipes.forEach {
+            it.log(level, message)
         }
     }
 
     private fun transform(message: String) = if (printName) "[$name] $message" else message
 
 
-    fun debug(message: String): Boolean {
-        this.entries.add(LogEntry(LogLevel.DEBUG, message))
-        if (printDebug) this.infoOutput(transform(message))
-        return printDebug
-    }
+    fun debug(message: String) = this.log(LogLevel.DEBUG, message)
+    fun info(message: String) = this.log(LogLevel.INFO, message)
+    fun success(message: String) = this.log(LogLevel.SUCCESS, message)
+    fun warn(message: String) = this.log(LogLevel.WARN, message)
+    fun error(message: String) = this.log(LogLevel.ERROR, message)
+    fun fatal(message: String) = this.log(LogLevel.FATAL, message)
 
-    fun info(message: String): Boolean {
-        this.entries.add(LogEntry(LogLevel.INFO, message))
-        if (printInfo) this.infoOutput(transform(message))
-        return printInfo
-    }
-
-    fun success(message: String): Boolean {
-        this.entries.add(LogEntry(LogLevel.SUCCESS, message))
-        if (printInfo) this.infoOutput(transform(message))
-        return printInfo
-    }
-
-    fun warn(message: String): Boolean {
-        this.entries.add(LogEntry(LogLevel.WARN, message))
-        if (printWarn) this.warnOutput(transform(message))
-        return printWarn
-    }
-
-    fun error(message: String): Boolean {
-        this.entries.add(LogEntry(LogLevel.ERROR, message))
-        if (printError) this.errorOutput(transform(message))
-        return printError
-    }
-
-    fun fatal(message: String): Boolean {
-        this.entries.add(LogEntry(LogLevel.FATAL, message))
-        if (printFatal) this.fatalOutput(transform(message))
-        return printFatal
+    fun pipe(pipe: LoggerPipe) {
+        this.entries.forEach {
+            pipe.log(it.level, it.message)
+        }
+        this.pipes.add(pipe)
     }
 }
 
 class LogEntry(val level: LogLevel, val message: String)
+
+abstract class LoggerPipe {
+    abstract fun log(level: LogLevel, message: String)
+    fun debug(message: String) = log(LogLevel.DEBUG, message)
+    fun info(message: String) = log(LogLevel.INFO, message)
+    fun success(message: String) = log(LogLevel.SUCCESS, message)
+    fun warn(message: String) = log(LogLevel.WARN, message)
+    fun error(message: String) = log(LogLevel.ERROR, message)
+    fun fatal(message: String) = log(LogLevel.FATAL, message)
+}
 
 enum class LogLevel {
     DEBUG,
@@ -129,6 +87,4 @@ enum class LogLevel {
     SUCCESS;
 }
 
-expect val uncoloredLogger: Logger
-expect val coloredLogger: Logger
-expect val logger: Logger
+val logger = Logger("")

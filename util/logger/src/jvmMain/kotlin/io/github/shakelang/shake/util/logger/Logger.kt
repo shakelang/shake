@@ -1,6 +1,18 @@
 package io.github.shakelang.shake.util.logger
 
-object JavaColoredConsoleLogger {
+object JavaColoredConsoleLogger : LoggerPipe() {
+
+    override fun log(level: LogLevel, message: String) {
+        when (level) {
+            LogLevel.INFO -> printInfo(message)
+            LogLevel.DEBUG -> printDebug(message)
+            LogLevel.SUCCESS -> printSuccess(message)
+            LogLevel.WARN -> printWarn(message)
+            LogLevel.ERROR -> printError(message)
+            LogLevel.FATAL -> printFatal(message)
+        }
+    }
+
     private fun printInfo(message: String) = println(message)
     private fun printDebug(message: String) = println(message)
     private fun printSuccess(message: String) = println(message)
@@ -8,19 +20,21 @@ object JavaColoredConsoleLogger {
     private fun printError(message: String) = System.err.println(message)
     private fun printFatal(message: String) = System.err.println(message)
 
-    val logger = Logger(
-        "",
-        infoOutput = ::printInfo,
-        debugOutput = ::printDebug,
-        successOutput = ::printSuccess,
-        warnOutput = ::printWarn,
-        errorOutput = ::printError,
-        fatalOutput = ::printFatal,
-        printDebug = true
-    )
 }
 
-object JavaConsoleLogger {
+object JavaConsoleLogger : LoggerPipe() {
+
+    override fun log(level: LogLevel, message: String) {
+        when (level) {
+            LogLevel.INFO -> printInfo(message)
+            LogLevel.DEBUG -> printDebug(message)
+            LogLevel.SUCCESS -> printSuccess(message)
+            LogLevel.WARN -> printWarn(message)
+            LogLevel.ERROR -> printError(message)
+            LogLevel.FATAL -> printFatal(message)
+        }
+    }
+
     private fun printInfo(message: String) = println(message)
     private fun printDebug(message: String) = println(message)
     private fun printSuccess(message: String) = println(message)
@@ -28,19 +42,4 @@ object JavaConsoleLogger {
     private fun printError(message: String) = System.err.println(message)
     private fun printFatal(message: String) = System.err.println(message)
 
-    val logger = Logger(
-        "",
-        infoOutput = ::printInfo,
-        debugOutput = ::printDebug,
-        successOutput = ::printSuccess,
-        warnOutput = ::printWarn,
-        errorOutput = ::printError,
-        fatalOutput = ::printFatal,
-        printDebug = true
-    )
 }
-
-actual val coloredLogger get() = JavaColoredConsoleLogger.logger
-actual val uncoloredLogger get() = JavaConsoleLogger.logger
-
-actual val logger get() = coloredLogger

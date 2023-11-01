@@ -9,7 +9,19 @@ import kotlin.js.Console
 
 inline fun Console.debug(vararg message: String): Unit = asDynamic().debug(message) as Unit
 
-object JsColoredBrowserConsoleLogger {
+object JsColoredBrowserConsoleLogger : LoggerPipe() {
+
+    override fun log(level: LogLevel, message: String) {
+        when (level) {
+            LogLevel.INFO -> printInfo(message)
+            LogLevel.DEBUG -> printDebug(message)
+            LogLevel.SUCCESS -> printSuccess(message)
+            LogLevel.WARN -> printWarn(message)
+            LogLevel.ERROR -> printError(message)
+            LogLevel.FATAL -> printFatal(message)
+        }
+    }
+
     private fun printInfo(message: String) = console.info("%c$message", "color: cyan;")
     private fun printDebug(message: String) = console.debug("%c$message", "color: blue;")
     private fun printSuccess(message: String) = console.debug("%c$message", "color: green;")
@@ -17,19 +29,21 @@ object JsColoredBrowserConsoleLogger {
     private fun printError(message: String) = console.error("%c$message", "color: red;")
     private fun printFatal(message: String) = console.error("%c$message", "color: red;")
 
-    val logger = Logger(
-        "",
-        infoOutput = ::printInfo,
-        debugOutput = ::printDebug,
-        successOutput = ::printSuccess,
-        warnOutput = ::printWarn,
-        errorOutput = ::printError,
-        fatalOutput = ::printFatal,
-        printDebug = true
-    )
 }
 
-object JsColoredConsoleLogger {
+object JsColoredConsoleLogger : LoggerPipe() {
+
+    override fun log(level: LogLevel, message: String) {
+        when (level) {
+            LogLevel.INFO -> printInfo(message)
+            LogLevel.DEBUG -> printDebug(message)
+            LogLevel.SUCCESS -> printSuccess(message)
+            LogLevel.WARN -> printWarn(message)
+            LogLevel.ERROR -> printError(message)
+            LogLevel.FATAL -> printFatal(message)
+        }
+    }
+
     private fun printInfo(message: String) = console.info(message.cyan().string())
     private fun printDebug(message: String) = console.debug(message.blue().string())
     private fun printSuccess(message: String) = console.debug(message.blue().string())
@@ -37,19 +51,21 @@ object JsColoredConsoleLogger {
     private fun printError(message: String) = console.error(message.red().string())
     private fun printFatal(message: String) = console.error(message.red().string())
 
-    val logger = Logger(
-        "",
-        infoOutput = ::printInfo,
-        debugOutput = ::printDebug,
-        successOutput = ::printSuccess,
-        warnOutput = ::printWarn,
-        errorOutput = ::printError,
-        fatalOutput = ::printFatal,
-        printDebug = true
-    )
 }
 
-object JsConsoleLogger {
+object JsConsoleLogger: LoggerPipe() {
+
+    override fun log(level: LogLevel, message: String) {
+        when (level) {
+            LogLevel.INFO -> printInfo(message)
+            LogLevel.DEBUG -> printDebug(message)
+            LogLevel.SUCCESS -> printSuccess(message)
+            LogLevel.WARN -> printWarn(message)
+            LogLevel.ERROR -> printError(message)
+            LogLevel.FATAL -> printFatal(message)
+        }
+    }
+
     private fun printInfo(message: String) = console.info(message)
     private fun printDebug(message: String) = console.debug(message)
     private fun printSuccess(message: String) = console.debug(message)
@@ -57,23 +73,4 @@ object JsConsoleLogger {
     private fun printError(message: String) = console.error(message)
     private fun printFatal(message: String) = console.error(message)
 
-    val logger = Logger(
-        "",
-        infoOutput = ::printInfo,
-        debugOutput = ::printDebug,
-        successOutput = ::printSuccess,
-        warnOutput = ::printWarn,
-        errorOutput = ::printError,
-        fatalOutput = ::printFatal,
-        printDebug = true
-    )
 }
-
-actual val coloredLogger get() =
-    if(getRunningEnvironment().isJavaScriptBrowser) JsColoredBrowserConsoleLogger.logger
-    else if(getRunningEnvironment().isJavaScript) JsColoredConsoleLogger.logger
-    else JsConsoleLogger.logger
-
-actual val uncoloredLogger get() = JsConsoleLogger.logger
-
-actual val logger get() = coloredLogger
