@@ -1,9 +1,9 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.shas
 
-import io.github.shakelang.io.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.io.streaming.output.DataOutputStream
-import io.github.shakelang.io.streaming.output.OutputStream
+import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.OutputStream
 import io.github.shakelang.parseutils.characters.Characters.isHexCharacter
 import io.github.shakelang.parseutils.characters.Characters.isIdentifierCharacter
 import io.github.shakelang.parseutils.characters.Characters.isIdentifierStartCharacter

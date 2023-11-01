@@ -1,8 +1,8 @@
 package io.github.shakelang.jvmlib
 
-import io.github.shakelang.io.streaming.input.CountingInputStream
-import io.github.shakelang.io.streaming.input.DataInputStream
-import io.github.shakelang.io.streaming.input.InputStream
+import io.github.shakelang.shake.util.io.streaming.input.CountingInputStream
+import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
+import io.github.shakelang.shake.util.io.streaming.input.InputStream
 import io.github.shakelang.jvmlib.infos.ClassInfo
 
 object ClassFileReader

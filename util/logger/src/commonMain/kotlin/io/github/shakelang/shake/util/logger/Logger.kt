@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.util.logger
 
-import io.github.shakelang.colorlib.functional.blue
-import io.github.shakelang.colorlib.functional.cyan
-import io.github.shakelang.colorlib.functional.red
-import io.github.shakelang.colorlib.functional.yellow
+import io.github.shakelang.shake.util.colorlib.functional.blue
+import io.github.shakelang.shake.util.colorlib.functional.cyan
+import io.github.shakelang.shake.util.colorlib.functional.red
+import io.github.shakelang.shake.util.colorlib.functional.yellow
 
 object CommonColoredConsoleLogger : LoggerPipe() {
     override fun log(level: LogLevel, message: String) {

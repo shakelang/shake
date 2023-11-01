@@ -1,6 +1,6 @@
 package io.github.shakelang.jvmlib.infos.constants
 
-import io.github.shakelang.io.streaming.output.DataOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
 import kotlin.test.*
 
 class ConstantPoolTests {

@@ -1,8 +1,8 @@
 package io.github.shakelang.parseutils
 
-import io.github.shakelang.colorlib.functional.invert
-import io.github.shakelang.colorlib.functional.join
-import io.github.shakelang.colorlib.functional.red
+import io.github.shakelang.shake.util.colorlib.functional.invert
+import io.github.shakelang.shake.util.colorlib.functional.join
+import io.github.shakelang.shake.util.colorlib.functional.red
 import io.github.shakelang.parseutils.characters.position.Position
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import kotlin.js.JsName
@@ -332,11 +332,13 @@ open class CompilerError : Error {
                 // Generate end-string
                 return ErrorMarker(
                     join(pos1.source.location, ":", pos1.line.toString(), ":", pos1.column.toString()),
-                    join(start, invert(red(
+                    join(start, invert(
+                        red(
                         pos1.source.source[pos1.index, pos2.index + 1].concatToString()
                             .replace("\t".toRegex(), " ")
                             .replace("\n".toRegex(), " ")
-                        )) + end),
+                        )
+                    ) + end),
                     join(start, pos1.source.source[pos1.index, pos2.index + 1].concatToString(), end),
                     join(' '.repeat(start.length), '^'.repeat(highlighted))
                 )

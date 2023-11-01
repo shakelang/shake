@@ -1,7 +1,7 @@
 package io.github.shakelang.parseutils
 
-import io.github.shakelang.colorlib.functional.invert
-import io.github.shakelang.colorlib.functional.red
+import io.github.shakelang.shake.util.colorlib.functional.invert
+import io.github.shakelang.shake.util.colorlib.functional.red
 import io.github.shakelang.parseutils.characters.position.Position
 import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.parseutils.characters.source.CharacterSource

@@ -1,7 +1,7 @@
 @file:Suppress("unused_variable")
 package io.github.shakelang.jvmlib.infos.constants
 
-import io.github.shakelang.io.streaming.input.inputStream
+import io.github.shakelang.shake.util.io.streaming.input.inputStream
 import io.github.shakelang.jvmlib.infos.ClassInfo
 import io.github.shakelang.jvmlib.infos.InterfaceList
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap

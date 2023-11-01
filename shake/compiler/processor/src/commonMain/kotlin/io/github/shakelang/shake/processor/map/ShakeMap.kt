@@ -1,10 +1,10 @@
 package io.github.shakelang.shake.processor.map
 
-import io.github.shakelang.io.streaming.input.ByteArrayInputStream
-import io.github.shakelang.io.streaming.input.DataInputStream
-import io.github.shakelang.io.streaming.input.InputStream
-import io.github.shakelang.io.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.io.streaming.output.OutputStream
+import io.github.shakelang.shake.util.io.streaming.input.ByteArrayInputStream
+import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
+import io.github.shakelang.shake.util.io.streaming.input.InputStream
+import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.OutputStream
 import io.github.shakelang.primitives.bytes.toBytes
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.types.*

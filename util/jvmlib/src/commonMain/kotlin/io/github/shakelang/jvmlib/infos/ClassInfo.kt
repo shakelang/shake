@@ -1,8 +1,8 @@
 package io.github.shakelang.jvmlib.infos
 
-import io.github.shakelang.io.streaming.input.DataInputStream
-import io.github.shakelang.io.streaming.output.DataOutputStream
-import io.github.shakelang.io.streaming.output.OutputStream
+import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
+import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.OutputStream
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
 import io.github.shakelang.jvmlib.infos.constants.ConstantClassInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantInfo

@@ -1,11 +1,11 @@
 package io.github.shakelang.jvmlib.infos
 
-import io.github.shakelang.io.streaming.input.DataInputStream
-import io.github.shakelang.io.streaming.input.InputStream
-import io.github.shakelang.io.streaming.input.dataStream
-import io.github.shakelang.io.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.io.streaming.output.DataOutputStream
-import io.github.shakelang.io.streaming.output.OutputStream
+import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
+import io.github.shakelang.shake.util.io.streaming.input.InputStream
+import io.github.shakelang.shake.util.io.streaming.input.dataStream
+import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.OutputStream
 import io.github.shakelang.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.jvmlib.infos.constants.ConstantUser

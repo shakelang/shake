@@ -1,7 +1,7 @@
 package io.github.shakelang.jvmlib.infos.fields
 
-import io.github.shakelang.io.streaming.input.dataStream
-import io.github.shakelang.io.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.shake.util.io.streaming.input.dataStream
+import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.jvmlib.infos.attributes.AttributeMap
 import io.github.shakelang.jvmlib.infos.constants.Constant
 import io.github.shakelang.jvmlib.infos.constants.ConstantPool
