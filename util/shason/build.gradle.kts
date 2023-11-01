@@ -2,7 +2,7 @@ import conventions.dependencies
 import conventions.projectGroup
 
 group = projectGroup("util.shason")
-version = "0.1.0"
+version = "0.1.1"
 description = "A json parser implemented in kotlin (mpp)"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 

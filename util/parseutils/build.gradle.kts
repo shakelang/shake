@@ -7,7 +7,7 @@ plugins {
 }
 
 group = projectGroup("util.parseutils")
-version = "0.1.2"
+version = "0.1.3"
 description = "Utilities for parsing stuff with kotlin"
 
 val projectName = name
