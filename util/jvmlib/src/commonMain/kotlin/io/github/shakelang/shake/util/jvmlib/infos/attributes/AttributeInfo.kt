@@ -7,9 +7,9 @@ import io.github.shakelang.shake.util.jvmlib.infos.ClassInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.primitives.bytes.setBytes
-import io.github.shakelang.primitives.bytes.setInt
-import io.github.shakelang.primitives.bytes.setUnsignedShort
+import io.github.shakelang.shake.util.primitives.bytes.setBytes
+import io.github.shakelang.shake.util.primitives.bytes.setInt
+import io.github.shakelang.shake.util.primitives.bytes.setUnsignedShort
 
 abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
 

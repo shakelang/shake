@@ -10,7 +10,7 @@ import io.github.shakelang.shake.util.jvmlib.infos.ClassInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
-import io.github.shakelang.shason.json
+import io.github.shakelang.shake.util.shason.json
 
 class FieldList(val fields: List<FieldInfo>): List<FieldInfo> by fields, ConstantUser {
 

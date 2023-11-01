@@ -1,7 +1,7 @@
 @file:OptIn(ExperimentalUnsignedTypes::class)
 package io.github.shakelang.shake.util.io.streaming.input
 
-import io.github.shakelang.primitives.bytes.byteArrayOf
+import io.github.shakelang.shake.util.primitives.bytes.byteArrayOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

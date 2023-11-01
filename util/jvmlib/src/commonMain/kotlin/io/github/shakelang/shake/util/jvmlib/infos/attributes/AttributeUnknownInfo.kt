@@ -4,10 +4,10 @@ import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.primitives.bytes.getBytes
-import io.github.shakelang.primitives.bytes.getInt
-import io.github.shakelang.primitives.bytes.getUnsignedShort
-import io.github.shakelang.primitives.bytes.toHexString
+import io.github.shakelang.shake.util.primitives.bytes.getBytes
+import io.github.shakelang.shake.util.primitives.bytes.getInt
+import io.github.shakelang.shake.util.primitives.bytes.getUnsignedShort
+import io.github.shakelang.shake.util.primitives.bytes.toHexString
 
 class AttributeUnknownInfo(name: ConstantUtf8Info, override val bytes: ByteArray) : AttributeInfo(name) {
 

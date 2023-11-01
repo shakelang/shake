@@ -3,7 +3,7 @@ package io.github.shakelang.shake
 import io.github.shakelang.shake.js.ShakeJsGenerator
 import io.github.shakelang.shake.processor.ShakePackageBasedProcessor
 import io.github.shakelang.shake.processor.map.ShakeMap
-import io.github.shakelang.shason.json
+import io.github.shakelang.shake.util.shason.json
 
 fun main(args: Array<String>) {
 

@@ -6,7 +6,7 @@ import io.github.shakelang.shake.util.io.streaming.input.dataStream
 import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
 import io.github.shakelang.shake.util.jvmlib.infos.ClassInfo
-import io.github.shakelang.shason.json
+import io.github.shakelang.shake.util.shason.json
 
 
 abstract class ConstantInfo {

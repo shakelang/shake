@@ -6,7 +6,7 @@ import io.github.shakelang.shake.util.jvmlib.infos.ClassInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
-import io.github.shakelang.primitives.bytes.toBytes
+import io.github.shakelang.shake.util.primitives.bytes.toBytes
 
 open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, AttributeInfo>, ConstantUser {
 

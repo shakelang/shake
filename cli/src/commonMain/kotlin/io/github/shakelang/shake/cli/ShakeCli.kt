@@ -16,7 +16,7 @@ import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.ShakeParser
 import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.processor.ShakePackageBasedProcessor
-import io.github.shakelang.shason.json
+import io.github.shakelang.shake.util.shason.json
 import kotlin.jvm.JvmName
 
 /**

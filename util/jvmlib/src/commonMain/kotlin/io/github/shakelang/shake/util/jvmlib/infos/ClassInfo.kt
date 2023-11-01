@@ -9,7 +9,7 @@ import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.fields.FieldList
 import io.github.shakelang.shake.util.jvmlib.infos.methods.MethodList
-import io.github.shakelang.shason.json
+import io.github.shakelang.shake.util.shason.json
 
 class ClassInfo(
     val minorVersion: UShort,

@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.parser.node
 
-import io.github.shakelang.shason.JSON
+import io.github.shakelang.shake.util.shason.JSON
 
 @Suppress("unused")
 open class ShakeVariableType {
@@ -14,7 +14,7 @@ open class ShakeVariableType {
         this.type = type
     }
 
-    override fun toString(): String = JSON.stringify(this.json)
+    override fun toString(): String = io.github.shakelang.shake.util.shason.JSON.stringify(this.json)
 
     val json: Map<String, *>
         get() = toJson()

@@ -5,7 +5,7 @@ import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
 import io.github.shakelang.shake.util.io.streaming.input.InputStream
 import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.shake.util.io.streaming.output.OutputStream
-import io.github.shakelang.primitives.bytes.toBytes
+import io.github.shakelang.shake.util.primitives.bytes.toBytes
 import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.types.*
 import io.github.shakelang.shake.processor.program.types.code.ShakeCode
@@ -14,7 +14,7 @@ import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 import io.github.shakelang.shake.processor.util.PointerList
 import io.github.shakelang.shake.processor.util.latePoint
 import io.github.shakelang.shake.processor.util.values
-import io.github.shakelang.shason.json
+import io.github.shakelang.shake.util.shason.json
 
 class ShakeMap(
 

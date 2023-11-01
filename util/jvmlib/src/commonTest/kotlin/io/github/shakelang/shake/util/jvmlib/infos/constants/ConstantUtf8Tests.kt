@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.util.jvmlib.infos.constants
 
 import io.github.shakelang.shake.util.io.streaming.input.inputStream
-import io.github.shakelang.primitives.bytes.toBytes
+import io.github.shakelang.shake.util.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
