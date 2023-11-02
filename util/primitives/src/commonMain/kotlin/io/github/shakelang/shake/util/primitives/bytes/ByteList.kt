@@ -768,8 +768,8 @@ fun MutableList<Byte>.append(byte: Byte): MutableList<Byte> {
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.append(short: Short): MutableList<Byte> {
-    val bytes = short.toBytes()
-    this.add(bytes[0])
+    val bytes = short.toBytes().toList()
+    this.addAll(bytes)
     return this
 }
 
@@ -783,8 +783,8 @@ inline fun MutableList<Byte>.append(short: Short): MutableList<Byte> {
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.append(int: Int): MutableList<Byte> {
-    val bytes = int.toBytes()
-    this.add(bytes[0])
+    val bytes = int.toBytes().toList()
+    this.addAll(bytes)
     return this
 }
 
@@ -801,8 +801,8 @@ inline fun MutableList<Byte>.append(int: Int): MutableList<Byte> {
  * @see [MutableList.append]
  */
 inline fun MutableList<Byte>.append(long: Long): MutableList<Byte> {
-    val bytes = long.toBytes()
-    this.add(bytes[0])
+    val bytes = long.toBytes().toList()
+    this.addAll(bytes)
     return this
 }
 
@@ -819,8 +819,8 @@ inline fun MutableList<Byte>.append(long: Long): MutableList<Byte> {
  * @see [MutableList.append]
  */
 inline fun MutableList<Byte>.append(float: Float): MutableList<Byte> {
-    val bytes = float.toBytes()
-    this.add(bytes[0])
+    val bytes = float.toBytes().toList()
+    this.addAll(bytes)
     return this
 }
 
@@ -837,8 +837,8 @@ inline fun MutableList<Byte>.append(float: Float): MutableList<Byte> {
  * @see [MutableList.append]
  */
 inline fun MutableList<Byte>.append(double: Double): MutableList<Byte> {
-    val bytes = double.toBytes()
-    this.add(bytes[0])
+    val bytes = double.toBytes().toList()
+    this.addAll(bytes)
     return this
 }
 
@@ -871,11 +871,8 @@ inline fun MutableList<Byte>.append(unsignedByte: UByte): MutableList<Byte> {
  * @see [UShort.toBytes]
  * @see [MutableList.append]
  */
-inline fun MutableList<Byte>.append(unsignedShort: UShort): MutableList<Byte> {
-    val bytes = unsignedShort.toBytes()
-    this.add(bytes[0])
-    return this
-}
+inline fun MutableList<Byte>.append(unsignedShort: UShort): MutableList<Byte>
+    = this.append(unsignedShort.toShort())
 
 /**
  * Append unsigned int to a byte List
@@ -889,11 +886,8 @@ inline fun MutableList<Byte>.append(unsignedShort: UShort): MutableList<Byte> {
  * @see [UInt.toBytes]
  * @see [MutableList.append]
  */
-inline fun MutableList<Byte>.append(unsignedInt: UInt): MutableList<Byte> {
-    val bytes = unsignedInt.toBytes()
-    this.add(bytes[0])
-    return this
-}
+inline fun MutableList<Byte>.append(unsignedInt: UInt): MutableList<Byte>
+    = this.append(unsignedInt.toInt())
 
 /**
  * Append unsigned long to a byte List
@@ -907,8 +901,5 @@ inline fun MutableList<Byte>.append(unsignedInt: UInt): MutableList<Byte> {
  * @see [ULong.toBytes]
  * @see [MutableList.append]
  */
-inline fun MutableList<Byte>.append(unsignedLong: ULong): MutableList<Byte> {
-    val bytes = unsignedLong.toBytes()
-    this.add(bytes[0])
-    return this
-}
+inline fun MutableList<Byte>.append(unsignedLong: ULong): MutableList<Byte>
+    = this.append(unsignedLong.toLong())

@@ -936,16 +936,16 @@ class ByteArrayTests {
     @Test
     fun testGetBytesErrors() {
         val bytes = ByteArray(16)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        assertFailsWith<IndexOutOfBoundsException>("arraycopy: source index -1 out of bounds for byte[16]") {
             bytes.getBytes(-1, 16)
         }
-        assertFailsWith<IllegalArgumentException>("length must be >= 0, but is -1") {
+        assertFailsWith<IllegalArgumentException>("toIndex (20) is greater than size (16)") {
             bytes.getBytes(0, -1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+        assertFailsWith<IndexOutOfBoundsException>("ByteArray must be of size 20, but is 16") {
             bytes.getBytes(16, 4)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+        assertFailsWith<IndexOutOfBoundsException>("ByteArray must be of size 20, but is 16") {
             bytes.getBytes(0, 20)
         }
     }

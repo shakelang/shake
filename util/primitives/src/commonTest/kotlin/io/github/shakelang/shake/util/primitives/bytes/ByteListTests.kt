@@ -155,6 +155,10 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setByte(8, 9)
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setByte(-1, 9)
+        }
     }
 
     @Test
@@ -168,6 +172,10 @@ class ByteListTests {
 
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setShort(8, 0x0102)
+        }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setShort(-1, 0x0102)
         }
     }
 
@@ -183,6 +191,10 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setInt(6, 0x01020304)
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setInt(-1, 0x01020304)
+        }
     }
 
     @Test
@@ -193,6 +205,10 @@ class ByteListTests {
 
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setLong(6, 0x0102030405060708L)
+        }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setLong(-1, 0x0102030405060708L)
         }
     }
 
@@ -208,6 +224,10 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setFloat(6, Float.fromBits(0x01020304))
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setFloat(-1, Float.fromBits(0x01020304))
+        }
     }
 
     @Test
@@ -218,6 +238,10 @@ class ByteListTests {
 
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setDouble(4, Double.fromBits(0x0102030405060708L))
+        }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setDouble(-1, Double.fromBits(0x0102030405060708L))
         }
     }
 
@@ -233,6 +257,10 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setUnsignedByte(8, 0xFFu)
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setUnsignedByte(-1, 0xFFu)
+        }
     }
 
     @Test
@@ -246,6 +274,10 @@ class ByteListTests {
 
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setUnsignedShort(7, 0xFFFFu)
+        }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setUnsignedShort(-1, 0xFFFFu)
         }
     }
 
@@ -261,6 +293,10 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setUnsignedInt(7, 0xFFFFFFFFu)
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setUnsignedInt(-1, 0xFFFFFFFFu)
+        }
     }
 
     @Test
@@ -271,6 +307,10 @@ class ByteListTests {
 
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.setUnsignedLong(7, 0xFFFFFFFFFFFFFFFFuL)
+        }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.setUnsignedLong(-1, 0xFFFFFFFFFFFFFFFFuL)
         }
     }
 
@@ -289,6 +329,10 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 10, but is 8") {
             bytes.getByte(8)
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.getByte(-1)
+        }
     }
 
     @Test
@@ -303,6 +347,10 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 10, but is 8") {
             bytes.getShort(8)
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.getShort(-1)
+        }
     }
 
     @Test
@@ -315,6 +363,10 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 10, but is 8") {
             bytes.getInt(8)
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.getInt(-1)
+        }
     }
 
     @Test
@@ -324,6 +376,10 @@ class ByteListTests {
 
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 10, but is 8") {
             bytes.getLong(1)
+        }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.getLong(-1)
         }
     }
 
@@ -337,6 +393,10 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 10, but is 8") {
             bytes.getFloat(5)
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.getFloat(-1)
+        }
     }
 
     @Test
@@ -346,6 +406,10 @@ class ByteListTests {
 
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 10, but is 8") {
             bytes.getDouble(1)
+        }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.getDouble(-1)
         }
     }
 
@@ -564,18 +628,139 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 9, but is 8") {
             bytes.getBytes(5, 4)
         }
+
+        assertFailsWith<IllegalArgumentException>("index must be >= 0, but is -1") {
+            bytes.getBytes(-1, 4)
+        }
     }
 
     @Test
     fun testToHexString() {
-        val bytes = listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
-        assertEquals("0102030405060708", bytes.toHexString())
+        val bytes = listOf<Byte>(0, 1, 2, 3, 4, 5, 6, 7, 8, -1)
+        assertEquals("000102030405060708ff", bytes.toHexString())
     }
 
     @Test
     fun testToUtf8String() {
         val bytes = listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
         assertEquals("\u0001\u0002\u0003\u0004\u0005\u0006\u0007\u0008", bytes.toUtf8String())
+    }
+
+
+    @Test
+    fun testAppendWithByte() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(1.toByte())
+        assertEquals(listOf<Byte>(1), bytes)
+        bytes.append(2.toByte())
+        assertEquals(listOf<Byte>(1, 2), bytes)
+        bytes.append(3.toByte())
+        assertEquals(listOf<Byte>(1, 2, 3), bytes)
+        bytes.append(4.toByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4), bytes)
+        bytes.append(5.toByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5), bytes)
+        bytes.append(6.toByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6), bytes)
+        bytes.append(7.toByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7), bytes)
+        bytes.append(8.toByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
+    }
+
+    @Test
+    fun testAppendWithShort() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(0x0102.toShort())
+        assertEquals(listOf<Byte>(1, 2), bytes)
+        bytes.append(0x0304.toShort())
+        assertEquals(listOf<Byte>(1, 2, 3, 4), bytes)
+        bytes.append(0x0506.toShort())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6), bytes)
+        bytes.append(0x0708.toShort())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
+    }
+
+    @Test
+    fun testAppendWithInt() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(0x01020304)
+        assertEquals(listOf<Byte>(1, 2, 3, 4), bytes)
+        bytes.append(0x05060708)
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
+    }
+
+    @Test
+    fun testAppendWithLong() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(0x0102030405060708L)
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
+    }
+
+    @Test
+    fun testAppendWithFloat() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(Float.fromBits(0x01020304))
+        assertEquals(listOf<Byte>(1, 2, 3, 4), bytes)
+        bytes.append(Float.fromBits(0x05060708))
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
+    }
+
+    @Test
+    fun testAppendWithDouble() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(Double.fromBits(0x0102030405060708L))
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
+    }
+
+    @Test
+    fun testAppendWithUnsignedByte() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(1u.toUByte())
+        assertEquals(listOf<Byte>(1), bytes)
+        bytes.append(2u.toUByte())
+        assertEquals(listOf<Byte>(1, 2), bytes)
+        bytes.append(3u.toUByte())
+        assertEquals(listOf<Byte>(1, 2, 3), bytes)
+        bytes.append(4u.toUByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4), bytes)
+        bytes.append(5u.toUByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5), bytes)
+        bytes.append(6u.toUByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6), bytes)
+        bytes.append(7u.toUByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7), bytes)
+        bytes.append(8u.toUByte())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
+    }
+
+    @Test
+    fun testAppendWithUnsignedShort() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(0x0102u.toUShort())
+        assertEquals(listOf<Byte>(1, 2), bytes)
+        bytes.append(0x0304u.toUShort())
+        assertEquals(listOf<Byte>(1, 2, 3, 4), bytes)
+        bytes.append(0x0506u.toUShort())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6), bytes)
+        bytes.append(0x0708u.toUShort())
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
+    }
+
+    @Test
+    fun testAppendWithUnsignedInt() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(0x01020304u)
+        assertEquals(listOf<Byte>(1, 2, 3, 4), bytes)
+        bytes.append(0x05060708u)
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
+    }
+
+    @Test
+    fun testAppendWithUnsignedLong() {
+        val bytes = mutableListOf<Byte>()
+        bytes.append(0x0102030405060708uL)
+        assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
     }
 
 }
