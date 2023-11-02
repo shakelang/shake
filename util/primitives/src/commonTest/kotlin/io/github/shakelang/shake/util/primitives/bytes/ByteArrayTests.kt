@@ -207,6 +207,18 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testSetBytesErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setBytes(-1, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu))
+        }
+
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+            bytes.setBytes(1, ByteArray(8) {0xFF.toByte()})
+        }
+    }
+
+    @Test
     fun testSetByte() {
         var bytes = ByteArray(8)
         bytes.setByte(0, 0xFFu.toByte())
@@ -232,6 +244,17 @@ class ByteArrayTests {
         assertEquals(0x00u.toByte(), bytes[9])
         assertEquals(0x00u.toByte(), bytes[10])
         assertEquals(0x00u.toByte(), bytes[11])
+    }
+
+    @Test
+    fun testSetByteErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setByte(-1, 0xFFu.toByte())
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+            bytes.setByte(8, 0xFFu.toByte())
+        }
     }
 
     @Test
@@ -263,6 +286,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testSetShortErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setShort(-1, 0xFFFFu.toShort())
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+            bytes.setShort(8, 0xFFFFu.toShort())
+        }
+    }
+
+    @Test
     fun testSetInt() {
         var bytes = ByteArray(8)
         bytes.setInt(0, 0xFFFFFFFFu.toInt())
@@ -288,6 +322,17 @@ class ByteArrayTests {
         assertEquals(0x00u.toByte(), bytes[9])
         assertEquals(0x00u.toByte(), bytes[10])
         assertEquals(0x00u.toByte(), bytes[11])
+    }
+
+    @Test
+    fun testSetIntErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setInt(-1, 0xFFFFFFFFu.toInt())
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+            bytes.setInt(8, 0xFFFFFFFFu.toInt())
+        }
     }
 
     @Test
@@ -319,6 +364,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testSetLongErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setLong(-1, 0xFFFFFFFFFFFFFFFFuL.toLong())
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 16, but is 8") {
+            bytes.setLong(8, 0xFFFFFFFFFFFFFFFFuL.toLong())
+        }
+    }
+
+    @Test
     fun testSetFloat() {
         var bytes = ByteArray(8)
         bytes.setFloat(0, Float.fromBits(0x3f99999au.toInt()))
@@ -344,6 +400,17 @@ class ByteArrayTests {
         assertEquals(0x00u.toByte(), bytes[9])
         assertEquals(0x00u.toByte(), bytes[10])
         assertEquals(0x00u.toByte(), bytes[11])
+    }
+
+    @Test
+    fun testSetFloatErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setFloat(-1, Float.fromBits(0x3f99999au.toInt()))
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 4") {
+            bytes.setFloat(5, Float.fromBits(0x3f99999au.toInt()))
+        }
     }
 
     @Test
@@ -375,6 +442,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testSetDoubleErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setDouble(-1, Double.fromBits(0x3ff3333333333333uL.toLong()))
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 16, but is 8") {
+            bytes.setDouble(8, Double.fromBits(0x3ff3333333333333uL.toLong()))
+        }
+    }
+
+    @Test
     fun testSetUnsignedByte() {
         var bytes = ByteArray(8)
         bytes.setUnsignedByte(0, 0xFFu)
@@ -400,6 +478,17 @@ class ByteArrayTests {
         assertEquals(0x00u.toByte(), bytes[9])
         assertEquals(0x00u.toByte(), bytes[10])
         assertEquals(0x00u.toByte(), bytes[11])
+    }
+
+    @Test
+    fun testSetUnsignedByteErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setUnsignedByte(-1, 0xFFu)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+            bytes.setUnsignedByte(8, 0xFFu)
+        }
     }
 
     @Test
@@ -431,6 +520,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testSetUnsignedShortErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setUnsignedShort(-1, 0xFFFFu)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 11, but is 8") {
+            bytes.setUnsignedShort(8, 0xFFFFu)
+        }
+    }
+
+    @Test
     fun testSetUnsignedInt() {
         var bytes = ByteArray(8)
         bytes.setUnsignedInt(0, 0xFFFFFFFFu)
@@ -456,6 +556,17 @@ class ByteArrayTests {
         assertEquals(0x00u.toByte(), bytes[9])
         assertEquals(0x00u.toByte(), bytes[10])
         assertEquals(0x00u.toByte(), bytes[11])
+    }
+
+    @Test
+    fun testSetUnsignedIntErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setUnsignedInt(-1, 0xFFFFFFFFu)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 13, but is 8") {
+            bytes.setUnsignedInt(8, 0xFFFFFFFFu)
+        }
     }
 
     @Test
@@ -487,6 +598,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testSetUnsignedLongErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.setUnsignedLong(-1, 0xFFFFFFFFFFFFFFFFu)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 17, but is 8") {
+            bytes.setUnsignedLong(8, 0xFFFFFFFFFFFFFFFFu)
+        }
+    }
+
+    @Test
     fun testGetByte() {
         val bytes = ByteArray(8)
         bytes[0] = 0xFFu.toByte()
@@ -505,6 +627,17 @@ class ByteArrayTests {
         assertEquals(0x00u.toByte(), bytes.getByte(5))
         assertEquals(0x00u.toByte(), bytes.getByte(6))
         assertEquals(0x00u.toByte(), bytes.getByte(7))
+    }
+
+    @Test
+    fun testGetByteErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getByte(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+            bytes.getByte(8)
+        }
     }
 
     @Test
@@ -529,6 +662,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testGetUnsignedByteErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getUnsignedByte(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+            bytes.getUnsignedByte(8)
+        }
+    }
+
+    @Test
     fun testGetShort() {
         val bytes = ByteArray(8)
         bytes[0] = 0x00u.toByte()
@@ -543,6 +687,17 @@ class ByteArrayTests {
         assertEquals(0x2233u.toShort(), bytes.getShort(2))
         assertEquals(0x4455u.toShort(), bytes.getShort(4))
         assertEquals(0x6677u.toShort(), bytes.getShort(6))
+    }
+
+    @Test
+    fun testGetShortErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getShort(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+            bytes.getShort(8)
+        }
     }
 
     @Test
@@ -563,6 +718,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testGetUnsignedShortErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getUnsignedShort(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+            bytes.getUnsignedShort(8)
+        }
+    }
+
+    @Test
     fun testGetInt() {
         val bytes = ByteArray(8)
         bytes[0] = 0x00u.toByte()
@@ -578,6 +744,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testGetIntErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getInt(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+            bytes.getInt(8)
+        }
+    }
+
+    @Test
     fun testGetUnsignedInt() {
         val bytes = ByteArray(8)
         bytes[0] = 0x00u.toByte()
@@ -590,6 +767,17 @@ class ByteArrayTests {
         bytes[7] = 0x77u.toByte()
         assertEquals(0x00112233u, bytes.getUnsignedInt(0))
         assertEquals(0x44556677u, bytes.getUnsignedInt(4))
+    }
+
+    @Test
+    fun testGetUnsignedIntErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getUnsignedInt(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+            bytes.getUnsignedInt(8)
+        }
     }
 
     @Test
@@ -616,6 +804,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testGetLongErrors() {
+        val bytes = ByteArray(16)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getLong(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+            bytes.getLong(16)
+        }
+    }
+
+    @Test
     fun testGetUnsignedLong() {
         val bytes = ByteArray(16)
         bytes[0] = 0x00u.toByte()
@@ -639,6 +838,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testGetUnsignedLongErrors() {
+        val bytes = ByteArray(16)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getUnsignedLong(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+            bytes.getUnsignedLong(16)
+        }
+    }
+
+    @Test
     fun testGetFloat() {
         val bytes = ByteArray(8)
         bytes[0] = 0x00u.toByte()
@@ -651,6 +861,17 @@ class ByteArrayTests {
         bytes[7] = 0x77u.toByte()
         assertEquals(Float.fromBits(0x00112233u.toInt()), bytes.getFloat(0))
         assertEquals(Float.fromBits(0x44556677u.toInt()), bytes.getFloat(4))
+    }
+
+    @Test
+    fun testGetFloatErrors() {
+        val bytes = ByteArray(8)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getFloat(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+            bytes.getFloat(8)
+        }
     }
 
     @Test
@@ -677,6 +898,17 @@ class ByteArrayTests {
     }
 
     @Test
+    fun testGetDoubleErrors() {
+        val bytes = ByteArray(16)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getDouble(-1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+            bytes.getDouble(16)
+        }
+    }
+
+    @Test
     fun testGetBytes() {
         val bytes = ByteArray(16)
         bytes[0] = 0x00u.toByte()
@@ -699,6 +931,23 @@ class ByteArrayTests {
             byteArrayOf(0x00u, 0x11u, 0x22u, 0x33u, 0x44u, 0x55u, 0x66u, 0x77u, 0x88u, 0x99u,
             0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu).toList(), bytes.getBytes(0, 16).toList())
         assertEquals(byteArrayOf(0x11u, 0x22u).toList(), bytes.getBytes(1, 2).toList())
+    }
+
+    @Test
+    fun testGetBytesErrors() {
+        val bytes = ByteArray(16)
+        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+            bytes.getBytes(-1, 16)
+        }
+        assertFailsWith<IllegalArgumentException>("length must be >= 0, but is -1") {
+            bytes.getBytes(0, -1)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+            bytes.getBytes(16, 4)
+        }
+        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+            bytes.getBytes(0, 20)
+        }
     }
 
     @Test
