@@ -117,7 +117,7 @@ jobs:
           artifacts: |
             ${{needs.extract_info.outputs.release_path}}/build/libs/*
           allowUpdates: true
-          makeLatest: false
+          makeLatest: true
           name: ${{needs.extract_info.outputs.release_type}}/${{needs.extract_info.outputs.version}}
           token: ${{ secrets.GITHUB_TOKEN }}
 
