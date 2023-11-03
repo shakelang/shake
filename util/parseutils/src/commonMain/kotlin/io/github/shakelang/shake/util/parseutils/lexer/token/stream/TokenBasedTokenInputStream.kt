@@ -110,11 +110,13 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
     }
 
     override fun skip() {
-        if(!hasNext()) throw Error("Input already finished")
+        if(!hasNext()) throw Error("Not enough tokens left")
         position++
     }
 
     override fun skip(amount: Int) {
+        if(amount < 1) throw Error("Amount must be greater than 0")
+        if(!has(amount)) throw Error("Not enough tokens left")
         position += amount
     }
 
@@ -128,6 +130,7 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
     }
 
     override fun peek(offset: Int): T {
+        if(offset < 1) throw Error("Offset must be greater than 0")
         if(position + offset >= tokens.size) throw Error("Not enough tokens left")
         return tokens[position + offset]
     }

@@ -14,7 +14,6 @@ import kotlin.js.JsName
  *
  * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-@Suppress("unused")
 open class CompilerError : Error {
 
     /**
@@ -45,7 +44,7 @@ open class CompilerError : Error {
      * The marker of the Error
      */
     @JsName("marker")
-    val marker: io.github.shakelang.shake.util.parseutils.CompilerError.ErrorMarker
+    val marker: ErrorMarker
 
 
     /**
@@ -63,7 +62,7 @@ open class CompilerError : Error {
      */
     private constructor(
         message: String,
-        marker: io.github.shakelang.shake.util.parseutils.CompilerError.ErrorMarker,
+        marker: ErrorMarker,
         exceptionName: String,
         details: String,
         start: Position,
@@ -74,38 +73,6 @@ open class CompilerError : Error {
         this.details = details
         this.start = start
         this.end = end
-        this.marker = marker
-    }
-
-
-    /**
-     * Constructor for [CompilerError]
-     *
-     * @param message the message of the exception _(Value for [CompilerError.message])_
-     * @param marker the marker of the exception _(Value for [CompilerError.marker])_
-     * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
-     * @param details the details of the exception _(Value for [CompilerError.details])_
-     * @param map the position map to resolve start and end _(Value for [CompilerError.start])_
-     * @param start the start position of the exception _(Value for [CompilerError.start])_
-     * @param end the end position of the exception _(Value for [CompilerError.end])_
-     * @param cause the cause for the exception
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
-     */
-    private constructor(
-        message: String,
-        marker: io.github.shakelang.shake.util.parseutils.CompilerError.ErrorMarker,
-        exceptionName: String,
-        details: String,
-        map: PositionMap,
-        start: Int,
-        end: Int,
-        cause: Throwable? = null
-    ) : super("$message: $details\n\n$marker\n", cause) {
-        this.exceptionName = exceptionName
-        this.details = details
-        this.start = map.resolve(start)
-        this.end = map.resolve(end)
         this.marker = marker
     }
 
@@ -130,8 +97,8 @@ open class CompilerError : Error {
         end: Position,
         cause: Throwable? = null
     ) : this(message,
-        io.github.shakelang.shake.util.parseutils.CompilerError.Companion.createPositionMarker(
-            io.github.shakelang.shake.util.parseutils.CompilerError.Companion.maxLength,
+        createPositionMarker(
+            MAX_LENGTH,
             start,
             end
         ), exceptionName, details, start, end, cause)
@@ -241,7 +208,7 @@ open class CompilerError : Error {
          *
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
-        const val maxLength = 60
+        const val MAX_LENGTH = 60
 
         /**
          * Creates a [ErrorMarker]
@@ -249,10 +216,10 @@ open class CompilerError : Error {
          * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         private fun createPositionMarker(
-            maxLength: Int = io.github.shakelang.shake.util.parseutils.CompilerError.Companion.maxLength,
+            maxLength: Int = MAX_LENGTH,
             p1: Position,
             p2: Position
-        ): io.github.shakelang.shake.util.parseutils.CompilerError.ErrorMarker {
+        ): ErrorMarker {
 
             var pos1 = p1
             var pos2 = p2
@@ -300,8 +267,8 @@ open class CompilerError : Error {
                 val after2 = pos2.source.getAfterInLine(pos2)
 
                 // Take the smallest value and use it
-                var realBefore = io.github.shakelang.shake.util.parseutils.smallest(before, before2)
-                var realAfter = io.github.shakelang.shake.util.parseutils.smallest(after, after2 + 1)
+                var realBefore = smallest(before, before2)
+                var realAfter = smallest(after, after2 + 1)
 
                 // Get the differences (to display if there are tokens that can't be displayed)
                 var beforeDif = before2 - realBefore
@@ -335,7 +302,7 @@ open class CompilerError : Error {
                         + if (afterDif > 0) "...+$afterDif" else "")
 
                 // Generate end-string
-                return io.github.shakelang.shake.util.parseutils.CompilerError.ErrorMarker(
+                return ErrorMarker(
                     join(pos1.source.location, ":", pos1.line.toString(), ":", pos1.column.toString()),
                     join(
                         start, invert(
@@ -353,7 +320,7 @@ open class CompilerError : Error {
             catch (e: Throwable) {
                 println("Error while creating position marker:")
                 e.printStackTrace()
-                return io.github.shakelang.shake.util.parseutils.CompilerError.ErrorMarker(
+                return ErrorMarker(
                     "${pos1.source.location}:${pos1.line}:${pos1.column}",
                     red("Error while creating position marker: ${e.message}"),
                     "Error while creating position marker: ${e.message}",
