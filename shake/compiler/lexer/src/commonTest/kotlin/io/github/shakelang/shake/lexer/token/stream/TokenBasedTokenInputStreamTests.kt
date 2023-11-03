@@ -274,7 +274,7 @@ class TokenBasedTokenInputStreamTests {
         assertEquals(dbtis.position, 3)
         dbtis.skip()
         assertEquals(dbtis.position, 4)
-        assertEquals("Input already finished", assertFailsWith<Error> { dbtis.skip() }.message)
+        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.skip() }.message)
 
     }
 
