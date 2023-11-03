@@ -15,7 +15,7 @@ class CompilerErrorTests {
     fun testCompilerError() {
         val source = CharacterSource.from(genLengthString(30), "<source>")
         val map = PositionMap.PositionMapImpl(source, intArrayOf())
-        val error = io.github.shakelang.shake.util.parseutils.CompilerError(
+        val error = CompilerError(
             "message", "TestingError", "Some details",
             map.resolve(10), map.resolve(10)
         )
@@ -33,11 +33,87 @@ class CompilerErrorTests {
     }
 
     @Test
+    fun testCausedCompilerError() {
+
+        val source = CharacterSource.from(genLengthString(30), "<source>")
+        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val error = Error("Test")
+        val caused = CompilerError(
+            "message", "TestingError", "Some details",
+            map.resolve(10), map.resolve(10),
+            error
+        )
+
+        assertEquals(10, caused.start.index)
+        assertEquals(caused.start.line, 1)
+        assertEquals(caused.start.column, 11)
+
+        assertEquals("<source>:1:11", caused.marker.source)
+        assertEquals("1  012345678901234567890123456789", caused.marker.preview)
+        assertEquals("             ^", caused.marker.marker)
+        assertEquals(
+            "1  0123456789" + invert(red("0")) + "1234567890123456789", caused.marker.colorPreview
+        )
+
+        assertEquals(error, caused.cause)
+
+    }
+
+    @Test
+    fun testCompilerError2() {
+
+        val source = CharacterSource.from(genLengthString(30), "<source>")
+        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val error = CompilerError(
+            "message", "TestingError", "Some details",
+            map, 10, 10
+        )
+
+        assertEquals(10, error.start.index)
+        assertEquals(error.start.line, 1)
+        assertEquals(error.start.column, 11)
+
+        assertEquals("<source>:1:11", error.marker.source)
+        assertEquals("1  012345678901234567890123456789", error.marker.preview)
+        assertEquals("             ^", error.marker.marker)
+        assertEquals(
+            "1  0123456789" + invert(red("0")) + "1234567890123456789", error.marker.colorPreview
+        )
+    }
+
+    @Test
+    fun testCausedCompilerError2() {
+
+        val source = CharacterSource.from(genLengthString(30), "<source>")
+        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val error = Error("Test")
+        val caused = CompilerError(
+            "message", "TestingError", "Some details",
+            map, 10, 10,
+            error
+        )
+
+        assertEquals(10, caused.start.index)
+        assertEquals(caused.start.line, 1)
+        assertEquals(caused.start.column, 11)
+
+        assertEquals("<source>:1:11", caused.marker.source)
+        assertEquals("1  012345678901234567890123456789", caused.marker.preview)
+        assertEquals("             ^", caused.marker.marker)
+        assertEquals(
+            "1  0123456789" + invert(red("0")) + "1234567890123456789", caused.marker.colorPreview
+        )
+
+        assertEquals(error, caused.cause)
+
+    }
+
+    @Test
     fun testCompilerErrorOverflowAfter() {
 
         val source = CharacterSource.from(genLengthString(60), "<source>")
         val map = PositionMap.PositionMapImpl(source, intArrayOf())
-        val error = io.github.shakelang.shake.util.parseutils.CompilerError(
+        val error = CompilerError(
             "message", "TestingError", "Some details",
             Position(map, 10, 11, 1),
             Position(map, 10, 11, 1)
@@ -55,7 +131,7 @@ class CompilerErrorTests {
     fun testCompilerErrorOverflowBefore() {
         val source = CharacterSource.from(genLengthString(60), "<source>")
         val map = PositionMap.PositionMapImpl(source, intArrayOf())
-        val error = io.github.shakelang.shake.util.parseutils.CompilerError(
+        val error = CompilerError(
             "message", "TestingError", "Some details",
             map.resolve(39), map.resolve(39)
         )
@@ -72,7 +148,7 @@ class CompilerErrorTests {
     fun testCompilerErrorOverflow() {
         val source = CharacterSource.from(genLengthString(100), "<source>")
         val map = PositionMap.PositionMapImpl(source, intArrayOf())
-        val error = io.github.shakelang.shake.util.parseutils.CompilerError(
+        val error = CompilerError(
             "message", "TestingError", "Some details",
             map.resolve(49), map.resolve(49)
         )
@@ -81,7 +157,7 @@ class CompilerErrorTests {
         assertEquals("1  +28...890123456789012345678901234567890123456789...+29", error.marker.preview)
         assertEquals("                              ^", error.marker.marker)
         assertEquals(
-            "1  +28...890123456789012345678" + invert(red("9" ))
+            "1  +28...890123456789012345678" + invert(red("9"))
                     + "01234567890123456789...+29", error.marker.colorPreview
         )
     }
@@ -90,7 +166,7 @@ class CompilerErrorTests {
     fun testCompilerErrorLongMark() {
         val source = CharacterSource.from(genLengthString(40), "<source>")
         val map = PositionMap.PositionMapImpl(source, intArrayOf())
-        val error = io.github.shakelang.shake.util.parseutils.CompilerError(
+        val error = CompilerError(
             "message", "TestingError", "Some details",
             map.resolve(9),
             map.resolve(14)
@@ -123,7 +199,7 @@ class CompilerErrorTests {
         assertSame(50, pos.index)
         assertSame(11, pos.column)
         assertSame(3, pos.line)
-        val error = io.github.shakelang.shake.util.parseutils.CompilerError(
+        val error = CompilerError(
             "message", "TestingError", "Some details", pos, pos
         )
 
@@ -133,7 +209,6 @@ class CompilerErrorTests {
         assertEquals(
             "3  0123456789" + invert(red("0")) + "1234567890123456789012...+7", error.marker.colorPreview
         )
-
     }
 
     companion object {
