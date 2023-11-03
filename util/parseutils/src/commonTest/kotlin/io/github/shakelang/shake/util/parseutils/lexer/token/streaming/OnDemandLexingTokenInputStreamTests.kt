@@ -18,10 +18,6 @@ class OnDemandLexingTokenInputStreamTests {
         override fun length(value: String?): Int {
             return value?.length ?: 0
         }
-
-        override fun toString(): String {
-            return "hello world"
-        }
     }
 
     class TestLexer(
@@ -31,6 +27,10 @@ class OnDemandLexingTokenInputStreamTests {
         val tokens = tokens.toMutableList()
         override fun makeToken(): Token<TokenType> {
             return tokens.removeAt(0)
+        }
+
+        override fun toString(): String {
+            return "hello world"
         }
     }
 
