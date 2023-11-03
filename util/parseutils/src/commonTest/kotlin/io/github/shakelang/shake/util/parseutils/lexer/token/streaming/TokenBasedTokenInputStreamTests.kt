@@ -1,7 +1,5 @@
 package io.github.shakelang.shake.util.parseutils.lexer.token.streaming
 
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
 import io.github.shakelang.shake.lexer.token.Token
@@ -115,35 +113,35 @@ class TokenBasedTokenInputStreamTests {
 
         val stream = TokenBasedTokenInputStream(tokens, map)
 
-        assertTrue (stream.has(1))
-        assertTrue (stream.has(2))
-        assertTrue (stream.has(3))
-        assertFalse (stream.has(4))
-        assertFalse (stream.has(5))
+        assertTrue(stream.has(1))
+        assertTrue(stream.has(2))
+        assertTrue(stream.has(3))
+        assertFalse(stream.has(4))
+        assertFalse(stream.has(5))
 
         stream.next()
 
-        assertTrue (stream.has(1))
-        assertTrue (stream.has(2))
-        assertFalse (stream.has(3))
-        assertFalse (stream.has(4))
-        assertFalse (stream.has(5))
+        assertTrue(stream.has(1))
+        assertTrue(stream.has(2))
+        assertFalse(stream.has(3))
+        assertFalse(stream.has(4))
+        assertFalse(stream.has(5))
 
         stream.next()
 
-        assertTrue (stream.has(1))
-        assertFalse (stream.has(2))
-        assertFalse (stream.has(3))
-        assertFalse (stream.has(4))
-        assertFalse (stream.has(5))
+        assertTrue(stream.has(1))
+        assertFalse(stream.has(2))
+        assertFalse(stream.has(3))
+        assertFalse(stream.has(4))
+        assertFalse(stream.has(5))
 
         stream.next()
 
-        assertFalse (stream.has(1))
-        assertFalse (stream.has(2))
-        assertFalse (stream.has(3))
-        assertFalse (stream.has(4))
-        assertFalse (stream.has(5))
+        assertFalse(stream.has(1))
+        assertFalse(stream.has(2))
+        assertFalse(stream.has(3))
+        assertFalse(stream.has(4))
+        assertFalse(stream.has(5))
     }
 
     @Test
@@ -161,16 +159,16 @@ class TokenBasedTokenInputStreamTests {
 
         val stream = TokenBasedTokenInputStream(tokens, map)
 
-        assertTrue (stream.hasNext())
+        assertTrue(stream.hasNext())
         stream.next()
-        assertTrue (stream.hasNext())
+        assertTrue(stream.hasNext())
         stream.next()
-        assertTrue (stream.hasNext())
+        assertTrue(stream.hasNext())
         stream.next()
-        assertFalse (stream.hasNext())
+        assertFalse(stream.hasNext())
     }
 
-   @Test
+    @Test
     fun testSource() {
         val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
@@ -262,34 +260,34 @@ class TokenBasedTokenInputStreamTests {
         }
     }
 
-@Test
-fun testGetValue() {
-    val tokens = arrayOf(
-        Token(TokenType.IDENTIFIER, "test", 0, 3),
-        Token(TokenType.NUMBER, "123", 4, 6),
-        Token(TokenType.STRING, "\"test\"", 7, 12),
-        Token(TokenType.STRING, "\"test\"", 7, 12)
-    )
+    @Test
+    fun testGetValue() {
+        val tokens = arrayOf(
+            Token(TokenType.IDENTIFIER, "test", 0, 3),
+            Token(TokenType.NUMBER, "123", 4, 6),
+            Token(TokenType.STRING, "\"test\"", 7, 12),
+            Token(TokenType.STRING, "\"test\"", 7, 12)
+        )
 
-    val map = PositionMap(
-        CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-        intArrayOf()
-    )
+        val map = PositionMap(
+            CharacterSource.from("test 123 \"test\" \"test\"", "test"),
+            intArrayOf()
+        )
 
-    val stream = TokenBasedTokenInputStream(tokens, map)
+        val stream = TokenBasedTokenInputStream(tokens, map)
 
-    assertEquals("test", stream.getValue(0))
-    assertEquals("123", stream.getValue(1))
-    assertEquals("\"test\"", stream.getValue(2))
-    assertEquals("\"test\"", stream.getValue(3))
+        assertEquals("test", stream.getValue(0))
+        assertEquals("123", stream.getValue(1))
+        assertEquals("\"test\"", stream.getValue(2))
+        assertEquals("\"test\"", stream.getValue(3))
 
-    assertFailsWith<Error>("Invalid index") {
-        stream.getValue(4)
+        assertFailsWith<Error>("Invalid index") {
+            stream.getValue(4)
+        }
+        assertFailsWith<Error>("Invalid index") {
+            stream.getValue(-1)
+        }
     }
-    assertFailsWith<Error>("Invalid index") {
-        stream.getValue(-1)
-    }
-}
 
     @Test
     fun testGetStart() {
@@ -345,5 +343,169 @@ fun testGetValue() {
         assertFailsWith<Error>("Invalid index") {
             stream.getEnd(-1)
         }
+    }
+
+    @Test
+    fun testGetHasValue() {
+        val tokens = arrayOf(
+            Token(TokenType.IDENTIFIER, "test", 0, 3),
+            Token(TokenType.NUMBER, "123", 4, 6),
+            Token(TokenType.STRING, "\"test\"", 7, 12),
+            Token(TokenType.STRING, null, 7, 12)
+        )
+
+        val map = PositionMap(
+            CharacterSource.from("test 123 \"test\" \"test\"", "test"),
+            intArrayOf()
+        )
+
+        val stream = TokenBasedTokenInputStream(tokens, map)
+
+        assertTrue(stream.getHasValue(0))
+        assertTrue(stream.getHasValue(1))
+        assertTrue(stream.getHasValue(2))
+        assertFalse(stream.getHasValue(3))
+
+        assertFailsWith<Error>("Invalid index") {
+            stream.getHasValue(4)
+        }
+        assertFailsWith<Error>("Invalid index") {
+            stream.getHasValue(-1)
+        }
+    }
+
+    @Test
+    fun testSkip() {
+        val tokens = arrayOf(
+            Token(TokenType.IDENTIFIER, "test", 0, 3),
+            Token(TokenType.NUMBER, "123", 4, 6),
+            Token(TokenType.STRING, null, 7, 12),
+            Token(TokenType.STRING, null, 13, 18),
+            Token(TokenType.STRING, null, 19, 24),
+            Token(TokenType.STRING, null, 25, 30),
+            Token(TokenType.STRING, null, 31, 36),
+        )
+
+        val map = PositionMap(
+            CharacterSource.from("test 123 \"test\" \"test\"", "test"),
+            intArrayOf()
+        )
+
+        val stream = TokenBasedTokenInputStream(tokens, map)
+
+        stream.skip()
+        assertEquals(tokens[0], stream.actual)
+        stream.skip(1)
+        assertEquals(tokens[1], stream.actual)
+        stream.skip(2)
+        assertEquals(tokens[3], stream.actual)
+        stream.skip(3)
+        assertEquals(tokens[5], stream.actual)
+
+        assertFailsWith<Error>("Not enough tokens left") { stream.skip(1) }
+        assertFailsWith<Error>("Not enough tokens left") { stream.skip() }
+        assertFailsWith<Error>("Invalid index") {
+            stream.skip(-1)
+        }
+    }
+
+    @Test
+    fun testPeekWithOffset() {
+        val tokens = arrayOf(
+            Token(TokenType.IDENTIFIER, "test", 0, 3),
+            Token(TokenType.NUMBER, null, 4, 6),
+            Token(TokenType.STRING, null, 7, 12),
+            Token(TokenType.STRING, null, 13, 18),
+            Token(TokenType.STRING, null, 19, 24),
+            Token(TokenType.STRING, null, 25, 30),
+            Token(TokenType.STRING, null, 31, 36),
+        )
+
+        val map = PositionMap(
+            CharacterSource.from("test 123 \"test\" \"test\"", "test"),
+            intArrayOf()
+        )
+
+        val stream = TokenBasedTokenInputStream(tokens, map)
+
+        assertEquals(tokens[0], stream.peek(1))
+        assertEquals(tokens[1], stream.peek(2))
+        assertEquals(tokens[2], stream.peek(3))
+        assertEquals(tokens[3], stream.peek(4))
+        assertEquals(tokens[4], stream.peek(5))
+        assertEquals(tokens[5], stream.peek(6))
+        assertEquals(tokens[6], stream.peek(7))
+
+        stream.skip(1)
+
+        assertEquals(tokens[1], stream.peek(1))
+        assertEquals(tokens[2], stream.peek(2))
+        assertEquals(tokens[3], stream.peek(3))
+        assertEquals(tokens[4], stream.peek(4))
+        assertEquals(tokens[5], stream.peek(5))
+        assertEquals(tokens[6], stream.peek(6))
+
+        stream.skip(1)
+
+        assertEquals(tokens[2], stream.peek(1))
+        assertEquals(tokens[3], stream.peek(2))
+        assertEquals(tokens[4], stream.peek(3))
+        assertEquals(tokens[5], stream.peek(4))
+        assertEquals(tokens[6], stream.peek(5))
+
+        assertFailsWith<Error>("Not enough tokens left") { stream.peek(6) }
+        assertFailsWith<Error>("Offset must be greater than 0") {
+            stream.peek(-1)
+        }
+    }
+
+    @Test
+    fun testReset() {
+        val tokens = arrayOf(
+            Token(TokenType.IDENTIFIER, "test", 0, 3),
+            Token(TokenType.NUMBER, null, 4, 6),
+            Token(TokenType.STRING, null, 7, 12),
+            Token(TokenType.STRING, null, 13, 18),
+            Token(TokenType.STRING, null, 19, 24),
+            Token(TokenType.STRING, null, 25, 30),
+            Token(TokenType.STRING, null, 31, 36),
+        )
+
+        val map = PositionMap(
+            CharacterSource.from("test 123 \"test\" \"test\"", "test"),
+            intArrayOf()
+        )
+
+        val stream = TokenBasedTokenInputStream(tokens, map)
+
+        stream.skip(3)
+        assertEquals(tokens[3], stream.actual)
+        stream.reset()
+        assertEquals(tokens[0], stream.actual)
+    }
+
+    @Test
+    fun testToString() {
+val tokens = arrayOf(
+            Token(TokenType.IDENTIFIER, "test", 0, 3),
+            Token(TokenType.NUMBER, null, 4, 6),
+            Token(TokenType.STRING, null, 7, 12),
+            Token(TokenType.STRING, null, 13, 18),
+            Token(TokenType.STRING, null, 19, 24),
+            Token(TokenType.STRING, null, 25, 30),
+            Token(TokenType.STRING, null, 31, 36),
+        )
+
+        val map = PositionMap(
+            CharacterSource.from("test 123 \"test\" \"test\"", "test"),
+            intArrayOf()
+        )
+
+        val stream = TokenBasedTokenInputStream(tokens, map)
+
+        assertEquals(
+            "TokenBasedTokenInputStream(source='test', tokens=7, position=-1)",
+            stream.toString()
+        )
     }
 }

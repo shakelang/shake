@@ -38,9 +38,9 @@ open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
         try {
             fillBuffer(1)
         } catch (e: IndexOutOfBoundsException) {
-            throw Error("Input already finished")
+            throw Error("Input already finished", e)
         } catch (e: IllegalStateException) {
-            throw Error("Input already finished")
+            throw Error("Input already finished", e)
         }
 
         position++
@@ -80,5 +80,6 @@ open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
         return lexingBase.makeToken()
     }
 
+    override fun toString(): String = "OnDemandLexingTokenInputStream(lexer=$lexingBase)"
 
 }
