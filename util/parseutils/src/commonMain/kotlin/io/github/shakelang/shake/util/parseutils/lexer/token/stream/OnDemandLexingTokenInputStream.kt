@@ -80,6 +80,6 @@ open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
         return lexingBase.makeToken()
     }
 
-    override fun toString(): String = "OnDemandLexingTokenInputStream($lexingBase)"
+    override fun toString(): String = "OnDemandLexingTokenInputStream(lexer=$lexingBase)"
 
 }
