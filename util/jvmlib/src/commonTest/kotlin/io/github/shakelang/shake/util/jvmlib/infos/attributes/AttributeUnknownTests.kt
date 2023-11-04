@@ -8,9 +8,12 @@ import kotlin.test.assertEquals
 
 class AttributeUnknownTests {
 
-    private val pool get() = ConstantPool(mutableListOf(
-        Constant.utf8("some_name"),
-    ))
+    private val pool
+        get() = ConstantPool(
+            mutableListOf(
+                Constant.utf8("some_name"),
+            )
+        )
 
     @Test
     fun test() {
@@ -100,13 +103,15 @@ class AttributeUnknownTests {
     @Test
     fun testFromBytes2() {
         val pool = pool
-        val info = AttributeUnknownInfo.fromBytes(pool, byteArrayOf(0x00, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x01, 0x21, 0x13))
+        val info = AttributeUnknownInfo.fromBytes(
+            pool,
+            byteArrayOf(0x00, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x01, 0x21, 0x13)
+        )
 
         assertEquals(1u, info.nameIndex)
         assertEquals(pool[1], info.name)
         assertEquals(4, info.bytes.size)
     }
-
 
 
 }

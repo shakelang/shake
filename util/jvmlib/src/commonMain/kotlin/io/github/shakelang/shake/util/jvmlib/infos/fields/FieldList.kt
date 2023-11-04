@@ -12,14 +12,14 @@ import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.shake.util.shason.json
 
-class FieldList(val fields: List<FieldInfo>): List<FieldInfo> by fields, ConstantUser {
+class FieldList(val fields: List<FieldInfo>) : List<FieldInfo> by fields, ConstantUser {
 
-    override val uses : Array<ConstantInfo> get() = fields.map { it.uses.toList() }.flatten().toTypedArray()
+    override val uses: Array<ConstantInfo> get() = fields.map { it.uses.toList() }.flatten().toTypedArray()
     override val users = fields.map { it.users.toList() }.flatten().toTypedArray()
 
     private lateinit var clazz: ClassInfo
 
-    constructor(fields: Array<FieldInfo>): this(fields.toList())
+    constructor(fields: Array<FieldInfo>) : this(fields.toList())
 
     fun init(clazz: ClassInfo) {
         this.clazz = clazz
@@ -58,7 +58,7 @@ class FieldList(val fields: List<FieldInfo>): List<FieldInfo> by fields, Constan
         fun fromBytes(pool: ConstantPool, bytes: ByteArray): FieldList {
             val stream = bytes.dataStream()
             val list = fromStream(pool, stream)
-            if(stream.available() > 0) throw IllegalArgumentException("Not all bytes have been used")
+            if (stream.available() > 0) throw IllegalArgumentException("Not all bytes have been used")
             return list
         }
     }

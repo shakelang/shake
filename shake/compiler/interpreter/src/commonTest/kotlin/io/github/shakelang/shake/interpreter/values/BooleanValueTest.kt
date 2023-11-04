@@ -6,7 +6,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertSame
 
 class BooleanValueTest {
-    
+
     @Test
     fun testFromBoolean() {
         assertSame(BooleanValue.TRUE, BooleanValue.from(true))
@@ -72,7 +72,7 @@ class BooleanValueTest {
 
     @Test
     fun testPow() {
-        val error = assertFailsWith(Error::class) {  BooleanValue.TRUE.pow(BooleanValue.TRUE) }
+        val error = assertFailsWith(Error::class) { BooleanValue.TRUE.pow(BooleanValue.TRUE) }
         assertEquals("Operator '**' is not defined for type boolean", error.message)
     }
 
@@ -114,7 +114,7 @@ class BooleanValueTest {
 
     @Test
     fun testBigger() {
-        val error = assertFailsWith(Error::class) { BooleanValue.TRUE.bigger(BooleanValue.TRUE)}
+        val error = assertFailsWith(Error::class) { BooleanValue.TRUE.bigger(BooleanValue.TRUE) }
         assertEquals("Operator '>' is not defined for type boolean", error.message)
     }
 

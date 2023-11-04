@@ -89,7 +89,7 @@ object Characters {
                         // Get the next 4 hex characters
                         val to = i + 4
                         while (i < to) {
-                            if(s.length <= ++i) throw IllegalArgumentException("Invalid unicode escape sequence")
+                            if (s.length <= ++i) throw IllegalArgumentException("Invalid unicode escape sequence")
                             c = s[i]
 
                             // Throw an error if the character is not a hex character

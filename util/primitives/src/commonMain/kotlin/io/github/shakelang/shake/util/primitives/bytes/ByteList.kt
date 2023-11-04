@@ -818,8 +818,7 @@ inline fun MutableList<Byte>.append(unsignedByte: UByte): MutableList<Byte> {
  * @see [UShort.toBytes]
  * @see [MutableList.append]
  */
-inline fun MutableList<Byte>.append(unsignedShort: UShort): MutableList<Byte>
-    = this.append(unsignedShort.toShort())
+inline fun MutableList<Byte>.append(unsignedShort: UShort): MutableList<Byte> = this.append(unsignedShort.toShort())
 
 /**
  * Append unsigned int to a byte List
@@ -832,8 +831,7 @@ inline fun MutableList<Byte>.append(unsignedShort: UShort): MutableList<Byte>
  * @see [UInt.toBytes]
  * @see [MutableList.append]
  */
-inline fun MutableList<Byte>.append(unsignedInt: UInt): MutableList<Byte>
-    = this.append(unsignedInt.toInt())
+inline fun MutableList<Byte>.append(unsignedInt: UInt): MutableList<Byte> = this.append(unsignedInt.toInt())
 
 /**
  * Append unsigned long to a byte List
@@ -846,5 +844,4 @@ inline fun MutableList<Byte>.append(unsignedInt: UInt): MutableList<Byte>
  * @see [ULong.toBytes]
  * @see [MutableList.append]
  */
-inline fun MutableList<Byte>.append(unsignedLong: ULong): MutableList<Byte>
-    = this.append(unsignedLong.toLong())
+inline fun MutableList<Byte>.append(unsignedLong: ULong): MutableList<Byte> = this.append(unsignedLong.toLong())

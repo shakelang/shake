@@ -6,6 +6,7 @@ interface ShakeNode {
 
     val json: Map<String, *>
         get() = toJson()
+
     fun toJson(): Map<String, *>
 }
 

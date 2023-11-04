@@ -2,10 +2,10 @@ package io.github.shakelang.shake.processor.program.creation
 
 import io.github.shakelang.shake.processor.program.types.ShakeParameter
 
-class CreationShakeParameter (
+class CreationShakeParameter(
     override val name: String,
-): ShakeParameter {
-    constructor(name: String, type: CreationShakeType): this(name) {
+) : ShakeParameter {
+    constructor(name: String, type: CreationShakeType) : this(name) {
         this.type = type
     }
 

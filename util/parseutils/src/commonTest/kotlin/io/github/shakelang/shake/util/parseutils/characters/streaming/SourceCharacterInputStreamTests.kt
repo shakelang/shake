@@ -19,14 +19,17 @@ class SourceCharacterInputStreamTests {
         }
 
         run {
-            val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#testConstructors", "Hello World!",)
+            val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#testConstructors", "Hello World!")
 
             assertEquals(-1, stream.position)
             assertEquals("Hello World!", stream.content.concatToString())
         }
 
         run {
-            val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#testConstructors", "Hello World!".toCharArray())
+            val stream = SourceCharacterInputStream(
+                "SourceCharacterInputStreamTests#testConstructors",
+                "Hello World!".toCharArray()
+            )
 
             assertEquals(-1, stream.position)
             assertEquals("Hello World!", stream.content.concatToString())
@@ -126,8 +129,8 @@ class SourceCharacterInputStreamTests {
             stream.has(0)
         }
 
-        for(i in 0..11) {
-            for(j in 1..30) {
+        for (i in 0..11) {
+            for (j in 1..30) {
                 assertEquals(j < 13 - i, stream.has(j))
             }
             stream.skip()
@@ -174,8 +177,6 @@ class SourceCharacterInputStreamTests {
 
         assertEquals("ello ", stream.peek(1, 5))
     }
-
-
 
 
 }

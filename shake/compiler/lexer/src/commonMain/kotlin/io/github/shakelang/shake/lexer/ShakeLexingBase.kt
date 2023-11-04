@@ -34,48 +34,37 @@ abstract class ShakeLexingBase(
         else if (next == '/' && peek == '/') {
             singleLineComment()
             makeToken()
-        }
-        else if (next == '/' && peek == '*') {
+        } else if (next == '/' && peek == '*') {
             multiLineComment()
             makeToken()
-        }
-        else if (input.has(2) && next == '*' && peek == '*' && input.peek(2) == '=') {
+        } else if (input.has(2) && next == '*' && peek == '*' && input.peek(2) == '=') {
             input.skip(2)
-             ShakeToken(ShakeTokenType.POW_ASSIGN, input.position, input.position)
-        }
-        else if (next == '%' && peek == '=') {
+            ShakeToken(ShakeTokenType.POW_ASSIGN, input.position, input.position)
+        } else if (next == '%' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.MOD_ASSIGN, input.position, input.position)
-        }
-        else if (next == '/' && peek == '=') {
+        } else if (next == '/' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.DIV_ASSIGN, input.position, input.position)
-        }
-        else if (next == '*' && peek == '=') {
+        } else if (next == '*' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.MUL_ASSIGN, input.position, input.position)
-        }
-        else if (next == '-' && peek == '=') {
+        } else if (next == '-' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.SUB_ASSIGN, input.position, input.position)
-        }
-        else if (next == '+' && peek == '=') {
+        } else if (next == '+' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.ADD_ASSIGN, input.position, input.position)
-        }
-        else if (next == '+' && peek == '+') {
+        } else if (next == '+' && peek == '+') {
             input.skip()
             ShakeToken(ShakeTokenType.INCR, input.position, input.position)
-        }
-        else if (next == '-' && peek == '-') {
+        } else if (next == '-' && peek == '-') {
             input.skip()
             ShakeToken(ShakeTokenType.DECR, input.position, input.position)
-        }
-        else if (next == '*' && peek == '*') {
+        } else if (next == '*' && peek == '*') {
             input.skip()
             ShakeToken(ShakeTokenType.POW, input.position, input.position)
-        }
-        else if (next == '%') ShakeToken(ShakeTokenType.MOD, input.position, input.position)
+        } else if (next == '%') ShakeToken(ShakeTokenType.MOD, input.position, input.position)
         else if (next == '/') ShakeToken(ShakeTokenType.DIV, input.position, input.position)
         else if (next == '*') ShakeToken(ShakeTokenType.MUL, input.position, input.position)
         else if (next == '-') ShakeToken(ShakeTokenType.SUB, input.position, input.position)
@@ -84,24 +73,19 @@ abstract class ShakeLexingBase(
         else if (next == '|' && peek == '|') {
             input.skip()
             ShakeToken(ShakeTokenType.LOGICAL_OR, input.position, input.position)
-        }
-        else if (next == '&' && peek == '&') {
+        } else if (next == '&' && peek == '&') {
             input.skip()
             ShakeToken(ShakeTokenType.LOGICAL_AND, input.position, input.position)
-        }
-        else if (next == '=' && peek == '=') {
+        } else if (next == '=' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.EQ_EQUALS, input.position, input.position)
-        }
-        else if (next == '>' && peek == '=') {
+        } else if (next == '>' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.BIGGER_EQUALS, input.position, input.position)
-        }
-        else if (next == '<' && peek == '=') {
+        } else if (next == '<' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.SMALLER_EQUALS, input.position, input.position)
-        }
-        else if (next == '>') ShakeToken(ShakeTokenType.BIGGER, input.position, input.position)
+        } else if (next == '>') ShakeToken(ShakeTokenType.BIGGER, input.position, input.position)
         else if (next == '<') ShakeToken(ShakeTokenType.SMALLER, input.position, input.position)
         else if (next == '=') ShakeToken(ShakeTokenType.ASSIGN, input.position, input.position)
         else if (next == '(') ShakeToken(ShakeTokenType.LPAREN, input.position, input.position)
@@ -126,7 +110,7 @@ abstract class ShakeLexingBase(
             numStr.append(input.next())
         }
         return if (dot) ShakeToken(ShakeTokenType.DOUBLE, numStr.toString(), start, input.position)
-            else ShakeToken(ShakeTokenType.INTEGER, numStr.toString(), start, input.position)
+        else ShakeToken(ShakeTokenType.INTEGER, numStr.toString(), start, input.position)
     }
 
     private fun makeIdentifier(): ShakeToken {
@@ -218,6 +202,7 @@ abstract class ShakeLexingBase(
                                 i++
                             }
                         }
+
                         else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
                     }
                 } else string.append(input.actual())
@@ -252,6 +237,7 @@ abstract class ShakeLexingBase(
                                 i++
                             }
                         }
+
                         else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
                     }
                 } else string.append(input.actual())
@@ -284,6 +270,7 @@ abstract class ShakeLexingBase(
                     }
                     s.toString()
                 }
+
                 else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
             }
         } else input.actual().toString()

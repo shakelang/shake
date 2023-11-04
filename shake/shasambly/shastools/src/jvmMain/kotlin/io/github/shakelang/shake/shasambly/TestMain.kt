@@ -124,7 +124,7 @@ fun main() {
     }
 
     val file = File("test.shasx")
-    if(file.exists()) file.delete()
+    if (file.exists()) file.delete()
     println("Write code bytes to ${file.absolutePath}...")
     val os = BufferedOutputStream(FileOutputStream(file))
     os.write(code)

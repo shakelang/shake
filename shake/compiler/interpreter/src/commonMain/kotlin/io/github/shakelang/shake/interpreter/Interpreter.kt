@@ -68,22 +68,22 @@ class Interpreter : ShakeGeneratorBase {
 
     @Throws(Error::class)
     fun applyDefaults() = applyDefaults(this)
-/*
-    private fun load(src: String, src_name: String) {
-        val s = javaClass.getResourceAsStream(src)!!
-        val reader = BufferedReader(InputStreamReader(s))
-        val chars = CharArray(s.available())
-        for (i in chars.indices) chars[i] = reader.read().toChar()
-        val source = from(chars, src_name)
-        val inputStream: CharacterInputStream = SourceCharacterInputStream(source)
-        val lexer = Lexer(inputStream)
-        val tokens = lexer.makeTokens()
-        val parser = Parser(tokens)
-        val tree = parser.parse()
-        visit(tree)
-    }
+    /*
+        private fun load(src: String, src_name: String) {
+            val s = javaClass.getResourceAsStream(src)!!
+            val reader = BufferedReader(InputStreamReader(s))
+            val chars = CharArray(s.available())
+            for (i in chars.indices) chars[i] = reader.read().toChar()
+            val source = from(chars, src_name)
+            val inputStream: CharacterInputStream = SourceCharacterInputStream(source)
+            val lexer = Lexer(inputStream)
+            val tokens = lexer.makeTokens()
+            val parser = Parser(tokens)
+            val tree = parser.parse()
+            visit(tree)
+        }
 
- */
+     */
 
     fun resetGlobals() {
         global.reset()

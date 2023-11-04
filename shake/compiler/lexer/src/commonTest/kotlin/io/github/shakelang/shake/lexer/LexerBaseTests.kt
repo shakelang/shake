@@ -112,42 +112,75 @@ class LexerBaseTests {
         generateToken("{", ShakeTokenType.LCURL) // '{'
         generateToken("}", ShakeTokenType.RCURL) // '}'
     }
+
     fun testKeyword(test: KeywordTest) {
         generateToken(test.input, test.output)
     }
 
-    @Test fun testDynamic() = testKeyword(KeywordTest.DYNAMIC)
-    @Test fun testByte() = testKeyword(KeywordTest.BYTE)
-    @Test fun testShort() = testKeyword(KeywordTest.SHORT)
-    @Test fun testInt() = testKeyword(KeywordTest.INT)
-    @Test fun testLong() = testKeyword(KeywordTest.LONG)
-    @Test fun testFloat() = testKeyword(KeywordTest.FLOAT)
-    @Test fun testDouble() = testKeyword(KeywordTest.DOUBLE)
-    @Test fun testChar() = testKeyword(KeywordTest.CHAR)
-    @Test fun testBoolean() = testKeyword(KeywordTest.BOOLEAN)
-    @Test fun testConst() = testKeyword(KeywordTest.CONST)
-    @Test fun testFunction() = testKeyword(KeywordTest.FUNCTION)
-    @Test fun testReturn() = testKeyword(KeywordTest.RETURN)
-    @Test fun testDo() = testKeyword(KeywordTest.DO)
-    @Test fun testWhile() = testKeyword(KeywordTest.WHILE)
-    @Test fun testFor() = testKeyword(KeywordTest.FOR)
-    @Test fun testIf() = testKeyword(KeywordTest.IF)
-    @Test fun testElse() = testKeyword(KeywordTest.ELSE)
-    @Test fun testTrue() = testKeyword(KeywordTest.TRUE)
-    @Test fun testFalse() = testKeyword(KeywordTest.FALSE)
-    @Test fun testClass() = testKeyword(KeywordTest.CLASS)
-    @Test fun testExtends() = testKeyword(KeywordTest.EXTENDS)
-    @Test fun testImplements() = testKeyword(KeywordTest.IMPLEMENTS)
-    @Test fun testStatic() = testKeyword(KeywordTest.STATIC)
-    @Test fun testFinal() = testKeyword(KeywordTest.FINAL)
-    @Test fun testPublic() = testKeyword(KeywordTest.PUBLIC)
-    @Test fun testProtected() = testKeyword(KeywordTest.PROTECTED)
-    @Test fun testPrivate() = testKeyword(KeywordTest.PRIVATE)
-    @Test fun testNew() = testKeyword(KeywordTest.NEW)
-    @Test fun testImport() = testKeyword(KeywordTest.IMPORT)
-    @Test fun testVoid() = testKeyword(KeywordTest.VOID)
-    @Test fun testConstructor() = testKeyword(KeywordTest.CONSTRUCTOR)
-    @Test fun testAs() = testKeyword(KeywordTest.AS)
+    @Test
+    fun testDynamic() = testKeyword(KeywordTest.DYNAMIC)
+    @Test
+    fun testByte() = testKeyword(KeywordTest.BYTE)
+    @Test
+    fun testShort() = testKeyword(KeywordTest.SHORT)
+    @Test
+    fun testInt() = testKeyword(KeywordTest.INT)
+    @Test
+    fun testLong() = testKeyword(KeywordTest.LONG)
+    @Test
+    fun testFloat() = testKeyword(KeywordTest.FLOAT)
+    @Test
+    fun testDouble() = testKeyword(KeywordTest.DOUBLE)
+    @Test
+    fun testChar() = testKeyword(KeywordTest.CHAR)
+    @Test
+    fun testBoolean() = testKeyword(KeywordTest.BOOLEAN)
+    @Test
+    fun testConst() = testKeyword(KeywordTest.CONST)
+    @Test
+    fun testFunction() = testKeyword(KeywordTest.FUNCTION)
+    @Test
+    fun testReturn() = testKeyword(KeywordTest.RETURN)
+    @Test
+    fun testDo() = testKeyword(KeywordTest.DO)
+    @Test
+    fun testWhile() = testKeyword(KeywordTest.WHILE)
+    @Test
+    fun testFor() = testKeyword(KeywordTest.FOR)
+    @Test
+    fun testIf() = testKeyword(KeywordTest.IF)
+    @Test
+    fun testElse() = testKeyword(KeywordTest.ELSE)
+    @Test
+    fun testTrue() = testKeyword(KeywordTest.TRUE)
+    @Test
+    fun testFalse() = testKeyword(KeywordTest.FALSE)
+    @Test
+    fun testClass() = testKeyword(KeywordTest.CLASS)
+    @Test
+    fun testExtends() = testKeyword(KeywordTest.EXTENDS)
+    @Test
+    fun testImplements() = testKeyword(KeywordTest.IMPLEMENTS)
+    @Test
+    fun testStatic() = testKeyword(KeywordTest.STATIC)
+    @Test
+    fun testFinal() = testKeyword(KeywordTest.FINAL)
+    @Test
+    fun testPublic() = testKeyword(KeywordTest.PUBLIC)
+    @Test
+    fun testProtected() = testKeyword(KeywordTest.PROTECTED)
+    @Test
+    fun testPrivate() = testKeyword(KeywordTest.PRIVATE)
+    @Test
+    fun testNew() = testKeyword(KeywordTest.NEW)
+    @Test
+    fun testImport() = testKeyword(KeywordTest.IMPORT)
+    @Test
+    fun testVoid() = testKeyword(KeywordTest.VOID)
+    @Test
+    fun testConstructor() = testKeyword(KeywordTest.CONSTRUCTOR)
+    @Test
+    fun testAs() = testKeyword(KeywordTest.AS)
 
     @Test
     fun testNumbers() {
@@ -221,7 +254,7 @@ class LexerBaseTests {
         @Suppress("deprecation")
         fun generateToken(input: String, tt: ShakeTokenType): ShakeToken {
             val i: CharacterInputStream = SourceCharacterInputStream("<tests>", input)
-            val lexer = object: ShakeLexingBase(i) {}
+            val lexer = object : ShakeLexingBase(i) {}
             val t = lexer.makeToken()
             assertSame(tt, t.type)
             assertFalse(i.hasNext())

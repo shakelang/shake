@@ -18,7 +18,7 @@ class CountingOutputStream(
      */
     val out: OutputStream,
 
-) : OutputStream() {
+    ) : OutputStream() {
 
     /**
      * The amount of bytes written to the [OutputStream]

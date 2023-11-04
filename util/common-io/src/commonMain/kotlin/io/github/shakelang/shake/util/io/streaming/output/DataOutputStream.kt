@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED")
+
 package io.github.shakelang.shake.util.io.streaming.output
 
 import io.github.shakelang.shake.util.io.IOException

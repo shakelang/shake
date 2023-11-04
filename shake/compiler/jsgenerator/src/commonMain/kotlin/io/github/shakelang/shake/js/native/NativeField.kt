@@ -6,7 +6,7 @@ import io.github.shakelang.shake.processor.program.types.code.values.ShakeFieldU
 
 interface NativeField {
 
-    fun handle(generator: ShakeJsGenerator, fieldUsage: ShakeFieldUsage) : JsValue
+    fun handle(generator: ShakeJsGenerator, fieldUsage: ShakeFieldUsage): JsValue
 
     val signature: String
 }

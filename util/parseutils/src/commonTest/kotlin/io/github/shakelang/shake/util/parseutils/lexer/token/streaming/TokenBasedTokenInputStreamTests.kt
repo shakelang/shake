@@ -486,7 +486,7 @@ class TokenBasedTokenInputStreamTests {
 
     @Test
     fun testToString() {
-val tokens = arrayOf(
+        val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, null, 4, 6),
             Token(TokenType.STRING, null, 7, 12),

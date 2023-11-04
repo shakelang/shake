@@ -9,9 +9,12 @@ import kotlin.test.assertSame
 
 class AttributeCodeInfoTests {
 
-    private val pool get() = ConstantPool(mutableListOf(
-        Constant.utf8("Code")
-    ))
+    private val pool
+        get() = ConstantPool(
+            mutableListOf(
+                Constant.utf8("Code")
+            )
+        )
 
     @Test
     fun test() {

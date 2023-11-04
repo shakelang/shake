@@ -1,4 +1,5 @@
 @file:Suppress("unused_variable")
+
 package io.github.shakelang.shake.util.jvmlib.infos.attributes
 
 import io.github.shakelang.shake.util.io.streaming.input.dataStream
@@ -205,7 +206,8 @@ class AttributeStackMapTableTests {
     fun testSameLocals1StackItemFrameExtendedInfoFromStream() {
 
         val stream = byteArrayOf(0, 64, 0).dataStream()
-        val info = AttributeStackMapTableInfo.StackMapFrameInfo.SameLocals1StackItemFrameExtendedInfo.fromStream(247u, stream)
+        val info =
+            AttributeStackMapTableInfo.StackMapFrameInfo.SameLocals1StackItemFrameExtendedInfo.fromStream(247u, stream)
         assertEquals(247u, info.frameType)
         assertEquals(64u, info.offsetDelta)
         assertEquals(listOf(247u.toByte(), 0, 64, 0), info.bytes.toList())
@@ -227,7 +229,8 @@ class AttributeStackMapTableTests {
     fun testSameLocals1StackItemFrameExtendedInfoFromBytes() {
 
         val bytes = byteArrayOf(0, 64, 0)
-        val info = AttributeStackMapTableInfo.StackMapFrameInfo.SameLocals1StackItemFrameExtendedInfo.fromBytes(247u, bytes)
+        val info =
+            AttributeStackMapTableInfo.StackMapFrameInfo.SameLocals1StackItemFrameExtendedInfo.fromBytes(247u, bytes)
         assertEquals(247u, info.frameType)
         assertEquals(64u, info.offsetDelta)
         assertEquals(listOf(247u.toByte(), 0, 64, 0), info.bytes.toList())
@@ -238,7 +241,8 @@ class AttributeStackMapTableTests {
     fun testSameLocals1StackItemFrameExtendedInfoFromBytesOffset() {
 
         val bytes = byteArrayOf(0, 0, 64, 0)
-        val info = AttributeStackMapTableInfo.StackMapFrameInfo.SameLocals1StackItemFrameExtendedInfo.fromBytes(247u, bytes, 1)
+        val info =
+            AttributeStackMapTableInfo.StackMapFrameInfo.SameLocals1StackItemFrameExtendedInfo.fromBytes(247u, bytes, 1)
         assertEquals(247u, info.frameType)
         assertEquals(64u, info.offsetDelta)
         assertEquals(listOf(247u.toByte(), 0, 64, 0), info.bytes.toList())
@@ -260,7 +264,8 @@ class AttributeStackMapTableTests {
     fun testSameLocals1StackItemFrameExtendedInfoFromBytes2Offset() {
 
         val bytes = byteArrayOf(0, 247u.toByte(), 0, 64, 0)
-        val info = AttributeStackMapTableInfo.StackMapFrameInfo.SameLocals1StackItemFrameExtendedInfo.fromBytes(bytes, 1)
+        val info =
+            AttributeStackMapTableInfo.StackMapFrameInfo.SameLocals1StackItemFrameExtendedInfo.fromBytes(bytes, 1)
         assertEquals(247u, info.frameType)
         assertEquals(64u, info.offsetDelta)
         assertEquals(listOf(247u.toByte(), 0, 64, 0), info.bytes.toList())
@@ -857,7 +862,8 @@ class AttributeStackMapTableTests {
 
         val bytes = byteArrayOf(
             *(1..10).map { (it % 255).toUByte().toByte() }.toByteArray(),
-            0, 2, 255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2, 0)
+            0, 2, 255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2, 0
+        )
         val info = AttributeStackMapTableInfo.contentsFromBytes(bytes, const, 10)
         assertEquals(2, info.entries.size)
         assertEquals(const, info.name)
@@ -901,7 +907,8 @@ class AttributeStackMapTableTests {
         val pool = ConstantPool(arrayOf(const))
         val bytes = byteArrayOf(
             *(1..10).map { (it % 255).toUByte().toByte() }.toByteArray(),
-            0, 1, 0, 0, 0, 12, 0, 2, 255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2, 0)
+            0, 1, 0, 0, 0, 12, 0, 2, 255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2, 0
+        )
         val info = AttributeStackMapTableInfo.fromBytes(pool, bytes, 10)
         assertEquals(2, info.entries.size)
         assertEquals(const, info.name)

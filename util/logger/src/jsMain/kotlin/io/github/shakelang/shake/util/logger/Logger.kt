@@ -52,7 +52,7 @@ object JsColoredConsoleLogger : LoggerPipe() {
 
 }
 
-object JsConsoleLogger: LoggerPipe() {
+object JsConsoleLogger : LoggerPipe() {
 
     override fun log(level: LogLevel, message: String) {
         when (level) {

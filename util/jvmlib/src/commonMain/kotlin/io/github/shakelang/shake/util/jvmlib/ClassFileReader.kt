@@ -5,8 +5,7 @@ import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
 import io.github.shakelang.shake.util.io.streaming.input.InputStream
 import io.github.shakelang.shake.util.jvmlib.infos.ClassInfo
 
-object ClassFileReader
-{
+object ClassFileReader {
 
     fun readClass(input: InputStream): ClassInfo {
 

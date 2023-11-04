@@ -18,7 +18,7 @@ class Scope
  * @param scopeVariables the variables of the scope (value for [scopeVariables])
  * @param interpreter the [interpreter] of the scope
  */
-(
+    (
 
     /**
      * The parent [Scope] (or null if the [Scope] has no parent)
@@ -35,8 +35,7 @@ class Scope
      */
     val interpreter: Interpreter
 
-)
-{
+) {
 
     // *******************************
     // fields

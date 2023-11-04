@@ -47,13 +47,20 @@ actual class File actual constructor(
 
     actual val exists: Boolean = this.file.exists()
 
-    actual fun mkdir() { this.file.mkdir() }
-    actual fun mkdirs() { this.file.mkdirs() }
+    actual fun mkdir() {
+        this.file.mkdir()
+    }
+
+    actual fun mkdirs() {
+        this.file.mkdirs()
+    }
+
     actual fun write(content: String) {
         val writer = BufferedWriter(FileWriter(file))
         writer.write(content)
         writer.close()
     }
+
     actual fun write(content: CharArray) {
         val writer = BufferedWriter(FileWriter(file))
         writer.write(content)
@@ -63,7 +70,7 @@ actual class File actual constructor(
 }
 
 actual fun resourceFile(path: String): String = File::class.java.classLoader
-        .getResourceAsStream(path)
-        ?.reader()
-        ?.readText()
-            ?: throw Error("Can't find resource '$path'")
+    .getResourceAsStream(path)
+    ?.reader()
+    ?.readText()
+    ?: throw Error("Can't find resource '$path'")

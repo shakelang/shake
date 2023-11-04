@@ -70,15 +70,27 @@ class JsonGeneratorTests {
     @Test
     fun testGenerateArrayFilledMultipleElements() {
         assertEquals("[\"hello\",\"world\"]", JsonGenerator.generate(arrayOf("hello", "world")))
-        assertEquals("[\n  \"hello\",\n  \"world\"\n]", JsonGenerator.generate(arrayOf("hello", "world"), indent = " ".repeat(2)))
-        assertEquals("[\n    \"hello\",\n    \"world\"\n]", JsonGenerator.generate(arrayOf("hello", "world"), indent = " ".repeat(4)))
+        assertEquals(
+            "[\n  \"hello\",\n  \"world\"\n]",
+            JsonGenerator.generate(arrayOf("hello", "world"), indent = " ".repeat(2))
+        )
+        assertEquals(
+            "[\n    \"hello\",\n    \"world\"\n]",
+            JsonGenerator.generate(arrayOf("hello", "world"), indent = " ".repeat(4))
+        )
     }
 
     @Test
     fun testGenerateArrayNested() {
         assertEquals("[[\"hello\"]]", JsonGenerator.generate(arrayOf(arrayOf("hello"))))
-        assertEquals("[\n  [\n    \"hello\"\n  ]\n]", JsonGenerator.generate(arrayOf(arrayOf("hello")), indent = " ".repeat(2)))
-        assertEquals("[\n    [\n        \"hello\"\n    ]\n]", JsonGenerator.generate(arrayOf(arrayOf("hello")), indent = " ".repeat(4)))
+        assertEquals(
+            "[\n  [\n    \"hello\"\n  ]\n]",
+            JsonGenerator.generate(arrayOf(arrayOf("hello")), indent = " ".repeat(2))
+        )
+        assertEquals(
+            "[\n    [\n        \"hello\"\n    ]\n]",
+            JsonGenerator.generate(arrayOf(arrayOf("hello")), indent = " ".repeat(4))
+        )
     }
 
     @Test
@@ -98,22 +110,34 @@ class JsonGeneratorTests {
     @Test
     fun testGenerateListFilledMultipleElements() {
         assertEquals("[\"hello\",\"world\"]", JsonGenerator.generate(listOf("hello", "world")))
-        assertEquals("[\n  \"hello\",\n  \"world\"\n]", JsonGenerator.generate(listOf("hello", "world"), indent = " ".repeat(2)))
-        assertEquals("[\n    \"hello\",\n    \"world\"\n]", JsonGenerator.generate(listOf("hello", "world"), indent = " ".repeat(4)))
+        assertEquals(
+            "[\n  \"hello\",\n  \"world\"\n]",
+            JsonGenerator.generate(listOf("hello", "world"), indent = " ".repeat(2))
+        )
+        assertEquals(
+            "[\n    \"hello\",\n    \"world\"\n]",
+            JsonGenerator.generate(listOf("hello", "world"), indent = " ".repeat(4))
+        )
     }
 
     @Test
     fun testGenerateListNested() {
         assertEquals("[[\"hello\"]]", JsonGenerator.generate(listOf(listOf("hello"))))
-        assertEquals("[\n  [\n    \"hello\"\n  ]\n]", JsonGenerator.generate(listOf(listOf("hello")), indent = " ".repeat(2)))
-        assertEquals("[\n    [\n        \"hello\"\n    ]\n]", JsonGenerator.generate(listOf(listOf("hello")), indent = " ".repeat(4)))
+        assertEquals(
+            "[\n  [\n    \"hello\"\n  ]\n]",
+            JsonGenerator.generate(listOf(listOf("hello")), indent = " ".repeat(2))
+        )
+        assertEquals(
+            "[\n    [\n        \"hello\"\n    ]\n]",
+            JsonGenerator.generate(listOf(listOf("hello")), indent = " ".repeat(4))
+        )
     }
 
     @Test
     fun testGenerateMapEmpty() {
-        assertEquals("{}", JsonGenerator.generate(emptyMap<String,Any>()))
-        assertEquals("{}", JsonGenerator.generate(emptyMap<String,Any>(), indentAmount = 2))
-        assertEquals("{}", JsonGenerator.generate(emptyMap<String,Any>(), indentAmount = 4))
+        assertEquals("{}", JsonGenerator.generate(emptyMap<String, Any>()))
+        assertEquals("{}", JsonGenerator.generate(emptyMap<String, Any>(), indentAmount = 2))
+        assertEquals("{}", JsonGenerator.generate(emptyMap<String, Any>(), indentAmount = 4))
     }
 
     @Test
@@ -126,15 +150,27 @@ class JsonGeneratorTests {
     @Test
     fun testGenerateMapFilledMultipleElements() {
         assertEquals("{\"hello\":1,\"world\":2}", JsonGenerator.generate(mapOf("hello" to 1, "world" to 2)))
-        assertEquals("{\n  \"hello\": 1,\n  \"world\": 2\n}", JsonGenerator.generate(mapOf("hello" to 1, "world" to 2), indent = " ".repeat(2)))
-        assertEquals("{\n    \"hello\": 1,\n    \"world\": 2\n}", JsonGenerator.generate(mapOf("hello" to 1, "world" to 2), indent = " ".repeat(4)))
+        assertEquals(
+            "{\n  \"hello\": 1,\n  \"world\": 2\n}",
+            JsonGenerator.generate(mapOf("hello" to 1, "world" to 2), indent = " ".repeat(2))
+        )
+        assertEquals(
+            "{\n    \"hello\": 1,\n    \"world\": 2\n}",
+            JsonGenerator.generate(mapOf("hello" to 1, "world" to 2), indent = " ".repeat(4))
+        )
     }
 
     @Test
     fun testGenerateMapNested() {
         assertEquals("{\"hello\":{\"world\":1}}", JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1))))
-        assertEquals("{\n  \"hello\": {\n    \"world\": 1\n  }\n}", JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1)), indent = " ".repeat(2)))
-        assertEquals("{\n    \"hello\": {\n        \"world\": 1\n    }\n}", JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1)), indent = " ".repeat(4)))
+        assertEquals(
+            "{\n  \"hello\": {\n    \"world\": 1\n  }\n}",
+            JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1)), indent = " ".repeat(2))
+        )
+        assertEquals(
+            "{\n    \"hello\": {\n        \"world\": 1\n    }\n}",
+            JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1)), indent = " ".repeat(4))
+        )
     }
 
 

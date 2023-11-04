@@ -1,4 +1,5 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused")
+
 package io.github.shakelang.shake.util.io.streaming.input
 
 import io.github.shakelang.shake.util.io.IOException

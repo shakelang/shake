@@ -21,7 +21,7 @@ class IntegerValue
  *
  * @param value the value of the [IntegerValue]
  */
-(
+    (
 
     /**
      * The value of the [IntegerValue]

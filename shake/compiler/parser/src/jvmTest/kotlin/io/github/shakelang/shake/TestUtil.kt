@@ -13,9 +13,11 @@ actual fun assertType(expected: KClass<*>, actual: Any) {
 actual fun assertArrayEquals(expected: Array<*>, actual: Array<*>) {
     try {
         assertTrue(expected.contentEquals(actual))
-    } catch(e: AssertionError) {
-        throw AssertionError("Array mismatch: \n" +
-                "expected: ${expected.contentToString()}, \n" +
-                "actual: ${actual.contentToString()}", e)
+    } catch (e: AssertionError) {
+        throw AssertionError(
+            "Array mismatch: \n" +
+                    "expected: ${expected.contentToString()}, \n" +
+                    "actual: ${actual.contentToString()}", e
+        )
     }
 }

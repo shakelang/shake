@@ -1,4 +1,5 @@
 @file:Suppress("nothing_to_inline", "unused")
+
 package io.github.shakelang.shake.util.primitives.bytes
 
 /**
@@ -29,8 +30,10 @@ fun Short.toBytes(): ByteArray = byteArrayOf((this.toInt() shr 8).toByte(), this
  * @since 0.1.0
  * @version 0.1.1
  */
-fun Int.toBytes(): ByteArray = byteArrayOf((this shr 24).toByte(), (this shr 16).toByte(),
-    (this shr 8).toByte(), this.toByte())
+fun Int.toBytes(): ByteArray = byteArrayOf(
+    (this shr 24).toByte(), (this shr 16).toByte(),
+    (this shr 8).toByte(), this.toByte()
+)
 
 /**
  * Convert Long to ByteArray
@@ -40,8 +43,10 @@ fun Int.toBytes(): ByteArray = byteArrayOf((this shr 24).toByte(), (this shr 16)
  * @since 0.1.0
  * @version 0.1.1
  */
-fun Long.toBytes(): ByteArray = byteArrayOf((this shr 56).toByte(), (this shr 48).toByte(), (this shr 40).toByte(),
-    (this shr 32).toByte(), (this shr 24).toByte(), (this shr 16).toByte(), (this shr 8).toByte(), this.toByte())
+fun Long.toBytes(): ByteArray = byteArrayOf(
+    (this shr 56).toByte(), (this shr 48).toByte(), (this shr 40).toByte(),
+    (this shr 32).toByte(), (this shr 24).toByte(), (this shr 16).toByte(), (this shr 8).toByte(), this.toByte()
+)
 
 /**
  * Convert Float to ByteArray
@@ -125,7 +130,7 @@ inline fun shortOf(b0: Byte, b1: Byte): Short = (b0.toUByte().toInt() shl 8 or b
 
 /**
  * Int of four bytes
- * 
+ *
  * @return The int
  *
  * @since 0.1.0
@@ -137,19 +142,21 @@ inline fun intOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) =
 
 /**
  * Long of eight bytes
- * 
+ *
  * @return The long
  *
  * @since 0.1.0
  * @version 0.1.1
  */
-inline fun longOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte)
-    = b0.toUByte().toLong() shl 8 or b1.toUByte().toLong() shl 8 or b2.toUByte().toLong() shl 8 or b3.toUByte().toLong() shl
-        8 or b4.toUByte().toLong() shl 8 or b5.toUByte().toLong() shl 8 or b6.toUByte().toLong() shl 8 or b7.toUByte().toLong()
+inline fun longOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte) =
+    b0.toUByte().toLong() shl 8 or b1.toUByte().toLong() shl 8 or b2.toUByte().toLong() shl 8 or b3.toUByte()
+        .toLong() shl
+            8 or b4.toUByte().toLong() shl 8 or b5.toUByte().toLong() shl 8 or b6.toUByte()
+        .toLong() shl 8 or b7.toUByte().toLong()
 
 /**
  * Float of four bytes
- * 
+ *
  * @return The float
  *
  * @since 0.1.0
@@ -159,18 +166,18 @@ inline fun floatOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = Float.fromBits(intO
 
 /**
  * Double of four bytes
- * 
+ *
  * @return The double
  *
  * @since 0.1.0
  * @version 0.1.1
  */
-inline fun doubleOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte)
-    = Double.fromBits(longOf(b0, b1, b2, b3, b4, b5, b6, b7))
+inline fun doubleOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte) =
+    Double.fromBits(longOf(b0, b1, b2, b3, b4, b5, b6, b7))
 
 /**
  * UByte of one byte
- * 
+ *
  * @return The UByte
  *
  * @since 0.1.0
@@ -180,7 +187,7 @@ inline fun ubyteOf(b: Byte) = byteOf(b).toUByte()
 
 /**
  * UShort of two bytes
- * 
+ *
  * @return The UShort
  *
  * @since 0.1.0
@@ -190,7 +197,7 @@ inline fun ushortOf(b0: Byte, b1: Byte): UShort = shortOf(b0, b1).toUShort()
 
 /**
  * UInt of four bytes
- * 
+ *
  * @return The UInt
  *
  * @since 0.1.0
@@ -200,14 +207,14 @@ inline fun uintOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = intOf(b0, b1, b2, b3
 
 /**
  * ULong of eight bytes
- * 
+ *
  * @return The ULong
  *
  * @since 0.1.0
  * @version 0.1.1
  */
-inline fun ulongOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte)
-        = longOf(b0, b1, b2, b3, b4, b5, b6, b7).toULong()
+inline fun ulongOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte) =
+    longOf(b0, b1, b2, b3, b4, b5, b6, b7).toULong()
 
 /**
  * UByte of one byte
@@ -247,6 +254,6 @@ inline fun unsignedIntOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = uintOf(b0, b1
  * @since 0.1.0
  * @version 0.1.1
  */
-inline fun unsignedLongOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte)
-        = ulongOf(b0, b1, b2, b3, b4, b5, b6, b7)
+inline fun unsignedLongOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte) =
+    ulongOf(b0, b1, b2, b3, b4, b5, b6, b7)
 

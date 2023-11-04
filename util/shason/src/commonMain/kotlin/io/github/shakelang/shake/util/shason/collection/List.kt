@@ -34,7 +34,7 @@ abstract class ListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, C
      */
     val list: List<T>,
 
-) : ListType<T, CT, MCT> {
+    ) : ListType<T, CT, MCT> {
 
     /**
      * Returns the size of the collection.

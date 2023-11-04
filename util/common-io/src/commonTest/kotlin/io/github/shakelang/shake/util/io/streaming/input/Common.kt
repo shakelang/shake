@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalUnsignedTypes::class)
+
 package io.github.shakelang.shake.util.io.streaming.input
 
 import io.github.shakelang.shake.util.primitives.bytes.byteArrayOf
@@ -29,7 +30,6 @@ fun testByteArrayCountingInputStream() {
     assertEquals(0xFF, stream.read())
     assertEquals(2, stream.count)
 }
-
 
 
 @Test
@@ -82,7 +82,6 @@ fun testDataInputStream() {
     assertEquals(7, dataInputStream.readByte())
     assertEquals(8, dataInputStream.readByte())
 }
-
 
 
 @Test

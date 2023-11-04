@@ -48,13 +48,13 @@ open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
     }
 
     override fun skip(amount: Int) {
-        for(i in 0 until amount) skip()
+        for (i in 0 until amount) skip()
     }
 
     override fun peek(offset: Int): T {
         try {
             fillBuffer(offset)
-        }  catch (e: IndexOutOfBoundsException) {
+        } catch (e: IndexOutOfBoundsException) {
             throw Error("Not enough tokens left", e)
         } catch (e: IllegalStateException) {
             throw Error("Not enough tokens left", e)

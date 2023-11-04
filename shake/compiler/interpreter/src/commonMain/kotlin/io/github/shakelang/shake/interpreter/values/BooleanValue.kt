@@ -14,7 +14,7 @@ class BooleanValue
  *
  * @param value the value of the boolean
  */
-(
+    (
 
     /**
      * The value of the [BooleanValue]

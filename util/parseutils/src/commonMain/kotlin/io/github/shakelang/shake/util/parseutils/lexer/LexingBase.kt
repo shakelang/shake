@@ -39,7 +39,8 @@ abstract class LexingBase<TT : TokenType, T : Token<TT>>(
         name: String,
         details: String,
         start: Position,
-        end: Position) :
+        end: Position
+    ) :
         io.github.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
 
         @JvmOverloads
@@ -70,6 +71,7 @@ abstract class LexingBase<TT : TokenType, T : Token<TT>>(
             start,
             end
         )
+
         @JvmOverloads
         constructor(
             name: String,

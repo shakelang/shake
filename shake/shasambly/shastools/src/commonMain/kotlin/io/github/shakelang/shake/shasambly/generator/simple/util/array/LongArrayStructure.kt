@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.generator.simple.util.array
 
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
@@ -34,7 +35,7 @@ class StaticallySizedLocalLongArrayStructure(val shasambly: SimpleShasambly, val
     fun getElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) isub(index * 8)
+            if (index != 0) isub(index * 8)
             l_get_global_dynamic()
         }
     }
@@ -62,7 +63,7 @@ class StaticallySizedLocalLongArrayStructure(val shasambly: SimpleShasambly, val
     fun storeElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) isub(index * 8)
+            if (index != 0) isub(index * 8)
             l_store_global_dynamic()
         }
     }
@@ -77,7 +78,7 @@ class StaticallySizedLocalLongArrayStructure(val shasambly: SimpleShasambly, val
         shasambly {
             lpush(value)
             i_get_local(address)
-            if(index != 0) isub(index * 8)
+            if (index != 0) isub(index * 8)
             l_store_global_dynamic()
         }
     }
@@ -99,11 +100,10 @@ class StaticallySizedLocalLongArrayStructure(val shasambly: SimpleShasambly, val
     fun free() {
         shasambly {
             i_get_local(address)
-            if(size == -1) {
+            if (size == -1) {
                 imul(8)
                 natives.freeGlobal()
-            }
-            else natives.freeGlobal(size * 8)
+            } else natives.freeGlobal(size * 8)
         }
     }
 
@@ -130,7 +130,7 @@ class StaticallySizedLocalLongArrayStructure(val shasambly: SimpleShasambly, val
  * @param size the size of the created array (must be at least 2 for this type of array!!!)
  */
 fun SimpleShasambly.createStaticallySizedLocalLongArray(addr: Int, size: Int): StaticallySizedLocalLongArrayStructure {
-    if(size < 1) throw IllegalArgumentException("Size must be at least 1 for this type of array")
+    if (size < 1) throw IllegalArgumentException("Size must be at least 1 for this type of array")
     natives.declareGlobal(size * 8)
     i_store_local(addr)
     return StaticallySizedLocalLongArrayStructure(this.base, addr, size)
@@ -312,7 +312,8 @@ typealias StaticallySizedLocalDoubleArrayStructure = StaticallySizedLocalLongArr
  * @param addr the local address to store the array in
  * @param size the size of the created array (must be at least 2 for this type of array!!!)
  */
-fun SimpleShasambly.createStaticallySizedLocalDoubleArray(addr: Int, size: Int) = this.createStaticallySizedLocalLongArray(addr, size)
+fun SimpleShasambly.createStaticallySizedLocalDoubleArray(addr: Int, size: Int) =
+    this.createStaticallySizedLocalLongArray(addr, size)
 
 /**
  * Create a [StaticallySizedLocalLongArrayStructure]

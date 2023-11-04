@@ -53,15 +53,16 @@ class Java : InterpreterValue {
          * @return the keys of all children
          *
          */
-        override val children: Array<String> get() {
-            // Get names of all classes in this package using reflections
-            val reflections = Reflections(unknownName)
-            val allClasses = reflections.getSubTypesOf(
-                Any::class.java
-            ).toTypedArray()
+        override val children: Array<String>
+            get() {
+                // Get names of all classes in this package using reflections
+                val reflections = Reflections(unknownName)
+                val allClasses = reflections.getSubTypesOf(
+                    Any::class.java
+                ).toTypedArray()
 
-            return (allClasses.map { it.simpleName }).toTypedArray()
-        }
+                return (allClasses.map { it.simpleName }).toTypedArray()
+            }
 
         /**
          * Returns the name of the type of [InterpreterValue] (To identify the type of value)
@@ -104,20 +105,21 @@ class Java : InterpreterValue {
             return Variable.finalOf(c, NullValue.NULL)
         }
 
-        override val children: Array<String> get() {
-            val children: MutableList<String> = ArrayList()
-            val fields = this.javaClass.fields
-            for (i in fields.indices) if (!containsString(children, fields[i].name)) children.add(
-                fields[i].name
-            )
-            for (i in javaClass.methods.indices) if (!containsString(children, fields[i].name)) children.add(
-                fields[i].name
-            )
-            for (i in javaClass.classes.indices) if (!containsString(children, fields[i].name)) children.add(
-                fields[i].name
-            )
-            return children.toTypedArray()
-        }
+        override val children: Array<String>
+            get() {
+                val children: MutableList<String> = ArrayList()
+                val fields = this.javaClass.fields
+                for (i in fields.indices) if (!containsString(children, fields[i].name)) children.add(
+                    fields[i].name
+                )
+                for (i in javaClass.methods.indices) if (!containsString(children, fields[i].name)) children.add(
+                    fields[i].name
+                )
+                for (i in javaClass.classes.indices) if (!containsString(children, fields[i].name)) children.add(
+                    fields[i].name
+                )
+                return children.toTypedArray()
+            }
 
         override fun newInstance(node: ShakeClassConstructionNode, scope: Scope): InterpreterValue {
             val args = arrayOfNulls<Any>(node.args.size)
@@ -142,7 +144,8 @@ class Java : InterpreterValue {
                     }
                 }
                 throw UnformattedInterpreterError(
-                    String.format("No constructor of class %s for arguments %s found",
+                    String.format(
+                        "No constructor of class %s for arguments %s found",
                         this.javaClass.name, Arrays.toString(
                             Arrays.stream(args)
                                 .map { arg: Any? -> arg!!.javaClass }.toArray()

@@ -7,7 +7,7 @@ import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterI
 
 class ShakeLexer(
     input: CharacterInputStream
-): ShakeLexingBase(input) {
+) : ShakeLexingBase(input) {
 
     fun makeTokens(): ShakeTokenBasedTokenInputStream {
         val tokens = mutableListOf<ShakeToken>()

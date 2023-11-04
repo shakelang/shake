@@ -6,7 +6,13 @@ import io.github.shakelang.shake.parser.node.ShakeStatementNodeImpl
 import io.github.shakelang.shake.parser.node.ShakeValuedNode
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
-class ShakeForNode(map: PositionMap, val body: ShakeBlockNode, val declaration: ShakeStatementNode, val condition: ShakeValuedNode, val round: ShakeStatementNode) :
+class ShakeForNode(
+    map: PositionMap,
+    val body: ShakeBlockNode,
+    val declaration: ShakeStatementNode,
+    val condition: ShakeValuedNode,
+    val round: ShakeStatementNode
+) :
     ShakeStatementNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =

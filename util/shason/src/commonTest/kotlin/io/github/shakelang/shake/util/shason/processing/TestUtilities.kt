@@ -9,6 +9,7 @@ object TestUtilities {
         val lexer = JsonLexer(input)
         return lexer.makeTokens()
     }
+
     fun parse(source: String, contents: String): JsonElement {
         val tokens = makeTokens(source, contents)
         val parser = JsonParser(tokens)

@@ -42,11 +42,10 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
             return ConstantNameAndTypeInfo(value, name)
         }
 
-        fun contentsFromStream(stream: InputStream)
-                = contentsFromStream(stream.dataStream)
+        fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if(stream.readByte() != tag)
+            if (stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantNameAndTypeInfo")
             else contentsFromStream(stream)
 

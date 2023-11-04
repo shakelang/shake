@@ -4,7 +4,7 @@ import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCo
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.types.code.statements.ShakeIf
 
-class CreationShakeIf (
+class CreationShakeIf(
 
     override val condition: CreationShakeValue,
     override val body: CreationShakeCode,

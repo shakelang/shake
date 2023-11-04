@@ -10,7 +10,7 @@ import io.github.shakelang.shake.util.primitives.bytes.toBytes
 
 open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, AttributeInfo>, ConstantUser {
 
-    override val uses : Array<ConstantInfo> get() = map.values.map { it.uses.toList() }.flatten().toTypedArray()
+    override val uses: Array<ConstantInfo> get() = map.values.map { it.uses.toList() }.flatten().toTypedArray()
     override val users: Array<ConstantUser> get() = map.values.toTypedArray()
 
     private lateinit var clazz: ClassInfo
@@ -45,7 +45,7 @@ open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, 
     fun toJson() = map.map {
         it.value.toJson()
     }
-    
+
     fun init(clazz: ClassInfo) {
         this.clazz = clazz
         for (i in map.values.indices) {
@@ -72,7 +72,8 @@ open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, 
 
 }
 
-class MutableAttributeMap(map: MutableMap<String, AttributeInfo>) : AttributeMap(map), MutableMap<String, AttributeInfo> {
+class MutableAttributeMap(map: MutableMap<String, AttributeInfo>) : AttributeMap(map),
+    MutableMap<String, AttributeInfo> {
 
     override val map: MutableMap<String, AttributeInfo>
         get() = super.map as MutableMap<String, AttributeInfo>
@@ -88,13 +89,10 @@ class MutableAttributeMap(map: MutableMap<String, AttributeInfo>) : AttributeMap
 
     override fun clear() = map.clear()
 
-    override fun put(key: String, value: AttributeInfo): AttributeInfo?
-        = map.put(key, value)
+    override fun put(key: String, value: AttributeInfo): AttributeInfo? = map.put(key, value)
 
-    override fun putAll(from: Map<out String, AttributeInfo>)
-        = map.putAll(from)
+    override fun putAll(from: Map<out String, AttributeInfo>) = map.putAll(from)
 
-    override fun remove(key: String): AttributeInfo?
-        = map.remove(key)
+    override fun remove(key: String): AttributeInfo? = map.remove(key)
 
 }

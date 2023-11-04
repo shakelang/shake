@@ -7,7 +7,7 @@ import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterI
 
 class ShasPLexer(
     input: CharacterInputStream
-): ShasPLexingBase(input) {
+) : ShasPLexingBase(input) {
 
     fun makeTokens(): ShasPTokenBasedInputStream {
         val tokens = mutableListOf<ShasPToken>()

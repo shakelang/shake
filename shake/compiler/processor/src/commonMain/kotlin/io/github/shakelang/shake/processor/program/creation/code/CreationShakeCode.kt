@@ -7,9 +7,9 @@ import io.github.shakelang.shake.processor.program.types.code.ShakeCode
 
 open class CreationShakeCode(
     override val statements: List<CreationShakeStatement>
-): ShakeCode {
+) : ShakeCode {
 
-    open class ShakeLateProcessCode (
+    open class ShakeLateProcessCode(
         open val tree: ShakeBlockNode
     ) : CreationShakeCode(emptyList()) {
 

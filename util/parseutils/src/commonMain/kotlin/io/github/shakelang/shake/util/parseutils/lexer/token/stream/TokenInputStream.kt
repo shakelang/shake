@@ -9,7 +9,7 @@ import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
  * created by a lexer
  */
 @Suppress("unused")
-interface TokenInputStream<TT: TokenType, T : Token<TT>> {
+interface TokenInputStream<TT : TokenType, T : Token<TT>> {
 
     /**
      * The source (mostly filename) of the [TokenInputStream]
@@ -102,45 +102,50 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      *
      * @return The actual token-type
      */
-    val actualType: TT get() {
-        return actual.type
-    }
+    val actualType: TT
+        get() {
+            return actual.type
+        }
 
     /**
      * Returns the start of the actual token
      *
      * @return The actual token-start
      */
-    val actualStart: Int get() {
-        return actual.start
-    }
+    val actualStart: Int
+        get() {
+            return actual.start
+        }
 
     /**
      * Returns the end of the actual token
      *
      * @return The actual token-end
      */
-    val actualEnd: Int get() {
-        return actual.end
-    }
+    val actualEnd: Int
+        get() {
+            return actual.end
+        }
 
     /**
      * Returns the value of the actual
      *
      * @return The actual token-value
      */
-    val actualValue: String? get() {
-        return actual.value
-    }
+    val actualValue: String?
+        get() {
+            return actual.value
+        }
 
     /**
      * Checks if the actual token without changing the actual token
      *
      * @return Has the actual token a value?
      */
-    val actualHasValue: Boolean get() {
-        return actualValue != null
-    }
+    val actualHasValue: Boolean
+        get() {
+            return actualValue != null
+        }
 
     /**
      * Returns the next [Token]

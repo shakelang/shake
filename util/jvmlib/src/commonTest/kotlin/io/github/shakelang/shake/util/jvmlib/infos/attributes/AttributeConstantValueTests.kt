@@ -8,10 +8,13 @@ import kotlin.test.assertEquals
 
 class AttributeConstantValueTests {
 
-    private val pool get() = ConstantPool(mutableListOf(
-        Constant.utf8("ConstantValue"),
-        Constant.utf8("Hello, World!")
-    ))
+    private val pool
+        get() = ConstantPool(
+            mutableListOf(
+                Constant.utf8("ConstantValue"),
+                Constant.utf8("Hello, World!")
+            )
+        )
 
     @Test
     fun test() {

@@ -10,7 +10,7 @@ class ConstantUtf8Tests {
     @Test
     fun test() {
         val constant = ConstantUtf8Info("Hello, World!")
-        assertEquals("Hello, World!", constant.value )
+        assertEquals("Hello, World!", constant.value)
         assertEquals(1, constant.tag)
         assertEquals("constant_utf8_info", constant.tagName)
     }

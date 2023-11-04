@@ -90,12 +90,14 @@ open class CompilerError : Error {
         start: Position,
         end: Position,
         cause: Throwable? = null
-    ) : this(message,
+    ) : this(
+        message,
         createPositionMarker(
             MAX_LENGTH,
             start,
             end
-        ), exceptionName, details, start, end, cause)
+        ), exceptionName, details, start, end, cause
+    )
 
 
     /**
@@ -214,17 +216,17 @@ open class CompilerError : Error {
                 if (pos1.line != pos2.line) throw Error("The two positions that should be marked have to be in the same line")
                 if (pos1.column > pos2.column) throw Error("Position 1 must be before Position 2")
 
-                if(pos1.source.lineSeparators.contains(pos1.index)) {
+                if (pos1.source.lineSeparators.contains(pos1.index)) {
                     var pos = pos1.index
-                    while(pos1.source.lineSeparators.contains(pos)) {
+                    while (pos1.source.lineSeparators.contains(pos)) {
                         pos--
                     }
                     pos1 = pos1.source.resolve(pos)
                 }
 
-                if(pos2.source.lineSeparators.contains(pos2.index)) {
+                if (pos2.source.lineSeparators.contains(pos2.index)) {
                     var pos = pos2.index
-                    while(pos2.source.lineSeparators.contains(pos)) {
+                    while (pos2.source.lineSeparators.contains(pos)) {
                         pos--
                     }
                     pos2 = pos2.source.resolve(pos)
@@ -299,8 +301,7 @@ open class CompilerError : Error {
                     join(start, pos1.source.source[pos1.index, pos2.index + 1].concatToString(), end),
                     join(' '.repeat(start.length), '^'.repeat(highlighted))
                 )
-            }
-            catch (e: Throwable) {
+            } catch (e: Throwable) {
                 println("Error while creating position marker:")
                 e.printStackTrace()
                 return ErrorMarker(

@@ -10,7 +10,7 @@ import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
  */
 @Suppress("unused")
 open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
-(
+    (
 
     /**
      * The tokenTypes that are contained in the [TokenBasedTokenInputStream]
@@ -30,7 +30,7 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
      * @return the token at the given position
      */
     open operator fun get(position: Int): T {
-        if(position < 0 || position >= tokens.size) throw Error("Invalid position")
+        if (position < 0 || position >= tokens.size) throw Error("Invalid position")
         return tokens[position]
     }
 
@@ -91,18 +91,18 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
     }
 
     override fun next(): T {
-        if(!hasNext()) throw Error("Not enough tokens left")
+        if (!hasNext()) throw Error("Not enough tokens left")
         return tokens[++position]
     }
 
     override fun skip() {
-        if(!hasNext()) throw Error("Not enough tokens left")
+        if (!hasNext()) throw Error("Not enough tokens left")
         position++
     }
 
     override fun skip(amount: Int) {
-        if(amount < 1) throw Error("Amount must be greater than 0")
-        if(!has(amount)) throw Error("Not enough tokens left")
+        if (amount < 1) throw Error("Amount must be greater than 0")
+        if (!has(amount)) throw Error("Not enough tokens left")
         position += amount
     }
 
@@ -111,13 +111,13 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
     }
 
     override fun peek(): T {
-        if(position + 1 >= tokens.size) throw Error("Not enough tokens left")
+        if (position + 1 >= tokens.size) throw Error("Not enough tokens left")
         return tokens[position + 1]
     }
 
     override fun peek(offset: Int): T {
-        if(offset < 1) throw Error("Offset must be greater than 0")
-        if(position + offset >= tokens.size) throw Error("Not enough tokens left")
+        if (offset < 1) throw Error("Offset must be greater than 0")
+        if (position + offset >= tokens.size) throw Error("Not enough tokens left")
         return tokens[position + offset]
     }
 

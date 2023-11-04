@@ -16,7 +16,7 @@ import kotlin.math.min
  *
  * @see InputStream
  */
-class BufferedInputStream (
+class BufferedInputStream(
 
     /**
      * The [InputStream] to buffer

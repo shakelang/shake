@@ -3,7 +3,7 @@ package io.github.shakelang.shake.util.environment
 /**
  * Describes an Environment of the multiplatform project execution
  */
-abstract class Environment (
+abstract class Environment(
 
     /**
      * The type of the Environment
@@ -38,12 +38,13 @@ abstract class Environment (
     /**
      * Casts this Environment to a JavaScriptEnvironment
      */
-    fun toJavaScript() = if(isJavaScript) this as JavaScriptEnvironment else throw Error("Environment is not javascript!")
+    fun toJavaScript() =
+        if (isJavaScript) this as JavaScriptEnvironment else throw Error("Environment is not javascript!")
 
     /**
      * Casts this Environment to a JavaScriptEnvironment
      */
-    fun toJava() = if(isJava) this as JavaEnvironment else throw Error("Environment is not java!")
+    fun toJava() = if (isJava) this as JavaEnvironment else throw Error("Environment is not java!")
 
     companion object {
 

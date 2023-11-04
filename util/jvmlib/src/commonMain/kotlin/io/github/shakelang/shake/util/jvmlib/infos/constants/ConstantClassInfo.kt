@@ -35,11 +35,10 @@ class ConstantClassInfo(private val vi: UShort) : ConstantInfo(), ConstantUser {
             return ConstantClassInfo(value)
         }
 
-        fun contentsFromStream(stream: InputStream)
-                = contentsFromStream(stream.dataStream)
+        fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if(stream.readByte() != tag)
+            if (stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantClassInfo")
             else contentsFromStream(stream)
 

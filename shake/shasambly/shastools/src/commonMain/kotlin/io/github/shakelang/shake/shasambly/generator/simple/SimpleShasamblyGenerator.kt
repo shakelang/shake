@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.generator.simple
 
 import io.github.shakelang.shake.shasambly.generator.basic.*
@@ -169,18 +170,22 @@ interface SimpleShasambly {
         bpush(b)
         badd()
     }
+
     fun bsub(b: Byte) {
         bpush(b)
         bsub()
     }
+
     fun bmul(b: Byte) {
         bpush(b)
         bmul()
     }
+
     fun bdiv(b: Byte) {
         bpush(b)
         bdiv()
     }
+
     fun bmod(b: Byte) {
         bpush(b)
         bmod()
@@ -191,18 +196,22 @@ interface SimpleShasambly {
         spush(s)
         sadd()
     }
+
     fun ssub(s: Short) {
         spush(s)
         ssub()
     }
+
     fun smul(s: Short) {
         spush(s)
         smul()
     }
+
     fun sdiv(s: Short) {
         spush(s)
         sdiv()
     }
+
     fun smod(s: Short) {
         spush(s)
         smod()
@@ -213,18 +222,22 @@ interface SimpleShasambly {
         ipush(i)
         iadd()
     }
+
     fun isub(i: Int) {
         ipush(i)
         isub()
     }
+
     fun imul(i: Int) {
         ipush(i)
         imul()
     }
+
     fun idiv(i: Int) {
         ipush(i)
         idiv()
     }
+
     fun imod(i: Int) {
         ipush(i)
         imod()
@@ -235,18 +248,22 @@ interface SimpleShasambly {
         lpush(l)
         ladd()
     }
+
     fun lsub(l: Long) {
         lpush(l)
         lsub()
     }
+
     fun lmul(l: Long) {
         lpush(l)
         lmul()
     }
+
     fun ldiv(l: Long) {
         lpush(l)
         ldiv()
     }
+
     fun lmod(l: Long) {
         lpush(l)
         lmod()
@@ -257,18 +274,22 @@ interface SimpleShasambly {
         fpush(f)
         fadd()
     }
+
     fun fsub(f: Float) {
         fpush(f)
         fsub()
     }
+
     fun fmul(f: Float) {
         fpush(f)
         fmul()
     }
+
     fun fdiv(f: Float) {
         fpush(f)
         fdiv()
     }
+
     fun fmod(f: Float) {
         fpush(f)
         fmod()
@@ -279,18 +300,22 @@ interface SimpleShasambly {
         dpush(d)
         dadd()
     }
+
     fun dsub(d: Double) {
         dpush(d)
         dsub()
     }
+
     fun dmul(d: Double) {
         dpush(d)
         dmul()
     }
+
     fun ddiv(d: Double) {
         dpush(d)
         ddiv()
     }
+
     fun dmod(d: Double) {
         dpush(d)
         dmod()
@@ -634,10 +659,12 @@ interface SimpleShasambly {
         }
     }
 
-    fun forLoop(decl: SimpleShasamblyGeneratorFunction,
-                cond: SimpleShasamblyGeneratorFunction,
-                round: SimpleShasamblyGeneratorFunction,
-                it: SimpleShasamblyGeneratorFunction) {
+    fun forLoop(
+        decl: SimpleShasamblyGeneratorFunction,
+        cond: SimpleShasamblyGeneratorFunction,
+        round: SimpleShasamblyGeneratorFunction,
+        it: SimpleShasamblyGeneratorFunction
+    ) {
         decl(this)
         whileLoop(cond) {
             it(this)
@@ -645,9 +672,11 @@ interface SimpleShasambly {
         }
     }
 
-    fun ifElse(cond: SimpleShasamblyGeneratorFunction,
-               orElse: SimpleShasamblyGeneratorFunction? = null,
-               it: SimpleShasamblyGeneratorFunction) {
+    fun ifElse(
+        cond: SimpleShasamblyGeneratorFunction,
+        orElse: SimpleShasamblyGeneratorFunction? = null,
+        it: SimpleShasamblyGeneratorFunction
+    ) {
         relative {
             cond(this)
             if (orElse == null) {
@@ -656,8 +685,7 @@ interface SimpleShasambly {
                 it(this)
                 val end = size
                 init(ShasamblyOpcodeJumpIfToIndex(end))
-            }
-            else {
+            } else {
                 val elseJump = lateinit(5)
                 orElse(this)
                 val endJump = lateinit(5)
@@ -700,7 +728,8 @@ open class RelativeShasamblyGeneratorPart(
 
 }
 
-class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction): ShasamblyGenerator(mutableListOf()), SimpleShasambly {
+class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction) : ShasamblyGenerator(mutableListOf()),
+    SimpleShasambly {
 
     override val natives = NativeFunctions(this)
     override val base = this
@@ -1039,25 +1068,29 @@ class NativeFunctions(val base: SimpleShasambly) {
      * Swap two bytes on the stack (the indexes are given as arguments, for example 0 means the top byte,
      * on the stack, 1 the second...)
      */
-    fun bswap(first: UByte, second: UByte) = base.invokeNative(Natives.bSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
+    fun bswap(first: UByte, second: UByte) =
+        base.invokeNative(Natives.bSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
 
     /**
      * Swap two shorts on the stack (the indexes are given as arguments, for example 0 means the top short,
      * on the stack, 2 the second...)
      */
-    fun sswap(first: UByte, second: UByte) = base.invokeNative(Natives.sSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
+    fun sswap(first: UByte, second: UByte) =
+        base.invokeNative(Natives.sSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
 
     /**
      * Swap two integers on the stack (the indexes are given as arguments, for example 0 means the top integer,
      * on the stack, 2 the second...)
      */
-    fun iswap(first: UByte, second: UByte) = base.invokeNative(Natives.iSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
+    fun iswap(first: UByte, second: UByte) =
+        base.invokeNative(Natives.iSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
 
     /**
      * Swap two longs on the stack (the indexes are given as arguments, for example 0 means the top integer,
      * on the stack, 2 the second...)
      */
-    fun lswap(first: UByte, second: UByte) = base.invokeNative(Natives.lSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
+    fun lswap(first: UByte, second: UByte) =
+        base.invokeNative(Natives.lSwap, byteArrayOf(*first.toBytes(), *second.toBytes()))
 
     /**
      * Duplicate the top byte on the stack

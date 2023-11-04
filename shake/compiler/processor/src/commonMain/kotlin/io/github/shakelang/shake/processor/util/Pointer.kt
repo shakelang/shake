@@ -29,9 +29,11 @@ interface Pointer<out T> {
         fun <T> of(value: T) = object : Pointer<T> {
             override val value: T = value
         }
+
         fun <T> mutableOf(value: T) = object : MutablePointer<T> {
             override var value: T = value
         }
+
         fun <T> late() = object : LateInitPointer<T> {
             var realValue: T? = null
 
@@ -40,14 +42,15 @@ interface Pointer<out T> {
 
             @Suppress("UNCHECKED_CAST")
             override val value: T
-                get() = if(isInitialized) realValue as T else throw IllegalStateException("lateinit pointer is not initialized")
+                get() = if (isInitialized) realValue as T else throw IllegalStateException("lateinit pointer is not initialized")
 
             override fun init(value: T) {
-                if(isInitialized) throw IllegalStateException("late init pointer is already initialized")
+                if (isInitialized) throw IllegalStateException("late init pointer is already initialized")
                 this.realValue = value
                 isInitialized = true
             }
         }
+
         fun <T> lateMutable() = object : LateInitMutablePointer<T> {
             var realValue: T? = null
 
@@ -56,14 +59,14 @@ interface Pointer<out T> {
 
             @Suppress("UNCHECKED_CAST")
             override var value: T
-                get() = if(isInitialized) realValue as T else throw IllegalStateException("late init pointer is not initialized")
+                get() = if (isInitialized) realValue as T else throw IllegalStateException("late init pointer is not initialized")
                 set(value) {
                     realValue = value
                     isInitialized = true
                 }
 
             override fun init(value: T) {
-                if(isInitialized) throw IllegalStateException("late init pointer is already initialized")
+                if (isInitialized) throw IllegalStateException("late init pointer is already initialized")
                 this.realValue = value
                 isInitialized = true
             }
@@ -106,6 +109,7 @@ fun <T> MutablePointerList<T>.values(): MutablePointingList<T> = MutablePointing
 
 interface PointingList<T> : List<T> {
     val pointers: List<Pointer<T>>
+
     private class Impl<T>(
         override val pointers: List<Pointer<T>>
     ) : PointingList<T> {
@@ -239,6 +243,7 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
                 override fun set(element: T) = iterator.set(Pointer.of(element))
             }
         }
+
         override fun subList(fromIndex: Int, toIndex: Int): MutableList<T> {
             return Impl(pointers.subList(fromIndex, toIndex))
         }
@@ -250,6 +255,7 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
         override fun removeAt(index: Int): T {
             return pointers.removeAt(index).value
         }
+
         override fun set(index: Int, element: T): T {
             return pointers.set(index, Pointer.of(element)).value
         }
@@ -269,6 +275,7 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
         override fun addAll(elements: Collection<T>): Boolean {
             return pointers.addAll(elements.map { Pointer.of(it) })
         }
+
         override fun addAll(index: Int, elements: Collection<T>): Boolean {
             return pointers.addAll(index, elements.map { Pointer.of(it) })
         }
@@ -276,6 +283,7 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
         override fun add(index: Int, element: T) {
             pointers.add(index, Pointer.of(element))
         }
+
         override fun add(element: T): Boolean {
             return pointers.add(Pointer.of(element))
         }

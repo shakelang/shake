@@ -1,4 +1,5 @@
 @file:Suppress("unused_variable", "unused")
+
 package io.github.shakelang.shake.shasambly.shasp.generator
 
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
@@ -30,8 +31,13 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
     private var localPosCounter: Int = 0
     private lateinit var gen: SimpleShasamblyGenerator
 
-    private fun SimpleShasambly.declareNativeRoutine(name: String, args: List<ShasPType>, localStackSize: Int, body: SimpleRoutineShasamblyGenerator): ShasamblyNativeFunctionGenerator {
-        if(functions.any { it.name == name }) {
+    private fun SimpleShasambly.declareNativeRoutine(
+        name: String,
+        args: List<ShasPType>,
+        localStackSize: Int,
+        body: SimpleRoutineShasamblyGenerator
+    ): ShasamblyNativeFunctionGenerator {
+        if (functions.any { it.name == name }) {
             throw IllegalStateException("Function $name already exists")
         }
         val routine = declareRoutine(args.sumOf { it.byteSize }, localStackSize)
@@ -127,8 +133,8 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
 
     fun generate(tree: ShasPProgram) {
         tree.children.forEach {
-            if(it is ShasPFunctionDeclaration) generate(it)
-            if(it is ShasPVariableDeclaration) TODO("Global variables are not implemented for now")
+            if (it is ShasPFunctionDeclaration) generate(it)
+            if (it is ShasPVariableDeclaration) TODO("Global variables are not implemented for now")
         }
         val main = functions.find { it.name == "main" } ?: throw IllegalStateException("No main function found")
         shasambly { main.call() }
@@ -138,7 +144,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
 
     private fun createFunctions() {
         // Only generate functions that are actually used at least once
-        while(functions.any { it.used && !it.created }) {
+        while (functions.any { it.used && !it.created }) {
             functions.filter { it.used && !it.created }.forEach {
                 it.create()
             }
@@ -147,7 +153,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
 
     private fun generate(function: ShasPFunctionDeclaration) {
         val name = function.name
-        if(functions.any { it.name == name }) throw IllegalStateException("Function $name already exists")
+        if (functions.any { it.name == name }) throw IllegalStateException("Function $name already exists")
         gen.run {
             val argSize = function.args.sumOf { it.type.byteSize }
             localPosCounter = 0
@@ -176,6 +182,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             used = true
             routine.call(args)
         }
+
         open fun call() {
             used = true
             routine.call()
@@ -194,7 +201,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
     private open inner class ShasPShasamblyFunctionGenerator(
         val function: ShasPFunctionDeclaration,
         override val routine: CallableRoutine
-    ): ShasamblyFunctionGenerator() {
+    ) : ShasamblyFunctionGenerator() {
 
         override val name: String = function.name
         override val argTypes: List<ShasPType> = function.args.map { it.type }
@@ -235,70 +242,70 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun findType(type0: ShasPType, type1: ShasPType): ShasPType? {
-            if(type0 == type1) return type0
-            if(type0 == BYTE && type1 == SHORT) return SHORT
-            if(type0 == BYTE && type1 == INT) return INT
-            if(type0 == BYTE && type1 == LONG) return LONG
-            if(type0 == BYTE && type1 == FLOAT) return FLOAT
-            if(type0 == BYTE && type1 == DOUBLE) return DOUBLE
-            if(type0 == SHORT && type1 == BYTE) return SHORT
-            if(type0 == SHORT && type1 == INT) return INT
-            if(type0 == SHORT && type1 == LONG) return LONG
-            if(type0 == SHORT && type1 == FLOAT) return FLOAT
-            if(type0 == SHORT && type1 == DOUBLE) return DOUBLE
-            if(type0 == INT && type1 == BYTE) return INT
-            if(type0 == INT && type1 == SHORT) return INT
-            if(type0 == INT && type1 == LONG) return LONG
-            if(type0 == INT && type1 == FLOAT) return FLOAT
-            if(type0 == INT && type1 == DOUBLE) return DOUBLE
-            if(type0 == LONG && type1 == BYTE) return LONG
-            if(type0 == LONG && type1 == SHORT) return LONG
-            if(type0 == LONG && type1 == INT) return LONG
-            if(type0 == LONG && type1 == FLOAT) return FLOAT
-            if(type0 == LONG && type1 == DOUBLE) return DOUBLE
-            if(type0 == FLOAT && type1 == BYTE) return FLOAT
-            if(type0 == FLOAT && type1 == SHORT) return FLOAT
-            if(type0 == FLOAT && type1 == INT) return FLOAT
-            if(type0 == FLOAT && type1 == LONG) return FLOAT
-            if(type0 == FLOAT && type1 == DOUBLE) return FLOAT
-            if(type0 == DOUBLE && type1 == BYTE) return DOUBLE
-            if(type0 == DOUBLE && type1 == SHORT) return DOUBLE
-            if(type0 == DOUBLE && type1 == INT) return DOUBLE
-            if(type0 == DOUBLE && type1 == LONG) return DOUBLE
-            if(type0 == DOUBLE && type1 == FLOAT) return DOUBLE
+            if (type0 == type1) return type0
+            if (type0 == BYTE && type1 == SHORT) return SHORT
+            if (type0 == BYTE && type1 == INT) return INT
+            if (type0 == BYTE && type1 == LONG) return LONG
+            if (type0 == BYTE && type1 == FLOAT) return FLOAT
+            if (type0 == BYTE && type1 == DOUBLE) return DOUBLE
+            if (type0 == SHORT && type1 == BYTE) return SHORT
+            if (type0 == SHORT && type1 == INT) return INT
+            if (type0 == SHORT && type1 == LONG) return LONG
+            if (type0 == SHORT && type1 == FLOAT) return FLOAT
+            if (type0 == SHORT && type1 == DOUBLE) return DOUBLE
+            if (type0 == INT && type1 == BYTE) return INT
+            if (type0 == INT && type1 == SHORT) return INT
+            if (type0 == INT && type1 == LONG) return LONG
+            if (type0 == INT && type1 == FLOAT) return FLOAT
+            if (type0 == INT && type1 == DOUBLE) return DOUBLE
+            if (type0 == LONG && type1 == BYTE) return LONG
+            if (type0 == LONG && type1 == SHORT) return LONG
+            if (type0 == LONG && type1 == INT) return LONG
+            if (type0 == LONG && type1 == FLOAT) return FLOAT
+            if (type0 == LONG && type1 == DOUBLE) return DOUBLE
+            if (type0 == FLOAT && type1 == BYTE) return FLOAT
+            if (type0 == FLOAT && type1 == SHORT) return FLOAT
+            if (type0 == FLOAT && type1 == INT) return FLOAT
+            if (type0 == FLOAT && type1 == LONG) return FLOAT
+            if (type0 == FLOAT && type1 == DOUBLE) return FLOAT
+            if (type0 == DOUBLE && type1 == BYTE) return DOUBLE
+            if (type0 == DOUBLE && type1 == SHORT) return DOUBLE
+            if (type0 == DOUBLE && type1 == INT) return DOUBLE
+            if (type0 == DOUBLE && type1 == LONG) return DOUBLE
+            if (type0 == DOUBLE && type1 == FLOAT) return DOUBLE
 
-            if(type0 == CHAR && type1 == BYTE || type0 == BYTE && type1 == CHAR) return SHORT
-            if(type0 == CHAR && type1 == SHORT || type0 == SHORT && type1 == CHAR) return SHORT
-            if(type0 == CHAR && type1 == INT || type0 == INT && type1 == CHAR) return INT
-            if(type0 == CHAR && type1 == LONG || type0 == LONG && type1 == CHAR) return LONG
-            if(type0 == CHAR && type1 == FLOAT || type0 == FLOAT && type1 == CHAR) return FLOAT
-            if(type0 == CHAR && type1 == DOUBLE || type0 == DOUBLE && type1 == CHAR) return DOUBLE
+            if (type0 == CHAR && type1 == BYTE || type0 == BYTE && type1 == CHAR) return SHORT
+            if (type0 == CHAR && type1 == SHORT || type0 == SHORT && type1 == CHAR) return SHORT
+            if (type0 == CHAR && type1 == INT || type0 == INT && type1 == CHAR) return INT
+            if (type0 == CHAR && type1 == LONG || type0 == LONG && type1 == CHAR) return LONG
+            if (type0 == CHAR && type1 == FLOAT || type0 == FLOAT && type1 == CHAR) return FLOAT
+            if (type0 == CHAR && type1 == DOUBLE || type0 == DOUBLE && type1 == CHAR) return DOUBLE
 
 
-            if(type0 == UNKNOWN_INTEGER_LITERAL && type1 == BYTE || type0 == BYTE && type1 == UNKNOWN_INTEGER_LITERAL) return BYTE
-            if(type0 == UNKNOWN_INTEGER_LITERAL && type1 == SHORT || type0 == SHORT && type1 == UNKNOWN_INTEGER_LITERAL) return SHORT
-            if(type0 == UNKNOWN_INTEGER_LITERAL && type1 == INT || type0 == INT && type1 == UNKNOWN_INTEGER_LITERAL) return INT
-            if(type0 == UNKNOWN_INTEGER_LITERAL && type1 == LONG || type0 == LONG && type1 == UNKNOWN_INTEGER_LITERAL) return LONG
-            if(type0 == UNKNOWN_INTEGER_LITERAL && type1 == FLOAT || type0 == FLOAT && type1 == UNKNOWN_INTEGER_LITERAL) return FLOAT
-            if(type0 == UNKNOWN_INTEGER_LITERAL && type1 == DOUBLE || type0 == DOUBLE && type1 == UNKNOWN_INTEGER_LITERAL) return DOUBLE
-            if(type0 == UNKNOWN_INTEGER_LITERAL && type1 == CHAR || type0 == CHAR && type1 == UNKNOWN_INTEGER_LITERAL) return SHORT
-            if(type0 == UNKNOWN_INTEGER_LITERAL && type1 == UNKNOWN_INTEGER_LITERAL) return UNKNOWN_INTEGER_LITERAL
-            if(type0 == UNKNOWN_INTEGER_LITERAL && type1 == UNKNOWN_DOUBLE_LITERAL || type0 == UNKNOWN_DOUBLE_LITERAL && type1 == UNKNOWN_INTEGER_LITERAL) return DOUBLE
+            if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == BYTE || type0 == BYTE && type1 == UNKNOWN_INTEGER_LITERAL) return BYTE
+            if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == SHORT || type0 == SHORT && type1 == UNKNOWN_INTEGER_LITERAL) return SHORT
+            if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == INT || type0 == INT && type1 == UNKNOWN_INTEGER_LITERAL) return INT
+            if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == LONG || type0 == LONG && type1 == UNKNOWN_INTEGER_LITERAL) return LONG
+            if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == FLOAT || type0 == FLOAT && type1 == UNKNOWN_INTEGER_LITERAL) return FLOAT
+            if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == DOUBLE || type0 == DOUBLE && type1 == UNKNOWN_INTEGER_LITERAL) return DOUBLE
+            if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == CHAR || type0 == CHAR && type1 == UNKNOWN_INTEGER_LITERAL) return SHORT
+            if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == UNKNOWN_INTEGER_LITERAL) return UNKNOWN_INTEGER_LITERAL
+            if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == UNKNOWN_DOUBLE_LITERAL || type0 == UNKNOWN_DOUBLE_LITERAL && type1 == UNKNOWN_INTEGER_LITERAL) return DOUBLE
 
-            if(type0 == UNKNOWN_DOUBLE_LITERAL && type1 == BYTE || type0 == BYTE && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
-            if(type0 == UNKNOWN_DOUBLE_LITERAL && type1 == SHORT || type0 == SHORT && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
-            if(type0 == UNKNOWN_DOUBLE_LITERAL && type1 == INT || type0 == INT && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
-            if(type0 == UNKNOWN_DOUBLE_LITERAL && type1 == LONG || type0 == LONG && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
-            if(type0 == UNKNOWN_DOUBLE_LITERAL && type1 == FLOAT || type0 == FLOAT && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
-            if(type0 == UNKNOWN_DOUBLE_LITERAL && type1 == DOUBLE || type0 == DOUBLE && type1 == UNKNOWN_DOUBLE_LITERAL) return DOUBLE
-            if(type0 == UNKNOWN_DOUBLE_LITERAL && type1 == CHAR || type0 == CHAR && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
-            if(type0 == UNKNOWN_DOUBLE_LITERAL && type1 == UNKNOWN_DOUBLE_LITERAL) return UNKNOWN_DOUBLE_LITERAL
+            if (type0 == UNKNOWN_DOUBLE_LITERAL && type1 == BYTE || type0 == BYTE && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
+            if (type0 == UNKNOWN_DOUBLE_LITERAL && type1 == SHORT || type0 == SHORT && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
+            if (type0 == UNKNOWN_DOUBLE_LITERAL && type1 == INT || type0 == INT && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
+            if (type0 == UNKNOWN_DOUBLE_LITERAL && type1 == LONG || type0 == LONG && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
+            if (type0 == UNKNOWN_DOUBLE_LITERAL && type1 == FLOAT || type0 == FLOAT && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
+            if (type0 == UNKNOWN_DOUBLE_LITERAL && type1 == DOUBLE || type0 == DOUBLE && type1 == UNKNOWN_DOUBLE_LITERAL) return DOUBLE
+            if (type0 == UNKNOWN_DOUBLE_LITERAL && type1 == CHAR || type0 == CHAR && type1 == UNKNOWN_DOUBLE_LITERAL) return FLOAT
+            if (type0 == UNKNOWN_DOUBLE_LITERAL && type1 == UNKNOWN_DOUBLE_LITERAL) return UNKNOWN_DOUBLE_LITERAL
 
             return null
         }
 
         fun valueType(value: ShasPValuedNode): ShasPType? {
-            return when(value) {
+            return when (value) {
                 is ShasPAdd -> valueType(value)
                 is ShasPSub -> valueType(value)
                 is ShasPMul -> valueType(value)
@@ -322,7 +329,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 is ShasPAnd -> BOOLEAN
                 is ShasPOr -> BOOLEAN
                 is ShasPNot -> BOOLEAN
-                else -> TODO(value::class.simpleName?:"null")
+                else -> TODO(value::class.simpleName ?: "null")
             }
         }
 
@@ -361,48 +368,48 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
 
         fun valueType(value: ShasPVariableAssignment): ShasPType? {
             val local = localTable[value.name]
-            if(local != null) return local.first
+            if (local != null) return local.first
             return null
         }
 
         fun valueType(value: ShasPVariableAddAssignment): ShasPType? {
             val local = localTable[value.name]
-            if(local != null) return local.first
+            if (local != null) return local.first
             return null
         }
 
         fun valueType(value: ShasPVariableSubAssignment): ShasPType? {
             val local = localTable[value.name]
-            if(local != null) return local.first
+            if (local != null) return local.first
             return null
         }
 
         fun valueType(value: ShasPVariableMulAssignment): ShasPType? {
             val local = localTable[value.name]
-            if(local != null) return local.first
+            if (local != null) return local.first
             return null
         }
 
         fun valueType(value: ShasPVariableDivAssignment): ShasPType? {
             val local = localTable[value.name]
-            if(local != null) return local.first
+            if (local != null) return local.first
             return null
         }
 
         fun valueType(value: ShasPVariableModAssignment): ShasPType? {
             val local = localTable[value.name]
-            if(local != null) return local.first
+            if (local != null) return local.first
             return null
         }
 
         fun valueType(value: ShasPIdentifier): ShasPType? {
             val local = localTable[value.name]
-            if(local != null) return local.first
+            if (local != null) return local.first
             return null
         }
 
         fun SimpleShasambly.generateValued(value: ShasPValuedNode, expectedType: ShasPType) {
-            when(value) {
+            when (value) {
                 is ShasPAdd -> generateValued(value, expectedType)
                 is ShasPSub -> generateValued(value, expectedType)
                 is ShasPMul -> generateValued(value, expectedType)
@@ -429,64 +436,70 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 is ShasPOr -> this.generateValued(value, expectedType)
                 is ShasPNot -> this.generateValued(value, expectedType)
                 is ShasPArrayInitializer -> this.generateValued(value, expectedType)
-                else -> TODO(value::class.simpleName?:"null")
+                else -> TODO(value::class.simpleName ?: "null")
             }
         }
 
         fun SimpleShasambly.convert(from: ShasPType, to: ShasPType) {
 
-            if(from == to) return
+            if (from == to) return
 
-            when(from) {
+            when (from) {
                 BYTE -> {
-                    when(to) {
+                    when (to) {
                         SHORT -> cast(PrimitiveIds.PRIMITIVE_BYTE, PrimitiveIds.PRIMITIVE_SHORT)
                         INT -> cast(PrimitiveIds.PRIMITIVE_BYTE, PrimitiveIds.PRIMITIVE_INT)
                         LONG -> cast(PrimitiveIds.PRIMITIVE_BYTE, PrimitiveIds.PRIMITIVE_LONG)
                         FLOAT -> cast(PrimitiveIds.PRIMITIVE_BYTE, PrimitiveIds.PRIMITIVE_FLOAT)
                         DOUBLE -> cast(PrimitiveIds.PRIMITIVE_BYTE, PrimitiveIds.PRIMITIVE_DOUBLE)
-                        else -> TODO(to::class.simpleName?:"null")
+                        else -> TODO(to::class.simpleName ?: "null")
                     }
                 }
+
                 SHORT -> {
-                    when(to) {
+                    when (to) {
                         INT -> cast(PrimitiveIds.PRIMITIVE_SHORT, PrimitiveIds.PRIMITIVE_INT)
                         LONG -> cast(PrimitiveIds.PRIMITIVE_SHORT, PrimitiveIds.PRIMITIVE_LONG)
                         FLOAT -> cast(PrimitiveIds.PRIMITIVE_SHORT, PrimitiveIds.PRIMITIVE_FLOAT)
                         DOUBLE -> cast(PrimitiveIds.PRIMITIVE_SHORT, PrimitiveIds.PRIMITIVE_DOUBLE)
-                        else -> TODO(to::class.simpleName?:"null")
+                        else -> TODO(to::class.simpleName ?: "null")
                     }
                 }
+
                 INT -> {
-                    when(to) {
+                    when (to) {
                         LONG -> cast(PrimitiveIds.PRIMITIVE_INT, PrimitiveIds.PRIMITIVE_LONG)
                         FLOAT -> cast(PrimitiveIds.PRIMITIVE_INT, PrimitiveIds.PRIMITIVE_FLOAT)
                         DOUBLE -> cast(PrimitiveIds.PRIMITIVE_INT, PrimitiveIds.PRIMITIVE_DOUBLE)
-                        else -> TODO(to::class.simpleName?:"null")
+                        else -> TODO(to::class.simpleName ?: "null")
                     }
                 }
+
                 LONG -> {
-                    when(to) {
+                    when (to) {
                         FLOAT -> cast(PrimitiveIds.PRIMITIVE_LONG, PrimitiveIds.PRIMITIVE_FLOAT)
                         DOUBLE -> cast(PrimitiveIds.PRIMITIVE_LONG, PrimitiveIds.PRIMITIVE_DOUBLE)
-                        else -> TODO(to::class.simpleName?:"null")
+                        else -> TODO(to::class.simpleName ?: "null")
                     }
                 }
+
                 FLOAT -> {
-                    when(to) {
+                    when (to) {
                         DOUBLE -> cast(PrimitiveIds.PRIMITIVE_FLOAT, PrimitiveIds.PRIMITIVE_DOUBLE)
-                        else -> TODO(to::class.simpleName?:"null")
+                        else -> TODO(to::class.simpleName ?: "null")
                     }
                 }
+
                 DOUBLE -> {
-                    TODO(to::class.simpleName?:"null")
+                    TODO(to::class.simpleName ?: "null")
                 }
-                else -> TODO(from::class.simpleName?:"null")
+
+                else -> TODO(from::class.simpleName ?: "null")
             }
         }
 
         fun SimpleShasambly.add(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> badd()
                 SHORT -> sadd()
                 INT -> iadd()
@@ -498,7 +511,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.sub(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> bsub()
                 SHORT -> ssub()
                 INT -> isub()
@@ -510,7 +523,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.mul(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> bmul()
                 SHORT -> smul()
                 INT -> imul()
@@ -522,7 +535,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.div(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> bdiv()
                 SHORT -> sdiv()
                 INT -> idiv()
@@ -534,7 +547,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.mod(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> bmod()
                 SHORT -> smod()
                 INT -> imod()
@@ -546,7 +559,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.eq(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> beq()
                 SHORT -> seq()
                 INT -> ieq()
@@ -569,7 +582,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.biggereq(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> bbiggereq()
                 SHORT -> sbiggereq()
                 INT -> ibiggereq()
@@ -586,7 +599,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.bigger(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> bbigger()
                 SHORT -> sbigger()
                 INT -> ibigger()
@@ -603,7 +616,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.smallereq(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> bsmallereq()
                 SHORT -> ssmallereq()
                 INT -> ismallereq()
@@ -620,7 +633,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.smaller(type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> bsmaller()
                 SHORT -> ssmaller()
                 INT -> ismaller()
@@ -668,7 +681,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPIntegerLiteral, type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE -> bpush(it.value.toByte())
                 SHORT -> spush(it.value.toShort())
                 INT -> ipush(it.value.toInt())
@@ -680,7 +693,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPDoubleLiteral, type: ShasPType) {
-            when(type) {
+            when (type) {
                 FLOAT -> fpush(it.value.toFloat())
                 DOUBLE -> dpush(it.value.toDouble())
                 else -> throw Error("Can't generate float literal for value type $type.")
@@ -693,7 +706,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.setLocal(addr: Int, type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE, BOOLEAN -> b_store_local(addr)
                 SHORT, CHAR -> s_store_local(addr)
                 INT, FLOAT -> i_store_local(addr)
@@ -702,7 +715,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.getLocal(addr: Int, type: ShasPType) {
-            when(type) {
+            when (type) {
                 BYTE, BOOLEAN -> b_get_local(addr)
                 SHORT, CHAR -> s_get_local(addr)
                 INT, FLOAT -> i_get_local(addr)
@@ -714,10 +727,10 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             val addr = lastLocalPointer
             val type = it.type
             val name = it.name
-            if(localTable.containsKey(name)) throw Error("Variable ${it.name} is already defined in this scope")
+            if (localTable.containsKey(name)) throw Error("Variable ${it.name} is already defined in this scope")
             localTable[name] = type to addr
             lastLocalPointer += type.byteSize
-            if(it.value != null) setLocal(addr, type, it.value)
+            if (it.value != null) setLocal(addr, type, it.value)
         }
 
         fun SimpleShasambly.generate(it: ShasPVariableAssignment) {
@@ -775,7 +788,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             getLocal(addr.second, type)
-            when(type) {
+            when (type) {
                 BYTE -> badd(1)
                 SHORT -> sadd(1)
                 INT -> iadd(1)
@@ -789,7 +802,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val type = addr.first
             getLocal(addr.second, type)
-            when(type) {
+            when (type) {
                 BYTE -> bsub(1)
                 SHORT -> ssub(1)
                 INT -> isub(1)
@@ -865,7 +878,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPEqual, type: ShasPType) {
-            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            if (type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
             val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
             val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
             val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
@@ -875,7 +888,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPNotEqual, type: ShasPType) {
-            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            if (type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
             val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
             val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
             val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
@@ -885,7 +898,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPLess, type: ShasPType) {
-            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            if (type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
             val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
             val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
             val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
@@ -895,7 +908,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPLessEqual, type: ShasPType) {
-            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            if (type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
             val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
             val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
             val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
@@ -905,7 +918,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPGreaterEqual, type: ShasPType) {
-            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            if (type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
             val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
             val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
             val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
@@ -915,7 +928,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPGreater, type: ShasPType) {
-            if(type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
+            if (type != BOOLEAN) throw Error("Comparison generates boolean result and not $type")
             val leftT = it.left.type ?: throw Error("Cannot compare ${it.left}")
             val rightT = it.right.type ?: throw Error("Cannot compare ${it.right}")
             val t = findType(leftT, rightT) ?: throw Error("Cannot compare $leftT and $rightT")
@@ -932,7 +945,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generateValued(it: ShasPArrayInitializer, type: ShasPType) {
-            if(type !is ShasPType.ShasPArrayType) throw Error("Array initializer generates array result and not $type")
+            if (type !is ShasPType.ShasPArrayType) throw Error("Array initializer generates array result and not $type")
             val size = it.type.subType.byteSize
             //createLocalByteArray()
             TODO()
@@ -940,8 +953,10 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generate(it: ShasPIf) {
-            if(it.orElse == null) ifElse({ generateValued(it.condition, BOOLEAN) }) { generate(it.then) }
-            else ifElse({ generateValued(it.condition, BOOLEAN) }, orElse = { generate(it.orElse) }) { generate(it.then) }
+            if (it.orElse == null) ifElse({ generateValued(it.condition, BOOLEAN) }) { generate(it.then) }
+            else ifElse(
+                { generateValued(it.condition, BOOLEAN) },
+                orElse = { generate(it.orElse) }) { generate(it.then) }
         }
 
         fun SimpleShasambly.generate(it: ShasPWhile) {
@@ -963,12 +978,13 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.generate(fCall: ShasPFunctionCall) {
-            val function = functions.find { fCall.name == it.name } ?: throw Error("Function ${fCall.name} is not defined")
+            val function =
+                functions.find { fCall.name == it.name } ?: throw Error("Function ${fCall.name} is not defined")
 
-            if(fCall.args.size != function.argTypes.size)
+            if (fCall.args.size != function.argTypes.size)
                 throw Error("Function ${fCall.name} expects ${function.argTypes.size} arguments but ${fCall.args.size} were given")
 
-            for((i, arg) in fCall.args.withIndex())
+            for ((i, arg) in fCall.args.withIndex())
                 generateValued(arg, function.argTypes[i])
 
             function.call()

@@ -33,11 +33,10 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
             return ConstantMethodTypeInfo(index)
         }
 
-        fun contentsFromStream(stream: InputStream)
-                = contentsFromStream(stream.dataStream)
+        fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if(stream.readByte() != tag)
+            if (stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantMethodTypeInfo")
             else contentsFromStream(stream)
 

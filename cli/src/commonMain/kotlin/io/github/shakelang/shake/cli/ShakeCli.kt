@@ -71,14 +71,14 @@ fun main(args: Array<String>) {
     val generator = arguments.getOption("generator")!!.values!![0]
 
     // If no normal argument is given, then we will open a prompt for entering code
-    when(arguments.arguments.size) {
+    when (arguments.arguments.size) {
 
         0 -> {
             // Info message for Shake console
             println(
                 "# Shake version $VERSION ${if (DEBUG) "in debug mode " else ""}\n" +
-                "# Enter Shake code below to execute!\n" +
-                "# Using $generator to execute code"
+                        "# Enter Shake code below to execute!\n" +
+                        "# Using $generator to execute code"
             )
 
             // Just create a infinite loop for reading from the console
@@ -141,7 +141,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val tree = parser.parse()
 
     // If debug is enabled we print out the tree
-    if (DEBUG) println("[DEBUG] Parsed Tree: $tree", )
+    if (DEBUG) println("[DEBUG] Parsed Tree: $tree")
 
     // return the Tree
     return ParseResult(tree, tokens.map)
@@ -163,9 +163,11 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
         "json" ->
             if (src == null) println(">> ${pr.tree}")
             else writeFile(File(target ?: "$targetFile.json"), pr.tree.toString())
+
         "beauty-json", "bjson" ->
             if (src == null) println(">> ${json.stringify(pr.tree, indent = 2)}")
             else writeFile(File(target ?: "$targetFile.json"), json.stringify(pr.tree, indent = 2))
+
         "java" -> throw Error("Java is not available")
         "js", "javascript" -> {
             val processor = ShakePackageBasedProcessor()

@@ -17,7 +17,7 @@ class ObjectValue
  *
  * @param parent the parent [ClassValue] of the [ObjectValue]
  */
-(
+    (
 
     /**
      * The parent class of the object

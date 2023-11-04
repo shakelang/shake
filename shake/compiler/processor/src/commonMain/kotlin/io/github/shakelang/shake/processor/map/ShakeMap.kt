@@ -29,7 +29,7 @@ class ShakeMap(
     val project_methods: Array<Int>,
     val project_fields: Array<Int>,
 
-) {
+    ) {
 
     val magic = 0x3082d75f
     val version = 0x00000001
@@ -294,10 +294,10 @@ interface ShakeMapConstant {
         }
 
         fun fromJson(it: Map<*, *>): ShakeUtf8Constant {
-            if(it["type"] == null) throw IllegalArgumentException("Missing type")
-            if(it["value"] == null) throw IllegalArgumentException("Missing value")
-            if(it["type"] !is Number) throw IllegalArgumentException("Invalid type: ${it["type"]!!::class.simpleName}")
-            if(it["value"] !is String) throw IllegalArgumentException("Invalid value")
+            if (it["type"] == null) throw IllegalArgumentException("Missing type")
+            if (it["value"] == null) throw IllegalArgumentException("Missing value")
+            if (it["type"] !is Number) throw IllegalArgumentException("Invalid type: ${it["type"]!!::class.simpleName}")
+            if (it["value"] !is String) throw IllegalArgumentException("Invalid value")
             val type = (it["type"] as Number).toInt()
             val value = it["value"] as String
             when (type) {
@@ -307,6 +307,7 @@ interface ShakeMapConstant {
         }
     }
 }
+
 class ShakeMapPackage(
     val name: Int,
     val package_references: Array<Int>,
@@ -872,9 +873,6 @@ fun Int.setBit30(value: Boolean): Int = if (value) this or 0x40000000 else this 
 fun Int.setBit31(value: Boolean): Int = if (value) this or 0x80000000u.toInt() else this and 0x7FFFFFFFu.toInt()
 
 
-
-
-
 class ShakeMapCreator {
 
     val constants = mutableListOf<ShakeMapConstant>()
@@ -1025,48 +1023,48 @@ class ShakeMapCreator {
 
     fun composeAttributes(clazz: ShakeClass): Short {
         var attributes = 0
-        if(clazz.isNative) attributes = attributes.setBit8(true)
-        if(clazz.isStatic) attributes = attributes.setBit7(true)
-        if(clazz.isFinal) attributes = attributes.setBit6(true)
-        if(clazz.isPublic) attributes = attributes.setBit4(true)
-        if(clazz.isProtected) attributes = attributes.setBit3(true)
-        if(clazz.isPrivate) attributes = attributes.setBit2(true)
-        if(clazz.isAbstract) attributes = attributes.setBit1(true)
+        if (clazz.isNative) attributes = attributes.setBit8(true)
+        if (clazz.isStatic) attributes = attributes.setBit7(true)
+        if (clazz.isFinal) attributes = attributes.setBit6(true)
+        if (clazz.isPublic) attributes = attributes.setBit4(true)
+        if (clazz.isProtected) attributes = attributes.setBit3(true)
+        if (clazz.isPrivate) attributes = attributes.setBit2(true)
+        if (clazz.isAbstract) attributes = attributes.setBit1(true)
         return attributes.toUShort().toShort()
     }
 
     fun composeAttributes(function: ShakeMethod): Short {
         var attributes = 0
-        if(function.isOperator) attributes = attributes.setBit9(true)
-        if(function.isNative) attributes = attributes.setBit8(true)
-        if(function.isStatic) attributes = attributes.setBit7(true)
-        if(function.isFinal) attributes = attributes.setBit6(true)
-        if(function.isPublic) attributes = attributes.setBit4(true)
-        if(function.isProtected) attributes = attributes.setBit3(true)
-        if(function.isPrivate) attributes = attributes.setBit2(true)
-        if(function.isAbstract) attributes = attributes.setBit1(true)
+        if (function.isOperator) attributes = attributes.setBit9(true)
+        if (function.isNative) attributes = attributes.setBit8(true)
+        if (function.isStatic) attributes = attributes.setBit7(true)
+        if (function.isFinal) attributes = attributes.setBit6(true)
+        if (function.isPublic) attributes = attributes.setBit4(true)
+        if (function.isProtected) attributes = attributes.setBit3(true)
+        if (function.isPrivate) attributes = attributes.setBit2(true)
+        if (function.isAbstract) attributes = attributes.setBit1(true)
         return attributes.toUShort().toShort()
     }
 
     fun composeAttributes(field: ShakeConstructor): Short {
         var attributes = 0
-        if(field.isNative) attributes = attributes.setBit8(true)
-        if(field.isPublic) attributes = attributes.setBit4(true)
-        if(field.isProtected) attributes = attributes.setBit3(true)
-        if(field.isPrivate) attributes = attributes.setBit2(true)
+        if (field.isNative) attributes = attributes.setBit8(true)
+        if (field.isPublic) attributes = attributes.setBit4(true)
+        if (field.isProtected) attributes = attributes.setBit3(true)
+        if (field.isPrivate) attributes = attributes.setBit2(true)
         return attributes.toUShort().toShort()
     }
 
     fun composeAttributes(field: ShakeField): Short {
         var attributes = 0
-        if(field.isNative) attributes = attributes.setBit8(true)
-        if(field.isStatic) attributes = attributes.setBit7(true)
-        if(field.isFinal) attributes = attributes.setBit6(true)
-        if(field.isFinal) attributes = attributes.setBit5(true)
-        if(field.isPublic) attributes = attributes.setBit4(true)
-        if(field.isProtected) attributes = attributes.setBit3(true)
-        if(field.isPrivate) attributes = attributes.setBit2(true)
-        if(field.isAbstract) attributes = attributes.setBit1(true)
+        if (field.isNative) attributes = attributes.setBit8(true)
+        if (field.isStatic) attributes = attributes.setBit7(true)
+        if (field.isFinal) attributes = attributes.setBit6(true)
+        if (field.isFinal) attributes = attributes.setBit5(true)
+        if (field.isPublic) attributes = attributes.setBit4(true)
+        if (field.isProtected) attributes = attributes.setBit3(true)
+        if (field.isPrivate) attributes = attributes.setBit2(true)
+        if (field.isAbstract) attributes = attributes.setBit1(true)
         return attributes.toShort()
     }
 
@@ -1093,7 +1091,7 @@ class MapAssembledProject(
     val fieldPointers: PointerList<ShakeField>,
     override val projectScope: ShakeScope
 
-): ShakeProject {
+) : ShakeProject {
 
     override val subpackages: List<ShakePackage> = packagePointers.values()
     override val classes: List<ShakeClass> = classPointers.values()
@@ -1111,7 +1109,7 @@ class MapAssembledPackage(
     val classPointers: PointerList<ShakeClass>,
     val methodPointers: PointerList<ShakeMethod>,
     val fieldPointers: PointerList<ShakeField>
-): ShakePackage {
+) : ShakePackage {
     override val subpackages: List<ShakePackage> get() = subpackagePointers.values()
     override val classes: List<ShakeClass> get() = classPointers.values()
     override val functions: List<ShakeMethod> get() = methodPointers.values()
@@ -1136,7 +1134,7 @@ class MapAssembledClass(
     override val isProtected: Boolean,
     override val isPrivate: Boolean,
     override val isNative: Boolean
-): ShakeClass {
+) : ShakeClass {
     override val classes: List<ShakeClass> = classPointers.values()
     override val methods: List<ShakeMethod> = methodPointers.values()
     override val fields: List<ShakeField> = fieldPointers.values()
@@ -1146,7 +1144,7 @@ class MapAssembledClass(
     override lateinit var superClass: ShakeClass
 }
 
-class MapAssembledMethod (
+class MapAssembledMethod(
     override val prj: ShakeProject,
     override var pkg: ShakePackage?,
     override var clazz: ShakeClass?,
@@ -1169,7 +1167,7 @@ class MapAssembledMethod (
     override val expanding: ShakeType?,
 ) : ShakeMethod
 
-class MapAssembledConstructor (
+class MapAssembledConstructor(
     var clazz_: ShakeClass?,
     override val name: String?,
     override val scope: ShakeScope,
@@ -1180,13 +1178,16 @@ class MapAssembledConstructor (
     override val body: ShakeCode? = null,
     override val isStrict: Boolean,
     override val isNative: Boolean,
-): ShakeConstructor {
-    override var clazz: ShakeClass get() = clazz_!!
-        set(value) { clazz_ = value }
+) : ShakeConstructor {
+    override var clazz: ShakeClass
+        get() = clazz_!!
+        set(value) {
+            clazz_ = value
+        }
 
 }
 
-class MapAssembledField (
+class MapAssembledField(
     override val project: ShakeProject,
     override var pkg: ShakePackage?,
     override var clazz: ShakeClass?,
@@ -1205,17 +1206,17 @@ class MapAssembledField (
     override val qualifiedName: String,
     override val initialValue: ShakeValue?,
     override val expanding: ShakeType?,
-): ShakeField
+) : ShakeField
 
 class ShakeAssembledObjectType(
     override var clazz: ShakeClass
-): ShakeType.Object {
+) : ShakeType.Object {
     override val name: String get() = clazz.name
 }
 
 class ShakeAssembledArrayType(
     override val elementType: ShakeType
-): ShakeType.Array {
+) : ShakeType.Array {
     override val name: String get() = elementType.name
 }
 
@@ -1259,7 +1260,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
         constructors = constructorPointers.values()
         fields = fieldPointers.values()
 
-        project = MapAssembledProject (
+        project = MapAssembledProject(
             shakeMap.project_packages.map { packagePointers[it] },
             shakeMap.project_classes.map { classPointers[it] },
             shakeMap.project_methods.map { methodPointers[it] },
@@ -1333,9 +1334,10 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
         // set superclasses and interfaces
         shakeMap.classes.forEachIndexed { i, cls ->
             val superclass = getUtf(cls.super_class)
-            classes[i].superClass = classes.find { it.qualifiedName == superclass } ?: error("Superclass $superclass not found")
+            classes[i].superClass =
+                classes.find { it.qualifiedName == superclass } ?: error("Superclass $superclass not found")
 
-            classes[i].interfaces = cls.interface_references.map {inf ->
+            classes[i].interfaces = cls.interface_references.map { inf ->
                 val interfaceName = getUtf(inf)
                 classes.find { it.qualifiedName == interfaceName } ?: error("Interface $interfaceName not found")
             }
@@ -1369,22 +1371,21 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     null,
                     info.isNative,
                     info.isOperator,
-                    if(info.expanding != -1) findType(info.expanding) else null,
+                    if (info.expanding != -1) findType(info.expanding) else null,
                 )
             )
         }
 
 
-
         // set parent packages
-        shakeMap.packages.forEachIndexed {i, pkg ->
+        shakeMap.packages.forEachIndexed { i, pkg ->
             pkg.method_references.forEach {
                 methods[it].pkg = packages[i]
             }
         }
 
         // set parent classes
-        shakeMap.classes.forEachIndexed {i, cls ->
+        shakeMap.classes.forEachIndexed { i, cls ->
             cls.method_references.forEach {
                 methods[it].clazz = classes[i]
             }
@@ -1395,7 +1396,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             point.init(
                 MapAssembledConstructor(
                     null,
-                    if(info.name != -1) getUtf(info.name) else null,
+                    if (info.name != -1) getUtf(info.name) else null,
                     scopeUnit,
                     info.parameter_names.zip(info.parameter_types).map {
                         object : ShakeParameter {
@@ -1441,13 +1442,13 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     findType(info.type),
                     getUtf(info.name),
                     null,
-                    if(info.expanding != -1) findType(info.expanding) else null,
+                    if (info.expanding != -1) findType(info.expanding) else null,
                 )
             )
         }
 
         // set parent packages
-        shakeMap.packages.forEachIndexed {i, pkg ->
+        shakeMap.packages.forEachIndexed { i, pkg ->
             pkg.field_references.forEach {
                 fields[it].pkg = packages[i]
             }
@@ -1478,11 +1479,12 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             "i" -> CreationShakeType.Primitives.UINT
             "j" -> CreationShakeType.Primitives.ULONG
             else -> {
-                if(type.startsWith("L")) {
+                if (type.startsWith("L")) {
                     val className = type.substring(1, type.length)
-                    val classPointer = classes.find { it.qualifiedName == className } ?: error("Class $className not found")
+                    val classPointer =
+                        classes.find { it.qualifiedName == className } ?: error("Class $className not found")
                     ShakeAssembledObjectType(classPointer)
-                } else if(type.startsWith("[")) {
+                } else if (type.startsWith("[")) {
                     val componentType = findType(type.substring(1))
                     ShakeAssembledArrayType(componentType)
                 } else {

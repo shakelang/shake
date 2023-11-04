@@ -1,4 +1,5 @@
 @file:Suppress("NOTHING_TO_INLINE")
+
 package io.github.shakelang.shake.lexer.token
 
 import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
@@ -11,7 +12,7 @@ enum class ShakeTokenType(private val length: Int) : TokenType {
     ADD_ASSIGN(2),
     ASSIGN(1),
     BIGGER(1),
-    BIGGER_EQUALS (2),
+    BIGGER_EQUALS(2),
     CHARACTER(-1),
     COMMA(1),
     DECR(2),
@@ -97,8 +98,9 @@ enum class ShakeTokenType(private val length: Int) : TokenType {
     ;
 
     override fun length(value: String?): Int {
-        return if(hasValue) value?.length ?: 0 else length
+        return if (hasValue) value?.length ?: 0 else length
     }
+
     override val hasValue: Boolean get() = length < 0
     val tokenName: String get() = name
     val tokenLength: Int get() = length

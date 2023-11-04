@@ -7,7 +7,7 @@ import io.github.shakelang.shake.processor.program.creation.code.statements.Crea
 import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import io.github.shakelang.shake.processor.program.types.code.ShakeNew
 
-class CreationShakeNew (
+class CreationShakeNew(
     override val project: CreationShakeProject,
     override val reference: CreationShakeConstructor,
     override val arguments: List<CreationShakeValue>,

@@ -6,13 +6,14 @@ import kotlin.test.assertEquals
 
 class ConstantFieldrefTests {
 
-    private val testConstants: Array<ConstantInfo> get() = arrayOf(
-        ConstantClassInfo(3u),
-        ConstantUtf8Info("java/lang/Object"),
-        ConstantNameAndTypeInfo(6u, 5u),
-        ConstantUtf8Info("foo"),
-        ConstantUtf8Info("I")
-    )
+    private val testConstants: Array<ConstantInfo>
+        get() = arrayOf(
+            ConstantClassInfo(3u),
+            ConstantUtf8Info("java/lang/Object"),
+            ConstantNameAndTypeInfo(6u, 5u),
+            ConstantUtf8Info("foo"),
+            ConstantUtf8Info("I")
+        )
 
     @Test
     fun test() {
@@ -94,7 +95,7 @@ class ConstantFieldrefTests {
         assertEquals(4, json.size)
         assertEquals(9, json["tag"])
         assertEquals("constant_fieldref_info", json["tag_type"])
-        assertEquals(2, json["class_ref"],)
+        assertEquals(2, json["class_ref"])
         assertEquals(4, json["name_type_ref"])
     }
 }

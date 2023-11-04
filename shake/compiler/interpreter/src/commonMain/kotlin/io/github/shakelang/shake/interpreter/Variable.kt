@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
  */
 @Suppress("unused")
 class Variable
-(
+    (
     /**
      * The [Variable] identifier
      */
@@ -220,7 +220,6 @@ class Variable
     override fun smaller(v: InterpreterValue): InterpreterValue = this.value.smaller(v)
 
 
-
     // ****************************
     // implementations for extended InterpreterValue
     // children
@@ -376,20 +375,23 @@ class Variable
             return when (type.type) {
                 ShakeVariableType.Type.BYTE, ShakeVariableType.Type.SHORT, ShakeVariableType.Type.INTEGER, ShakeVariableType.Type.LONG ->
                     Variable(
-                    name, access, IntegerValue::class, value?.to(
-                        IntegerValue::class
-                    ), finalVariable
-                )
+                        name, access, IntegerValue::class, value?.to(
+                            IntegerValue::class
+                        ), finalVariable
+                    )
+
                 ShakeVariableType.Type.FLOAT, ShakeVariableType.Type.DOUBLE -> Variable(
                     name, access, DoubleValue::class, value?.to(
                         DoubleValue::class
                     ), finalVariable
                 )
+
                 ShakeVariableType.Type.BOOLEAN -> Variable(
                     name, access, BooleanValue::class, value?.to(
                         BooleanValue::class
                     ), finalVariable
                 )
+
                 ShakeVariableType.Type.OBJECT -> Variable(
                     name, access, ObjectValue::class, value?.to(
                         ObjectValue::class
@@ -400,11 +402,13 @@ class Variable
                         InterpreterValue::class
                     ), finalVariable
                 )
+
                 ShakeVariableType.Type.CHAR -> Variable(
                     name, access, CharacterValue::class, value?.to(
                         CharacterValue::class
                     ), finalVariable
                 )
+
                 ShakeVariableType.Type.ARRAY -> throw Error("Not implemented yet")
                 else -> throw Error("Wrong input: ${type.type}")
             }
@@ -430,6 +434,6 @@ class Variable
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
         fun finalOf(name: String, v: InterpreterValue): Variable =
-                    Variable(name, ShakeAccessDescriber.PUBLIC, v::class, v)
+            Variable(name, ShakeAccessDescriber.PUBLIC, v::class, v)
     }
 }

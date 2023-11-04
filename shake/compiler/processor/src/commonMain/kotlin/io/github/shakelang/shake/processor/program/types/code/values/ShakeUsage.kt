@@ -18,7 +18,7 @@ interface ShakeClassFieldUsage {
 }
 
 interface ShakeStaticClassFieldUsage : ShakeUsage {
-    val name : String
+    val name: String
 }
 
 interface ShakeFieldUsage : ShakeUsage {

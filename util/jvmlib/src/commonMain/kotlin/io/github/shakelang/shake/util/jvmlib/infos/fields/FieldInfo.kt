@@ -97,9 +97,11 @@ class FieldInfo(
             val attributes = AttributeMap.fromStream(pool, stream)
             return FieldInfo(access_flags, name, descriptor, attributes)
         }
+
         fun fromStream(pool: ConstantPool, stream: InputStream): FieldInfo {
             return fromStream(pool, stream.dataStream)
         }
+
         fun fromBytes(pool: ConstantPool, array: ByteArray): FieldInfo {
             return fromStream(pool, array.dataStream())
         }

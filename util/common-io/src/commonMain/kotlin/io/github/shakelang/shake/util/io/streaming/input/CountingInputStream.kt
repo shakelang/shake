@@ -12,7 +12,7 @@ import io.github.shakelang.shake.util.io.IOException
  * @since 0.1.0
  * @version 0.1.1
  */
-class CountingInputStream (
+class CountingInputStream(
 
     /**
      * The input stream to count the read bytes from

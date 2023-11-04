@@ -10,7 +10,7 @@ import io.github.shakelang.shake.util.primitives.bytes.getUnsignedShort
 import io.github.shakelang.shake.util.primitives.bytes.toBytes
 import io.github.shakelang.shake.util.primitives.bytes.toUnsignedShort
 
-class AttributeConstantValueInfo (
+class AttributeConstantValueInfo(
 
     attributeName: ConstantUtf8Info,
     val value: ConstantInfo
@@ -32,12 +32,22 @@ class AttributeConstantValueInfo (
 
     companion object {
         const val TAG = "ConstantValue"
-        fun contentsFromBytes(pool: ConstantPool, bytes: ByteArray, name: ConstantUtf8Info): AttributeConstantValueInfo {
+        fun contentsFromBytes(
+            pool: ConstantPool,
+            bytes: ByteArray,
+            name: ConstantUtf8Info
+        ): AttributeConstantValueInfo {
             val valueIndex = bytes.toUnsignedShort()
             val value = pool[valueIndex]
             return AttributeConstantValueInfo(name, value)
         }
-        fun contentsFromBytes(pool: ConstantPool, bytes: ByteArray, name: ConstantUtf8Info, offset: Int): AttributeConstantValueInfo {
+
+        fun contentsFromBytes(
+            pool: ConstantPool,
+            bytes: ByteArray,
+            name: ConstantUtf8Info,
+            offset: Int
+        ): AttributeConstantValueInfo {
             val valueIndex = bytes.getUnsignedShort(offset)
             val value = pool[valueIndex]
             return AttributeConstantValueInfo(name, value)
@@ -53,13 +63,21 @@ class AttributeConstantValueInfo (
             return contentsFromBytes(pool, bytes, name, offset + 2)
         }
 
-        fun contentsFromStream(pool: ConstantPool, stream: DataInputStream, name: ConstantUtf8Info): AttributeConstantValueInfo {
+        fun contentsFromStream(
+            pool: ConstantPool,
+            stream: DataInputStream,
+            name: ConstantUtf8Info
+        ): AttributeConstantValueInfo {
             val constantValueIndex = stream.readUnsignedShort()
             val constantValue = pool[constantValueIndex]
             return AttributeConstantValueInfo(name, constantValue)
         }
 
-        fun contentsFromStream(pool: ConstantPool, stream: InputStream, name: ConstantUtf8Info): AttributeConstantValueInfo {
+        fun contentsFromStream(
+            pool: ConstantPool,
+            stream: InputStream,
+            name: ConstantUtf8Info
+        ): AttributeConstantValueInfo {
             return contentsFromStream(pool, stream.dataStream, name)
         }
 

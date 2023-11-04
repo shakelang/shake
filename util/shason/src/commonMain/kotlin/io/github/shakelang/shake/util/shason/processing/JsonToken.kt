@@ -94,7 +94,7 @@ enum class JsonTokenType(
     INT(-1),
     ;
 
-    override fun length(value: String?): Int = if(hasValue) value!!.length else length
+    override fun length(value: String?): Int = if (hasValue) value!!.length else length
     override val hasValue: Boolean get() = this.length < 0
 }
 
@@ -107,4 +107,4 @@ interface JsonTokenInputStream : TokenInputStream<JsonTokenType, JsonToken>
 class JsonTokenInputStreamImpl(
     tokens: Array<JsonToken>,
     map: PositionMap
-) : JsonTokenInputStream, TokenBasedTokenInputStream<JsonTokenType, JsonToken> (tokens, map)
+) : JsonTokenInputStream, TokenBasedTokenInputStream<JsonTokenType, JsonToken>(tokens, map)

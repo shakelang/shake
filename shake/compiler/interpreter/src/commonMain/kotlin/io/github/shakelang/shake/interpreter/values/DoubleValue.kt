@@ -15,22 +15,22 @@ class DoubleValue
  *
  * @param value the value of the [DoubleValue]
  */(
-    
+
     /**
      * The value of the [DoubleValue]
      *
      * @see DoubleValue.value
      */
     val value: Double
-    
+
 ) : InterpreterValue {
-    
-    
+
+
     // *******************************
     // implementations for extended InterpreterValue
     // >> number-operations
-    
-    
+
+
     /**
      * This function will be executed when the operator '+' is used on the double
      *
@@ -142,7 +142,7 @@ class DoubleValue
         // the modulo-result
         if (v is CharacterValue) return DoubleValue(value % v.value.code)
         throw UnformattedInterpreterError("Operator '%' is not defined for type double and " + v.name)
-        
+
     }
 
     /**
@@ -165,14 +165,14 @@ class DoubleValue
         // the pow-result
         if (v is CharacterValue) return DoubleValue(value.pow(v.value.code))
         throw UnformattedInterpreterError("Operator '**' is not defined for type double and " + v.name)
-        
+
     }
-    
-    
+
+
     // *******************************
     // implementations for extended InterpreterValue
     // >> comparison
-    
+
     /**
      * This function will be executed when the operator '==' is used on the double
      *
@@ -189,7 +189,7 @@ class DoubleValue
         // to the own value and return a BooleanValue
         if (v is DoubleValue) return BooleanValue.from(value == v.value)
         throw UnformattedInterpreterError("Operator '==' is not defined for type integer and " + v.name)
-        
+
     }
 
     /**
@@ -313,7 +313,7 @@ class DoubleValue
         if (type == CastTarget.CHAR) return CharacterValue(this.value.toInt().toChar()) as T
         if (type == CastTarget.BOOLEAN) return BooleanValue.from(this) as T
         return if (type == CastTarget.STRING) StringValue(this.value.toString()) as T
-            else super.castTo(type)
+        else super.castTo(type)
     }
 
 

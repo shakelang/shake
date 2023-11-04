@@ -58,8 +58,8 @@ fun execute(source: String, code: String) {
 /**
  * Parse the given code
  */
-private fun parse(source: String, input: String)
-    = parse(SourceCharacterInputStream(CharacterSource.Companion.from(input, source)))
+private fun parse(source: String, input: String) =
+    parse(SourceCharacterInputStream(CharacterSource.Companion.from(input, source)))
 
 
 /**
@@ -86,7 +86,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val tree = parser.parse()
 
     // If debug is enabled we print out the tree
-    debug("[DEBUG] Parsed Tree: $tree", )
+    debug("[DEBUG] Parsed Tree: $tree")
 
     // return the Tree
     return ParseResult(tree, tokens.map)

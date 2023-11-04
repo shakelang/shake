@@ -16,7 +16,7 @@ import kotlin.jvm.Synchronized
  * @since 0.1.0
  * @version 0.1.1
  */
-open class BufferedOutputStream (
+open class BufferedOutputStream(
 
     /**
      * The underlying output stream to be filtered.

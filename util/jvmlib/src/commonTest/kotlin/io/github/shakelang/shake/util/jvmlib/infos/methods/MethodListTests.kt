@@ -78,10 +78,12 @@ class MethodListTests {
                 Constant.utf8("D"),
             )
         )
-        val list = MethodList(listOf(
-            MethodInfo(0x0001u, pool.getUtf8(1), pool.getUtf8(3), AttributeMap(emptyMap())),
-            MethodInfo(0x0000u, pool.getUtf8(2), pool.getUtf8(4), AttributeMap(emptyMap())),
-        ))
+        val list = MethodList(
+            listOf(
+                MethodInfo(0x0001u, pool.getUtf8(1), pool.getUtf8(3), AttributeMap(emptyMap())),
+                MethodInfo(0x0000u, pool.getUtf8(2), pool.getUtf8(4), AttributeMap(emptyMap())),
+            )
+        )
         val bytes = listOf<Byte>(
             0x00, 0x02,
             0x00, 0x01, 0x00, 0x01, 0x00, 0x03, 0x00, 0x00,
@@ -112,10 +114,12 @@ class MethodListTests {
                 Constant.utf8("D"),
             )
         )
-        val list = MethodList(listOf(
-            MethodInfo(0x0001u, pool.getUtf8(1), pool.getUtf8(3), AttributeMap(emptyMap())),
-            MethodInfo(0x0000u, pool.getUtf8(2), pool.getUtf8(4), AttributeMap(emptyMap())),
-        ))
+        val list = MethodList(
+            listOf(
+                MethodInfo(0x0001u, pool.getUtf8(1), pool.getUtf8(3), AttributeMap(emptyMap())),
+                MethodInfo(0x0000u, pool.getUtf8(2), pool.getUtf8(4), AttributeMap(emptyMap())),
+            )
+        )
         val bytes = listOf<Byte>(
             0x00, 0x02,
             0x00, 0x01, 0x00, 0x01, 0x00, 0x03, 0x00, 0x00,
