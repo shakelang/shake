@@ -7,9 +7,8 @@ import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.shake.util.primitives.bytes.*
-import io.github.shakelang.shake.util.primitives.bytes.*
 
-class AttributeStackMapTableInfo (
+class AttributeStackMapTableInfo(
     name: ConstantUtf8Info,
     val entries: StackMapFrameList
 ) : AttributeInfo(name) {
@@ -32,34 +31,41 @@ class AttributeStackMapTableInfo (
         fun contentsFromStream(stream: DataInputStream, name: ConstantUtf8Info): AttributeStackMapTableInfo {
             return AttributeStackMapTableInfo(name, StackMapFrameList.fromStream(stream))
         }
+
         fun contentsFromStream(stream: InputStream, name: ConstantUtf8Info): AttributeStackMapTableInfo {
             return AttributeStackMapTableInfo(name, StackMapFrameList.fromStream(stream.dataStream))
         }
+
         fun contentsFromBytes(bytes: ByteArray, name: ConstantUtf8Info): AttributeStackMapTableInfo {
             return AttributeStackMapTableInfo(name, StackMapFrameList.fromBytes(bytes))
         }
+
         fun contentsFromBytes(bytes: ByteArray, name: ConstantUtf8Info, offset: Int): AttributeStackMapTableInfo {
             return AttributeStackMapTableInfo(name, StackMapFrameList.fromBytes(bytes, offset))
         }
+
         fun fromStream(pool: ConstantPool, stream: DataInputStream): AttributeStackMapTableInfo {
             val name = pool.getUtf8(stream.readUnsignedShort())
             val length = stream.readUnsignedInt()
             return contentsFromStream(stream, name)
         }
+
         fun fromStream(pool: ConstantPool, stream: InputStream): AttributeStackMapTableInfo {
             return fromStream(pool, stream.dataStream)
         }
+
         fun fromBytes(pool: ConstantPool, bytes: ByteArray): AttributeStackMapTableInfo {
             val name = pool.getUtf8(bytes.getUnsignedShort(0))
             return contentsFromBytes(bytes, name, 6)
         }
+
         fun fromBytes(pool: ConstantPool, bytes: ByteArray, offset: Int): AttributeStackMapTableInfo {
             val name = pool.getUtf8(bytes.getUnsignedShort(offset))
             return contentsFromBytes(bytes, name, offset + 6)
         }
     }
 
-    class StackMapFrameList (
+    class StackMapFrameList(
         val frames: MutableList<StackMapFrameInfo>
     ) : MutableList<StackMapFrameInfo> by frames {
 
@@ -86,14 +92,17 @@ class AttributeStackMapTableInfo (
                 }
                 return StackMapFrameList(frames.toMutableList())
             }
+
             fun fromStream(stream: InputStream): StackMapFrameList {
                 return fromStream(stream.dataStream)
             }
+
             fun fromBytes(bytes: ByteArray, offset: Int): StackMapFrameList {
                 val stream = bytes.dataStream()
                 stream.skip(offset.toLong())
                 return fromStream(stream)
             }
+
             fun fromBytes(bytes: ByteArray): StackMapFrameList {
                 val stream = bytes.dataStream()
                 return fromStream(stream)
@@ -121,9 +130,11 @@ class AttributeStackMapTableInfo (
                     else -> throw IllegalArgumentException("Unknown frame type: $frameType")
                 }
             }
+
             fun fromStream(stream: InputStream): StackMapFrameInfo {
                 return fromStream(stream.dataStream)
             }
+
             fun fromBytes(bytes: ByteArray, offset: Int): StackMapFrameInfo {
                 return when (val frameType = bytes.getUnsignedByte(offset)) {
                     in 0u..63u -> SameFrameInfo.fromBytes(bytes, offset)
@@ -136,11 +147,13 @@ class AttributeStackMapTableInfo (
                     else -> throw IllegalArgumentException("Unknown frame type: $frameType")
                 }
             }
+
             fun fromBytes(bytes: ByteArray): StackMapFrameInfo {
                 return fromBytes(bytes, 0)
             }
         }
-        class SameFrameInfo (
+
+        class SameFrameInfo(
             override val frameType: UByte
         ) : StackMapFrameInfo() {
             override val offsetDelta: UShort get() = frameType.toUShort()
@@ -152,39 +165,46 @@ class AttributeStackMapTableInfo (
 
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): SameFrameInfo {
-                    if(frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
+                    if (frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
                     return SameFrameInfo(frameType)
                 }
+
                 fun fromStream(frameType: UByte, stream: InputStream): SameFrameInfo {
-                    if(frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
+                    if (frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
                     return SameFrameInfo(frameType)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray): SameFrameInfo {
-                    if(frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
+                    if (frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
                     return SameFrameInfo(frameType)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray, offset: Int): SameFrameInfo {
-                    if(frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
+                    if (frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
                     return SameFrameInfo(frameType)
                 }
+
                 fun fromStream(stream: DataInputStream): SameFrameInfo {
                     val frameType = stream.readUnsignedByte()
-                    if(frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
+                    if (frameType !in 0u..63u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 0..63)")
                     return SameFrameInfo(frameType)
                 }
+
                 fun fromStream(stream: InputStream): SameFrameInfo {
                     return fromStream(DataInputStream(stream))
                 }
+
                 fun fromBytes(bytes: ByteArray, offset: Int): SameFrameInfo {
                     return fromBytes(bytes[offset].toUByte(), bytes, offset + 1)
                 }
+
                 fun fromBytes(bytes: ByteArray): SameFrameInfo {
                     return fromBytes(bytes[0].toUByte(), bytes, 1)
                 }
             }
         }
 
-        class SameLocals1StackItemFrameInfo (
+        class SameLocals1StackItemFrameInfo(
             override val frameType: UByte,
             val stack: VerificationTypeList
         ) : StackMapFrameInfo() {
@@ -201,41 +221,48 @@ class AttributeStackMapTableInfo (
 
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): SameLocals1StackItemFrameInfo {
-                    if(frameType !in 64u..127u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 64-127)")
+                    if (frameType !in 64u..127u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 64-127)")
                     val stack = VerificationTypeList.fromStream(stream, 1)
                     return SameLocals1StackItemFrameInfo(frameType, stack)
                 }
+
                 fun fromStream(frameType: UByte, stream: InputStream): SameLocals1StackItemFrameInfo {
                     return fromStream(frameType, stream.dataStream)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray): SameLocals1StackItemFrameInfo {
-                    if(frameType !in 64u..127u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 64-127)")
+                    if (frameType !in 64u..127u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 64-127)")
                     val stack = VerificationTypeList.fromBytes(bytes, 1)
                     return SameLocals1StackItemFrameInfo(frameType, stack)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray, offset: Int): SameLocals1StackItemFrameInfo {
-                    if(frameType !in 64u..127u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 64-127)")
+                    if (frameType !in 64u..127u) throw IllegalArgumentException("Invalid frame type: $frameType (expected 64-127)")
                     val stack = VerificationTypeList.fromBytes(bytes, offset, 1)
                     return SameLocals1StackItemFrameInfo(frameType, stack)
                 }
+
                 fun fromStream(stream: DataInputStream): SameLocals1StackItemFrameInfo {
                     val frameType = stream.readUnsignedByte()
                     return fromStream(frameType, stream)
                 }
+
                 fun fromStream(stream: InputStream): SameLocals1StackItemFrameInfo {
                     return fromStream(stream.dataStream)
                 }
+
                 fun fromBytes(bytes: ByteArray, offset: Int): SameLocals1StackItemFrameInfo {
                     val frameType = bytes.getUnsignedByte(offset)
                     return fromBytes(frameType, bytes, offset + 1)
                 }
+
                 fun fromBytes(bytes: ByteArray): SameLocals1StackItemFrameInfo {
                     return fromBytes(bytes, 0)
                 }
             }
         }
 
-        class SameLocals1StackItemFrameExtendedInfo (
+        class SameLocals1StackItemFrameExtendedInfo(
             override val offsetDelta: UShort,
             val stack: VerificationTypeList
         ) : StackMapFrameInfo() {
@@ -250,42 +277,49 @@ class AttributeStackMapTableInfo (
 
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): SameLocals1StackItemFrameExtendedInfo {
-                    if(frameType != 247u.toUByte()) throw IllegalArgumentException("frameType must be 247")
+                    if (frameType != 247u.toUByte()) throw IllegalArgumentException("frameType must be 247")
                     return SameLocals1StackItemFrameExtendedInfo(
                         stream.readUnsignedShort(),
                         VerificationTypeList.fromStream(stream, 1)
                     )
                 }
+
                 fun fromStream(frameType: UByte, stream: InputStream): SameLocals1StackItemFrameExtendedInfo {
                     return fromStream(frameType, stream.dataStream)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray, offset: Int): SameLocals1StackItemFrameExtendedInfo {
-                    if(frameType != 247u.toUByte()) throw IllegalArgumentException("frameType must be 247")
+                    if (frameType != 247u.toUByte()) throw IllegalArgumentException("frameType must be 247")
                     val offsetDelta = bytes.getUnsignedShort(offset)
                     val stack = VerificationTypeList.fromBytes(bytes, offset + 2, 1)
                     return SameLocals1StackItemFrameExtendedInfo(offsetDelta, stack)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray): SameLocals1StackItemFrameExtendedInfo {
                     return fromBytes(frameType, bytes, 0)
                 }
+
                 fun fromStream(stream: DataInputStream): SameLocals1StackItemFrameExtendedInfo {
                     val frameType = stream.readUnsignedByte()
                     return fromStream(frameType, stream)
                 }
+
                 fun fromStream(stream: InputStream): SameLocals1StackItemFrameExtendedInfo {
                     return fromStream(stream.dataStream)
                 }
+
                 fun fromBytes(bytes: ByteArray, offset: Int): SameLocals1StackItemFrameExtendedInfo {
                     val frameType = bytes.getUnsignedByte(offset)
                     return fromBytes(frameType, bytes, offset + 1)
                 }
+
                 fun fromBytes(bytes: ByteArray): SameLocals1StackItemFrameExtendedInfo {
                     return fromBytes(bytes, 0)
                 }
             }
         }
 
-        class ChopFrameInfo (
+        class ChopFrameInfo(
             override val frameType: UByte,
             override val offsetDelta: UShort
         ) : StackMapFrameInfo() {
@@ -299,38 +333,45 @@ class AttributeStackMapTableInfo (
 
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): ChopFrameInfo {
-                    if(frameType !in 248u..250u) throw IllegalArgumentException("frameType must be 248-250")
+                    if (frameType !in 248u..250u) throw IllegalArgumentException("frameType must be 248-250")
                     return ChopFrameInfo(frameType, stream.readUnsignedShort())
                 }
+
                 fun fromStream(frameType: UByte, stream: InputStream): ChopFrameInfo {
                     return fromStream(frameType, stream.dataStream)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray, offset: Int): ChopFrameInfo {
-                    if(frameType !in 248u..250u) throw IllegalArgumentException("frameType must be 248-250")
+                    if (frameType !in 248u..250u) throw IllegalArgumentException("frameType must be 248-250")
                     val offsetDelta = bytes.getUnsignedShort(offset)
                     return ChopFrameInfo(frameType, offsetDelta)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray): ChopFrameInfo {
                     return fromBytes(frameType, bytes, 0)
                 }
+
                 fun fromStream(stream: DataInputStream): ChopFrameInfo {
                     val frameType = stream.readUnsignedByte()
                     return fromStream(frameType, stream)
                 }
+
                 fun fromStream(stream: InputStream): ChopFrameInfo {
                     return fromStream(stream.dataStream)
                 }
+
                 fun fromBytes(bytes: ByteArray, offset: Int): ChopFrameInfo {
                     val frameType = bytes.getUnsignedByte(offset)
                     return fromBytes(frameType, bytes, offset + 1)
                 }
+
                 fun fromBytes(bytes: ByteArray): ChopFrameInfo {
                     return fromBytes(bytes, 0)
                 }
             }
         }
 
-        class SameFrameExtendedInfo (
+        class SameFrameExtendedInfo(
             override val offsetDelta: UShort
         ) : StackMapFrameInfo() {
             override val frameType: UByte get() = 251u
@@ -342,37 +383,44 @@ class AttributeStackMapTableInfo (
 
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): SameFrameExtendedInfo {
-                    if(frameType != 251u.toUByte()) throw IllegalArgumentException("frameType must be 251")
+                    if (frameType != 251u.toUByte()) throw IllegalArgumentException("frameType must be 251")
                     return SameFrameExtendedInfo(stream.readUnsignedShort())
                 }
+
                 fun fromStream(frameType: UByte, stream: InputStream): SameFrameExtendedInfo {
                     return fromStream(frameType, stream.dataStream)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray, offset: Int): SameFrameExtendedInfo {
-                    if(frameType != 251u.toUByte()) throw IllegalArgumentException("frameType must be 251")
+                    if (frameType != 251u.toUByte()) throw IllegalArgumentException("frameType must be 251")
                     return SameFrameExtendedInfo(bytes.getUnsignedShort(offset))
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray): SameFrameExtendedInfo {
                     return fromBytes(frameType, bytes, 0)
                 }
+
                 fun fromStream(stream: DataInputStream): SameFrameExtendedInfo {
                     val frameType = stream.readUnsignedByte()
                     return fromStream(frameType, stream)
                 }
+
                 fun fromStream(stream: InputStream): SameFrameExtendedInfo {
                     return fromStream(stream.dataStream)
                 }
+
                 fun fromBytes(bytes: ByteArray, offset: Int): SameFrameExtendedInfo {
                     val frameType = bytes.getUnsignedByte(offset)
                     return fromBytes(frameType, bytes, offset + 1)
                 }
+
                 fun fromBytes(bytes: ByteArray): SameFrameExtendedInfo {
                     return fromBytes(bytes, 0)
                 }
             }
         }
 
-        class AppendFrameInfo (
+        class AppendFrameInfo(
             override val frameType: UByte,
             override val offsetDelta: UShort,
             val locals: VerificationTypeList
@@ -387,33 +435,40 @@ class AttributeStackMapTableInfo (
 
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): AppendFrameInfo {
-                    if(frameType !in 252u..254u) throw IllegalArgumentException("frameType must be 252..254")
+                    if (frameType !in 252u..254u) throw IllegalArgumentException("frameType must be 252..254")
                     val offsetDelta = stream.readUnsignedShort()
                     val locals = VerificationTypeList.fromStream(stream, (frameType - 251u).toInt())
                     return AppendFrameInfo(frameType, offsetDelta, locals)
                 }
+
                 fun fromStream(frameType: UByte, stream: InputStream): AppendFrameInfo {
                     return fromStream(frameType, stream.dataStream)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray, offset: Int): AppendFrameInfo {
-                    if(frameType !in 252u..254u) throw IllegalArgumentException("frameType must be 252..254")
+                    if (frameType !in 252u..254u) throw IllegalArgumentException("frameType must be 252..254")
                     val locals = VerificationTypeList.fromBytes(bytes, offset + 2, (frameType - 251u).toInt())
                     return AppendFrameInfo(frameType, bytes.getUnsignedShort(offset), locals)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray): AppendFrameInfo {
                     return fromBytes(frameType, bytes, 0)
                 }
+
                 fun fromStream(stream: DataInputStream): AppendFrameInfo {
                     val frameType = stream.readUnsignedByte()
                     return fromStream(frameType, stream)
                 }
+
                 fun fromStream(stream: InputStream): AppendFrameInfo {
                     return fromStream(stream.dataStream)
                 }
+
                 fun fromBytes(bytes: ByteArray, offset: Int): AppendFrameInfo {
                     val frameType = bytes.getUnsignedByte(offset)
                     return fromBytes(frameType, bytes, offset + 1)
                 }
+
                 fun fromBytes(bytes: ByteArray): AppendFrameInfo {
                     return fromBytes(bytes, 0)
                 }
@@ -428,14 +483,15 @@ class AttributeStackMapTableInfo (
             val stack: VerificationTypeList
         ) : StackMapFrameInfo() {
             override val frameType: UByte get() = 255u
-            override val bytes: ByteArray get() = byteArrayOf(
-                frameType.toByte(),
-                *offsetDelta.toBytes(),
-                *numberOfLocals.toBytes(),
-                *locals.bytes,
-                *numberOfStackItems.toBytes(),
-                *stack.bytes
-            )
+            override val bytes: ByteArray
+                get() = byteArrayOf(
+                    frameType.toByte(),
+                    *offsetDelta.toBytes(),
+                    *numberOfLocals.toBytes(),
+                    *locals.bytes,
+                    *numberOfStackItems.toBytes(),
+                    *stack.bytes
+                )
 
             override fun toJson(): Map<String, Any> = mapOf(
                 "offsetDelta" to offsetDelta.toInt(),
@@ -455,32 +511,43 @@ class AttributeStackMapTableInfo (
                     val stack = VerificationTypeList.fromStream(stream, numberOfStackItems.toInt())
                     return FullFrameInfo(offsetDelta, numberOfLocals, numberOfStackItems, locals, stack)
                 }
+
                 fun fromStream(frameType: UByte, stream: InputStream): FullFrameInfo {
                     return fromStream(frameType, stream.dataStream)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray, offset: Int): FullFrameInfo {
                     if (frameType != 255u.toUByte()) throw IllegalArgumentException("Frame type must be 255")
                     val offsetDelta = bytes.getUnsignedShort(offset)
                     val numberOfLocals = bytes.getUnsignedShort(offset + 2)
                     val locals = VerificationTypeList.fromBytes(bytes, offset + 4, numberOfLocals.toInt())
                     val numberOfStackItems = bytes.getUnsignedShort(offset + 4 + locals.bytes.size)
-                    val stack = VerificationTypeList.fromBytes(bytes, offset + 4 + locals.bytes.size + 2, numberOfStackItems.toInt())
+                    val stack = VerificationTypeList.fromBytes(
+                        bytes,
+                        offset + 4 + locals.bytes.size + 2,
+                        numberOfStackItems.toInt()
+                    )
                     return FullFrameInfo(offsetDelta, numberOfLocals, numberOfStackItems, locals, stack)
                 }
+
                 fun fromBytes(frameType: UByte, bytes: ByteArray): FullFrameInfo {
                     return fromBytes(frameType, bytes, 0)
                 }
+
                 fun fromStream(stream: DataInputStream): FullFrameInfo {
                     val frameType = stream.readUnsignedByte()
                     return fromStream(frameType, stream)
                 }
+
                 fun fromStream(stream: InputStream): FullFrameInfo {
                     return fromStream(stream.dataStream)
                 }
+
                 fun fromBytes(bytes: ByteArray, offset: Int): FullFrameInfo {
                     val frameType = bytes.getUnsignedByte(offset)
                     return fromBytes(frameType, bytes, offset + 1)
                 }
+
                 fun fromBytes(bytes: ByteArray): FullFrameInfo {
                     return fromBytes(bytes, 0)
                 }
@@ -488,7 +555,7 @@ class AttributeStackMapTableInfo (
         }
     }
 
-    class VerificationTypeList (
+    class VerificationTypeList(
         val entries: MutableList<UByte>
     ) : MutableList<UByte> by entries {
 
@@ -497,15 +564,15 @@ class AttributeStackMapTableInfo (
         fun toJson(): String = entries.map { it.toByte() }.toByteArray().toHexString()
 
         companion object {
-            const val ITEM_TOP : UByte = 0u
-            const val ITEM_INTEGER : UByte = 1u
-            const val ITEM_FLOAT : UByte = 2u
-            const val ITEM_DOUBLE : UByte = 3u
-            const val ITEM_LONG : UByte = 4u
-            const val ITEM_NULL : UByte = 5u
-            const val ITEM_UNINITIALIZED_THIS : UByte = 6u
-            const val ITEM_OBJECT : UByte = 7u
-            const val ITEM_UNINITIALIZED : UByte = 8u
+            const val ITEM_TOP: UByte = 0u
+            const val ITEM_INTEGER: UByte = 1u
+            const val ITEM_FLOAT: UByte = 2u
+            const val ITEM_DOUBLE: UByte = 3u
+            const val ITEM_LONG: UByte = 4u
+            const val ITEM_NULL: UByte = 5u
+            const val ITEM_UNINITIALIZED_THIS: UByte = 6u
+            const val ITEM_OBJECT: UByte = 7u
+            const val ITEM_UNINITIALIZED: UByte = 8u
 
             fun fromStream(stream: DataInputStream, count: Int): VerificationTypeList {
                 return VerificationTypeList(MutableList(count) { stream.readUnsignedByte() })

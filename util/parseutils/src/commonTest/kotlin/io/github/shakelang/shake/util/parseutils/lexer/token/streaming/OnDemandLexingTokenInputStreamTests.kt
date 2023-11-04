@@ -22,7 +22,14 @@ class OnDemandLexingTokenInputStreamTests {
 
     class TestLexer(
         tokens: List<Token<TokenType>>,
-    ) : LexingBase<TokenType, Token<TokenType>>(SourceCharacterInputStream(CharacterSource.from("qwgg".toCharArray(), "a"))) {
+    ) : LexingBase<TokenType, Token<TokenType>>(
+        SourceCharacterInputStream(
+            CharacterSource.from(
+                "qwgg".toCharArray(),
+                "a"
+            )
+        )
+    ) {
 
         val tokens = tokens.toMutableList()
         override fun makeToken(): Token<TokenType> {
@@ -93,7 +100,7 @@ class OnDemandLexingTokenInputStreamTests {
 
         assertEquals(tokens[2], stream.peek(1))
 
-        assertFailsWith<Error> (){ stream.peek(2) }
+        assertFailsWith<Error>() { stream.peek(2) }
 
     }
 
@@ -156,15 +163,15 @@ class OnDemandLexingTokenInputStreamTests {
         assertIs<PositionMap>(stream.map)
     }
 
-   @Test
-   fun testToString() {
-         val tokens = mutableListOf<Token<TokenType>>()
-         tokens.add(Token(TokenType.IDENTIFIER, "test", 0, 0))
-         tokens.add(Token(TokenType.NUMBER, "123", 0, 0))
-         tokens.add(Token(TokenType.STRING, "\"test\"", 0, 0))
-         val lexer = TestLexer(tokens)
-         val stream = OnDemandLexingTokenInputStream(lexer)
-         assertEquals("OnDemandLexingTokenInputStream(lexer=hello world)", stream.toString())
-   }
+    @Test
+    fun testToString() {
+        val tokens = mutableListOf<Token<TokenType>>()
+        tokens.add(Token(TokenType.IDENTIFIER, "test", 0, 0))
+        tokens.add(Token(TokenType.NUMBER, "123", 0, 0))
+        tokens.add(Token(TokenType.STRING, "\"test\"", 0, 0))
+        val lexer = TestLexer(tokens)
+        val stream = OnDemandLexingTokenInputStream(lexer)
+        assertEquals("OnDemandLexingTokenInputStream(lexer=hello world)", stream.toString())
+    }
 
 }

@@ -14,12 +14,12 @@ import io.github.shakelang.shake.util.shason.json
 
 class MethodList(val methods: List<MethodInfo>) : List<MethodInfo> by methods, ConstantUser {
 
-    override val uses : Array<ConstantInfo> get() = methods.map { it.uses.toList() }.flatten().toTypedArray()
+    override val uses: Array<ConstantInfo> get() = methods.map { it.uses.toList() }.flatten().toTypedArray()
     override val users = methods.map { it.users.toList() }.flatten().toTypedArray()
 
     private lateinit var clazz: ClassInfo
 
-    constructor(methods: Array<MethodInfo>): this(methods.toList())
+    constructor(methods: Array<MethodInfo>) : this(methods.toList())
 
     fun init(clazz: ClassInfo) {
         this.clazz = clazz
@@ -58,7 +58,7 @@ class MethodList(val methods: List<MethodInfo>) : List<MethodInfo> by methods, C
         fun fromBytes(pool: ConstantPool, bytes: ByteArray): MethodList {
             val stream = bytes.dataStream()
             val list = fromStream(pool, stream)
-            if(stream.available() > 0) throw IllegalArgumentException("Not all bytes have been used")
+            if (stream.available() > 0) throw IllegalArgumentException("Not all bytes have been used")
             return list
         }
     }

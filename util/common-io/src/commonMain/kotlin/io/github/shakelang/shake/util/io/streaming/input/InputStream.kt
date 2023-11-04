@@ -1,4 +1,5 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused")
+
 package io.github.shakelang.shake.util.io.streaming.input
 
 import io.github.shakelang.shake.util.io.IOException
@@ -6,7 +7,6 @@ import io.github.shakelang.shake.util.io.IOException
 /**
  * This class is an abstract class for all input streams
  *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  * @since 0.1.0
  * @version 0.1.0
  */
@@ -23,7 +23,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.read
      * @see InputStream.readNBytes
@@ -38,7 +37,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     open fun close()
 
@@ -51,7 +49,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.markSupported
      */
@@ -66,7 +63,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.mark
      */
@@ -81,7 +77,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.read
      * @see InputStream.readNBytes
@@ -99,7 +94,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.read
      * @see InputStream.readNBytes
@@ -120,7 +114,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.read
      * @see InputStream.readNBytes
@@ -136,7 +129,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.mark
      * @see InputStream.markSupported
@@ -154,7 +146,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.skip
      */
@@ -169,7 +160,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.available
      * @see InputStream.read
@@ -187,7 +177,6 @@ expect abstract class InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.available
      * @see InputStream.read

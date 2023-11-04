@@ -10,7 +10,7 @@ actual class JavaEnvironment : Environment(EnvironmentType.JAVA) {
 
 actual class JavaScriptEnvironment : Environment(EnvironmentType.JAVASCRIPT) {
     actual val isNodeAvailable: Boolean = jsTypeOf(process) == "object"
-    actual val nodeVersion: String get() = if(isNodeAvailable) process.version as String else throw Error("No node available in javascript!")
+    actual val nodeVersion: String get() = if (isNodeAvailable) process.version as String else throw Error("No node available in javascript!")
     actual val isBrowser: Boolean get() = jsTypeOf(window) == "object" && jsTypeOf(document) == "object"
 }
 

@@ -27,7 +27,6 @@ interface JsonElement {
          * Create a [JsonElement] from any anonymous value
          * (Will throw an exception if it can't process the value)
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Any?) = when (value) {
             null -> JsonNullElement.INSTANCE
@@ -46,7 +45,6 @@ interface JsonElement {
         /**
          * Create a [JsonStringElement] from a [String]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: String) = JsonStringElement(value)
 
@@ -54,7 +52,6 @@ interface JsonElement {
         /**
          * Create a [JsonBooleanElement] from a [Boolean]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Boolean) = JsonBooleanElement.from(value)
 
@@ -62,14 +59,12 @@ interface JsonElement {
         /**
          * Create a [JsonDoubleElement] from a [Double]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Double) = JsonDoubleElement(value)
 
         /**
          * Create a [JsonDoubleElement] from a [Float]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Float) = from(value.toDouble())
 
@@ -77,28 +72,24 @@ interface JsonElement {
         /**
          * Create a [JsonIntegerElement] from a [Long]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Long) = JsonIntegerElement(value)
 
         /**
          * Create a [JsonIntegerElement] from a [Int]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Int) = from(value.toLong())
 
         /**
          * Create a [JsonIntegerElement] from a [Short]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Short) = from(value.toLong())
 
         /**
          * Create a [JsonIntegerElement] from a [Byte]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Byte) = from(value.toLong())
 
@@ -106,21 +97,18 @@ interface JsonElement {
         /**
          * Create a [JsonObject] from a [Map] of anonymous values
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Map<String, Any?>) = JsonObject.of(value)
 
         /**
          * Create a [JsonObject] from anonymous values
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(vararg values: Pair<String, Any?>) = JsonObject.of(*values)
 
         /**
          * Create a [JsonObject] from a [Map] of [JsonElement]s
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmName("fromElements")
         fun from(value: Map<String, JsonElement>) = JsonObject.of(value)
@@ -128,7 +116,6 @@ interface JsonElement {
         /**
          * Create a [JsonObject] from [JsonElement]s
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmName("fromElements")
         fun from(vararg values: Pair<String, JsonElement>) = JsonObject.of(*values)
@@ -137,21 +124,18 @@ interface JsonElement {
         /**
          * Create a [JsonArray] from a [Collection] of anonymous values
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(value: Collection<Any?>) = JsonArray.of(value)
 
         /**
          * Create a [JsonArray] from anonymous values
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(vararg values: Any?) = JsonArray.of(*values)
 
         /**
          * Create a [JsonArray] from a [Collection] of [JsonElement]s
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmName("fromElements")
         fun from(value: Collection<JsonElement>) = JsonArray.of(value)
@@ -159,7 +143,6 @@ interface JsonElement {
         /**
          * Create a [JsonArray] from [JsonElement]s
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmName("fromElements")
         fun from(vararg values: JsonElement) = JsonArray.of(*values)
@@ -169,15 +152,11 @@ interface JsonElement {
 
     /**
      * Is the [JsonElement] a [JsonPrimitive]?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun isJsonPrimitive() = this is JsonPrimitive
 
     /**
      * Cast the [JsonElement] to a [JsonPrimitive]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toJsonPrimitive() =
         if (this.isJsonPrimitive()) this as JsonPrimitive else throw Error("Element is not a JsonPrimitive")
@@ -185,30 +164,22 @@ interface JsonElement {
 
     /**
      * Is the [JsonElement] a [JsonObject]?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun isJsonObject() = this is JsonObject
 
     /**
      * Cast the [JsonElement] to a [JsonObject]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toJsonObject() = if (this.isJsonObject()) this as JsonObject else throw Error("Element is not a JsonObject")
 
 
     /**
      * Is the [JsonElement] a [JsonArray]?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun isJsonArray() = this is JsonArray
 
     /**
      * Cast the [JsonElement] to a [JsonArray]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toJsonArray() = if (this.isJsonArray()) this as JsonArray else throw Error("Element is not a JsonObject")
 

@@ -1,13 +1,12 @@
 package io.github.shakelang.shake.shasambly.shasp.parser
 
-import io.github.shakelang.shake.util.parseutils.CompilerError
-import io.github.shakelang.shake.util.parseutils.characters.Characters
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenInputStream
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.*
+import io.github.shakelang.shake.util.parseutils.characters.Characters
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
 
-class ShasPParser (
+class ShasPParser(
     private val input: ShasPTokenInputStream
 ) {
 
@@ -24,7 +23,7 @@ class ShasPParser (
         val unsigned = input.actual.type == ShasPTokenType.KEYWORD_UNSIGNED
         if (unsigned) input.skip()
 
-        var type = when(input.actual.type) {
+        var type = when (input.actual.type) {
             ShasPTokenType.KEYWORD_BYTE -> if (unsigned) ShasPType.UBYTE else ShasPType.BYTE
             ShasPTokenType.KEYWORD_SHORT -> if (unsigned) ShasPType.USHORT else ShasPType.SHORT
             ShasPTokenType.KEYWORD_INT -> if (unsigned) ShasPType.UINT else ShasPType.INT
@@ -38,16 +37,15 @@ class ShasPParser (
             }
         }
 
-        while(input.hasNext() && (input.peekType() == ShasPTokenType.LBRACKET)) {
+        while (input.hasNext() && (input.peekType() == ShasPTokenType.LBRACKET)) {
             input.skip()
-            if(!input.hasNext() || input.peekType() != ShasPTokenType.RBRACKET) {
+            if (!input.hasNext() || input.peekType() != ShasPTokenType.RBRACKET) {
                 val size = logicalOr()
-                if(!input.hasNext() || input.nextType() != ShasPTokenType.RBRACKET) {
+                if (!input.hasNext() || input.nextType() != ShasPTokenType.RBRACKET) {
                     throw ParserError("Expected ']', got ${input.next().type}")
                 }
                 type = ShasPType.arrayOf(type, size)
-            }
-            else {
+            } else {
                 input.skip()
                 type = ShasPType.arrayOf(type)
             }
@@ -61,7 +59,7 @@ class ShasPParser (
         input.skip()
         val type = parseType()
 
-        if(input.next().type != ShasPTokenType.IDENTIFIER) {
+        if (input.next().type != ShasPTokenType.IDENTIFIER) {
             throw ParserError(
                 "Expected identifier after type",
                 input.peekStart(),
@@ -69,7 +67,7 @@ class ShasPParser (
             )
         }
         val name = input.actual.value!!
-        if(input.peek().type == ShasPTokenType.LPAREN) {
+        if (input.peek().type == ShasPTokenType.LPAREN) {
             input.skip()
             return parseFunctionDeclaration(type, name)
         }
@@ -81,7 +79,7 @@ class ShasPParser (
 
         // Parse function definition
         val args = mutableListOf<ShasPArgument>()
-        while(input.next().type != ShasPTokenType.RPAREN) {
+        while (input.next().type != ShasPTokenType.RPAREN) {
             args.add(parseArgument())
         }
 
@@ -95,7 +93,7 @@ class ShasPParser (
 
         val type = parseType()
 
-        if(input.next().type != ShasPTokenType.IDENTIFIER) {
+        if (input.next().type != ShasPTokenType.IDENTIFIER) {
             throw ParserError(
                 "Expected identifier after type",
                 input.peekStart(),
@@ -111,7 +109,7 @@ class ShasPParser (
 
     private fun parseVariableDeclaration(type: ShasPType, name: String): ShasPVariableDeclaration {
 
-        if(input.peek().type == ShasPTokenType.ASSIGN) {
+        if (input.peek().type == ShasPTokenType.ASSIGN) {
             input.skip()
             val value = expr()
             return ShasPVariableDeclaration(name, type, value)
@@ -123,7 +121,7 @@ class ShasPParser (
 
     private fun parseVariableAssignment(name: String): ShasPVariableAssignment {
 
-        if(input.next().type != ShasPTokenType.ASSIGN) {
+        if (input.next().type != ShasPTokenType.ASSIGN) {
             throw ParserError(
                 "Expected assignment operator",
                 input.peekStart(),
@@ -139,7 +137,7 @@ class ShasPParser (
 
     private fun parseIfStatement(): ShasPIf {
 
-        if(input.actual.type != ShasPTokenType.KEYWORD_IF) {
+        if (input.actual.type != ShasPTokenType.KEYWORD_IF) {
             throw ParserError(
                 "Expected if keyword",
                 input.peekStart(),
@@ -147,7 +145,7 @@ class ShasPParser (
             )
         }
 
-        if(input.next().type != ShasPTokenType.LPAREN) {
+        if (input.next().type != ShasPTokenType.LPAREN) {
             throw ParserError(
                 "Expected left parenthesis",
                 input.peekStart(),
@@ -157,7 +155,7 @@ class ShasPParser (
 
         val condition = value()
 
-        if(input.next().type != ShasPTokenType.RPAREN) {
+        if (input.next().type != ShasPTokenType.RPAREN) {
             throw ParserError(
                 "Expected right parenthesis",
                 input.peekStart(),
@@ -167,7 +165,7 @@ class ShasPParser (
 
         val body = parseBody()
 
-        if(input.peek().type == ShasPTokenType.KEYWORD_ELSE) {
+        if (input.peek().type == ShasPTokenType.KEYWORD_ELSE) {
             input.skip()
             val elseBody = parseBody()
             return ShasPIf(condition, body, elseBody)
@@ -179,7 +177,7 @@ class ShasPParser (
 
     fun parseWhileStatement(): ShasPWhile {
 
-        if(input.actual.type != ShasPTokenType.KEYWORD_WHILE) {
+        if (input.actual.type != ShasPTokenType.KEYWORD_WHILE) {
             throw ParserError(
                 "Expected while keyword",
                 input.peekStart(),
@@ -187,7 +185,7 @@ class ShasPParser (
             )
         }
 
-        if(input.next().type != ShasPTokenType.LPAREN) {
+        if (input.next().type != ShasPTokenType.LPAREN) {
             throw ParserError(
                 "Expected left parenthesis",
                 input.peekStart(),
@@ -197,7 +195,7 @@ class ShasPParser (
 
         val condition = value()
 
-        if(input.next().type != ShasPTokenType.RPAREN) {
+        if (input.next().type != ShasPTokenType.RPAREN) {
             throw ParserError(
                 "Expected right parenthesis",
                 input.peekStart(),
@@ -213,7 +211,7 @@ class ShasPParser (
 
     fun parseReturnStatement(): ShasPReturn {
 
-        if(input.actual.type != ShasPTokenType.KEYWORD_RETURN) {
+        if (input.actual.type != ShasPTokenType.KEYWORD_RETURN) {
             throw ParserError(
                 "Expected return keyword",
                 input.peekStart(),
@@ -221,13 +219,13 @@ class ShasPParser (
             )
         }
 
-        if(input.peek().type == ShasPTokenType.SEMICOLON) {
+        if (input.peek().type == ShasPTokenType.SEMICOLON) {
             return ShasPReturn(null)
         }
 
         val value = expr()
 
-        if(input.peek().type == ShasPTokenType.SEMICOLON) {
+        if (input.peek().type == ShasPTokenType.SEMICOLON) {
             return ShasPReturn(value)
         }
 
@@ -241,7 +239,7 @@ class ShasPParser (
 
     private fun parseForStatement(): ShasPFor {
 
-        if(input.actual.type != ShasPTokenType.KEYWORD_FOR) {
+        if (input.actual.type != ShasPTokenType.KEYWORD_FOR) {
             throw ParserError(
                 "Expected for keyword",
                 input.peekStart(),
@@ -249,7 +247,7 @@ class ShasPParser (
             )
         }
 
-        if(input.next().type != ShasPTokenType.LPAREN) {
+        if (input.next().type != ShasPTokenType.LPAREN) {
             throw ParserError(
                 "Expected left parenthesis",
                 input.peekStart(),
@@ -259,7 +257,7 @@ class ShasPParser (
 
         val initializer = parseStatement()
 
-        if(input.next().type != ShasPTokenType.SEMICOLON) {
+        if (input.next().type != ShasPTokenType.SEMICOLON) {
             throw ParserError(
                 "Expected semicolon",
                 input.peekStart(),
@@ -269,7 +267,7 @@ class ShasPParser (
 
         val condition = value()
 
-        if(input.next().type != ShasPTokenType.SEMICOLON) {
+        if (input.next().type != ShasPTokenType.SEMICOLON) {
             throw ParserError(
                 "Expected semicolon",
                 input.peekStart(),
@@ -279,7 +277,7 @@ class ShasPParser (
 
         val increment = parseStatement()
 
-        if(input.next().type != ShasPTokenType.RPAREN) {
+        if (input.next().type != ShasPTokenType.RPAREN) {
             throw ParserError(
                 "Expected right parenthesis",
                 input.peekStart(),
@@ -295,7 +293,7 @@ class ShasPParser (
 
     private fun parseDoWhileStatement(): ShasPDoWhile {
 
-        if(input.actual.type != ShasPTokenType.KEYWORD_DO) {
+        if (input.actual.type != ShasPTokenType.KEYWORD_DO) {
             throw ParserError(
                 "Expected do keyword",
                 input.peekStart(),
@@ -305,7 +303,7 @@ class ShasPParser (
 
         val body = parseBody()
 
-        if(input.actual.type != ShasPTokenType.KEYWORD_WHILE) {
+        if (input.actual.type != ShasPTokenType.KEYWORD_WHILE) {
             throw ParserError(
                 "Expected while keyword",
                 input.peekStart(),
@@ -313,7 +311,7 @@ class ShasPParser (
             )
         }
 
-        if(input.next().type != ShasPTokenType.LPAREN) {
+        if (input.next().type != ShasPTokenType.LPAREN) {
             throw ParserError(
                 "Expected left parenthesis",
                 input.peekStart(),
@@ -323,7 +321,7 @@ class ShasPParser (
 
         val condition = value()
 
-        if(input.next().type != ShasPTokenType.RPAREN) {
+        if (input.next().type != ShasPTokenType.RPAREN) {
             throw ParserError(
                 "Expected right parenthesis",
                 input.peekStart(),
@@ -331,7 +329,7 @@ class ShasPParser (
             )
         }
 
-        if(input.next().type != ShasPTokenType.SEMICOLON) {
+        if (input.next().type != ShasPTokenType.SEMICOLON) {
             throw ParserError(
                 "Expected semicolon",
                 input.peekStart(),
@@ -346,7 +344,7 @@ class ShasPParser (
     private fun parseStatement(): ShasPStatement {
 
         val token = input.next()
-        if(token.type == ShasPTokenType.IDENTIFIER) {
+        if (token.type == ShasPTokenType.IDENTIFIER) {
             val name = token.value!!
             val peek = input.peek()
             if (peek.type == ShasPTokenType.ASSIGN) {
@@ -355,52 +353,52 @@ class ShasPParser (
             if (peek.type == ShasPTokenType.LPAREN) {
                 return parseFunctionCall(name)
             }
-            if(peek.type == ShasPTokenType.ADD_ASSIGN) {
+            if (peek.type == ShasPTokenType.ADD_ASSIGN) {
                 input.skip()
                 return ShasPVariableAddAssignment(name, value())
             }
-            if(peek.type == ShasPTokenType.SUB_ASSIGN) {
+            if (peek.type == ShasPTokenType.SUB_ASSIGN) {
                 input.skip()
                 return ShasPVariableSubAssignment(name, value())
             }
-            if(peek.type == ShasPTokenType.MUL_ASSIGN) {
+            if (peek.type == ShasPTokenType.MUL_ASSIGN) {
                 input.skip()
                 return ShasPVariableMulAssignment(name, value())
             }
-            if(peek.type == ShasPTokenType.DIV_ASSIGN) {
+            if (peek.type == ShasPTokenType.DIV_ASSIGN) {
                 input.skip()
                 return ShasPVariableDivAssignment(name, value())
             }
-            if(peek.type == ShasPTokenType.MOD_ASSIGN) {
+            if (peek.type == ShasPTokenType.MOD_ASSIGN) {
                 input.skip()
                 return ShasPVariableModAssignment(name, value())
             }
-            if(peek.type == ShasPTokenType.INCR) {
+            if (peek.type == ShasPTokenType.INCR) {
                 input.skip()
                 return ShasPVariableIncr(name)
             }
-            if(peek.type == ShasPTokenType.DECR) {
+            if (peek.type == ShasPTokenType.DECR) {
                 input.skip()
                 return ShasPVariableDecr(name)
             }
 
         }
-        if(token.type == ShasPTokenType.KEYWORD_IF) {
+        if (token.type == ShasPTokenType.KEYWORD_IF) {
             return parseIfStatement()
         }
-        if(token.type == ShasPTokenType.KEYWORD_WHILE) {
+        if (token.type == ShasPTokenType.KEYWORD_WHILE) {
             return parseWhileStatement()
         }
-        if(token.type == ShasPTokenType.KEYWORD_RETURN) {
+        if (token.type == ShasPTokenType.KEYWORD_RETURN) {
             return parseReturnStatement()
         }
-        if(token.type == ShasPTokenType.KEYWORD_FOR) {
+        if (token.type == ShasPTokenType.KEYWORD_FOR) {
             return parseForStatement()
         }
-        if(token.type == ShasPTokenType.KEYWORD_DO) {
+        if (token.type == ShasPTokenType.KEYWORD_DO) {
             return parseDoWhileStatement()
         }
-        if(token.type == ShasPTokenType.KEYWORD_BYTE ||
+        if (token.type == ShasPTokenType.KEYWORD_BYTE ||
             token.type == ShasPTokenType.KEYWORD_SHORT ||
             token.type == ShasPTokenType.KEYWORD_INT ||
             token.type == ShasPTokenType.KEYWORD_LONG ||
@@ -408,7 +406,8 @@ class ShasPParser (
             token.type == ShasPTokenType.KEYWORD_DOUBLE ||
             token.type == ShasPTokenType.KEYWORD_CHAR ||
             token.type == ShasPTokenType.KEYWORD_BOOLEAN ||
-            token.type == ShasPTokenType.KEYWORD_UNSIGNED) {
+            token.type == ShasPTokenType.KEYWORD_UNSIGNED
+        ) {
             return parseVariableDeclaration()
         }
         throw ParserError("Expected statement, but got ${token.type.name}")
@@ -416,7 +415,7 @@ class ShasPParser (
 
     private fun parseBody(): ShasPCode {
 
-        if(input.next().type != ShasPTokenType.LCURL) {
+        if (input.next().type != ShasPTokenType.LCURL) {
             throw ParserError(
                 "Expected '{' after function name",
                 input.peekStart(),
@@ -426,8 +425,8 @@ class ShasPParser (
 
         val statements = mutableListOf<ShasPStatement>()
 
-        while(input.peek().type != ShasPTokenType.RCURL) {
-            if(input.peek().type == ShasPTokenType.SEMICOLON) {
+        while (input.peek().type != ShasPTokenType.RCURL) {
+            if (input.peek().type == ShasPTokenType.SEMICOLON) {
                 input.skip()
                 continue
             }
@@ -441,7 +440,7 @@ class ShasPParser (
     }
 
     private fun parseIdentifier(): ShasPValuedNode {
-        if(input.actualType != ShasPTokenType.IDENTIFIER) {
+        if (input.actualType != ShasPTokenType.IDENTIFIER) {
             throw ParserError(
                 "Expected identifier",
                 input.peekStart(),
@@ -450,16 +449,15 @@ class ShasPParser (
         }
 
         val identifier = input.actual.value!!
-        return if(input.peek().type == ShasPTokenType.LPAREN) {
+        return if (input.peek().type == ShasPTokenType.LPAREN) {
             parseFunctionCall(identifier)
-        }
-            else ShasPIdentifier(identifier)
+        } else ShasPIdentifier(identifier)
     }
 
     private fun parseFunctionCall(identifier: String): ShasPFunctionCall {
         input.skip()
         val args = mutableListOf<ShasPValuedNode>()
-        while(input.peek().type != ShasPTokenType.RPAREN) {
+        while (input.peek().type != ShasPTokenType.RPAREN) {
             args.add(value())
         }
         input.skip()
@@ -503,7 +501,7 @@ class ShasPParser (
             input.skip()
             return ShasPCharLiteral(Characters.parseString(input.actualValue!!)[0])
         }
-        if(token == ShasPTokenType.KEYWORD_NEW) {
+        if (token == ShasPTokenType.KEYWORD_NEW) {
             return parseNew()
         }
         throw ParserError("Unexpected Token $token")
@@ -511,14 +509,14 @@ class ShasPParser (
 
     private fun parseNew(): ShasPValuedNode {
 
-        if(input.actualType != ShasPTokenType.KEYWORD_NEW) {
+        if (input.actualType != ShasPTokenType.KEYWORD_NEW) {
             throw ParserError("Expected 'new'")
         }
 
         input.skip()
 
         val type = parseType()
-        if(type !is ShasPType.ShasPArrayType) throw ParserError("Expected array type")
+        if (type !is ShasPType.ShasPArrayType) throw ParserError("Expected array type")
         return ShasPArrayInitializer(type)
 
     }
@@ -565,7 +563,8 @@ class ShasPParser (
         while (input.hasNext() && input.peekType().let {
                 it == ShasPTokenType.MUL
                         || it == ShasPTokenType.DIV
-                        || it == ShasPTokenType.MOD }) {
+                        || it == ShasPTokenType.MOD
+            }) {
             input.skip()
             val type = input.actualType
             result = when (type) {
@@ -615,7 +614,8 @@ class ShasPParser (
                         || it == ShasPTokenType.BIGGER
                         || it == ShasPTokenType.BIGGER_EQUALS
                         || it == ShasPTokenType.SMALLER
-                        || it == ShasPTokenType.SMALLER_EQUALS }) {
+                        || it == ShasPTokenType.SMALLER_EQUALS
+            }) {
             input.skip()
             val type = input.actualType
             result = when (type) {
@@ -635,7 +635,7 @@ class ShasPParser (
 
         input.skip()
         val type = parseType()
-        if(input.next().type != ShasPTokenType.IDENTIFIER) {
+        if (input.next().type != ShasPTokenType.IDENTIFIER) {
             throw ParserError(
                 "Expected identifier after type",
                 input.peekStart(),

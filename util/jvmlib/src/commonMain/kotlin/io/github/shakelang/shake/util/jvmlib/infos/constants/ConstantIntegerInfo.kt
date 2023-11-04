@@ -23,11 +23,10 @@ class ConstantIntegerInfo(val value: Int) : ConstantInfo() {
             return ConstantIntegerInfo(value)
         }
 
-        fun contentsFromStream(stream: InputStream)
-                = contentsFromStream(stream.dataStream)
+        fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if(stream.readByte() != tag)
+            if (stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantIntegerInfo")
             else contentsFromStream(stream)
 

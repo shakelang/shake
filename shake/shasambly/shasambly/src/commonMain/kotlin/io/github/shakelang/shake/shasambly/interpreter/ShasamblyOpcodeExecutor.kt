@@ -1,7 +1,7 @@
 @file:Suppress("nothing_to_inline")
+
 package io.github.shakelang.shake.shasambly.interpreter
 
-import io.github.shakelang.shake.util.primitives.bytes.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import io.github.shakelang.shake.util.primitives.bytes.*
 import kotlin.experimental.and
@@ -9,11 +9,11 @@ import kotlin.experimental.or
 import kotlin.experimental.xor
 import kotlin.math.abs
 
-abstract class ShasamblyOpcodeExecutor (
+abstract class ShasamblyOpcodeExecutor(
     memorySize: Int,
     bytes: ByteArray,
     position: Int
-) : ShasamblyInterpretingBase (memorySize, bytes, position) {
+) : ShasamblyInterpretingBase(memorySize, bytes, position) {
 
     fun incr_variable_stack() {
         val size = read_short().toUShort().toInt()
@@ -28,7 +28,11 @@ abstract class ShasamblyOpcodeExecutor (
 
     fun jump(address: Int) {
         //println("Jumping to ${address.toBytes().toHexString()}")
-        if(address < 0 || address > memory.size) throw Error("Address 0x${address.toBytes().toHexString()} out of range")
+        if (address < 0 || address > memory.size) throw Error(
+            "Address 0x${
+                address.toBytes().toHexString()
+            } out of range"
+        )
         position = address
     }
 
@@ -42,19 +46,23 @@ abstract class ShasamblyOpcodeExecutor (
 
     fun jump_if() {
         val addr = read_int()
-        if(stack.popByte() != 0x00.toByte()) jump(addr)
+        if (stack.popByte() != 0x00.toByte()) jump(addr)
     }
 
     fun invoke_native() {
         val native = read_short().toUShort().toInt()
         (nativeFunctions[native]
-            ?: throw Error("Unknown native function 0x${native.toBytes().toHexString()} at position 0x${position.toBytes().toHexString()}"))
+            ?: throw Error(
+                "Unknown native function 0x${
+                    native.toBytes().toHexString()
+                } at position 0x${position.toBytes().toHexString()}"
+            ))
             .execute.invoke(this)
     }
 
     fun glob_addr() {
         val variable = read_short().toUShort().toInt()
-        if(variable >= variableStackSize) throw IllegalArgumentException("Could not get global address of local $variable (Local stack size is only $variableStackSize)")
+        if (variable >= variableStackSize) throw IllegalArgumentException("Could not get global address of local $variable (Local stack size is only $variableStackSize)")
         stack.pushInt(localStackPointer + variable)
     }
 
@@ -620,6 +628,7 @@ abstract class ShasamblyOpcodeExecutor (
     fun d_abs() {
         stack.pushDouble(abs(stack.popDouble()))
     }
+
     fun primitive_cast() {
         val cast = read_byte().toUByte()
         val from = cast / 16u
@@ -628,7 +637,7 @@ abstract class ShasamblyOpcodeExecutor (
         when (from) {
             PrimitiveIds.PRIMITIVE_BYTE -> {
                 val v = stack.pop()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v)
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
@@ -643,9 +652,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> {
                 val v = stack.popByte().toUByte()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
@@ -660,9 +670,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_SHORT -> {
                 val v = stack.popShort()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v)
@@ -677,9 +688,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_UNSIGNED_SHORT -> {
                 val v = stack.popShort().toUShort()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
@@ -694,9 +706,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_INT -> {
                 val v = stack.popInt()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
@@ -711,9 +724,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_UNSIGNED_INT -> {
                 val v = stack.popInt().toUInt()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
@@ -728,9 +742,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_LONG -> {
                 val v = stack.popLong()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
@@ -745,9 +760,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_UNSIGNED_LONG -> {
                 val v = stack.popLong()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toByte())
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toUByte().toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toShort())
@@ -762,9 +778,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toUByte().toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_FLOAT -> {
                 val v = stack.popFloat()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toInt().toByte())
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toInt().toUByte().toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toInt().toShort())
@@ -779,9 +796,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toInt().toUByte().toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_DOUBLE -> {
                 val v = stack.popDouble()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> stack.push(v.toInt().toByte())
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> stack.push(v.toInt().toUByte().toByte())
                     PrimitiveIds.PRIMITIVE_SHORT -> stack.pushShort(v.toInt().toShort())
@@ -796,9 +814,10 @@ abstract class ShasamblyOpcodeExecutor (
                     PrimitiveIds.PRIMITIVE_CHAR -> stack.pushShort(v.toInt().toUByte().toShort())
                 }
             }
+
             PrimitiveIds.PRIMITIVE_BOOLEAN -> {
                 val v = stack.popByte()
-                when(to) {
+                when (to) {
                     PrimitiveIds.PRIMITIVE_BYTE -> throw Error("Cannot cast from boolean to byte")
                     PrimitiveIds.PRIMITIVE_UNSIGNED_BYTE -> throw Error("Cannot cast from boolean to unsigned byte")
                     PrimitiveIds.PRIMITIVE_SHORT -> throw Error("Cannot cast from boolean to short")
@@ -815,6 +834,7 @@ abstract class ShasamblyOpcodeExecutor (
             }
         }
     }
+
     fun b_shr() {
         val shr = stack.popByte().toUByte().toInt()
         val byte = stack.popByte()
@@ -890,7 +910,7 @@ abstract class ShasamblyOpcodeExecutor (
     fun b_or() {
         val v0 = stack.popByte()
         val v1 = stack.popByte()
-        stack.push(v0 or  v1)
+        stack.push(v0 or v1)
     }
 
     fun s_or() {
@@ -914,7 +934,7 @@ abstract class ShasamblyOpcodeExecutor (
     fun b_xor() {
         val v0 = stack.popByte()
         val v1 = stack.popByte()
-        stack.push(v0 xor  v1)
+        stack.push(v0 xor v1)
     }
 
     fun s_xor() {

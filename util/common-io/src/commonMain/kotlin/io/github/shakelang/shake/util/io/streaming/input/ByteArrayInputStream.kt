@@ -9,7 +9,6 @@ import io.github.shakelang.shake.util.io.IOException
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  *
  * @see InputStream
  */
@@ -20,7 +19,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private var buf: ByteArray,
 ) : InputStream() {
@@ -30,7 +28,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private var pos = 0
 
@@ -39,7 +36,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private var mark = 0
 
@@ -48,7 +44,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private var count = 0
 
@@ -65,7 +60,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     constructor(buf: ByteArray, offset: Int, length: Int) : this(buf) {
         this.count = length + offset
@@ -81,7 +75,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(): Int {
         if (pos >= count) {
@@ -101,7 +94,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(b: ByteArray, off: Int, len: Int): Int {
         var l = len
@@ -125,7 +117,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun skip(n: Long): Long {
         var l = n
@@ -147,7 +138,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun available(): Int {
         return count - pos
@@ -161,7 +151,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun mark(readlimit: Int) {
         mark = pos
@@ -174,7 +163,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun reset() {
         pos = mark
@@ -200,7 +188,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun close() {
         buf = ByteArray(0)
@@ -216,7 +203,6 @@ class ByteArrayInputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun toString(): String {
         return "ByteArrayInputStream(pos=$pos, mark=$mark, count=$count)"

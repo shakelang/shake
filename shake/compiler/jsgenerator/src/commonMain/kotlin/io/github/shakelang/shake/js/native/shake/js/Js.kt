@@ -14,11 +14,11 @@ class Js : NativeFunction {
     override fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
         return object : JsValuedStatement {
             override fun generate(indentAmount: Int, indent: String): String {
-                if(invokation.arguments.size != 1) {
+                if (invokation.arguments.size != 1) {
                     throw IllegalArgumentException("shake.js.js takes exactly one argument")
                 }
                 val argument = invokation.arguments[0]
-                if(argument !is ShakeStringLiteral) {
+                if (argument !is ShakeStringLiteral) {
                     throw IllegalArgumentException("shake.js.js takes exactly one string argument")
                 }
                 return argument.value

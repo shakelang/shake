@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalUnsignedTypes::class)
+
 package io.github.shakelang.shake.util.primitives.bytes
 
 import kotlin.math.abs
@@ -76,8 +77,14 @@ class ByteArrayTests {
 
     @Test
     fun testToLong() {
-        assertEquals(0x0000000000000000UL.toLong(), byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong())
-        assertEquals(0x0000000000000010UL.toLong(), byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x10u).toLong())
+        assertEquals(
+            0x0000000000000000UL.toLong(),
+            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong()
+        )
+        assertEquals(
+            0x0000000000000010UL.toLong(),
+            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x10u).toLong()
+        )
         assertEquals(-1, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong())
         assertEquals(Long.MIN_VALUE, byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong())
         assertEquals(Long.MAX_VALUE, byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong())
@@ -115,8 +122,14 @@ class ByteArrayTests {
         assertCompare(Double.MIN_VALUE, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toDouble())
         assertCompare(Double.MAX_VALUE, byteArrayOf(0x7Fu, 0xEFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toDouble())
         assertCompare(Double.NaN, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toDouble())
-        assertCompare(Double.NEGATIVE_INFINITY, byteArrayOf(0xffu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble())
-        assertCompare(Double.POSITIVE_INFINITY, byteArrayOf(0x7fu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble())
+        assertCompare(
+            Double.NEGATIVE_INFINITY,
+            byteArrayOf(0xffu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
+        )
+        assertCompare(
+            Double.POSITIVE_INFINITY,
+            byteArrayOf(0x7fu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
+        )
         assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 9") {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toDouble()
         }
@@ -169,7 +182,10 @@ class ByteArrayTests {
     fun testToUnsignedLong() {
         assertEquals(0uL, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toUnsignedLong())
         assertEquals(1uL, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedLong())
-        assertEquals(18446744073709551615uL, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedLong())
+        assertEquals(
+            18446744073709551615uL,
+            byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedLong()
+        )
         assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 9") {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedLong()
         }
@@ -214,7 +230,7 @@ class ByteArrayTests {
         }
 
         assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
-            bytes.setBytes(1, ByteArray(8) {0xFF.toByte()})
+            bytes.setBytes(1, ByteArray(8) { 0xFF.toByte() })
         }
     }
 
@@ -928,8 +944,11 @@ class ByteArrayTests {
         bytes[14] = 0xEEu.toByte()
         bytes[15] = 0xFFu.toByte()
         assertEquals(
-            byteArrayOf(0x00u, 0x11u, 0x22u, 0x33u, 0x44u, 0x55u, 0x66u, 0x77u, 0x88u, 0x99u,
-            0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu).toList(), bytes.getBytes(0, 16).toList())
+            byteArrayOf(
+                0x00u, 0x11u, 0x22u, 0x33u, 0x44u, 0x55u, 0x66u, 0x77u, 0x88u, 0x99u,
+                0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu
+            ).toList(), bytes.getBytes(0, 16).toList()
+        )
         assertEquals(byteArrayOf(0x11u, 0x22u).toList(), bytes.getBytes(1, 2).toList())
     }
 
@@ -988,17 +1007,24 @@ class ByteArrayTests {
 
 fun assertCompare(expected: Float, actual: Float) {
     val delta = max(abs(expected / 1000), 0.001f)
-    assertTrue(compare(expected, actual, delta), "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)")
-}
-fun assertCompare(expected: Double, actual: Double) {
-    val delta = max(abs(expected / 1000000), 0.000001)
-    assertTrue(compare(expected, actual, delta), "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)")
+    assertTrue(
+        compare(expected, actual, delta),
+        "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)"
+    )
 }
 
-fun compare(f0: Float, f1: Float, delta: Float): Boolean
-    = (f0.isNaN() && f1.isNaN())
+fun assertCompare(expected: Double, actual: Double) {
+    val delta = max(abs(expected / 1000000), 0.000001)
+    assertTrue(
+        compare(expected, actual, delta),
+        "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)"
+    )
+}
+
+fun compare(f0: Float, f1: Float, delta: Float): Boolean = (f0.isNaN() && f1.isNaN())
         || (f0.isInfinite() && f1.isInfinite() && ((f0 > 0 && f1 > 0) || (f0 < 0 && f1 < 0)))
         || abs(f0 - f1) <= delta
+
 fun compare(d0: Double, d1: Double, delta: Double): Boolean = (d0.isNaN() && d1.isNaN())
         || (d0.isInfinite() && d1.isInfinite() && ((d0 > 0 && d1 > 0) || (d0 < 0 && d1 < 0)))
         || abs(d0 - d1) <= delta

@@ -1,10 +1,10 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.interpreter
 
+import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import io.github.shakelang.shake.util.parseutils.ElementLoopController
 import io.github.shakelang.shake.util.parseutils.IndexedElementLoopController
-import io.github.shakelang.shake.util.primitives.bytes.*
-import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import io.github.shakelang.shake.util.primitives.bytes.*
 import kotlin.experimental.and
 
@@ -12,8 +12,6 @@ import kotlin.experimental.and
  * The base of the shasambly interpreter.
  * It contains the core functions of the interpreter that store data and are used to manipulate the interprets data.
  * It does not contain any functions that are used to interpret the data or to execute opcodes.
- *
- * @author Nicolas Schmidt
  */
 abstract class ShasamblyInterpretingBase(
     memorySize: Int,
@@ -120,7 +118,7 @@ abstract class ShasamblyInterpretingBase(
         get() = this.instructionPointer
 
 
-    var exitCode : Int = 0 // TODO
+    var exitCode: Int = 0 // TODO
 
     init {
         bytes.copyInto(memory, 32)
@@ -132,40 +130,41 @@ abstract class ShasamblyInterpretingBase(
         localStackPointer = -1
         globalsSize = 32 + bytes.size + 8
 
-        memory.setBytes(32 + bytes.size, byteArrayOf(
-            Opcodes.I_PUSH,
-            *0.toBytes(),
-            Opcodes.INVOKE_NATIVE,
-            *Natives.exit.toBytes()
-        ))
+        memory.setBytes(
+            32 + bytes.size, byteArrayOf(
+                Opcodes.I_PUSH,
+                *0.toBytes(),
+                Opcodes.INVOKE_NATIVE,
+                *Natives.exit.toBytes()
+            )
+        )
 
         //memory[bytes.size + 4] = Opcodes.JUMP_STATIC
         //memory.setInt(bytes.size + 5, 0)
     }
 
     fun increaseGlobals(chunkSize: Int): Int {
-        if(chunkSize < 4) throw Error("Chunk size must not be smaller than 4 (but is $chunkSize)")
+        if (chunkSize < 4) throw Error("Chunk size must not be smaller than 4 (but is $chunkSize)")
         val addr = globalsSize
         globalsSize += chunkSize
         return addr
     }
 
     fun declareGlobal(chunkSize: Int): Int {
-        if(chunkSize < 4) throw Error("Chunk size must not be smaller than 4 (but is $chunkSize)")
+        if (chunkSize < 4) throw Error("Chunk size must not be smaller than 4 (but is $chunkSize)")
         var addr = freeTable.getReusedAddress(chunkSize)
-        if(addr == -1) addr = increaseGlobals(chunkSize)
+        if (addr == -1) addr = increaseGlobals(chunkSize)
         return addr
     }
 
     fun free(address: Int, csize: Int) {
-        if(csize < 4) throw Error("Chunk size must be at least 4!")
+        if (csize < 4) throw Error("Chunk size must be at least 4!")
         val table = freeTable.getWithSize(csize)
         val lastElement = memory.getInt(table + 8)
-        if(lastElement == -1) {
+        if (lastElement == -1) {
             memory.setInt(table + 4, address)
             memory.setInt(table + 8, address)
-        }
-        else {
+        } else {
             memory.setInt(lastElement, address)
             memory.setInt(table + 8, address)
         }
@@ -180,16 +179,19 @@ abstract class ShasamblyInterpretingBase(
     fun read_byte(): Byte {
         return memory[instructionPointer++]
     }
+
     fun read_short(): Short {
         val v = short()
         instructionPointer += 2
         return v
     }
+
     fun read_int(): Int {
         val v = int()
         instructionPointer += 4
         return v
     }
+
     fun read_long(): Long {
         val v = long()
         instructionPointer += 8
@@ -285,7 +287,7 @@ abstract class ShasamblyInterpretingBase(
         /**
          * Push a boolean on top of the stack
          */
-        fun pushBoolean(v: Boolean) = this.push(if(v) 0x1.toByte() else 0x0.toByte())
+        fun pushBoolean(v: Boolean) = this.push(if (v) 0x1.toByte() else 0x0.toByte())
 
         /**
          * Pop the top byte from the stack
@@ -310,7 +312,16 @@ abstract class ShasamblyInterpretingBase(
          * Pop the top long from the stack
          */
         fun popLong(): Long {
-            return longOf(this.pop(), this.pop(), this.pop(), this.pop(), this.pop(), this.pop(), this.pop(), this.pop())
+            return longOf(
+                this.pop(),
+                this.pop(),
+                this.pop(),
+                this.pop(),
+                this.pop(),
+                this.pop(),
+                this.pop(),
+                this.pop()
+            )
         }
 
         /**
@@ -347,7 +358,7 @@ abstract class ShasamblyInterpretingBase(
      * Caused by the link to the next element being 4 bytes in size it is not possible to add sectors that are
      * smaller than 4 bytes.
      */
-    inner class FreeTableControllerObject: MutableList<FreeTableControllerObject.FreeTableEntry> {
+    inner class FreeTableControllerObject : MutableList<FreeTableControllerObject.FreeTableEntry> {
 
         /**
          * Find a free-table with a given size
@@ -361,9 +372,9 @@ abstract class ShasamblyInterpretingBase(
          */
         fun findWithSize(size: Int): Int {
             var position = freeTableStartPointer
-            while(position != -1) {
+            while (position != -1) {
                 val csize = memory.getInt(position)
-                if(csize == size) return position
+                if (csize == size) return position
                 position = memory.getInt(position + 12)
             }
             return -1
@@ -379,8 +390,8 @@ abstract class ShasamblyInterpretingBase(
          */
         fun findClosestBelow(size: Int): Int {
             var position = freeTableEndPointer
-            while(position != -1) {
-                if(memory.getInt(position) <= size) return position
+            while (position != -1) {
+                if (memory.getInt(position) <= size) return position
                 position = memory.getInt(position + 16)
             }
             return -1
@@ -399,11 +410,11 @@ abstract class ShasamblyInterpretingBase(
         fun findBestAbove(size: Int): Int {
             var position = freeTableEndPointer
             var bestMatch = -1
-            while(position != -1) {
+            while (position != -1) {
                 val csize = memory.getInt(position)
-                if(csize < size) break
-                if(csize == size) return position
-                if(csize >= size + 4) bestMatch = position
+                if (csize < size) break
+                if (csize == size) return position
+                if (csize >= size + 4) bestMatch = position
                 position = memory.getInt(position + 16)
             }
             return bestMatch
@@ -420,8 +431,8 @@ abstract class ShasamblyInterpretingBase(
          */
         fun create(size: Int): Int {
             val closestFreeTable = findClosestBelow(size)
-            if(closestFreeTable == -1) {
-                if(freeTableStartPointer == -1) { // This is the first defined free table
+            if (closestFreeTable == -1) {
+                if (freeTableStartPointer == -1) { // This is the first defined free table
                     val addr = increaseGlobals(20)
                     memory.setInt(addr, size)
                     memory.setInt(addr + 4, -1)
@@ -431,8 +442,7 @@ abstract class ShasamblyInterpretingBase(
                     freeTableStartPointer = addr
                     freeTableEndPointer = addr
                     return addr
-                }
-                else { // There is already a free table, but this is the free table with the smallest size
+                } else { // There is already a free table, but this is the free table with the smallest size
                     val addr = declareGlobal(20)
                     memory.setInt(addr, size)
                     memory.setInt(addr + 4, -1)
@@ -443,8 +453,7 @@ abstract class ShasamblyInterpretingBase(
                     freeTableStartPointer = addr
                     return addr
                 }
-            }
-            else { // There is a table with a smaller size than the one we want to create
+            } else { // There is a table with a smaller size than the one we want to create
                 val addr = declareGlobal(20)
                 val next = memory.getInt(closestFreeTable + 12)
                 memory.setInt(addr, size)
@@ -453,7 +462,7 @@ abstract class ShasamblyInterpretingBase(
                 memory.setInt(addr + 12, next)
                 memory.setInt(addr + 16, closestFreeTable)
                 memory.setInt(closestFreeTable + 12, addr)
-                if(next == -1) freeTableEndPointer = addr
+                if (next == -1) freeTableEndPointer = addr
                 else memory.setInt(addr - 19, addr)
                 return addr
             }
@@ -470,7 +479,7 @@ abstract class ShasamblyInterpretingBase(
          */
         fun getWithSize(size: Int): Int {
             var addr = findWithSize(size)
-            if(addr == -1) addr = create(size)
+            if (addr == -1) addr = create(size)
             return addr
         }
 
@@ -496,19 +505,16 @@ abstract class ShasamblyInterpretingBase(
         fun removeEmptyFreeTable(address: Int) {
             val a = freeTableStartPointer == address
             val b = freeTableEndPointer == address
-            if(a && b) {
+            if (a && b) {
                 freeTableStartPointer = -1
                 freeTableEndPointer = -1
-            }
-            else if(a && !b) {
+            } else if (a && !b) {
                 freeTableStartPointer = memory.getInt(address + 12)
                 memory.setInt(freeTableStartPointer + 16, -1)
-            }
-            else if(b && !a) {
+            } else if (b && !a) {
                 freeTableEndPointer = memory.getInt(address + 16)
                 memory.setInt(freeTableEndPointer + 12, -1)
-            }
-            else {
+            } else {
                 val next = memory.getInt(address + 12)
                 val before = memory.getInt(address + 16)
                 memory.setInt(next + 16, before)
@@ -537,20 +543,18 @@ abstract class ShasamblyInterpretingBase(
                 if (addr == -1) {
                     table = findBestAbove(size + 1)
                     continue
-                }
-                else break
+                } else break
             }
             val next = memory.getInt(addr)
-            if(next == -1) {
+            if (next == -1) {
                 memory.setInt(table + 4, -1)
                 memory.setInt(table + 8, -1)
                 removeEmptyFreeTable(table)
-            }
-            else {
+            } else {
                 memory.setInt(table + 4, next)
             }
             val dif = size - csize
-            if(dif > 0) free(addr - csize, dif)
+            if (dif > 0) free(addr - csize, dif)
             return addr
         }
 
@@ -568,8 +572,8 @@ abstract class ShasamblyInterpretingBase(
         fun findFreeEntry(address: Int, startAddress: Int, csize: Int): IntArray {
             var addr = startAddress
             var before = -1
-            while(addr != -1) {
-                if(address in addr until addr +  csize) return intArrayOf(before, addr)
+            while (addr != -1) {
+                if (address in addr until addr + csize) return intArrayOf(before, addr)
                 before = addr
                 addr = memory.getInt(addr)
             }
@@ -588,11 +592,11 @@ abstract class ShasamblyInterpretingBase(
          */
         fun findFree(address: Int): FreeElement? {
             var table = freeTableStartPointer
-            while(table != -1) {
+            while (table != -1) {
                 val csize = memory.getInt(table)
                 val first = memory.getInt(table + 4)
                 val data = findFreeEntry(address, first, csize)
-                if(data[0] != -1) return FreeElement(address = data[0], size = csize, before = data[1], table = table)
+                if (data[0] != -1) return FreeElement(address = data[0], size = csize, before = data[1], table = table)
                 table = memory.getInt(table + 12)
             }
             return null
@@ -605,7 +609,7 @@ abstract class ShasamblyInterpretingBase(
          */
         fun forEach(action: (FreeTableEntry) -> Unit) {
             var address = freeTableStartPointer
-            while(address != -1) {
+            while (address != -1) {
                 action(FreeTableEntry(address))
                 address = memory.getInt(address + 12)
             }
@@ -618,11 +622,11 @@ abstract class ShasamblyInterpretingBase(
          */
         fun forEachControlled(action: (ElementLoopController<FreeTableEntry>) -> Unit) {
             var address = freeTableStartPointer
-            while(address != -1) {
+            while (address != -1) {
                 val table = FreeTableEntry(address)
                 val controller = ElementLoopController(table)
                 action(controller)
-                if(controller.isBreak) break
+                if (controller.isBreak) break
                 address = memory.getInt(address + 12)
             }
         }
@@ -635,11 +639,11 @@ abstract class ShasamblyInterpretingBase(
         fun forEachIndexed(action: (IndexedElementLoopController<FreeTableEntry>) -> Unit) {
             var address = freeTableStartPointer
             var index = 0
-            while(address != -1) {
+            while (address != -1) {
                 val table = FreeTableEntry(address)
                 val controller = IndexedElementLoopController(table, index)
                 action(controller)
-                if(controller.isBreak) break
+                if (controller.isBreak) break
                 address = memory.getInt(address + 12)
                 index++
             }
@@ -650,7 +654,7 @@ abstract class ShasamblyInterpretingBase(
          *
          * @see FreeTableControllerObject for more information
          */
-        open inner class FreeTableEntry (
+        open inner class FreeTableEntry(
             val address: Int
         ) {
 
@@ -659,56 +663,70 @@ abstract class ShasamblyInterpretingBase(
              */
             var size
                 get() = memory.getInt(address)
-                set(value) { memory.setInt(address, value) }
+                set(value) {
+                    memory.setInt(address, value)
+                }
 
             /**
              * The address of the first child of the entry
              */
             var firstAddress
                 get() = memory.getInt(address + 4)
-                set(value) { memory.setInt(address + 4, value) }
+                set(value) {
+                    memory.setInt(address + 4, value)
+                }
 
             /**
              * The address of the last child of the entry
              */
             var lastAddress
                 get() = memory.getInt(address + 8)
-                set(value) { memory.setInt(address + 8, value) }
+                set(value) {
+                    memory.setInt(address + 8, value)
+                }
 
             /**
              * The address of the next entry in the free table
              */
             var nextAddress
                 get() = memory.getInt(address + 12)
-                set(value) { memory.setInt(address + 12, value) }
+                set(value) {
+                    memory.setInt(address + 12, value)
+                }
 
             /**
              * The address of the previous entry in the free table
              */
             var beforeAddress
                 get() = memory.getInt(address + 16)
-                set(value) { memory.setInt(address + 16, value) }
+                set(value) {
+                    memory.setInt(address + 16, value)
+                }
 
             /**
              * The next entry in the free table
              */
             var next: FreeTableEntry?
-                get() = if(nextAddress == -1) null else FreeTableEntry(nextAddress)
-                set(value) { nextAddress = value?.address ?: -1 }
+                get() = if (nextAddress == -1) null else FreeTableEntry(nextAddress)
+                set(value) {
+                    nextAddress = value?.address ?: -1
+                }
 
             /**
              * The previous entry in the free table
              */
             var before: FreeTableEntry?
-                get() = if(beforeAddress == -1) null else FreeTableEntry(beforeAddress)
-                set(value) { beforeAddress = value?.address ?: -1 }
+                get() = if (beforeAddress == -1) null else FreeTableEntry(beforeAddress)
+                set(value) {
+                    beforeAddress = value?.address ?: -1
+                }
 
             /**
              * Loops over the chunks of this entry
              */
             fun forEach(action: (Int) -> Unit) {
                 var addr = firstAddress
-                while(addr != -1) {
+                while (addr != -1) {
                     action(addr)
                     addr = memory.getInt(addr)
                 }
@@ -719,10 +737,10 @@ abstract class ShasamblyInterpretingBase(
              */
             fun forEachControlled(action: (ElementLoopController<Int>) -> Unit) {
                 var addr = firstAddress
-                while(addr != -1) {
+                while (addr != -1) {
                     val controller = ElementLoopController(addr)
                     action(controller)
-                    if(controller.isBreak) break
+                    if (controller.isBreak) break
                     addr = memory.getInt(addr)
                 }
             }
@@ -733,10 +751,10 @@ abstract class ShasamblyInterpretingBase(
             fun forEachIndexed(action: (IndexedElementLoopController<Int>) -> Unit) {
                 var addr = firstAddress
                 var index = 0
-                while(addr != -1) {
+                while (addr != -1) {
                     val controller = IndexedElementLoopController(addr, index)
                     action(controller)
-                    if(controller.isBreak) break
+                    if (controller.isBreak) break
                     addr = memory.getInt(addr)
                     index++
                 }
@@ -772,7 +790,7 @@ abstract class ShasamblyInterpretingBase(
             get() {
                 var address = freeTableStartPointer
                 var size = 0
-                while(address != -1) {
+                while (address != -1) {
                     size++
                     address = memory.getInt(address + 12)
                 }
@@ -781,16 +799,16 @@ abstract class ShasamblyInterpretingBase(
 
         override fun contains(element: FreeTableEntry): Boolean {
             var address = freeTableStartPointer
-            while(address != -1) {
-                if(address == element.address) return true
+            while (address != -1) {
+                if (address == element.address) return true
                 address = memory.getInt(address + 12)
             }
             return false
         }
 
         override fun containsAll(elements: Collection<FreeTableEntry>): Boolean {
-            for(element in elements) {
-                if(!contains(element)) return false
+            for (element in elements) {
+                if (!contains(element)) return false
             }
             return true
         }
@@ -798,8 +816,8 @@ abstract class ShasamblyInterpretingBase(
         override fun indexOf(element: FreeTableEntry): Int {
             var address = freeTableStartPointer
             var index = 0
-            while(address != -1) {
-                if(address == element.address) return index
+            while (address != -1) {
+                if (address == element.address) return index
                 address = memory.getInt(address + 12)
                 index++
             }
@@ -903,12 +921,12 @@ abstract class ShasamblyInterpretingBase(
         }
 
         override fun remove(element: FreeTableEntry): Boolean {
-            if(!contains(element)) {
+            if (!contains(element)) {
                 return false
             }
             val before = element.before
             val next = element.next
-            if(before != null && next != null) {
+            if (before != null && next != null) {
                 before.next = next
                 next.before = before
             } else if (before != null) {
@@ -926,7 +944,7 @@ abstract class ShasamblyInterpretingBase(
 
         override fun removeAll(elements: Collection<FreeTableEntry>): Boolean {
             var result = false
-            for(element in elements) {
+            for (element in elements) {
                 result = result || remove(element)
             }
             return result
@@ -953,7 +971,7 @@ abstract class ShasamblyInterpretingBase(
             throw UnsupportedOperationException()
         }
 
-        inner class FreeElement (
+        inner class FreeElement(
             val address: Int,
             val size: Int,
             val before: Int,

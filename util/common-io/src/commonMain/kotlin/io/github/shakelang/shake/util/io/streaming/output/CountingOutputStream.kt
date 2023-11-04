@@ -7,7 +7,6 @@ package io.github.shakelang.shake.util.io.streaming.output
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 class CountingOutputStream(
 
@@ -16,11 +15,10 @@ class CountingOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     val out: OutputStream,
 
-) : OutputStream() {
+    ) : OutputStream() {
 
     /**
      * The amount of bytes written to the [OutputStream]
@@ -29,7 +27,6 @@ class CountingOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     val count: Long get() = byteCount
 
@@ -38,7 +35,6 @@ class CountingOutputStream(
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     var byteCount: Long = 0L
         private set
@@ -48,7 +44,6 @@ class CountingOutputStream(
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     var operationCount: Long = 0L
         private set
@@ -60,7 +55,6 @@ class CountingOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun write(b: Int) {
         out.write(b)
@@ -75,7 +69,6 @@ class CountingOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun write(b: ByteArray) {
         out.write(b)
@@ -92,7 +85,6 @@ class CountingOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun write(b: ByteArray, off: Int, len: Int) {
         out.write(b, off, len)
@@ -105,7 +97,6 @@ class CountingOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun flush() {
         out.flush()
@@ -116,7 +107,6 @@ class CountingOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun close() {
         out.close()

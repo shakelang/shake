@@ -1,18 +1,16 @@
 package io.github.shakelang.shake.util.parseutils.lexer.token.stream
 
+import io.github.shakelang.shake.lexer.token.Token
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
-import io.github.shakelang.shake.lexer.token.Token
 
 /**
  * A [TokenBasedTokenInputStream] provides the [Token]s for a Parser. It is
  * created by a lexer
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
-(
+    (
 
     /**
      * The tokenTypes that are contained in the [TokenBasedTokenInputStream]
@@ -30,11 +28,9 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
      *
      * @param position the position to get
      * @return the token at the given position
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     open operator fun get(position: Int): T {
-        if(position < 0 || position >= tokens.size) throw Error("Invalid position")
+        if (position < 0 || position >= tokens.size) throw Error("Invalid position")
         return tokens[position]
     }
 
@@ -43,8 +39,6 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
      *
      * @param position the position to get
      * @return the token at the given position
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     open fun getType(position: Int): TT {
         return this[position].type
@@ -55,8 +49,6 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
      *
      * @param position the position to get
      * @return the token at the given position
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     open fun getStart(position: Int): Int {
         return this[position].start
@@ -67,8 +59,6 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
      *
      * @param position the position to get
      * @return the token at the given position
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     open fun getEnd(position: Int): Int {
         return this[position].end
@@ -79,8 +69,6 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
      *
      * @param position the position to get
      * @return the token at the given position
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     open fun getValue(position: Int): String? {
         return this[position].value
@@ -91,8 +79,6 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
      *
      * @param position the position to get
      * @return the token at the given position
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     open fun getHasValue(position: Int): Boolean {
         return this[position].value != null
@@ -105,18 +91,18 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
     }
 
     override fun next(): T {
-        if(!hasNext()) throw Error("Not enough tokens left")
+        if (!hasNext()) throw Error("Not enough tokens left")
         return tokens[++position]
     }
 
     override fun skip() {
-        if(!hasNext()) throw Error("Not enough tokens left")
+        if (!hasNext()) throw Error("Not enough tokens left")
         position++
     }
 
     override fun skip(amount: Int) {
-        if(amount < 1) throw Error("Amount must be greater than 0")
-        if(!has(amount)) throw Error("Not enough tokens left")
+        if (amount < 1) throw Error("Amount must be greater than 0")
+        if (!has(amount)) throw Error("Not enough tokens left")
         position += amount
     }
 
@@ -125,13 +111,13 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
     }
 
     override fun peek(): T {
-        if(position + 1 >= tokens.size) throw Error("Not enough tokens left")
+        if (position + 1 >= tokens.size) throw Error("Not enough tokens left")
         return tokens[position + 1]
     }
 
     override fun peek(offset: Int): T {
-        if(offset < 1) throw Error("Offset must be greater than 0")
-        if(position + offset >= tokens.size) throw Error("Not enough tokens left")
+        if (offset < 1) throw Error("Offset must be greater than 0")
+        if (position + offset >= tokens.size) throw Error("Not enough tokens left")
         return tokens[position + offset]
     }
 

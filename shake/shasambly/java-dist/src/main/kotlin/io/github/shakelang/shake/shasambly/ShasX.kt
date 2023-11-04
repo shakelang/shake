@@ -7,8 +7,8 @@ import java.io.FileInputStream
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
-    if(args.size != 1) throw Error("Expecting one argument!")
-    if(!args[0].endsWith(".shasx")) throw Error("Input file has to end with .shas")
+    if (args.size != 1) throw Error("Expecting one argument!")
+    if (!args[0].endsWith(".shasx")) throw Error("Input file has to end with .shas")
     val f = File(args[0])
     val inputStream = FileInputStream(f).buffered()
     val contents = inputStream.readAllBytes()

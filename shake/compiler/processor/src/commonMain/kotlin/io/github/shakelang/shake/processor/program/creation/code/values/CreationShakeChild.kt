@@ -6,28 +6,42 @@ import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeChild
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeChildUsage
 
-class CreationShakeChild (
+class CreationShakeChild(
 
     override val project: CreationShakeProject,
     override val scope: CreationShakeScope,
-    override val parent : CreationShakeValue,
+    override val parent: CreationShakeValue,
     override val name: String,
 
-) : CreationShakeAssignable, ShakeChild {
+    ) : CreationShakeAssignable, ShakeChild {
 
-    override val type : ShakeType = parent.type.childType(name, scope)!!
+    override val type: ShakeType = parent.type.childType(name, scope)!!
     override val actualValue: CreationShakeChildUsage get() = CreationShakeChildUsage(project, this)
     override val actualType: ShakeType
         get() = actualValue.type
-    override val access : CreationShakeValue get() = CreationShakeChildUsage(project, this)
+    override val access: CreationShakeValue get() = CreationShakeChildUsage(project, this)
 
-    override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType = type.additionAssignType(other, scope) ?: other
-    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.additionAssignType(other, scope) ?: type
-    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.subtractionAssignType(other, scope) ?: type
-    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.multiplicationAssignType(other, scope) ?: type
-    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.divisionAssignType(other, scope) ?: type
-    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.modulusAssignType(other, scope) ?: type
-    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.powerAssignType(other, scope) ?: type
+    override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.additionAssignType(other, scope) ?: other
+
+    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.additionAssignType(other, scope) ?: type
+
+    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.subtractionAssignType(other, scope) ?: type
+
+    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.multiplicationAssignType(other, scope) ?: type
+
+    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.divisionAssignType(other, scope) ?: type
+
+    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.modulusAssignType(other, scope) ?: type
+
+    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.powerAssignType(other, scope) ?: type
+
     override fun incrementBeforeType(scope: ShakeScope): ShakeType = type.incrementBeforeType(scope) ?: type
     override fun incrementAfterType(scope: ShakeScope): ShakeType = type.incrementAfterType(scope) ?: type
     override fun decrementBeforeType(scope: ShakeScope): ShakeType = type.decrementBeforeType(scope) ?: type
@@ -47,7 +61,7 @@ class CreationShakeChild (
 
 }
 
-class CreationShakeChildUsage (
+class CreationShakeChildUsage(
 
     override val project: CreationShakeProject,
     override val used: CreationShakeChild
@@ -63,7 +77,7 @@ class CreationShakeChildUsage (
     override val declaration: CreationShakeDeclaration
         get() {
             val parentType = used.parent.type
-            if(parentType is CreationShakeType.Object) {
+            if (parentType is CreationShakeType.Object) {
                 return parentType.clazz.fields.find { it.name == used.name }!! // TODO: check if this is correct
             }
             throw IllegalStateException("Child usage is not in an object")
@@ -76,7 +90,6 @@ class CreationShakeChildUsage (
             "name" to used.name
         )
     }
-
 
 
 }

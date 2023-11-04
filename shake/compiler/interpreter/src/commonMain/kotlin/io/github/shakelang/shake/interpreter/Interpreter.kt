@@ -47,8 +47,6 @@ class Interpreter : ShakeGeneratorBase {
      * Constructor for [Interpreter]
      *
      * @param global the global [Scope] ([.global])
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(global: Scope) {
         // set the global field
@@ -57,8 +55,6 @@ class Interpreter : ShakeGeneratorBase {
 
     /**
      * Constructor for [Interpreter]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor() {
         // set the global scope to a new scope
@@ -72,22 +68,22 @@ class Interpreter : ShakeGeneratorBase {
 
     @Throws(Error::class)
     fun applyDefaults() = applyDefaults(this)
-/*
-    private fun load(src: String, src_name: String) {
-        val s = javaClass.getResourceAsStream(src)!!
-        val reader = BufferedReader(InputStreamReader(s))
-        val chars = CharArray(s.available())
-        for (i in chars.indices) chars[i] = reader.read().toChar()
-        val source = from(chars, src_name)
-        val inputStream: CharacterInputStream = SourceCharacterInputStream(source)
-        val lexer = Lexer(inputStream)
-        val tokens = lexer.makeTokens()
-        val parser = Parser(tokens)
-        val tree = parser.parse()
-        visit(tree)
-    }
+    /*
+        private fun load(src: String, src_name: String) {
+            val s = javaClass.getResourceAsStream(src)!!
+            val reader = BufferedReader(InputStreamReader(s))
+            val chars = CharArray(s.available())
+            for (i in chars.indices) chars[i] = reader.read().toChar()
+            val source = from(chars, src_name)
+            val inputStream: CharacterInputStream = SourceCharacterInputStream(source)
+            val lexer = Lexer(inputStream)
+            val tokens = lexer.makeTokens()
+            val parser = Parser(tokens)
+            val tree = parser.parse()
+            visit(tree)
+        }
 
- */
+     */
 
     fun resetGlobals() {
         global.reset()
@@ -106,8 +102,6 @@ class Interpreter : ShakeGeneratorBase {
      *
      * @param n the [ShakeNode] to visit
      * @return the resulting [InterpreterValue] of the operation
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @JvmOverloads
     fun visit(n: ShakeNode?, scope: Scope = global): InterpreterValue {
@@ -174,8 +168,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param t the [ShakeBlockNode] to visit
      * @param scope the scope to use for visiting the [ShakeBlockNode]
      * @return the latest [InterpreterValue] of the tree
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitTree(t: ShakeBlockNode, scope: Scope): InterpreterValue {
 
@@ -212,8 +204,6 @@ class Interpreter : ShakeGeneratorBase {
      *
      * @param n the [ShakeIntegerNode] to process
      * @return the [IntegerValue] that is created
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitIntegerNode(n: ShakeIntegerNode): IntegerValue {
         // Just create a IntegerValue from the IntegerNode value and return it
@@ -225,8 +215,6 @@ class Interpreter : ShakeGeneratorBase {
      *
      * @param n the [ShakeDoubleNode] to process
      * @return the [DoubleValue] that is created
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitDoubleNode(n: ShakeDoubleNode): DoubleValue {
         // Just create a DoubleValue from the DoubleNode value and return it
@@ -243,8 +231,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeAddNode] to visit
      * @param scope the [Scope] for visiting the [ShakeAddNode]
      * @return the addition-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitAddNode(n: ShakeAddNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -263,8 +249,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeSubNode] to visit
      * @param scope the [Scope] for visiting the [ShakeSubNode]
      * @return the subtraction-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitSubNode(n: ShakeSubNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -283,8 +267,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeMulNode] to visit
      * @param scope the [Scope] for visiting the [ShakeMulNode]
      * @return the multiplication-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitMulNode(n: ShakeMulNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -303,8 +285,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeDivNode] to visit
      * @param scope the [Scope] for visiting the [ShakeDivNode]
      * @return the division-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitDivNode(n: ShakeDivNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -323,8 +303,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeModNode] to visit
      * @param scope the [Scope] for visiting the [ShakeModNode]
      * @return the modulo-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitModNode(n: ShakeModNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -343,8 +321,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakePowNode] to visit
      * @param scope the [Scope] for visiting the [ShakePowNode]
      * @return the power-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitPowNode(n: ShakePowNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -370,8 +346,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariableDeclarationNode] to process
      * @param scope the [Scope] for visiting the [ShakeVariableDeclarationNode]
      * @return If the [Variable] gets a value assigned the value that is assigned, if not NULL
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableDeclarationNode(n: ShakeVariableDeclarationNode, scope: Scope): InterpreterValue {
         val value = if (n.value != null) visit(n.value!!, scope) else null
@@ -392,8 +366,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeValuedNode] to visit
      * @param scope the [Scope] for visiting the [ShakeValuedNode]
      * @return The value that is assigned to the variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableAssignmentNode(n: ShakeVariableAssignmentNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
@@ -408,8 +380,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariableAddAssignmentNode] to visit
      * @param scope the [Scope] for visiting the [ShakeVariableAddAssignmentNode]
      * @return The value that is assigned to the variable (So the old variable value plus the value given.)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableAddAssignmentNode(n: ShakeVariableAddAssignmentNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
@@ -433,8 +403,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariableSubAssignmentNode] to visit
      * @param scope the [Scope] for visiting the [ShakeVariableSubAssignmentNode]
      * @return The value that is assigned to the variable (So the old variable value minus the value given.)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableSubAssignmentNode(n: ShakeVariableSubAssignmentNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
@@ -458,8 +426,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariableMulAssignmentNode] to visit
      * @param scope the [Scope] for visiting the [ShakeVariableMulAssignmentNode]
      * @return The value that is assigned to the variable (So the old variable value times the value given.)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableMulAssignmentNode(n: ShakeVariableMulAssignmentNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
@@ -483,8 +449,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariableDivAssignmentNode] to visit
      * @param scope the [Scope] for visiting the [ShakeVariableDivAssignmentNode]
      * @return The value that is assigned to the variable (So the old variable value by the value given.)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableDivAssignmentNode(n: ShakeVariableDivAssignmentNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
@@ -508,8 +472,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariableModAssignmentNode] to visit
      * @param scope the [Scope] for visiting the [ShakeVariableModAssignmentNode]
      * @return The value that is assigned to the variable (So the old variable value modulo the value given.)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableModAssignmentNode(n: ShakeVariableModAssignmentNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
@@ -533,8 +495,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariablePowAssignmentNode] to visit
      * @param scope the [Scope] for visiting the [ShakeVariablePowAssignmentNode]
      * @return The value that is assigned to the variable (So the old variable value power the value given.)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariablePowAssignmentNode(n: ShakeVariablePowAssignmentNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
@@ -558,8 +518,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariableIncreaseNode] to visit
      * @param scope the [Scope] for visiting the [ShakeVariableIncreaseNode]
      * @return The old value of the Variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableIncreaseNode(n: ShakeVariableIncreaseNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
@@ -574,8 +532,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariableDecreaseNode] to visit
      * @param scope the [Scope] for visiting the [ShakeVariableDecreaseNode]
      * @return The old value of the Variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableDecreaseNode(n: ShakeVariableDecreaseNode, scope: Scope): InterpreterValue {
         val variable = visit(n.variable, scope) as Variable
@@ -590,8 +546,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeVariableUsageNode] to visit
      * @param scope the [Scope] for visiting the [ShakeVariableUsageNode]
      * @return The value of the [Variable]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitVariableUsageNode(n: ShakeVariableUsageNode, scope: Scope): InterpreterValue {
         return visitIdentifier(n.variable, scope).value
@@ -607,8 +561,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeLogicalEqEqualsNode] to visit
      * @param scope the [Scope] for visiting the [ShakeLogicalEqEqualsNode]
      * @return are the two sides of the [ShakeLogicalEqEqualsNode] the same?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitEqEqualsNode(n: ShakeLogicalEqEqualsNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -623,8 +575,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeLogicalBiggerEqualsNode] to visit
      * @param scope the [Scope] for visiting the [ShakeLogicalBiggerEqualsNode]
      * @return is the left side of the [ShakeLogicalBiggerEqualsNode] bigger or equal to the right side
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitBiggerEqualsNode(n: ShakeLogicalBiggerEqualsNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -639,8 +589,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeLogicalSmallerEqualsNode] to visit
      * @param scope the [Scope] for visiting the [ShakeLogicalSmallerEqualsNode]
      * @return is the left side of the [ShakeLogicalSmallerEqualsNode] smaller or equal to the right side
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitSmallerEqualsNode(n: ShakeLogicalSmallerEqualsNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -655,8 +603,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeLogicalBiggerEqualsNode] to visit
      * @param scope the [Scope] for visiting the [ShakeLogicalBiggerEqualsNode]
      * @return is the left side of the [ShakeLogicalBiggerEqualsNode] bigger than the right side
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitBiggerNode(n: ShakeLogicalBiggerNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -671,8 +617,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeLogicalSmallerEqualsNode] to visit
      * @param scope the [Scope] for visiting the [ShakeLogicalSmallerEqualsNode]
      * @return is the left side of the [ShakeLogicalSmallerEqualsNode] bigger than the right side
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitSmallerNode(n: ShakeLogicalSmallerNode, scope: Scope): InterpreterValue {
         // visit both sides of the term
@@ -688,8 +632,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeLogicalAndNode] to visit
      * @param scope the [Scope] for visiting the [ShakeLogicalAndNode]
      * @return is at least one of the two sides true
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitLogicalAndNode(n: ShakeLogicalAndNode, scope: Scope): InterpreterValue {
         return visit(n.left, scope).and(visit(n.right, scope))
@@ -701,8 +643,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeLogicalOrNode] to visit
      * @param scope the [Scope] for visiting the [ShakeLogicalOrNode]
      * @return are both sides true
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitLogicalOrNode(n: ShakeLogicalOrNode, scope: Scope): InterpreterValue {
         return visit(n.left, scope).or(visit(n.right, scope))
@@ -714,8 +654,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeLogicalXOrNode] to visit
      * @param scope the [Scope] for visiting the [ShakeLogicalOrNode]
      * @return are both sides true
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitLogicalXOrNode(n: ShakeLogicalXOrNode, scope: Scope): InterpreterValue {
         return visit(n.left, scope).xor(visit(n.right, scope))
@@ -731,8 +669,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeWhileNode] to visit
      * @param scope the [Scope] for visiting the [ShakeWhileNode]
      * @return NullValue.NULL (a while loop does not return a value)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitWhileNode(n: ShakeWhileNode, scope: Scope): InterpreterValue {
 
@@ -761,8 +697,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeDoWhileNode] to visit
      * @param scope the [Scope] for visiting the [ShakeDoWhileNode]
      * @return NullValue.NULL (a do-while loop does not return a value)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitDoWhileNode(n: ShakeDoWhileNode, scope: Scope): InterpreterValue {
 
@@ -791,8 +725,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeForNode] to visit
      * @param scope the [Scope] for visiting the [ShakeForNode]
      * @return NullValue.NULL (a for loop does not return a value)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitForNode(n: ShakeForNode, scope: Scope): InterpreterValue {
 
@@ -838,8 +770,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeIfNode] to visit
      * @param scope the [Scope] for visiting the [ShakeIfNode]
      * @return the last operation-result of the executed block
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitIfNode(n: ShakeIfNode, scope: Scope): InterpreterValue {
 
@@ -868,8 +798,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param node the [ShakeFunctionDeclarationNode] to visit
      * @param scope the [Scope] for visiting the [ShakeFunctionDeclarationNode]
      * @return the [Function]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitFunctionDeclarationNode(node: ShakeFunctionDeclarationNode, scope: Scope): Function {
 
@@ -894,8 +822,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param node the [ShakeFunctionDeclarationNode] to create
      * @param scope the [Scope] to create the [ShakeFunctionDeclarationNode]
      * @return the created [Function]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun createFunctionDeclaration(node: ShakeFunctionDeclarationNode, scope: Scope?): Function {
 
@@ -909,8 +835,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param node the [ShakeFunctionCallNode] to visit
      * @param scope the [Scope] for visiting the [ShakeFunctionCallNode]
      * @return the return [InterpreterValue] of the function-call
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitFunctionCallNode(node: ShakeFunctionCallNode, scope: Scope): InterpreterValue {
 
@@ -933,8 +857,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param node the [ShakeClassDeclarationNode] to visit
      * @param scope the [Scope] to visit the [ShakeClassDeclarationNode]
      * @return the created [ClassValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitClassDeclarationNode(node: ShakeClassDeclarationNode, scope: Scope): ClassValue {
 
@@ -959,8 +881,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeClassDeclarationNode] to create
      * @param scope the [Scope] to create the [ShakeClassDeclarationNode]
      * @return the created [ClassValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun createClassDeclaration(
         n: ShakeClassDeclarationNode,
@@ -1084,8 +1004,6 @@ class Interpreter : ShakeGeneratorBase {
      * @param n the [ShakeClassConstructionNode] to create
      * @param scope the [Scope] to create the [ShakeClassDeclarationNode]
      * @return the created [ClassValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun visitClassConstruction(n: ShakeClassConstructionNode, scope: Scope): InterpreterValue {
 

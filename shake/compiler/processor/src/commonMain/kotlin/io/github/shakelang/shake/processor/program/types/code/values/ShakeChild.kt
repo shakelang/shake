@@ -6,10 +6,10 @@ import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 interface ShakeChild : ShakeAssignable {
 
     val scope: ShakeScope
-    val parent : ShakeValue
+    val parent: ShakeValue
     val name: String
 
-    val access : ShakeValue
+    val access: ShakeValue
 }
 
 interface ShakeChildUsage : ShakeUsage {

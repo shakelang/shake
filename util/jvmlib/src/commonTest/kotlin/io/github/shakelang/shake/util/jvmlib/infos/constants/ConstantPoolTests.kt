@@ -158,7 +158,7 @@ class ConstantPoolTests {
     @Test
     fun testInitialisation() {
         var bool0 = false
-        val ci0 = object: ConstantInfo() {
+        val ci0 = object : ConstantInfo() {
 
             override val tag: Byte
                 get() = 0
@@ -166,8 +166,7 @@ class ConstantPoolTests {
             override val tagName: String
                 get() = "dummy"
 
-            override fun dump(out: DataOutputStream)
-                    = throw UnsupportedOperationException()
+            override fun dump(out: DataOutputStream) = throw UnsupportedOperationException()
 
             override fun init(pool: ConstantPool) {
                 super.init(pool)
@@ -176,7 +175,7 @@ class ConstantPoolTests {
 
         }
         var bool1 = false
-        val ci1 = object: ConstantInfo() {
+        val ci1 = object : ConstantInfo() {
 
             override val tag: Byte
                 get() = 0
@@ -184,8 +183,7 @@ class ConstantPoolTests {
             override val tagName: String
                 get() = "dummy"
 
-            override fun dump(out: DataOutputStream)
-                    = throw UnsupportedOperationException()
+            override fun dump(out: DataOutputStream) = throw UnsupportedOperationException()
 
             override fun init(pool: ConstantPool) {
                 super.init(pool)

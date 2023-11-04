@@ -5,12 +5,12 @@ import io.github.shakelang.shake.util.parseutils.nodeJsAvailable
 import io.github.shakelang.shake.util.parseutils.process
 import io.github.shakelang.shake.util.parseutils.require
 
-val readline = if(nodeJsAvailable) require("readline") else null
+val readline = if (nodeJsAvailable) require("readline") else null
 
 var rl: dynamic = null
 private fun expectReadline(): dynamic {
-    if(!nodeJsAvailable) throw Error("Node is not available, can't use readline'!")
-    if(rl == null) rl = readline.createInterface(mapOf( "input" to process.stdin, "output" to process.stdout ))
+    if (!nodeJsAvailable) throw Error("Node is not available, can't use readline'!")
+    if (rl == null) rl = readline.createInterface(mapOf("input" to process.stdin, "output" to process.stdout))
     return rl
 }
 
@@ -21,7 +21,8 @@ actual fun readLine(message: String): Promise<String?> =
                 run {
                     rl.pause()
                     rs(it as? String)
-                } }
+                }
+            }
         } as Unit
     }
 

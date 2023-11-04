@@ -43,18 +43,18 @@ interface ShakeClass {
 
     fun compatibleTo(other: ShakeClass): Boolean {
         if (this == other) return true
-        if(isObject) return false
+        if (isObject) return false
         if (this.superClass.compatibleTo(other)) return true
         return this.interfaces.any { it.compatibleTo(other) }
     }
 
     fun compatibilityDistance(other: ShakeClass): Int {
         if (this == other) return 0
-        if(isObject) return -1
+        if (isObject) return -1
         val scd = this.superClass.compatibilityDistance(other) + 1
         val intDistance = (this.interfaces.minOfOrNull { it.compatibilityDistance(other) } ?: -2) + 1
-        if(scd < 0) return intDistance
-        if(intDistance < 0) return scd
+        if (scd < 0) return intDistance
+        if (intDistance < 0) return scd
         return min(scd, intDistance)
     }
 

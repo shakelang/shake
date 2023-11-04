@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.cli
 
 actual fun mainLoop(execute: (String) -> Unit) {
-    while(true) {
+    while (true) {
         try {
 
             // Print input-request-line-start

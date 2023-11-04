@@ -9,7 +9,7 @@ import io.github.shakelang.shake.processor.program.creation.code.statements.Crea
 import io.github.shakelang.shake.processor.program.types.ShakeMethod
 import io.github.shakelang.shake.processor.program.types.ShakeType
 
-class CreationShakeMethod (
+class CreationShakeMethod(
     override val prj: CreationShakeProject,
     override val pkg: CreationShakePackage?,
     override val clazz: CreationShakeClass?,
@@ -26,7 +26,7 @@ class CreationShakeMethod (
     override val isPublic: Boolean,
     override val isNative: Boolean,
     override val isOperator: Boolean,
-): CreationShakeInvokable(body), ShakeMethod {
+) : CreationShakeInvokable(body), ShakeMethod {
 
     override val qualifiedName: String
         get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
@@ -57,13 +57,30 @@ class CreationShakeMethod (
         isNative: Boolean,
         isOperator: Boolean,
         expanding: ShakeType?
-    ): this(prj, pkg, clazz, parentScope, name, body, isStatic, isFinal, isAbstract, isSynchronized, isStrict, isPrivate, isProtected, isPublic, isNative, isOperator) {
+    ) : this(
+        prj,
+        pkg,
+        clazz,
+        parentScope,
+        name,
+        body,
+        isStatic,
+        isFinal,
+        isAbstract,
+        isSynchronized,
+        isStrict,
+        isPrivate,
+        isProtected,
+        isPublic,
+        isNative,
+        isOperator
+    ) {
         this.parameters = parameters
         this.returnType = returnType
         this.expanding = expanding
     }
 
-    override val scope : CreationShakeScope = ShakeFunctionScope()
+    override val scope: CreationShakeScope = ShakeFunctionScope()
 
     fun lateinitReturnType(): (CreationShakeType) -> CreationShakeType {
         return {
@@ -89,7 +106,7 @@ class CreationShakeMethod (
     }
 
     fun processCode() {
-        if(body is CreationShakeCode.ShakeLateProcessCode) body.process(scope)
+        if (body is CreationShakeCode.ShakeLateProcessCode) body.process(scope)
     }
 
     override fun toJson(): Map<String, Any?> {
@@ -108,7 +125,8 @@ class CreationShakeMethod (
             "body" to body?.toJson()
         )
     }
-    inner class ShakeFunctionScope: CreationShakeScope() {
+
+    inner class ShakeFunctionScope : CreationShakeScope() {
 
         val variables = mutableListOf<CreationShakeVariableDeclaration>()
 
@@ -120,8 +138,8 @@ class CreationShakeMethod (
         }
 
         override fun set(value: CreationShakeDeclaration) {
-            if(value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
-            if(variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
+            if (value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
+            if (variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
             variables.add(value)
         }
 
@@ -147,7 +165,12 @@ class CreationShakeMethod (
     }
 
     companion object {
-        fun from(baseProject: CreationShakeProject, pkg: CreationShakePackage?, parentScope: CreationShakeScope, node: ShakeFunctionDeclarationNode): CreationShakeMethod {
+        fun from(
+            baseProject: CreationShakeProject,
+            pkg: CreationShakePackage?,
+            parentScope: CreationShakeScope,
+            node: ShakeFunctionDeclarationNode
+        ): CreationShakeMethod {
             return CreationShakeMethod(
                 baseProject,
                 pkg,
@@ -167,13 +190,20 @@ class CreationShakeMethod (
                 node.isOperator
             ).let {
                 it.lateinitReturnType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
-                node.expandedType?.let { it1 -> it.lateinitExpanding().let { run -> parentScope.getType(it1) { t -> run(t) } } }
+                node.expandedType?.let { it1 ->
+                    it.lateinitExpanding().let { run -> parentScope.getType(it1) { t -> run(t) } }
+                }
                 it.lateinitParameterTypes(node.args.map { p -> p.name })
                     .forEachIndexed { i, run -> parentScope.getType(node.args[i].type) { t -> run(t) } }
                 it
             }
         }
-        fun from(clazz: CreationShakeClass, parentScope: CreationShakeScope, node: ShakeFunctionDeclarationNode): CreationShakeMethod {
+
+        fun from(
+            clazz: CreationShakeClass,
+            parentScope: CreationShakeScope,
+            node: ShakeFunctionDeclarationNode
+        ): CreationShakeMethod {
             return CreationShakeMethod(
                 clazz.prj,
                 clazz.pkg,

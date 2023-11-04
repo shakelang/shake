@@ -2,7 +2,7 @@ package io.github.shakelang.shake.parser.node
 
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
-class ShakeTypeArgumentsDeclarationNode (
+class ShakeTypeArgumentsDeclarationNode(
 
     map: PositionMap,
     val typeArguments: Array<ShakeTypeArgumentDeclarationNode>
@@ -17,14 +17,14 @@ class ShakeTypeArgumentsDeclarationNode (
 
 }
 
-class ShakeTypeArgumentDeclarationNode (
+class ShakeTypeArgumentDeclarationNode(
 
 
     map: PositionMap,
     val name: String,
     val extends: ShakeVariableType?,
 
-) : ShakeNodeImpl(map) {
+    ) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> {
         return mapOf(

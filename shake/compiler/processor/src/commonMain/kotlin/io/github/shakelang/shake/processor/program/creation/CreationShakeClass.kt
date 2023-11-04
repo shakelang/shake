@@ -6,7 +6,7 @@ import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import io.github.shakelang.shake.processor.program.types.ShakeClass
 
-class CreationShakeClass: ShakeClass {
+class CreationShakeClass : ShakeClass {
     override val staticScope: StaticScope
     override val instanceScope: InstanceScope
     override val prj: CreationShakeProject
@@ -78,6 +78,7 @@ class CreationShakeClass: ShakeClass {
         this.isProtected = isProtected
         this.isNative = isNative
     }
+
     private constructor(
         baseProject: CreationShakeProject,
         pkg: CreationShakePackage?,
@@ -104,7 +105,7 @@ class CreationShakeClass: ShakeClass {
                 this.prj,
                 this.pkg,
                 this,
-                if(it.isStatic) staticScope else instanceScope,
+                if (it.isStatic) staticScope else instanceScope,
                 it.name,
                 it.body?.let { it1 -> CreationShakeCode.fromTree(it1) },
                 it.isStatic,
@@ -119,7 +120,9 @@ class CreationShakeClass: ShakeClass {
                 it.isOperator,
             )
             method.lateinitReturnType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
-            it.expandedType?.let { it1 -> method.lateinitExpanding().let { run -> instanceScope.getType(it1) { type -> run(type) } } }
+            it.expandedType?.let { it1 ->
+                method.lateinitExpanding().let { run -> instanceScope.getType(it1) { type -> run(type) } }
+            }
             method
                 .lateinitParameterTypes(it.args.map { p -> p.name })
                 .forEachIndexed { i, run -> instanceScope.getType(it.args[i].type) { type -> run(type) } }
@@ -129,7 +132,9 @@ class CreationShakeClass: ShakeClass {
         this.fields = clz.fields.map {
             val field = CreationShakeField.from(this, if (it.isStatic) staticScope else instanceScope, it)
             field.lateinitType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
-            it.expandedType?.let { it1 -> field.lateinitExpanding().let { run -> instanceScope.getType(it1) { type -> run(type) } } }
+            it.expandedType?.let { it1 ->
+                field.lateinitExpanding().let { run -> instanceScope.getType(it1) { type -> run(type) } }
+            }
             field
         }
 
@@ -151,7 +156,7 @@ class CreationShakeClass: ShakeClass {
             constr
         }
 
-        if(clz.extends != null) parentScope.getClass(clz.extends.toString()) { this.superClass = it }
+        if (clz.extends != null) parentScope.getClass(clz.extends.toString()) { this.superClass = it }
         else prj.cores.pointObjectClass { this.superClass = it }
 
         /*
@@ -225,7 +230,9 @@ class CreationShakeClass: ShakeClass {
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
-            return methods.filter { it.name == name } + staticMethods.filter { it.name == name } + parent.getFunctions(name)
+            return methods.filter { it.name == name } + staticMethods.filter { it.name == name } + parent.getFunctions(
+                name
+            )
         }
 
         override fun setFunctions(function: CreationShakeMethod) {
@@ -243,7 +250,12 @@ class CreationShakeClass: ShakeClass {
     }
 
     companion object {
-        fun from(baseProject: CreationShakeProject, pkg: CreationShakePackage?, parentScope: CreationShakeScope, clz: ShakeClassDeclarationNode): CreationShakeClass {
+        fun from(
+            baseProject: CreationShakeProject,
+            pkg: CreationShakePackage?,
+            parentScope: CreationShakeScope,
+            clz: ShakeClassDeclarationNode
+        ): CreationShakeClass {
             return CreationShakeClass(baseProject, pkg, parentScope, clz)
         }
     }

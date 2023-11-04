@@ -3,8 +3,6 @@ package io.github.shakelang.shake.util.parseutils
 
 /**
  * An abstract File implementation that works on different environments
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 expect class File
 
@@ -12,10 +10,8 @@ expect class File
  * Constructor for [File] class
  *
  * @param path the path of the file
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-(
+    (
 
     path: String
 
@@ -78,29 +74,21 @@ expect class File
 
     /**
      * Create the file as directory
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun mkdir()
 
     /**
      * Create the file as directory and it's parent directories
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun mkdirs()
 
     /**
      * Write a string to the file
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun write(content: String)
 
     /**
      * Write a char array
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun write(content: CharArray)
 

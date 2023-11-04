@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.shasp.parser.nodes
 
 import io.github.shakelang.shake.util.shason.json
@@ -8,9 +9,10 @@ interface ShasPNode {
     fun toJsonString(): String = json.stringify(toJson())
     fun toJsonString(indent: Int) = json.stringify(toJson(), indent)
 }
+
 interface ShasPStatement : ShasPNode
 
-class ShasPProgram (val children: Array<ShasPProgChild>) : ShasPNode {
+class ShasPProgram(val children: Array<ShasPProgChild>) : ShasPNode {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "program",
@@ -18,8 +20,10 @@ class ShasPProgram (val children: Array<ShasPProgChild>) : ShasPNode {
         )
     }
 }
+
 interface ShasPProgChild : ShasPNode
-open class ShasPVariableDeclaration (val name: String, val type: ShasPType, val value: ShasPValuedNode? = null) : ShasPProgChild, ShasPStatement {
+open class ShasPVariableDeclaration(val name: String, val type: ShasPType, val value: ShasPValuedNode? = null) :
+    ShasPProgChild, ShasPStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "variable_declaration",
@@ -29,6 +33,7 @@ open class ShasPVariableDeclaration (val name: String, val type: ShasPType, val 
         )
     }
 }
+
 open class ShasPFunctionDeclaration(
     val type: ShasPType,
     val name: String,
@@ -45,6 +50,7 @@ open class ShasPFunctionDeclaration(
         )
     }
 }
+
 open class ShasPCode(val children: Array<ShasPStatement>) : ShasPStatement {
     override fun toJson(): Map<String, Any> {
         return mapOf(
@@ -53,8 +59,9 @@ open class ShasPCode(val children: Array<ShasPStatement>) : ShasPStatement {
         )
     }
 }
-open class ShasPArgument (val name: String, val type: ShasPType) {
-     fun toJson(): Map<String, Any> {
+
+open class ShasPArgument(val name: String, val type: ShasPType) {
+    fun toJson(): Map<String, Any> {
         return mapOf(
             "name" to name,
             "type" to type.toJson()
@@ -67,8 +74,8 @@ open class ShasPArgument (val name: String, val type: ShasPType) {
 
 interface ShasPValuedNode : ShasPNode
 interface ShasPValuedStatement : ShasPStatement, ShasPValuedNode
-abstract class ExpressionNode (val left: ShasPValuedNode, val right: ShasPValuedNode) : ShasPValuedNode
-open class ShasPAdd (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+abstract class ExpressionNode(val left: ShasPValuedNode, val right: ShasPValuedNode) : ShasPValuedNode
+open class ShasPAdd(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "add",
@@ -77,7 +84,8 @@ open class ShasPAdd (left: ShasPValuedNode, right: ShasPValuedNode) : Expression
         )
     }
 }
-open class ShasPSub (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPSub(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "sub",
@@ -86,7 +94,8 @@ open class ShasPSub (left: ShasPValuedNode, right: ShasPValuedNode) : Expression
         )
     }
 }
-open class ShasPMul (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPMul(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "mul",
@@ -95,7 +104,8 @@ open class ShasPMul (left: ShasPValuedNode, right: ShasPValuedNode) : Expression
         )
     }
 }
-open class ShasPDiv (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPDiv(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "div",
@@ -104,7 +114,8 @@ open class ShasPDiv (left: ShasPValuedNode, right: ShasPValuedNode) : Expression
         )
     }
 }
-open class ShasPMod (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPMod(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "mod",
@@ -113,7 +124,8 @@ open class ShasPMod (left: ShasPValuedNode, right: ShasPValuedNode) : Expression
         )
     }
 }
-open class ShasPAnd (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPAnd(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "and",
@@ -122,7 +134,8 @@ open class ShasPAnd (left: ShasPValuedNode, right: ShasPValuedNode) : Expression
         )
     }
 }
-open class ShasPOr (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPOr(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "or",
@@ -131,7 +144,8 @@ open class ShasPOr (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionN
         )
     }
 }
-open class ShasPXor (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPXor(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "xor",
@@ -140,7 +154,8 @@ open class ShasPXor (left: ShasPValuedNode, right: ShasPValuedNode) : Expression
         )
     }
 }
-open class ShasPShiftLeft (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPShiftLeft(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "shift_left",
@@ -149,7 +164,8 @@ open class ShasPShiftLeft (left: ShasPValuedNode, right: ShasPValuedNode) : Expr
         )
     }
 }
-open class ShasPShiftRight (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPShiftRight(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "shift_right",
@@ -158,7 +174,8 @@ open class ShasPShiftRight (left: ShasPValuedNode, right: ShasPValuedNode) : Exp
         )
     }
 }
-open class ShasPEqual (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPEqual(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "equal",
@@ -167,7 +184,8 @@ open class ShasPEqual (left: ShasPValuedNode, right: ShasPValuedNode) : Expressi
         )
     }
 }
-open class ShasPNotEqual (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPNotEqual(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "not_equal",
@@ -176,7 +194,8 @@ open class ShasPNotEqual (left: ShasPValuedNode, right: ShasPValuedNode) : Expre
         )
     }
 }
-open class ShasPLess (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPLess(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "less",
@@ -185,7 +204,8 @@ open class ShasPLess (left: ShasPValuedNode, right: ShasPValuedNode) : Expressio
         )
     }
 }
-open class ShasPGreater (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPGreater(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "greater",
@@ -194,7 +214,8 @@ open class ShasPGreater (left: ShasPValuedNode, right: ShasPValuedNode) : Expres
         )
     }
 }
-open class ShasPLessEqual (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPLessEqual(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "less_equal",
@@ -203,7 +224,8 @@ open class ShasPLessEqual (left: ShasPValuedNode, right: ShasPValuedNode) : Expr
         )
     }
 }
-open class ShasPGreaterEqual (left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
+
+open class ShasPGreaterEqual(left: ShasPValuedNode, right: ShasPValuedNode) : ExpressionNode(left, right) {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "greater_equal",
@@ -212,7 +234,8 @@ open class ShasPGreaterEqual (left: ShasPValuedNode, right: ShasPValuedNode) : E
         )
     }
 }
-open class ShasPNot (val child: ShasPValuedNode) : ShasPValuedNode {
+
+open class ShasPNot(val child: ShasPValuedNode) : ShasPValuedNode {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "not",
@@ -220,6 +243,7 @@ open class ShasPNot (val child: ShasPValuedNode) : ShasPValuedNode {
         )
     }
 }
+
 open class ShasPLogicalTrueNode : ShasPValuedNode {
     override fun toJson(): Map<String, Any> {
         return mapOf(
@@ -227,6 +251,7 @@ open class ShasPLogicalTrueNode : ShasPValuedNode {
         )
     }
 }
+
 open class ShasPLogicalFalseNode : ShasPValuedNode {
     override fun toJson(): Map<String, Any> {
         return mapOf(
@@ -234,7 +259,8 @@ open class ShasPLogicalFalseNode : ShasPValuedNode {
         )
     }
 }
-open class ShasPCast (val type: ShasPType, val child: ShasPValuedNode) : ShasPValuedNode {
+
+open class ShasPCast(val type: ShasPType, val child: ShasPValuedNode) : ShasPValuedNode {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "cast",
@@ -244,7 +270,7 @@ open class ShasPCast (val type: ShasPType, val child: ShasPValuedNode) : ShasPVa
     }
 }
 
-open class ShasPPosNode (val child: ShasPValuedNode) : ShasPValuedNode {
+open class ShasPPosNode(val child: ShasPValuedNode) : ShasPValuedNode {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "pos",
@@ -252,7 +278,8 @@ open class ShasPPosNode (val child: ShasPValuedNode) : ShasPValuedNode {
         )
     }
 }
-open class ShasPNegNode (val child: ShasPValuedNode) : ShasPValuedNode {
+
+open class ShasPNegNode(val child: ShasPValuedNode) : ShasPValuedNode {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "neg",
@@ -261,7 +288,7 @@ open class ShasPNegNode (val child: ShasPValuedNode) : ShasPValuedNode {
     }
 }
 
-open class ShasPIntegerLiteral (val value: String) : ShasPValuedNode {
+open class ShasPIntegerLiteral(val value: String) : ShasPValuedNode {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "integer_literal",
@@ -269,7 +296,8 @@ open class ShasPIntegerLiteral (val value: String) : ShasPValuedNode {
         )
     }
 }
-open class ShasPDoubleLiteral (val value: String) : ShasPValuedNode {
+
+open class ShasPDoubleLiteral(val value: String) : ShasPValuedNode {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "double_literal",
@@ -277,7 +305,8 @@ open class ShasPDoubleLiteral (val value: String) : ShasPValuedNode {
         )
     }
 }
-open class ShasPStringLiteral (val value: String) : ShasPValuedNode {
+
+open class ShasPStringLiteral(val value: String) : ShasPValuedNode {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "string_literal",
@@ -285,7 +314,8 @@ open class ShasPStringLiteral (val value: String) : ShasPValuedNode {
         )
     }
 }
-open class ShasPCharLiteral (val value: Char) : ShasPValuedNode {
+
+open class ShasPCharLiteral(val value: Char) : ShasPValuedNode {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "char_literal",
@@ -293,7 +323,8 @@ open class ShasPCharLiteral (val value: Char) : ShasPValuedNode {
         )
     }
 }
-open class ShasPIdentifier (val name: String) : ShasPValuedNode {
+
+open class ShasPIdentifier(val name: String) : ShasPValuedNode {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "identifier",
@@ -301,7 +332,8 @@ open class ShasPIdentifier (val name: String) : ShasPValuedNode {
         )
     }
 }
-open class ShasPFunctionCall (val name: String, val args: Array<ShasPValuedNode>) : ShasPValuedStatement {
+
+open class ShasPFunctionCall(val name: String, val args: Array<ShasPValuedNode>) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "function_call",
@@ -311,7 +343,7 @@ open class ShasPFunctionCall (val name: String, val args: Array<ShasPValuedNode>
     }
 }
 
-open class ShasPVariableAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
+open class ShasPVariableAssignment(val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "variable_assignment",
@@ -320,7 +352,8 @@ open class ShasPVariableAssignment (val name: String, val value: ShasPValuedNode
         )
     }
 }
-open class ShasPVariableAddAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
+
+open class ShasPVariableAddAssignment(val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "variable_add_assignment",
@@ -329,7 +362,8 @@ open class ShasPVariableAddAssignment (val name: String, val value: ShasPValuedN
         )
     }
 }
-open class ShasPVariableSubAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
+
+open class ShasPVariableSubAssignment(val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "variable_sub_assignment",
@@ -338,7 +372,8 @@ open class ShasPVariableSubAssignment (val name: String, val value: ShasPValuedN
         )
     }
 }
-open class ShasPVariableMulAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
+
+open class ShasPVariableMulAssignment(val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "variable_mul_assignment",
@@ -347,7 +382,8 @@ open class ShasPVariableMulAssignment (val name: String, val value: ShasPValuedN
         )
     }
 }
-open class ShasPVariableDivAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
+
+open class ShasPVariableDivAssignment(val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "variable_div_assignment",
@@ -356,7 +392,8 @@ open class ShasPVariableDivAssignment (val name: String, val value: ShasPValuedN
         )
     }
 }
-open class ShasPVariableModAssignment (val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
+
+open class ShasPVariableModAssignment(val name: String, val value: ShasPValuedNode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "variable_mod_assignment",
@@ -365,7 +402,8 @@ open class ShasPVariableModAssignment (val name: String, val value: ShasPValuedN
         )
     }
 }
-open class ShasPVariableIncr (val name: String) : ShasPValuedStatement {
+
+open class ShasPVariableIncr(val name: String) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "variable_incr",
@@ -373,7 +411,8 @@ open class ShasPVariableIncr (val name: String) : ShasPValuedStatement {
         )
     }
 }
-open class ShasPVariableDecr (val name: String) : ShasPValuedStatement {
+
+open class ShasPVariableDecr(val name: String) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "type" to "variable_decr",
@@ -383,7 +422,8 @@ open class ShasPVariableDecr (val name: String) : ShasPValuedStatement {
 }
 
 
-open class ShasPIf (val condition: ShasPValuedNode, val then: ShasPCode, val orElse: ShasPCode? = null) : ShasPValuedStatement {
+open class ShasPIf(val condition: ShasPValuedNode, val then: ShasPCode, val orElse: ShasPCode? = null) :
+    ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "if",
@@ -393,7 +433,8 @@ open class ShasPIf (val condition: ShasPValuedNode, val then: ShasPCode, val orE
         )
     }
 }
-open class ShasPWhile (val condition: ShasPValuedNode, val body: ShasPCode) : ShasPValuedStatement {
+
+open class ShasPWhile(val condition: ShasPValuedNode, val body: ShasPCode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "while",
@@ -402,7 +443,8 @@ open class ShasPWhile (val condition: ShasPValuedNode, val body: ShasPCode) : Sh
         )
     }
 }
-open class ShasPDoWhile (val condition: ShasPValuedNode, val body: ShasPCode) : ShasPValuedStatement {
+
+open class ShasPDoWhile(val condition: ShasPValuedNode, val body: ShasPCode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "do_while",
@@ -411,7 +453,13 @@ open class ShasPDoWhile (val condition: ShasPValuedNode, val body: ShasPCode) : 
         )
     }
 }
-open class ShasPFor (val init: ShasPStatement, val condition: ShasPValuedNode, val step: ShasPStatement, val body: ShasPCode) : ShasPValuedStatement {
+
+open class ShasPFor(
+    val init: ShasPStatement,
+    val condition: ShasPValuedNode,
+    val step: ShasPStatement,
+    val body: ShasPCode
+) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "for",
@@ -422,7 +470,8 @@ open class ShasPFor (val init: ShasPStatement, val condition: ShasPValuedNode, v
         )
     }
 }
-open class ShasPForEach (val name: String, val collection: ShasPValuedNode, val body: ShasPCode) : ShasPValuedStatement {
+
+open class ShasPForEach(val name: String, val collection: ShasPValuedNode, val body: ShasPCode) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "for_each",
@@ -432,6 +481,7 @@ open class ShasPForEach (val name: String, val collection: ShasPValuedNode, val 
         )
     }
 }
+
 open class ShasPBreak : ShasPValuedStatement {
     override fun toJson(): Map<String, Any> {
         return mapOf(
@@ -439,6 +489,7 @@ open class ShasPBreak : ShasPValuedStatement {
         )
     }
 }
+
 open class ShasPContinue : ShasPValuedStatement {
     override fun toJson(): Map<String, Any> {
         return mapOf(
@@ -446,7 +497,8 @@ open class ShasPContinue : ShasPValuedStatement {
         )
     }
 }
-open class ShasPReturn (val value: ShasPValuedNode?) : ShasPValuedStatement {
+
+open class ShasPReturn(val value: ShasPValuedNode?) : ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "return",
@@ -455,7 +507,7 @@ open class ShasPReturn (val value: ShasPValuedNode?) : ShasPValuedStatement {
     }
 }
 
-open class ShasPArrayInitializer (
+open class ShasPArrayInitializer(
     val type: ShasPType.ShasPArrayType,
     val values: List<ShasPValuedNode>? = null
 ) : ShasPValuedNode {
@@ -468,7 +520,7 @@ open class ShasPArrayInitializer (
     }
 }
 
-open class ShasPType (val name: String, val byteSize: Int) {
+open class ShasPType(val name: String, val byteSize: Int) {
 
     open fun toJson(): Map<String, Any?> {
         return mapOf(

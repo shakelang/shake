@@ -1,4 +1,5 @@
 @file:Suppress("nothing_to_inline")
+
 package io.github.shakelang.shake.util.io.streaming.input
 
 import io.github.shakelang.shake.util.primitives.bytes.toBytes
@@ -11,7 +12,6 @@ import io.github.shakelang.shake.util.primitives.bytes.toBytes
  *
  * @since 0.1.0
  * @version 0.1.0
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 inline fun InputStream.asDataInputStream(): DataInputStream {
     return DataInputStream(this)
@@ -24,7 +24,6 @@ inline fun InputStream.asDataInputStream(): DataInputStream {
  *
  * @since 0.1.0
  * @version 0.1.0
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 inline val InputStream.dataStream: DataInputStream
     get() = DataInputStream(this)
@@ -36,7 +35,6 @@ inline val InputStream.dataStream: DataInputStream
  *
  * @since 0.1.0
  * @version 0.1.0
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 inline fun InputStream.asCountingInputStream(): CountingInputStream {
     return CountingInputStream(this)
@@ -49,7 +47,6 @@ inline fun InputStream.asCountingInputStream(): CountingInputStream {
  *
  * @since 0.1.0
  * @version 0.1.0
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 inline val InputStream.countingStream: CountingInputStream
     get() = CountingInputStream(this)
@@ -61,7 +58,6 @@ inline val InputStream.countingStream: CountingInputStream
  *
  * @since 0.1.0
  * @version 0.1.0
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 inline fun InputStream.asBufferedInputStream(): io.github.shakelang.shake.util.io.streaming.input.BufferedInputStream {
     return io.github.shakelang.shake.util.io.streaming.input.BufferedInputStream(this)
@@ -74,7 +70,6 @@ inline fun InputStream.asBufferedInputStream(): io.github.shakelang.shake.util.i
  *
  * @since 0.1.0
  * @version 0.1.0
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 inline val InputStream.bufferedStream: io.github.shakelang.shake.util.io.streaming.input.BufferedInputStream
     get() = io.github.shakelang.shake.util.io.streaming.input.BufferedInputStream(this)
@@ -86,7 +81,6 @@ inline val InputStream.bufferedStream: io.github.shakelang.shake.util.io.streami
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 inline val InputStream.readFully: ByteArray
     get() {

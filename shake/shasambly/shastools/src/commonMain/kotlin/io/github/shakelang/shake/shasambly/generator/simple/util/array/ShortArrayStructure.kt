@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.generator.simple.util.array
 
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
@@ -34,7 +35,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
     fun getElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) isub(index * 2)
+            if (index != 0) isub(index * 2)
             s_get_global_dynamic()
         }
     }
@@ -62,7 +63,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
     fun storeElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) isub(index * 2)
+            if (index != 0) isub(index * 2)
             s_store_global_dynamic()
         }
     }
@@ -77,7 +78,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
         shasambly {
             spush(value)
             i_get_local(address)
-            if(index != 0) isub(index * 2)
+            if (index != 0) isub(index * 2)
             s_store_global_dynamic()
         }
     }
@@ -89,11 +90,10 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
     fun free() {
         shasambly {
             i_get_local(address)
-            if(size == -1) {
+            if (size == -1) {
                 imul(2)
                 natives.freeGlobal()
-            }
-            else natives.freeGlobal(size * 2)
+            } else natives.freeGlobal(size * 2)
         }
     }
 
@@ -119,8 +119,11 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
  * @param addr the local address to store the array in
  * @param size the size of the created array (must be at least 2 for this type of array!!!)
  */
-fun SimpleShasambly.createStaticallySizedLocalShortArray(addr: Int, size: Int): StaticallySizedLocalShortArrayStructure {
-    if(size < 2) throw IllegalArgumentException("Size must be at least 2 for this type of array")
+fun SimpleShasambly.createStaticallySizedLocalShortArray(
+    addr: Int,
+    size: Int
+): StaticallySizedLocalShortArrayStructure {
+    if (size < 2) throw IllegalArgumentException("Size must be at least 2 for this type of array")
     natives.declareGlobal(size * 2)
     i_store_local(addr)
     return StaticallySizedLocalShortArrayStructure(this.base, addr, size)

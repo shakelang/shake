@@ -2,22 +2,16 @@ package io.github.shakelang.shake.util.shason.collection
 
 /**
  * A type for an own [List] implementation.
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 interface ListType<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, CT, MCT>> : List<T> {
 
     /**
      * Create a new [List] from this [List].
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toCollection(): CT
 
     /**
      * Create a new [MutableCollection] from this [Collection].
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toMutableCollection(): MCT
 
@@ -26,16 +20,12 @@ interface ListType<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, CT, MC
 
 /**
  * A type for an own [MutableList] implementation.
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 interface MutableListType<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, CT, MCT>>
     : MutableList<T>, ListType<T, CT, MCT>
 
 /**
  * A base API class for an implementation of [ListType]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 abstract class ListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, CT, MCT>>(
 
@@ -44,7 +34,7 @@ abstract class ListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, C
      */
     val list: List<T>,
 
-) : ListType<T, CT, MCT> {
+    ) : ListType<T, CT, MCT> {
 
     /**
      * Returns the size of the collection.
@@ -54,29 +44,21 @@ abstract class ListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, C
 
     /**
      * Checks if the specified element is contained in this list.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun contains(element: T): Boolean = list.contains(element)
 
     /**
      * Checks if all elements in the specified collection are contained in this list.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun containsAll(elements: Collection<T>): Boolean = list.containsAll(elements)
 
     /**
      * Returns `true` if the list is empty (contains no elements), `false` otherwise.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun isEmpty(): Boolean = list.isEmpty()
 
     /**
      * Returns an iterator over the elements of this object.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun iterator(): Iterator<T> = list.iterator()
 
@@ -96,8 +78,6 @@ abstract class ListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, C
 
 /**
  * A base API class for an implementation of [MutableListType]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, CT, MCT>>(
 
@@ -116,29 +96,21 @@ abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListTy
 
     /**
      * Checks if the specified element is contained in this list.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun contains(element: T): Boolean = list.contains(element)
 
     /**
      * Checks if all elements in the specified collection are contained in this list.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun containsAll(elements: Collection<T>): Boolean = list.containsAll(elements)
 
     /**
      * Returns `true` if the list is empty (contains no elements), `false` otherwise.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun isEmpty(): Boolean = list.isEmpty()
 
     /**
      * Returns an iterator over the elements of this object.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun iterator(): MutableIterator<T> = list.iterator()
 
@@ -147,8 +119,6 @@ abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListTy
      *
      * @return `true` if the element has been added, `false` if the list does not support duplicates
      * and the element is already contained in the list.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun add(element: T): Boolean = list.add(element)
 
@@ -156,15 +126,11 @@ abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListTy
      * Adds all of the elements of the specified collection to this list.
      *
      * @return `true` if any of the specified elements was added to the list, `false` if the list was not modified.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun addAll(elements: Collection<T>): Boolean = list.addAll(elements)
 
     /**
      * Removes all elements from this list.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun clear() = list.clear()
 
@@ -173,8 +139,6 @@ abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListTy
      * list, if it is present.
      *
      * @return `true` if the element has been successfully removed; `false` if it was not present in the list.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun remove(element: T): Boolean = list.remove(element)
 
@@ -182,8 +146,6 @@ abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListTy
      * Removes all of this list's elements that are also contained in the specified collection.
      *
      * @return `true` if any of the specified elements was removed from the list, `false` if the list was not modified.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun removeAll(elements: Collection<T>): Boolean = list.removeAll(elements)
 
@@ -191,8 +153,6 @@ abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListTy
      * Removes all of this list's elements that are also contained in the specified collection.
      *
      * @return `true` if any of the specified elements was removed from the list, `false` if the list was not modified.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun retainAll(elements: Collection<T>): Boolean = list.removeAll(elements)
 

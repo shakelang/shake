@@ -31,7 +31,7 @@ interface ShakeProject {
         val parts = clz.split(".")
         val name = parts.last()
         val pkg = parts.dropLast(1).toTypedArray()
-        return if(pkg.isEmpty()) this.classes.find { it.name == name }
+        return if (pkg.isEmpty()) this.classes.find { it.name == name }
         else this.getPackage(pkg)?.classes?.find { it.name == name }
     }
 

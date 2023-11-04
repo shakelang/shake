@@ -13,18 +13,16 @@ import kotlin.math.min
  *
  * @since 0.1.0
  * @version 0.1.0
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  *
  * @see InputStream
  */
-class BufferedInputStream (
+class BufferedInputStream(
 
     /**
      * The [InputStream] to buffer
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private val input: io.github.shakelang.shake.util.io.streaming.input.InputStream,
     maxBuffer: Int = 8192
@@ -35,7 +33,6 @@ class BufferedInputStream (
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private val buffer = ByteArray(maxBuffer)
 
@@ -44,7 +41,6 @@ class BufferedInputStream (
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private var bufferSize = 0
 
@@ -53,7 +49,6 @@ class BufferedInputStream (
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private var bufferPos = 0
 
@@ -63,7 +58,6 @@ class BufferedInputStream (
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(): Int {
         if (bufferPos == bufferSize) {
@@ -82,7 +76,6 @@ class BufferedInputStream (
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(b: ByteArray, off: Int, len: Int): Int {
         return this.readNBytes(b, off, len)
@@ -95,7 +88,6 @@ class BufferedInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(b: ByteArray): Int {
         return read(b, 0, b.size)
@@ -111,7 +103,6 @@ class BufferedInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun skip(n: Long): Long {
         var skipped = 0L
@@ -135,7 +126,6 @@ class BufferedInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun readNBytes(n: Int): ByteArray {
         val bytes = ByteArray(n)
@@ -152,7 +142,6 @@ class BufferedInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun reset() {
         input.reset()
@@ -169,7 +158,6 @@ class BufferedInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun mark(readlimit: Int) {
         input.mark(readlimit)
@@ -182,7 +170,6 @@ class BufferedInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun markSupported(): Boolean {
         // TODO: This marks the input stream, but we already have stuff in the buffer
@@ -200,7 +187,6 @@ class BufferedInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun available(): Int {
         return bufferSize - bufferPos + input.available()
@@ -214,7 +200,6 @@ class BufferedInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun readNBytes(b: ByteArray, off: Int, len: Int): Int {
         var read = 0
@@ -232,7 +217,6 @@ class BufferedInputStream (
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun close() {
         input.close()

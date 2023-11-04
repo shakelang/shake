@@ -18,7 +18,7 @@ class InterfaceList(val interfaces: List<ConstantUtf8Info>) : List<ConstantUtf8I
     override val uses: Array<ConstantInfo> get() = interfaces.toTypedArray()
 
     private lateinit var clazz: ClassInfo
-    val classInfo : ClassInfo get() = clazz
+    val classInfo: ClassInfo get() = clazz
 
     constructor(interfaces: Array<ConstantUtf8Info>) : this(interfaces.toList())
 
@@ -46,7 +46,7 @@ class InterfaceList(val interfaces: List<ConstantUtf8Info>) : List<ConstantUtf8I
     fun dump(out: DataOutputStream) {
         out.writeUnsignedShort(interfaces.size.toUShort())
         interfaces.forEach {
-            out.writeUnsignedShort((it.index-1u).toUShort())
+            out.writeUnsignedShort((it.index - 1u).toUShort())
         }
     }
 
@@ -69,9 +69,11 @@ class InterfaceList(val interfaces: List<ConstantUtf8Info>) : List<ConstantUtf8I
             }
             return InterfaceList(interfaces)
         }
+
         fun fromStream(pool: ConstantPool, stream: InputStream): InterfaceList {
             return fromStream(pool, stream)
         }
+
         fun fromBytes(pool: ConstantPool, bytes: ByteArray): InterfaceList {
             return fromStream(pool, bytes.dataStream())
         }

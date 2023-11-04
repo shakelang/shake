@@ -5,7 +5,7 @@ import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCo
 import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.ShakeConstructor
 
-open class CreationShakeConstructor (
+open class CreationShakeConstructor(
     override val clazz: CreationShakeClass,
     override val body: CreationShakeCode,
     override val isStrict: Boolean,
@@ -14,7 +14,7 @@ open class CreationShakeConstructor (
     override val isPublic: Boolean,
     override val isNative: Boolean,
     override val name: String? = null
-): ShakeConstructor {
+) : ShakeConstructor {
     final override lateinit var parameters: List<CreationShakeParameter>
         private set
 
@@ -28,7 +28,7 @@ open class CreationShakeConstructor (
         isPublic: Boolean,
         isNative: Boolean,
         name: String? = null
-    ): this(clazz, body, isStrict, isPrivate, isProtected, isPublic, isNative, name) {
+    ) : this(clazz, body, isStrict, isPrivate, isProtected, isPublic, isNative, name) {
         this.parameters = parameters
     }
 
@@ -44,7 +44,9 @@ open class CreationShakeConstructor (
     }
 
     fun processCode() {
-        if(body is CreationShakeCode.ShakeLateProcessCode) (body as CreationShakeCode.ShakeLateProcessCode).process(scope)
+        if (body is CreationShakeCode.ShakeLateProcessCode) (body as CreationShakeCode.ShakeLateProcessCode).process(
+            scope
+        )
     }
 
     inner class ShakeConstructorScope : CreationShakeScope() {
@@ -57,8 +59,8 @@ open class CreationShakeConstructor (
         }
 
         override fun set(value: CreationShakeDeclaration) {
-            if(value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
-            if(variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
+            if (value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
+            if (variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
             variables.add(value)
         }
 

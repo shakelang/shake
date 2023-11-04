@@ -5,8 +5,6 @@ import kotlin.jvm.JvmStatic
 
 /**
  * A CharacterSource provides characters
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 interface CharacterSource {
 
@@ -30,8 +28,6 @@ interface CharacterSource {
      *
      * @param start the start index for the characters
      * @param end the end index for the characters
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     operator fun get(start: Int, end: Int): CharArray
 
@@ -43,7 +39,6 @@ interface CharacterSource {
          * @param contents the contents of the [CharacterSource]
          * @param source the source of the characters (e.g. file name)
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmStatic
         fun from(contents: String, source: String): CharacterSource = from(contents.toCharArray(), source)
@@ -54,7 +49,6 @@ interface CharacterSource {
          * @param chars the contained chars of the [CharacterSource]
          * @param source the source of the characters (e.g. file name)
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmStatic
         fun from(chars: CharArray, source: String): CharacterSource = CharArraySource(chars, source)

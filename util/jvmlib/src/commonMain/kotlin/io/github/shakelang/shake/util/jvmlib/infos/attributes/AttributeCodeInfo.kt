@@ -8,7 +8,7 @@ import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.shake.util.primitives.bytes.*
 
-class AttributeCodeInfo (
+class AttributeCodeInfo(
 
     name: ConstantUtf8Info,
     val max_stack: UShort,
@@ -17,9 +17,13 @@ class AttributeCodeInfo (
     val exception_table: Array<ExceptionTableEntry>,
     val attributes: Array<AttributeInfo>
 
-): AttributeInfo(name) {
+) : AttributeInfo(name) {
 
-    override val uses: Array<ConstantInfo> get() = arrayOf(name, *attributes.flatMap { it.uses.toList() }.toTypedArray())
+    override val uses: Array<ConstantInfo>
+        get() = arrayOf(
+            name,
+            *attributes.flatMap { it.uses.toList() }.toTypedArray()
+        )
 
     override val bytes: ByteArray
         get() {
@@ -72,19 +76,24 @@ class AttributeCodeInfo (
                 attributes
             )
         }
+
         fun fromStream(pool: ConstantPool, stream: DataInputStream): AttributeCodeInfo {
             val name = pool.getUtf8(stream.readUnsignedShort())
             return contentsFromStream(pool, stream, name)
         }
+
         fun contentsFromStream(pool: ConstantPool, stream: InputStream, name: ConstantUtf8Info): AttributeCodeInfo {
             return contentsFromStream(pool, stream.dataStream, name)
         }
+
         fun fromStream(pool: ConstantPool, stream: InputStream): AttributeCodeInfo {
             return fromStream(pool, stream.dataStream)
         }
+
         fun contentsFromBytes(pool: ConstantPool, bytes: ByteArray, name: ConstantUtf8Info): AttributeCodeInfo {
             return contentsFromStream(pool, bytes.dataStream(), name)
         }
+
         fun fromBytes(pool: ConstantPool, bytes: ByteArray): AttributeCodeInfo {
             return fromStream(pool, bytes.dataStream())
         }
@@ -124,6 +133,7 @@ class AttributeCodeInfo (
                     b.getUnsignedShort(6)
                 )
             }
+
             fun fromStream(stream: DataInputStream): ExceptionTableEntry {
                 return fromBytes(stream.readNBytes(8))
             }

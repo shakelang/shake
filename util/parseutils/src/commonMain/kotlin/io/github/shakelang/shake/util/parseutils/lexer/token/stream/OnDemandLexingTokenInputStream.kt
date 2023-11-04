@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.util.parseutils.lexer.token.stream
 
+import io.github.shakelang.shake.lexer.token.Token
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.util.parseutils.lexer.LexingBase
 import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
-import io.github.shakelang.shake.lexer.token.Token
 
 open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
     private val lexingBase: LexingBase<TT, T>
@@ -48,13 +48,13 @@ open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
     }
 
     override fun skip(amount: Int) {
-        for(i in 0 until amount) skip()
+        for (i in 0 until amount) skip()
     }
 
     override fun peek(offset: Int): T {
         try {
             fillBuffer(offset)
-        }  catch (e: IndexOutOfBoundsException) {
+        } catch (e: IndexOutOfBoundsException) {
             throw Error("Not enough tokens left", e)
         } catch (e: IllegalStateException) {
             throw Error("Not enough tokens left", e)

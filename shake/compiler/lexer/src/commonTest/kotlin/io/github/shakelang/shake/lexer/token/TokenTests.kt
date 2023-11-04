@@ -8,7 +8,7 @@ class TokenTests {
 
     @Test
     fun testTokenOneArgument() {
-        val token = ShakeToken(ShakeTokenType.IDENTIFIER, "test",7, 10)
+        val token = ShakeToken(ShakeTokenType.IDENTIFIER, "test", 7, 10)
         assertEquals(ShakeTokenType.IDENTIFIER, token.type)
         assertEquals("test", token.value)
         assertEquals(7, token.start)
@@ -38,10 +38,10 @@ class TokenTests {
         assertNotEquals(token0, token3)
         assertNotEquals(token0, token4)
 
-        assertEquals(token1,  token0)
-        assertEquals(token2,  token0)
-        assertNotEquals(token3,  token0)
-        assertNotEquals(token4,  token0)
+        assertEquals(token1, token0)
+        assertEquals(token2, token0)
+        assertNotEquals(token3, token0)
+        assertNotEquals(token4, token0)
     }
 
 }

@@ -5,8 +5,6 @@ import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSour
 /**
  * A modifiable [PositionMarker] that stores the positions
  * of the line-separators
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 class PositionMaker : PositionMap, PositionMarker {
@@ -27,8 +25,6 @@ class PositionMaker : PositionMap, PositionMarker {
      * Getter for [PositionMaker.line]
      *
      * @return The [PositionMaker.line] of the [PositionMaker]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override var line: Int
         private set
@@ -51,8 +47,6 @@ class PositionMaker : PositionMap, PositionMarker {
      * @param column The [PositionMaker.column] of the position
      * @param line The [PositionMaker.line] of the position
      * @param source the [CharacterSource] the chars come from
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(index: Int, column: Int, line: Int, source: CharacterSource) {
         this.index = index
@@ -68,8 +62,6 @@ class PositionMaker : PositionMap, PositionMarker {
      * @param column The [PositionMaker.column] of the position
      * @param line The [PositionMaker.line] of the position
      * @param source the [CharacterSource] the chars come from
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(index: Int, column: Int, line: Int, lineSeparators: IntArray, source: CharacterSource) {
         this.index = index
@@ -83,8 +75,6 @@ class PositionMaker : PositionMap, PositionMarker {
      * Constructor for the [PositionMaker]
      *
      * @param source the [CharacterSource] the chars come from
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(source: CharacterSource) {
         this.source = source
@@ -95,8 +85,6 @@ class PositionMaker : PositionMap, PositionMarker {
 
     /**
      * Increases the [PositionMaker.index] and [PositionMaker.column]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun nextColumn() {
         index++
@@ -106,8 +94,6 @@ class PositionMaker : PositionMap, PositionMarker {
     /**
      * Increases the [PositionMaker.index] and [PositionMaker.line] and sets the
      * [PositionMaker.column] to 1
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun nextLine() {
         lineSeparatorsList.add(++index)
@@ -118,16 +104,12 @@ class PositionMaker : PositionMap, PositionMarker {
     /**
      * Creates a [PositionMap] from the [PositionMaker]. This function only works after
      * the position is looped through
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun createPositionMap(): PositionMap = PositionMap.PositionMapImpl(source, lineSeparators)
 
     /**
      * Creates a [Position] from the [PositionMaker] at the actual location.
      * The [PositionMap] is only working to the actual position
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun createPositionAtLocation(): Position = Position(this, index, column, line)
 

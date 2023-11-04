@@ -1,10 +1,9 @@
 package io.github.shakelang.shake.util.parseutils.lexer
 
-import io.github.shakelang.shake.util.parseutils.CompilerError
+import io.github.shakelang.shake.lexer.token.Token
 import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
-import io.github.shakelang.shake.lexer.token.Token
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
@@ -40,7 +39,8 @@ abstract class LexingBase<TT : TokenType, T : Token<TT>>(
         name: String,
         details: String,
         start: Position,
-        end: Position) :
+        end: Position
+    ) :
         io.github.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
 
         @JvmOverloads
@@ -71,6 +71,7 @@ abstract class LexingBase<TT : TokenType, T : Token<TT>>(
             start,
             end
         )
+
         @JvmOverloads
         constructor(
             name: String,

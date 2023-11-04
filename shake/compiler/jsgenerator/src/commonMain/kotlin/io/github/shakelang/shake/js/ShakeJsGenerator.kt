@@ -10,7 +10,7 @@ import io.github.shakelang.shake.processor.program.types.code.values.*
 class ShakeJsGenerator {
 
     fun visitValue(v: ShakeValue): JsValue {
-        return when(v) {
+        return when (v) {
             is ShakeDoubleLiteral -> visitDouble(v)
             is ShakeIntLiteral -> visitInteger(v)
             is ShakeStringLiteral -> visitString(v)
@@ -50,7 +50,7 @@ class ShakeJsGenerator {
     }
 
     fun visitStatement(s: ShakeStatement): JsStatement {
-        return when(s) {
+        return when (s) {
             is ShakePower -> visitPower(s)
             is ShakeAssignment -> visitAssignment(s)
             is ShakeAddAssignment -> visitAdditionAssignment(s)
@@ -93,7 +93,7 @@ class ShakeJsGenerator {
     }
 
     fun visitBoolean(n: ShakeBooleanLiteral): JsLiteral {
-        return if(n.value) JsLiteral.TRUE else JsLiteral.FALSE
+        return if (n.value) JsLiteral.TRUE else JsLiteral.FALSE
     }
 
     fun visitAddition(n: ShakeAddition): JsAdd {
@@ -117,23 +117,25 @@ class ShakeJsGenerator {
     }
 
     fun visitPower(n: ShakePower): JsFunctionCall {
-        return JsFunctionCall(JsField("pow", parent = JsField("Math")),
-            args = listOf(visitValue(n.left).toValue(), visitValue(n.right).toValue()))
+        return JsFunctionCall(
+            JsField("pow", parent = JsField("Math")),
+            args = listOf(visitValue(n.left).toValue(), visitValue(n.right).toValue())
+        )
     }
 
     fun visitVariableDeclaration(n: ShakeVariableDeclaration): JsDeclaration {
-        if(n.isFinal) {
-            if(n.initialValue == null) throw IllegalStateException("Final variable must have an assignment")
+        if (n.isFinal) {
+            if (n.initialValue == null) throw IllegalStateException("Final variable must have an assignment")
             return JsConstantDeclaration(n.name, visitValue(n.initialValue!!).toValue())
         }
-        if(n.initialValue == null) return JsVariableDeclaration(n.name)
+        if (n.initialValue == null) return JsVariableDeclaration(n.name)
         return JsVariableDeclaration(n.name, visitValue(n.initialValue!!).toValue())
     }
 
     fun visitAssignable(a: ShakeAssignable): JsAssignable {
-        if(a is ShakeVariableDeclaration) return JsAssignable(JsField(a.name))
-        if(a is ShakeField) {
-            if(a.clazz == null) return JsAssignable(JsField(a.name))
+        if (a is ShakeVariableDeclaration) return JsAssignable(JsField(a.name))
+        if (a is ShakeField) {
+            if (a.clazz == null) return JsAssignable(JsField(a.name))
             if (a.isStatic) return JsAssignable(JsField(a.name, parent = JsField(a.clazz!!.name)))
             return JsAssignable(JsField(a.name, parent = JsField("this")))
         }
@@ -172,8 +174,12 @@ class ShakeJsGenerator {
 
     fun visitPowerAssignment(n: ShakePowAssignment): JsAssignment {
         val variable = visitAssignable(n.variable)
-        return variable.assign(JsFunctionCall(JsField("pow", parent = JsField("Math")),
-            args = listOf(visitValue(n.value).toValue(), visitValue(n.value).toValue())))
+        return variable.assign(
+            JsFunctionCall(
+                JsField("pow", parent = JsField("Math")),
+                args = listOf(visitValue(n.value).toValue(), visitValue(n.value).toValue())
+            )
+        )
     }
 
     fun visitIncrementBefore(n: ShakeIncrementBefore): JsBeforeIncrement {
@@ -197,13 +203,18 @@ class ShakeJsGenerator {
     }
 
     fun visitUsage(n: ShakeUsage): JsField {
-        if(n is ShakeVariableUsage) return JsField(n.name)
-        if(n is ShakeClassFieldUsage) {
-            if(n.receiver != null) return JsField(n.name, parent = visitValue(n.receiver!!))
-            if(n.declaration.isStatic) return JsField(n.name, parent = JsField(n.declaration.clazz?.name ?: throw IllegalStateException("Static field must have a class")))
+        if (n is ShakeVariableUsage) return JsField(n.name)
+        if (n is ShakeClassFieldUsage) {
+            if (n.receiver != null) return JsField(n.name, parent = visitValue(n.receiver!!))
+            if (n.declaration.isStatic) return JsField(
+                n.name,
+                parent = JsField(
+                    n.declaration.clazz?.name ?: throw IllegalStateException("Static field must have a class")
+                )
+            )
             return JsField(n.name, parent = JsField("this"))
         }
-        if(n is ShakeFieldUsage) {
+        if (n is ShakeFieldUsage) {
             return JsField(n.name)
         }
         throw IllegalStateException("Unknown usage: $n")
@@ -286,11 +297,11 @@ class ShakeJsGenerator {
     }
 
     fun visitFieldDeclaration(n: ShakeField): JsDeclaration {
-        if(n.isFinal) {
-            if(n.initialValue == null) throw IllegalStateException("Final field must have initial value")
+        if (n.isFinal) {
+            if (n.initialValue == null) throw IllegalStateException("Final field must have initial value")
             return JsConstantDeclaration(n.name, visitValue(n.initialValue!!))
         }
-        if(n.initialValue != null) return JsVariableDeclaration(n.name, visitValue(n.initialValue!!))
+        if (n.initialValue != null) return JsVariableDeclaration(n.name, visitValue(n.initialValue!!))
         return JsVariableDeclaration(n.name)
     }
 
@@ -314,26 +325,33 @@ class ShakeJsGenerator {
 
         val callable = n.callable
 
-        when(callable) {
+        when (callable) {
             is ShakeMethod -> {
 
-                if(callable.isNative) {
+                if (callable.isNative) {
 
                     return JsNatives.getNativeFunction(callable).handleValue(this, n)
 
                 }
 
-                if(callable.clazz == null) return JsFunctionCall(JsField(callable.name), n.arguments.map { visitValue(it) })
+                if (callable.clazz == null) return JsFunctionCall(
+                    JsField(callable.name),
+                    n.arguments.map { visitValue(it) })
 
-                if(callable.isStatic)
-                    return JsFunctionCall(JsField(callable.name, JsField(callable.clazz!!.name)), n.arguments.map { visitValue(it) })
+                if (callable.isStatic)
+                    return JsFunctionCall(
+                        JsField(callable.name, JsField(callable.clazz!!.name)),
+                        n.arguments.map { visitValue(it) })
 
-                if(n.parent != null)
-                    return JsFunctionCall(JsField(callable.name, visitValue(n.parent!!)), n.arguments.map { visitValue(it) })
+                if (n.parent != null)
+                    return JsFunctionCall(
+                        JsField(callable.name, visitValue(n.parent!!)),
+                        n.arguments.map { visitValue(it) })
 
                 return JsFunctionCall(JsField(callable.name, JsField("this")), n.arguments.map { visitValue(it) })
 
             }
+
             is ShakeLambdaDeclaration -> TODO()
             // is ShakeLambdaDeclaration -> return JsFunctionCall(callable, n.arguments.map { visitValue(it) })
             else -> throw IllegalStateException("Unknown callable type")
@@ -344,26 +362,33 @@ class ShakeJsGenerator {
 
         val callable = n.callable
 
-        when(callable) {
+        when (callable) {
             is ShakeMethod -> {
 
-                if(callable.isNative) {
+                if (callable.isNative) {
 
                     return JsNatives.getNativeFunction(callable).handleStatement(this, n)
 
                 }
 
-                if(callable.clazz == null) return JsFunctionCall(JsField(callable.name), n.arguments.map { visitValue(it) })
+                if (callable.clazz == null) return JsFunctionCall(
+                    JsField(callable.name),
+                    n.arguments.map { visitValue(it) })
 
-                if(callable.isStatic)
-                    return JsFunctionCall(JsField(callable.name, JsField(callable.clazz!!.name)), n.arguments.map { visitValue(it) })
+                if (callable.isStatic)
+                    return JsFunctionCall(
+                        JsField(callable.name, JsField(callable.clazz!!.name)),
+                        n.arguments.map { visitValue(it) })
 
-                if(n.parent != null)
-                    return JsFunctionCall(JsField(callable.name, visitValue(n.parent!!)), n.arguments.map { visitValue(it) })
+                if (n.parent != null)
+                    return JsFunctionCall(
+                        JsField(callable.name, visitValue(n.parent!!)),
+                        n.arguments.map { visitValue(it) })
 
                 return JsFunctionCall(JsField(callable.name, JsField("this")), n.arguments.map { visitValue(it) })
 
             }
+
             is ShakeLambdaDeclaration -> TODO()
             // is ShakeLambdaDeclaration -> return JsFunctionCall(callable, n.arguments.map { visitValue(it) })
             else -> throw IllegalStateException("Unknown callable type")
@@ -463,26 +488,35 @@ class JsProject {
 
     fun generatePackageFile(): String {
         return (
-            classes.map { it.generate() } +
-            functions.map { it.generate() } +
-            fields.map { it.generate() } +
-            export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
-        ).joinToString("\n")
+                classes.map { it.generate() } +
+                        functions.map { it.generate() } +
+                        fields.map { it.generate() } +
+                        export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
+                ).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {
         val files = subpackages.flatMap { it.generatePackageFiles().toList() }.toMap().toMutableMap()
-        if(hasContents()) files += mapOf("index.js" to generatePackageFile())
+        if (hasContents()) files += mapOf("index.js" to generatePackageFile())
         files += mapOf(
             "structure.js" to "module.exports=global.packageJsLibrary=global.packageJsLibrary||function(){try{return require(name)}catch(a){if(\"MODULE_NOT_FOUND\"===a.code)return!1;throw a}}()||function(){function c(a){return a&&\"object\"==typeof a&&!Array.isArray(a)}function d(a,...f){if(!f.length)return a;let e=f.shift();if(c(a)&&c(e))for(let b in e)c(e[b])?(a[b]||Object.assign(a,{[b]:{}}),d(a[b],e[b])):Object.assign(a,{[b]:e[b]});return d(a,...f)}function e(a){let b={};return Object.keys(a).forEach(h=>{let g=h.split(/[.\\/]/g),i=a[h],c=b;for(let f=0;f<g.length;f++)c[g[f]]||(c[g[f]]={}),c=c[g[f]];\"function\"==typeof i?Object.defineProperty(c,\"\$it\",{get:function(){let a=i();return Object.defineProperty(c,\"\$it\",{value:a}),a},configurable:!0}):d(c,e(i[h]))}),b}function a(a){let b=a?.packages||{},c=e(b),f;return f={packages:c,pImport(d){let c=d.split(/[.\\/]/g),a=f.packages;for(let b=0;b<c.length;b++){if(!a[c[b]])return;a=a[c[b]]}return a.\$it},add(a){d(f.packages,e(a))}}}let b=a({});return Object.assign(b,{createPackageSystem:a,require:a=>()=>require(`\${a}`),object:a=>()=>a})}();\n\n" +
-                    JsTree(listOf(
-                        JsFunctionCall(JsField("add", JsField("packages")), listOf(JsObject(
-                            packages.map {
-                                JsStringLiteral(it) to JsFunctionCall(JsField("require"), listOf(JsStringLiteral("$it.js")))
-                            }.toTypedArray().toMap()
-                        ))),
-                        export(listOf("import"))
-                    )).generate()
+                    JsTree(
+                        listOf(
+                            JsFunctionCall(
+                                JsField("add", JsField("packages")), listOf(
+                                    JsObject(
+                                        packages.map {
+                                            JsStringLiteral(it) to JsFunctionCall(
+                                                JsField("require"),
+                                                listOf(JsStringLiteral("$it.js"))
+                                            )
+                                        }.toTypedArray().toMap()
+                                    )
+                                )
+                            ),
+                            export(listOf("import"))
+                        )
+                    ).generate()
 
         )
         return files
@@ -500,7 +534,7 @@ class JsPackage {
     val fields: List<JsDeclaration>
     val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + name
 
-    val packages: List<String> get() = subpackages.flatMap { it.packages } + if(hasContents()) listOf(qualifiedName) else listOf()
+    val packages: List<String> get() = subpackages.flatMap { it.packages } + if (hasContents()) listOf(qualifiedName) else listOf()
 
     constructor(
         prj: JsProject,
@@ -554,16 +588,16 @@ class JsPackage {
 
     fun generatePackageFile(): String {
         return (
-            classes.map { it.generate() } +
-            functions.map { it.generate() } +
-            fields.map { it.generate() } +
-            export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
-        ).joinToString("\n")
+                classes.map { it.generate() } +
+                        functions.map { it.generate() } +
+                        fields.map { it.generate() } +
+                        export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
+                ).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {
         val files = subpackages.flatMap { it.generatePackageFiles().toList() }.toMap().toMutableMap()
-        if(hasContents()) files += mapOf("$qualifiedName.js" to generatePackageFile())
+        if (hasContents()) files += mapOf("$qualifiedName.js" to generatePackageFile())
         return files
     }
 }

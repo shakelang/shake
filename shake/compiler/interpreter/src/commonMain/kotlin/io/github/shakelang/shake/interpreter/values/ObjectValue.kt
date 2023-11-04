@@ -16,10 +16,8 @@ class ObjectValue
  * Constructor for [ObjectValue]
  *
  * @param parent the parent [ClassValue] of the [ObjectValue]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-(
+    (
 
     /**
      * The parent class of the object
@@ -48,8 +46,6 @@ class ObjectValue
      *
      * @param c the child to get
      * @return the child variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun getChild(c: String): Variable {
         // it the required value does not exist throw an error
@@ -63,8 +59,6 @@ class ObjectValue
      * This function will be executed when getting all child keys
      *
      * @return the keys of all children
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val children: Array<String> get() = thisObject.children
 
@@ -78,8 +72,6 @@ class ObjectValue
      * For [ObjectValue] it just always returns "object"
      *
      * @return "class"
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val name: String get() = "object"
 
@@ -91,8 +83,6 @@ class ObjectValue
      * Returns the string representation of the [ObjectValue]
      *
      * @return the string representation of the [ObjectValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString(): String {
         // Just create a string out of all the children of the ObjectValue

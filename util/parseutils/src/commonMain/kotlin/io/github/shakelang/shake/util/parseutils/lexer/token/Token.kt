@@ -6,8 +6,6 @@ import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
 /**
  * The input of the [io.github.shakelang.shake.lexer.Lexer] gets converted into [Token]s. These get parsed
  * by the parser
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 open class Token<T : TokenType>
 /**
@@ -18,14 +16,12 @@ open class Token<T : TokenType>
  * @param start the [Token.start] of the [Token]
  * @param end the [Token.end] of the [Token]
  *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  *
  * @see Token
  * @see Token.type
  * @see Token.value
  * @see Token.start
  * @see Token.end
- *
  */(
     /**
      * The type of the [Token]
@@ -67,7 +63,6 @@ open class Token<T : TokenType>
      * @see Token.type
      * @see Token.start
      * @see Token.end
-     *
      */
     constructor(
         type: T,

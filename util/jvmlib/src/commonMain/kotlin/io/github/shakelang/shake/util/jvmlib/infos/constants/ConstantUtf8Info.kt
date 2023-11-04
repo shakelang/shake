@@ -25,11 +25,10 @@ class ConstantUtf8Info(val value: String) : ConstantInfo() {
             return ConstantUtf8Info(value)
         }
 
-        fun contentsFromStream(stream: InputStream)
-                = contentsFromStream(stream.dataStream)
+        fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if(stream.readByte() != tag)
+            if (stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantUtf8Info")
             else contentsFromStream(stream)
 

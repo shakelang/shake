@@ -20,7 +20,6 @@ val KotlinMultiplatformExtension.dependencies: KotlinMultiplatformExtensionDepen
     get() = KotlinMultiplatformExtensionDependencies(this)
 
 
-
 class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExtension) {
     val commonMain: KotlinSourceSet by extension.sourceSets.getting
     val commonTest: KotlinSourceSet by extension.sourceSets.getting
@@ -52,26 +51,31 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
             configure(this)
         }
     }
+
     fun commonTest(configure: KotlinDependencyHandler.() -> Unit) {
         commonTest.dependencies {
             configure(this)
         }
     }
+
     fun jvmMain(configure: KotlinDependencyHandler.() -> Unit) {
         jvmMain.dependencies {
             configure(this)
         }
     }
+
     fun jvmTest(configure: KotlinDependencyHandler.() -> Unit) {
         jvmTest.dependencies {
             configure(this)
         }
     }
+
     fun jsMain(configure: KotlinDependencyHandler.() -> Unit) {
         jsMain.dependencies {
             configure(this)
         }
     }
+
     fun jsTest(configure: KotlinDependencyHandler.() -> Unit) {
         jsTest.dependencies {
             configure(this)
@@ -135,8 +139,10 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
     fun project(notation: Map<String, Any?>): ProjectDependency =
         common.project(notation)
 
-    @Deprecated("Declaring NPM dependency without version is forbidden",
-        ReplaceWith("npm(name, version)"))
+    @Deprecated(
+        "Declaring NPM dependency without version is forbidden",
+        ReplaceWith("npm(name, version)")
+    )
     @Suppress("deprecation")
     fun npm(name: String): Dependency = common.npm(name)
 
@@ -252,7 +258,8 @@ class KotlinSourceType(
     fun <T : Dependency> implementation(dependency: T, configure: Closure<*>) =
         implementation(dependency) { ConfigureUtil.configure(configure, this) }
 
-    fun testImplementation(dependencyNotation: Any): Dependency? = ret { test.dependencies { it(implementation(dependencyNotation)) } }
+    fun testImplementation(dependencyNotation: Any): Dependency? =
+        ret { test.dependencies { it(implementation(dependencyNotation)) } }
 
     fun testImplementation(
         dependencyNotation: String,
@@ -270,17 +277,19 @@ class KotlinSourceType(
 
     fun kotlin(simpleModuleName: String): ExternalModuleDependency =
         ret { main.dependencies { it(kotlin(simpleModuleName)) } }
+
     fun kotlin(simpleModuleName: String, version: String?): ExternalModuleDependency =
         ret { main.dependencies { it(kotlin(simpleModuleName, version)) } }
 
     fun project(path: String, configuration: String? = null): ProjectDependency =
         ret { main.dependencies { it(project(path, configuration)) } }
 
-    fun project(notation: Map<String, Any?>): ProjectDependency
-        = ret { main.dependencies { it(project(notation)) } }
+    fun project(notation: Map<String, Any?>): ProjectDependency = ret { main.dependencies { it(project(notation)) } }
 
-    @Deprecated("Declaring NPM dependency without version is forbidden",
-        ReplaceWith("npm(name, version)"))
+    @Deprecated(
+        "Declaring NPM dependency without version is forbidden",
+        ReplaceWith("npm(name, version)")
+    )
     @Suppress("deprecation")
     fun npm(name: String): Dependency = ret { main.dependencies { it(npm(name)) } }
 

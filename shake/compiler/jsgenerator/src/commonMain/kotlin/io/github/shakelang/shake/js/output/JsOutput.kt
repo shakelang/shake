@@ -5,10 +5,11 @@ import io.github.shakelang.shake.util.parseutils.characters.Characters
 interface JsOutput {
     fun generate(indentAmount: Int = 0, indent: String = "  "): String
     fun toStatement(): JsStatement? {
-        return if(this is JsStatement) this else null
+        return if (this is JsStatement) this else null
     }
+
     fun toValue(): JsValue {
-        return if(this is JsValue) this else throw IllegalStateException("Not a value")
+        return if (this is JsValue) this else throw IllegalStateException("Not a value")
     }
 }
 
@@ -19,7 +20,7 @@ interface JsStatement : JsOutput {
 interface JsValue : JsOutput {
     val needsParens: Boolean
     fun generateValue(indentAmount: Int = 0, indent: String = "  "): String {
-        return if(needsParens) "(${generate(indentAmount, indent)})" else generate(indentAmount, indent)
+        return if (needsParens) "(${generate(indentAmount, indent)})" else generate(indentAmount, indent)
     }
 }
 
@@ -30,14 +31,15 @@ class JsTree(
 ) : JsOutput {
     override fun generate(indentAmount: Int, indent: String): String {
         return children.joinToString("\n") {
-            indent.repeat(indentAmount) + it.generate(indentAmount, indent) + if(it.needsSemicolon) ";" else ""
+            indent.repeat(indentAmount) + it.generate(indentAmount, indent) + if (it.needsSemicolon) ";" else ""
         }
     }
+
     fun generateBlock(indentAmount: Int, indent: String): String {
-        if(children.isEmpty()) {
+        if (children.isEmpty()) {
             return "{}"
         }
-        if(children.size == 1) {
+        if (children.size == 1) {
             return children.first().generate(indentAmount, indent)
         }
         return "{\n${generate(indentAmount + 1, indent)}\n}"
@@ -114,13 +116,13 @@ class JsModulo(
     }
 }
 
-class JsField (
+class JsField(
     val name: String,
     val parent: JsValue? = null
 ) : JsValue {
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
-        return if(parent == null) name else "${parent.generateValue(indentAmount, indent)}.$name"
+        return if (parent == null) name else "${parent.generateValue(indentAmount, indent)}.$name"
     }
 }
 
@@ -130,7 +132,14 @@ class JsFunctionCall(
 ) : JsValuedStatement {
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
-        return "${function.generateValue(indentAmount, indent)}(${args.joinToString(", ") { it.generate(indentAmount, indent) }})"
+        return "${function.generateValue(indentAmount, indent)}(${
+            args.joinToString(", ") {
+                it.generate(
+                    indentAmount,
+                    indent
+                )
+            }
+        })"
     }
 }
 
@@ -139,17 +148,17 @@ abstract class JsDeclaration : JsStatement {
     abstract val value: JsValue?
 }
 
-class JsVariableDeclaration (
+class JsVariableDeclaration(
     override val name: String,
     override val value: JsValue? = null
 ) : JsDeclaration() {
     override fun generate(indentAmount: Int, indent: String): String {
-        return if(value == null) "let $name"
+        return if (value == null) "let $name"
         else "let $name = ${value.generate(indentAmount, indent)}"
     }
 }
 
-class JsConstantDeclaration (
+class JsConstantDeclaration(
     override val name: String,
     override val value: JsValue
 ) : JsDeclaration() {
@@ -373,8 +382,15 @@ class JsIf(
                 (elseStatement == null && then.children.size == 1)
 
     override fun generate(indentAmount: Int, indent: String): String {
-        val statement = StringBuilder("if (${condition.generate(indentAmount, indent)}) ${then.generateBlock(indentAmount, indent)}")
-        if(elseStatement != null) {
+        val statement = StringBuilder(
+            "if (${condition.generate(indentAmount, indent)}) ${
+                then.generateBlock(
+                    indentAmount,
+                    indent
+                )
+            }"
+        )
+        if (elseStatement != null) {
             statement.append(" else ${elseStatement.generateBlock(indentAmount, indent)}")
         }
         return statement.toString()
@@ -387,7 +403,7 @@ class JsWhile(
 ) : JsStatement {
 
     override val needsSemicolon: Boolean
-        get() =  body.children.size == 1
+        get() = body.children.size == 1
 
     override fun generate(indentAmount: Int, indent: String): String {
         return "while (${condition.generate(indentAmount, indent)}) ${body.generateBlock(indentAmount, indent)}"
@@ -411,10 +427,15 @@ class JsFor(
 ) : JsStatement {
 
     override val needsSemicolon: Boolean
-        get() =  body.children.size == 1
+        get() = body.children.size == 1
 
     override fun generate(indentAmount: Int, indent: String): String {
-        return "for (${init.generate(indentAmount, indent)}; ${condition.generate(indentAmount, indent)}; ${update.generate(indentAmount, indent)}) ${body.generateBlock(indentAmount, indent)}"
+        return "for (${init.generate(indentAmount, indent)}; ${
+            condition.generate(
+                indentAmount,
+                indent
+            )
+        }; ${update.generate(indentAmount, indent)}) ${body.generateBlock(indentAmount, indent)}"
     }
 }
 
@@ -448,29 +469,41 @@ class JsFunctionDeclaration(
     }
 
     private fun baseGenerate(indentAmount: Int, indent: String): String {
-        return "(${parameters.joinToString(", ") {
-            if(it.default != null) {
-                "${it.name} = ${it.default.generate(indentAmount, indent)}"
-            } else {
-                it.name
+        return "(${
+            parameters.joinToString(", ") {
+                if (it.default != null) {
+                    "${it.name} = ${it.default.generate(indentAmount, indent)}"
+                } else {
+                    it.name
+                }
             }
-        }}) " + if(body.children.isEmpty()) "{}" else "{\n${body.generate(indentAmount + 1, indent)}\n${indent.repeat(indentAmount)}}"
+        }) " + if (body.children.isEmpty()) "{}" else "{\n${body.generate(indentAmount + 1, indent)}\n${
+            indent.repeat(
+                indentAmount
+            )
+        }}"
     }
 }
 
-class JsInlineFunction (
+class JsInlineFunction(
     val parameters: List<JsParameter>,
     val body: JsTree
 ) : JsValue {
     override val needsParens: Boolean get() = true
     override fun generate(indentAmount: Int, indent: String): String {
-        return "function (${parameters.joinToString(", ") {
-            if(it.default != null) {
-                "${it.name} = ${it.default.generate(indentAmount + 1, indent)}"
-            } else {
-                it.name
+        return "function (${
+            parameters.joinToString(", ") {
+                if (it.default != null) {
+                    "${it.name} = ${it.default.generate(indentAmount + 1, indent)}"
+                } else {
+                    it.name
+                }
             }
-        }}) " + if(body.children.isEmpty()) "{}" else "{\n${body.generate(indentAmount + 1, indent)}\n${indent.repeat(indentAmount)}}"
+        }) " + if (body.children.isEmpty()) "{}" else "{\n${body.generate(indentAmount + 1, indent)}\n${
+            indent.repeat(
+                indentAmount
+            )
+        }}"
     }
 }
 
@@ -485,19 +518,20 @@ class JsClassDeclaration(
 
     override val needsSemicolon: Boolean get() = false
 
-    val classConstructor: JsFunctionDeclaration get() {
-        val statements = mutableListOf<JsStatement>()
-        fields.forEach {
-            if(it.value != null) {
-                statements.add(JsAssignment(JsField(it.name, JsField("this")), it.value!!))
+    val classConstructor: JsFunctionDeclaration
+        get() {
+            val statements = mutableListOf<JsStatement>()
+            fields.forEach {
+                if (it.value != null) {
+                    statements.add(JsAssignment(JsField(it.name, JsField("this")), it.value!!))
+                }
             }
+            return JsFunctionDeclaration("constructor", emptyList(), JsTree(statements))
         }
-        return JsFunctionDeclaration("constructor", emptyList(), JsTree(statements))
-    }
 
     override fun generate(indentAmount: Int, indent: String): String {
         val statement = StringBuilder("class $name")
-        if(extends != null) {
+        if (extends != null) {
             statement.append(" extends ${extends.generate(indentAmount, indent)}")
         }
         statement.append(" {\n")
@@ -507,11 +541,21 @@ class JsClassDeclaration(
         statement.append('\n').append(indent.repeat(indentAmount)).append("}")
         staticFunctions.forEach {
             statement.append("\n")
-            statement.append(JsAssignment(JsField(it.name, JsField(this.name)), it.inline()).generate(indentAmount, indent))
+            statement.append(
+                JsAssignment(JsField(it.name, JsField(this.name)), it.inline()).generate(
+                    indentAmount,
+                    indent
+                )
+            )
         }
         staticFields.forEach {
             statement.append("\n")
-            statement.append(JsAssignment(JsField(it.name, JsField(this.name)), it.value!!).generate(indentAmount, indent))
+            statement.append(
+                JsAssignment(JsField(it.name, JsField(this.name)), it.value!!).generate(
+                    indentAmount,
+                    indent
+                )
+            )
         }
         return statement.toString()
     }
@@ -523,7 +567,14 @@ class JsNew(
 ) : JsValuedStatement {
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
-        return "new ${type.generate(indentAmount, indent)}(${parameters.joinToString(", ") { it.generate(indentAmount, indent) }})"
+        return "new ${type.generate(indentAmount, indent)}(${
+            parameters.joinToString(", ") {
+                it.generate(
+                    indentAmount,
+                    indent
+                )
+            }
+        })"
     }
 }
 
@@ -533,10 +584,12 @@ class JsObject(
     override val needsParens: Boolean get() = false
     override fun generate(indentAmount: Int, indent: String): String {
         val ind = indent.repeat(indentAmount + 1)
-        return if(fields.isEmpty()) "{}"
-            else "{\n$ind${fields.entries.joinToString(",\n$ind") {
+        return if (fields.isEmpty()) "{}"
+        else "{\n$ind${
+            fields.entries.joinToString(",\n$ind") {
                 "${it.key.generate(indentAmount + 1, indent)}: ${it.value.generate(indentAmount + 1, indent)}"
-            }}\n${indent.repeat(indentAmount)}}"
+            }
+        }\n${indent.repeat(indentAmount)}}"
     }
 }
 
@@ -560,6 +613,7 @@ class JsReturn(
 
 enum class JsLiteral : JsValue {
     TRUE, FALSE, NULL;
+
     override val needsParens: Boolean get() = false
 
     override fun generate(indentAmount: Int, indent: String): String {
@@ -567,9 +621,9 @@ enum class JsLiteral : JsValue {
     }
 }
 
-class JsAssignable (
+class JsAssignable(
     val field: JsField,
-)  {
+) {
 
     fun assign(value: JsValue): JsAssignment {
         return JsAssignment(field, value)

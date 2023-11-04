@@ -5,7 +5,8 @@ import kotlin.jvm.JvmField
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
-class ShakeCastNode(map: PositionMap, val value: ShakeValuedNode, val castTarget: CastTarget) : ShakeValuedNodeImpl(map) {
+class ShakeCastNode(map: PositionMap, val value: ShakeValuedNode, val castTarget: CastTarget) :
+    ShakeValuedNodeImpl(map) {
 
     class CastTarget @JvmOverloads constructor(val type: CastTargetType, val subtype: ShakeNamespaceNode? = null) {
 
@@ -22,20 +23,28 @@ class ShakeCastNode(map: PositionMap, val value: ShakeValuedNode, val castTarget
         companion object {
             @JvmField
             val BYTE = CastTarget(CastTargetType.BYTE)
+
             @JvmField
             val SHORT = CastTarget(CastTargetType.SHORT)
+
             @JvmField
             val INTEGER = CastTarget(CastTargetType.INT)
+
             @JvmField
             val LONG = CastTarget(CastTargetType.LONG)
+
             @JvmField
             val FLOAT = CastTarget(CastTargetType.FLOAT)
+
             @JvmField
             val DOUBLE = CastTarget(CastTargetType.DOUBLE)
+
             @JvmField
             val BOOLEAN = CastTarget(CastTargetType.BOOLEAN)
+
             @JvmField
             val CHAR = CastTarget(CastTargetType.CHAR)
+
             @JvmField
             val STRING = CastTarget(CastTargetType.STRING)
         }

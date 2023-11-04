@@ -8,8 +8,6 @@ import io.github.shakelang.shake.util.shason.processing.JsonParser
 
 /**
  * Api for processing json
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 object JSON {
@@ -18,8 +16,6 @@ object JSON {
      * Parse json code
      *
      * @param code the json to parse
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun parse(code: String): Any {
         val source = CharacterSource.from(code, "JSON.parse")
@@ -36,8 +32,6 @@ object JSON {
      * @param input the objects to stringify
      * @param indent the indent for the json (or null for no indent). Can be an Int (number of spaces) or a string
      * to indent with
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun stringify(input: Any?, indent: Any? = null): String {
         return JsonGenerator.generate(
@@ -54,7 +48,5 @@ object JSON {
 
 /**
  * Api for processing json
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 typealias json = io.github.shakelang.shake.util.shason.JSON

@@ -1,30 +1,29 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.shasp.lexer.token
 
+import io.github.shakelang.shake.lexer.token.ShasPToken
+import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexingBase
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
 import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenInputStream
-import io.github.shakelang.shake.lexer.token.ShasPToken
-import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexingBase
 
 /**
  * A [ShasPTokenInputStream] provides the [ShasPToken]s for a Parser. It is
  * created by a Lexer
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 interface ShasPTokenInputStream : TokenInputStream<ShasPTokenType, ShasPToken>
 
-class ShasPTokenBasedInputStream (
+class ShasPTokenBasedInputStream(
     tokens: Array<ShasPToken>,
     map: PositionMap
 ) : ShasPTokenInputStream, TokenBasedTokenInputStream<ShasPTokenType, ShasPToken>(tokens, map)
 
-class OnDemandLexingShasPTokenInputStream (
+class OnDemandLexingShasPTokenInputStream(
     input: CharacterInputStream
-): ShasPTokenInputStream, ShasPLexingBase(input) {
+) : ShasPTokenInputStream, ShasPLexingBase(input) {
 
     override val size get() = throw UnsupportedOperationException()
     val buffer: MutableList<ShasPToken> = mutableListOf()
@@ -66,13 +65,13 @@ class OnDemandLexingShasPTokenInputStream (
     }
 
     override fun skip(amount: Int) {
-        for(i in 0 until amount) skip()
+        for (i in 0 until amount) skip()
     }
 
     override fun peek(offset: Int): ShasPToken {
         try {
             fillBuffer(offset)
-        }  catch (e: IndexOutOfBoundsException) {
+        } catch (e: IndexOutOfBoundsException) {
             throw Error("Not enough tokens left", e)
         } catch (e: IllegalStateException) {
             throw Error("Not enough tokens left", e)

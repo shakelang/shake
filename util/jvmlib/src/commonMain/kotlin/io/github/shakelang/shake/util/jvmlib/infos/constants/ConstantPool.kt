@@ -14,14 +14,15 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     private lateinit var clazz: ClassInfo
-    val classInfo : ClassInfo get() = clazz
-    override val uses : Array<ConstantInfo> = users.map { it.uses.toList() }.flatten().toTypedArray()
-    override val users: Array<ConstantUser> get() = constants.filter { it is ConstantUser }.map { it as ConstantUser }.toTypedArray()
+    val classInfo: ClassInfo get() = clazz
+    override val uses: Array<ConstantInfo> = users.map { it.uses.toList() }.flatten().toTypedArray()
+    override val users: Array<ConstantUser>
+        get() = constants.filter { it is ConstantUser }.map { it as ConstantUser }.toTypedArray()
 
     constructor(constants: Array<ConstantInfo>) : this(constants.toMutableList())
 
-    override fun get(index: Int): ConstantInfo = if(index == 0) ConstantNullPointer.INSTANCE else constants[index-1]
-    operator fun get(index: UShort) : ConstantInfo = get(index.toInt())
+    override fun get(index: Int): ConstantInfo = if (index == 0) ConstantNullPointer.INSTANCE else constants[index - 1]
+    operator fun get(index: UShort): ConstantInfo = get(index.toInt())
 
     fun toJson(): List<Map<String, Any>> {
         return this.constants.map { it.toJson() }
@@ -68,9 +69,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun getInvokeDynamic(nameIndex: UShort) = this.getInvokeDynamic(nameIndex.toInt())
 
     fun findUtf8(name: String): ConstantUtf8Info? {
-        for(constant in constants) {
-            if(constant is ConstantUtf8Info) {
-                if(constant.value == name) {
+        for (constant in constants) {
+            if (constant is ConstantUtf8Info) {
+                if (constant.value == name) {
                     return constant
                 }
             }
@@ -79,9 +80,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findClass(value: ConstantUtf8Info): ConstantClassInfo? {
-        for(constant in constants) {
-            if(constant is ConstantClassInfo) {
-                if(constant.value == value) {
+        for (constant in constants) {
+            if (constant is ConstantClassInfo) {
+                if (constant.value == value) {
                     return constant
                 }
             }
@@ -90,9 +91,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findClass(value: String): ConstantClassInfo? {
-        for(constant in constants) {
-            if(constant is ConstantClassInfo) {
-                if(constant.value.value == value) {
+        for (constant in constants) {
+            if (constant is ConstantClassInfo) {
+                if (constant.value.value == value) {
                     return constant
                 }
             }
@@ -101,9 +102,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findFieldRef(classRef: ConstantClassInfo, nameTypeRef: ConstantNameAndTypeInfo): ConstantFieldrefInfo? {
-        for(constant in constants) {
-            if(constant is ConstantFieldrefInfo) {
-                if(constant.classRef === classRef && constant.nameTypeRef === nameTypeRef) {
+        for (constant in constants) {
+            if (constant is ConstantFieldrefInfo) {
+                if (constant.classRef === classRef && constant.nameTypeRef === nameTypeRef) {
                     return constant
                 }
             }
@@ -112,12 +113,13 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findFieldRef(classRef: ConstantClassInfo, name: String, descriptor: String): ConstantFieldrefInfo? {
-        for(constant in constants) {
-            if(constant is ConstantFieldrefInfo) {
+        for (constant in constants) {
+            if (constant is ConstantFieldrefInfo) {
 
-                if(constant.classRef === classRef
+                if (constant.classRef === classRef
                     && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor) {
+                    && constant.nameTypeRef.type.value == descriptor
+                ) {
                     return constant
                 }
             }
@@ -126,11 +128,12 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findFieldRef(classRef: String, name: String, descriptor: String): ConstantFieldrefInfo? {
-        for(constant in constants) {
-            if(constant is ConstantFieldrefInfo) {
-                if(constant.classRef.value.value == classRef
+        for (constant in constants) {
+            if (constant is ConstantFieldrefInfo) {
+                if (constant.classRef.value.value == classRef
                     && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor) {
+                    && constant.nameTypeRef.type.value == descriptor
+                ) {
                     return constant
                 }
             }
@@ -139,9 +142,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findMethodRef(classRef: ConstantClassInfo, nameTypeRef: ConstantNameAndTypeInfo): ConstantMethodrefInfo? {
-        for(constant in constants) {
-            if(constant is ConstantMethodrefInfo) {
-                if(constant.classRef == classRef && constant.nameTypeRef == nameTypeRef) {
+        for (constant in constants) {
+            if (constant is ConstantMethodrefInfo) {
+                if (constant.classRef == classRef && constant.nameTypeRef == nameTypeRef) {
                     return constant
                 }
             }
@@ -150,11 +153,12 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findMethodRef(classRef: ConstantClassInfo, name: String, descriptor: String): ConstantMethodrefInfo? {
-        for(constant in constants) {
-            if(constant is ConstantMethodrefInfo) {
-                if(constant.classRef == classRef
+        for (constant in constants) {
+            if (constant is ConstantMethodrefInfo) {
+                if (constant.classRef == classRef
                     && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor) {
+                    && constant.nameTypeRef.type.value == descriptor
+                ) {
                     return constant
                 }
             }
@@ -163,11 +167,12 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findMethodRef(classRef: String, name: String, descriptor: String): ConstantMethodrefInfo? {
-        for(constant in constants) {
-            if(constant is ConstantMethodrefInfo) {
-                if(constant.classRef.value.value == classRef
+        for (constant in constants) {
+            if (constant is ConstantMethodrefInfo) {
+                if (constant.classRef.value.value == classRef
                     && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor) {
+                    && constant.nameTypeRef.type.value == descriptor
+                ) {
                     return constant
                 }
             }
@@ -175,10 +180,13 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         return null
     }
 
-    fun findInterfaceMethodRef(classRef: ConstantClassInfo, nameTypeRef: ConstantNameAndTypeInfo): ConstantInterfaceMethodrefInfo? {
-        for(constant in constants) {
-            if(constant is ConstantInterfaceMethodrefInfo) {
-                if(constant.classRef == classRef && constant.nameTypeRef == nameTypeRef) {
+    fun findInterfaceMethodRef(
+        classRef: ConstantClassInfo,
+        nameTypeRef: ConstantNameAndTypeInfo
+    ): ConstantInterfaceMethodrefInfo? {
+        for (constant in constants) {
+            if (constant is ConstantInterfaceMethodrefInfo) {
+                if (constant.classRef == classRef && constant.nameTypeRef == nameTypeRef) {
                     return constant
                 }
             }
@@ -186,12 +194,17 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         return null
     }
 
-    fun findInterfaceMethodRef(classRef: ConstantClassInfo, name: String, descriptor: String): ConstantInterfaceMethodrefInfo? {
-        for(constant in constants) {
-            if(constant is ConstantInterfaceMethodrefInfo) {
-                if(constant.classRef == classRef
+    fun findInterfaceMethodRef(
+        classRef: ConstantClassInfo,
+        name: String,
+        descriptor: String
+    ): ConstantInterfaceMethodrefInfo? {
+        for (constant in constants) {
+            if (constant is ConstantInterfaceMethodrefInfo) {
+                if (constant.classRef == classRef
                     && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor) {
+                    && constant.nameTypeRef.type.value == descriptor
+                ) {
                     return constant
                 }
             }
@@ -200,11 +213,12 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findInterfaceMethodRef(classRef: String, name: String, descriptor: String): ConstantInterfaceMethodrefInfo? {
-        for(constant in constants) {
-            if(constant is ConstantInterfaceMethodrefInfo) {
-                if(constant.classRef.value.value == classRef
+        for (constant in constants) {
+            if (constant is ConstantInterfaceMethodrefInfo) {
+                if (constant.classRef.value.value == classRef
                     && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor) {
+                    && constant.nameTypeRef.type.value == descriptor
+                ) {
                     return constant
                 }
             }
@@ -213,9 +227,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findString(value: ConstantUtf8Info): ConstantStringInfo? {
-        for(constant in constants) {
-            if(constant is ConstantStringInfo) {
-                if(constant.string == value) {
+        for (constant in constants) {
+            if (constant is ConstantStringInfo) {
+                if (constant.string == value) {
                     return constant
                 }
             }
@@ -224,9 +238,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findString(value: String): ConstantStringInfo? {
-        for(constant in constants) {
-            if(constant is ConstantStringInfo) {
-                if(constant.string.value == value) {
+        for (constant in constants) {
+            if (constant is ConstantStringInfo) {
+                if (constant.string.value == value) {
                     return constant
                 }
             }
@@ -235,9 +249,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findInteger(value: Int): ConstantIntegerInfo? {
-        for(constant in constants) {
-            if(constant is ConstantIntegerInfo) {
-                if(constant.value == value) {
+        for (constant in constants) {
+            if (constant is ConstantIntegerInfo) {
+                if (constant.value == value) {
                     return constant
                 }
             }
@@ -246,9 +260,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findFloat(value: Float): ConstantFloatInfo? {
-        for(constant in constants) {
-            if(constant is ConstantFloatInfo) {
-                if(constant.value == value) {
+        for (constant in constants) {
+            if (constant is ConstantFloatInfo) {
+                if (constant.value == value) {
                     return constant
                 }
             }
@@ -257,9 +271,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findLong(value: Long): ConstantLongInfo? {
-        for(constant in constants) {
-            if(constant is ConstantLongInfo) {
-                if(constant.value == value) {
+        for (constant in constants) {
+            if (constant is ConstantLongInfo) {
+                if (constant.value == value) {
                     return constant
                 }
             }
@@ -268,9 +282,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findDouble(value: Double): ConstantDoubleInfo? {
-        for(constant in constants) {
-            if(constant is ConstantDoubleInfo) {
-                if(constant.value == value) {
+        for (constant in constants) {
+            if (constant is ConstantDoubleInfo) {
+                if (constant.value == value) {
                     return constant
                 }
             }
@@ -279,9 +293,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findNameAndType(name: ConstantUtf8Info, descriptor: ConstantUtf8Info): ConstantNameAndTypeInfo? {
-        for(constant in constants) {
-            if(constant is ConstantNameAndTypeInfo) {
-                if(constant.name == name && constant.type == descriptor) {
+        for (constant in constants) {
+            if (constant is ConstantNameAndTypeInfo) {
+                if (constant.name == name && constant.type == descriptor) {
                     return constant
                 }
             }
@@ -290,9 +304,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findNameAndType(name: String, descriptor: String): ConstantNameAndTypeInfo? {
-        for(constant in constants) {
-            if(constant is ConstantNameAndTypeInfo) {
-                if(constant.name.value == name && constant.type.value == descriptor) {
+        for (constant in constants) {
+            if (constant is ConstantNameAndTypeInfo) {
+                if (constant.name.value == name && constant.type.value == descriptor) {
                     return constant
                 }
             }
@@ -301,9 +315,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findMethodHandle(referenceKind: Byte, reference: ConstantInfo): ConstantMethodHandleInfo? {
-        for(constant in constants) {
-            if(constant is ConstantMethodHandleInfo) {
-                if(constant.referenceKind == referenceKind && constant.reference == reference) {
+        for (constant in constants) {
+            if (constant is ConstantMethodHandleInfo) {
+                if (constant.referenceKind == referenceKind && constant.reference == reference) {
                     return constant
                 }
             }
@@ -312,9 +326,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findMethodType(descriptor: ConstantUtf8Info): ConstantMethodTypeInfo? {
-        for(constant in constants) {
-            if(constant is ConstantMethodTypeInfo) {
-                if(constant.descriptor == descriptor) {
+        for (constant in constants) {
+            if (constant is ConstantMethodTypeInfo) {
+                if (constant.descriptor == descriptor) {
                     return constant
                 }
             }
@@ -323,9 +337,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findMethodType(descriptor: String): ConstantMethodTypeInfo? {
-        for(constant in constants) {
-            if(constant is ConstantMethodTypeInfo) {
-                if(constant.descriptor.value == descriptor) {
+        for (constant in constants) {
+            if (constant is ConstantMethodTypeInfo) {
+                if (constant.descriptor.value == descriptor) {
                     return constant
                 }
             }
@@ -334,9 +348,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findInvokeDynamic(bootstrapMethod: UShort, nameAndType: ConstantNameAndTypeInfo): ConstantInvokeDynamicInfo? {
-        for(constant in constants) {
-            if(constant is ConstantInvokeDynamicInfo) {
-                if(constant.bootstrapMethodAttributeIndex == bootstrapMethod && constant.nameAndType == nameAndType) {
+        for (constant in constants) {
+            if (constant is ConstantInvokeDynamicInfo) {
+                if (constant.bootstrapMethodAttributeIndex == bootstrapMethod && constant.nameAndType == nameAndType) {
                     return constant
                 }
             }
@@ -345,11 +359,12 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
     fun findInvokeDynamic(bootstrapMethod: UShort, name: String, type: String): ConstantInvokeDynamicInfo? {
-        for(constant in constants) {
-            if(constant is ConstantInvokeDynamicInfo) {
-                if(constant.bootstrapMethodAttributeIndex == bootstrapMethod
+        for (constant in constants) {
+            if (constant is ConstantInvokeDynamicInfo) {
+                if (constant.bootstrapMethodAttributeIndex == bootstrapMethod
                     && constant.nameAndType.name.value == name
-                    && constant.nameAndType.type.value == type) {
+                    && constant.nameAndType.type.value == type
+                ) {
                     return constant
                 }
             }
@@ -358,59 +373,63 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     }
 
 
+    fun expectUtf8(value: String): ConstantUtf8Info =
+        findUtf8(value) ?: throw Exception("No utf8 constant found for value: $value")
 
+    fun expectClass(value: ConstantUtf8Info): ConstantClassInfo =
+        findClass(value) ?: throw Exception("No class constant found for value: $value")
 
-    fun expectUtf8(value: String): ConstantUtf8Info
-        = findUtf8(value) ?: throw Exception("No utf8 constant found for value: $value")
+    fun expectClass(value: String): ConstantClassInfo =
+        findClass(value) ?: throw Exception("No class constant found for value: $value")
 
-    fun expectClass(value: ConstantUtf8Info): ConstantClassInfo
-        = findClass(value) ?: throw Exception("No class constant found for value: $value")
+    fun expectFieldRef(classRef: String, name: String, descriptor: String): ConstantFieldrefInfo =
+        findFieldRef(classRef, name, descriptor)
+            ?: throw Exception("No fieldref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")
 
-    fun expectClass(value: String): ConstantClassInfo
-            = findClass(value) ?: throw Exception("No class constant found for value: $value")
+    fun expectMethodRef(classRef: String, name: String, descriptor: String): ConstantMethodrefInfo =
+        findMethodRef(classRef, name, descriptor)
+            ?: throw Exception("No methodref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")
 
-    fun expectFieldRef(classRef: String, name: String, descriptor: String): ConstantFieldrefInfo
-        = findFieldRef(classRef, name, descriptor) ?: throw Exception("No fieldref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")
+    fun expectInterfaceMethodRef(classRef: String, name: String, descriptor: String): ConstantInterfaceMethodrefInfo =
+        findInterfaceMethodRef(classRef, name, descriptor)
+            ?: throw Exception("No interface methodref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")
 
-    fun expectMethodRef(classRef: String, name: String, descriptor: String): ConstantMethodrefInfo
-        = findMethodRef(classRef, name, descriptor) ?: throw Exception("No methodref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")
+    fun expectString(value: String): ConstantStringInfo =
+        findString(value) ?: throw Exception("No string constant found for value: $value")
 
-    fun expectInterfaceMethodRef(classRef: String, name: String, descriptor: String): ConstantInterfaceMethodrefInfo
-        = findInterfaceMethodRef(classRef, name, descriptor) ?: throw Exception("No interface methodref constant found for classRef: $classRef, name: $name, descriptor: $descriptor")
+    fun expectInteger(value: Int): ConstantIntegerInfo =
+        findInteger(value) ?: throw Exception("No integer constant found for value: $value")
 
-    fun expectString(value: String): ConstantStringInfo
-        = findString(value) ?: throw Exception("No string constant found for value: $value")
+    fun expectFloat(value: Float): ConstantFloatInfo =
+        findFloat(value) ?: throw Exception("No float constant found for value: $value")
 
-    fun expectInteger(value: Int): ConstantIntegerInfo
-        = findInteger(value) ?: throw Exception("No integer constant found for value: $value")
+    fun expectLong(value: Long): ConstantLongInfo =
+        findLong(value) ?: throw Exception("No long constant found for value: $value")
 
-    fun expectFloat(value: Float): ConstantFloatInfo
-        = findFloat(value) ?: throw Exception("No float constant found for value: $value")
+    fun expectDouble(value: Double): ConstantDoubleInfo =
+        findDouble(value) ?: throw Exception("No double constant found for value: $value")
 
-    fun expectLong(value: Long): ConstantLongInfo
-        = findLong(value) ?: throw Exception("No long constant found for value: $value")
+    fun expectNameAndType(name: String, descriptor: String): ConstantNameAndTypeInfo = findNameAndType(name, descriptor)
+        ?: throw Exception("No name and type constant found for name: $name, descriptor: $descriptor")
 
-    fun expectDouble(value: Double): ConstantDoubleInfo
-        = findDouble(value) ?: throw Exception("No double constant found for value: $value")
+    fun expectNameAndType(name: ConstantUtf8Info, descriptor: ConstantUtf8Info): ConstantNameAndTypeInfo =
+        findNameAndType(name, descriptor)
+            ?: throw Exception("No name and type constant found for name: $name, descriptor: $descriptor")
 
-    fun expectNameAndType(name: String, descriptor: String): ConstantNameAndTypeInfo
-        = findNameAndType(name, descriptor) ?: throw Exception("No name and type constant found for name: $name, descriptor: $descriptor")
+    fun expectMethodHandle(referenceKind: Byte, reference: ConstantInfo): ConstantMethodHandleInfo =
+        findMethodHandle(referenceKind, reference)
+            ?: throw Exception("No method handle constant found for referenceKind: $referenceKind, reference: $reference")
 
-    fun expectNameAndType(name: ConstantUtf8Info, descriptor: ConstantUtf8Info): ConstantNameAndTypeInfo
-        = findNameAndType(name, descriptor) ?: throw Exception("No name and type constant found for name: $name, descriptor: $descriptor")
+    fun expectMethodType(descriptor: ConstantUtf8Info): ConstantMethodTypeInfo =
+        findMethodType(descriptor) ?: throw Exception("No method type constant found for descriptor: $descriptor")
 
-    fun expectMethodHandle(referenceKind: Byte, reference: ConstantInfo): ConstantMethodHandleInfo
-        = findMethodHandle(referenceKind, reference) ?: throw Exception("No method handle constant found for referenceKind: $referenceKind, reference: $reference")
-
-    fun expectMethodType(descriptor: ConstantUtf8Info): ConstantMethodTypeInfo
-        = findMethodType(descriptor) ?: throw Exception("No method type constant found for descriptor: $descriptor")
-
-    fun expectInvokeDynamic(bootstrapMethod: UShort, nameAndType: ConstantNameAndTypeInfo): ConstantInvokeDynamicInfo
-        = findInvokeDynamic(bootstrapMethod, nameAndType) ?: throw Exception("No invoke dynamic constant found for bootstrapMethod: $bootstrapMethod, nameAndType: $nameAndType")
+    fun expectInvokeDynamic(bootstrapMethod: UShort, nameAndType: ConstantNameAndTypeInfo): ConstantInvokeDynamicInfo =
+        findInvokeDynamic(bootstrapMethod, nameAndType)
+            ?: throw Exception("No invoke dynamic constant found for bootstrapMethod: $bootstrapMethod, nameAndType: $nameAndType")
 
     override fun add(element: ConstantInfo): Boolean {
         val ret = constants.add(element)
-        if(ret) element.init(this)
+        if (ret) element.init(this)
         return ret
     }
 
@@ -438,7 +457,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     companion object {
         fun fromStream(stream: DataInputStream): ConstantPool {
             val constantPoolCount = stream.readUnsignedShort()
-            val constants = Array(constantPoolCount.toInt()-1) { ConstantInfo.fromStream(stream) }
+            val constants = Array(constantPoolCount.toInt() - 1) { ConstantInfo.fromStream(stream) }
             return ConstantPool(constants)
         }
     }

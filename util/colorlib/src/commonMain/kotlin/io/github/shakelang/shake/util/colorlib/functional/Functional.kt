@@ -202,8 +202,6 @@ fun brightCyan(contents: String) = fgBrightCyan(contents)
 fun brightWhite(contents: String) = fgBrightWhite(contents)
 
 
-
-
 /**
  * Make your background color black
  * @param contents the contents to make black

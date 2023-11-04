@@ -22,11 +22,16 @@ interface ShakeMethod : ShakeInvokable {
     val isOperator: Boolean
     val expanding: ShakeType?
 
-    override val qualifiedName: String get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
-    val signature: String get() = "${expanding?.qualifiedName?.plus("$")?:""}$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
+    override val qualifiedName: String
+        get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}$name(${
+            parameters.joinToString(
+                ", "
+            ) { it.type.qualifiedName }
+        })${returnType.qualifiedName}"
+    val signature: String get() = "${expanding?.qualifiedName?.plus("$") ?: ""}$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
     val qualifiedSignature: String get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}$signature"
     override val returnType: ShakeType
-    val scope : ShakeScope
+    val scope: ShakeScope
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(
