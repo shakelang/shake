@@ -12,11 +12,9 @@ import kotlin.jvm.JvmOverloads
 
 /**
  * A [JsonLexer] creates a [JsonTokenInputStream] from a [CharacterInputStream]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
-class JsonLexer (
+class JsonLexer(
 
     /**
      * The [CharacterInputStream] to create the [JsonTokenInputStream] from
@@ -28,8 +26,6 @@ class JsonLexer (
     /**
      * Make a [JsonTokenInputStream] from the [chars] of the [JsonLexer]
      * This function executes the [JsonLexer]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun makeTokens(): JsonTokenInputStream {
 
@@ -100,8 +96,6 @@ class JsonLexer (
      * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
      * there and not here to improve performance. The condition **must** be checked before the call of this
      * function!)_
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun makeIdentifier(): JsonToken {
 
@@ -115,7 +109,7 @@ class JsonLexer (
         }
 
         // return a new string token out of the identifier
-        return when(identifier) {
+        return when (identifier) {
             "false" -> JsonToken(JsonTokenType.FALSE, start, this.chars.position)
             "true" -> JsonToken(JsonTokenType.TRUE, start, this.chars.position)
             else -> JsonToken(JsonTokenType.STRING, start, this.chars.position, identifier)
@@ -130,8 +124,6 @@ class JsonLexer (
      * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
      * there and not here to improve performance. The condition **must** be checked before the call of this
      * function!)_
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun makeString(): JsonToken {
 
@@ -167,13 +159,14 @@ class JsonLexer (
                         }
                         str.append(s.toInt(radix = 16).toChar())
                     }
+
                     else -> throw JsonTokenLexerError("Unknown escape sequence '\\" + this.chars.actual() + "'")
                 }
             } else str.append(this.chars.actual())
         }
 
         // If we have not found the end throw an Error
-        if (this.chars.actual() != end) throw  JsonTokenLexerError("Unexpected End")
+        if (this.chars.actual() != end) throw JsonTokenLexerError("Unexpected End")
 
         // Return a string JsonToken
         return JsonToken(JsonTokenType.STRING, start, this.chars.position, str.toString())
@@ -186,8 +179,6 @@ class JsonLexer (
      * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
      * there and not here to improve performance. The condition **must** be checked before the call of this
      * function!)_
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun makeNumber(): JsonToken {
 
@@ -200,7 +191,7 @@ class JsonLexer (
 
         // The number string
         val number = StringBuilder().append(this.chars.actual())
-        if(this.chars.actual() == '.') foundDot = true
+        if (this.chars.actual() == '.') foundDot = true
 
         // Loop as long we find a '.' or '0-9' char
         while (this.chars.hasNext() && isNumberOrDotCharacter(this.chars.peek())) {
@@ -229,8 +220,6 @@ class JsonLexer (
 
     /**
      * An [CompilerError] thrown by the [JsonLexer]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private inner class JsonTokenLexerError(
         message: String,
@@ -248,7 +237,6 @@ class JsonLexer (
          * @param start the start position of the [CompilerError]
          * @param end the end position of the [CompilerError]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmOverloads
         constructor(
@@ -272,7 +260,6 @@ class JsonLexer (
          * @param start the start position of the [CompilerError]
          * @param end the end position of the [CompilerError]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmOverloads
         constructor(

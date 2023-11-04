@@ -236,22 +236,23 @@ object JsNatives {
     }
 
     fun getNativeClass(clazz: ShakeClass): NativeClass {
-        if(!clazz.isNative) {
+        if (!clazz.isNative) {
             throw IllegalArgumentException("Class is not native")
         }
         return getNativeClass(clazz.qualifiedName) ?: throw IllegalArgumentException("No matching native class found")
     }
 
     fun getNativeFunction(fn: ShakeMethod): NativeFunction {
-        if(!fn.isNative) {
+        if (!fn.isNative) {
             throw IllegalArgumentException("Function is not native")
         }
-        if(fn.clazz != null) {
+        if (fn.clazz != null) {
             return getNativeClass(fn.clazz!!)
                 .functions
                 .firstOrNull {
-                    it.signature == fn.signature }
-                    ?: throw IllegalArgumentException("No matching native function found ${fn.qualifiedSignature}")
+                    it.signature == fn.signature
+                }
+                ?: throw IllegalArgumentException("No matching native function found ${fn.qualifiedSignature}")
         }
         return nativeFunctions.firstOrNull {
             it.signature == fn.qualifiedSignature
@@ -260,20 +261,18 @@ object JsNatives {
     }
 
     fun getNativeField(field: ShakeMethod): NativeField {
-        if(!field.isNative) {
+        if (!field.isNative) {
             throw IllegalArgumentException("Field is not native")
         }
-        if(field.clazz != null) {
+        if (field.clazz != null) {
             return getNativeClass(field.clazz!!)
                 .fields
                 .firstOrNull { it.signature == field.name }
-                    ?: throw IllegalArgumentException("No matching native field found")
+                ?: throw IllegalArgumentException("No matching native field found")
         }
         return nativeFields.firstOrNull { it.signature == field.qualifiedName }
             ?: throw IllegalArgumentException("No matching native field found")
     }
-
-
 
 
 }

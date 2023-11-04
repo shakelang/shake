@@ -263,7 +263,7 @@ class BufferedInputStreamTests {
         assertEquals(1, counter.operationCount)
     }
 
-   @Test
+    @Test
     fun testAvailable() {
         val counter = "Hello".toBytes().inputStream().countingStream
         val stream = counter.bufferedStream

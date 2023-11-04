@@ -9,8 +9,6 @@ import io.github.shakelang.shake.util.shason.processing.JsonTokenType.*
 
 /**
  * A [JsonParser] creates a [JsonElement] from a [JsonTokenInputStream]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 class JsonParser(
@@ -32,8 +30,6 @@ class JsonParser(
 
     /**
      * Parse a [JsonElement]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun parseValue(): JsonElement {
 
@@ -55,8 +51,6 @@ class JsonParser(
 
     /**
      * Parse a [JsonObject]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun parseMap(): JsonObject {
         if (tokens.actual.type != LCURL) throw ParserError("Expecting '{'")
@@ -81,8 +75,6 @@ class JsonParser(
 
     /**
      * Parse a [JsonArray]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun parseArray(): JsonArray {
         if (tokens.actual.type != LSQUARE) throw ParserError("Expecting '['")
@@ -109,8 +101,6 @@ class JsonParser(
 
     /**
      * An [CompilerError] thrown by the [JsonParser]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     inner class ParserError(message: String, name: String, details: String, start: Position, end: Position) :
         io.github.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
@@ -123,7 +113,6 @@ class JsonParser(
          * @param start the start position of the [ParserError]
          * @param end the end position of the [ParserError]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         constructor(
             name: String,
@@ -146,7 +135,6 @@ class JsonParser(
          * @param start the start position of the [ParserError]
          * @param end the end position of the [ParserError]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         constructor(details: String, start: Position, end: Position) : this("ParserError", details, start, end)
 
@@ -158,7 +146,6 @@ class JsonParser(
          * @param start the start position of the [ParserError]
          * @param end the end position of the [ParserError]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         constructor(details: String, start: Int, end: Int) : this(
             "ParserError",
@@ -173,7 +160,6 @@ class JsonParser(
          *
          * @param error the error message
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         constructor(error: String) : this(
             error,

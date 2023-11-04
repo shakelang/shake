@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.util.parseutils.lexer.token.streaming
 
+import io.github.shakelang.shake.lexer.token.Token
 import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
-import io.github.shakelang.shake.lexer.token.Token
 import kotlin.test.*
 
 class TokenBasedTokenInputStreamTests {
@@ -486,7 +486,7 @@ class TokenBasedTokenInputStreamTests {
 
     @Test
     fun testToString() {
-val tokens = arrayOf(
+        val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, null, 4, 6),
             Token(TokenType.STRING, null, 7, 12),

@@ -37,11 +37,10 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
             return ConstantMethodHandleInfo(name, index)
         }
 
-        fun contentsFromStream(stream: InputStream)
-                = contentsFromStream(stream.dataStream)
+        fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if(stream.readByte() != tag)
+            if (stream.readByte() != tag)
                 throw IllegalArgumentException("Invalid tag for ConstantMethodHandleInfo")
             else contentsFromStream(stream)
 

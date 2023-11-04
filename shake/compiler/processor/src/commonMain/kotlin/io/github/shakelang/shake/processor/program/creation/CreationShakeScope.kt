@@ -22,11 +22,12 @@ abstract class CreationShakeScope : ShakeScope {
     override fun getInvokable(name: String): List<CreationShakeInvokable> {
         val functions = getFunctions(name)
         val variable = get(name)
-        if(variable != null && variable is CreationShakeInvokable) {
+        if (variable != null && variable is CreationShakeInvokable) {
             return listOf(variable, *functions.toTypedArray())
         }
         return functions
     }
+
     override fun use(name: String) {
         val declaration = get(name)
     }
@@ -51,12 +52,14 @@ abstract class CreationShakeScope : ShakeScope {
             ShakeVariableType.Type.BOOLEAN -> then(CreationShakeType.Primitives.BOOLEAN)
             ShakeVariableType.Type.CHAR -> then(CreationShakeType.Primitives.CHAR)
             ShakeVariableType.Type.OBJECT -> {
-                val namespace = (type as ShakeVariableType.Object).namespace ?: throw IllegalArgumentException("Object type must have subtype")
-                val clzName = namespace.parts.joinToString (".")
+                val namespace = (type as ShakeVariableType.Object).namespace
+                    ?: throw IllegalArgumentException("Object type must have subtype")
+                val clzName = namespace.parts.joinToString(".")
                 this.getClass(clzName) {
                     then(CreationShakeType.objectType(it))
                 }
             }
+
             ShakeVariableType.Type.DYNAMIC -> then(CreationShakeType.Primitives.DYNAMIC)
             ShakeVariableType.Type.ARRAY -> {
                 val subtype = (type as ShakeVariableType.Array).subtype
@@ -64,6 +67,7 @@ abstract class CreationShakeScope : ShakeScope {
                     then(CreationShakeType.array(it))
                 }
             }
+
             ShakeVariableType.Type.VOID -> then(CreationShakeType.Primitives.VOID)
         }
     }
@@ -82,13 +86,13 @@ abstract class CreationShakeScope : ShakeScope {
     }
 
     open fun init(): CreationShakeScope {
-        if(this.initialized) return this
+        if (this.initialized) return this
         project.addScope(this)
         this.initialized = true
         return this
     }
 
-    abstract val processor : ShakeCodeProcessor
+    abstract val processor: ShakeCodeProcessor
 }
 
 class CreationFileScope(

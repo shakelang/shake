@@ -11,8 +11,6 @@ import kotlin.js.JsName
 /**
  * A [CompilerError] is an error thrown by a Compiler. It has functionality for
  * marking source code locations
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 open class CompilerError : Error {
 
@@ -57,8 +55,6 @@ open class CompilerError : Error {
      * @param start the start position of the exception _(Value for [CompilerError.start])_
      * @param end the end position of the exception _(Value for [CompilerError.end])_
      * @param cause the cause for the exception
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private constructor(
         message: String,
@@ -86,8 +82,6 @@ open class CompilerError : Error {
      * @param start the start position of the exception _(Value for [CompilerError.start])_
      * @param end the end position of the exception _(Value for [CompilerError.end])_
      * @param cause the cause for the exception
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(
         message: String,
@@ -96,12 +90,14 @@ open class CompilerError : Error {
         start: Position,
         end: Position,
         cause: Throwable? = null
-    ) : this(message,
+    ) : this(
+        message,
         createPositionMarker(
             MAX_LENGTH,
             start,
             end
-        ), exceptionName, details, start, end, cause)
+        ), exceptionName, details, start, end, cause
+    )
 
 
     /**
@@ -114,8 +110,6 @@ open class CompilerError : Error {
      * @param start the start position of the exception _(Value for [CompilerError.start])_
      * @param end the end position of the exception _(Value for [CompilerError.end])_
      * @param cause the cause for the exception
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(
         message: String,
@@ -137,16 +131,12 @@ open class CompilerError : Error {
 
     /**
      * Stringify the [CompilerError]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString() = message!!
 
 
     /**
      * A marker for the position of the [CompilerError]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     class ErrorMarker(
 
@@ -179,7 +169,6 @@ open class CompilerError : Error {
         /**
          * Generate the [ErrorMarker] as a string
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JsName("generateMarker")
         fun generateMarker() = "at $source\n$preview\n$marker"
@@ -187,7 +176,6 @@ open class CompilerError : Error {
         /**
          * Generate the [ErrorMarker] as a string including console colors
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JsName("generateColoredMarker")
         fun generateColoredMarker() = "at $source\n$colorPreview\n$marker"
@@ -195,7 +183,6 @@ open class CompilerError : Error {
         /**
          * Stringify the [CompilerError] (just the same as [ErrorMarker.generateMarker]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override fun toString() = generateMarker()
 
@@ -206,14 +193,12 @@ open class CompilerError : Error {
         /**
          * The maxLength for generated [ErrorMarker]s
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         const val MAX_LENGTH = 60
 
         /**
          * Creates a [ErrorMarker]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         private fun createPositionMarker(
             maxLength: Int = MAX_LENGTH,
@@ -231,17 +216,17 @@ open class CompilerError : Error {
                 if (pos1.line != pos2.line) throw Error("The two positions that should be marked have to be in the same line")
                 if (pos1.column > pos2.column) throw Error("Position 1 must be before Position 2")
 
-                if(pos1.source.lineSeparators.contains(pos1.index)) {
+                if (pos1.source.lineSeparators.contains(pos1.index)) {
                     var pos = pos1.index
-                    while(pos1.source.lineSeparators.contains(pos)) {
+                    while (pos1.source.lineSeparators.contains(pos)) {
                         pos--
                     }
                     pos1 = pos1.source.resolve(pos)
                 }
 
-                if(pos2.source.lineSeparators.contains(pos2.index)) {
+                if (pos2.source.lineSeparators.contains(pos2.index)) {
                     var pos = pos2.index
-                    while(pos2.source.lineSeparators.contains(pos)) {
+                    while (pos2.source.lineSeparators.contains(pos)) {
                         pos--
                     }
                     pos2 = pos2.source.resolve(pos)
@@ -316,8 +301,7 @@ open class CompilerError : Error {
                     join(start, pos1.source.source[pos1.index, pos2.index + 1].concatToString(), end),
                     join(' '.repeat(start.length), '^'.repeat(highlighted))
                 )
-            }
-            catch (e: Throwable) {
+            } catch (e: Throwable) {
                 println("Error while creating position marker:")
                 e.printStackTrace()
                 return ErrorMarker(

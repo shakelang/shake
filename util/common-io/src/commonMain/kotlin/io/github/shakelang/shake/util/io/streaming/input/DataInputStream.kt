@@ -2,7 +2,6 @@ package io.github.shakelang.shake.util.io.streaming.input
 
 import io.github.shakelang.shake.util.io.IOException
 import io.github.shakelang.shake.util.primitives.bytes.*
-import io.github.shakelang.shake.util.primitives.bytes.*
 
 /**
  * A [DataInputStream] is a [InputStream] that can read data from a [InputStream]
@@ -11,7 +10,6 @@ import io.github.shakelang.shake.util.primitives.bytes.*
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 class DataInputStream(private val data: InputStream) : InputStream() {
 
@@ -24,7 +22,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(): Int {
         return data.read()
@@ -40,7 +37,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(b: ByteArray): Int {
         return data.read(b)
@@ -57,7 +53,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(b: ByteArray, off: Int, len: Int): Int {
         return data.read(b, off, len)
@@ -72,7 +67,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun skip(n: Long): Long {
         return data.skip(n)
@@ -86,7 +80,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun available(): Int {
         return data.available()
@@ -99,7 +92,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun close() {
         data.close()
@@ -115,7 +107,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.markSupported
      */
@@ -132,7 +123,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun reset() {
         data.reset()
@@ -148,7 +138,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun markSupported(): Boolean {
         return data.markSupported()
@@ -164,7 +153,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readByte(): Byte {
         return read().toByte()
@@ -181,7 +169,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readShort(): Short {
         return readNBytes(2).toShort()
@@ -198,7 +185,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readInt(): Int {
         return readNBytes(4).toInt()
@@ -215,7 +201,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readLong(): Long {
         return readNBytes(8).toLong()
@@ -232,7 +217,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readFloat(): Float {
         return readNBytes(4).toFloat()
@@ -249,7 +233,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readDouble(): Double {
         return readNBytes(8).toDouble()
@@ -266,7 +249,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readUnsignedByte(): UByte {
         return readByte().toUByte()
@@ -283,7 +265,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readUnsignedShort(): UShort {
         return readNBytes(2).toUnsignedShort()
@@ -300,7 +281,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readUnsignedInt(): UInt {
         return readNBytes(4).toUnsignedInt()
@@ -317,7 +297,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readUnsignedLong(): ULong {
         return readNBytes(8).toUnsignedLong()
@@ -336,7 +315,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readUTF(length: Int): String {
         return readNBytes(length).toUtf8String()
@@ -354,7 +332,6 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun readUTF(): String {
         val length = readInt()

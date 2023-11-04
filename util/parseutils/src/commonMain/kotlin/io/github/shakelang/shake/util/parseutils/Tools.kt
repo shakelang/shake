@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.util.parseutils
 
 open class LoopController {

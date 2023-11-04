@@ -33,6 +33,7 @@ interface PositionMap {
     fun getAfterInLine(p: Position): Int {
         return if (p.line - 1 == lineSeparators.size) source.length - p.column else lineSeparators[p.line - 1] - p.index
     }
+
     fun getAfterInLine(index: Int): Int = getAfterInLine(resolve(index))
 
     open class PositionMapImpl(

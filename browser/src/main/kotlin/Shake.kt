@@ -17,8 +17,6 @@ private val core_files = mutableMapOf<String, String>()
 
 /**
  * Add an api file to the interpreter code execution
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @JsName("addInterpreterFile")
 fun addInterpreterFile(filename: String, contents: String): Boolean {
@@ -29,8 +27,6 @@ fun addInterpreterFile(filename: String, contents: String): Boolean {
 
 /**
  * Add an api file from an url to the interpreter code execution
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @JsName("addInterpreterFileFromUrl")
 fun addInterpreterFileFromUrl(filename: String, url: String): Promise<Unit> {
@@ -41,8 +37,6 @@ fun addInterpreterFileFromUrl(filename: String, url: String): Promise<Unit> {
 
 /**
  * Execute the given code
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @JsName("execute")
 @Suppress("unused")
@@ -63,11 +57,9 @@ fun execute(source: String, code: String) {
 
 /**
  * Parse the given code
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-private fun parse(source: String, input: String)
-    = parse(SourceCharacterInputStream(CharacterSource.Companion.from(input, source)))
+private fun parse(source: String, input: String) =
+    parse(SourceCharacterInputStream(CharacterSource.Companion.from(input, source)))
 
 
 /**
@@ -75,8 +67,6 @@ private fun parse(source: String, input: String)
  *
  * @param input the [CharacterInputStream] to parse
  * @return the parsed [Tree]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 private fun parse(input: CharacterInputStream): ParseResult {
 
@@ -96,7 +86,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val tree = parser.parse()
 
     // If debug is enabled we print out the tree
-    debug("[DEBUG] Parsed Tree: $tree", )
+    debug("[DEBUG] Parsed Tree: $tree")
 
     // return the Tree
     return ParseResult(tree, tokens.map)
@@ -106,8 +96,6 @@ private fun parse(input: CharacterInputStream): ParseResult {
 
 /**
  * The result of a parsing operation.
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 private class ParseResult(val tree: Tree, val map: PositionMap)
@@ -115,8 +103,6 @@ private class ParseResult(val tree: Tree, val map: PositionMap)
 
 /**
  * Log a message to console.debug
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused_parameter")
 private fun debug(message: String) {

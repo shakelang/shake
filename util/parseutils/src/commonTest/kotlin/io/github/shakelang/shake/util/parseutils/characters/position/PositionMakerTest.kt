@@ -8,8 +8,7 @@ import kotlin.test.assertSame
 
 /**
  * Tests for [PositionMaker]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)w
+ *w
  */
 class PositionMakerTest {
 

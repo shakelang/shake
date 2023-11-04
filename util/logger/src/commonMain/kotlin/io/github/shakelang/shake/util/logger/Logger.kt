@@ -22,7 +22,7 @@ object CommonConsoleLogger : LoggerPipe() {
     override fun log(level: LogLevel, message: String) = println(message)
 }
 
-class Logger (
+class Logger(
     val path: String,
     val name: String = path,
     var printName: Boolean = true,

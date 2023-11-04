@@ -11,16 +11,14 @@ import io.github.shakelang.shake.util.io.IOException
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
-class CountingInputStream (
+class CountingInputStream(
 
     /**
      * The input stream to count the read bytes from
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private val data: InputStream
 
@@ -31,7 +29,6 @@ class CountingInputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @deprecated Use [byteCount] instead.
      */
@@ -42,7 +39,6 @@ class CountingInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     var byteCount: Long = 0L
         private set
@@ -65,7 +61,6 @@ class CountingInputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      *
      * @see InputStream.read
      * @see InputStream.readNBytes
@@ -86,7 +81,6 @@ class CountingInputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(b: ByteArray): Int {
         operationCount++
@@ -104,7 +98,6 @@ class CountingInputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun read(b: ByteArray, off: Int, len: Int): Int {
         operationCount++
@@ -122,7 +115,6 @@ class CountingInputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun skip(n: Long): Long {
         operationCount++
@@ -140,7 +132,6 @@ class CountingInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun readNBytes(n: Int): ByteArray {
         operationCount++
@@ -158,7 +149,6 @@ class CountingInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun readNBytes(b: ByteArray, off: Int, len: Int): Int {
         operationCount++
@@ -174,7 +164,6 @@ class CountingInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun markSupported(): Boolean {
         return data.markSupported()
@@ -188,7 +177,6 @@ class CountingInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun mark(readlimit: Int) {
         data.mark(readlimit)
@@ -199,7 +187,6 @@ class CountingInputStream (
      *
      * @since 0.1.1
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun reset() {
         operationCount = 0
@@ -215,7 +202,6 @@ class CountingInputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun available(): Int {
         return data.available()
@@ -226,7 +212,6 @@ class CountingInputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun close() {
         data.close()

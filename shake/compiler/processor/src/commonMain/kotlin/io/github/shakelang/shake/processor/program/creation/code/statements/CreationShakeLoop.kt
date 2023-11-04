@@ -6,7 +6,7 @@ import io.github.shakelang.shake.processor.program.types.code.statements.ShakeDo
 import io.github.shakelang.shake.processor.program.types.code.statements.ShakeFor
 import io.github.shakelang.shake.processor.program.types.code.statements.ShakeWhile
 
-class CreationShakeWhile (
+class CreationShakeWhile(
     override val condition: CreationShakeValue,
     override val body: CreationShakeCode
 ) : CreationShakeStatement, ShakeWhile {
@@ -19,7 +19,7 @@ class CreationShakeWhile (
     }
 }
 
-class CreationShakeDoWhile (
+class CreationShakeDoWhile(
     override val condition: CreationShakeValue,
     override val body: CreationShakeCode
 ) : CreationShakeStatement, ShakeDoWhile {

@@ -6,11 +6,12 @@ import kotlin.test.assertEquals
 
 class ConstantInvokeDynamicTests {
 
-    private val testConstants: Array<ConstantInfo> get() = arrayOf(
-        ConstantNameAndTypeInfo(3u, 4u),
-        ConstantUtf8Info("foo"),
-        ConstantUtf8Info("I"),
-    )
+    private val testConstants: Array<ConstantInfo>
+        get() = arrayOf(
+            ConstantNameAndTypeInfo(3u, 4u),
+            ConstantUtf8Info("foo"),
+            ConstantUtf8Info("I"),
+        )
 
     @Test
     fun test() {
@@ -77,7 +78,6 @@ class ConstantInvokeDynamicTests {
         ConstantPool(mutableListOf(constant, *testConstants))
         assertEquals(byteArrayOf(0x12, 0x00, 0x00, 0x00, 0x02).toList(), constant.toBytes().toList())
     }
-
 
 
     @Test

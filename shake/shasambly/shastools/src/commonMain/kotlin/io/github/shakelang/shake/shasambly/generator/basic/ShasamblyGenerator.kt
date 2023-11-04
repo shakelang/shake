@@ -1,9 +1,10 @@
 @file: Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.generator.basic
 
+import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 import io.github.shakelang.shake.util.primitives.bytes.toBytes
 import io.github.shakelang.shake.util.primitives.bytes.toHexString
-import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 
 /**
  * This represents one shasambly opcode in the generation. It will be converted to it's bytes by
@@ -56,7 +57,7 @@ open class ShasamblyGenerator(contents: MutableList<ShasamblyOpcode>) : MutableL
      * Generates all content [Opcodes] into a single [ByteArray]
      */
     fun generate(): ByteArray {
-        if(sizesCache != null) throw IllegalStateException("Generate already running")
+        if (sizesCache != null) throw IllegalStateException("Generate already running")
         sizesCache = sizes
 
         val bytes = flatMap { it.generate(this).toList() }.toByteArray()
@@ -71,8 +72,8 @@ open class ShasamblyGenerator(contents: MutableList<ShasamblyOpcode>) : MutableL
     fun positionOfIndex(index: Int): Int {
         val sizes = sizes
         var sum = 0
-        if(index > sizes.size) throw IllegalArgumentException("Index to big, must be smaller than ${sizes.size} (is $index)")
-        for(i in 0 until index) sum += sizes[i]
+        if (index > sizes.size) throw IllegalArgumentException("Index to big, must be smaller than ${sizes.size} (is $index)")
+        for (i in 0 until index) sum += sizes[i]
         return sum
     }
 
@@ -83,7 +84,7 @@ open class ShasamblyGenerator(contents: MutableList<ShasamblyOpcode>) : MutableL
  */
 open class ShasamblyOpcodeIncrStack(val stackSize: Int) : ShasamblyOpcode {
     init {
-        if(stackSize !in 0..UShort.MAX_VALUE.toInt()) throw IllegalArgumentException("Stack size must not be bigger then ${UShort.MAX_VALUE} and not below 0, but is $stackSize")
+        if (stackSize !in 0..UShort.MAX_VALUE.toInt()) throw IllegalArgumentException("Stack size must not be bigger then ${UShort.MAX_VALUE} and not below 0, but is $stackSize")
     }
 
     override val size get() = 3
@@ -114,7 +115,7 @@ private fun resolveJump(target: Int): Int {
  */
 open class ShasamblyOpcodeJumpStatic(val address: Int) : ShasamblyOpcode {
     init {
-        if(address < 0) throw IllegalArgumentException("Jump address must not be smaller than 0 (is $address)")
+        if (address < 0) throw IllegalArgumentException("Jump address must not be smaller than 0 (is $address)")
     }
 
     override val size: Int get() = 5
@@ -130,7 +131,7 @@ open class ShasamblyOpcodeJumpStatic(val address: Int) : ShasamblyOpcode {
  * @see ShasamblyOpcodeJumpStatic
  * @see ShasamblyOpcodeJumpStaticToRelativeIndex
  */
-open class ShasamblyOpcodeJumpStaticToIndex(val index: Int): ShasamblyOpcodeJumpStatic(0) {
+open class ShasamblyOpcodeJumpStaticToIndex(val index: Int) : ShasamblyOpcodeJumpStatic(0) {
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val address = gen.positionOfIndex(index)
         return byteArrayOf(Opcodes.JUMP_STATIC, *resolveJump(address).toBytes())
@@ -154,14 +155,15 @@ open class ShasamblyOpcodeJumpStaticToIndex(val index: Int): ShasamblyOpcodeJump
  * @see ShasamblyOpcodeJumpStatic
  * @see ShasamblyOpcodeJumpStaticToIndex
  */
-open class ShasamblyOpcodeJumpStaticToRelativeIndex(val relativeIndex: Int): ShasamblyOpcodeJumpStatic(0) {
+open class ShasamblyOpcodeJumpStaticToRelativeIndex(val relativeIndex: Int) : ShasamblyOpcodeJumpStatic(0) {
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val index = gen.indexOf(this) + relativeIndex
         val address = gen.positionOfIndex(index)
         return byteArrayOf(Opcodes.JUMP_STATIC, *resolveJump(address).toBytes())
     }
 }
-open class ShasamblyOpcodeIPushAddress(val relativeIndex: Int): ShasamblyOpcodeJumpStatic(0) {
+
+open class ShasamblyOpcodeIPushAddress(val relativeIndex: Int) : ShasamblyOpcodeJumpStatic(0) {
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val index = gen.indexOf(this) + relativeIndex
         val address = gen.positionOfIndex(index)
@@ -189,7 +191,7 @@ open class ShasamblyOpcodeJumpDynamic : ShasamblyOpcode {
  */
 open class ShasamblyOpcodeJumpIf(val address: Int) : ShasamblyOpcode {
     init {
-        if(address < 0) throw IllegalArgumentException("Jump address must not be smaller than 0 (is $address)")
+        if (address < 0) throw IllegalArgumentException("Jump address must not be smaller than 0 (is $address)")
     }
 
     override val size: Int get() = 5
@@ -205,7 +207,7 @@ open class ShasamblyOpcodeJumpIf(val address: Int) : ShasamblyOpcode {
  * @see ShasamblyOpcodeJumpIf
  * @see ShasamblyOpcodeJumpIfToRelativeIndex
  */
-open class ShasamblyOpcodeJumpIfToIndex(val index: Int): ShasamblyOpcodeJumpIf(0) {
+open class ShasamblyOpcodeJumpIfToIndex(val index: Int) : ShasamblyOpcodeJumpIf(0) {
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val address = gen.positionOfIndex(index)
         return byteArrayOf(Opcodes.JUMP_IF, *resolveJump(address).toBytes())
@@ -229,7 +231,7 @@ open class ShasamblyOpcodeJumpIfToIndex(val index: Int): ShasamblyOpcodeJumpIf(0
  * @see ShasamblyOpcodeJumpIfToIndex
  * @see ShasamblyOpcodeJumpIfToRelativeIndex
  */
-open class ShasamblyOpcodeJumpIfToRelativeIndex(val relativeIndex: Int): ShasamblyOpcodeJumpIf(0) {
+open class ShasamblyOpcodeJumpIfToRelativeIndex(val relativeIndex: Int) : ShasamblyOpcodeJumpIf(0) {
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         val index = gen.indexOf(this) + relativeIndex
         val address = gen.positionOfIndex(index)
@@ -244,9 +246,11 @@ open class ShasamblyOpcodeJumpIfToRelativeIndex(val relativeIndex: Int): Shasamb
  */
 open class ShasamblyOpcodeGlobAddr(val address: Int) : ShasamblyOpcode {
     init {
-        if(address !in 0..UShort.MAX_VALUE.toInt())
-            throw IllegalArgumentException("Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
-                    " and not below 0x0, but is 0x${address.toBytes().toHexString()}")
+        if (address !in 0..UShort.MAX_VALUE.toInt())
+            throw IllegalArgumentException(
+                "Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
+                        " and not below 0x0, but is 0x${address.toBytes().toHexString()}"
+            )
     }
 
     override val size: Int get() = 3
@@ -270,9 +274,10 @@ open class ShasamblyOpcodeGlobAddr(val address: Int) : ShasamblyOpcode {
 open class ShasamblyLateinitOpcode(override val size: Int) : ShasamblyOpcode {
     var opcode: ShasamblyOpcode? = null
     override fun generate(gen: ShasamblyGenerator): ByteArray {
-        if(opcode == null) throw Error("Lateinit opcode is not initialized")
+        if (opcode == null) throw Error("Lateinit opcode is not initialized")
         return opcode!!.generate(gen)
     }
+
     fun init(opcode: ShasamblyOpcode) {
         this.opcode = opcode
     }
@@ -288,7 +293,11 @@ open class ShasamblyLateinitOpcode(override val size: Int) : ShasamblyOpcode {
 open class ShasamblyOpcodeInvokeNative(val address: Short, val args: ByteArray = byteArrayOf()) : ShasamblyOpcode {
 
     init {
-        if(address < 0) throw IllegalArgumentException("Jump address must not be smaller than 0x0 (is 0x${address.toBytes().toHexString()})")
+        if (address < 0) throw IllegalArgumentException(
+            "Jump address must not be smaller than 0x0 (is 0x${
+                address.toBytes().toHexString()
+            })"
+        )
     }
 
     override val size: Int = 3 + args.size
@@ -307,12 +316,14 @@ open class ShasamblyOpcodeInvokeNative(val address: Short, val args: ByteArray =
  * @see ShasamblyOpcodeIGetLocal
  * @see ShasamblyOpcodeLGetLocal
  */
-abstract class ShasamblyOpcodeGetLocal(val opcode: Byte, val address: Int): ShasamblyOpcode {
+abstract class ShasamblyOpcodeGetLocal(val opcode: Byte, val address: Int) : ShasamblyOpcode {
 
     init {
-        if(address !in 0..UShort.MAX_VALUE.toInt())
-            throw IllegalArgumentException("Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
-                    " and not below 0x0, but is 0x${address.toBytes().toHexString()}")
+        if (address !in 0..UShort.MAX_VALUE.toInt())
+            throw IllegalArgumentException(
+                "Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
+                        " and not below 0x0, but is 0x${address.toBytes().toHexString()}"
+            )
     }
 
     override val size: Int get() = 3
@@ -326,25 +337,25 @@ abstract class ShasamblyOpcodeGetLocal(val opcode: Byte, val address: Int): Shas
  * Generator for opcode [Opcodes.B_GET_LOCAL]
  * Gets a byte from the local variables at a given local address and puts it on top of the stack
  */
-open class ShasamblyOpcodeBGetLocal(address: Int): ShasamblyOpcodeGetLocal(Opcodes.B_GET_LOCAL, address)
+open class ShasamblyOpcodeBGetLocal(address: Int) : ShasamblyOpcodeGetLocal(Opcodes.B_GET_LOCAL, address)
 
 /**
  * Generator for opcode [Opcodes.S_GET_LOCAL]
  * Gets a short from the local variables at a given local address and puts it on top of the stack
  */
-open class ShasamblyOpcodeSGetLocal(address: Int): ShasamblyOpcodeGetLocal(Opcodes.S_GET_LOCAL, address)
+open class ShasamblyOpcodeSGetLocal(address: Int) : ShasamblyOpcodeGetLocal(Opcodes.S_GET_LOCAL, address)
 
 /**
  * Generator for opcode [Opcodes.I_GET_LOCAL]
  * Gets a short from the local variables at a given local address and puts it on top of the stack
  */
-open class ShasamblyOpcodeIGetLocal(address: Int): ShasamblyOpcodeGetLocal(Opcodes.I_GET_LOCAL, address)
+open class ShasamblyOpcodeIGetLocal(address: Int) : ShasamblyOpcodeGetLocal(Opcodes.I_GET_LOCAL, address)
 
 /**
  * Generator for opcode [Opcodes.L_GET_LOCAL]
  * Gets a long from the local variables at a given local address and puts it on top of the stack
  */
-open class ShasamblyOpcodeLGetLocal(address: Int): ShasamblyOpcodeGetLocal(Opcodes.L_GET_LOCAL, address)
+open class ShasamblyOpcodeLGetLocal(address: Int) : ShasamblyOpcodeGetLocal(Opcodes.L_GET_LOCAL, address)
 
 /**
  * This is a typealias to [ShasamblyOpcodeIGetLocal]
@@ -376,12 +387,14 @@ typealias ShasamblyOpcodeDGetLocal = ShasamblyOpcodeLGetLocal
  * @see ShasamblyOpcodeIStoreLocal
  * @see ShasamblyOpcodeLStoreLocal
  */
-abstract class ShasamblyOpcodeStoreLocal(val opcode: Byte, val address: Int): ShasamblyOpcode {
+abstract class ShasamblyOpcodeStoreLocal(val opcode: Byte, val address: Int) : ShasamblyOpcode {
 
     init {
-        if(address !in 0..UShort.MAX_VALUE.toInt())
-            throw IllegalArgumentException("Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
-                    " and not below 0x0, but is 0x${address.toBytes().toHexString()}")
+        if (address !in 0..UShort.MAX_VALUE.toInt())
+            throw IllegalArgumentException(
+                "Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
+                        " and not below 0x0, but is 0x${address.toBytes().toHexString()}"
+            )
     }
 
     override val size: Int get() = 3
@@ -395,25 +408,25 @@ abstract class ShasamblyOpcodeStoreLocal(val opcode: Byte, val address: Int): Sh
  * Generator for opcode [Opcodes.B_STORE_LOCAL]
  * Takes the top byte from the stack and puts it into the given local address
  */
-open class ShasamblyOpcodeBStoreLocal(address: Int): ShasamblyOpcodeStoreLocal(Opcodes.B_STORE_LOCAL, address)
+open class ShasamblyOpcodeBStoreLocal(address: Int) : ShasamblyOpcodeStoreLocal(Opcodes.B_STORE_LOCAL, address)
 
 /**
  * Generator for opcode [Opcodes.S_STORE_LOCAL]
  * Takes the top short from the stack and puts it into the given local address
  */
-open class ShasamblyOpcodeSStoreLocal(address: Int): ShasamblyOpcodeStoreLocal(Opcodes.S_STORE_LOCAL, address)
+open class ShasamblyOpcodeSStoreLocal(address: Int) : ShasamblyOpcodeStoreLocal(Opcodes.S_STORE_LOCAL, address)
 
 /**
  * Generator for opcode [Opcodes.I_STORE_LOCAL]
  * Takes the top integer from the stack and puts it into the given local address
  */
-open class ShasamblyOpcodeIStoreLocal(address: Int): ShasamblyOpcodeStoreLocal(Opcodes.I_STORE_LOCAL, address)
+open class ShasamblyOpcodeIStoreLocal(address: Int) : ShasamblyOpcodeStoreLocal(Opcodes.I_STORE_LOCAL, address)
 
 /**
  * Generator for opcode [Opcodes.L_STORE_LOCAL]
  * Takes the top long from the stack and puts it into the given local address
  */
-open class ShasamblyOpcodeLStoreLocal(address: Int): ShasamblyOpcodeStoreLocal(Opcodes.L_STORE_LOCAL, address)
+open class ShasamblyOpcodeLStoreLocal(address: Int) : ShasamblyOpcodeStoreLocal(Opcodes.L_STORE_LOCAL, address)
 
 /**
  * This is a typealias to [ShasamblyOpcodeIStoreLocal]
@@ -441,10 +454,11 @@ typealias ShasamblyOpcodeDStoreLocal = ShasamblyOpcodeLStoreLocal
  */
 open class ShasamblyOpcodeBPush(val byte: Byte) : ShasamblyOpcode {
 
-    constructor(bool: Boolean) : this(if(bool) 0x01 else 0x00)
+    constructor(bool: Boolean) : this(if (bool) 0x01 else 0x00)
 
     override val size: Int
         get() = 2
+
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         return byteArrayOf(Opcodes.B_PUSH, byte)
     }
@@ -459,6 +473,7 @@ open class ShasamblyOpcodeSPush(val short: Short) : ShasamblyOpcode {
 
     override val size: Int
         get() = 3
+
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         return byteArrayOf(Opcodes.S_PUSH, *short.toBytes())
     }
@@ -492,6 +507,7 @@ open class ShasamblyOpcodeLPush(val long: Long) : ShasamblyOpcode {
 
     override val size: Int
         get() = 9
+
     override fun generate(gen: ShasamblyGenerator): ByteArray {
         return byteArrayOf(Opcodes.L_PUSH, *long.toBytes())
     }

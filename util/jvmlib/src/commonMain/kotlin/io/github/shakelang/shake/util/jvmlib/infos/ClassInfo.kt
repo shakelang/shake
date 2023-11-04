@@ -50,13 +50,14 @@ class ClassInfo(
 
     val name: String get() = thisClass.className
 
-    val users get() = arrayOf(
-        *constantPool.users,
-        interfaces,
-        *fieldInfos.users,
-        *methodInfos.users,
-        *attributeInfos.users
-    )
+    val users
+        get() = arrayOf(
+            *constantPool.users,
+            interfaces,
+            *fieldInfos.users,
+            *methodInfos.users,
+            *attributeInfos.users
+        )
 
     val uses: Array<ConstantInfo>
         get() = arrayOf(
@@ -113,9 +114,9 @@ class ClassInfo(
 
         const val magic: Int = 0xcafebabe.toInt()
 
-        fun fromStream(stream : DataInputStream): ClassInfo {
+        fun fromStream(stream: DataInputStream): ClassInfo {
             val magic = stream.readUnsignedInt()
-            if(magic.toLong() != 0xcafebabe) throw IllegalArgumentException("Invalid magic number 0x${magic.toString(16)}")
+            if (magic.toLong() != 0xcafebabe) throw IllegalArgumentException("Invalid magic number 0x${magic.toString(16)}")
             val minorVersion = stream.readUnsignedShort()
             val majorVersion = stream.readUnsignedShort()
             val constantPool = ConstantPool.fromStream(stream)

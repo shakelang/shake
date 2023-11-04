@@ -1,4 +1,5 @@
 @file:Suppress("unused_variable")
+
 package io.github.shakelang.shake.util.jvmlib.infos.constants
 
 import io.github.shakelang.shake.util.io.streaming.input.inputStream
@@ -45,7 +46,8 @@ class ConstantInfoTests {
 
     @Test
     fun testConstantInterfaceMethodRefFromStream() {
-        val inputStream = byteArrayOf(0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00).inputStream()
+        val inputStream =
+            byteArrayOf(0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00).inputStream()
         val constant = ConstantInfo.fromStream(inputStream).toInterfaceMethodRef()
     }
 
@@ -63,7 +65,8 @@ class ConstantInfoTests {
 
     @Test
     fun testConstantNameAndTypeFromStream() {
-        val inputStream = byteArrayOf(0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00).inputStream()
+        val inputStream =
+            byteArrayOf(0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00).inputStream()
         val constant = ConstantInfo.fromStream(inputStream).toNameAndType()
     }
 

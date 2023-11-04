@@ -38,13 +38,15 @@ class FormattedStringTests {
 
     @Test
     fun testFormattedStringColor() {
-        val formattedString = FormattedString(listOf(FormattedStringObject.wrap("Hello World")), color = Formatting.FGColor.RED)
+        val formattedString =
+            FormattedString(listOf(FormattedStringObject.wrap("Hello World")), color = Formatting.FGColor.RED)
         assertEquals("${Formatting.FGColor.RED}Hello World${Formatting.RESET}", formattedString.string())
     }
 
     @Test
     fun testFormattedStringBackgroundColor() {
-        val formattedString = FormattedString(listOf(FormattedStringObject.wrap("Hello World")), backgroundColor = Formatting.BGColor.RED)
+        val formattedString =
+            FormattedString(listOf(FormattedStringObject.wrap("Hello World")), backgroundColor = Formatting.BGColor.RED)
         assertEquals("${Formatting.BGColor.RED}Hello World${Formatting.RESET}", formattedString.string())
     }
 
@@ -422,7 +424,7 @@ class FormattedStringTests {
         assertEquals("${Formatting.BGColor.BRIGHT_WHITE}Hello World${Formatting.RESET}", formattedString.string())
     }
 
-   @Test
+    @Test
     fun testMakeFormattedStringReset() {
         val formattedString = FormattedString.wrap("Hello World").reset()
         assertEquals("Hello World", formattedString.string())
@@ -809,44 +811,66 @@ class FormattedStringTests {
     @Test
     fun testExtendsWithBold() {
         val formattedString = ("Hello".red() + " World").bold()
-        assertEquals("${Formatting.BOLD}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.BOLD} World${Formatting.RESET}", formattedString.string())
+        assertEquals(
+            "${Formatting.BOLD}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.BOLD} World${Formatting.RESET}",
+            formattedString.string()
+        )
     }
 
     @Test
     fun testExtendsWithItalic() {
         val formattedString = ("Hello".red() + " World").italic()
-        assertEquals("${Formatting.ITALIC}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.ITALIC} World${Formatting.RESET}", formattedString.string())
+        assertEquals(
+            "${Formatting.ITALIC}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.ITALIC} World${Formatting.RESET}",
+            formattedString.string()
+        )
     }
 
     @Test
     fun testExtendsWithUnderline() {
         val formattedString = ("Hello".red() + " World").underline()
-        assertEquals("${Formatting.UNDERLINE}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.UNDERLINE} World${Formatting.RESET}", formattedString.string())
+        assertEquals(
+            "${Formatting.UNDERLINE}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.UNDERLINE} World${Formatting.RESET}",
+            formattedString.string()
+        )
     }
 
     @Test
     fun testExtendsWithStrikethrough() {
         val formattedString = ("Hello".red() + " World").strikethrough()
-        assertEquals("${Formatting.STRIKETHROUGH}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.STRIKETHROUGH} World${Formatting.RESET}", formattedString.string())
+        assertEquals(
+            "${Formatting.STRIKETHROUGH}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.STRIKETHROUGH} World${Formatting.RESET}",
+            formattedString.string()
+        )
     }
 
     @Test
     fun testExtendsWithInvert() {
         val formattedString = ("Hello".red() + " World").invert()
-        assertEquals("${Formatting.INVERT}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.INVERT} World${Formatting.RESET}", formattedString.string())
+        assertEquals(
+            "${Formatting.INVERT}${Formatting.FGColor.RED}Hello${Formatting.RESET}${Formatting.INVERT} World${Formatting.RESET}",
+            formattedString.string()
+        )
     }
 
     @Test
     fun testExtendsWithColor() {
         val formattedString = ("Hello".bold() + " World").color(Formatting.FGColor.BLUE)
-        assertEquals("${Formatting.BOLD}${Formatting.FGColor.BLUE}Hello${Formatting.RESET}${Formatting.FGColor.BLUE} World${Formatting.RESET}", formattedString.string())
+        assertEquals(
+            "${Formatting.BOLD}${Formatting.FGColor.BLUE}Hello${Formatting.RESET}${Formatting.FGColor.BLUE} World${Formatting.RESET}",
+            formattedString.string()
+        )
     }
 
     @Test
     fun testWithBackground() {
         val formattedString = ("Hello".bold() + " World").backgroundColor(Formatting.BGColor.BLUE)
-        assertEquals("${Formatting.BOLD}${Formatting.BGColor.BLUE}Hello${Formatting.RESET}${Formatting.BGColor.BLUE} World${Formatting.RESET}", formattedString.string())
+        assertEquals(
+            "${Formatting.BOLD}${Formatting.BGColor.BLUE}Hello${Formatting.RESET}${Formatting.BGColor.BLUE} World${Formatting.RESET}",
+            formattedString.string()
+        )
     }
+
     @Test
     fun testWrapOfString() {
         val formattedString = FormattedString.wrap("Hello World")
@@ -868,7 +892,10 @@ class FormattedStringTests {
     @Test
     fun testWrapOfFormattedStrings() {
         val formattedString = FormattedString.wrap("Hello World".red(), "Hello World".blue())
-        assertEquals("${Formatting.FGColor.RED}Hello World${Formatting.RESET}${Formatting.FGColor.BLUE}Hello World${Formatting.RESET}", formattedString.string())
+        assertEquals(
+            "${Formatting.FGColor.RED}Hello World${Formatting.RESET}${Formatting.FGColor.BLUE}Hello World${Formatting.RESET}",
+            formattedString.string()
+        )
     }
 
 }

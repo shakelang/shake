@@ -3,22 +3,16 @@ package io.github.shakelang.shake.util.shason.map
 
 /**
  * A type for an own map implementation.
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 interface MapType<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K, V, MT, MMT>> : Map<K, V> {
 
     /**
      * Create a new map from this map
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toMap(): MT
 
     /**
      * Create a mutable map from this map
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toMutableMap(): MMT
 
@@ -27,16 +21,12 @@ interface MapType<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K, V, 
 
 /**
  * A type for an own mutable map implementation.
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 interface MutableMapType<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K, V, MT, MMT>>
     : MutableMap<K, V>, MapType<K, V, MT, MMT>
 
 /**
  * A base API class for an implementation of [MapType]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 abstract class MapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K, V, MT, MMT>>(
 
@@ -75,29 +65,21 @@ abstract class MapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K
 
     /**
      * Returns `true` if the map contains the specified [key].
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun containsKey(key: K): Boolean = this.map.containsKey(key)
 
     /**
      * Returns `true` if the map maps one or more keys to the specified [value].
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun containsValue(value: V): Boolean = this.map.containsValue(value)
 
     /**
      * Returns the value corresponding to the given [key], or `null` if such a key is not present in the map.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun get(key: K): V? = this.map[key]
 
     /**
      * Returns `true` if the map is empty (contains no elements), `false` otherwise.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun isEmpty(): Boolean = this.map.isEmpty()
 
@@ -140,36 +122,26 @@ abstract class MutableMapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMa
 
     /**
      * Returns `true` if the map contains the specified [key].
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun containsKey(key: K): Boolean = this.map.containsKey(key)
 
     /**
      * Returns `true` if the map maps one or more keys to the specified [value].
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun containsValue(value: V): Boolean = this.map.containsValue(value)
 
     /**
      * Returns the value corresponding to the given [key], or `null` if such a key is not present in the map.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun get(key: K): V? = this.map[key]
 
     /**
      * Returns `true` if the map is empty (contains no elements), `false` otherwise.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun isEmpty(): Boolean = this.map.isEmpty()
 
     /**
      * Removes all elements from this map.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun clear() = this.map.clear()
 
@@ -177,15 +149,11 @@ abstract class MutableMapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMa
      * Associates the specified [value] with the specified [key] in the map.
      *
      * @return the previous value associated with the key, or `null` if the key was not present in the map.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun put(key: K, value: V): V? = this.map.put(key, value)
 
     /**
      * Updates this map with key/value pairs from the specified map [from].
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun putAll(from: Map<out K, V>) = this.map.putAll(from)
 
@@ -193,8 +161,6 @@ abstract class MutableMapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMa
      * Removes the specified key and its corresponding value from this map.
      *
      * @return the previous value associated with the key, or `null` if the key was not present in the map.
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun remove(key: K): V? = this.map.remove(key)
 

@@ -19,17 +19,29 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
     val expanding: ShakeType?
 
     override val qualifiedName: String
-        get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}${expanding?.qualifiedName?.plus("$")?:""}$name"
+        get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}${expanding?.qualifiedName?.plus("$") ?: ""}$name"
 
     val signature: String get() = name
 
     override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType = type.assignType(other, scope) ?: other
-    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.additionAssignType(other, scope) ?: type
-    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.subtractionAssignType(other, scope) ?: type
-    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.multiplicationAssignType(other, scope) ?: type
-    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.divisionAssignType(other, scope) ?: type
-    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.modulusAssignType(other, scope) ?: type
-    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.powerAssignType(other, scope) ?: type
+    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.additionAssignType(other, scope) ?: type
+
+    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.subtractionAssignType(other, scope) ?: type
+
+    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.multiplicationAssignType(other, scope) ?: type
+
+    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.divisionAssignType(other, scope) ?: type
+
+    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.modulusAssignType(other, scope) ?: type
+
+    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.powerAssignType(other, scope) ?: type
+
     override fun incrementBeforeType(scope: ShakeScope): ShakeType = type.incrementBeforeType(scope) ?: type
     override fun incrementAfterType(scope: ShakeScope): ShakeType = type.incrementAfterType(scope) ?: type
     override fun decrementBeforeType(scope: ShakeScope): ShakeType? = type.decrementBeforeType(scope) ?: type

@@ -6,8 +6,6 @@ import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSour
 
 /**
  * An implementation of [CharacterInputStream] using just a string as argument
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 class SourceCharacterInputStream(
@@ -29,7 +27,6 @@ class SourceCharacterInputStream(
      *
      * @return the actual position of the [CharacterInputStream]
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.position
      * @see SourceCharacterInputStream.content
@@ -43,7 +40,6 @@ class SourceCharacterInputStream(
      *
      * @return the chars of the [CharacterInputStream]
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.content
      * @see SourceCharacterInputStream.source
@@ -57,8 +53,6 @@ class SourceCharacterInputStream(
      *
      * @param content the characters
      * @param source the source of the characters
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(source: String, content: CharArray) : this(from(content, source))
 
@@ -67,8 +61,6 @@ class SourceCharacterInputStream(
      *
      * @param content the characters
      * @param source the source of the characters
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(source: String, content: String) : this(from(content, source))
 
@@ -77,7 +69,6 @@ class SourceCharacterInputStream(
      *
      * @return if the [CharacterInputStream] has a next character
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.hasNext
      * @see SourceCharacterInputStream.has
@@ -93,7 +84,6 @@ class SourceCharacterInputStream(
      * @param number the num of characters to check
      * @return if the [CharacterInputStream] has a given number of characters left
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.has
      * @see SourceCharacterInputStream.hasNext
@@ -109,7 +99,6 @@ class SourceCharacterInputStream(
      *
      * @return the next character
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.next
      */
@@ -124,7 +113,6 @@ class SourceCharacterInputStream(
      *
      * @param number the number of characters to skip
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.skip
      * @see SourceCharacterInputStream.skip
@@ -137,7 +125,6 @@ class SourceCharacterInputStream(
     /**
      * Skips the next character
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.skip
      * @see SourceCharacterInputStream.skip
@@ -152,7 +139,6 @@ class SourceCharacterInputStream(
      *
      * @return the actual character
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.actual
      */
@@ -166,7 +152,6 @@ class SourceCharacterInputStream(
      *
      * @return the next character
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.peek
      * @see SourceCharacterInputStream.peek
@@ -187,7 +172,6 @@ class SourceCharacterInputStream(
      * @return the next character
      *
      * @param num the position to get
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.peek
      * @see SourceCharacterInputStream.peek
@@ -211,7 +195,6 @@ class SourceCharacterInputStream(
      * @param to the end position of the string to get
      * @return the character at the requested position
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterInputStream.peek
      * @see SourceCharacterInputStream.peek
@@ -220,7 +203,7 @@ class SourceCharacterInputStream(
     override fun peek(from: Int, to: Int): String {
         if (from < 0) throw Error("Peek argument must not be smaller than 0")
         if (to <= from) throw Error("To-argument must be bigger than from-argument")
-        if(!this.has(to)) throw Error("Not enough characters left");
+        if (!this.has(to)) throw Error("Not enough characters left");
         return this.content.copyOfRange(position + from, position + to + 1).concatToString()
     }
 }

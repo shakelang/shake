@@ -6,8 +6,6 @@ import kotlin.jvm.JvmField
 
 /**
  * [InterpreterValue]s for booleans ([BooleanValue.TRUE] &amp; [BooleanValue.FALSE]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 class BooleanValue
 
@@ -15,10 +13,8 @@ class BooleanValue
  * Constructor for [BooleanValue]
  *
  * @param value the value of the boolean
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */
-(
+    (
 
     /**
      * The value of the [BooleanValue]
@@ -36,8 +32,6 @@ class BooleanValue
      *
      * @param v The other value for the or operator
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun or(v: InterpreterValue): InterpreterValue {
         // if the given value is a BooleanValue check if at least one of the values is true and return a BooleanValue again
@@ -51,8 +45,6 @@ class BooleanValue
      *
      * @param v The other value for the or operator
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun xor(v: InterpreterValue): InterpreterValue {
         // if the given value is a BooleanValue check if at least one of the values is true and return a BooleanValue
@@ -66,8 +58,6 @@ class BooleanValue
      *
      * @param v The other value for the and operator
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun and(v: InterpreterValue): InterpreterValue {
         // if the given value is a BooleanValue check if the values are both true and return a BooleanValue again
@@ -81,8 +71,6 @@ class BooleanValue
      *
      * @param v The value that should be the same
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun equals(v: InterpreterValue): InterpreterValue {
         // if the given value is a BooleanValue check if the values are the same and return a BooleanValue again
@@ -100,8 +88,6 @@ class BooleanValue
      * Get the java-representation of the [BooleanValue]
      *
      * @return the java-representation of the [BooleanValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toJava(): Any {
         return value
@@ -118,8 +104,6 @@ class BooleanValue
      * @param type the type to cast to
      * @param <T> the type to cast to
      * @return the converted [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
     override fun <T : InterpreterValue> castTo(type: CastTarget): T {
@@ -137,8 +121,6 @@ class BooleanValue
      * Returns the name of the type of [InterpreterValue] (To identify the type of value)
      *
      * @return the name of the [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val name: String get() = "boolean"
 
@@ -150,8 +132,6 @@ class BooleanValue
      * Returns the string representation of the [BooleanValue]
      *
      * @return the string representation of the [BooleanValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString(): String = this.value.toString()
 
@@ -176,7 +156,6 @@ class BooleanValue
          * @param b the boolean to create the [BooleanValue]  from
          * @return the [BooleanValue] representation of the boolean
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(b: Boolean): BooleanValue = if (b) TRUE else FALSE
 
@@ -186,7 +165,6 @@ class BooleanValue
          * @param v the [InterpreterValue] to create the [BooleanValue]  from
          * @return the [BooleanValue] representation of the boolean
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun from(v: InterpreterValue?): BooleanValue {
             // If v is a BooleanValue just return v

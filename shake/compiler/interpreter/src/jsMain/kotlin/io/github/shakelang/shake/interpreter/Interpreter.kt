@@ -25,7 +25,9 @@ fun jsEvalCode(contents: String, scope: Scope): InterpreterValue {
         return InterpreterValue.of(function(
             js("new Proxy(scope, handler)"),
             { scope.scopeVariables[it]?.value?.toJava() },
-            *variableNames.map { scope.scopeVariables[it]?.value?.toJava() }.toTypedArray()))
+            *variableNames.map { scope.scopeVariables[it]?.value?.toJava() }.toTypedArray()
+        )
+        )
     } catch (e: Error) {
         e.printStackTrace()
         TODO()
@@ -51,14 +53,20 @@ object DefaultFunctions {
 
 private object JsShakeScopeProxyHandler {
 
-    fun get(target: Scope, path: String): dynamic
-        = target.scopeVariables[path]?.toJava()
+    fun get(target: Scope, path: String): dynamic = target.scopeVariables[path]?.toJava()
 
-    fun set(target: Scope, path: String, assignment_value: dynamic)
-        = target.scopeVariables[path].let {
-            val value = InterpreterValue.of(assignment_value)
-            if (it!= null) it.value = value
-            else target.scopeVariables.declare(Variable.create(path, ShakeVariableType.DYNAMIC, ShakeAccessDescriber.PRIVATE, false, value))
-        }
+    fun set(target: Scope, path: String, assignment_value: dynamic) = target.scopeVariables[path].let {
+        val value = InterpreterValue.of(assignment_value)
+        if (it != null) it.value = value
+        else target.scopeVariables.declare(
+            Variable.create(
+                path,
+                ShakeVariableType.DYNAMIC,
+                ShakeAccessDescriber.PRIVATE,
+                false,
+                value
+            )
+        )
+    }
 
 }

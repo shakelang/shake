@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.util.io
 
 actual class IOException : Exception {
@@ -9,7 +10,7 @@ actual class IOException : Exception {
      * The detail message (which is saved for later retrieval
      * by the [.getMessage] method)
      */
-    actual constructor(message: String?): super(message)
+    actual constructor(message: String?) : super(message)
 
     /**
      * Constructs an `IOException` with the specified detail message
@@ -31,7 +32,7 @@ actual class IOException : Exception {
      *
      * @since 1.6
      */
-    actual constructor(message: String?, cause: Throwable?): super(message, cause)
+    actual constructor(message: String?, cause: Throwable?) : super(message, cause)
 
     /**
      * Constructs an `IOException` with the specified cause and a

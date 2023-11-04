@@ -11,8 +11,6 @@ import kotlin.reflect.KClass
 
 /**
  * A Value for the Interpreter, any type of value will implement this interface
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 interface InterpreterValue {
 
@@ -25,8 +23,6 @@ interface InterpreterValue {
      *
      * @param v The Value to add to this value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun add(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -39,8 +35,6 @@ interface InterpreterValue {
      *
      * @param v The Value to sub from this value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun sub(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -53,8 +47,6 @@ interface InterpreterValue {
      *
      * @param v The Value to multiply with this value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun mul(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -67,8 +59,6 @@ interface InterpreterValue {
      *
      * @param v The divisor-value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     operator fun div(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -81,8 +71,6 @@ interface InterpreterValue {
      *
      * @param v The divisor-value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun mod(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -95,8 +83,6 @@ interface InterpreterValue {
      *
      * @param v The divisor-value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     operator fun rem(v: InterpreterValue): InterpreterValue = this.mod(v)
 
@@ -105,8 +91,6 @@ interface InterpreterValue {
      *
      * @param v The exponent value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun pow(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -123,8 +107,6 @@ interface InterpreterValue {
      *
      * @param v The other value for the or operator
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun or(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -137,8 +119,6 @@ interface InterpreterValue {
      *
      * @param v The other value for the or operator
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun xor(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -151,8 +131,6 @@ interface InterpreterValue {
      *
      * @param v The other value for the and operator
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun and(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -169,8 +147,6 @@ interface InterpreterValue {
      *
      * @param v The value that should be the same
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun equals(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -183,8 +159,6 @@ interface InterpreterValue {
      *
      * @param v The value that should be smaller
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun biggerEquals(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -197,8 +171,6 @@ interface InterpreterValue {
      *
      * @param v The value that should be bigger
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun smallerEquals(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -211,8 +183,6 @@ interface InterpreterValue {
      *
      * @param v The value that should be smaller or equal
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun bigger(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -225,8 +195,6 @@ interface InterpreterValue {
      *
      * @param v The value that should be bigger or equal
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun smaller(v: InterpreterValue): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -243,8 +211,6 @@ interface InterpreterValue {
      *
      * @param c the child to get
      * @return the child variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun getChild(c: String): Variable? {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -256,8 +222,6 @@ interface InterpreterValue {
      * This function will be executed when getting all child keys
      *
      * @return the keys of all children
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     val children: Array<String>
         get() {
@@ -276,8 +240,6 @@ interface InterpreterValue {
      * @param node the node that called the function
      * @param scope the scope the call was made in (to process the arguments)
      * @return the value of the function
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     operator fun invoke(node: ShakeFunctionCallNode, scope: Scope): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -291,8 +253,6 @@ interface InterpreterValue {
      * @param node the node that created the instance
      * @param scope the scope the creation was made in (to process the arguments)
      * @return the created [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun newInstance(node: ShakeClassConstructionNode, scope: Scope): InterpreterValue {
         // Throw an UnformattedInterpreterError when the operator is not implemented
@@ -310,8 +270,6 @@ interface InterpreterValue {
      * @param type the type to convert to
      * @param <T> the type to convert to
      * @return the converted [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
     fun <T : InterpreterValue> to(type: KClass<T>): T {
@@ -325,8 +283,6 @@ interface InterpreterValue {
      * @param type the type to cast to
      * @param <T> the type to cast to
      * @return the converted [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun <T : InterpreterValue> castTo(type: CastTarget): T {
         // if(type.isInstance(this)) return (T) this;
@@ -341,8 +297,6 @@ interface InterpreterValue {
      * Get the java-representation of the [InterpreterValue]
      *
      * @return the java-representation of the [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toJava(): Any? {
         return name
@@ -356,8 +310,6 @@ interface InterpreterValue {
      * Returns the name of the type of [InterpreterValue] (To identify the type of value)
      *
      * @return the name of the [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     val name: String
 

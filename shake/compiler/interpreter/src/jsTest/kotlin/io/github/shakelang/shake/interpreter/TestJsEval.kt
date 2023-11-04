@@ -1,4 +1,5 @@
 package io.github.shakelang.shake.interpreter
+
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream

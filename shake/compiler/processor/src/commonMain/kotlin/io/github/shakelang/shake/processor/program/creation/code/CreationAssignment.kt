@@ -7,7 +7,7 @@ import io.github.shakelang.shake.processor.program.creation.code.values.Creation
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.*
 
-open class CreationShakeAssignment (
+open class CreationShakeAssignment(
     override val project: CreationShakeProject,
     override val variable: CreationShakeAssignable,
     override val value: CreationShakeValue,

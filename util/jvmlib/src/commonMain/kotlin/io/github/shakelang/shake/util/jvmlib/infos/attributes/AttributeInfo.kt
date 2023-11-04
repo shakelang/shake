@@ -11,7 +11,7 @@ import io.github.shakelang.shake.util.primitives.bytes.setBytes
 import io.github.shakelang.shake.util.primitives.bytes.setInt
 import io.github.shakelang.shake.util.primitives.bytes.setUnsignedShort
 
-abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
+abstract class AttributeInfo(val name: ConstantUtf8Info) : ConstantUser {
 
     val nameIndex get() = name.index
 
@@ -35,8 +35,8 @@ abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
     fun dump(out: DataOutputStream) = out.write(toBytes())
 
     companion object {
-        fun fromBytes(pool: ConstantPool, bytes: ByteArray): AttributeInfo
-            = fromStream(pool, DataInputStream(ByteArrayInputStream(bytes)))
+        fun fromBytes(pool: ConstantPool, bytes: ByteArray): AttributeInfo =
+            fromStream(pool, DataInputStream(ByteArrayInputStream(bytes)))
 
         fun fromStream(pool: ConstantPool, stream: DataInputStream): AttributeInfo {
             val nameIndex = stream.readUnsignedShort()
@@ -54,13 +54,12 @@ abstract class AttributeInfo (val name: ConstantUtf8Info) : ConstantUser {
                     "StackMapTable" -> AttributeStackMapTableInfo.contentsFromStream(attrStream, name)
                     else -> AttributeUnknownInfo.contentsFromStream(pool, attrStream, name, length)
                 }.let {
-                    if(attrStream.available() > 0) {
+                    if (attrStream.available() > 0) {
                         println("WARNING: ${attrStream.available()} bytes left in attribute $name")
                     }
                     it
                 }
-            }
-            catch (e: Throwable) {
+            } catch (e: Throwable) {
 //                println("AttributeInfo: $name, $length bytes")
                 throw e
             }

@@ -33,27 +33,31 @@ interface CreationShakeAssignable : ShakeAssignable {
     }
 
     fun createAddAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeAddAssignment {
-        val type = additionAssignType(value.type, scope)?: throw Exception("Cannot add ${value.type} to ${this.type}")
+        val type = additionAssignType(value.type, scope) ?: throw Exception("Cannot add ${value.type} to ${this.type}")
         return CreationShakeAddAssignment(project, this, value, type)
     }
 
     fun createSubtractAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeSubAssignment {
-        val type = subtractionAssignType(value.type, scope) ?: throw Exception("Cannot subtract ${value.type} from ${this.type}")
+        val type = subtractionAssignType(value.type, scope)
+            ?: throw Exception("Cannot subtract ${value.type} from ${this.type}")
         return CreationShakeSubAssignment(project, this, value, type)
     }
 
     fun createMultiplyAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeMulAssignment {
-        val type = multiplicationAssignType(value.type, scope) ?: throw Exception("Cannot multiply ${value.type} with ${this.type}")
+        val type = multiplicationAssignType(value.type, scope)
+            ?: throw Exception("Cannot multiply ${value.type} with ${this.type}")
         return CreationShakeMulAssignment(project, this, value, type)
     }
 
     fun createDivideAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeDivAssignment {
-        val type = divisionAssignType(value.type, scope) ?: throw Exception("Cannot divide ${value.type} by ${this.type}")
+        val type =
+            divisionAssignType(value.type, scope) ?: throw Exception("Cannot divide ${value.type} by ${this.type}")
         return CreationShakeDivAssignment(project, this, value, type)
     }
 
     fun createModulusAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeModAssignment {
-        val type = modulusAssignType(value.type, scope) ?: throw Exception("Cannot modulus ${value.type} by ${this.type}")
+        val type =
+            modulusAssignType(value.type, scope) ?: throw Exception("Cannot modulus ${value.type} by ${this.type}")
         return CreationShakeModAssignment(project, this, value, type)
     }
 

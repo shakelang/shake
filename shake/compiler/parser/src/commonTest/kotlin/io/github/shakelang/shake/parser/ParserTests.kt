@@ -66,7 +66,8 @@ class ParserTests {
 
     @Test
     fun testDoWhile() {
-        var node = ParserTestUtil.parseStatement("<DoWhileTest>", "do { println(i) } while (true);", ShakeDoWhileNode::class)
+        var node =
+            ParserTestUtil.parseStatement("<DoWhileTest>", "do { println(i) } while (true);", ShakeDoWhileNode::class)
         assertNotNull(node.condition)
         assertNotNull(node.body)
         assertType(ShakeLogicalTrueNode::class, node.condition)
@@ -80,7 +81,11 @@ class ParserTests {
 
     @Test
     fun testFor() {
-        var node = ParserTestUtil.parseStatement("<ForTest>", "for(var i = 0; i < 100; i++) { println(); }", ShakeForNode::class)
+        var node = ParserTestUtil.parseStatement(
+            "<ForTest>",
+            "for(var i = 0; i < 100; i++) { println(); }",
+            ShakeForNode::class
+        )
         assertNotNull(node.declaration)
         assertNotNull(node.condition)
         assertNotNull(node.round)
@@ -89,7 +94,8 @@ class ParserTests {
         assertType(ShakeLogicalSmallerNode::class, node.condition)
         assertType(ShakeVariableIncreaseNode::class, node.round)
         assertType(ShakeBlockNode::class, node.body)
-        node = ParserTestUtil.parseStatement("<ForTest>", "for(var i = 0; i < 100; i++) println();", ShakeForNode::class)
+        node =
+            ParserTestUtil.parseStatement("<ForTest>", "for(var i = 0; i < 100; i++) println();", ShakeForNode::class)
         assertNotNull(node.declaration)
         assertNotNull(node.condition)
         assertNotNull(node.round)
@@ -120,7 +126,11 @@ class ParserTests {
         assertType(ShakeLogicalTrueNode::class, node.condition)
         assertType(ShakeBlockNode::class, node.body)
         assertType(ShakeBlockNode::class, node.elseBody!!)
-        node = ParserTestUtil.parseStatement("<IfTest>", "if (true) println(i); else if (true) println(i); else println(i);", ShakeIfNode::class)
+        node = ParserTestUtil.parseStatement(
+            "<IfTest>",
+            "if (true) println(i); else if (true) println(i); else println(i);",
+            ShakeIfNode::class
+        )
         assertNotNull(node.condition)
         assertNotNull(node.body)
         assertNotNull(node.elseBody)

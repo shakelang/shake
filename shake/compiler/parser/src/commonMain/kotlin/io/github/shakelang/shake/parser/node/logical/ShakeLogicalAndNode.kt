@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.parser.node.logical
 
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.ShakeValuedNode
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 class ShakeLogicalAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode) :
     ShakeLogicalConcatenationNode(map, left, right) {

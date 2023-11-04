@@ -22,7 +22,6 @@ expect abstract class OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     abstract fun write(b: Int)
 
@@ -37,7 +36,6 @@ expect abstract class OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     open fun write(b: ByteArray)
 
@@ -74,7 +72,6 @@ expect abstract class OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     open fun write(b: ByteArray, off: Int, len: Int)
 
@@ -100,7 +97,6 @@ expect abstract class OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     open fun flush()
 
@@ -117,7 +113,6 @@ expect abstract class OutputStream() {
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     open fun close()
 }

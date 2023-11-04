@@ -4,8 +4,6 @@ import io.github.shakelang.shake.util.parseutils.characters.Characters
 
 /**
  * API for generating json
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 object JsonGenerator {
 
@@ -16,8 +14,6 @@ object JsonGenerator {
 
     /**
      * Generate an Array
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun generate(o: Array<*>, indent: String? = null, indentAmount: Int = 0): String {
         return "[" +
@@ -32,13 +28,17 @@ object JsonGenerator {
                     if (o.isNotEmpty() && indent != null) "," + LINE_SEPARATOR + indent.repeat(indentAmount + 1)
                     else ","
 
-                ) { generate(it!!, indent, indentAmount + 1) })  +(if (o.isNotEmpty() && indent != null) LINE_SEPARATOR + indent.repeat(indentAmount) else "") + "]"
+                ) {
+                    generate(
+                        it!!,
+                        indent,
+                        indentAmount + 1
+                    )
+                }) + (if (o.isNotEmpty() && indent != null) LINE_SEPARATOR + indent.repeat(indentAmount) else "") + "]"
     }
 
     /**
      * Generate an Object
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun generate(o: Map<*, *>, indent: String? = null, indentAmount: Int = 0): String {
         var ret = "{"
@@ -63,15 +63,11 @@ object JsonGenerator {
 
     /**
      * Generate a String
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun generate(s: String) = "\"${Characters.escapeString(s)}\""
 
     /**
      * Generate something
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun generate(o: Any?, indent: String? = null, indentAmount: Int = 0): String {
         return when (o) {

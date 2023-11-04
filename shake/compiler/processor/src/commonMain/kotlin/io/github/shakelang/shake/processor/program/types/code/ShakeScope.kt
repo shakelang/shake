@@ -10,5 +10,5 @@ interface ShakeScope {
     fun getFunctions(name: String): List<ShakeMethod>
     fun getClass(name: String): ShakeClass?
     fun getInvokable(name: String): List<ShakeInvokable>
-    fun use(name: String) 
+    fun use(name: String)
 }

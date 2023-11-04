@@ -126,6 +126,7 @@ class ByteListTests {
             bytes2.toUnsignedLong()
         }
     }
+
     @Test
     fun testSetBytes() {
         val bytes = mutableListOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
@@ -449,8 +450,6 @@ class ByteListTests {
         val bytes = listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
         assertEquals(0x0102030405060708uL, bytes.getUnsignedLong(0))
     }
-
-
 
 
     @Test
