@@ -1,11 +1,10 @@
 package io.github.shakelang.shake.shasambly.shasp.parser
 
-import io.github.shakelang.shake.util.parseutils.CompilerError
-import io.github.shakelang.shake.util.parseutils.characters.Characters
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenInputStream
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 import io.github.shakelang.shake.shasambly.shasp.parser.nodes.*
+import io.github.shakelang.shake.util.parseutils.characters.Characters
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
 
 class ShasPParser (
     private val input: ShasPTokenInputStream

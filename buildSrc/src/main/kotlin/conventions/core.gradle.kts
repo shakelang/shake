@@ -1,9 +1,5 @@
 package conventions
 
-import gradle.kotlin.dsl.accessors._4ad077ad74816558e52d7069eb18a2f7.publishing
-import gradle.kotlin.dsl.accessors._bed5c5adebf3efe38c055e8c4dfb71ee.kotlin
-import gradle.kotlin.dsl.accessors._bed5c5adebf3efe38c055e8c4dfb71ee.node
-import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
 val jvmTarget = JVM_TARGET

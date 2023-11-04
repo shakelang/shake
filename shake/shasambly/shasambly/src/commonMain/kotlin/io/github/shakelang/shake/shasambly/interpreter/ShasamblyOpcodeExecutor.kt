@@ -1,7 +1,6 @@
 @file:Suppress("nothing_to_inline")
 package io.github.shakelang.shake.shasambly.interpreter
 
-import io.github.shakelang.shake.util.primitives.bytes.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import io.github.shakelang.shake.util.primitives.bytes.*
 import kotlin.experimental.and

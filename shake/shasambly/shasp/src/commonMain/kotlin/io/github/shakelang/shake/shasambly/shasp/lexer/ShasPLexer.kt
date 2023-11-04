@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.shasambly.shasp.lexer
 
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.lexer.token.ShasPToken
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.OnDemandLexingShasPTokenInputStream
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenBasedInputStream
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 
 class ShasPLexer(
     input: CharacterInputStream

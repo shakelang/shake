@@ -7,7 +7,6 @@ import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.shake.util.primitives.bytes.*
-import io.github.shakelang.shake.util.primitives.bytes.*
 
 class AttributeStackMapTableInfo (
     name: ConstantUtf8Info,

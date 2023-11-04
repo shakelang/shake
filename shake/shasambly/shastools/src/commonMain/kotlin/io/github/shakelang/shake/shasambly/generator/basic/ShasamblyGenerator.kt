@@ -1,9 +1,9 @@
 @file: Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.basic
 
+import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 import io.github.shakelang.shake.util.primitives.bytes.toBytes
 import io.github.shakelang.shake.util.primitives.bytes.toHexString
-import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 
 /**
  * This represents one shasambly opcode in the generation. It will be converted to it's bytes by

@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.lexer
 
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.lexer.token.ShakeToken
 import io.github.shakelang.shake.lexer.token.ShakeTokenType
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

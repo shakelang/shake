@@ -1,9 +1,9 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.simple
 
-import io.github.shakelang.shake.util.primitives.bytes.toBytes
 import io.github.shakelang.shake.shasambly.generator.basic.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+import io.github.shakelang.shake.util.primitives.bytes.toBytes
 
 typealias SimpleShasamblyGeneratorFunction = SimpleShasambly.() -> Unit
 

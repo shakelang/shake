@@ -1,9 +1,5 @@
 package io.github.shakelang.shake.parser
 
-import io.github.shakelang.shake.util.parseutils.CompilerError
-import io.github.shakelang.shake.util.parseutils.characters.Characters.parseString
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import io.github.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import io.github.shakelang.shake.parser.node.*
@@ -26,6 +22,9 @@ import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassType
 import io.github.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.*
+import io.github.shakelang.shake.util.parseutils.characters.Characters.parseString
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 /**
  * An abstract Parser for the Shake Programming language. An instance is created for each file in the compilation process.

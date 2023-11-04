@@ -1,13 +1,7 @@
 package conventions
 
-import gradle.kotlin.dsl.accessors._4ad077ad74816558e52d7069eb18a2f7.publishing
-import gradle.kotlin.dsl.accessors._4ad077ad74816558e52d7069eb18a2f7.signing
 import gradle.kotlin.dsl.accessors._bed5c5adebf3efe38c055e8c4dfb71ee.kotlin
 import org.gradle.crypto.checksum.Checksum
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.maven
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-import org.jetbrains.kotlin.gradle.plugin.extraProperties
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmDependency
 
 plugins {

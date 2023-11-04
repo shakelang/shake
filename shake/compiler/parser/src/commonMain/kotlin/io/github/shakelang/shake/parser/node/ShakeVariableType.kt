@@ -1,7 +1,5 @@
 package io.github.shakelang.shake.parser.node
 
-import io.github.shakelang.shake.util.shason.JSON
-
 @Suppress("unused")
 open class ShakeVariableType {
     val type: Type

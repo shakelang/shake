@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.lexer.token.stream
 
-import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenInputStream
 import io.github.shakelang.shake.lexer.token.ShakeToken
 import io.github.shakelang.shake.lexer.token.ShakeTokenType
+import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenInputStream
 
 /**
  * A [ShakeTokenInputStream] provides the [ShakeToken]s for a Parser. It is

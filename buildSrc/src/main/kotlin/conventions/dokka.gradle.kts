@@ -1,7 +1,5 @@
 package conventions
 
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.named
 import org.jetbrains.dokka.gradle.DokkaTask
 
 val rootProjectDir = project.rootProject.rootDir

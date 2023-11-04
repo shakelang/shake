@@ -1,6 +1,9 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.shas
 
+import io.github.shakelang.shake.shasambly.interpreter.Opcodes
+import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
 import io.github.shakelang.shake.util.io.streaming.output.OutputStream
@@ -10,9 +13,6 @@ import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentif
 import io.github.shakelang.shake.util.parseutils.characters.Characters.isNumberCharacter
 import io.github.shakelang.shake.util.parseutils.characters.Characters.isNumberOrDotCharacter
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.shasambly.interpreter.Opcodes
-import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
-import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 
 class ShasCompiler(private val input: CharacterInputStream) {
 

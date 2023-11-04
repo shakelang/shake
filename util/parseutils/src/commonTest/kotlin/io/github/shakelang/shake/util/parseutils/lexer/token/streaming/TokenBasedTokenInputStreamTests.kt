@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.util.parseutils.lexer.token.streaming
 
+import io.github.shakelang.shake.lexer.token.Token
 import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
-import io.github.shakelang.shake.lexer.token.Token
 import kotlin.test.*
 
 class TokenBasedTokenInputStreamTests {

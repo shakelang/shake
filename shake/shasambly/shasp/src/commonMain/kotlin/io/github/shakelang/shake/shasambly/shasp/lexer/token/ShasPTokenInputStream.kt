@@ -1,12 +1,12 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.shasp.lexer.token
 
+import io.github.shakelang.shake.lexer.token.ShasPToken
+import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexingBase
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
 import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenInputStream
-import io.github.shakelang.shake.lexer.token.ShasPToken
-import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexingBase
 
 /**
  * A [ShasPTokenInputStream] provides the [ShasPToken]s for a Parser. It is

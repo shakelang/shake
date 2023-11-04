@@ -1,8 +1,5 @@
 package io.github.shakelang.shake.processor
 
-import io.github.shakelang.shake.util.parseutils.File
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.ShakeParser
 import io.github.shakelang.shake.parser.node.*
@@ -25,6 +22,9 @@ import io.github.shakelang.shake.processor.program.creation.CreationShakeType
 import io.github.shakelang.shake.processor.program.creation.code.*
 import io.github.shakelang.shake.processor.program.creation.code.statements.*
 import io.github.shakelang.shake.processor.program.creation.code.values.*
+import io.github.shakelang.shake.util.parseutils.File
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 
 class ShakeProcessorOptions {
     var precalculate: Boolean = true

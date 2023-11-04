@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.util.io.streaming.output
 
-import kotlin.jvm.Synchronized
 import io.github.shakelang.shake.util.io.IOException
+import kotlin.jvm.Synchronized
 
 /**
  * The class implements a buffered output stream. By setting up such

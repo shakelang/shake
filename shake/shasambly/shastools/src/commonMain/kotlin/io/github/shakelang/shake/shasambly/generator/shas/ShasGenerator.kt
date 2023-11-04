@@ -1,6 +1,9 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.shas
 
+import io.github.shakelang.shake.shasambly.interpreter.Opcodes
+import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import io.github.shakelang.shake.util.io.streaming.input.InputStream
 import io.github.shakelang.shake.util.io.streaming.input.asCountingInputStream
 import io.github.shakelang.shake.util.io.streaming.input.asDataInputStream
@@ -8,9 +11,6 @@ import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.shake.util.io.streaming.output.OutputStream
 import io.github.shakelang.shake.util.primitives.bytes.toBytes
 import io.github.shakelang.shake.util.primitives.bytes.toHexString
-import io.github.shakelang.shake.shasambly.interpreter.Opcodes
-import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
-import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 
 class ShasGenerator(input: InputStream) {
 

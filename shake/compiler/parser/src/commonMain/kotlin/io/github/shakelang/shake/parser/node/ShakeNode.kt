@@ -1,7 +1,6 @@
 package io.github.shakelang.shake.parser.node
 
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
-import io.github.shakelang.shake.util.shason.JSON
 
 interface ShakeNode {
 

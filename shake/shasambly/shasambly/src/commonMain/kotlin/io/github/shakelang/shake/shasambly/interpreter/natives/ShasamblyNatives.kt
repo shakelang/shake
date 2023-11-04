@@ -1,11 +1,11 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.interpreter.natives
 
+import io.github.shakelang.shake.shasambly.interpreter.ShasamblyOpcodeExecutor
 import io.github.shakelang.shake.util.primitives.bytes.getByte
 import io.github.shakelang.shake.util.primitives.bytes.getInt
 import io.github.shakelang.shake.util.primitives.bytes.getLong
 import io.github.shakelang.shake.util.primitives.bytes.getShort
-import io.github.shakelang.shake.shasambly.interpreter.ShasamblyOpcodeExecutor
 
 val nativeFunctions = arrayOfNulls<ShasamblyNative>((UShort.MAX_VALUE).toInt() + 1)
 

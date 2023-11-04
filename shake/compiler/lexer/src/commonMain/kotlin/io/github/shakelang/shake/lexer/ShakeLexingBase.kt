@@ -1,12 +1,11 @@
 package io.github.shakelang.shake.lexer
 
-import io.github.shakelang.shake.util.parseutils.CompilerError
+import io.github.shakelang.shake.lexer.token.ShakeToken
+import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import io.github.shakelang.shake.util.parseutils.characters.Characters
 import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.util.parseutils.lexer.LexingBase
-import io.github.shakelang.shake.lexer.token.ShakeToken
-import io.github.shakelang.shake.lexer.token.ShakeTokenType
 import kotlin.jvm.JvmOverloads
 
 abstract class ShakeLexingBase(

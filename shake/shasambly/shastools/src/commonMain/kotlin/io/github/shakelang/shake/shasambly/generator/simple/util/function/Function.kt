@@ -1,16 +1,16 @@
 @file:Suppress("unused")
 package io.github.shakelang.shake.shasambly.generator.simple.util.function
 
-import io.github.shakelang.shake.util.primitives.bytes.removeLastByte
-import io.github.shakelang.shake.util.primitives.bytes.removeLastInt
-import io.github.shakelang.shake.util.primitives.bytes.removeLastLong
-import io.github.shakelang.shake.util.primitives.bytes.removeLastShort
 import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcode
 import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcodeJumpStaticToIndex
 import io.github.shakelang.shake.shasambly.generator.simple.RelativeShasamblyGeneratorPart
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGenerator
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGeneratorFunction
+import io.github.shakelang.shake.util.primitives.bytes.removeLastByte
+import io.github.shakelang.shake.util.primitives.bytes.removeLastInt
+import io.github.shakelang.shake.util.primitives.bytes.removeLastLong
+import io.github.shakelang.shake.util.primitives.bytes.removeLastShort
 
 typealias SimpleRoutineShasamblyGenerator = SimpleRoutineShasambly.() -> Unit
 
