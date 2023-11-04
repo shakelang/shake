@@ -10,7 +10,6 @@ package io.github.shakelang.shake.util.primitives.bytes
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toByte(): Byte {
     if (this.size != 1) throw IllegalArgumentException("ByteArray must be of size 1, but is ${this.size}")
@@ -25,7 +24,6 @@ fun List<Byte>.toByte(): Byte {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toShort(): Short {
     if (this.size != 2) throw IllegalArgumentException("ByteArray must be of size 2, but is ${this.size}")
@@ -40,7 +38,6 @@ fun List<Byte>.toShort(): Short {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toInt(): Int {
     if (this.size != 4) throw IllegalArgumentException("ByteArray must be of size 4, but is ${this.size}")
@@ -55,7 +52,6 @@ fun List<Byte>.toInt(): Int {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toLong(): Long {
     if (this.size != 8) throw IllegalArgumentException("ByteArray must be of size 8, but is ${this.size}")
@@ -70,7 +66,6 @@ fun List<Byte>.toLong(): Long {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toFloat(): Float {
     if (this.size != 4) throw IllegalArgumentException("ByteArray must be of size 4")
@@ -85,7 +80,6 @@ fun List<Byte>.toFloat(): Float {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toDouble(): Double {
     if (this.size != 8) throw IllegalArgumentException("ByteArray must be of size 8")
@@ -100,7 +94,6 @@ fun List<Byte>.toDouble(): Double {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toUnsignedByte(): UByte = this.toByte().toUByte()
 
@@ -112,7 +105,6 @@ fun List<Byte>.toUnsignedByte(): UByte = this.toByte().toUByte()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toUnsignedShort(): UShort = this.toShort().toUShort()
 
@@ -124,7 +116,6 @@ fun List<Byte>.toUnsignedShort(): UShort = this.toShort().toUShort()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toUnsignedInt(): UInt = this.toInt().toUInt()
 
@@ -136,7 +127,6 @@ fun List<Byte>.toUnsignedInt(): UInt = this.toInt().toUInt()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toUnsignedLong(): ULong = this.toLong().toULong()
 
@@ -149,7 +139,6 @@ fun List<Byte>.toUnsignedLong(): ULong = this.toLong().toULong()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setBytes(startIndex: Int, bytes: ByteArray): MutableList<Byte> {
     for (i in startIndex until startIndex + bytes.size) this[i] = bytes[i - startIndex]
@@ -164,7 +153,6 @@ fun MutableList<Byte>.setBytes(startIndex: Int, bytes: ByteArray): MutableList<B
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setBytes(startIndex: Int, bytes: List<Byte>): MutableList<Byte> {
     for (i in startIndex until startIndex + bytes.size) this[i] = bytes[i - startIndex]
@@ -179,7 +167,6 @@ fun MutableList<Byte>.setBytes(startIndex: Int, bytes: List<Byte>): MutableList<
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setByte(index: Int, byte: Byte): MutableList<Byte> {
 
@@ -199,7 +186,6 @@ fun MutableList<Byte>.setByte(index: Int, byte: Byte): MutableList<Byte> {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setShort(index: Int, short: Short): MutableList<Byte> {
 
@@ -221,7 +207,6 @@ fun MutableList<Byte>.setShort(index: Int, short: Short): MutableList<Byte> {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setInt(index: Int, int: Int): MutableList<Byte> {
 
@@ -244,7 +229,6 @@ fun MutableList<Byte>.setInt(index: Int, int: Int): MutableList<Byte> {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setLong(index: Int, long: Long): MutableList<Byte> {
 
@@ -272,7 +256,6 @@ fun MutableList<Byte>.setLong(index: Int, long: Long): MutableList<Byte> {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setFloat(index: Int, float: Float): MutableList<Byte> {
 
@@ -292,7 +275,6 @@ fun MutableList<Byte>.setFloat(index: Int, float: Float): MutableList<Byte> {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setDouble(index: Int, double: Double): MutableList<Byte> {
 
@@ -312,7 +294,6 @@ fun MutableList<Byte>.setDouble(index: Int, double: Double): MutableList<Byte> {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setUnsignedByte(index: Int, unsignedByte: UByte): MutableList<Byte> {
 
@@ -332,7 +313,6 @@ fun MutableList<Byte>.setUnsignedByte(index: Int, unsignedByte: UByte): MutableL
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setUnsignedShort(index: Int, unsignedShort: UShort): MutableList<Byte> {
 
@@ -353,7 +333,6 @@ fun MutableList<Byte>.setUnsignedShort(index: Int, unsignedShort: UShort): Mutab
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setUnsignedInt(index: Int, unsignedInt: UInt): MutableList<Byte> {
 
@@ -376,7 +355,6 @@ fun MutableList<Byte>.setUnsignedInt(index: Int, unsignedInt: UInt): MutableList
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.setUnsignedLong(index: Int, unsignedLong: ULong): MutableList<Byte> {
 
@@ -404,7 +382,6 @@ fun MutableList<Byte>.setUnsignedLong(index: Int, unsignedLong: ULong): MutableL
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getByte(index: Int): Byte {
 
@@ -424,7 +401,6 @@ fun List<Byte>.getByte(index: Int): Byte {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getShort(index: Int): Short {
 
@@ -443,7 +419,6 @@ fun List<Byte>.getShort(index: Int): Short {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getInt(index: Int): Int {
     if (this.size < index + 4)
@@ -461,7 +436,6 @@ fun List<Byte>.getInt(index: Int): Int {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getLong(index: Int): Long {
 
@@ -483,7 +457,6 @@ fun List<Byte>.getLong(index: Int): Long {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getFloat(index: Int): Float = Float.fromBits(this.getInt(index))
 
@@ -495,7 +468,6 @@ fun List<Byte>.getFloat(index: Int): Float = Float.fromBits(this.getInt(index))
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getDouble(index: Int): Double = Double.fromBits(this.getLong(index))
 
@@ -507,7 +479,6 @@ fun List<Byte>.getDouble(index: Int): Double = Double.fromBits(this.getLong(inde
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getUnsignedByte(index: Int): UByte = this[index].toUByte()
 
@@ -519,7 +490,6 @@ fun List<Byte>.getUnsignedByte(index: Int): UByte = this[index].toUByte()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getUnsignedShort(index: Int): UShort = unsignedShortOf(this[index], this[index + 1])
 
@@ -531,7 +501,6 @@ fun List<Byte>.getUnsignedShort(index: Int): UShort = unsignedShortOf(this[index
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getUnsignedInt(index: Int): UInt =
     unsignedIntOf(this[index], this[index + 1], this[index + 2], this[index + 3])
@@ -544,7 +513,6 @@ fun List<Byte>.getUnsignedInt(index: Int): UInt =
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getUnsignedLong(index: Int): ULong = unsignedLongOf(
     this[index], this[index + 1], this[index + 2],
@@ -559,7 +527,6 @@ fun List<Byte>.getUnsignedLong(index: Int): ULong = unsignedLongOf(
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastByte(): Byte {
     if (this.size < 1) throw IllegalArgumentException("ByteArray must be of size 1, but is ${this.size}")
@@ -574,7 +541,6 @@ inline fun MutableList<Byte>.removeLastByte(): Byte {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastShort(): Short {
     if (this.size < 2) throw IllegalArgumentException("ByteArray must be of size 2, but is ${this.size}")
@@ -590,7 +556,6 @@ inline fun MutableList<Byte>.removeLastShort(): Short {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastInt(): Int {
     if (this.size < 4) throw IllegalArgumentException("ByteArray must be of size 4, but is ${this.size}")
@@ -606,7 +571,6 @@ inline fun MutableList<Byte>.removeLastInt(): Int {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastLong(): Long {
     if (this.size < 8) throw IllegalArgumentException("ByteArray must be of size 8, but is ${this.size}")
@@ -622,7 +586,6 @@ inline fun MutableList<Byte>.removeLastLong(): Long {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastFloat(): Float = Float.fromBits(this.removeLastInt())
 
@@ -634,7 +597,6 @@ inline fun MutableList<Byte>.removeLastFloat(): Float = Float.fromBits(this.remo
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastDouble(): Double = Double.fromBits(this.removeLastLong())
 
@@ -646,7 +608,6 @@ inline fun MutableList<Byte>.removeLastDouble(): Double = Double.fromBits(this.r
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastUnsignedByte(): UByte = this.removeLastByte().toUByte()
 
@@ -658,7 +619,6 @@ inline fun MutableList<Byte>.removeLastUnsignedByte(): UByte = this.removeLastBy
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastUnsignedShort(): UShort = this.removeLastShort().toUShort()
 
@@ -670,7 +630,6 @@ inline fun MutableList<Byte>.removeLastUnsignedShort(): UShort = this.removeLast
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastUnsignedInt(): UInt = this.removeLastInt().toUInt()
 
@@ -682,7 +641,6 @@ inline fun MutableList<Byte>.removeLastUnsignedInt(): UInt = this.removeLastInt(
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.removeLastUnsignedLong(): ULong = this.removeLastLong().toULong()
 
@@ -695,7 +653,6 @@ inline fun MutableList<Byte>.removeLastUnsignedLong(): ULong = this.removeLastLo
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.getBytes(index: Int, length: Int): ByteArray {
 
@@ -714,7 +671,6 @@ fun List<Byte>.getBytes(index: Int, length: Int): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toHexString(): String {
     val sb = StringBuilder()
@@ -734,7 +690,6 @@ fun List<Byte>.toHexString(): String {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun List<Byte>.toUtf8String(): String {
     val sb = StringBuilder()
@@ -751,7 +706,6 @@ fun List<Byte>.toUtf8String(): String {
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun MutableList<Byte>.append(byte: Byte): MutableList<Byte> {
     this.add(byte)
@@ -765,7 +719,6 @@ fun MutableList<Byte>.append(byte: Byte): MutableList<Byte> {
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.append(short: Short): MutableList<Byte> {
     val bytes = short.toBytes().toList()
@@ -780,7 +733,6 @@ inline fun MutableList<Byte>.append(short: Short): MutableList<Byte> {
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun MutableList<Byte>.append(int: Int): MutableList<Byte> {
     val bytes = int.toBytes().toList()
@@ -795,7 +747,6 @@ inline fun MutableList<Byte>.append(int: Int): MutableList<Byte> {
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  *
  * @see [Long.toBytes]
  * @see [MutableList.append]
@@ -813,7 +764,6 @@ inline fun MutableList<Byte>.append(long: Long): MutableList<Byte> {
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  *
  * @see [Float.toBytes]
  * @see [MutableList.append]
@@ -831,7 +781,6 @@ inline fun MutableList<Byte>.append(float: Float): MutableList<Byte> {
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  *
  * @see [Double.toBytes]
  * @see [MutableList.append]
@@ -849,7 +798,6 @@ inline fun MutableList<Byte>.append(double: Double): MutableList<Byte> {
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  *
  * @see [UByte.toByte]
  * @see [MutableList.append]
@@ -866,7 +814,6 @@ inline fun MutableList<Byte>.append(unsignedByte: UByte): MutableList<Byte> {
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  *
  * @see [UShort.toBytes]
  * @see [MutableList.append]
@@ -881,7 +828,6 @@ inline fun MutableList<Byte>.append(unsignedShort: UShort): MutableList<Byte>
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  *
  * @see [UInt.toBytes]
  * @see [MutableList.append]
@@ -896,7 +842,6 @@ inline fun MutableList<Byte>.append(unsignedInt: UInt): MutableList<Byte>
  *
  * @since 0.1.1
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  *
  * @see [ULong.toBytes]
  * @see [MutableList.append]

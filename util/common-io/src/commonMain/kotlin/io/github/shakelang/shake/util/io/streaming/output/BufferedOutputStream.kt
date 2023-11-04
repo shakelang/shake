@@ -15,7 +15,6 @@ import kotlin.jvm.Synchronized
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 open class BufferedOutputStream (
 
@@ -24,7 +23,6 @@ open class BufferedOutputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     val out: OutputStream,
     bufferSize: Int = 8192
@@ -34,7 +32,6 @@ open class BufferedOutputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private val buf: ByteArray = ByteArray(bufferSize)
 
@@ -46,7 +43,6 @@ open class BufferedOutputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     protected var count = 0
 
@@ -58,7 +54,6 @@ open class BufferedOutputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     private fun flushBuffer(array: ByteArray = byteArrayOf()) {
         if (count + array.size > 0) {
@@ -75,7 +70,6 @@ open class BufferedOutputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     @Synchronized
     override fun write(b: Int) {
@@ -93,7 +87,6 @@ open class BufferedOutputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun write(b: ByteArray) {
         this.write(b, 0, b.size)
@@ -118,7 +111,6 @@ open class BufferedOutputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     @Synchronized
     override fun write(b: ByteArray, off: Int, len: Int) {
@@ -140,7 +132,6 @@ open class BufferedOutputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     @Synchronized
     override fun flush() {
@@ -158,7 +149,6 @@ open class BufferedOutputStream (
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun close() {
         flush()

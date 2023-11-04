@@ -9,7 +9,6 @@ package io.github.shakelang.shake.util.primitives.bytes
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toByte(): Byte {
     if(this.size != 1) throw IllegalArgumentException("ByteArray must be of size 1, but is ${this.size}")
@@ -24,7 +23,6 @@ fun ByteArray.toByte(): Byte {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toShort(): Short {
     if(this.size != 2) throw IllegalArgumentException("ByteArray must be of size 2, but is ${this.size}")
@@ -39,7 +37,6 @@ fun ByteArray.toShort(): Short {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toInt(): Int {
     if(this.size != 4) throw IllegalArgumentException("ByteArray must be of size 4, but is ${this.size}")
@@ -54,7 +51,6 @@ fun ByteArray.toInt(): Int {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toLong(): Long {
     if(this.size != 8) throw IllegalArgumentException("ByteArray must be of size 8, but is ${this.size}")
@@ -69,7 +65,6 @@ fun ByteArray.toLong(): Long {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toFloat(): Float {
     if(this.size != 4) throw IllegalArgumentException("ByteArray must be of size 4")
@@ -84,7 +79,6 @@ fun ByteArray.toFloat(): Float {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toDouble(): Double {
     if(this.size != 8) throw IllegalArgumentException("ByteArray must be of size 8")
@@ -99,7 +93,6 @@ fun ByteArray.toDouble(): Double {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toUnsignedByte(): UByte = this.toByte().toUByte()
 
@@ -111,7 +104,6 @@ fun ByteArray.toUnsignedByte(): UByte = this.toByte().toUByte()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toUnsignedShort(): UShort = this.toShort().toUShort()
 
@@ -123,7 +115,6 @@ fun ByteArray.toUnsignedShort(): UShort = this.toShort().toUShort()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toUnsignedInt(): UInt = this.toInt().toUInt()
 
@@ -135,7 +126,6 @@ fun ByteArray.toUnsignedInt(): UInt = this.toInt().toUInt()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toUnsignedLong(): ULong = this.toLong().toULong()
 
@@ -148,7 +138,6 @@ fun ByteArray.toUnsignedLong(): ULong = this.toLong().toULong()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setBytes(startIndex: Int, bytes: ByteArray): ByteArray {
 
@@ -168,7 +157,6 @@ fun ByteArray.setBytes(startIndex: Int, bytes: ByteArray): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setByte(index: Int, byte: Byte): ByteArray {
 
@@ -188,7 +176,6 @@ fun ByteArray.setByte(index: Int, byte: Byte): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setShort(index: Int, short: Short): ByteArray {
 
@@ -210,7 +197,6 @@ fun ByteArray.setShort(index: Int, short: Short): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setInt(index: Int, int: Int): ByteArray {
 
@@ -233,7 +219,6 @@ fun ByteArray.setInt(index: Int, int: Int): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setLong(index: Int, long: Long): ByteArray {
 
@@ -261,7 +246,6 @@ fun ByteArray.setLong(index: Int, long: Long): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setFloat(index: Int, float: Float): ByteArray {
     this.setInt(index, float.toBits())
@@ -276,7 +260,6 @@ fun ByteArray.setFloat(index: Int, float: Float): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setDouble(index: Int, double: Double): ByteArray {
     this.setLong(index, double.toBits())
@@ -291,7 +274,6 @@ fun ByteArray.setDouble(index: Int, double: Double): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setUnsignedByte(index: Int, unsignedByte: UByte): ByteArray {
 
@@ -311,7 +293,6 @@ fun ByteArray.setUnsignedByte(index: Int, unsignedByte: UByte): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setUnsignedShort(index: Int, unsignedShort: UShort): ByteArray {
 
@@ -332,7 +313,6 @@ fun ByteArray.setUnsignedShort(index: Int, unsignedShort: UShort): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setUnsignedInt(index: Int, unsignedInt: UInt): ByteArray {
 
@@ -355,7 +335,6 @@ fun ByteArray.setUnsignedInt(index: Int, unsignedInt: UInt): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.setUnsignedLong(index: Int, unsignedLong: ULong): ByteArray {
 
@@ -383,7 +362,6 @@ fun ByteArray.setUnsignedLong(index: Int, unsignedLong: ULong): ByteArray {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getByte(index: Int): Byte {
 
@@ -402,7 +380,6 @@ fun ByteArray.getByte(index: Int): Byte {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getShort(index: Int): Short {
 
@@ -422,7 +399,6 @@ fun ByteArray.getShort(index: Int): Short {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getInt(index: Int): Int {
 
@@ -442,7 +418,6 @@ fun ByteArray.getInt(index: Int): Int {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getLong(index: Int): Long {
 
@@ -464,7 +439,6 @@ fun ByteArray.getLong(index: Int): Long {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getFloat(index: Int): Float = Float.fromBits(this.getInt(index))
 
@@ -476,7 +450,6 @@ fun ByteArray.getFloat(index: Int): Float = Float.fromBits(this.getInt(index))
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getDouble(index: Int): Double = Double.fromBits(this.getLong(index))
 
@@ -488,7 +461,6 @@ fun ByteArray.getDouble(index: Int): Double = Double.fromBits(this.getLong(index
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getUnsignedByte(index: Int): UByte = this.getByte(index).toUByte()
 
@@ -500,7 +472,6 @@ fun ByteArray.getUnsignedByte(index: Int): UByte = this.getByte(index).toUByte()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getUnsignedShort(index: Int): UShort = this.getShort(index).toUShort()
 
@@ -512,7 +483,6 @@ fun ByteArray.getUnsignedShort(index: Int): UShort = this.getShort(index).toUSho
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getUnsignedInt(index: Int): UInt = this.getInt(index).toUInt()
 
@@ -524,7 +494,6 @@ fun ByteArray.getUnsignedInt(index: Int): UInt = this.getInt(index).toUInt()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getUnsignedLong(index: Int): ULong = this.getLong(index).toULong()
 
@@ -536,7 +505,6 @@ fun ByteArray.getUnsignedLong(index: Int): ULong = this.getLong(index).toULong()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.getBytes(index: Int, length: Int): ByteArray = this.copyOfRange(index, index + length)
 
@@ -547,7 +515,6 @@ fun ByteArray.getBytes(index: Int, length: Int): ByteArray = this.copyOfRange(in
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toHexString(): String {
     val sb = StringBuilder()
@@ -566,7 +533,6 @@ fun ByteArray.toHexString(): String {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ByteArray.toUtf8String(): String {
     val sb = StringBuilder()
@@ -583,7 +549,6 @@ fun ByteArray.toUtf8String(): String {
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @OptIn(ExperimentalUnsignedTypes::class)
 fun byteArrayOf(vararg bytes: UByte): ByteArray {

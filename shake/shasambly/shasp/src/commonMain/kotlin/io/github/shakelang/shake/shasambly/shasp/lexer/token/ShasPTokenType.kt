@@ -5,8 +5,6 @@ import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
 
 /**
  * These are the different types of tokens, that the lexer creates
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 enum class ShasPTokenType(private val size: Int, override val hasValue: Boolean = false): TokenType {
 

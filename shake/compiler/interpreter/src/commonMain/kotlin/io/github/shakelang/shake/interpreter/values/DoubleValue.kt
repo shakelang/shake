@@ -7,8 +7,6 @@ import kotlin.reflect.KClass
 
 /**
  * [InterpreterValue]s for doubles
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 class DoubleValue
 
@@ -16,8 +14,6 @@ class DoubleValue
  * Constructor for [DoubleValue]
  *
  * @param value the value of the [DoubleValue]
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */(
     
     /**
@@ -40,8 +36,6 @@ class DoubleValue
      *
      * @param v The value to add to this value
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun add(v: InterpreterValue): InterpreterValue {
 
@@ -67,8 +61,6 @@ class DoubleValue
      *
      * @param v The value to sub from this value
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun sub(v: InterpreterValue): InterpreterValue {
 
@@ -91,8 +83,6 @@ class DoubleValue
      *
      * @param v The value to multiply with this value
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun mul(v: InterpreterValue): InterpreterValue {
 
@@ -115,8 +105,6 @@ class DoubleValue
      *
      * @param v The divisor-value
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun div(v: InterpreterValue): InterpreterValue {
 
@@ -139,8 +127,6 @@ class DoubleValue
      *
      * @param v The divisor-value
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun mod(v: InterpreterValue): InterpreterValue {
 
@@ -164,8 +150,6 @@ class DoubleValue
      *
      * @param v The exponent value
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun pow(v: InterpreterValue): InterpreterValue {
 
@@ -194,8 +178,6 @@ class DoubleValue
      *
      * @param v The value that should be the same
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun equals(v: InterpreterValue): BooleanValue {
 
@@ -215,8 +197,6 @@ class DoubleValue
      *
      * @param v The value that should be smaller
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun biggerEquals(v: InterpreterValue): InterpreterValue {
 
@@ -235,8 +215,6 @@ class DoubleValue
      *
      * @param v The value that should be bigger
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun smallerEquals(v: InterpreterValue): InterpreterValue {
 
@@ -255,8 +233,6 @@ class DoubleValue
      *
      * @param v The value that should be smaller or equal
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun bigger(v: InterpreterValue): InterpreterValue {
 
@@ -275,8 +251,6 @@ class DoubleValue
      *
      * @param v The value that should be bigger or equal
      * @return The calculation-result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun smaller(v: InterpreterValue): InterpreterValue {
 
@@ -299,8 +273,6 @@ class DoubleValue
      * Get the java-representation of the [DoubleValue]
      *
      * @return the java-representation of the [DoubleValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toJava(): Any {
         return value
@@ -317,8 +289,6 @@ class DoubleValue
      * @param type the type to convert to
      * @param <T> the type to convert to
      * @return the converted [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
     override fun <T : InterpreterValue> to(type: KClass<T>): T {
@@ -331,8 +301,6 @@ class DoubleValue
      * @param type the type to cast to
      * @param <T> the type to cast to
      * @return the converted [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
     override fun <T : InterpreterValue> castTo(type: CastTarget): T {
@@ -358,8 +326,6 @@ class DoubleValue
      * For [DoubleValue] it just always returns "double"
      *
      * @return "double"
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val name: String get() = "double"
 
@@ -371,8 +337,6 @@ class DoubleValue
      * Returns the string representation of the [IntegerValue]
      *
      * @return the string representation of the [IntegerValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString(): String = this.value.toString()
 }

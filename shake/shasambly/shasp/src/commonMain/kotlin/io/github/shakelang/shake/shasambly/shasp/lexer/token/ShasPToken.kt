@@ -5,8 +5,6 @@ import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 
 /**
  * A token representing a ShasP token.
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 class ShasPToken : Token<ShasPTokenType> {

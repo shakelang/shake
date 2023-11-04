@@ -6,8 +6,6 @@ import kotlin.test.*
 
 /**
  * Tests for [SourceCharacterInputStream]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 class SourceCharacterInputStreamTests {
 

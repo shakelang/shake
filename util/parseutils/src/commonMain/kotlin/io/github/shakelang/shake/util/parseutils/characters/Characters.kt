@@ -4,8 +4,6 @@ import kotlin.js.JsName
 
 /**
  * Utilities for wirking with characters
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 object Characters {
 
@@ -16,48 +14,36 @@ object Characters {
 
     /**
      * Is the given character a hex character (0-f)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @JsName("isHexCharacter")
     fun isHexCharacter(c: Char): Boolean = c in '0'..'9' || c in 'A'..'F' || c in 'a'..'f'
 
     /**
      * Is the given character a number character (0-9)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @JsName("isNumberCharacter")
     fun isNumberCharacter(c: Char): Boolean = c in '0'..'9'
 
     /**
      * Is the given character a number character (0-9) or a dot character
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @JsName("isNumberOrDotCharacter")
     fun isNumberOrDotCharacter(c: Char): Boolean = c in '0'..'9' || c == '.'
 
     /**
      * Is the given character a ignored whitespace character ('\r', '\t' or ' ', **not '\n'**)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @JsName("isWhitespaceCharacter")
     fun isWhitespaceCharacter(c: Char): Boolean = c == '\r' || c == '\t' || c == ' '
 
     /**
      * Is the given character a part of an identifier (A-Z, a-z, 0-9 and '_')
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @JsName("isIdentifierCharacter")
     fun isIdentifierCharacter(c: Char): Boolean = c in '0'..'9' || c in 'A'..'Z' || c in 'a'..'z' || c == '_'
 
     /**
      * Is the given character the start of a identifier (A-Z, a-z and '_', **not 0-9**)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @JsName("isIdentifierStartCharacter")
     fun isIdentifierStartCharacter(c: Char): Boolean = c in 'A'..'Z' || c in 'a'..'z' || c == '_'
@@ -72,8 +58,6 @@ object Characters {
      * `"hello\tworld"` → `"hello world"`
      *
      * `"\u0021"` → `"!"`
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @JsName("parseString")
     fun parseString(s: String): String {
@@ -140,15 +124,11 @@ object Characters {
 
     /**
      * Escape a string
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun escapeString(str: String): String = str.toCharArray().joinToString("") { escapeCharacter(it) }
 
     /**
      * Escape a character
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun escapeCharacter(c: Char): String {
         return when {
@@ -166,23 +146,17 @@ object Characters {
 
     /**
      * Escape a character to an unicode
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toUnicode(char: Char) = "\\u${toBase16(char.code, 4)}"
 
     /**
      * Get a base 16 char equivalent of an integer
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;]
      */
     fun getBase16Character(number: Int) =
         if (number !in 0..15) throw IllegalArgumentException("Input $number should be in range 0..15") else base16chars[number]
 
     /**
      * Generate number to base 16
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun toBase16(number: Int, digits: Int = 1): String {
         val sb = StringBuilder()

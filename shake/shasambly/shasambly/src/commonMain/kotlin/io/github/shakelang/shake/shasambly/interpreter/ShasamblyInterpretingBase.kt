@@ -11,8 +11,6 @@ import kotlin.experimental.and
  * The base of the shasambly interpreter.
  * It contains the core functions of the interpreter that store data and are used to manipulate the interprets data.
  * It does not contain any functions that are used to interpret the data or to execute opcodes.
- *
- * @author Nicolas Schmidt
  */
 abstract class ShasamblyInterpretingBase(
     memorySize: Int,

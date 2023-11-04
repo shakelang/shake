@@ -8,7 +8,6 @@ package io.github.shakelang.shake.util.primitives.bytes
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun Byte.toBytes(): ByteArray = byteArrayOf(this)
 
@@ -19,7 +18,6 @@ fun Byte.toBytes(): ByteArray = byteArrayOf(this)
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun Short.toBytes(): ByteArray = byteArrayOf((this.toInt() shr 8).toByte(), this.toByte())
 
@@ -30,7 +28,6 @@ fun Short.toBytes(): ByteArray = byteArrayOf((this.toInt() shr 8).toByte(), this
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun Int.toBytes(): ByteArray = byteArrayOf((this shr 24).toByte(), (this shr 16).toByte(),
     (this shr 8).toByte(), this.toByte())
@@ -42,7 +39,6 @@ fun Int.toBytes(): ByteArray = byteArrayOf((this shr 24).toByte(), (this shr 16)
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun Long.toBytes(): ByteArray = byteArrayOf((this shr 56).toByte(), (this shr 48).toByte(), (this shr 40).toByte(),
     (this shr 32).toByte(), (this shr 24).toByte(), (this shr 16).toByte(), (this shr 8).toByte(), this.toByte())
@@ -54,7 +50,6 @@ fun Long.toBytes(): ByteArray = byteArrayOf((this shr 56).toByte(), (this shr 48
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun Float.toBytes(): ByteArray = this.toBits().toBytes()
 
@@ -65,7 +60,6 @@ fun Float.toBytes(): ByteArray = this.toBits().toBytes()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun Double.toBytes(): ByteArray = this.toBits().toBytes()
 
@@ -76,7 +70,6 @@ fun Double.toBytes(): ByteArray = this.toBits().toBytes()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun UByte.toBytes(): ByteArray = toByte().toBytes()
 
@@ -87,7 +80,6 @@ fun UByte.toBytes(): ByteArray = toByte().toBytes()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun UShort.toBytes(): ByteArray = toShort().toBytes()
 
@@ -98,7 +90,6 @@ fun UShort.toBytes(): ByteArray = toShort().toBytes()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun UInt.toBytes(): ByteArray = toInt().toBytes()
 
@@ -109,7 +100,6 @@ fun UInt.toBytes(): ByteArray = toInt().toBytes()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun ULong.toBytes(): ByteArray = toLong().toBytes()
 
@@ -120,7 +110,6 @@ fun ULong.toBytes(): ByteArray = toLong().toBytes()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun byteOf(b: Byte): Byte = b
 
@@ -131,7 +120,6 @@ inline fun byteOf(b: Byte): Byte = b
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun shortOf(b0: Byte, b1: Byte): Short = (b0.toUByte().toInt() shl 8 or b1.toInt()).toShort()
 
@@ -142,7 +130,6 @@ inline fun shortOf(b0: Byte, b1: Byte): Short = (b0.toUByte().toInt() shl 8 or b
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun intOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) =
     b0.toUByte().toInt() shl 8 or b1.toUByte().toInt() shl 8 or
@@ -155,7 +142,6 @@ inline fun intOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) =
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun longOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte)
     = b0.toUByte().toLong() shl 8 or b1.toUByte().toLong() shl 8 or b2.toUByte().toLong() shl 8 or b3.toUByte().toLong() shl
@@ -168,7 +154,6 @@ inline fun longOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun floatOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = Float.fromBits(intOf(b0, b1, b2, b3))
 
@@ -179,7 +164,6 @@ inline fun floatOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = Float.fromBits(intO
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun doubleOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte)
     = Double.fromBits(longOf(b0, b1, b2, b3, b4, b5, b6, b7))
@@ -191,7 +175,6 @@ inline fun doubleOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, 
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun ubyteOf(b: Byte) = byteOf(b).toUByte()
 
@@ -202,7 +185,6 @@ inline fun ubyteOf(b: Byte) = byteOf(b).toUByte()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun ushortOf(b0: Byte, b1: Byte): UShort = shortOf(b0, b1).toUShort()
 
@@ -213,7 +195,6 @@ inline fun ushortOf(b0: Byte, b1: Byte): UShort = shortOf(b0, b1).toUShort()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun uintOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = intOf(b0, b1, b2, b3).toUInt()
 
@@ -224,7 +205,6 @@ inline fun uintOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = intOf(b0, b1, b2, b3
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun ulongOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte)
         = longOf(b0, b1, b2, b3, b4, b5, b6, b7).toULong()
@@ -236,7 +216,6 @@ inline fun ulongOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun unsignedByteOf(b: Byte) = ubyteOf(b)
 
@@ -247,7 +226,6 @@ inline fun unsignedByteOf(b: Byte) = ubyteOf(b)
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun unsignedShortOf(b0: Byte, b1: Byte): UShort = ushortOf(b0, b1)
 
@@ -258,7 +236,6 @@ inline fun unsignedShortOf(b0: Byte, b1: Byte): UShort = ushortOf(b0, b1)
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun unsignedIntOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = uintOf(b0, b1, b2, b3)
 
@@ -269,7 +246,6 @@ inline fun unsignedIntOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = uintOf(b0, b1
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 inline fun unsignedLongOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte)
         = ulongOf(b0, b1, b2, b3, b4, b5, b6, b7)

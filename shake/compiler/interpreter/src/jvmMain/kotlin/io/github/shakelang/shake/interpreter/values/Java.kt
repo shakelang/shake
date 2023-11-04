@@ -17,8 +17,6 @@ class Java : InterpreterValue {
      *
      * @param c the child to get
      * @return the child variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun getChild(c: String): Variable {
         return Variable.finalOf(c, JavaUnknown(c))
@@ -28,8 +26,6 @@ class Java : InterpreterValue {
      * Returns the name of the type of [InterpreterValue] (To identify the type of value)
      *
      * @return the name of the [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val name: String = "java"
 
@@ -41,7 +37,6 @@ class Java : InterpreterValue {
          * @param c the child to get
          * @return the child variable
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override fun getChild(c: String): Variable {
             val name = "$unknownName.$c"
@@ -57,7 +52,6 @@ class Java : InterpreterValue {
          *
          * @return the keys of all children
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override val children: Array<String> get() {
             // Get names of all classes in this package using reflections
@@ -74,7 +68,6 @@ class Java : InterpreterValue {
          *
          * @return the name of the [InterpreterValue]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override val name: String get() = "java-unknown"
 
@@ -91,7 +84,6 @@ class Java : InterpreterValue {
          * @param c the child to get
          * @return the child variable
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override fun getChild(c: String): Variable {
             val fields = this.javaClass.fields
@@ -167,7 +159,6 @@ class Java : InterpreterValue {
          *
          * @return the name of the [InterpreterValue]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override val name: String get() = "java-class"
 
@@ -219,7 +210,6 @@ class Java : InterpreterValue {
          * Returns the name of the type of [InterpreterValue] (To identify the type of value)
          *
          * @return the name of the [InterpreterValue]
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override val name: String get() = "java-method"
 
@@ -233,7 +223,6 @@ class Java : InterpreterValue {
          *
          * @param c the child to get
          * @return the child variable
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override fun getChild(c: String): Variable {
             try {
@@ -265,7 +254,6 @@ class Java : InterpreterValue {
          * Returns the name of the type of [InterpreterValue] (To identify the type of value)
          *
          * @return the name of the [InterpreterValue]
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override val name: String get() = "java-value"
 

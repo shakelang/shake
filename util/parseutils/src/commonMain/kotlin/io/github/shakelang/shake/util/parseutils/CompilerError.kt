@@ -11,8 +11,6 @@ import kotlin.js.JsName
 /**
  * A [CompilerError] is an error thrown by a Compiler. It has functionality for
  * marking source code locations
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 open class CompilerError : Error {
 
@@ -57,8 +55,6 @@ open class CompilerError : Error {
      * @param start the start position of the exception _(Value for [CompilerError.start])_
      * @param end the end position of the exception _(Value for [CompilerError.end])_
      * @param cause the cause for the exception
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private constructor(
         message: String,
@@ -86,8 +82,6 @@ open class CompilerError : Error {
      * @param start the start position of the exception _(Value for [CompilerError.start])_
      * @param end the end position of the exception _(Value for [CompilerError.end])_
      * @param cause the cause for the exception
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(
         message: String,
@@ -114,8 +108,6 @@ open class CompilerError : Error {
      * @param start the start position of the exception _(Value for [CompilerError.start])_
      * @param end the end position of the exception _(Value for [CompilerError.end])_
      * @param cause the cause for the exception
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(
         message: String,
@@ -137,16 +129,12 @@ open class CompilerError : Error {
 
     /**
      * Stringify the [CompilerError]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString() = message!!
 
 
     /**
      * A marker for the position of the [CompilerError]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     class ErrorMarker(
 
@@ -179,7 +167,6 @@ open class CompilerError : Error {
         /**
          * Generate the [ErrorMarker] as a string
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JsName("generateMarker")
         fun generateMarker() = "at $source\n$preview\n$marker"
@@ -187,7 +174,6 @@ open class CompilerError : Error {
         /**
          * Generate the [ErrorMarker] as a string including console colors
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JsName("generateColoredMarker")
         fun generateColoredMarker() = "at $source\n$colorPreview\n$marker"
@@ -195,7 +181,6 @@ open class CompilerError : Error {
         /**
          * Stringify the [CompilerError] (just the same as [ErrorMarker.generateMarker]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         override fun toString() = generateMarker()
 
@@ -206,14 +191,12 @@ open class CompilerError : Error {
         /**
          * The maxLength for generated [ErrorMarker]s
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         const val MAX_LENGTH = 60
 
         /**
          * Creates a [ErrorMarker]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         private fun createPositionMarker(
             maxLength: Int = MAX_LENGTH,

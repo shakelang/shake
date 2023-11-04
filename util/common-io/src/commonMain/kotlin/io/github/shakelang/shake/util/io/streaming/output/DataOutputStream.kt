@@ -12,7 +12,6 @@ import io.github.shakelang.shake.util.primitives.bytes.toBytes
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
  */
 @OptIn(ExperimentalUnsignedTypes::class)
 class DataOutputStream(
@@ -21,7 +20,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     val output: OutputStream
 ) : OutputStream() {
@@ -33,7 +31,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun write(b: Int) {
         output.write(b)
@@ -44,7 +41,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun flush() {
         output.flush()
@@ -55,7 +51,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     override fun close() {
         output.close()
@@ -68,7 +63,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeBoolean(b: Boolean) {
         write(if (b) 1 else 0)
@@ -81,7 +75,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeByte(b: Byte) {
         write(b.toInt())
@@ -94,7 +87,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeShort(b: Short) {
         write(b.toBytes())
@@ -107,7 +99,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeInt(b: Int) {
         write(b.toBytes())
@@ -120,7 +111,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeLong(b: Long) {
         write(b.toBytes())
@@ -133,7 +123,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeFloat(b: Float) {
         write(b.toBytes())
@@ -146,7 +135,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeDouble(b: Double) {
         write(b.toBytes())
@@ -159,7 +147,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedByte(b: UByte) {
         writeByte(b.toByte())
@@ -172,7 +159,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedShort(b: UShort) {
         writeShort(b.toShort())
@@ -185,7 +171,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedInt(b: UInt) {
         writeInt(b.toInt())
@@ -198,7 +183,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedLong(b: ULong) {
         writeLong(b.toLong())
@@ -211,7 +195,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeChar(b: Char) {
         write((b.code shr 8).toUByte().toInt())
@@ -225,7 +208,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeCharUTF8(b: Char) {
         writeUnsignedByte(b.code.toUByte())
@@ -238,7 +220,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeBooleanArray(b: BooleanArray) {
         b.forEach { writeBoolean(it) }
@@ -256,7 +237,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeBooleanArray(b: BooleanArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -274,7 +254,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeBooleanArray(b: Array<Boolean>) {
         b.forEach { writeBoolean(it) }
@@ -292,7 +271,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeBooleanArray(b: Array<Boolean>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -310,7 +288,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeByteArray(b: ByteArray) {
         write(b)
@@ -328,7 +305,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeByteArray(b: ByteArray, off: Int, len: Int) {
         write(b, off, len)
@@ -344,7 +320,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeByteArray(b: Array<Byte>) {
         write(b.toByteArray())
@@ -362,7 +337,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeByteArray(b: Array<Byte>, off: Int, len: Int) {
         write(b.toByteArray(), off, len)
@@ -375,7 +349,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeShortArray(b: ShortArray) {
         b.forEach { writeShort(it) }
@@ -393,7 +366,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeShortArray(b: ShortArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -408,7 +380,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeShortArray(b: Array<Short>) {
         b.forEach { writeShort(it) }
@@ -426,7 +397,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeShortArray(b: Array<Short>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -441,7 +411,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeIntArray(b: IntArray) {
         b.forEach { writeInt(it) }
@@ -459,7 +428,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeIntArray(b: IntArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -474,7 +442,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeIntArray(b: Array<Int>) {
         b.forEach { writeInt(it) }
@@ -492,7 +459,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeIntArray(b: Array<Int>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -507,7 +473,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeLongArray(b: LongArray) {
         b.forEach { writeLong(it) }
@@ -522,7 +487,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeLongArray(b: LongArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -559,7 +523,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeLongArray(b: Array<Long>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -578,7 +541,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeFloatArray(b: FloatArray) {
         b.forEach { writeFloat(it) }
@@ -597,7 +559,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeFloatArray(b: FloatArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -616,7 +577,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeFloatArray(b: Array<Float>) {
         b.forEach { writeFloat(it) }
@@ -635,7 +595,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeFloatArray(b: Array<Float>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -654,7 +613,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeDoubleArray(b: DoubleArray) {
         b.forEach { writeDouble(it) }
@@ -673,7 +631,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeDoubleArray(b: DoubleArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -692,7 +649,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeDoubleArray(b: Array<Double>) {
         b.forEach { writeDouble(it) }
@@ -711,7 +667,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeDoubleArray(b: Array<Double>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -731,7 +686,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedByteArray(b: UByteArray) {
         b.forEach { writeUnsignedByte(it) }
@@ -751,7 +705,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedByteArray(b: UByteArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -771,7 +724,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedByteArray(b: Array<UByte>) {
         b.forEach { writeUnsignedByte(it) }
@@ -791,7 +743,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedByteArray(b: Array<UByte>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -811,7 +762,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedShortArray(b: UShortArray) {
         b.forEach { writeUnsignedShort(it) }
@@ -831,7 +781,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedShortArray(b: UShortArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -851,7 +800,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedShortArray(b: Array<UShort>) {
         b.forEach { writeUnsignedShort(it) }
@@ -871,7 +819,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedShortArray(b: Array<UShort>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -890,7 +837,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedIntArray(b: UIntArray) {
         b.forEach { writeUnsignedInt(it) }
@@ -910,7 +856,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedIntArray(b: UIntArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -930,7 +875,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedIntArray(b: Array<UInt>) {
         b.forEach { writeUnsignedInt(it) }
@@ -950,7 +894,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedIntArray(b: Array<UInt>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -966,7 +909,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedLongArray(b: ULongArray) {
         b.forEach { writeUnsignedLong(it) }
@@ -986,7 +928,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedLongArray(b: ULongArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -1002,7 +943,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedLongArray(b: Array<ULong>) {
         b.forEach { writeUnsignedLong(it) }
@@ -1022,7 +962,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUnsignedLongArray(b: Array<ULong>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -1038,7 +977,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeCharArrayUTF8(b: CharArray) {
         b.forEach { writeCharUTF8(it) }
@@ -1057,7 +995,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeCharArrayUTF8(b: CharArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -1073,7 +1010,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeCharArrayUTF8(b: Array<Char>) {
         b.forEach { writeCharUTF8(it) }
@@ -1091,7 +1027,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeCharArrayUTF8(b: Array<Char>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -1107,7 +1042,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeCharArray(b: CharArray) {
         b.forEach { writeChar(it) }
@@ -1127,7 +1061,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeCharArray(b: CharArray, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -1148,7 +1081,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeCharArray(b: Array<Char>) {
         b.forEach { writeChar(it) }
@@ -1168,7 +1100,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeCharArray(b: Array<Char>, off: Int, len: Int) {
         for (i in off until off + len) {
@@ -1189,7 +1120,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUTF8(str: CharSequence) {
         writeUTF8(str, 0, str.length)
@@ -1209,7 +1139,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeUTF8(str: CharSequence, off: Int, len: Int) {
         val bytes = str.toBytes()
@@ -1225,7 +1154,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeStringUTF8(str: CharSequence) {
         writeUTF8(str)
@@ -1245,7 +1173,6 @@ class DataOutputStream(
      *
      * @since 0.1.0
      * @version 0.1.1
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de/)
      */
     fun writeStringUTF8(str: CharSequence, off: Int, len: Int) {
         writeUTF8(str, off, len)

@@ -30,7 +30,6 @@ import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
  * An abstract Parser for the Shake Programming language. An instance is created for each file in the compilation process.
  * The Default implementation of this class is [ShakeParserImpl]. Create a ShakeParser using [ShakeParser.from]
  *
- * @author Nicolas Schmidt <@nsc-de>
  * @see ShakeParserImpl
  * @see ShakeParser.from
  */

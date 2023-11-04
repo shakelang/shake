@@ -7,8 +7,6 @@ import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
 /**
  * A [TokenInputStream] provides the [Token]s for a Parser. It is
  * created by a lexer
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 interface TokenInputStream<TT: TokenType, T : Token<TT>> {
@@ -39,8 +37,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      *
      * @param num the number of tokens to check
      * @return has the [TokenInputStream] left the given amount of [Token]s?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun has(num: Int): Boolean
 
@@ -48,8 +44,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Checks if the [TokenInputStream] has a token left
      *
      * @return has the [TokenInputStream] another [Token] left?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     operator fun hasNext(): Boolean = has(1)
 
@@ -57,7 +51,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the next token of the [TokenInputStream] (and skips)
      *
      * @return the next token
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     operator fun next(): T {
         // skip to next token and then return the actual token
@@ -69,8 +62,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the type of the next token of the [TokenInputStream] (and skips)
      *
      * @return the next token
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun nextType(): TT {
         // skip to next token and then return the actual token
@@ -82,8 +73,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the next token of the [TokenInputStream]
      *
      * @return the next token
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun nextValue(): String? {
         // skip to next token and then return the actual token
@@ -93,15 +82,11 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
 
     /**
      * Skips the next token
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun skip()
 
     /**
      * Skips a number of tokens
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun skip(amount: Int)
 
@@ -109,7 +94,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the actual [Token]
      *
      * @return The actual [Token]
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     val actual: T
 
@@ -117,8 +101,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the type of the actual token
      *
      * @return The actual token-type
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     val actualType: TT get() {
         return actual.type
@@ -128,8 +110,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the start of the actual token
      *
      * @return The actual token-start
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     val actualStart: Int get() {
         return actual.start
@@ -139,8 +119,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the end of the actual token
      *
      * @return The actual token-end
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     val actualEnd: Int get() {
         return actual.end
@@ -150,8 +128,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the value of the actual
      *
      * @return The actual token-value
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     val actualValue: String? get() {
         return actual.value
@@ -161,8 +137,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Checks if the actual token without changing the actual token
      *
      * @return Has the actual token a value?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     val actualHasValue: Boolean get() {
         return actualValue != null
@@ -172,7 +146,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the next [Token]
      *
      * @return The next [Token]
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun peek(): T {
         return peek(1)
@@ -182,8 +155,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the type of the next token without changing the actual token
      *
      * @return The next token-type
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun peekType(): TT {
         return peek().type
@@ -193,8 +164,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the start of the next token without changing the actual token
      *
      * @return The next token-start
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun peekStart(): Int {
         return peek().start
@@ -204,8 +173,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the end of the next token without changing the actual token
      *
      * @return The next token-end
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun peekEnd(): Int {
         return peek().end
@@ -215,8 +182,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Returns the value of the next token without changing the actual token
      *
      * @return The next token-value
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun peekValue(): String? {
         return peek().value
@@ -226,8 +191,6 @@ interface TokenInputStream<TT: TokenType, T : Token<TT>> {
      * Checks if the next token of the [TokenInputStream] has a value without skipping
      *
      * @return The next [Token]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun peekHasValue(): Boolean {
         return peekValue() != null

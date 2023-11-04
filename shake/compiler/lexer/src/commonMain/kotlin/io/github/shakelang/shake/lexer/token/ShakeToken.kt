@@ -3,8 +3,6 @@ package io.github.shakelang.shake.lexer.token
 /**
  * The input of the [io.github.shakelang.shake.lexer.ShakeLexer] gets converted into [ShakeToken]s. These get parsed
  * by the parser
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 class ShakeToken: Token<ShakeTokenType> {
 

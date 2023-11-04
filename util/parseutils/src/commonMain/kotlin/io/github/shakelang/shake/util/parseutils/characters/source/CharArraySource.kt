@@ -4,7 +4,6 @@ package io.github.shakelang.shake.util.parseutils.characters.source
  * A [CharArraySource] is an implementation of [CharacterSource] that provides the characters based
  * on a [CharArray]
  *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  *
  * @see CharacterSource
  */
@@ -29,7 +28,6 @@ internal class CharArraySource(
     /**
      * The length of the [CharacterSource] (implementation of [CharacterSource.length])
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;]
      *
      * @see CharacterSource.length
      */
@@ -42,7 +40,6 @@ internal class CharArraySource(
      * @param start the start index for the characters
      * @param end the end index for the characters
      *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      *
      * @see CharacterSource.get
      */

@@ -5,8 +5,6 @@ import kotlin.jvm.JvmOverloads
 
 /**
  * The [Position] marks a position in the source-code.
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 class Position
@@ -18,8 +16,6 @@ class Position
  * @param index The [index] of the position
  * @param column The [column] of the position
  * @param line The [line] of the position
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @JvmOverloads constructor(
 
@@ -49,8 +45,6 @@ class Position
      * Copies the position
      *
      * @return a copy of the position
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun copy(): Position {
         return Position(source, index, column, line)
@@ -60,8 +54,6 @@ class Position
      * Creates a string-representation of the string
      *
      * @return A string-representation of the string
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString(): String {
         return "$source:$line:$column"
@@ -72,8 +64,6 @@ class Position
      *
      * @param other The other position
      * @return true if the positions are equal
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

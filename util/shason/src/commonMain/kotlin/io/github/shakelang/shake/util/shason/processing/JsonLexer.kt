@@ -12,8 +12,6 @@ import kotlin.jvm.JvmOverloads
 
 /**
  * A [JsonLexer] creates a [JsonTokenInputStream] from a [CharacterInputStream]
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 class JsonLexer (
@@ -28,8 +26,6 @@ class JsonLexer (
     /**
      * Make a [JsonTokenInputStream] from the [chars] of the [JsonLexer]
      * This function executes the [JsonLexer]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun makeTokens(): JsonTokenInputStream {
 
@@ -100,8 +96,6 @@ class JsonLexer (
      * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
      * there and not here to improve performance. The condition **must** be checked before the call of this
      * function!)_
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun makeIdentifier(): JsonToken {
 
@@ -130,8 +124,6 @@ class JsonLexer (
      * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
      * there and not here to improve performance. The condition **must** be checked before the call of this
      * function!)_
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun makeString(): JsonToken {
 
@@ -186,8 +178,6 @@ class JsonLexer (
      * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
      * there and not here to improve performance. The condition **must** be checked before the call of this
      * function!)_
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private fun makeNumber(): JsonToken {
 
@@ -229,8 +219,6 @@ class JsonLexer (
 
     /**
      * An [CompilerError] thrown by the [JsonLexer]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     private inner class JsonTokenLexerError(
         message: String,
@@ -248,7 +236,6 @@ class JsonLexer (
          * @param start the start position of the [CompilerError]
          * @param end the end position of the [CompilerError]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmOverloads
         constructor(
@@ -272,7 +259,6 @@ class JsonLexer (
          * @param start the start position of the [CompilerError]
          * @param end the end position of the [CompilerError]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmOverloads
         constructor(

@@ -8,7 +8,6 @@ package io.github.shakelang.shake.util.primitives.bytes
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 fun CharSequence.toBytes(): ByteArray = this.encodeToByteArray()
 
@@ -20,7 +19,6 @@ fun CharSequence.toBytes(): ByteArray = this.encodeToByteArray()
  *
  * @since 0.1.0
  * @version 0.1.1
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 private fun CharSequence.encodeToByteArray(): ByteArray {
     val bytes = ByteArray(this.length)
