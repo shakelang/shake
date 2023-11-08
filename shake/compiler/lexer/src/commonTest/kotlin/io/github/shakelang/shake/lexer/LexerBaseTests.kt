@@ -99,8 +99,36 @@ class LexerBaseTests {
 
         // logical concatenation
         generateToken("||", ShakeTokenType.LOGICAL_OR) // "||"
-        generateToken("^", ShakeTokenType.LOGICAL_XOR) // "^"
+        generateToken("^^", ShakeTokenType.LOGICAL_XOR) // "^^"
         generateToken("&&", ShakeTokenType.LOGICAL_AND) // "&&"
+        generateToken("!", ShakeTokenType.LOGICAL_NOT) // "!"
+    }
+
+    @Test
+    fun testBitwiseConcatenation() {
+
+        // bitwise concatenation
+        generateToken("|", ShakeTokenType.BITWISE_OR) // "|"
+        generateToken("^", ShakeTokenType.BITWISE_XOR) // "^"
+        generateToken("&", ShakeTokenType.BITWISE_AND) // "&"
+        generateToken("~", ShakeTokenType.BITWISE_NOT) // "~"
+
+        generateToken("~|", ShakeTokenType.BITWISE_NOR) // "~|"
+        generateToken("~^", ShakeTokenType.BITWISE_XNOR) // "~^"
+        generateToken("~&", ShakeTokenType.BITWISE_NAND) // "~&"
+
+
+
+
+    }
+
+    @Test
+    fun testBitShifts() {
+
+        // bit shifts
+        generateToken("<<", ShakeTokenType.BITWISE_SHL) // "<<"
+        generateToken(">>", ShakeTokenType.BITWISE_SHR) // ">>"
+
     }
 
     @Test
