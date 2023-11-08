@@ -69,13 +69,25 @@ abstract class ShakeLexingBase(
         else if (next == '*') ShakeToken(ShakeTokenType.MUL, input.position, input.position)
         else if (next == '-') ShakeToken(ShakeTokenType.SUB, input.position, input.position)
         else if (next == '+') ShakeToken(ShakeTokenType.ADD, input.position, input.position)
-        else if (next == '^') ShakeToken(ShakeTokenType.LOGICAL_XOR, input.position, input.position)
+        else if (next == '<' && peek == '<') {
+            input.skip()
+            ShakeToken(ShakeTokenType.BITWISE_SHL, input.position, input.position)
+        } else if (next == '>' && peek == '>') {
+            input.skip()
+            ShakeToken(ShakeTokenType.BITWISE_SHR, input.position, input.position)
+        } else if (next == '|' && peek == '|') {
+            input.skip()
+            ShakeToken(ShakeTokenType.LOGICAL_OR, input.position, input.position)
+        }
         else if (next == '|' && peek == '|') {
             input.skip()
             ShakeToken(ShakeTokenType.LOGICAL_OR, input.position, input.position)
         } else if (next == '&' && peek == '&') {
             input.skip()
             ShakeToken(ShakeTokenType.LOGICAL_AND, input.position, input.position)
+        } else if (next == '^' && peek == '^') {
+            input.skip()
+            ShakeToken(ShakeTokenType.LOGICAL_XOR, input.position, input.position)
         } else if (next == '=' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.EQ_EQUALS, input.position, input.position)
@@ -87,6 +99,21 @@ abstract class ShakeLexingBase(
             ShakeToken(ShakeTokenType.SMALLER_EQUALS, input.position, input.position)
         } else if (next == '>') ShakeToken(ShakeTokenType.BIGGER, input.position, input.position)
         else if (next == '<') ShakeToken(ShakeTokenType.SMALLER, input.position, input.position)
+        else if (next == '!') ShakeToken(ShakeTokenType.LOGICAL_NOT, input.position, input.position)
+        else if (next == '~' && peek == '&') {
+            input.skip()
+            ShakeToken(ShakeTokenType.BITWISE_NAND, input.position, input.position)
+        } else if (next == '~' && peek == '|') {
+            input.skip()
+            ShakeToken(ShakeTokenType.BITWISE_NOR, input.position, input.position)
+        } else if (next == '~' && peek == '^') {
+            input.skip()
+            ShakeToken(ShakeTokenType.BITWISE_XNOR, input.position, input.position)
+        }
+        else if (next == '~') ShakeToken(ShakeTokenType.BITWISE_NOT, input.position, input.position)
+        else if (next == '&') ShakeToken(ShakeTokenType.BITWISE_AND, input.position, input.position)
+        else if (next == '|') ShakeToken(ShakeTokenType.BITWISE_OR, input.position, input.position)
+        else if (next == '^') ShakeToken(ShakeTokenType.BITWISE_XOR, input.position, input.position)
         else if (next == '=') ShakeToken(ShakeTokenType.ASSIGN, input.position, input.position)
         else if (next == '(') ShakeToken(ShakeTokenType.LPAREN, input.position, input.position)
         else if (next == ')') ShakeToken(ShakeTokenType.RPAREN, input.position, input.position)
