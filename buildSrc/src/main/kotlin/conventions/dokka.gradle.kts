@@ -23,12 +23,12 @@ tasks.register<Copy>("copyDokkaHtml") {
     group = "documentation"
     dependsOn("dokkaHtml")
     from(file("build/docs/html"))
-    into(file("$rootProjectDir/build/docs/html/$projectName/"))
+    into(file("$rootProjectDir/build/docs/html/${project.path.replace(":", "/")}/"))
 }
 
 tasks.register<Copy>("copyDokkaGfm") {
     group = "documentation"
     dependsOn("dokkaGfm")
     from(file("build/docs/markdown"))
-    into(file("$rootProjectDir/build/docs/markdown/$projectName/"))
+    into(file("$rootProjectDir/build/docs/markdown/${project.path.replace(":", "/")}/"))
 }
