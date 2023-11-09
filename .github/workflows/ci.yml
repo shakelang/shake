@@ -23,7 +23,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Cache Gradle packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
@@ -34,7 +34,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          ./gradlew build allTests 
+          ./gradlew build allTests
 
       - if: success() || failure()
         name: Generate Test Reports
