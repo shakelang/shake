@@ -6,6 +6,7 @@ import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.parser.node.ShakeIfNode
 import io.github.shakelang.shake.parser.node.ShakeImportNode
 import io.github.shakelang.shake.parser.node.expression.*
+import io.github.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import io.github.shakelang.shake.parser.node.loops.ShakeForNode

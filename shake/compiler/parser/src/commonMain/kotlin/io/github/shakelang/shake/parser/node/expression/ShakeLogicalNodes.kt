@@ -1,7 +1,6 @@
 package io.github.shakelang.shake.parser.node.expression
 
 import io.github.shakelang.shake.parser.node.ShakeValuedNode
-import io.github.shakelang.shake.parser.node.ShakeValuedNodeImpl
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 class ShakeLogicalAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
@@ -38,11 +37,6 @@ class ShakeLogicalEqEqualsNode(map: PositionMap, left: ShakeValuedNode, right: S
 }
 
 
-class ShakeLogicalFalseNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
-    override fun toJson(): Map<String, *> = mapOf("name" to "LogicalFalseNode")
-}
-
-
 class ShakeLogicalOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
@@ -70,10 +64,6 @@ class ShakeLogicalSmallerNode(map: PositionMap, left: ShakeValuedNode, right: Sh
     override fun toJson(): Map<String, *> = mapOf("name" to "LogicalSmallerNode", "left" to left, "right" to right)
 }
 
-
-class ShakeLogicalTrueNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
-    override fun toJson(): Map<String, *> = mapOf("name" to "LogicalTrueNode")
-}
 
 class ShakeLogicalXOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {

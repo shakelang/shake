@@ -4,9 +4,7 @@ import io.github.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.ShakeParser
 import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.factor.ShakeStringNode
+import io.github.shakelang.shake.parser.node.factor.*
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 import io.github.shakelang.shake.parser.node.functions.ShakeReturnNode
 import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode

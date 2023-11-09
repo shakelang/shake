@@ -4,6 +4,8 @@ import io.github.shakelang.shake.assertType
 import io.github.shakelang.shake.parser.node.expression.*
 import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import io.github.shakelang.shake.parser.node.factor.ShakeLogicalFalseNode
+import io.github.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals

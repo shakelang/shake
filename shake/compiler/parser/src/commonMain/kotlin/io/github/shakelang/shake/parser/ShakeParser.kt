@@ -5,10 +5,7 @@ import io.github.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
 import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.ShakeCharacterNode
-import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.factor.ShakeStringNode
+import io.github.shakelang.shake.parser.node.factor.*
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
