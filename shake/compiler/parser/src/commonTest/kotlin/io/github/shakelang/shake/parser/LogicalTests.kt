@@ -84,7 +84,7 @@ class LogicalTests {
     fun testXOr() {
         val node = ParserTestUtil.parseValue(
             "<LogicalXOrTest>",
-            "true ^ false",
+            "true ^^ false",
             ShakeLogicalXOrNode::class
         )
         assertNotNull(node.left)
