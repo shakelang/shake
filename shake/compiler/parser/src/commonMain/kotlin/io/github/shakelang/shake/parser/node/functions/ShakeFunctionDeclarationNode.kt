@@ -1,10 +1,10 @@
 package io.github.shakelang.shake.parser.node.functions
 
-import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.ShakeBlockNode
 import io.github.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import io.github.shakelang.shake.parser.node.ShakeVariableType
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.jvm.JvmOverloads
 
 class ShakeFunctionDeclarationNode @JvmOverloads constructor(

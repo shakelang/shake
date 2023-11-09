@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.parser.node.expression
 
-import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.ShakeValuedNode
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 class ShakePowNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {

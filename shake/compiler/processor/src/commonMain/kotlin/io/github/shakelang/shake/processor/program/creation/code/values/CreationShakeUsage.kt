@@ -71,8 +71,8 @@ class CreationShakeFieldUsage(
     override val type get() = declaration.type
 
     init {
-        if(!declaration.isStatic && receiver == null) throw IllegalArgumentException("Field $name is not static")
-        if(declaration.isStatic && receiver != null) throw IllegalArgumentException("Field $name is static")
+        if (!declaration.isStatic && receiver == null) throw IllegalArgumentException("Field $name is not static")
+        if (declaration.isStatic && receiver != null) throw IllegalArgumentException("Field $name is static")
     }
 
     override fun toJson(): Map<String, Any?> {
@@ -86,16 +86,18 @@ class CreationShakeFieldUsage(
 
     companion object {
 
-        fun from(scope: CreationShakeScope, declaration: CreationShakeField, receiver: CreationShakeValue? = null): CreationShakeUsage {
-            return if(declaration.clazz != null) {
-                if(declaration.isStatic) {
-                    if(receiver != null) throw IllegalArgumentException("Static field $declaration cannot have a receiver")
+        fun from(
+            scope: CreationShakeScope,
+            declaration: CreationShakeField,
+            receiver: CreationShakeValue? = null
+        ): CreationShakeUsage {
+            return if (declaration.clazz != null) {
+                if (declaration.isStatic) {
+                    if (receiver != null) throw IllegalArgumentException("Static field $declaration cannot have a receiver")
                     CreationShakeStaticClassFieldUsage(scope, declaration)
-                }
-                else if(receiver == null) throw IllegalArgumentException("Field $declaration is not static")
+                } else if (receiver == null) throw IllegalArgumentException("Field $declaration is not static")
                 else CreationShakeClassFieldUsage(scope, declaration, receiver)
-            }
-            else CreationShakeFieldUsage(scope, declaration, receiver)
+            } else CreationShakeFieldUsage(scope, declaration, receiver)
         }
     }
 }

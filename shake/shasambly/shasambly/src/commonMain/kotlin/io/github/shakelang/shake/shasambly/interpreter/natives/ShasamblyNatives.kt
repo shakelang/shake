@@ -1,11 +1,12 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.interpreter.natives
 
-import io.github.shakelang.primitives.bytes.getByte
-import io.github.shakelang.primitives.bytes.getInt
-import io.github.shakelang.primitives.bytes.getLong
-import io.github.shakelang.primitives.bytes.getShort
 import io.github.shakelang.shake.shasambly.interpreter.ShasamblyOpcodeExecutor
+import io.github.shakelang.shake.util.primitives.bytes.getByte
+import io.github.shakelang.shake.util.primitives.bytes.getInt
+import io.github.shakelang.shake.util.primitives.bytes.getLong
+import io.github.shakelang.shake.util.primitives.bytes.getShort
 
 val nativeFunctions = arrayOfNulls<ShasamblyNative>((UShort.MAX_VALUE).toInt() + 1)
 
@@ -14,7 +15,12 @@ private fun nativeFunction(name: String, id: Int, execute: ShasamblyOpcodeExecut
     return id.toShort()
 }
 
-private fun nativeFunction(name: String, id: Int, byteArgumentAmount: Int, execute: ShasamblyOpcodeExecutor.() -> Unit): Short {
+private fun nativeFunction(
+    name: String,
+    id: Int,
+    byteArgumentAmount: Int,
+    execute: ShasamblyOpcodeExecutor.() -> Unit
+): Short {
     nativeFunctions[id] = ShasamblyNative(name, byteArgumentAmount, execute)
     return id.toShort()
 }
@@ -102,7 +108,7 @@ object Natives {
         var zw = memory[first]
         memory[first] = memory[second]
         memory[second] = zw
-        for(i in 0..2) {
+        for (i in 0..2) {
             first++
             second++
             zw = memory[first]
@@ -116,7 +122,7 @@ object Natives {
         var zw = memory[first]
         memory[first] = memory[second]
         memory[second] = zw
-        for(i in 0..6) {
+        for (i in 0..6) {
             first++
             second++
             zw = memory[first]
@@ -144,6 +150,7 @@ object Natives {
         val code = stack.popInt()
         exitProcess(code)
     }
+
     fun initNativeFunctions() {
         // Do nothing
         // This function is just a placeholder called to initialize all

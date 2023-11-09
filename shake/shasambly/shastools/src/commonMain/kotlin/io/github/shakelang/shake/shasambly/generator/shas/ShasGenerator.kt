@@ -1,16 +1,17 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.generator.shas
 
-import io.github.shakelang.io.streaming.input.InputStream
-import io.github.shakelang.io.streaming.input.asCountingInputStream
-import io.github.shakelang.io.streaming.input.asDataInputStream
-import io.github.shakelang.io.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.io.streaming.output.OutputStream
-import io.github.shakelang.primitives.bytes.toBytes
-import io.github.shakelang.primitives.bytes.toHexString
 import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
+import io.github.shakelang.shake.util.io.streaming.input.InputStream
+import io.github.shakelang.shake.util.io.streaming.input.asCountingInputStream
+import io.github.shakelang.shake.util.io.streaming.input.asDataInputStream
+import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.OutputStream
+import io.github.shakelang.shake.util.primitives.bytes.toBytes
+import io.github.shakelang.shake.util.primitives.bytes.toHexString
 
 class ShasGenerator(input: InputStream) {
 
@@ -34,7 +35,7 @@ class ShasGenerator(input: InputStream) {
 
     private fun doParse() {
         Natives.initNativeFunctions()
-        while(input.available() > 0) {
+        while (input.available() > 0) {
             print_opcode()
         }
     }
@@ -49,56 +50,69 @@ class ShasGenerator(input: InputStream) {
 
     fun print_opcode() {
         oprint("[0x${(counter.count + Util.START_BYTES).toUInt().toBytes().toHexString()}] ")
-        when(val opcode = input.readByte()) {
+        when (val opcode = input.readByte()) {
             Opcodes.INCR_STACK -> oprintln("incr_stack ${input.readUnsignedShort()}")
             Opcodes.DECR_STACK -> oprintln("decr_stack")
             Opcodes.JUMP_STATIC -> input.readUnsignedInt().let {
                 oprintln("jump_static 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.JUMP_DYNAMIC -> oprintln("jump_dynamic")
             Opcodes.JUMP_IF -> oprintln("jump_if 0x${input.readUnsignedInt().toBytes().toHexString()}")
             Opcodes.INVOKE_NATIVE -> {
                 val f = input.readUnsignedShort().toInt()
                 oprint("invoke_native ${nativeFunctions[f]?.name ?: throw Error("Unknown native")}")
                 val args = nativeFunctions[f]!!.byteArgumentAmount
-                if(args > 0) oprint(" ${input.readNBytes(args).toHexString()}")
+                if (args > 0) oprint(" ${input.readNBytes(args).toHexString()}")
                 oprintln()
             }
+
             Opcodes.GLOB_ADDR -> oprintln("glob_addr ${input.readUnsignedShort()}")
 
             Opcodes.B_GET_LOCAL -> input.readUnsignedShort().let {
                 oprintln("b_get_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.S_GET_LOCAL -> input.readUnsignedShort().let {
                 oprintln("s_get_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.I_GET_LOCAL -> input.readUnsignedShort().let {
                 oprintln("i_get_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.L_GET_LOCAL -> input.readUnsignedShort().let {
                 oprintln("l_get_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.B_STORE_LOCAL -> input.readUnsignedShort().let {
                 oprintln("b_store_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.S_STORE_LOCAL -> input.readUnsignedShort().let {
                 oprintln("s_store_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.I_STORE_LOCAL -> input.readUnsignedShort().let {
                 oprintln("i_store_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.L_STORE_LOCAL -> input.readUnsignedShort().let {
                 oprintln("l_store_local 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.B_PUSH -> input.readByte().let {
                 oprintln("b_push 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.S_PUSH -> input.readShort().let {
                 oprintln("s_push 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.I_PUSH -> input.readInt().let {
                 oprintln("i_push 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
+
             Opcodes.L_PUSH -> input.readLong().let {
                 oprintln("l_push 0x${it.toBytes().toHexString()} [numeric: ${it}]")
             }
@@ -200,8 +214,10 @@ class ShasGenerator(input: InputStream) {
             Opcodes.L_ABS -> oprintln("labs")
             Opcodes.F_ABS -> oprintln("fabs")
             Opcodes.D_ABS -> oprintln("dabs")
-            else -> throw Error("Wrong opcode 0x${opcode.toBytes().toHexString()} at position " +
-                    "0x${(counter.count-1).toUInt().toBytes().toHexString()}")
+            else -> throw Error(
+                "Wrong opcode 0x${opcode.toBytes().toHexString()} at position " +
+                        "0x${(counter.count - 1).toUInt().toBytes().toHexString()}"
+            )
         }
     }
 

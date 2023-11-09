@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.processor.program.types
 
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
-import io.github.shakelang.shason.json
+import io.github.shakelang.shake.util.shason.json
 
 interface ShakeProject {
     val subpackages: List<ShakePackage>
@@ -31,7 +31,7 @@ interface ShakeProject {
         val parts = clz.split(".")
         val name = parts.last()
         val pkg = parts.dropLast(1).toTypedArray()
-        return if(pkg.isEmpty()) this.classes.find { it.name == name }
+        return if (pkg.isEmpty()) this.classes.find { it.name == name }
         else this.getPackage(pkg)?.classes?.find { it.name == name }
     }
 

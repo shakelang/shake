@@ -1,15 +1,16 @@
 @file:Suppress("nothing_to_inline", "unused")
+
 package io.github.shakelang.shake.shasambly.interpreter
 
-import io.github.shakelang.primitives.bytes.toBytes
-import io.github.shakelang.primitives.bytes.toHexString
+import io.github.shakelang.shake.util.primitives.bytes.toBytes
+import io.github.shakelang.shake.util.primitives.bytes.toHexString
 
 
 class ShasamblyInterpreter(
     memorySize: Int,
     bytes: ByteArray,
     position: Int
-): ShasamblyOpcodeExecutor(memorySize, bytes, position) {
+) : ShasamblyOpcodeExecutor(memorySize, bytes, position) {
 
     val byteMap = createByteMap()
 
@@ -22,20 +23,22 @@ class ShasamblyInterpreter(
         try {
             (byteMap[next.toUByte().toInt()] ?: throw NoSuchElementException("Wrong opcode")).invoke()
         } catch (e: Throwable) {
-            throw Error("Could not execute byte 0x${next.toBytes().toHexString()} " +
-                    "at position 0x${(pos - 16).toBytes().toHexString()} (${pos-16})", e)
+            throw Error(
+                "Could not execute byte 0x${next.toBytes().toHexString()} " +
+                        "at position 0x${(pos - 16).toBytes().toHexString()} (${pos - 16})", e
+            )
         }
     }
 
     fun tick(times: Int) {
         for (i in 1..times) {
             tick()
-            if(finished()) break
+            if (finished()) break
         }
     }
 
     fun finish() {
-        while(!finished()) tick()
+        while (!finished()) tick()
     }
 
     private fun createByteMap(): Array<(() -> Unit)?> {

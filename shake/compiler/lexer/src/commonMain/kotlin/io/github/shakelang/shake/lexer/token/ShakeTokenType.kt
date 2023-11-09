@@ -1,19 +1,27 @@
 @file:Suppress("NOTHING_TO_INLINE")
+
 package io.github.shakelang.shake.lexer.token
 
-import io.github.shakelang.parseutils.lexer.token.TokenType
+import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
 
 /**
  * These are the different types of tokens, that the lexer creates
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 enum class ShakeTokenType(private val length: Int) : TokenType {
     ADD(1),
     ADD_ASSIGN(2),
     ASSIGN(1),
     BIGGER(1),
-    BIGGER_EQUALS (2),
+    BIGGER_EQUALS(2),
+    BITWISE_AND(1),
+    BITWISE_NOT(1),
+    BITWISE_OR(1),
+    BITWISE_XOR(1),
+    BITWISE_NOR(2),
+    BITWISE_NAND(2),
+    BITWISE_XNOR(2),
+    BITWISE_SHL(2),
+    BITWISE_SHR(2),
     CHARACTER(-1),
     COMMA(1),
     DECR(2),
@@ -76,6 +84,7 @@ enum class ShakeTokenType(private val length: Int) : TokenType {
     LCURL(1),
     LINE_SEPARATOR(1),
     LOGICAL_AND(2),
+    LOGICAL_NOT(1),
     LOGICAL_OR(2),
     LOGICAL_XOR(1),
     LPAREN(1),
@@ -99,8 +108,9 @@ enum class ShakeTokenType(private val length: Int) : TokenType {
     ;
 
     override fun length(value: String?): Int {
-        return if(hasValue) value?.length ?: 0 else length
+        return if (hasValue) value?.length ?: 0 else length
     }
+
     override val hasValue: Boolean get() = length < 0
     val tokenName: String get() = name
     val tokenLength: Int get() = length

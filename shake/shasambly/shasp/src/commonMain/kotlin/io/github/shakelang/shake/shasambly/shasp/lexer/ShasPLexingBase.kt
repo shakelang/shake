@@ -1,11 +1,10 @@
 package io.github.shakelang.shake.shasambly.shasp.lexer
 
-import io.github.shakelang.parseutils.CompilerError
-import io.github.shakelang.parseutils.characters.Characters
-import io.github.shakelang.parseutils.characters.position.Position
-import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.lexer.token.ShasPToken
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
+import io.github.shakelang.shake.util.parseutils.characters.Characters
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import kotlin.jvm.JvmOverloads
 
 abstract class ShasPLexingBase(
@@ -228,7 +227,7 @@ abstract class ShasPLexingBase(
     }
 
     inner class LexerError(message: String, name: String, details: String, start: Position, end: Position) :
-        CompilerError(message, name, details, start, end) {
+        io.github.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
         @JvmOverloads
         constructor(
             name: String,

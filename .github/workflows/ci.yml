@@ -23,7 +23,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Cache Gradle packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
@@ -39,8 +39,9 @@ jobs:
       - if: success() || failure()
         name: Generate Test Reports
         run: |
-          ./gradlew jvmTest genReport koverXmlReport koverHtmlReport
+          ./gradlew genReport koverXmlReport koverHtmlReport testAggregate
           zip -r build/reports/kover/html.zip build/reports/kover/html
+          zip -r build/reports/tests.zip build/reports/tests
 
       #      - name: Test Report
       #        uses: dorny/test-reporter@v1

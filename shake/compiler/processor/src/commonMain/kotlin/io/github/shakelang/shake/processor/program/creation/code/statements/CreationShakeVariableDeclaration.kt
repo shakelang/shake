@@ -11,7 +11,8 @@ import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 import io.github.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 
-open class CreationShakeVariableDeclaration : CreationShakeDeclaration, CreationShakeAssignable, CreationShakeStatement, ShakeVariableDeclaration {
+open class CreationShakeVariableDeclaration : CreationShakeDeclaration, CreationShakeAssignable, CreationShakeStatement,
+    ShakeVariableDeclaration {
     override val scope: CreationShakeScope
     final override val name: String
     override val initialValue: CreationShakeValue?
@@ -46,7 +47,13 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
         this.latestType = type
     }
 
-    constructor(scope: CreationShakeScope, name: String, type: ShakeType, initialValue: CreationShakeValue?, isFinal: Boolean) {
+    constructor(
+        scope: CreationShakeScope,
+        name: String,
+        type: ShakeType,
+        initialValue: CreationShakeValue?,
+        isFinal: Boolean
+    ) {
         this.scope = scope
         this.name = name
         this.initialValue = initialValue

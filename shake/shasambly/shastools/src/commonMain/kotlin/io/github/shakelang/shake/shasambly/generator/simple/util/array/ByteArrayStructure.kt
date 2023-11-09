@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.generator.simple.util.array
 
 import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
@@ -33,7 +34,7 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
     fun getElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) isub(index)
+            if (index != 0) isub(index)
             b_get_global_dynamic()
         }
     }
@@ -60,7 +61,7 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
     fun storeElement(index: Int) {
         shasambly {
             i_get_local(address)
-            if(index != 0) isub(index)
+            if (index != 0) isub(index)
             b_store_global_dynamic()
         }
     }
@@ -75,7 +76,7 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
         shasambly {
             bpush(value)
             i_get_local(address)
-            if(index != 0) isub(index)
+            if (index != 0) isub(index)
             b_store_global_dynamic()
         }
     }
@@ -87,7 +88,7 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
     fun free() {
         shasambly {
             i_get_local(address)
-            if(size == -1) natives.freeGlobal()
+            if (size == -1) natives.freeGlobal()
             else natives.freeGlobal(size)
         }
     }
@@ -115,7 +116,7 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
  * @param size the size of the created array (must be at least 4 for this type of array!!!)
  */
 fun SimpleShasambly.createStaticallySizedLocalByteArray(addr: Int, size: Int): StaticallySizedLocalByteArrayStructure {
-    if(size < 4) throw IllegalArgumentException("Size must be at least 4 for this type of array")
+    if (size < 4) throw IllegalArgumentException("Size must be at least 4 for this type of array")
     natives.declareGlobal(size)
     i_store_local(addr)
     return StaticallySizedLocalByteArrayStructure(this.base, addr, size)

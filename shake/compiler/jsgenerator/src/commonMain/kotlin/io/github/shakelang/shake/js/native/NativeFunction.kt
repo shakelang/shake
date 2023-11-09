@@ -9,10 +9,13 @@ import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
 interface NativeFunction {
 
     val signature: String
-    fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation) : JsValuedStatement {
+    fun handle(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValuedStatement {
         error("Not available")
     }
-    fun handleStatement(generator: ShakeJsGenerator, invokation: ShakeInvocation) : JsStatement = handle(generator, invokation)
+
+    fun handleStatement(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsStatement =
+        handle(generator, invokation)
+
     fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue = handle(generator, invokation)
 
 }

@@ -1,10 +1,10 @@
 package io.github.shakelang.shake.shasambly
 
-import io.github.shakelang.io.streaming.input.inputStream
 import io.github.shakelang.shake.shasambly.generator.shas.ShasGenerator
 import io.github.shakelang.shake.shasambly.generator.simple.shasambly
 import io.github.shakelang.shake.shasambly.generator.simple.util.function.declareRoutine
 import io.github.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
+import io.github.shakelang.shake.util.io.streaming.input.inputStream
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -124,7 +124,7 @@ fun main() {
     }
 
     val file = File("test.shasx")
-    if(file.exists()) file.delete()
+    if (file.exists()) file.delete()
     println("Write code bytes to ${file.absolutePath}...")
     val os = BufferedOutputStream(FileOutputStream(file))
     os.write(code)

@@ -4,8 +4,6 @@ import kotlin.jvm.JvmField
 
 /**
  * null / undefined variable [InterpreterValue] for variables
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 class NullValue : InterpreterValue {
 
@@ -14,8 +12,6 @@ class NullValue : InterpreterValue {
      *
      * @param v The value that should be the same
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun equals(v: InterpreterValue): InterpreterValue {
         // If the given value to compare is equal to null than return true
@@ -33,8 +29,6 @@ class NullValue : InterpreterValue {
      * For [NullValue] it just always returns "null"
      *
      * @return "null"
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val name: String get() = "null"
 
@@ -47,8 +41,6 @@ class NullValue : InterpreterValue {
      * Get the java-representation of the [NullValue]
      *
      * @return the java-representation of the [NullValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toJava(): Any? = null
 
@@ -61,8 +53,6 @@ class NullValue : InterpreterValue {
      * For [NullValue] it just always returns "null"
      *
      * @return "null"
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString(): String = "null"
 

@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.shasambly.interpreter
 
-import io.github.shakelang.primitives.bytes.toBytes
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+import io.github.shakelang.shake.util.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -133,7 +133,7 @@ class ShasamblyInterpretingBaseTests {
             Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
             Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-            *Array( 56) { 0 } // unused bytes
+            *Array(56) { 0 } // unused bytes
         ), it.memory.toList())
 
         it.freeTable.create(10)
@@ -809,7 +809,7 @@ class ShasamblyInterpretingBaseTests {
             Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
             Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-            *Array( 56) { 0 } // unused bytes
+            *Array(56) { 0 } // unused bytes
         ), it.memory.toList())
 
         assertEquals(40, it.freeTable.getWithSize(10))

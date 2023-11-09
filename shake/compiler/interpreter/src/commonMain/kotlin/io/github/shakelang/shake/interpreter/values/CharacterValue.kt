@@ -131,8 +131,6 @@ class CharacterValue(val value: Char) : InterpreterValue {
      * @param type the type to cast to
      * @param <T> the type to cast to
      * @return the converted [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     @Suppress("UNCHECKED_CAST")
     override fun <T : InterpreterValue> castTo(type: CastTarget): T {
@@ -151,7 +149,6 @@ class CharacterValue(val value: Char) : InterpreterValue {
      * Get the java-representation of the [InterpreterValue]
      *
      * @return the java-representation of the [InterpreterValue]
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toJava(): Char {
         return value
@@ -161,7 +158,6 @@ class CharacterValue(val value: Char) : InterpreterValue {
      * Returns the name of the type of [InterpreterValue] (To identify the type of value)
      *
      * @return the name of the [InterpreterValue]
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val name: String get() = "char"
 

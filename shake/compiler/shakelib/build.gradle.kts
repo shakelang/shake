@@ -1,6 +1,6 @@
-import dev.icerock.gradle.MRVisibility
 import conventions.dependencies
 import conventions.projectGroup
+import dev.icerock.gradle.MRVisibility
 
 plugins {
     id("conventions.all")

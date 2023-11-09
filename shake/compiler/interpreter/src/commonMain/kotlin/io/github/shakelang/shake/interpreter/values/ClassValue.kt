@@ -7,8 +7,6 @@ import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationN
 
 /**
  * An [InterpreterValue] to store class-declarations
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 class ClassValue
 
@@ -24,66 +22,48 @@ class ClassValue
  * @param prototype the [ClassValue.prototype] of the class
  * @param access the [ClassValue.access] of the class
  * @param isFinal is this class [ClassValue.isFinal]?
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
  */
-(
+    (
 
     /**
- * The name of the class
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
- */
-val className: String,
+     * The name of the class
+     */
+    val className: String,
 
     /**
- * The static fields, classes and functions of the class
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
- */
-val statics: VariableList,
+     * The static fields, classes and functions of the class
+     */
+    val statics: VariableList,
 
     /**
- * The fields of the class (they get initialized when creating a new instance of the class)
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
- */
-val fields: Array<ShakeVariableDeclarationNode?>,
+     * The fields of the class (they get initialized when creating a new instance of the class)
+     */
+    val fields: Array<ShakeVariableDeclarationNode?>,
 
     /**
- * The [Scope] the class is located in (this is used to access values of this scope in the class)
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
- */
-val scope: Scope?,
+     * The [Scope] the class is located in (this is used to access values of this scope in the class)
+     */
+    val scope: Scope?,
 
     /**
- * The interpreter the class is created with
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
- */
-val interpreter: Interpreter,
+     * The interpreter the class is created with
+     */
+    val interpreter: Interpreter,
 
     /**
- * The prototype of the class (contains subclasses and functions)
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
- */
-val prototype: VariableList,
+     * The prototype of the class (contains subclasses and functions)
+     */
+    val prototype: VariableList,
 
     /**
- * The access type of the class
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
- */
-private val access: ShakeAccessDescriber,
+     * The access type of the class
+     */
+    private val access: ShakeAccessDescriber,
 
     /**
- * Is this class final?
- *
- * @author [Nicolas Schmidt &lt;@nsc -de&gt;](https://github.com/nsc-de)
- */
-val isFinal: Boolean
+     * Is this class final?
+     */
+    val isFinal: Boolean
 
 ) : InterpreterValue {
 
@@ -92,8 +72,6 @@ val isFinal: Boolean
      *
      * @param scope the scope to use
      * @return the [ClassValue] using the specified [Scope] ([.scope])
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun withScope(scope: Scope?): ClassValue {
         // Return a new Function with the same argument as this one, just replace the scope
@@ -109,8 +87,6 @@ val isFinal: Boolean
      *
      * @param c the child to get
      * @return the child variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun getChild(c: String): Variable {
         // If the child does not exist throw an error
@@ -124,8 +100,6 @@ val isFinal: Boolean
      * This function will be executed when getting all child keys
      *
      * @return the keys of all children
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val children: Array<String> get() = statics.children
 
@@ -140,8 +114,6 @@ val isFinal: Boolean
      * @param node the node that created the instance
      * @param scope the scope the creation was made in (to process the arguments)
      * @return the created [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun newInstance(node: ShakeClassConstructionNode, scope: Scope): InterpreterValue = ObjectValue(this)
 
@@ -155,8 +127,6 @@ val isFinal: Boolean
      * For [ClassValue] it just always returns "class"
      *
      * @return "class"
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val name: String get() = "class"
 
@@ -168,8 +138,6 @@ val isFinal: Boolean
      * Returns the string representation of the [ClassValue]
      *
      * @return the string representation of the [ClassValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString(): String {
         // Create a string representation of the class by logging out all the important parts

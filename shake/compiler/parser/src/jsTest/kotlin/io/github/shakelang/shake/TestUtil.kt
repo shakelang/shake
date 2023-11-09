@@ -1,4 +1,3 @@
-
 package io.github.shakelang.shake
 
 import kotlin.reflect.KClass

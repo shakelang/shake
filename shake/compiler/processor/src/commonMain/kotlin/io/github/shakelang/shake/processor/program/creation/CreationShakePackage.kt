@@ -9,7 +9,7 @@ import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationN
 import io.github.shakelang.shake.processor.ShakeCodeProcessor
 import io.github.shakelang.shake.processor.program.types.ShakePackage
 
-open class CreationShakePackage (
+open class CreationShakePackage(
     override val baseProject: CreationShakeProject,
     override val name: String,
     override val parent: CreationShakePackage? = null,
@@ -17,7 +17,7 @@ open class CreationShakePackage (
     override val classes: MutableList<CreationShakeClass> = mutableListOf(),
     override val functions: MutableList<CreationShakeMethod> = mutableListOf(),
     override val fields: MutableList<CreationShakeField> = mutableListOf(),
-): ShakePackage {
+) : ShakePackage {
 
     override val qualifiedName: String get() = "${parent?.qualifiedName?.plus(".") ?: ""}$name"
     override val scope: CreationShakeScope = Scope()
@@ -53,10 +53,11 @@ open class CreationShakePackage (
         contents.children.forEach {
             when (it) {
                 is ShakeClassDeclarationNode -> {
-                    if(classes.any { clz -> clz.name == it.name })
+                    if (classes.any { clz -> clz.name == it.name })
                         throw IllegalStateException("Class ${it.name} already exists")
                     classes.add(CreationShakeClass.from(baseProject, this, fileScope, it))
                 }
+
                 is ShakeFunctionDeclarationNode -> {
                     val method = CreationShakeMethod.from(baseProject, this, fileScope, it)
                     /* TODO: check if method already exists
@@ -65,11 +66,13 @@ open class CreationShakePackage (
                     */
                     functions.add(method)
                 }
+
                 is ShakeVariableDeclarationNode -> {
-                    if(fields.any { field -> field.name == it.name })
+                    if (fields.any { field -> field.name == it.name })
                         throw IllegalStateException("Field ${it.name} already exists")
                     fields.add(CreationShakeField.from(baseProject, this, fileScope, it))
                 }
+
                 is ShakePackageNode -> {}
                 else -> throw IllegalStateException("Unknown node type ${it::class.simpleName}")
             }

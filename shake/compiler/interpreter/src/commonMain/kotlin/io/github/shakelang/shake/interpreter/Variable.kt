@@ -12,12 +12,10 @@ import kotlin.reflect.KClass
 /**
  * Variable class to keep all [InterpreterValue]s in variables
  * Type argument is the type of value that
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
 @Suppress("unused")
 class Variable
-(
+    (
     /**
      * The [Variable] identifier
      */
@@ -40,8 +38,6 @@ class Variable
 
     /**
      * Is the variable final?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     var final: Boolean = false,
 
@@ -73,8 +69,6 @@ class Variable
      *
      * @param identifier the identifier of the variable
      * @param value the value of the variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(identifier: String, type: KClass<*>, value: InterpreterValue) :
             this(identifier, ShakeAccessDescriber.PACKAGE, type, value)
@@ -84,8 +78,6 @@ class Variable
      *
      * @param identifier the identifier of the variable
      * @param access the access of the
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(identifier: String, access: ShakeAccessDescriber, type: KClass<*>, finalVariable: Boolean) :
             this(identifier, access, type, null, finalVariable)
@@ -94,8 +86,6 @@ class Variable
      * Constructor for [Variable]
      *
      * @param identifier the identifier of the variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     constructor(identifier: String, type: KClass<*>) : this(identifier, ShakeAccessDescriber.PACKAGE, type)
 
@@ -107,8 +97,6 @@ class Variable
      * Checks if the [Variable] has a value ([.value] != null)
      *
      * @return has the [Variable] a value?
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun hasValue(): Boolean = value != NullValue.NULL
 
@@ -122,8 +110,6 @@ class Variable
      *
      * @param v The Value to add to this value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun add(v: InterpreterValue): InterpreterValue = this.value.add(v)
 
@@ -132,8 +118,6 @@ class Variable
      *
      * @param v The Value to sub from this value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun sub(v: InterpreterValue): InterpreterValue = this.value.sub(v)
 
@@ -142,8 +126,6 @@ class Variable
      *
      * @param v The Value to multiply with this value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun mul(v: InterpreterValue): InterpreterValue = this.value.mul(v)
 
@@ -152,8 +134,6 @@ class Variable
      *
      * @param v The divisor-value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun div(v: InterpreterValue): InterpreterValue = this.value.div(v)
 
@@ -162,8 +142,6 @@ class Variable
      *
      * @param v The divisor-value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun mod(v: InterpreterValue): InterpreterValue = this.value.mod(v)
 
@@ -172,8 +150,6 @@ class Variable
      *
      * @param v The exponent value
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun pow(v: InterpreterValue): InterpreterValue = this.value.pow(v)
 
@@ -187,8 +163,6 @@ class Variable
      *
      * @param v The other value for the or operator
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun or(v: InterpreterValue): InterpreterValue = this.value.or(v)
 
@@ -197,8 +171,6 @@ class Variable
      *
      * @param v The other value for the and operator
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun and(v: InterpreterValue): InterpreterValue = this.value.and(v)
 
@@ -212,8 +184,6 @@ class Variable
      *
      * @param v The value that should be the same
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun equals(v: InterpreterValue): InterpreterValue = this.value.equals(v)
 
@@ -222,8 +192,6 @@ class Variable
      *
      * @param v The value that should be smaller
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun biggerEquals(v: InterpreterValue): InterpreterValue = this.value.biggerEquals(v)
 
@@ -232,8 +200,6 @@ class Variable
      *
      * @param v The value that should be bigger
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun smallerEquals(v: InterpreterValue): InterpreterValue = this.value.smallerEquals(v)
 
@@ -242,8 +208,6 @@ class Variable
      *
      * @param v The value that should be smaller or equal
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun bigger(v: InterpreterValue): InterpreterValue = this.value.bigger(v)
 
@@ -252,11 +216,8 @@ class Variable
      *
      * @param v The value that should be bigger or equal
      * @return The Calculation-Result
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun smaller(v: InterpreterValue): InterpreterValue = this.value.smaller(v)
-
 
 
     // ****************************
@@ -268,8 +229,6 @@ class Variable
      *
      * @param c the child to get
      * @return the child variable
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun getChild(c: String): Variable? = this.value.getChild(c)
 
@@ -277,8 +236,6 @@ class Variable
      * This function will be executed when getting all child keys
      *
      * @return the keys of all children
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val children: Array<String>
         get() = value.children
@@ -307,8 +264,6 @@ class Variable
      * @param node the node that created the instance
      * @param scope the scope the creation was made in (to process the arguments)
      * @return the created [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun newInstance(node: ShakeClassConstructionNode, scope: Scope): InterpreterValue =
         this.value.newInstance(node, scope)
@@ -322,8 +277,6 @@ class Variable
      * Returns the name of the type of [InterpreterValue] (To identify the type of value)
      *
      * @return the name of the [InterpreterValue]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val name: String
         get() =// redirect operator to the value
@@ -337,8 +290,6 @@ class Variable
      * Copies the variable
      *
      * @return the copied [Variable]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun copy(): Variable {
         // return a new Variable using the same values
@@ -353,8 +304,6 @@ class Variable
      * Returns the string representation of the [Variable]
      *
      * @return the string representation of the [Variable]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString(): String {
 
@@ -383,8 +332,6 @@ class Variable
      *
      * @param scope the scope to use
      * @return the [Function] using the specified [Scope]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun withScope(scope: Scope): Variable {
         return Variable(identifier, access, type, useScope(value, scope))
@@ -399,7 +346,6 @@ class Variable
          * @param <V> the type of [InterpreterValue] that is given as argument
          * @return the given [InterpreterValue], but it now uses the given [Scope]
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @Suppress("UNCHECKED_CAST")
         private fun <V : InterpreterValue?> useScope(v: V?, scope: Scope): V? {
@@ -418,7 +364,6 @@ class Variable
          * @param type the type to convert
          * @return the created variable
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         fun create(
             name: String,
@@ -430,20 +375,23 @@ class Variable
             return when (type.type) {
                 ShakeVariableType.Type.BYTE, ShakeVariableType.Type.SHORT, ShakeVariableType.Type.INTEGER, ShakeVariableType.Type.LONG ->
                     Variable(
-                    name, access, IntegerValue::class, value?.to(
-                        IntegerValue::class
-                    ), finalVariable
-                )
+                        name, access, IntegerValue::class, value?.to(
+                            IntegerValue::class
+                        ), finalVariable
+                    )
+
                 ShakeVariableType.Type.FLOAT, ShakeVariableType.Type.DOUBLE -> Variable(
                     name, access, DoubleValue::class, value?.to(
                         DoubleValue::class
                     ), finalVariable
                 )
+
                 ShakeVariableType.Type.BOOLEAN -> Variable(
                     name, access, BooleanValue::class, value?.to(
                         BooleanValue::class
                     ), finalVariable
                 )
+
                 ShakeVariableType.Type.OBJECT -> Variable(
                     name, access, ObjectValue::class, value?.to(
                         ObjectValue::class
@@ -454,11 +402,13 @@ class Variable
                         InterpreterValue::class
                     ), finalVariable
                 )
+
                 ShakeVariableType.Type.CHAR -> Variable(
                     name, access, CharacterValue::class, value?.to(
                         CharacterValue::class
                     ), finalVariable
                 )
+
                 ShakeVariableType.Type.ARRAY -> throw Error("Not implemented yet")
                 else -> throw Error("Wrong input: ${type.type}")
             }
@@ -471,7 +421,6 @@ class Variable
          * @param type the type to convert
          * @return the created variable
          *
-         * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
          */
         @JvmStatic
         @JvmOverloads
@@ -485,6 +434,6 @@ class Variable
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
         fun finalOf(name: String, v: InterpreterValue): Variable =
-                    Variable(name, ShakeAccessDescriber.PUBLIC, v::class, v)
+            Variable(name, ShakeAccessDescriber.PUBLIC, v::class, v)
     }
 }

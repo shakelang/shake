@@ -21,10 +21,8 @@ class Function
  * @param interpreter the [.interpreter] of the function
  * @param access the [.access] of the function
  * @param isFinal is this class [.isFinal]?
- *
- * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
  */
-(
+    (
 
     /**
      * The function arguments
@@ -63,8 +61,6 @@ class Function
      *
      * @param scope the scope to use
      * @return the [Function] using the specified [Scope] ([.scope])
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     fun withScope(scope: Scope?): Function {
         // Return a new Function with the same argument as this one, just replace the scope
@@ -77,8 +73,6 @@ class Function
      *
      * @param node the node that called the function
      * @param scope the scope the call was made in (to process the arguments)
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun invoke(node: ShakeFunctionCallNode, scope: Scope): InterpreterValue {
         // TODO return statements
@@ -134,8 +128,6 @@ class Function
      * For [Function] it just always returns "function"
      *
      * @return "function"
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override val name: String get() = "function"
 
@@ -147,8 +139,6 @@ class Function
      * Returns the string representation of the [Function]
      *
      * @return the string representation of the [Function]
-     *
-     * @author [Nicolas Schmidt &lt;@nsc-de&gt;](https://github.com/nsc-de)
      */
     override fun toString(): String {
         // just return a string-representation of the function

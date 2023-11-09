@@ -63,8 +63,10 @@ object Number {
         override fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue {
             val left = generator.visitValue(invokation.parent!!)
             val right = generator.visitValue(invokation.arguments[0])
-            return JsFunctionCall(JsField("pow", parent = JsField("Math")),
-                args = listOf(left, right))
+            return JsFunctionCall(
+                JsField("pow", parent = JsField("Math")),
+                args = listOf(left, right)
+            )
         }
     }
 }

@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.parser.node
 
-import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
-class ShakeNamespaceNode (
+class ShakeNamespaceNode(
     map: PositionMap,
     val parts: Array<String>
 ) : ShakeNodeImpl(map) {
@@ -13,7 +13,7 @@ class ShakeNamespaceNode (
         )
     }
 
-override fun toString(): String {
+    override fun toString(): String {
         return parts.joinToString(".")
     }
 }

@@ -12,7 +12,8 @@ import kotlin.test.*
 class InterfaceTests {
     @Test
     fun testFinalInterface() {
-        assertFailsWith(ShakeParserImpl.ParserError::class,
+        assertFailsWith(
+            ShakeParserImpl.ParserError::class,
             "Error occurred in parser: ParserError, Interfaces cannot be final in PositionMaker(index=22, " +
                     "column=23, line=1, lineSeparators=[]):1:7: Interfaces cannot be final\n" +
                     "\n" +

@@ -16,7 +16,7 @@ class CreationShakeProject(
     override val classes: MutableList<CreationShakeClass> = mutableListOf(),
     override val functions: MutableList<CreationShakeMethod> = mutableListOf(),
     override val fields: MutableList<CreationShakeField> = mutableListOf()
-): ShakeProject {
+) : ShakeProject {
 
     private val classRequirements = mutableListOf<ClassRequirement>()
     private val packageRequirements = mutableListOf<PackageRequirement>()
@@ -77,7 +77,7 @@ class CreationShakeProject(
     }
 
     override fun getPackage(name: String): CreationShakePackage {
-        if(name.contains(".")) return getPackage(name.split(".").toTypedArray())
+        if (name.contains(".")) return getPackage(name.split(".").toTypedArray())
         return subpackages.find { it.name == name } ?: CreationShakePackage(this, name).let {
             subpackages.add(it)
             it
@@ -85,12 +85,12 @@ class CreationShakeProject(
     }
 
     override fun getPackage(name: Array<String>): CreationShakePackage {
-        if(name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
+        if (name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
         return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
     }
 
     override fun getPackage(name: List<String>): CreationShakePackage {
-        if(name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
+        if (name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
         return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
     }
 
@@ -114,20 +114,23 @@ class CreationShakeProject(
         contents.children.forEach {
             when (it) {
                 is ShakeClassDeclarationNode -> {
-                    if(classes.any { clz -> clz.name == it.name })
+                    if (classes.any { clz -> clz.name == it.name })
                         throw IllegalArgumentException("Class ${it.name} already exists")
                     classes.add(CreationShakeClass.from(this, null, fileScope, it))
                 }
+
                 is ShakeFunctionDeclarationNode -> {
-                    if(functions.any { func -> func.name == it.name })
+                    if (functions.any { func -> func.name == it.name })
                         throw IllegalArgumentException("Function ${it.name} already exists")
                     functions.add(CreationShakeMethod.from(this, null, fileScope, it))
                 }
+
                 is ShakeVariableDeclarationNode -> {
-                    if(fields.any { field -> field.name == it.name })
+                    if (fields.any { field -> field.name == it.name })
                         throw IllegalArgumentException("Field ${it.name} already exists")
                     fields.add(CreationShakeField.from(this, null, fileScope, it))
                 }
+
                 is ShakeImportNode -> {}
                 else -> throw IllegalArgumentException("Unknown node type ${it::class.simpleName}")
             }
@@ -138,7 +141,7 @@ class CreationShakeProject(
         val pkg = (contents.children.find { it is ShakePackageNode } as? ShakePackageNode)?.pkg
             ?: name.sliceArray(0 until name.size - 1)
         val file = name.last()
-        if(pkg.isEmpty()) putFile(file, contents)
+        if (pkg.isEmpty()) putFile(file, contents)
         else getPackage(pkg).putFile(file, contents)
     }
 
@@ -155,7 +158,7 @@ class CreationShakeProject(
         val parts = clz.split(".")
         val name = parts.last()
         val pkg = parts.dropLast(1).toTypedArray()
-        return if(pkg.isEmpty()) this.classes.find { it.name == name }
+        return if (pkg.isEmpty()) this.classes.find { it.name == name }
         else this.getPackage(pkg).classes.find { it.name == name }
     }
 
@@ -175,12 +178,14 @@ class CreationShakeProject(
             ShakeVariableType.Type.BOOLEAN -> then(CreationShakeType.Primitives.BOOLEAN)
             ShakeVariableType.Type.CHAR -> then(CreationShakeType.Primitives.CHAR)
             ShakeVariableType.Type.OBJECT -> {
-                val namespace = (type as ShakeVariableType.Object).namespace ?: throw IllegalArgumentException("Object type must have subtype")
-                val clzName = namespace.parts.joinToString (".")
+                val namespace = (type as ShakeVariableType.Object).namespace
+                    ?: throw IllegalArgumentException("Object type must have subtype")
+                val clzName = namespace.parts.joinToString(".")
                 this.getClass(clzName) {
                     then(CreationShakeType.objectType(it))
                 }
             }
+
             ShakeVariableType.Type.DYNAMIC -> TODO()
             ShakeVariableType.Type.ARRAY -> TODO()
             ShakeVariableType.Type.VOID -> TODO()

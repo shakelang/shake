@@ -1,18 +1,19 @@
 @file:Suppress("unused")
+
 package io.github.shakelang.shake.shasambly.generator.shas
 
-import io.github.shakelang.io.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.io.streaming.output.DataOutputStream
-import io.github.shakelang.io.streaming.output.OutputStream
-import io.github.shakelang.parseutils.characters.Characters.isHexCharacter
-import io.github.shakelang.parseutils.characters.Characters.isIdentifierCharacter
-import io.github.shakelang.parseutils.characters.Characters.isIdentifierStartCharacter
-import io.github.shakelang.parseutils.characters.Characters.isNumberCharacter
-import io.github.shakelang.parseutils.characters.Characters.isNumberOrDotCharacter
-import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.shasambly.interpreter.Opcodes
 import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
+import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
+import io.github.shakelang.shake.util.io.streaming.output.OutputStream
+import io.github.shakelang.shake.util.parseutils.characters.Characters.isHexCharacter
+import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierCharacter
+import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierStartCharacter
+import io.github.shakelang.shake.util.parseutils.characters.Characters.isNumberCharacter
+import io.github.shakelang.shake.util.parseutils.characters.Characters.isNumberOrDotCharacter
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 
 class ShasCompiler(private val input: CharacterInputStream) {
 
@@ -34,17 +35,17 @@ class ShasCompiler(private val input: CharacterInputStream) {
 
     private fun doParse() {
         Natives.initNativeFunctions()
-        while(input.hasNext()) {
+        while (input.hasNext()) {
             expectCommand()
             skipIgnored()
         }
     }
 
     private fun skipIgnored() {
-        while(input.hasNext()) {
+        while (input.hasNext()) {
             val next = input.peek()
-            if(next.isWhitespace()) input.skip()
-            else if(next == '[') do input.skip() while(input.actual() != ']')
+            if (next.isWhitespace()) input.skip()
+            else if (next == '[') do input.skip() while (input.actual() != ']')
             else break
         }
     }
@@ -53,22 +54,22 @@ class ShasCompiler(private val input: CharacterInputStream) {
 
     private fun expectHexNumber(): String {
         skipIgnored()
-        if(input.next() != '0' || !input.hasNext() || input.next() != 'x') throw IllegalStateException("Hex numbers have to start with '0x'")
+        if (input.next() != '0' || !input.hasNext() || input.next() != 'x') throw IllegalStateException("Hex numbers have to start with '0x'")
         val number = StringBuilder()
-        while(input.hasNext() && isHexCharacter(input.peek())) {
+        while (input.hasNext() && isHexCharacter(input.peek())) {
             number.append(input.next())
         }
-        if(number.isEmpty()) throw IllegalStateException("Hex number to short")
+        if (number.isEmpty()) throw IllegalStateException("Hex number to short")
         return number.toString()
     }
 
     private fun expectNumber(): String {
         skipIgnored()
         val number = StringBuilder()
-        while(input.hasNext() && isNumberCharacter(input.peek())) {
+        while (input.hasNext() && isNumberCharacter(input.peek())) {
             number.append(input.next())
         }
-        if(number.isEmpty()) throw IllegalStateException("Hex number to short")
+        if (number.isEmpty()) throw IllegalStateException("Hex number to short")
         return number.toString()
     }
 
@@ -76,75 +77,75 @@ class ShasCompiler(private val input: CharacterInputStream) {
         skipIgnored()
         val number = StringBuilder()
         var dotCount = 0
-        while(input.hasNext() && isNumberOrDotCharacter(input.next())) {
-            if(input.next() == '.') dotCount++
-            if(dotCount > 1) throw IllegalStateException("There must not be more then one dots in a floating point number")
+        while (input.hasNext() && isNumberOrDotCharacter(input.next())) {
+            if (input.next() == '.') dotCount++
+            if (dotCount > 1) throw IllegalStateException("There must not be more then one dots in a floating point number")
             number.append(input.next())
         }
-        if(number.isEmpty() || (number.length == 1 && number[0] == '.')) throw IllegalStateException("Hex number to short")
+        if (number.isEmpty() || (number.length == 1 && number[0] == '.')) throw IllegalStateException("Hex number to short")
         return number.toString()
     }
 
     private fun expectByte(): Byte {
         skipIgnored()
         val neg = input.peek() == '-'
-        if(neg) input.skip()
-        return if(isHex()) {
-            if(neg) "-${expectHexNumber()}".toByte() else expectHexNumber().toUByte(16).toByte()
-        } else if(neg) "-${expectNumber()}".toByte() else expectNumber().toUByte().toByte()
+        if (neg) input.skip()
+        return if (isHex()) {
+            if (neg) "-${expectHexNumber()}".toByte() else expectHexNumber().toUByte(16).toByte()
+        } else if (neg) "-${expectNumber()}".toByte() else expectNumber().toUByte().toByte()
     }
 
     private fun expectShort(): Short {
         skipIgnored()
         val neg = input.peek() == '-'
-        if(neg) input.skip()
-        return if(isHex()) {
-            if(neg) "-${expectHexNumber()}".toShort() else expectHexNumber().toUShort(16).toShort()
-        } else if(neg) "-${expectNumber()}".toShort() else expectNumber().toUShort().toShort()
+        if (neg) input.skip()
+        return if (isHex()) {
+            if (neg) "-${expectHexNumber()}".toShort() else expectHexNumber().toUShort(16).toShort()
+        } else if (neg) "-${expectNumber()}".toShort() else expectNumber().toUShort().toShort()
     }
 
     private fun expectInt(): Int {
         skipIgnored()
         val neg = input.peek() == '-'
-        if(neg) input.skip()
-        return if(isHex()) {
-            if(neg) "-${expectHexNumber()}".toInt() else expectHexNumber().toUInt(16).toInt()
-        } else if(neg) "-${expectNumber()}".toInt() else expectNumber().toUInt().toInt()
+        if (neg) input.skip()
+        return if (isHex()) {
+            if (neg) "-${expectHexNumber()}".toInt() else expectHexNumber().toUInt(16).toInt()
+        } else if (neg) "-${expectNumber()}".toInt() else expectNumber().toUInt().toInt()
     }
 
     private fun expectLong(): Long {
         skipIgnored()
         val neg = input.peek() == '-'
-        if(neg) input.skip()
-        return if(isHex()) {
-            if(neg) "-${expectHexNumber()}".toLong() else expectHexNumber().toULong(16).toLong()
-        } else if(neg) "-${expectNumber()}".toLong() else expectNumber().toULong().toLong()
+        if (neg) input.skip()
+        return if (isHex()) {
+            if (neg) "-${expectHexNumber()}".toLong() else expectHexNumber().toULong(16).toLong()
+        } else if (neg) "-${expectNumber()}".toLong() else expectNumber().toULong().toLong()
     }
 
     private fun expectUByte(): UByte {
         skipIgnored()
-        return if(isHex()) {
+        return if (isHex()) {
             expectHexNumber().toUByte(16)
         } else expectNumber().toUByte()
     }
 
     private fun expectUShort(): UShort {
         skipIgnored()
-        return if(isHex()) {
+        return if (isHex()) {
             expectHexNumber().toUShort(16)
         } else expectNumber().toUShort()
     }
 
     private fun expectUInt(): UInt {
         skipIgnored()
-        return if(isHex()) {
+        return if (isHex()) {
             expectHexNumber().toUInt(16)
         } else expectNumber().toUInt()
     }
 
     private fun expectULong(): ULong {
         skipIgnored()
-        return if(isHex()) {
+        return if (isHex()) {
             expectHexNumber().toULong(16)
         } else expectNumber().toULong()
     }
@@ -152,31 +153,31 @@ class ShasCompiler(private val input: CharacterInputStream) {
     private fun expectFloat(): Float {
         skipIgnored()
         val neg = input.peek() == '-'
-        if(neg) input.skip()
-        return if(isHex()) {
-            Float.fromBits(if(neg) "-${expectHexNumber()}".toInt() else expectHexNumber().toUInt(16).toInt())
-        } else (if(neg) "-" else "" + expectFloatingPointNumber()).toFloat()
+        if (neg) input.skip()
+        return if (isHex()) {
+            Float.fromBits(if (neg) "-${expectHexNumber()}".toInt() else expectHexNumber().toUInt(16).toInt())
+        } else (if (neg) "-" else "" + expectFloatingPointNumber()).toFloat()
     }
 
     private fun expectDouble(): Double {
         skipIgnored()
         val neg = input.peek() == '-'
-        if(neg) input.skip()
-        return if(isHex()) {
-            Double.fromBits(if(neg) "-${expectHexNumber()}".toLong() else expectHexNumber().toULong(16).toLong())
-        } else (if(neg) "-" else "" + expectFloatingPointNumber()).toDouble()
+        if (neg) input.skip()
+        return if (isHex()) {
+            Double.fromBits(if (neg) "-${expectHexNumber()}".toLong() else expectHexNumber().toULong(16).toLong())
+        } else (if (neg) "-" else "" + expectFloatingPointNumber()).toDouble()
     }
 
     private fun expectBytes(byteArgumentAmount: Int): ByteArray {
         skipIgnored()
-        if(byteArgumentAmount <= 0) return byteArrayOf()
+        if (byteArgumentAmount <= 0) return byteArrayOf()
         val number = StringBuilder()
-        while(input.hasNext() && isHexCharacter(input.peek())) {
+        while (input.hasNext() && isHexCharacter(input.peek())) {
             number.append(input.next())
         }
         val byteString = number.toString()
-        if(number.length % 2 != 0) throw IllegalStateException("Expecting an even number of hex chars in byte array")
-        if(byteString.length / 2 != byteArgumentAmount)
+        if (number.length % 2 != 0) throw IllegalStateException("Expecting an even number of hex chars in byte array")
+        if (byteString.length / 2 != byteArgumentAmount)
             throw IllegalStateException("Wrong number of bytes given, expect $byteArgumentAmount, but got ${byteString.length / 2}")
         return ByteArray(byteString.length / 2) {
             byteString.substring(it * 2, it * 2 + 1).toUByte(16).toByte()
@@ -185,7 +186,7 @@ class ShasCompiler(private val input: CharacterInputStream) {
 
     private fun makeIdentifier(): String {
         val cmd = StringBuilder()
-        while(isIdentifierCharacter(input.peek())) {
+        while (isIdentifierCharacter(input.peek())) {
             cmd.append(input.next())
         }
         return cmd.toString()
@@ -193,103 +194,121 @@ class ShasCompiler(private val input: CharacterInputStream) {
 
     private fun expectNativeFunction(): Short {
         skipIgnored()
-        if(isIdentifierStartCharacter(input.peek())) {
+        if (isIdentifierStartCharacter(input.peek())) {
             val identifier = makeIdentifier()
             for (i in nativeFunctions.indices) {
                 val f = nativeFunctions[i]
                 if (f != null && f.name.equals(identifier, ignoreCase = true)) return i.toUShort().toShort()
             }
             throw IllegalArgumentException("Unknown native function $identifier")
-        }
-        else return expectUShort().toShort()
+        } else return expectUShort().toShort()
 
     }
 
     private fun expectCommand() {
         skipIgnored()
         val cmd = makeIdentifier()
-        if(cmd.isEmpty()) throw Error("Expecting Command")
-        when(cmd.uppercase()) {
+        if (cmd.isEmpty()) throw Error("Expecting Command")
+        when (cmd.uppercase()) {
             "INCR_STACK" -> {
                 out.writeByte(Opcodes.INCR_STACK)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "DECR_STACK" -> out.writeByte(Opcodes.DECR_STACK)
             "JUMP_STATIC" -> {
                 out.writeByte(Opcodes.JUMP_STATIC)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "JUMP_DYNAMIC" -> out.writeByte(Opcodes.JUMP_DYNAMIC)
             "JUMP_IF" -> {
                 out.writeByte(Opcodes.JUMP_IF)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "NATIVE", "INVOKE", "CALL", "INVOKE_NATIVE" -> {
                 out.writeByte(Opcodes.INVOKE_NATIVE)
                 val function = expectNativeFunction()
                 out.writeShort(function)
                 out.writeByteArray(expectBytes(nativeFunctions[function.toInt()]!!.byteArgumentAmount))
             }
+
             "GLOB_ADDR" -> {
                 out.writeByte(Opcodes.GLOB_ADDR)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "B_GET_LOCAL" -> {
                 out.writeByte(Opcodes.B_GET_LOCAL)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "S_GET_LOCAL" -> {
                 out.writeByte(Opcodes.S_GET_LOCAL)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "I_GET_LOCAL" -> {
                 out.writeByte(Opcodes.I_GET_LOCAL)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "L_GET_LOCAL" -> {
                 out.writeByte(Opcodes.L_GET_LOCAL)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "B_STORE_LOCAL" -> {
                 out.writeByte(Opcodes.B_STORE_LOCAL)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "S_STORE_LOCAL" -> {
                 out.writeByte(Opcodes.S_STORE_LOCAL)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "I_STORE_LOCAL" -> {
                 out.writeByte(Opcodes.I_STORE_LOCAL)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "L_STORE_LOCAL" -> {
                 out.writeByte(Opcodes.L_STORE_LOCAL)
                 out.writeUnsignedShort(expectUShort())
             }
+
             "BPUSH", "B_PUSH" -> {
                 out.writeByte(Opcodes.B_PUSH)
                 out.writeByte(expectByte())
             }
+
             "SPUSH", "S_PUSH" -> {
                 out.writeByte(Opcodes.S_PUSH)
                 out.writeShort(expectShort())
             }
+
             "IPUSH", "I_PUSH" -> {
                 out.writeByte(Opcodes.I_PUSH)
                 out.writeInt(expectInt())
             }
+
             "LPUSH", "L_PUSH" -> {
                 out.writeByte(Opcodes.L_PUSH)
                 out.writeLong(expectLong())
             }
+
             "FPUSH", "F_PUSH" -> { // Synthetic pregenerated opcode to make your life a bit easier ;)
                 out.writeByte(Opcodes.I_PUSH)
                 out.writeFloat(expectFloat())
             }
+
             "DPUSH", "D_PUSH" -> { // Synthetic pregenerated opcode to make your life a bit easier ;)
                 out.writeByte(Opcodes.L_PUSH)
                 out.writeDouble(expectDouble())
             }
+
             "BADD", "B_ADD" -> out.writeByte(Opcodes.B_ADD)
             "BSUB", "B_SUB" -> out.writeByte(Opcodes.B_SUB)
             "BMUL", "B_MUL" -> out.writeByte(Opcodes.B_MUL)
@@ -355,18 +374,22 @@ class ShasCompiler(private val input: CharacterInputStream) {
                 out.writeByte(Opcodes.B_GET_GLOBAL)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "S_GET_GLOBAL" -> {
                 out.writeByte(Opcodes.S_GET_GLOBAL)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "I_GET_GLOBAL" -> {
                 out.writeByte(Opcodes.I_GET_GLOBAL)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "L_GET_GLOBAL" -> {
                 out.writeByte(Opcodes.L_GET_GLOBAL)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "B_GET_GLOBAL_DYNAMIC" -> out.writeByte(Opcodes.B_GET_GLOBAL_DYNAMIC)
             "S_GET_GLOBAL_DYNAMIC" -> out.writeByte(Opcodes.S_GET_GLOBAL_DYNAMIC)
             "I_GET_GLOBAL_DYNAMIC" -> out.writeByte(Opcodes.I_GET_GLOBAL_DYNAMIC)
@@ -375,18 +398,22 @@ class ShasCompiler(private val input: CharacterInputStream) {
                 out.writeByte(Opcodes.B_STORE_GLOBAL)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "S_STORE_GLOBAL" -> {
                 out.writeByte(Opcodes.S_STORE_GLOBAL)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "I_STORE_GLOBAL" -> {
                 out.writeByte(Opcodes.I_STORE_GLOBAL)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "L_STORE_GLOBAL" -> {
                 out.writeByte(Opcodes.L_STORE_GLOBAL)
                 out.writeUnsignedInt(expectUInt())
             }
+
             "B_STORE_GLOBAL_DYNAMIC" -> out.writeByte(Opcodes.B_STORE_GLOBAL_DYNAMIC)
             "S_STORE_GLOBAL_DYNAMIC" -> out.writeByte(Opcodes.S_STORE_GLOBAL_DYNAMIC)
             "I_STORE_GLOBAL_DYNAMIC" -> out.writeByte(Opcodes.I_STORE_GLOBAL_DYNAMIC)

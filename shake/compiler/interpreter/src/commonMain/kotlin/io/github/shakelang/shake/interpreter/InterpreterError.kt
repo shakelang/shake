@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.interpreter
 
-import io.github.shakelang.parseutils.CompilerError
-import io.github.shakelang.parseutils.characters.position.Position
-import io.github.shakelang.parseutils.characters.position.PositionMap
+import io.github.shakelang.shake.util.parseutils.CompilerError
+import io.github.shakelang.shake.util.parseutils.characters.position.Position
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 @Suppress("unused")
 class InterpreterError : CompilerError {
@@ -18,7 +18,7 @@ class InterpreterError : CompilerError {
     constructor(details: String?, map: PositionMap?, start: Int, end: Int, cause: Throwable?) :
             this("Error occurred in Interpreter", details, map, start, end, cause)
 
-    constructor(details: String?, map: PositionMap?, position: Int, cause: Throwable? ) :
+    constructor(details: String?, map: PositionMap?, position: Int, cause: Throwable?) :
             this("Error occurred in Interpreter", details, map, position, cause)
 
     constructor(message: String?, details: String?, start: Position?, end: Position?) :
@@ -34,5 +34,5 @@ class InterpreterError : CompilerError {
             this("Error occurred in Interpreter", details, map, start, end)
 
     constructor(details: String?, map: PositionMap?, position: Int) :
-            this("Error occurred in Interpreter", details, map, position )
+            this("Error occurred in Interpreter", details, map, position)
 }

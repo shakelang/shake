@@ -8,7 +8,7 @@ import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
 
-class CreationShakeInvocation (
+class CreationShakeInvocation(
     override val project: ShakeProject,
     override val callable: ShakeInvokable,
     override val arguments: List<CreationShakeValue>,
@@ -17,7 +17,7 @@ class CreationShakeInvocation (
 
     override val type: ShakeType
         get() = callable.returnType
-    override val name get() = if(callable is CreationShakeMethod) callable.name else "anonymous"
+    override val name get() = if (callable is CreationShakeMethod) callable.name else "anonymous"
     override val isAnonymous get() = callable !is CreationShakeMethod
 
     override fun toJson(): Map<String, Any?> {

@@ -3,7 +3,7 @@ package io.github.shakelang.shake.processor.program.types.code
 import io.github.shakelang.shake.processor.program.types.code.statements.ShakeStatement
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 
-interface ShakeInvocation: ShakeValue, ShakeStatement {
+interface ShakeInvocation : ShakeValue, ShakeStatement {
     val callable: ShakeInvokable
     val arguments: List<ShakeValue>
     val parent: ShakeValue?

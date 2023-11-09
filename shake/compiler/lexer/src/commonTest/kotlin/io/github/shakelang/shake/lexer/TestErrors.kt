@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.lexer
 
-import io.github.shakelang.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.parseutils.characters.streaming.SourceCharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith

@@ -1,7 +1,5 @@
 package io.github.shakelang.shake.parser.node
 
-import io.github.shakelang.shason.JSON
-
 @Suppress("unused")
 open class ShakeVariableType {
     val type: Type
@@ -14,7 +12,7 @@ open class ShakeVariableType {
         this.type = type
     }
 
-    override fun toString(): String = JSON.stringify(this.json)
+    override fun toString(): String = io.github.shakelang.shake.util.shason.JSON.stringify(this.json)
 
     val json: Map<String, *>
         get() = toJson()
@@ -25,8 +23,8 @@ open class ShakeVariableType {
             "type" to type,
         )
 
-    class Object (val namespace: ShakeNamespaceNode?) : ShakeVariableType(Type.OBJECT)
-    class Array (val subtype: ShakeVariableType) : ShakeVariableType(Type.ARRAY)
+    class Object(val namespace: ShakeNamespaceNode?) : ShakeVariableType(Type.OBJECT)
+    class Array(val subtype: ShakeVariableType) : ShakeVariableType(Type.ARRAY)
 
     enum class Type {
         DYNAMIC,
@@ -77,7 +75,7 @@ open class ShakeVariableType {
                 namespace += node.name
                 node = node.parent
             }
-            if(node != null) {
+            if (node != null) {
                 throw IllegalArgumentException("Invalid subtype for OBJECT type")
             }
             return objectType(ShakeNamespaceNode(subtype.map, namespace.reversed().toTypedArray()))

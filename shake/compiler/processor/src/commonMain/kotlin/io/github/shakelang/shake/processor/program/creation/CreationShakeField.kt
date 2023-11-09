@@ -9,7 +9,7 @@ import io.github.shakelang.shake.processor.program.types.ShakeField
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
-open class CreationShakeField (
+open class CreationShakeField(
     override val project: CreationShakeProject,
     override val pkg: CreationShakePackage?,
     override val clazz: CreationShakeClass?,
@@ -23,7 +23,7 @@ open class CreationShakeField (
     override val isPublic: Boolean,
     override val isNative: Boolean,
     override val initialValue: CreationShakeValue?,
-): CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
+) : CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
 
     override val qualifiedName: String
         get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
@@ -41,12 +41,24 @@ open class CreationShakeField (
         private set
 
     override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType = type.assignType(other, scope) ?: other
-    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.additionAssignType(other, scope) ?: type
-    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.subtractionAssignType(other, scope) ?: type
-    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.multiplicationAssignType(other, scope) ?: type
-    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.divisionAssignType(other, scope) ?: type
-    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.modulusAssignType(other, scope) ?: type
-    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType = type.powerAssignType(other, scope) ?: type
+    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.additionAssignType(other, scope) ?: type
+
+    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.subtractionAssignType(other, scope) ?: type
+
+    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.multiplicationAssignType(other, scope) ?: type
+
+    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.divisionAssignType(other, scope) ?: type
+
+    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.modulusAssignType(other, scope) ?: type
+
+    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType =
+        type.powerAssignType(other, scope) ?: type
+
     override fun incrementBeforeType(scope: ShakeScope): ShakeType = type.incrementBeforeType(scope) ?: type
     override fun incrementAfterType(scope: ShakeScope): ShakeType = type.incrementAfterType(scope) ?: type
     override fun decrementBeforeType(scope: ShakeScope): ShakeType? = type.decrementBeforeType(scope) ?: type
@@ -90,7 +102,12 @@ open class CreationShakeField (
     }
 
     companion object {
-        fun from(baseProject: CreationShakeProject, pkg: CreationShakePackage?, parentScope: CreationShakeScope, node: ShakeVariableDeclarationNode): CreationShakeField {
+        fun from(
+            baseProject: CreationShakeProject,
+            pkg: CreationShakePackage?,
+            parentScope: CreationShakeScope,
+            node: ShakeVariableDeclarationNode
+        ): CreationShakeField {
             return object : CreationShakeField(
                 baseProject,
                 pkg,
@@ -116,12 +133,18 @@ open class CreationShakeField (
 
             }.let {
                 it.lateinitType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
-                node.expandedType?.let { it1 -> it.lateinitExpanding().let { run -> parentScope.getType(it1) { t -> run(t) } } }
+                node.expandedType?.let { it1 ->
+                    it.lateinitExpanding().let { run -> parentScope.getType(it1) { t -> run(t) } }
+                }
                 it
             }
         }
 
-        fun from(clazz: CreationShakeClass, parentScope: CreationShakeScope, node: ShakeVariableDeclarationNode): CreationShakeField {
+        fun from(
+            clazz: CreationShakeClass,
+            parentScope: CreationShakeScope,
+            node: ShakeVariableDeclarationNode
+        ): CreationShakeField {
             return object : CreationShakeField(
                 clazz.prj,
                 clazz.pkg,

@@ -1,11 +1,11 @@
 package io.github.shakelang.shake.parser.node.objects
 
-import io.github.shakelang.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
 import io.github.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import io.github.shakelang.shake.parser.node.ShakeNamespaceNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
