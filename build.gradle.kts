@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 group = "io.github.shakelang.shake"
 version = "0.1.0"
 description = "Shake"
@@ -29,13 +31,30 @@ plugins {
     id("org.jetbrains.dokka")
     kotlin("multiplatform") apply false
     id("org.jetbrains.kotlinx.kover")
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
+}
+
+subprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint") // Version should be inherited from parent
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    ktlint {
+        reporters {
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.HTML)
+            reporter(ReporterType.SARIF)
+        }
+    }
 }
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
-
 
 fun findDokkaHtmlProjects(): List<Project> =
     subprojects.filter {
@@ -127,7 +146,6 @@ tasks.register("copyDokkaHtml") {
         dependsOn("${it.path}:dokkaHtml")
     }
 }
-
 
 val testAggregate = tasks.register<TestReport>("testAggregate") {
     group = "verification"
