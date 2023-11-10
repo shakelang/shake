@@ -74,7 +74,7 @@ tasks.create("lint") {
     description = "Runs ktlintCheck on all subprojects and copies the reports to build directory"
     dependsOn("ktlintCheck")
     subprojects.forEach {
-        dependsOn("${it.path}:ktlintCheck", "${it.path}:copyKtlintReports")
+        dependsOn("${it.path}:ktlintCheck")
     }
 
     doLast {
