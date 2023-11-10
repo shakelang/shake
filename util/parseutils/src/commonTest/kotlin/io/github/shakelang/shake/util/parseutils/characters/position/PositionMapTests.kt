@@ -22,7 +22,6 @@ class PositionMapTests {
         assertEquals(Position(map, 8, 1, 3), map.resolve(8))
         assertEquals(Position(map, 9, 2, 3), map.resolve(9))
         assertEquals(Position(map, 10, 3, 3), map.resolve(10))
-
     }
 
     @Test
@@ -41,5 +40,4 @@ class PositionMapTests {
         val map = PositionMap.PositionMapImpl(src, intArrayOf(3, 7))
         assertEquals("PositionMapTests#testToString", map.toString())
     }
-
 }

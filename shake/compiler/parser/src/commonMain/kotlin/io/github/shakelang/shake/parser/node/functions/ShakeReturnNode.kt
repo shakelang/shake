@@ -7,5 +7,4 @@ import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 class ShakeReturnNode(map: PositionMap, val value: ShakeValuedNode) : ShakeStatementNodeImpl(map) {
 
     override fun toJson(): Map<String, *> = mapOf("name" to "ReturnNode", "value" to value.json)
-
 }

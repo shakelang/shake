@@ -14,11 +14,16 @@ class InterfaceListTests {
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("java/lang/Runnable"),
-                Constant.utf8("anotherInterface"),
+                Constant.utf8("anotherInterface")
             )
         )
         val stream = byteArrayOf(
-            0x00, 0x02, 0x00, 0x00, 0x00, 0x01
+            0x00,
+            0x02,
+            0x00,
+            0x00,
+            0x00,
+            0x01
         ).dataStream()
 
         val list = InterfaceList.fromStream(pool, stream)
@@ -26,7 +31,6 @@ class InterfaceListTests {
         assertEquals(2, list.size)
         assertEquals(pool[1], list[0])
         assertEquals(pool[2], list[1])
-
     }
 
     @Test
@@ -34,11 +38,16 @@ class InterfaceListTests {
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("java/lang/Runnable"),
-                Constant.utf8("anotherInterface"),
+                Constant.utf8("anotherInterface")
             )
         )
         val bytes = byteArrayOf(
-            0x00, 0x02, 0x00, 0x00, 0x00, 0x01
+            0x00,
+            0x02,
+            0x00,
+            0x00,
+            0x00,
+            0x01
         )
 
         val list = InterfaceList.fromBytes(pool, bytes)
@@ -53,12 +62,17 @@ class InterfaceListTests {
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("java/lang/Runnable"),
-                Constant.utf8("anotherInterface"),
+                Constant.utf8("anotherInterface")
             )
         )
         val list = InterfaceList(listOf(pool.getUtf8(1), pool.getUtf8(2)))
         val bytes = listOf<Byte>(
-            0x00, 0x02, 0x00, 0x00, 0x00, 0x01
+            0x00,
+            0x02,
+            0x00,
+            0x00,
+            0x00,
+            0x01
         )
 
         assertEquals(2, list.size)
@@ -77,13 +91,18 @@ class InterfaceListTests {
                 Constant.utf8("hello"),
                 Constant.utf8("world"),
                 Constant.utf8("I"),
-                Constant.utf8("D"),
+                Constant.utf8("D")
             )
         )
 
         val list = InterfaceList(listOf(pool.getUtf8(1), pool.getUtf8(2)))
         val bytes = listOf<Byte>(
-            0x00, 0x02, 0x00, 0x00, 0x00, 0x01
+            0x00,
+            0x02,
+            0x00,
+            0x00,
+            0x00,
+            0x01
         )
 
         assertEquals(2, list.size)

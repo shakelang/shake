@@ -34,7 +34,6 @@ class CreationShakeClass : ShakeClass {
     override val staticFields: List<CreationShakeField> get() = fields.filter { it.isStatic }
     override val staticClasses: List<CreationShakeClass> get() = classes.filter { it.isStatic }
 
-
     override lateinit var superClass: CreationShakeClass
         private set
 
@@ -58,7 +57,7 @@ class CreationShakeClass : ShakeClass {
         isPublic: Boolean = false,
         isPrivate: Boolean = false,
         isProtected: Boolean = false,
-        isNative: Boolean = false,
+        isNative: Boolean = false
     ) {
         this.prj = prj
         this.pkg = pkg
@@ -117,7 +116,7 @@ class CreationShakeClass : ShakeClass {
                 it.access == ShakeAccessDescriber.PROTECTED,
                 it.access == ShakeAccessDescriber.PUBLIC,
                 it.isNative,
-                it.isOperator,
+                it.isOperator
             )
             method.lateinitReturnType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
             it.expandedType?.let { it1 ->
@@ -156,8 +155,11 @@ class CreationShakeClass : ShakeClass {
             constr
         }
 
-        if (clz.extends != null) parentScope.getClass(clz.extends.toString()) { this.superClass = it }
-        else prj.cores.pointObjectClass { this.superClass = it }
+        if (clz.extends != null) {
+            parentScope.getClass(clz.extends.toString()) { this.superClass = it }
+        } else {
+            prj.cores.pointObjectClass { this.superClass = it }
+        }
 
         /*
         TODO Interface & Super
@@ -212,7 +214,6 @@ class CreationShakeClass : ShakeClass {
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set in this scope")
         }
-
     }
 
     inner class InstanceScope : CreationShakeScope() {
@@ -246,7 +247,6 @@ class CreationShakeClass : ShakeClass {
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set in this scope")
         }
-
     }
 
     companion object {

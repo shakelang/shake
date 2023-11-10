@@ -3,7 +3,6 @@ package io.github.shakelang.shake.processor.program.types
 import io.github.shakelang.shake.processor.ShakeSelect
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
-
 interface ShakeType {
 
     val name: String
@@ -362,7 +361,7 @@ interface ShakeType {
         PRIMITIVE,
         OBJECT,
         ARRAY,
-        LAMBDA,
+        LAMBDA
     }
 
     enum class PrimitiveType {
@@ -379,7 +378,7 @@ interface ShakeType {
         UNSIGNED_INT,
         UNSIGNED_LONG,
         VOID,
-        DYNAMIC,
+        DYNAMIC
     }
 
     interface Primitive : ShakeType {
@@ -389,17 +388,19 @@ interface ShakeType {
 
         override fun castableTo(other: ShakeType): Boolean =
             other is Primitive &&
-                    (other.type == PrimitiveType.BYTE
-                            || other.type == PrimitiveType.SHORT
-                            || other.type == PrimitiveType.INT
-                            || other.type == PrimitiveType.LONG
-                            || other.type == PrimitiveType.FLOAT
-                            || other.type == PrimitiveType.DOUBLE
-                            || other.type == PrimitiveType.UNSIGNED_BYTE
-                            || other.type == PrimitiveType.UNSIGNED_SHORT
-                            || other.type == PrimitiveType.UNSIGNED_INT
-                            || other.type == PrimitiveType.UNSIGNED_LONG
-                            || other.type == PrimitiveType.CHAR)
+                (
+                    other.type == PrimitiveType.BYTE ||
+                        other.type == PrimitiveType.SHORT ||
+                        other.type == PrimitiveType.INT ||
+                        other.type == PrimitiveType.LONG ||
+                        other.type == PrimitiveType.FLOAT ||
+                        other.type == PrimitiveType.DOUBLE ||
+                        other.type == PrimitiveType.UNSIGNED_BYTE ||
+                        other.type == PrimitiveType.UNSIGNED_SHORT ||
+                        other.type == PrimitiveType.UNSIGNED_INT ||
+                        other.type == PrimitiveType.UNSIGNED_LONG ||
+                        other.type == PrimitiveType.CHAR
+                    )
     }
 
     interface Object : ShakeType {
@@ -572,5 +573,5 @@ interface ShakeType {
 
 class ShakeOperatorRequestResult(
     val returnType: ShakeType?,
-    val overload: ShakeMethod?,
+    val overload: ShakeMethod?
 )

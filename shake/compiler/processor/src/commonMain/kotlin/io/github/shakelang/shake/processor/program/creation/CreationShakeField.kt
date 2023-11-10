@@ -22,7 +22,7 @@ open class CreationShakeField(
     override val isProtected: Boolean,
     override val isPublic: Boolean,
     override val isNative: Boolean,
-    override val initialValue: CreationShakeValue?,
+    override val initialValue: CreationShakeValue?
 ) : CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
 
     override val qualifiedName: String
@@ -130,7 +130,6 @@ open class CreationShakeField(
                 override fun processCode() {
                     initialValue = node.value?.let { this.parentScope.processor.visitValue(parentScope, it) }
                 }
-
             }.let {
                 it.lateinitType().let { run -> parentScope.getType(node.type) { t -> run(t) } }
                 node.expandedType?.let { it1 ->
@@ -166,7 +165,6 @@ open class CreationShakeField(
                 override fun processCode() {
                     initialValue = node.value?.let { this.parentScope.processor.visitValue(parentScope, it) }
                 }
-
             }.let {
                 it.lateinitType().let { run -> clazz.instanceScope.getType(node.type) { t -> run(t) } }
                 it

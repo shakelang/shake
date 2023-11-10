@@ -11,19 +11,16 @@ class SourceCharacterInputStreamTests {
 
     @Test
     fun testSourceCharacterInputStreamContent() {
-
         val stream = createSourceCharacterInputStream(
             "hello",
             "SourceCharacterInputStreamTests#testSourceCharacterInputStreamContent()"
         )
 
         assertEquals("hello", stream.content.concatToString())
-
     }
 
     @Test
     fun testSourceCharacterInputStreamNext() {
-
         val stream = createSourceCharacterInputStream(
             "hello",
             "SourceCharacterInputStreamTests#testSourceCharacterInputStreamNext()"
@@ -38,12 +35,10 @@ class SourceCharacterInputStreamTests {
         assertFailsWith<Error>("Error: Not enough characters left") {
             stream.next()
         }
-
     }
 
     @Test
     fun testSourceCharacterInputStreamPeek() {
-
         val stream = createSourceCharacterInputStream(
             "hello",
             "SourceCharacterInputStreamTests#testSourceCharacterInputStreamPeek()"
@@ -63,12 +58,10 @@ class SourceCharacterInputStreamTests {
         assertFailsWith<Error>("Error: Not enough characters left") {
             stream.peek()
         }
-
     }
 
     @Test
     fun testSourceCharacterInputStreamSkip() {
-
         val stream = createSourceCharacterInputStream(
             "hello",
             "SourceCharacterInputStreamTests#testSourceCharacterInputStreamSkip()"
@@ -83,12 +76,10 @@ class SourceCharacterInputStreamTests {
         assertFailsWith<Error>("Error: Not enough characters left") {
             stream.skip()
         }
-
     }
 
     @Test
     fun testSourceCharacterInputStreamActual() {
-
         val stream = createSourceCharacterInputStream(
             "hello",
             "SourceCharacterInputStreamTests#testSourceCharacterInputStreamActual()"
@@ -96,12 +87,10 @@ class SourceCharacterInputStreamTests {
 
         stream.skip()
         assertEquals('h', stream.actual())
-
     }
 
     @Test
     fun testSourceCharacterInputStreamPosition() {
-
         val stream = createSourceCharacterInputStream(
             "hello",
             "SourceCharacterInputStreamTests#testSourceCharacterInputStreamPosition()"
@@ -112,12 +101,10 @@ class SourceCharacterInputStreamTests {
         assertSame(0, stream.position)
         stream.skip()
         assertSame(1, stream.position)
-
     }
 
     @Test
     fun testSourceCharacterInputStreamHas() {
-
         val stream = createSourceCharacterInputStream(
             "hello",
             "SourceCharacterInputStreamTests#testSourceCharacterInputStreamHas()"
@@ -136,12 +123,10 @@ class SourceCharacterInputStreamTests {
         assertTrue(stream.has(1))
         assertTrue(stream.has(5))
         assertFalse(stream.has(6))
-
     }
 
     @Test
     fun testSourceCharacterInputStreamHasNext() {
-
         val stream = createSourceCharacterInputStream(
             "hello",
             "SourceCharacterInputStreamTests#testSourceCharacterInputStreamHasNext()"
@@ -152,11 +137,8 @@ class SourceCharacterInputStreamTests {
         assertTrue(stream.hasNext())
         stream.skip()
         assertFalse(stream.hasNext())
-
-
     }
 
     fun createSourceCharacterInputStream(content: String, source: String) =
         SourceCharacterInputStream(CharacterSource.from(content, source))
-
 }

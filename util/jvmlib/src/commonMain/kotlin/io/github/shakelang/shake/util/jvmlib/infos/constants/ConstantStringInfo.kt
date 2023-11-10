@@ -37,9 +37,11 @@ class ConstantStringInfo(private val si: UShort) : ConstantInfo(), ConstantUser 
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != ConstantMethodTypeInfo.tag)
+            if (stream.readByte() != ConstantMethodTypeInfo.tag) {
                 throw IllegalArgumentException("Invalid tag for ConstantStringInfo")
-            else contentsFromStream(stream)
+            } else {
+                contentsFromStream(stream)
+            }
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
@@ -50,5 +52,4 @@ class ConstantStringInfo(private val si: UShort) : ConstantInfo(), ConstantUser 
         const val name = "constant_string_info"
         const val tag = ConstantTags.CONSTANT_STRING
     }
-
 }

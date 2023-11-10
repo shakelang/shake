@@ -7,5 +7,4 @@ import io.github.shakelang.shake.processor.program.types.code.ShakeNew
 interface NativeConstructor {
 
     fun handle(it: ShakeNew, args: List<JsValue>): JsValuedStatement
-
 }

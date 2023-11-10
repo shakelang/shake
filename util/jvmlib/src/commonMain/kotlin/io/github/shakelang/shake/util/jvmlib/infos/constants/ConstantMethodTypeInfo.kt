@@ -36,9 +36,11 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag)
+            if (stream.readByte() != tag) {
                 throw IllegalArgumentException("Invalid tag for ConstantMethodTypeInfo")
-            else contentsFromStream(stream)
+            } else {
+                contentsFromStream(stream)
+            }
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
@@ -49,5 +51,4 @@ class ConstantMethodTypeInfo(val di: UShort) : ConstantInfo(), ConstantUser {
         const val name = "constant_methodtype_info"
         const val tag = ConstantTags.CONSTANT_METHODTYPE
     }
-
 }

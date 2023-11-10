@@ -48,7 +48,6 @@ object Characters {
     @JsName("isIdentifierStartCharacter")
     fun isIdentifierStartCharacter(c: Char): Boolean = c in 'A'..'Z' || c in 'a'..'z' || c == '_'
 
-
     /**
      * Parses string contents. Not including string start & end
      * e.g.
@@ -61,7 +60,6 @@ object Characters {
      */
     @JsName("parseString")
     fun parseString(s: String): String {
-
         val string = StringBuilder()
 
         // We use a while loop because kotlin has no normal for loop
@@ -80,7 +78,6 @@ object Characters {
                     '"' -> string.append('\"')
                     '\\' -> string.append('\\')
                     'u' -> {
-
                         // parse unicode
 
                         // create string for storing the unicode
@@ -96,7 +93,6 @@ object Characters {
                             if (!isHexCharacter(c)) throw IllegalArgumentException("Expecting hex char, got $c")
 
                             unicode.append(c)
-
                         }
 
                         // Parse the unicode and append it to the string
@@ -106,13 +102,13 @@ object Characters {
                     // When we don't know the escape sequence we throw an error
                     else -> throw IllegalArgumentException("Unknown escape sequence '\\${s[i]}'")
                 }
-
-
             }
 
             // If the next character is not a escape sequence we
             // just append it to the string result
-            else string.append(c)
+            else {
+                string.append(c)
+            }
 
             // Increase the counting variable
             i++

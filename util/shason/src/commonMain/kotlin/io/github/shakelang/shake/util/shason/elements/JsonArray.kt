@@ -7,7 +7,6 @@ import io.github.shakelang.shake.util.shason.collection.MutableListBase
 import io.github.shakelang.shake.util.shason.collection.MutableListType
 import kotlin.jvm.JvmName
 
-
 /**
  * An array in json
  */
@@ -43,7 +42,6 @@ interface JsonArray : JsonElement, ListType<JsonElement, JsonArray, MutableJsonA
          *
          */
         override fun toString(): String = io.github.shakelang.shake.util.shason.JSON.stringify(value)
-
     }
 
     companion object {
@@ -79,11 +77,8 @@ interface JsonArray : JsonElement, ListType<JsonElement, JsonArray, MutableJsonA
          *
          */
         fun of(vararg values: Any?) = JsonArrayImplementation(values.map { JsonElement.from(it) })
-
     }
-
 }
-
 
 /**
  * A mutable array in json
@@ -157,11 +152,8 @@ interface MutableJsonArray : JsonArray, MutableListType<JsonElement, JsonArray, 
          */
         fun of(vararg values: Any?) =
             MutableJsonArrayImplementation(values.map { JsonElement.from(it) }.toMutableList())
-
     }
-
 }
-
 
 /**
  * Create a [MutableJsonArray] out of a [Collection] of [JsonElement]s
@@ -189,13 +181,11 @@ fun mutableJsonArrayOf(value: Collection<Any?>) = MutableJsonArray.of(value)
 @Suppress("unused")
 fun mutableJsonArrayOf(vararg values: Any?) = MutableJsonArray.of(*values)
 
-
 /**
  * Create an empty [MutableJsonArray]
  */
 @Suppress("unused")
 fun mutableJsonArrayOf() = MutableJsonArray.of()
-
 
 /**
  * Create a [JsonArray] out of a [Collection] of [JsonElement]s
@@ -222,7 +212,6 @@ fun jsonArrayOf(value: Collection<Any?>) = JsonArray.of(value)
  */
 @Suppress("unused")
 fun jsonArrayOf(vararg values: Any?) = JsonArray.of(*values)
-
 
 /**
  * Create an empty [JsonArray]

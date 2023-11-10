@@ -11,7 +11,7 @@ class CreationShakeLambdaDeclaration(
     override val project: CreationShakeProject,
     parameters: List<CreationShakeParameter>,
     override val returnType: CreationShakeType,
-    override val content: CreationShakeCode,
+    override val content: CreationShakeCode
 ) : CreationShakeInvokable(content, parameters), CreationShakeValue, ShakeLambdaDeclaration {
 
     override val type: CreationShakeType = CreationShakeType.Lambda("lambda${parameters.size}", parameters, returnType)
@@ -23,7 +23,7 @@ class CreationShakeLambdaDeclaration(
             "type" to "lambda",
             "parameters" to parameters.map { it.toJson() },
             "returnType" to returnType.toJson(),
-            "content" to content.toJson(),
+            "content" to content.toJson()
         )
     }
 }

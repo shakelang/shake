@@ -48,7 +48,6 @@ inline operator fun Byte.plus(other: UInt): Long = this + other.toLong()
  */
 inline operator fun Byte.plus(other: ULong): Long = this + other.toLong()
 
-
 /**
  * Add a short and an unsigned byte to get an integer.
  *
@@ -92,7 +91,6 @@ inline operator fun Short.plus(other: UInt): Long = this + other.toLong()
  * @version 0.1.1
  */
 inline operator fun Short.plus(other: ULong): Long = this + other.toLong()
-
 
 /**
  * Add an integer and an unsigned byte to get an integer.
@@ -138,7 +136,6 @@ inline operator fun Int.plus(other: UInt): Long = this + other.toLong()
  */
 inline operator fun Int.plus(other: ULong): Long = this + abs(other.toLong())
 
-
 /**
  * Add a long and an unsigned byte to get a long.
  *
@@ -182,7 +179,6 @@ inline operator fun Long.plus(other: UInt): Long = this + other.toLong()
  * @version 0.1.1
  */
 inline operator fun Long.plus(other: ULong): Long = this + abs(other.toLong())
-
 
 /**
  * Subtract a byte and an unsigned byte to get an integer.
@@ -228,7 +224,6 @@ inline operator fun Byte.minus(other: UInt): Long = this - other.toLong()
  */
 inline operator fun Byte.minus(other: ULong): Long = this - other.toLong()
 
-
 /**
  * Subtract a short and an unsigned byte to get an integer.
  *
@@ -272,7 +267,6 @@ inline operator fun Short.minus(other: UInt): Long = this - other.toLong()
  * @version 0.1.1
  */
 inline operator fun Short.minus(other: ULong): Long = this - other.toLong()
-
 
 /**
  * Subtract an integer and an unsigned byte to get an integer.
@@ -318,7 +312,6 @@ inline operator fun Int.minus(other: UInt): Long = this - other.toLong()
  */
 inline operator fun Int.minus(other: ULong): Long = this - abs(other.toLong())
 
-
 /**
  * Subtract a long and an unsigned byte to get a long.
  *
@@ -362,7 +355,6 @@ inline operator fun Long.minus(other: UInt): Long = this - other.toLong()
  * @version 0.1.1
  */
 inline operator fun Long.minus(other: ULong): Long = this - abs(other.toLong())
-
 
 /**
  * Multiply a byte and an unsigned byte to get an integer.
@@ -408,7 +400,6 @@ inline operator fun Byte.times(other: UInt): Long = this * other.toLong()
  */
 inline operator fun Byte.times(other: ULong): Long = this * other.toLong()
 
-
 /**
  * Multiply a short and an unsigned byte to get an integer.
  *
@@ -452,7 +443,6 @@ inline operator fun Short.times(other: UInt): Long = this * other.toLong()
  * @version 0.1.1
  */
 inline operator fun Short.times(other: ULong): Long = this * other.toLong()
-
 
 /**
  * Multiply an integer and an unsigned byte to get an integer.
@@ -498,7 +488,6 @@ inline operator fun Int.times(other: UInt): Long = this * other.toLong()
  */
 inline operator fun Int.times(other: ULong): Long = this * abs(other.toLong())
 
-
 /**
  * Multiply a long and an unsigned byte to get a long.
  *
@@ -542,7 +531,6 @@ inline operator fun Long.times(other: UInt): Long = this * other.toLong()
  * @version 0.1.1
  */
 inline operator fun Long.times(other: ULong): Long = this * abs(other.toLong())
-
 
 /**
  * Divide a byte and an unsigned byte to get an integer.
@@ -588,7 +576,6 @@ inline operator fun Byte.div(other: UInt): Long = this / other.toLong()
  */
 inline operator fun Byte.div(other: ULong): Long = this / other.toLong()
 
-
 /**
  * Divide a short and an unsigned byte to get an integer.
  *
@@ -632,7 +619,6 @@ inline operator fun Short.div(other: UInt): Long = this / other.toLong()
  * @version 0.1.1
  */
 inline operator fun Short.div(other: ULong): Long = this / other.toLong()
-
 
 /**
  * Divide an integer and an unsigned byte to get an integer.
@@ -678,7 +664,6 @@ inline operator fun Int.div(other: UInt): Long = this / other.toLong()
  */
 inline operator fun Int.div(other: ULong): Long = this / abs(other.toLong())
 
-
 /**
  * Divide a long and an unsigned byte to get a long.
  *
@@ -722,7 +707,6 @@ inline operator fun Long.div(other: UInt): Long = this / other.toLong()
  * @version 0.1.1
  */
 inline operator fun Long.div(other: ULong): Long = this / abs(other.toLong())
-
 
 /**
  * Modulo a byte and an unsigned byte to get an integer.
@@ -768,7 +752,6 @@ inline operator fun Byte.rem(other: UInt): Long = this % other.toLong()
  */
 inline operator fun Byte.rem(other: ULong): Long = this % other.toLong()
 
-
 /**
  * Modulo a short and an unsigned byte to get an integer.
  *
@@ -812,7 +795,6 @@ inline operator fun Short.rem(other: UInt): Long = this % other.toLong()
  * @version 0.1.1
  */
 inline operator fun Short.rem(other: ULong): Long = this % other.toLong()
-
 
 /**
  * Modulo an integer and an unsigned byte to get an integer.
@@ -858,7 +840,6 @@ inline operator fun Int.rem(other: UInt): Long = this % other.toLong()
  */
 inline operator fun Int.rem(other: ULong): Long = this % abs(other.toLong())
 
-
 /**
  * Modulo a long and an unsigned byte to get a long.
  *
@@ -903,7 +884,6 @@ inline operator fun Long.rem(other: UInt): Long = this % other.toLong()
  */
 inline operator fun Long.rem(other: ULong): Long = this % abs(other.toLong())
 
-
 /**
  * Add an unsigned byte and a byte to get a integer.
  *
@@ -914,7 +894,6 @@ inline operator fun Long.rem(other: ULong): Long = this % abs(other.toLong())
  * @version 0.1.1
  */
 inline operator fun UByte.plus(other: Byte): Int = this.toShort() + other
-
 
 /**
  * Add an unsigned byte and a short to get an integer.
@@ -992,7 +971,6 @@ inline operator fun UShort.plus(other: Int): Long = this.toLong() + other
  * @version 0.1.1
  */
 inline operator fun UShort.plus(other: Long): Long = this.toLong() + other
-
 
 /**
  * Add an unsigned integer and an unsigned byte to get an integer.
@@ -1082,7 +1060,6 @@ inline operator fun ULong.plus(other: Int): Long = this.toLong() + other
  */
 inline operator fun ULong.plus(other: Long): Long = this.toLong() + other
 
-
 /**
  * Subtract an unsigned byte and a byte to get an integer.
  *
@@ -1126,7 +1103,6 @@ inline operator fun UByte.minus(other: Int): Long = this.toLong() - other
  * @version 0.1.1
  */
 inline operator fun UByte.minus(other: Long): Long = this.toLong() - other
-
 
 /**
  * Subtract an unsigned short and an unsigned byte to get an integer.
@@ -1172,7 +1148,6 @@ inline operator fun UShort.minus(other: Int): Long = this.toLong() - other
  */
 inline operator fun UShort.minus(other: Long): Long = this.toLong() - other
 
-
 /**
  * Subtract an unsigned integer and an unsigned byte to get an integer.
  *
@@ -1216,7 +1191,6 @@ inline operator fun UInt.minus(other: Int): Long = this.toLong() - other
  * @version 0.1.1
  */
 inline operator fun UInt.minus(other: Long): Long = this.toLong() - other
-
 
 /**
  * Subtract an unsigned long and an unsigned byte to get a long.
@@ -1262,7 +1236,6 @@ inline operator fun ULong.minus(other: Int): Long = this.toLong() - other
  */
 inline operator fun ULong.minus(other: Long): Long = this.toLong() - other
 
-
 /**
  * Multiply an unsigned byte and a byte to get an integer.
  *
@@ -1306,7 +1279,6 @@ inline operator fun UByte.times(other: Int): Long = this.toLong() * other
  * @version 0.1.1
  */
 inline operator fun UByte.times(other: Long): Long = this.toLong() * other
-
 
 /**
  * Multiply an unsigned short and an unsigned byte to get an integer.
@@ -1352,7 +1324,6 @@ inline operator fun UShort.times(other: Int): Long = this.toLong() * other
  */
 inline operator fun UShort.times(other: Long): Long = this.toLong() * other
 
-
 /**
  * Multiply an unsigned integer and an unsigned byte to get an integer.
  *
@@ -1396,7 +1367,6 @@ inline operator fun UInt.times(other: Int): Long = this.toLong() * other
  * @version 0.1.1
  */
 inline operator fun UInt.times(other: Long): Long = this.toLong() * other
-
 
 /**
  * Multiply an unsigned long and an unsigned byte to get a long.
@@ -1442,7 +1412,6 @@ inline operator fun ULong.times(other: Int): Long = this.toLong() * other
  */
 inline operator fun ULong.times(other: Long): Long = this.toLong() * other
 
-
 /**
  * Divide an unsigned byte and a byte to get a integer.
  *
@@ -1486,7 +1455,6 @@ inline operator fun UByte.div(other: Int): Long = this.toLong() / other
  * @version 0.1.1
  */
 inline operator fun UByte.div(other: Long): Long = this.toLong() / other
-
 
 /**
  * Divide an unsigned short and an unsigned byte to get an integer.
@@ -1532,7 +1500,6 @@ inline operator fun UShort.div(other: Int): Long = this.toLong() / other
  */
 inline operator fun UShort.div(other: Long): Long = this.toLong() / other
 
-
 /**
  * Divide an unsigned integer and an unsigned byte to get an integer.
  *
@@ -1576,7 +1543,6 @@ inline operator fun UInt.div(other: Int): Long = this.toLong() / other
  * @version 0.1.1
  */
 inline operator fun UInt.div(other: Long): Long = this.toLong() / other
-
 
 /**
  * Divide an unsigned long and an unsigned byte to get a long.
@@ -1622,7 +1588,6 @@ inline operator fun ULong.div(other: Int): Long = this.toLong() / other
  */
 inline operator fun ULong.div(other: Long): Long = this.toLong() / other
 
-
 /**
  * Modulo an unsigned byte and a byte to get a integer.
  *
@@ -1666,7 +1631,6 @@ inline operator fun UByte.rem(other: Int): Long = this.toLong() % other
  * @version 0.1.1
  */
 inline operator fun UByte.rem(other: Long): Long = this.toLong() % other
-
 
 /**
  * Modulo an unsigned short and an unsigned byte to get an integer.
@@ -1712,7 +1676,6 @@ inline operator fun UShort.rem(other: Int): Long = this.toLong() % other
  */
 inline operator fun UShort.rem(other: Long): Long = this.toLong() % other
 
-
 /**
  * Modulo an unsigned integer and an unsigned byte to get an integer.
  *
@@ -1756,7 +1719,6 @@ inline operator fun UInt.rem(other: Int): Long = this.toLong() % other
  * @version 0.1.1
  */
 inline operator fun UInt.rem(other: Long): Long = this.toLong() % other
-
 
 /**
  * Modulo an unsigned long and an unsigned byte to get a long.

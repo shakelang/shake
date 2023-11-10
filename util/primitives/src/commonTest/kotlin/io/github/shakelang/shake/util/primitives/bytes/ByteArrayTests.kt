@@ -947,7 +947,8 @@ class ByteArrayTests {
             byteArrayOf(
                 0x00u, 0x11u, 0x22u, 0x33u, 0x44u, 0x55u, 0x66u, 0x77u, 0x88u, 0x99u,
                 0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu
-            ).toList(), bytes.getBytes(0, 16).toList()
+            ).toList(),
+            bytes.getBytes(0, 16).toList()
         )
         assertEquals(byteArrayOf(0x11u, 0x22u).toList(), bytes.getBytes(1, 2).toList())
     }
@@ -1021,10 +1022,10 @@ fun assertCompare(expected: Double, actual: Double) {
     )
 }
 
-fun compare(f0: Float, f1: Float, delta: Float): Boolean = (f0.isNaN() && f1.isNaN())
-        || (f0.isInfinite() && f1.isInfinite() && ((f0 > 0 && f1 > 0) || (f0 < 0 && f1 < 0)))
-        || abs(f0 - f1) <= delta
+fun compare(f0: Float, f1: Float, delta: Float): Boolean = (f0.isNaN() && f1.isNaN()) ||
+    (f0.isInfinite() && f1.isInfinite() && ((f0 > 0 && f1 > 0) || (f0 < 0 && f1 < 0))) ||
+    abs(f0 - f1) <= delta
 
-fun compare(d0: Double, d1: Double, delta: Double): Boolean = (d0.isNaN() && d1.isNaN())
-        || (d0.isInfinite() && d1.isInfinite() && ((d0 > 0 && d1 > 0) || (d0 < 0 && d1 < 0)))
-        || abs(d0 - d1) <= delta
+fun compare(d0: Double, d1: Double, delta: Double): Boolean = (d0.isNaN() && d1.isNaN()) ||
+    (d0.isInfinite() && d1.isInfinite() && ((d0 > 0 && d1 > 0) || (d0 < 0 && d1 < 0))) ||
+    abs(d0 - d1) <= delta

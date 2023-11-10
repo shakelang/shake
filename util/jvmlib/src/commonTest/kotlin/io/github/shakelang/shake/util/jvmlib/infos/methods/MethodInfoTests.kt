@@ -14,7 +14,6 @@ class MethodInfoTests {
 
     @Test
     fun test() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -27,12 +26,10 @@ class MethodInfoTests {
         assertEquals(1u, info.nameIndex)
         assertEquals(pool[2], info.descriptor)
         assertEquals(2u, info.descriptorIndex)
-
     }
 
     @Test
     fun testFromStream() {
-
         val stream = byteArrayOf(0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00).dataStream()
         val pool = ConstantPool(
             arrayOf(
@@ -46,12 +43,10 @@ class MethodInfoTests {
         assertEquals(1u, info.nameIndex)
         assertEquals(pool[2], info.descriptor)
         assertEquals(2u, info.descriptorIndex)
-
     }
 
     @Test
     fun testFromArray() {
-
         val arr = byteArrayOf(0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00)
         val pool = ConstantPool(
             arrayOf(
@@ -65,12 +60,10 @@ class MethodInfoTests {
         assertEquals(1u, info.nameIndex)
         assertEquals(pool[2], info.descriptor)
         assertEquals(2u, info.descriptorIndex)
-
     }
 
     @Test
     fun testIsPublic() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -82,12 +75,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0001u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isPublic)
-
     }
 
     @Test
     fun testIsPrivate() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -99,12 +90,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0002u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isPrivate)
-
     }
 
     @Test
     fun testIsProtected() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -116,12 +105,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0004u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isProtected)
-
     }
 
     @Test
     fun testIsStatic() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -133,12 +120,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0008u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isStatic)
-
     }
 
     @Test
     fun testIsFinal() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -150,12 +135,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0010u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isFinal)
-
     }
 
     @Test
     fun testIsSynchronized() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -167,12 +150,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0020u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isSynchronized)
-
     }
 
     @Test
     fun testIsBridge() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -184,12 +165,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0040u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isBridge)
-
     }
 
     @Test
     fun testIsVarargs() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -201,12 +180,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0080u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isVarargs)
-
     }
 
     @Test
     fun testIsNative() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -218,12 +195,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0100u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isNative)
-
     }
 
     @Test
     fun testIsAbstract() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -235,12 +210,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0400u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isAbstract)
-
     }
 
     @Test
     fun testIsStrict() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -252,12 +225,10 @@ class MethodInfoTests {
 
         info = MethodInfo(0x0800u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isStrict)
-
     }
 
     @Test
     fun isSynthetic() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("method"),
@@ -269,7 +240,6 @@ class MethodInfoTests {
 
         info = MethodInfo(0x1000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isSynthetic)
-
     }
 
     @Test
@@ -297,5 +267,4 @@ class MethodInfoTests {
         val info = MethodInfo(0x00u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertEquals<List<Byte>>(listOf(0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00), info.toBytes().toList())
     }
-
 }

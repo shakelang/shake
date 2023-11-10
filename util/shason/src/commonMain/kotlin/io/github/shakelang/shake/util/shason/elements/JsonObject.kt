@@ -7,7 +7,6 @@ import io.github.shakelang.shake.util.shason.map.MutableMapBase
 import io.github.shakelang.shake.util.shason.map.MutableMapType
 import kotlin.jvm.JvmName
 
-
 /**
  * An object in json
  */
@@ -43,7 +42,6 @@ interface JsonObject : JsonElement, MapType<String, JsonElement, JsonObject, Mut
          *
          */
         override fun toString(): String = io.github.shakelang.shake.util.shason.JSON.stringify(value)
-
     }
 
     companion object {
@@ -79,11 +77,8 @@ interface JsonObject : JsonElement, MapType<String, JsonElement, JsonObject, Mut
          *
          */
         fun of(vararg values: Pair<String, Any?>) = of(mutableMapOf(*values))
-
     }
-
 }
-
 
 /**
  * A mutable object in json
@@ -120,7 +115,6 @@ interface MutableJsonObject : JsonObject, MutableMapType<String, JsonElement, Js
          *
          */
         override fun toString(): String = io.github.shakelang.shake.util.shason.JSON.stringify(value)
-
     }
 
     companion object {
@@ -157,11 +151,8 @@ interface MutableJsonObject : JsonObject, MutableMapType<String, JsonElement, Js
          *
          */
         fun of(vararg values: Pair<String, Any?>) = of(mapOf(*values))
-
     }
-
 }
-
 
 /**
  * Create a [MutableJsonObject] out of a [Map] of [JsonElement]s
@@ -195,7 +186,6 @@ fun mutableJsonObjectOf(vararg values: Pair<String, Any?>) = MutableJsonObject.o
 @Suppress("unused")
 fun mutableJsonObjectOf() = MutableJsonObject.of()
 
-
 /**
  * Create a [JsonObject] out of a [Map] of [JsonElement]s
  */
@@ -209,7 +199,6 @@ fun jsonObjectOf(value: Map<String, JsonElement>) = JsonObject.of(value)
 @Suppress("unused")
 @JvmName("jsonObjectOfElements")
 fun jsonObjectOf(vararg values: Pair<String, JsonElement>) = JsonObject.of(*values)
-
 
 /**
  * Create a [JsonObject] out of a [Map] of anonymous values

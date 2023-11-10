@@ -116,13 +116,11 @@ class FormattedStringTests {
         assertEquals("${Formatting.BGColor.RED}Hello World${Formatting.RESET}", formattedString.string())
     }
 
-
     @Test
     fun testMakeFormattedStringBlack() {
         val formattedString = FormattedString.wrap("Hello World").black()
         assertEquals("${Formatting.FGColor.BLACK}Hello World${Formatting.RESET}", formattedString.string())
     }
-
 
     @Test
     fun testMakeFormattedStringRed() {
@@ -897,5 +895,4 @@ class FormattedStringTests {
             formattedString.string()
         )
     }
-
 }

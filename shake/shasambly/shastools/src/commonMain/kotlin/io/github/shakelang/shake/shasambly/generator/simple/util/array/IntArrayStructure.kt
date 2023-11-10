@@ -103,7 +103,9 @@ class StaticallySizedLocalIntArrayStructure(val shasambly: SimpleShasambly, val 
             if (size == -1) {
                 imul(4)
                 natives.freeGlobal()
-            } else natives.freeGlobal(size * 4)
+            } else {
+                natives.freeGlobal(size * 4)
+            }
         }
     }
 
@@ -346,7 +348,6 @@ fun SimpleShasambly.createLocalIntegerArray(addr: Int, size: Int) = this.createL
  * @param addr the local address to create the int array in
  */
 fun SimpleShasambly.createLocalIntegerArray(addr: Int) = this.createLocalIntArray(addr)
-
 
 typealias StaticallySizedLocalFloatArrayStructure = StaticallySizedLocalIntArrayStructure
 

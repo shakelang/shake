@@ -8,5 +8,4 @@ interface ShakeIf : ShakeStatement {
     val condition: ShakeValue
     val body: ShakeCode
     val elseBody: ShakeCode?
-
 }

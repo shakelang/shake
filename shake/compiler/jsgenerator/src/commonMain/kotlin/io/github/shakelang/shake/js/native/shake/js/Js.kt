@@ -26,8 +26,6 @@ class Js : NativeFunction {
 
             override val needsParens: Boolean
                 get() = true
-
         }
     }
-
 }

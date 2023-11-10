@@ -222,5 +222,4 @@ class TokenTypeTests {
         assertEquals(11, ShakeTokenType.KEYWORD_CONSTRUCTOR.length(""))
         assertEquals(2, ShakeTokenType.KEYWORD_AS.length(""))
     }
-
 }

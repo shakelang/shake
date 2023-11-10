@@ -21,7 +21,7 @@ class OnDemandLexingTokenInputStreamTests {
     }
 
     class TestLexer(
-        tokens: List<Token<TokenType>>,
+        tokens: List<Token<TokenType>>
     ) : LexingBase<TokenType, Token<TokenType>>(
         SourceCharacterInputStream(
             CharacterSource.from(
@@ -101,7 +101,6 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(tokens[2], stream.peek(1))
 
         assertFailsWith<Error>() { stream.peek(2) }
-
     }
 
     @Test
@@ -173,5 +172,4 @@ class OnDemandLexingTokenInputStreamTests {
         val stream = OnDemandLexingTokenInputStream(lexer)
         assertEquals("OnDemandLexingTokenInputStream(lexer=hello world)", stream.toString())
     }
-
 }

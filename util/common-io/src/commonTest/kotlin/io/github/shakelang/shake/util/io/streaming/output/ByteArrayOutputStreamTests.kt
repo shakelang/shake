@@ -67,5 +67,4 @@ class ByteArrayOutputStreamTests {
         stream.write(0x03)
         assertEquals(3, stream.size())
     }
-
 }

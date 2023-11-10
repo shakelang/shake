@@ -10,5 +10,4 @@ interface ShakeNew : ShakeValue, ShakeStatement {
     val arguments: List<ShakeValue>
     val parent: ShakeValue?
     val name: String
-
 }

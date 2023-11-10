@@ -37,7 +37,6 @@ abstract class ShakeProcessor<T> {
     abstract val src: T
 
     open fun parseFile(src: String): ShakeFileNode {
-
         val file = File(src).contents
         val chars: CharacterInputStream = SourceCharacterInputStream(src, file)
 
@@ -45,7 +44,6 @@ abstract class ShakeProcessor<T> {
         val tokens = lexer.makeTokens()
         val parser = ShakeParser.from(tokens)
         return parser.parse()
-
     }
 
     abstract fun loadFile(directory: String, src: String)
@@ -53,8 +51,6 @@ abstract class ShakeProcessor<T> {
     fun <O> generate(f: (T) -> O): O {
         return f(src)
     }
-
-
 }
 
 open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
@@ -70,11 +66,9 @@ open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
     }
 
     override fun loadFile(directory: String, src: String) {
-
         val reformatted = src.replace("\\", "/")
         val contents = parseFile("$directory/$src")
         project.putFile(reformatted.split("/").toTypedArray(), contents)
-
     }
 
     fun finish(): CreationShakeProject {
@@ -147,9 +141,11 @@ open class ShakeCodeProcessor {
     }
 
     fun visitTree(scope: CreationShakeScope, t: ShakeBlockNode): CreationShakeCode {
-        return CreationShakeCode(t.children.map {
-            visitStatement(scope, it)
-        })
+        return CreationShakeCode(
+            t.children.map {
+                visitStatement(scope, it)
+            }
+        )
     }
 
     fun visitType(scope: CreationShakeScope, t: ShakeVariableType): CreationShakeType? {
@@ -182,78 +178,96 @@ open class ShakeCodeProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.additionOperator(right.type, scope)
-        return if (aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
-        else CreationShakeAddition(
-            scope.project,
-            left,
-            right,
-            aw.returnType ?: throw IllegalStateException("No return type for addition")
-        )
+        return if (aw.overload != null) {
+            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        } else {
+            CreationShakeAddition(
+                scope.project,
+                left,
+                right,
+                aw.returnType ?: throw IllegalStateException("No return type for addition")
+            )
+        }
     }
 
     fun visitSubNode(scope: CreationShakeScope, n: ShakeSubNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.subtractionOperator(right.type, scope)
-        return if (aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
-        else CreationShakeSubtraction(
-            scope.project,
-            left,
-            right,
-            aw.returnType ?: throw IllegalStateException("No return type for subtraction")
-        )
+        return if (aw.overload != null) {
+            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        } else {
+            CreationShakeSubtraction(
+                scope.project,
+                left,
+                right,
+                aw.returnType ?: throw IllegalStateException("No return type for subtraction")
+            )
+        }
     }
 
     fun visitMulNode(scope: CreationShakeScope, n: ShakeMulNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.multiplicationOperator(right.type, scope)
-        return if (aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
-        else CreationShakeMultiplication(
-            scope.project,
-            left,
-            right,
-            aw.returnType ?: throw IllegalStateException("No return type for multiplication")
-        )
+        return if (aw.overload != null) {
+            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        } else {
+            CreationShakeMultiplication(
+                scope.project,
+                left,
+                right,
+                aw.returnType ?: throw IllegalStateException("No return type for multiplication")
+            )
+        }
     }
 
     fun visitDivNode(scope: CreationShakeScope, n: ShakeDivNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.divisionOperator(right.type, scope)
-        return if (aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
-        else CreationShakeDivision(
-            scope.project,
-            left,
-            right,
-            aw.returnType ?: throw IllegalStateException("No return type for division")
-        )
+        return if (aw.overload != null) {
+            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        } else {
+            CreationShakeDivision(
+                scope.project,
+                left,
+                right,
+                aw.returnType ?: throw IllegalStateException("No return type for division")
+            )
+        }
     }
 
     fun visitModNode(scope: CreationShakeScope, n: ShakeModNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.modulusOperator(right.type, scope)
-        return if (aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
-        else CreationShakeModulus(
-            scope.project,
-            left,
-            right,
-            aw.returnType ?: throw IllegalStateException("No return type for modulus")
-        )
+        return if (aw.overload != null) {
+            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        } else {
+            CreationShakeModulus(
+                scope.project,
+                left,
+                right,
+                aw.returnType ?: throw IllegalStateException("No return type for modulus")
+            )
+        }
     }
 
     fun visitPowNode(scope: CreationShakeScope, n: ShakePowNode): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         val aw = left.type.powerOperator(right.type, scope)
-        return if (aw.overload != null) CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
-        else CreationShakePower(
-            scope.project,
-            left,
-            right,
-            aw.returnType ?: throw IllegalStateException("No return type for power")
-        )
+        return if (aw.overload != null) {
+            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+        } else {
+            CreationShakePower(
+                scope.project,
+                left,
+                right,
+                aw.returnType ?: throw IllegalStateException("No return type for power")
+            )
+        }
     }
 
     fun visitVariableDeclarationNode(
@@ -268,11 +282,14 @@ open class ShakeCodeProcessor {
     }
 
     fun getAssignable(scope: CreationShakeScope, n: ShakeValuedNode): CreationShakeAssignable? {
-        return if (n !is ShakeIdentifierNode) CreationShakeAssignable.wrap(scope.project, visitValue(scope, n))
-        else if (n.parent != null) {
+        return if (n !is ShakeIdentifierNode) {
+            CreationShakeAssignable.wrap(scope.project, visitValue(scope, n))
+        } else if (n.parent != null) {
             val parent = visitValue(scope, n.parent!!)
             CreationShakeChild(scope.project, scope, parent, n.name)
-        } else scope.get(n.name)
+        } else {
+            scope.get(n.name)
+        }
     }
 
     fun visitVariableAssignmentNode(
@@ -377,7 +394,10 @@ open class ShakeCodeProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeEquals(
-            scope.project, left, right, left.type.equalsType(right.type, scope)
+            scope.project,
+            left,
+            right,
+            left.type.equalsType(right.type, scope)
                 ?: throw Exception("Cannot compare ${left.type} to ${right.type}")
         )
     }
@@ -389,7 +409,10 @@ open class ShakeCodeProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeGreaterThanOrEqual(
-            scope.project, left, right, left.type.equalsType(right.type, scope)
+            scope.project,
+            left,
+            right,
+            left.type.equalsType(right.type, scope)
                 ?: throw Exception("Cannot compare ${left.type} to ${right.type}")
         )
     }
@@ -401,7 +424,10 @@ open class ShakeCodeProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeLessThanOrEqual(
-            scope.project, left, right, left.type.equalsType(right.type, scope)
+            scope.project,
+            left,
+            right,
+            left.type.equalsType(right.type, scope)
                 ?: throw Exception("Cannot compare ${left.type} to ${right.type}")
         )
     }
@@ -410,7 +436,10 @@ open class ShakeCodeProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeGreaterThan(
-            scope.project, left, right, left.type.equalsType(right.type, scope)
+            scope.project,
+            left,
+            right,
+            left.type.equalsType(right.type, scope)
                 ?: throw Exception("Cannot compare ${left.type} to ${right.type}")
         )
     }
@@ -419,7 +448,10 @@ open class ShakeCodeProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeLessThan(
-            scope.project, left, right, left.type.equalsType(right.type, scope)
+            scope.project,
+            left,
+            right,
+            left.type.equalsType(right.type, scope)
                 ?: throw Exception("Cannot compare ${left.type} to ${right.type}")
         )
     }
@@ -428,7 +460,10 @@ open class ShakeCodeProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeAnd(
-            scope.project, left, right, left.type.equalsType(right.type, scope)
+            scope.project,
+            left,
+            right,
+            left.type.equalsType(right.type, scope)
                 ?: throw Exception("Cannot compare ${left.type} to ${right.type}")
         )
     }
@@ -437,7 +472,10 @@ open class ShakeCodeProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeOr(
-            scope.project, left, right, left.type.equalsType(right.type, scope)
+            scope.project,
+            left,
+            right,
+            left.type.equalsType(right.type, scope)
                 ?: throw Exception("Cannot compare ${left.type} to ${right.type}")
         )
     }
@@ -446,15 +484,21 @@ open class ShakeCodeProcessor {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeXor(
-            scope.project, left, right, left.type.equalsType(right.type, scope)
+            scope.project,
+            left,
+            right,
+            left.type.equalsType(right.type, scope)
                 ?: throw Exception("Cannot compare ${left.type} to ${right.type}")
         )
     }
 
     fun visitBoolean(scope: CreationShakeScope, n: ShakeValuedNode): CreationShakeValue {
         val value = visitValue(scope, n)
-        return if (value.type == CreationShakeType.Primitives.BOOLEAN) value
-        else throw Exception("Cannot convert ${value.type} to boolean")
+        return if (value.type == CreationShakeType.Primitives.BOOLEAN) {
+            value
+        } else {
+            throw Exception("Cannot convert ${value.type} to boolean")
+        }
     }
 
     fun visitWhileNode(scope: CreationShakeScope, n: ShakeWhileNode): CreationShakeWhile {
@@ -569,5 +613,4 @@ open class ShakeCodeProcessor {
         val value = visitValue(scope, n.value)
         return CreationShakeReturn(value)
     }
-
 }

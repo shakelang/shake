@@ -5,7 +5,8 @@ import io.github.shakelang.shake.lexer.token.ShakeToken
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 
-class ShakeOnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : ShakeLexingBase(inputStream),
+class ShakeOnDemandLexingTokenInputStream(inputStream: CharacterInputStream) :
+    ShakeLexingBase(inputStream),
     ShakeTokenInputStream {
 
     override val size get() = throw UnsupportedOperationException()
@@ -21,7 +22,6 @@ class ShakeOnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : S
 
     override var position: Int = -1
         private set
-
 
     override fun has(num: Int): Boolean {
         return try {
@@ -75,6 +75,4 @@ class ShakeOnDemandLexingTokenInputStream(inputStream: CharacterInputStream) : S
             }
         }
     }
-
-
 }

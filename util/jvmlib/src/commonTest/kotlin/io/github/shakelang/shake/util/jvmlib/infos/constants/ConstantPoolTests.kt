@@ -172,7 +172,6 @@ class ConstantPoolTests {
                 super.init(pool)
                 bool0 = true
             }
-
         }
         var bool1 = false
         val ci1 = object : ConstantInfo() {
@@ -189,7 +188,6 @@ class ConstantPoolTests {
                 super.init(pool)
                 bool1 = true
             }
-
         }
 
         val cp = ConstantPool(mutableListOf(ci0))
@@ -217,7 +215,6 @@ class ConstantPoolTests {
         /*13*/cp.add(Constant.long(1L))
         /*14*/cp.add(Constant.double(1.0))
         /*15*/cp.add(Constant.invokeDynamic(2u, 3u))
-
 
         return cp
     }
@@ -319,5 +316,4 @@ class ConstantPoolTests {
         assertSame(cp[14], cp.expectDouble(1.0))
         assertFailsWith<Exception> { cp.expectDouble(2.0) }
     }
-
 }

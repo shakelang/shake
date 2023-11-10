@@ -7,7 +7,6 @@ import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
 
 class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : ConstantInfo(), ConstantUser {
 
-
     lateinit var classRef: ConstantClassInfo
     lateinit var nameTypeRef: ConstantNameAndTypeInfo
 
@@ -44,9 +43,11 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag)
+            if (stream.readByte() != tag) {
                 throw IllegalArgumentException("Invalid tag for ConstantFieldrefInfo")
-            else contentsFromStream(stream)
+            } else {
+                contentsFromStream(stream)
+            }
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
@@ -57,5 +58,4 @@ class ConstantFieldrefInfo(private val cri: UShort, val ntri: UShort) : Constant
         const val name = "constant_fieldref_info"
         const val tag = ConstantTags.CONSTANT_FIELD_REF
     }
-
 }

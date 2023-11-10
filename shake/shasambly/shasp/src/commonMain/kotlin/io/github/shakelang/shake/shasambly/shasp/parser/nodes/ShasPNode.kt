@@ -421,7 +421,6 @@ open class ShasPVariableDecr(val name: String) : ShasPValuedStatement {
     }
 }
 
-
 open class ShasPIf(val condition: ShasPValuedNode, val then: ShasPCode, val orElse: ShasPCode? = null) :
     ShasPValuedStatement {
     override fun toJson(): Map<String, Any?> {
@@ -580,6 +579,5 @@ open class ShasPType(val name: String, val byteSize: Int) {
             result = 31 * result + (size?.hashCode() ?: 0)
             return result
         }
-
     }
 }

@@ -117,5 +117,4 @@ class ByteArrayOutputStream : OutputStream() {
     fun size(): Int {
         return count
     }
-
 }

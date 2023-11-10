@@ -27,7 +27,6 @@ object JsColoredBrowserConsoleLogger : LoggerPipe() {
     private fun printWarn(message: String) = console.warn("%c$message", "color: yellow;")
     private fun printError(message: String) = console.error("%c$message", "color: red;")
     private fun printFatal(message: String) = console.error("%c$message", "color: red;")
-
 }
 
 object JsColoredConsoleLogger : LoggerPipe() {
@@ -49,7 +48,6 @@ object JsColoredConsoleLogger : LoggerPipe() {
     private fun printWarn(message: String) = console.warn(message.yellow().string())
     private fun printError(message: String) = console.error(message.red().string())
     private fun printFatal(message: String) = console.error(message.red().string())
-
 }
 
 object JsConsoleLogger : LoggerPipe() {
@@ -71,5 +69,4 @@ object JsConsoleLogger : LoggerPipe() {
     private fun printWarn(message: String) = console.warn(message)
     private fun printError(message: String) = console.error(message)
     private fun printFatal(message: String) = console.error(message)
-
 }

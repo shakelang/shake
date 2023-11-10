@@ -25,7 +25,7 @@ class CreationShakeMethod(
     override val isProtected: Boolean,
     override val isPublic: Boolean,
     override val isNative: Boolean,
-    override val isOperator: Boolean,
+    override val isOperator: Boolean
 ) : CreationShakeInvokable(body), ShakeMethod {
 
     override val qualifiedName: String
@@ -161,7 +161,6 @@ class CreationShakeMethod(
 
         override val processor: ShakeCodeProcessor
             get() = prj.projectScope.processor
-
     }
 
     companion object {

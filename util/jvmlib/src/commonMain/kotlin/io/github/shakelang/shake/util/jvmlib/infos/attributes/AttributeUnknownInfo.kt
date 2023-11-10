@@ -13,7 +13,6 @@ class AttributeUnknownInfo(name: ConstantUtf8Info, override val bytes: ByteArray
 
     override val uses: Array<ConstantInfo> get() = arrayOf(name)
 
-
     override fun toJson(): Map<String, Any> = mapOf(
         "name" to name,
         "bytes" to bytes.toHexString()

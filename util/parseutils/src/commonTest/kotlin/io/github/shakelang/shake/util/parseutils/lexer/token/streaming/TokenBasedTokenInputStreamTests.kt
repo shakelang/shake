@@ -20,7 +20,7 @@ class TokenBasedTokenInputStreamTests {
 
     class PositionMap(
         override val source: CharacterSource,
-        override val lineSeparators: IntArray,
+        override val lineSeparators: IntArray
     ) : io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 
     @Test
@@ -383,7 +383,7 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.STRING, null, 13, 18),
             Token(TokenType.STRING, null, 19, 24),
             Token(TokenType.STRING, null, 25, 30),
-            Token(TokenType.STRING, null, 31, 36),
+            Token(TokenType.STRING, null, 31, 36)
         )
 
         val map = PositionMap(
@@ -418,7 +418,7 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.STRING, null, 13, 18),
             Token(TokenType.STRING, null, 19, 24),
             Token(TokenType.STRING, null, 25, 30),
-            Token(TokenType.STRING, null, 31, 36),
+            Token(TokenType.STRING, null, 31, 36)
         )
 
         val map = PositionMap(
@@ -468,7 +468,7 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.STRING, null, 13, 18),
             Token(TokenType.STRING, null, 19, 24),
             Token(TokenType.STRING, null, 25, 30),
-            Token(TokenType.STRING, null, 31, 36),
+            Token(TokenType.STRING, null, 31, 36)
         )
 
         val map = PositionMap(
@@ -493,7 +493,7 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.STRING, null, 13, 18),
             Token(TokenType.STRING, null, 19, 24),
             Token(TokenType.STRING, null, 25, 30),
-            Token(TokenType.STRING, null, 31, 36),
+            Token(TokenType.STRING, null, 31, 36)
         )
 
         val map = PositionMap(

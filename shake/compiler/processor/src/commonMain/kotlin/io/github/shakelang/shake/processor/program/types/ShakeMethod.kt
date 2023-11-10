@@ -3,7 +3,6 @@ package io.github.shakelang.shake.processor.program.types
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
-
 interface ShakeMethod : ShakeInvokable {
     val prj: ShakeProject
     val pkg: ShakePackage?
@@ -24,9 +23,9 @@ interface ShakeMethod : ShakeInvokable {
 
     override val qualifiedName: String
         get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}$name(${
-            parameters.joinToString(
-                ", "
-            ) { it.type.qualifiedName }
+        parameters.joinToString(
+            ", "
+        ) { it.type.qualifiedName }
         })${returnType.qualifiedName}"
     val signature: String get() = "${expanding?.qualifiedName?.plus("$") ?: ""}$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
     val qualifiedSignature: String get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}$signature"

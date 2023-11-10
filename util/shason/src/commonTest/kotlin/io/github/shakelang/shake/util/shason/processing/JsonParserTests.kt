@@ -80,5 +80,4 @@ class JsonParserTests {
         assertEquals(1, parsed.toJsonObject()["one"]!!.toJsonPrimitive().toInt().value)
         assertEquals(2, parsed.toJsonObject()["two"]!!.toJsonPrimitive().toInt().value)
     }
-
 }

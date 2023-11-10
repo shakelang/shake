@@ -8,5 +8,4 @@ class ShakeVariableIncreaseNode(map: PositionMap, val variable: ShakeValuedNode,
     ShakeValuedStatementNodeImpl(map) {
 
     override fun toJson(): Map<String, *> = mapOf("name" to "VariableModAssignmentNode", "variable" to variable.json)
-
 }

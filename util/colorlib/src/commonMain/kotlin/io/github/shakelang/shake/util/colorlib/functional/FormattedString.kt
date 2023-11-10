@@ -49,7 +49,6 @@ interface FormattedStringObject {
     val formatsItself: Boolean
         get() = false
 
-
     companion object {
 
         /**
@@ -107,7 +106,6 @@ class FormattedStringObjectString(
      */
     override fun extends(format: FormattedString) = this
 }
-
 
 /**
  * A formatted [String] that can be used to format [String]s with colors and styles
@@ -277,7 +275,6 @@ class FormattedString(
      */
     val isInverted get() = _isInverted ?: false
 
-
     /**
      * Construct a [FormattedString] from the given [contents] [FormattedString]
      *
@@ -315,13 +312,13 @@ class FormattedString(
      * @version 0.1.1
      */
     val isFormatted: Boolean
-        get() = isBold
-                || isItalic
-                || isUnderlined
-                || isStrikethrough
-                || isInverted
-                || color != null
-                || backgroundColor != null
+        get() = isBold ||
+            isItalic ||
+            isUnderlined ||
+            isStrikethrough ||
+            isInverted ||
+            color != null ||
+            backgroundColor != null
 
     /**
      * Get the [String] representation of this [FormattedString]
@@ -332,7 +329,6 @@ class FormattedString(
      * @version 0.1.1
      */
     override fun toString(): String {
-
         val formatting = StringBuilder()
 
         if (isBold) formatting.append(Formatting.BOLD)
@@ -346,8 +342,11 @@ class FormattedString(
         val formattingEnd = if (isFormatted) Formatting.RESET else ""
 
         val str = contents.map {
-            if (!it.formatsItself) formatting.toString() + it.extends(this).string() + formattingEnd
-            else it.extends(this).string()
+            if (!it.formatsItself) {
+                formatting.toString() + it.extends(this).string() + formattingEnd
+            } else {
+                it.extends(this).string()
+            }
         }
 
         return str.joinToString("")
@@ -455,7 +454,6 @@ class FormattedString(
      */
     fun fgColor(color: Formatting.FGColor) = color(color)
 
-
     /**
      * Set the [Formatting.BGColor] of this [FormattedString]
      *
@@ -488,7 +486,6 @@ class FormattedString(
      * @version 0.1.1
      */
     fun bgColor(color: Formatting.BGColor) = backgroundColor(color)
-
 
     /**
      * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BLACK]
@@ -660,7 +657,6 @@ class FormattedString(
      */
     fun brightWhite() = color(Formatting.FGColor.BRIGHT_WHITE)
 
-
     /**
      * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BLACK]
      *
@@ -830,7 +826,6 @@ class FormattedString(
      * @version 0.1.1
      */
     fun fgBrightWhite() = color(Formatting.FGColor.BRIGHT_WHITE)
-
 
     /**
      * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BLACK]
@@ -1070,7 +1065,6 @@ class FormattedString(
          * @version 0.1.1
          */
         fun wrap(vararg strings: FormattedStringObject) = FormattedString(strings.toList())
-
     }
 }
 
@@ -1108,7 +1102,6 @@ fun String.format(
     backgroundColor
 )
 
-
 /**
  * Format a string with the given color
  *
@@ -1142,7 +1135,6 @@ fun String.fg(color: Formatting.FGColor) = format(color = color)
  */
 fun String.fgColor(color: Formatting.FGColor) = format(color = color)
 
-
 /**
  * Format a string with the given background color
  *
@@ -1175,7 +1167,6 @@ fun String.bgColor(color: Formatting.BGColor) = format(backgroundColor = color)
  * @version 0.1.1
  */
 fun String.backgroundColor(color: Formatting.BGColor) = format(backgroundColor = color)
-
 
 /**
  * Make the string bold
@@ -1226,7 +1217,6 @@ fun String.strikethrough() = format(isStrikethrough = true)
  * @version 0.1.1
  */
 fun String.invert() = format(isInverted = true)
-
 
 /**
  * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BLACK]
@@ -1398,7 +1388,6 @@ fun String.brightCyan() = format(color = Formatting.FGColor.BRIGHT_CYAN)
  */
 fun String.brightWhite() = format(color = Formatting.FGColor.BRIGHT_WHITE)
 
-
 /**
  * Set the [Formatting.FGColor] of this [FormattedString] to [Formatting.FGColor.BLACK]
  *
@@ -1568,7 +1557,6 @@ fun String.fgBrightCyan() = format(color = Formatting.FGColor.BRIGHT_CYAN)
  * @version 0.1.1
  */
 fun String.fgBrightWhite() = format(color = Formatting.FGColor.BRIGHT_WHITE)
-
 
 /**
  * Set the [Formatting.BGColor] of this [FormattedString] to [Formatting.BGColor.BLACK]

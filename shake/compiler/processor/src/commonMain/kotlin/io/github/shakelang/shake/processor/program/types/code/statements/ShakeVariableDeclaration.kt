@@ -14,5 +14,5 @@ interface ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeSta
     val isFinal: Boolean
 
     fun valueCompatible(value: ShakeValue): Boolean
-    //override fun use(scope: ShakeScope): ShakeVariableUsage
+    // override fun use(scope: ShakeScope): ShakeVariableUsage
 }

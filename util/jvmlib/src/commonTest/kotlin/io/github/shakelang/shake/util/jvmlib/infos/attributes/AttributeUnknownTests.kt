@@ -11,7 +11,7 @@ class AttributeUnknownTests {
     private val pool
         get() = ConstantPool(
             mutableListOf(
-                Constant.utf8("some_name"),
+                Constant.utf8("some_name")
             )
         )
 
@@ -23,7 +23,6 @@ class AttributeUnknownTests {
         assertEquals(1u, info.nameIndex)
         assertEquals(pool[1], info.name)
         assertEquals(0, info.bytes.size)
-
     }
 
     @Test
@@ -112,6 +111,4 @@ class AttributeUnknownTests {
         assertEquals(pool[1], info.name)
         assertEquals(4, info.bytes.size)
     }
-
-
 }

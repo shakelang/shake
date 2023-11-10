@@ -25,5 +25,4 @@ class CreationShakeNew(
             "arguments" to arguments.map { it.toJson() }
         )
     }
-
 }
