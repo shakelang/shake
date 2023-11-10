@@ -53,11 +53,20 @@ jobs:
       - name: Merge SARIF files
         run: npx @microsoft/sarif-multitool merge ./**/*.sarif --recurse true --output-directory=. --output-file=report.sarif
 
+      - name: Copy SARIF files
+        run: ./gradlew copyKtlintReports
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: report.sarif
           path: report.sarif
+
+      - name: Upload Artifact 2
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports
+          path: build/reports/ktlint/ktlintKotlinScriptCheck
 
       - name: Upload SARIF file for GitHub Advanced Security
         uses: github/codeql-action/upload-sarif@v2
