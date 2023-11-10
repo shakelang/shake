@@ -7,7 +7,6 @@ import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.js.JsName
 
-
 /**
  * A [CompilerError] is an error thrown by a Compiler. It has functionality for
  * marking source code locations
@@ -44,7 +43,6 @@ open class CompilerError : Error {
     @JsName("marker")
     val marker: ErrorMarker
 
-
     /**
      * Constructor for [CompilerError]
      *
@@ -72,7 +70,6 @@ open class CompilerError : Error {
         this.marker = marker
     }
 
-
     /**
      * Constructor for [CompilerError]
      *
@@ -96,9 +93,13 @@ open class CompilerError : Error {
             MAX_LENGTH,
             start,
             end
-        ), exceptionName, details, start, end, cause
+        ),
+        exceptionName,
+        details,
+        start,
+        end,
+        cause
     )
-
 
     /**
      * Constructor for [CompilerError]
@@ -128,12 +129,10 @@ open class CompilerError : Error {
         cause
     )
 
-
     /**
      * Stringify the [CompilerError]
      */
     override fun toString() = message!!
-
 
     /**
      * A marker for the position of the [CompilerError]
@@ -185,7 +184,6 @@ open class CompilerError : Error {
          *
          */
         override fun toString() = generateMarker()
-
     }
 
     companion object {
@@ -205,12 +203,10 @@ open class CompilerError : Error {
             p1: Position,
             p2: Position
         ): ErrorMarker {
-
             var pos1 = p1
             var pos2 = p2
 
             try {
-
                 // Check requirements
                 if (pos1.source != pos2.source) throw Error("The two have to be located in the same source")
                 if (pos1.line != pos2.line) throw Error("The two positions that should be marked have to be in the same line")
@@ -232,7 +228,6 @@ open class CompilerError : Error {
                     pos2 = pos2.source.resolve(pos)
                 }
 
-
                 // Line start (linenumber + 2 spaces)
                 val lineStr = pos1.line.toString() + "  "
 
@@ -243,7 +238,6 @@ open class CompilerError : Error {
                 val maxAround = maxLength - highlighted - lineStr.length
                 val before = maxAround / 2 + maxAround % 2
                 val after = maxAround / 2
-
 
                 // The available tokens before the highlighted section
                 val before2 = pos1.column - 1
@@ -273,24 +267,28 @@ open class CompilerError : Error {
                     afterDif += len
                 }
 
-
                 // The start of the line
-                val start = (lineStr
-                        + (if (beforeDif > 0) "+$beforeDif..." else "")
-                        + pos1.source.source[pos1.index - realBefore, pos1.index].concatToString()
-                    .replace("\t".toRegex(), " "))
+                val start = (
+                    lineStr +
+                        (if (beforeDif > 0) "+$beforeDif..." else "") +
+                        pos1.source.source[pos1.index - realBefore, pos1.index].concatToString()
+                            .replace("\t".toRegex(), " ")
+                    )
 
                 // The end of the line
-                val end = (pos1.source.source[pos2.index + 1, pos2.index + realAfter].concatToString()
-                    .replace("\t".toRegex(), " ")
-                    .replace("\n".toRegex(), " ")
-                        + if (afterDif > 0) "...+$afterDif" else "")
+                val end = (
+                    pos1.source.source[pos2.index + 1, pos2.index + realAfter].concatToString()
+                        .replace("\t".toRegex(), " ")
+                        .replace("\n".toRegex(), " ") +
+                        if (afterDif > 0) "...+$afterDif" else ""
+                    )
 
                 // Generate end-string
                 return ErrorMarker(
                     join(pos1.source.location, ":", pos1.line.toString(), ":", pos1.column.toString()),
                     join(
-                        start, invert(
+                        start,
+                        invert(
                             red(
                                 pos1.source.source[pos1.index, pos2.index + 1].concatToString()
                                     .replace("\t".toRegex(), " ")

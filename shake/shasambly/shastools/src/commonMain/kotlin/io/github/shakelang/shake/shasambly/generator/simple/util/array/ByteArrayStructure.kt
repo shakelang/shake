@@ -88,8 +88,11 @@ class StaticallySizedLocalByteArrayStructure(val shasambly: SimpleShasambly, val
     fun free() {
         shasambly {
             i_get_local(address)
-            if (size == -1) natives.freeGlobal()
-            else natives.freeGlobal(size)
+            if (size == -1) {
+                natives.freeGlobal()
+            } else {
+                natives.freeGlobal(size)
+            }
         }
     }
 

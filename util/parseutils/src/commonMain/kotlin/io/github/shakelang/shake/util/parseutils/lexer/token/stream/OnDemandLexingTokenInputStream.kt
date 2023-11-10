@@ -22,7 +22,6 @@ open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
 
     override var position: Int = -1
 
-
     override fun has(num: Int): Boolean {
         return try {
             fillBuffer(num)
@@ -81,5 +80,4 @@ open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
     }
 
     override fun toString(): String = "OnDemandLexingTokenInputStream(lexer=$lexingBase)"
-
 }

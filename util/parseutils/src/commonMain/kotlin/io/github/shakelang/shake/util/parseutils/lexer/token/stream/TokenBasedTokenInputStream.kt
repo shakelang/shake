@@ -9,8 +9,7 @@ import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
  * created by a lexer
  */
 @Suppress("unused")
-open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
-    (
+open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>(
 
     /**
      * The tokenTypes that are contained in the [TokenBasedTokenInputStream]
@@ -131,5 +130,4 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>
     override fun toString(): String {
         return "TokenBasedTokenInputStream(source='$source', tokens=${tokens.size}, position=$position)"
     }
-
 }

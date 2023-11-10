@@ -5,7 +5,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertSame
 
-
 /**
  * Tests for [PositionMaker]
  *w
@@ -132,7 +131,6 @@ class PositionMakerTest {
         assertEquals(Position(maker, 8, 1, 3), maker.resolve(8))
         assertEquals(Position(maker, 9, 2, 3), maker.resolve(9))
         assertEquals(Position(maker, 10, 3, 3), maker.resolve(10))
-
     }
 
     @Test
@@ -251,7 +249,6 @@ class PositionMakerTest {
             assertSame(0, maker.column)
             assertSame(1, maker.line)
 
-
             assertEquals(Position(maker, -1, 0, 1), maker.createPositionAtLocation())
 
             maker.nextColumn()
@@ -306,6 +303,4 @@ class PositionMakerTest {
             assertEquals(0, maker.getAfterInLine(9))
         }
     }
-
-
 }

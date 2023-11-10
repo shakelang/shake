@@ -39,7 +39,6 @@ class OnDemandLexingShasPTokenInputStream(
     override var position: Int = -1
         private set
 
-
     override fun has(num: Int): Boolean {
         return try {
             fillBuffer(num)

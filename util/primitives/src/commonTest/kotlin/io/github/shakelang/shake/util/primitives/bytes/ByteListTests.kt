@@ -16,7 +16,6 @@ class ByteListTests {
         assertFailsWith(IllegalArgumentException::class, "ByteArray must be of size 1, but is 2") {
             bytes2.toByte()
         }
-
     }
 
     @Test
@@ -451,7 +450,6 @@ class ByteListTests {
         assertEquals(0x0102030405060708uL, bytes.getUnsignedLong(0))
     }
 
-
     @Test
     fun testRemoveLastByte() {
         val bytes = mutableListOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
@@ -645,7 +643,6 @@ class ByteListTests {
         assertEquals("\u0001\u0002\u0003\u0004\u0005\u0006\u0007\u0008", bytes.toUtf8String())
     }
 
-
     @Test
     fun testAppendWithByte() {
         val bytes = mutableListOf<Byte>()
@@ -761,5 +758,4 @@ class ByteListTests {
         bytes.append(0x0102030405060708uL)
         assertEquals(listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8), bytes)
     }
-
 }

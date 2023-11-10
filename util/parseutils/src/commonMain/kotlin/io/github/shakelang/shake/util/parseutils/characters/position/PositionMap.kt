@@ -10,21 +10,26 @@ interface PositionMap {
     fun resolve(index: Int): Position {
         for (i in lineSeparators.indices) {
             if (index < lineSeparators[i] + 1) {
-                return if (i == 0) Position(
-                    this,
-                    index,
-                    index + 1,
-                    1
-                ) else Position(
-                    this,
-                    index,
-                    index - lineSeparators[i - 1],
-                    i + 1
-                )
+                return if (i == 0) {
+                    Position(
+                        this,
+                        index,
+                        index + 1,
+                        1
+                    )
+                } else {
+                    Position(
+                        this,
+                        index,
+                        index - lineSeparators[i - 1],
+                        i + 1
+                    )
+                }
             }
         }
         return Position(
-            this, index,
+            this,
+            index,
             index - (if (lineSeparators.isNotEmpty()) lineSeparators[lineSeparators.size - 1] + 1 else 0) + 1,
             lineSeparators.size + 1
         )

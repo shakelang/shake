@@ -64,14 +64,14 @@ actual abstract class InputStream {
      *  The `read(b)` method for class `InputStream`
      * has the same effect as: <pre>`read(b, 0, b.length) `</pre>
      *
-     * @param      b   the buffer into which the data is read.
-     * @return     the total number of bytes read into the buffer, or
+     * @param b   the buffer into which the data is read.
+     * @return the total number of bytes read into the buffer, or
      * `-1` if there is no more data because the end of
      * the stream has been reached.
-     * @throws     IOException  If the first byte cannot be read for any reason
+     * @throws IOException  If the first byte cannot be read for any reason
      * other than the end of the file, if the input stream has been
      * closed, or if some other I/O error occurs.
-     * @throws     NullPointerException  if `b` is `null`.
+     * @throws NullPointerException  if `b` is `null`.
      * @see java.io.InputStream.read
      */
     actual open fun read(b: ByteArray): Int {
@@ -124,18 +124,18 @@ actual abstract class InputStream {
      * end of file is detected, or an exception is thrown. Subclasses are
      * encouraged to provide a more efficient implementation of this method.
      *
-     * @param      b     the buffer into which the data is read.
-     * @param      off   the start offset in array `b`
+     * @param b     the buffer into which the data is read.
+     * @param off   the start offset in array `b`
      * at which the data is written.
-     * @param      len   the maximum number of bytes to read.
-     * @return     the total number of bytes read into the buffer, or
+     * @param len   the maximum number of bytes to read.
+     * @return the total number of bytes read into the buffer, or
      * `-1` if there is no more data because the end of
      * the stream has been reached.
-     * @throws     IOException If the first byte cannot be read for any reason
+     * @throws IOException If the first byte cannot be read for any reason
      * other than end of file, or if the input stream has been closed,
      * or if some other I/O error occurs.
-     * @throws     NullPointerException If `b` is `null`.
-     * @throws     IndexOutOfBoundsException If `off` is negative,
+     * @throws NullPointerException If `b` is `null`.
+     * @throws IndexOutOfBoundsException If `off` is negative,
      * `len` is negative, or `len` is greater than
      * `b.length - off`
      */
@@ -245,5 +245,4 @@ actual abstract class InputStream {
         }
         return i
     }
-
 }

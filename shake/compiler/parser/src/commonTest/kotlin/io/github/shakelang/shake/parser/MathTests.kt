@@ -83,15 +83,23 @@ class MathTests {
         )
         assertNotNull(node.left)
         assertTrue(node.left is ShakeDoubleNode || node.left is ShakeIntegerNode)
-        if (node.left is ShakeDoubleNode) assertEquals(
-            left,
-            (node.left as ShakeDoubleNode).number
-        ) else assertEquals(left, (node.left as ShakeIntegerNode).number.toDouble())
+        if (node.left is ShakeDoubleNode) {
+            assertEquals(
+                left,
+                (node.left as ShakeDoubleNode).number
+            )
+        } else {
+            assertEquals(left, (node.left as ShakeIntegerNode).number.toDouble())
+        }
         assertNotNull(node.right)
         assertTrue(node.right is ShakeDoubleNode || node.right is ShakeIntegerNode)
-        if (node.right is ShakeDoubleNode) assertEquals(
-            right,
-            (node.right as ShakeDoubleNode).number
-        ) else assertEquals(right, (node.right as ShakeIntegerNode).number.toDouble())
+        if (node.right is ShakeDoubleNode) {
+            assertEquals(
+                right,
+                (node.right as ShakeDoubleNode).number
+            )
+        } else {
+            assertEquals(right, (node.right as ShakeIntegerNode).number.toDouble())
+        }
     }
 }

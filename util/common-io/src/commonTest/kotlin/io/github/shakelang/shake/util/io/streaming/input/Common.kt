@@ -31,7 +31,6 @@ fun testByteArrayCountingInputStream() {
     assertEquals(2, stream.count)
 }
 
-
 @Test
 fun testInputStream() {
     val bytes = listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
@@ -82,7 +81,6 @@ fun testDataInputStream() {
     assertEquals(7, dataInputStream.readByte())
     assertEquals(8, dataInputStream.readByte())
 }
-
 
 @Test
 fun testByteInputStream() {

@@ -22,6 +22,4 @@ enum class JsonNullElement : JsonPrimitive {
      * Override toString to generate via [JSON.stringify]
      */
     override fun toString(): String = io.github.shakelang.shake.util.shason.JSON.stringify(value)
-
-
 }

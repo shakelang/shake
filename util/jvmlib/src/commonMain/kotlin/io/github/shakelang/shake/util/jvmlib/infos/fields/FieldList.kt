@@ -62,5 +62,4 @@ class FieldList(val fields: List<FieldInfo>) : List<FieldInfo> by fields, Consta
             return list
         }
     }
-
 }

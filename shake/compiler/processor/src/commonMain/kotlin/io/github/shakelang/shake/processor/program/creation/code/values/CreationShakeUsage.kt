@@ -34,7 +34,6 @@ open class CreationShakeClassFieldUsage(
             "type" to type.toJson()
         )
     }
-
 }
 
 open class CreationShakeStaticClassFieldUsage(
@@ -55,7 +54,6 @@ open class CreationShakeStaticClassFieldUsage(
             "type" to type.toJson()
         )
     }
-
 }
 
 class CreationShakeFieldUsage(
@@ -95,9 +93,14 @@ class CreationShakeFieldUsage(
                 if (declaration.isStatic) {
                     if (receiver != null) throw IllegalArgumentException("Static field $declaration cannot have a receiver")
                     CreationShakeStaticClassFieldUsage(scope, declaration)
-                } else if (receiver == null) throw IllegalArgumentException("Field $declaration is not static")
-                else CreationShakeClassFieldUsage(scope, declaration, receiver)
-            } else CreationShakeFieldUsage(scope, declaration, receiver)
+                } else if (receiver == null) {
+                    throw IllegalArgumentException("Field $declaration is not static")
+                } else {
+                    CreationShakeClassFieldUsage(scope, declaration, receiver)
+                }
+            } else {
+                CreationShakeFieldUsage(scope, declaration, receiver)
+            }
         }
     }
 }

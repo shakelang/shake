@@ -32,4 +32,3 @@ interface ShakeXor : ShakeLogicalConcatenation
 interface ShakeNot : ShakeLogical {
     val value: ShakeValue
 }
-

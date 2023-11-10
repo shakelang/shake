@@ -16,9 +16,8 @@ class JsonToken : Token<JsonTokenType> {
         type: JsonTokenType,
         start: Int,
         end: Int = start,
-        value: String? = null,
+        value: String? = null
     ) : super(type, value, start, end)
-
 
     /**
      * Constructor for [JsonToken]
@@ -41,32 +40,32 @@ enum class JsonTokenType(
     /**
      * A [LCURL] [JsonTokenType] represents a '{' in the source
      */
-    LCURL(1),              // '{'
+    LCURL(1), // '{'
 
     /**
      * A [RCURL] [JsonTokenType] represents a '}' in the source
      */
-    RCURL(1),              // '}'
+    RCURL(1), // '}'
 
     /**
      * A [LSQUARE] [JsonTokenType] represents a '[' in the source
      */
-    LSQUARE(1),            // '['
+    LSQUARE(1), // '['
 
     /**
      * A [RSQUARE] [JsonTokenType] represents a ']' in the source
      */
-    RSQUARE(1),            // ']'
+    RSQUARE(1), // ']'
 
     /**
      * A [COMMA] [JsonTokenType] represents a ',' in the source
      */
-    COMMA(1),              // ','
+    COMMA(1), // ','
 
     /**
      * A [COLON] [JsonTokenType] represents a ':' in the source
      */
-    COLON(1),              // ':'
+    COLON(1), // ':'
 
     /**
      * A [TRUE] [JsonTokenType] represents a 'true' in the source
@@ -91,7 +90,7 @@ enum class JsonTokenType(
     /**
      * A [INT] [JsonTokenType] represents a integer (e.g. '42') in the source
      */
-    INT(-1),
+    INT(-1)
     ;
 
     override fun length(value: String?): Int = if (hasValue) value!!.length else length

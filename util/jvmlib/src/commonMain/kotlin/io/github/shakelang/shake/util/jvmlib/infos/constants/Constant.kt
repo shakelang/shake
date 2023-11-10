@@ -27,5 +27,4 @@ object Constant {
     fun methodType(descriptor: UShort): ConstantMethodTypeInfo = ConstantMethodTypeInfo(descriptor)
     fun invokeDynamic(bootstrapMethod: UShort, nameAndType: UShort): ConstantInvokeDynamicInfo =
         ConstantInvokeDynamicInfo(bootstrapMethod, nameAndType)
-
 }

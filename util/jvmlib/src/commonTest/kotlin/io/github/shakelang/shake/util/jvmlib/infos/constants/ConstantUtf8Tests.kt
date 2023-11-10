@@ -66,5 +66,4 @@ class ConstantUtf8Tests {
         assertEquals("constant_utf8_info", json["tag_type"])
         assertEquals("Hello, World!", json["value"])
     }
-
 }

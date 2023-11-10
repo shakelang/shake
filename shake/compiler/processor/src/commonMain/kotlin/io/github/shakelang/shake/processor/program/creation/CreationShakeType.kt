@@ -4,7 +4,7 @@ import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 
 abstract class CreationShakeType(
-    override val name: String,
+    override val name: String
 ) : ShakeType {
 
     abstract override val kind: ShakeType.Kind
@@ -32,24 +32,26 @@ abstract class CreationShakeType(
 
     abstract class Primitive(
         name: String,
-        val type: ShakeType.PrimitiveType,
+        val type: ShakeType.PrimitiveType
     ) : CreationShakeType(name) {
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.PRIMITIVE
 
         override fun castableTo(other: ShakeType): Boolean =
             other is Primitive &&
-                    (other.type == ShakeType.PrimitiveType.BYTE
-                            || other.type == ShakeType.PrimitiveType.SHORT
-                            || other.type == ShakeType.PrimitiveType.INT
-                            || other.type == ShakeType.PrimitiveType.LONG
-                            || other.type == ShakeType.PrimitiveType.FLOAT
-                            || other.type == ShakeType.PrimitiveType.DOUBLE
-                            || other.type == ShakeType.PrimitiveType.UNSIGNED_BYTE
-                            || other.type == ShakeType.PrimitiveType.UNSIGNED_SHORT
-                            || other.type == ShakeType.PrimitiveType.UNSIGNED_INT
-                            || other.type == ShakeType.PrimitiveType.UNSIGNED_LONG
-                            || other.type == ShakeType.PrimitiveType.CHAR)
+                (
+                    other.type == ShakeType.PrimitiveType.BYTE ||
+                        other.type == ShakeType.PrimitiveType.SHORT ||
+                        other.type == ShakeType.PrimitiveType.INT ||
+                        other.type == ShakeType.PrimitiveType.LONG ||
+                        other.type == ShakeType.PrimitiveType.FLOAT ||
+                        other.type == ShakeType.PrimitiveType.DOUBLE ||
+                        other.type == ShakeType.PrimitiveType.UNSIGNED_BYTE ||
+                        other.type == ShakeType.PrimitiveType.UNSIGNED_SHORT ||
+                        other.type == ShakeType.PrimitiveType.UNSIGNED_INT ||
+                        other.type == ShakeType.PrimitiveType.UNSIGNED_LONG ||
+                        other.type == ShakeType.PrimitiveType.CHAR
+                    )
 
         companion object {
 
@@ -128,14 +130,18 @@ abstract class CreationShakeType(
 
             val BYTE: Primitive = object : Primitive("byte", ShakeType.PrimitiveType.BYTE) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.BYTE -> 0
-                        ShakeType.PrimitiveType.SHORT -> 1
-                        ShakeType.PrimitiveType.INT -> 2
-                        ShakeType.PrimitiveType.LONG -> 3
-                        ShakeType.PrimitiveType.FLOAT -> 4
-                        ShakeType.PrimitiveType.DOUBLE -> 4
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.BYTE -> 0
+                            ShakeType.PrimitiveType.SHORT -> 1
+                            ShakeType.PrimitiveType.INT -> 2
+                            ShakeType.PrimitiveType.LONG -> 3
+                            ShakeType.PrimitiveType.FLOAT -> 4
+                            ShakeType.PrimitiveType.DOUBLE -> 4
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -147,13 +153,17 @@ abstract class CreationShakeType(
 
             val SHORT: Primitive = object : Primitive("short", ShakeType.PrimitiveType.SHORT) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.SHORT -> 0
-                        ShakeType.PrimitiveType.INT -> 1
-                        ShakeType.PrimitiveType.LONG -> 2
-                        ShakeType.PrimitiveType.FLOAT -> 3
-                        ShakeType.PrimitiveType.DOUBLE -> 4
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.SHORT -> 0
+                            ShakeType.PrimitiveType.INT -> 1
+                            ShakeType.PrimitiveType.LONG -> 2
+                            ShakeType.PrimitiveType.FLOAT -> 3
+                            ShakeType.PrimitiveType.DOUBLE -> 4
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -165,12 +175,16 @@ abstract class CreationShakeType(
 
             val INT: Primitive = object : Primitive("int", ShakeType.PrimitiveType.INT) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.INT -> 0
-                        ShakeType.PrimitiveType.LONG -> 1
-                        ShakeType.PrimitiveType.FLOAT -> 2
-                        ShakeType.PrimitiveType.DOUBLE -> 3
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.INT -> 0
+                            ShakeType.PrimitiveType.LONG -> 1
+                            ShakeType.PrimitiveType.FLOAT -> 2
+                            ShakeType.PrimitiveType.DOUBLE -> 3
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -182,11 +196,15 @@ abstract class CreationShakeType(
 
             val LONG: Primitive = object : Primitive("long", ShakeType.PrimitiveType.LONG) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.LONG -> 0
-                        ShakeType.PrimitiveType.FLOAT -> 1
-                        ShakeType.PrimitiveType.DOUBLE -> 2
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.LONG -> 0
+                            ShakeType.PrimitiveType.FLOAT -> 1
+                            ShakeType.PrimitiveType.DOUBLE -> 2
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -198,10 +216,14 @@ abstract class CreationShakeType(
 
             val FLOAT: Primitive = object : Primitive("float", ShakeType.PrimitiveType.FLOAT) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.FLOAT -> 0
-                        ShakeType.PrimitiveType.DOUBLE -> 1
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.FLOAT -> 0
+                            ShakeType.PrimitiveType.DOUBLE -> 1
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -213,9 +235,13 @@ abstract class CreationShakeType(
 
             val DOUBLE: Primitive = object : Primitive("double", ShakeType.PrimitiveType.DOUBLE) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.DOUBLE -> 0
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.DOUBLE -> 0
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -227,17 +253,21 @@ abstract class CreationShakeType(
 
             val UNSIGNED_BYTE: Primitive = object : Primitive("unsigned_byte", ShakeType.PrimitiveType.UNSIGNED_BYTE) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.UNSIGNED_BYTE -> 0
-                        ShakeType.PrimitiveType.UNSIGNED_SHORT -> 1
-                        ShakeType.PrimitiveType.UNSIGNED_INT -> 2
-                        ShakeType.PrimitiveType.UNSIGNED_LONG -> 3
-                        ShakeType.PrimitiveType.SHORT -> 4
-                        ShakeType.PrimitiveType.INT -> 5
-                        ShakeType.PrimitiveType.LONG -> 6
-                        ShakeType.PrimitiveType.FLOAT -> 7
-                        ShakeType.PrimitiveType.DOUBLE -> 8
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.UNSIGNED_BYTE -> 0
+                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> 1
+                            ShakeType.PrimitiveType.UNSIGNED_INT -> 2
+                            ShakeType.PrimitiveType.UNSIGNED_LONG -> 3
+                            ShakeType.PrimitiveType.SHORT -> 4
+                            ShakeType.PrimitiveType.INT -> 5
+                            ShakeType.PrimitiveType.LONG -> 6
+                            ShakeType.PrimitiveType.FLOAT -> 7
+                            ShakeType.PrimitiveType.DOUBLE -> 8
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -250,17 +280,21 @@ abstract class CreationShakeType(
             val UNSIGNED_SHORT: Primitive =
                 object : Primitive("unsigned_short", ShakeType.PrimitiveType.UNSIGNED_SHORT) {
                     override fun compatibilityDistance(other: ShakeType): Int =
-                        if (other !is Primitive) -1 else when (other.type) {
-                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> 0
-                            ShakeType.PrimitiveType.UNSIGNED_INT -> 1
-                            ShakeType.PrimitiveType.UNSIGNED_LONG -> 2
-                            ShakeType.PrimitiveType.BYTE -> 3
-                            ShakeType.PrimitiveType.SHORT -> 4
-                            ShakeType.PrimitiveType.INT -> 5
-                            ShakeType.PrimitiveType.LONG -> 6
-                            ShakeType.PrimitiveType.FLOAT -> 7
-                            ShakeType.PrimitiveType.DOUBLE -> 8
-                            else -> -1
+                        if (other !is Primitive) {
+                            -1
+                        } else {
+                            when (other.type) {
+                                ShakeType.PrimitiveType.UNSIGNED_SHORT -> 0
+                                ShakeType.PrimitiveType.UNSIGNED_INT -> 1
+                                ShakeType.PrimitiveType.UNSIGNED_LONG -> 2
+                                ShakeType.PrimitiveType.BYTE -> 3
+                                ShakeType.PrimitiveType.SHORT -> 4
+                                ShakeType.PrimitiveType.INT -> 5
+                                ShakeType.PrimitiveType.LONG -> 6
+                                ShakeType.PrimitiveType.FLOAT -> 7
+                                ShakeType.PrimitiveType.DOUBLE -> 8
+                                else -> -1
+                            }
                         }
 
                     override fun toJson(): Map<String, Any?> {
@@ -272,16 +306,20 @@ abstract class CreationShakeType(
 
             val UNSIGNED_INT: Primitive = object : Primitive("unsigned_int", ShakeType.PrimitiveType.UNSIGNED_INT) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.UNSIGNED_INT -> 0
-                        ShakeType.PrimitiveType.UNSIGNED_LONG -> 1
-                        ShakeType.PrimitiveType.BYTE -> 2
-                        ShakeType.PrimitiveType.SHORT -> 3
-                        ShakeType.PrimitiveType.INT -> 4
-                        ShakeType.PrimitiveType.LONG -> 5
-                        ShakeType.PrimitiveType.FLOAT -> 6
-                        ShakeType.PrimitiveType.DOUBLE -> 7
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.UNSIGNED_INT -> 0
+                            ShakeType.PrimitiveType.UNSIGNED_LONG -> 1
+                            ShakeType.PrimitiveType.BYTE -> 2
+                            ShakeType.PrimitiveType.SHORT -> 3
+                            ShakeType.PrimitiveType.INT -> 4
+                            ShakeType.PrimitiveType.LONG -> 5
+                            ShakeType.PrimitiveType.FLOAT -> 6
+                            ShakeType.PrimitiveType.DOUBLE -> 7
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -293,15 +331,19 @@ abstract class CreationShakeType(
 
             val UNSIGNED_LONG: Primitive = object : Primitive("unsigned_long", ShakeType.PrimitiveType.UNSIGNED_LONG) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.UNSIGNED_LONG -> 0
-                        ShakeType.PrimitiveType.BYTE -> 1
-                        ShakeType.PrimitiveType.SHORT -> 2
-                        ShakeType.PrimitiveType.INT -> 3
-                        ShakeType.PrimitiveType.LONG -> 4
-                        ShakeType.PrimitiveType.FLOAT -> 5
-                        ShakeType.PrimitiveType.DOUBLE -> 6
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.UNSIGNED_LONG -> 0
+                            ShakeType.PrimitiveType.BYTE -> 1
+                            ShakeType.PrimitiveType.SHORT -> 2
+                            ShakeType.PrimitiveType.INT -> 3
+                            ShakeType.PrimitiveType.LONG -> 4
+                            ShakeType.PrimitiveType.FLOAT -> 5
+                            ShakeType.PrimitiveType.DOUBLE -> 6
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -313,17 +355,21 @@ abstract class CreationShakeType(
 
             val CHAR = object : Primitive("char", ShakeType.PrimitiveType.CHAR) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.CHAR -> 0
-                        ShakeType.PrimitiveType.SHORT -> 1
-                        ShakeType.PrimitiveType.UNSIGNED_SHORT -> 1
-                        ShakeType.PrimitiveType.INT -> 2
-                        ShakeType.PrimitiveType.UNSIGNED_INT -> 2
-                        ShakeType.PrimitiveType.LONG -> 3
-                        ShakeType.PrimitiveType.UNSIGNED_LONG -> 3
-                        ShakeType.PrimitiveType.FLOAT -> 5
-                        ShakeType.PrimitiveType.DOUBLE -> 6
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.CHAR -> 0
+                            ShakeType.PrimitiveType.SHORT -> 1
+                            ShakeType.PrimitiveType.UNSIGNED_SHORT -> 1
+                            ShakeType.PrimitiveType.INT -> 2
+                            ShakeType.PrimitiveType.UNSIGNED_INT -> 2
+                            ShakeType.PrimitiveType.LONG -> 3
+                            ShakeType.PrimitiveType.UNSIGNED_LONG -> 3
+                            ShakeType.PrimitiveType.FLOAT -> 5
+                            ShakeType.PrimitiveType.DOUBLE -> 6
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -335,9 +381,13 @@ abstract class CreationShakeType(
 
             val VOID = object : Primitive("void", ShakeType.PrimitiveType.VOID) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.VOID -> 0
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.VOID -> 0
+                            else -> -1
+                        }
                     }
 
                 override fun toJson(): Map<String, Any?> {
@@ -349,9 +399,13 @@ abstract class CreationShakeType(
 
             val DYNAMIC = object : Primitive("dynamic", ShakeType.PrimitiveType.DYNAMIC) {
                 override fun compatibilityDistance(other: ShakeType): Int =
-                    if (other !is Primitive) -1 else when (other.type) {
-                        ShakeType.PrimitiveType.DYNAMIC -> 0
-                        else -> -1
+                    if (other !is Primitive) {
+                        -1
+                    } else {
+                        when (other.type) {
+                            ShakeType.PrimitiveType.DYNAMIC -> 0
+                            else -> -1
+                        }
                     }
 
                 override fun compatibleTo(other: ShakeType): Boolean {
@@ -372,7 +426,7 @@ abstract class CreationShakeType(
     }
 
     class Object(
-        override val clazz: CreationShakeClass,
+        override val clazz: CreationShakeClass
     ) : CreationShakeType(clazz.qualifiedName), ShakeType.Object {
 
         override val kind: ShakeType.Kind

@@ -73,7 +73,6 @@ class ShakeJsGenerator {
             is ShakeVariableDeclaration -> visitVariableDeclaration(s)
             else -> throw IllegalArgumentException("Unsupported value type: ${s::class.simpleName}")
         }
-
     }
 
     fun visitCode(t: ShakeCode): JsTree {
@@ -206,12 +205,14 @@ class ShakeJsGenerator {
         if (n is ShakeVariableUsage) return JsField(n.name)
         if (n is ShakeClassFieldUsage) {
             if (n.receiver != null) return JsField(n.name, parent = visitValue(n.receiver!!))
-            if (n.declaration.isStatic) return JsField(
-                n.name,
-                parent = JsField(
-                    n.declaration.clazz?.name ?: throw IllegalStateException("Static field must have a class")
+            if (n.declaration.isStatic) {
+                return JsField(
+                    n.name,
+                    parent = JsField(
+                        n.declaration.clazz?.name ?: throw IllegalStateException("Static field must have a class")
+                    )
                 )
-            )
+            }
             return JsField(n.name, parent = JsField("this"))
         }
         if (n is ShakeFieldUsage) {
@@ -260,7 +261,6 @@ class ShakeJsGenerator {
         return JsNot(visitValue(n.value))
     }
 
-
     fun visitWhile(n: ShakeWhile): JsWhile {
         return JsWhile(visitValue(n.condition), visitCode(n.body))
     }
@@ -305,7 +305,6 @@ class ShakeJsGenerator {
         return JsVariableDeclaration(n.name)
     }
 
-
     fun visitClassDeclaration(n: ShakeClass): JsClassDeclaration {
         return JsClassDeclaration(
             n.name,
@@ -322,34 +321,36 @@ class ShakeJsGenerator {
     }
 
     fun visitInvocationValue(n: ShakeInvocation): JsValue {
-
         val callable = n.callable
 
         when (callable) {
             is ShakeMethod -> {
-
                 if (callable.isNative) {
-
                     return JsNatives.getNativeFunction(callable).handleValue(this, n)
-
                 }
 
-                if (callable.clazz == null) return JsFunctionCall(
-                    JsField(callable.name),
-                    n.arguments.map { visitValue(it) })
+                if (callable.clazz == null) {
+                    return JsFunctionCall(
+                        JsField(callable.name),
+                        n.arguments.map { visitValue(it) }
+                    )
+                }
 
-                if (callable.isStatic)
+                if (callable.isStatic) {
                     return JsFunctionCall(
                         JsField(callable.name, JsField(callable.clazz!!.name)),
-                        n.arguments.map { visitValue(it) })
+                        n.arguments.map { visitValue(it) }
+                    )
+                }
 
-                if (n.parent != null)
+                if (n.parent != null) {
                     return JsFunctionCall(
                         JsField(callable.name, visitValue(n.parent!!)),
-                        n.arguments.map { visitValue(it) })
+                        n.arguments.map { visitValue(it) }
+                    )
+                }
 
                 return JsFunctionCall(JsField(callable.name, JsField("this")), n.arguments.map { visitValue(it) })
-
             }
 
             is ShakeLambdaDeclaration -> TODO()
@@ -359,34 +360,36 @@ class ShakeJsGenerator {
     }
 
     fun visitInvocationStatement(n: ShakeInvocation): JsStatement {
-
         val callable = n.callable
 
         when (callable) {
             is ShakeMethod -> {
-
                 if (callable.isNative) {
-
                     return JsNatives.getNativeFunction(callable).handleStatement(this, n)
-
                 }
 
-                if (callable.clazz == null) return JsFunctionCall(
-                    JsField(callable.name),
-                    n.arguments.map { visitValue(it) })
+                if (callable.clazz == null) {
+                    return JsFunctionCall(
+                        JsField(callable.name),
+                        n.arguments.map { visitValue(it) }
+                    )
+                }
 
-                if (callable.isStatic)
+                if (callable.isStatic) {
                     return JsFunctionCall(
                         JsField(callable.name, JsField(callable.clazz!!.name)),
-                        n.arguments.map { visitValue(it) })
+                        n.arguments.map { visitValue(it) }
+                    )
+                }
 
-                if (n.parent != null)
+                if (n.parent != null) {
                     return JsFunctionCall(
                         JsField(callable.name, visitValue(n.parent!!)),
-                        n.arguments.map { visitValue(it) })
+                        n.arguments.map { visitValue(it) }
+                    )
+                }
 
                 return JsFunctionCall(JsField(callable.name, JsField("this")), n.arguments.map { visitValue(it) })
-
             }
 
             is ShakeLambdaDeclaration -> TODO()
@@ -424,7 +427,6 @@ class ShakeJsGenerator {
             n.fields.filter { !it.isNative }.toTypedArray()
         )
     }
-
 }
 
 fun export(values: Map<JsValue, JsValue>): JsAssignment {
@@ -488,11 +490,11 @@ class JsProject {
 
     fun generatePackageFile(): String {
         return (
-                classes.map { it.generate() } +
-                        functions.map { it.generate() } +
-                        fields.map { it.generate() } +
-                        export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
-                ).joinToString("\n")
+            classes.map { it.generate() } +
+                functions.map { it.generate() } +
+                fields.map { it.generate() } +
+                export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
+            ).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {
@@ -500,23 +502,24 @@ class JsProject {
         if (hasContents()) files += mapOf("index.js" to generatePackageFile())
         files += mapOf(
             "structure.js" to "module.exports=global.packageJsLibrary=global.packageJsLibrary||function(){try{return require(name)}catch(a){if(\"MODULE_NOT_FOUND\"===a.code)return!1;throw a}}()||function(){function c(a){return a&&\"object\"==typeof a&&!Array.isArray(a)}function d(a,...f){if(!f.length)return a;let e=f.shift();if(c(a)&&c(e))for(let b in e)c(e[b])?(a[b]||Object.assign(a,{[b]:{}}),d(a[b],e[b])):Object.assign(a,{[b]:e[b]});return d(a,...f)}function e(a){let b={};return Object.keys(a).forEach(h=>{let g=h.split(/[.\\/]/g),i=a[h],c=b;for(let f=0;f<g.length;f++)c[g[f]]||(c[g[f]]={}),c=c[g[f]];\"function\"==typeof i?Object.defineProperty(c,\"\$it\",{get:function(){let a=i();return Object.defineProperty(c,\"\$it\",{value:a}),a},configurable:!0}):d(c,e(i[h]))}),b}function a(a){let b=a?.packages||{},c=e(b),f;return f={packages:c,pImport(d){let c=d.split(/[.\\/]/g),a=f.packages;for(let b=0;b<c.length;b++){if(!a[c[b]])return;a=a[c[b]]}return a.\$it},add(a){d(f.packages,e(a))}}}let b=a({});return Object.assign(b,{createPackageSystem:a,require:a=>()=>require(`\${a}`),object:a=>()=>a})}();\n\n" +
-                    JsTree(
-                        listOf(
-                            JsFunctionCall(
-                                JsField("add", JsField("packages")), listOf(
-                                    JsObject(
-                                        packages.map {
-                                            JsStringLiteral(it) to JsFunctionCall(
-                                                JsField("require"),
-                                                listOf(JsStringLiteral("$it.js"))
-                                            )
-                                        }.toTypedArray().toMap()
-                                    )
+                JsTree(
+                    listOf(
+                        JsFunctionCall(
+                            JsField("add", JsField("packages")),
+                            listOf(
+                                JsObject(
+                                    packages.map {
+                                        JsStringLiteral(it) to JsFunctionCall(
+                                            JsField("require"),
+                                            listOf(JsStringLiteral("$it.js"))
+                                        )
+                                    }.toTypedArray().toMap()
                                 )
-                            ),
-                            export(listOf("import"))
-                        )
-                    ).generate()
+                            )
+                        ),
+                        export(listOf("import"))
+                    )
+                ).generate()
 
         )
         return files
@@ -588,11 +591,11 @@ class JsPackage {
 
     fun generatePackageFile(): String {
         return (
-                classes.map { it.generate() } +
-                        functions.map { it.generate() } +
-                        fields.map { it.generate() } +
-                        export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
-                ).joinToString("\n")
+            classes.map { it.generate() } +
+                functions.map { it.generate() } +
+                fields.map { it.generate() } +
+                export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
+            ).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {

@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 group = "io.github.shakelang.shake"
 version = "0.1.0"
 description = "Shake"
@@ -29,13 +31,61 @@ plugins {
     id("org.jetbrains.dokka")
     kotlin("multiplatform") apply false
     id("org.jetbrains.kotlinx.kover")
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
+}
+
+subprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint") // Version should be inherited from parent
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    ktlint {
+        ignoreFailures.set(true)
+        reporters {
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.HTML)
+            reporter(ReporterType.SARIF)
+        }
+    }
+
+    tasks.create<Copy>("copyKtlintReports") {
+        group = "verification"
+        description = "Copies ktlint reports to build directory"
+        dependsOn("ktlintCheck")
+        from("$buildDir/reports/ktlint/ktlintKotlinScriptCheck/ktlintKotlinScriptCheck.sarif")
+        rename { "${path.replace(":", "-").substring(1)}.sarif" }
+        destinationDir = File("${rootProject.buildDir}/reports/ktlint/ktlintKotlinScriptCheck/")
+    }
+}
+
+ktlint {
+    ignoreFailures.set(true)
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.HTML)
+        reporter(ReporterType.SARIF)
+    }
+}
+
+tasks.create("lint") {
+    group = "verification"
+    description = "Runs ktlintCheck on all subprojects and copies the reports to build directory"
+    dependsOn("ktlintCheck")
+    subprojects.forEach {
+        dependsOn("${it.path}:ktlintCheck", "${it.path}:copyKtlintReports")
+    }
+
+    doLast {
+        println("Ktlint reports copied to ${rootProject.buildDir}/reports/ktlint/ktlintKotlinScriptCheck/")
+    }
 }
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
-
 
 fun findDokkaHtmlProjects(): List<Project> =
     subprojects.filter {
@@ -127,7 +177,6 @@ tasks.register("copyDokkaHtml") {
         dependsOn("${it.path}:dokkaHtml")
     }
 }
-
 
 val testAggregate = tasks.register<TestReport>("testAggregate") {
     group = "verification"

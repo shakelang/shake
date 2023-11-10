@@ -1178,5 +1178,4 @@ class DataOutputStream(
     fun writeStringUTF8(str: CharSequence, off: Int, len: Int) {
         writeUTF8(str, off, len)
     }
-
 }

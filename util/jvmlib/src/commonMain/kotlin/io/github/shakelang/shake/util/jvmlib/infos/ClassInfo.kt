@@ -143,7 +143,5 @@ class ClassInfo(
                 attributeInfos
             )
         }
-
     }
-
 }

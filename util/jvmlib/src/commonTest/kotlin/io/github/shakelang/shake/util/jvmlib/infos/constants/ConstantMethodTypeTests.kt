@@ -80,5 +80,4 @@ class ConstantMethodTypeTests {
         assertEquals("constant_methodtype_info", json["tag_type"])
         assertEquals(2, json["index"])
     }
-
 }

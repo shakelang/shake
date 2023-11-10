@@ -4,7 +4,6 @@ import io.github.shakelang.shake.processor.program.creation.CreationShakeProject
 import io.github.shakelang.shake.processor.program.types.ShakeType
 import io.github.shakelang.shake.processor.program.types.code.values.*
 
-
 open class CreationShakeEquals(
     override val project: CreationShakeProject,
     override val left: CreationShakeValue,

@@ -337,5 +337,4 @@ class DataInputStream(private val data: InputStream) : InputStream() {
         val length = readInt()
         return readUTF(length)
     }
-
 }

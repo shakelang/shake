@@ -62,5 +62,4 @@ class MethodList(val methods: List<MethodInfo>) : List<MethodInfo> by methods, C
             return list
         }
     }
-
 }

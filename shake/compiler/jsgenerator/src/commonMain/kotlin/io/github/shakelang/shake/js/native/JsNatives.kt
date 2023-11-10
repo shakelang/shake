@@ -6,8 +6,8 @@ import io.github.shakelang.shake.processor.program.types.ShakeMethod
 object JsNatives {
 
     val nativeClasses = listOf<NativeClass>(
-        io.github.shakelang.shake.js.native.shake.lang.String(),
-        //io.github.shakelang.shake.js.native.shake.lang.Object(),
+        io.github.shakelang.shake.js.native.shake.lang.String()
+        // io.github.shakelang.shake.js.native.shake.lang.Object(),
     )
 
     val nativeFunctions = listOf(
@@ -227,7 +227,7 @@ object JsNatives {
         io.github.shakelang.shake.js.native.shake.lang.Number.Times("shake.lang\$D\$times(D)D"),
         io.github.shakelang.shake.js.native.shake.lang.Number.Div("shake.lang\$D\$div(D)D"),
         io.github.shakelang.shake.js.native.shake.lang.Number.Mod("shake.lang\$D\$mod(D)D"),
-        io.github.shakelang.shake.js.native.shake.lang.Number.Pow("shake.lang\$D\$pow(D)D"),
+        io.github.shakelang.shake.js.native.shake.lang.Number.Pow("shake.lang\$D\$pow(D)D")
     )
     val nativeFields = listOf<NativeField>()
 
@@ -273,6 +273,4 @@ object JsNatives {
         return nativeFields.firstOrNull { it.signature == field.qualifiedName }
             ?: throw IllegalArgumentException("No matching native field found")
     }
-
-
 }

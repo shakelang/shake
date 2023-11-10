@@ -24,5 +24,4 @@ class StringTests {
         assertEquals('d'.code.toByte(), bytes[11])
         assertEquals('!'.code.toByte(), bytes[12])
     }
-
 }

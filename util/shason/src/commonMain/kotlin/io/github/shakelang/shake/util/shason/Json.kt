@@ -35,7 +35,8 @@ object JSON {
      */
     fun stringify(input: Any?, indent: Any? = null): String {
         return JsonGenerator.generate(
-            input, indent = when (indent) {
+            input,
+            indent = when (indent) {
                 null -> null
                 is String -> indent
                 is Int -> " ".repeat(indent)

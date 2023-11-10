@@ -62,7 +62,8 @@ class DataOutputStreamTests {
         stream.writeInt(0x090A0B0C)
         assertEquals(
             byteArrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C)
-                .toList(), baseStream.toByteArray().toList()
+                .toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -77,7 +78,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -90,7 +92,8 @@ class DataOutputStreamTests {
         stream.writeFloat(3.0f)
         assertEquals(
             byteArrayOf(0x3F, 0x80u.toByte(), 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00)
-                .toList(), baseStream.toByteArray().toList()
+                .toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -105,7 +108,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x3F, 0xF0u.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0x00, 0x00, 0x40, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -138,7 +142,8 @@ class DataOutputStreamTests {
         stream.writeUnsignedInt(0x090A0B0Cu)
         assertEquals(
             byteArrayOf(0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C)
-                .toList(), baseStream.toByteArray().toList()
+                .toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -153,7 +158,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -213,7 +219,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -225,7 +232,9 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18
-            ), 1, 2
+            ),
+            1,
+            2
         )
         assertEquals(byteArrayOf(0x02, 0x03).toList(), baseStream.toByteArray().toList())
     }
@@ -244,7 +253,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -256,7 +266,9 @@ class DataOutputStreamTests {
             arrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18
-            ), 1, 2
+            ),
+            1,
+            2
         )
         assertEquals(byteArrayOf(0x02, 0x03).toList(), baseStream.toByteArray().toList())
     }
@@ -308,7 +320,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -332,7 +345,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -356,7 +370,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -369,7 +384,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16,
                 0x17, 0x18
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -382,7 +398,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
                 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -395,7 +412,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16,
                 0x17, 0x18
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -406,7 +424,8 @@ class DataOutputStreamTests {
         stream.writeFloatArray(floatArrayOf(1.0f, 2.0f, 3.0f))
         assertEquals(
             byteArrayOf(0x3F, 0x80u.toByte(), 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00)
-                .toList(), baseStream.toByteArray().toList()
+                .toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -428,7 +447,8 @@ class DataOutputStreamTests {
         stream.writeFloatArray(arrayOf(1.0f, 2.0f, 3.0f))
         assertEquals(
             byteArrayOf(0x3F, 0x80u.toByte(), 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00)
-                .toList(), baseStream.toByteArray().toList()
+                .toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -452,7 +472,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x3F, 0xF0u.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0x00, 0x00, 0x40, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -479,7 +500,8 @@ class DataOutputStreamTests {
                 0x00,
                 0x00,
                 0x00
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -492,7 +514,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x3F, 0xF0u.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0x00, 0x00, 0x40, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -519,7 +542,8 @@ class DataOutputStreamTests {
                 0x00,
                 0x00,
                 0x00
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -640,7 +664,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -653,7 +678,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0x03
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -666,7 +692,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 
@@ -679,7 +706,8 @@ class DataOutputStreamTests {
             byteArrayOf(
                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0x03
-            ).toList(), baseStream.toByteArray().toList()
+            ).toList(),
+            baseStream.toByteArray().toList()
         )
     }
 

@@ -191,7 +191,6 @@ interface SimpleShasambly {
         bmod()
     }
 
-
     fun sadd(s: Short) {
         spush(s)
         sadd()
@@ -216,7 +215,6 @@ interface SimpleShasambly {
         spush(s)
         smod()
     }
-
 
     fun iadd(i: Int) {
         ipush(i)
@@ -243,7 +241,6 @@ interface SimpleShasambly {
         imod()
     }
 
-
     fun ladd(l: Long) {
         lpush(l)
         ladd()
@@ -268,7 +265,6 @@ interface SimpleShasambly {
         lpush(l)
         lmod()
     }
-
 
     fun fadd(f: Float) {
         fpush(f)
@@ -295,7 +291,6 @@ interface SimpleShasambly {
         fmod()
     }
 
-
     fun dadd(d: Double) {
         dpush(d)
         dadd()
@@ -320,7 +315,6 @@ interface SimpleShasambly {
         dpush(d)
         dmod()
     }
-
 
     fun beq(b: Byte) {
         bpush(b)
@@ -352,7 +346,6 @@ interface SimpleShasambly {
         deq()
     }
 
-
     fun bbigger(b: Byte) {
         bpush(b)
         bbigger()
@@ -382,7 +375,6 @@ interface SimpleShasambly {
         dpush(d)
         dbigger()
     }
-
 
     fun bsmaller(b: Byte) {
         bpush(b)
@@ -414,7 +406,6 @@ interface SimpleShasambly {
         dsmaller()
     }
 
-
     fun bbiggereq(b: Byte) {
         bpush(b)
         bbiggereq()
@@ -444,7 +435,6 @@ interface SimpleShasambly {
         dpush(d)
         dbiggereq()
     }
-
 
     fun bsmallereq(b: Byte) {
         bpush(b)
@@ -699,7 +689,6 @@ interface SimpleShasambly {
     fun push_rel_addr(relIdx: Int) {
         opcode(ShasamblyOpcodeIPushAddress(relIdx))
     }
-
 }
 
 open class RelativeShasamblyGeneratorPart(
@@ -725,10 +714,10 @@ open class RelativeShasamblyGeneratorPart(
     override fun relative(it: SimpleShasamblyGeneratorFunction) {
         RelativeShasamblyGeneratorPart(base, this, it)
     }
-
 }
 
-class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction) : ShasamblyGenerator(mutableListOf()),
+class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction) :
+    ShasamblyGenerator(mutableListOf()),
     SimpleShasambly {
 
     override val natives = NativeFunctions(this)
@@ -994,7 +983,6 @@ class SimpleShasamblyGenerator(generator: SimpleShasamblyGeneratorFunction) : Sh
     override fun relative(it: SimpleShasamblyGeneratorFunction) {
         RelativeShasamblyGeneratorPart(this, this, it)
     }
-
 }
 
 class NativeFunctions(val base: SimpleShasambly) {
@@ -1111,7 +1099,6 @@ class NativeFunctions(val base: SimpleShasambly) {
      * Duplicate the first long on the stack
      */
     fun ldup() = base.invokeNative(Natives.lDup)
-
 }
 
 fun shasambly(f: SimpleShasamblyGeneratorFunction) = SimpleShasamblyGenerator(f).generate()

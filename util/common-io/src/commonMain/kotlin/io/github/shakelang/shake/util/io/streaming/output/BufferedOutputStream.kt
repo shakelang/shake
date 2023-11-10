@@ -73,8 +73,9 @@ open class BufferedOutputStream(
      */
     @Synchronized
     override fun write(b: Int) {
-        if (count >= buf.size)
+        if (count >= buf.size) {
             flushBuffer()
+        }
         buf[count++] = b.toByte()
     }
 
@@ -104,9 +105,9 @@ open class BufferedOutputStream(
      * bytes directly to the underlying output stream.  Thus redundant
      * `BufferedOutputStream`s will not copy data unnecessarily.
      *
-     * @param      b     the data.
-     * @param      off   the start offset in the data.
-     * @param      len   the number of bytes to write.
+     * @param b     the data.
+     * @param off   the start offset in the data.
+     * @param len   the number of bytes to write.
      * @throws IOException
      *
      * @since 0.1.0

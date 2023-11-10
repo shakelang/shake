@@ -48,5 +48,4 @@ class HtmlConsole {
     fun printSuccess(message: String) {
         println(message, "green")
     }
-
 }
