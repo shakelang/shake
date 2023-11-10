@@ -16,7 +16,7 @@ open class CreationShakePackage(
     override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
     override val classes: MutableList<CreationShakeClass> = mutableListOf(),
     override val functions: MutableList<CreationShakeMethod> = mutableListOf(),
-    override val fields: MutableList<CreationShakeField> = mutableListOf(),
+    override val fields: MutableList<CreationShakeField> = mutableListOf()
 ) : ShakePackage {
 
     override val qualifiedName: String get() = "${parent?.qualifiedName?.plus(".") ?: ""}$name"
@@ -38,7 +38,6 @@ open class CreationShakePackage(
     }
 
     open fun putFile(name: String, contents: ShakeFileNode) {
-
         val imports = contents.children.filterIsInstance<ShakeImportNode>()
         val imported = arrayOfNulls<CreationShakePackage>(imports.size)
 
@@ -53,8 +52,9 @@ open class CreationShakePackage(
         contents.children.forEach {
             when (it) {
                 is ShakeClassDeclarationNode -> {
-                    if (classes.any { clz -> clz.name == it.name })
+                    if (classes.any { clz -> clz.name == it.name }) {
                         throw IllegalStateException("Class ${it.name} already exists")
+                    }
                     classes.add(CreationShakeClass.from(baseProject, this, fileScope, it))
                 }
 
@@ -68,8 +68,9 @@ open class CreationShakePackage(
                 }
 
                 is ShakeVariableDeclarationNode -> {
-                    if (fields.any { field -> field.name == it.name })
+                    if (fields.any { field -> field.name == it.name }) {
                         throw IllegalStateException("Field ${it.name} already exists")
+                    }
                     fields.add(CreationShakeField.from(baseProject, this, fileScope, it))
                 }
 

@@ -51,5 +51,4 @@ class FileTests {
         val file = File("./src/commonTest/resources/test")
         assertContentEquals("aaa".toCharArray(), file.contents)
     }
-
 }

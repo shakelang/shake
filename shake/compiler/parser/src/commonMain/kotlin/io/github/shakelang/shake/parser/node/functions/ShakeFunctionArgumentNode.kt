@@ -15,5 +15,4 @@ class ShakeFunctionArgumentNode @JvmOverloads constructor(
 
     override fun toJson(): Map<String, *> =
         mapOf("name" to "FunctionArgumentNode", "argument_name" to name, "type" to type.toString())
-
 }

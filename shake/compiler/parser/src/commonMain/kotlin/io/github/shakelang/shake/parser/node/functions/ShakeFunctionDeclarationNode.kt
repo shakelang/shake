@@ -22,7 +22,7 @@ class ShakeFunctionDeclarationNode @JvmOverloads constructor(
     val isSynchronized: Boolean,
     val isNative: Boolean,
     val isOperator: Boolean,
-    val isInline: Boolean,
+    val isInline: Boolean
 ) : ShakeFileChildNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =

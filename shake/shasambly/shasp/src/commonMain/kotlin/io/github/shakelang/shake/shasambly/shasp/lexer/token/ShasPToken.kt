@@ -2,7 +2,6 @@ package io.github.shakelang.shake.lexer.token
 
 import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 
-
 /**
  * A token representing a ShasP token.
  */
@@ -13,9 +12,17 @@ class ShasPToken : Token<ShasPTokenType> {
     constructor(type: ShasPTokenType, start: Int, end: Int) : super(type, start, end)
 
     override fun toString(): String {
-        return if (start == end) if (value != null) "" +
-                "Token{" + "type=" + type + ", value=" + value + ", position=" + start + '}' else "Token{type=$type, position=$start}" else if (value != null) "" +
-                "Token{" + "type=" + type + ", value=" + value + ", start=" + start + ", end=" + end + '}' else "Token{type=$type, position=$start, end=$end}"
+        return if (start == end) if (value != null) {
+            "" +
+                "Token{" + "type=" + type + ", value=" + value + ", position=" + start + '}'
+        } else {
+            "Token{type=$type, position=$start}"
+        } else if (value != null) {
+            "" +
+                "Token{" + "type=" + type + ", value=" + value + ", start=" + start + ", end=" + end + '}'
+        } else {
+            "Token{type=$type, position=$start, end=$end}"
+        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -23,7 +30,7 @@ class ShasPToken : Token<ShasPTokenType> {
         if (other is Byte) return other == this.type
         if (other == null || other !is ShasPToken) return false
         return type == other.type &&
-                value == other.value
+            value == other.value
     }
 
     override fun hashCode(): Int = hashAll(type, value)
@@ -36,5 +43,4 @@ class ShasPToken : Token<ShasPTokenType> {
         }
         return res
     }
-
 }

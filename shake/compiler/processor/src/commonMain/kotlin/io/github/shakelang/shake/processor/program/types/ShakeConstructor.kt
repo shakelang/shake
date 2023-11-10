@@ -24,7 +24,7 @@ interface ShakeConstructor {
             "isProtected" to isProtected,
             "isPublic" to isPublic,
             "name" to name,
-            "parameters" to parameters.map { it.toJson() },
+            "parameters" to parameters.map { it.toJson() }
         )
     }
 }

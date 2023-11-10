@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.util.colorlib
 
-
 /**
  * Format a string to show it in the console.
  *
@@ -109,7 +108,6 @@ enum class Formatting(
      */
     INVERT(7);
 
-
     /**
      * Stringify the formatting code
      *
@@ -119,7 +117,6 @@ enum class Formatting(
      * @version 0.1.1
      */
     override fun toString() = "\u001B[" + code + 'm'
-
 
     /**
      * Format a string's color to show it in the console.
@@ -295,7 +292,6 @@ enum class Formatting(
          * @version 0.1.1
          */
         BRIGHT_WHITE(97);
-
 
         /**
          * Stringify the formatting code
@@ -486,7 +482,6 @@ enum class Formatting(
          */
         BRIGHT_WHITE(107);
 
-
         /**
          * Stringify the formatting code
          *
@@ -497,7 +492,6 @@ enum class Formatting(
          */
         override fun toString(): String = "\u001B[" + code + 'm'
     }
-
 }
 
 /**
@@ -527,5 +521,4 @@ interface FormattingType {
      * @version 0.1.1
      */
     override fun toString(): String
-
 }

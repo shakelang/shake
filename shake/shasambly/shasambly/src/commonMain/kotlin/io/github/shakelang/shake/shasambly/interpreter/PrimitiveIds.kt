@@ -16,5 +16,4 @@ object PrimitiveIds {
     val PRIMITIVE_DOUBLE = generateUInt()
     val PRIMITIVE_BOOLEAN = generateUInt()
     val PRIMITIVE_CHAR = generateUInt()
-
 }

@@ -68,11 +68,8 @@ abstract class ShakeParser {
          * @return A new [ShakeParser] instance.
          */
         fun from(input: ShakeTokenInputStream) = ShakeParserImpl(input)
-
     }
-
 }
-
 
 /**
  * The default implementation of the abstract [ShakeParser] class.
@@ -113,7 +110,6 @@ class ShakeParserImpl(
         // TODO Require Separator
         // boolean separator = true;
         while (input.hasNext()) {
-
             // if(!separator) throw new ParserError("AwaitSeparatorError", "Awaited separator at this point");
             // separator = false;
             if (position >= input.position) break
@@ -129,7 +125,6 @@ class ShakeParserImpl(
         return ShakeBlockNode(map, nodes.toTypedArray())
     }
 
-
     // ****************************************************************************
     // Basic Program
 
@@ -143,7 +138,6 @@ class ShakeParserImpl(
         // TODO Require Separator
         // boolean separator = true;
         while (input.hasNext()) {
-
             // if(!separator) throw new ParserError("AwaitSeparatorError", "Awaited separator at this point");
             // separator = false;
             if (position >= input.position) break
@@ -205,7 +199,6 @@ class ShakeParserImpl(
      */
     override fun expectValue(): ShakeValuedNode = expectLogicalOr()
 
-
     // ****************************************************************************
     // Utils
 
@@ -214,8 +207,10 @@ class ShakeParserImpl(
      */
     fun skipSeparators(): Int {
         var number = 0
-        while (input.hasNext() && (input.peekType() == ShakeTokenType.SEMICOLON
-                    || input.peekType() == ShakeTokenType.LINE_SEPARATOR)
+        while (input.hasNext() && (
+            input.peekType() == ShakeTokenType.SEMICOLON ||
+                input.peekType() == ShakeTokenType.LINE_SEPARATOR
+            )
         ) {
             number++
             input.skip()
@@ -227,8 +222,9 @@ class ShakeParserImpl(
      * Expects a semicolon.
      */
     fun expectSemicolon() {
-        if (input.skipIgnorable().nextType() != ShakeTokenType.SEMICOLON)
+        if (input.skipIgnorable().nextType() != ShakeTokenType.SEMICOLON) {
             throw ParserError("Expecting semicolon at this point")
+        }
     }
 
     /**
@@ -261,12 +257,13 @@ class ShakeParserImpl(
 
             ShakeTokenType.KEYWORD_STATIC -> {
                 input.skip()
-                if (info.scope != DeclarationScope.CLASS
-                    && info.scope != DeclarationScope.INTERFACE
-                    && info.scope != DeclarationScope.OBJECT
-                    && info.scope != DeclarationScope.ENUM
-                )
+                if (info.scope != DeclarationScope.CLASS &&
+                    info.scope != DeclarationScope.INTERFACE &&
+                    info.scope != DeclarationScope.OBJECT &&
+                    info.scope != DeclarationScope.ENUM
+                ) {
                     throw ParserError("Static keyword is only for objects in classes, interfaces or enums")
+                }
                 if (info.isStatic) throw ParserError("Static keyword is only allowed once")
                 info.isStatic = true
                 expectDeclaration(info)
@@ -333,8 +330,9 @@ class ShakeParserImpl(
             ShakeTokenType.KEYWORD_OBJECT -> expectObjectDeclaration(info)
             ShakeTokenType.KEYWORD_ENUM -> expectEnumDeclaration(info)
             ShakeTokenType.KEYWORD_CONSTRUCTOR -> {
-                if (info.scope != DeclarationScope.CLASS && info.scope != DeclarationScope.ENUM)
+                if (info.scope != DeclarationScope.CLASS && info.scope != DeclarationScope.ENUM) {
                     throw ParserError("Constructor is only allowed in classes")
+                }
                 expectConstructorDeclaration(info)
             }
 
@@ -350,13 +348,14 @@ class ShakeParserImpl(
             ShakeTokenType.KEYWORD_DOUBLE,
             ShakeTokenType.KEYWORD_VOID,
             ShakeTokenType.IDENTIFIER -> {
-
                 // This parses a function declaration or a variable declaration
 
                 val type = expectType()
                 if (!input.skipIgnorable()
-                        .hasNext()
-                ) throw ParserError("Expecting identifier, but got ${input.actualType}")
+                    .hasNext()
+                ) {
+                    throw ParserError("Expecting identifier, but got ${input.actualType}")
+                }
 
                 val next = input.peekType()
                 var expandedType: ShakeVariableType? = null
@@ -375,24 +374,29 @@ class ShakeParserImpl(
                     next == ShakeTokenType.KEYWORD_DOUBLE
                 ) {
                     expandedType = expectType()
-                    if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.DOT)
+                    if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.DOT) {
                         throw ParserError("Expecting '.' after type, but got ${input.actualType}")
+                    }
 
-                    if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER)
+                    if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER) {
                         throw ParserError("Expecting identifier, but got ${input.actualType}")
+                    }
 
                     identifier = input.actualValue ?: error("identifier needs value")
                 } else if (next == ShakeTokenType.IDENTIFIER) {
                     val namespace = expectNamespace()
                     identifier = namespace.parts.last()
-                    if (namespace.parts.size > 1)
+                    if (namespace.parts.size > 1) {
                         expandedType = ShakeVariableType.objectType(
                             ShakeNamespaceNode(
                                 map,
                                 namespace.parts.dropLast(1).toTypedArray()
                             )
                         )
-                } else throw ParserError("Expecting type, but got ${input.actualType}")
+                    }
+                } else {
+                    throw ParserError("Expecting type, but got ${input.actualType}")
+                }
 
                 val hasNext = input.skipIgnorable().hasNext()
                 val peekType = if (hasNext) input.peekType() else null
@@ -412,7 +416,7 @@ class ShakeParserImpl(
                         isConst = info.isConst,
                         isNative = info.isNative,
                         isOverride = info.isOverride,
-                        isInline = info.isInline,
+                        isInline = info.isInline
                     )
                 } else if (hasNext && peekType == ShakeTokenType.LPAREN) {
                     if (info.isConst) throw ParserError("Const functions are not supported")
@@ -433,7 +437,7 @@ class ShakeParserImpl(
                         isNative = info.isNative,
                         isOverride = info.isOverride,
                         isOperator = info.isOperator,
-                        isInline = info.isInline,
+                        isInline = info.isInline
                     )
                 } else {
                     ShakeVariableDeclarationNode(
@@ -448,7 +452,7 @@ class ShakeParserImpl(
                         isConst = info.isConst,
                         isNative = info.isNative,
                         isOverride = info.isOverride,
-                        isInline = info.isInline,
+                        isInline = info.isInline
                     )
                 }
             }
@@ -474,11 +478,12 @@ class ShakeParserImpl(
      * Expect declaration of a local variable
      */
     fun expectLocalDeclaration(type: ShakeVariableType, const: Boolean): ShakeVariableDeclarationNode {
-        if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER)
+        if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER) {
             throw ParserError("Expecting identifier")
+        }
         val name = input.actualValue!!
 
-        if (!input.hasNext() || input.peekType() != ShakeTokenType.ASSIGN)
+        if (!input.hasNext() || input.peekType() != ShakeTokenType.ASSIGN) {
             return ShakeVariableDeclarationNode(
                 map,
                 null,
@@ -491,8 +496,9 @@ class ShakeParserImpl(
                 isNative = false,
                 isConst = const,
                 isOverride = false,
-                isInline = false,
+                isInline = false
             )
+        }
 
         input.skip()
         val value = expectValue()
@@ -509,7 +515,7 @@ class ShakeParserImpl(
             isNative = false,
             isConst = const,
             isOverride = false,
-            isInline = false,
+            isInline = false
         )
     }
 
@@ -523,7 +529,9 @@ class ShakeParserImpl(
             input.skip()
             t = input.peekType()
             true
-        } else false
+        } else {
+            false
+        }
         var type = if (t == ShakeTokenType.KEYWORD_DYNAMIC) {
             if (unsigned) throw ParserError("Unsigned dynamic is not supported")
             input.skip()
@@ -563,12 +571,15 @@ class ShakeParserImpl(
         } else if (t == ShakeTokenType.IDENTIFIER) {
             if (unsigned) throw ParserError("Unsigned object is not supported")
             ShakeVariableType.objectType(expectNamespace())
-        } else throw ParserError("Expecting a variable type")
+        } else {
+            throw ParserError("Expecting a variable type")
+        }
 
         while (input.peekType() == ShakeTokenType.LSQBR) {
             input.skip()
-            if (input.peekType() != ShakeTokenType.RSQBR)
+            if (input.peekType() != ShakeTokenType.RSQBR) {
                 throw ParserError("Expecting ']'")
+            }
             type = ShakeVariableType.arrayType(type)
             input.skip()
         }
@@ -596,8 +607,9 @@ class ShakeParserImpl(
             when (input.peekType()) {
                 ShakeTokenType.LPAREN -> ret = expectFunctionCall(identifierNode)
                 ShakeTokenType.ASSIGN -> ret = expectVariableAssignment(identifierNode)
-                ShakeTokenType.IDENTIFIER -> ret =
-                    this.expectLocalDeclaration(ShakeVariableType.objectType(identifierNode), false)
+                ShakeTokenType.IDENTIFIER ->
+                    ret =
+                        this.expectLocalDeclaration(ShakeVariableType.objectType(identifierNode), false)
 
                 ShakeTokenType.ADD_ASSIGN -> ret = expectVariableAddAssignment(identifierNode)
                 ShakeTokenType.SUB_ASSIGN -> ret = expectVariableSubAssignment(identifierNode)
@@ -612,10 +624,12 @@ class ShakeParserImpl(
                     input.skip()
                     input.skipIgnorable()
                     return expectIdentifierStatement(
-                        (ret ?: ShakeVariableUsageNode(
-                            map,
-                            identifierNode
-                        )) as ShakeValuedNode
+                        (
+                            ret ?: ShakeVariableUsageNode(
+                                map,
+                                identifierNode
+                            )
+                            ) as ShakeValuedNode
                     )
                 }
 
@@ -671,10 +685,13 @@ class ShakeParserImpl(
         val node = expectIdentifierStatement(null) as? ShakeFunctionCallNode
             ?: throw ParserError(
                 "Expecting a call after keyword new",
-                start, input.actualEnd
+                start,
+                input.actualEnd
             )
         return ShakeClassConstructionNode(
-            map, node.function, node.args,
+            map,
+            node.function,
+            node.args,
             newKeywordPosition
         )
     }
@@ -705,8 +722,10 @@ class ShakeParserImpl(
      */
     fun expectPackage(): ShakePackageNode {
         if (!input.skipIgnorable()
-                .hasNext() || input.peekType() != ShakeTokenType.KEYWORD_PACKAGE
-        ) throw ParserError("Expecting package keyword")
+            .hasNext() || input.peekType() != ShakeTokenType.KEYWORD_PACKAGE
+        ) {
+            throw ParserError("Expecting package keyword")
+        }
         val list = mutableListOf<String>()
         do {
             input.skip()
@@ -723,10 +742,11 @@ class ShakeParserImpl(
      * Expects a class declaration. This function is only called if the next token is a class keyword.
      */
     fun expectClassDeclaration(ctx: DeclarationContextInformation): ShakeClassDeclarationNode {
-
         if (input.skipIgnorable()
-                .nextType() != ShakeTokenType.KEYWORD_CLASS
-        ) throw ParserError("Expecting class keyword")
+            .nextType() != ShakeTokenType.KEYWORD_CLASS
+        ) {
+            throw ParserError("Expecting class keyword")
+        }
 
         if (ctx.isSynchronized) throw ParserError("Synchronized classes are not supported")
         if (ctx.isConst) throw ParserError("Const classes are not supported")
@@ -744,10 +764,11 @@ class ShakeParserImpl(
         var implements: MutableList<ShakeNamespaceNode>? = null
 
         while (input.skipIgnorable().hasNext() &&
-            (input.peekType() == ShakeTokenType.KEYWORD_EXTENDS
-                    || input.peekType() == ShakeTokenType.KEYWORD_IMPLEMENTS)
+            (
+                input.peekType() == ShakeTokenType.KEYWORD_EXTENDS ||
+                    input.peekType() == ShakeTokenType.KEYWORD_IMPLEMENTS
+                )
         ) {
-
             if (input.nextType() == ShakeTokenType.KEYWORD_EXTENDS) {
                 if (extends != null) throw ParserError("Class/Object can only extend one class")
                 extends = expectNamespace()
@@ -761,9 +782,10 @@ class ShakeParserImpl(
                     if (a) {
                         input.skip()
                         input.skipIgnorable()
-                    } else a = true
+                    } else {
+                        a = true
+                    }
                     implements.add(expectNamespace())
-
                 } while (input.skipIgnorable().peekType() == ShakeTokenType.COMMA)
             }
         }
@@ -797,17 +819,17 @@ class ShakeParserImpl(
         )
     }
 
-
     /**
      * Expects an interface declaration. This function is only called if the next token is an interface keyword.
      */
     fun expectInterfaceDeclaration(
         info: DeclarationContextInformation
     ): ShakeClassDeclarationNode {
-
         if (input.skipIgnorable()
-                .nextType() != ShakeTokenType.KEYWORD_INTERFACE
-        ) throw ParserError("Expecting object keyword")
+            .nextType() != ShakeTokenType.KEYWORD_INTERFACE
+        ) {
+            throw ParserError("Expecting object keyword")
+        }
 
         if (info.isSynchronized) throw ParserError("Synchronized interfaces are not supported")
         if (info.isConst) throw ParserError("Const interfaces are not supported")
@@ -836,7 +858,9 @@ class ShakeParserImpl(
                 if (a) {
                     input.skip()
                     input.skipIgnorable()
-                } else a = true
+                } else {
+                    a = true
+                }
                 implements.add(expectNamespace())
             } while (input.skipIgnorable().peekType() == ShakeTokenType.COMMA)
         }
@@ -867,7 +891,7 @@ class ShakeParserImpl(
             info.isStatic,
             info.isFinal,
             isAbstract = false,
-            info.isNative,
+            info.isNative
         )
     }
 
@@ -877,9 +901,7 @@ class ShakeParserImpl(
     fun expectEnumDeclaration(
         info: DeclarationContextInformation
     ): ShakeClassDeclarationNode {
-
         TODO("Not implemented")
-
     }
 
     /**
@@ -888,9 +910,7 @@ class ShakeParserImpl(
     fun expectObjectDeclaration(
         info: DeclarationContextInformation
     ): ShakeClassDeclarationNode {
-
         TODO("Not implemented")
-
     }
 
     // ****************************************************************************
@@ -902,8 +922,10 @@ class ShakeParserImpl(
     fun expectFunctionArguments(): Array<ShakeFunctionArgumentNode> {
         val args = ArrayList<ShakeFunctionArgumentNode>()
         if (!input.skipIgnorable()
-                .hasNext() || input.nextType() != ShakeTokenType.LPAREN
-        ) throw ParserError("Expecting '('")
+            .hasNext() || input.nextType() != ShakeTokenType.LPAREN
+        ) {
+            throw ParserError("Expecting '('")
+        }
         if (input.skipIgnorable().hasNext() && input.peekType() != ShakeTokenType.RPAREN) {
             args.add(expectArgument())
             while (input.hasNext() && input.peekType() == ShakeTokenType.COMMA) {
@@ -911,9 +933,11 @@ class ShakeParserImpl(
                 if (input.hasNext() && input.peekType() != ShakeTokenType.RPAREN) args.add(expectArgument()) else break
             }
         }
-        if (!input.hasNext() || input.nextType() != ShakeTokenType.RPAREN) throw ParserError(
-            "Expecting ')'"
-        )
+        if (!input.hasNext() || input.nextType() != ShakeTokenType.RPAREN) {
+            throw ParserError(
+                "Expecting ')'"
+            )
+        }
         return args.toTypedArray()
     }
 
@@ -926,10 +950,11 @@ class ShakeParserImpl(
         val value = if (input.peekType() == ShakeTokenType.ASSIGN) {
             input.skip()
             expectValue()
-        } else null
+        } else {
+            null
+        }
         return ShakeFunctionArgumentNode(map, name, type, value)
     }
-
 
     /**
      * Expects a function call. This is called with the function itself already parsed. It gets the function as argument.
@@ -955,8 +980,10 @@ class ShakeParserImpl(
      */
     fun expectReturnStatement(): ShakeReturnNode {
         if (!input.skipIgnorable()
-                .hasNext() || input.nextType() != ShakeTokenType.KEYWORD_RETURN
-        ) throw ParserError("Expecting 'return'")
+            .hasNext() || input.nextType() != ShakeTokenType.KEYWORD_RETURN
+        ) {
+            throw ParserError("Expecting 'return'")
+        }
         return ShakeReturnNode(map, expectNotNull(expectValue()))
     }
 
@@ -964,8 +991,9 @@ class ShakeParserImpl(
         info: DeclarationContextInformation
     ): ShakeConstructorDeclarationNode {
         if (!input.hasNext() || input.nextType() != ShakeTokenType.KEYWORD_CONSTRUCTOR) throw ParserError("Expecting function keyword")
-        if (info.scope != DeclarationScope.CLASS && info.scope != DeclarationScope.ENUM)
+        if (info.scope != DeclarationScope.CLASS && info.scope != DeclarationScope.ENUM) {
             throw ParserError("A constructor must be inside of a class")
+        }
         if (info.isFinal) throw ParserError("A constructor must not be final")
         if (info.isStatic) throw ParserError("A constructor must not be static")
         if (info.isAbstract) throw ParserError("A constructor must not be abstract")
@@ -1099,13 +1127,17 @@ class ShakeParserImpl(
     }
 
     fun expectParseConditionStatement(): ShakeValuedNode {
-        if (!input.hasNext() || input.nextType() != ShakeTokenType.LPAREN) throw ParserError(
-            "Expecting '('"
-        )
+        if (!input.hasNext() || input.nextType() != ShakeTokenType.LPAREN) {
+            throw ParserError(
+                "Expecting '('"
+            )
+        }
         val condition = expectLogicalOr()
-        if (!input.hasNext() || input.nextType() != ShakeTokenType.RPAREN) throw ParserError(
-            "Expecting ')'"
-        )
+        if (!input.hasNext() || input.nextType() != ShakeTokenType.RPAREN) {
+            throw ParserError(
+                "Expecting ')'"
+            )
+        }
         return condition
     }
 
@@ -1119,9 +1151,11 @@ class ShakeParserImpl(
                 list.add(expectStatement())
                 skipSeparators()
             }
-            if (!input.hasNext() || input.nextType() != ShakeTokenType.RCURL) throw ParserError(
-                "Expecting '}'"
-            )
+            if (!input.hasNext() || input.nextType() != ShakeTokenType.RCURL) {
+                throw ParserError(
+                    "Expecting '}'"
+                )
+            }
             ShakeBlockNode(map, list)
         } else {
             ShakeBlockNode(
@@ -1274,10 +1308,12 @@ class ShakeParserImpl(
         var result = expectPow()
         var tmpType: ShakeTokenType = ShakeTokenType.NONE
         while (input.hasNext() &&
-            (input.peekType()
-                .also {
-                    tmpType = it
-                } == ShakeTokenType.MUL || tmpType == ShakeTokenType.DIV || tmpType == ShakeTokenType.MOD)
+            (
+                input.peekType()
+                    .also {
+                        tmpType = it
+                    } == ShakeTokenType.MUL || tmpType == ShakeTokenType.DIV || tmpType == ShakeTokenType.MOD
+                )
         ) {
             input.skip()
             val pos = input.actualStart
@@ -1334,14 +1370,15 @@ class ShakeParserImpl(
     fun expectCompare(): ShakeValuedNode {
         var left = expectExpr()
         var tmpType: ShakeTokenType = ShakeTokenType.NONE
-        while (input.hasNext()
-            && (input.peekType().also { tmpType = it } == ShakeTokenType.EQ_EQUALS ||
-                    tmpType == ShakeTokenType.BIGGER_EQUALS
-                    || tmpType == ShakeTokenType.SMALLER_EQUALS
-                    || tmpType == ShakeTokenType.BIGGER
-                    || tmpType == ShakeTokenType.SMALLER)
+        while (input.hasNext() &&
+            (
+                input.peekType().also { tmpType = it } == ShakeTokenType.EQ_EQUALS ||
+                    tmpType == ShakeTokenType.BIGGER_EQUALS ||
+                    tmpType == ShakeTokenType.SMALLER_EQUALS ||
+                    tmpType == ShakeTokenType.BIGGER ||
+                    tmpType == ShakeTokenType.SMALLER
+                )
         ) {
-
             input.skip()
             val pos = input.actualStart
             left = when (tmpType) {
@@ -1351,16 +1388,15 @@ class ShakeParserImpl(
                 ShakeTokenType.BIGGER -> ShakeLogicalBiggerNode(map, left, expectLogicalOr(), pos)
                 else -> ShakeLogicalSmallerNode(map, left, expectLogicalOr(), pos)
             }
-
         }
         return left
     }
 
-
     // Type arguments
     fun expectTypeArgumentsDeclaration(): ShakeTypeArgumentsDeclarationNode {
-        if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.SMALLER)
+        if (!input.skipIgnorable().hasNext() || input.nextType() != ShakeTokenType.SMALLER) {
             throw ParserError("Expecting '<'")
+        }
         if (!input.skipIgnorable().hasNext()) throw ParserError("Expecting type argument")
         if (input.peekType() == ShakeTokenType.BIGGER) return ShakeTypeArgumentsDeclarationNode(map, emptyArray())
 
@@ -1368,14 +1404,16 @@ class ShakeParserImpl(
 
         while (input.skipIgnorable().hasNext() && input.peekType() != ShakeTokenType.BIGGER) {
             arguments.add(expectTypeArgumentDeclaration())
-            if (input.peekType() == ShakeTokenType.COMMA) input.skip()
-            else break
+            if (input.peekType() == ShakeTokenType.COMMA) {
+                input.skip()
+            } else {
+                break
+            }
         }
 
         if (input.peekType() != ShakeTokenType.BIGGER) throw ParserError("Expecting '>'")
 
         return ShakeTypeArgumentsDeclarationNode(map, arguments.toTypedArray())
-
     }
 
     fun expectTypeArgumentDeclaration(): ShakeTypeArgumentDeclarationNode {
@@ -1393,7 +1431,6 @@ class ShakeParserImpl(
         return ShakeTypeArgumentDeclarationNode(map, name, null)
     }
 
-
     fun <T> expectNotNull(v: T?): T {
         if (v == null) throw ParserError("Expecting value")
         return v
@@ -1403,8 +1440,10 @@ class ShakeParserImpl(
         val name = mutableListOf<String>()
         do {
             if (!input.skipIgnorable()
-                    .hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER
-            ) throw ParserError("Expecting identifier")
+                .hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER
+            ) {
+                throw ParserError("Expecting identifier")
+            }
             name.add(input.actualValue ?: throw ParserError("Expecting identifier to have value"))
         } while (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT)
         return ShakeNamespaceNode(map, name.toTypedArray())
@@ -1413,10 +1452,13 @@ class ShakeParserImpl(
     // ****************************************************************************
     // Errors
 
-
     inner class ParserError(message: String?, name: String?, details: String?, start: Position?, end: Position?) :
         io.github.shakelang.shake.util.parseutils.CompilerError(
-            message!!, name!!, details!!, start!!, end!!
+            message!!,
+            name!!,
+            details!!,
+            start!!,
+            end!!
         ) {
         constructor(
             name: String,
@@ -1445,7 +1487,6 @@ class ShakeParserImpl(
             input.map.resolve(input.actualEnd)
         )
     }
-
 }
 
 enum class DeclarationScope {
@@ -1454,9 +1495,8 @@ enum class DeclarationScope {
     OBJECT,
     INTERFACE,
     ENUM,
-    BLOCK,
+    BLOCK
 }
-
 
 class DeclarationContextInformation(
     val scope: DeclarationScope

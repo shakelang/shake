@@ -100,7 +100,6 @@ class MethodInfo(
     companion object {
 
         fun fromStream(pool: ConstantPool, stream: DataInputStream): MethodInfo {
-
             val accessFlags = stream.readUnsignedShort()
             val nameIndex = stream.readUnsignedShort()
             val name: ConstantUtf8Info = pool.getUtf8(nameIndex)
@@ -108,7 +107,6 @@ class MethodInfo(
             val descriptor: ConstantUtf8Info = pool.getUtf8(descriptorIndex)
             val attributes = AttributeMap.fromStream(pool, stream)
             return MethodInfo(accessFlags, name, descriptor, attributes)
-
         }
 
         fun fromStream(pool: ConstantPool, stream: InputStream): MethodInfo {
@@ -118,6 +116,5 @@ class MethodInfo(
         fun fromBytes(pool: ConstantPool, bytes: ByteArray): MethodInfo {
             return fromStream(pool, bytes.dataStream())
         }
-
     }
 }

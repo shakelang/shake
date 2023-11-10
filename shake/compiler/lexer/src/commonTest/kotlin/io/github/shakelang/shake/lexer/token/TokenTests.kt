@@ -43,5 +43,4 @@ class TokenTests {
         assertNotEquals(token3, token0)
         assertNotEquals(token4, token0)
     }
-
 }

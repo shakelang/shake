@@ -8,7 +8,6 @@ import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
 import io.github.shakelang.shake.util.jvmlib.infos.ClassInfo
 import io.github.shakelang.shake.util.shason.json
 
-
 abstract class ConstantInfo {
 
     private lateinit var pool: ConstantPool
@@ -84,9 +83,7 @@ abstract class ConstantInfo {
         fun fromBytes(bytes: ByteArray): ConstantInfo {
             return fromStream(bytes.dataStream())
         }
-
     }
-
 }
 
 fun <K, V> Map<K, V>.with(k: K, v: V): Map<K, V> {

@@ -19,7 +19,6 @@ class ShasPParser(
     }
 
     private fun parseType(): ShasPType {
-
         val unsigned = input.actual.type == ShasPTokenType.KEYWORD_UNSIGNED
         if (unsigned) input.skip()
 
@@ -55,7 +54,6 @@ class ShasPParser(
     }
 
     private fun parseFileChild(): ShasPProgChild {
-
         input.skip()
         val type = parseType()
 
@@ -72,11 +70,9 @@ class ShasPParser(
             return parseFunctionDeclaration(type, name)
         }
         return parseVariableDeclaration(type, name)
-
     }
 
     private fun parseFunctionDeclaration(type: ShasPType, name: String): ShasPFunctionDeclaration {
-
         // Parse function definition
         val args = mutableListOf<ShasPArgument>()
         while (input.next().type != ShasPTokenType.RPAREN) {
@@ -86,11 +82,9 @@ class ShasPParser(
         val body = parseBody()
 
         return ShasPFunctionDeclaration(type, name, args.toTypedArray(), body)
-
     }
 
     private fun parseVariableDeclaration(): ShasPVariableDeclaration {
-
         val type = parseType()
 
         if (input.next().type != ShasPTokenType.IDENTIFIER) {
@@ -104,11 +98,9 @@ class ShasPParser(
         val name = input.actualValue!!
 
         return parseVariableDeclaration(type, name)
-
     }
 
     private fun parseVariableDeclaration(type: ShasPType, name: String): ShasPVariableDeclaration {
-
         if (input.peek().type == ShasPTokenType.ASSIGN) {
             input.skip()
             val value = expr()
@@ -116,11 +108,9 @@ class ShasPParser(
         }
 
         return ShasPVariableDeclaration(name, type)
-
     }
 
     private fun parseVariableAssignment(name: String): ShasPVariableAssignment {
-
         if (input.next().type != ShasPTokenType.ASSIGN) {
             throw ParserError(
                 "Expected assignment operator",
@@ -132,11 +122,9 @@ class ShasPParser(
         val value = expr()
 
         return ShasPVariableAssignment(name, value)
-
     }
 
     private fun parseIfStatement(): ShasPIf {
-
         if (input.actual.type != ShasPTokenType.KEYWORD_IF) {
             throw ParserError(
                 "Expected if keyword",
@@ -172,11 +160,9 @@ class ShasPParser(
         }
 
         return ShasPIf(condition, body)
-
     }
 
     fun parseWhileStatement(): ShasPWhile {
-
         if (input.actual.type != ShasPTokenType.KEYWORD_WHILE) {
             throw ParserError(
                 "Expected while keyword",
@@ -206,11 +192,9 @@ class ShasPParser(
         val body = parseBody()
 
         return ShasPWhile(condition, body)
-
     }
 
     fun parseReturnStatement(): ShasPReturn {
-
         if (input.actual.type != ShasPTokenType.KEYWORD_RETURN) {
             throw ParserError(
                 "Expected return keyword",
@@ -234,11 +218,9 @@ class ShasPParser(
             input.peekStart(),
             input.peekEnd()
         )
-
     }
 
     private fun parseForStatement(): ShasPFor {
-
         if (input.actual.type != ShasPTokenType.KEYWORD_FOR) {
             throw ParserError(
                 "Expected for keyword",
@@ -288,11 +270,9 @@ class ShasPParser(
         val body = parseBody()
 
         return ShasPFor(initializer, condition, increment, body)
-
     }
 
     private fun parseDoWhileStatement(): ShasPDoWhile {
-
         if (input.actual.type != ShasPTokenType.KEYWORD_DO) {
             throw ParserError(
                 "Expected do keyword",
@@ -338,11 +318,9 @@ class ShasPParser(
         }
 
         return ShasPDoWhile(condition, body)
-
     }
 
     private fun parseStatement(): ShasPStatement {
-
         val token = input.next()
         if (token.type == ShasPTokenType.IDENTIFIER) {
             val name = token.value!!
@@ -381,7 +359,6 @@ class ShasPParser(
                 input.skip()
                 return ShasPVariableDecr(name)
             }
-
         }
         if (token.type == ShasPTokenType.KEYWORD_IF) {
             return parseIfStatement()
@@ -414,7 +391,6 @@ class ShasPParser(
     }
 
     private fun parseBody(): ShasPCode {
-
         if (input.next().type != ShasPTokenType.LCURL) {
             throw ParserError(
                 "Expected '{' after function name",
@@ -436,7 +412,6 @@ class ShasPParser(
         input.skip()
 
         return ShasPCode(statements.toTypedArray())
-
     }
 
     private fun parseIdentifier(): ShasPValuedNode {
@@ -451,7 +426,9 @@ class ShasPParser(
         val identifier = input.actual.value!!
         return if (input.peek().type == ShasPTokenType.LPAREN) {
             parseFunctionCall(identifier)
-        } else ShasPIdentifier(identifier)
+        } else {
+            ShasPIdentifier(identifier)
+        }
     }
 
     private fun parseFunctionCall(identifier: String): ShasPFunctionCall {
@@ -508,7 +485,6 @@ class ShasPParser(
     }
 
     private fun parseNew(): ShasPValuedNode {
-
         if (input.actualType != ShasPTokenType.KEYWORD_NEW) {
             throw ParserError("Expected 'new'")
         }
@@ -518,7 +494,6 @@ class ShasPParser(
         val type = parseType()
         if (type !is ShasPType.ShasPArrayType) throw ParserError("Expected array type")
         return ShasPArrayInitializer(type)
-
     }
 
     // Casting
@@ -561,10 +536,11 @@ class ShasPParser(
     private fun term(): ShasPValuedNode {
         var result = cast()
         while (input.hasNext() && input.peekType().let {
-                it == ShasPTokenType.MUL
-                        || it == ShasPTokenType.DIV
-                        || it == ShasPTokenType.MOD
-            }) {
+            it == ShasPTokenType.MUL ||
+                it == ShasPTokenType.DIV ||
+                it == ShasPTokenType.MOD
+        }
+        ) {
             input.skip()
             val type = input.actualType
             result = when (type) {
@@ -609,13 +585,14 @@ class ShasPParser(
     private fun compare(): ShasPValuedNode {
         var result = expr()
         while (input.hasNext() && input.peekType().let {
-                it == ShasPTokenType.EQ_EQUALS
-                        || it == ShasPTokenType.NOT_EQUALS
-                        || it == ShasPTokenType.BIGGER
-                        || it == ShasPTokenType.BIGGER_EQUALS
-                        || it == ShasPTokenType.SMALLER
-                        || it == ShasPTokenType.SMALLER_EQUALS
-            }) {
+            it == ShasPTokenType.EQ_EQUALS ||
+                it == ShasPTokenType.NOT_EQUALS ||
+                it == ShasPTokenType.BIGGER ||
+                it == ShasPTokenType.BIGGER_EQUALS ||
+                it == ShasPTokenType.SMALLER ||
+                it == ShasPTokenType.SMALLER_EQUALS
+        }
+        ) {
             input.skip()
             val type = input.actualType
             result = when (type) {
@@ -632,7 +609,6 @@ class ShasPParser(
     }
 
     private fun parseArgument(): ShasPArgument {
-
         input.skip()
         val type = parseType()
         if (input.next().type != ShasPTokenType.IDENTIFIER) {
@@ -644,16 +620,18 @@ class ShasPParser(
         }
         val name = input.actual.value!!
         return ShasPArgument(name, type)
-
     }
 
     // ****************************************************************************
     // Errors
 
-
     inner class ParserError(message: String?, name: String?, details: String?, start: Position?, end: Position?) :
         io.github.shakelang.shake.util.parseutils.CompilerError(
-            message!!, name!!, details!!, start!!, end!!
+            message!!,
+            name!!,
+            details!!,
+            start!!,
+            end!!
         ) {
         constructor(
             name: String,
@@ -682,6 +660,4 @@ class ShasPParser(
             input.map.resolve(input.actualEnd)
         )
     }
-
-
 }

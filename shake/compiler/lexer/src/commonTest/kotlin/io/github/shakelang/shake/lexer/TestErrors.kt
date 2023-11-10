@@ -10,7 +10,6 @@ import kotlin.test.assertSame
 class TestErrors {
     @Test
     fun testStringMustEndError() {
-
         // String type 1 not finished
         val error = assertFailsWith(ShakeLexingBase.LexerError::class) {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"test")
@@ -31,7 +30,6 @@ class TestErrors {
 
     @Test
     fun testUnknownEscapeSequenceError() {
-
         // Unknown escape sequence (using \a here)
         val error = assertFailsWith(ShakeLexingBase.LexerError::class) {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"\\a\"")
@@ -47,13 +45,11 @@ class TestErrors {
         assertEquals("1  \"\\a\"", error.marker.preview)
         assertEquals("     ^", error.marker.marker)
 
-
         // System.out.println(Formatting.FGColor.GREEN + "\u2705 Correct error was thrown" + Formatting.RESET);
     }
 
     @Test
     fun testExpectHexCharacterError() {
-
         // Wrong input to unicode character
         val error = assertFailsWith(ShakeLexingBase.LexerError::class) {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"\\uatea\"")
@@ -74,7 +70,6 @@ class TestErrors {
 
     @Test
     fun testUnexpectedTokenError() {
-
         // Unexpected Token
         val error = assertFailsWith(ShakeLexingBase.LexerError::class) {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\u00dc")

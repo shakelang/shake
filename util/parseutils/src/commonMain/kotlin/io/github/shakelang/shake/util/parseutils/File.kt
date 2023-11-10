@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.util.parseutils
 
-
 /**
  * An abstract File implementation that works on different environments
  */
@@ -10,8 +9,7 @@ expect class File
  * Constructor for [File] class
  *
  * @param path the path of the file
- */
-    (
+ */(
 
     path: String
 
@@ -91,7 +89,6 @@ expect class File
      * Write a char array
      */
     fun write(content: CharArray)
-
 }
 
 expect fun resourceFile(path: String): String

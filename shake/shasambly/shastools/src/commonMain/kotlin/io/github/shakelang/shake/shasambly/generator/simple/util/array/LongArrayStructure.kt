@@ -103,7 +103,9 @@ class StaticallySizedLocalLongArrayStructure(val shasambly: SimpleShasambly, val
             if (size == -1) {
                 imul(8)
                 natives.freeGlobal()
-            } else natives.freeGlobal(size * 8)
+            } else {
+                natives.freeGlobal(size * 8)
+            }
         }
     }
 

@@ -11,9 +11,7 @@ import java.io.FileOutputStream
 import kotlin.system.exitProcess
 
 fun main() {
-
     val code = shasambly {
-
         incrStack(100)
 
         val printIntLn = declareRoutine(4) {
@@ -40,7 +38,6 @@ fun main() {
             printIntLn.call()
         }
         decrStack()
-
 
         /*
         incrStack(0x007f)
@@ -119,8 +116,6 @@ fun main() {
 
         natives.printLineEnding()
         */
-
-
     }
 
     val file = File("test.shasx")
@@ -140,7 +135,9 @@ fun main() {
     out.close()
 
     val interpreter = ShasamblyInterpreter(
-        1024 * 8, code, 0
+        1024 * 8,
+        code,
+        0
     )
 
     try {

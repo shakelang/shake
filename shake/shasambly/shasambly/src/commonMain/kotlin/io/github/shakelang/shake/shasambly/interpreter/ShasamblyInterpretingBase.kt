@@ -16,7 +16,7 @@ import kotlin.experimental.and
 abstract class ShasamblyInterpretingBase(
     memorySize: Int,
     bytes: ByteArray,
-    position: Int = 0,
+    position: Int = 0
 ) {
 
     val freeTable = FreeTableControllerObject()
@@ -55,7 +55,6 @@ abstract class ShasamblyInterpretingBase(
             memory.setInt(0x14, v)
         }
         get() = memory.getInt(0x14)
-
 
     var running: Boolean = true
         private set
@@ -117,7 +116,6 @@ abstract class ShasamblyInterpretingBase(
         }
         get() = this.instructionPointer
 
-
     var exitCode: Int = 0 // TODO
 
     init {
@@ -131,7 +129,8 @@ abstract class ShasamblyInterpretingBase(
         globalsSize = 32 + bytes.size + 8
 
         memory.setBytes(
-            32 + bytes.size, byteArrayOf(
+            32 + bytes.size,
+            byteArrayOf(
                 Opcodes.I_PUSH,
                 *0.toBytes(),
                 Opcodes.INVOKE_NATIVE,
@@ -139,8 +138,8 @@ abstract class ShasamblyInterpretingBase(
             )
         )
 
-        //memory[bytes.size + 4] = Opcodes.JUMP_STATIC
-        //memory.setInt(bytes.size + 5, 0)
+        // memory[bytes.size + 4] = Opcodes.JUMP_STATIC
+        // memory.setInt(bytes.size + 5, 0)
     }
 
     fun increaseGlobals(chunkSize: Int): Int {
@@ -333,7 +332,6 @@ abstract class ShasamblyInterpretingBase(
          * Pop the top double from the stack
          */
         fun popDouble(): Double = Double.fromBits(this.popLong())
-
     }
 
     /**
@@ -462,8 +460,11 @@ abstract class ShasamblyInterpretingBase(
                 memory.setInt(addr + 12, next)
                 memory.setInt(addr + 16, closestFreeTable)
                 memory.setInt(closestFreeTable + 12, addr)
-                if (next == -1) freeTableEndPointer = addr
-                else memory.setInt(addr - 19, addr)
+                if (next == -1) {
+                    freeTableEndPointer = addr
+                } else {
+                    memory.setInt(addr - 19, addr)
+                }
                 return addr
             }
         }
@@ -543,7 +544,9 @@ abstract class ShasamblyInterpretingBase(
                 if (addr == -1) {
                     table = findBestAbove(size + 1)
                     continue
-                } else break
+                } else {
+                    break
+                }
             }
             val next = memory.getInt(addr)
             if (next == -1) {
@@ -763,12 +766,12 @@ abstract class ShasamblyInterpretingBase(
             override fun equals(other: Any?): Boolean {
                 if (this === other) return true
                 if (other !is FreeTableEntry) return false
-                return address == other.address
-                        && size == other.size
-                        && firstAddress == other.firstAddress
-                        && lastAddress == other.lastAddress
-                        && nextAddress == other.nextAddress
-                        && beforeAddress == other.beforeAddress
+                return address == other.address &&
+                    size == other.size &&
+                    firstAddress == other.firstAddress &&
+                    lastAddress == other.lastAddress &&
+                    nextAddress == other.nextAddress &&
+                    beforeAddress == other.beforeAddress
             }
 
             override fun hashCode(): Int {
@@ -780,7 +783,6 @@ abstract class ShasamblyInterpretingBase(
                 result = 31 * result + beforeAddress
                 return result
             }
-
         }
 
         /**
@@ -982,9 +984,6 @@ abstract class ShasamblyInterpretingBase(
                 set(value) {
                     memory.setInt(address, value)
                 }
-
         }
-
     }
-
 }

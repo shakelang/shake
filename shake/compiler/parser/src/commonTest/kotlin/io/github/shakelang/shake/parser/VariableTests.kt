@@ -12,9 +12,8 @@ import kotlin.test.*
 
 class VariableTests {
 
-
-    //// *************************************************************
-    //// Assignments
+    // // *************************************************************
+    // // Assignments
 
     @Test
     fun testVariableAssignment() {
@@ -139,9 +138,8 @@ class VariableTests {
         assertNull((node.variable as ShakeIdentifierNode).parent)
     }
 
-
-    //// *************************************************************
-    //// Variable Declaration
+    // // *************************************************************
+    // // Variable Declaration
 
     @Test
     fun testFinalVariableDeclaration() {
@@ -1360,8 +1358,8 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    //// *************************************************************
-    //// Variable Usage
+    // // *************************************************************
+    // // Variable Usage
     @Test
     fun testVariableUsage() {
         val node = ParserTestUtil.parseValue("<VariableUsageTest>", "i", ShakeVariableUsageNode::class)

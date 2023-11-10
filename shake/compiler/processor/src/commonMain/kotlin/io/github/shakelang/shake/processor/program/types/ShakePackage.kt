@@ -33,7 +33,7 @@ interface ShakePackage {
             "subpackages" to subpackages.map { it.toJson() },
             "classes" to classes.map { it.toJson() },
             "functions" to functions.map { it.toJson() },
-            "fields" to fields.map { it.toJson() },
+            "fields" to fields.map { it.toJson() }
         )
     }
 }

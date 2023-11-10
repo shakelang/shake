@@ -18,21 +18,23 @@ abstract class ShasamblyOpcodeExecutor(
     fun incr_variable_stack() {
         val size = read_short().toUShort().toInt()
         incrLocalStack(size)
-        //println("Variable stack size updated to $variableAddress")
+        // println("Variable stack size updated to $variableAddress")
     }
 
     fun decr_variable_stack() {
         decrLocalStack()
-        //println("Variable stack size updated to $variableAddress")
+        // println("Variable stack size updated to $variableAddress")
     }
 
     fun jump(address: Int) {
-        //println("Jumping to ${address.toBytes().toHexString()}")
-        if (address < 0 || address > memory.size) throw Error(
-            "Address 0x${
+        // println("Jumping to ${address.toBytes().toHexString()}")
+        if (address < 0 || address > memory.size) {
+            throw Error(
+                "Address 0x${
                 address.toBytes().toHexString()
-            } out of range"
-        )
+                } out of range"
+            )
+        }
         position = address
     }
 
@@ -51,12 +53,14 @@ abstract class ShasamblyOpcodeExecutor(
 
     fun invoke_native() {
         val native = read_short().toUShort().toInt()
-        (nativeFunctions[native]
-            ?: throw Error(
-                "Unknown native function 0x${
+        (
+            nativeFunctions[native]
+                ?: throw Error(
+                    "Unknown native function 0x${
                     native.toBytes().toHexString()
-                } at position 0x${position.toBytes().toHexString()}"
-            ))
+                    } at position 0x${position.toBytes().toHexString()}"
+                )
+            )
             .execute.invoke(this)
     }
 

@@ -20,7 +20,7 @@ open class ShakeVariableType {
     fun toJson(): Map<String, *> =
         mapOf(
             "name" to "VariableType",
-            "type" to type,
+            "type" to type
         )
 
     class Object(val namespace: ShakeNamespaceNode?) : ShakeVariableType(Type.OBJECT)

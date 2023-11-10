@@ -2,7 +2,6 @@ package io.github.shakelang.shake.util.parseutils.characters.source
 
 import kotlin.jvm.JvmStatic
 
-
 /**
  * A CharacterSource provides characters
  */
@@ -52,6 +51,5 @@ interface CharacterSource {
          */
         @JvmStatic
         fun from(chars: CharArray, source: String): CharacterSource = CharArraySource(chars, source)
-
     }
 }

@@ -15,7 +15,6 @@ import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import io.github.shakelang.shake.parser.node.variables.*
 
-
 @Suppress("unused")
 abstract class ShakeGeneratorContext<T, C> : ShakeGeneratorBase {
     fun visit(n: ShakeNodeImpl, context: C): T {

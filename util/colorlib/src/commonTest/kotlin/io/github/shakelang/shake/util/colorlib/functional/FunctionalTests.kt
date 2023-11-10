@@ -286,5 +286,4 @@ class FunctionalTests {
     @Test
     fun testJoin() =
         assertEquals(arrayOf("hello", "world").joinToString(""), join("hello", "world"))
-
 }

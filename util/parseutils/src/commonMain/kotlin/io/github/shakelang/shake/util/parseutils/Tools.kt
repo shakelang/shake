@@ -8,18 +8,17 @@ open class LoopController {
     fun Break() {
         isBreak = true
     }
-
 }
 
 open class IndexedLoopController(
-    var index: Int,
+    var index: Int
 ) : LoopController()
 
 open class ElementLoopController<E>(
-    var element: E,
+    var element: E
 ) : LoopController()
 
 open class IndexedElementLoopController<E>(
     var element: E,
-    var index: Int,
+    var index: Int
 ) : LoopController()

@@ -11,7 +11,6 @@ class OnDemandLexingTokenInputStreamTests {
 
     @Test
     fun testNextType() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testNextType()")
@@ -28,12 +27,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(9, dbtis.actualEnd)
         assertEquals(ShakeTokenType.SEMICOLON, dbtis.nextType())
         assertEquals(10, dbtis.actualEnd)
-
     }
 
     @Test
     fun testNextValue() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testNextValue()")
@@ -50,12 +47,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(9, dbtis.actualEnd)
         assertEquals(null, dbtis.nextValue())
         assertEquals(10, dbtis.actualEnd)
-
     }
 
     @Test
     fun testNextToken() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testNextToken()")
@@ -91,7 +86,6 @@ class OnDemandLexingTokenInputStreamTests {
 
     @Test
     fun testSkip() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testSkip()")
@@ -108,12 +102,10 @@ class OnDemandLexingTokenInputStreamTests {
         dbtis.skip()
         assertEquals(4, dbtis.position)
         assertEquals("Input already finished", assertFailsWith<Error> { dbtis.skip() }.message)
-
     }
 
     @Test
     fun testHas() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testHas()")
@@ -131,12 +123,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(true, dbtis.has(2))
         assertEquals(true, dbtis.has(3))
         assertEquals(false, dbtis.has(4))
-
     }
 
     @Test
     fun testHasNext() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testHasNext()")
@@ -148,12 +138,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(true, dbtis.hasNext())
         dbtis.skip(3)
         assertEquals(false, dbtis.hasNext())
-
     }
 
     @Test
     fun testHasNextWithEmptyAndPosition() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("", "OnDemandLexingTokenInputStreamTests#testHasNextWithEmptyAndPosition()")
@@ -162,12 +150,10 @@ class OnDemandLexingTokenInputStreamTests {
 
         assertEquals(false, dbtis.hasNext())
         assertEquals(-1, dbtis.position)
-
     }
 
     @Test
     fun testActualEnd() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualEnd()")
@@ -184,12 +170,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(9, dbtis.actualEnd)
         dbtis.skip()
         assertEquals(10, dbtis.actualEnd)
-
     }
 
     @Test
     fun testActualStart() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualStart()")
@@ -206,12 +190,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(8, dbtis.actualStart)
         dbtis.skip()
         assertEquals(10, dbtis.actualStart)
-
     }
 
     @Test
     fun testActualType() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualType()")
@@ -228,12 +210,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(ShakeTokenType.INTEGER, dbtis.actualType)
         dbtis.skip()
         assertEquals(ShakeTokenType.SEMICOLON, dbtis.actualType)
-
     }
 
     @Test
     fun testActualValue() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActualValue()")
@@ -250,12 +230,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals("10", dbtis.actualValue)
         dbtis.skip()
         assertEquals(null, dbtis.actualValue)
-
     }
 
     @Test
     fun testActual() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testActual()")
@@ -292,12 +270,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(null, actual.value)
         assertEquals(10, actual.end)
         assertEquals(10, actual.start)
-
     }
 
     @Test
     fun testPeekType() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekType()")
@@ -313,12 +289,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(ShakeTokenType.INTEGER, dbtis.peekType())
         dbtis.skip()
         assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType())
-
     }
 
     @Test
     fun testPeekEnd() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekEnd()")
@@ -334,12 +308,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(9, dbtis.peekEnd())
         dbtis.skip()
         assertEquals(10, dbtis.peekEnd())
-
     }
 
     @Test
     fun testPeekStart() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekStart()")
@@ -355,12 +327,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(8, dbtis.peekStart())
         dbtis.skip()
         assertEquals(10, dbtis.peekStart())
-
     }
 
     @Test
     fun testPeekValue() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekValue()")
@@ -376,12 +346,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals("10", dbtis.peekValue())
         dbtis.skip()
         assertEquals(null, dbtis.peekValue())
-
     }
 
     @Test
     fun testPeek() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeek()")
@@ -417,12 +385,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals(null, token.value)
         assertEquals(10, token.start)
         assertEquals(10, token.end)
-
     }
 
     @Test
     fun testPeekType2() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekType2()")
@@ -458,12 +424,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(3) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
-
     }
 
     @Test
     fun testPeekEnd2() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekEnd2()")
@@ -499,12 +463,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertFailsWith<Error> { dbtis.peekEnd(3) }
         assertFailsWith<Error> { dbtis.peekEnd(4) }
         assertFailsWith<Error> { dbtis.peekEnd(5) }
-
     }
 
     @Test
     fun testPeekStart2() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekStart2()")
@@ -546,12 +508,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertFailsWith<Error> { dbtis.peekStart(3) }
         assertFailsWith<Error> { dbtis.peekStart(4) }
         assertFailsWith<Error> { dbtis.peekStart(5) }
-
     }
 
     @Test
     fun testPeekValue2() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeekValue2()")
@@ -593,12 +553,10 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(3) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(4) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(5) }.message)
-
     }
 
     @Test
     fun testPeek2() {
-
         val dbtis = ShakeOnDemandLexingTokenInputStream(
             SourceCharacterInputStream(
                 CharacterSource.from("int i = 10;", "OnDemandLexingTokenInputStreamTests#testPeek2()")
@@ -702,7 +660,5 @@ class OnDemandLexingTokenInputStreamTests {
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(3) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(4) }.message)
         assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(5) }.message)
-
     }
-
 }

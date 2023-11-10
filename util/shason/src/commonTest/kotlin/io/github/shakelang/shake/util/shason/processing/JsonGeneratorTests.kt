@@ -172,6 +172,4 @@ class JsonGeneratorTests {
             JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1)), indent = " ".repeat(4))
         )
     }
-
-
 }

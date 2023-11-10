@@ -29,7 +29,6 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
         out.writeUnsignedShort(referenceIndex)
     }
 
-
     companion object {
         fun contentsFromStream(stream: DataInputStream): ConstantMethodHandleInfo {
             val name = stream.readByte()
@@ -40,9 +39,11 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag)
+            if (stream.readByte() != tag) {
                 throw IllegalArgumentException("Invalid tag for ConstantMethodHandleInfo")
-            else contentsFromStream(stream)
+            } else {
+                contentsFromStream(stream)
+            }
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
@@ -53,5 +54,4 @@ class ConstantMethodHandleInfo(val referenceKind: Byte, private val ri: UShort) 
         const val name = "constant_method_handle_info"
         const val tag = ConstantTags.CONSTANT_METHOD_HANDLE
     }
-
 }

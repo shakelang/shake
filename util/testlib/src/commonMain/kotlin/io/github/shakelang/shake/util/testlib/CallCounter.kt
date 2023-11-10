@@ -28,7 +28,6 @@ class CallCounter {
      */
     fun call() = ++calls
 
-
     /**
      * Reset the counter
      *
@@ -60,5 +59,4 @@ class CallCounter {
     infix fun shouldBeCalled(times: Int) {
         if (calls != times) throw AssertionError("Expected $times calls, but got $calls")
     }
-
 }

@@ -32,7 +32,7 @@ listOf(
     "compileKotlinJs",
     "compileKotlinJvm",
     "jsProcessResources",
-    "jvmProcessResources",
+    "jvmProcessResources"
 ).forEach {
     tasks.named(it) {
         dependsOn("generateMRcommonMain")

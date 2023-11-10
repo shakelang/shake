@@ -26,9 +26,11 @@ class ConstantLongInfo(val value: Long) : ConstantInfo() {
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag)
+            if (stream.readByte() != tag) {
                 throw IllegalArgumentException("Invalid tag for ConstantLongnfo")
-            else contentsFromStream(stream)
+            } else {
+                contentsFromStream(stream)
+            }
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
@@ -39,5 +41,4 @@ class ConstantLongInfo(val value: Long) : ConstantInfo() {
         const val name = "constant_long_info"
         const val tag = ConstantTags.CONSTANT_LONG
     }
-
 }

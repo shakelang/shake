@@ -14,5 +14,4 @@ actual abstract class OutputStream {
 
     actual open fun flush() {}
     actual open fun close() {}
-
 }

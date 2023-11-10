@@ -239,5 +239,4 @@ object Opcodes {
     val S_XOR: Byte = bGenerateUByte() // Syntax S_SHL ; Combines two short's bits using xor
     val I_XOR: Byte = bGenerateUByte() // Syntax I_SHL ; Combines two int's bits using xor
     val L_XOR: Byte = bGenerateUByte() // Syntax L_SHL ; Combines two long's bits using xor
-
 }
