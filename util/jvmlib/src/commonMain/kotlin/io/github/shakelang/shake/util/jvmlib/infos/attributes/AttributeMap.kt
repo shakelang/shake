@@ -67,12 +67,11 @@ open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, 
             }
             return AttributeMap(map)
         }
-
     }
-
 }
 
-class MutableAttributeMap(map: MutableMap<String, AttributeInfo>) : AttributeMap(map),
+class MutableAttributeMap(map: MutableMap<String, AttributeInfo>) :
+    AttributeMap(map),
     MutableMap<String, AttributeInfo> {
 
     override val map: MutableMap<String, AttributeInfo>
@@ -94,5 +93,4 @@ class MutableAttributeMap(map: MutableMap<String, AttributeInfo>) : AttributeMap
     override fun putAll(from: Map<out String, AttributeInfo>) = map.putAll(from)
 
     override fun remove(key: String): AttributeInfo? = map.remove(key)
-
 }

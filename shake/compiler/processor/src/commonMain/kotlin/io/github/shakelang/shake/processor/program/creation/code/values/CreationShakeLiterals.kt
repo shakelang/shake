@@ -20,7 +20,6 @@ class CreationShakeDoubleLiteral(
             "value" to value
         )
     }
-
 }
 
 class CreationShakeIntegerLiteral(
@@ -39,7 +38,6 @@ class CreationShakeIntegerLiteral(
             "value" to value
         )
     }
-
 }
 
 class CreationShakeBooleanLiteral(
@@ -58,7 +56,6 @@ class CreationShakeBooleanLiteral(
             "value" to value
         )
     }
-
 }
 
 class CreationShakeCharacterLiteral(
@@ -77,7 +74,6 @@ class CreationShakeCharacterLiteral(
             "value" to value
         )
     }
-
 }
 
 class CreationShakeStringLiteral(
@@ -95,5 +91,4 @@ class CreationShakeStringLiteral(
             "value" to value
         )
     }
-
 }

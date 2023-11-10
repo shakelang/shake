@@ -2,7 +2,6 @@ package io.github.shakelang.shake.lexer.token
 
 import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
 
-
 /**
  * The input of the [io.github.shakelang.shake.lexer.Lexer] gets converted into [Token]s. These get parsed
  * by the parser
@@ -78,7 +77,7 @@ open class Token<T : TokenType>
         if (this === other) return true
         if (other == null || other !is Token<*>) return false
         return type == other.type &&
-                value == other.value
+            value == other.value
     }
 
     override fun hashCode(): Int = hashAll(type, value)
@@ -91,5 +90,4 @@ open class Token<T : TokenType>
         }
         return res
     }
-
 }

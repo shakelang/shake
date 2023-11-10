@@ -274,7 +274,6 @@ class AttributeStackMapTableInfo(
                 "stack" to stack.toJson()
             )
 
-
             companion object {
                 fun fromStream(frameType: UByte, stream: DataInputStream): SameLocals1StackItemFrameExtendedInfo {
                     if (frameType != 247u.toUByte()) throw IllegalArgumentException("frameType must be 247")

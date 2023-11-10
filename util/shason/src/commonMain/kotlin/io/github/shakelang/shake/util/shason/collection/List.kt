@@ -14,15 +14,13 @@ interface ListType<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, CT, MC
      * Create a new [MutableCollection] from this [Collection].
      */
     fun toMutableCollection(): MCT
-
 }
-
 
 /**
  * A type for an own [MutableList] implementation.
  */
-interface MutableListType<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, CT, MCT>>
-    : MutableList<T>, ListType<T, CT, MCT>
+interface MutableListType<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, CT, MCT>> :
+    MutableList<T>, ListType<T, CT, MCT>
 
 /**
  * A base API class for an implementation of [ListType]
@@ -32,9 +30,9 @@ abstract class ListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, C
     /**
      * The [List] to create the [ListBase] from
      */
-    val list: List<T>,
+    val list: List<T>
 
-    ) : ListType<T, CT, MCT> {
+) : ListType<T, CT, MCT> {
 
     /**
      * Returns the size of the collection.
@@ -73,7 +71,6 @@ abstract class ListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, C
     override fun listIterator(index: Int): ListIterator<T> = list.listIterator()
 
     override fun subList(fromIndex: Int, toIndex: Int): List<T> = list.subList(fromIndex, toIndex)
-
 }
 
 /**
@@ -84,9 +81,9 @@ abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListTy
     /**
      * The [MutableList] to create the [MutableListBase] from
      */
-    val list: MutableList<T>,
+    val list: MutableList<T>
 
-    ) : MutableListType<T, CT, MCT> {
+) : MutableListType<T, CT, MCT> {
 
     /**
      * Returns the size of the list.
@@ -175,5 +172,4 @@ abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListTy
     override fun removeAt(index: Int): T = list.removeAt(index)
 
     override fun set(index: Int, element: T): T = list.set(index, element)
-
 }

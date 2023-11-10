@@ -83,5 +83,4 @@ class ConstantClassTests {
         assertEquals("constant_class_info", json["tag_type"])
         assertEquals(2, json["value"])
     }
-
 }

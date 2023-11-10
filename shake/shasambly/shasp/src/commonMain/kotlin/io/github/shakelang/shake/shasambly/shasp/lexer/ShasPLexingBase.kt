@@ -20,14 +20,21 @@ abstract class ShasPLexingBase(
         val peek: Char = if (input.hasNext()) input.peek() else (0).toChar()
         val start = input.position
 
-        return if (next == ';') ShasPToken(ShasPTokenType.SEMICOLON, start, start)
-        else if (next == ',') ShasPToken(ShasPTokenType.COMMA, start, start)
-        else if (next == '.') ShasPToken(ShasPTokenType.DOT, start, start)
-        else if (Characters.isNumberCharacter(next)) makeNumber()
-        else if (Characters.isIdentifierStartCharacter(next)) makeIdentifier()
-        else if (next == '"') makeString()
-        else if (next == '\'') makeCharacter()
-        else if (next == '/' && peek == '/') {
+        return if (next == ';') {
+            ShasPToken(ShasPTokenType.SEMICOLON, start, start)
+        } else if (next == ',') {
+            ShasPToken(ShasPTokenType.COMMA, start, start)
+        } else if (next == '.') {
+            ShasPToken(ShasPTokenType.DOT, start, start)
+        } else if (Characters.isNumberCharacter(next)) {
+            makeNumber()
+        } else if (Characters.isIdentifierStartCharacter(next)) {
+            makeIdentifier()
+        } else if (next == '"') {
+            makeString()
+        } else if (next == '\'') {
+            makeCharacter()
+        } else if (next == '/' && peek == '/') {
             singleLineComment()
             makeToken()
         } else if (next == '/' && peek == '*') {
@@ -54,13 +61,19 @@ abstract class ShasPLexingBase(
         } else if (next == '-' && peek == '-') {
             input.skip()
             ShasPToken(ShasPTokenType.DECR, input.position, input.position)
-        } else if (next == '%') ShasPToken(ShasPTokenType.MOD, input.position, input.position)
-        else if (next == '/') ShasPToken(ShasPTokenType.DIV, input.position, input.position)
-        else if (next == '*') ShasPToken(ShasPTokenType.MUL, input.position, input.position)
-        else if (next == '-') ShasPToken(ShasPTokenType.SUB, input.position, input.position)
-        else if (next == '+') ShasPToken(ShasPTokenType.ADD, input.position, input.position)
-        else if (next == '^') ShasPToken(ShasPTokenType.LOGICAL_XOR, input.position, input.position)
-        else if (next == '|' && peek == '|') {
+        } else if (next == '%') {
+            ShasPToken(ShasPTokenType.MOD, input.position, input.position)
+        } else if (next == '/') {
+            ShasPToken(ShasPTokenType.DIV, input.position, input.position)
+        } else if (next == '*') {
+            ShasPToken(ShasPTokenType.MUL, input.position, input.position)
+        } else if (next == '-') {
+            ShasPToken(ShasPTokenType.SUB, input.position, input.position)
+        } else if (next == '+') {
+            ShasPToken(ShasPTokenType.ADD, input.position, input.position)
+        } else if (next == '^') {
+            ShasPToken(ShasPTokenType.LOGICAL_XOR, input.position, input.position)
+        } else if (next == '|' && peek == '|') {
             input.skip()
             ShasPToken(ShasPTokenType.LOGICAL_OR, input.position, input.position)
         } else if (next == '&' && peek == '&') {
@@ -78,16 +91,27 @@ abstract class ShasPLexingBase(
         } else if (next == '<' && peek == '=') {
             input.skip()
             ShasPToken(ShasPTokenType.SMALLER_EQUALS, input.position, input.position)
-        } else if (next == '>') ShasPToken(ShasPTokenType.BIGGER, input.position, input.position)
-        else if (next == '<') ShasPToken(ShasPTokenType.SMALLER, input.position, input.position)
-        else if (next == '=') ShasPToken(ShasPTokenType.ASSIGN, input.position, input.position)
-        else if (next == '(') ShasPToken(ShasPTokenType.LPAREN, input.position, input.position)
-        else if (next == ')') ShasPToken(ShasPTokenType.RPAREN, input.position, input.position)
-        else if (next == '{') ShasPToken(ShasPTokenType.LCURL, input.position, input.position)
-        else if (next == '}') return ShasPToken(ShasPTokenType.RCURL, input.position, input.position)
-        else if (next == '[') return ShasPToken(ShasPTokenType.LBRACKET, input.position, input.position)
-        else if (next == ']') return ShasPToken(ShasPTokenType.RBRACKET, input.position, input.position)
-        else throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
+        } else if (next == '>') {
+            ShasPToken(ShasPTokenType.BIGGER, input.position, input.position)
+        } else if (next == '<') {
+            ShasPToken(ShasPTokenType.SMALLER, input.position, input.position)
+        } else if (next == '=') {
+            ShasPToken(ShasPTokenType.ASSIGN, input.position, input.position)
+        } else if (next == '(') {
+            ShasPToken(ShasPTokenType.LPAREN, input.position, input.position)
+        } else if (next == ')') {
+            ShasPToken(ShasPTokenType.RPAREN, input.position, input.position)
+        } else if (next == '{') {
+            ShasPToken(ShasPTokenType.LCURL, input.position, input.position)
+        } else if (next == '}') {
+            return ShasPToken(ShasPTokenType.RCURL, input.position, input.position)
+        } else if (next == '[') {
+            return ShasPToken(ShasPTokenType.LBRACKET, input.position, input.position)
+        } else if (next == ']') {
+            return ShasPToken(ShasPTokenType.RBRACKET, input.position, input.position)
+        } else {
+            throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
+        }
     }
 
     private fun makeNumber(): ShasPToken {
@@ -101,16 +125,21 @@ abstract class ShasPLexingBase(
             }
             numStr.append(input.next())
         }
-        return if (dot) ShasPToken(
-            ShasPTokenType.DOUBLE,
-            numStr.toString(),
-            input.position,
-            input.position
-        ) else ShasPToken(
-            ShasPTokenType.INTEGER,
-            numStr.toString(),
-            input.position, input.position
-        )
+        return if (dot) {
+            ShasPToken(
+                ShasPTokenType.DOUBLE,
+                numStr.toString(),
+                input.position,
+                input.position
+            )
+        } else {
+            ShasPToken(
+                ShasPTokenType.INTEGER,
+                numStr.toString(),
+                input.position,
+                input.position
+            )
+        }
     }
 
     private fun makeIdentifier(): ShasPToken {
@@ -144,7 +173,9 @@ abstract class ShasPLexingBase(
                 "void" -> ShasPTokenType.KEYWORD_VOID
                 "while" -> ShasPTokenType.KEYWORD_WHILE
                 else -> return ShasPToken(ShasPTokenType.IDENTIFIER, identifier.toString(), end, end)
-            }, end, end
+            },
+            end,
+            end
         )
     }
 
@@ -175,7 +206,9 @@ abstract class ShasPLexingBase(
 
                         else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
                     }
-                } else string.append(input.actual())
+                } else {
+                    string.append(input.actual())
+                }
             }
             if (input.actual() != '"') throw LexerError("String must end with a '\"'")
         }
@@ -207,7 +240,9 @@ abstract class ShasPLexingBase(
 
                 else -> throw LexerError("Unknown escape sequence '\\" + input.actual() + "'")
             }
-        } else input.actual().toString()
+        } else {
+            input.actual().toString()
+        }
         if (input.next() != '\'') throw LexerError("Char must end with a \"'\"")
         return ShasPToken(ShasPTokenType.CHARACTER, c, input.position, input.position)
     }

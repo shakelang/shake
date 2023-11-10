@@ -96,5 +96,4 @@ class PositionTest {
         val position = Position(map, 1, 2, 1)
         assertEquals("PositionTest#testToString:1:2", position.toString())
     }
-
 }

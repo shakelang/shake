@@ -34,16 +34,18 @@ class ConstantInvokeDynamicInfo(
         fun contentsFromStream(stream: DataInputStream): ConstantInvokeDynamicInfo {
             return ConstantInvokeDynamicInfo(
                 stream.readUnsignedShort(),
-                stream.readUnsignedShort(),
+                stream.readUnsignedShort()
             )
         }
 
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag)
+            if (stream.readByte() != tag) {
                 throw IllegalArgumentException("Invalid tag for ConstantInvokeDynamicInfo")
-            else contentsFromStream(stream)
+            } else {
+                contentsFromStream(stream)
+            }
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
@@ -54,5 +56,4 @@ class ConstantInvokeDynamicInfo(
         const val name = "constant_invoke_dynamic"
         const val tag = ConstantTags.CONSTANT_INVOKE_DYNAMIC
     }
-
 }

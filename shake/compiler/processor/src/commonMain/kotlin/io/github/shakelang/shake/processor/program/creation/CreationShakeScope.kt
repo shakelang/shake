@@ -76,7 +76,6 @@ abstract class CreationShakeScope : ShakeScope {
         this.getClass(clzName) {
             then(CreationShakeType.objectType(it))
         }
-
     }
 
     fun finish() {
@@ -99,7 +98,7 @@ class CreationFileScope(
     override val project: CreationShakeProject,
     override val parent: CreationShakeScope,
     val imports: List<ShakeImportNode>,
-    val imported: Array<CreationShakePackage?>,
+    val imported: Array<CreationShakePackage?>
 ) : CreationShakeScope() {
 
     override fun get(name: String): CreationShakeAssignable? {
@@ -143,5 +142,4 @@ class CreationFileScope(
 
     override val processor: ShakeCodeProcessor
         get() = parent.processor
-
 }

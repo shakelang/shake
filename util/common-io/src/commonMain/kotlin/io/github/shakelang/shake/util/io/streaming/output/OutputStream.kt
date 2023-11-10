@@ -15,8 +15,8 @@ expect abstract class OutputStream() {
      * Subclasses of `OutputStream` must provide an
      * implementation for this method.
      *
-     * @param      b   the `byte`.
-     * @throws     IOException  if an I/O error occurs. In particular,
+     * @param b   the `byte`.
+     * @throws IOException  if an I/O error occurs. In particular,
      * an `IOException` may be thrown if the
      * output stream has been closed.
      *
@@ -31,8 +31,8 @@ expect abstract class OutputStream() {
      * is that it should have exactly the same effect as the call
      * `write(b, 0, b.length)`.
      *
-     * @param      b   the data.
-     * @throws     IOException  if an I/O error occurs.
+     * @param b   the data.
+     * @throws IOException  if an I/O error occurs.
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -63,10 +63,10 @@ expect abstract class OutputStream() {
      * `off+len` is greater than the length of the array
      * `b`, then an `IndexOutOfBoundsException` is thrown.
      *
-     * @param      b     the data.
-     * @param      off   the start offset in the data.
-     * @param      len   the number of bytes to write.
-     * @throws     IOException  if an I/O error occurs. In particular,
+     * @param b     the data.
+     * @param off   the start offset in the data.
+     * @param len   the number of bytes to write.
+     * @throws IOException  if an I/O error occurs. In particular,
      * an `IOException` is thrown if the output
      * stream is closed.
      *
@@ -93,7 +93,7 @@ expect abstract class OutputStream() {
      *
      * The `flush` method of `OutputStream` does nothing.
      *
-     * @throws     IOException  if an I/O error occurs.
+     * @throws IOException  if an I/O error occurs.
      *
      * @since 0.1.0
      * @version 0.1.1
@@ -109,7 +109,7 @@ expect abstract class OutputStream() {
      *
      * The `close` method of `OutputStream` does nothing.
      *
-     * @throws     IOException  if an I/O error occurs.
+     * @throws IOException  if an I/O error occurs.
      *
      * @since 0.1.0
      * @version 0.1.1

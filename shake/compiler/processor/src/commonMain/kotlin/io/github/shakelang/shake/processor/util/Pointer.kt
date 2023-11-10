@@ -24,7 +24,6 @@ interface Pointer<out T> {
         }
     }
 
-
     companion object {
         fun <T> of(value: T) = object : Pointer<T> {
             override val value: T = value
@@ -303,7 +302,6 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
         override fun contains(element: T): Boolean {
             return pointers.any { it.value == element }
         }
-
     }
 
     companion object {

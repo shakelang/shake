@@ -104,7 +104,7 @@ enum class ShakeTokenType(private val length: Int) : TokenType {
     SMALLER_EQUALS(2),
     STRING(-1),
     SUB(1),
-    SUB_ASSIGN(2),
+    SUB_ASSIGN(2)
     ;
 
     override fun length(value: String?): Int {

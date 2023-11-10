@@ -57,7 +57,7 @@ class String : NativeClass {
         val str = "Lshake.lang.String"
     }
 
-    /// Static methods
+    // / Static methods
 
     // valueOf(byte[] bytes)
     class FunctionValueOf0 : NativeFunction {
@@ -81,7 +81,8 @@ class String : NativeClass {
             val arg2 = generator.visitValue(invokation.arguments[2])
 
             return JsFunctionCall(
-                JsField("fromCharCode", JsField("String")), listOf(
+                JsField("fromCharCode", JsField("String")),
+                listOf(
                     JsFunctionCall(JsField("slice", arg0), listOf(arg1, JsSubtract(arg2, arg1)))
                 )
             )
@@ -207,7 +208,6 @@ class String : NativeClass {
             return JsFunctionCall(JsField("fromCharCode", JsField("String")), listOf(arg0))
         }
     }
-
 
     // instance fields
 
@@ -448,5 +448,4 @@ class String : NativeClass {
     override val fields: List<NativeField> = listOf(
         FieldLength()
     )
-
 }

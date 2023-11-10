@@ -10,7 +10,6 @@ class LexerTests {
 
     @Test
     fun testMakeTokens() {
-
         val tokens = createLexer("10+7*3", "LexerTests#testMakeTokens()").makeTokens()
         var token = tokens.next()
         assertEquals(ShakeTokenType.INTEGER, token.type)
@@ -37,12 +36,10 @@ class LexerTests {
         assertEquals("3", token.value)
         assertEquals(5, token.start)
         assertEquals(5, token.end)
-
     }
 
     @Test
     fun testStream() {
-
         val tokens = createLexer("10+7*3", "LexerTests#testStream()").stream()
         var token = tokens.next()
         assertEquals(ShakeTokenType.INTEGER, token.type)
@@ -69,12 +66,10 @@ class LexerTests {
         assertEquals("3", token.value)
         assertEquals(5, token.start)
         assertEquals(5, token.end)
-
     }
 
     fun createLexer(constents: String, source: String): ShakeLexer {
         val stream = SourceCharacterInputStream(CharacterSource.from(constents, source))
         return ShakeLexer(stream)
     }
-
 }

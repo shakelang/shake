@@ -262,15 +262,16 @@ class DataInputStreamTests {
 
     @Test
     fun testReadUTF() {
-        val bytes = ByteArrayInputStream(listOf(
-            listOf<Byte>(0, 0, 0, 11),
-            "hello world".toCharArray().map { it.code.toByte() },
-            "hello 2".toCharArray().map { it.code.toByte() }
-        ).flatten().toByteArray())
+        val bytes = ByteArrayInputStream(
+            listOf(
+                listOf<Byte>(0, 0, 0, 11),
+                "hello world".toCharArray().map { it.code.toByte() },
+                "hello 2".toCharArray().map { it.code.toByte() }
+            ).flatten().toByteArray()
+        )
         val stream = DataInputStream(bytes)
         assertEquals("hello world", stream.readUTF())
         assertEquals("hello 2", stream.readUTF(7))
-
     }
 
     @Test
@@ -326,5 +327,4 @@ class DataInputStreamTests {
         stream.read()
         assertEquals(0, stream.available())
     }
-
 }

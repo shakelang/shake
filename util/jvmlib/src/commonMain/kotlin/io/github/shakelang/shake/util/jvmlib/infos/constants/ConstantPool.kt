@@ -115,10 +115,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun findFieldRef(classRef: ConstantClassInfo, name: String, descriptor: String): ConstantFieldrefInfo? {
         for (constant in constants) {
             if (constant is ConstantFieldrefInfo) {
-
-                if (constant.classRef === classRef
-                    && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor
+                if (constant.classRef === classRef &&
+                    constant.nameTypeRef.name.value == name &&
+                    constant.nameTypeRef.type.value == descriptor
                 ) {
                     return constant
                 }
@@ -130,9 +129,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun findFieldRef(classRef: String, name: String, descriptor: String): ConstantFieldrefInfo? {
         for (constant in constants) {
             if (constant is ConstantFieldrefInfo) {
-                if (constant.classRef.value.value == classRef
-                    && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor
+                if (constant.classRef.value.value == classRef &&
+                    constant.nameTypeRef.name.value == name &&
+                    constant.nameTypeRef.type.value == descriptor
                 ) {
                     return constant
                 }
@@ -155,9 +154,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun findMethodRef(classRef: ConstantClassInfo, name: String, descriptor: String): ConstantMethodrefInfo? {
         for (constant in constants) {
             if (constant is ConstantMethodrefInfo) {
-                if (constant.classRef == classRef
-                    && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor
+                if (constant.classRef == classRef &&
+                    constant.nameTypeRef.name.value == name &&
+                    constant.nameTypeRef.type.value == descriptor
                 ) {
                     return constant
                 }
@@ -169,9 +168,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun findMethodRef(classRef: String, name: String, descriptor: String): ConstantMethodrefInfo? {
         for (constant in constants) {
             if (constant is ConstantMethodrefInfo) {
-                if (constant.classRef.value.value == classRef
-                    && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor
+                if (constant.classRef.value.value == classRef &&
+                    constant.nameTypeRef.name.value == name &&
+                    constant.nameTypeRef.type.value == descriptor
                 ) {
                     return constant
                 }
@@ -201,9 +200,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     ): ConstantInterfaceMethodrefInfo? {
         for (constant in constants) {
             if (constant is ConstantInterfaceMethodrefInfo) {
-                if (constant.classRef == classRef
-                    && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor
+                if (constant.classRef == classRef &&
+                    constant.nameTypeRef.name.value == name &&
+                    constant.nameTypeRef.type.value == descriptor
                 ) {
                     return constant
                 }
@@ -215,9 +214,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun findInterfaceMethodRef(classRef: String, name: String, descriptor: String): ConstantInterfaceMethodrefInfo? {
         for (constant in constants) {
             if (constant is ConstantInterfaceMethodrefInfo) {
-                if (constant.classRef.value.value == classRef
-                    && constant.nameTypeRef.name.value == name
-                    && constant.nameTypeRef.type.value == descriptor
+                if (constant.classRef.value.value == classRef &&
+                    constant.nameTypeRef.name.value == name &&
+                    constant.nameTypeRef.type.value == descriptor
                 ) {
                     return constant
                 }
@@ -361,9 +360,9 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun findInvokeDynamic(bootstrapMethod: UShort, name: String, type: String): ConstantInvokeDynamicInfo? {
         for (constant in constants) {
             if (constant is ConstantInvokeDynamicInfo) {
-                if (constant.bootstrapMethodAttributeIndex == bootstrapMethod
-                    && constant.nameAndType.name.value == name
-                    && constant.nameAndType.type.value == type
+                if (constant.bootstrapMethodAttributeIndex == bootstrapMethod &&
+                    constant.nameAndType.name.value == name &&
+                    constant.nameAndType.type.value == type
                 ) {
                     return constant
                 }
@@ -371,7 +370,6 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         }
         return null
     }
-
 
     fun expectUtf8(value: String): ConstantUtf8Info =
         findUtf8(value) ?: throw Exception("No utf8 constant found for value: $value")
@@ -461,5 +459,4 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
             return ConstantPool(constants)
         }
     }
-
 }

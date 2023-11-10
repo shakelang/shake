@@ -2,7 +2,6 @@ package io.github.shakelang.shake.util.shason.elements
 
 import kotlin.jvm.JvmName
 
-
 /**
  * A [JsonElement] represents all elements of json
  *
@@ -48,13 +47,11 @@ interface JsonElement {
          */
         fun from(value: String) = JsonStringElement(value)
 
-
         /**
          * Create a [JsonBooleanElement] from a [Boolean]
          *
          */
         fun from(value: Boolean) = JsonBooleanElement.from(value)
-
 
         /**
          * Create a [JsonDoubleElement] from a [Double]
@@ -67,7 +64,6 @@ interface JsonElement {
          *
          */
         fun from(value: Float) = from(value.toDouble())
-
 
         /**
          * Create a [JsonIntegerElement] from a [Long]
@@ -92,7 +88,6 @@ interface JsonElement {
          *
          */
         fun from(value: Byte) = from(value.toLong())
-
 
         /**
          * Create a [JsonObject] from a [Map] of anonymous values
@@ -120,7 +115,6 @@ interface JsonElement {
         @JvmName("fromElements")
         fun from(vararg values: Pair<String, JsonElement>) = JsonObject.of(*values)
 
-
         /**
          * Create a [JsonArray] from a [Collection] of anonymous values
          *
@@ -146,9 +140,7 @@ interface JsonElement {
          */
         @JvmName("fromElements")
         fun from(vararg values: JsonElement) = JsonArray.of(*values)
-
     }
-
 
     /**
      * Is the [JsonElement] a [JsonPrimitive]?
@@ -161,7 +153,6 @@ interface JsonElement {
     fun toJsonPrimitive() =
         if (this.isJsonPrimitive()) this as JsonPrimitive else throw Error("Element is not a JsonPrimitive")
 
-
     /**
      * Is the [JsonElement] a [JsonObject]?
      */
@@ -172,7 +163,6 @@ interface JsonElement {
      */
     fun toJsonObject() = if (this.isJsonObject()) this as JsonObject else throw Error("Element is not a JsonObject")
 
-
     /**
      * Is the [JsonElement] a [JsonArray]?
      */
@@ -182,5 +172,4 @@ interface JsonElement {
      * Cast the [JsonElement] to a [JsonArray]
      */
     fun toJsonArray() = if (this.isJsonArray()) this as JsonArray else throw Error("Element is not a JsonObject")
-
 }

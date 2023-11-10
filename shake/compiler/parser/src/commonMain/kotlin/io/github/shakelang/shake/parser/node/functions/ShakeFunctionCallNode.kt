@@ -9,5 +9,4 @@ class ShakeFunctionCallNode(map: PositionMap, val function: ShakeValuedNode, val
 
     override fun toJson(): Map<String, *> =
         mapOf("name" to "FunctionCallNode", "function" to function.json, "args" to args.map { it.json })
-
 }

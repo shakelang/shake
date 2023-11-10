@@ -25,7 +25,7 @@ class AttributeCodeInfoTests {
             0u,
             byteArrayOf(),
             arrayOf(),
-            arrayOf(),
+            arrayOf()
         )
         assertSame(pool[1], attribute.name)
         assertEquals(0u, attribute.max_stack)
@@ -43,7 +43,7 @@ class AttributeCodeInfoTests {
             0x00, 0x00, // max_locals
             0x00, 0x00, 0x00, 0x00, // code length
             0x00, 0x00, // exception table length
-            0x00, 0x00, // attributes length
+            0x00, 0x00 // attributes length
         ).dataStream()
         val attribute = AttributeCodeInfo.contentsFromStream(pool, stream, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
@@ -65,7 +65,7 @@ class AttributeCodeInfoTests {
             0x00, 0x02, // exception table length
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
-            0x00, 0x00, // attributes length
+            0x00, 0x00 // attributes length
         ).dataStream()
         val attribute = AttributeCodeInfo.contentsFromStream(pool, stream, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
@@ -85,7 +85,7 @@ class AttributeCodeInfoTests {
             0x00, 0x00, // max_locals
             0x00, 0x00, 0x00, 0x00, // code length
             0x00, 0x00, // exception table length
-            0x00, 0x00, // attributes length
+            0x00, 0x00 // attributes length
         ).dataStream()
         val attribute = AttributeCodeInfo.fromStream(pool, stream)
         assertSame(pool[1], attribute.name)
@@ -108,7 +108,7 @@ class AttributeCodeInfoTests {
             0x00, 0x02, // exception table length
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
-            0x00, 0x00, // attributes length
+            0x00, 0x00 // attributes length
         ).dataStream()
         val attribute = AttributeCodeInfo.fromStream(pool, stream)
         assertSame(pool[1], attribute.name)
@@ -127,7 +127,7 @@ class AttributeCodeInfoTests {
             0x00, 0x00, // max_locals
             0x00, 0x00, 0x00, 0x00, // code length
             0x00, 0x00, // exception table length
-            0x00, 0x00, // attributes length
+            0x00, 0x00 // attributes length
         )
         val attribute = AttributeCodeInfo.contentsFromBytes(pool, bytes, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
@@ -149,7 +149,7 @@ class AttributeCodeInfoTests {
             0x00, 0x02, // exception table length
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
-            0x00, 0x00, // attributes length
+            0x00, 0x00 // attributes length
         )
         val attribute = AttributeCodeInfo.contentsFromBytes(pool, bytes, pool.getUtf8(1))
         assertSame(pool[1], attribute.name)
@@ -169,7 +169,7 @@ class AttributeCodeInfoTests {
             0x00, 0x00, // max_locals
             0x00, 0x00, 0x00, 0x00, // code length
             0x00, 0x00, // exception table length
-            0x00, 0x00, // attributes length
+            0x00, 0x00 // attributes length
         )
         val attribute = AttributeCodeInfo.fromBytes(pool, bytes)
         assertSame(pool[1], attribute.name)
@@ -192,7 +192,7 @@ class AttributeCodeInfoTests {
             0x00, 0x02, // exception table length
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // exception table entry
-            0x00, 0x00, // attributes length
+            0x00, 0x00 // attributes length
         )
         val attribute = AttributeCodeInfo.fromBytes(pool, bytes)
         assertSame(pool[1], attribute.name)
@@ -202,5 +202,4 @@ class AttributeCodeInfoTests {
         assertEquals(2, attribute.exception_table.size)
         assertEquals(0, attribute.attributes.size)
     }
-
 }

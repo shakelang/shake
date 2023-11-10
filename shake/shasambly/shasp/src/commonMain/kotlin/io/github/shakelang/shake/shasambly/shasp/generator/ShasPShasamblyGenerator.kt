@@ -121,7 +121,6 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             printUtf8.call()
             printLn.call()
         }
-
     }
 
     fun generate(): SimpleShasamblyGenerator {
@@ -280,7 +279,6 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             if (type0 == CHAR && type1 == LONG || type0 == LONG && type1 == CHAR) return LONG
             if (type0 == CHAR && type1 == FLOAT || type0 == FLOAT && type1 == CHAR) return FLOAT
             if (type0 == CHAR && type1 == DOUBLE || type0 == DOUBLE && type1 == CHAR) return DOUBLE
-
 
             if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == BYTE || type0 == BYTE && type1 == UNKNOWN_INTEGER_LITERAL) return BYTE
             if (type0 == UNKNOWN_INTEGER_LITERAL && type1 == SHORT || type0 == SHORT && type1 == UNKNOWN_INTEGER_LITERAL) return SHORT
@@ -441,7 +439,6 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         }
 
         fun SimpleShasambly.convert(from: ShasPType, to: ShasPType) {
-
             if (from == to) return
 
             when (from) {
@@ -604,7 +601,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 SHORT -> sbigger()
                 INT -> ibigger()
                 LONG -> lbigger()
-                UBYTE -> bbigger()// TODO val > 127
+                UBYTE -> bbigger() // TODO val > 127
                 USHORT -> sbigger()
                 UINT -> ibigger()
                 ULONG -> lbigger()
@@ -648,7 +645,6 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
                 else -> throw Error("Can't perform less-than checks with value type $type.")
             }
         }
-
 
         fun SimpleShasambly.generateValued(value: ShasPAdd, expectedType: ShasPType) {
             generateValued(value.left, expectedType)
@@ -868,7 +864,6 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             convert(rType, type)
         }
 
-
         fun SimpleShasambly.generateValued(it: ShasPVariableAssignment, type: ShasPType) {
             val addr = localTable[it.name] ?: throw Error("Variable ${it.name} is not defined in this scope")
             val rType = addr.first
@@ -947,16 +942,19 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         fun SimpleShasambly.generateValued(it: ShasPArrayInitializer, type: ShasPType) {
             if (type !is ShasPType.ShasPArrayType) throw Error("Array initializer generates array result and not $type")
             val size = it.type.subType.byteSize
-            //createLocalByteArray()
+            // createLocalByteArray()
             TODO()
-
         }
 
         fun SimpleShasambly.generate(it: ShasPIf) {
-            if (it.orElse == null) ifElse({ generateValued(it.condition, BOOLEAN) }) { generate(it.then) }
-            else ifElse(
-                { generateValued(it.condition, BOOLEAN) },
-                orElse = { generate(it.orElse) }) { generate(it.then) }
+            if (it.orElse == null) {
+                ifElse({ generateValued(it.condition, BOOLEAN) }) { generate(it.then) }
+            } else {
+                ifElse(
+                    { generateValued(it.condition, BOOLEAN) },
+                    orElse = { generate(it.orElse) }
+                ) { generate(it.then) }
+            }
         }
 
         fun SimpleShasambly.generate(it: ShasPWhile) {
@@ -981,15 +979,14 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             val function =
                 functions.find { fCall.name == it.name } ?: throw Error("Function ${fCall.name} is not defined")
 
-            if (fCall.args.size != function.argTypes.size)
+            if (fCall.args.size != function.argTypes.size) {
                 throw Error("Function ${fCall.name} expects ${function.argTypes.size} arguments but ${fCall.args.size} were given")
+            }
 
             for ((i, arg) in fCall.args.withIndex())
                 generateValued(arg, function.argTypes[i])
 
             function.call()
         }
-
     }
-
 }

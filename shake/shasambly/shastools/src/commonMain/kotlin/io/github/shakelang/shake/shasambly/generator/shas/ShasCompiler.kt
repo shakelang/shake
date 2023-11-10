@@ -44,9 +44,13 @@ class ShasCompiler(private val input: CharacterInputStream) {
     private fun skipIgnored() {
         while (input.hasNext()) {
             val next = input.peek()
-            if (next.isWhitespace()) input.skip()
-            else if (next == '[') do input.skip() while (input.actual() != ']')
-            else break
+            if (next.isWhitespace()) {
+                input.skip()
+            } else if (next == '[') {
+                do input.skip() while (input.actual() != ']')
+            } else {
+                break
+            }
         }
     }
 
@@ -126,28 +130,36 @@ class ShasCompiler(private val input: CharacterInputStream) {
         skipIgnored()
         return if (isHex()) {
             expectHexNumber().toUByte(16)
-        } else expectNumber().toUByte()
+        } else {
+            expectNumber().toUByte()
+        }
     }
 
     private fun expectUShort(): UShort {
         skipIgnored()
         return if (isHex()) {
             expectHexNumber().toUShort(16)
-        } else expectNumber().toUShort()
+        } else {
+            expectNumber().toUShort()
+        }
     }
 
     private fun expectUInt(): UInt {
         skipIgnored()
         return if (isHex()) {
             expectHexNumber().toUInt(16)
-        } else expectNumber().toUInt()
+        } else {
+            expectNumber().toUInt()
+        }
     }
 
     private fun expectULong(): ULong {
         skipIgnored()
         return if (isHex()) {
             expectHexNumber().toULong(16)
-        } else expectNumber().toULong()
+        } else {
+            expectNumber().toULong()
+        }
     }
 
     private fun expectFloat(): Float {
@@ -156,7 +168,9 @@ class ShasCompiler(private val input: CharacterInputStream) {
         if (neg) input.skip()
         return if (isHex()) {
             Float.fromBits(if (neg) "-${expectHexNumber()}".toInt() else expectHexNumber().toUInt(16).toInt())
-        } else (if (neg) "-" else "" + expectFloatingPointNumber()).toFloat()
+        } else {
+            (if (neg) "-" else "" + expectFloatingPointNumber()).toFloat()
+        }
     }
 
     private fun expectDouble(): Double {
@@ -165,7 +179,9 @@ class ShasCompiler(private val input: CharacterInputStream) {
         if (neg) input.skip()
         return if (isHex()) {
             Double.fromBits(if (neg) "-${expectHexNumber()}".toLong() else expectHexNumber().toULong(16).toLong())
-        } else (if (neg) "-" else "" + expectFloatingPointNumber()).toDouble()
+        } else {
+            (if (neg) "-" else "" + expectFloatingPointNumber()).toDouble()
+        }
     }
 
     private fun expectBytes(byteArgumentAmount: Int): ByteArray {
@@ -177,8 +193,9 @@ class ShasCompiler(private val input: CharacterInputStream) {
         }
         val byteString = number.toString()
         if (number.length % 2 != 0) throw IllegalStateException("Expecting an even number of hex chars in byte array")
-        if (byteString.length / 2 != byteArgumentAmount)
+        if (byteString.length / 2 != byteArgumentAmount) {
             throw IllegalStateException("Wrong number of bytes given, expect $byteArgumentAmount, but got ${byteString.length / 2}")
+        }
         return ByteArray(byteString.length / 2) {
             byteString.substring(it * 2, it * 2 + 1).toUByte(16).toByte()
         }
@@ -201,8 +218,9 @@ class ShasCompiler(private val input: CharacterInputStream) {
                 if (f != null && f.name.equals(identifier, ignoreCase = true)) return i.toUShort().toShort()
             }
             throw IllegalArgumentException("Unknown native function $identifier")
-        } else return expectUShort().toShort()
-
+        } else {
+            return expectUShort().toShort()
+        }
     }
 
     private fun expectCommand() {
@@ -433,5 +451,4 @@ class ShasCompiler(private val input: CharacterInputStream) {
             else -> throw Error("Unknown opcode")
         }
     }
-
 }

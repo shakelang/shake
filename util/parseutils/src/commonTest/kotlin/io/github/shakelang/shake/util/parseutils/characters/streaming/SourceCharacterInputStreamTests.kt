@@ -116,7 +116,6 @@ class SourceCharacterInputStreamTests {
         }
 
         assertEquals(false, stream.hasNext())
-
     }
 
     @Test
@@ -139,7 +138,6 @@ class SourceCharacterInputStreamTests {
 
     @Test
     fun testPeek() {
-
         val stream = SourceCharacterInputStream("SourceCharacterInputStreamTests#checkHas", "Hello World!")
 
         assertEquals(-1, stream.position)
@@ -177,6 +175,4 @@ class SourceCharacterInputStreamTests {
 
         assertEquals("ello ", stream.peek(1, 5))
     }
-
-
 }

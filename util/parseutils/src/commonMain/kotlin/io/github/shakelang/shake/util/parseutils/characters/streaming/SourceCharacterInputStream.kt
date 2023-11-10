@@ -203,7 +203,7 @@ class SourceCharacterInputStream(
     override fun peek(from: Int, to: Int): String {
         if (from < 0) throw Error("Peek argument must not be smaller than 0")
         if (to <= from) throw Error("To-argument must be bigger than from-argument")
-        if (!this.has(to)) throw Error("Not enough characters left");
+        if (!this.has(to)) throw Error("Not enough characters left")
         return this.content.copyOfRange(position + from, position + to + 1).concatToString()
     }
 }

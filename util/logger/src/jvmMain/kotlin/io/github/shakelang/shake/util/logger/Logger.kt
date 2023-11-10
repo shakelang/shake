@@ -19,7 +19,6 @@ object JavaColoredConsoleLogger : LoggerPipe() {
     private fun printWarn(message: String) = println(message)
     private fun printError(message: String) = System.err.println(message)
     private fun printFatal(message: String) = System.err.println(message)
-
 }
 
 object JavaConsoleLogger : LoggerPipe() {
@@ -41,5 +40,4 @@ object JavaConsoleLogger : LoggerPipe() {
     private fun printWarn(message: String) = println(message)
     private fun printError(message: String) = System.err.println(message)
     private fun printFatal(message: String) = System.err.println(message)
-
 }

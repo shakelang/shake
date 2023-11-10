@@ -130,7 +130,6 @@ fun ByteArray.toUnsignedInt(): UInt = this.toInt().toUInt()
  */
 fun ByteArray.toUnsignedLong(): ULong = this.toLong().toULong()
 
-
 /**
  * Set specific bytes in a byte array to a byte array
  *
@@ -141,9 +140,9 @@ fun ByteArray.toUnsignedLong(): ULong = this.toLong().toULong()
  * @version 0.1.1
  */
 fun ByteArray.setBytes(startIndex: Int, bytes: ByteArray): ByteArray {
-
-    if (this.size < startIndex + bytes.size)
+    if (this.size < startIndex + bytes.size) {
         throw IllegalArgumentException("ByteArray must be of size ${startIndex + bytes.size}, but is ${this.size}")
+    }
     if (startIndex < 0) throw IllegalArgumentException("startIndex must be >= 0, but is $startIndex")
 
     for (i in startIndex until startIndex + bytes.size) this[i] = bytes[i - startIndex]
@@ -160,9 +159,9 @@ fun ByteArray.setBytes(startIndex: Int, bytes: ByteArray): ByteArray {
  * @version 0.1.1
  */
 fun ByteArray.setByte(index: Int, byte: Byte): ByteArray {
-
-    if (this.size < index + 1)
+    if (this.size < index + 1) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 1}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     this[index] = byte
@@ -179,16 +178,15 @@ fun ByteArray.setByte(index: Int, byte: Byte): ByteArray {
  * @version 0.1.1
  */
 fun ByteArray.setShort(index: Int, short: Short): ByteArray {
-
-    if (this.size < index + 2)
+    if (this.size < index + 2) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 2}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     this[index] = (short.toInt() shr 8).toByte()
     this[index + 1] = (short.toInt() and 0xFF).toByte()
     return this
 }
-
 
 /**
  * Set specific bytes in a byte array to an int
@@ -200,9 +198,9 @@ fun ByteArray.setShort(index: Int, short: Short): ByteArray {
  * @version 0.1.1
  */
 fun ByteArray.setInt(index: Int, int: Int): ByteArray {
-
-    if (this.size < index + 4)
+    if (this.size < index + 4) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 4}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     this[index] = (int shr 24).toByte()
@@ -222,9 +220,9 @@ fun ByteArray.setInt(index: Int, int: Int): ByteArray {
  * @version 0.1.1
  */
 fun ByteArray.setLong(index: Int, long: Long): ByteArray {
-
-    if (this.size < index + 8)
+    if (this.size < index + 8) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 8}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     this[index] = (long shr 56).toByte()
@@ -237,7 +235,6 @@ fun ByteArray.setLong(index: Int, long: Long): ByteArray {
     this[index + 7] = (long and 0xFF).toByte()
     return this
 }
-
 
 /**
  * Set specific bytes in a byte array to a float
@@ -277,9 +274,9 @@ fun ByteArray.setDouble(index: Int, double: Double): ByteArray {
  * @version 0.1.1
  */
 fun ByteArray.setUnsignedByte(index: Int, unsignedByte: UByte): ByteArray {
-
-    if (this.size < index + 1)
+    if (this.size < index + 1) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 1}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     this[index] = unsignedByte.toByte()
@@ -296,9 +293,9 @@ fun ByteArray.setUnsignedByte(index: Int, unsignedByte: UByte): ByteArray {
  * @version 0.1.1
  */
 fun ByteArray.setUnsignedShort(index: Int, unsignedShort: UShort): ByteArray {
-
-    if (this.size < index + 2)
+    if (this.size < index + 2) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 2}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     this[index] = (unsignedShort.toInt() shr 8).toByte()
@@ -316,9 +313,9 @@ fun ByteArray.setUnsignedShort(index: Int, unsignedShort: UShort): ByteArray {
  * @version 0.1.1
  */
 fun ByteArray.setUnsignedInt(index: Int, unsignedInt: UInt): ByteArray {
-
-    if (this.size < index + 4)
+    if (this.size < index + 4) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 4}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     this[index] = (unsignedInt shr 24).toByte()
@@ -338,9 +335,9 @@ fun ByteArray.setUnsignedInt(index: Int, unsignedInt: UInt): ByteArray {
  * @version 0.1.1
  */
 fun ByteArray.setUnsignedLong(index: Int, unsignedLong: ULong): ByteArray {
-
-    if (this.size < index + 8)
+    if (this.size < index + 8) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 8}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     this[index] = (unsignedLong shr 56).toByte()
@@ -354,7 +351,6 @@ fun ByteArray.setUnsignedLong(index: Int, unsignedLong: ULong): ByteArray {
     return this
 }
 
-
 /**
  * Get specific byte from a byte array at a given position
  *
@@ -365,9 +361,9 @@ fun ByteArray.setUnsignedLong(index: Int, unsignedLong: ULong): ByteArray {
  * @version 0.1.1
  */
 fun ByteArray.getByte(index: Int): Byte {
-
-    if (this.size < index + 1)
+    if (this.size < index + 1) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 1}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     return this[index]
@@ -383,13 +379,12 @@ fun ByteArray.getByte(index: Int): Byte {
  * @version 0.1.1
  */
 fun ByteArray.getShort(index: Int): Short {
-
-    if (this.size < index + 2)
+    if (this.size < index + 2) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 2}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     return ((this[index].toUByte().toInt() shl 8) or this[index + 1].toUByte().toInt()).toShort()
-
 }
 
 /**
@@ -402,13 +397,15 @@ fun ByteArray.getShort(index: Int): Short {
  * @version 0.1.1
  */
 fun ByteArray.getInt(index: Int): Int {
-
-    if (this.size < index + 4)
+    if (this.size < index + 4) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 4}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
-    return (this[index].toUByte().toInt() shl 8 or this[index + 1].toUByte().toInt() shl 8
-            or this[index + 2].toUByte().toInt() shl 8 or this[index + 3].toUByte().toInt())
+    return (
+        this[index].toUByte().toInt() shl 8 or this[index + 1].toUByte().toInt() shl 8
+            or this[index + 2].toUByte().toInt() shl 8 or this[index + 3].toUByte().toInt()
+        )
 }
 
 /**
@@ -421,15 +418,17 @@ fun ByteArray.getInt(index: Int): Int {
  * @version 0.1.1
  */
 fun ByteArray.getLong(index: Int): Long {
-
-    if (this.size < index + 8)
+    if (this.size < index + 8) {
         throw IllegalArgumentException("ByteArray must be of size ${index + 8}, but is ${this.size}")
+    }
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
-    return (this[index].toUByte().toLong() shl 8 or this[index + 1].toUByte().toLong() shl 8
+    return (
+        this[index].toUByte().toLong() shl 8 or this[index + 1].toUByte().toLong() shl 8
             or this[index + 2].toUByte().toLong() shl 8 or this[index + 3].toUByte().toLong() shl 8
             or this[index + 4].toUByte().toLong() shl 8 or this[index + 5].toUByte().toLong() shl 8
-            or this[index + 6].toUByte().toLong() shl 8 or this[index + 7].toUByte().toLong())
+            or this[index + 6].toUByte().toLong() shl 8 or this[index + 7].toUByte().toLong()
+        )
 }
 
 /**

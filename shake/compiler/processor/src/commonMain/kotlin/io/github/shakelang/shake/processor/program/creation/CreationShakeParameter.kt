@@ -3,7 +3,7 @@ package io.github.shakelang.shake.processor.program.creation
 import io.github.shakelang.shake.processor.program.types.ShakeParameter
 
 class CreationShakeParameter(
-    override val name: String,
+    override val name: String
 ) : ShakeParameter {
     constructor(name: String, type: CreationShakeType) : this(name) {
         this.type = type
@@ -22,7 +22,7 @@ class CreationShakeParameter(
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to name,
-            "type" to type.toJson(),
+            "type" to type.toJson()
         )
     }
 }

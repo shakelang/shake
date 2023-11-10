@@ -19,7 +19,7 @@ open class SimpleRoutineShasambly(
     val routine: CallableRoutine,
     base: SimpleShasamblyGenerator,
     parent: SimpleShasambly,
-    generator: SimpleRoutineShasamblyGenerator,
+    generator: SimpleRoutineShasamblyGenerator
 ) : RelativeShasamblyGeneratorPart(base, parent, {}) {
 
     init {
@@ -27,35 +27,38 @@ open class SimpleRoutineShasambly(
     }
 
     fun getByteArgument(position: Int) {
-        if (position < 0 || position >= routine.argumentCount)
+        if (position < 0 || position >= routine.argumentCount) {
             throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount}")
+        }
         b_get_local(position + routine.stackSize)
     }
 
     fun getShortArgument(position: Int) {
-        if (position < 0 || position >= routine.argumentCount - 1)
+        if (position < 0 || position >= routine.argumentCount - 1) {
             throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount - 1}")
+        }
         if (position < 0) throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount}")
         s_get_local(position + routine.stackSize)
     }
 
     fun getIntArgument(position: Int) {
-        if (position < 0 || position >= routine.argumentCount - 3)
+        if (position < 0 || position >= routine.argumentCount - 3) {
             throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount - 3}")
+        }
         if (position < 0) throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount}")
         i_get_local(position + routine.stackSize)
     }
 
     fun getLongArgument(position: Int) {
-        if (position < 0 || position >= routine.argumentCount - 7)
+        if (position < 0 || position >= routine.argumentCount - 7) {
             throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount - 3}")
+        }
         if (position < 0) throw Error("Position must be bigger than 0 and smaller than ${routine.argumentCount}")
         l_get_local(position + routine.stackSize)
     }
 
     fun getFloatArgument(position: Int) = getIntArgument(position)
     fun getDoubleArgument(position: Int) = getLongArgument(position)
-
 }
 
 open class CallableRoutine(
@@ -125,8 +128,11 @@ open class CallableRoutine(
 
     fun jumpToCallableRoutineStart() {
         shasambly {
-            if (isCreated) jumpStaticTo(location)
-            else toInitCalls.add(lateinit(5))
+            if (isCreated) {
+                jumpStaticTo(location)
+            } else {
+                toInitCalls.add(lateinit(5))
+            }
         }
     }
 

@@ -10,7 +10,7 @@ class ConstantInvokeDynamicTests {
         get() = arrayOf(
             ConstantNameAndTypeInfo(3u, 4u),
             ConstantUtf8Info("foo"),
-            ConstantUtf8Info("I"),
+            ConstantUtf8Info("I")
         )
 
     @Test
@@ -79,7 +79,6 @@ class ConstantInvokeDynamicTests {
         assertEquals(byteArrayOf(0x12, 0x00, 0x00, 0x00, 0x02).toList(), constant.toBytes().toList())
     }
 
-
     @Test
     fun testToJson() {
         val constant = ConstantInvokeDynamicInfo(0u, 2u)
@@ -91,5 +90,4 @@ class ConstantInvokeDynamicTests {
         assertEquals(18, json["tag"])
         assertEquals("constant_invoke_dynamic", json["tag_type"])
     }
-
 }

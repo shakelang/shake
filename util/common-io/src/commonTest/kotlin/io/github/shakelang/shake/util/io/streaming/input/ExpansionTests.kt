@@ -129,5 +129,4 @@ class ExpansionTests {
         assertIs<io.github.shakelang.shake.util.io.streaming.input.BufferedInputStream>(stream)
         assertContentEquals("Hello World!".toBytes(), stream.readFully)
     }
-
 }

@@ -2,7 +2,6 @@ package io.github.shakelang.shake.util.parseutils.characters.position
 
 import kotlin.jvm.JvmOverloads
 
-
 /**
  * The [Position] marks a position in the source-code.
  */
@@ -37,9 +36,9 @@ class Position
     /**
      * The line of the position
      */
-    override val line: Int,
+    override val line: Int
 
-    ) : PositionMarker {
+) : PositionMarker {
 
     /**
      * Copies the position

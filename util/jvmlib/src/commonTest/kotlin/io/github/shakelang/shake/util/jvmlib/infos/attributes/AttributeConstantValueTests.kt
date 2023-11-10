@@ -104,5 +104,4 @@ class AttributeConstantValueTests {
         assertEquals(pool.getUtf8(2), attribute.value)
         assertEquals(2u, attribute.valueIndex)
     }
-
 }

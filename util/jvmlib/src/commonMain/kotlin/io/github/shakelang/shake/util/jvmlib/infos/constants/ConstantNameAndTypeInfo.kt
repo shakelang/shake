@@ -13,7 +13,6 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
     val typeIndex: UShort get() = type.index
     val nameIndex: UShort get() = name.index
 
-
     override val uses: Array<ConstantInfo> get() = arrayOf(type, name)
 
     override val tag: Byte get() = ConstantNameAndTypeInfo.tag
@@ -45,9 +44,11 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag)
+            if (stream.readByte() != tag) {
                 throw IllegalArgumentException("Invalid tag for ConstantNameAndTypeInfo")
-            else contentsFromStream(stream)
+            } else {
+                contentsFromStream(stream)
+            }
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
@@ -58,5 +59,4 @@ class ConstantNameAndTypeInfo(private val ti: UShort, private val ni: UShort) : 
         const val name = "constant_name_and_type_info"
         const val tag = ConstantTags.CONSTANT_NAME_AND_TYPE
     }
-
 }

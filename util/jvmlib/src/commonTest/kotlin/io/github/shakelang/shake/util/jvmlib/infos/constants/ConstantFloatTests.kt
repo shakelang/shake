@@ -66,5 +66,4 @@ class ConstantFloatTests {
         assertEquals(4, json["tag"])
         assertEquals("constant_float_info", json["tag_type"])
     }
-
 }

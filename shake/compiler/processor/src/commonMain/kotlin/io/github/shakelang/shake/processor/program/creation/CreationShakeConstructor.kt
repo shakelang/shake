@@ -44,9 +44,11 @@ open class CreationShakeConstructor(
     }
 
     fun processCode() {
-        if (body is CreationShakeCode.ShakeLateProcessCode) (body as CreationShakeCode.ShakeLateProcessCode).process(
-            scope
-        )
+        if (body is CreationShakeCode.ShakeLateProcessCode) {
+            (body as CreationShakeCode.ShakeLateProcessCode).process(
+                scope
+            )
+        }
     }
 
     inner class ShakeConstructorScope : CreationShakeScope() {
@@ -82,6 +84,5 @@ open class CreationShakeConstructor(
 
         override val processor: ShakeCodeProcessor
             get() = parent.processor
-
     }
 }

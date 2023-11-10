@@ -10,8 +10,7 @@ import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTo
  * created by the [io.github.shakelang.shake.lexer.ShakeLexer]
  */
 @Suppress("unused")
-class ShakeTokenBasedTokenInputStream
-    (
+class ShakeTokenBasedTokenInputStream(
     override val source: String,
 
     /**

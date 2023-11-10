@@ -27,9 +27,9 @@ class ShakeMap(
     val project_packages: Array<Int>,
     val project_classes: Array<Int>,
     val project_methods: Array<Int>,
-    val project_fields: Array<Int>,
+    val project_fields: Array<Int>
 
-    ) {
+) {
 
     val magic = 0x3082d75f
     val version = 0x00000001
@@ -235,9 +235,7 @@ class ShakeMap(
             )
         }
     }
-
 }
-
 
 interface ShakeMapConstant {
     val type: ShakeClassConstantTag
@@ -246,9 +244,8 @@ interface ShakeMapConstant {
     fun write(stream: OutputStream) = stream.write(getBytes())
     fun toJson(): Map<String, *>
 
-
     enum class ShakeClassConstantTag(val TAG: Byte) {
-        UTF8(0x01),
+        UTF8(0x01)
         ;
     }
 
@@ -313,7 +310,7 @@ class ShakeMapPackage(
     val package_references: Array<Int>,
     val class_references: Array<Int>,
     val method_references: Array<Int>,
-    val field_references: Array<Int>,
+    val field_references: Array<Int>
 ) {
     fun getBytes(): ByteArray {
         val stream = ByteArrayOutputStream()
@@ -391,10 +388,9 @@ class ShakeMapPackage(
                 package_references_,
                 class_references_,
                 method_references_,
-                field_references_,
+                field_references_
             )
         }
-
     }
 }
 
@@ -530,7 +526,7 @@ class ShakeMapMethod(
     val return_type: Int,
     val parameter_names: Array<Int>,
     val parameter_types: Array<Int>,
-    val expanding: Int,
+    val expanding: Int
 ) {
     val isOperator get() = attributes.bit9
     val isNative get() = attributes.bit8
@@ -566,7 +562,7 @@ class ShakeMapMethod(
         "return_type" to return_type,
         "parameter_names" to parameter_names.map { it },
         "parameter_types" to parameter_types.map { it },
-        "expanding" to expanding,
+        "expanding" to expanding
     )
 
     companion object {
@@ -620,7 +616,7 @@ class ShakeMapMethod(
                 return_type,
                 parameter_names_,
                 parameter_types_,
-                expanding,
+                expanding
             )
         }
     }
@@ -630,7 +626,7 @@ class ShakeMapConstructor(
     val name: Int,
     val attributes: Short,
     val parameter_names: Array<Int>,
-    val parameter_types: Array<Int>,
+    val parameter_types: Array<Int>
 ) {
     val isNative get() = attributes.bit8
     val isStrict: Boolean get() = attributes.bit5
@@ -709,7 +705,7 @@ class ShakeMapField(
     val name: Int,
     val attributes: Short,
     val type: Int,
-    val expanding: Int,
+    val expanding: Int
 ) {
     val isNative get() = attributes.bit8
     val isStatic get() = attributes.bit7
@@ -749,7 +745,7 @@ class ShakeMapField(
                 name,
                 attributes,
                 type,
-                input.readInt(),
+                input.readInt()
             )
         }
 
@@ -774,7 +770,7 @@ class ShakeMapField(
                 name,
                 attributes,
                 type,
-                expanding,
+                expanding
             )
         }
     }
@@ -872,7 +868,6 @@ fun Int.setBit29(value: Boolean): Int = if (value) this or 0x20000000 else this 
 fun Int.setBit30(value: Boolean): Int = if (value) this or 0x40000000 else this and 0xBFFFFFFFu.toInt()
 fun Int.setBit31(value: Boolean): Int = if (value) this or 0x80000000u.toInt() else this and 0x7FFFFFFFu.toInt()
 
-
 class ShakeMapCreator {
 
     val constants = mutableListOf<ShakeMapConstant>()
@@ -894,7 +889,6 @@ class ShakeMapCreator {
     }
 
     fun visit(package_: ShakePackage): Int {
-
         val name = utf8(package_.name)
 
         val packages = mutableListOf<Int>()
@@ -921,7 +915,6 @@ class ShakeMapCreator {
     }
 
     fun visit(class_: ShakeClass): Int {
-
         val name = utf8(class_.name)
         val superclass = if (class_.superClass != null) utf8(class_.superClass!!.qualifiedName) else -1
         val interfaces = class_.interfaces.map { utf8(it.qualifiedName) }.toTypedArray()
@@ -954,7 +947,6 @@ class ShakeMapCreator {
     }
 
     fun visit(method: ShakeMethod): Int {
-
         val name = utf8(method.name)
         val attributes = composeAttributes(method)
         val return_type = utf8(method.returnType.qualifiedName)
@@ -995,7 +987,6 @@ class ShakeMapCreator {
     }
 
     fun visit(field: ShakeField): Int {
-
         val name = utf8(field.name)
         val attributes = composeAttributes(field)
         val type = utf8(field.type.qualifiedName)
@@ -1011,7 +1002,6 @@ class ShakeMapCreator {
         )
 
         return this.fields.size - 1
-
     }
 
     fun utf8(string: String): Int {
@@ -1097,7 +1087,6 @@ class MapAssembledProject(
     override val classes: List<ShakeClass> = classPointers.values()
     override val functions: List<ShakeMethod> = methodPointers.values()
     override val fields: List<ShakeField> = fieldPointers.values()
-
 }
 
 class MapAssembledPackage(
@@ -1164,7 +1153,7 @@ class MapAssembledMethod(
     override val body: ShakeCode? = null,
     override val isNative: Boolean,
     override val isOperator: Boolean,
-    override val expanding: ShakeType?,
+    override val expanding: ShakeType?
 ) : ShakeMethod
 
 class MapAssembledConstructor(
@@ -1177,14 +1166,13 @@ class MapAssembledConstructor(
     override val isPrivate: Boolean,
     override val body: ShakeCode? = null,
     override val isStrict: Boolean,
-    override val isNative: Boolean,
+    override val isNative: Boolean
 ) : ShakeConstructor {
     override var clazz: ShakeClass
         get() = clazz_!!
         set(value) {
             clazz_ = value
         }
-
 }
 
 class MapAssembledField(
@@ -1205,7 +1193,7 @@ class MapAssembledField(
     override val actualType: ShakeType = type,
     override val qualifiedName: String,
     override val initialValue: ShakeValue?,
-    override val expanding: ShakeType?,
+    override val expanding: ShakeType?
 ) : ShakeField
 
 class ShakeAssembledObjectType(
@@ -1220,7 +1208,6 @@ class ShakeAssembledArrayType(
     override val name: String get() = elementType.name
 }
 
-
 class ShakeMapAssembler(val shakeMap: ShakeMap) {
 
     val scopeUnit: ShakeScope = object : ShakeScope {
@@ -1231,7 +1218,6 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
         override fun getInvokable(name: String) = error("Should not be called")
         override fun use(name: String) = error("Should not be called")
     }
-
 
     val project: ShakeProject
 
@@ -1279,7 +1265,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.package_references.map { packagePointers[it] },
                     info.class_references.map { classPointers[it] },
                     info.method_references.map { methodPointers[it] },
-                    info.field_references.map { fieldPointers[it] },
+                    info.field_references.map { fieldPointers[it] }
                 )
             )
         }
@@ -1311,7 +1297,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isPublic,
                     info.isProtected,
                     info.isPrivate,
-                    info.isNative,
+                    info.isNative
                 )
             )
         }
@@ -1326,7 +1312,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
         // set parent classes
         shakeMap.classes.forEachIndexed { i, cls ->
             cls.subclass_references.forEach {
-                //classes[i].parent = classes[it]
+                // classes[i].parent = classes[it]
                 // TODO: implement
             }
         }
@@ -1371,11 +1357,10 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     null,
                     info.isNative,
                     info.isOperator,
-                    if (info.expanding != -1) findType(info.expanding) else null,
+                    if (info.expanding != -1) findType(info.expanding) else null
                 )
             )
         }
-
 
         // set parent packages
         shakeMap.packages.forEachIndexed { i, pkg ->
@@ -1409,7 +1394,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isPrivate,
                     null,
                     info.isStrict,
-                    info.isNative,
+                    info.isNative
                 )
             )
         }
@@ -1442,7 +1427,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     findType(info.type),
                     getUtf(info.name),
                     null,
-                    if (info.expanding != -1) findType(info.expanding) else null,
+                    if (info.expanding != -1) findType(info.expanding) else null
                 )
             )
         }
@@ -1460,7 +1445,6 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                 fields[it].clazz = classes[i]
             }
         }
-
     }
 
     private fun findType(type: String): ShakeType {
@@ -1495,7 +1479,6 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
     }
 
     private fun findType(name: Int) = findType(getUtf(name))
-
 
     private fun getUtf(id: Int): String {
         return (shakeMap.constants[id] as ShakeMapConstant.ShakeUtf8Constant).value
