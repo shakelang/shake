@@ -47,10 +47,11 @@ jobs:
         run: |
           ./gradlew check
 
+      - name: Install @microsoft/sarif-multitool
+        run: npm i -g @microsoft/sarif-multitool
+
       - name: Merge SARIF files
-        run: |
-          npm i -g @microsoft/sarif-multitool
-          npx @microsoft/sarif-multitool merge ./**/*.sarif --recurse true --output-directory=. --output-file=report.sarif
+        run: npx @microsoft/sarif-multitool merge ./**/*.sarif --recurse true --output-directory=. --output-file=report.sarif
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
