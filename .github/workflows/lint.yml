@@ -45,7 +45,7 @@ jobs:
 
       - name: Lint with KtLint
         run: |
-          ./gradlew lint
+          ./gradlew check
 
       - name: Merge SARIF files
         run: |
