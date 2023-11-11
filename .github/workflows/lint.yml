@@ -54,7 +54,8 @@ jobs:
           path: ./build/reports/ktlint/all
 
       - name: Merge SARIF files
-        run: npm i -g @microsoft/sarif-multitool
+        run: |
+          npm i -g @microsoft/sarif-multitool
           chmod +x merge-sarif.sh
           merge-sarif.sh
 
