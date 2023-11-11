@@ -10,7 +10,7 @@ import com.shakelang.shake.util.jvmlib.infos.ClassInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
-import io.github.shakelang.shake.util.shason.json
+import com.shakelang.shake.util.shason.json
 
 class MethodList(val methods: List<MethodInfo>) : List<MethodInfo> by methods, ConstantUser {
 

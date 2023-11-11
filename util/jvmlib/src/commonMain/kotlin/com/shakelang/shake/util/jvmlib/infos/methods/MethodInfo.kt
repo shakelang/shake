@@ -11,7 +11,7 @@ import io.github.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.shake.util.shason.json
+import com.shakelang.shake.util.shason.json
 
 class MethodInfo(
     val accessFlags: UShort,

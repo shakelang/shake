@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.processor.program.types
 
 import io.github.shakelang.shake.processor.program.types.code.ShakeScope
-import io.github.shakelang.shake.util.shason.json
+import com.shakelang.shake.util.shason.json
 
 interface ShakeProject {
     val subpackages: List<ShakePackage>

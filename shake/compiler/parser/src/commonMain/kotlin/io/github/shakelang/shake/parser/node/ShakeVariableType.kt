@@ -12,7 +12,7 @@ open class ShakeVariableType {
         this.type = type
     }
 
-    override fun toString(): String = io.github.shakelang.shake.util.shason.JSON.stringify(this.json)
+    override fun toString(): String = com.shakelang.shake.util.shason.JSON.stringify(this.json)
 
     val json: Map<String, *>
         get() = toJson()

@@ -14,7 +14,7 @@ import io.github.shakelang.shake.util.io.streaming.input.InputStream
 import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import io.github.shakelang.shake.util.io.streaming.output.OutputStream
 import com.shakelang.shake.util.primitives.bytes.toBytes
-import io.github.shakelang.shake.util.shason.json
+import com.shakelang.shake.util.shason.json
 
 class ShakeMap(
 

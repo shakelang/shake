@@ -11,7 +11,7 @@ interface ShakeNode {
 }
 
 abstract class ShakeNodeImpl protected constructor(val map: PositionMap) : ShakeNode {
-    override fun toString(): String = io.github.shakelang.shake.util.shason.JSON.stringify(this.json)
+    override fun toString(): String = com.shakelang.shake.util.shason.JSON.stringify(this.json)
 }
 
 interface ShakeStatementNode : ShakeNode

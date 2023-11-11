@@ -12,7 +12,7 @@ import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.shake.util.shason.json
+import com.shakelang.shake.util.shason.json
 
 class FieldInfo(
     val accessFlags: UShort,

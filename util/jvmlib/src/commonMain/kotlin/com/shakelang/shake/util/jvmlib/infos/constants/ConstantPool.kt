@@ -3,7 +3,7 @@ package com.shakelang.shake.util.jvmlib.infos.constants
 import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
 import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
 import com.shakelang.shake.util.jvmlib.infos.ClassInfo
-import io.github.shakelang.shake.util.shason.json
+import com.shakelang.shake.util.shason.json
 
 class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<ConstantInfo> by constants, ConstantUser {
 
