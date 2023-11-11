@@ -107,7 +107,10 @@ kotlin {
             compilations {
                 "main" {
                     packageJson {
-                        customField("browser", mapOf( "fs" to false, "path" to false, "os" to false, "readline" to false))
+                        customField(
+                            "browser",
+                            mapOf("fs" to false, "path" to false, "os" to false, "readline" to false)
+                        )
                     }
                     kotlinOptions {
                         moduleKind = "commonjs"

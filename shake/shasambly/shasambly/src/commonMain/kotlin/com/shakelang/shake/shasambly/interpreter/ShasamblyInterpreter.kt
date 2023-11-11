@@ -24,7 +24,7 @@ class ShasamblyInterpreter(
         } catch (e: Throwable) {
             throw Error(
                 "Could not execute byte 0x${next.toBytes().toHexString()} " +
-                    "at position 0x${(pos - 16).toBytes().toHexString()} (${pos - 16})",
+                        "at position 0x${(pos - 16).toBytes().toHexString()} (${pos - 16})",
                 e
             )
         }
@@ -205,7 +205,7 @@ class ShasamblyInterpreter(
 
     override fun toString(): String {
         return "ShasablyInterpreter{" +
-            "position=$position," +
-            "memory=${memory.toHexString()}}"
+                "position=$position," +
+                "memory=${memory.toHexString()}}"
     }
 }

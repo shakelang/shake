@@ -17,12 +17,12 @@ class ClassFileReaderTests {
 
         javaLocations = mapOf(
             *(
-                (
-                    subDirs.map {
-                        it.name to it
-                    }
-                    ).toTypedArray()
-                )
+                    (
+                            subDirs.map {
+                                it.name to it
+                            }
+                            ).toTypedArray()
+                    )
         )
     }
 
