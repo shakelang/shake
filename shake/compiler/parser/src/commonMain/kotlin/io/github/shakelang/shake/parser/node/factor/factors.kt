@@ -16,16 +16,13 @@ class ShakeCharacterNode(map: PositionMap, val value: Char) : ShakeValuedNodeImp
     override fun toJson(): Map<String, *> = mapOf("name" to "CharacterNode", "value" to "$value")
 }
 
-
 class ShakeDoubleNode(map: PositionMap, val number: Double) : ShakeValuedNodeImpl(map) {
     override fun toJson(): Map<String, *> = mapOf("name" to "DoubleNode", "value" to number)
 }
 
-
 class ShakeIntegerNode(map: PositionMap, val number: Int) : ShakeValuedNodeImpl(map) {
     override fun toJson(): Map<String, *> = mapOf("name" to "IntegerNode", "value" to number)
 }
-
 
 class ShakePriorityNode(map: PositionMap, val value: ShakeValuedNode) : ShakeValuedNodeImpl(map) {
     override fun toJson(): Map<String, *> = mapOf("name" to "PriorityNode", "value" to value)
