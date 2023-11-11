@@ -38,7 +38,7 @@ plugins {
 
 detekt {
     toolVersion = "1.23.3"
-    config.setFrom(file("config/detekt/detekt.yml"))
+    config.setFrom(rootProject.file("config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
 }
 
@@ -96,7 +96,7 @@ subprojects {
 
     detekt {
         toolVersion = "1.23.3"
-        config.setFrom(file("config/detekt/detekt.yml"))
+        config.setFrom(rootProject.file("config/detekt/detekt.yml"))
         buildUponDefaultConfig = true
     }
 
