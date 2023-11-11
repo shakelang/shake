@@ -262,7 +262,7 @@ abstract class ShasPLexingBase(
     }
 
     inner class LexerError(message: String, name: String, details: String, start: Position, end: Position) :
-        io.github.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
+        com.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
         @JvmOverloads
         constructor(
             name: String,

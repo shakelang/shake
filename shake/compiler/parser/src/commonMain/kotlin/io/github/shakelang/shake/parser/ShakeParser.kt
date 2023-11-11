@@ -1453,7 +1453,7 @@ class ShakeParserImpl(
     // Errors
 
     inner class ParserError(message: String?, name: String?, details: String?, start: Position?, end: Position?) :
-        io.github.shakelang.shake.util.parseutils.CompilerError(
+        com.shakelang.shake.util.parseutils.CompilerError(
             message!!,
             name!!,
             details!!,

@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.util.shason.processing
 
-import io.github.shakelang.shake.util.parseutils.CompilerError
+import com.shakelang.shake.util.parseutils.CompilerError
 import io.github.shakelang.shake.util.parseutils.characters.Characters.isHexCharacter
 import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierCharacter
 import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierStartCharacter
@@ -221,7 +221,7 @@ class JsonLexer(
         details: String,
         start: Position,
         end: Position
-    ) : io.github.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
+    ) : com.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
 
         /**
          * Constructor for [JsonTokenLexerError]
