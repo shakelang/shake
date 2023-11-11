@@ -65,4 +65,4 @@ jobs:
           branch: ktlint-format-${{ github.sha }}
           branch-suffix: timestamp
           delete-branch: true
-          author: github-actions[bot] <actions@github.com>
+          author: shakebot[bot] <150525471+shakelang-bot@users.noreply.github.com>
