@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.js.output
+package com.shakelang.shake.js.output
 
 import io.github.shakelang.shake.util.parseutils.characters.Characters
 

@@ -1,6 +1,7 @@
-package io.github.shakelang.shake.js
+package com.shakelang.shake.js
 
-import io.github.shakelang.shake.js.native.JsNatives
+import com.shakelang.shake.js.native.JsNatives
+import com.shakelang.shake.js.output.*
 import io.github.shakelang.shake.js.output.*
 import io.github.shakelang.shake.processor.program.types.*
 import io.github.shakelang.shake.processor.program.types.code.*

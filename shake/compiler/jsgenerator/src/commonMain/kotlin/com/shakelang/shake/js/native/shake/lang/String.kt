@@ -1,9 +1,10 @@
-package io.github.shakelang.shake.js.native.shake.lang
+package com.shakelang.shake.js.native.shake.lang
 
-import io.github.shakelang.shake.js.ShakeJsGenerator
-import io.github.shakelang.shake.js.native.NativeClass
-import io.github.shakelang.shake.js.native.NativeField
-import io.github.shakelang.shake.js.native.NativeFunction
+import com.shakelang.shake.js.ShakeJsGenerator
+import com.shakelang.shake.js.native.NativeClass
+import com.shakelang.shake.js.native.NativeField
+import com.shakelang.shake.js.native.NativeFunction
+import com.shakelang.shake.js.output.*
 import io.github.shakelang.shake.js.output.*
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeFieldUsage

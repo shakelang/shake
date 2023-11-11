@@ -1,7 +1,7 @@
-package io.github.shakelang.shake.js.native
+package com.shakelang.shake.js.native
 
-import io.github.shakelang.shake.js.output.JsValue
-import io.github.shakelang.shake.js.output.JsValuedStatement
+import com.shakelang.shake.js.output.JsValue
+import com.shakelang.shake.js.output.JsValuedStatement
 import io.github.shakelang.shake.processor.program.types.code.ShakeNew
 
 interface NativeConstructor {

@@ -1,6 +1,6 @@
 package io.github.shakelang.shake
 
-import io.github.shakelang.shake.js.ShakeJsGenerator
+import com.shakelang.shake.js.ShakeJsGenerator
 import io.github.shakelang.shake.processor.ShakePackageBasedProcessor
 import io.github.shakelang.shake.processor.map.ShakeMap
 import com.shakelang.shake.util.shason.json

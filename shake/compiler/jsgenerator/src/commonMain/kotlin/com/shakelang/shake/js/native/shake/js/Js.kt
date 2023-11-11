@@ -1,8 +1,8 @@
-package io.github.shakelang.shake.js.native.shake.js
+package com.shakelang.shake.js.native.shake.js
 
-import io.github.shakelang.shake.js.ShakeJsGenerator
-import io.github.shakelang.shake.js.native.NativeFunction
-import io.github.shakelang.shake.js.output.JsValuedStatement
+import com.shakelang.shake.js.ShakeJsGenerator
+import com.shakelang.shake.js.native.NativeFunction
+import com.shakelang.shake.js.output.JsValuedStatement
 import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeStringLiteral
 

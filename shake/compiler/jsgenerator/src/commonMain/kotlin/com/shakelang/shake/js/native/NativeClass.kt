@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.js.native
+package com.shakelang.shake.js.native
 
 interface NativeClass {
 
