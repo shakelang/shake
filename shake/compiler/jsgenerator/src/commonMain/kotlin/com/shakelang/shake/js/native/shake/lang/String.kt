@@ -5,7 +5,6 @@ import com.shakelang.shake.js.native.NativeClass
 import com.shakelang.shake.js.native.NativeField
 import com.shakelang.shake.js.native.NativeFunction
 import com.shakelang.shake.js.output.*
-import com.shakelang.shake.js.output.*
 import com.shakelang.shake.processor.program.types.code.ShakeInvocation
 import com.shakelang.shake.processor.program.types.code.values.ShakeFieldUsage
 import kotlin.String

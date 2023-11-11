@@ -5,7 +5,7 @@ import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeIfNode
 import com.shakelang.shake.parser.node.ShakeImportNode
-import com.shakelang.shake.parser.node.expression.*
+import com.shakelang.shake.parser.node.expression.ShakeLogicalSmallerNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode

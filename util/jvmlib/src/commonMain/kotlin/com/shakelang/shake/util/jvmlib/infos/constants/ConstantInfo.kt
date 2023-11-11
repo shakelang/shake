@@ -5,7 +5,6 @@ import com.shakelang.shake.util.io.streaming.input.InputStream
 import com.shakelang.shake.util.io.streaming.input.dataStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
-import com.shakelang.shake.util.jvmlib.infos.ClassInfo
 import com.shakelang.shake.util.shason.json
 
 abstract class ConstantInfo {

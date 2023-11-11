@@ -2,7 +2,6 @@ package com.shakelang.shake.js
 
 import com.shakelang.shake.js.native.JsNatives
 import com.shakelang.shake.js.output.*
-import com.shakelang.shake.js.output.*
 import com.shakelang.shake.processor.program.types.*
 import com.shakelang.shake.processor.program.types.code.*
 import com.shakelang.shake.processor.program.types.code.statements.*

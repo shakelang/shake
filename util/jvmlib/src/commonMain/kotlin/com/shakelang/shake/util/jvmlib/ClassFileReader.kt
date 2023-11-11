@@ -3,7 +3,6 @@ package com.shakelang.shake.util.jvmlib
 import com.shakelang.shake.util.io.streaming.input.CountingInputStream
 import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.input.InputStream
-import com.shakelang.shake.util.jvmlib.infos.ClassInfo
 
 object ClassFileReader {
 
