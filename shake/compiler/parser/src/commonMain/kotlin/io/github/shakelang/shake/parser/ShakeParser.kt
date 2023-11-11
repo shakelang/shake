@@ -5,15 +5,11 @@ import io.github.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
 import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.ShakeCharacterNode
-import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.factor.ShakeStringNode
+import io.github.shakelang.shake.parser.node.factor.*
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import io.github.shakelang.shake.parser.node.functions.ShakeReturnNode
-import io.github.shakelang.shake.parser.node.logical.*
 import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import io.github.shakelang.shake.parser.node.loops.ShakeForNode
 import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
@@ -1218,11 +1214,11 @@ class ShakeParserImpl(
         }
         if (token == ShakeTokenType.ADD) {
             input.skip()
-            return ShakeAddNode(map, 0, expectFactor(), input.position)
+            return ShakeUnaryPlusNode(map, expectFactor(), input.position)
         }
         if (token == ShakeTokenType.SUB) {
             input.skip()
-            return ShakeSubNode(map, 0, expectFactor(), input.position)
+            return ShakeUnaryMinusNode(map, expectFactor(), input.position)
         }
         if (token == ShakeTokenType.STRING) {
             input.skip()
@@ -1345,7 +1341,8 @@ class ShakeParserImpl(
         var result = expectLogicalXOr()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LOGICAL_OR) {
             input.skip()
-            result = ShakeLogicalOrNode(map, result, expectLogicalXOr())
+            val pos = input.actualStart
+            result = ShakeLogicalOrNode(map, result, expectLogicalXOr(), pos)
         }
         return result
     }
@@ -1354,7 +1351,8 @@ class ShakeParserImpl(
         var result = expectLogicalAnd()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LOGICAL_XOR) {
             input.skip()
-            result = ShakeLogicalXOrNode(map, result, expectLogicalAnd())
+            val pos = input.actualStart
+            result = ShakeLogicalXOrNode(map, result, expectLogicalAnd(), pos)
         }
         return result
     }
@@ -1363,7 +1361,8 @@ class ShakeParserImpl(
         var result = expectCompare()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LOGICAL_AND) {
             input.skip()
-            result = ShakeLogicalAndNode(map, result, expectCompare())
+            val pos = input.actualStart
+            result = ShakeLogicalAndNode(map, result, expectCompare(), pos)
         }
         return result
     }
@@ -1381,12 +1380,13 @@ class ShakeParserImpl(
                 )
         ) {
             input.skip()
+            val pos = input.actualStart
             left = when (tmpType) {
-                ShakeTokenType.EQ_EQUALS -> return ShakeLogicalEqEqualsNode(map, left, expectLogicalOr())
-                ShakeTokenType.BIGGER_EQUALS -> ShakeLogicalBiggerEqualsNode(map, left, expectLogicalOr())
-                ShakeTokenType.SMALLER_EQUALS -> ShakeLogicalSmallerEqualsNode(map, left, expectLogicalOr())
-                ShakeTokenType.BIGGER -> ShakeLogicalBiggerNode(map, left, expectLogicalOr())
-                else -> ShakeLogicalSmallerNode(map, left, expectLogicalOr())
+                ShakeTokenType.EQ_EQUALS -> return ShakeLogicalEqEqualsNode(map, left, expectLogicalOr(), pos)
+                ShakeTokenType.BIGGER_EQUALS -> ShakeLogicalBiggerEqualsNode(map, left, expectLogicalOr(), pos)
+                ShakeTokenType.SMALLER_EQUALS -> ShakeLogicalSmallerEqualsNode(map, left, expectLogicalOr(), pos)
+                ShakeTokenType.BIGGER -> ShakeLogicalBiggerNode(map, left, expectLogicalOr(), pos)
+                else -> ShakeLogicalSmallerNode(map, left, expectLogicalOr(), pos)
             }
         }
         return left

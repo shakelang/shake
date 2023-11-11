@@ -6,7 +6,7 @@ import io.github.shakelang.shake.parser.node.ShakeIdentifierNode
 import io.github.shakelang.shake.parser.node.ShakeVariableType
 import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.logical.ShakeLogicalTrueNode
+import io.github.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
 import io.github.shakelang.shake.parser.node.variables.*
 import kotlin.test.*
 
