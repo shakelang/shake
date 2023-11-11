@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.cli
+package com.shakelang.shake.cli
 
 import kotlin.jvm.JvmOverloads
 

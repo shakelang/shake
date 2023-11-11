@@ -1,10 +1,10 @@
-package io.github.shakelang.shake.interpreter
+package com.shakelang.shake.interpreter
 
-import io.github.shakelang.shake.interpreter.values.*
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.ShakeVariableType
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import com.shakelang.shake.interpreter.values.*
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass

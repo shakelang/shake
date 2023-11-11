@@ -30,3 +30,4 @@ secrets.properties
 # Mac
 .DS_Store
 report.sarif
+moko-resources-generated.js

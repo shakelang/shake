@@ -60,7 +60,7 @@ kotlin {
 
 application {
     applicationName = "shake"
-    mainClass.set("io.github.shakelang.shake.cli.ShakeCli")
+    mainClass.set("com.shakelang.shake.cli.ShakeCli")
 }
 var classPath: FileCollection? = null
 

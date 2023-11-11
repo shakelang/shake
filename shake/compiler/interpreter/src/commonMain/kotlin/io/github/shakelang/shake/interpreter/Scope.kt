@@ -1,6 +1,6 @@
-package io.github.shakelang.shake.interpreter
+package com.shakelang.shake.interpreter
 
-import io.github.shakelang.shake.interpreter.values.InterpreterValue
+import com.shakelang.shake.interpreter.values.InterpreterValue
 
 /**
  * A scope to keep all the variables inside

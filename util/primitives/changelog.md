@@ -2,4 +2,4 @@
 
 ## 0.1.1 (2023-11-01)
 
-- Move `io.github.shakelang.primitives` to `io.github.shakelang.shake.util.primitives`
+- Move `com.shakelang.primitives` to `com.shakelang.shake.util.primitives`

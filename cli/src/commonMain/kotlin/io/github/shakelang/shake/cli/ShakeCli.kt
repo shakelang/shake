@@ -4,19 +4,19 @@
 
 @file:JvmName("ShakeCli")
 
-package io.github.shakelang.shake.cli
+package com.shakelang.shake.cli
 
-import io.github.shakelang.shake.util.parseutils.File
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
-import io.github.shakelang.shake.interpreter.Interpreter
-import io.github.shakelang.shake.js.ShakeJsGenerator
-import io.github.shakelang.shake.lexer.ShakeLexer
-import io.github.shakelang.shake.parser.ShakeParser
-import io.github.shakelang.shake.parser.node.ShakeBlockNode
-import io.github.shakelang.shake.processor.ShakePackageBasedProcessor
-import io.github.shakelang.shake.util.shason.json
+import com.shakelang.shake.util.parseutils.File
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.shake.interpreter.Interpreter
+import com.shakelang.shake.js.ShakeJsGenerator
+import com.shakelang.shake.lexer.ShakeLexer
+import com.shakelang.shake.parser.ShakeParser
+import com.shakelang.shake.parser.node.ShakeBlockNode
+import com.shakelang.shake.processor.ShakePackageBasedProcessor
+import com.shakelang.shake.util.shason.json
 import kotlin.jvm.JvmName
 
 /**
