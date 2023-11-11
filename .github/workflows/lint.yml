@@ -56,8 +56,8 @@ jobs:
       - name: Merge SARIF files
         run: |
           npm i -g @microsoft/sarif-multitool
-          chmod +x merge-sarif.sh
-          merge-sarif.sh
+          chmod +x ./merge-sarif.sh
+          ./merge-sarif.sh
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
