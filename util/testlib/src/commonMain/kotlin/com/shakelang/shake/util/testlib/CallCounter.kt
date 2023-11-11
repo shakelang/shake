@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.util.testlib
+package com.shakelang.shake.util.testlib
 
 /**
  * A class to count calls
