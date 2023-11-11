@@ -15,6 +15,8 @@ val projectName = name
 kotlin {
     dependencies {
         implementation(gradleApi())
+        implementation(project(":util:colorlib"))
+        implementation(project(":util:shason"))
         testImplementation(kotlin("test"))
     }
 }
