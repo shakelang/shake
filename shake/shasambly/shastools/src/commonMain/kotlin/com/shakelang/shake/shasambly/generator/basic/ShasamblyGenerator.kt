@@ -247,7 +247,7 @@ open class ShasamblyOpcodeGlobAddr(val address: Int) : ShasamblyOpcode {
         if (address !in 0..UShort.MAX_VALUE.toInt()) {
             throw IllegalArgumentException(
                 "Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
-                        " and not below 0x0, but is 0x${address.toBytes().toHexString()}"
+                    " and not below 0x0, but is 0x${address.toBytes().toHexString()}"
             )
         }
     }
@@ -294,7 +294,7 @@ open class ShasamblyOpcodeInvokeNative(val address: Short, val args: ByteArray =
         if (address < 0) {
             throw IllegalArgumentException(
                 "Jump address must not be smaller than 0x0 (is 0x${
-                    address.toBytes().toHexString()
+                address.toBytes().toHexString()
                 })"
             )
         }
@@ -322,7 +322,7 @@ abstract class ShasamblyOpcodeGetLocal(val opcode: Byte, val address: Int) : Sha
         if (address !in 0..UShort.MAX_VALUE.toInt()) {
             throw IllegalArgumentException(
                 "Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
-                        " and not below 0x0, but is 0x${address.toBytes().toHexString()}"
+                    " and not below 0x0, but is 0x${address.toBytes().toHexString()}"
             )
         }
     }
@@ -393,7 +393,7 @@ abstract class ShasamblyOpcodeStoreLocal(val opcode: Byte, val address: Int) : S
         if (address !in 0..UShort.MAX_VALUE.toInt()) {
             throw IllegalArgumentException(
                 "Address must not be bigger then 0x${UShort.MAX_VALUE.toBytes().toHexString()}" +
-                        " and not below 0x0, but is 0x${address.toBytes().toHexString()}"
+                    " and not below 0x0, but is 0x${address.toBytes().toHexString()}"
             )
         }
     }
