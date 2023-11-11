@@ -50,13 +50,27 @@ subprojects {
         }
     }
 
-    tasks.create<Copy>("copyKtlintReports") {
+    tasks.create("copyKtlintSarifReports") {
         group = "verification"
         description = "Copies ktlint reports to build directory"
         dependsOn("ktlintCheck")
-        from("$buildDir/reports/ktlint/ktlintKotlinScriptCheck/ktlintKotlinScriptCheck.sarif")
-        rename { "${path.replace(":", "-").substring(1)}.sarif" }
-        destinationDir = File("${rootProject.buildDir}/reports/ktlint/ktlintKotlinScriptCheck/")
+
+        doLast {
+            copy {
+                from("$buildDir/reports/ktlint/") {
+                    include("**/*.sarif")
+                }
+                rename {
+                    println("${path.replace(":", "-").substring(1)}$it")
+                    "${path.substringBeforeLast(":").replace(":", "-").substring(1)}-$it"
+                }
+                into("${rootProject.buildDir}/reports/ktlint/all/")
+                // Flatten the file tree
+                eachFile {
+                    this.path = this.name
+                }
+            }
+        }
     }
 }
 
@@ -74,7 +88,7 @@ tasks.create("lint") {
     description = "Runs ktlintCheck on all subprojects and copies the reports to build directory"
     dependsOn("ktlintCheck")
     subprojects.forEach {
-        dependsOn("${it.path}:ktlintCheck", "${it.path}:copyKtlintReports")
+        dependsOn("${it.path}:ktlintCheck")
     }
 
     doLast {

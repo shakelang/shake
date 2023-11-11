@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   lint:
-    name: Lint using ktlint
+    name: Format using ktlint
     runs-on: ubuntu-latest
 
     strategy:
@@ -43,7 +43,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Lint with KtLint
+      - name: Format with KtLint
         run: |
           ./gradlew ktlintFormat
 
@@ -57,3 +57,4 @@ jobs:
           branch: ktlint-format-${{ github.sha }}
           branch-suffix: timestamp
           delete-branch: true
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
