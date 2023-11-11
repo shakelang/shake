@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.util.logger
+package com.shakelang.shake.util.logger
 
 object JavaColoredConsoleLogger : LoggerPipe() {
 
