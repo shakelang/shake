@@ -1,10 +1,10 @@
 package com.shakelang.shake.util.shason.processing
 
 import com.shakelang.shake.util.parseutils.CompilerError
-import io.github.shakelang.shake.util.parseutils.characters.Characters
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
-import io.github.shakelang.shake.util.shason.elements.*
-import io.github.shakelang.shake.util.shason.processing.JsonTokenType.*
+import com.shakelang.shake.util.parseutils.characters.Characters
+import com.shakelang.shake.util.parseutils.characters.position.Position
+import com.shakelang.shake.util.shason.elements.*
+import com.shakelang.shake.util.shason.processing.JsonTokenType.*
 
 /**
  * A [JsonParser] creates a [JsonElement] from a [JsonTokenInputStream]

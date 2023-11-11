@@ -2,9 +2,9 @@
 
 package com.shakelang.shake.util.jvmlib.infos.attributes
 
-import io.github.shakelang.shake.util.io.streaming.input.dataStream
-import io.github.shakelang.shake.util.jvmlib.infos.constants.Constant
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.shake.util.io.streaming.input.dataStream
+import com.shakelang.shake.util.jvmlib.infos.constants.Constant
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

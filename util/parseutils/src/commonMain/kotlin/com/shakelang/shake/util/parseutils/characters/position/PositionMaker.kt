@@ -1,6 +1,6 @@
 package com.shakelang.shake.util.parseutils.characters.position
 
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
 
 /**
  * A modifiable [PositionMarker] that stores the positions

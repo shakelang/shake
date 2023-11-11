@@ -1,10 +1,10 @@
 package com.shakelang.shake.util.shason.elements
 
 import com.shakelang.shake.util.shason.JSON
-import io.github.shakelang.shake.util.shason.collection.ListBase
-import io.github.shakelang.shake.util.shason.collection.ListType
-import io.github.shakelang.shake.util.shason.collection.MutableListBase
-import io.github.shakelang.shake.util.shason.collection.MutableListType
+import com.shakelang.shake.util.shason.collection.ListBase
+import com.shakelang.shake.util.shason.collection.ListType
+import com.shakelang.shake.util.shason.collection.MutableListBase
+import com.shakelang.shake.util.shason.collection.MutableListType
 import kotlin.jvm.JvmName
 
 /**

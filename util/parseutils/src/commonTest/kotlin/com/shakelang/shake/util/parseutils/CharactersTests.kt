@@ -1,6 +1,6 @@
 package com.shakelang.shake.util.parseutils
 
-import io.github.shakelang.shake.util.parseutils.characters.Characters
+import com.shakelang.shake.util.parseutils.characters.Characters
 import kotlin.test.*
 
 class CharactersTests {

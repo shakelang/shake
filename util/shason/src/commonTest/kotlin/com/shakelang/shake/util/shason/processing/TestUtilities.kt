@@ -1,7 +1,7 @@
 package com.shakelang.shake.util.shason.processing
 
-import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
-import io.github.shakelang.shake.util.shason.elements.JsonElement
+import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.shake.util.shason.elements.JsonElement
 
 object TestUtilities {
     fun makeTokens(source: String, contents: String): JsonTokenInputStream {

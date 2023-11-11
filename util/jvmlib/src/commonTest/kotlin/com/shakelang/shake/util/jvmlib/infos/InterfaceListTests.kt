@@ -1,9 +1,9 @@
 package com.shakelang.shake.util.jvmlib.infos
 
-import io.github.shakelang.shake.util.io.streaming.input.dataStream
-import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.shake.util.jvmlib.infos.constants.Constant
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.shake.util.io.streaming.input.dataStream
+import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.shake.util.jvmlib.infos.constants.Constant
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

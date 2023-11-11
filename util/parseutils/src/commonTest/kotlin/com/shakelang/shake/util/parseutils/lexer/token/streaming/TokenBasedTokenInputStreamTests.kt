@@ -1,13 +1,13 @@
 package com.shakelang.shake.util.parseutils.lexer.token.streaming
 
-import io.github.shakelang.shake.lexer.token.Token
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
-import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
+import com.shakelang.shake.lexer.token.Token
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import com.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
 import kotlin.test.*
 
 class TokenBasedTokenInputStreamTests {
 
-    enum class TokenType : io.github.shakelang.shake.util.parseutils.lexer.token.TokenType {
+    enum class TokenType : com.shakelang.shake.util.parseutils.lexer.token.TokenType {
         IDENTIFIER, NUMBER, STRING;
 
         override val hasValue: Boolean
@@ -21,7 +21,7 @@ class TokenBasedTokenInputStreamTests {
     class PositionMap(
         override val source: CharacterSource,
         override val lineSeparators: IntArray
-    ) : io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
+    ) : com.shakelang.shake.util.parseutils.characters.position.PositionMap
 
     @Test
     fun testConstruct() {

@@ -2,7 +2,7 @@
 
 ## 0.1.3 (2023-11-01)
 
-- Move `io.github.shakelang.parseutils` to `io.github.shakelang.shake.util.parseutils`
+- Move `com.shakelang.parseutils` to `com.shakelang.shake.util.parseutils`
 
 ## 0.1.2
 

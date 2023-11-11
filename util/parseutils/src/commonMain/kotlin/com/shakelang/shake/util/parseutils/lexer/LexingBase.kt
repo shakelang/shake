@@ -1,9 +1,9 @@
 package com.shakelang.shake.util.parseutils.lexer
 
-import io.github.shakelang.shake.lexer.token.Token
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
+import com.shakelang.shake.lexer.token.Token
+import com.shakelang.shake.util.parseutils.characters.position.Position
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.lexer.token.TokenType
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")

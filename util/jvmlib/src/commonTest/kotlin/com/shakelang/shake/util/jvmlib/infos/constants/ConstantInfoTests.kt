@@ -2,12 +2,12 @@
 
 package com.shakelang.shake.util.jvmlib.infos.constants
 
-import io.github.shakelang.shake.util.io.streaming.input.inputStream
+import com.shakelang.shake.util.io.streaming.input.inputStream
 import com.shakelang.shake.util.jvmlib.infos.ClassInfo
-import io.github.shakelang.shake.util.jvmlib.infos.InterfaceList
-import io.github.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
-import io.github.shakelang.shake.util.jvmlib.infos.fields.FieldList
-import io.github.shakelang.shake.util.jvmlib.infos.methods.MethodList
+import com.shakelang.shake.util.jvmlib.infos.InterfaceList
+import com.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
+import com.shakelang.shake.util.jvmlib.infos.fields.FieldList
+import com.shakelang.shake.util.jvmlib.infos.methods.MethodList
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

@@ -2,9 +2,9 @@ package com.shakelang.shake.util.parseutils
 
 import com.shakelang.shake.util.colorlib.functional.invert
 import com.shakelang.shake.util.colorlib.functional.red
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import com.shakelang.shake.util.parseutils.characters.position.Position
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertSame

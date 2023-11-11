@@ -1,6 +1,6 @@
 package com.shakelang.shake.util.shason.processing
 
-import io.github.shakelang.shake.util.shason.processing.TestUtilities.makeTokens
+import com.shakelang.shake.util.shason.processing.TestUtilities.makeTokens
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertSame

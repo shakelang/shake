@@ -1,12 +1,12 @@
 package com.shakelang.shake.util.shason.processing
 
 import com.shakelang.shake.util.parseutils.CompilerError
-import io.github.shakelang.shake.util.parseutils.characters.Characters.isHexCharacter
-import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierCharacter
-import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierStartCharacter
-import io.github.shakelang.shake.util.parseutils.characters.Characters.isNumberOrDotCharacter
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.characters.Characters.isHexCharacter
+import com.shakelang.shake.util.parseutils.characters.Characters.isIdentifierCharacter
+import com.shakelang.shake.util.parseutils.characters.Characters.isIdentifierStartCharacter
+import com.shakelang.shake.util.parseutils.characters.Characters.isNumberOrDotCharacter
+import com.shakelang.shake.util.parseutils.characters.position.Position
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import kotlin.jvm.JvmOverloads
 
 /**

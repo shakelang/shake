@@ -1,14 +1,14 @@
 package com.shakelang.shake.util.jvmlib.infos
 
-import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
-import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
-import io.github.shakelang.shake.util.io.streaming.output.OutputStream
-import io.github.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantClassInfo
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
-import io.github.shakelang.shake.util.jvmlib.infos.fields.FieldList
-import io.github.shakelang.shake.util.jvmlib.infos.methods.MethodList
+import com.shakelang.shake.util.io.streaming.input.DataInputStream
+import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.shake.util.io.streaming.output.OutputStream
+import com.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantClassInfo
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.shake.util.jvmlib.infos.fields.FieldList
+import com.shakelang.shake.util.jvmlib.infos.methods.MethodList
 import com.shakelang.shake.util.shason.json
 
 class ClassInfo(

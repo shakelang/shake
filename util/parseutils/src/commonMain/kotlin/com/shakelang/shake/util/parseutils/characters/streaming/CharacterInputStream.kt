@@ -1,7 +1,7 @@
 package com.shakelang.shake.util.parseutils.characters.streaming
 
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMaker
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import com.shakelang.shake.util.parseutils.characters.position.PositionMaker
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
 
 /**
  * A [CharacterInputStream] provides the characters for a Lexer

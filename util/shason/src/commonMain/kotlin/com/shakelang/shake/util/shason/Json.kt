@@ -1,10 +1,10 @@
 package com.shakelang.shake.util.shason
 
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
-import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
-import io.github.shakelang.shake.util.shason.processing.JsonGenerator
-import io.github.shakelang.shake.util.shason.processing.JsonLexer
-import io.github.shakelang.shake.util.shason.processing.JsonParser
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.shake.util.shason.processing.JsonGenerator
+import com.shakelang.shake.util.shason.processing.JsonLexer
+import com.shakelang.shake.util.shason.processing.JsonParser
 
 /**
  * Api for processing json

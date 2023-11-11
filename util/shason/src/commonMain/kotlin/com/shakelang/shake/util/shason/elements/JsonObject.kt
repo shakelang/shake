@@ -1,10 +1,10 @@
 package com.shakelang.shake.util.shason.elements
 
 import com.shakelang.shake.util.shason.JSON
-import io.github.shakelang.shake.util.shason.map.MapBase
-import io.github.shakelang.shake.util.shason.map.MapType
-import io.github.shakelang.shake.util.shason.map.MutableMapBase
-import io.github.shakelang.shake.util.shason.map.MutableMapType
+import com.shakelang.shake.util.shason.map.MapBase
+import com.shakelang.shake.util.shason.map.MapType
+import com.shakelang.shake.util.shason.map.MutableMapBase
+import com.shakelang.shake.util.shason.map.MutableMapType
 import kotlin.jvm.JvmName
 
 /**

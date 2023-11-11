@@ -1,8 +1,8 @@
 package com.shakelang.shake.util.parseutils.characters.streaming
 
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMaker
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource.Companion.from
+import com.shakelang.shake.util.parseutils.characters.position.PositionMaker
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource.Companion.from
 
 /**
  * An implementation of [CharacterInputStream] using just a string as argument

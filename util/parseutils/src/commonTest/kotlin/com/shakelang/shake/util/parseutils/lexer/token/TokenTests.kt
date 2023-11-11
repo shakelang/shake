@@ -1,13 +1,13 @@
 package com.shakelang.shake.util.parseutils.lexer.token
 
-import io.github.shakelang.shake.lexer.token.Token
+import com.shakelang.shake.lexer.token.Token
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class TokenTests {
 
-    enum class TokenType : io.github.shakelang.shake.util.parseutils.lexer.token.TokenType {
+    enum class TokenType : com.shakelang.shake.util.parseutils.lexer.token.TokenType {
         IDENTIFIER, NUMBER;
 
         override val hasValue: Boolean

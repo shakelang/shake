@@ -1,12 +1,12 @@
 package com.shakelang.shake.util.jvmlib.infos.attributes
 
-import io.github.shakelang.shake.util.io.streaming.input.ByteArrayInputStream
-import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
-import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.shake.util.io.streaming.input.ByteArrayInputStream
+import com.shakelang.shake.util.io.streaming.input.DataInputStream
+import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 import com.shakelang.shake.util.jvmlib.infos.ClassInfo
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
 import com.shakelang.shake.util.primitives.bytes.setBytes
 import com.shakelang.shake.util.primitives.bytes.setInt
 import com.shakelang.shake.util.primitives.bytes.setUnsignedShort

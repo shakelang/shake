@@ -1,15 +1,15 @@
 package com.shakelang.shake.util.jvmlib.infos
 
-import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
-import io.github.shakelang.shake.util.io.streaming.input.InputStream
-import io.github.shakelang.shake.util.io.streaming.input.dataStream
-import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
-import io.github.shakelang.shake.util.io.streaming.output.OutputStream
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
-import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
+import com.shakelang.shake.util.io.streaming.input.DataInputStream
+import com.shakelang.shake.util.io.streaming.input.InputStream
+import com.shakelang.shake.util.io.streaming.input.dataStream
+import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.shake.util.io.streaming.output.OutputStream
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
+import com.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
 import com.shakelang.shake.util.shason.json
 
 class InterfaceList(val interfaces: List<ConstantUtf8Info>) : List<ConstantUtf8Info> by interfaces, ConstantUser {

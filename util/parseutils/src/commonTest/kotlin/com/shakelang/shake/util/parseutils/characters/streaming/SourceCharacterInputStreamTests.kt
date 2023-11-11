@@ -1,6 +1,6 @@
 package com.shakelang.shake.util.parseutils.characters.streaming
 
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
