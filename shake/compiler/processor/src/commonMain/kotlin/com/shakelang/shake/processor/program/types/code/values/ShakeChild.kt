@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.types.code.values
 
-import io.github.shakelang.shake.processor.program.types.ShakeAssignable
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.ShakeAssignable
+import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 interface ShakeChild : ShakeAssignable {
 

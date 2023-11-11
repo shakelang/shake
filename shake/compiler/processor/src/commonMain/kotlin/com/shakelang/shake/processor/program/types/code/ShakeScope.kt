@@ -1,8 +1,8 @@
 package com.shakelang.shake.processor.program.types.code
 
-import io.github.shakelang.shake.processor.program.types.ShakeAssignable
-import io.github.shakelang.shake.processor.program.types.ShakeClass
-import io.github.shakelang.shake.processor.program.types.ShakeMethod
+import com.shakelang.shake.processor.program.types.ShakeAssignable
+import com.shakelang.shake.processor.program.types.ShakeClass
+import com.shakelang.shake.processor.program.types.ShakeMethod
 
 interface ShakeScope {
     val parent: ShakeScope?

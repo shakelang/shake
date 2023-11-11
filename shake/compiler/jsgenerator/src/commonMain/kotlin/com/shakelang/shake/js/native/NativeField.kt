@@ -2,7 +2,7 @@ package com.shakelang.shake.js.native
 
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.js.output.JsValue
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeFieldUsage
+import com.shakelang.shake.processor.program.types.code.values.ShakeFieldUsage
 
 interface NativeField {
 

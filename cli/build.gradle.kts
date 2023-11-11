@@ -33,7 +33,7 @@ tasks.test {
     maxHeapSize = "1G"
     // ignoreFailures = true
     filter {
-        includeTestsMatching("io.github.shakelang.shake.*")
+        includeTestsMatching("com.shakelang.shake.*")
     }
 }
 

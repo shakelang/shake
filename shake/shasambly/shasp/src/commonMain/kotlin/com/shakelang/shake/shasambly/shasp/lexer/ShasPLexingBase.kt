@@ -1,10 +1,10 @@
 package com.shakelang.shake.shasambly.shasp.lexer
 
-import io.github.shakelang.shake.lexer.token.ShasPToken
-import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
-import io.github.shakelang.shake.util.parseutils.characters.Characters
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.lexer.token.ShasPToken
+import com.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
+import com.shakelang.shake.util.parseutils.characters.Characters
+import com.shakelang.shake.util.parseutils.characters.position.Position
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import kotlin.jvm.JvmOverloads
 
 abstract class ShasPLexingBase(

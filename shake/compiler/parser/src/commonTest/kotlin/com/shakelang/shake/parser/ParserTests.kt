@@ -1,18 +1,18 @@
 package com.shakelang.shake.parser
 
-import io.github.shakelang.shake.assertArrayEquals
-import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.ShakeBlockNode
-import io.github.shakelang.shake.parser.node.ShakeIfNode
-import io.github.shakelang.shake.parser.node.ShakeImportNode
-import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
-import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import io.github.shakelang.shake.parser.node.loops.ShakeForNode
-import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
+import com.shakelang.shake.assertArrayEquals
+import com.shakelang.shake.assertType
+import com.shakelang.shake.parser.node.ShakeBlockNode
+import com.shakelang.shake.parser.node.ShakeIfNode
+import com.shakelang.shake.parser.node.ShakeImportNode
+import com.shakelang.shake.parser.node.expression.*
+import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
+import com.shakelang.shake.parser.node.loops.ShakeForNode
+import com.shakelang.shake.parser.node.loops.ShakeWhileNode
+import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
 import kotlin.test.*
 
 class ParserTests {
@@ -22,14 +22,14 @@ class ParserTests {
         assertEquals(1, node.children.size)
         assertType(ShakeImportNode::class, node.children[0])
         assertArrayEquals(arrayOf("com"), (node.children[0] as ShakeImportNode).import)
-        node = ParserTestUtil.parse("<ImportTest>", "import io.github.shakelang.shake;")
+        node = ParserTestUtil.parse("<ImportTest>", "import com.shakelang.shake;")
         assertEquals(1, node.children.size)
         assertType(ShakeImportNode::class, node.children[0])
         assertArrayEquals(
             arrayOf("io", "github", "shakelang", "shake"),
             (node.children[0] as ShakeImportNode).import
         )
-        node = ParserTestUtil.parse("<ImportTest>", "import io.github.shakelang.shake.*;")
+        node = ParserTestUtil.parse("<ImportTest>", "import com.shakelang.shake.*;")
         assertEquals(1, node.children.size)
         assertType(ShakeImportNode::class, node.children[0])
         assertArrayEquals(

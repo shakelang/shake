@@ -1,8 +1,8 @@
 package com.shakelang.shake.parser
 
-import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import com.shakelang.shake.assertType
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import kotlin.test.*
 
 class ConstructorTests {

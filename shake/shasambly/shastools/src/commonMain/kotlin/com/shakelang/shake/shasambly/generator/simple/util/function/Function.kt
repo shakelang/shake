@@ -2,12 +2,12 @@
 
 package com.shakelang.shake.shasambly.generator.simple.util.function
 
-import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcode
-import io.github.shakelang.shake.shasambly.generator.basic.ShasamblyOpcodeJumpStaticToIndex
-import io.github.shakelang.shake.shasambly.generator.simple.RelativeShasamblyGeneratorPart
-import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
-import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGenerator
-import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGeneratorFunction
+import com.shakelang.shake.shasambly.generator.basic.ShasamblyOpcode
+import com.shakelang.shake.shasambly.generator.basic.ShasamblyOpcodeJumpStaticToIndex
+import com.shakelang.shake.shasambly.generator.simple.RelativeShasamblyGeneratorPart
+import com.shakelang.shake.shasambly.generator.simple.SimpleShasambly
+import com.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGenerator
+import com.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGeneratorFunction
 import com.shakelang.shake.util.primitives.bytes.removeLastByte
 import com.shakelang.shake.util.primitives.bytes.removeLastInt
 import com.shakelang.shake.util.primitives.bytes.removeLastLong

@@ -1,7 +1,7 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
-group = "io.github.shakelang.shake"
+group = "com.shakelang.shake"
 version = "0.1.0"
 description = "Shake"
 

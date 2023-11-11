@@ -1,6 +1,6 @@
 package com.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.processor.program.types.ShakeParameter
+import com.shakelang.shake.processor.program.types.ShakeParameter
 
 class CreationShakeParameter(
     override val name: String

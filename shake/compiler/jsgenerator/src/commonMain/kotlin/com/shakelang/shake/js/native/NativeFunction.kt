@@ -4,7 +4,7 @@ import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.js.output.JsStatement
 import com.shakelang.shake.js.output.JsValue
 import com.shakelang.shake.js.output.JsValuedStatement
-import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
+import com.shakelang.shake.processor.program.types.code.ShakeInvocation
 
 interface NativeFunction {
 

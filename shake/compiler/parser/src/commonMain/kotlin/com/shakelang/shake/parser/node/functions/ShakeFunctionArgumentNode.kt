@@ -1,9 +1,9 @@
 package com.shakelang.shake.parser.node.functions
 
-import io.github.shakelang.shake.parser.node.ShakeNodeImpl
-import io.github.shakelang.shake.parser.node.ShakeValuedNode
-import io.github.shakelang.shake.parser.node.ShakeVariableType
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.parser.node.ShakeNodeImpl
+import com.shakelang.shake.parser.node.ShakeValuedNode
+import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.jvm.JvmOverloads
 
 class ShakeFunctionArgumentNode @JvmOverloads constructor(

@@ -1,7 +1,7 @@
 package com.shakelang.shake.shasambly
 
-import io.github.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
-import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+import com.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
+import com.shakelang.shake.shasambly.interpreter.natives.Natives
 import java.io.File
 import java.io.FileInputStream
 import kotlin.system.exitProcess

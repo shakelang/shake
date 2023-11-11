@@ -2,18 +2,18 @@
 
 package com.shakelang.shake.shasambly.generator.shas
 
-import io.github.shakelang.shake.shasambly.interpreter.Opcodes
-import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
-import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
-import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.shake.util.io.streaming.output.DataOutputStream
-import io.github.shakelang.shake.util.io.streaming.output.OutputStream
-import io.github.shakelang.shake.util.parseutils.characters.Characters.isHexCharacter
-import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierCharacter
-import io.github.shakelang.shake.util.parseutils.characters.Characters.isIdentifierStartCharacter
-import io.github.shakelang.shake.util.parseutils.characters.Characters.isNumberCharacter
-import io.github.shakelang.shake.util.parseutils.characters.Characters.isNumberOrDotCharacter
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.shasambly.interpreter.Opcodes
+import com.shakelang.shake.shasambly.interpreter.natives.Natives
+import com.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
+import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.shake.util.io.streaming.output.OutputStream
+import com.shakelang.shake.util.parseutils.characters.Characters.isHexCharacter
+import com.shakelang.shake.util.parseutils.characters.Characters.isIdentifierCharacter
+import com.shakelang.shake.util.parseutils.characters.Characters.isIdentifierStartCharacter
+import com.shakelang.shake.util.parseutils.characters.Characters.isNumberCharacter
+import com.shakelang.shake.util.parseutils.characters.Characters.isNumberOrDotCharacter
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 
 class ShasCompiler(private val input: CharacterInputStream) {
 

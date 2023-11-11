@@ -1,12 +1,12 @@
 package com.shakelang.shake.processor.program.creation.code.values
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeDeclaration
-import io.github.shakelang.shake.processor.program.creation.CreationShakeField
-import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
-import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
-import io.github.shakelang.shake.processor.program.types.ShakeProject
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.values.*
+import com.shakelang.shake.processor.program.creation.CreationShakeDeclaration
+import com.shakelang.shake.processor.program.creation.CreationShakeField
+import com.shakelang.shake.processor.program.creation.CreationShakeScope
+import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+import com.shakelang.shake.processor.program.types.ShakeProject
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.values.*
 
 abstract class CreationShakeUsage : CreationShakeValue, ShakeUsage {
     abstract override val scope: CreationShakeScope

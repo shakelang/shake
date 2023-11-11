@@ -1,10 +1,10 @@
 package com.shakelang.shake.shasambly
 
-import io.github.shakelang.shake.shasambly.shasp.generator.ShasPShasamblyGenerator
-import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexer
-import io.github.shakelang.shake.shasambly.shasp.parser.ShasPParser
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
-import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.shake.shasambly.shasp.generator.ShasPShasamblyGenerator
+import com.shakelang.shake.shasambly.shasp.lexer.ShasPLexer
+import com.shakelang.shake.shasambly.shasp.parser.ShasPParser
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream

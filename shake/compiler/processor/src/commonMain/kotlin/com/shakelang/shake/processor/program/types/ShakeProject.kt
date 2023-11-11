@@ -1,6 +1,6 @@
 package com.shakelang.shake.processor.program.types
 
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.code.ShakeScope
 import com.shakelang.shake.util.shason.json
 
 interface ShakeProject {

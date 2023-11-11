@@ -1,18 +1,18 @@
 package com.shakelang.shake.processor.map
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
-import io.github.shakelang.shake.processor.program.types.*
-import io.github.shakelang.shake.processor.program.types.code.ShakeCode
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
-import io.github.shakelang.shake.processor.util.PointerList
-import io.github.shakelang.shake.processor.util.latePoint
-import io.github.shakelang.shake.processor.util.values
-import io.github.shakelang.shake.util.io.streaming.input.ByteArrayInputStream
-import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
-import io.github.shakelang.shake.util.io.streaming.input.InputStream
-import io.github.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import io.github.shakelang.shake.util.io.streaming.output.OutputStream
+import com.shakelang.shake.processor.program.creation.CreationShakeType
+import com.shakelang.shake.processor.program.types.*
+import com.shakelang.shake.processor.program.types.code.ShakeCode
+import com.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.code.values.ShakeValue
+import com.shakelang.shake.processor.util.PointerList
+import com.shakelang.shake.processor.util.latePoint
+import com.shakelang.shake.processor.util.values
+import com.shakelang.shake.util.io.streaming.input.ByteArrayInputStream
+import com.shakelang.shake.util.io.streaming.input.DataInputStream
+import com.shakelang.shake.util.io.streaming.input.InputStream
+import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.shake.util.io.streaming.output.OutputStream
 import com.shakelang.shake.util.primitives.bytes.toBytes
 import com.shakelang.shake.util.shason.json
 

@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 abstract class CreationShakeType(
     override val name: String

@@ -2,8 +2,8 @@ package com.shakelang.shake.lexer.token.stream
 
 import com.shakelang.shake.lexer.ShakeLexingBase
 import com.shakelang.shake.lexer.token.ShakeToken
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 
 class ShakeOnDemandLexingTokenInputStream(inputStream: CharacterInputStream) :
     ShakeLexingBase(inputStream),

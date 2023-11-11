@@ -1,9 +1,9 @@
 package com.shakelang.shake.processor.program.creation.code
 
-import io.github.shakelang.shake.parser.node.ShakeBlockNode
-import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
-import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
-import io.github.shakelang.shake.processor.program.types.code.ShakeCode
+import com.shakelang.shake.parser.node.ShakeBlockNode
+import com.shakelang.shake.processor.program.creation.CreationShakeScope
+import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
+import com.shakelang.shake.processor.program.types.code.ShakeCode
 
 open class CreationShakeCode(
     override val statements: List<CreationShakeStatement>

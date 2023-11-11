@@ -1,11 +1,11 @@
 package com.shakelang.shake.processor.program.creation.code
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeAssignable
-import io.github.shakelang.shake.processor.program.creation.CreationShakeProject
-import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.*
+import com.shakelang.shake.processor.program.creation.CreationShakeAssignable
+import com.shakelang.shake.processor.program.creation.CreationShakeProject
+import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.*
 
 open class CreationShakeAssignment(
     override val project: CreationShakeProject,

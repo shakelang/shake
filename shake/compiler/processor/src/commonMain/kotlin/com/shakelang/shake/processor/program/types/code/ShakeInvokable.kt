@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.types.code
 
-import io.github.shakelang.shake.processor.program.types.ShakeParameter
-import io.github.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.ShakeParameter
+import com.shakelang.shake.processor.program.types.ShakeType
 
 interface ShakeInvokable {
     val body: ShakeCode?

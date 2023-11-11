@@ -1,10 +1,10 @@
 package com.shakelang.shake.parser.node.objects
 
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.ShakeBlockNode
-import io.github.shakelang.shake.parser.node.ShakeValuedNodeImpl
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.ShakeBlockNode
+import com.shakelang.shake.parser.node.ShakeValuedNodeImpl
+import com.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")

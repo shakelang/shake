@@ -1,11 +1,11 @@
 package com.shakelang.shake.parser
 
-import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.ShakeVariableType
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import io.github.shakelang.shake.parser.node.functions.ShakeReturnNode
+import com.shakelang.shake.assertType
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.functions.ShakeReturnNode
 import kotlin.test.*
 
 class FunctionTests {

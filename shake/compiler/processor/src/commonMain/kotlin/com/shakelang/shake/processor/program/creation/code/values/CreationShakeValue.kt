@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.creation.code.values
 
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 interface CreationShakeValue : ShakeValue {
     override val type: ShakeType

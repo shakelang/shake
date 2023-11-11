@@ -1,6 +1,6 @@
 package com.shakelang.shake.shasambly
 
-import io.github.shakelang.shake.shasambly.generator.shas.ShasGenerator
+import com.shakelang.shake.shasambly.generator.shas.ShasGenerator
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream

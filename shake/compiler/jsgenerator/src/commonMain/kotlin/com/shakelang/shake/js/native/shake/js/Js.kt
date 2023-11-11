@@ -3,8 +3,8 @@ package com.shakelang.shake.js.native.shake.js
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.js.native.NativeFunction
 import com.shakelang.shake.js.output.JsValuedStatement
-import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeStringLiteral
+import com.shakelang.shake.processor.program.types.code.ShakeInvocation
+import com.shakelang.shake.processor.program.types.code.values.ShakeStringLiteral
 
 class Js : NativeFunction {
 

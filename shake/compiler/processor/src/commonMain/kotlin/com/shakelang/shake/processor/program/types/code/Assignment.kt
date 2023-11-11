@@ -1,8 +1,8 @@
 package com.shakelang.shake.processor.program.types.code
 
-import io.github.shakelang.shake.processor.program.types.ShakeAssignable
-import io.github.shakelang.shake.processor.program.types.code.statements.ShakeStatement
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
+import com.shakelang.shake.processor.program.types.ShakeAssignable
+import com.shakelang.shake.processor.program.types.code.statements.ShakeStatement
+import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 interface ShakeAssignmentType : ShakeValue, ShakeStatement {
     val variable: ShakeAssignable

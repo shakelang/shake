@@ -1,9 +1,9 @@
 package com.shakelang.shake.parser
 
-import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import com.shakelang.shake.assertType
+import com.shakelang.shake.parser.node.expression.*
+import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
+import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals

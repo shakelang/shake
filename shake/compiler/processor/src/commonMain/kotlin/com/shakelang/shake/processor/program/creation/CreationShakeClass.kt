@@ -1,10 +1,10 @@
 package com.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import io.github.shakelang.shake.processor.ShakeCodeProcessor
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
-import io.github.shakelang.shake.processor.program.types.ShakeClass
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import com.shakelang.shake.processor.ShakeCodeProcessor
+import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
+import com.shakelang.shake.processor.program.types.ShakeClass
 
 class CreationShakeClass : ShakeClass {
     override val staticScope: StaticScope

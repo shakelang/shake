@@ -1,13 +1,13 @@
 package com.shakelang.shake.parser
 
-import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.ShakeIdentifierNode
-import io.github.shakelang.shake.parser.node.ShakeVariableType
-import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
-import io.github.shakelang.shake.parser.node.variables.*
+import com.shakelang.shake.assertType
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.ShakeIdentifierNode
+import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
+import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
+import com.shakelang.shake.parser.node.variables.*
 import kotlin.test.*
 
 class VariableTests {

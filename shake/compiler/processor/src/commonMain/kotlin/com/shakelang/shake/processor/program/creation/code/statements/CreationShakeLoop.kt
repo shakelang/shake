@@ -1,10 +1,10 @@
 package com.shakelang.shake.processor.program.creation.code.statements
 
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
-import io.github.shakelang.shake.processor.program.types.code.statements.ShakeDoWhile
-import io.github.shakelang.shake.processor.program.types.code.statements.ShakeFor
-import io.github.shakelang.shake.processor.program.types.code.statements.ShakeWhile
+import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import com.shakelang.shake.processor.program.types.code.statements.ShakeDoWhile
+import com.shakelang.shake.processor.program.types.code.statements.ShakeFor
+import com.shakelang.shake.processor.program.types.code.statements.ShakeWhile
 
 class CreationShakeWhile(
     override val condition: CreationShakeValue,

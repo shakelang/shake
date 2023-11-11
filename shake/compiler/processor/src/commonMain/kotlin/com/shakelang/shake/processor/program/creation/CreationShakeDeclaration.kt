@@ -1,8 +1,8 @@
 package com.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
-import io.github.shakelang.shake.processor.program.types.ShakeDeclaration
-import io.github.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
+import com.shakelang.shake.processor.program.types.ShakeDeclaration
+import com.shakelang.shake.processor.program.types.ShakeType
 
 interface CreationShakeDeclaration : ShakeDeclaration {
     override val name: String

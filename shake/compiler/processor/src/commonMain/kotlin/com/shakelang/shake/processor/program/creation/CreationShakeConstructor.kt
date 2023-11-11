@@ -1,9 +1,9 @@
 package com.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.processor.ShakeCodeProcessor
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
-import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
-import io.github.shakelang.shake.processor.program.types.ShakeConstructor
+import com.shakelang.shake.processor.ShakeCodeProcessor
+import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
+import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
+import com.shakelang.shake.processor.program.types.ShakeConstructor
 
 open class CreationShakeConstructor(
     override val clazz: CreationShakeClass,

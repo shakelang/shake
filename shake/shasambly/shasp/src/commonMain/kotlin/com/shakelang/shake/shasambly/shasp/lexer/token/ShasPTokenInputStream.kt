@@ -2,12 +2,12 @@
 
 package com.shakelang.shake.shasambly.shasp.lexer.token
 
-import io.github.shakelang.shake.lexer.token.ShasPToken
-import io.github.shakelang.shake.shasambly.shasp.lexer.ShasPLexingBase
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
-import io.github.shakelang.shake.util.parseutils.lexer.token.stream.TokenInputStream
+import com.shakelang.shake.lexer.token.ShasPToken
+import com.shakelang.shake.shasambly.shasp.lexer.ShasPLexingBase
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.lexer.token.stream.TokenBasedTokenInputStream
+import com.shakelang.shake.util.parseutils.lexer.token.stream.TokenInputStream
 
 /**
  * A [ShasPTokenInputStream] provides the [ShasPToken]s for a Parser. It is

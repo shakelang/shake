@@ -1,10 +1,10 @@
-package io.github.shakelang.shake.interpreter.values
+package com.shakelang.shake.interpreter.values
 
-import io.github.shakelang.shake.interpreter.Scope
-import io.github.shakelang.shake.interpreter.UnformattedInterpreterError
-import io.github.shakelang.shake.interpreter.Variable
-import io.github.shakelang.shake.interpreter.VariableList
-import io.github.shakelang.shake.interpreter.VariableList.ScopeVariableList
+import com.shakelang.shake.interpreter.Scope
+import com.shakelang.shake.interpreter.UnformattedInterpreterError
+import com.shakelang.shake.interpreter.Variable
+import com.shakelang.shake.interpreter.VariableList
+import com.shakelang.shake.interpreter.VariableList.ScopeVariableList
 
 /**
  * [InterpreterValue] to store objects

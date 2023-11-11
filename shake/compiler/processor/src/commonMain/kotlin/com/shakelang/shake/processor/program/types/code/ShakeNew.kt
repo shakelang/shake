@@ -1,8 +1,8 @@
 package com.shakelang.shake.processor.program.types.code
 
-import io.github.shakelang.shake.processor.program.types.ShakeConstructor
-import io.github.shakelang.shake.processor.program.types.code.statements.ShakeStatement
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
+import com.shakelang.shake.processor.program.types.ShakeConstructor
+import com.shakelang.shake.processor.program.types.code.statements.ShakeStatement
+import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 interface ShakeNew : ShakeValue, ShakeStatement {
 

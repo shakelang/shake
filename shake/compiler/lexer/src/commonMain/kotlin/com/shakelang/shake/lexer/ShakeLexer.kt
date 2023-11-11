@@ -3,7 +3,7 @@ package com.shakelang.shake.lexer
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.stream.ShakeOnDemandLexingTokenInputStream
 import com.shakelang.shake.lexer.token.stream.ShakeTokenBasedTokenInputStream
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 
 class ShakeLexer(
     input: CharacterInputStream

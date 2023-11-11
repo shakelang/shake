@@ -2,8 +2,8 @@
 
 package com.shakelang.shake.shasambly.generator.simple
 
-import io.github.shakelang.shake.shasambly.generator.basic.*
-import io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+import com.shakelang.shake.shasambly.generator.basic.*
+import com.shakelang.shake.shasambly.interpreter.natives.Natives
 import com.shakelang.shake.util.primitives.bytes.toBytes
 
 typealias SimpleShasamblyGeneratorFunction = SimpleShasambly.() -> Unit

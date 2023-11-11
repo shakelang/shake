@@ -1,6 +1,6 @@
 package com.shakelang.shake.parser.node
 
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 class ShakeTypeArgumentsNode(
 

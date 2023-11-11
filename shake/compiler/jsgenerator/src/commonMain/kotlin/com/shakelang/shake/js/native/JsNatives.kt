@@ -2,14 +2,14 @@ package com.shakelang.shake.js.native
 
 import com.shakelang.shake.js.native.shake.js.Js
 import com.shakelang.shake.js.native.shake.lang.Number
-import io.github.shakelang.shake.processor.program.types.ShakeClass
-import io.github.shakelang.shake.processor.program.types.ShakeMethod
+import com.shakelang.shake.processor.program.types.ShakeClass
+import com.shakelang.shake.processor.program.types.ShakeMethod
 
 object JsNatives {
 
     val nativeClasses = listOf<NativeClass>(
         com.shakelang.shake.js.native.shake.lang.String()
-        // io.github.shakelang.shake.js.native.shake.lang.Object(),
+        // com.shakelang.shake.js.native.shake.lang.Object(),
     )
 
     val nativeFunctions = listOf(

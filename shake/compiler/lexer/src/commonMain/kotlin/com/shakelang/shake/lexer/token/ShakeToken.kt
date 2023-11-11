@@ -1,7 +1,7 @@
 package com.shakelang.shake.lexer.token
 
 /**
- * The input of the [io.github.shakelang.shake.lexer.ShakeLexer] gets converted into [ShakeToken]s. These get parsed
+ * The input of the [com.shakelang.shake.lexer.ShakeLexer] gets converted into [ShakeToken]s. These get parsed
  * by the parser
  */
 class ShakeToken : Token<ShakeTokenType> {

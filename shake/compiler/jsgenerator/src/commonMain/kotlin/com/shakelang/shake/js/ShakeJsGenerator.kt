@@ -2,11 +2,11 @@ package com.shakelang.shake.js
 
 import com.shakelang.shake.js.native.JsNatives
 import com.shakelang.shake.js.output.*
-import io.github.shakelang.shake.js.output.*
-import io.github.shakelang.shake.processor.program.types.*
-import io.github.shakelang.shake.processor.program.types.code.*
-import io.github.shakelang.shake.processor.program.types.code.statements.*
-import io.github.shakelang.shake.processor.program.types.code.values.*
+import com.shakelang.shake.js.output.*
+import com.shakelang.shake.processor.program.types.*
+import com.shakelang.shake.processor.program.types.code.*
+import com.shakelang.shake.processor.program.types.code.statements.*
+import com.shakelang.shake.processor.program.types.code.values.*
 
 class ShakeJsGenerator {
 

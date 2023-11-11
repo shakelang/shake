@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.shasambly.interpreter.natives
 
-import io.github.shakelang.shake.shasambly.interpreter.ShasamblyOpcodeExecutor
+import com.shakelang.shake.shasambly.interpreter.ShasamblyOpcodeExecutor
 import com.shakelang.shake.util.primitives.bytes.getByte
 import com.shakelang.shake.util.primitives.bytes.getInt
 import com.shakelang.shake.util.primitives.bytes.getLong

@@ -1,7 +1,7 @@
 package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.ShakeParserImpl.ParserError
-import io.github.shakelang.shake.parser.node.ShakeIfNode
+import com.shakelang.shake.parser.node.ShakeIfNode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith

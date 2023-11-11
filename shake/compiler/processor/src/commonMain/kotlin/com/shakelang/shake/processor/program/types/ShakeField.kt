@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.types
 
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
+import com.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 interface ShakeField : ShakeDeclaration, ShakeAssignable {
     val project: ShakeProject

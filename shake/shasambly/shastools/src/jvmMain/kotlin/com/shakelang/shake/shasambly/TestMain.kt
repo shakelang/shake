@@ -1,10 +1,10 @@
 package com.shakelang.shake.shasambly
 
-import io.github.shakelang.shake.shasambly.generator.shas.ShasGenerator
-import io.github.shakelang.shake.shasambly.generator.simple.shasambly
-import io.github.shakelang.shake.shasambly.generator.simple.util.function.declareRoutine
-import io.github.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
-import io.github.shakelang.shake.util.io.streaming.input.inputStream
+import com.shakelang.shake.shasambly.generator.shas.ShasGenerator
+import com.shakelang.shake.shasambly.generator.simple.shasambly
+import com.shakelang.shake.shasambly.generator.simple.util.function.declareRoutine
+import com.shakelang.shake.shasambly.interpreter.ShasamblyInterpreter
+import com.shakelang.shake.util.io.streaming.input.inputStream
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream

@@ -3,8 +3,8 @@ package com.shakelang.shake.js.native.shake.lang
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.js.native.NativeFunction
 import com.shakelang.shake.js.output.*
-import io.github.shakelang.shake.js.output.*
-import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
+import com.shakelang.shake.js.output.*
+import com.shakelang.shake.processor.program.types.code.ShakeInvocation
 import kotlin.String
 
 object Number {

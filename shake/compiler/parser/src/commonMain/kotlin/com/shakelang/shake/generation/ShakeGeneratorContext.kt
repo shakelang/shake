@@ -1,19 +1,19 @@
 package com.shakelang.shake.generation
 
-import io.github.shakelang.shake.parser.node.*
-import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
-import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.factor.ShakeLogicalFalseNode
-import io.github.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import io.github.shakelang.shake.parser.node.loops.ShakeForNode
-import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import io.github.shakelang.shake.parser.node.variables.*
+import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.parser.node.expression.*
+import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
+import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import com.shakelang.shake.parser.node.factor.ShakeLogicalFalseNode
+import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
+import com.shakelang.shake.parser.node.loops.ShakeForNode
+import com.shakelang.shake.parser.node.loops.ShakeWhileNode
+import com.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import com.shakelang.shake.parser.node.variables.*
 
 @Suppress("unused")
 abstract class ShakeGeneratorContext<T, C> : com.shakelang.shake.generation.ShakeGeneratorBase {

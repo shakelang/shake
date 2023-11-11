@@ -77,32 +77,32 @@ var classPath: FileCollection? = null
 val startScripts = tasks.named<CreateStartScripts>("startScripts") {
     applicationName = "shasx"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasXKt"
+    mainClassName = "com.shakelang.shake.shasambly.ShasXKt"
     classPath = classpath
     dependsOn(startScriptShasB, startScriptShasC, startScriptShasG, startScriptShasP)
 }
 val startScriptShasB by tasks.register<CreateStartScripts>("startScriptShasB") {
     applicationName = "shasb"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasBeautifyKt"
+    mainClassName = "com.shakelang.shake.shasambly.ShasBeautifyKt"
     classpath = classPath
 }
 val startScriptShasC by tasks.register<CreateStartScripts>("startScriptShasC") {
     applicationName = "shasc"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasCompileKt"
+    mainClassName = "com.shakelang.shake.shasambly.ShasCompileKt"
     classpath = classPath
 }
 val startScriptShasG by tasks.register<CreateStartScripts>("startScriptShasG") {
     applicationName = "shasg"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasGenerateKt"
+    mainClassName = "com.shakelang.shake.shasambly.ShasGenerateKt"
     classpath = classPath
 }
 val startScriptShasP by tasks.register<CreateStartScripts>("startScriptShasP") {
     applicationName = "shasp"
     outputDir = file("build/scripts")
-    mainClassName = "io.github.shakelang.shake.shasambly.ShasPKt"
+    mainClassName = "com.shakelang.shake.shasambly.ShasPKt"
     classpath = classPath
 }
 

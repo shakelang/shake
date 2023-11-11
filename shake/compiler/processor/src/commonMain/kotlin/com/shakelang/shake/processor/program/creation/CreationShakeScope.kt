@@ -1,10 +1,10 @@
 package com.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.parser.node.ShakeImportNode
-import io.github.shakelang.shake.parser.node.ShakeVariableType
-import io.github.shakelang.shake.processor.ShakeCodeProcessor
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.parser.node.ShakeImportNode
+import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.processor.ShakeCodeProcessor
+import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
+import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 abstract class CreationShakeScope : ShakeScope {
     val classRequirements = mutableListOf<CreationShakeProject.ClassRequirement>()

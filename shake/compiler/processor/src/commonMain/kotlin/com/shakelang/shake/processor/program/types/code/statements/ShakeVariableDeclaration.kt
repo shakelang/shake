@@ -1,10 +1,10 @@
 package com.shakelang.shake.processor.program.types.code.statements
 
-import io.github.shakelang.shake.processor.program.types.ShakeAssignable
-import io.github.shakelang.shake.processor.program.types.ShakeDeclaration
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
+import com.shakelang.shake.processor.program.types.ShakeAssignable
+import com.shakelang.shake.processor.program.types.ShakeDeclaration
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 interface ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeStatement {
     val scope: ShakeScope

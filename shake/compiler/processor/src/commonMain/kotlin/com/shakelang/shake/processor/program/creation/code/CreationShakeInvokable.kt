@@ -1,8 +1,8 @@
 package com.shakelang.shake.processor.program.creation.code
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeParameter
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
-import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
+import com.shakelang.shake.processor.program.creation.CreationShakeParameter
+import com.shakelang.shake.processor.program.creation.CreationShakeType
+import com.shakelang.shake.processor.program.types.code.ShakeInvokable
 
 abstract class CreationShakeInvokable(
     override val body: CreationShakeCode?

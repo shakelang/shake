@@ -1,8 +1,8 @@
 package com.shakelang.shake.processor.program.creation.code.values
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
-import io.github.shakelang.shake.processor.program.types.ShakeProject
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
+import com.shakelang.shake.processor.program.creation.CreationShakeType
+import com.shakelang.shake.processor.program.types.ShakeProject
+import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 class CreationShakeCast(
     override val project: ShakeProject,

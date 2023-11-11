@@ -1,13 +1,13 @@
 package com.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeFieldUsage
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
-import io.github.shakelang.shake.processor.program.types.ShakeField
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeFieldUsage
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import com.shakelang.shake.processor.program.types.ShakeField
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 open class CreationShakeField(
     override val project: CreationShakeProject,

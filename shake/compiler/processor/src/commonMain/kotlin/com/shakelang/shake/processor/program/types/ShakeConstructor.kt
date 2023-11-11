@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.types
 
-import io.github.shakelang.shake.processor.program.types.code.ShakeCode
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.code.ShakeCode
+import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 interface ShakeConstructor {
     val clazz: ShakeClass

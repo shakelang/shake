@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.creation.code.statements
 
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
-import io.github.shakelang.shake.processor.program.types.code.statements.ShakeReturn
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import com.shakelang.shake.processor.program.types.code.statements.ShakeReturn
 
 class CreationShakeReturn(
     override val value: CreationShakeValue?

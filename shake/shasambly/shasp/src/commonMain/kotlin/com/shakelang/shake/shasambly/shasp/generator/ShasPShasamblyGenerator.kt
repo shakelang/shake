@@ -2,28 +2,28 @@
 
 package com.shakelang.shake.shasambly.shasp.generator
 
-import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
-import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGenerator
-import io.github.shakelang.shake.shasambly.generator.simple.shasambly
-import io.github.shakelang.shake.shasambly.generator.simple.util.function.CallableRoutine
-import io.github.shakelang.shake.shasambly.generator.simple.util.function.SimpleRoutineShasamblyGenerator
-import io.github.shakelang.shake.shasambly.generator.simple.util.function.declareRoutine
-import io.github.shakelang.shake.shasambly.interpreter.PrimitiveIds
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.*
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.BOOLEAN
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.BYTE
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.CHAR
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.DOUBLE
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.FLOAT
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.INT
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.LONG
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.SHORT
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UBYTE
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UINT
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.ULONG
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UNKNOWN_DOUBLE_LITERAL
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UNKNOWN_INTEGER_LITERAL
-import io.github.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.USHORT
+import com.shakelang.shake.shasambly.generator.simple.SimpleShasambly
+import com.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGenerator
+import com.shakelang.shake.shasambly.generator.simple.shasambly
+import com.shakelang.shake.shasambly.generator.simple.util.function.CallableRoutine
+import com.shakelang.shake.shasambly.generator.simple.util.function.SimpleRoutineShasamblyGenerator
+import com.shakelang.shake.shasambly.generator.simple.util.function.declareRoutine
+import com.shakelang.shake.shasambly.interpreter.PrimitiveIds
+import com.shakelang.shake.shasambly.shasp.parser.nodes.*
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.BOOLEAN
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.BYTE
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.CHAR
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.DOUBLE
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.FLOAT
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.INT
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.LONG
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.SHORT
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UBYTE
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UINT
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.ULONG
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UNKNOWN_DOUBLE_LITERAL
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.UNKNOWN_INTEGER_LITERAL
+import com.shakelang.shake.shasambly.shasp.parser.nodes.ShasPType.Companion.USHORT
 
 class ShasPShasamblyGenerator(val tree: ShasPProgram) {
 

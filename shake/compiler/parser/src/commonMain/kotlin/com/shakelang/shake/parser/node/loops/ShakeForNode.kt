@@ -1,10 +1,10 @@
 package com.shakelang.shake.parser.node.loops
 
-import io.github.shakelang.shake.parser.node.ShakeBlockNode
-import io.github.shakelang.shake.parser.node.ShakeStatementNode
-import io.github.shakelang.shake.parser.node.ShakeStatementNodeImpl
-import io.github.shakelang.shake.parser.node.ShakeValuedNode
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.parser.node.ShakeBlockNode
+import com.shakelang.shake.parser.node.ShakeStatementNode
+import com.shakelang.shake.parser.node.ShakeStatementNodeImpl
+import com.shakelang.shake.parser.node.ShakeValuedNode
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 class ShakeForNode(
     map: PositionMap,

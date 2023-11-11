@@ -2,26 +2,26 @@ package com.shakelang.shake.processor
 
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.ShakeParser
-import io.github.shakelang.shake.parser.node.*
-import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.*
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
-import io.github.shakelang.shake.parser.node.functions.ShakeReturnNode
-import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import io.github.shakelang.shake.parser.node.loops.ShakeForNode
-import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
-import io.github.shakelang.shake.parser.node.variables.*
-import io.github.shakelang.shake.processor.program.creation.CreationShakeAssignable
-import io.github.shakelang.shake.processor.program.creation.CreationShakeProject
-import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
-import io.github.shakelang.shake.processor.program.creation.CreationShakeType
-import io.github.shakelang.shake.processor.program.creation.code.*
-import io.github.shakelang.shake.processor.program.creation.code.statements.*
-import io.github.shakelang.shake.processor.program.creation.code.values.*
-import io.github.shakelang.shake.util.parseutils.File
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.parser.node.expression.*
+import com.shakelang.shake.parser.node.factor.*
+import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.functions.ShakeReturnNode
+import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
+import com.shakelang.shake.parser.node.loops.ShakeForNode
+import com.shakelang.shake.parser.node.loops.ShakeWhileNode
+import com.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import com.shakelang.shake.parser.node.variables.*
+import com.shakelang.shake.processor.program.creation.CreationShakeAssignable
+import com.shakelang.shake.processor.program.creation.CreationShakeProject
+import com.shakelang.shake.processor.program.creation.CreationShakeScope
+import com.shakelang.shake.processor.program.creation.CreationShakeType
+import com.shakelang.shake.processor.program.creation.code.*
+import com.shakelang.shake.processor.program.creation.code.statements.*
+import com.shakelang.shake.processor.program.creation.code.values.*
+import com.shakelang.shake.util.parseutils.File
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 
 class ShakeProcessorOptions {
     var precalculate: Boolean = true

@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.interpreter.values
+package com.shakelang.shake.interpreter.values
 
 import kotlin.jvm.JvmField
 

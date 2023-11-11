@@ -9,7 +9,7 @@ Shake is an object-oriented, modern programming language. It is not a scripting 
 Shake has a java-like package system and a simple, yet powerful, c-style, syntax.
 
 ```shake
-package io.github.shakelang.shake
+package com.shakelang.shake
 ```
 
 ## Function declarations

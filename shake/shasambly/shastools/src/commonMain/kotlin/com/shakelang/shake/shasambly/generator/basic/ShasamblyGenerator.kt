@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.shasambly.generator.basic
 
-import io.github.shakelang.shake.shasambly.interpreter.Opcodes
+import com.shakelang.shake.shasambly.interpreter.Opcodes
 import com.shakelang.shake.util.primitives.bytes.toBytes
 import com.shakelang.shake.util.primitives.bytes.toHexString
 
@@ -284,9 +284,9 @@ open class ShasamblyLateinitOpcode(override val size: Int) : ShasamblyOpcode {
 /**
  * Generator for opcode [Opcodes.INVOKE_NATIVE]
  * Invokes a shasambly native function
- * The ids are provided by [io.github.shakelang.shake.shasambly.interpreter.natives.Natives]
+ * The ids are provided by [com.shakelang.shake.shasambly.interpreter.natives.Natives]
  *
- * @see io.github.shakelang.shake.shasambly.interpreter.natives.Natives
+ * @see com.shakelang.shake.shasambly.interpreter.natives.Natives
  */
 open class ShasamblyOpcodeInvokeNative(val address: Short, val args: ByteArray = byteArrayOf()) : ShasamblyOpcode {
 

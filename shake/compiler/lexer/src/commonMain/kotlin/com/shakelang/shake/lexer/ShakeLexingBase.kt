@@ -2,10 +2,10 @@ package com.shakelang.shake.lexer
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
-import io.github.shakelang.shake.util.parseutils.characters.Characters
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.util.parseutils.lexer.LexingBase
+import com.shakelang.shake.util.parseutils.characters.Characters
+import com.shakelang.shake.util.parseutils.characters.position.Position
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.lexer.LexingBase
 import kotlin.jvm.JvmOverloads
 
 abstract class ShakeLexingBase(

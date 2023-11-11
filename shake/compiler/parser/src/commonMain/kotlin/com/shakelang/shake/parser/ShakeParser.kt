@@ -2,25 +2,25 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
-import io.github.shakelang.shake.parser.node.*
-import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
-import io.github.shakelang.shake.parser.node.expression.*
-import io.github.shakelang.shake.parser.node.factor.*
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import io.github.shakelang.shake.parser.node.functions.ShakeReturnNode
-import io.github.shakelang.shake.parser.node.loops.ShakeDoWhileNode
-import io.github.shakelang.shake.parser.node.loops.ShakeForNode
-import io.github.shakelang.shake.parser.node.loops.ShakeWhileNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassType
-import io.github.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
-import io.github.shakelang.shake.parser.node.variables.*
-import io.github.shakelang.shake.util.parseutils.characters.Characters.parseString
-import io.github.shakelang.shake.util.parseutils.characters.position.Position
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.parser.node.ShakeCastNode.CastTarget
+import com.shakelang.shake.parser.node.expression.*
+import com.shakelang.shake.parser.node.factor.*
+import com.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.functions.ShakeReturnNode
+import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
+import com.shakelang.shake.parser.node.loops.ShakeForNode
+import com.shakelang.shake.parser.node.loops.ShakeWhileNode
+import com.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import com.shakelang.shake.parser.node.objects.ShakeClassType
+import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
+import com.shakelang.shake.parser.node.variables.*
+import com.shakelang.shake.util.parseutils.characters.Characters.parseString
+import com.shakelang.shake.util.parseutils.characters.position.Position
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 /**
  * An abstract Parser for the Shake Programming language. An instance is created for each file in the compilation process.

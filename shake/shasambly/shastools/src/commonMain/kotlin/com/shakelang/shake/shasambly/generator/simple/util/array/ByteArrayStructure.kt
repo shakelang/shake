@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.shasambly.generator.simple.util.array
 
-import io.github.shakelang.shake.shasambly.generator.simple.SimpleShasambly
+import com.shakelang.shake.shasambly.generator.simple.SimpleShasambly
 
 /**
  * A local byte array that does not store it's size. If you are using it you have to store

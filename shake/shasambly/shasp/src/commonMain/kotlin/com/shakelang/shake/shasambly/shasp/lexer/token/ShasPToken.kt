@@ -1,6 +1,6 @@
-package io.github.shakelang.shake.lexer.token
+package com.shakelang.shake.lexer.token
 
-import io.github.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
+import com.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 
 /**
  * A token representing a ShasP token.

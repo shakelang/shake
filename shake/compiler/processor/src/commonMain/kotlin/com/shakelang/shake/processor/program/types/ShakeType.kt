@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.types
 
-import io.github.shakelang.shake.processor.ShakeSelect
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.ShakeSelect
+import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 interface ShakeType {
 

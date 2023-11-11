@@ -1,10 +1,10 @@
 package com.shakelang.shake.processor.program.creation.code.values
 
-import io.github.shakelang.shake.processor.program.creation.*
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeChild
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeChildUsage
+import com.shakelang.shake.processor.program.creation.*
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.code.values.ShakeChild
+import com.shakelang.shake.processor.program.types.code.values.ShakeChildUsage
 
 class CreationShakeChild(
 

@@ -1,12 +1,12 @@
 package com.shakelang.shake.processor.program.creation.code
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeMethod
-import io.github.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
-import io.github.shakelang.shake.processor.program.types.ShakeProject
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.ShakeInvocation
-import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
+import com.shakelang.shake.processor.program.creation.CreationShakeMethod
+import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeStatement
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import com.shakelang.shake.processor.program.types.ShakeProject
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.ShakeInvocation
+import com.shakelang.shake.processor.program.types.code.ShakeInvokable
 
 class CreationShakeInvocation(
     override val project: ShakeProject,

@@ -1,15 +1,15 @@
 package com.shakelang.shake.processor.program.creation.code.statements
 
-import io.github.shakelang.shake.processor.program.creation.CreationShakeAssignable
-import io.github.shakelang.shake.processor.program.creation.CreationShakeDeclaration
-import io.github.shakelang.shake.processor.program.creation.CreationShakeProject
-import io.github.shakelang.shake.processor.program.creation.CreationShakeScope
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeVariableUsage
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
-import io.github.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
-import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
+import com.shakelang.shake.processor.program.creation.CreationShakeAssignable
+import com.shakelang.shake.processor.program.creation.CreationShakeDeclaration
+import com.shakelang.shake.processor.program.creation.CreationShakeProject
+import com.shakelang.shake.processor.program.creation.CreationShakeScope
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeVariableUsage
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
+import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 
 open class CreationShakeVariableDeclaration :
     CreationShakeDeclaration,

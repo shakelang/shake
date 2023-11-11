@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.interpreter
+package com.shakelang.shake.interpreter
 
 @Suppress("unused")
 class UnformattedInterpreterError : Error {

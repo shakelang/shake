@@ -1,11 +1,11 @@
-package io.github.shakelang.shake.interpreter
+package com.shakelang.shake.interpreter
 
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
-import io.github.shakelang.shake.lexer.ShakeLexer
-import io.github.shakelang.shake.parser.ShakeParser
-import io.github.shakelang.shake.parser.node.ShakeBlockNode
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.shake.lexer.ShakeLexer
+import com.shakelang.shake.parser.ShakeParser
+import com.shakelang.shake.parser.node.ShakeBlockNode
 import kotlin.test.Ignore
 import kotlin.test.Test
 

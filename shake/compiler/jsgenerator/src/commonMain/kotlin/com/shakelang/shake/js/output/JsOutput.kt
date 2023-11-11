@@ -1,6 +1,6 @@
 package com.shakelang.shake.js.output
 
-import io.github.shakelang.shake.util.parseutils.characters.Characters
+import com.shakelang.shake.util.parseutils.characters.Characters
 
 interface JsOutput {
     fun generate(indentAmount: Int = 0, indent: String = "  "): String

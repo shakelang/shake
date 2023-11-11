@@ -1,6 +1,6 @@
-package io.github.shakelang.shake.interpreter.values
+package com.shakelang.shake.interpreter.values
 
-import io.github.shakelang.shake.interpreter.values.BooleanValue.Companion.from
+import com.shakelang.shake.interpreter.values.BooleanValue.Companion.from
 
 actual fun createInterpreterValueOf(value: Any?): InterpreterValue {
     if (value == null || value == undefined || value is Unit) return NullValue.NULL

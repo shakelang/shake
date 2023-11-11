@@ -1,7 +1,7 @@
 package com.shakelang.shake.processor.program.types
 
-import io.github.shakelang.shake.processor.program.types.code.ShakeInvokable
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.types.code.ShakeInvokable
+import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 interface ShakeMethod : ShakeInvokable {
     val prj: ShakeProject

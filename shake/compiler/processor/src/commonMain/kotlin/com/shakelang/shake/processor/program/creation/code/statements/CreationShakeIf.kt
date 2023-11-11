@@ -1,8 +1,8 @@
 package com.shakelang.shake.processor.program.creation.code.statements
 
-import io.github.shakelang.shake.processor.program.creation.code.CreationShakeCode
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
-import io.github.shakelang.shake.processor.program.types.code.statements.ShakeIf
+import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import com.shakelang.shake.processor.program.types.code.statements.ShakeIf
 
 class CreationShakeIf(
 

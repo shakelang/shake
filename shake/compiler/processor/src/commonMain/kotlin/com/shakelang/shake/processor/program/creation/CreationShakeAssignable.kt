@@ -1,10 +1,10 @@
 package com.shakelang.shake.processor.program.creation
 
-import io.github.shakelang.shake.processor.program.creation.code.*
-import io.github.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
-import io.github.shakelang.shake.processor.program.types.ShakeAssignable
-import io.github.shakelang.shake.processor.program.types.ShakeType
-import io.github.shakelang.shake.processor.program.types.code.ShakeScope
+import com.shakelang.shake.processor.program.creation.code.*
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import com.shakelang.shake.processor.program.types.ShakeAssignable
+import com.shakelang.shake.processor.program.types.ShakeType
+import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 interface CreationShakeAssignable : ShakeAssignable {
 

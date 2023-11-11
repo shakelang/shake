@@ -1,7 +1,7 @@
 package com.shakelang.shake.parser.node.variables
 
-import io.github.shakelang.shake.parser.node.*
-import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.jvm.JvmOverloads
 
 class ShakeVariableDeclarationNode @JvmOverloads constructor(
