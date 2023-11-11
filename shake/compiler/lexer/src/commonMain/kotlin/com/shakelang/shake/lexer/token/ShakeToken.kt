@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.lexer.token
+package com.shakelang.shake.lexer.token
 
 /**
  * The input of the [io.github.shakelang.shake.lexer.ShakeLexer] gets converted into [ShakeToken]s. These get parsed

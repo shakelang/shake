@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.lexer.token
+package com.shakelang.shake.lexer.token
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

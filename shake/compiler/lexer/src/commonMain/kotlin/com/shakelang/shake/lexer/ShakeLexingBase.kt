@@ -1,7 +1,7 @@
-package io.github.shakelang.shake.lexer
+package com.shakelang.shake.lexer
 
-import io.github.shakelang.shake.lexer.token.ShakeToken
-import io.github.shakelang.shake.lexer.token.ShakeTokenType
+import com.shakelang.shake.lexer.token.ShakeToken
+import com.shakelang.shake.lexer.token.ShakeTokenType
 import io.github.shakelang.shake.util.parseutils.characters.Characters
 import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream

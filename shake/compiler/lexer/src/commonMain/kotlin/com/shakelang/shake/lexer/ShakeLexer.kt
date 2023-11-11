@@ -1,8 +1,8 @@
-package io.github.shakelang.shake.lexer
+package com.shakelang.shake.lexer
 
-import io.github.shakelang.shake.lexer.token.ShakeToken
-import io.github.shakelang.shake.lexer.token.stream.ShakeOnDemandLexingTokenInputStream
-import io.github.shakelang.shake.lexer.token.stream.ShakeTokenBasedTokenInputStream
+import com.shakelang.shake.lexer.token.ShakeToken
+import com.shakelang.shake.lexer.token.stream.ShakeOnDemandLexingTokenInputStream
+import com.shakelang.shake.lexer.token.stream.ShakeTokenBasedTokenInputStream
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 
 class ShakeLexer(

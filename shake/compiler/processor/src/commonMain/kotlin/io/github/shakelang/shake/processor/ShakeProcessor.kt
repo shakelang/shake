@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.processor
 
-import io.github.shakelang.shake.lexer.ShakeLexer
+import com.shakelang.shake.lexer.ShakeLexer
 import io.github.shakelang.shake.parser.ShakeParser
 import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.expression.*

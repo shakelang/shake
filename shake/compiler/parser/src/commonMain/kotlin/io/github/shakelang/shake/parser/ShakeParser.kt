@@ -1,7 +1,7 @@
 package io.github.shakelang.shake.parser
 
-import io.github.shakelang.shake.lexer.token.ShakeTokenType
-import io.github.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
+import com.shakelang.shake.lexer.token.ShakeTokenType
+import com.shakelang.shake.lexer.token.stream.ShakeTokenInputStream
 import io.github.shakelang.shake.parser.node.*
 import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
 import io.github.shakelang.shake.parser.node.expression.*

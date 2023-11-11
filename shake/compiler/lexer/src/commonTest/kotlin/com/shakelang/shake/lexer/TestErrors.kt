@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.lexer
+package com.shakelang.shake.lexer
 
 import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream

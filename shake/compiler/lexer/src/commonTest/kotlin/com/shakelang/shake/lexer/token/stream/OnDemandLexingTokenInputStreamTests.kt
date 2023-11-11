@@ -1,6 +1,6 @@
-package io.github.shakelang.shake.lexer.token.stream
+package com.shakelang.shake.lexer.token.stream
 
-import io.github.shakelang.shake.lexer.token.ShakeTokenType
+import com.shakelang.shake.lexer.token.ShakeTokenType
 import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import kotlin.test.Test

@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE")
 
-package io.github.shakelang.shake.lexer.token
+package com.shakelang.shake.lexer.token
 
 import io.github.shakelang.shake.util.parseutils.lexer.token.TokenType
 

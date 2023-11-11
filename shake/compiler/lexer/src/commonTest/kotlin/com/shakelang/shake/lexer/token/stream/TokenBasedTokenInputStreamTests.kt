@@ -1,7 +1,7 @@
-package io.github.shakelang.shake.lexer.token.stream
+package com.shakelang.shake.lexer.token.stream
 
-import io.github.shakelang.shake.lexer.token.ShakeToken
-import io.github.shakelang.shake.lexer.token.ShakeTokenType
+import com.shakelang.shake.lexer.token.ShakeToken
+import com.shakelang.shake.lexer.token.ShakeTokenType
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import kotlin.test.Test
