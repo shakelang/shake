@@ -1,5 +1,6 @@
 package com.shakelang.shake.util.jvmlib.infos.attributes
 
+import com.shakelang.shake.util.primitives.bytes.*
 import io.github.shakelang.shake.util.io.streaming.input.DataInputStream
 import io.github.shakelang.shake.util.io.streaming.input.InputStream
 import io.github.shakelang.shake.util.io.streaming.input.dataStream

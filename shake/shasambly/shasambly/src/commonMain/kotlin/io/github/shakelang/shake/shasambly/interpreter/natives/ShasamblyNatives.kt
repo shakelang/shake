@@ -3,10 +3,10 @@
 package io.github.shakelang.shake.shasambly.interpreter.natives
 
 import io.github.shakelang.shake.shasambly.interpreter.ShasamblyOpcodeExecutor
-import io.github.shakelang.shake.util.primitives.bytes.getByte
-import io.github.shakelang.shake.util.primitives.bytes.getInt
-import io.github.shakelang.shake.util.primitives.bytes.getLong
-import io.github.shakelang.shake.util.primitives.bytes.getShort
+import com.shakelang.shake.util.primitives.bytes.getByte
+import com.shakelang.shake.util.primitives.bytes.getInt
+import com.shakelang.shake.util.primitives.bytes.getLong
+import com.shakelang.shake.util.primitives.bytes.getShort
 
 val nativeFunctions = arrayOfNulls<ShasamblyNative>((UShort.MAX_VALUE).toInt() + 1)
 

@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE")
 
-package io.github.shakelang.shake.util.primitives.calc
+package com.shakelang.shake.util.primitives.calc
 
 import kotlin.math.abs
 

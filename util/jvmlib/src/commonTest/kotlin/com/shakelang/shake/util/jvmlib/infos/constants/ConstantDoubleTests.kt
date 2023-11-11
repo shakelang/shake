@@ -1,7 +1,7 @@
 package com.shakelang.shake.util.jvmlib.infos.constants
 
 import io.github.shakelang.shake.util.io.streaming.input.inputStream
-import io.github.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.shake.util.primitives.bytes.toBytes
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.test.Test

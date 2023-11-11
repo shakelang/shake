@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.util.io.streaming.input
 
-import io.github.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.shake.util.primitives.bytes.toBytes
 
 /**
  * Returns a DataInputStream that reads from this input stream.

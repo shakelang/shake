@@ -1,6 +1,7 @@
 package com.shakelang.shake.util.io.streaming.input
 
 import com.shakelang.shake.util.io.IOException
+import com.shakelang.shake.util.primitives.bytes.*
 import io.github.shakelang.shake.util.primitives.bytes.*
 
 /**

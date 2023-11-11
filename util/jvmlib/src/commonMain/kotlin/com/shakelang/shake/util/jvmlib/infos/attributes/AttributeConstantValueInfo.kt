@@ -6,9 +6,9 @@ import io.github.shakelang.shake.util.io.streaming.input.dataStream
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
-import io.github.shakelang.shake.util.primitives.bytes.getUnsignedShort
-import io.github.shakelang.shake.util.primitives.bytes.toBytes
-import io.github.shakelang.shake.util.primitives.bytes.toUnsignedShort
+import com.shakelang.shake.util.primitives.bytes.getUnsignedShort
+import com.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.shake.util.primitives.bytes.toUnsignedShort
 
 class AttributeConstantValueInfo(
 

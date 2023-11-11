@@ -2,6 +2,7 @@
 
 package io.github.shakelang.shake.shasambly.interpreter
 
+import com.shakelang.shake.util.primitives.bytes.*
 import io.github.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
 import io.github.shakelang.shake.util.primitives.bytes.*
 import kotlin.experimental.and

@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.util.primitives.bytes
+package com.shakelang.shake.util.primitives.bytes
 
 /**
  * Convert a [String] to a [ByteArray]

@@ -1,6 +1,6 @@
 package io.github.shakelang.shake.shasambly.interpreter
 
-import io.github.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.shake.util.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

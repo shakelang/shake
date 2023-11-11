@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.util.primitives.calc
+package com.shakelang.shake.util.primitives.calc
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

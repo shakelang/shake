@@ -1,6 +1,6 @@
 @file:Suppress("nothing_to_inline", "unused")
 
-package io.github.shakelang.shake.util.primitives.bytes
+package com.shakelang.shake.util.primitives.bytes
 
 /**
  * Convert Byte to ByteArray

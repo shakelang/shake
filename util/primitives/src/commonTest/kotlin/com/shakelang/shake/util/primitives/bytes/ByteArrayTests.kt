@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalUnsignedTypes::class)
 
-package io.github.shakelang.shake.util.primitives.bytes
+package com.shakelang.shake.util.primitives.bytes
 
 import kotlin.math.abs
 import kotlin.math.max
