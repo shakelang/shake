@@ -9,7 +9,6 @@ class ShakeLogicalAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeV
     override fun toJson(): Map<String, *> = mapOf("name" to "LogicalAndNode", "left" to left, "right" to right)
 }
 
-
 class ShakeLogicalOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
