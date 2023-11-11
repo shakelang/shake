@@ -97,40 +97,52 @@ signing {
     sign(publishing.publications)
 }
 
-if(project.tasks.findByName("signJsPublication") != null)
-    tasks.named("signJsPublication") {
+afterEvaluate {
+
+    if (project.tasks.findByName("signJsPublication") != null)
+        tasks.named("signJsPublication") {
+            group = "signing"
+        }
+
+    if (project.tasks.findByName("signJvmPublication") != null)
+        tasks.named("signJvmPublication") {
+            group = "signing"
+        }
+
+    if (project.tasks.findByName("signKotlinMultiplatformPublication") != null)
+        tasks.named("signKotlinMultiplatformPublication") {
+            group = "signing"
+        }
+
+    if (project.tasks.findByName("signKotlinPublication") != null)
+        tasks.named("signKotlinPublication") {
+            group = "signing"
+        }
+
+    tasks.create("signAllPublications") {
         group = "signing"
+        if (project.tasks.findByName("signKotlinMultiplatformPublication") != null)
+            dependsOn("signJsPublication")
+
+        if (project.tasks.findByName("signKotlinMultiplatformPublication") != null)
+            dependsOn("signJvmPublication")
+
+        if (project.tasks.findByName("signKotlinMultiplatformPublication") != null)
+            dependsOn("signKotlinMultiplatformPublication")
+
+        if (project.tasks.findByName("signKotlinPublication") != null)
+            dependsOn("signKotlinPublication")
     }
 
-if(project.tasks.findByName("signJvmPublication") != null)
-    tasks.named("signJvmPublication") {
-        group = "signing"
+    tasks.create<Checksum>("createChecksums") {
+        group = "checksums"
+        dependsOn("build", "signAllPublications")
+
+        val dir = file("build/libs")
+        val files = dir.listFiles { _, name -> name.endsWith(".jar") }
+
+        inputFiles.setFrom(files)
+        outputDirectory.set(file("build/libs"))
     }
 
-if(project.tasks.findByName("signKotlinMultiplatformPublication") != null)
-    tasks.named("signKotlinMultiplatformPublication") {
-        group = "signing"
-    }
-
-tasks.create("signAllPublications") {
-    group = "signing"
-    if(project.tasks.findByName("signKotlinMultiplatformPublication") != null)
-        dependsOn("signJsPublication")
-
-    if(project.tasks.findByName("signKotlinMultiplatformPublication") != null)
-        dependsOn("signJvmPublication")
-
-    if(project.tasks.findByName("signKotlinMultiplatformPublication") != null)
-        dependsOn("signKotlinMultiplatformPublication")
-}
-
-tasks.create<Checksum>("createChecksums") {
-    group = "checksums"
-    dependsOn("build", "signAllPublications")
-
-    val dir = file("build/libs")
-    val files = dir.listFiles { _, name -> name.endsWith(".jar") }
-
-    inputFiles.setFrom(files)
-    outputDirectory.set(file("build/libs"))
 }

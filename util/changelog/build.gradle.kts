@@ -25,6 +25,23 @@ sourceSets {
     main {
         java.srcDirs("src/main/kotlin")
     }
+    test {
+        java.srcDirs("src/test/kotlin")
+    }
+}
+
+publishing {
+    publications {
+        // kotlin plugin
+        create<MavenPublication>("kotlin") {
+            from(components["java"])
+            artifactId = projectName
+            pom {
+                name.set(project.displayName)
+                description.set(project.description)
+            }
+        }
+    }
 }
 
 kotlin {
