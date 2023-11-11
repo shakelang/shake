@@ -16,8 +16,8 @@ actual fun assertArrayEquals(expected: Array<*>, actual: Array<*>) {
     } catch (e: AssertionError) {
         throw AssertionError(
             "Array mismatch: \n" +
-                "expected: ${expected.contentToString()}, \n" +
-                "actual: ${actual.contentToString()}",
+                    "expected: ${expected.contentToString()}, \n" +
+                    "actual: ${actual.contentToString()}",
             e
         )
     }

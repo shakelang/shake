@@ -5,6 +5,7 @@ It is not a full language tutorial and not meant to be a full language reference
 rather for experienced users to get a feel and overview of the language.
 
 ## Info
+
 Shake is an object-oriented, modern programming language. It is not a scripting language.
 Shake has a java-like package system and a simple, yet powerful, c-style, syntax.
 
@@ -27,7 +28,8 @@ Functions can have the following attributes:
 - `public`: The function is accessible from outside the package.
 - `private`: The function is only accessible from inside the file
 - `protected`: The function is accessible from inside the package, inside the file and inside of subclasses.
-- `static`: Only available for functions in classes, enums and interfaces. Static functions do not need an instance to be called.
+- `static`: Only available for functions in classes, enums and interfaces. Static functions do not need an instance to
+  be called.
 - `final`: The function can not be overridden.
 - `abstract`: The function provides no implementation and must be implemented in a subclass.
 - `override`: The function overrides a function in a superclass.
@@ -65,7 +67,8 @@ Fields can have the following attributes:
 - `public`: The field is accessible from outside the package.
 - `private`: The field is only accessible from inside the file.
 - `protected`: The field is accessible from inside the package, inside the file and inside of subclasses.
-- `static`: Only available for fields in classes, enums and interfaces. Static fields do not need an instance to be accessed.
+- `static`: Only available for fields in classes, enums and interfaces. Static fields do not need an instance to be
+  accessed.
 - `final`: The field can not be overridden.
 - `const`: The field can not be changed.
 - `abstract`: The field provides no implementation and must be implemented in a subclass.
@@ -258,6 +261,7 @@ Block comments are created using the `/*` and `*/` symbols.
 #### For Loops
 
 `for` loops are created using the `for` keyword. They contain three parts:
+
 - declaration of the counter variable
 - condition for the loop to run
 - increment of the counter variable
@@ -310,7 +314,8 @@ if(true) {
 
 ### Local Variables
 
-Local variables are declared with the type of value and the name of the variable. They are only available inside the block they are declared in.
+Local variables are declared with the type of value and the name of the variable. They are only available inside the
+block they are declared in.
 
 ```shake
 {

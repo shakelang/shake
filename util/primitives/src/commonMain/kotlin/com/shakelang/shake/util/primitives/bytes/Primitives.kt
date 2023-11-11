@@ -146,7 +146,7 @@ inline fun shortOf(b0: Byte, b1: Byte): Short = (b0.toUByte().toInt() shl 8 or b
  */
 inline fun intOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) =
     b0.toUByte().toInt() shl 8 or b1.toUByte().toInt() shl 8 or
-        b2.toUByte().toInt() shl 8 or b3.toUByte().toInt()
+            b2.toUByte().toInt() shl 8 or b3.toUByte().toInt()
 
 /**
  * Long of eight bytes
@@ -159,7 +159,7 @@ inline fun intOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) =
 inline fun longOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte) =
     b0.toUByte().toLong() shl 8 or b1.toUByte().toLong() shl 8 or b2.toUByte().toLong() shl 8 or b3.toUByte()
         .toLong() shl
-        8 or b4.toUByte().toLong() shl 8 or b5.toUByte().toLong() shl 8 or b6.toUByte()
+            8 or b4.toUByte().toLong() shl 8 or b5.toUByte().toLong() shl 8 or b6.toUByte()
         .toLong() shl 8 or b7.toUByte().toLong()
 
 /**

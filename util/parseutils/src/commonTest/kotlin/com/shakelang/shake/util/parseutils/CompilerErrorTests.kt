@@ -180,7 +180,7 @@ class CompilerErrorTests {
         assertEquals("                              ^", error.marker.marker)
         assertEquals(
             "1  +28...890123456789012345678" + invert(red("9")) +
-                "01234567890123456789...+29",
+                    "01234567890123456789...+29",
             error.marker.colorPreview
         )
     }
