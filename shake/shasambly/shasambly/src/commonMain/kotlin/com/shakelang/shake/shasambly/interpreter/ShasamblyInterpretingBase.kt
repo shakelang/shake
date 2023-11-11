@@ -767,11 +767,11 @@ abstract class ShasamblyInterpretingBase(
                 if (this === other) return true
                 if (other !is FreeTableEntry) return false
                 return address == other.address &&
-                    size == other.size &&
-                    firstAddress == other.firstAddress &&
-                    lastAddress == other.lastAddress &&
-                    nextAddress == other.nextAddress &&
-                    beforeAddress == other.beforeAddress
+                        size == other.size &&
+                        firstAddress == other.firstAddress &&
+                        lastAddress == other.lastAddress &&
+                        nextAddress == other.nextAddress &&
+                        beforeAddress == other.beforeAddress
             }
 
             override fun hashCode(): Int {

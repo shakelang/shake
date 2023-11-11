@@ -22,7 +22,7 @@ tasks.register("listDependencies") {
                 if (it.group != null) dep.add(it.group!!)
                 if (it.name != null) dep.add(it.name)
                 if (it.version != null) dep.add(it.version.toString())
-                println("  - ${if(it is NpmDependency) "npm" else "maven"} ${dep.joinToString(":")}")
+                println("  - ${if (it is NpmDependency) "npm" else "maven"} ${dep.joinToString(":")}")
             }
         }
     }
@@ -86,8 +86,8 @@ publishing {
 //
 //}
 signing {
-        val signingKey = System.getenv("GRADLE_SIGNING_KEY")
-        val signingPassword: String? = System.getenv("GRADLE_SIGNING_PASSWORD")
+    val signingKey = System.getenv("GRADLE_SIGNING_KEY")
+    val signingPassword: String? = System.getenv("GRADLE_SIGNING_PASSWORD")
 
     if (signingKey != null && signingPassword != null) {
         logger.log(LogLevel.INFO, "Found signing key and password, using in-memory PGP keys, using them")

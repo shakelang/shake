@@ -313,12 +313,12 @@ class FormattedString(
      */
     val isFormatted: Boolean
         get() = isBold ||
-            isItalic ||
-            isUnderlined ||
-            isStrikethrough ||
-            isInverted ||
-            color != null ||
-            backgroundColor != null
+                isItalic ||
+                isUnderlined ||
+                isStrikethrough ||
+                isInverted ||
+                color != null ||
+                backgroundColor != null
 
     /**
      * Get the [String] representation of this [FormattedString]

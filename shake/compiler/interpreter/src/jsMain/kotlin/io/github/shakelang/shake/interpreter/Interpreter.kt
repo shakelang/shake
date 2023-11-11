@@ -22,11 +22,12 @@ fun jsEvalCode(contents: String, scope: Scope): InterpreterValue {
             as KFunction3<dynamic, (name: String) -> dynamic, Array<out dynamic>, Unit>
 
     try {
-        return InterpreterValue.of(function(
-            js("new Proxy(scope, handler)"),
-            { scope.scopeVariables[it]?.value?.toJava() },
-            *variableNames.map { scope.scopeVariables[it]?.value?.toJava() }.toTypedArray()
-        )
+        return InterpreterValue.of(
+            function(
+                js("new Proxy(scope, handler)"),
+                { scope.scopeVariables[it]?.value?.toJava() },
+                *variableNames.map { scope.scopeVariables[it]?.value?.toJava() }.toTypedArray()
+            )
         )
     } catch (e: Error) {
         e.printStackTrace()

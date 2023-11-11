@@ -25,7 +25,12 @@ class ShakeLogicalNotEqualsNode(
         mapOf("name" to "LogicalNotEqualsNode", "left" to left, "right" to right)
 }
 
-class ShakeLogicalBiggerEqualsNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
+class ShakeLogicalBiggerEqualsNode(
+    map: PositionMap,
+    left: ShakeValuedNode,
+    right: ShakeValuedNode,
+    operatorPosition: Int
+) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
         get() = ">="
@@ -42,7 +47,12 @@ class ShakeLogicalBiggerNode(map: PositionMap, left: ShakeValuedNode, right: Sha
     override fun toJson(): Map<String, *> = mapOf("name" to "LogicalBiggerNode", "left" to left, "right" to right)
 }
 
-class ShakeLogicalSmallerEqualsNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
+class ShakeLogicalSmallerEqualsNode(
+    map: PositionMap,
+    left: ShakeValuedNode,
+    right: ShakeValuedNode,
+    operatorPosition: Int
+) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
         get() = "<="
