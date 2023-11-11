@@ -45,26 +45,17 @@ jobs:
 
       - name: Lint with KtLint
         run: |
-          ./gradlew check
-
-      - name: Install @microsoft/sarif-multitool
-        run: npm i -g @microsoft/sarif-multitool
-
-      - name: Merge SARIF files
-        run: npx @microsoft/sarif-multitool merge ./**/*.sarif --recurse true --output-directory=. --output-file=report.sarif
-
-      - name: List SARIF files before merging
-        run: find . -type f -name "*.sarif"
+          ./gradlew check copyKtlintSarifReports
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: report.sarif
-          path: report.sarif
+          name: reports
+          path: ./build/reports/ktlint/all
 
       - name: Upload SARIF file for GitHub Advanced Security
         uses: github/codeql-action/upload-sarif@v2
         with:
           # Path to SARIF file relative to the root of the repository
-          sarif_file: ./report.sarif
+          sarif_file: ./build/reports/ktlint/all
           category: KtLint
