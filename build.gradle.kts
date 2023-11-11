@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 group = "io.github.shakelang.shake"
@@ -32,10 +33,29 @@ plugins {
     kotlin("multiplatform") apply false
     id("org.jetbrains.kotlinx.kover")
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
+    id("io.gitlab.arturbosch.detekt") version("1.23.3")
+}
+
+detekt {
+    toolVersion = "1.23.3"
+    config.setFrom(file("config/detekt/detekt.yml"))
+    buildUponDefaultConfig = true
+}
+
+// Kotlin DSL
+tasks.withType<Detekt>().configureEach {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        txt.required.set(true)
+        sarif.required.set(true)
+        md.required.set(true)
+    }
 }
 
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint") // Version should be inherited from parent
+    apply(plugin = "io.gitlab.arturbosch.detekt") // Version should be inherited from parent
     repositories {
         mavenLocal()
         mavenCentral()
@@ -70,6 +90,24 @@ subprojects {
                     this.path = this.name
                 }
             }
+        }
+    }
+
+
+    detekt {
+        toolVersion = "1.23.3"
+        config.setFrom(file("config/detekt/detekt.yml"))
+        buildUponDefaultConfig = true
+    }
+
+    // Kotlin DSL
+    tasks.withType<Detekt>().configureEach {
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+            txt.required.set(true)
+            sarif.required.set(true)
+            md.required.set(true)
         }
     }
 }
