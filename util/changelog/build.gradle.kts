@@ -2,7 +2,7 @@ import conventions.dependencies
 import conventions.projectGroup
 
 plugins {
-//    id("conventions.publishing")
+    id("conventions.publishing")
     kotlin("jvm")
 }
 

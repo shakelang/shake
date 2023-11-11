@@ -29,10 +29,10 @@ tasks.register("listDependencies") {
 }
 
 
-kotlin {
-    val publicationsFromMainHost =
-        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
-}
+//kotlin {
+//    val publicationsFromMainHost =
+//        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+//}
 
 publishing {
 
@@ -97,24 +97,31 @@ signing {
     sign(publishing.publications)
 }
 
+if(project.tasks.findByName("signJsPublication") != null)
+    tasks.named("signJsPublication") {
+        group = "signing"
+    }
 
-tasks.named("signJsPublication") {
-    group = "signing"
-}
+if(project.tasks.findByName("signJvmPublication") != null)
+    tasks.named("signJvmPublication") {
+        group = "signing"
+    }
 
-tasks.named("signJvmPublication") {
-    group = "signing"
-}
-
-tasks.named("signKotlinMultiplatformPublication") {
-    group = "signing"
-}
+if(project.tasks.findByName("signKotlinMultiplatformPublication") != null)
+    tasks.named("signKotlinMultiplatformPublication") {
+        group = "signing"
+    }
 
 tasks.create("signAllPublications") {
     group = "signing"
-    dependsOn("signJsPublication")
-    dependsOn("signJvmPublication")
-    dependsOn("signKotlinMultiplatformPublication")
+    if(project.tasks.findByName("signKotlinMultiplatformPublication") != null)
+        dependsOn("signJsPublication")
+
+    if(project.tasks.findByName("signKotlinMultiplatformPublication") != null)
+        dependsOn("signJvmPublication")
+
+    if(project.tasks.findByName("signKotlinMultiplatformPublication") != null)
+        dependsOn("signKotlinMultiplatformPublication")
 }
 
 tasks.create<Checksum>("createChecksums") {
