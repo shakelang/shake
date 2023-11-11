@@ -3,9 +3,9 @@ package com.shakelang.shake.util.changelog
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-    class Changelog : Plugin<Project> {
+class Changelog : Plugin<Project> {
     override fun apply(project: Project) {
-        if(project == project.rootProject) {
+        if (project == project.rootProject) {
             project.tasks.create("initChangelog", InitChangelogTask::class.java) {
                 it.group = "changelog"
                 it.description = "Initializes the changelog"
@@ -13,7 +13,6 @@ import org.gradle.api.Project
         }
     }
 }
-
 
 class InitChangelogTask : org.gradle.api.DefaultTask() {
 
@@ -24,11 +23,9 @@ class InitChangelogTask : org.gradle.api.DefaultTask() {
 
     @org.gradle.api.tasks.TaskAction
     fun initChangelog() {
-
         val changelog = project.file(".changelog")
         if (!changelog.exists()) {
             changelog.mkdirs()
         }
     }
-
 }
