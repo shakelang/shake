@@ -47,6 +47,14 @@ jobs:
         run: |
           ./gradlew ktlintFormat
 
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.ACTIONS_GPG_KEY }}
+          passphrase: ${{ secrets.ACTIONS_GPG_PASS }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
@@ -57,4 +65,4 @@ jobs:
           branch: ktlint-format-${{ github.sha }}
           branch-suffix: timestamp
           delete-branch: true
-          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: github-actions[bot] <actions@github.com>
