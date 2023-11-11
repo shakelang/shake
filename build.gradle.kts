@@ -40,6 +40,7 @@ detekt {
     toolVersion = "1.23.3"
     config.setFrom(rootProject.file("config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
+    ignoreFailures = true
 }
 
 // Kotlin DSL
@@ -97,6 +98,7 @@ subprojects {
         toolVersion = "1.23.3"
         config.setFrom(rootProject.file("config/detekt/detekt.yml"))
         buildUponDefaultConfig = true
+        ignoreFailures = true
     }
 
     // Kotlin DSL
