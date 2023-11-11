@@ -1,9 +1,9 @@
 package io.github.shakelang.shake.util.logger
 
-import io.github.shakelang.shake.util.colorlib.functional.blue
-import io.github.shakelang.shake.util.colorlib.functional.cyan
-import io.github.shakelang.shake.util.colorlib.functional.red
-import io.github.shakelang.shake.util.colorlib.functional.yellow
+import com.shakelang.shake.util.colorlib.functional.blue
+import com.shakelang.shake.util.colorlib.functional.cyan
+import com.shakelang.shake.util.colorlib.functional.red
+import com.shakelang.shake.util.colorlib.functional.yellow
 import kotlin.js.Console
 
 inline fun Console.debug(vararg message: String): Unit = asDynamic().debug(message) as Unit

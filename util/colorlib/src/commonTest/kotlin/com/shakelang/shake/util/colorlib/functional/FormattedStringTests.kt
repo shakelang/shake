@@ -1,6 +1,6 @@
-package io.github.shakelang.shake.util.colorlib.functional
+package com.shakelang.shake.util.colorlib.functional
 
-import io.github.shakelang.shake.util.colorlib.Formatting
+import com.shakelang.shake.util.colorlib.Formatting
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

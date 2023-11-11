@@ -1,8 +1,8 @@
 package io.github.shakelang.shake.util.parseutils
 
-import io.github.shakelang.shake.util.colorlib.functional.invert
-import io.github.shakelang.shake.util.colorlib.functional.join
-import io.github.shakelang.shake.util.colorlib.functional.red
+import com.shakelang.shake.util.colorlib.functional.invert
+import com.shakelang.shake.util.colorlib.functional.join
+import com.shakelang.shake.util.colorlib.functional.red
 import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.js.JsName

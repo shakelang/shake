@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.util.colorlib
+package com.shakelang.shake.util.colorlib
 
 /**
  * Format a string to show it in the console.

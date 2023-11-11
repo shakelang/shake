@@ -1,6 +1,6 @@
-package io.github.shakelang.shake.util.colorlib.functional
+package com.shakelang.shake.util.colorlib.functional
 
-import io.github.shakelang.shake.util.colorlib.Formatting
+import com.shakelang.shake.util.colorlib.Formatting
 
 /**
  * A FormattedStringObject is an object that can be used in a [FormattedString]
