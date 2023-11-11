@@ -26,7 +26,7 @@ class ParserTests {
         assertEquals(1, node.children.size)
         assertType(ShakeImportNode::class, node.children[0])
         assertArrayEquals(
-            arrayOf("io", "github", "shakelang", "shake"),
+            arrayOf("com", "shakelang", "shake"),
             (node.children[0] as ShakeImportNode).import
         )
         node = ParserTestUtil.parse("<ImportTest>", "import com.shakelang.shake.*;")
