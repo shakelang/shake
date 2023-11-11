@@ -13,5 +13,4 @@ class ShakeClassConstructionNode(
 
     override fun toJson(): Map<String, *> =
         mapOf("name" to "ClassConstructionNode", "type" to type.json, "args" to args.map { it.json })
-
 }

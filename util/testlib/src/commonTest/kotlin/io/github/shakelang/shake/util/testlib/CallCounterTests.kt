@@ -44,5 +44,4 @@ class CallCounterTests {
         counter.call()
         counter shouldBeCalled 1
     }
-
 }

@@ -32,7 +32,7 @@ class Logger(
     var printWarn: Boolean = true,
     var printError: Boolean = true,
     var printFatal: Boolean = true,
-    val pipes: MutableList<LoggerPipe> = mutableListOf(),
+    val pipes: MutableList<LoggerPipe> = mutableListOf()
 ) {
 
     // We'll mainly write to this list
@@ -49,7 +49,6 @@ class Logger(
     }
 
     private fun transform(message: String) = if (printName) "[$name] $message" else message
-
 
     fun debug(message: String) = this.log(LogLevel.DEBUG, message)
     fun info(message: String) = this.log(LogLevel.INFO, message)

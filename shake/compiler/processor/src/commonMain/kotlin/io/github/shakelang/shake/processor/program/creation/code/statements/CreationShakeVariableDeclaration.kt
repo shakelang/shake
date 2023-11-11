@@ -11,7 +11,10 @@ import io.github.shakelang.shake.processor.program.types.code.ShakeScope
 import io.github.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
 import io.github.shakelang.shake.processor.program.types.code.values.ShakeValue
 
-open class CreationShakeVariableDeclaration : CreationShakeDeclaration, CreationShakeAssignable, CreationShakeStatement,
+open class CreationShakeVariableDeclaration :
+    CreationShakeDeclaration,
+    CreationShakeAssignable,
+    CreationShakeStatement,
     ShakeVariableDeclaration {
     override val scope: CreationShakeScope
     final override val name: String
@@ -169,5 +172,4 @@ open class CreationShakeVariableDeclaration : CreationShakeDeclaration, Creation
             "latestType" to latestType.toJson()
         )
     }
-
 }

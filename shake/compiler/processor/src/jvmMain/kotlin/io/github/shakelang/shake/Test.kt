@@ -5,7 +5,6 @@ import io.github.shakelang.shake.processor.map.ShakeMap
 import io.github.shakelang.shake.util.shason.json
 
 fun main(args: Array<String>) {
-
     val processor = ShakePackageBasedProcessor()
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "test.shake")
     processor.loadFile("shake/compiler/processor/src/commonTest/resources", "io/github/shakelang/test.shake")
@@ -18,6 +17,4 @@ fun main(args: Array<String>) {
     println(project.toJsonString())
     println(ShakeMap.from(ShakeMap.from(project).getBytes()).assemble().toJsonString())
     println(ShakeMap.fromJson(ShakeMap.from(project).toJson()).assemble().toJsonString())
-
-
 }

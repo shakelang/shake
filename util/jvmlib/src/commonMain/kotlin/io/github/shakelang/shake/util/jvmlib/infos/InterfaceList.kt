@@ -12,7 +12,6 @@ import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
 import io.github.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
 import io.github.shakelang.shake.util.shason.json
 
-
 class InterfaceList(val interfaces: List<ConstantUtf8Info>) : List<ConstantUtf8Info> by interfaces, ConstantUser {
 
     override val uses: Array<ConstantInfo> get() = interfaces.toTypedArray()
@@ -78,5 +77,4 @@ class InterfaceList(val interfaces: List<ConstantUtf8Info>) : List<ConstantUtf8I
             return fromStream(pool, bytes.dataStream())
         }
     }
-
 }

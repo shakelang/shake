@@ -127,22 +127,19 @@ fun testCharacterRange(
     vararg allowedCharacters: Any,
     range: CharRange = 0.toChar()..255.toChar()
 ) {
-
     for (i in range) {
-
         // Test character is allowed
         if (allowedCharacters.find {
-
-                when (it) {
-                    is CharRange -> i in it
-                    is Char -> i == it
-                    else -> throw Error()
-                }
-
-            } != null)
+            when (it) {
+                is CharRange -> i in it
+                is Char -> i == it
+                else -> throw Error()
+            }
+        } != null
+        ) {
             assertTrue("Function ${fn::class} should return true for input '$i'") { fn(i) }
-        else
+        } else {
             assertFalse("Function ${fn::class} should not return true for input '$i'") { fn(i) }
+        }
     }
-
 }

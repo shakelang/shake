@@ -1,11 +1,11 @@
 package io.github.shakelang.shake.parser
 
 import io.github.shakelang.shake.assertType
-import io.github.shakelang.shake.parser.node.expression.ShakeAddNode
-import io.github.shakelang.shake.parser.node.expression.ShakeMulNode
+import io.github.shakelang.shake.parser.node.expression.*
 import io.github.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import io.github.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import io.github.shakelang.shake.parser.node.logical.*
+import io.github.shakelang.shake.parser.node.factor.ShakeLogicalFalseNode
+import io.github.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -139,7 +139,7 @@ class LogicalTests {
         assertEquals(2, (mul.right as ShakeIntegerNode).number)
     }
 
-    private fun <T : ShakeLogicalCompareNode> testBasic(input: String, left: Double, right: Double, type: KClass<T>) {
+    private fun <T : ShakeExpressionNode> testBasic(input: String, left: Double, right: Double, type: KClass<T>) {
         val node = ParserTestUtil.parseValue(
             '<'.toString() + type.simpleName?.substring(type.simpleName?.length?.minus(4) ?: 0) + "Test>",
             input,
@@ -147,15 +147,23 @@ class LogicalTests {
         )
         assertNotNull(node.left)
         assertTrue(node.left is ShakeDoubleNode || node.left is ShakeIntegerNode)
-        if (node.left is ShakeDoubleNode) assertEquals(
-            left,
-            (node.left as ShakeDoubleNode).number
-        ) else assertEquals(left, (node.left as ShakeIntegerNode).number.toDouble())
+        if (node.left is ShakeDoubleNode) {
+            assertEquals(
+                left,
+                (node.left as ShakeDoubleNode).number
+            )
+        } else {
+            assertEquals(left, (node.left as ShakeIntegerNode).number.toDouble())
+        }
         assertNotNull(node.right)
         assertTrue(node.right is ShakeDoubleNode || node.right is ShakeIntegerNode)
-        if (node.right is ShakeDoubleNode) assertEquals(
-            right,
-            (node.right as ShakeDoubleNode).number
-        ) else assertEquals(right, (node.right as ShakeIntegerNode).number.toDouble())
+        if (node.right is ShakeDoubleNode) {
+            assertEquals(
+                right,
+                (node.right as ShakeDoubleNode).number
+            )
+        } else {
+            assertEquals(right, (node.right as ShakeIntegerNode).number.toDouble())
+        }
     }
 }

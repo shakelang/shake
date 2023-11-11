@@ -31,8 +31,10 @@ fun Short.toBytes(): ByteArray = byteArrayOf((this.toInt() shr 8).toByte(), this
  * @version 0.1.1
  */
 fun Int.toBytes(): ByteArray = byteArrayOf(
-    (this shr 24).toByte(), (this shr 16).toByte(),
-    (this shr 8).toByte(), this.toByte()
+    (this shr 24).toByte(),
+    (this shr 16).toByte(),
+    (this shr 8).toByte(),
+    this.toByte()
 )
 
 /**
@@ -44,8 +46,14 @@ fun Int.toBytes(): ByteArray = byteArrayOf(
  * @version 0.1.1
  */
 fun Long.toBytes(): ByteArray = byteArrayOf(
-    (this shr 56).toByte(), (this shr 48).toByte(), (this shr 40).toByte(),
-    (this shr 32).toByte(), (this shr 24).toByte(), (this shr 16).toByte(), (this shr 8).toByte(), this.toByte()
+    (this shr 56).toByte(),
+    (this shr 48).toByte(),
+    (this shr 40).toByte(),
+    (this shr 32).toByte(),
+    (this shr 24).toByte(),
+    (this shr 16).toByte(),
+    (this shr 8).toByte(),
+    this.toByte()
 )
 
 /**
@@ -138,7 +146,7 @@ inline fun shortOf(b0: Byte, b1: Byte): Short = (b0.toUByte().toInt() shl 8 or b
  */
 inline fun intOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) =
     b0.toUByte().toInt() shl 8 or b1.toUByte().toInt() shl 8 or
-            b2.toUByte().toInt() shl 8 or b3.toUByte().toInt()
+        b2.toUByte().toInt() shl 8 or b3.toUByte().toInt()
 
 /**
  * Long of eight bytes
@@ -151,7 +159,7 @@ inline fun intOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) =
 inline fun longOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte) =
     b0.toUByte().toLong() shl 8 or b1.toUByte().toLong() shl 8 or b2.toUByte().toLong() shl 8 or b3.toUByte()
         .toLong() shl
-            8 or b4.toUByte().toLong() shl 8 or b5.toUByte().toLong() shl 8 or b6.toUByte()
+        8 or b4.toUByte().toLong() shl 8 or b5.toUByte().toLong() shl 8 or b6.toUByte()
         .toLong() shl 8 or b7.toUByte().toLong()
 
 /**
@@ -256,4 +264,3 @@ inline fun unsignedIntOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte) = uintOf(b0, b1
  */
 inline fun unsignedLongOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte) =
     ulongOf(b0, b1, b2, b3, b4, b5, b6, b7)
-

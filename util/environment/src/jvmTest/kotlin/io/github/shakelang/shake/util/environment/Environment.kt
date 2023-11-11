@@ -15,5 +15,4 @@ class EnvironmentTests {
         assertEquals(false, env.isJavaScript)
         assertSame(EnvironmentType.JAVA, env.type)
     }
-
 }

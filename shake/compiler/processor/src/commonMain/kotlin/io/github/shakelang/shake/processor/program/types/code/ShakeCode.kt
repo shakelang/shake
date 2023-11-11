@@ -6,4 +6,3 @@ interface ShakeCode {
     val statements: List<ShakeStatement>
     fun toJson(): Map<String, Any>
 }
-

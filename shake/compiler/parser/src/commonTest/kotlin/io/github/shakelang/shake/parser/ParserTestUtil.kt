@@ -68,6 +68,4 @@ object ParserTestUtil {
         assertType(type, value)
         return value as T
     }
-
-
 }

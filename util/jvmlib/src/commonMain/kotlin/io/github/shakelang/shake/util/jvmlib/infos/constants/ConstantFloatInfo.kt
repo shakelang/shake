@@ -26,9 +26,11 @@ class ConstantFloatInfo(val value: Float) : ConstantInfo() {
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag)
+            if (stream.readByte() != tag) {
                 throw IllegalArgumentException("Invalid tag for ConstantFloatInfo")
-            else contentsFromStream(stream)
+            } else {
+                contentsFromStream(stream)
+            }
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
@@ -39,5 +41,4 @@ class ConstantFloatInfo(val value: Float) : ConstantInfo() {
         const val name = "constant_float_info"
         const val tag = ConstantTags.CONSTANT_FLOAT
     }
-
 }

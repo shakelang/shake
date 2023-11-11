@@ -32,7 +32,7 @@ class CreationShakeProject(
 
         val imported: Array<CreationShakePackage> = arrayOf(
             getPackage("shake.lang"),
-            getPackage("shake.js"),
+            getPackage("shake.js")
         )
 
         override fun get(name: String): CreationShakeAssignable? {
@@ -99,7 +99,6 @@ class CreationShakeProject(
     }
 
     open fun putFile(name: String, contents: ShakeFileNode) {
-
         val imports = contents.children.filterIsInstance<ShakeImportNode>()
         val imported = arrayOfNulls<CreationShakePackage>(imports.size)
 
@@ -114,20 +113,23 @@ class CreationShakeProject(
         contents.children.forEach {
             when (it) {
                 is ShakeClassDeclarationNode -> {
-                    if (classes.any { clz -> clz.name == it.name })
+                    if (classes.any { clz -> clz.name == it.name }) {
                         throw IllegalArgumentException("Class ${it.name} already exists")
+                    }
                     classes.add(CreationShakeClass.from(this, null, fileScope, it))
                 }
 
                 is ShakeFunctionDeclarationNode -> {
-                    if (functions.any { func -> func.name == it.name })
+                    if (functions.any { func -> func.name == it.name }) {
                         throw IllegalArgumentException("Function ${it.name} already exists")
+                    }
                     functions.add(CreationShakeMethod.from(this, null, fileScope, it))
                 }
 
                 is ShakeVariableDeclarationNode -> {
-                    if (fields.any { field -> field.name == it.name })
+                    if (fields.any { field -> field.name == it.name }) {
                         throw IllegalArgumentException("Field ${it.name} already exists")
+                    }
                     fields.add(CreationShakeField.from(this, null, fileScope, it))
                 }
 
@@ -141,8 +143,11 @@ class CreationShakeProject(
         val pkg = (contents.children.find { it is ShakePackageNode } as? ShakePackageNode)?.pkg
             ?: name.sliceArray(0 until name.size - 1)
         val file = name.last()
-        if (pkg.isEmpty()) putFile(file, contents)
-        else getPackage(pkg).putFile(file, contents)
+        if (pkg.isEmpty()) {
+            putFile(file, contents)
+        } else {
+            getPackage(pkg).putFile(file, contents)
+        }
     }
 
     @Deprecated("Use Scope.getClass() instead!")
@@ -158,8 +163,11 @@ class CreationShakeProject(
         val parts = clz.split(".")
         val name = parts.last()
         val pkg = parts.dropLast(1).toTypedArray()
-        return if (pkg.isEmpty()) this.classes.find { it.name == name }
-        else this.getPackage(pkg).classes.find { it.name == name }
+        return if (pkg.isEmpty()) {
+            this.classes.find { it.name == name }
+        } else {
+            this.getPackage(pkg).classes.find { it.name == name }
+        }
     }
 
     @Deprecated("Use Scope.getType() instead")
@@ -193,7 +201,6 @@ class CreationShakeProject(
     }
 
     fun finish() {
-
         classRequirements.forEach {
             val cls = this.getClass(it.name)
             it.then(cls ?: throw IllegalArgumentException("Class ${it.name} not found"))
@@ -217,7 +224,6 @@ class CreationShakeProject(
         this.functions.forEach { it.processCode() }
         this.fields.forEach { it.processCode() }
         this.subpackages.forEach { it.processCode() }
-
     }
 
     fun addScope(creationShakeScope: CreationShakeScope) {

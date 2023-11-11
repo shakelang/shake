@@ -36,7 +36,5 @@ enum class JsonBooleanElement(
          *
          */
         fun from(b: Boolean) = if (b) TRUE else FALSE
-
     }
-
 }

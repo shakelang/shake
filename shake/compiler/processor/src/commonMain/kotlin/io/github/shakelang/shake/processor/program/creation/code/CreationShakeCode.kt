@@ -30,12 +30,10 @@ open class CreationShakeCode(
 
     companion object {
 
-        //fun empty() = ShakeCode(emptyList())
+        // fun empty() = ShakeCode(emptyList())
 
         fun fromTree(tree: ShakeBlockNode): CreationShakeCode {
             return ShakeLateProcessCode(tree)
         }
     }
-
 }
-

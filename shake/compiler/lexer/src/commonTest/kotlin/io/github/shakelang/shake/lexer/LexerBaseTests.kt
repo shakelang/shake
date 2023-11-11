@@ -12,7 +12,6 @@ import kotlin.test.assertSame
 class LexerBaseTests {
     @Test
     fun testString() {
-
         // strings
         assertEquals("", generateToken("\"\"", ShakeTokenType.STRING).value)
         assertEquals("afvne9214 ro", generateToken("\"afvne9214 ro\"", ShakeTokenType.STRING).value)
@@ -24,7 +23,6 @@ class LexerBaseTests {
 
     @Test
     fun testCharacter() {
-
         // characters
         assertEquals(" ", generateToken("' '", ShakeTokenType.CHARACTER).value)
         assertEquals("a", generateToken("'a'", ShakeTokenType.CHARACTER).value)
@@ -39,7 +37,6 @@ class LexerBaseTests {
 
     @Test
     fun testPunctuation() {
-
         // punctuation
         generateToken(";", ShakeTokenType.SEMICOLON) // ';'
         generateToken(",", ShakeTokenType.COMMA) // ','
@@ -48,7 +45,6 @@ class LexerBaseTests {
 
     @Test
     fun testLineSeparator() {
-
         // line separator
         generateToken("\n", ShakeTokenType.LINE_SEPARATOR) // '\n'
         generateToken("\r\n", ShakeTokenType.LINE_SEPARATOR) // '\r\n'
@@ -56,7 +52,6 @@ class LexerBaseTests {
 
     @Test
     fun testAssign() {
-
         // assign
         generateToken("=", ShakeTokenType.ASSIGN) // '='
 
@@ -73,7 +68,6 @@ class LexerBaseTests {
 
     @Test
     fun testMathOperators() {
-
         // math operators
         generateToken("+", ShakeTokenType.ADD) // '+'
         generateToken("-", ShakeTokenType.SUB) // '-'
@@ -85,7 +79,6 @@ class LexerBaseTests {
 
     @Test
     fun testLogicalComparison() {
-
         // logical comparison
         generateToken("==", ShakeTokenType.EQ_EQUALS) // "=="
         generateToken(">=", ShakeTokenType.BIGGER_EQUALS) // ">="
@@ -96,7 +89,6 @@ class LexerBaseTests {
 
     @Test
     fun testLogicalConcatenation() {
-
         // logical concatenation
         generateToken("||", ShakeTokenType.LOGICAL_OR) // "||"
         generateToken("^^", ShakeTokenType.LOGICAL_XOR) // "^^"
@@ -106,7 +98,6 @@ class LexerBaseTests {
 
     @Test
     fun testBitwiseConcatenation() {
-
         // bitwise concatenation
         generateToken("|", ShakeTokenType.BITWISE_OR) // "|"
         generateToken("^", ShakeTokenType.BITWISE_XOR) // "^"
@@ -116,24 +107,17 @@ class LexerBaseTests {
         generateToken("~|", ShakeTokenType.BITWISE_NOR) // "~|"
         generateToken("~^", ShakeTokenType.BITWISE_XNOR) // "~^"
         generateToken("~&", ShakeTokenType.BITWISE_NAND) // "~&"
-
-
-
-
     }
 
     @Test
     fun testBitShifts() {
-
         // bit shifts
         generateToken("<<", ShakeTokenType.BITWISE_SHL) // "<<"
         generateToken(">>", ShakeTokenType.BITWISE_SHR) // ">>"
-
     }
 
     @Test
     fun testBrackets() {
-
         // brackets
         generateToken("(", ShakeTokenType.LPAREN) // '('
         generateToken(")", ShakeTokenType.RPAREN) // ')'
@@ -147,72 +131,102 @@ class LexerBaseTests {
 
     @Test
     fun testDynamic() = testKeyword(KeywordTest.DYNAMIC)
+
     @Test
     fun testByte() = testKeyword(KeywordTest.BYTE)
+
     @Test
     fun testShort() = testKeyword(KeywordTest.SHORT)
+
     @Test
     fun testInt() = testKeyword(KeywordTest.INT)
+
     @Test
     fun testLong() = testKeyword(KeywordTest.LONG)
+
     @Test
     fun testFloat() = testKeyword(KeywordTest.FLOAT)
+
     @Test
     fun testDouble() = testKeyword(KeywordTest.DOUBLE)
+
     @Test
     fun testChar() = testKeyword(KeywordTest.CHAR)
+
     @Test
     fun testBoolean() = testKeyword(KeywordTest.BOOLEAN)
+
     @Test
     fun testConst() = testKeyword(KeywordTest.CONST)
+
     @Test
     fun testFunction() = testKeyword(KeywordTest.FUNCTION)
+
     @Test
     fun testReturn() = testKeyword(KeywordTest.RETURN)
+
     @Test
     fun testDo() = testKeyword(KeywordTest.DO)
+
     @Test
     fun testWhile() = testKeyword(KeywordTest.WHILE)
+
     @Test
     fun testFor() = testKeyword(KeywordTest.FOR)
+
     @Test
     fun testIf() = testKeyword(KeywordTest.IF)
+
     @Test
     fun testElse() = testKeyword(KeywordTest.ELSE)
+
     @Test
     fun testTrue() = testKeyword(KeywordTest.TRUE)
+
     @Test
     fun testFalse() = testKeyword(KeywordTest.FALSE)
+
     @Test
     fun testClass() = testKeyword(KeywordTest.CLASS)
+
     @Test
     fun testExtends() = testKeyword(KeywordTest.EXTENDS)
+
     @Test
     fun testImplements() = testKeyword(KeywordTest.IMPLEMENTS)
+
     @Test
     fun testStatic() = testKeyword(KeywordTest.STATIC)
+
     @Test
     fun testFinal() = testKeyword(KeywordTest.FINAL)
+
     @Test
     fun testPublic() = testKeyword(KeywordTest.PUBLIC)
+
     @Test
     fun testProtected() = testKeyword(KeywordTest.PROTECTED)
+
     @Test
     fun testPrivate() = testKeyword(KeywordTest.PRIVATE)
+
     @Test
     fun testNew() = testKeyword(KeywordTest.NEW)
+
     @Test
     fun testImport() = testKeyword(KeywordTest.IMPORT)
+
     @Test
     fun testVoid() = testKeyword(KeywordTest.VOID)
+
     @Test
     fun testConstructor() = testKeyword(KeywordTest.CONSTRUCTOR)
+
     @Test
     fun testAs() = testKeyword(KeywordTest.AS)
 
     @Test
     fun testNumbers() {
-
         // numbers
         assertEquals("149", generateToken("149", ShakeTokenType.INTEGER).value)
         assertEquals("0.01", generateToken("0.01", ShakeTokenType.DOUBLE).value)
@@ -220,7 +234,6 @@ class LexerBaseTests {
 
     @Test
     fun testIdentifiers() {
-
         // identifiers
         assertEquals("hello", generateToken("hello", ShakeTokenType.IDENTIFIER).value)
         assertEquals("world0A_", generateToken("world0A_", ShakeTokenType.IDENTIFIER).value)

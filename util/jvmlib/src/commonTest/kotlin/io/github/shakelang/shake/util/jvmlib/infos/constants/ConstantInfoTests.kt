@@ -177,5 +177,4 @@ class ConstantInfoTests {
         assertFalse(constant.isUsed)
         assertTrue(constant2.isUsed)
     }
-
 }

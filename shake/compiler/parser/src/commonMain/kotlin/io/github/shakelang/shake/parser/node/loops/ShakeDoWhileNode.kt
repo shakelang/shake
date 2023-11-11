@@ -10,5 +10,4 @@ class ShakeDoWhileNode(map: PositionMap, val body: ShakeBlockNode, val condition
 
     override fun toJson(): Map<String, *> =
         mapOf("name" to "DoWhileNode", "body" to body.json, "condition" to condition.json)
-
 }

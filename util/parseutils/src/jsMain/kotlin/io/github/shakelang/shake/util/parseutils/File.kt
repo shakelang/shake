@@ -50,9 +50,11 @@ actual class File actual constructor(
         get() = node_fs.existsSync(path) as Boolean
 
     init {
-        if (node_fs == null || node_path == null) throw Error(
-            "Can't use file API because node seems to be not available (you are probably in browser)"
-        )
+        if (node_fs == null || node_path == null) {
+            throw Error(
+                "Can't use file API because node seems to be not available (you are probably in browser)"
+            )
+        }
     }
 
     actual fun mkdir() {
@@ -68,7 +70,6 @@ actual class File actual constructor(
     }
 
     actual fun write(content: CharArray) = this.write(content.concatToString())
-
 }
 
 actual fun resourceFile(path: String): String = require(path) as String

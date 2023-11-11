@@ -44,9 +44,11 @@ class ConstantInterfaceMethodrefInfo(private val cri: UShort, val ntri: UShort) 
         fun contentsFromStream(stream: InputStream) = contentsFromStream(stream.dataStream)
 
         fun fromStream(stream: DataInputStream) =
-            if (stream.readByte() != tag)
+            if (stream.readByte() != tag) {
                 throw IllegalArgumentException("Invalid tag for ConstantInterfaceMethodrefInfo")
-            else contentsFromStream(stream)
+            } else {
+                contentsFromStream(stream)
+            }
 
         fun fromStream(stream: InputStream) = fromStream(stream.dataStream)
 
@@ -57,5 +59,4 @@ class ConstantInterfaceMethodrefInfo(private val cri: UShort, val ntri: UShort) 
         const val name: String = "constant_interface_methodref_info"
         const val tag: Byte = ConstantTags.CONSTANT_INTERFACE_METHOD_REF
     }
-
 }

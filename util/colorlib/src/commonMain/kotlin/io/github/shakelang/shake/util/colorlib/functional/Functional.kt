@@ -56,7 +56,6 @@ fun fgWhite(contents: String) = "${Formatting.FGColor.WHITE}$contents${Formattin
  */
 fun fgBrightBlack(contents: String) = "${Formatting.FGColor.BRIGHT_BLACK}$contents${Formatting.RESET}"
 
-
 /**
  * Make your foreground color gray
  * @param contents the contents to make gray
@@ -201,7 +200,6 @@ fun brightCyan(contents: String) = fgBrightCyan(contents)
  */
 fun brightWhite(contents: String) = fgBrightWhite(contents)
 
-
 /**
  * Make your background color black
  * @param contents the contents to make black
@@ -324,4 +322,3 @@ fun reverse(contents: String) = contents.reversed()
 fun invert(contents: String) = "${Formatting.INVERT}$contents${Formatting.RESET}"
 
 fun join(vararg strings: String) = strings.joinToString("")
-

@@ -68,7 +68,6 @@ kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_16)
     }
-
 }
 
 application {

@@ -14,7 +14,6 @@ class FieldInfoTests {
 
     @Test
     fun test() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -27,12 +26,10 @@ class FieldInfoTests {
         assertEquals(1u, info.nameIndex)
         assertEquals(pool[2], info.descriptor)
         assertEquals(2u, info.descriptorIndex)
-
     }
 
     @Test
     fun testFromStream() {
-
         val stream = byteArrayOf(0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00).dataStream()
         val pool = ConstantPool(
             arrayOf(
@@ -46,12 +43,10 @@ class FieldInfoTests {
         assertEquals(1u, info.nameIndex)
         assertEquals(pool[2], info.descriptor)
         assertEquals(2u, info.descriptorIndex)
-
     }
 
     @Test
     fun testFromArray() {
-
         val arr = byteArrayOf(0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00)
         val pool = ConstantPool(
             arrayOf(
@@ -65,12 +60,10 @@ class FieldInfoTests {
         assertEquals(1u, info.nameIndex)
         assertEquals(pool[2], info.descriptor)
         assertEquals(2u, info.descriptorIndex)
-
     }
 
     @Test
     fun testIsPublic() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -82,12 +75,10 @@ class FieldInfoTests {
 
         info = FieldInfo(0x0001u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isPublic)
-
     }
 
     @Test
     fun testIsPrivate() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -99,12 +90,10 @@ class FieldInfoTests {
 
         info = FieldInfo(0x0002u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isPrivate)
-
     }
 
     @Test
     fun testIsProtected() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -116,12 +105,10 @@ class FieldInfoTests {
 
         info = FieldInfo(0x0004u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isProtected)
-
     }
 
     @Test
     fun testIsStatic() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -133,12 +120,10 @@ class FieldInfoTests {
 
         info = FieldInfo(0x0008u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isStatic)
-
     }
 
     @Test
     fun testIsFinal() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -150,12 +135,10 @@ class FieldInfoTests {
 
         info = FieldInfo(0x0010u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isFinal)
-
     }
 
     @Test
     fun testIsVolatile() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -167,12 +150,10 @@ class FieldInfoTests {
 
         info = FieldInfo(0x0040u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isVolatile)
-
     }
 
     @Test
     fun testIsTransient() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -184,12 +165,10 @@ class FieldInfoTests {
 
         info = FieldInfo(0x0080u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isTransient)
-
     }
 
     @Test
     fun isSynthetic() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -201,12 +180,10 @@ class FieldInfoTests {
 
         info = FieldInfo(0x1000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isSynthetic)
-
     }
 
     @Test
     fun isEnum() {
-
         val pool = ConstantPool(
             arrayOf(
                 Constant.utf8("variable"),
@@ -218,7 +195,6 @@ class FieldInfoTests {
 
         info = FieldInfo(0x4000u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertTrue(info.isEnum)
-
     }
 
     @Test
@@ -246,5 +222,4 @@ class FieldInfoTests {
         val info = FieldInfo(0x00u, pool.getUtf8(1), pool.getUtf8(2), AttributeMap(emptyMap()))
         assertEquals<List<Byte>>(listOf(0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00), info.toBytes().toList())
     }
-
 }

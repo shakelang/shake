@@ -14,17 +14,15 @@ class ShakeTypeArgumentsDeclarationNode(
             "typeArguments" to typeArguments.map { it.toJson() }
         )
     }
-
 }
 
 class ShakeTypeArgumentDeclarationNode(
 
-
     map: PositionMap,
     val name: String,
-    val extends: ShakeVariableType?,
+    val extends: ShakeVariableType?
 
-    ) : ShakeNodeImpl(map) {
+) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> {
         return mapOf(
@@ -33,6 +31,4 @@ class ShakeTypeArgumentDeclarationNode(
             "extends" to extends?.toJson()
         )
     }
-
-
 }

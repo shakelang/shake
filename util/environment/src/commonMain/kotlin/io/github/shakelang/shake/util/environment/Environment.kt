@@ -28,12 +28,10 @@ abstract class Environment(
      */
     val isJavaScriptBrowser: Boolean get() = isJavaScript && toJavaScript().isBrowser
 
-
     /**
      * Is the Environment a JVM Environment
      */
     val isJava: Boolean get() = this.type == EnvironmentType.JAVA
-
 
     /**
      * Casts this Environment to a JavaScriptEnvironment
@@ -53,10 +51,8 @@ abstract class Environment(
          *
          */
         fun getEnvironment(): Environment = getRunningEnvironment()
-
     }
 }
-
 
 /**
  * [Environment] of type Java
@@ -67,9 +63,7 @@ expect class JavaEnvironment : Environment {
      * The java version of the [JavaEnvironment]
      */
     val javaVersion: String
-
 }
-
 
 /**
  * [Environment] of type JavaScript
@@ -90,9 +84,7 @@ expect class JavaScriptEnvironment : Environment {
      * Is the [JavaScriptEnvironment] running in a browser
      */
     val isBrowser: Boolean
-
 }
-
 
 /**
  * Returns the running environment
@@ -117,5 +109,4 @@ enum class EnvironmentType {
      * @see JavaScriptEnvironment
      */
     JAVASCRIPT
-
 }

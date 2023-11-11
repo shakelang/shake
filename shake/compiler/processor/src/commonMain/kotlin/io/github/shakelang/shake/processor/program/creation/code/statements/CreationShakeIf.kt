@@ -20,5 +20,4 @@ class CreationShakeIf(
             "else" to elseBody?.toJson()
         )
     }
-
 }

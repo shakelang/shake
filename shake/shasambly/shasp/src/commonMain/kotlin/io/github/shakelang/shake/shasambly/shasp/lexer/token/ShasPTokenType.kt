@@ -54,7 +54,6 @@ enum class ShasPTokenType(private val size: Int, override val hasValue: Boolean 
      */
     ADD(1),
 
-
     /**
      * Subtraction
      */
@@ -288,7 +287,7 @@ enum class ShasPTokenType(private val size: Int, override val hasValue: Boolean 
     /**
      * New keyword
      */
-    KEYWORD_NEW(3),
+    KEYWORD_NEW(3)
 
     ;
 
@@ -299,5 +298,4 @@ enum class ShasPTokenType(private val size: Int, override val hasValue: Boolean 
     override fun length(value: String?): Int {
         return if (size == -1) value!!.length else size
     }
-
 }

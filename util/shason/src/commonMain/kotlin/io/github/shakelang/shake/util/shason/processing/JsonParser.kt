@@ -6,7 +6,6 @@ import io.github.shakelang.shake.util.parseutils.characters.position.Position
 import io.github.shakelang.shake.util.shason.elements.*
 import io.github.shakelang.shake.util.shason.processing.JsonTokenType.*
 
-
 /**
  * A [JsonParser] creates a [JsonElement] from a [JsonTokenInputStream]
  */
@@ -21,20 +20,16 @@ class JsonParser(
 ) {
 
     fun parse(): JsonElement {
-
         val ret = parseValue()
         if (tokens.hasNext()) throw ParserError("Input not finished")
         return ret
-
     }
 
     /**
      * Parse a [JsonElement]
      */
     private fun parseValue(): JsonElement {
-
         return when (val next = tokens.next().type) {
-
             LCURL -> parseMap()
             LSQUARE -> parseArray()
             STRING -> JsonElement.from(Characters.parseString(tokens.actual.value!!))
@@ -44,9 +39,7 @@ class JsonParser(
             FALSE -> JsonBooleanElement.FALSE
 
             else -> throw ParserError("Could not parse token $next")
-
         }
-
     }
 
     /**
@@ -65,7 +58,6 @@ class JsonParser(
 
             next = tokens.peek().type == COMMA
             if (next) tokens.skip()
-
         }
 
         if (tokens.next().type != RCURL) throw ParserError("Expecting '}'")
@@ -83,17 +75,14 @@ class JsonParser(
         var next = true
 
         while (tokens.hasNext() && next) {
-
             if (tokens.peek().type == RSQUARE) break
             arr.add(parseValue())
             next = tokens.peek().type == COMMA
             if (next) tokens.skip()
-
         }
 
         if (tokens.next().type != RSQUARE) throw ParserError("Expecting ']")
         return arr
-
     }
 
     // ****************************************************************************
@@ -127,7 +116,6 @@ class JsonParser(
             end
         )
 
-
         /**
          * Constructor for [ParserError]
          *
@@ -137,7 +125,6 @@ class JsonParser(
          *
          */
         constructor(details: String, start: Position, end: Position) : this("ParserError", details, start, end)
-
 
         /**
          * Constructor for [ParserError]
@@ -154,7 +141,6 @@ class JsonParser(
             tokens.map.resolve(end)
         )
 
-
         /**
          * Constructor for [ParserError]
          *
@@ -167,5 +153,4 @@ class JsonParser(
             tokens.map.resolve(tokens.peek().end)
         )
     }
-
 }

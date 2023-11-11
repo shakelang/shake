@@ -66,7 +66,6 @@ actual class File actual constructor(
         writer.write(content)
         writer.close()
     }
-
 }
 
 actual fun resourceFile(path: String): String = File::class.java.classLoader

@@ -75,7 +75,5 @@ class TokenTests {
 
         assertNotEquals<Token<*>?>(token, null)
         assertNotEquals<Any>(token, "test")
-
     }
-
 }

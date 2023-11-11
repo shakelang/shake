@@ -183,5 +183,4 @@ expect abstract class InputStream() {
      * @see InputStream.readNBytes
      */
     open fun readNBytes(b: ByteArray, off: Int, len: Int): Int
-
 }

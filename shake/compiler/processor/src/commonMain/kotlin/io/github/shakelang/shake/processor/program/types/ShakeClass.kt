@@ -69,7 +69,7 @@ interface ShakeClass {
             "staticFields" to this.staticFields.map { it.toJson() },
             "constructors" to this.constructors.map { it.toJson() },
             "classes" to this.classes.map { it.toJson() },
-            "staticClasses" to this.staticClasses.map { it.toJson() },
+            "staticClasses" to this.staticClasses.map { it.toJson() }
         )
     }
 }

@@ -37,6 +37,6 @@ class ShakeConstructorDeclarationNode
             "function_name" to name,
             "args" to args.map { it.json },
             "body" to body.json,
-            "access" to access.toString(),
+            "access" to access.toString()
         )
 }

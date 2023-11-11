@@ -1,6 +1,5 @@
 package io.github.shakelang.shake.util.shason.map
 
-
 /**
  * A type for an own map implementation.
  */
@@ -15,15 +14,13 @@ interface MapType<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K, V, 
      * Create a mutable map from this map
      */
     fun toMutableMap(): MMT
-
 }
-
 
 /**
  * A type for an own mutable map implementation.
  */
-interface MutableMapType<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K, V, MT, MMT>>
-    : MutableMap<K, V>, MapType<K, V, MT, MMT>
+interface MutableMapType<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K, V, MT, MMT>> :
+    MutableMap<K, V>, MapType<K, V, MT, MMT>
 
 /**
  * A base API class for an implementation of [MapType]
@@ -33,9 +30,9 @@ abstract class MapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K
     /**
      * The [Map] to create the [MapBase] from
      */
-    val map: Map<K, V>,
+    val map: Map<K, V>
 
-    ) : MapType<K, V, MT, MMT> {
+) : MapType<K, V, MT, MMT> {
 
     /**
      * Returns a read-only [Set] of all key/value pairs in this map.
@@ -82,7 +79,6 @@ abstract class MapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K
      * Returns `true` if the map is empty (contains no elements), `false` otherwise.
      */
     override fun isEmpty(): Boolean = this.map.isEmpty()
-
 }
 
 abstract class MutableMapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K, V, MT, MMT>>(
@@ -90,9 +86,9 @@ abstract class MutableMapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMa
     /**
      * The [MutableMap] to create the [MutableMapBase] from
      */
-    val map: MutableMap<K, V>,
+    val map: MutableMap<K, V>
 
-    ) : MutableMapType<K, V, MT, MMT> {
+) : MutableMapType<K, V, MT, MMT> {
 
     /**
      * Returns a read-only [Set] of all key/value pairs in this map.
@@ -163,5 +159,4 @@ abstract class MutableMapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMa
      * @return the previous value associated with the key, or `null` if the key was not present in the map.
      */
     override fun remove(key: K): V? = this.map.remove(key)
-
 }

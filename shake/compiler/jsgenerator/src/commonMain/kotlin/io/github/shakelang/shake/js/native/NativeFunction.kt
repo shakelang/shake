@@ -17,5 +17,4 @@ interface NativeFunction {
         handle(generator, invokation)
 
     fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue = handle(generator, invokation)
-
 }

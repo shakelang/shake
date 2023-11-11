@@ -15,7 +15,6 @@ interface JsonPrimitive : JsonElement {
      */
     fun toInt() = if (this.isInt()) this as JsonIntegerElement else throw Error("Element is not a JsonIntegerElement")
 
-
     /**
      * Is the [JsonPrimitive] a [JsonDoubleElement]?
      */
@@ -26,7 +25,6 @@ interface JsonPrimitive : JsonElement {
      */
     fun toDouble() =
         if (this.isDouble()) this as JsonDoubleElement else throw Error("Element is not a JsonDoubleElement")
-
 
     /**
      * Is the [JsonPrimitive] a [JsonStringElement]?
@@ -39,7 +37,6 @@ interface JsonPrimitive : JsonElement {
     fun toStringElement() =
         if (this.isString()) this as JsonStringElement else throw Error("Element is not a JsonStringElement")
 
-
     /**
      * Is the [JsonPrimitive] a [JsonBooleanElement]?
      */
@@ -50,5 +47,4 @@ interface JsonPrimitive : JsonElement {
      */
     fun toBoolean() =
         if (this.isBoolean()) this as JsonBooleanElement else throw Error("Element is not a JsonBooleanElement")
-
 }

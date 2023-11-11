@@ -99,7 +99,6 @@ class AttributeCodeInfo(
         }
     }
 
-
     class ExceptionTableEntry(
         val start_pc: UShort,
         val end_pc: UShort,
@@ -139,5 +138,4 @@ class AttributeCodeInfo(
             }
         }
     }
-
 }
