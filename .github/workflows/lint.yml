@@ -22,13 +22,18 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Gradle
+      - name: Setup Gradle 📦
         uses: gradle/gradle-build-action@v2
 
-      - name: Grant execute permission for gradlew
+      - name: Setup Node.js 📦
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Grant execute permission for gradlew 📜
         run: chmod +x gradlew
 
-      - name: Cache Gradle packages
+      - name: Cache Gradle packages ♻️
         uses: actions/cache@v3
         with:
           path: |
@@ -38,13 +43,31 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Lint with KtLint
+      - name: Lint with KtLint 🔬
         run: |
-          ./gradlew lint
+          ./gradlew check copyKtlintSarifReports
 
-      - name: Upload SARIF file for GitHub Advanced Security
+      - name: Upload Artifact ⬆️
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports
+          path: ./build/reports/ktlint/all
+
+      - name: Merge SARIF files 📂
+        run: |
+          npm i -g @microsoft/sarif-multitool
+          chmod +x ./merge-sarif.sh
+          ./merge-sarif.sh
+
+      - name: Upload Artifact ⬆️
+        uses: actions/upload-artifact@v2
+        with:
+          name: report
+          path: ./build/reports/ktlint/merged/*.sarif
+
+      - name: Upload SARIF file for GitHub Advanced Security 📂
         uses: github/codeql-action/upload-sarif@v2
         with:
           # Path to SARIF file relative to the root of the repository
-          sarif_file: build/reports/ktlint/ktlintKotlinScriptCheck
+          sarif_file: ./build/reports/ktlint/merged
           category: KtLint
