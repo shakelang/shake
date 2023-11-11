@@ -1,7 +1,7 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
-group = "io.github.shakelang.shake"
+group = "com.shakelang.shake"
 version = "0.1.0"
 description = "Shake"
 
@@ -38,7 +38,7 @@ plugins {
 
 detekt {
     toolVersion = "1.23.3"
-    config.setFrom(file("config/detekt/detekt.yml"))
+    config.setFrom(rootProject.file("config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
 }
 
@@ -96,7 +96,7 @@ subprojects {
 
     detekt {
         toolVersion = "1.23.3"
-        config.setFrom(file("config/detekt/detekt.yml"))
+        config.setFrom(rootProject.file("config/detekt/detekt.yml"))
         buildUponDefaultConfig = true
     }
 

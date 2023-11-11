@@ -74,7 +74,7 @@ node {
 }
 
 //multiplatformResources {
-//    multiplatformResourcesPackage = "io.github.shakelang.shake.$packageName.resources"
+//    multiplatformResourcesPackage = "com.shakelang.shake.$packageName.resources"
 //    multiplatformResourcesClassName = "${packageCapitalized}Resources"
 //    iosBaseLocalizationRegion = "en" // optional, default "en"
 //    multiplatformResourcesSourceSet = "commonMain"  // optional, default "commonMain"

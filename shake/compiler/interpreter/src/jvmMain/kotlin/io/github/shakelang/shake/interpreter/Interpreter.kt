@@ -1,11 +1,11 @@
-package io.github.shakelang.shake.interpreter
+package com.shakelang.shake.interpreter
 
-import io.github.shakelang.shake.util.parseutils.characters.source.CharacterSource.Companion.from
-import io.github.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import io.github.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
-import io.github.shakelang.shake.interpreter.values.Java
-import io.github.shakelang.shake.lexer.ShakeLexer
-import io.github.shakelang.shake.parser.ShakeParser
+import com.shakelang.shake.util.parseutils.characters.source.CharacterSource.Companion.from
+import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.shake.interpreter.values.Java
+import com.shakelang.shake.lexer.ShakeLexer
+import com.shakelang.shake.parser.ShakeParser
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader

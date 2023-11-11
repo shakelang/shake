@@ -1,9 +1,9 @@
-package io.github.shakelang.shake.interpreter.values
+package com.shakelang.shake.interpreter.values
 
-import io.github.shakelang.shake.interpreter.*
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
-import io.github.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.interpreter.*
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 
 /**
  * An [InterpreterValue] to store class-declarations

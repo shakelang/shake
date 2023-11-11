@@ -1,11 +1,11 @@
-package io.github.shakelang.shake.interpreter.values
+package com.shakelang.shake.interpreter.values
 
-import io.github.shakelang.shake.interpreter.Scope
-import io.github.shakelang.shake.interpreter.UnformattedInterpreterError
-import io.github.shakelang.shake.interpreter.Variable
-import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
-import io.github.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
+import com.shakelang.shake.interpreter.Scope
+import com.shakelang.shake.interpreter.UnformattedInterpreterError
+import com.shakelang.shake.interpreter.Variable
+import com.shakelang.shake.parser.node.ShakeCastNode.CastTarget
+import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.objects.ShakeClassConstructionNode
 import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 

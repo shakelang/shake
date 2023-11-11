@@ -1,7 +1,7 @@
-package io.github.shakelang.shake.interpreter.values
+package com.shakelang.shake.interpreter.values
 
-import io.github.shakelang.shake.interpreter.UnformattedInterpreterError
-import io.github.shakelang.shake.parser.node.ShakeCastNode.CastTarget
+import com.shakelang.shake.interpreter.UnformattedInterpreterError
+import com.shakelang.shake.parser.node.ShakeCastNode.CastTarget
 import kotlin.math.pow
 import kotlin.reflect.KClass
 

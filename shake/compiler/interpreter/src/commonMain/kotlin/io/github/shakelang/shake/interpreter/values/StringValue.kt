@@ -1,4 +1,4 @@
-package io.github.shakelang.shake.interpreter.values
+package com.shakelang.shake.interpreter.values
 
 class StringValue(val value: String) : InterpreterValue {
 

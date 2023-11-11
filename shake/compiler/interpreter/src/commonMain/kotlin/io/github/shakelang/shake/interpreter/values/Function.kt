@@ -1,12 +1,12 @@
-package io.github.shakelang.shake.interpreter.values
+package com.shakelang.shake.interpreter.values
 
-import io.github.shakelang.shake.interpreter.Interpreter
-import io.github.shakelang.shake.interpreter.Scope
-import io.github.shakelang.shake.interpreter.Variable
-import io.github.shakelang.shake.parser.node.ShakeAccessDescriber
-import io.github.shakelang.shake.parser.node.ShakeBlockNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
-import io.github.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.interpreter.Interpreter
+import com.shakelang.shake.interpreter.Scope
+import com.shakelang.shake.interpreter.Variable
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.ShakeBlockNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 
 /**
  * An [InterpreterValue] for function-declarations

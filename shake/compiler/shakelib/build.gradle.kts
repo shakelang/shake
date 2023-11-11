@@ -15,7 +15,7 @@ description = "Utilities for parsing stuff with kotlin"
 val projectName = name
 
 multiplatformResources {
-    multiplatformResourcesPackage = "io.github.shakelang.shake.shakelib"
+    multiplatformResourcesPackage = "com.shakelang.shake.shakelib"
     multiplatformResourcesClassName = "ShakeLib"
     iosBaseLocalizationRegion = "en"
     multiplatformResourcesSourceSet = "commonMain"
