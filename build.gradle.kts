@@ -28,12 +28,18 @@ dependencies {
 //    kover(project(":shake:shasambly:java-dist"))
 }
 
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
 plugins {
     id("org.jetbrains.dokka")
     kotlin("multiplatform") apply false
     id("org.jetbrains.kotlinx.kover")
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
     id("io.gitlab.arturbosch.detekt") version ("1.23.3")
+//    id("com.shakelang.shake.util.changelog.plugin")
 }
 
 detekt {

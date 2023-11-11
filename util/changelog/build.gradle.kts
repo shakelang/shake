@@ -33,9 +33,11 @@ sourceSets {
 publishing {
     publications {
         // kotlin plugin
-        create<MavenPublication>("kotlin") {
+        create<MavenPublication>("plugin") {
             from(components["java"])
-            artifactId = projectName
+            groupId = projectGroup("util.changelog")
+            artifactId = "plugin"
+            version = project.version.toString()
             pom {
                 name.set(project.displayName)
                 description.set(project.description)
