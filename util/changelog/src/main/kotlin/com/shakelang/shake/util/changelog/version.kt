@@ -1,7 +1,5 @@
 package com.shakelang.shake.util.changelog
 
-
-
 class Version(
     var major: Int,
     var minor: Int,
