@@ -10,7 +10,7 @@ class Version(
 ) {
 
     override fun toString(): String {
-        return "$major.$minor.$patch-suffix"
+        return "$major.$minor.$patch-$suffix"
     }
 
     companion object {
