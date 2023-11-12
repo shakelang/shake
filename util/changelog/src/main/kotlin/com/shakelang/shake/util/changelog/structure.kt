@@ -1,7 +1,6 @@
 package com.shakelang.shake.util.changelog
 
 import com.shakelang.shake.util.shason.elements.JsonObject
-import com.shakelang.shake.util.shason.elements.JsonStringElement
 import com.shakelang.shake.util.shason.json
 import org.gradle.api.Project
 import java.util.*
@@ -114,7 +113,7 @@ class ChangelogStructure(
     }
 }
 
-fun readStructure(project: Project) = project.subprojects.map {
+fun Changelog.readStructure() = project.subprojects.map {
     ProjectStructure(
         it.path,
         try {
@@ -131,17 +130,17 @@ fun readStructure(project: Project) = project.subprojects.map {
 }
 
 
-fun newStructure(project: Project) {
+fun Changelog.newStructure() {
     val structure = ChangelogStructure(
         Date(),
-        readStructure(project.rootProject)
+        readStructure()
     )
-    project.rootProject.file(".changelog/structure.json").writeText(structure.toString())
+    project.file(".changelog/structure.json").writeText(structure.toString())
 }
 
-fun updateStructure(project: Project) {
+fun Changelog.updateStructure() {
     val structure = ChangelogStructure.fromString(
-        project.rootProject.file(".changelog/structure.json").readText()
+        project.file(".changelog/structure.json").readText()
     )
     structure.projects.forEach {
         val projectStructure = ProjectStructure(
@@ -153,16 +152,16 @@ fun updateStructure(project: Project) {
             it.dependencies
         )
     }
-    project.rootProject.file(".changelog/structure.json").writeText(structure.toString())
+    project.file(".changelog/structure.json").writeText(structure.toString())
 }
 
-fun readStructureFile(project: Project): ChangelogStructure {
+fun Changelog.readStructureFile(): ChangelogStructure {
     return ChangelogStructure.fromString(
-        project.rootProject.file(".changelog/structure.json").readText()
+        project.file(".changelog/structure.json").readText()
     )
 }
 
-fun getVersion(project: Project): Version
-    = readStructureFile(project).projects.find {
+fun Project.getVersion(): Version
+    = changelog.mainChangelog.readStructureFile().projects.find {
         it.path == project.path
     }?.version ?: Version.fromString("0.1.0-SNAPSHOT")
