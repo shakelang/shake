@@ -72,20 +72,23 @@ open class BumpTask : DefaultTask() {
 
     @org.gradle.api.tasks.TaskAction
     open fun version() {
-        val messageValue: String? = project.findProperty("message") as String?
-        val projectArray = (project.findProperty("projects") as String?)?.split(",")
-        val typeValue: String? = project.findProperty("type") as String?
+        val messageValue: String? = project.findProperty("message")?.toString()
+        val projectArray = (project.findProperty("packages")?.toString())?.split(",")
+        val typeValue: String? = project.findProperty("type")?.toString()
 
         if(typeValue != "major" && typeValue != "minor" && typeValue != "patch") {
-            throw Error("Please provide a type with -Ptype=\"major|minor|patch\"")
+            logger.error("Please provide a type with -Ptype=\"major|minor|patch\"")
+            throw Exception("Please provide a type with -Ptype=\"major|minor|patch\"")
         }
 
         if (messageValue == null) {
-            throw Error("Please provide a message with -Pmessage=\"Your message\"")
+            logger.error("Please provide a message with -Pmessage=\"Your message\"")
+            throw Exception("Please provide a message with -Pmessage=\"Your message\"")
         }
 
-        if (projectArray == null) {
-            throw Error("Please provide a project with -Pprojects=\"project1,project2\"")
+        if (projectArray.isNullOrEmpty()) {
+            logger.error("Please provide a project with -Ppackages=\"project1,project2\"")
+            throw Exception("Please provide a project with -Ppackages=\"project1,project2\"")
         }
 
         val allProjects = Changelog.instance.readStructureFile().projects
@@ -94,6 +97,10 @@ open class BumpTask : DefaultTask() {
         val projects = projectArray.map { project -> allProjects.find { it.path == project }
             ?: throw Exception("Project $project not found") }
 
+
+
+        logger.info("Bumping version with type $typeValue and message $messageValue")
+        logger.info("Projects: ${projects.joinToString(", "){ it.path }}")
     }
 }
 
