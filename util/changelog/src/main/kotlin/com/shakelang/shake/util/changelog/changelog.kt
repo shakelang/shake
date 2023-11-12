@@ -81,10 +81,14 @@ open class BumpTask : DefaultTask() {
             throw Exception("Please provide a type with -Ptype=\"major|minor|patch\"")
         }
 
+        val type = BumpType.fromString(typeValue)
+
         if (messageValue == null) {
             logger.error("Please provide a message with -Pmessage=\"Your message\"")
             throw Exception("Please provide a message with -Pmessage=\"Your message\"")
         }
+
+        val message = messageValue
 
         if (projectArray.isNullOrEmpty()) {
             logger.error("Please provide a project with -Ppackages=\"project1,project2\"")
@@ -97,10 +101,13 @@ open class BumpTask : DefaultTask() {
         val projects = projectArray.map { project -> allProjects.find { it.path == project }
             ?: throw Exception("Project $project not found") }
 
-
-
         logger.info("Bumping version with type $typeValue and message $messageValue")
         logger.info("Projects: ${projects.joinToString(", "){ it.path }}")
+
+        val bump = Bump(type, message, projects.map { it.path })
+        val bumpFile = Changelog.instance.readBumpFile()
+        bumpFile.add(bump)
+        Changelog.instance.writeBumpFile(bumpFile)
     }
 }
 
