@@ -44,12 +44,14 @@ class Bump(
             val messageElement = obj["message"]!!
             val pathsElement = obj["paths"]!!
 
-            if (!typeElement.isJsonPrimitive() || typeElement.toJsonPrimitive()
+            if (!typeElement.isJsonPrimitive() || !typeElement.toJsonPrimitive()
                     .isString()
             ) throw IllegalArgumentException("Bump type is not a string")
-            if (!messageElement.isJsonPrimitive() || messageElement.toJsonPrimitive()
+
+            if (!messageElement.isJsonPrimitive() || !messageElement.toJsonPrimitive()
                     .isString()
             ) throw IllegalArgumentException("Bump message is not a string")
+
             if (!pathsElement.isJsonArray()) throw IllegalArgumentException("Bump paths is not an array")
 
             val type = typeElement.toJsonPrimitive().toStringElement().value
