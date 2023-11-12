@@ -24,12 +24,17 @@ open class InitChangelogTask : org.gradle.api.DefaultTask() {
 
         val changelog = project.file(".changelog")
         if (!changelog.exists()) {
+            project.logger.info("Creating .changelog directory")
             changelog.mkdirs()
         }
 
         val structure = project.file(".changelog/structure.json")
         if (!structure.exists()) {
+            project.logger.info("Creating .changelog/structure.json file")
             newStructure(project)
         }
+
+        project.logger.info("Updating .changelog/structure.json file")
+        updateStructure(project)
     }
 }

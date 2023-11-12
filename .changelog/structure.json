@@ -1,0 +1,234 @@
+{
+  "projects": [
+    {
+      "path": ":shake",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "",
+      "author": "shake",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@194dc8e8"
+      ]
+    },
+    {
+      "path": ":util",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "",
+      "author": "shake",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@45dfce2a"
+      ]
+    },
+    {
+      "path": ":shake:compiler",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "",
+      "author": "shake.shake",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@40dd4079"
+      ]
+    },
+    {
+      "path": ":shake:shasambly",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "",
+      "author": "shake.shake",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@1fe60726"
+      ]
+    },
+    {
+      "path": ":util:changelog",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Changelog generation plugin for Shake",
+      "author": "com.shakelang.shake.util.changelog",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@21af561c"
+      ]
+    },
+    {
+      "path": ":util:colorlib",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
+      "author": "com.shakelang.shake.util.colorlib",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@1a3a729d"
+      ]
+    },
+    {
+      "path": ":util:common-io",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
+      "author": "com.shakelang.shake.util.common-io",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@304e372b"
+      ]
+    },
+    {
+      "path": ":util:environment",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
+      "author": "com.shakelang.shake.util.environment",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@1fbed933"
+      ]
+    },
+    {
+      "path": ":util:jvmlib",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "A library for jvm stuff in java",
+      "author": "com.shakelang.shake.util.jvmlib",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@447a736e"
+      ]
+    },
+    {
+      "path": ":util:logger",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Logger utility for Kotlin Multiplatform.",
+      "author": "com.shakelang.shake.util.logger",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@d9d5fe6"
+      ]
+    },
+    {
+      "path": ":util:parseutils",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utilities for parsing stuff with kotlin",
+      "author": "com.shakelang.shake.util.parseutils",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@4c2bd611"
+      ]
+    },
+    {
+      "path": ":util:primitives",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
+      "author": "com.shakelang.shake.util.primitives",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@25b5f9e6"
+      ]
+    },
+    {
+      "path": ":util:shason",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "A json parser implemented in kotlin (mpp)",
+      "author": "com.shakelang.shake.util.shason",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@32431f3d"
+      ]
+    },
+    {
+      "path": ":util:testlib",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utilities for parsing stuff with kotlin",
+      "author": "com.shakelang.shake.testlib",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@554614fc"
+      ]
+    },
+    {
+      "path": ":shake:compiler:jsgenerator",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "js-generator",
+      "author": "com.shakelang.shake.compiler.jsgenerator",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@474fdb1b"
+      ]
+    },
+    {
+      "path": ":shake:compiler:lexer",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utilities for parsing stuff with kotlin",
+      "author": "com.shakelang.shake.compiler.lexer",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@4dbf70dd"
+      ]
+    },
+    {
+      "path": ":shake:compiler:parser",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utilities for parsing stuff with kotlin",
+      "author": "com.shakelang.shake.compiler.parser",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@672f34a0"
+      ]
+    },
+    {
+      "path": ":shake:compiler:processor",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utilities for parsing stuff with kotlin",
+      "author": "com.shakelang.shake.compiler.processor",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@2ab2d4d"
+      ]
+    },
+    {
+      "path": ":shake:compiler:shakelib",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utilities for parsing stuff with kotlin",
+      "author": "com.shakelang.shake.compiler.shakelib",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@3b85b900"
+      ]
+    },
+    {
+      "path": ":shake:shasambly:java-dist",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Java distribution commands for Shasambly",
+      "author": "com.shakelang.shake.shasambly.java-dist",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@d0a0f35"
+      ]
+    },
+    {
+      "path": ":shake:shasambly:shasambly",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Shake\'s own bytecode format interpreter",
+      "author": "com.shakelang.shake.shasambly",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@139eb000"
+      ]
+    },
+    {
+      "path": ":shake:shasambly:shasp",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Shasp is a very simple programming language that outputs shasambly bytecode.",
+      "author": "com.shakelang.shake.shasambly.shasp",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@4804367b"
+      ]
+    },
+    {
+      "path": ":shake:shasambly:shastools",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Shake\'s own bytecode format interpreter",
+      "author": "com.shakelang.shake.shasambly.shastools",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@5edfcbc2"
+      ]
+    }
+  ]
+}

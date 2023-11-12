@@ -1,5 +1,7 @@
 package com.shakelang.shake.util.changelog
 
+import com.shakelang.shake.util.shason.elements.JsonObject
+import com.shakelang.shake.util.shason.elements.JsonStringElement
 import com.shakelang.shake.util.shason.json
 import org.gradle.api.Project
 import java.util.*
@@ -8,12 +10,12 @@ import java.util.*
 class ProjectStructure(
     val path: String,
     val version: Version,
-    val description: String?,
+    val description: String,
     val author: String,
-    val license: String?,
+    val license: String,
     val dependencies: List<String>
 ) {
-    val toJsonObject: Map<String, Any?> = mapOf(
+    val toJsonObject: Map<String, Any> = mapOf(
         "path" to path,
         "version" to version.toString(),
         "description" to description,
@@ -27,26 +29,45 @@ class ProjectStructure(
     }
 
     companion object {
+        fun fromJsonObject(structure: JsonObject): ProjectStructure {
+            if(!structure.containsKey("path")) throw IllegalArgumentException("Structure does not contain key 'path'")
+            if(!structure.containsKey("version")) throw IllegalArgumentException("Structure does not contain key 'version'")
+            if(!structure.containsKey("description")) throw IllegalArgumentException("Structure does not contain key 'description'")
+            if(!structure.containsKey("author")) throw IllegalArgumentException("Structure does not contain key 'author'")
+            if(!structure.containsKey("license")) throw IllegalArgumentException("Structure does not contain key 'license'")
+            if(!structure.containsKey("dependencies")) throw IllegalArgumentException("Structure does not contain key 'dependencies'")
 
-        fun fromJsonObject(structure: Map<String, Any?>): ProjectStructure {
+            val path = structure["path"]!!
+            val version = structure["version"]!!
+            val description = structure["description"]!!
+            val author = structure["author"]!!
+            val license = structure["license"]!!
+            val dependencies = structure["dependencies"]!!
+
+            if(!(path.isJsonPrimitive()) || path.toJsonPrimitive().isString() ) throw IllegalArgumentException("Structure key 'path' is not a string")
+            if(!(version.isJsonPrimitive()) || version.toJsonPrimitive().isString()) throw IllegalArgumentException("Structure key 'version' is not a string")
+            if(!(description.isJsonPrimitive()) || description.toJsonPrimitive().isString()) throw IllegalArgumentException("Structure key 'description' is not a string")
+            if(!(author.isJsonPrimitive()) || author.toJsonPrimitive().isString()) throw IllegalArgumentException("Structure key 'author' is not a string")
+            if(!(license.isJsonPrimitive()) || license.toJsonPrimitive().isString()) throw IllegalArgumentException("Structure key 'license' is not a string")
+            if(!(dependencies.isJsonArray())) throw IllegalArgumentException("Structure key 'dependencies' is not a array")
+
             return ProjectStructure(
-                structure["name"] as String,
-                Version.fromString(structure["version"] as String),
-                structure["description"] as String,
-                structure["author"] as String,
-                structure["license"] as String,
-                structure["dependencies"] as List<String>
+                path.toJsonPrimitive().toStringElement().value,
+                Version.fromString(version.toJsonPrimitive().toStringElement().value),
+                description.toJsonPrimitive().toStringElement().value,
+                author.toJsonPrimitive().toStringElement().value,
+                license.toJsonPrimitive().toStringElement().value,
+                dependencies.toJsonArray().map {
+                    if(!(it.isJsonPrimitive()) || it.toJsonPrimitive().isString()) throw IllegalArgumentException("Structure key 'dependencies' is not a string")
+                    it.toJsonPrimitive().toStringElement().value
+                }
             )
-        }
-
-        fun fromString(structure: String): ProjectStructure {
-            return fromJsonObject(json.parse(structure) as Map<String, Any>)
         }
     }
 }
 
 class ChangelogStructure(
-    val lastUpdate: Date,
+    val lastUpdate: Date?,
     val projects: List<ProjectStructure>
 ) {
     fun toJsonObject(): Map<String, Any?> {
@@ -63,36 +84,47 @@ class ChangelogStructure(
 
     companion object {
 
-        fun fromJsonObject(structure: Map<String, Any?>): ChangelogStructure {
+        fun fromJsonObject(structure: JsonObject): ChangelogStructure {
+
+            if(!structure.containsKey("projects")) throw IllegalArgumentException("Structure does not contain key 'projects'")
+            if(!structure.containsKey("lastUpdate")) throw IllegalArgumentException("Structure does not contain key 'lastUpdate'")
+
+            val projects = structure["projects"]!!
+            val lastUpdate = structure["lastUpdate"]!!
+
+            if(!(projects.isJsonArray())) throw IllegalArgumentException("Structure key 'projects' is not a array")
+            if(!(lastUpdate.isJsonPrimitive()) || lastUpdate.toJsonPrimitive().isInt()) throw IllegalArgumentException("Structure key 'lastUpdate' is not a number")
+
             return ChangelogStructure(
-                Date(structure["lastUpdate"] as Long),
-                (structure["projects"] as List<Map<String, Any?>>).map {
-                    ProjectStructure.fromJsonObject(it)
+                Date(lastUpdate.toJsonPrimitive().toInt().value),
+                projects.toJsonArray().map {
+                    if(!(it.isJsonObject())) throw IllegalArgumentException("Structure key 'projects' is not a object")
+                    ProjectStructure.fromJsonObject(it.toJsonObject())
                 }
             )
         }
 
         fun fromString(structure: String): ChangelogStructure {
             val result = json.parse(structure)
-            if (result !is Map<*, *>) throw IllegalArgumentException("Structure is not a json object")
-            return fromJsonObject(result as Map<String, Any>)
+            if(!(result.isJsonObject())) throw IllegalArgumentException("Structure is not a object")
+            return fromJsonObject(result.toJsonObject())
         }
 
     }
 }
 
-fun readStructureFile(project: Project) = project.subprojects.map {
+fun readStructure(project: Project) = project.subprojects.map {
     ProjectStructure(
-        it.name,
+        it.path,
         try {
             Version.fromString(it.version.toString())
         } catch (e: Exception) {
             project.logger.warn("Could not read version of project ${it.path}, using 0.1.0-SNAPSHOT instead: ${e.message}")
             Version.fromString("0.1.0-SNAPSHOT")
         },
-        it.description,
+        it.description ?: "",
         it.group.toString(),
-        null,
+        null ?: "",
         it.dependencies.toString().split(",")
     )
 }
@@ -101,7 +133,7 @@ fun readStructureFile(project: Project) = project.subprojects.map {
 fun newStructure(project: Project) {
     val structure = ChangelogStructure(
         Date(),
-        readStructureFile(project.rootProject)
+        readStructure(project.rootProject)
     )
     project.rootProject.file(".changelog/structure.json").writeText(structure.toString())
 }
@@ -124,13 +156,13 @@ fun updateStructure(project: Project) {
     project.rootProject.file(".changelog/structure.json").writeText(structure.toString())
 }
 
-fun readStructure(project: Project): ChangelogStructure {
+fun readStructureFile(project: Project): ChangelogStructure {
     return ChangelogStructure.fromString(
         project.rootProject.file(".changelog/structure.json").readText()
     )
 }
 
 fun getVersion(project: Project): Version
-    = readStructure(project).projects.find {
+    = readStructureFile(project).projects.find {
         it.path == project.path
     }?.version ?: Version.fromString("0.1.0-SNAPSHOT")
