@@ -29,10 +29,6 @@ class Version(
         suffix = ""
     }
 
-    fun setSuffix(suffix: String) {
-        this.suffix = suffix
-    }
-
     companion object {
 
         fun fromString(version: String): Version {

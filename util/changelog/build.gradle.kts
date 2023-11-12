@@ -17,6 +17,7 @@ kotlin {
         implementation(gradleApi())
         implementation(project(":util:colorlib"))
         implementation(project(":util:shason"))
+        implementation("com.googlecode.lanterna:lanterna:3.1.1")
         testImplementation(kotlin("test"))
     }
 }
