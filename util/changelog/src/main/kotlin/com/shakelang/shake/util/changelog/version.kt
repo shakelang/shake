@@ -10,18 +10,24 @@ class Version(
 ) {
 
     override fun toString(): String {
-        return "$major.$minor.$patch$suffix"
+        return "$major.$minor.$patch-suffix"
     }
 
     companion object {
 
         fun fromString(version: String): Version {
-            val split = version.split(".")
-            val major = split[0].toInt()
-            val minor = split[1].toInt()
-            val patch = split[2].toInt()
-            val suffix = split[3]
-            return Version(major, minor, patch, suffix)
+            try {
+                val split = version.split(".")
+                val major = split[0].toInt()
+                val minor = split[1].toInt()
+                val third = split[2]
+                val split2 = third.split("-")
+                val patch = split2[0].toInt()
+                val suffix = split2[1]
+                return Version(major, minor, patch, suffix)
+            } catch (e: Exception) {
+                throw IllegalArgumentException("Invalid version string: $version", e)
+            }
         }
 
     }

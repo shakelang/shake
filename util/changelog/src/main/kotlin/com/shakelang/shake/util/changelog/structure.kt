@@ -51,7 +51,9 @@ class ChangelogStructure(
 ) {
     fun toJsonObject(): Map<String, Any?> {
         return mapOf(
-            "projects" to projects
+            "projects" to projects.map {
+                it.toJsonObject
+            }
         )
     }
 
@@ -79,10 +81,15 @@ class ChangelogStructure(
     }
 }
 
-fun readStructure(project: Project) = project.subprojects.map {
+fun readStructureFile(project: Project) = project.subprojects.map {
     ProjectStructure(
         it.name,
-        Version.fromString(it.version.toString()),
+        try {
+            Version.fromString(it.version.toString())
+        } catch (e: Exception) {
+            project.logger.warn("Could not read version of project ${it.path}, using 0.1.0-SNAPSHOT instead: ${e.message}")
+            Version.fromString("0.1.0-SNAPSHOT")
+        },
         it.description,
         it.group.toString(),
         null,
@@ -91,15 +98,15 @@ fun readStructure(project: Project) = project.subprojects.map {
 }
 
 
-fun newChangelog(project: Project) {
+fun newStructure(project: Project) {
     val structure = ChangelogStructure(
         Date(),
-        readStructure(project.rootProject)
+        readStructureFile(project.rootProject)
     )
     project.rootProject.file(".changelog/structure.json").writeText(structure.toString())
 }
 
-fun updateChangelog(project: Project) {
+fun updateStructure(project: Project) {
     val structure = ChangelogStructure.fromString(
         project.rootProject.file(".changelog/structure.json").readText()
     )
@@ -117,13 +124,13 @@ fun updateChangelog(project: Project) {
     project.rootProject.file(".changelog/structure.json").writeText(structure.toString())
 }
 
-fun readChangelog(project: Project): ChangelogStructure {
+fun readStructure(project: Project): ChangelogStructure {
     return ChangelogStructure.fromString(
         project.rootProject.file(".changelog/structure.json").readText()
     )
 }
 
-fun changelogVersion(project: Project): Version
-    = readChangelog(project).projects.find {
+fun getVersion(project: Project): Version
+    = readStructure(project).projects.find {
         it.path == project.path
     }?.version ?: Version.fromString("0.1.0-SNAPSHOT")
