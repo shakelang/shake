@@ -3,7 +3,7 @@ import conventions.projectGroup
 
 plugins {
     id("conventions.publishing")
-    kotlin("jvm")
+    `kotlin-dsl`
 }
 
 group = projectGroup("util.changelog")
