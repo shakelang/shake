@@ -1,4 +1,4 @@
-import conventions.dependencies
+import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.projectGroup
 
 plugins {
@@ -7,7 +7,7 @@ plugins {
 }
 
 group = projectGroup("util.changelog")
-version = "0.1.0"
+version = resolveVersion()
 description = "Changelog generation plugin for Shake"
 
 val projectName = name

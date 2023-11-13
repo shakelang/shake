@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.Changelog
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
@@ -31,6 +32,7 @@ dependencies {
 repositories {
     mavenLocal()
     mavenCentral()
+    gradlePluginPortal()
 }
 
 plugins {
@@ -39,9 +41,11 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
     id("io.gitlab.arturbosch.detekt") version ("1.23.3")
-//    id("com.shakelang.shake.util.changelog.plugin")
 }
 
+apply<Changelog>()
+
+//apply(plugin = "com.shakelang.shake.util.changelog.Changelog")
 detekt {
     toolVersion = "1.23.3"
     config.setFrom(rootProject.file("config/detekt/detekt.yml"))

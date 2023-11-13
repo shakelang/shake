@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
 
@@ -7,7 +8,7 @@ plugins {
 }
 
 group = projectGroup("util.parseutils")
-version = "0.1.3"
+version = resolveVersion()
 description = "Utilities for parsing stuff with kotlin"
 
 val projectName = name
