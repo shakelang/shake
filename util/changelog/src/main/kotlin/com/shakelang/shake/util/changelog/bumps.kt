@@ -9,13 +9,25 @@ enum class BumpType {
 
     val type: String get() = name.toLowerCase()
 
+    fun toInt() = when (this) {
+        MAJOR -> 2
+        MINOR -> 1
+        PATCH -> 0
+    }
+
     companion object {
         fun fromString(string: String): BumpType {
             if (string == "major") return MAJOR
             if (string == "minor") return MINOR
             if (string == "patch") return PATCH
             throw IllegalArgumentException("BumpType is not valid")
+        }
 
+        fun fromInt(int: Int): BumpType {
+            if (int == 2) return MAJOR
+            if (int == 1) return MINOR
+            if (int == 0) return PATCH
+            throw IllegalArgumentException("BumpType is not valid")
         }
     }
 }

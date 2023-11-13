@@ -8,6 +8,7 @@ import org.gradle.api.Project
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import kotlin.math.max
 
 class Changelog : Plugin<Project> {
 
@@ -26,6 +27,7 @@ class Changelog : Plugin<Project> {
         this.project = project
         project.tasks.create("initChangelog", InitChangelogTask::class.java)
         project.tasks.create("bump", BumpTask::class.java)
+        project.tasks.create("version", VersionTask::class.java)
     }
 
     companion object {
@@ -71,12 +73,12 @@ open class BumpTask : DefaultTask() {
     }
 
     @org.gradle.api.tasks.TaskAction
-    open fun version() {
+    open fun bump() {
         val messageValue: String? = project.findProperty("message")?.toString()
         val projectArray = (project.findProperty("packages")?.toString())?.split(",")
         val typeValue: String? = project.findProperty("type")?.toString()
 
-        if(typeValue != "major" && typeValue != "minor" && typeValue != "patch") {
+        if (typeValue != "major" && typeValue != "minor" && typeValue != "patch") {
             logger.error("Please provide a type with -Ptype=\"major|minor|patch\"")
             throw Exception("Please provide a type with -Ptype=\"major|minor|patch\"")
         }
@@ -98,16 +100,83 @@ open class BumpTask : DefaultTask() {
         val allProjects = Changelog.instance.readStructureFile().projects
 
         // get projects
-        val projects = projectArray.map { project -> allProjects.find { it.path == project }
-            ?: throw Exception("Project $project not found") }
+        val projects = projectArray.map { project ->
+            allProjects.find { it.path == project }
+                ?: throw Exception("Project $project not found")
+        }
 
         logger.info("Bumping version with type $typeValue and message $messageValue")
-        logger.info("Projects: ${projects.joinToString(", "){ it.path }}")
+        logger.info("Projects: ${projects.joinToString(", ") { it.path }}")
 
         val bump = Bump(type, message, projects.map { it.path })
         val bumpFile = Changelog.instance.readBumpFile()
         bumpFile.add(bump)
         Changelog.instance.writeBumpFile(bumpFile)
+    }
+}
+
+open class VersionTask : DefaultTask() {
+
+    init {
+        group = "changelog"
+        description = "Prints the current version"
+        this.dependsOn("initChangelog")
+    }
+
+    @org.gradle.api.tasks.TaskAction
+    open fun version() {
+        val structureFile = Changelog.instance.readStructureFile()
+        val bumpFile = Changelog.instance.readBumpFile()
+        val mapFile = Changelog.instance.readMap()
+
+        val changelog = structureFile.projects.associate { it.path to mutableListOf<String>() }
+        val bumpTypes = BumpType.values().associate { it.name to BumpType.PATCH }.toMutableMap()
+
+        bumpFile.bumps.forEach { bump ->
+            bump.paths.forEach { path ->
+                changelog[path]?.add(bump.message)
+                println("Bump: $path -> ${bump.message}")
+                println("Bump: $path -> ${bump.type}")
+                println("${bumpTypes[path]} -> ${bump.type}")
+                bumpTypes[path] = BumpType.fromInt(max(bumpTypes[path]?.toInt() ?: -1, bump.type.toInt()))
+            }
+        }
+
+        bumpFile.bumps.clear()
+        changelog.entries.zip(bumpTypes.entries).forEach { (changelogEntry, bumpTypeEntry) ->
+            val (path, messages) = changelogEntry
+            val (_, bumpType) = bumpTypeEntry
+
+            if (messages.isEmpty()) return@forEach
+
+            // Update version
+            val version = structureFile.projects.find { it.path == path }!!.version
+            when (bumpType) {
+                BumpType.MAJOR -> version.incrementMajor()
+                BumpType.MINOR -> version.incrementMinor()
+                BumpType.PATCH -> version.incrementPatch()
+            }
+
+            // Add map entry
+            var it = mapFile.packages.find { it.path == path }
+            if (it == null) {
+                it = PackageChangelog(
+                    path,
+                    path,
+                    description,
+                )
+                mapFile.add(it)
+            }
+
+            it.add(ChangelogVersion(version, messages))
+        }
+
+        // save files
+        Changelog.instance.writeBumpFile(bumpFile)
+        Changelog.instance.writeMap(mapFile)
+        Changelog.instance.writeStructure(structureFile)
+
+
     }
 }
 

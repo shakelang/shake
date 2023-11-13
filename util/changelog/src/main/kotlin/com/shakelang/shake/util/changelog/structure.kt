@@ -138,6 +138,10 @@ fun Changelog.newStructure() {
     project.file(".changelog/structure.json").writeText(structure.toString())
 }
 
+fun Changelog.writeStructure(structure: ChangelogStructure) {
+    project.file(".changelog/structure.json").writeText(structure.toString())
+}
+
 fun Changelog.updateStructure() {
     val structure = ChangelogStructure.fromString(
         project.file(".changelog/structure.json").readText()

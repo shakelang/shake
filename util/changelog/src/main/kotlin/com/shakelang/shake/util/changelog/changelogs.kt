@@ -39,8 +39,11 @@ class PackageChangelog (
     val path: String,
     val name: String,
     val description: String,
-    val versions: List<ChangelogVersion>
+    val versions: MutableList<ChangelogVersion> = mutableListOf()
 ) {
+
+    fun addVersion(version: ChangelogVersion) = versions.add(version)
+    fun add(version: ChangelogVersion) = addVersion(version)
 
     fun toObject(): Map<String, Any> {
         val map = mutableMapOf<String, Any>()
@@ -77,13 +80,13 @@ class PackageChangelog (
             val description = descriptionElement.toJsonPrimitive().toStringElement().value
             val versions = versionsElement.toJsonArray().map { ChangelogVersion.fromObject(it.toJsonObject()) }
 
-            return PackageChangelog(path, name, description, versions)
+            return PackageChangelog(path, name, description, versions.toMutableList())
         }
     }
 }
 
 class ChangelogMap (
-    val packages: List<PackageChangelog>
+    val packages: MutableList<PackageChangelog>
 ) {
 
     fun toObject(): Map<String, Any> {
@@ -91,6 +94,8 @@ class ChangelogMap (
         map["packages"] = packages.map { it.toObject() }
         return map
     }
+
+    fun add(it: PackageChangelog) = packages.add(it)
 
     companion object {
         fun fromObject(obj: JsonObject): ChangelogMap {
@@ -103,7 +108,7 @@ class ChangelogMap (
 
             val packages = packagesElement.toJsonArray().map { PackageChangelog.fromObject(it.toJsonObject()) }
 
-            return ChangelogMap(packages)
+            return ChangelogMap(packages.toMutableList())
         }
 
         fun fromString(string: String): ChangelogMap {
@@ -116,7 +121,7 @@ class ChangelogMap (
 
 fun Changelog.readMap(): ChangelogMap {
     val file = project.file(".changelog/changelogs.json")
-    if (!file.exists()) return ChangelogMap(emptyList())
+    if (!file.exists()) return ChangelogMap(mutableListOf())
     return ChangelogMap.fromString(file.readText())
 }
 
