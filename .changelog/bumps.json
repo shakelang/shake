@@ -1,25 +1,3 @@
 {
-  "bumps": [
-    {
-      "type": "minor",
-      "message": "Update to new package structure",
-      "paths": [
-        ":util:colorlib",
-        ":util:common-io",
-        ":util:environment",
-        ":util:logger",
-        ":util:parseutils",
-        ":util:primitives",
-        ":util:shason",
-        ":util:testlib"
-      ]
-    },
-    {
-      "type": "minor",
-      "message": "Update dependencies",
-      "paths": [
-        ":util:changelog"
-      ]
-    }
-  ]
+  "bumps": []
 }
