@@ -32,3 +32,22 @@ tasks.register<Copy>("copyDokkaGfm") {
     from(file("build/docs/markdown"))
     into(file("$rootProjectDir/build/docs/markdown/${project.path.replace(":", "/")}/"))
 }
+
+tasks.register<Jar>("dokkaHtmlJar") {
+    dependsOn(tasks["dokkaHtml"])
+    from(tasks["dokkaHtml"].outputs)
+    archiveClassifier.set("html-docs")
+}
+
+tasks.register<Jar>("dokkaJavadocJar") {
+    dependsOn(tasks["dokkaJavadoc"])
+    from(tasks["dokkaJavadoc"].outputs)
+    archiveClassifier.set("javadoc")
+}
+
+val javadocJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles Javadoc JAR"
+    archiveClassifier.set("javadoc")
+    from(tasks.named("dokkaHtml"))
+}
