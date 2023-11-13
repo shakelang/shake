@@ -131,8 +131,6 @@ open class VersionTask : DefaultTask() {
         val changelog = structureFile.projects.associate { it.path to mutableListOf<String>() }
         val bumpTypes = mutableMapOf<String, BumpType>()
 
-        println(json.stringify(bumpFile))
-
         bumpFile.bumps.forEach { bump ->
             bump.paths.forEach { path ->
                 changelog[path]?.add(bump.message)
@@ -155,10 +153,6 @@ open class VersionTask : DefaultTask() {
                 BumpType.PATCH -> version.incrementPatch()
             }
 
-            println("Bumping $path to $version")
-            println(prj)
-            println(structureFile.projects.find { it.path == path })
-
             // Add map entry
             var it = mapFile.packages.find { it.path == path }
             if (it == null) {
@@ -172,8 +166,6 @@ open class VersionTask : DefaultTask() {
 
             it.add(ChangelogVersion(version, messages))
         }
-
-        println(structureFile)
 
         // save files
         Changelog.instance.writeBumpFile(bumpFile)
