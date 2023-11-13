@@ -226,7 +226,7 @@ tasks.register<TestReport>("genReport") {
     val testTasks = allprojects.flatMap { it.tasks.withType(Test::class) }
     dependsOn(testTasks)
     destinationDirectory.set(file("${layout.buildDirectory}/reports/tests"))
-    reportOn(testTasks)
+    testResults.from(testTasks)
 }
 
 tasks.register("copyDokkaGfm") {
@@ -251,5 +251,5 @@ val testAggregate = tasks.register<TestReport>("testAggregate") {
 //        dependsOn("${it.path}:allTests")
 //    }
     destinationDirectory.set(file("$buildDir/reports/tests/aggregate"))
-    reportOn(subprojects.flatMap { it.tasks.withType<Test>() })
+    testResults.from(subprojects.flatMap { it.tasks.withType<Test>() })
 }

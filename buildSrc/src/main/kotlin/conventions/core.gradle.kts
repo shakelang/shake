@@ -95,7 +95,7 @@ kotlin {
             useJUnitPlatform()
         }
 
-        val main by compilations.getting
+//        val main by compilations.getting
     }
 
     js(IR) {

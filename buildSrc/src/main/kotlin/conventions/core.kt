@@ -6,7 +6,6 @@ import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.getting
-import org.gradle.util.ConfigureUtil
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
@@ -108,9 +107,6 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
     fun implementation(dependencyNotation: String, configure: Closure<*>): ExternalModuleDependency =
         common.implementation(dependencyNotation, configure)
 
-    fun <T : Dependency> implementation(dependency: T, configure: Closure<*>) =
-        common.implementation(dependency, configure)
-
     fun testImplementation(dependencyNotation: Any): Dependency? = common.testImplementation(dependencyNotation)
 
     fun testImplementation(
@@ -145,13 +141,6 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
     )
     @Suppress("deprecation")
     fun npm(name: String): Dependency = common.npm(name)
-
-    fun npm(
-        name: String,
-        version: String,
-        generateExternals: Boolean
-    ): Dependency =
-        common.npm(name, version, generateExternals)
 
     fun npm(
         name: String,
@@ -255,9 +244,6 @@ class KotlinSourceType(
     fun implementation(dependencyNotation: String, configure: Closure<*>): ExternalModuleDependency =
         ret { main.dependencies { it(implementation(dependencyNotation, configure)) } }
 
-    fun <T : Dependency> implementation(dependency: T, configure: Closure<*>) =
-        implementation(dependency) { ConfigureUtil.configure(configure, this) }
-
     fun testImplementation(dependencyNotation: Any): Dependency? =
         ret { test.dependencies { it(implementation(dependencyNotation)) } }
 
@@ -292,12 +278,6 @@ class KotlinSourceType(
     )
     @Suppress("deprecation")
     fun npm(name: String): Dependency = ret { main.dependencies { it(npm(name)) } }
-
-    fun npm(
-        name: String,
-        version: String,
-        generateExternals: Boolean
-    ): Dependency = ret { main.dependencies { it(npm(name, version, generateExternals)) } }
 
     fun npm(
         name: String,
