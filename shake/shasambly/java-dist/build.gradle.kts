@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.projectGroup
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -8,7 +9,7 @@ plugins {
 }
 
 group = projectGroup("shasambly.java-dist")
-version = "0.1.0"
+version = resolveVersion()
 description = "Java distribution commands for Shasambly"
 
 repositories {

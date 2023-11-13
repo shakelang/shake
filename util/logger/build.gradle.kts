@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
 
@@ -6,8 +7,8 @@ plugins {
     id("conventions.publishing")
 }
 
-group = projectGroup("util.logger")
-version = "0.1.0"
+group = projectGroup("util")
+version = resolveVersion()
 description = "Logger utility for Kotlin Multiplatform."
 
 val projectName = name

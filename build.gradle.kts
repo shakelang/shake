@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.Changelog
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
@@ -6,11 +7,13 @@ version = "0.1.0"
 description = "Shake"
 
 dependencies {
+//    kover(project(":util:changelog"))
     kover(project(":util:colorlib"))
     kover(project(":util:common-io"))
     kover(project(":util:environment"))
     kover(project(":util:jvmlib"))
     kover(project(":util:logger"))
+    kover(project(":util:markdown"))
     kover(project(":util:parseutils"))
     kover(project(":util:primitives"))
     kover(project(":util:shason"))
@@ -28,6 +31,12 @@ dependencies {
 //    kover(project(":shake:shasambly:java-dist"))
 }
 
+repositories {
+    mavenLocal()
+    mavenCentral()
+    gradlePluginPortal()
+}
+
 plugins {
     id("org.jetbrains.dokka")
     kotlin("multiplatform") apply false
@@ -36,6 +45,9 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version ("1.23.3")
 }
 
+apply<Changelog>()
+
+//apply(plugin = "com.shakelang.shake.util.changelog.Changelog")
 detekt {
     toolVersion = "1.23.3"
     config.setFrom(rootProject.file("config/detekt/detekt.yml"))

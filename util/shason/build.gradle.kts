@@ -1,8 +1,9 @@
+import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
 
-group = projectGroup("util.shason")
-version = "0.1.1"
+group = projectGroup("util")
+version = resolveVersion()
 description = "A json parser implemented in kotlin (mpp)"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 

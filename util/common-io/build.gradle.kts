@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
 
@@ -6,8 +7,8 @@ plugins {
     id("conventions.publishing")
 }
 
-group = projectGroup("util.common-io")
-version = "0.1.2"
+group = projectGroup("util")
+version = resolveVersion()
 description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
 
 val projectName = name

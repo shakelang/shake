@@ -2,6 +2,7 @@ package com.shakelang.shake.util.shason
 
 import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.shake.util.shason.elements.JsonElement
 import com.shakelang.shake.util.shason.processing.JsonGenerator
 import com.shakelang.shake.util.shason.processing.JsonLexer
 import com.shakelang.shake.util.shason.processing.JsonParser
@@ -17,7 +18,7 @@ object JSON {
      *
      * @param code the json to parse
      */
-    fun parse(code: String): Any {
+    fun parse(code: String): JsonElement {
         val source = CharacterSource.from(code, "JSON.parse")
         val chars = SourceCharacterInputStream(source)
         val lexer = JsonLexer(chars)
