@@ -4,7 +4,7 @@ mkdir -p ./build/reports/ktlint/groups
 
 files=($(ls -1 ./build/reports/ktlint/all/*.sarif))
 group_number=1
-group_size=20
+group_size=10
 group_amount=$(((${#files[@]} + group_size - 1) / group_size))
 
 # Step 1: Split Into Groups
