@@ -135,9 +135,6 @@ open class VersionTask : DefaultTask() {
         bumpFile.bumps.forEach { bump ->
             bump.paths.forEach { path ->
                 changelog[path]?.add(bump.message)
-                println("Bump: $path -> ${bump.message}")
-                println("Bump: $path -> ${bump.type}")
-                println("${bumpTypes[path]} -> ${bump.type}")
                 bumpTypes[path] = BumpType.fromInt(max(bumpTypes[path]?.toInt() ?: -1, bump.type.toInt()))
             }
         }
