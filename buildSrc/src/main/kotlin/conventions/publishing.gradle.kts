@@ -28,7 +28,6 @@ tasks.register("listDependencies") {
     }
 }
 
-
 //kotlin {
 //    val publicationsFromMainHost =
 //        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
@@ -99,39 +98,66 @@ signing {
 
 afterEvaluate {
 
-    if (project.tasks.findByName("signJsPublication") != null)
-        tasks.named("signJsPublication") {
-            group = "signing"
-        }
+    publishing {
+        publications.withType<MavenPublication> {
 
-    if (project.tasks.findByName("signJvmPublication") != null)
-        tasks.named("signJvmPublication") {
-            group = "signing"
-        }
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["dokkaJavadocJar"])
+            artifact(tasks["dokkaHtmlJar"])
 
-    if (project.tasks.findByName("signKotlinMultiplatformPublication") != null)
-        tasks.named("signKotlinMultiplatformPublication") {
-            group = "signing"
+            pom {
+                name.set(project.name)
+                description.set(project.description)
+                url.set("https://github.com/${Meta.githubRepo}")
+                licenses {
+                    license {
+                        name.set(Meta.license)
+                        url.set("https://github.com/${Meta.githubRepo}/blob/master/LICENSE")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("shake-developers")
+                        name.set("Shake Developers")
+                        url.set("https://github.com/shakelang")
+                        organization.set("shakelang")
+                        organizationUrl.set("https://shakelang.com/")
+                    }
+                    developer {
+                        id.set("nicolas-schmidt")
+                        name.set("Nicolas Schmidt")
+                        url.set("https://github.com/nsc-de")
+                        organization.set("shakelang")
+                        organizationUrl.set("https://shakelang.com/")
+                    }
+                }
+                scm {
+                    url.set(
+                        "https://github.com/${Meta.githubRepo}.git"
+                    )
+                    connection.set(
+                        "scm:git:git://github.com/${Meta.githubRepo}.git"
+                    )
+                    developerConnection.set(
+                        "scm:git:git://github.com/${Meta.githubRepo}.git"
+                    )
+                }
+                issueManagement {
+                    url.set("https://github.com/${Meta.githubRepo}/issues")
+                }
+            }
         }
+    }
 
-    if (project.tasks.findByName("signKotlinPublication") != null)
-        tasks.named("signKotlinPublication") {
-            group = "signing"
-        }
+    tasks.withType<Sign>() {
+        group = "signing"
+    }
 
     tasks.create("signAllPublications") {
         group = "signing"
-        if (project.tasks.findByName("signKotlinMultiplatformPublication") != null)
-            dependsOn("signJsPublication")
-
-        if (project.tasks.findByName("signKotlinMultiplatformPublication") != null)
-            dependsOn("signJvmPublication")
-
-        if (project.tasks.findByName("signKotlinMultiplatformPublication") != null)
-            dependsOn("signKotlinMultiplatformPublication")
-
-        if (project.tasks.findByName("signKotlinPublication") != null)
-            dependsOn("signKotlinPublication")
+        tasks.withType<Sign> {
+            this@create.dependsOn(this)
+        }
     }
 
     tasks.create<Checksum>("createChecksums") {
@@ -144,5 +170,4 @@ afterEvaluate {
         inputFiles.setFrom(files)
         outputDirectory.set(file("build/libs"))
     }
-
 }

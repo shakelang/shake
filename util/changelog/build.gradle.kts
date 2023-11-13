@@ -35,6 +35,7 @@ sourceSets {
 
 val sourcesJar by tasks.registering(Jar::class) {
     archiveClassifier.set("sources")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(kotlin.sourceSets.main.get().kotlin)
 }
 
@@ -46,52 +47,6 @@ publishing {
             groupId = projectGroup("util.changelog")
             artifactId = "plugin"
             version = project.version.toString()
-
-            artifact(tasks["kotlinSourcesJar"])
-            artifact(tasks["dokkaJavadocJar"])
-            artifact(tasks["dokkaHtmlJar"])
-
-            pom {
-                name.set(project.name)
-                description.set(project.description)
-                url.set("https://github.com/${Meta.githubRepo}")
-                licenses {
-                    license {
-                        name.set(Meta.license)
-                        url.set("https://github.com/${Meta.githubRepo}/blob/master/LICENSE")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("shake-developers")
-                        name.set("Shake Developers")
-                        url.set("https://github.com/shakelang")
-                        organization.set("shakelang")
-                        organizationUrl.set("https://shakelang.com/")
-                    }
-                    developer {
-                        id.set("nicolas-schmidt")
-                        name.set("Nicolas Schmidt")
-                        url.set("https://github.com/nsc-de")
-                        organization.set("shakelang")
-                        organizationUrl.set("https://shakelang.com/")
-                    }
-                }
-                scm {
-                    url.set(
-                        "https://github.com/${Meta.githubRepo}.git"
-                    )
-                    connection.set(
-                        "scm:git:git://github.com/${Meta.githubRepo}.git"
-                    )
-                    developerConnection.set(
-                        "scm:git:git://github.com/${Meta.githubRepo}.git"
-                    )
-                }
-                issueManagement {
-                    url.set("https://github.com/${Meta.githubRepo}/issues")
-                }
-            }
         }
     }
 }
