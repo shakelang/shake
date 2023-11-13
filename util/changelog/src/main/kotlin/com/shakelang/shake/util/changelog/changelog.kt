@@ -2,6 +2,7 @@ package com.shakelang.shake.util.changelog
 
 import com.googlecode.lanterna.input.KeyStroke
 import com.googlecode.lanterna.input.KeyType
+import com.shakelang.shake.util.shason.json
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -128,7 +129,7 @@ open class VersionTask : DefaultTask() {
         val mapFile = Changelog.instance.readMap()
 
         val changelog = structureFile.projects.associate { it.path to mutableListOf<String>() }
-        val bumpTypes = BumpType.values().associate { it.name to BumpType.PATCH }.toMutableMap()
+        val bumpTypes = mutableMapOf<String, BumpType>()
 
         bumpFile.bumps.forEach { bump ->
             bump.paths.forEach { path ->
@@ -138,14 +139,14 @@ open class VersionTask : DefaultTask() {
         }
 
         bumpFile.bumps.clear()
-        changelog.entries.zip(bumpTypes.entries).forEach { (changelogEntry, bumpTypeEntry) ->
-            val (path, messages) = changelogEntry
-            val (_, bumpType) = bumpTypeEntry
+        changelog.entries.forEach { (path, messages) ->
+            val bumpType = bumpTypes[path]
 
-            if (messages.isEmpty()) return@forEach
+            if (messages.isEmpty() || bumpType == null) return@forEach
 
             // Update version
-            val version = structureFile.projects.find { it.path == path }!!.version
+            val prj = structureFile.projects.find { it.path == path }!!
+            val version = prj.version
             when (bumpType) {
                 BumpType.MAJOR -> version.incrementMajor()
                 BumpType.MINOR -> version.incrementMinor()
@@ -170,6 +171,9 @@ open class VersionTask : DefaultTask() {
         Changelog.instance.writeBumpFile(bumpFile)
         Changelog.instance.writeMap(mapFile)
         Changelog.instance.writeStructure(structureFile)
+
+        // render new changelog files
+        Changelog.instance.renderChangelog(mapFile)
     }
 }
 

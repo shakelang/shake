@@ -3,6 +3,7 @@ package com.shakelang.shake.util.changelog
 import com.shakelang.shake.util.markdown.MutableMarkdownDocument
 import com.shakelang.shake.util.shason.elements.JsonObject
 import com.shakelang.shake.util.shason.json
+import org.gradle.internal.execution.history.changes.Change
 
 class ChangelogVersion(
     val version: Version,
@@ -129,7 +130,16 @@ class ChangelogMap(
 
 fun Changelog.readMap(): ChangelogMap {
     val file = project.file(".changelog/changelogs.json")
-    if (!file.exists()) return ChangelogMap(mutableListOf())
+    if (!file.exists()) return ChangelogMap(
+        readStructure().map {
+            PackageChangelog(
+                it.path,
+                it.name,
+                it.description
+            )
+        }.toMutableList()
+//        mutableListOf()
+    )
     return ChangelogMap.fromString(file.readText())
 }
 
@@ -138,7 +148,7 @@ fun Changelog.writeMap(map: ChangelogMap) {
     file.writeText(json.stringify(map.toObject(), true))
 }
 
-fun renderChangelogMap(map: PackageChangelog): String {
+fun Changelog.renderChangelog(map: PackageChangelog): String {
     return MutableMarkdownDocument {
         h1(map.name)
         h2("Description")
@@ -153,11 +163,11 @@ fun renderChangelogMap(map: PackageChangelog): String {
     }.render()
 }
 
-fun renderChangelogMap(map: ChangelogMap) {
+fun Changelog.renderChangelog(map: ChangelogMap) {
     map.packages.forEach { pkg ->
         // get project for path
         val project = Changelog.instance.project.project(pkg.path)
         val file = project.file("CHANGELOG.md")
-        file.writeText(renderChangelogMap(pkg))
+        file.writeText(renderChangelog(pkg))
     }
 }

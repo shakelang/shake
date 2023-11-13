@@ -1,0 +1,155 @@
+{
+  "packages": [
+    {
+      "path": ":shake",
+      "name": "shake:shake",
+      "description": "",
+      "versions": []
+    },
+    {
+      "path": ":util",
+      "name": "shake:util",
+      "description": "",
+      "versions": []
+    },
+    {
+      "path": ":shake:compiler",
+      "name": "shake.shake:compiler",
+      "description": "",
+      "versions": []
+    },
+    {
+      "path": ":shake:shasambly",
+      "name": "shake.shake:shasambly",
+      "description": "",
+      "versions": []
+    },
+    {
+      "path": ":util:changelog",
+      "name": "com.shakelang.shake.util.changelog:changelog",
+      "description": "Changelog generation plugin for Shake",
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "patches to changelog"
+          ]
+        }
+      ]
+    },
+    {
+      "path": ":util:colorlib",
+      "name": "com.shakelang.shake.util:colorlib",
+      "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
+      "versions": []
+    },
+    {
+      "path": ":util:common-io",
+      "name": "com.shakelang.shake.util:common-io",
+      "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
+      "versions": []
+    },
+    {
+      "path": ":util:environment",
+      "name": "com.shakelang.shake.util:environment",
+      "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
+      "versions": []
+    },
+    {
+      "path": ":util:jvmlib",
+      "name": "com.shakelang.shake.util:jvmlib",
+      "description": "A library for jvm stuff in java",
+      "versions": []
+    },
+    {
+      "path": ":util:logger",
+      "name": "com.shakelang.shake.util:logger",
+      "description": "Logger utility for Kotlin Multiplatform.",
+      "versions": []
+    },
+    {
+      "path": ":util:markdown",
+      "name": "com.shakelang.shake.util:markdown",
+      "description": "Utility package for working with markdown (Kotlin Multiplatform)",
+      "versions": []
+    },
+    {
+      "path": ":util:parseutils",
+      "name": "com.shakelang.shake.util:parseutils",
+      "description": "Utilities for parsing stuff with kotlin",
+      "versions": []
+    },
+    {
+      "path": ":util:primitives",
+      "name": "com.shakelang.shake.util:primitives",
+      "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
+      "versions": []
+    },
+    {
+      "path": ":util:shason",
+      "name": "com.shakelang.shake.util:shason",
+      "description": "A json parser implemented in kotlin (mpp)",
+      "versions": []
+    },
+    {
+      "path": ":util:testlib",
+      "name": "com.shakelang.shake.util:testlib",
+      "description": "Utilities for parsing stuff with kotlin",
+      "versions": []
+    },
+    {
+      "path": ":shake:compiler:jsgenerator",
+      "name": "com.shakelang.shake.compiler.jsgenerator:jsgenerator",
+      "description": "js-generator",
+      "versions": []
+    },
+    {
+      "path": ":shake:compiler:lexer",
+      "name": "com.shakelang.shake.compiler.lexer:lexer",
+      "description": "Utilities for parsing stuff with kotlin",
+      "versions": []
+    },
+    {
+      "path": ":shake:compiler:parser",
+      "name": "com.shakelang.shake.compiler.parser:parser",
+      "description": "Utilities for parsing stuff with kotlin",
+      "versions": []
+    },
+    {
+      "path": ":shake:compiler:processor",
+      "name": "com.shakelang.shake.compiler.processor:processor",
+      "description": "Utilities for parsing stuff with kotlin",
+      "versions": []
+    },
+    {
+      "path": ":shake:compiler:shakelib",
+      "name": "com.shakelang.shake.compiler.shakelib:shakelib",
+      "description": "Utilities for parsing stuff with kotlin",
+      "versions": []
+    },
+    {
+      "path": ":shake:shasambly:java-dist",
+      "name": "com.shakelang.shake.shasambly.java-dist:java-dist",
+      "description": "Java distribution commands for Shasambly",
+      "versions": []
+    },
+    {
+      "path": ":shake:shasambly:shasambly",
+      "name": "com.shakelang.shake.shasambly:shasambly",
+      "description": "Shake\'s own bytecode format interpreter",
+      "versions": []
+    },
+    {
+      "path": ":shake:shasambly:shasp",
+      "name": "com.shakelang.shake.shasambly.shasp:shasp",
+      "description": "Shasp is a very simple programming language that outputs shasambly bytecode.",
+      "versions": []
+    },
+    {
+      "path": ":shake:shasambly:shastools",
+      "name": "com.shakelang.shake.shasambly.shastools:shastools",
+      "description": "Shake\'s own bytecode format interpreter",
+      "versions": []
+    }
+  ]
+}
