@@ -34,6 +34,12 @@
           "changes": [
             "patches to changelog"
           ]
+        },
+        {
+          "version": "0.2.1",
+          "changes": [
+            "Update dependencies"
+          ]
         }
       ]
     },
@@ -41,19 +47,40 @@
       "path": ":util:colorlib",
       "name": "com.shakelang.shake.util:colorlib",
       "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Update to new package structure"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:common-io",
       "name": "com.shakelang.shake.util:common-io",
       "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Update to new package structure"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:environment",
       "name": "com.shakelang.shake.util:environment",
       "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Update to new package structure"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:jvmlib",
@@ -65,7 +92,14 @@
       "path": ":util:logger",
       "name": "com.shakelang.shake.util:logger",
       "description": "Logger utility for Kotlin Multiplatform.",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Update to new package structure"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:markdown",
@@ -77,25 +111,53 @@
       "path": ":util:parseutils",
       "name": "com.shakelang.shake.util:parseutils",
       "description": "Utilities for parsing stuff with kotlin",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Update to new package structure"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:primitives",
       "name": "com.shakelang.shake.util:primitives",
       "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Update to new package structure"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:shason",
       "name": "com.shakelang.shake.util:shason",
       "description": "A json parser implemented in kotlin (mpp)",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Update to new package structure"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:testlib",
       "name": "com.shakelang.shake.util:testlib",
       "description": "Utilities for parsing stuff with kotlin",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Update to new package structure"
+          ]
+        }
+      ]
     },
     {
       "path": ":shake:compiler:jsgenerator",

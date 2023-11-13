@@ -4,3 +4,5 @@ Changelog generation plugin for Shake
 ## Versions
 ### 0.2.0
 patches to changelog
+### 0.2.1
+Update dependencies
