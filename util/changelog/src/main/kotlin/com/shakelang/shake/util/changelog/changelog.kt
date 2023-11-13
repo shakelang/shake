@@ -36,7 +36,6 @@ class Changelog : Plugin<Project> {
     }
 }
 
-
 open class InitChangelogTask : DefaultTask() {
 
     init {
@@ -46,7 +45,6 @@ open class InitChangelogTask : DefaultTask() {
 
     @org.gradle.api.tasks.TaskAction
     open fun initChangelog() {
-
         val changelog = project.file(".changelog")
         if (!changelog.exists()) {
             project.logger.info("Creating .changelog directory")
@@ -160,7 +158,7 @@ open class VersionTask : DefaultTask() {
                 it = PackageChangelog(
                     path,
                     path,
-                    description,
+                    description
                 )
                 mapFile.add(it)
             }
@@ -172,13 +170,10 @@ open class VersionTask : DefaultTask() {
         Changelog.instance.writeBumpFile(bumpFile)
         Changelog.instance.writeMap(mapFile)
         Changelog.instance.writeStructure(structureFile)
-
-
     }
 }
 
 fun main() {
-
     val options = Changelog.instance.readStructureFile().projects.map { it.path }.toTypedArray()
 
     val checkboxList = CheckboxList(options)
@@ -239,9 +234,8 @@ class CheckboxList(private val options: Array<String>) {
     }
 }
 
-
 fun readKeyStroke(): KeyStroke {
-    val console = System.console();
+    val console = System.console()
 
     if (console != null) {
         // Reading a single character without echoing it to the console
@@ -258,4 +252,3 @@ fun readKeyStroke(): KeyStroke {
         throw RuntimeException("Error reading input", e)
     }
 }
-

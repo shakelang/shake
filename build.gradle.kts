@@ -47,7 +47,7 @@ plugins {
 
 apply<Changelog>()
 
-//apply(plugin = "com.shakelang.shake.util.changelog.Changelog")
+// apply(plugin = "com.shakelang.shake.util.changelog.Changelog")
 detekt {
     toolVersion = "1.23.3"
     config.setFrom(rootProject.file("config/detekt/detekt.yml"))

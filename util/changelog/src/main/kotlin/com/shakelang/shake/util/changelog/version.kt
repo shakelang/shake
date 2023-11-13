@@ -8,7 +8,7 @@ class Version(
 ) {
 
     override fun toString(): String {
-        return "$major.$minor.$patch${if(suffix != "") "-$suffix" else ""}"
+        return "$major.$minor.$patch${if (suffix != "") "-$suffix" else ""}"
     }
 
     fun incrementMajor() {
@@ -39,7 +39,7 @@ class Version(
                 val third = split[2]
                 val split2 = third.split("-")
                 val patch = split2[0].toInt()
-                val suffix = if(split2.size > 1) split2[1] else ""
+                val suffix = if (split2.size > 1) split2[1] else ""
                 return Version(major, minor, patch, suffix)
             } catch (e: Exception) {
                 throw IllegalArgumentException("Invalid version string: $version", e)
