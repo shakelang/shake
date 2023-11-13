@@ -14,7 +14,7 @@ class ProjectStructure(
     val license: String,
     val dependencies: List<String>
 ) {
-    val toJsonObject: Map<String, Any> = mapOf(
+    val toJsonObject get() = mapOf(
         "path" to path,
         "name" to name,
         "version" to version.toString(),
