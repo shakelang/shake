@@ -7,7 +7,7 @@ version = "0.1.0"
 description = "Shake"
 
 dependencies {
-    kover(project(":util:changelog"))
+//    kover(project(":util:changelog"))
     kover(project(":util:colorlib"))
     kover(project(":util:common-io"))
     kover(project(":util:environment"))
