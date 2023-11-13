@@ -28,7 +28,14 @@
       "path": ":util:changelog",
       "name": "com.shakelang.shake.util.changelog:changelog",
       "description": "Changelog generation plugin for Shake",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "patches to changelog"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:colorlib",

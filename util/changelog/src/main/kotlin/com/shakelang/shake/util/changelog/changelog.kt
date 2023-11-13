@@ -171,6 +171,9 @@ open class VersionTask : DefaultTask() {
         Changelog.instance.writeBumpFile(bumpFile)
         Changelog.instance.writeMap(mapFile)
         Changelog.instance.writeStructure(structureFile)
+
+        // render new changelog files
+        Changelog.instance.renderChangelog(mapFile)
     }
 }
 

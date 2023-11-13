@@ -1,11 +1,3 @@
 {
-  "bumps": [
-    {
-      "type": "minor",
-      "message": "patches to changelog",
-      "paths": [
-        ":util:changelog"
-      ]
-    }
-  ]
+  "bumps": []
 }
