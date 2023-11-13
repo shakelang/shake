@@ -1,5 +1,6 @@
 package com.shakelang.shake.util.changelog
 
+import com.shakelang.shake.util.markdown.MutableMarkdownDocument
 import com.shakelang.shake.util.shason.elements.JsonObject
 import com.shakelang.shake.util.shason.json
 
@@ -135,4 +136,28 @@ fun Changelog.readMap(): ChangelogMap {
 fun Changelog.writeMap(map: ChangelogMap) {
     val file = project.file(".changelog/changelogs.json")
     file.writeText(json.stringify(map.toObject(), true))
+}
+
+fun renderChangelogMap(map: PackageChangelog): String {
+    return MutableMarkdownDocument {
+        h1(map.name)
+        h2("Description")
+        p(map.description)
+        h2("Versions")
+        map.versions.forEach { version ->
+            h3(version.version.toString())
+            version.changes.forEach { change ->
+                p(change)
+            }
+        }
+    }.render()
+}
+
+fun renderChangelogMap(map: ChangelogMap) {
+    map.packages.forEach { pkg ->
+        // get project for path
+        val project = Changelog.instance.project.project(pkg.path)
+        val file = project.file("CHANGELOG.md")
+        file.writeText(renderChangelogMap(pkg))
+    }
 }
