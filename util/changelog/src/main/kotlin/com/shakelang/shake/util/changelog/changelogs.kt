@@ -129,7 +129,16 @@ class ChangelogMap(
 
 fun Changelog.readMap(): ChangelogMap {
     val file = project.file(".changelog/changelogs.json")
-    if (!file.exists()) return ChangelogMap(mutableListOf())
+    if (!file.exists()) return ChangelogMap(
+        readStructure().map {
+            PackageChangelog(
+                it.path,
+                it.name,
+                it.description
+            )
+        }.toMutableList()
+//        mutableListOf()
+    )
     return ChangelogMap.fromString(file.readText())
 }
 
