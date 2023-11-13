@@ -3,7 +3,7 @@ package com.shakelang.shake.util.changelog
 import com.shakelang.shake.util.shason.elements.JsonObject
 import com.shakelang.shake.util.shason.json
 
-class ChangelogVersion (
+class ChangelogVersion(
     val version: Version,
     val changes: List<String>
 ) {
@@ -22,10 +22,12 @@ class ChangelogVersion (
             val versionElement = obj["version"]!!
             val changesElement = obj["changes"]!!
 
-            if (!versionElement.isJsonPrimitive() || !versionElement.toJsonPrimitive().isString())
+            if (!versionElement.isJsonPrimitive() || !versionElement.toJsonPrimitive().isString()) {
                 throw IllegalArgumentException("ChangelogVersion version is not a string")
-            if (!changesElement.isJsonArray())
+            }
+            if (!changesElement.isJsonArray()) {
                 throw IllegalArgumentException("ChangelogVersion changes is not an array")
+            }
 
             val version = Version.fromString(versionElement.toJsonPrimitive().toStringElement().value)
             val changes = changesElement.toJsonArray().map { it.toJsonPrimitive().toStringElement().value }
@@ -35,7 +37,7 @@ class ChangelogVersion (
     }
 }
 
-class PackageChangelog (
+class PackageChangelog(
     val path: String,
     val name: String,
     val description: String,
@@ -66,14 +68,18 @@ class PackageChangelog (
             val descriptionElement = obj["description"]!!
             val versionsElement = obj["versions"]!!
 
-            if (!pathElement.isJsonPrimitive() || !pathElement.toJsonPrimitive().isString())
+            if (!pathElement.isJsonPrimitive() || !pathElement.toJsonPrimitive().isString()) {
                 throw IllegalArgumentException("PackageChangelog path is not a string")
-            if (!nameElement.isJsonPrimitive() || !nameElement.toJsonPrimitive().isString())
+            }
+            if (!nameElement.isJsonPrimitive() || !nameElement.toJsonPrimitive().isString()) {
                 throw IllegalArgumentException("PackageChangelog name is not a string")
-            if (!descriptionElement.isJsonPrimitive() || !descriptionElement.toJsonPrimitive().isString())
+            }
+            if (!descriptionElement.isJsonPrimitive() || !descriptionElement.toJsonPrimitive().isString()) {
                 throw IllegalArgumentException("PackageChangelog description is not a string")
-            if (!versionsElement.isJsonArray())
+            }
+            if (!versionsElement.isJsonArray()) {
                 throw IllegalArgumentException("PackageChangelog versions is not an array")
+            }
 
             val path = pathElement.toJsonPrimitive().toStringElement().value
             val name = nameElement.toJsonPrimitive().toStringElement().value
@@ -85,7 +91,7 @@ class PackageChangelog (
     }
 }
 
-class ChangelogMap (
+class ChangelogMap(
     val packages: MutableList<PackageChangelog>
 ) {
 
@@ -103,8 +109,9 @@ class ChangelogMap (
 
             val packagesElement = obj["packages"]!!
 
-            if (!packagesElement.isJsonArray())
+            if (!packagesElement.isJsonArray()) {
                 throw IllegalArgumentException("ChangelogMap packages is not an array")
+            }
 
             val packages = packagesElement.toJsonArray().map { PackageChangelog.fromObject(it.toJsonObject()) }
 

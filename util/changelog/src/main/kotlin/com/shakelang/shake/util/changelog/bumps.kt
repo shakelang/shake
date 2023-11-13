@@ -47,7 +47,6 @@ class Bump(
 
     companion object {
         fun fromObject(obj: JsonObject): Bump {
-
             if (!obj.containsKey("type")) throw IllegalArgumentException("Bump object has no type")
             if (!obj.containsKey("message")) throw IllegalArgumentException("Bump object has no message")
             if (!obj.containsKey("paths")) throw IllegalArgumentException("Bump object has no paths")
@@ -57,12 +56,16 @@ class Bump(
             val pathsElement = obj["paths"]!!
 
             if (!typeElement.isJsonPrimitive() || !typeElement.toJsonPrimitive()
-                    .isString()
-            ) throw IllegalArgumentException("Bump type is not a string")
+                .isString()
+            ) {
+                throw IllegalArgumentException("Bump type is not a string")
+            }
 
             if (!messageElement.isJsonPrimitive() || !messageElement.toJsonPrimitive()
-                    .isString()
-            ) throw IllegalArgumentException("Bump message is not a string")
+                .isString()
+            ) {
+                throw IllegalArgumentException("Bump message is not a string")
+            }
 
             if (!pathsElement.isJsonArray()) throw IllegalArgumentException("Bump paths is not an array")
 
@@ -96,10 +99,8 @@ class BumpFile(
     fun add(type: BumpType, message: String, paths: List<String>) = addBump(type, message, paths)
     fun add(type: BumpType, message: String, vararg paths: String) = addBump(type, message, paths.toList())
 
-
     companion object {
         fun fromObject(obj: JsonObject): BumpFile {
-
             if (!obj.containsKey("bumps")) throw IllegalArgumentException("BumpFile object has no bumps")
 
             val bumpsElement = obj["bumps"]!!
