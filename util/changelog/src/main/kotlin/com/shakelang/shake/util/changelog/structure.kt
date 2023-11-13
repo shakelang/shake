@@ -39,9 +39,13 @@ class ProjectStructure(
 
             val path = structure["path"]!!
             val name =
-                if (structure.containsKey("name") && structure["name"]!!.isJsonPrimitive()
-                    && structure["name"]!!.toJsonPrimitive().isString()
-                ) structure["name"]!!.toJsonPrimitive().toStringElement().value else ""
+                if (structure.containsKey("name") && structure["name"]!!.isJsonPrimitive() &&
+                    structure["name"]!!.toJsonPrimitive().isString()
+                ) {
+                    structure["name"]!!.toJsonPrimitive().toStringElement().value
+                } else {
+                    ""
+                }
             val version = structure["version"]!!
             val description = structure["description"]!!
             val author = structure["author"]!!
@@ -49,20 +53,30 @@ class ProjectStructure(
             val dependencies = structure["dependencies"]!!
 
             if (!(path.isJsonPrimitive()) || !path.toJsonPrimitive()
-                    .isString()
-            ) throw IllegalArgumentException("Structure key 'path' is not a string")
+                .isString()
+            ) {
+                throw IllegalArgumentException("Structure key 'path' is not a string")
+            }
             if (!(version.isJsonPrimitive()) || !version.toJsonPrimitive()
-                    .isString()
-            ) throw IllegalArgumentException("Structure key 'version' is not a string")
+                .isString()
+            ) {
+                throw IllegalArgumentException("Structure key 'version' is not a string")
+            }
             if (!(description.isJsonPrimitive()) || !description.toJsonPrimitive()
-                    .isString()
-            ) throw IllegalArgumentException("Structure key 'description' is not a string")
+                .isString()
+            ) {
+                throw IllegalArgumentException("Structure key 'description' is not a string")
+            }
             if (!(author.isJsonPrimitive()) || !author.toJsonPrimitive()
-                    .isString()
-            ) throw IllegalArgumentException("Structure key 'author' is not a string")
+                .isString()
+            ) {
+                throw IllegalArgumentException("Structure key 'author' is not a string")
+            }
             if (!(license.isJsonPrimitive()) || !license.toJsonPrimitive()
-                    .isString()
-            ) throw IllegalArgumentException("Structure key 'license' is not a string")
+                .isString()
+            ) {
+                throw IllegalArgumentException("Structure key 'license' is not a string")
+            }
             if (!(dependencies.isJsonArray())) throw IllegalArgumentException("Structure key 'dependencies' is not a array")
 
             return ProjectStructure(
@@ -74,8 +88,10 @@ class ProjectStructure(
                 license.toJsonPrimitive().toStringElement().value,
                 dependencies.toJsonArray().map {
                     if (!(it.isJsonPrimitive()) || !it.toJsonPrimitive()
-                            .isString()
-                    ) throw IllegalArgumentException("Structure key 'dependencies' is not a string")
+                        .isString()
+                    ) {
+                        throw IllegalArgumentException("Structure key 'dependencies' is not a string")
+                    }
                     it.toJsonPrimitive().toStringElement().value
                 }
             )
@@ -111,8 +127,10 @@ class ChangelogStructure(
 
             if (!(projects.isJsonArray())) throw IllegalArgumentException("Structure key 'projects' is not a array")
             if (!(lastUpdate.isJsonPrimitive()) || !lastUpdate.toJsonPrimitive()
-                    .isInt()
-            ) throw IllegalArgumentException("Structure key 'lastUpdate' is not a number")
+                .isInt()
+            ) {
+                throw IllegalArgumentException("Structure key 'lastUpdate' is not a number")
+            }
 
             return ChangelogStructure(
                 Date(lastUpdate.toJsonPrimitive().toInt().value),
