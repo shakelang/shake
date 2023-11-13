@@ -2,7 +2,7 @@ import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
 
-group = projectGroup("util.jvmlib")
+group = projectGroup("util")
 version = resolveVersion()
 description = "A library for jvm stuff in java"
 

@@ -7,7 +7,7 @@ plugins {
     id("conventions.publishing")
 }
 
-group = projectGroup("util.logger")
+group = projectGroup("util")
 version = resolveVersion()
 description = "Logger utility for Kotlin Multiplatform."
 

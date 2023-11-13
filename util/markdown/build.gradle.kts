@@ -7,7 +7,7 @@ plugins {
     id("conventions.publishing")
 }
 
-group = projectGroup("util.markdown")
+group = projectGroup("util")
 version = resolveVersion()
 description = "Utility package for working with markdown (Kotlin Multiplatform)"
 

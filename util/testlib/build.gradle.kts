@@ -7,7 +7,7 @@ plugins {
     id("conventions.publishing")
 }
 
-group = projectGroup("testlib")
+group = projectGroup("util")
 version = resolveVersion()
 description = "Utilities for parsing stuff with kotlin"
 

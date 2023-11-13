@@ -101,7 +101,9 @@ afterEvaluate {
     publishing {
         publications.withType<MavenPublication> {
 
-            artifact(tasks["sourcesJar"])
+            if (!project.ext.has("isMultiplatform") || project.ext["isMultiplatform"] == false)
+                artifact(tasks["sourcesJar"])
+
             artifact(tasks["dokkaJavadocJar"])
             artifact(tasks["dokkaHtmlJar"])
 

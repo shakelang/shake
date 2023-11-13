@@ -7,7 +7,7 @@ plugins {
     id("conventions.publishing")
 }
 
-group = projectGroup("util.common-io")
+group = projectGroup("util")
 version = resolveVersion()
 description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
 

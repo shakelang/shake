@@ -1,5 +1,4 @@
 import com.shakelang.shake.util.changelog.resolveVersion
-import conventions.Meta
 import conventions.projectGroup
 
 plugins {
@@ -44,7 +43,7 @@ publishing {
         // kotlin plugin
         create<MavenPublication>("plugin") {
             from(components["kotlin"])
-            groupId = projectGroup("util.changelog")
+            groupId = project.group.toString()
             artifactId = "plugin"
             version = project.version.toString()
         }
