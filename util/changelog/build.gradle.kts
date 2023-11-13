@@ -1,13 +1,14 @@
-import conventions.dependencies
+import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.projectGroup
 
 plugins {
-//    id("conventions.publishing")
-    kotlin("jvm")
+    id("conventions.publishing")
+    id("conventions.dokka")
+    `kotlin-dsl`
 }
 
 group = projectGroup("util.changelog")
-version = "0.1.0"
+version = resolveVersion()
 description = "Changelog generation plugin for Shake"
 
 val projectName = name
@@ -17,6 +18,7 @@ kotlin {
         implementation(gradleApi())
         implementation(project(":util:colorlib"))
         implementation(project(":util:shason"))
+        implementation("com.googlecode.lanterna:lanterna:3.1.1")
         testImplementation(kotlin("test"))
     }
 }
@@ -24,6 +26,27 @@ kotlin {
 sourceSets {
     main {
         java.srcDirs("src/main/kotlin")
+    }
+    test {
+        java.srcDirs("src/test/kotlin")
+    }
+}
+
+val sourcesJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("sources")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from(kotlin.sourceSets.main.get().kotlin)
+}
+
+publishing {
+    publications {
+        // kotlin plugin
+        create<MavenPublication>("plugin") {
+            from(components["kotlin"])
+            groupId = project.group.toString()
+            artifactId = "plugin"
+            version = project.version.toString()
+        }
     }
 }
 

@@ -1,8 +1,9 @@
+import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
 
 group = projectGroup("compiler.jsgenerator")
-version = "0.1.0"
+version = resolveVersion()
 description = "js-generator"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 

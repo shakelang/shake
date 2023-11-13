@@ -28,11 +28,10 @@ tasks.register("listDependencies") {
     }
 }
 
-
-kotlin {
-    val publicationsFromMainHost =
-        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
-}
+//kotlin {
+//    val publicationsFromMainHost =
+//        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+//}
 
 publishing {
 
@@ -97,33 +96,80 @@ signing {
     sign(publishing.publications)
 }
 
+afterEvaluate {
 
-tasks.named("signJsPublication") {
-    group = "signing"
-}
+    publishing {
+        publications.withType<MavenPublication> {
 
-tasks.named("signJvmPublication") {
-    group = "signing"
-}
+            if (!project.ext.has("isMultiplatform") || project.ext["isMultiplatform"] == false)
+                artifact(tasks["sourcesJar"])
 
-tasks.named("signKotlinMultiplatformPublication") {
-    group = "signing"
-}
+            artifact(tasks["dokkaJavadocJar"])
+            artifact(tasks["dokkaHtmlJar"])
 
-tasks.create("signAllPublications") {
-    group = "signing"
-    dependsOn("signJsPublication")
-    dependsOn("signJvmPublication")
-    dependsOn("signKotlinMultiplatformPublication")
-}
+            pom {
+                name.set(project.name)
+                description.set(project.description)
+                url.set("https://github.com/${Meta.githubRepo}")
+                licenses {
+                    license {
+                        name.set(Meta.license)
+                        url.set("https://github.com/${Meta.githubRepo}/blob/master/LICENSE")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("shake-developers")
+                        name.set("Shake Developers")
+                        url.set("https://github.com/shakelang")
+                        organization.set("shakelang")
+                        organizationUrl.set("https://shakelang.com/")
+                    }
+                    developer {
+                        id.set("nicolas-schmidt")
+                        name.set("Nicolas Schmidt")
+                        url.set("https://github.com/nsc-de")
+                        organization.set("shakelang")
+                        organizationUrl.set("https://shakelang.com/")
+                    }
+                }
+                scm {
+                    url.set(
+                        "https://github.com/${Meta.githubRepo}.git"
+                    )
+                    connection.set(
+                        "scm:git:git://github.com/${Meta.githubRepo}.git"
+                    )
+                    developerConnection.set(
+                        "scm:git:git://github.com/${Meta.githubRepo}.git"
+                    )
+                }
+                issueManagement {
+                    url.set("https://github.com/${Meta.githubRepo}/issues")
+                }
+            }
+        }
+    }
 
-tasks.create<Checksum>("createChecksums") {
-    group = "checksums"
-    dependsOn("build", "signAllPublications")
+    tasks.withType<Sign>() {
+        group = "signing"
+    }
 
-    val dir = file("build/libs")
-    val files = dir.listFiles { _, name -> name.endsWith(".jar") }
+    tasks.create("signAllPublications") {
+        group = "signing"
+        tasks.withType<Sign> {
+            this@create.dependsOn(this)
+        }
+    }
 
-    inputFiles.setFrom(files)
-    outputDirectory.set(file("build/libs"))
+    tasks.create<Checksum>("createChecksums") {
+        group = "checksums"
+        dependsOn("build", "signAllPublications")
+
+        val dir = file("build/libs")
+        val files = dir.listFiles { _, name -> name.endsWith(".jar") }
+
+        inputFiles.setFrom(files)
+        outputDirectory.set(file("build/libs"))
+    }
 }
