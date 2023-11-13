@@ -1,4 +1,4 @@
-# com.shakelang.shake.util:testlib
+# com.shakelang.shake.compiler.processor:processor
 ## Description
 Utilities for parsing stuff with kotlin
 ## Versions
