@@ -71,8 +71,6 @@ open class MarkdownContext() {
     open fun render(): String = elements.joinToString("\n") { it.toMarkdown().joinToString("\n") }
 }
 
-
-
 interface MarkdownElement {
     fun toMarkdown(): List<String>
 }
@@ -101,10 +99,9 @@ class MarkdownListElement(val elements: List<MarkdownElement>, val ordered: Bool
     override fun toMarkdown() =
         elements.flatMap {
             it.toMarkdown().mapIndexed { index, s ->
-                if(ordered) "${index + 1}. $s" else "* $s"
+                if (ordered) "${index + 1}. $s" else "* $s"
             }
         }
-
 }
 
 class MarkdownTableElement(val headers: List<String>, val rows: List<List<MarkdownElement>>) : MarkdownElement {
