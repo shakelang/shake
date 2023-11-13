@@ -2,7 +2,6 @@ package com.shakelang.shake.util.changelog
 
 import com.googlecode.lanterna.input.KeyStroke
 import com.googlecode.lanterna.input.KeyType
-import com.shakelang.shake.util.shason.json
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
