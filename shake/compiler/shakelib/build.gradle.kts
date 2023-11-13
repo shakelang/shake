@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
 import dev.icerock.gradle.MRVisibility
@@ -9,7 +10,7 @@ plugins {
 }
 
 group = projectGroup("compiler.shakelib")
-version = "0.1.0"
+version = resolveVersion()
 description = "Utilities for parsing stuff with kotlin"
 
 val projectName = name
