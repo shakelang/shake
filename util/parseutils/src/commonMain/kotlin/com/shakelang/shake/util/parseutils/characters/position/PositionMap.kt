@@ -136,7 +136,7 @@ interface PositionMap {
          * @return the String representation of the [PositionMap]
          */
         override fun toString(): String {
-            return "PositionMapImplementation(source=$source, lineSeparators=${lineSeparators.contentToString()})"
+            return source.location
         }
     }
 }
