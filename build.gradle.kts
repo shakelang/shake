@@ -47,7 +47,7 @@ plugins {
 }
 
 apply<Changelog>()
-apply(plugin="io.codearte.nexus-staging")
+apply(plugin = "io.codearte.nexus-staging")
 
 tasks.withType<VersionTask>().configureEach {
     this.tagFormat {
@@ -255,10 +255,9 @@ tasks.named("closeAndReleaseRepository") { group = "publishing" }
 tasks.named("closeRepository") { group = "publishing" }
 tasks.named("releaseRepository") { group = "publishing" }
 
-
 extensions.getByType<NexusStagingExtension>().apply {
-    serverUrl = "https://s01.oss.sonatype.org/service/local/" //required only for projects registered in Sonatype after 2021-02-24
-    packageGroup = "com.shakelang" //optional if packageGroup == project.getGroup()
+    serverUrl = "https://s01.oss.sonatype.org/service/local/" // required only for projects registered in Sonatype after 2021-02-24
+    packageGroup = "com.shakelang" // optional if packageGroup == project.getGroup()
 
     username = System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
     password = System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
