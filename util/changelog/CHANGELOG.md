@@ -6,3 +6,5 @@ Changelog generation plugin for Shake
 patches to changelog
 ### 0.2.1
 Update dependencies
+### 0.3.0
+Add ability to create tags

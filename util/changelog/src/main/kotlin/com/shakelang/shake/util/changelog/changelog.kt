@@ -5,7 +5,11 @@ import com.googlecode.lanterna.input.KeyType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Exec
+import org.gradle.api.tasks.Input
 import java.io.BufferedReader
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import kotlin.math.max
@@ -28,6 +32,7 @@ class Changelog : Plugin<Project> {
         project.tasks.create("initChangelog", InitChangelogTask::class.java)
         project.tasks.create("bump", BumpTask::class.java)
         project.tasks.create("version", VersionTask::class.java)
+        project.tasks.create("createTags", VersionTags::class.java)
     }
 
     companion object {
@@ -113,7 +118,18 @@ open class BumpTask : DefaultTask() {
     }
 }
 
+data class TagCreationInfo(val project: ProjectStructure, val version: Version, val message: String)
+typealias TagCreation = (TagCreationInfo) -> String
+
 open class VersionTask : DefaultTask() {
+
+    private var tagFormat: TagCreation = {
+        "${it.project.name}@${it.version}"
+    }
+
+    fun tagFormat(tagFormat: TagCreation) {
+        this.tagFormat = tagFormat
+    }
 
     init {
         group = "changelog"
@@ -138,6 +154,10 @@ open class VersionTask : DefaultTask() {
         }
 
         bumpFile.bumps.clear()
+        val tagFormat = this.tagFormat
+
+        val stash = Changelog.instance.readStash()
+        
         changelog.entries.forEach { (path, messages) ->
             val bumpType = bumpTypes[path]
 
@@ -151,6 +171,12 @@ open class VersionTask : DefaultTask() {
                 BumpType.MINOR -> version.incrementMinor()
                 BumpType.PATCH -> version.incrementPatch()
             }
+
+            val tagName = tagFormat(TagCreationInfo(prj, version, messages.joinToString("\n")))
+
+            // stash tag
+            stash.add(TagStash(tagName))
+            
 
             // Add map entry
             var it = mapFile.packages.find { it.path == path }
@@ -170,9 +196,65 @@ open class VersionTask : DefaultTask() {
         Changelog.instance.writeBumpFile(bumpFile)
         Changelog.instance.writeMap(mapFile)
         Changelog.instance.writeStructure(structureFile)
+        Changelog.instance.writeStash(stash)
 
         // render new changelog files
         Changelog.instance.renderChangelog(mapFile)
+    }
+}
+
+open class VersionTags : DefaultTask() {
+
+    @Input
+    val push: Property<Boolean> = project.objects.property(Boolean::class.java)
+
+    @Input
+    val origin: Property<String> = project.objects.property(String::class.java)
+
+    init {
+        group = "changelog"
+        description = "Creates git tags for stashed versions"
+        this.dependsOn("initChangelog")
+
+        push.convention(true)
+        origin.convention("origin")
+    }
+
+    @org.gradle.api.tasks.TaskAction
+    open fun versionTags() {
+        val stash = Changelog.instance.readStash()
+
+        val rt = Runtime.getRuntime()
+
+        stash.tags.forEach {
+            println("Creating tag ${it.name}...")
+
+            val tagCreation = rt.exec(arrayOf("git", "tag", it.name, "-m", "Release ${it.name}"))
+
+            val exitCode = tagCreation.waitFor()
+            if (exitCode != 0) {
+                println("Failed to create tag ${it.name}")
+                while( tagCreation.errorStream.available() > 0)
+                    System.err.print(tagCreation.errorStream.read().toChar());
+
+                return@forEach
+            }
+
+
+            if (push.get()) {
+                println("Pushing tag ${it.name}...")
+                val pushTag = rt.exec(arrayOf("git", "push", origin.get(), tagRef(it.name)))
+                val exitCode2 = pushTag.waitFor()
+
+                if (exitCode2 != 0) {
+                    println("Failed to push tag ${it.name}")
+                    return@forEach
+                }
+            }
+        }
+
+        stash.clear()
+        Changelog.instance.writeStash(stash)
     }
 }
 
