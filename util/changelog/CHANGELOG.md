@@ -10,3 +10,5 @@ Update dependencies
 Add ability to create tags
 ### 0.3.1
 Remove unused JGit Dependency
+### 0.3.2
+Update dependencies

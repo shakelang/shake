@@ -52,6 +52,12 @@
           "changes": [
             "Remove unused JGit Dependency"
           ]
+        },
+        {
+          "version": "0.3.2",
+          "changes": [
+            "Update dependencies"
+          ]
         }
       ]
     },
