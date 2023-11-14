@@ -1,11 +1,8 @@
 package com.shakelang.shake.util.parseutils.characters.position
 
-import kotlin.jvm.JvmOverloads
-
 /**
  * The [Position] marks a position in the source-code.
  */
-@Suppress("unused")
 class Position
 
 /**
@@ -15,8 +12,7 @@ class Position
  * @param index The [index] of the position
  * @param column The [column] of the position
  * @param line The [line] of the position
- */
-@JvmOverloads constructor(
+ */(
 
     /**
      * The source
@@ -74,5 +70,18 @@ class Position
         if (line != other.line) return false
 
         return true
+    }
+
+    /**
+     * Creates a hashcode of the position
+     *
+     * @return The hashcode of the position
+     */
+    override fun hashCode(): Int {
+        var result = source.hashCode()
+        result = 31 * result + index
+        result = 31 * result + column
+        result = 31 * result + line
+        return result
     }
 }
