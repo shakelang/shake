@@ -8,7 +8,7 @@
       "author": "shake",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@6c3e185c"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@d7ffb40"
       ]
     },
     {
@@ -19,7 +19,7 @@
       "author": "shake",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@4a756c8c"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@576c5bd"
       ]
     },
     {
@@ -30,7 +30,7 @@
       "author": "shake.shake",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@13f3af81"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@2a8e7882"
       ]
     },
     {
@@ -41,7 +41,7 @@
       "author": "shake.shake",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@f93b95b"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@59032959"
       ]
     },
     {
@@ -52,7 +52,7 @@
       "author": "com.shakelang.shake.util.changelog",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@5a2010a"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@2bd47cc2"
       ]
     },
     {
@@ -63,7 +63,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@64d21c3e"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@18bc0f28"
       ]
     },
     {
@@ -74,7 +74,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@6a533882"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@412f2ed5"
       ]
     },
     {
@@ -85,7 +85,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@78980df2"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@1269e48"
       ]
     },
     {
@@ -96,7 +96,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@6d27e9ba"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@99cd0c2"
       ]
     },
     {
@@ -107,7 +107,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@19e02bcc"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@71a15b96"
       ]
     },
     {
@@ -118,7 +118,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@6a84975a"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@49409af1"
       ]
     },
     {
@@ -129,7 +129,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@524be065"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@7c21994f"
       ]
     },
     {
@@ -140,7 +140,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@f3a9af"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@13d45cc9"
       ]
     },
     {
@@ -151,7 +151,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@18555c36"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@6852c8ce"
       ]
     },
     {
@@ -162,7 +162,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@56a52621"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@25885027"
       ]
     },
     {
@@ -173,7 +173,7 @@
       "author": "com.shakelang.shake.compiler.jsgenerator",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@5b60bc58"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@55934e38"
       ]
     },
     {
@@ -184,7 +184,7 @@
       "author": "com.shakelang.shake.compiler.lexer",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@4643d84a"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@64106257"
       ]
     },
     {
@@ -195,7 +195,7 @@
       "author": "com.shakelang.shake.compiler.parser",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@74459858"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@1a7ad2a3"
       ]
     },
     {
@@ -206,7 +206,7 @@
       "author": "com.shakelang.shake.compiler.processor",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@b2e2cdf"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@7d94a0a3"
       ]
     },
     {
@@ -217,7 +217,7 @@
       "author": "com.shakelang.shake.compiler.shakelib",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@55f2c39e"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@32b9c3a7"
       ]
     },
     {
@@ -228,7 +228,7 @@
       "author": "com.shakelang.shake.shasambly.java-dist",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@dabd0e2"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@55dc0d7d"
       ]
     },
     {
@@ -239,7 +239,7 @@
       "author": "com.shakelang.shake.shasambly",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@55740e57"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@197f32af"
       ]
     },
     {
@@ -250,7 +250,7 @@
       "author": "com.shakelang.shake.shasambly.shasp",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@2fc698f2"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@4136089b"
       ]
     },
     {
@@ -261,9 +261,9 @@
       "author": "com.shakelang.shake.shasambly.shastools",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@6c6b50a7"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@3dee5fe1"
       ]
     }
   ],
-  "lastUpdate": 1699976706283
+  "lastUpdate": 1699984943009
 }
