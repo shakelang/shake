@@ -9,6 +9,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.Input
 import java.io.BufferedReader
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import kotlin.math.max
@@ -228,10 +229,14 @@ open class VersionTags : DefaultTask() {
         stash.tags.forEach {
             println("Creating tag ${it.name}...")
 
-            val tagCreation = rt.exec(arrayOf("git", "tag", tagRef(it.name), "-m", "Release ${it.name}"))
+            val tagCreation = rt.exec(arrayOf("git", "tag", it.name, "-m", "Release ${it.name}"))
+
             val exitCode = tagCreation.waitFor()
             if (exitCode != 0) {
                 println("Failed to create tag ${it.name}")
+                while( tagCreation.errorStream.available() > 0)
+                    System.err.print(tagCreation.errorStream.read().toChar());
+
                 return@forEach
             }
 
