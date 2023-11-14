@@ -1,5 +1,6 @@
 import com.shakelang.shake.util.changelog.Changelog
 import com.shakelang.shake.util.changelog.VersionTask
+import io.codearte.gradle.nexus.NexusStagingExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
@@ -40,13 +41,13 @@ repositories {
 
 plugins {
     id("org.jetbrains.dokka")
-    kotlin("multiplatform") apply false
     id("org.jetbrains.kotlinx.kover")
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
-    id("io.gitlab.arturbosch.detekt") version ("1.23.3")
+    id("io.gitlab.arturbosch.detekt") version "1.23.3"
 }
 
 apply<Changelog>()
+apply(plugin="io.codearte.nexus-staging")
 
 tasks.withType<VersionTask>().configureEach {
     this.tagFormat {
@@ -248,6 +249,19 @@ tasks.register("copyDokkaHtml") {
     findDokkaHtmlProjects().forEach {
         dependsOn("${it.path}:dokkaHtml")
     }
+}
+
+tasks.named("closeAndReleaseRepository") { group = "publishing" }
+tasks.named("closeRepository") { group = "publishing" }
+tasks.named("releaseRepository") { group = "publishing" }
+
+
+extensions.getByType<NexusStagingExtension>().apply {
+    serverUrl = "https://s01.oss.sonatype.org/service/local/" //required only for projects registered in Sonatype after 2021-02-24
+    packageGroup = "com.shakelang" //optional if packageGroup == project.getGroup()
+
+    username = System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
+    password = System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
 }
 
 val testAggregate = tasks.register<TestReport>("testAggregate") {
