@@ -202,7 +202,7 @@ open class VersionTask : DefaultTask() {
     }
 }
 
-open class VersionTags : Exec() {
+open class VersionTags : DefaultTask() {
 
     @Input
     val push: Property<Boolean> = project.objects.property(Boolean::class.java)
@@ -223,14 +223,28 @@ open class VersionTags : Exec() {
     open fun versionTags() {
         val stash = Changelog.instance.readStash()
 
-        stash.tags.forEach {
-            println("Creating tag ${it.name}")
+        val rt = Runtime.getRuntime()
 
-            commandLine("git", "tag", it.name, "-m", "Release ${it.name}")
+        stash.tags.forEach {
+            println("Creating tag ${it.name}...")
+
+            val tagCreation = rt.exec(arrayOf("git", "tag", tagRef(it.name), "-m", "Release ${it.name}"))
+            val exitCode = tagCreation.waitFor()
+            if (exitCode != 0) {
+                println("Failed to create tag ${it.name}")
+                return@forEach
+            }
+
 
             if (push.get()) {
-                println("Pushing tag ${it.name}")
-                commandLine("git", "push", origin.get(), it.name)
+                println("Pushing tag ${it.name}...")
+                val pushTag = rt.exec(arrayOf("git", "push", origin.get(), tagRef(it.name)))
+                val exitCode2 = pushTag.waitFor()
+
+                if (exitCode2 != 0) {
+                    println("Failed to push tag ${it.name}")
+                    return@forEach
+                }
             }
         }
 
