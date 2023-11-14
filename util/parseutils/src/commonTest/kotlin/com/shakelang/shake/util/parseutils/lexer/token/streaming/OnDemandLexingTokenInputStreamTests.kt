@@ -1,10 +1,10 @@
 package com.shakelang.shake.util.parseutils.lexer.token.streaming
 
-import com.shakelang.shake.util.parseutils.lexer.token.Token
 import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import com.shakelang.shake.util.parseutils.lexer.LexingBase
+import com.shakelang.shake.util.parseutils.lexer.token.Token
 import com.shakelang.shake.util.parseutils.lexer.token.stream.OnDemandLexingTokenInputStream
 import kotlin.test.*
 

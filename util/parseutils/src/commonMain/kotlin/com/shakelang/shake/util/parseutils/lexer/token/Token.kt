@@ -11,8 +11,7 @@ package com.shakelang.shake.util.parseutils.lexer.token
  * @since 0.1.0
  * @version 0.2.1
  */
-open class Token<T : TokenType>
-(
+open class Token<T : TokenType>(
     /**
      * The type of the [Token]
      * @see Token

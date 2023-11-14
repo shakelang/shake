@@ -1,7 +1,7 @@
 package com.shakelang.shake.util.parseutils.lexer.token.stream
 
-import com.shakelang.shake.util.parseutils.lexer.token.Token
 import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.shake.util.parseutils.lexer.token.Token
 import com.shakelang.shake.util.parseutils.lexer.token.TokenType
 
 /**
@@ -9,11 +9,9 @@ import com.shakelang.shake.util.parseutils.lexer.token.TokenType
  * created by a lexer
  * @param TT the [TokenType] of the [Token]s
  * @param T the [Token]s
- * 
- * @param tokens the [Token]s that are contained in the [TokenBasedTokenInputStream]
+ * * @param tokens the [Token]s that are contained in the [TokenBasedTokenInputStream]
  * @param map the [PositionMap] of the [Token]s
- * 
- * @since 0.1.0
+ * * @since 0.1.0
  * @version 0.2.1
  */
 @Suppress("unused")
@@ -21,16 +19,14 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>(
 
     /**
      * The tokenTypes that are contained in the [TokenBasedTokenInputStream]
-     * 
-     * @since 0.1.0
+     * * @since 0.1.0
      * @version 0.2.1
      */
     open val tokens: Array<T>,
-    
+
     /**
      * The [PositionMap] of the [Token]s
-     * 
-     * @since 0.1.0
+     * * @since 0.1.0
      * @version 0.2.1
      */
     override val map: PositionMap
@@ -39,16 +35,14 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>(
 
     /**
      * The source of the [TokenBasedTokenInputStream]
-     * 
-     * @since 0.1.0
+     * * @since 0.1.0
      * @version 0.2.1
      */
     override val source get() = map.source.location
-    
+
     /**
      * The size of the [TokenBasedTokenInputStream]
-     * 
-     * @since 0.1.0
+     * * @since 0.1.0
      * @version 0.2.1
      */
     override val size: Int get() = tokens.size
