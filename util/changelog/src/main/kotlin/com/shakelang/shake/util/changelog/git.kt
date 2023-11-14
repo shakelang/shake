@@ -2,12 +2,6 @@ package com.shakelang.shake.util.changelog
 import com.shakelang.shake.util.shason.elements.JsonElement
 import com.shakelang.shake.util.shason.elements.JsonObject
 import com.shakelang.shake.util.shason.json
-import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.api.errors.GitAPIException
-import org.eclipse.jgit.api.errors.NoFilepatternException
-import org.eclipse.jgit.api.errors.NoHeadException
-import org.eclipse.jgit.errors.RepositoryNotFoundException
-import java.io.File
 
 fun tagRef(name: String): String {
     return "refs/tags/$name"
