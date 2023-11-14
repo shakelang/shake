@@ -69,6 +69,19 @@ fun <T : Git> T.pushTags() {
     }
 }
 
+fun <T : Git> T.pushTag(name: String) {
+    try {
+        push().add(tagRef(name)).call()
+        println("Tag pushed successfully.")
+    } catch (e: GitAPIException) {
+        println("Error pushing tag: ${e.message}")
+    }
+}
+
+fun tagRef(name: String): String {
+    return "refs/tags/$name"
+}
+
 class TagStash (
     val name: String,
 ) {
@@ -93,8 +106,41 @@ class TagStash (
 }
 
 class TagStashList (
-    val tags: List<TagStash>,
+    val tags: MutableList<TagStash>,
 ) {
+
+    fun add(tag: TagStash) {
+        tags.add(tag)
+    }
+
+    fun remove(tag: TagStash) {
+        tags.remove(tag)
+    }
+
+    fun remove(name: String) {
+        tags.removeIf { it.name == name }
+    }
+
+    fun contains(tag: TagStash): Boolean {
+        return tags.contains(tag)
+    }
+
+    fun contains(name: String): Boolean {
+        return tags.any { it.name == name }
+    }
+
+    operator fun get(name: String): TagStash? {
+        return tags.find { it.name == name }
+    }
+
+    operator fun get(id: Int): TagStash? {
+        return tags[id]
+    }
+
+    fun clear() {
+        tags.clear()
+    }
+
     fun toObject(): Any {
         return mapOf(
             "tags" to tags.map { it.toObject() }
@@ -113,7 +159,7 @@ class TagStashList (
             return TagStashList(tags.toJsonArray().map {
                 if(!it.isJsonObject()) throw IllegalArgumentException("TagStashList tags array contains non object")
                 TagStash.fromObject(it.toJsonObject())
-            })
+            }.toMutableList())
         }
 
         fun fromObject(obj: JsonElement): TagStashList {
@@ -122,18 +168,18 @@ class TagStashList (
         }
 
         fun empty(): TagStashList {
-            return TagStashList(emptyList())
+            return TagStashList(mutableListOf())
         }
     }
 }
 
-fun Changelog.getStash(): TagStashList {
+fun Changelog.readStash(): TagStashList {
     val file = project.file(".changelog/stash.json")
     if(!file.exists()) return TagStashList.empty()
     return TagStashList.fromObject(json.parse(file.readText()))
 }
 
-fun Changelog.setStash(stash: TagStashList) {
+fun Changelog.writeStash(stash: TagStashList) {
     val file = project.file(".changelog/stash.json")
     file.writeText(stash.toString())
 }

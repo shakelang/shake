@@ -1,3 +1,11 @@
 {
-  "bumps": []
+  "bumps": [
+    {
+      "type": "minor",
+      "message": "Add ability to create tags",
+      "paths": [
+        ":util:changelog"
+      ]
+    }
+  ]
 }
