@@ -25,12 +25,14 @@ class MutableMarkdownDocument() : MarkdownDocument, MarkdownContext() {
     fun h6(text: String) = header(text, 6)
     fun list(elements: List<MarkdownElement>, ordered: Boolean = false) =
         this.elements.add(MarkdownListElement(elements, ordered))
+
     fun ulist(elements: List<MarkdownElement>) = list(elements, false)
     fun olist(elements: List<MarkdownElement>) = list(elements, true)
     fun ul(vararg elements: MarkdownElement) = ulist(elements.toList())
     fun ol(vararg elements: MarkdownElement) = olist(elements.toList())
     fun table(headers: List<String>, rows: List<List<MarkdownElement>>) =
         elements.add(MarkdownTableElement(headers, rows))
+
     fun html(html: String) = elements.add(MarkdownHtmlElement(html))
 
     override fun render(): String = elements.joinToString("\n") { it.toMarkdown().joinToString("\n") }
@@ -47,6 +49,7 @@ open class MarkdownContext() {
     fun link(text: String, url: String) = elements.add(MarkdownLinkElement(text, url))
     fun link(url: String, creator: MarkdownContext.() -> Unit) =
         elements.add(MarkdownLinkElement(MarkdownContext().apply(creator).render(), url))
+
     fun image(text: String, url: String) = elements.add(MarkdownImageElement(text, url))
     fun image(url: String, creator: MarkdownContext.() -> Unit) =
         elements.add(MarkdownImageElement(MarkdownContext().apply(creator).render(), url))
@@ -54,18 +57,23 @@ open class MarkdownContext() {
     fun quote(elements: List<MarkdownElement>) = this.elements.add(MarkdownQuoteElement(elements))
     fun quote(creator: MarkdownContext.() -> Unit) =
         this.elements.add(MarkdownQuoteElement(MarkdownContext().apply(creator).elements))
+
     fun bold(elements: List<MarkdownElement>) = this.elements.add(MarkdownBoldElement(elements))
     fun bold(creator: MarkdownContext.() -> Unit) =
         this.elements.add(MarkdownBoldElement(MarkdownContext().apply(creator).elements))
+
     fun italic(elements: List<MarkdownElement>) = this.elements.add(MarkdownItalicElement(elements))
     fun italic(creator: MarkdownContext.() -> Unit) =
         this.elements.add(MarkdownItalicElement(MarkdownContext().apply(creator).elements))
+
     fun strikethrough(elements: List<MarkdownElement>) = this.elements.add(MarkdownStrikethroughElement(elements))
     fun strikethrough(creator: MarkdownContext.() -> Unit) =
         this.elements.add(MarkdownStrikethroughElement(MarkdownContext().apply(creator).elements))
+
     fun text(text: String) = elements.add(MarkdownTextElement(text))
     fun text(creator: MarkdownContext.() -> Unit) =
         elements.add(MarkdownTextElement(MarkdownContext().apply(creator).render()))
+
     fun p(text: String) = text(text)
     fun p(creator: MarkdownContext.() -> Unit) = text(creator)
     open fun render(): String = elements.joinToString("\n") { it.toMarkdown().joinToString("\n") }

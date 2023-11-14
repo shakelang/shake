@@ -23,9 +23,9 @@ interface ShakeMethod : ShakeInvokable {
 
     override val qualifiedName: String
         get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}$name(${
-        parameters.joinToString(
-            ", "
-        ) { it.type.qualifiedName }
+            parameters.joinToString(
+                ", "
+            ) { it.type.qualifiedName }
         })${returnType.qualifiedName}"
     val signature: String get() = "${expanding?.qualifiedName?.plus("$") ?: ""}$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
     val qualifiedSignature: String get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}$signature"

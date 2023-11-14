@@ -208,9 +208,9 @@ class ShakeParserImpl(
     fun skipSeparators(): Int {
         var number = 0
         while (input.hasNext() && (
-            input.peekType() == ShakeTokenType.SEMICOLON ||
-                input.peekType() == ShakeTokenType.LINE_SEPARATOR
-            )
+                    input.peekType() == ShakeTokenType.SEMICOLON ||
+                            input.peekType() == ShakeTokenType.LINE_SEPARATOR
+                    )
         ) {
             number++
             input.skip()
@@ -352,7 +352,7 @@ class ShakeParserImpl(
 
                 val type = expectType()
                 if (!input.skipIgnorable()
-                    .hasNext()
+                        .hasNext()
                 ) {
                     throw ParserError("Expecting identifier, but got ${input.actualType}")
                 }
@@ -625,11 +625,11 @@ class ShakeParserImpl(
                     input.skipIgnorable()
                     return expectIdentifierStatement(
                         (
-                            ret ?: ShakeVariableUsageNode(
-                                map,
-                                identifierNode
-                            )
-                            ) as ShakeValuedNode
+                                ret ?: ShakeVariableUsageNode(
+                                    map,
+                                    identifierNode
+                                )
+                                ) as ShakeValuedNode
                     )
                 }
 
@@ -722,7 +722,7 @@ class ShakeParserImpl(
      */
     fun expectPackage(): ShakePackageNode {
         if (!input.skipIgnorable()
-            .hasNext() || input.peekType() != ShakeTokenType.KEYWORD_PACKAGE
+                .hasNext() || input.peekType() != ShakeTokenType.KEYWORD_PACKAGE
         ) {
             throw ParserError("Expecting package keyword")
         }
@@ -743,7 +743,7 @@ class ShakeParserImpl(
      */
     fun expectClassDeclaration(ctx: com.shakelang.shake.parser.DeclarationContextInformation): ShakeClassDeclarationNode {
         if (input.skipIgnorable()
-            .nextType() != ShakeTokenType.KEYWORD_CLASS
+                .nextType() != ShakeTokenType.KEYWORD_CLASS
         ) {
             throw ParserError("Expecting class keyword")
         }
@@ -765,9 +765,9 @@ class ShakeParserImpl(
 
         while (input.skipIgnorable().hasNext() &&
             (
-                input.peekType() == ShakeTokenType.KEYWORD_EXTENDS ||
-                    input.peekType() == ShakeTokenType.KEYWORD_IMPLEMENTS
-                )
+                    input.peekType() == ShakeTokenType.KEYWORD_EXTENDS ||
+                            input.peekType() == ShakeTokenType.KEYWORD_IMPLEMENTS
+                    )
         ) {
             if (input.nextType() == ShakeTokenType.KEYWORD_EXTENDS) {
                 if (extends != null) throw ParserError("Class/Object can only extend one class")
@@ -826,7 +826,7 @@ class ShakeParserImpl(
         info: com.shakelang.shake.parser.DeclarationContextInformation
     ): ShakeClassDeclarationNode {
         if (input.skipIgnorable()
-            .nextType() != ShakeTokenType.KEYWORD_INTERFACE
+                .nextType() != ShakeTokenType.KEYWORD_INTERFACE
         ) {
             throw ParserError("Expecting object keyword")
         }
@@ -922,7 +922,7 @@ class ShakeParserImpl(
     fun expectFunctionArguments(): Array<ShakeFunctionArgumentNode> {
         val args = ArrayList<ShakeFunctionArgumentNode>()
         if (!input.skipIgnorable()
-            .hasNext() || input.nextType() != ShakeTokenType.LPAREN
+                .hasNext() || input.nextType() != ShakeTokenType.LPAREN
         ) {
             throw ParserError("Expecting '('")
         }
@@ -980,7 +980,7 @@ class ShakeParserImpl(
      */
     fun expectReturnStatement(): ShakeReturnNode {
         if (!input.skipIgnorable()
-            .hasNext() || input.nextType() != ShakeTokenType.KEYWORD_RETURN
+                .hasNext() || input.nextType() != ShakeTokenType.KEYWORD_RETURN
         ) {
             throw ParserError("Expecting 'return'")
         }
@@ -1309,11 +1309,11 @@ class ShakeParserImpl(
         var tmpType: ShakeTokenType = ShakeTokenType.NONE
         while (input.hasNext() &&
             (
-                input.peekType()
-                    .also {
-                        tmpType = it
-                    } == ShakeTokenType.MUL || tmpType == ShakeTokenType.DIV || tmpType == ShakeTokenType.MOD
-                )
+                    input.peekType()
+                        .also {
+                            tmpType = it
+                        } == ShakeTokenType.MUL || tmpType == ShakeTokenType.DIV || tmpType == ShakeTokenType.MOD
+                    )
         ) {
             input.skip()
             val pos = input.actualStart
@@ -1372,12 +1372,12 @@ class ShakeParserImpl(
         var tmpType: ShakeTokenType = ShakeTokenType.NONE
         while (input.hasNext() &&
             (
-                input.peekType().also { tmpType = it } == ShakeTokenType.EQ_EQUALS ||
-                    tmpType == ShakeTokenType.BIGGER_EQUALS ||
-                    tmpType == ShakeTokenType.SMALLER_EQUALS ||
-                    tmpType == ShakeTokenType.BIGGER ||
-                    tmpType == ShakeTokenType.SMALLER
-                )
+                    input.peekType().also { tmpType = it } == ShakeTokenType.EQ_EQUALS ||
+                            tmpType == ShakeTokenType.BIGGER_EQUALS ||
+                            tmpType == ShakeTokenType.SMALLER_EQUALS ||
+                            tmpType == ShakeTokenType.BIGGER ||
+                            tmpType == ShakeTokenType.SMALLER
+                    )
         ) {
             input.skip()
             val pos = input.actualStart
@@ -1440,7 +1440,7 @@ class ShakeParserImpl(
         val name = mutableListOf<String>()
         do {
             if (!input.skipIgnorable()
-                .hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER
+                    .hasNext() || input.nextType() != ShakeTokenType.IDENTIFIER
             ) {
                 throw ParserError("Expecting identifier")
             }

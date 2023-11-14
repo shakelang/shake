@@ -1,4 +1,5 @@
 package com.shakelang.shake.util.changelog
+
 import com.shakelang.shake.util.shason.elements.JsonElement
 import com.shakelang.shake.util.shason.elements.JsonObject
 import com.shakelang.shake.util.shason.json
@@ -24,7 +25,9 @@ class TagStash(
         fun fromObject(obj: JsonObject): TagStash {
             if (!obj.containsKey("name")) throw IllegalArgumentException("TagStash object has no name")
             val name = obj["name"]!!
-            if (!name.isJsonPrimitive() || !name.toJsonPrimitive().isString()) throw IllegalArgumentException("TagStash name is not a string")
+            if (!name.isJsonPrimitive() || !name.toJsonPrimitive()
+                    .isString()
+            ) throw IllegalArgumentException("TagStash name is not a string")
             return TagStash(name.toJsonPrimitive().toStringElement().value)
         }
     }
