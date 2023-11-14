@@ -10,42 +10,60 @@ import kotlin.js.JsName
 /**
  * A [CompilerError] is an error thrown by a Compiler. It has functionality for
  * marking source code locations
+ *
+ * @since 0.1.0
+ * @version 0.2.1
  */
+@Suppress("unused")
 open class CompilerError : Error {
 
     /**
      * The name of the [CompilerError]
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("exceptionName")
     val exceptionName: String
 
     /**
      * The details of the [CompilerError]
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("details")
     val details: String
 
     /**
      * The start position of the [CompilerError]
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("start")
     val start: Position
 
     /**
      * The end position of the [CompilerError]
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("end")
     val end: Position
 
     /**
      * The marker of the Error
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("marker")
-    val marker: com.shakelang.shake.util.parseutils.CompilerError.ErrorMarker
+    val marker: ErrorMarker
 
     /**
      * Constructor for [CompilerError]
-     *
      * @param message the message of the exception _(Value for [CompilerError.message])_
      * @param marker the marker of the exception _(Value for [CompilerError.marker])_
      * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
@@ -53,10 +71,13 @@ open class CompilerError : Error {
      * @param start the start position of the exception _(Value for [CompilerError.start])_
      * @param end the end position of the exception _(Value for [CompilerError.end])_
      * @param cause the cause for the exception
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     private constructor(
         message: String,
-        marker: com.shakelang.shake.util.parseutils.CompilerError.ErrorMarker,
+        marker: ErrorMarker,
         exceptionName: String,
         details: String,
         start: Position,
@@ -72,13 +93,15 @@ open class CompilerError : Error {
 
     /**
      * Constructor for [CompilerError]
-     *
      * @param message the message of the exception _(Value for [CompilerError.message])_
      * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
      * @param details the details of the exception _(Value for [CompilerError.details])_
      * @param start the start position of the exception _(Value for [CompilerError.start])_
      * @param end the end position of the exception _(Value for [CompilerError.end])_
      * @param cause the cause for the exception
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     constructor(
         message: String,
@@ -89,8 +112,8 @@ open class CompilerError : Error {
         cause: Throwable? = null
     ) : this(
         message,
-        com.shakelang.shake.util.parseutils.CompilerError.Companion.createPositionMarker(
-            com.shakelang.shake.util.parseutils.CompilerError.Companion.MAX_LENGTH,
+        createPositionMarker(
+            MAX_LENGTH,
             start,
             end
         ),
@@ -103,7 +126,6 @@ open class CompilerError : Error {
 
     /**
      * Constructor for [CompilerError]
-     *
      * @param message the message of the exception _(Value for [CompilerError.message])_
      * @param exceptionName the name of the exception _(Value for [CompilerError.exceptionName])_
      * @param details the details of the exception _(Value for [CompilerError.details])_
@@ -111,6 +133,9 @@ open class CompilerError : Error {
      * @param start the start position of the exception _(Value for [CompilerError.start])_
      * @param end the end position of the exception _(Value for [CompilerError.end])_
      * @param cause the cause for the exception
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     constructor(
         message: String,
@@ -131,34 +156,52 @@ open class CompilerError : Error {
 
     /**
      * Stringify the [CompilerError]
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     override fun toString() = message!!
 
     /**
      * A marker for the position of the [CompilerError]
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     class ErrorMarker(
 
         /**
          * The source of the [ErrorMarker]
+         *
+         * @since 0.1.0
+         * @version 0.2.1
          */
         @JsName("source")
         val source: String,
 
         /**
          * The colorPreview of the [ErrorMarker]
+         *
+         * @since 0.1.0
+         * @version 0.2.1
          */
         @JsName("colorPreview")
         val colorPreview: String,
 
         /**
          * The preview of the [ErrorMarker]
+         *
+         * @since 0.1.0
+         * @version 0.2.1
          */
         @JsName("preview")
         val preview: String,
 
         /**
          * The marker of the [ErrorMarker]
+         *
+         * @since 0.1.0
+         * @version 0.2.1
          */
         @JsName("marker")
         val marker: String
@@ -168,6 +211,8 @@ open class CompilerError : Error {
         /**
          * Generate the [ErrorMarker] as a string
          *
+         * @since 0.1.0
+         * @version 0.2.1
          */
         @JsName("generateMarker")
         fun generateMarker() = "at $source\n$preview\n$marker"
@@ -175,6 +220,8 @@ open class CompilerError : Error {
         /**
          * Generate the [ErrorMarker] as a string including console colors
          *
+         * @since 0.1.0
+         * @version 0.2.1
          */
         @JsName("generateColoredMarker")
         fun generateColoredMarker() = "at $source\n$colorPreview\n$marker"
@@ -182,6 +229,8 @@ open class CompilerError : Error {
         /**
          * Stringify the [CompilerError] (just the same as [ErrorMarker.generateMarker]
          *
+         * @since 0.1.0
+         * @version 0.2.1
          */
         override fun toString() = generateMarker()
     }
@@ -191,18 +240,22 @@ open class CompilerError : Error {
         /**
          * The maxLength for generated [ErrorMarker]s
          *
+         * @since 0.1.0
+         * @version 0.2.1
          */
         const val MAX_LENGTH = 60
 
         /**
          * Creates a [ErrorMarker]
          *
+         * @since 0.1.0
+         * @version 0.2.1
          */
         private fun createPositionMarker(
-            maxLength: Int = com.shakelang.shake.util.parseutils.CompilerError.Companion.MAX_LENGTH,
+            maxLength: Int = MAX_LENGTH,
             p1: Position,
             p2: Position
-        ): com.shakelang.shake.util.parseutils.CompilerError.ErrorMarker {
+        ): ErrorMarker {
             var pos1 = p1
             var pos2 = p2
 
@@ -246,8 +299,8 @@ open class CompilerError : Error {
                 val after2 = pos2.source.getAfterInLine(pos2)
 
                 // Take the smallest value and use it
-                var realBefore = com.shakelang.shake.util.parseutils.smallest(before, before2)
-                var realAfter = com.shakelang.shake.util.parseutils.smallest(after, after2 + 1)
+                var realBefore = smallest(before, before2)
+                var realAfter = smallest(after, after2 + 1)
 
                 // Get the differences (to display if there are tokens that can't be displayed)
                 var beforeDif = before2 - realBefore
@@ -284,7 +337,7 @@ open class CompilerError : Error {
                     )
 
                 // Generate end-string
-                return com.shakelang.shake.util.parseutils.CompilerError.ErrorMarker(
+                return ErrorMarker(
                     join(pos1.source.location, ":", pos1.line.toString(), ":", pos1.column.toString()),
                     join(
                         start,
@@ -302,7 +355,7 @@ open class CompilerError : Error {
             } catch (e: Throwable) {
                 println("Error while creating position marker:")
                 e.printStackTrace()
-                return com.shakelang.shake.util.parseutils.CompilerError.ErrorMarker(
+                return ErrorMarker(
                     "${pos1.source.location}:${pos1.line}:${pos1.column}",
                     red("Error while creating position marker: ${e.message}"),
                     "Error while creating position marker: ${e.message}",
@@ -313,12 +366,28 @@ open class CompilerError : Error {
     }
 }
 
+/**
+ * Repeat a char multiple times
+ * @param number the number of times the char should be repeated
+ * @return the repeated char
+ *
+ * @since 0.1.0
+ * @version 0.2.1
+ */
 private fun Char.repeat(number: Int): String {
     val string = StringBuilder()
     for (i in 0 until number) string.append(this)
     return string.toString()
 }
 
+/**
+ * Get the smallest number of an array
+ * @param arr the array to get the smallest number from
+ * @return the smallest number
+ *
+ * @since 0.1.0
+ * @version 0.2.1
+ */
 private fun smallest(vararg arr: Int): Int {
     var smallest = arr[0]
     for (i in 1 until arr.size) if (arr[i] < smallest) smallest = arr[i]
