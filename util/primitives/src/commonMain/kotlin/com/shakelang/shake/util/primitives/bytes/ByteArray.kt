@@ -403,9 +403,9 @@ fun ByteArray.getInt(index: Int): Int {
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     return (
-            this[index].toUByte().toInt() shl 8 or this[index + 1].toUByte().toInt() shl 8
-                    or this[index + 2].toUByte().toInt() shl 8 or this[index + 3].toUByte().toInt()
-            )
+        this[index].toUByte().toInt() shl 8 or this[index + 1].toUByte().toInt() shl 8
+            or this[index + 2].toUByte().toInt() shl 8 or this[index + 3].toUByte().toInt()
+        )
 }
 
 /**
@@ -424,11 +424,11 @@ fun ByteArray.getLong(index: Int): Long {
     if (index < 0) throw IllegalArgumentException("index must be >= 0, but is $index")
 
     return (
-            this[index].toUByte().toLong() shl 8 or this[index + 1].toUByte().toLong() shl 8
-                    or this[index + 2].toUByte().toLong() shl 8 or this[index + 3].toUByte().toLong() shl 8
-                    or this[index + 4].toUByte().toLong() shl 8 or this[index + 5].toUByte().toLong() shl 8
-                    or this[index + 6].toUByte().toLong() shl 8 or this[index + 7].toUByte().toLong()
-            )
+        this[index].toUByte().toLong() shl 8 or this[index + 1].toUByte().toLong() shl 8
+            or this[index + 2].toUByte().toLong() shl 8 or this[index + 3].toUByte().toLong() shl 8
+            or this[index + 4].toUByte().toLong() shl 8 or this[index + 5].toUByte().toLong() shl 8
+            or this[index + 6].toUByte().toLong() shl 8 or this[index + 7].toUByte().toLong()
+        )
 }
 
 /**
