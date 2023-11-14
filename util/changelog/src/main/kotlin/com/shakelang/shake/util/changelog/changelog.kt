@@ -216,6 +216,7 @@ open class VersionTags : Exec() {
         this.dependsOn("initChangelog")
 
         push.convention(true)
+        origin.convention("origin")
     }
 
     @org.gradle.api.tasks.TaskAction
