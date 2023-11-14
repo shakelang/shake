@@ -49,7 +49,9 @@ plugins {
 apply<Changelog>()
 
 tasks.withType<VersionTask>().configureEach {
-//    this.tag
+    this.tagFormat {
+        "release${it.project.path.replace(":", "/")}/v${it.version}"
+    }
 }
 
 // apply(plugin = "com.shakelang.shake.util.changelog.Changelog")

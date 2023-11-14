@@ -40,6 +40,12 @@
           "changes": [
             "Update dependencies"
           ]
+        },
+        {
+          "version": "0.3.0",
+          "changes": [
+            "Add ability to create tags"
+          ]
         }
       ]
     },
