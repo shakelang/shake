@@ -1,18 +1,3 @@
 {
-  "bumps": [
-    {
-      "type": "patch",
-      "message": "Update documentation",
-      "paths": [
-        ":util:parseutils"
-      ]
-    },
-    {
-      "type": "patch",
-      "message": "Update dependencies",
-      "paths": [
-        ":util:shason"
-      ]
-    }
-  ]
+  "bumps": []
 }
