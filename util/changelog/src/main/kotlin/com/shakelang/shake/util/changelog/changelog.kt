@@ -29,6 +29,7 @@ class Changelog : Plugin<Project> {
         project.tasks.create("initChangelog", InitChangelogTask::class.java)
         project.tasks.create("bump", BumpTask::class.java)
         project.tasks.create("version", VersionTask::class.java)
+        project.tasks.create("createTags", VersionTags::class.java)
     }
 
     companion object {
