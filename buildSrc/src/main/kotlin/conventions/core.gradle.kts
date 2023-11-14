@@ -1,6 +1,7 @@
 package conventions
 
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
+
 val jvmTarget = JVM_TARGET
 
 // Tell other plugins that this is a multiplatform project

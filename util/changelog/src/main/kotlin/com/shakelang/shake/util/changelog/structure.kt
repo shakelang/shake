@@ -14,15 +14,16 @@ class ProjectStructure(
     val license: String,
     val dependencies: List<String>
 ) {
-    val toJsonObject get() = mapOf(
-        "path" to path,
-        "name" to name,
-        "version" to version.toString(),
-        "description" to description,
-        "author" to author,
-        "license" to license,
-        "dependencies" to dependencies
-    )
+    val toJsonObject
+        get() = mapOf(
+            "path" to path,
+            "name" to name,
+            "version" to version.toString(),
+            "description" to description,
+            "author" to author,
+            "license" to license,
+            "dependencies" to dependencies
+        )
 
     override fun toString(): String {
         return json.stringify(toJsonObject, true)
