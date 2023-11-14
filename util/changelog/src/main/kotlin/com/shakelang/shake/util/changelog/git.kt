@@ -2,23 +2,17 @@ package com.shakelang.shake.util.changelog
 import com.shakelang.shake.util.shason.elements.JsonElement
 import com.shakelang.shake.util.shason.elements.JsonObject
 import com.shakelang.shake.util.shason.json
-import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.api.errors.GitAPIException
-import org.eclipse.jgit.api.errors.NoFilepatternException
-import org.eclipse.jgit.api.errors.NoHeadException
-import org.eclipse.jgit.errors.RepositoryNotFoundException
-import java.io.File
 
 fun tagRef(name: String): String {
     return "refs/tags/$name"
 }
 
-class TagStash (
-    val name: String,
+class TagStash(
+    val name: String
 ) {
     fun toObject(): Any {
         return mapOf(
-            "name" to name,
+            "name" to name
         )
     }
 
@@ -30,14 +24,14 @@ class TagStash (
         fun fromObject(obj: JsonObject): TagStash {
             if (!obj.containsKey("name")) throw IllegalArgumentException("TagStash object has no name")
             val name = obj["name"]!!
-            if(!name.isJsonPrimitive() || !name.toJsonPrimitive().isString()) throw IllegalArgumentException("TagStash name is not a string")
+            if (!name.isJsonPrimitive() || !name.toJsonPrimitive().isString()) throw IllegalArgumentException("TagStash name is not a string")
             return TagStash(name.toJsonPrimitive().toStringElement().value)
         }
     }
 }
 
-class TagStashList (
-    val tags: MutableList<TagStash>,
+class TagStashList(
+    val tags: MutableList<TagStash>
 ) {
 
     fun add(tag: TagStash) {
@@ -86,15 +80,17 @@ class TagStashList (
         fun fromObject(obj: JsonObject): TagStashList {
             if (!obj.containsKey("tags")) throw IllegalArgumentException("TagStashList object has no tags")
             val tags = obj["tags"]!!
-            if(!tags.isJsonArray()) throw IllegalArgumentException("TagStashList tags is not an array")
-            return TagStashList(tags.toJsonArray().map {
-                if(!it.isJsonObject()) throw IllegalArgumentException("TagStashList tags array contains non object")
-                TagStash.fromObject(it.toJsonObject())
-            }.toMutableList())
+            if (!tags.isJsonArray()) throw IllegalArgumentException("TagStashList tags is not an array")
+            return TagStashList(
+                tags.toJsonArray().map {
+                    if (!it.isJsonObject()) throw IllegalArgumentException("TagStashList tags array contains non object")
+                    TagStash.fromObject(it.toJsonObject())
+                }.toMutableList()
+            )
         }
 
         fun fromObject(obj: JsonElement): TagStashList {
-            if(!obj.isJsonObject()) throw IllegalArgumentException("TagStashList object is not an object")
+            if (!obj.isJsonObject()) throw IllegalArgumentException("TagStashList object is not an object")
             return fromObject(obj.toJsonObject())
         }
 
@@ -106,7 +102,7 @@ class TagStashList (
 
 fun Changelog.readStash(): TagStashList {
     val file = project.file(".changelog/stash.json")
-    if(!file.exists()) return TagStashList.empty()
+    if (!file.exists()) return TagStashList.empty()
     return TagStashList.fromObject(json.parse(file.readText()))
 }
 

@@ -1,5 +1,4 @@
 import com.shakelang.shake.util.changelog.Changelog
-import com.shakelang.shake.util.changelog.VersionTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
@@ -48,11 +47,11 @@ plugins {
 
 apply<Changelog>()
 
-//tasks.withType<VersionTask>().configureEach {
+// tasks.withType<VersionTask>().configureEach {
 //    this.tagFormat { info ->
 //        "release${info.project.path.replace(":", "/")}/v${info.version}"
 //    }
-//}
+// }
 
 // apply(plugin = "com.shakelang.shake.util.changelog.Changelog")
 detekt {

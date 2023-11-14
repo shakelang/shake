@@ -6,10 +6,8 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.Input
 import java.io.BufferedReader
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import kotlin.math.max
@@ -157,7 +155,7 @@ open class VersionTask : DefaultTask() {
         val tagFormat = this.tagFormat
 
         val stash = Changelog.instance.readStash()
-        
+
         changelog.entries.forEach { (path, messages) ->
             val bumpType = bumpTypes[path]
 
@@ -176,7 +174,6 @@ open class VersionTask : DefaultTask() {
 
             // stash tag
             stash.add(TagStash(tagName))
-            
 
             // Add map entry
             var it = mapFile.packages.find { it.path == path }
@@ -234,12 +231,11 @@ open class VersionTags : DefaultTask() {
             val exitCode = tagCreation.waitFor()
             if (exitCode != 0) {
                 println("Failed to create tag ${it.name}")
-                while( tagCreation.errorStream.available() > 0)
-                    System.err.print(tagCreation.errorStream.read().toChar());
+                while (tagCreation.errorStream.available() > 0)
+                    System.err.print(tagCreation.errorStream.read().toChar())
 
                 return@forEach
             }
-
 
             if (push.get()) {
                 println("Pushing tag ${it.name}...")
