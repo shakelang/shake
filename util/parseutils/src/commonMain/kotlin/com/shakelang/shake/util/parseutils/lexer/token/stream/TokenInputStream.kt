@@ -1,6 +1,6 @@
 package com.shakelang.shake.util.parseutils.lexer.token.stream
 
-import com.shakelang.shake.lexer.token.Token
+import com.shakelang.shake.util.parseutils.lexer.token.Token
 import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 import com.shakelang.shake.util.parseutils.lexer.token.TokenType
 

@@ -1,5 +1,3 @@
-@file:Suppress("NOTHING_TO_INLINE")
-
 package com.shakelang.shake.util.parseutils.lexer.token
 
 /**
