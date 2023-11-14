@@ -49,8 +49,8 @@ plugins {
 apply<Changelog>()
 
 tasks.withType<VersionTask>().configureEach {
-    this.tagFormat {
-        "release${it.project.path.replace(":", "/")}/v${it.version}"
+    this.tagFormat { info ->
+        "release${info.project.path.replace(":", "/")}/v${info.version}"
     }
 }
 
