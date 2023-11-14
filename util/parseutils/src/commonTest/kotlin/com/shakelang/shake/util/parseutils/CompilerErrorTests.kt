@@ -14,7 +14,7 @@ class CompilerErrorTests {
     @Test
     fun testCompilerError() {
         val source = CharacterSource.from(genLengthString(30), "<source>")
-        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = com.shakelang.shake.util.parseutils.CompilerError(
             "message",
             "TestingError",
@@ -39,7 +39,7 @@ class CompilerErrorTests {
     @Test
     fun testCausedCompilerError() {
         val source = CharacterSource.from(genLengthString(30), "<source>")
-        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = Error("Test")
         val caused = com.shakelang.shake.util.parseutils.CompilerError(
             "message",
@@ -68,7 +68,7 @@ class CompilerErrorTests {
     @Test
     fun testCompilerError2() {
         val source = CharacterSource.from(genLengthString(30), "<source>")
-        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = com.shakelang.shake.util.parseutils.CompilerError(
             "message",
             "TestingError",
@@ -94,7 +94,7 @@ class CompilerErrorTests {
     @Test
     fun testCausedCompilerError2() {
         val source = CharacterSource.from(genLengthString(30), "<source>")
-        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = Error("Test")
         val caused = com.shakelang.shake.util.parseutils.CompilerError(
             "message",
@@ -124,7 +124,7 @@ class CompilerErrorTests {
     @Test
     fun testCompilerErrorOverflowAfter() {
         val source = CharacterSource.from(genLengthString(60), "<source>")
-        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = com.shakelang.shake.util.parseutils.CompilerError(
             "message",
             "TestingError",
@@ -145,7 +145,7 @@ class CompilerErrorTests {
     @Test
     fun testCompilerErrorOverflowBefore() {
         val source = CharacterSource.from(genLengthString(60), "<source>")
-        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = com.shakelang.shake.util.parseutils.CompilerError(
             "message",
             "TestingError",
@@ -166,7 +166,7 @@ class CompilerErrorTests {
     @Test
     fun testCompilerErrorOverflow() {
         val source = CharacterSource.from(genLengthString(100), "<source>")
-        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = com.shakelang.shake.util.parseutils.CompilerError(
             "message",
             "TestingError",
@@ -188,7 +188,7 @@ class CompilerErrorTests {
     @Test
     fun testCompilerErrorLongMark() {
         val source = CharacterSource.from(genLengthString(40), "<source>")
-        val map = PositionMap.PositionMapImpl(source, intArrayOf())
+        val map = PositionMap.PositionMapImplementation(source, intArrayOf())
         val error = com.shakelang.shake.util.parseutils.CompilerError(
             "message",
             "TestingError",
@@ -220,7 +220,7 @@ class CompilerErrorTests {
             
         """.trimIndent()
         val source = CharacterSource.from(str, "<source>")
-        val map = PositionMap.PositionMapImpl(source, intArrayOf(0, 39, 80, 120))
+        val map = PositionMap.PositionMapImplementation(source, intArrayOf(0, 39, 80, 120))
         val pos = map.resolve(50)
         assertSame(50, pos.index)
         assertSame(11, pos.column)

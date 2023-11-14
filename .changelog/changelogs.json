@@ -129,6 +129,12 @@
           "changes": [
             "Update to new package structure"
           ]
+        },
+        {
+          "version": "0.2.1",
+          "changes": [
+            "Update documentation"
+          ]
         }
       ]
     },
@@ -154,6 +160,12 @@
           "version": "0.2.0",
           "changes": [
             "Update to new package structure"
+          ]
+        },
+        {
+          "version": "0.2.1",
+          "changes": [
+            "Update dependencies"
           ]
         }
       ]

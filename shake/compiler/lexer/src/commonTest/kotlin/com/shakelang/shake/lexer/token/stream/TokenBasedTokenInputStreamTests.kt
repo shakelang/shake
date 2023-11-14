@@ -21,7 +21,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextType()"),
                 intArrayOf()
             )
@@ -50,7 +50,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextValue()"),
                 intArrayOf()
             )
@@ -79,7 +79,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextToken()"),
                 intArrayOf()
             )
@@ -123,7 +123,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 9, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetType()"),
                 intArrayOf()
             )
@@ -147,7 +147,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetEnd()"),
                 intArrayOf()
             )
@@ -171,7 +171,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetStart()"),
                 intArrayOf()
             )
@@ -195,7 +195,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetValue()"),
                 intArrayOf()
             )
@@ -219,7 +219,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetHasValue()"),
                 intArrayOf()
             )
@@ -243,7 +243,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSkip()"),
                 intArrayOf()
             )
@@ -272,7 +272,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSetPosition()"),
                 intArrayOf()
             )
@@ -316,7 +316,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHas()"),
                 intArrayOf()
             )
@@ -346,7 +346,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHasNext()"),
                 intArrayOf()
             )
@@ -364,7 +364,7 @@ class TokenBasedTokenInputStreamTests {
         val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHasNextWithEmpty()",
             arrayOf(),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("", "TokenBasedTokenInputStreamTests#testHasNextWithEmpty()"),
                 intArrayOf()
             )
@@ -378,7 +378,7 @@ class TokenBasedTokenInputStreamTests {
         val dbtis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHasNextWithEmptyAndPosition()",
             arrayOf(),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("", "TokenBasedTokenInputStreamTests#testHasNextWithEmptyAndPosition()"),
                 intArrayOf()
             )
@@ -399,7 +399,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualEnd()"),
                 intArrayOf()
             )
@@ -428,7 +428,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualStart()"),
                 intArrayOf()
             )
@@ -457,7 +457,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualType()"),
                 intArrayOf()
             )
@@ -486,7 +486,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualValue()"),
                 intArrayOf()
             )
@@ -515,7 +515,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActual()"),
                 intArrayOf()
             )
@@ -564,7 +564,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 9, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType()"),
                 intArrayOf()
             )
@@ -592,7 +592,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd()"),
                 intArrayOf()
             )
@@ -620,7 +620,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart()"),
                 intArrayOf()
             )
@@ -648,7 +648,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue()"),
                 intArrayOf()
             )
@@ -676,7 +676,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek()"),
                 intArrayOf()
             )
@@ -724,7 +724,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType2()"),
                 intArrayOf()
             )
@@ -772,7 +772,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd2()"),
                 intArrayOf()
             )
@@ -820,7 +820,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart2()"),
                 intArrayOf()
             )
@@ -874,7 +874,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue2()"),
                 intArrayOf()
             )
@@ -928,7 +928,7 @@ class TokenBasedTokenInputStreamTests {
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
                 ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
             ),
-            PositionMap.PositionMapImpl(
+            PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek2()"),
                 intArrayOf()
             )

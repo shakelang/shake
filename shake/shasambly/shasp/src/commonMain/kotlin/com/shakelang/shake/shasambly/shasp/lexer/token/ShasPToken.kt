@@ -1,6 +1,7 @@
 package com.shakelang.shake.lexer.token
 
 import com.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
+import com.shakelang.shake.util.parseutils.lexer.token.Token
 
 /**
  * A token representing a ShasP token.

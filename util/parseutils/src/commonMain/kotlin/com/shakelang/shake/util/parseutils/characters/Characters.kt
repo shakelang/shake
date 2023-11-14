@@ -3,47 +3,73 @@ package com.shakelang.shake.util.parseutils.characters
 import kotlin.js.JsName
 
 /**
- * Utilities for wirking with characters
+ * Utilities for working with characters
+ *
+ * @since 0.1.0
+ * @version 0.2.1
  */
 object Characters {
 
     /**
      * All characters that are used to encode base16 integers (for encoding and decoding unicodes)
+     * The index of the character is the value of the base16 integer
+     * This array only contains lowercase characters
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     private val base16chars = "0123456789abcdef".toCharArray()
 
     /**
      * Is the given character a hex character (0-f)
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("isHexCharacter")
     fun isHexCharacter(c: Char): Boolean = c in '0'..'9' || c in 'A'..'F' || c in 'a'..'f'
 
     /**
      * Is the given character a number character (0-9)
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("isNumberCharacter")
     fun isNumberCharacter(c: Char): Boolean = c in '0'..'9'
 
     /**
      * Is the given character a number character (0-9) or a dot character
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("isNumberOrDotCharacter")
     fun isNumberOrDotCharacter(c: Char): Boolean = c in '0'..'9' || c == '.'
 
     /**
-     * Is the given character a ignored whitespace character ('\r', '\t' or ' ', **not '\n'**)
+     * Is the given character an ignored whitespace character ('\r', '\t' or ' ', **not '\n'**)
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("isWhitespaceCharacter")
     fun isWhitespaceCharacter(c: Char): Boolean = c == '\r' || c == '\t' || c == ' '
 
     /**
      * Is the given character a part of an identifier (A-Z, a-z, 0-9 and '_')
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("isIdentifierCharacter")
     fun isIdentifierCharacter(c: Char): Boolean = c in '0'..'9' || c in 'A'..'Z' || c in 'a'..'z' || c == '_'
 
     /**
      * Is the given character the start of a identifier (A-Z, a-z and '_', **not 0-9**)
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     @JsName("isIdentifierStartCharacter")
     fun isIdentifierStartCharacter(c: Char): Boolean = c in 'A'..'Z' || c in 'a'..'z' || c == '_'
@@ -57,6 +83,9 @@ object Characters {
      * `"hello\tworld"` → `"hello world"`
      *
      * `"\u0021"` → `"!"`
+     *
+     * @since 0.2.1
+     * @version 0.1.0
      */
     @JsName("parseString")
     fun parseString(s: String): String {
@@ -141,18 +170,27 @@ object Characters {
     }
 
     /**
-     * Escape a character to an unicode
+     * Escape a character to a unicode
+     *
+     * @since 0.2.1
+     * @version 0.1.0
      */
     fun toUnicode(char: Char) = "\\u${toBase16(char.code, 4)}"
 
     /**
      * Get a base 16 char equivalent of an integer
+     *
+     * @since 0.2.1
+     * @version 0.1.0
      */
     fun getBase16Character(number: Int) =
         if (number !in 0..15) throw IllegalArgumentException("Input $number should be in range 0..15") else base16chars[number]
 
     /**
      * Generate number to base 16
+     *
+     * @since 0.2.1
+     * @version 0.1.0
      */
     fun toBase16(number: Int, digits: Int = 1): String {
         val sb = StringBuilder()

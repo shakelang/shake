@@ -1,6 +1,5 @@
 package com.shakelang.shake.util.parseutils.lexer.token
 
-import com.shakelang.shake.lexer.token.Token
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
