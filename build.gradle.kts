@@ -47,11 +47,11 @@ plugins {
 
 apply<Changelog>()
 
-// tasks.withType<VersionTask>().configureEach {
-//    this.tagFormat { info ->
-//        "release${info.project.path.replace(":", "/")}/v${info.version}"
-//    }
-// }
+tasks.withType<VersionTask>().configureEach {
+    this.tagFormat {
+        "release${it.project.path.replace(":", "/")}/v${it.version}"
+    }
+}
 
 // apply(plugin = "com.shakelang.shake.util.changelog.Changelog")
 detekt {

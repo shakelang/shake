@@ -8,3 +8,5 @@ patches to changelog
 Update dependencies
 ### 0.3.0
 Add ability to create tags
+### 0.3.1
+Remove unused JGit Dependency

@@ -16,5 +16,5 @@ dependencies {
     implementation("com.github.node-gradle:gradle-node-plugin:7.0.1")
     implementation("gradle.plugin.org.gradle.crypto:checksum:1.4.0")
     implementation("gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:0.15.0")
-    implementation("com.shakelang.shake.util.changelog:plugin:0.2.0")
+    implementation("com.shakelang.shake.util.changelog:plugin:0.3.1")
 }
