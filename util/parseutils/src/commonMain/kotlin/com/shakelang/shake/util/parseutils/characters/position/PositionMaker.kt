@@ -5,30 +5,45 @@ import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
 /**
  * A modifiable [PositionMarker] that stores the positions
  * of the line-separators
+ *
+ * @since 0.1.0
+ * @version 0.2.1
  */
 @Suppress("unused")
 class PositionMaker : PositionMap, PositionMarker {
 
     /**
      * The index of the position
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     override var index: Int
         private set
 
     /**
      * The column of the position
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     override var column: Int
         private set
 
     /**
      * Getter for [PositionMaker.line]
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     override var line: Int
         private set
 
     /**
      * The list of line-separators
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     private val lineSeparatorsList: MutableList<Int> = ArrayList()
 
@@ -114,7 +129,7 @@ class PositionMaker : PositionMap, PositionMarker {
      * Creates a [PositionMap] from the [PositionMaker]. This function only works after
      * the position is looped through
      */
-    fun createPositionMap(): PositionMap = PositionMap.PositionMapImpl(source, lineSeparators)
+    fun createPositionMap(): PositionMap = PositionMap.PositionMapImplementation(source, lineSeparators)
 
     /**
      * Creates a [Position] from the [PositionMaker] at the actual location.

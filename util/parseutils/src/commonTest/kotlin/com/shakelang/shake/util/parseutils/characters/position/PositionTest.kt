@@ -10,7 +10,7 @@ class PositionTest {
     @Test
     fun testConstructor() {
         val src = CharacterSource.from("abc", "PositionTest#testConstructor")
-        val map = PositionMap.PositionMapImpl(src, intArrayOf(3, 7))
+        val map = PositionMap.PositionMapImplementation(src, intArrayOf(3, 7))
         val position = Position(map, 1, 2, 1)
 
         assertEquals(1, position.line)
@@ -21,7 +21,7 @@ class PositionTest {
     @Test
     fun testCopy() {
         val src = CharacterSource.from("abc", "PositionTest#testCopy")
-        val map = PositionMap.PositionMapImpl(src, intArrayOf(3, 7))
+        val map = PositionMap.PositionMapImplementation(src, intArrayOf(3, 7))
         val position = Position(map, 1, 2, 1)
 
         assertEquals(1, position.line)
@@ -38,8 +38,8 @@ class PositionTest {
     @Test
     fun testEquals() {
         val src = CharacterSource.from("abc", "PositionTest#testEquals")
-        val map = PositionMap.PositionMapImpl(src, intArrayOf(3, 7))
-        val map2 = PositionMap.PositionMapImpl(src, intArrayOf(3, 7))
+        val map = PositionMap.PositionMapImplementation(src, intArrayOf(3, 7))
+        val map2 = PositionMap.PositionMapImplementation(src, intArrayOf(3, 7))
 
         run {
             val position = Position(map, 1, 2, 1)
@@ -92,7 +92,7 @@ class PositionTest {
     @Test
     fun testToString() {
         val src = CharacterSource.from("abc", "PositionTest#testToString")
-        val map = PositionMap.PositionMapImpl(src, intArrayOf(3, 7))
+        val map = PositionMap.PositionMapImplementation(src, intArrayOf(3, 7))
         val position = Position(map, 1, 2, 1)
         assertEquals("PositionTest#testToString:1:2", position.toString())
     }

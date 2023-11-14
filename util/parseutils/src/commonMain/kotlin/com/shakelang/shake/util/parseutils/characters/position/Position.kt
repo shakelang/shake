@@ -2,35 +2,46 @@ package com.shakelang.shake.util.parseutils.characters.position
 
 /**
  * The [Position] marks a position in the source-code.
- */
-class Position
-
-/**
- * Constructor for the position
  *
  * @param source The [source] (mostly file) of the content
  * @param index The [index] of the position
  * @param column The [column] of the position
  * @param line The [line] of the position
- */(
+ *
+ * @since 0.1.0
+ * @version 0.2.1
+ */
+class Position(
 
     /**
      * The source
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     val source: PositionMap,
 
     /**
      * The index of the position
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     override val index: Int,
 
     /**
      * The column of the position
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     override val column: Int,
 
     /**
      * The line of the position
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     override val line: Int
 
@@ -38,8 +49,10 @@ class Position
 
     /**
      * Copies the position
-     *
      * @return a copy of the position
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     fun copy(): Position {
         return Position(source, index, column, line)
@@ -47,8 +60,10 @@ class Position
 
     /**
      * Creates a string-representation of the string
-     *
      * @return A string-representation of the string
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     override fun toString(): String {
         return "$source:$line:$column"
@@ -59,6 +74,9 @@ class Position
      *
      * @param other The other position
      * @return true if the positions are equal
+     *
+     * @since 0.1.0
+     * @version 0.2.1
      */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -74,8 +92,10 @@ class Position
 
     /**
      * Creates a hashcode of the position
-     *
      * @return The hashcode of the position
+     *
+     * @since 0.2.1
+     * @version 0.2.1
      */
     override fun hashCode(): Int {
         var result = source.hashCode()
