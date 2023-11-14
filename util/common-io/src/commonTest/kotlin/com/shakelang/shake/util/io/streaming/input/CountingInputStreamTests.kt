@@ -384,7 +384,7 @@ class CountingInputStreamTests {
 
         assertEquals(
             "CountingInputStream(data=ByteArrayInputStream(pos=0, mark=0, count=5), byteCount=0," +
-                " operationCount=0)",
+                    " operationCount=0)",
             stream.toString()
         )
 
@@ -396,7 +396,7 @@ class CountingInputStreamTests {
 
         assertEquals(
             "CountingInputStream(data=ByteArrayInputStream(pos=5, mark=0, count=5), byteCount=5, " +
-                "operationCount=5)",
+                    "operationCount=5)",
             stream.toString()
         )
     }

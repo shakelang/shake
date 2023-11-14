@@ -14,15 +14,16 @@ class ProjectStructure(
     val license: String,
     val dependencies: List<String>
 ) {
-    val toJsonObject get() = mapOf(
-        "path" to path,
-        "name" to name,
-        "version" to version.toString(),
-        "description" to description,
-        "author" to author,
-        "license" to license,
-        "dependencies" to dependencies
-    )
+    val toJsonObject
+        get() = mapOf(
+            "path" to path,
+            "name" to name,
+            "version" to version.toString(),
+            "description" to description,
+            "author" to author,
+            "license" to license,
+            "dependencies" to dependencies
+        )
 
     override fun toString(): String {
         return json.stringify(toJsonObject, true)
@@ -53,27 +54,27 @@ class ProjectStructure(
             val dependencies = structure["dependencies"]!!
 
             if (!(path.isJsonPrimitive()) || !path.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'path' is not a string")
             }
             if (!(version.isJsonPrimitive()) || !version.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'version' is not a string")
             }
             if (!(description.isJsonPrimitive()) || !description.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'description' is not a string")
             }
             if (!(author.isJsonPrimitive()) || !author.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'author' is not a string")
             }
             if (!(license.isJsonPrimitive()) || !license.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'license' is not a string")
             }
@@ -88,7 +89,7 @@ class ProjectStructure(
                 license.toJsonPrimitive().toStringElement().value,
                 dependencies.toJsonArray().map {
                     if (!(it.isJsonPrimitive()) || !it.toJsonPrimitive()
-                        .isString()
+                            .isString()
                     ) {
                         throw IllegalArgumentException("Structure key 'dependencies' is not a string")
                     }
@@ -127,7 +128,7 @@ class ChangelogStructure(
 
             if (!(projects.isJsonArray())) throw IllegalArgumentException("Structure key 'projects' is not a array")
             if (!(lastUpdate.isJsonPrimitive()) || !lastUpdate.toJsonPrimitive()
-                .isInt()
+                    .isInt()
             ) {
                 throw IllegalArgumentException("Structure key 'lastUpdate' is not a number")
             }
