@@ -6,6 +6,8 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Exec
+import org.gradle.api.tasks.Input
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -200,9 +202,13 @@ open class VersionTask : DefaultTask() {
     }
 }
 
-open class VersionTags : DefaultTask() {
+open class VersionTags : Exec() {
 
+    @Input
     val push: Property<Boolean> = project.objects.property(Boolean::class.java)
+
+    @Input
+    val origin: Property<String> = project.objects.property(String::class.java)
 
     init {
         group = "changelog"
@@ -215,23 +221,21 @@ open class VersionTags : DefaultTask() {
     @org.gradle.api.tasks.TaskAction
     open fun versionTags() {
         val stash = Changelog.instance.readStash()
-        val git = Changelog.instance.git()
-
-        if (git == null) {
-            logger.error("No git repository found")
-            return
-        }
 
         stash.tags.forEach {
             println("Creating tag ${it.name}")
-            git.createTag(it.name)
+
+            commandLine("git", "tag", it.name, "-m", "Release ${it.name}")
+
             if (push.get()) {
                 println("Pushing tag ${it.name}")
-                git.pushTag(it.name)
+                commandLine("git", "push", origin.get(), it.name)
             }
         }
-    }
 
+        stash.clear()
+        Changelog.instance.writeStash(stash)
+    }
 }
 
 fun main() {
