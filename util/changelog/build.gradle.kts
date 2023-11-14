@@ -20,6 +20,7 @@ kotlin {
         implementation(project(":util:shason"))
         implementation(project(":util:markdown"))
         implementation("com.googlecode.lanterna:lanterna:3.1.1")
+        implementation("org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r")
         testImplementation(kotlin("test"))
     }
 }
