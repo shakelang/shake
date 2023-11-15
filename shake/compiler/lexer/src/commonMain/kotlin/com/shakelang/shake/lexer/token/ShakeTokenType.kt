@@ -94,6 +94,7 @@ enum class ShakeTokenType(private val length: Int) : TokenType {
     MUL(1),
     MUL_ASSIGN(2),
     NONE(0),
+    NOT_EQUALS(2),
     POW(2),
     POW_ASSIGN(3),
     RCURL(1),

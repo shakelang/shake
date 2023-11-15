@@ -85,6 +85,7 @@ class LexerBaseTests {
         generateToken("<=", ShakeTokenType.SMALLER_EQUALS) // "<="
         generateToken(">", ShakeTokenType.BIGGER) // '>'
         generateToken("<", ShakeTokenType.SMALLER) // '<'
+        generateToken("!=", ShakeTokenType.NOT_EQUALS) // "!="
     }
 
     @Test
@@ -125,7 +126,7 @@ class LexerBaseTests {
         generateToken("}", ShakeTokenType.RCURL) // '}'
     }
 
-    fun testKeyword(test: KeywordTest) {
+    private fun testKeyword(test: KeywordTest) {
         generateToken(test.input, test.output)
     }
 
@@ -292,7 +293,6 @@ class LexerBaseTests {
     }
 
     companion object {
-        @Suppress("deprecation")
         fun generateToken(input: String, tt: ShakeTokenType): ShakeToken {
             val i: CharacterInputStream = SourceCharacterInputStream("<tests>", input)
             val lexer = object : ShakeLexingBase(i) {}
