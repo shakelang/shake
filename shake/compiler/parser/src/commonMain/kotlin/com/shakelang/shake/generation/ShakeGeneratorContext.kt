@@ -6,7 +6,7 @@ import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalFalseNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import com.shakelang.shake.parser.node.loops.ShakeForNode
@@ -52,7 +52,7 @@ abstract class ShakeGeneratorContext<T, C> : com.shakelang.shake.generation.Shak
         if (n is ShakeIfNode) return visitIfNode(n, context)
         if (n is ShakeFunctionDeclarationNode) return visitFunctionDeclarationNode(n, context)
         if (n is ShakeClassConstructionNode) return visitClassConstruction(n, context)
-        if (n is ShakeFunctionCallNode) return visitFunctionCallNode(n, context)
+        if (n is ShakeInvocationNode) return visitFunctionCallNode(n, context)
         if (n is ShakeIdentifierNode) return visitIdentifierNode(n, context)
         if (n is ShakeClassDeclarationNode) return visitClassDeclarationNode(n, context)
         if (n is ShakeLogicalTrueNode) return visitLogicalTrueNode(n, context)
@@ -97,7 +97,7 @@ abstract class ShakeGeneratorContext<T, C> : com.shakelang.shake.generation.Shak
     abstract fun visitFunctionDeclarationNode(n: ShakeFunctionDeclarationNode?, context: C): T
     abstract fun visitClassDeclarationNode(n: ShakeClassDeclarationNode?, context: C): T
     abstract fun visitClassConstruction(n: ShakeClassConstructionNode?, context: C): T
-    abstract fun visitFunctionCallNode(n: ShakeFunctionCallNode?, context: C): T
+    abstract fun visitFunctionCallNode(n: ShakeInvocationNode?, context: C): T
     abstract fun visitIdentifierNode(n: ShakeIdentifierNode?, context: C): T
     abstract fun visitLogicalTrueNode(n: ShakeLogicalTrueNode?, context: C): T
     abstract fun visitLogicalFalseNode(n: ShakeLogicalFalseNode?, context: C): T

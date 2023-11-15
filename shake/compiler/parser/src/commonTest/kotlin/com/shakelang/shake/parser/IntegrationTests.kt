@@ -28,165 +28,243 @@ class IntegrationTests {
     @Test
     fun testNullLiteral() = testCodeSnippetValue("null", mapOf("name" to "ShakeNullNode"))
 
+    @Test
+    fun testVariableLiteral() = testCodeSnippetValue(
+        "a",
+        mapOf("name" to "VariableUsageNode", "variable" to mapOf("name" to "a", "parent" to null))
+    )
+
+    @Test
+    fun testFieldLiteral() = testCodeSnippetValue(
+        "a.b", mapOf(
+            "name" to "VariableUsageNode",
+            "variable" to mapOf(
+                "name" to "b",
+                "parent" to mapOf(
+                    "name" to "VariableUsageNode",
+                    "variable" to mapOf("name" to "a", "parent" to null)
+                )
+            )
+        )
+    )
+
+    @Test
+    fun testFunctionCallLiteral() = testCodeSnippetValue(
+        "a()", mapOf(
+            "name" to "ShakeInvocationNode",
+            "function" to mapOf(
+                "name" to "VariableUsageNode",
+                "variable" to mapOf("name" to "a", "parent" to null)
+            ),
+            "args" to emptyList<Any>()
+        )
+    )
+
 
     // Expressions
     @Test
-    fun testAddExpression() = testCodeSnippetValue("1 + 2", mapOf(
-        "name" to "ShakeAddNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testAddExpression() = testCodeSnippetValue(
+        "1 + 2", mapOf(
+            "name" to "ShakeAddNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testSubtractExpression() = testCodeSnippetValue("1 - 2", mapOf(
-        "name" to "ShakeSubNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testSubtractExpression() = testCodeSnippetValue(
+        "1 - 2", mapOf(
+            "name" to "ShakeSubNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testMultiplyExpression() = testCodeSnippetValue("1 * 2", mapOf(
-        "name" to "ShakeMulNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testMultiplyExpression() = testCodeSnippetValue(
+        "1 * 2", mapOf(
+            "name" to "ShakeMulNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testDivideExpression() = testCodeSnippetValue("1 / 2", mapOf(
-        "name" to "ShakeDivNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testDivideExpression() = testCodeSnippetValue(
+        "1 / 2", mapOf(
+            "name" to "ShakeDivNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testModuloExpression() = testCodeSnippetValue("1 % 2", mapOf(
-        "name" to "ShakeModNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testModuloExpression() = testCodeSnippetValue(
+        "1 % 2", mapOf(
+            "name" to "ShakeModNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testPowerExpression() = testCodeSnippetValue("1 ** 2", mapOf(
-        "name" to "ShakePowNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testPowerExpression() = testCodeSnippetValue(
+        "1 ** 2", mapOf(
+            "name" to "ShakePowNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testLogicalAndExpression() = testCodeSnippetValue("true && false", mapOf(
-        "name" to "ShakeLogicalAndNode",
-        "left" to mapOf("name" to "ShakeLogicalTrueNode"),
-        "right" to mapOf("name" to "ShakeLogicalFalseNode")
-    ))
+    fun testLogicalAndExpression() = testCodeSnippetValue(
+        "true && false", mapOf(
+            "name" to "ShakeLogicalAndNode",
+            "left" to mapOf("name" to "ShakeLogicalTrueNode"),
+            "right" to mapOf("name" to "ShakeLogicalFalseNode")
+        )
+    )
 
     @Test
-    fun testLogicalOrExpression() = testCodeSnippetValue("true || false", mapOf(
-        "name" to "ShakeLogicalOrNode",
-        "left" to mapOf("name" to "ShakeLogicalTrueNode"),
-        "right" to mapOf("name" to "ShakeLogicalFalseNode")
-    ))
+    fun testLogicalOrExpression() = testCodeSnippetValue(
+        "true || false", mapOf(
+            "name" to "ShakeLogicalOrNode",
+            "left" to mapOf("name" to "ShakeLogicalTrueNode"),
+            "right" to mapOf("name" to "ShakeLogicalFalseNode")
+        )
+    )
 
     @Test
-    fun testLogicalXOrExpression() = testCodeSnippetValue("true ^^ false", mapOf(
-        "name" to "ShakeLogicalXOrNode",
-        "left" to mapOf("name" to "ShakeLogicalTrueNode"),
-        "right" to mapOf("name" to "ShakeLogicalFalseNode")
-    ))
+    fun testLogicalXOrExpression() = testCodeSnippetValue(
+        "true ^^ false", mapOf(
+            "name" to "ShakeLogicalXOrNode",
+            "left" to mapOf("name" to "ShakeLogicalTrueNode"),
+            "right" to mapOf("name" to "ShakeLogicalFalseNode")
+        )
+    )
 
     @Test
-    fun testEqualsExpression() = testCodeSnippetValue("1 == 2", mapOf(
-        "name" to "ShakeEqualNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testEqualsExpression() = testCodeSnippetValue(
+        "1 == 2", mapOf(
+            "name" to "ShakeEqualNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testNotEqualsExpression() = testCodeSnippetValue("1 != 2", mapOf(
-        "name" to "ShakeNotEqualNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testNotEqualsExpression() = testCodeSnippetValue(
+        "1 != 2", mapOf(
+            "name" to "ShakeNotEqualNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testLessThanExpression() = testCodeSnippetValue("1 < 2", mapOf(
-        "name" to "ShakeLessThanNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testLessThanExpression() = testCodeSnippetValue(
+        "1 < 2", mapOf(
+            "name" to "ShakeLessThanNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testLessThanOrEqualsExpression() = testCodeSnippetValue("1 <= 2", mapOf(
-        "name" to "ShakeLessThanOrEqualNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testLessThanOrEqualsExpression() = testCodeSnippetValue(
+        "1 <= 2", mapOf(
+            "name" to "ShakeLessThanOrEqualNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testGreaterThanExpression() = testCodeSnippetValue("1 > 2", mapOf(
-        "name" to "ShakeGreaterThanNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testGreaterThanExpression() = testCodeSnippetValue(
+        "1 > 2", mapOf(
+            "name" to "ShakeGreaterThanNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testGreaterThanOrEqualsExpression() = testCodeSnippetValue("1 >= 2", mapOf(
-        "name" to "ShakeGreaterThanOrEqualNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testGreaterThanOrEqualsExpression() = testCodeSnippetValue(
+        "1 >= 2", mapOf(
+            "name" to "ShakeGreaterThanOrEqualNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testUnaryMinusExpression() = testCodeSnippetValue("-1", mapOf(
-        "name" to "ShakeUnaryMinusNode",
-        "value" to mapOf("name" to "ShakeIntegerNode", "value" to 1)
-    ))
+    fun testUnaryMinusExpression() = testCodeSnippetValue(
+        "-1", mapOf(
+            "name" to "ShakeUnaryMinusNode",
+            "value" to mapOf("name" to "ShakeIntegerNode", "value" to 1)
+        )
+    )
 
     @Test
-    fun testUnaryPlusExpression() = testCodeSnippetValue("+1", mapOf(
-        "name" to "ShakeUnaryPlusNode",
-        "value" to mapOf("name" to "ShakeIntegerNode", "value" to 1)
-    ))
+    fun testUnaryPlusExpression() = testCodeSnippetValue(
+        "+1", mapOf(
+            "name" to "ShakeUnaryPlusNode",
+            "value" to mapOf("name" to "ShakeIntegerNode", "value" to 1)
+        )
+    )
 
     @Test
-    fun testNotExpression() = testCodeSnippetValue("!true", mapOf(
-        "name" to "ShakeLogicalNotNode",
-        "value" to mapOf("name" to "ShakeLogicalTrueNode")
-    ))
+    fun testNotExpression() = testCodeSnippetValue(
+        "!true", mapOf(
+            "name" to "ShakeLogicalNotNode",
+            "value" to mapOf("name" to "ShakeLogicalTrueNode")
+        )
+    )
 
     @Test
-    fun testBitwiseOrExpression() = testCodeSnippetValue("1 | 2", mapOf(
-        "name" to "ShakeBitwiseOrNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testBitwiseOrExpression() = testCodeSnippetValue(
+        "1 | 2", mapOf(
+            "name" to "ShakeBitwiseOrNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testBitwiseAndExpression() = testCodeSnippetValue("1 & 2", mapOf(
-        "name" to "ShakeBitwiseAndNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testBitwiseAndExpression() = testCodeSnippetValue(
+        "1 & 2", mapOf(
+            "name" to "ShakeBitwiseAndNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testBitwiseXOrExpression() = testCodeSnippetValue("1 ^ 2", mapOf(
-        "name" to "ShakeBitwiseXOrNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testBitwiseXOrExpression() = testCodeSnippetValue(
+        "1 ^ 2", mapOf(
+            "name" to "ShakeBitwiseXOrNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testBitwiseLeftShiftExpression() = testCodeSnippetValue("1 << 2", mapOf(
-        "name" to "ShakeBitwiseShiftLeftNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testBitwiseLeftShiftExpression() = testCodeSnippetValue(
+        "1 << 2", mapOf(
+            "name" to "ShakeBitwiseShiftLeftNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
     @Test
-    fun testBitwiseRightShiftExpression() = testCodeSnippetValue("1 >> 2", mapOf(
-        "name" to "ShakeBitwiseShiftRightNode",
-        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
-        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
-    ))
+    fun testBitwiseRightShiftExpression() = testCodeSnippetValue(
+        "1 >> 2", mapOf(
+            "name" to "ShakeBitwiseShiftRightNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
 
 
     // Utils

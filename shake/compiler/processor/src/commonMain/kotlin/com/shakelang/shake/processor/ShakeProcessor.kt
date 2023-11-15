@@ -4,7 +4,7 @@ import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.node.*
 import com.shakelang.shake.parser.node.expression.*
 import com.shakelang.shake.parser.node.factor.*
-import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.functions.ShakeReturnNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import com.shakelang.shake.parser.node.loops.ShakeForNode
@@ -107,7 +107,7 @@ open class ShakeCodeProcessor {
             is ShakeVariableDecreaseNode -> visitVariableDecrementNode(scope, value)
             is ShakeVariableUsageNode -> visitVariableUsageNode(scope, value)
             is ShakeCastNode -> visitCastNode(scope, value)
-            is ShakeFunctionCallNode -> visitFunctionCallNode(scope, value)
+            is ShakeInvocationNode -> visitFunctionCallNode(scope, value)
             is ShakeClassConstructionNode -> visitClassConstruction(scope, value)
             else -> throw IllegalArgumentException("Unsupported value type: ${value::class.simpleName}")
         }
@@ -130,7 +130,7 @@ open class ShakeCodeProcessor {
             is ShakeVariablePowAssignmentNode -> visitVariablePowAssignmentNode(scope, statement)
             is ShakeVariableIncreaseNode -> visitVariableIncrementNode(scope, statement)
             is ShakeVariableDecreaseNode -> visitVariableDecrementNode(scope, statement)
-            is ShakeFunctionCallNode -> visitFunctionCallNode(scope, statement)
+            is ShakeInvocationNode -> visitFunctionCallNode(scope, statement)
             is ShakeClassConstructionNode -> visitClassConstruction(scope, statement)
             else -> throw IllegalArgumentException("Unsupported statement type: ${statement::class}")
         }
@@ -375,7 +375,7 @@ open class ShakeCodeProcessor {
     }
 
     fun visitVariableUsageNode(scope: CreationShakeScope, n: ShakeVariableUsageNode): CreationShakeValue {
-        val identifier = n.variable
+        val identifier = n.identifier
         if (identifier.parent != null) {
             val parent = visitValue(scope, identifier.parent!!)
             val type = parent.type.childType(identifier.name, scope)
@@ -546,7 +546,7 @@ open class ShakeCodeProcessor {
         TODO("Returned constructor. Will this ever be possible?")
     }
 
-    fun visitFunctionCallNode(scope: CreationShakeScope, n: ShakeFunctionCallNode): CreationShakeInvocation {
+    fun visitFunctionCallNode(scope: CreationShakeScope, n: ShakeInvocationNode): CreationShakeInvocation {
         val functionNode = n.function
         if (functionNode is ShakeIdentifierNode) {
             if (functionNode.parent != null) {

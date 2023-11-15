@@ -1,5 +1,7 @@
 package com.shakelang.shake.parser.node
 
+import com.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
+
 @Suppress("unused")
 open class ShakeVariableType {
     val type: Type
@@ -68,12 +70,12 @@ open class ShakeVariableType {
 
         fun objectType(subtype: ShakeNamespaceNode): ShakeVariableType = Object(subtype)
 
-        fun objectType(subtype: ShakeIdentifierNode): ShakeVariableType {
+        fun objectType(subtype: ShakeVariableUsageNode): ShakeVariableType {
             val namespace = mutableListOf<String>()
             var node: ShakeValuedNode? = subtype
-            while (node is ShakeIdentifierNode) {
-                namespace += node.name
-                node = node.parent
+            while (node is ShakeVariableUsageNode) {
+                namespace += node.identifier.name
+                node = node.identifier.parent
             }
             if (node != null) {
                 throw IllegalArgumentException("Invalid subtype for OBJECT type")

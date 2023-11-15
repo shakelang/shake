@@ -2,7 +2,7 @@ package com.shakelang.shake.parser.node
 
 import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 
-class ShakeIdentifierNode : ShakeValuedNodeImpl {
+class ShakeIdentifierNode : ShakeNodeImpl {
     val parent: ShakeValuedNode?
     val name: String
     val position: Int

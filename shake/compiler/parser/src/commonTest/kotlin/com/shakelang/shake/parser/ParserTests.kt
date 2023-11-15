@@ -7,7 +7,7 @@ import com.shakelang.shake.parser.node.ShakeIfNode
 import com.shakelang.shake.parser.node.ShakeImportNode
 import com.shakelang.shake.parser.node.expression.ShakeLessThanNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import com.shakelang.shake.parser.node.loops.ShakeForNode
 import com.shakelang.shake.parser.node.loops.ShakeWhileNode
@@ -43,11 +43,11 @@ class ParserTests {
         var node = ParserTestUtil.parseStatement("<MultiStatementTest>", "var i; println(i);")
         assertEquals(2, node.children.size)
         assertType(ShakeVariableDeclarationNode::class, node.children[0])
-        assertType(ShakeFunctionCallNode::class, node.children[1])
+        assertType(ShakeInvocationNode::class, node.children[1])
         node = ParserTestUtil.parseStatement("<MultiStatementTest>", "var i\nprintln(i)")
         assertEquals(2, node.children.size)
         assertType(ShakeVariableDeclarationNode::class, node.children[0])
-        assertType(ShakeFunctionCallNode::class, node.children[1])
+        assertType(ShakeInvocationNode::class, node.children[1])
     }
 
     @Test

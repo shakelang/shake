@@ -6,7 +6,7 @@ import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalFalseNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import com.shakelang.shake.parser.node.loops.ShakeForNode
@@ -51,7 +51,7 @@ abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGenerator
         if (n is ShakeIfNode) return visitIfNode(n)
         if (n is ShakeFunctionDeclarationNode) return visitFunctionDeclarationNode(n)
         if (n is ShakeClassConstructionNode) return visitClassConstruction(n)
-        if (n is ShakeFunctionCallNode) return visitFunctionCallNode(n)
+        if (n is ShakeInvocationNode) return visitFunctionCallNode(n)
         if (n is ShakeIdentifierNode) return visitIdentifierNode(n)
         if (n is ShakeClassDeclarationNode) return visitClassDeclarationNode(n)
         if (n is ShakeLogicalTrueNode) return visitLogicalTrueNode(n)
@@ -96,7 +96,7 @@ abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGenerator
     abstract fun visitFunctionDeclarationNode(n: ShakeFunctionDeclarationNode): T
     abstract fun visitClassDeclarationNode(n: ShakeClassDeclarationNode): T
     abstract fun visitClassConstruction(n: ShakeClassConstructionNode): T
-    abstract fun visitFunctionCallNode(n: ShakeFunctionCallNode): T
+    abstract fun visitFunctionCallNode(n: ShakeInvocationNode): T
     abstract fun visitIdentifierNode(n: ShakeIdentifierNode): T
     abstract fun visitLogicalTrueNode(n: ShakeLogicalTrueNode): T
     abstract fun visitLogicalFalseNode(n: ShakeLogicalFalseNode): T

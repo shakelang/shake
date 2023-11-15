@@ -19,21 +19,21 @@ class VariableTests {
     fun testVariableAssignment() {
         var node =
             ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = 0", ShakeVariableAssignmentNode::class)
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
         assertNotNull(node.value)
         assertType(ShakeIntegerNode::class, node.value)
         node = ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = 0.1", ShakeVariableAssignmentNode::class)
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
         assertNotNull(node.value)
         assertType(ShakeDoubleNode::class, node.value)
         node = ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = true", ShakeVariableAssignmentNode::class)
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
         assertNotNull(node.value)
         assertType(ShakeLogicalTrueNode::class, node.value)
     }
@@ -45,9 +45,9 @@ class VariableTests {
             "i += 0",
             ShakeVariableAddAssignmentNode::class
         )
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
         assertNotNull(node.value)
         assertType(ShakeIntegerNode::class, node.value)
     }
@@ -59,9 +59,9 @@ class VariableTests {
             "i -= 0",
             ShakeVariableSubAssignmentNode::class
         )
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
         assertNotNull(node.value)
         assertType(ShakeIntegerNode::class, node.value)
     }
@@ -73,9 +73,9 @@ class VariableTests {
             "i *= 0",
             ShakeVariableMulAssignmentNode::class
         )
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
         assertNotNull(node.value)
         assertType(ShakeIntegerNode::class, node.value)
     }
@@ -87,9 +87,9 @@ class VariableTests {
             "i /= 1",
             ShakeVariableDivAssignmentNode::class
         )
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
         assertNotNull(node.value)
         assertType(ShakeIntegerNode::class, node.value)
     }
@@ -101,9 +101,9 @@ class VariableTests {
             "i %= 1",
             ShakeVariableModAssignmentNode::class
         )
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
         assertNotNull(node.value)
         assertType(ShakeIntegerNode::class, node.value)
     }
@@ -115,9 +115,9 @@ class VariableTests {
             "i **= 0",
             ShakeVariablePowAssignmentNode::class
         )
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
         assertNotNull(node.value)
         assertType(ShakeIntegerNode::class, node.value)
     }
@@ -125,17 +125,17 @@ class VariableTests {
     @Test
     fun testVariableIncrease() {
         val node = ParserTestUtil.parseStatement("<VariableIncreaseTest>", "i ++", ShakeVariableIncreaseNode::class)
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
     }
 
     @Test
     fun testVariableDecrease() {
         val node = ParserTestUtil.parseStatement("<VariableDecreaseTest>", "i --", ShakeVariableDecreaseNode::class)
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeIdentifierNode).name)
-        assertNull((node.variable as ShakeIdentifierNode).parent)
+        assertType(ShakeVariableUsageNode::class, node.variable)
+        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
+        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
     }
 
     // // *************************************************************
@@ -1365,8 +1365,8 @@ class VariableTests {
         val node = ParserTestUtil.parseValue("<VariableUsageTest>", "i", ShakeVariableUsageNode::class)
 
         // Variable names
-        assertType(ShakeIdentifierNode::class, node.variable)
-        assertEquals("i", node.variable.name)
-        assertNull(node.variable.parent)
+        assertType(ShakeIdentifierNode::class, node.identifier)
+        assertEquals("i", node.identifier.name)
+        assertNull(node.identifier.parent)
     }
 }
