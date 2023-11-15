@@ -278,6 +278,394 @@ class IntegrationTests {
         )
     )
 
+    // Test order of operations
+    @Test
+    fun testParenthesesBeforeUnary() = testCodeSnippetValue(
+        "-(1 + 2)", mapOf(
+            "name" to "ShakeUnaryMinusNode",
+            "value" to mapOf(
+                "name" to "ShakePriorityNode",
+                "value" to mapOf(
+                    "name" to "ShakeAddNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+                )
+            )
+        )
+    )
+
+    @Test
+    fun testUnaryBeforeCast() = testCodeSnippetValue(
+        "-1 as double", mapOf(
+            "name" to "ShakeCastNode",
+            "value" to mapOf(
+                "name" to "ShakeUnaryMinusNode",
+                "value" to mapOf("name" to "ShakeIntegerNode", "value" to 1)
+            ),
+            "cast_target" to "DOUBLE"
+        )
+    )
+
+    @Test
+    fun testCastBeforePower() = testCodeSnippetValue(
+        "1 ** 2 as double", mapOf(
+            "name" to "ShakePowNode",
+            "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+            "right" to mapOf(
+                "name" to "ShakeCastNode",
+                "value" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                "cast_target" to "DOUBLE"
+            )
+        )
+    )
+
+    @Test
+    fun testPowerBeforeMultiply() = testCodeSnippetValue(
+        "2 ** 3 * 2", mapOf(
+            "name" to "ShakeMulNode",
+            "left" to mapOf(
+                "name" to "ShakePowNode",
+                "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+            ),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
+
+    @Test
+    fun testPowerBeforeDivide() = testCodeSnippetValue(
+        "2 ** 3 / 2", mapOf(
+            "name" to "ShakeDivNode",
+            "left" to mapOf(
+                "name" to "ShakePowNode",
+                "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+            ),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
+
+    @Test
+    fun testPowerBeforeModulo() = testCodeSnippetValue(
+        "2 ** 3 % 2", mapOf(
+            "name" to "ShakeModNode",
+            "left" to mapOf(
+                "name" to "ShakePowNode",
+                "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+            ),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
+
+    @Test
+    fun testMultiplyBeforeDivide() = testCodeSnippetValue(
+        "2 * 3 / 2", mapOf(
+            "name" to "ShakeDivNode",
+            "left" to mapOf(
+                "name" to "ShakeMulNode",
+                "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+            ),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
+
+    @Test
+    fun testMultiplyBeforeModulo() = testCodeSnippetValue(
+        "2 * 3 % 2", mapOf(
+            "name" to "ShakeModNode",
+            "left" to mapOf(
+                "name" to "ShakeMulNode",
+                "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+            ),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
+
+    @Test
+    fun testMultiplyBeforeAdd() = testCodeSnippetValue(
+        "2 * 3 + 2", mapOf(
+            "name" to "ShakeAddNode",
+            "left" to mapOf(
+                "name" to "ShakeMulNode",
+                "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+            ),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
+
+    @Test
+    fun testMultiplyBeforeSubtract() = testCodeSnippetValue(
+        "2 * 3 - 2", mapOf(
+            "name" to "ShakeSubNode",
+            "left" to mapOf(
+                "name" to "ShakeMulNode",
+                "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+            ),
+            "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+        )
+    )
+
+    @Test
+    fun testAddBeforeShiftLeft() {
+        testCodeSnippetValue(
+            "2 + 3 << 2", mapOf(
+                "name" to "ShakeBitwiseShiftLeftNode",
+                "left" to mapOf(
+                    "name" to "ShakeAddNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testAddBeforeShiftRight() {
+        testCodeSnippetValue(
+            "2 + 3 >> 2", mapOf(
+                "name" to "ShakeBitwiseShiftRightNode",
+                "left" to mapOf(
+                    "name" to "ShakeAddNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testSubtractBeforeShiftLeft() {
+        testCodeSnippetValue(
+            "2 - 3 << 2", mapOf(
+                "name" to "ShakeBitwiseShiftLeftNode",
+                "left" to mapOf(
+                    "name" to "ShakeSubNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testSubtractBeforeShiftRight() {
+        testCodeSnippetValue(
+            "2 - 3 >> 2", mapOf(
+                "name" to "ShakeBitwiseShiftRightNode",
+                "left" to mapOf(
+                    "name" to "ShakeSubNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testShiftLeftBeforeBitwiseAnd() {
+        testCodeSnippetValue(
+            "2 << 3 & 2", mapOf(
+                "name" to "ShakeBitwiseAndNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseShiftLeftNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testShiftRightBeforeLargerThan() {
+        testCodeSnippetValue(
+            "2 >> 3 > 2", mapOf(
+                "name" to "ShakeGreaterThanNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseShiftRightNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testShiftRightBeforeLargerThanOrEquals() {
+        testCodeSnippetValue(
+            "2 >> 3 >= 2", mapOf(
+                "name" to "ShakeGreaterThanOrEqualNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseShiftRightNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testShiftRightBeforeLessThan() {
+        testCodeSnippetValue(
+            "2 >> 3 < 2", mapOf(
+                "name" to "ShakeLessThanNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseShiftRightNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testShiftRightBeforeLessThanOrEquals() {
+        testCodeSnippetValue(
+            "2 >> 3 <= 2", mapOf(
+                "name" to "ShakeLessThanOrEqualNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseShiftRightNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testShiftRightBeforeGreaterThanOrEquals() {
+        testCodeSnippetValue(
+            "2 >> 3 >= 2", mapOf(
+                "name" to "ShakeGreaterThanOrEqualNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseShiftRightNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testShiftRightBeforeBitwiseAnd() {
+        testCodeSnippetValue(
+            "2 >> 3 & 2", mapOf(
+                "name" to "ShakeBitwiseAndNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseShiftRightNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testBitwiseAndBeforeBitwiseXOr() {
+        testCodeSnippetValue(
+            "2 & 3 ^ 2", mapOf(
+                "name" to "ShakeBitwiseXOrNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseAndNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testBitwiseXOrBeforeBitwiseOr() {
+        testCodeSnippetValue(
+            "2 ^ 3 | 2", mapOf(
+                "name" to "ShakeBitwiseOrNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseXOrNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testBitwiseOrBeforeLogicalAnd() {
+        testCodeSnippetValue(
+            "2 | 3 && 2", mapOf(
+                "name" to "ShakeLogicalAndNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseOrNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testBitwiseOrBeforeLogicalOr() {
+        testCodeSnippetValue(
+            "2 | 3 || 2", mapOf(
+                "name" to "ShakeLogicalOrNode",
+                "left" to mapOf(
+                    "name" to "ShakeBitwiseOrNode",
+                    "left" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                    "right" to mapOf("name" to "ShakeIntegerNode", "value" to 3)
+                ),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testLogicalAndBeforeLogicalXOr() {
+        testCodeSnippetValue(
+            "true && false ^^ true", mapOf(
+                "name" to "ShakeLogicalXOrNode",
+                "left" to mapOf(
+                    "name" to "ShakeLogicalAndNode",
+                    "left" to mapOf("name" to "ShakeLogicalTrueNode"),
+                    "right" to mapOf("name" to "ShakeLogicalFalseNode")
+                ),
+                "right" to mapOf("name" to "ShakeLogicalTrueNode")
+            )
+        )
+    }
+
+    @Test
+    fun testLogicalXOrBeforeLogicalOr() {
+        testCodeSnippetValue(
+            "true ^^ false || true", mapOf(
+                "name" to "ShakeLogicalOrNode",
+                "left" to mapOf(
+                    "name" to "ShakeLogicalXOrNode",
+                    "left" to mapOf("name" to "ShakeLogicalTrueNode"),
+                    "right" to mapOf("name" to "ShakeLogicalFalseNode")
+                ),
+                "right" to mapOf("name" to "ShakeLogicalTrueNode")
+            )
+        )
+    }
+
+
 
     // Utils
 

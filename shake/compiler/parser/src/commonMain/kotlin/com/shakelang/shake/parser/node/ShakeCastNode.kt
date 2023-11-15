@@ -52,7 +52,7 @@ class ShakeCastNode(map: PositionMap, val value: ShakeValuedNode, val castTarget
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "CastNode",
+            "name" to nodeName,
             "value" to value.json,
             "cast_target" to castTarget.toString()
         )
