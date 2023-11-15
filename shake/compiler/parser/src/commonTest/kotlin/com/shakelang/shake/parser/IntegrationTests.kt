@@ -153,6 +153,40 @@ class IntegrationTests {
         "value" to mapOf("name" to "ShakeLogicalTrueNode")
     ))
 
+    @Test
+    fun testBitwiseOrExpression() = testCodeSnippetValue("1 | 2", mapOf(
+        "name" to "ShakeBitwiseOrNode",
+        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+    ))
+
+    @Test
+    fun testBitwiseAndExpression() = testCodeSnippetValue("1 & 2", mapOf(
+        "name" to "ShakeBitwiseAndNode",
+        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+    ))
+
+    @Test
+    fun testBitwiseXOrExpression() = testCodeSnippetValue("1 ^ 2", mapOf(
+        "name" to "ShakeBitwiseXOrNode",
+        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+    ))
+
+    @Test
+    fun testBitwiseLeftShiftExpression() = testCodeSnippetValue("1 << 2", mapOf(
+        "name" to "ShakeBitwiseShiftLeftNode",
+        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+    ))
+
+    @Test
+    fun testBitwiseRightShiftExpression() = testCodeSnippetValue("1 >> 2", mapOf(
+        "name" to "ShakeBitwiseShiftRightNode",
+        "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+        "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+    ))
 
 
     // Utils

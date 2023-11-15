@@ -1257,14 +1257,14 @@ class ShakeParserImpl(
             val pos = input.actualStart
             left = when (tmpType) {
                 ShakeTokenType.EQ_EQUALS -> return ShakeEqualNode(map, left, expectLogicalOr(), pos)
-                else -> ShakeNotEqualNode(map, left, expectLogicalOr(), pos)
+                else -> ShakeNotEqualNode(map, left, expectRelational(), pos)
             }
         }
         return left
     }
 
     private fun expectRelational(): ShakeValuedNode {
-        var left = expectExpr()
+        var left = expectBitShift()
         var tmpType: ShakeTokenType = ShakeTokenType.NONE
         while (input.hasNext() &&
             (
@@ -1277,10 +1277,29 @@ class ShakeParserImpl(
             input.skip()
             val pos = input.actualStart
             left = when (tmpType) {
-                ShakeTokenType.BIGGER_EQUALS -> ShakeGreaterThanOrEqualNode(map, left, expectLogicalOr(), pos)
-                ShakeTokenType.SMALLER_EQUALS -> ShakeLessThanOrEqualNode(map, left, expectLogicalOr(), pos)
-                ShakeTokenType.BIGGER -> ShakeGreaterThanNode(map, left, expectLogicalOr(), pos)
-                else -> ShakeLessThanNode(map, left, expectLogicalOr(), pos)
+                ShakeTokenType.BIGGER_EQUALS -> ShakeGreaterThanOrEqualNode(map, left, expectBitShift(), pos)
+                ShakeTokenType.SMALLER_EQUALS -> ShakeLessThanOrEqualNode(map, left, expectBitShift(), pos)
+                ShakeTokenType.BIGGER -> ShakeGreaterThanNode(map, left, expectBitShift(), pos)
+                else -> ShakeLessThanNode(map, left, expectBitShift(), pos)
+            }
+        }
+        return left
+    }
+
+    private fun expectBitShift(): ShakeValuedNode {
+        var left = expectExpr()
+        var tmpType: ShakeTokenType = ShakeTokenType.NONE
+        while (input.hasNext() &&
+            (
+                    input.peekType().also { tmpType = it } == ShakeTokenType.BITWISE_SHL ||
+                            tmpType == ShakeTokenType.BITWISE_SHR
+                    )
+        ) {
+            input.skip()
+            val pos = input.actualStart
+            left = when (tmpType) {
+                ShakeTokenType.BITWISE_SHL -> ShakeBitwiseShiftLeftNode(map, left, expectExpr(), pos)
+                else -> ShakeBitwiseShiftRightNode(map, left, expectExpr(), pos)
             }
         }
         return left

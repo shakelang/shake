@@ -25,3 +25,15 @@ class ShakeBitwiseNotNode(map: PositionMap, node: ShakeValuedNode, operatorPosit
     override val operator: String
         get() = "!"
 }
+
+class ShakeBitwiseShiftLeftNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
+    ShakeExpressionNode(map, left, right, operatorPosition) {
+    override val operator: String
+        get() = "<<"
+}
+
+class ShakeBitwiseShiftRightNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
+    ShakeExpressionNode(map, left, right, operatorPosition) {
+    override val operator: String
+        get() = ">>"
+}
