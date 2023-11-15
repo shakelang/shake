@@ -1221,6 +1221,10 @@ class ShakeParserImpl(
             input.skip()
             return ShakeUnaryMinusNode(map, expectFactor(), input.position)
         }
+        if (token == ShakeTokenType.LOGICAL_NOT) {
+            input.skip()
+            return ShakeLogicalNotNode(map, expectFactor(), input.position)
+        }
         if (token == ShakeTokenType.STRING) {
             input.skip()
             return ShakeStringNode(map, parseString(input.actualValue!!))
@@ -1377,7 +1381,8 @@ class ShakeParserImpl(
                     tmpType == ShakeTokenType.BIGGER_EQUALS ||
                     tmpType == ShakeTokenType.SMALLER_EQUALS ||
                     tmpType == ShakeTokenType.BIGGER ||
-                    tmpType == ShakeTokenType.SMALLER
+                    tmpType == ShakeTokenType.SMALLER ||
+                    tmpType == ShakeTokenType.NOT_EQUALS
                 )
         ) {
             input.skip()
@@ -1387,7 +1392,8 @@ class ShakeParserImpl(
                 ShakeTokenType.BIGGER_EQUALS -> ShakeGreaterThanOrEqualNode(map, left, expectLogicalOr(), pos)
                 ShakeTokenType.SMALLER_EQUALS -> ShakeLessThanOrEqualNode(map, left, expectLogicalOr(), pos)
                 ShakeTokenType.BIGGER -> ShakeGreaterThanNode(map, left, expectLogicalOr(), pos)
-                else -> ShakeLessThanNode(map, left, expectLogicalOr(), pos)
+                ShakeTokenType.SMALLER -> ShakeLessThanNode(map, left, expectLogicalOr(), pos)
+                else -> ShakeNotEqualNode(map, left, expectLogicalOr(), pos)
             }
         }
         return left

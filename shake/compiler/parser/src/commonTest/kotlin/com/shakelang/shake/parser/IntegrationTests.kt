@@ -102,9 +102,9 @@ class IntegrationTests {
         "right" to mapOf("name" to "IntegerNode", "value" to 2)
     ))
 
-    @Test @Ignore // TODO: Fix this
+    @Test
     fun testNotEqualsExpression() = testCodeSnippetValue("1 != 2", mapOf(
-        "name" to "NotEqualNode",
+        "name" to "ShakeNotEqualNode",
         "left" to mapOf("name" to "IntegerNode", "value" to 1),
         "right" to mapOf("name" to "IntegerNode", "value" to 2)
     ))
@@ -149,9 +149,9 @@ class IntegrationTests {
         "value" to mapOf("name" to "IntegerNode", "value" to 1)
     ))
 
-    @Test @Ignore // TODO: Fix this
+    @Test
     fun testNotExpression() = testCodeSnippetValue("!true", mapOf(
-        "name" to "ShakeNotNode",
+        "name" to "ShakeLogicalNotNode",
         "value" to mapOf("name" to "LogicalTrueNode")
     ))
 
@@ -166,19 +166,6 @@ class IntegrationTests {
 
         assertEquals(expected, json, "The parsed value is not correct")
 
-    }
-
-}
-
-
-data class CallerInfo(
-    val className: String,
-    val functionName: String,
-    val lineNumber: Int,
-    val fileName: String
-) {
-    override fun toString(): String {
-        return "CallerInfo(className='$className', functionName='$functionName', lineNumber=$lineNumber, fileName='$fileName')"
     }
 
 }
