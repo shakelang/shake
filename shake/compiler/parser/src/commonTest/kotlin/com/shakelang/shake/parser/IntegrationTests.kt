@@ -34,63 +34,63 @@ class IntegrationTests {
     // Expressions
     @Test
     fun testAddExpression() = testCodeSnippetValue("1 + 2", mapOf(
-        "name" to "AddNode",
+        "name" to "ShakeAddNode",
         "left" to mapOf("name" to "IntegerNode", "value" to 1),
         "right" to mapOf("name" to "IntegerNode", "value" to 2)
     ))
 
     @Test
     fun testSubtractExpression() = testCodeSnippetValue("1 - 2", mapOf(
-        "name" to "SubNode",
+        "name" to "ShakeSubNode",
         "left" to mapOf("name" to "IntegerNode", "value" to 1),
         "right" to mapOf("name" to "IntegerNode", "value" to 2)
     ))
 
     @Test
     fun testMultiplyExpression() = testCodeSnippetValue("1 * 2", mapOf(
-        "name" to "MulNode",
+        "name" to "ShakeMulNode",
         "left" to mapOf("name" to "IntegerNode", "value" to 1),
         "right" to mapOf("name" to "IntegerNode", "value" to 2)
     ))
 
     @Test
     fun testDivideExpression() = testCodeSnippetValue("1 / 2", mapOf(
-        "name" to "DivNode",
+        "name" to "ShakeDivNode",
         "left" to mapOf("name" to "IntegerNode", "value" to 1),
         "right" to mapOf("name" to "IntegerNode", "value" to 2)
     ))
 
     @Test
     fun testModuloExpression() = testCodeSnippetValue("1 % 2", mapOf(
-        "name" to "ModNode",
+        "name" to "ShakeModNode",
         "left" to mapOf("name" to "IntegerNode", "value" to 1),
         "right" to mapOf("name" to "IntegerNode", "value" to 2)
     ))
 
     @Test
     fun testPowerExpression() = testCodeSnippetValue("1 ** 2", mapOf(
-        "name" to "PowNode",
+        "name" to "ShakePowNode",
         "left" to mapOf("name" to "IntegerNode", "value" to 1),
         "right" to mapOf("name" to "IntegerNode", "value" to 2)
     ))
 
     @Test
     fun testLogicalAndExpression() = testCodeSnippetValue("true && false", mapOf(
-        "name" to "LogicalAndNode",
+        "name" to "ShakeLogicalAndNode",
         "left" to mapOf("name" to "LogicalTrueNode"),
         "right" to mapOf("name" to "LogicalFalseNode")
     ))
 
     @Test
     fun testLogicalOrExpression() = testCodeSnippetValue("true || false", mapOf(
-        "name" to "LogicalOrNode",
+        "name" to "ShakeLogicalOrNode",
         "left" to mapOf("name" to "LogicalTrueNode"),
         "right" to mapOf("name" to "LogicalFalseNode")
     ))
 
     @Test
     fun testLogicalXOrExpression() = testCodeSnippetValue("true ^^ false", mapOf(
-        "name" to "LogicalXOrNode",
+        "name" to "ShakeLogicalXOrNode",
         "left" to mapOf("name" to "LogicalTrueNode"),
         "right" to mapOf("name" to "LogicalFalseNode")
     ))
