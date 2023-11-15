@@ -67,7 +67,7 @@ abstract class ShakeParser {
          * @param input The [ShakeTokenInputStream] to be parsed.
          * @return A new [ShakeParser] instance.
          */
-        fun from(input: ShakeTokenInputStream) = com.shakelang.shake.parser.ShakeParserImpl(input)
+        fun from(input: ShakeTokenInputStream) = ShakeParserImpl(input)
     }
 }
 
@@ -167,8 +167,7 @@ class ShakeParserImpl(
      * Parses a statement.
      */
     private fun expectStatement(): ShakeStatementNode {
-        val token = input.skipIgnorable().peekType()
-        return when (token) {
+        return when (val token = input.skipIgnorable().peekType()) {
             ShakeTokenType.KEYWORD_WHILE -> expectWhileLoop()
             ShakeTokenType.KEYWORD_DO -> expectDoWhileLoop()
             ShakeTokenType.KEYWORD_FOR -> expectForLoop()
@@ -898,6 +897,7 @@ class ShakeParserImpl(
     /**
      * Expects an enum declaration. This function is only called if the next token is an enum keyword.
      */
+    @Suppress("UNUSED_PARAMETER")
     private fun expectEnumDeclaration(
         info: DeclarationContextInformation
     ): ShakeClassDeclarationNode {
@@ -907,6 +907,7 @@ class ShakeParserImpl(
     /**
      * Expects an interface declaration. This function is only called if the next token is a interface keyword.
      */
+    @Suppress("UNUSED_PARAMETER")
     private fun expectObjectDeclaration(
         info: DeclarationContextInformation
     ): ShakeClassDeclarationNode {
