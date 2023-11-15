@@ -1453,7 +1453,7 @@ class ShakeParserImpl(
                 input.skip()
                 val result = expectLogicalOr()
                 if (input.nextType() != ShakeTokenType.RPAREN) throw ParserError("Expecting ')'")
-                return result
+                return ShakePriorityNode(map, result)
             }
 
             ShakeTokenType.KEYWORD_TRUE -> {

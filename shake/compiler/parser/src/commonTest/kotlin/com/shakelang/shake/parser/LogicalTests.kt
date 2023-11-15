@@ -2,10 +2,7 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.expression.*
-import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
-import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import com.shakelang.shake.parser.node.factor.ShakeLogicalFalseNode
-import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
+import com.shakelang.shake.parser.node.factor.*
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -104,8 +101,11 @@ class LogicalTests {
         assertNotNull(node.left)
         assertType(ShakeLogicalTrueNode::class, node.left)
         assertNotNull(node.right)
-        assertType(ShakeLogicalOrNode::class, node.right)
-        val or = node.right as ShakeLogicalOrNode
+        assertType(ShakePriorityNode::class, node.right)
+        val priority = node.right as ShakePriorityNode
+        assertNotNull(priority.value)
+        assertType(ShakeLogicalOrNode::class, priority.value)
+        val or = priority.value as ShakeLogicalOrNode
         assertNotNull(or.left)
         assertType(ShakeLogicalFalseNode::class, or.left)
         assertNotNull(or.right)

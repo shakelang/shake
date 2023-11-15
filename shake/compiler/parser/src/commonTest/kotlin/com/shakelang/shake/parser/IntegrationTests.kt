@@ -60,6 +60,18 @@ class IntegrationTests {
         )
     )
 
+    @Test
+    fun testPriorityExpression() = testCodeSnippetValue(
+        "(1 + 2)", mapOf(
+            "name" to "ShakePriorityNode",
+            "value" to mapOf(
+                "name" to "ShakeAddNode",
+                "left" to mapOf("name" to "ShakeIntegerNode", "value" to 1),
+                "right" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            ),
+        )
+    )
+
 
     // Expressions
     @Test

@@ -4,6 +4,7 @@ import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.expression.*
 import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
+import com.shakelang.shake.parser.node.factor.ShakePriorityNode
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -65,8 +66,11 @@ class MathTests {
         assertType(ShakeIntegerNode::class, node.left)
         assertEquals(2, (node.left as ShakeIntegerNode).number)
         assertNotNull(node.right)
-        assertType(ShakeAddNode::class, node.right)
-        val add = node.right as ShakeAddNode
+        assertType(ShakePriorityNode::class, node.right)
+        val priority = node.right as ShakePriorityNode
+        assertNotNull(priority.value)
+        assertType(ShakeAddNode::class, priority.value)
+        val add = priority.value as ShakeAddNode
         assertNotNull(add.left)
         assertType(ShakeIntegerNode::class, add.left)
         assertEquals(4, (add.left as ShakeIntegerNode).number)
