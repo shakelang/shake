@@ -11,7 +11,11 @@ abstract class ShakeExpressionNode(
     val operatorPosition: Int
 ) : ShakeValuedNodeImpl(map) {
     abstract val operator: String
-
+    override fun toJson(): Map<String, *> = mapOf(
+        "name" to nodeName,
+        "left" to left.json,
+        "right" to right.json,
+    )
 }
 
 abstract class ShakeUnaryNode(
@@ -20,4 +24,8 @@ abstract class ShakeUnaryNode(
     val operatorPosition: Int
 ) : ShakeValuedNodeImpl(map) {
     abstract val operator: String
+    override fun toJson(): Map<String, *> = mapOf(
+        "name" to nodeName,
+        "value" to value.json,
+    )
 }
