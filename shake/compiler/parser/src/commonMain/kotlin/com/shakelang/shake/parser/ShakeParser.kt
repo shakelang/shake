@@ -1233,6 +1233,10 @@ class ShakeParserImpl(
             input.skip()
             return ShakeCharacterNode(map, parseString(input.actualValue!!)[0])
         }
+        if (token == ShakeTokenType.KEYWORD_NULL) {
+            input.skip()
+            return ShakeNullNode(map)
+        }
         throw ParserError(input.toString())
     }
 
