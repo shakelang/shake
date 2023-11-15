@@ -29,5 +29,5 @@ class ShakePriorityNode(map: PositionMap, val value: ShakeValuedNode) : ShakeVal
 }
 
 class ShakeStringNode(map: PositionMap, val value: String) : ShakeValuedNodeImpl(map) {
-    override fun toJson(): Map<String, *> = mapOf("name" to "StringNode", "number" to value)
+    override fun toJson(): Map<String, *> = mapOf("name" to "StringNode", "value" to value)
 }

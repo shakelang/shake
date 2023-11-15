@@ -37,11 +37,11 @@ abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGenerator
         if (n is ShakeVariableDecreaseNode) return visitVariableDecreaseNode(n)
         if (n is ShakeValuedNode) return visitVariableAssignmentNode(n)
         if (n is ShakeVariableUsageNode) return visitVariableUsageNode(n)
-        if (n is ShakeLogicalEqEqualsNode) return visitEqEqualsNode(n)
-        if (n is ShakeLogicalBiggerEqualsNode) return visitBiggerEqualsNode(n)
-        if (n is ShakeLogicalSmallerEqualsNode) return visitSmallerEqualsNode(n)
-        if (n is ShakeLogicalBiggerNode) return visitBiggerNode(n)
-        if (n is ShakeLogicalSmallerNode) return visitSmallerNode(n)
+        if (n is ShakeEqualNode) return visitEqEqualsNode(n)
+        if (n is ShakeGreaterThanOrEqualNode) return visitBiggerEqualsNode(n)
+        if (n is ShakeLessThanOrEqualNode) return visitSmallerEqualsNode(n)
+        if (n is ShakeGreaterThanNode) return visitBiggerNode(n)
+        if (n is ShakeLessThanNode) return visitSmallerNode(n)
         if (n is ShakeLogicalAndNode) return visitLogicalAndNode(n)
         if (n is ShakeLogicalOrNode) return visitLogicalOrNode(n)
         if (n is ShakeLogicalXOrNode) return visitLogicalXOrNode(n)
@@ -81,11 +81,11 @@ abstract class ShakeGenerator<T> : com.shakelang.shake.generation.ShakeGenerator
     abstract fun visitVariableIncreaseNode(n: ShakeVariableIncreaseNode): T
     abstract fun visitVariableDecreaseNode(n: ShakeVariableDecreaseNode): T
     abstract fun visitVariableUsageNode(n: ShakeVariableUsageNode): T
-    abstract fun visitEqEqualsNode(n: ShakeLogicalEqEqualsNode): T
-    abstract fun visitBiggerEqualsNode(n: ShakeLogicalBiggerEqualsNode): T
-    abstract fun visitSmallerEqualsNode(n: ShakeLogicalSmallerEqualsNode): T
-    abstract fun visitBiggerNode(n: ShakeLogicalBiggerNode): T
-    abstract fun visitSmallerNode(n: ShakeLogicalSmallerNode): T
+    abstract fun visitEqEqualsNode(n: ShakeEqualNode): T
+    abstract fun visitBiggerEqualsNode(n: ShakeGreaterThanOrEqualNode): T
+    abstract fun visitSmallerEqualsNode(n: ShakeLessThanOrEqualNode): T
+    abstract fun visitBiggerNode(n: ShakeGreaterThanNode): T
+    abstract fun visitSmallerNode(n: ShakeLessThanNode): T
     abstract fun visitLogicalAndNode(n: ShakeLogicalAndNode): T
     abstract fun visitLogicalOrNode(n: ShakeLogicalOrNode): T
     abstract fun visitLogicalXOrNode(n: ShakeLogicalXOrNode): T

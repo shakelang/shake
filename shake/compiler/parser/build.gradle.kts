@@ -17,5 +17,6 @@ kotlin {
         implementation(project(":util:shason"))
         implementation(project(":shake:compiler:lexer"))
         testImplementation(kotlin("test"))
+        testImplementation(kotlin("stdlib"))
     }
 }

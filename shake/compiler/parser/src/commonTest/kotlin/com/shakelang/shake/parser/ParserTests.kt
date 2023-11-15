@@ -5,7 +5,7 @@ import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeIfNode
 import com.shakelang.shake.parser.node.ShakeImportNode
-import com.shakelang.shake.parser.node.expression.ShakeLogicalSmallerNode
+import com.shakelang.shake.parser.node.expression.ShakeLessThanNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
@@ -91,7 +91,7 @@ class ParserTests {
         assertNotNull(node.round)
         assertNotNull(node.body)
         assertType(ShakeVariableDeclarationNode::class, node.declaration)
-        assertType(ShakeLogicalSmallerNode::class, node.condition)
+        assertType(ShakeLessThanNode::class, node.condition)
         assertType(ShakeVariableIncreaseNode::class, node.round)
         assertType(ShakeBlockNode::class, node.body)
         node =
@@ -101,7 +101,7 @@ class ParserTests {
         assertNotNull(node.round)
         assertNotNull(node.body)
         assertType(ShakeVariableDeclarationNode::class, node.declaration)
-        assertType(ShakeLogicalSmallerNode::class, node.condition)
+        assertType(ShakeLessThanNode::class, node.condition)
         assertType(ShakeVariableIncreaseNode::class, node.round)
         assertType(ShakeBlockNode::class, node.body)
     }

@@ -261,6 +261,8 @@ extensions.getByType<NexusStagingExtension>().apply {
 
     username = System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
     password = System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
+
+    stagingProfileId = "com.shakelang"
 }
 
 val testAggregate = tasks.register<TestReport>("testAggregate") {

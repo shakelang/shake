@@ -1382,11 +1382,11 @@ class ShakeParserImpl(
             input.skip()
             val pos = input.actualStart
             left = when (tmpType) {
-                ShakeTokenType.EQ_EQUALS -> return ShakeLogicalEqEqualsNode(map, left, expectLogicalOr(), pos)
-                ShakeTokenType.BIGGER_EQUALS -> ShakeLogicalBiggerEqualsNode(map, left, expectLogicalOr(), pos)
-                ShakeTokenType.SMALLER_EQUALS -> ShakeLogicalSmallerEqualsNode(map, left, expectLogicalOr(), pos)
-                ShakeTokenType.BIGGER -> ShakeLogicalBiggerNode(map, left, expectLogicalOr(), pos)
-                else -> ShakeLogicalSmallerNode(map, left, expectLogicalOr(), pos)
+                ShakeTokenType.EQ_EQUALS -> return ShakeEqualNode(map, left, expectLogicalOr(), pos)
+                ShakeTokenType.BIGGER_EQUALS -> ShakeGreaterThanOrEqualNode(map, left, expectLogicalOr(), pos)
+                ShakeTokenType.SMALLER_EQUALS -> ShakeLessThanOrEqualNode(map, left, expectLogicalOr(), pos)
+                ShakeTokenType.BIGGER -> ShakeGreaterThanNode(map, left, expectLogicalOr(), pos)
+                else -> ShakeLessThanNode(map, left, expectLogicalOr(), pos)
             }
         }
         return left

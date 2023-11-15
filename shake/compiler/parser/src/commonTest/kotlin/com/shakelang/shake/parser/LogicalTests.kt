@@ -31,27 +31,27 @@ class LogicalTests {
 
     @Test
     fun testEqEquals() {
-        testBasic("10==10", 10.0, 10.0, ShakeLogicalEqEqualsNode::class)
+        testBasic("10==10", 10.0, 10.0, ShakeEqualNode::class)
     }
 
     @Test
     fun testBiggerEquals() {
-        testBasic("10>=10", 10.0, 10.0, ShakeLogicalBiggerEqualsNode::class)
+        testBasic("10>=10", 10.0, 10.0, ShakeGreaterThanOrEqualNode::class)
     }
 
     @Test
     fun testSmallerEquals() {
-        testBasic("10<=10", 10.0, 10.0, ShakeLogicalSmallerEqualsNode::class)
+        testBasic("10<=10", 10.0, 10.0, ShakeLessThanOrEqualNode::class)
     }
 
     @Test
     fun testBigger() {
-        testBasic("10>10", 10.0, 10.0, ShakeLogicalBiggerNode::class)
+        testBasic("10>10", 10.0, 10.0, ShakeGreaterThanNode::class)
     }
 
     @Test
     fun testSmaller() {
-        testBasic("10<10", 10.0, 10.0, ShakeLogicalSmallerNode::class)
+        testBasic("10<10", 10.0, 10.0, ShakeLessThanNode::class)
     }
 
     @Test
@@ -117,7 +117,7 @@ class LogicalTests {
         val node = ParserTestUtil.parseValue(
             "<LogicalExpressionTest>",
             "10 >= 5 + 9 * 2",
-            ShakeLogicalBiggerEqualsNode::class
+            ShakeGreaterThanOrEqualNode::class
         )
         assertNotNull(node.left)
         assertType(ShakeIntegerNode::class, node.left)

@@ -11,11 +11,12 @@ abstract class ShakeExpressionNode(
     val operatorPosition: Int
 ) : ShakeValuedNodeImpl(map) {
     abstract val operator: String
+
 }
 
 abstract class ShakeUnaryNode(
     map: PositionMap,
-    val node: ShakeValuedNode,
+    val value: ShakeValuedNode,
     val operatorPosition: Int
 ) : ShakeValuedNodeImpl(map) {
     abstract val operator: String

@@ -85,11 +85,11 @@ open class ShakeCodeProcessor {
             is ShakeLogicalAndNode -> visitLogicalAndNode(scope, value)
             is ShakeLogicalOrNode -> visitLogicalOrNode(scope, value)
             is ShakeLogicalXOrNode -> visitLogicalXOrNode(scope, value)
-            is ShakeLogicalEqEqualsNode -> visitEqEqualsNode(scope, value)
-            is ShakeLogicalBiggerEqualsNode -> visitBiggerEqualsNode(scope, value)
-            is ShakeLogicalSmallerEqualsNode -> visitSmallerEqualsNode(scope, value)
-            is ShakeLogicalBiggerNode -> visitBiggerNode(scope, value)
-            is ShakeLogicalSmallerNode -> visitSmallerNode(scope, value)
+            is ShakeEqualNode -> visitEqEqualsNode(scope, value)
+            is ShakeGreaterThanOrEqualNode -> visitBiggerEqualsNode(scope, value)
+            is ShakeLessThanOrEqualNode -> visitSmallerEqualsNode(scope, value)
+            is ShakeGreaterThanNode -> visitBiggerNode(scope, value)
+            is ShakeLessThanNode -> visitSmallerNode(scope, value)
             is ShakeAddNode -> visitAddNode(scope, value)
             is ShakeSubNode -> visitSubNode(scope, value)
             is ShakeMulNode -> visitMulNode(scope, value)
@@ -386,7 +386,7 @@ open class ShakeCodeProcessor {
         return variable.access(scope) // TODO null value
     }
 
-    fun visitEqEqualsNode(scope: CreationShakeScope, n: ShakeLogicalEqEqualsNode): CreationShakeEquals {
+    fun visitEqEqualsNode(scope: CreationShakeScope, n: ShakeEqualNode): CreationShakeEquals {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeEquals(
@@ -400,7 +400,7 @@ open class ShakeCodeProcessor {
 
     fun visitBiggerEqualsNode(
         scope: CreationShakeScope,
-        n: ShakeLogicalBiggerEqualsNode
+        n: ShakeGreaterThanOrEqualNode
     ): CreationShakeGreaterThanOrEqual {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
@@ -415,7 +415,7 @@ open class ShakeCodeProcessor {
 
     fun visitSmallerEqualsNode(
         scope: CreationShakeScope,
-        n: ShakeLogicalSmallerEqualsNode
+        n: ShakeLessThanOrEqualNode
     ): CreationShakeLessThanOrEqual {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
@@ -428,7 +428,7 @@ open class ShakeCodeProcessor {
         )
     }
 
-    fun visitBiggerNode(scope: CreationShakeScope, n: ShakeLogicalBiggerNode): CreationShakeGreaterThan {
+    fun visitBiggerNode(scope: CreationShakeScope, n: ShakeGreaterThanNode): CreationShakeGreaterThan {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeGreaterThan(
@@ -440,7 +440,7 @@ open class ShakeCodeProcessor {
         )
     }
 
-    fun visitSmallerNode(scope: CreationShakeScope, n: ShakeLogicalSmallerNode): CreationShakeLessThan {
+    fun visitSmallerNode(scope: CreationShakeScope, n: ShakeLessThanNode): CreationShakeLessThan {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
         return CreationShakeLessThan(
