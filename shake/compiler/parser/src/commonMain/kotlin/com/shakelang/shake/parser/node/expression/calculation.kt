@@ -56,3 +56,23 @@ class ShakeUnaryMinusNode(
 ) : ShakeUnaryNode(map, contents, operatorPosition) {
     override val operator: String get() = "-"
 }
+
+fun createSyntheticAddNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeAddNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticSubNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeSubNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticMulNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeMulNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticDivNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeDivNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticModNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeModNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticPowNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakePowNode(PositionMap.empty(), left, right, -1)
+
+

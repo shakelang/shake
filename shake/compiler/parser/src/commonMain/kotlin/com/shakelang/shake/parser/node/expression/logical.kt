@@ -25,3 +25,15 @@ class ShakeLogicalNotNode(map: PositionMap, node: ShakeValuedNode, operatorPosit
     override val operator: String
         get() = "!"
 }
+
+fun createSyntheticLogicalAndNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeLogicalAndNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticLogicalOrNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeLogicalOrNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticLogicalXOrNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeLogicalXOrNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticLogicalNotNode(node: ShakeValuedNode) =
+    ShakeLogicalNotNode(PositionMap.empty(), node, -1)

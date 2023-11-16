@@ -58,3 +58,21 @@ class ShakeLessThanNode(map: PositionMap, left: ShakeValuedNode, right: ShakeVal
     override val operator: String
         get() = "<"
 }
+
+fun createSyntheticEqualNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeEqualNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticNotEqualNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeNotEqualNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticGreaterThanOrEqualNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeGreaterThanOrEqualNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticGreaterThanNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeGreaterThanNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticLessThanOrEqualNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeLessThanOrEqualNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticLessThanNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeLessThanNode(PositionMap.empty(), left, right, -1)
