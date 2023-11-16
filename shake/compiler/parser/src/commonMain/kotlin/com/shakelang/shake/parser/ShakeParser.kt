@@ -174,6 +174,7 @@ class ShakeParserImpl(
             ShakeTokenType.KEYWORD_IF -> expectIfStatement()
             ShakeTokenType.KEYWORD_RETURN -> expectReturnStatement()
             ShakeTokenType.KEYWORD_CONST,
+            ShakeTokenType.KEYWORD_VAR,
             ShakeTokenType.KEYWORD_FINAL,
             ShakeTokenType.KEYWORD_DYNAMIC,
             ShakeTokenType.KEYWORD_BOOLEAN,
@@ -535,7 +536,12 @@ class ShakeParserImpl(
             if (unsigned) throw ParserError("Unsigned dynamic is not supported")
             input.skip()
             ShakeVariableType.DYNAMIC
-        } else if (t == ShakeTokenType.KEYWORD_BYTE) {
+        }
+        else if (t == ShakeTokenType.KEYWORD_VAR) {
+            input.skip()
+            if (unsigned) throw ParserError("Unsigned var is not supported") else ShakeVariableType.UNKNOWN
+        }
+        else if (t == ShakeTokenType.KEYWORD_BYTE) {
             input.skip()
             if (unsigned) ShakeVariableType.UNSIGNED_BYTE else ShakeVariableType.BYTE
         } else if (t == ShakeTokenType.KEYWORD_SHORT) {

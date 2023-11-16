@@ -3,7 +3,7 @@ package com.shakelang.shake.parser.node
 import com.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
 
 @Suppress("unused")
-open class ShakeVariableType {
+open class ShakeVariableType: ShakeNode {
     val type: Type
 
     constructor(subtype: ShakeNamespaceNode?) {
@@ -16,12 +16,12 @@ open class ShakeVariableType {
 
     override fun toString(): String = com.shakelang.shake.util.shason.JSON.stringify(this.json)
 
-    val json: Map<String, *>
+    override val json: Map<String, *>
         get() = toJson()
 
-    fun toJson(): Map<String, *> =
+    override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to this::class.simpleName,
+            "name" to nodeName,
             "type" to type
         )
 
@@ -29,6 +29,7 @@ open class ShakeVariableType {
     class Array(val subtype: ShakeVariableType) : ShakeVariableType(Type.ARRAY)
 
     enum class Type {
+        UNKNOWN,
         DYNAMIC,
         BYTE,
         SHORT,
@@ -54,6 +55,7 @@ open class ShakeVariableType {
     companion object {
 
         val DYNAMIC = ShakeVariableType(Type.DYNAMIC)
+        val UNKNOWN = ShakeVariableType(Type.UNKNOWN)
         val BYTE = ShakeVariableType(Type.BYTE)
         val SHORT = ShakeVariableType(Type.SHORT)
         val INTEGER = ShakeVariableType(Type.INTEGER)

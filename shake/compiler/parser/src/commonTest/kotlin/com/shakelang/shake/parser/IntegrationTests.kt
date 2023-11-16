@@ -993,4 +993,36 @@ class IntegrationTests {
 
         }
     }
+
+    class Statements {
+        @Test
+        fun testVariableDeclaration() {
+            testCodeSnippet(
+                "var a = 2", mapOf(
+                    "name" to "ShakeBlockNode",
+                    "children" to listOf(
+                        mapOf(
+                            "name" to "ShakeVariableDeclarationNode",
+                            "variable_name" to "a",
+                            "type" to mapOf(
+                                "name" to "ShakeVariableType",
+                                "type" to "unknown"
+                            ),
+                            "access" to "PACKAGE",
+                            "assignment" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
+                            "is_static" to false,
+                            "is_final" to false
+                        )
+                    )
+                )
+            )
+        }
+
+        private fun testCodeSnippet(code: String, expected: Any) {
+            val sourceLocation = "TestInput"
+            val parsed = ParserTestUtil.parseStatement(sourceLocation, code)
+            val json = parsed.json
+            assertEquals(expected, json, "The parsed statement is not correct")
+        }
+    }
 }
