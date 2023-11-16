@@ -1188,7 +1188,6 @@ class ShakeParserImpl(
             input.peekType() == ShakeTokenType.DIV_ASSIGN ||
             input.peekType() == ShakeTokenType.MOD_ASSIGN ||
             input.peekType() == ShakeTokenType.POW_ASSIGN)) {
-            println("Assignment")
             val operator = input.nextType()
             val operatorPosition = input.actualStart
             left = when (operator) {
