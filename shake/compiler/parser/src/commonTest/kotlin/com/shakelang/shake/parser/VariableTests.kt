@@ -8,15 +8,15 @@ import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
 import com.shakelang.shake.parser.node.variables.*
+import io.kotest.core.spec.style.FreeSpec
 import kotlin.test.*
 
-class VariableTests {
+class VariableTests : FreeSpec({
 
     // // *************************************************************
     // // Assignments
 
-    @Test
-    fun testVariableAssignment() {
+    "variable assignment" {
         var node =
             ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = 0", ShakeVariableAssignmentNode::class)
         assertType(ShakeVariableUsageNode::class, node.variable)
@@ -38,8 +38,7 @@ class VariableTests {
         assertType(ShakeLogicalTrueNode::class, node.value)
     }
 
-    @Test
-    fun testVariableAddAssignment() {
+    "variable add assignment" {
         val node = ParserTestUtil.parseStatement(
             "<VariableAddAssignmentTest>",
             "i += 0",
@@ -52,8 +51,7 @@ class VariableTests {
         assertType(ShakeIntegerNode::class, node.value)
     }
 
-    @Test
-    fun testVariableSubAssignment() {
+    "variable sub assignment" {
         val node = ParserTestUtil.parseStatement(
             "<VariableSubAssignmentTest>",
             "i -= 0",
@@ -66,8 +64,7 @@ class VariableTests {
         assertType(ShakeIntegerNode::class, node.value)
     }
 
-    @Test
-    fun testVariableMulAssignment() {
+    "variable mul assignment" {
         val node = ParserTestUtil.parseStatement(
             "<VariableMulAssignmentTest>",
             "i *= 0",
@@ -80,8 +77,7 @@ class VariableTests {
         assertType(ShakeIntegerNode::class, node.value)
     }
 
-    @Test
-    fun testVariableDivAssignment() {
+    "variable div assignment" {
         val node = ParserTestUtil.parseStatement(
             "<VariableDivAssignmentTest>",
             "i /= 1",
@@ -94,8 +90,7 @@ class VariableTests {
         assertType(ShakeIntegerNode::class, node.value)
     }
 
-    @Test
-    fun testVariableModAssignment() {
+    "variable mod assignment" {
         val node = ParserTestUtil.parseStatement(
             "<VariableModAssignmentTest>",
             "i %= 1",
@@ -108,8 +103,7 @@ class VariableTests {
         assertType(ShakeIntegerNode::class, node.value)
     }
 
-    @Test
-    fun testVariablePowAssignment() {
+    "variable pow assignment" {
         val node = ParserTestUtil.parseStatement(
             "<VariablePowAssignmentTest>",
             "i **= 0",
@@ -122,16 +116,14 @@ class VariableTests {
         assertType(ShakeIntegerNode::class, node.value)
     }
 
-    @Test
-    fun testVariableIncrease() {
+    "variable incr" {
         val node = ParserTestUtil.parseStatement("<VariableIncreaseTest>", "i ++", ShakeVariableIncreaseNode::class)
         assertType(ShakeVariableUsageNode::class, node.variable)
         assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
         assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
     }
 
-    @Test
-    fun testVariableDecrease() {
+    "variable decr" {
         val node = ParserTestUtil.parseStatement("<VariableDecreaseTest>", "i --", ShakeVariableDecreaseNode::class)
         assertType(ShakeVariableUsageNode::class, node.variable)
         assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
@@ -141,8 +133,7 @@ class VariableTests {
     // // *************************************************************
     // // Variable Declaration
 
-    @Test
-    fun testFinalVariableDeclaration() {
+    "final variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<FinalVariableDeclarationTest>",
             "final int i",
@@ -156,8 +147,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testPublicVariableDeclaration() {
+    "public variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PublicVariableDeclarationTest>",
             "public int i",
@@ -171,8 +161,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testPublicFinalVariableDeclaration() {
+    "public final variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalDynamicVariableDeclarationTest>",
             "public final int i",
@@ -186,8 +175,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testProtectedVariableDeclaration() {
+    "protected variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedVariableDeclarationTest>",
             "protected int i",
@@ -201,8 +189,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testProtectedFinalVariableDeclaration() {
+    "protected final variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalVariableDeclarationTest>",
             "protected final int i",
@@ -216,8 +203,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testPrivateVariableDeclaration() {
+    "private variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PrivateVariableDeclarationTest>",
             "private int i",
@@ -231,8 +217,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testPrivateFinalVariableDeclaration() {
+    "private final variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalVariableDeclarationTest>",
             "private final int i",
@@ -246,8 +231,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testDynamicVariableDeclaration() {
+    "dynamic variable declaration" {
         var node = ParserTestUtil.parseSingle(
             "<DynamicVariableDeclarationTest>",
             "dynamic d",
@@ -266,8 +250,7 @@ class VariableTests {
         assertNotNull(node.value)
     }
 
-    @Test
-    fun testFinalDynamicVariableDeclaration() {
+    "final dynamic variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<FinalDynamicVariableDeclarationTest>",
             "final dynamic d",
@@ -281,8 +264,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testPublicDynamicVariableDeclaration() {
+    "public dynamic variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PublicDynamicVariableDeclarationTest>",
             "public dynamic d",
@@ -296,8 +278,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testPublicFinalDynamicVariableDeclaration() {
+    "public final dynamic variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalDynamicVariableDeclarationTest>",
             "public final dynamic d",
@@ -311,8 +292,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testProtectedDynamicVariableDeclaration() {
+    "protected dynamic variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedDynamicVariableDeclarationTest>",
             "protected dynamic d",
@@ -326,8 +306,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testProtectedDynamicIntegerVariableDeclaration() {
+    "protected final dynamic variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalDynamicVariableDeclarationTest>",
             "protected final dynamic d",
@@ -341,8 +320,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testPrivateDynamicVariableDeclaration() {
+    "private dynamic variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PrivateDynamicVariableDeclarationTest>",
             "private dynamic d",
@@ -356,8 +334,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testPrivateFinalDynamicVariableDeclaration() {
+    "private final dynamic variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalDynamicVariableDeclarationTest>",
             "private final dynamic d",
@@ -371,8 +348,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testBooleanVariableDeclaration() {
+    "boolean variable declaration" {
         var node = ParserTestUtil.parseSingle(
             "<BooleanVariableDeclarationTest>",
             "boolean b",
@@ -391,8 +367,7 @@ class VariableTests {
         assertNotNull(node.value)
     }
 
-    @Test
-    fun testFinalBooleanVariableDeclaration() {
+    "final boolean variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<FinalBooleanVariableDeclarationTest>",
             "final boolean b",
@@ -406,8 +381,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testPublicBooleanVariableDeclaration() {
+    "public boolean variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PublicBooleanVariableDeclarationTest>",
             "public boolean b",
@@ -421,8 +395,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testPublicFinalBooleanVariableDeclaration() {
+    "public final boolean variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalBooleanVariableDeclarationTest>",
             "public final boolean b",
@@ -436,8 +409,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testProtectedBooleanVariableDeclaration() {
+    "protected boolean variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedBooleanVariableDeclarationTest>",
             "protected boolean b",
@@ -451,8 +423,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testProtectedFinalBooleanVariableDeclaration() {
+    "protected final boolean variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalBooleanVariableDeclarationTest>",
             "protected final boolean b",
@@ -466,8 +437,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testPrivateBooleanVariableDeclaration() {
+    "private boolean variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PrivateBooleanVariableDeclarationTest>",
             "private boolean b",
@@ -481,8 +451,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testPrivateFinalBooleanVariableDeclaration() {
+    "private final boolean variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalBooleanVariableDeclarationTest>",
             "private final boolean b",
@@ -496,8 +465,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testCharacterVariableDeclaration() {
+    "char variable declaration" {
         var node = ParserTestUtil.parseSingle(
             "<CharacterVariableDeclarationTest>",
             "char c",
@@ -516,8 +484,7 @@ class VariableTests {
         assertNotNull(node.value)
     }
 
-    @Test
-    fun testFinalCharacterVariableDeclaration() {
+    "final char variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<FinalCharacterVariableDeclarationTest>",
             "final char c",
@@ -531,8 +498,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testPublicCharacterVariableDeclaration() {
+    "public char variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PublicCharacterVariableDeclarationTest>",
             "public char c",
@@ -546,8 +512,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testPublicFinalCharacterVariableDeclaration() {
+    "public final char variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PublicFinalCharacterVariableDeclarationTest>",
             "public final char c",
@@ -561,8 +526,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testProtectedCharacterVariableDeclaration() {
+    "protected char variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedCharacterVariableDeclarationTest>",
             "protected char c",
@@ -576,8 +540,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testProtectedFinalCharacterVariableDeclaration() {
+    "protected final char variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<ProtectedFinalCharacterVariableDeclarationTest>",
             "protected final char c",
@@ -591,8 +554,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testPrivateCharacterVariableDeclaration() {
+    "private char variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PrivateCharacterVariableDeclarationTest>",
             "private char c",
@@ -606,8 +568,7 @@ class VariableTests {
         assertFalse(node.isFinal)
     }
 
-    @Test
-    fun testPrivateFinalCharacterVariableDeclaration() {
+    "private final char variable declaration" {
         val node = ParserTestUtil.parseSingle(
             "<PrivateFinalCharacterVariableDeclarationTest>",
             "private final char c",
@@ -621,8 +582,7 @@ class VariableTests {
         assertTrue(node.isFinal)
     }
 
-    @Test
-    fun testByteVariableDeclaration() {
+    "float variable declaration" {
         var node =
             ParserTestUtil.parseSingle("<ByteVariableDeclarationTest>", "byte b", ShakeVariableDeclarationNode::class)
         assertEquals("b", node.name)
@@ -1369,4 +1329,4 @@ class VariableTests {
         assertEquals("i", node.identifier.name)
         assertNull(node.identifier.parent)
     }
-}
+})
