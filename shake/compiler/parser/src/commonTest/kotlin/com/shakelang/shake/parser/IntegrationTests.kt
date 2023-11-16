@@ -61,6 +61,55 @@ class IntegrationTests {
     )
 
     @Test
+    fun testFieldOfCallLiteral() = testCodeSnippetValue(
+        "a().b", mapOf(
+            "name" to "ShakeVariableUsageNode",
+            "variable" to mapOf(
+                "name" to "b",
+                "parent" to mapOf(
+                    "name" to "ShakeInvocationNode",
+                    "function" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "a", "parent" to null)
+                    ),
+                    "args" to emptyList<Any>()
+                )
+            )
+        )
+    )
+
+    @Test
+    fun testFunctionCallWithArgsLiteral() = testCodeSnippetValue(
+        "a(1, 2)", mapOf(
+            "name" to "ShakeInvocationNode",
+            "function" to mapOf(
+                "name" to "ShakeVariableUsageNode",
+                "variable" to mapOf("name" to "a", "parent" to null)
+            ),
+            "args" to listOf(
+                mapOf("name" to "ShakeIntegerNode", "value" to 1),
+                mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    )
+
+    @Test
+    fun testCallOfReturnValue() = testCodeSnippetValue(
+        "a()()", mapOf(
+            "name" to "ShakeInvocationNode",
+            "function" to mapOf(
+                "name" to "ShakeInvocationNode",
+                "function" to mapOf(
+                    "name" to "ShakeVariableUsageNode",
+                    "variable" to mapOf("name" to "a", "parent" to null)
+                ),
+                "args" to emptyList<Any>()
+            ),
+            "args" to emptyList<Any>()
+        )
+    )
+
+    @Test
     fun testPriorityExpression() = testCodeSnippetValue(
         "(1 + 2)", mapOf(
             "name" to "ShakePriorityNode",

@@ -1386,7 +1386,7 @@ class ShakeParserImpl(
     }
 
     private fun expectCast(): ShakeValuedNode {
-        var result = expectFactor()
+        var result = expectFunctionReturning()
         while (input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.KEYWORD_AS) {
             input.skip()
             var target: CastTarget?
@@ -1439,11 +1439,12 @@ class ShakeParserImpl(
         return result
     }
 
-    private fun expectFunctionReturning() {
+    private fun expectFunctionReturning(): ShakeValuedNode {
         var value = expectFactor()
         while (input.hasNext() && input.peekType() == ShakeTokenType.LPAREN) {
             value = expectInvocation(value)
         }
+        return value
     }
 
     private fun expectFactor(): ShakeValuedNode {
