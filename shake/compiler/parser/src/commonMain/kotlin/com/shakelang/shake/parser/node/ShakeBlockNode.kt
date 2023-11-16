@@ -8,7 +8,7 @@ class ShakeBlockNode(map: PositionMap, val children: Array<ShakeStatementNode>) 
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "Tree",
+            "name" to nodeName,
             "children" to children.map { it.json }
         )
 }

@@ -6,7 +6,7 @@ class ShakePackageNode(map: PositionMap, val pkg: Array<String>) : ShakeFileChil
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "ImportNode",
+            "name" to nodeName,
             "package" to pkg
         )
 }

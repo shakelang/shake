@@ -21,7 +21,7 @@ class ShakeIdentifierNode : ShakeNodeImpl {
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "IdentifierNode",
+            "name" to nodeName,
             "parent" to (parent?.json),
             "name" to name
         )

@@ -6,6 +6,5 @@ import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 
 class ShakeVariableDecreaseNode(map: PositionMap, val variable: ShakeValuedNode, val operatorPosition: Int) :
     ShakeValuedStatementNodeImpl(map) {
-
-    override fun toJson(): Map<String, *> = mapOf("name" to "VariableDecreaseNode", "variable" to variable.json)
+    override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "variable" to variable.json)
 }

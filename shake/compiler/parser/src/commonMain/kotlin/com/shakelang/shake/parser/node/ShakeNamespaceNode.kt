@@ -8,7 +8,7 @@ class ShakeNamespaceNode(
 ) : ShakeNodeImpl(map) {
     override fun toJson(): Map<String, *> {
         return mapOf(
-            "type" to "namespace",
+            "type" to nodeName,
             "parts" to parts
         )
     }

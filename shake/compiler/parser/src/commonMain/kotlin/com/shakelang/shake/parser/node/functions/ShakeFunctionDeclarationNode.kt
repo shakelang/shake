@@ -1,18 +1,27 @@
 package com.shakelang.shake.parser.node.functions
 
-import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.ShakeBlockNode
-import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
-import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.parser.node.*
 import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.jvm.JvmOverloads
 
-class ShakeFunctionDeclarationNode @JvmOverloads constructor(
+
+class ShakeFunctionParameterNode @JvmOverloads constructor(
+    map: PositionMap,
+    val name: String,
+    val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
+    val defaultValue: ShakeValuedNode? = null
+) : ShakeNodeImpl(map) {
+
+    override fun toJson(): Map<String, *> =
+        mapOf("name" to nodeName, "argument_name" to name, "type" to type.toString())
+}
+
+class ShakeFunctionDeclarationNode(
     map: PositionMap,
     val expandedType: ShakeVariableType?,
     val name: String,
     val body: ShakeBlockNode?,
-    val args: Array<ShakeFunctionArgumentNode>,
+    val args: Array<ShakeFunctionParameterNode>,
     val type: ShakeVariableType,
     val access: ShakeAccessDescriber?,
     val isStatic: Boolean,
@@ -27,7 +36,7 @@ class ShakeFunctionDeclarationNode @JvmOverloads constructor(
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "FunctionDeclarationNode",
+            "name" to nodeName,
             "function_name" to name,
             "args" to args.map { it.json },
             "body" to body?.json,

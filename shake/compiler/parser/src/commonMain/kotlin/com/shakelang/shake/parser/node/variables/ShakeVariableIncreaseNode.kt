@@ -7,5 +7,5 @@ import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 class ShakeVariableIncreaseNode(map: PositionMap, val variable: ShakeValuedNode, val operatorPosition: Int) :
     ShakeValuedStatementNodeImpl(map) {
 
-    override fun toJson(): Map<String, *> = mapOf("name" to "VariableModAssignmentNode", "variable" to variable.json)
+    override fun toJson(): Map<String, *> = mapOf("name" to nodeName, "variable" to variable.json)
 }

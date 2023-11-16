@@ -6,7 +6,7 @@ import com.shakelang.shake.parser.node.*
 import com.shakelang.shake.parser.node.ShakeCastNode.CastTarget
 import com.shakelang.shake.parser.node.expression.*
 import com.shakelang.shake.parser.node.factor.*
-import com.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionParameterNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.functions.ShakeReturnNode
@@ -950,8 +950,8 @@ class ShakeParserImpl(
     /**
      * Expects function arguments. (This parses all between the "(" and ")" of a function)
      */
-    private fun expectFunctionArguments(): Array<ShakeFunctionArgumentNode> {
-        val args = ArrayList<ShakeFunctionArgumentNode>()
+    private fun expectFunctionArguments(): Array<ShakeFunctionParameterNode> {
+        val args = ArrayList<ShakeFunctionParameterNode>()
         if (!input.skipIgnorable()
                 .hasNext() || input.nextType() != ShakeTokenType.LPAREN
         ) {
@@ -975,7 +975,7 @@ class ShakeParserImpl(
     /**
      * Expects a function argument declaration.
      */
-    private fun expectArgument(): ShakeFunctionArgumentNode {
+    private fun expectArgument(): ShakeFunctionParameterNode {
         val type = expectType()
         val name = input.nextValue() ?: throw ParserError("Expecting identifier")
         val value = if (input.peekType() == ShakeTokenType.ASSIGN) {
@@ -984,7 +984,7 @@ class ShakeParserImpl(
         } else {
             null
         }
-        return ShakeFunctionArgumentNode(map, name, type, value)
+        return ShakeFunctionParameterNode(map, name, type, value)
     }
 
     /**

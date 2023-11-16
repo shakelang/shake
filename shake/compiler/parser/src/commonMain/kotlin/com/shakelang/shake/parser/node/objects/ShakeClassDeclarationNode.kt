@@ -60,7 +60,7 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "ClassDeclarationNode",
+            "name" to nodeName,
             "is_static" to isStatic,
             "is_final" to isFinal,
             "access" to access.toString(),

@@ -8,7 +8,7 @@ class ShakeFileNode(map: PositionMap, val children: Array<ShakeFileChildNode>) :
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "Tree",
+            "name" to nodeName,
             "children" to children.map { it.json }
         )
 }

@@ -26,7 +26,7 @@ class ShakeTypeArgumentDeclarationNode(
 
     override fun toJson(): Map<String, *> {
         return mapOf(
-            "type" to "TypeArgumentDeclarationNode",
+            "type" to nodeName,
             "name" to name,
             "extends" to extends?.toJson()
         )

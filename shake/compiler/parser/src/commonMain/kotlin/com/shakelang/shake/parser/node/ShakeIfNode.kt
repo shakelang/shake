@@ -13,7 +13,7 @@ class ShakeIfNode(
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "IfNode",
+            "name" to nodeName,
             "condition" to condition.json,
             "body" to body.json
         )

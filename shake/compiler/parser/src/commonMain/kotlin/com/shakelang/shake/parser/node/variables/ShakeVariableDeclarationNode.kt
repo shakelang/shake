@@ -21,7 +21,7 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "VariableDivAssignmentNode",
+            "name" to nodeName,
             "variable_name" to name,
             "type" to type.toString(),
             "access" to access.toString(),

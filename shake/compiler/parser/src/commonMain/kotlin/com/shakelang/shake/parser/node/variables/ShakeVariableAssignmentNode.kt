@@ -10,10 +10,8 @@ abstract class ShakeCommonVariableAssignmentNode(
     val value: ShakeValuedNode,
     val operatorPosition: Int
 ) : ShakeValuedStatementNodeImpl(map) {
-    abstract val name: String
-
     override fun toJson(): Map<String, *> = mapOf(
-        "name" to name,
+        "name" to nodeName,
         "variable" to variable.json,
         "value" to value.json
     )
@@ -24,60 +22,45 @@ class ShakeVariableAssignmentNode(
     variable: ShakeValuedNode,
     value: ShakeValuedNode,
     operatorPosition: Int
-) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition) {
-    override val name: String = "VariableAssignmentNode"
-}
+) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition)
 
 class ShakeVariableAddAssignmentNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     value: ShakeValuedNode,
     operatorPosition: Int
-) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition) {
-    override val name: String = "VariableAddAssignmentNode"
-}
+) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition)
 
 class ShakeVariableSubAssignmentNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     value: ShakeValuedNode,
     operatorPosition: Int
-) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition) {
-    override val name: String = "VariableSubAssignmentNode"
-}
+) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition)
 
 class ShakeVariableMulAssignmentNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     value: ShakeValuedNode,
     operatorPosition: Int
-) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition) {
-    override val name: String = "VariableMulAssignmentNode"
-}
-
+) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition)
 class ShakeVariableDivAssignmentNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     value: ShakeValuedNode,
     operatorPosition: Int
-) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition) {
-    override val name: String = "VariableDivAssignmentNode"
-}
+) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition)
 
 class ShakeVariableModAssignmentNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     value: ShakeValuedNode,
     operatorPosition: Int
-) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition) {
-    override val name: String = "VariableModAssignmentNode"
-}
+) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition)
 
 class ShakeVariablePowAssignmentNode(
     map: PositionMap,
     variable: ShakeValuedNode,
     value: ShakeValuedNode,
     operatorPosition: Int
-) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition) {
-    override val name: String = "VariablePowAssignmentNode"
-}
+) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition)

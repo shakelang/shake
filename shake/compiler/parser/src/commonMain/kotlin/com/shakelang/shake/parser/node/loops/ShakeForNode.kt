@@ -17,7 +17,7 @@ class ShakeForNode(
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "ForNode",
+            "name" to nodeName,
             "body" to body.json,
             "declaration" to declaration.json,
             "condition" to condition.json,

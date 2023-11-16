@@ -11,7 +11,7 @@ class ShakeTypeArgumentsNode(
 
     override fun toJson(): Map<String, *> {
         return mapOf(
-            "type" to "TypeArguments",
+            "type" to nodeName,
             "typeArguments" to typeArguments.map { it.toJson() }
         )
     }

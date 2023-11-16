@@ -21,7 +21,7 @@ open class ShakeVariableType {
 
     fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "VariableType",
+            "name" to this::class.simpleName,
             "type" to type
         )
 

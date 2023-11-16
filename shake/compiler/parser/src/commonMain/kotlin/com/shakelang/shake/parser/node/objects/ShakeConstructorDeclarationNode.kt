@@ -3,7 +3,7 @@ package com.shakelang.shake.parser.node.objects
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeValuedNodeImpl
-import com.shakelang.shake.parser.node.functions.ShakeFunctionArgumentNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionParameterNode
 import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.jvm.JvmOverloads
 
@@ -14,7 +14,7 @@ class ShakeConstructorDeclarationNode
     map: PositionMap,
     val name: String?,
     val body: ShakeBlockNode,
-    val args: Array<ShakeFunctionArgumentNode>,
+    val args: Array<ShakeFunctionParameterNode>,
     val access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE,
     val isNative: Boolean,
     val isSynchronized: Boolean
@@ -25,7 +25,7 @@ class ShakeConstructorDeclarationNode
     constructor(
         map: PositionMap,
         body: ShakeBlockNode,
-        args: Array<ShakeFunctionArgumentNode>,
+        args: Array<ShakeFunctionParameterNode>,
         access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE,
         isNative: Boolean,
         isSynchronized: Boolean
@@ -33,7 +33,7 @@ class ShakeConstructorDeclarationNode
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "ConstructorDeclarationNode",
+            "name" to nodeName,
             "function_name" to name,
             "args" to args.map { it.json },
             "body" to body.json,
