@@ -25,6 +25,25 @@ open class ShakeVariableType: ShakeNode {
             "type" to type
         )
 
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeVariableType) return false
+        if (type != other.type) return false
+
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeVariableType) return false
+        if (type != other.type) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return type.hashCode()
+    }
+
     class Object(val namespace: ShakeNamespaceNode?) : ShakeVariableType(Type.OBJECT)
     class Array(val subtype: ShakeVariableType) : ShakeVariableType(Type.ARRAY)
 

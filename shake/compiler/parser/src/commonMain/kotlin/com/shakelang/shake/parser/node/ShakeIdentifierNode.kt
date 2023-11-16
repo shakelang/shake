@@ -25,4 +25,28 @@ class ShakeIdentifierNode : ShakeNodeImpl {
             "parent" to (parent?.json),
             "name" to name
         )
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeIdentifierNode) return false
+        if (parent != other.parent) return false
+        if (name != other.name) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeIdentifierNode) return false
+        if (parent != other.parent) return false
+        if (name != other.name) return false
+        if (map != other.map) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = parent?.hashCode() ?: 0
+        result = 31 * result + name.hashCode()
+        result = 31 * result + map.hashCode()
+        return result
+    }
 }

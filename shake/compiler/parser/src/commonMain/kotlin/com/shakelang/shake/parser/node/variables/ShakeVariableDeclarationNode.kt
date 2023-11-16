@@ -29,4 +29,54 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
             "is_static" to isStatic,
             "is_final" to isFinal
         )
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeVariableDeclarationNode) return false
+        if (expandedType != other.expandedType) return false
+        if (name != other.name) return false
+        if (type != other.type) return false
+        if (value != other.value) return false
+        if (access != other.access) return false
+        if (isStatic != other.isStatic) return false
+        if (isFinal != other.isFinal) return false
+        if (isNative != other.isNative) return false
+        if (isConst != other.isConst) return false
+        if (isOverride != other.isOverride) return false
+        return isInline == other.isInline
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeVariableDeclarationNode) return false
+        if (expandedType != other.expandedType) return false
+        if (name != other.name) return false
+        if (type != other.type) return false
+        if (value != other.value) return false
+        if (access != other.access) return false
+        if (isStatic != other.isStatic) return false
+        if (isFinal != other.isFinal) return false
+        if (isNative != other.isNative) return false
+        if (isConst != other.isConst) return false
+        if (isOverride != other.isOverride) return false
+        if (isInline != other.isInline) return false
+        if (map != other.map) return false
+        return true
+    }
+
+override fun hashCode(): Int {
+        var result = expandedType?.hashCode() ?: 0
+        result = 31 * result + name.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + (value?.hashCode() ?: 0)
+        result = 31 * result + access.hashCode()
+        result = 31 * result + isStatic.hashCode()
+        result = 31 * result + isFinal.hashCode()
+        result = 31 * result + isNative.hashCode()
+        result = 31 * result + isConst.hashCode()
+        result = 31 * result + isOverride.hashCode()
+        result = 31 * result + isInline.hashCode()
+        result = 31 * result + map.hashCode()
+        return result
+    }
 }

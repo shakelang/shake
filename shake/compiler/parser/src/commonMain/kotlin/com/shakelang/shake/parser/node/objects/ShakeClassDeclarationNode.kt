@@ -69,6 +69,63 @@ class ShakeClassDeclarationNode @JvmOverloads constructor(
             "classes" to classes.map { it.json },
             "constructors" to constructors.map { it.json }
         )
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeClassDeclarationNode) return false
+        if (name != other.name) return false
+        if (extends != other.extends) return false
+        if (!implements.contentEquals(other.implements)) return false
+        if (!fields.contentEquals(other.fields)) return false
+        if (!methods.contentEquals(other.methods)) return false
+        if (!classes.contentEquals(other.classes)) return false
+        if (!constructors.contentEquals(other.constructors)) return false
+        if (access != other.access) return false
+        if (type != other.type) return false
+        if (isStatic != other.isStatic) return false
+        if (isFinal != other.isFinal) return false
+        if (isAbstract != other.isAbstract) return false
+        if (isNative != other.isNative) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeClassDeclarationNode) return false
+        if (name != other.name) return false
+        if (extends != other.extends) return false
+        if (!implements.contentEquals(other.implements)) return false
+        if (!fields.contentEquals(other.fields)) return false
+        if (!methods.contentEquals(other.methods)) return false
+        if (!classes.contentEquals(other.classes)) return false
+        if (!constructors.contentEquals(other.constructors)) return false
+        if (access != other.access) return false
+        if (type != other.type) return false
+        if (isStatic != other.isStatic) return false
+        if (isFinal != other.isFinal) return false
+        if (isAbstract != other.isAbstract) return false
+        if (isNative != other.isNative) return false
+        if (map != other.map) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (extends?.hashCode() ?: 0)
+        result = 31 * result + implements.contentHashCode()
+        result = 31 * result + fields.contentHashCode()
+        result = 31 * result + methods.contentHashCode()
+        result = 31 * result + classes.contentHashCode()
+        result = 31 * result + constructors.contentHashCode()
+        result = 31 * result + access.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + isStatic.hashCode()
+        result = 31 * result + isFinal.hashCode()
+        result = 31 * result + isAbstract.hashCode()
+        result = 31 * result + isNative.hashCode()
+        result = 31 * result + map.hashCode()
+        return result
+    }
 }
 
 enum class ShakeClassType {

@@ -15,6 +15,24 @@ class ShakeTypeArgumentsNode(
             "typeArguments" to typeArguments.map { it.toJson() }
         )
     }
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeTypeArgumentsNode) return false
+        if (!typeArguments.map { it.equalsIgnorePosition(other) }.all { it }) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeTypeArgumentsNode) return false
+        if (!typeArguments.map { it.equals(other) }.all { it }) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return typeArguments.hashCode()
+    }
 }
 
 class ShakeTypeArgumentNode(
@@ -29,5 +47,19 @@ class ShakeTypeArgumentNode(
             "type" to "TypeArgument",
             "type" to type.toJson()
         )
+    }
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeTypeArgumentNode) return false
+        if (!type.equalsIgnorePosition(other.type)) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeTypeArgumentNode) return false
+        if (!type.equals(other.type)) return false
+        return true
     }
 }

@@ -16,4 +16,25 @@ class ShakeNamespaceNode(
     override fun toString(): String {
         return parts.joinToString(".")
     }
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeNamespaceNode) return false
+        if (!parts.contentEquals(other.parts)) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeNamespaceNode) return false
+        if (!parts.contentEquals(other.parts)) return false
+        if (map != other.map) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = parts.contentHashCode()
+        result = 31 * result + map.hashCode()
+        return result
+    }
 }

@@ -10,6 +10,8 @@ interface ShakeNode {
     val nodeName get() = this::class.simpleName!!
 
     fun toJson(): Map<String, *> = mapOf("name" to nodeName)
+    override fun equals(other: Any?): Boolean
+    fun equalsIgnorePosition(other: Any?): Boolean
 }
 
 abstract class ShakeNodeImpl protected constructor(val map: PositionMap) : ShakeNode {

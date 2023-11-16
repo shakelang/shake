@@ -11,4 +11,25 @@ class ShakeFileNode(map: PositionMap, val children: Array<ShakeFileChildNode>) :
             "name" to nodeName,
             "children" to children.map { it.json }
         )
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeFileNode) return false
+        if (!children.contentEquals(other.children)) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeFileNode) return false
+        if (!children.contentEquals(other.children)) return false
+        if (map != other.map) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = children.contentHashCode()
+        result = 31 * result + map.hashCode()
+        return result
+    }
 }
