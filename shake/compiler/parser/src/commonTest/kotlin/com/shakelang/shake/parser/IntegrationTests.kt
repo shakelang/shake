@@ -31,17 +31,17 @@ class IntegrationTests {
     @Test
     fun testVariableLiteral() = testCodeSnippetValue(
         "a",
-        mapOf("name" to "VariableUsageNode", "variable" to mapOf("name" to "a", "parent" to null))
+        mapOf("name" to "ShakeVariableUsageNode", "variable" to mapOf("name" to "a", "parent" to null))
     )
 
     @Test
     fun testFieldLiteral() = testCodeSnippetValue(
         "a.b", mapOf(
-            "name" to "VariableUsageNode",
+            "name" to "ShakeVariableUsageNode",
             "variable" to mapOf(
                 "name" to "b",
                 "parent" to mapOf(
-                    "name" to "VariableUsageNode",
+                    "name" to "ShakeVariableUsageNode",
                     "variable" to mapOf("name" to "a", "parent" to null)
                 )
             )
@@ -53,7 +53,7 @@ class IntegrationTests {
         "a()", mapOf(
             "name" to "ShakeInvocationNode",
             "function" to mapOf(
-                "name" to "VariableUsageNode",
+                "name" to "ShakeVariableUsageNode",
                 "variable" to mapOf("name" to "a", "parent" to null)
             ),
             "args" to emptyList<Any>()
@@ -665,7 +665,103 @@ class IntegrationTests {
         )
     }
 
+    @Test
+    fun testAssign() {
+        testCodeSnippetValue(
+            "a = 2", mapOf(
+                "name" to "ShakeVariableAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeVariableUsageNode",
+                    "variable" to mapOf("name" to "a", "parent" to null)
+                ),
+                "value" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
 
+    @Test
+    fun testAddAssign() {
+        testCodeSnippetValue(
+            "a += 2", mapOf(
+                "name" to "ShakeVariableAddAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeVariableUsageNode",
+                    "variable" to mapOf("name" to "a", "parent" to null)
+                ),
+                "value" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testSubAssign() {
+        testCodeSnippetValue(
+            "a -= 2", mapOf(
+                "name" to "ShakeVariableSubAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeVariableUsageNode",
+                    "variable" to mapOf("name" to "a", "parent" to null)
+                ),
+                "value" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testMulAssign() {
+        testCodeSnippetValue(
+            "a *= 2", mapOf(
+                "name" to "ShakeVariableMulAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeVariableUsageNode",
+                    "variable" to mapOf("name" to "a", "parent" to null)
+                ),
+                "value" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testDivAssign() {
+        testCodeSnippetValue(
+            "a /= 2", mapOf(
+                "name" to "ShakeVariableDivAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeVariableUsageNode",
+                    "variable" to mapOf("name" to "a", "parent" to null)
+                ),
+                "value" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testModAssign() {
+        testCodeSnippetValue(
+            "a %= 2", mapOf(
+                "name" to "ShakeVariableModAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeVariableUsageNode",
+                    "variable" to mapOf("name" to "a", "parent" to null)
+                ),
+                "value" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
+
+    @Test
+    fun testPowAssign() {
+        testCodeSnippetValue(
+            "a **= 2", mapOf(
+                "name" to "ShakeVariablePowAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeVariableUsageNode",
+                    "variable" to mapOf("name" to "a", "parent" to null)
+                ),
+                "value" to mapOf("name" to "ShakeIntegerNode", "value" to 2)
+            )
+        )
+    }
 
     // Utils
 
