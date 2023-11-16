@@ -139,4 +139,9 @@ interface PositionMap {
             return source.location
         }
     }
+
+    companion object {
+        fun empty(source: CharacterSource): PositionMap = PositionMapImplementation(source, intArrayOf())
+        fun empty(): PositionMap = empty(CharacterSource.from("empty", "<PositionMap#empty()>"))
+    }
 }
