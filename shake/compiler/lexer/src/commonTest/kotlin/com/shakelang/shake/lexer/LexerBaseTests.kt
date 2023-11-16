@@ -221,6 +221,9 @@ class LexerBaseTests {
     fun testVoid() = testKeyword(KeywordTest.VOID)
 
     @Test
+    fun testVar() = testKeyword(KeywordTest.VAR)
+
+    @Test
     fun testConstructor() = testKeyword(KeywordTest.CONSTRUCTOR)
 
     @Test
@@ -284,6 +287,7 @@ class LexerBaseTests {
         NEW("new", ShakeTokenType.KEYWORD_NEW),
         IMPORT("import", ShakeTokenType.KEYWORD_IMPORT),
         VOID("void", ShakeTokenType.KEYWORD_VOID),
+        VAR("var", ShakeTokenType.KEYWORD_VAR),
         CONSTRUCTOR("constructor", ShakeTokenType.KEYWORD_CONSTRUCTOR),
         AS("as", ShakeTokenType.KEYWORD_AS);
 

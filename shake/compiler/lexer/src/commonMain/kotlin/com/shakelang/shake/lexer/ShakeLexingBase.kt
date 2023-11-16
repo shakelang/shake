@@ -232,6 +232,7 @@ abstract class ShakeLexingBase(
                 "this" -> ShakeTokenType.KEYWORD_THIS
                 "true" -> ShakeTokenType.KEYWORD_TRUE
                 "unsigned" -> ShakeTokenType.KEYWORD_UNSIGNED
+                "var" -> ShakeTokenType.KEYWORD_VAR
                 "void" -> ShakeTokenType.KEYWORD_VOID
                 "while" -> ShakeTokenType.KEYWORD_WHILE
                 else -> return ShakeToken(ShakeTokenType.IDENTIFIER, identifier.toString(), start, end)
