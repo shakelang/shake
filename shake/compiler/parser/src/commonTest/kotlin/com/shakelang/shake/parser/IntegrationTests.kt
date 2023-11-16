@@ -812,6 +812,174 @@ class IntegrationTests {
         )
     }
 
+    @Test
+    fun testOrBeforeAssign() {
+        testCodeSnippetValue(
+            "a || b = 2", mapOf(
+                "name" to "ShakeVariableAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeLogicalOrNode",
+                    "left" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "a", "parent" to null)
+                    ),
+                    "right" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "b", "parent" to null)
+                    )
+                ),
+                "value" to mapOf(
+                    "name" to "ShakeIntegerNode",
+                    "value" to 2
+                )
+            )
+        )
+    }
+
+    @Test
+    fun testOrBeforeAddAssign() {
+        testCodeSnippetValue(
+            "a || b += 2", mapOf(
+                "name" to "ShakeVariableAddAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeLogicalOrNode",
+                    "left" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "a", "parent" to null)
+                    ),
+                    "right" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "b", "parent" to null)
+                    )
+                ),
+                "value" to mapOf(
+                    "name" to "ShakeIntegerNode",
+                    "value" to 2
+                )
+            )
+        )
+    }
+
+    @Test
+    fun testOrBeforeSubAssign() {
+        testCodeSnippetValue(
+            "a || b -= 2", mapOf(
+                "name" to "ShakeVariableSubAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeLogicalOrNode",
+                    "left" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "a", "parent" to null)
+                    ),
+                    "right" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "b", "parent" to null)
+                    )
+                ),
+                "value" to mapOf(
+                    "name" to "ShakeIntegerNode",
+                    "value" to 2
+                )
+            )
+        )
+    }
+
+    @Test
+    fun testOrBeforeMulAssign() {
+        testCodeSnippetValue(
+            "a || b *= 2", mapOf(
+                "name" to "ShakeVariableMulAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeLogicalOrNode",
+                    "left" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "a", "parent" to null)
+                    ),
+                    "right" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "b", "parent" to null)
+                    )
+                ),
+                "value" to mapOf(
+                    "name" to "ShakeIntegerNode",
+                    "value" to 2
+                )
+            )
+        )
+    }
+
+    @Test
+    fun testOrBeforeDivAssign() {
+        testCodeSnippetValue(
+            "a || b /= 2", mapOf(
+                "name" to "ShakeVariableDivAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeLogicalOrNode",
+                    "left" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "a", "parent" to null)
+                    ),
+                    "right" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "b", "parent" to null)
+                    )
+                ),
+                "value" to mapOf(
+                    "name" to "ShakeIntegerNode",
+                    "value" to 2
+                )
+            )
+        )
+    }
+
+    @Test
+    fun testOrBeforeModAssign() {
+        testCodeSnippetValue(
+            "a || b %= 2", mapOf(
+                "name" to "ShakeVariableModAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeLogicalOrNode",
+                    "left" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "a", "parent" to null)
+                    ),
+                    "right" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "b", "parent" to null)
+                    )
+                ),
+                "value" to mapOf(
+                    "name" to "ShakeIntegerNode",
+                    "value" to 2
+                )
+            )
+        )
+    }
+
+    @Test
+    fun testOrBeforePowAssign() {
+        testCodeSnippetValue(
+            "a || b **= 2", mapOf(
+                "name" to "ShakeVariablePowAssignmentNode",
+                "variable" to mapOf(
+                    "name" to "ShakeLogicalOrNode",
+                    "left" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "a", "parent" to null)
+                    ),
+                    "right" to mapOf(
+                        "name" to "ShakeVariableUsageNode",
+                        "variable" to mapOf("name" to "b", "parent" to null)
+                    )
+                ),
+                "value" to mapOf(
+                    "name" to "ShakeIntegerNode",
+                    "value" to 2
+                )
+            )
+        )
+    }
+
     // Utils
 
     private fun testCodeSnippetValue(code: String, expected: Any) {
