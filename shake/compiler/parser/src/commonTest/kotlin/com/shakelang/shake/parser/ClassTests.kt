@@ -16,9 +16,9 @@ class ClassTests: FreeSpec({
         val accessPrefix = access.prefix?.plus(" ") ?: ""
         val baseList = listOfNotNull(access.prefix)
 
-        "$accessPrefix class" {
+        "${accessPrefix}class" {
 
-            val tree = ParserTestUtil.parse("<${accessPrefix}class test>", "$accessPrefix class test {}")
+            val tree = ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test {}")
             assertEquals(1, tree.children.size)
             assertType(ShakeClassDeclarationNode::class, tree.children[0])
             val node = tree.children[0] as ShakeClassDeclarationNode
@@ -32,9 +32,9 @@ class ClassTests: FreeSpec({
 
         }
 
-        "$accessPrefix final class" {
+        "${accessPrefix}final class" {
 
-            val tree = ParserTestUtil.parse("<${accessPrefix}final class test>", "$accessPrefix final class test {}")
+            val tree = ParserTestUtil.parse("<${accessPrefix}final class test>", "${accessPrefix}final class test {}")
             assertEquals(1, tree.children.size)
             assertType(ShakeClassDeclarationNode::class, tree.children[0])
             val node = tree.children[0] as ShakeClassDeclarationNode
@@ -51,10 +51,10 @@ class ClassTests: FreeSpec({
         ShakeAccessDescriber.entries.forEach { access2 ->
             val accessPrefix2 = access2.prefix?.plus(" ") ?: ""
             val baseList2 = listOfNotNull(access2.prefix)
-            "$accessPrefix class with a ${accessPrefix2}field" {
+            "${accessPrefix}class with a ${accessPrefix2}field" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}class test>", "$accessPrefix class test { ${accessPrefix2}int i = 0; }")
+                    ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}int i = 0; }")
                 assertEquals(1, tree.children.size)
                 assertType(ShakeClassDeclarationNode::class, tree.children[0])
                 val node = tree.children[0] as ShakeClassDeclarationNode
@@ -76,10 +76,10 @@ class ClassTests: FreeSpec({
 
             }
 
-            "$accessPrefix class with a ${accessPrefix2}method" {
+            "${accessPrefix}class with a ${accessPrefix2}method" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}class test>", "$accessPrefix class test { ${accessPrefix2}void f() {} }")
+                    ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}void f() {} }")
                 assertEquals(1, tree.children.size)
                 assertType(ShakeClassDeclarationNode::class, tree.children[0])
                 val node = tree.children[0] as ShakeClassDeclarationNode
@@ -101,10 +101,10 @@ class ClassTests: FreeSpec({
 
             }
 
-            "$accessPrefix class with a ${accessPrefix2}class" {
+            "${accessPrefix}class with a ${accessPrefix2}class" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}class test>", "$accessPrefix class test { ${accessPrefix2}class Test {} }")
+                    ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}class Test {} }")
                 assertEquals(1, tree.children.size)
                 assertType(ShakeClassDeclarationNode::class, tree.children[0])
                 val node = tree.children[0] as ShakeClassDeclarationNode
@@ -127,10 +127,10 @@ class ClassTests: FreeSpec({
 
             }
 
-            "$accessPrefix class with a ${accessPrefix2}constructor" {
+            "${accessPrefix}class with a ${accessPrefix2}constructor" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}class test>", "$accessPrefix class test { ${accessPrefix2}constructor() {} }")
+                    ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}constructor() {} }")
                 assertEquals(1, tree.children.size)
                 assertType(ShakeClassDeclarationNode::class, tree.children[0])
                 val node = tree.children[0] as ShakeClassDeclarationNode
