@@ -26,13 +26,13 @@ class VariableTests : FreeSpec({
     )
 
     listOf(
-        AssignmentTestDescriptor("VariableAssignmentTest", "=", ShakeVariableAssignmentNode::class),
-        AssignmentTestDescriptor("VariableAddAssignmentTest", "+=", ShakeVariableAddAssignmentNode::class),
-        AssignmentTestDescriptor("VariableSubAssignmentTest", "-=", ShakeVariableSubAssignmentNode::class),
-        AssignmentTestDescriptor("VariableMulAssignmentTest", "*=", ShakeVariableMulAssignmentNode::class),
-        AssignmentTestDescriptor("VariableDivAssignmentTest", "/=", ShakeVariableDivAssignmentNode::class),
-        AssignmentTestDescriptor("VariableModAssignmentTest", "%=", ShakeVariableModAssignmentNode::class),
-        AssignmentTestDescriptor("VariablePowAssignmentTest", "**=", ShakeVariablePowAssignmentNode::class),
+        AssignmentTestDescriptor("variable assignment", "=", ShakeVariableAssignmentNode::class),
+        AssignmentTestDescriptor("variable add assignment", "+=", ShakeVariableAddAssignmentNode::class),
+        AssignmentTestDescriptor("variable sub assignment", "-=", ShakeVariableSubAssignmentNode::class),
+        AssignmentTestDescriptor("variable mul assignment", "*=", ShakeVariableMulAssignmentNode::class),
+        AssignmentTestDescriptor("variable div assignment", "/=", ShakeVariableDivAssignmentNode::class),
+        AssignmentTestDescriptor("variable mod assignment", "%=", ShakeVariableModAssignmentNode::class),
+        AssignmentTestDescriptor("variable pow assignment", "**=", ShakeVariablePowAssignmentNode::class),
     ).forEach {
         it.name {
             val node = ParserTestUtil.parseStatement("<${it.name}>", "i ${it.operator} 0", it.nodeClass)
