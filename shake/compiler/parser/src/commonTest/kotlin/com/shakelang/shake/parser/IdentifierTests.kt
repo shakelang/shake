@@ -4,21 +4,21 @@ import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.ShakeIdentifierNode
 import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
+import io.kotest.core.spec.style.FreeSpec
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-class IdentifierTests {
-    @Test
-    fun testBasicIdentifier() {
+class IdentifierTests : FreeSpec({
+
+    "test basic identifier" {
         val node = ParserTestUtil.parseValue("<BasicIdentifierTest>", "test", ShakeVariableUsageNode::class)
         assertEquals("test", node.identifier.name)
         assertNull(node.identifier.parent)
     }
 
-    @Test
-    fun testComplexIdentifier() {
+    "test complex identifier" {
         var node = ParserTestUtil.parseValue("<BasicIdentifierTest>", "test.test2", ShakeVariableUsageNode::class)
         assertEquals("test2", node.identifier.name)
         assertNotNull(node.identifier.parent)
@@ -28,8 +28,7 @@ class IdentifierTests {
         assertNull(node.identifier.parent)
     }
 
-    @Test
-    fun testComplexIdentifierWithFunctions() {
+    "test complex identifier with invocation" {
         var node = ParserTestUtil.parseValue("<BasicIdentifierTest>", "aaa.test().test2", ShakeVariableUsageNode::class)
         assertEquals("test2", node.identifier.name)
         assertNotNull(node.identifier.parent)
@@ -43,4 +42,4 @@ class IdentifierTests {
         assertEquals("aaa", node.identifier.name)
         assertNull(node.identifier.parent)
     }
-}
+})
