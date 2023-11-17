@@ -13,11 +13,11 @@ import com.shakelang.shake.parser.node.loops.ShakeForNode
 import com.shakelang.shake.parser.node.loops.ShakeWhileNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
+import io.kotest.core.spec.style.FreeSpec
 import kotlin.test.*
 
-class ParserTests {
-    @Test
-    fun testImport() {
+class ParserTests : FreeSpec({
+    "test import" {
         var node = ParserTestUtil.parse("<ImportTest>", "import com;")
         assertEquals(1, node.children.size)
         assertType(ShakeImportNode::class, node.children[0])
@@ -38,8 +38,7 @@ class ParserTests {
         )
     }
 
-    @Test
-    fun testMultiStatement() {
+    "test multi statement" {
         var node = ParserTestUtil.parseStatement("<MultiStatementTest>", "var i; println(i);")
         assertEquals(2, node.children.size)
         assertType(ShakeVariableDeclarationNode::class, node.children[0])
@@ -50,8 +49,7 @@ class ParserTests {
         assertType(ShakeInvocationNode::class, node.children[1])
     }
 
-    @Test
-    fun testWhile() {
+    "test while" {
         var node = ParserTestUtil.parseStatement("<WhileTest>", "while (true) { println(); }", ShakeWhileNode::class)
         assertNotNull(node.condition)
         assertNotNull(node.body)
@@ -64,8 +62,7 @@ class ParserTests {
         assertType(ShakeBlockNode::class, node.body)
     }
 
-    @Test
-    fun testDoWhile() {
+    "test do while" {
         var node =
             ParserTestUtil.parseStatement("<DoWhileTest>", "do { println(i) } while (true);", ShakeDoWhileNode::class)
         assertNotNull(node.condition)
@@ -79,8 +76,7 @@ class ParserTests {
         assertType(ShakeBlockNode::class, node.body)
     }
 
-    @Test
-    fun testFor() {
+    "test for" {
         var node = ParserTestUtil.parseStatement(
             "<ForTest>",
             "for(var i = 0; i < 100; i++) { println(); }",
@@ -106,8 +102,7 @@ class ParserTests {
         assertType(ShakeBlockNode::class, node.body)
     }
 
-    @Test
-    fun testIf() {
+    "test if" {
         var node = ParserTestUtil.parseStatement("<IfTest>", "if (true) { println(i) }", ShakeIfNode::class)
         assertNotNull(node.condition)
         assertNotNull(node.body)
@@ -144,4 +139,4 @@ class ParserTests {
         assertType(ShakeBlockNode::class, if2.body)
         assertType(ShakeBlockNode::class, if2.elseBody!!)
     }
-}
+})
