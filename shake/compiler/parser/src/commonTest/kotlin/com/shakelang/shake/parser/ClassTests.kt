@@ -2,12 +2,15 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
+import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import com.shakelang.shake.shouldBeOfType
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class ClassTests: FreeSpec({
 
@@ -69,7 +72,9 @@ class ClassTests: FreeSpec({
                 val variable = node.fields[0]
                 variable.type.type shouldBe ShakeVariableType.Type.INTEGER
                 variable.access shouldBe access2
-                variable.value shouldBe 0
+                variable.value shouldNotBe null
+                variable.value shouldBeOfType ShakeIntegerNode::class
+                (variable.value as ShakeIntegerNode).number shouldBe 0
                 variable.name shouldBe "i"
                 variable.isStatic shouldBe false
                 variable.isFinal shouldBe false
@@ -139,17 +144,14 @@ class ClassTests: FreeSpec({
                 node.isFinal shouldBe false
                 node.name shouldBe "test"
                 node.fields.size shouldBe 0
-                node.methods.size shouldBe 1
+                node.methods.size shouldBe 0
                 node.classes.size shouldBe 0
-                node.methods[0] shouldBeOfType ShakeFunctionDeclarationNode::class
-                val function = node.methods[0]
-                function.type.type shouldBe ShakeVariableType.Type.VOID
-                function.access shouldBe access2
-                function.args.size shouldBe 0
-                function.name shouldBe "constructor"
-                function.isStatic shouldBe false
-                function.isFinal shouldBe false
-
+                node.constructors.size shouldBe 1
+                node.constructors[0] shouldBeOfType ShakeConstructorDeclarationNode::class
+                val constructor = node.constructors[0]
+                constructor.access shouldBe access2
+                constructor.args.size shouldBe 0
+                constructor.name shouldBe null
             }
         }
     }

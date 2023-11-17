@@ -457,7 +457,10 @@ class ShakeParserImpl(
                 }
             }
 
-            else -> throw ParserError("Unexpected token (" + input.peekType() + ')')
+            else -> {
+                input.skip()
+                throw ParserError("Unexpected token (" + input.actualType + ')')
+            }
         }
     }
 

@@ -13,6 +13,10 @@ group = projectGroup("compiler.parser")
 version = resolveVersion()
 description = "Utilities for parsing stuff with kotlin"
 
+repositories {
+    mavenCentral()
+}
+
 kotlin {
     dependencies {
         implementation(project(":util:parseutils"))
@@ -23,5 +27,12 @@ kotlin {
         testImplementation("io.kotest:kotest-assertions-core:$KOTEST_VERSION")
         testImplementation("io.kotest:kotest-property:$KOTEST_VERSION")
 
+        jvmTest {
+            implementation("io.kotest:kotest-runner-junit5-jvm:5.8.0")
+        }
     }
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }

@@ -22,11 +22,11 @@ class FunctionTests : FreeSpec({
 
     listOf(
         FunctionDeclarationDescriptor("void", ShakeVariableType.VOID),
-        FunctionDeclarationDescriptor("int", ShakeVariableType.BYTE),
+        FunctionDeclarationDescriptor("byte", ShakeVariableType.BYTE),
         FunctionDeclarationDescriptor("short", ShakeVariableType.SHORT),
         FunctionDeclarationDescriptor("int", ShakeVariableType.INTEGER),
         FunctionDeclarationDescriptor("long", ShakeVariableType.LONG),
-        FunctionDeclarationDescriptor("unsigned byte", ShakeVariableType.UNSIGNED_INTEGER),
+        FunctionDeclarationDescriptor("unsigned byte", ShakeVariableType.UNSIGNED_BYTE),
         FunctionDeclarationDescriptor("unsigned short", ShakeVariableType.UNSIGNED_SHORT),
         FunctionDeclarationDescriptor("unsigned int", ShakeVariableType.UNSIGNED_INTEGER),
         FunctionDeclarationDescriptor("unsigned long", ShakeVariableType.UNSIGNED_LONG),
@@ -44,7 +44,7 @@ class FunctionTests : FreeSpec({
 
                 val fn = ParserTestUtil.parseSingle(
                     "<FunctionTest>",
-                    "$access${it.declarationType} test() { return 10; }",
+                    "$accessPrefix${it.declarationType} test() { return 10; }",
                     ShakeFunctionDeclarationNode::class
                 )
                 fn.access shouldBe access
@@ -65,7 +65,7 @@ class FunctionTests : FreeSpec({
                 (baseList + listOf("final")).allCombinations().forEach { creationParams ->
                     val fn = ParserTestUtil.parseSingle(
                         "<FunctionTest>",
-                        "$creationParams ${it.declarationType} test() { return 10; }",
+                        "${creationParams.joinToString(" ") } ${it.declarationType} test() { return 10; }",
                         ShakeFunctionDeclarationNode::class
                     )
                     fn.access shouldBe access

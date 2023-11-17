@@ -2,6 +2,7 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
@@ -9,6 +10,7 @@ import com.shakelang.shake.shouldBeOfType
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class InterfaceTests : FreeSpec({
     "final interface" {
@@ -68,7 +70,9 @@ class InterfaceTests : FreeSpec({
                 val variable = node.fields[0]
                 variable.type.type shouldBe ShakeVariableType.Type.INTEGER
                 variable.access shouldBe access2
-                variable.value shouldBe 0
+                variable.value shouldNotBe null
+                variable.value shouldBeOfType ShakeIntegerNode::class
+                (variable.value as ShakeIntegerNode).number shouldBe 0
                 variable.name shouldBe "i"
                 variable.isStatic shouldBe false
                 variable.isFinal shouldBe false
