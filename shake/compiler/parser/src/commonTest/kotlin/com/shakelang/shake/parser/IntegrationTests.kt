@@ -2,7 +2,6 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.expression.*
-import com.shakelang.shake.parser.node.variables.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import kotlin.reflect.KClass

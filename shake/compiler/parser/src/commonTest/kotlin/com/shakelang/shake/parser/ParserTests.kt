@@ -54,7 +54,10 @@ class ParserTests : FreeSpec({
         node.condition shouldNotBe null
         node.body shouldNotBe null
         node.condition shouldBeOfType ShakeLogicalTrueNode::class
-        node.body shouldBeOfType ShakeInvocationNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        val body = node.body
+        body.children.size shouldBe 1
+        body.children[0] shouldBeOfType ShakeInvocationNode::class
     }
 
     "test do while" {
@@ -109,16 +112,25 @@ class ParserTests : FreeSpec({
         node.body shouldNotBe null
         node.elseBody shouldBe null
         node.condition shouldBeOfType ShakeLogicalTrueNode::class
-        node.body shouldBeOfType ShakeInvocationNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
         node.condition shouldBeOfType ShakeLogicalTrueNode::class
-        node.body shouldBeOfType ShakeInvocationNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
         node = ParserTestUtil.parseStatement("<IfTest>", "if (true) println(i); else println(i);", ShakeIfNode::class)
         node.condition shouldNotBe null
         node.body shouldNotBe null
         node.elseBody shouldNotBe null
         node.condition shouldBeOfType ShakeLogicalTrueNode::class
-        node.body shouldBeOfType ShakeInvocationNode::class
-        node.elseBody shouldBeOfType ShakeInvocationNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+        node.elseBody shouldBeOfType ShakeBlockNode::class
+        node.elseBody!!.children.size shouldBe 1
+        node.elseBody!!.children[0] shouldBeOfType ShakeInvocationNode::class
+
         node = ParserTestUtil.parseStatement(
             "<IfTest>",
             "if (true) println(i); else if (true) println(i); else println(i);",
@@ -128,7 +140,22 @@ class ParserTests : FreeSpec({
         node.body shouldNotBe null
         node.elseBody shouldNotBe null
         node.condition shouldBeOfType ShakeLogicalTrueNode::class
-        node.body shouldBeOfType ShakeInvocationNode::class
-        node.elseBody shouldBeOfType ShakeIfNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+        node.elseBody shouldBeOfType ShakeBlockNode::class
+        node.elseBody!!.children.size shouldBe 1
+        node.elseBody!!.children[0] shouldBeOfType ShakeIfNode::class
+        node = node.elseBody!!.children[0] as ShakeIfNode
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.elseBody shouldNotBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+        node.elseBody shouldBeOfType ShakeBlockNode::class
+        node.elseBody!!.children.size shouldBe 1
+        node.elseBody!!.children[0] shouldBeOfType ShakeInvocationNode::class
     }
 })
