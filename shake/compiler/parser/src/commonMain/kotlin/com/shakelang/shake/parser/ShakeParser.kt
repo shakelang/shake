@@ -1286,7 +1286,7 @@ class ShakeParserImpl(
             input.skip()
             val pos = input.actualStart
             left = when (tmpType) {
-                ShakeTokenType.EQ_EQUALS -> return ShakeEqualNode(map, left, expectValuedLogicalOr(), pos)
+                ShakeTokenType.EQ_EQUALS -> return ShakeEqualNode(map, left, expectValuedRelational(), pos)
                 else -> ShakeNotEqualNode(map, left, expectValuedRelational(), pos)
             }
         }

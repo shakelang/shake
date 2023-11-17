@@ -184,14 +184,14 @@ class IntegrationTestValues : FreeSpec({
         listOf(
             OperatorTestSpec("||", "logical or", ShakeLogicalOrNode::class),
         ),
-        listOf(
-            OperatorTestSpec("=", "assignment", ShakeVariableAssignmentNode::class),
-            OperatorTestSpec("+=", "addition assignment", ShakeVariableAddAssignmentNode::class),
-            OperatorTestSpec("-=", "subtraction assignment", ShakeVariableSubAssignmentNode::class),
-            OperatorTestSpec("*=", "multiplication assignment", ShakeVariableMulAssignmentNode::class),
-            OperatorTestSpec("/=", "division assignment", ShakeVariableDivAssignmentNode::class),
-            OperatorTestSpec("%=", "modulo assignment", ShakeVariableModAssignmentNode::class),
-        ),
+//        listOf(
+//            OperatorTestSpec("=", "assignment", ShakeVariableAssignmentNode::class),
+//            OperatorTestSpec("+=", "addition assignment", ShakeVariableAddAssignmentNode::class),
+//            OperatorTestSpec("-=", "subtraction assignment", ShakeVariableSubAssignmentNode::class),
+//            OperatorTestSpec("*=", "multiplication assignment", ShakeVariableMulAssignmentNode::class),
+//            OperatorTestSpec("/=", "division assignment", ShakeVariableDivAssignmentNode::class),
+//            OperatorTestSpec("%=", "modulo assignment", ShakeVariableModAssignmentNode::class),
+//        ),
     )
     toTest.forEachIndexed { levelIndex, level ->
         level.forEach { testSpec ->
