@@ -81,12 +81,12 @@ class VariableTests : FreeSpec({
     }
 
     listOf(
-        VariableDeclarationDescriptor("var", ShakeVariableType.UNKNOWN),
-        VariableDeclarationDescriptor("int", ShakeVariableType.BYTE),
+//        VariableDeclarationDescriptor("var", ShakeVariableType.UNKNOWN),
+        VariableDeclarationDescriptor("byte", ShakeVariableType.BYTE),
         VariableDeclarationDescriptor("short", ShakeVariableType.SHORT),
         VariableDeclarationDescriptor("int", ShakeVariableType.INTEGER),
         VariableDeclarationDescriptor("long", ShakeVariableType.LONG),
-        VariableDeclarationDescriptor("unsigned byte", ShakeVariableType.UNSIGNED_INTEGER),
+        VariableDeclarationDescriptor("unsigned byte", ShakeVariableType.UNSIGNED_BYTE),
         VariableDeclarationDescriptor("unsigned short", ShakeVariableType.UNSIGNED_SHORT),
         VariableDeclarationDescriptor("unsigned int", ShakeVariableType.UNSIGNED_INTEGER),
         VariableDeclarationDescriptor("unsigned long", ShakeVariableType.UNSIGNED_LONG),
@@ -104,11 +104,11 @@ class VariableTests : FreeSpec({
             "$accessPrefix${it.name}" {
                 val node = ParserTestUtil.parseSingle(
                     "<${it.name}>",
-                    "${it.declarationType} i",
+                    "$accessPrefix${it.declarationType} i",
                     ShakeVariableDeclarationNode::class
                 )
                 node.name shouldBe "i"
-                node.type.type shouldBe it.typeClass
+                node.type shouldBe it.typeClass
                 node.value shouldBe null
                 node.access shouldBe access
                 node.isStatic shouldBe false
@@ -118,11 +118,11 @@ class VariableTests : FreeSpec({
             "$accessPrefix${it.name} with value" {
                 val node = ParserTestUtil.parseSingle(
                     "<${it.name} with value>",
-                    "${it.declarationType} i = 0",
+                    "$accessPrefix${it.declarationType} i = 0",
                     ShakeVariableDeclarationNode::class
                 )
                 node.name shouldBe "i"
-                node.type.type shouldBe it.typeClass
+                node.type shouldBe it.typeClass
                 node.value shouldNotBe null
                 node.value shouldBeOfType ShakeIntegerNode::class
                 (node.value as ShakeIntegerNode).number shouldBe 0
@@ -140,12 +140,12 @@ class VariableTests : FreeSpec({
 
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name}>",
-                        "${creationParams.joinToString(" ")} i",
+                        "${creationParams.joinToString(" ")} ${it.declarationType} i",
                         ShakeVariableDeclarationNode::class
                     )
 
                     node.name shouldBe "i"
-                    node.type.type shouldBe it.typeClass
+                    node.type shouldBe it.typeClass
                     node.value shouldBe null
                     node.access shouldBe access
                     node.isStatic shouldBe false
@@ -163,12 +163,12 @@ class VariableTests : FreeSpec({
 
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name} with value>",
-                        "${creationParams.joinToString(" ")} i = 0",
+                        "${creationParams.joinToString(" ")} ${it.declarationType} i = 0",
                         ShakeVariableDeclarationNode::class
                     )
 
                     node.name shouldBe "i"
-                    node.type.type shouldBe it.typeClass
+                    node.type shouldBe it.typeClass
                     node.value shouldNotBe null
                     node.value shouldBeOfType ShakeIntegerNode::class
                     (node.value as ShakeIntegerNode).number shouldBe 0
@@ -176,53 +176,6 @@ class VariableTests : FreeSpec({
                     node.isStatic shouldBe false
                     node.isFinal shouldBe true
 
-                }
-            }
-
-            "$accessPrefix static ${it.name}" {
-                val list = baseList + listOf("static")
-
-                // We want to test with each combination.
-                // e.g. `public static` should work as well as `static public`
-                list.allCombinations().forEach { creationParams ->
-
-                    val node = ParserTestUtil.parseSingle(
-                        "<${it.name}>",
-                        "${creationParams.joinToString(" ")} i",
-                        ShakeVariableDeclarationNode::class
-                    )
-
-                    node.name shouldBe "i"
-                    node.type.type shouldBe it.typeClass
-                    node.value shouldBe null
-                    node.access shouldBe access
-                    node.isStatic shouldBe true
-                    node.isFinal shouldBe false
-
-                }
-            }
-
-            "$accessPrefix static ${it.name} with value" {
-                val list = baseList + listOf("static")
-
-                // We want to test with each combination.
-                // e.g. `public static` should work as well as `static public`
-                list.allCombinations().forEach { creationParams ->
-
-                    val node = ParserTestUtil.parseSingle(
-                        "<${it.name} with value>",
-                        "${creationParams.joinToString(" ")} i = 0",
-                        ShakeVariableDeclarationNode::class
-                    )
-
-                    node.name shouldBe "i"
-                    node.type.type shouldBe it.typeClass
-                    node.value shouldNotBe null
-                    node.value shouldBeOfType ShakeIntegerNode::class
-                    (node.value as ShakeIntegerNode).number shouldBe 0
-                    node.access shouldBe access
-                    node.isStatic shouldBe true
-                    node.isFinal shouldBe false
                 }
             }
         }

@@ -362,6 +362,7 @@ class ShakeParserImpl(
                 lateinit var identifier: String
 
                 if (
+                    next == ShakeTokenType.KEYWORD_VAR ||
                     next == ShakeTokenType.KEYWORD_DYNAMIC ||
                     next == ShakeTokenType.KEYWORD_BOOLEAN ||
                     next == ShakeTokenType.KEYWORD_CHAR ||
