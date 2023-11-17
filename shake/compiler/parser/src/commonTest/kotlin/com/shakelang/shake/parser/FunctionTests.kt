@@ -11,7 +11,6 @@ import com.shakelang.shake.shouldBeOfType
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import kotlin.test.*
 
 class FunctionTests : FreeSpec({
 
@@ -91,12 +90,13 @@ class FunctionTests : FreeSpec({
     // C-Style
 
 
-    @Test
-    fun testReturn() {
+    "return" {
         val tree = ParserTestUtil.parseStatement("<FunctionTest>", "return 10;")
-        assertEquals(1, tree.children.size)
-        assertType(ShakeReturnNode::class, tree.children[0])
+        tree.children.size shouldBe 1;
+        tree.children[0] shouldBeOfType ShakeReturnNode::class
         val node = tree.children[0] as ShakeReturnNode
-        assertType(ShakeIntegerNode::class, node.value)
+        node.value shouldBeOfType ShakeIntegerNode::class
+        val int = node.value as ShakeIntegerNode
+        int.number shouldBe 10
     }
 })
