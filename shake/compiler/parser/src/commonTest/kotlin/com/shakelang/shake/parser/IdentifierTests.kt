@@ -1,11 +1,9 @@
 package com.shakelang.shake.parser
 
 import com.shakelang.shake.assertType
-import com.shakelang.shake.parser.node.ShakeIdentifierNode
 import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
 import io.kotest.core.spec.style.FreeSpec
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
