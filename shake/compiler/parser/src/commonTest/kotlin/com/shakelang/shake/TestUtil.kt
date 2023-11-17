@@ -1,7 +1,6 @@
 package com.shakelang.shake
 
 import kotlin.reflect.KClass
-import kotlin.test.Test
 
 expect fun assertType(expected: KClass<*>, actual: Any)
 expect fun assertArrayEquals(expected: Array<*>, actual: Array<*>)
@@ -26,4 +25,10 @@ fun <T> allCombinations(list: List<T>): Sequence<List<T>> {
             }
         }
     }
+}
+
+infix fun <T> T.shouldBeOfType(expected: KClass<*>) {
+    if(this == null) throw AssertionError("Expected $expected but was null")
+    assertType(expected, this)
+
 }

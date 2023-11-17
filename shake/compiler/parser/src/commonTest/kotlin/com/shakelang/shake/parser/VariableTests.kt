@@ -4,11 +4,14 @@ import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeIdentifierNode
 import com.shakelang.shake.parser.node.ShakeVariableType
-import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
+import com.shakelang.shake.parser.node.expression.ShakeAddNode
 import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
-import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
 import com.shakelang.shake.parser.node.variables.*
+import com.shakelang.shake.shouldBeOfType
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+import kotlin.reflect.KClass
 import kotlin.test.*
 
 class VariableTests : FreeSpec({
@@ -16,104 +19,43 @@ class VariableTests : FreeSpec({
     // // *************************************************************
     // // Assignments
 
-    "variable assignment" {
-        var node =
-            ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = 0", ShakeVariableAssignmentNode::class)
-        assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
-        assertNotNull(node.value)
-        assertType(ShakeIntegerNode::class, node.value)
-        node = ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = 0.1", ShakeVariableAssignmentNode::class)
-        assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
-        assertNotNull(node.value)
-        assertType(ShakeDoubleNode::class, node.value)
-        node = ParserTestUtil.parseStatement("<VariableAssignmentTest>", "i = true", ShakeVariableAssignmentNode::class)
-        assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
-        assertNotNull(node.value)
-        assertType(ShakeLogicalTrueNode::class, node.value)
-    }
+    class AssignmentTestDescriptor(
+        val name: String,
+        val operator: String,
+        val nodeClass: KClass<out ShakeCommonVariableAssignmentNode>
+    )
 
-    "variable add assignment" {
-        val node = ParserTestUtil.parseStatement(
-            "<VariableAddAssignmentTest>",
-            "i += 0",
-            ShakeVariableAddAssignmentNode::class
-        )
-        assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
-        assertNotNull(node.value)
-        assertType(ShakeIntegerNode::class, node.value)
-    }
+    listOf(
+        AssignmentTestDescriptor("VariableAssignmentTest", "=", ShakeVariableAssignmentNode::class),
+        AssignmentTestDescriptor("VariableAddAssignmentTest", "+=", ShakeVariableAddAssignmentNode::class),
+        AssignmentTestDescriptor("VariableSubAssignmentTest", "-=", ShakeVariableSubAssignmentNode::class),
+        AssignmentTestDescriptor("VariableMulAssignmentTest", "*=", ShakeVariableMulAssignmentNode::class),
+        AssignmentTestDescriptor("VariableDivAssignmentTest", "/=", ShakeVariableDivAssignmentNode::class),
+        AssignmentTestDescriptor("VariableModAssignmentTest", "%=", ShakeVariableModAssignmentNode::class),
+        AssignmentTestDescriptor("VariablePowAssignmentTest", "**=", ShakeVariablePowAssignmentNode::class),
+    ).forEach {
+        it.name {
+            val node = ParserTestUtil.parseStatement("<${it.name}>", "i ${it.operator} 0", it.nodeClass)
+            node shouldBeOfType it.nodeClass
+            (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
+            (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
+            node.value shouldNotBe null
+            node.value shouldBeOfType ShakeIntegerNode::class
+            (node.value as ShakeIntegerNode).number shouldBe 0
+        }
 
-    "variable sub assignment" {
-        val node = ParserTestUtil.parseStatement(
-            "<VariableSubAssignmentTest>",
-            "i -= 0",
-            ShakeVariableSubAssignmentNode::class
-        )
-        assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
-        assertNotNull(node.value)
-        assertType(ShakeIntegerNode::class, node.value)
-    }
-
-    "variable mul assignment" {
-        val node = ParserTestUtil.parseStatement(
-            "<VariableMulAssignmentTest>",
-            "i *= 0",
-            ShakeVariableMulAssignmentNode::class
-        )
-        assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
-        assertNotNull(node.value)
-        assertType(ShakeIntegerNode::class, node.value)
-    }
-
-    "variable div assignment" {
-        val node = ParserTestUtil.parseStatement(
-            "<VariableDivAssignmentTest>",
-            "i /= 1",
-            ShakeVariableDivAssignmentNode::class
-        )
-        assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
-        assertNotNull(node.value)
-        assertType(ShakeIntegerNode::class, node.value)
-    }
-
-    "variable mod assignment" {
-        val node = ParserTestUtil.parseStatement(
-            "<VariableModAssignmentTest>",
-            "i %= 1",
-            ShakeVariableModAssignmentNode::class
-        )
-        assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
-        assertNotNull(node.value)
-        assertType(ShakeIntegerNode::class, node.value)
-    }
-
-    "variable pow assignment" {
-        val node = ParserTestUtil.parseStatement(
-            "<VariablePowAssignmentTest>",
-            "i **= 0",
-            ShakeVariablePowAssignmentNode::class
-        )
-        assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
-        assertNotNull(node.value)
-        assertType(ShakeIntegerNode::class, node.value)
+        "${it.name} with expression" {
+            val node = ParserTestUtil.parseStatement("<${it.name}>", "i ${it.operator} 11 + 2", it.nodeClass)
+            node shouldBeOfType it.nodeClass
+            (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
+            (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
+            node.value shouldNotBe null
+            node.value shouldBeOfType ShakeAddNode::class
+            (node.value as ShakeAddNode).left shouldBeOfType ShakeIntegerNode::class
+            (node.value as ShakeAddNode).right shouldBeOfType ShakeIntegerNode::class
+            ((node.value as ShakeAddNode).left as ShakeIntegerNode).number shouldBe 11
+            ((node.value as ShakeAddNode).right as ShakeIntegerNode).number shouldBe 2
+        }
     }
 
     "variable incr" {
