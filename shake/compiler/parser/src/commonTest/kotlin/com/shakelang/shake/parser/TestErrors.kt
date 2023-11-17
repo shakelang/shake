@@ -50,7 +50,7 @@ class TestErrors : FreeSpec({
             ParserTestUtil.parseStatement("<TestAwaitSemicolonError>", "for(var i = 0 i<10) {", ShakeIfNode::class)
         }
 
-         error.start.index shouldBe 14
+        error.start.index shouldBe 14
         error.end.index shouldBe 14
         error.details shouldBe "Expecting semicolon at this point"
         error.marker.source shouldBe "<TestAwaitSemicolonError>:1:15"

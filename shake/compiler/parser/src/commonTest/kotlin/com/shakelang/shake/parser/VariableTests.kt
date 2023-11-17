@@ -12,8 +12,6 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import kotlin.reflect.KClass
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
 class VariableTests : FreeSpec({
 
@@ -62,15 +60,15 @@ class VariableTests : FreeSpec({
     "variable incr" {
         val node = ParserTestUtil.parseStatement("<VariableIncreaseTest>", "i ++", ShakeVariableIncreaseNode::class)
         assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
+        (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
+        (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
     }
 
     "variable decr" {
         val node = ParserTestUtil.parseStatement("<VariableDecreaseTest>", "i --", ShakeVariableDecreaseNode::class)
         assertType(ShakeVariableUsageNode::class, node.variable)
-        assertEquals("i", (node.variable as ShakeVariableUsageNode).identifier.name)
-        assertNull((node.variable as ShakeVariableUsageNode).identifier.parent)
+        (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
+        (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
     }
 
     // // *************************************************************
