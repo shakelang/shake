@@ -1,7 +1,5 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.assertArrayEquals
-import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeIfNode
 import com.shakelang.shake.parser.node.ShakeImportNode
@@ -14,6 +12,7 @@ import com.shakelang.shake.parser.node.loops.ShakeWhileNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
 import com.shakelang.shake.shouldBeOfType
+import com.shakelang.shake.shouldHaveSameContents
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -23,32 +22,26 @@ class ParserTests : FreeSpec({
         var node = ParserTestUtil.parse("<ImportTest>", "import com;")
         node.children.size shouldBe 1
          node.children[0] shouldBeOfType ShakeImportNode::class
-        assertArrayEquals(arrayOf("com"), (node.children[0] as ShakeImportNode).import)
+        (node.children[0] as ShakeImportNode).import shouldHaveSameContents arrayOf("com")
         node = ParserTestUtil.parse("<ImportTest>", "import com.shakelang.shake;")
         node.children.size shouldBe 1
         node.children[0] shouldBeOfType ShakeImportNode::class
-        assertArrayEquals(
-            arrayOf("com", "shakelang", "shake"),
-            (node.children[0] as ShakeImportNode).import
-        )
+        (node.children[0] as ShakeImportNode).import shouldHaveSameContents arrayOf("com", "shakelang", "shake")
         node = ParserTestUtil.parse("<ImportTest>", "import com.shakelang.shake.*;")
         node.children.size shouldBe 1
-        assertType(ShakeImportNode::class, node.children[0])
-        assertArrayEquals(
-            arrayOf("com", "shakelang", "shake", "*"),
-            (node.children[0] as ShakeImportNode).import
-        )
+        node.children[0] shouldBeOfType ShakeImportNode::class
+        (node.children[0] as ShakeImportNode).import shouldHaveSameContents arrayOf("com", "shakelang", "shake", "*")
     }
 
     "test multi statement" {
         var node = ParserTestUtil.parseStatement("<MultiStatementTest>", "var i; println(i);")
         node.children.size shouldBe 2
-        assertType(ShakeVariableDeclarationNode::class, node.children[0])
-        assertType(ShakeInvocationNode::class, node.children[1])
+        node.children[0] shouldBeOfType ShakeVariableDeclarationNode::class
+        node.children[1] shouldBeOfType ShakeInvocationNode::class
         node = ParserTestUtil.parseStatement("<MultiStatementTest>", "var i\nprintln(i)")
         node.children.size shouldBe 2
-        assertType(ShakeVariableDeclarationNode::class, node.children[0])
-        assertType(ShakeInvocationNode::class, node.children[1])
+        node.children[0] shouldBeOfType ShakeVariableDeclarationNode::class
+        node.children[1] shouldBeOfType ShakeInvocationNode::class
     }
 
     "test while" {
@@ -117,8 +110,8 @@ class ParserTests : FreeSpec({
         node.elseBody shouldBe null
         node.condition shouldBeOfType ShakeLogicalTrueNode::class
         node.body shouldBeOfType ShakeInvocationNode::class
-        assertType(ShakeLogicalTrueNode::class, node.condition)
-        assertType(ShakeBlockNode::class, node.body)
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeInvocationNode::class
         node = ParserTestUtil.parseStatement("<IfTest>", "if (true) println(i); else println(i);", ShakeIfNode::class)
         node.condition shouldNotBe null
         node.body shouldNotBe null

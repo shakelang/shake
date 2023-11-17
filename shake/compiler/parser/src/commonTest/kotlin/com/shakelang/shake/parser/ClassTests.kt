@@ -1,11 +1,11 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.shouldBeOfType
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -20,7 +20,7 @@ class ClassTests: FreeSpec({
 
             val tree = ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test {}")
             tree.children.size shouldBe  1
-            assertType(ShakeClassDeclarationNode::class, tree.children[0])
+            tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
             val node = tree.children[0] as ShakeClassDeclarationNode
             node.access shouldBe access
             node.isStatic shouldBe false
@@ -36,7 +36,7 @@ class ClassTests: FreeSpec({
 
             val tree = ParserTestUtil.parse("<${accessPrefix}final class test>", "${accessPrefix}final class test {}")
             tree.children.size shouldBe  1
-            assertType(ShakeClassDeclarationNode::class, tree.children[0])
+            tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
             val node = tree.children[0] as ShakeClassDeclarationNode
             node.access shouldBe access
             node.isStatic shouldBe false
@@ -56,7 +56,7 @@ class ClassTests: FreeSpec({
                 val tree =
                     ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}int i = 0; }")
                 tree.children.size shouldBe  1
-                assertType(ShakeClassDeclarationNode::class, tree.children[0])
+                tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
                 node.access shouldBe access
                 node.isStatic shouldBe false
@@ -65,7 +65,7 @@ class ClassTests: FreeSpec({
                 node.fields.size shouldBe 1
                 node.methods.size shouldBe 0
                 node.classes.size shouldBe 0
-                assertType(ShakeVariableDeclarationNode::class, node.fields[0])
+                node.fields[0] shouldBeOfType ShakeVariableDeclarationNode::class
                 val variable = node.fields[0]
                 variable.type.type shouldBe ShakeVariableType.Type.INTEGER
                 variable.access shouldBe access2
@@ -81,7 +81,7 @@ class ClassTests: FreeSpec({
                 val tree =
                     ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}void f() {} }")
                 tree.children.size shouldBe  1
-                assertType(ShakeClassDeclarationNode::class, tree.children[0])
+                tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
                 node.access shouldBe access
                 node.isStatic shouldBe false
@@ -90,7 +90,7 @@ class ClassTests: FreeSpec({
                 node.fields.size shouldBe 0
                 node.methods.size shouldBe 1
                 node.classes.size shouldBe 0
-                assertType(ShakeFunctionDeclarationNode::class, node.methods[0])
+                node.methods[0] shouldBeOfType ShakeFunctionDeclarationNode::class
                 val function = node.methods[0]
                 function.type.type shouldBe ShakeVariableType.Type.VOID
                 function.access shouldBe access2
@@ -106,7 +106,7 @@ class ClassTests: FreeSpec({
                 val tree =
                     ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}class Test {} }")
                 tree.children.size shouldBe 1
-                assertType(ShakeClassDeclarationNode::class, tree.children[0])
+                tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
                 node.access shouldBe access
                 node.isStatic shouldBe false
@@ -115,7 +115,7 @@ class ClassTests: FreeSpec({
                 node.fields.size shouldBe 0
                 node.methods.size shouldBe 0
                 node.classes.size shouldBe 1
-                assertType(ShakeClassDeclarationNode::class, node.classes[0])
+                node.classes[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val clazz = node.classes[0]
                 clazz.access shouldBe access2
                 clazz.isStatic shouldBe false
@@ -132,7 +132,7 @@ class ClassTests: FreeSpec({
                 val tree =
                     ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}constructor() {} }")
                 tree.children.size shouldBe  1
-                assertType(ShakeClassDeclarationNode::class, tree.children[0])
+                tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
                 node.access shouldBe access
                 node.isStatic shouldBe false
@@ -141,7 +141,7 @@ class ClassTests: FreeSpec({
                 node.fields.size shouldBe 0
                 node.methods.size shouldBe 1
                 node.classes.size shouldBe 0
-                assertType(ShakeFunctionDeclarationNode::class, node.methods[0])
+                node.methods[0] shouldBeOfType ShakeFunctionDeclarationNode::class
                 val function = node.methods[0]
                 function.type.type shouldBe ShakeVariableType.Type.VOID
                 function.access shouldBe access2

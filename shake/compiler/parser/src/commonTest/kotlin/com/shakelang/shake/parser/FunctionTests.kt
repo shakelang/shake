@@ -1,7 +1,6 @@
 package com.shakelang.shake.parser
 
 import com.shakelang.shake.allCombinations
-import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
 import com.shakelang.shake.parser.node.factor.ShakeIntegerNode

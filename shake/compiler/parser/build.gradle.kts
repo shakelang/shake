@@ -18,7 +18,6 @@ kotlin {
         implementation(project(":util:parseutils"))
         implementation(project(":util:shason"))
         implementation(project(":shake:compiler:lexer"))
-        testImplementation(kotlin("test"))
         testImplementation(kotlin("stdlib"))
         testImplementation("io.kotest:kotest-framework-engine:$KOTEST_VERSION")
         testImplementation("io.kotest:kotest-assertions-core:$KOTEST_VERSION")

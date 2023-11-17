@@ -2,8 +2,12 @@ package com.shakelang.shake
 
 import kotlin.reflect.KClass
 
-expect fun assertType(expected: KClass<*>, actual: Any)
-expect fun assertArrayEquals(expected: Array<*>, actual: Array<*>)
+infix fun <T> Array<T>.shouldHaveSameContents(expected: Array<T>) {
+    if(this.size != expected.size) throw AssertionError("Expected ${expected.size} elements but was ${this.size}")
+    for(i in this.indices) {
+        if(this[i] != expected[i]) throw AssertionError("Expected ${expected[i]} but was ${this[i]}")
+    }
+}
 
 /**
  * Returns a stream of all possible permutations of the given list.
@@ -31,5 +35,5 @@ fun <T> List<T>.allCombinations(): Sequence<List<T>> {
 
 infix fun <T> T.shouldBeOfType(expected: KClass<*>) {
     if(this == null) throw AssertionError("Expected $expected but was null")
-    assertType(expected, this)
+    if(!expected.isInstance(this)) throw AssertionError("Expected $expected but was ${this!!::class}")
 }

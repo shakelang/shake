@@ -1,13 +1,13 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.assertType
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.node.*
+import com.shakelang.shake.shouldBeOfType
 import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import kotlin.reflect.KClass
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 object ParserTestUtil {
     fun parse(source: String, input: String): ShakeFileNode {
@@ -40,11 +40,11 @@ object ParserTestUtil {
         val nodes = file.children
 
         // Result should be 1 node
-        assertEquals(1, nodes.size)
+        nodes.size shouldBe  1
 
         // result is expected class
-        assertNotNull(nodes[0])
-        assertType(type, nodes[0])
+        nodes[0] shouldNotBe null
+        nodes[0] shouldBeOfType type
         return nodes[0] as T
     }
 
@@ -54,18 +54,18 @@ object ParserTestUtil {
         val nodes = tree.children
 
         // Result should be 1 node
-        assertEquals(1, nodes.size)
+        nodes.size shouldBe 1
 
         // result is expected class
-        assertNotNull(nodes[0])
-        assertType(type, nodes[0])
+        nodes[0] shouldNotBe null
+        nodes[0] shouldBeOfType type
         return nodes[0] as T
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : ShakeValuedNode> parseValue(source: String, input: String, type: KClass<T>): T {
         val value = parseValue(source, input)
-        assertType(type, value)
+        value shouldNotBe null
         return value as T
     }
 }

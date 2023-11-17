@@ -1,7 +1,6 @@
 package com.shakelang.shake.parser
 
 import com.shakelang.shake.allCombinations
-import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
 import com.shakelang.shake.parser.node.expression.ShakeAddNode
@@ -59,14 +58,14 @@ class VariableTests : FreeSpec({
 
     "variable incr" {
         val node = ParserTestUtil.parseStatement("<VariableIncreaseTest>", "i ++", ShakeVariableIncreaseNode::class)
-        assertType(ShakeVariableUsageNode::class, node.variable)
+        node.variable shouldBeOfType ShakeVariableUsageNode::class
         (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
         (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
     }
 
     "variable decr" {
         val node = ParserTestUtil.parseStatement("<VariableDecreaseTest>", "i --", ShakeVariableDecreaseNode::class)
-        assertType(ShakeVariableUsageNode::class, node.variable)
+        node.variable shouldBeOfType ShakeVariableUsageNode::class
         (node.variable as ShakeVariableUsageNode).identifier.name shouldBe "i"
         (node.variable as ShakeVariableUsageNode).identifier.parent shouldBe null
     }
