@@ -24,8 +24,8 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
             "name" to nodeName,
             "variable_name" to name,
             "type" to type.json,
-            "access" to access.toString(),
-            "assignment" to this.value?.toJson(),
+            "access" to access.name.lowercase(),
+            "assignment" to this.value?.json,
             "is_static" to isStatic,
             "is_final" to isFinal
         )

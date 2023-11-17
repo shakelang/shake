@@ -249,7 +249,7 @@ class Statements : FreeSpec({
                             "name" to "ShakeVariableType",
                             "type" to "unknown"
                         ),
-                        "access" to "PACKAGE",
+                        "access" to "package",
                         "assignment" to mapOf("name" to "ShakeIntegerNode", "value" to 2),
                         "is_static" to false,
                         "is_final" to false
