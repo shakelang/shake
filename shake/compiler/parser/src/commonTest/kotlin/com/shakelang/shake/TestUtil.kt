@@ -7,21 +7,23 @@ expect fun assertArrayEquals(expected: Array<*>, actual: Array<*>)
 
 /**
  * Returns a stream of all possible permutations of the given list.
+ *
+ * `a b c` -> `{a, b c}, {a, c b}, {b, a c}, {b, c a}, {c, a b}, {c, b a}`
  */
-// a b c -> {a, b c}, {a, c b}, {b, a c}, {b, c a}, {c, a b}, {c, b a}
-fun <T> allCombinations(list: List<T>): Sequence<List<T>> {
+
+fun <T> List<T>.allCombinations(): Sequence<List<T>> {
     return sequence {
-        val indices = list.indices.toList()
+        val indices = this@allCombinations.indices.toList()
 
         for (i in indices.indices) {
             // get sublist without i
-            val subList = list.subList(0, i) + list.subList(i + 1, list.size)
+            val subList = this@allCombinations.subList(0, i) + this@allCombinations.subList(i + 1, this@allCombinations.size)
             if (subList.isEmpty()) {
-                yield(listOf(list[i]))
+                yield(listOf(this@allCombinations[i]))
                 continue
             }
-            for(combination in allCombinations(subList)) {
-                yield(listOf(list[i]) + combination)
+            for(combination in subList.allCombinations()) {
+                yield(listOf(this@allCombinations[i]) + combination)
             }
         }
     }
@@ -30,5 +32,4 @@ fun <T> allCombinations(list: List<T>): Sequence<List<T>> {
 infix fun <T> T.shouldBeOfType(expected: KClass<*>) {
     if(this == null) throw AssertionError("Expected $expected but was null")
     assertType(expected, this)
-
 }
