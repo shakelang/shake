@@ -3,7 +3,7 @@ package com.shakelang.shake.parser.node
 import com.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
 
 @Suppress("unused")
-open class ShakeVariableType: ShakeNode {
+open class ShakeVariableType : ShakeNode {
     val type: Type
 
     constructor(subtype: ShakeNamespaceNode?) {

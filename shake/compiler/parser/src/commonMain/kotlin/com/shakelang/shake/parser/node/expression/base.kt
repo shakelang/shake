@@ -21,7 +21,7 @@ abstract class ShakeExpressionNode(
         if (this === other) return true
         if (other !is ShakeExpressionNode) return false
 
-        if(other::class != this::class) return false
+        if (other::class != this::class) return false
         if (left != other.left) return false
         if (right != other.right) return false
         if (operatorPosition != other.operatorPosition) return false
@@ -34,7 +34,7 @@ abstract class ShakeExpressionNode(
         if (this === other) return true
         if (other !is ShakeExpressionNode) return false
 
-        if(other::class != this::class) return false
+        if (other::class != this::class) return false
         if (!left.equalsIgnorePosition(other.left)) return false
         if (!right.equalsIgnorePosition(other.right)) return false
         if (operator != other.operator) return false
@@ -66,7 +66,7 @@ abstract class ShakeUnaryNode(
         if (this === other) return true
         if (other !is ShakeUnaryNode) return false
 
-        if(other::class != this::class) return false
+        if (other::class != this::class) return false
         if (value != other.value) return false
         if (operatorPosition != other.operatorPosition) return false
         if (operator != other.operator) return false
@@ -78,7 +78,7 @@ abstract class ShakeUnaryNode(
         if (this === other) return true
         if (other !is ShakeUnaryNode) return false
 
-        if(other::class != this::class) return false
+        if (other::class != this::class) return false
         if (!value.equalsIgnorePosition(other.value)) return false
         if (operator != other.operator) return false
 

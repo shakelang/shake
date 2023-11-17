@@ -6,8 +6,8 @@ import com.shakelang.shake.parser.node.factor.ShakeDoubleNode
 import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalFalseNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
-import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import com.shakelang.shake.parser.node.loops.ShakeForNode
 import com.shakelang.shake.parser.node.loops.ShakeWhileNode

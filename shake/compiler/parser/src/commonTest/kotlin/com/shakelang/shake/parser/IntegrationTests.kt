@@ -205,7 +205,7 @@ class IntegrationTestValues : FreeSpec({
                 )
             }
 
-            for(i in 0 until  levelIndex) {
+            for (i in 0 until levelIndex) {
                 val previousLevel = toTest[i]
                 previousLevel.forEach { previousTestSpec ->
                     "test ${previousTestSpec.name} before ${testSpec.name} operator" {

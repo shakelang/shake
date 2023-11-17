@@ -12,7 +12,7 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
-class ClassTests: FreeSpec({
+class ClassTests : FreeSpec({
 
     ShakeAccessDescriber.entries.forEach { access ->
 
@@ -22,7 +22,7 @@ class ClassTests: FreeSpec({
         "${accessPrefix}class" {
 
             val tree = ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test {}")
-            tree.children.size shouldBe  1
+            tree.children.size shouldBe 1
             tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
             val node = tree.children[0] as ShakeClassDeclarationNode
             node.access shouldBe access
@@ -38,7 +38,7 @@ class ClassTests: FreeSpec({
         "${accessPrefix}final class" {
 
             val tree = ParserTestUtil.parse("<${accessPrefix}final class test>", "${accessPrefix}final class test {}")
-            tree.children.size shouldBe  1
+            tree.children.size shouldBe 1
             tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
             val node = tree.children[0] as ShakeClassDeclarationNode
             node.access shouldBe access
@@ -57,8 +57,11 @@ class ClassTests: FreeSpec({
             "${accessPrefix}class with a ${accessPrefix2}field" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}int i = 0; }")
-                tree.children.size shouldBe  1
+                    ParserTestUtil.parse(
+                        "<${accessPrefix}class test>",
+                        "${accessPrefix}class test { ${accessPrefix2}int i = 0; }"
+                    )
+                tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
                 node.access shouldBe access
@@ -84,8 +87,11 @@ class ClassTests: FreeSpec({
             "${accessPrefix}class with a ${accessPrefix2}method" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}void f() {} }")
-                tree.children.size shouldBe  1
+                    ParserTestUtil.parse(
+                        "<${accessPrefix}class test>",
+                        "${accessPrefix}class test { ${accessPrefix2}void f() {} }"
+                    )
+                tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
                 node.access shouldBe access
@@ -109,7 +115,10 @@ class ClassTests: FreeSpec({
             "${accessPrefix}class with a ${accessPrefix2}class" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}class Test {} }")
+                    ParserTestUtil.parse(
+                        "<${accessPrefix}class test>",
+                        "${accessPrefix}class test { ${accessPrefix2}class Test {} }"
+                    )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
@@ -135,8 +144,11 @@ class ClassTests: FreeSpec({
             "${accessPrefix}class with a ${accessPrefix2}constructor" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}class test>", "${accessPrefix}class test { ${accessPrefix2}constructor() {} }")
-                tree.children.size shouldBe  1
+                    ParserTestUtil.parse(
+                        "<${accessPrefix}class test>",
+                        "${accessPrefix}class test { ${accessPrefix2}constructor() {} }"
+                    )
+                tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
                 node.access shouldBe access

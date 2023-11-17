@@ -74,7 +74,7 @@ class BitwiseTest : FreeSpec({
         node1 shouldBe node2
     }
 
-     "${ShakeBitwiseAndNode::class.simpleName} - Should not be equal to another node with a different value" {
+    "${ShakeBitwiseAndNode::class.simpleName} - Should not be equal to another node with a different value" {
         val map = PositionMap.empty()
 
         val dummy1 = DummyValuedNode(1)

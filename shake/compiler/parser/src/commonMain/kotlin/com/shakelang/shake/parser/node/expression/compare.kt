@@ -8,7 +8,8 @@ class ShakeEqualNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValued
     override val operator: String
         get() = "=="
 
-    override fun toJson(): Map<String, *> = mapOf("name" to "ShakeEqualNode", "left" to left.json, "right" to right.json)
+    override fun toJson(): Map<String, *> =
+        mapOf("name" to "ShakeEqualNode", "left" to left.json, "right" to right.json)
 }
 
 class ShakeNotEqualNode(

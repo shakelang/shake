@@ -65,7 +65,7 @@ class FunctionTests : FreeSpec({
                 (baseList + listOf("final")).allCombinations().forEach { creationParams ->
                     val fn = ParserTestUtil.parseSingle(
                         "<FunctionTest>",
-                        "${creationParams.joinToString(" ") } ${it.declarationType} test() { return 10; }",
+                        "${creationParams.joinToString(" ")} ${it.declarationType} test() { return 10; }",
                         ShakeFunctionDeclarationNode::class
                     )
                     fn.access shouldBe access

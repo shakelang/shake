@@ -19,7 +19,7 @@ abstract class ShakeCommonVariableAssignmentNode(
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ShakeCommonVariableAssignmentNode) return false
-        if(other::class != this::class) return false
+        if (other::class != this::class) return false
         if (variable != other.variable) return false
         if (value != other.value) return false
         return true
@@ -28,7 +28,7 @@ abstract class ShakeCommonVariableAssignmentNode(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ShakeCommonVariableAssignmentNode) return false
-        if(other::class != this::class) return false
+        if (other::class != this::class) return false
         if (variable != other.variable) return false
         if (value != other.value) return false
         if (map != other.map) return false
@@ -63,6 +63,7 @@ class ShakeVariableMulAssignmentNode(
     value: ShakeValuedNode,
     operatorPosition: Int
 ) : ShakeCommonVariableAssignmentNode(map, variable, value, operatorPosition)
+
 class ShakeVariableDivAssignmentNode(
     map: PositionMap,
     variable: ShakeValuedNode,

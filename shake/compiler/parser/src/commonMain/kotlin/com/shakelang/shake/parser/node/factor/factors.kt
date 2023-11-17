@@ -21,6 +21,7 @@ class ShakeLogicalTrueNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
         return 0
     }
 }
+
 class ShakeLogicalFalseNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
     override fun equalsIgnorePosition(other: Any?): Boolean {
         if (this === other) return true

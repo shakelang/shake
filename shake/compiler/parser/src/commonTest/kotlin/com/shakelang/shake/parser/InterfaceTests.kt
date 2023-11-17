@@ -14,7 +14,7 @@ import io.kotest.matchers.shouldNotBe
 
 class InterfaceTests : FreeSpec({
     "final interface" {
-        shouldThrow <ShakeParserImpl.ParserError> {
+        shouldThrow<ShakeParserImpl.ParserError> {
             ParserTestUtil.parse("<InterfaceTest>", "final interface test {}")
         }
     }
@@ -55,7 +55,10 @@ class InterfaceTests : FreeSpec({
             "${accessPrefix}class with a ${accessPrefix2}field" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}interface test>", "${accessPrefix}interface test { ${accessPrefix2}int i = 0; }")
+                    ParserTestUtil.parse(
+                        "<${accessPrefix}interface test>",
+                        "${accessPrefix}interface test { ${accessPrefix2}int i = 0; }"
+                    )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
@@ -82,7 +85,10 @@ class InterfaceTests : FreeSpec({
             "${accessPrefix}interface with a ${accessPrefix2}method" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}interface test>", "${accessPrefix}interface test { ${accessPrefix2}void f() {} }")
+                    ParserTestUtil.parse(
+                        "<${accessPrefix}interface test>",
+                        "${accessPrefix}interface test { ${accessPrefix2}void f() {} }"
+                    )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode
@@ -107,7 +113,10 @@ class InterfaceTests : FreeSpec({
             "${accessPrefix}interface with a ${accessPrefix2}interface" {
 
                 val tree =
-                    ParserTestUtil.parse("<${accessPrefix}interface test>", "${accessPrefix}interface test { ${accessPrefix2}class Test {} }")
+                    ParserTestUtil.parse(
+                        "<${accessPrefix}interface test>",
+                        "${accessPrefix}interface test { ${accessPrefix2}class Test {} }"
+                    )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
                 val node = tree.children[0] as ShakeClassDeclarationNode

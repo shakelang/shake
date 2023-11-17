@@ -6,8 +6,8 @@ import com.shakelang.shake.parser.node.*
 import com.shakelang.shake.parser.node.ShakeCastNode.CastTarget
 import com.shakelang.shake.parser.node.expression.*
 import com.shakelang.shake.parser.node.factor.*
-import com.shakelang.shake.parser.node.functions.ShakeFunctionParameterNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.functions.ShakeFunctionParameterNode
 import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.functions.ShakeReturnNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
@@ -540,12 +540,10 @@ class ShakeParserImpl(
             if (unsigned) throw ParserError("Unsigned dynamic is not supported")
             input.skip()
             ShakeVariableType.DYNAMIC
-        }
-        else if (t == ShakeTokenType.KEYWORD_VAR) {
+        } else if (t == ShakeTokenType.KEYWORD_VAR) {
             input.skip()
             if (unsigned) throw ParserError("Unsigned var is not supported") else ShakeVariableType.UNKNOWN
-        }
-        else if (t == ShakeTokenType.KEYWORD_BYTE) {
+        } else if (t == ShakeTokenType.KEYWORD_BYTE) {
             input.skip()
             if (unsigned) ShakeVariableType.UNSIGNED_BYTE else ShakeVariableType.BYTE
         } else if (t == ShakeTokenType.KEYWORD_SHORT) {
@@ -1191,23 +1189,66 @@ class ShakeParserImpl(
     private fun expectValuedAssignment(): ShakeValuedNode {
         var left = expectValuedLogicalOr()
         if (input.hasNext() && (
-            input.peekType() == ShakeTokenType.ASSIGN ||
-            input.peekType() == ShakeTokenType.ADD_ASSIGN ||
-            input.peekType() == ShakeTokenType.SUB_ASSIGN ||
-            input.peekType() == ShakeTokenType.MUL_ASSIGN ||
-            input.peekType() == ShakeTokenType.DIV_ASSIGN ||
-            input.peekType() == ShakeTokenType.MOD_ASSIGN ||
-            input.peekType() == ShakeTokenType.POW_ASSIGN)) {
+                    input.peekType() == ShakeTokenType.ASSIGN ||
+                            input.peekType() == ShakeTokenType.ADD_ASSIGN ||
+                            input.peekType() == ShakeTokenType.SUB_ASSIGN ||
+                            input.peekType() == ShakeTokenType.MUL_ASSIGN ||
+                            input.peekType() == ShakeTokenType.DIV_ASSIGN ||
+                            input.peekType() == ShakeTokenType.MOD_ASSIGN ||
+                            input.peekType() == ShakeTokenType.POW_ASSIGN)
+        ) {
             val operator = input.nextType()
             val operatorPosition = input.actualStart
             left = when (operator) {
-                ShakeTokenType.ASSIGN -> ShakeVariableAssignmentNode(map, left, expectValuedLogicalOr(), operatorPosition)
-                ShakeTokenType.ADD_ASSIGN -> ShakeVariableAddAssignmentNode(map, left, expectValuedLogicalOr(), operatorPosition)
-                ShakeTokenType.SUB_ASSIGN -> ShakeVariableSubAssignmentNode(map, left, expectValuedLogicalOr(), operatorPosition)
-                ShakeTokenType.MUL_ASSIGN -> ShakeVariableMulAssignmentNode(map, left, expectValuedLogicalOr(), operatorPosition)
-                ShakeTokenType.DIV_ASSIGN -> ShakeVariableDivAssignmentNode(map, left, expectValuedLogicalOr(), operatorPosition)
-                ShakeTokenType.MOD_ASSIGN -> ShakeVariableModAssignmentNode(map, left, expectValuedLogicalOr(), operatorPosition)
-                ShakeTokenType.POW_ASSIGN -> ShakeVariablePowAssignmentNode(map, left, expectValuedLogicalOr(), operatorPosition)
+                ShakeTokenType.ASSIGN -> ShakeVariableAssignmentNode(
+                    map,
+                    left,
+                    expectValuedLogicalOr(),
+                    operatorPosition
+                )
+
+                ShakeTokenType.ADD_ASSIGN -> ShakeVariableAddAssignmentNode(
+                    map,
+                    left,
+                    expectValuedLogicalOr(),
+                    operatorPosition
+                )
+
+                ShakeTokenType.SUB_ASSIGN -> ShakeVariableSubAssignmentNode(
+                    map,
+                    left,
+                    expectValuedLogicalOr(),
+                    operatorPosition
+                )
+
+                ShakeTokenType.MUL_ASSIGN -> ShakeVariableMulAssignmentNode(
+                    map,
+                    left,
+                    expectValuedLogicalOr(),
+                    operatorPosition
+                )
+
+                ShakeTokenType.DIV_ASSIGN -> ShakeVariableDivAssignmentNode(
+                    map,
+                    left,
+                    expectValuedLogicalOr(),
+                    operatorPosition
+                )
+
+                ShakeTokenType.MOD_ASSIGN -> ShakeVariableModAssignmentNode(
+                    map,
+                    left,
+                    expectValuedLogicalOr(),
+                    operatorPosition
+                )
+
+                ShakeTokenType.POW_ASSIGN -> ShakeVariablePowAssignmentNode(
+                    map,
+                    left,
+                    expectValuedLogicalOr(),
+                    operatorPosition
+                )
+
                 else -> throw ParserError("Unexpected token")
             }
         }
@@ -1443,13 +1484,15 @@ class ShakeParserImpl(
     private fun expectValuedFunctionReturning(): ShakeValuedNode {
         var value = expectValuedFactor()
         while (input.hasNext() && (input.peekType() == ShakeTokenType.LPAREN
-            || input.peekType() == ShakeTokenType.DOT)) {
-            when(input.peekType()) {
+                    || input.peekType() == ShakeTokenType.DOT)
+        ) {
+            when (input.peekType()) {
                 ShakeTokenType.LPAREN -> value = expectInvocation(value)
                 ShakeTokenType.DOT -> {
                     input.skip()
                     value = expectValueIdentifier(value)
                 }
+
                 else -> throw ParserError("Unexpected token")
             }
         }

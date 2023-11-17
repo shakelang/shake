@@ -40,7 +40,7 @@ object ParserTestUtil {
         val nodes = file.children
 
         // Result should be 1 node
-        nodes.size shouldBe  1
+        nodes.size shouldBe 1
 
         // result is expected class
         nodes[0] shouldNotBe null

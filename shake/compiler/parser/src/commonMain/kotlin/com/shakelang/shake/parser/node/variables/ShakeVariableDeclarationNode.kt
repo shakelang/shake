@@ -64,7 +64,7 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
         return true
     }
 
-override fun hashCode(): Int {
+    override fun hashCode(): Int {
         var result = expandedType?.hashCode() ?: 0
         result = 31 * result + name.hashCode()
         result = 31 * result + type.hashCode()

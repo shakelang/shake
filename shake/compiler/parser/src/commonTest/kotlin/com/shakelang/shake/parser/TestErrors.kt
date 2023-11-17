@@ -17,7 +17,7 @@ class TestErrors : FreeSpec({
         error.details shouldBe "Expecting '('"
         error.marker.source shouldBe "<TestLPAREN>:1:4"
         error.marker.preview shouldBe "1  if test"
-        error.marker.marker shouldBe  "      ^^^^"
+        error.marker.marker shouldBe "      ^^^^"
     }
 
     "test RPAREN" {
@@ -29,11 +29,11 @@ class TestErrors : FreeSpec({
         error.details shouldBe "Expecting ')'"
         error.marker.source shouldBe "<TestRPAREN>:1:8"
         error.marker.preview shouldBe "1  if(test{"
-        error.marker.marker shouldBe  "          ^"
+        error.marker.marker shouldBe "          ^"
     }
 
     "test LCURL" {
-        val error = shouldThrow <ParserError> {
+        val error = shouldThrow<ParserError> {
             ParserTestUtil.parseStatement("<TestLCURL>", "if(test) {", ShakeIfNode::class)
         }
         error.start.index shouldBe 9
@@ -41,7 +41,7 @@ class TestErrors : FreeSpec({
         error.details shouldBe "Expecting '}'"
         error.marker.source shouldBe "<TestLCURL>:1:10"
         error.marker.preview shouldBe "1  if(test) {"
-        error.marker.marker shouldBe  "            ^"
+        error.marker.marker shouldBe "            ^"
     }
 
 
@@ -55,6 +55,6 @@ class TestErrors : FreeSpec({
         error.details shouldBe "Expecting semicolon at this point"
         error.marker.source shouldBe "<TestAwaitSemicolonError>:1:15"
         error.marker.preview shouldBe "1  for(var i = 0 i<10) {"
-        error.marker.marker shouldBe  "                 ^"
+        error.marker.marker shouldBe "                 ^"
     }
 })
