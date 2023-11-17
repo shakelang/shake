@@ -4,8 +4,8 @@ import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.expression.*
 import com.shakelang.shake.parser.node.variables.*
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 import kotlin.reflect.KClass
-import kotlin.test.assertEquals
 
 // This file holds many tests that test the parser and the lexer together
 // It should test every possible syntax of the language
@@ -17,7 +17,7 @@ class IntegrationTestValues : FreeSpec({
         val parsed = ParserTestUtil.parseValue(sourceLocation, code)
         val json = parsed.json
 
-        assertEquals(expected, json, "The parsed value is not correct")
+        json shouldBe expected
 
     }
 
@@ -235,7 +235,7 @@ class Statements : FreeSpec({
         val sourceLocation = "TestInput"
         val parsed = ParserTestUtil.parseStatement(sourceLocation, code)
         val json = parsed.json
-        assertEquals(expected, json, "The parsed statement is not correct")
+        json shouldBe expected
     }
 
     "test variable declaration" {
