@@ -5,7 +5,6 @@ import com.shakelang.shake.parser.node.expression.*
 import com.shakelang.shake.parser.node.variables.*
 import io.kotest.core.spec.style.FreeSpec
 import kotlin.reflect.KClass
-import kotlin.test.Test
 import kotlin.test.assertEquals
 
 // This file holds many tests that test the parser and the lexer together
