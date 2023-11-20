@@ -3,73 +3,72 @@ package com.shakelang.shake.lexer
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
 import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 
-class LexerTests {
+@Suppress("unused")
+class LexerTests : FreeSpec({
 
-    @Test
-    fun testMakeTokens() {
-        val tokens = createLexer("10+7*3", "LexerTests#testMakeTokens()").makeTokens()
-        var token = tokens.next()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("10", token.value)
-        assertEquals(0, token.start)
-        assertEquals(1, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.ADD, token.type)
-        assertEquals(null, token.value)
-        assertEquals(2, token.start)
-        assertEquals(2, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("7", token.value)
-        assertEquals(3, token.start)
-        assertEquals(3, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.MUL, token.type)
-        assertEquals(null, token.value)
-        assertEquals(4, token.start)
-        assertEquals(4, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("3", token.value)
-        assertEquals(5, token.start)
-        assertEquals(5, token.end)
-    }
-
-    @Test
-    fun testStream() {
-        val tokens = createLexer("10+7*3", "LexerTests#testStream()").stream()
-        var token = tokens.next()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("10", token.value)
-        assertEquals(0, token.start)
-        assertEquals(1, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.ADD, token.type)
-        assertEquals(null, token.value)
-        assertEquals(2, token.start)
-        assertEquals(2, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("7", token.value)
-        assertEquals(3, token.start)
-        assertEquals(3, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.MUL, token.type)
-        assertEquals(null, token.value)
-        assertEquals(4, token.start)
-        assertEquals(4, token.end)
-        token = tokens.next()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("3", token.value)
-        assertEquals(5, token.start)
-        assertEquals(5, token.end)
-    }
-
-    fun createLexer(constents: String, source: String): ShakeLexer {
-        val stream = SourceCharacterInputStream(CharacterSource.from(constents, source))
+    fun createLexer(contents: String, source: String): ShakeLexer {
+        val stream = SourceCharacterInputStream(CharacterSource.from(contents, source))
         return ShakeLexer(stream)
     }
-}
+
+    "make tokens" {
+        val tokens = createLexer("10+7*3", "LexerTests#testMakeTokens()").makeTokens()
+        var token = tokens.next()
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "10"
+        token.start shouldBe 0
+        token.end shouldBe 1
+        token = tokens.next()
+        token.type shouldBe ShakeTokenType.ADD
+        token.value shouldBe null
+        token.start shouldBe 2
+        token.end shouldBe 2
+        token = tokens.next()
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "7"
+        token.start shouldBe 3
+        token.end shouldBe 3
+        token = tokens.next()
+        token.type shouldBe ShakeTokenType.MUL
+        token.value shouldBe null
+        token.start shouldBe 4
+        token.end shouldBe 4
+        token = tokens.next()
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "3"
+        token.start shouldBe 5
+        token.end shouldBe 5
+    }
+
+    "stream" {
+        val tokens = createLexer("10+7*3", "LexerTests#testStream()").stream()
+        var token = tokens.next()
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "10"
+        token.start shouldBe 0
+        token.end shouldBe 1
+        token = tokens.next()
+        token.type shouldBe ShakeTokenType.ADD
+        token.value shouldBe null
+        token.start shouldBe 2
+        token.end shouldBe 2
+        token = tokens.next()
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "7"
+        token.start shouldBe 3
+        token.end shouldBe 3
+        token = tokens.next()
+        token.type shouldBe ShakeTokenType.MUL
+        token.value shouldBe null
+        token.start shouldBe 4
+        token.end shouldBe 4
+        token = tokens.next()
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "3"
+        token.start shouldBe 5
+        token.end shouldBe 5
+    }
+})
