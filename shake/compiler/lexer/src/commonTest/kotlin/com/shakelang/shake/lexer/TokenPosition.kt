@@ -3,154 +3,152 @@ package com.shakelang.shake.lexer
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.should
+import io.kotest.matchers.shouldBe
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertSame
 
-class TokenPosition {
+class TokenPosition : FreeSpec({
 
-    @Test
-    @Suppress("deprecation")
-    fun testGetBasicPosition() {
+    "get basic position" {
         val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "int test = 10;")
         val lexer = ShakeLexer(chars)
         val input = lexer.makeTokens()
-        assertSame(ShakeTokenType.KEYWORD_INT, input.peek().type)
-        assertSame(null, input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.KEYWORD_INT
+        input.peek().value shouldBe null
         var start = input.map.resolve(input.peek().start)
         var end = input.map.resolve(input.peek().end)
-        assertSame(0, start.index)
-        assertSame(1, start.column)
-        assertSame(1, start.line)
-        assertSame(2, end.index)
-        assertSame(3, end.column)
-        assertSame(1, end.line)
+        start.index shouldBe 0
+        start.column shouldBe 1
+        start.line shouldBe 1
+        end.index shouldBe 2
+        end.column shouldBe 3
+        end.line shouldBe 1
         input.skip()
-        assertSame(ShakeTokenType.IDENTIFIER, input.peek().type)
-        assertEquals("test", input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.IDENTIFIER
+        input.peek().value shouldBe "test"
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(4, start.index)
-        assertSame(5, start.column)
-        assertSame(1, start.line)
-        assertSame(7, end.index)
-        assertSame(8, end.column)
-        assertSame(1, end.line)
+        start.index shouldBe 4
+        start.column shouldBe 5
+        start.line shouldBe 1
+        end.index shouldBe 7
+        end.column shouldBe 8
+        end.line shouldBe 1
         input.skip()
-        assertSame(ShakeTokenType.ASSIGN, input.peek().type)
-        assertSame(null, input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.ASSIGN
+        input.peek().value shouldBe null
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(9, start.index)
-        assertSame(10, start.column)
-        assertSame(1, start.line)
-        assertSame(9, end.index)
-        assertSame(10, end.column)
-        assertSame(1, end.line)
+        start.index shouldBe 9
+        start.column shouldBe 10
+        start.line shouldBe 1
+        end.index shouldBe 9
+        end.column shouldBe 10
+        end.line shouldBe 1
         input.skip()
-        assertSame(ShakeTokenType.INTEGER, input.peek().type)
-        assertEquals("10", input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.INTEGER
+        input.peek().value shouldBe "10"
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(11, start.index)
-        assertSame(12, start.column)
-        assertSame(1, start.line)
-        assertSame(12, end.index)
-        assertSame(13, end.column)
-        assertSame(1, end.line)
+        start.index shouldBe 11
+        start.column shouldBe 12
+        start.line shouldBe 1
+        end.index shouldBe 12
+        end.column shouldBe 13
+        end.line shouldBe 1
         input.skip()
-        assertSame(ShakeTokenType.SEMICOLON, input.peek().type)
-        assertSame(null, input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.SEMICOLON
+        input.peek().value shouldBe null
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(13, start.index)
-        assertSame(14, start.column)
-        assertSame(1, start.line)
-        assertSame(13, end.index)
-        assertSame(14, end.column)
-        assertSame(1, end.line)
+        start.index shouldBe 13
+        start.column shouldBe 14
+        start.line shouldBe 1
+        end.index shouldBe 13
+        end.column shouldBe 14
+        end.line shouldBe 1
     }
 
-    @Test
-    fun testGetMultiLinePosition() {
+    "get multi line position" {
         val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "int test\n  = \n10;")
         val lexer = ShakeLexer(chars)
         val input = lexer.makeTokens()
-        assertSame(ShakeTokenType.KEYWORD_INT, input.peek().type)
-        assertSame(null, input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.KEYWORD_INT
+        input.peek().value shouldBe null
         var start = input.map.resolve(input.peek().start)
         var end = input.map.resolve(input.peek().end)
-        assertSame(0, start.index)
-        assertSame(1, start.column)
-        assertSame(1, start.line)
-        assertSame(2, end.index)
-        assertSame(3, end.column)
-        assertSame(1, end.line)
+        start.index shouldBe 0
+        start.column shouldBe 1
+        start.line shouldBe 1
+        end.index shouldBe 2
+        end.column shouldBe 3
+        end.line shouldBe 1
         input.skip()
-        assertSame(ShakeTokenType.IDENTIFIER, input.peek().type)
-        assertEquals("test", input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.IDENTIFIER
+        input.peek().value shouldBe "test"
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(4, start.index)
-        assertSame(5, start.column)
-        assertSame(1, start.line)
-        assertSame(7, end.index)
-        assertSame(8, end.column)
-        assertSame(1, end.line)
+        start.index shouldBe 4
+        start.column shouldBe 5
+        start.line shouldBe 1
+        end.index shouldBe 7
+        end.column shouldBe 8
+        end.line shouldBe 1
         input.skip()
-        assertSame(ShakeTokenType.LINE_SEPARATOR, input.peek().type)
-        assertSame(null, input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.LINE_SEPARATOR
+        input.peek().value shouldBe null
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(8, start.index)
-        assertSame(9, start.column)
-        assertSame(1, start.line)
-        assertSame(8, end.index)
-        assertSame(9, end.column)
-        assertSame(1, end.line)
+        start.index shouldBe 8
+        start.column shouldBe 9
+        start.line shouldBe 1
+        end.index shouldBe 8
+        end.column shouldBe 9
+        end.line shouldBe 1
         input.skip()
-        assertSame(ShakeTokenType.ASSIGN, input.peek().type)
-        assertSame(null, input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.ASSIGN
+        input.peek().value shouldBe null
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(11, start.index)
-        assertSame(3, start.column)
-        assertSame(2, start.line)
-        assertSame(11, end.index)
-        assertSame(3, end.column)
-        assertSame(2, end.line)
+        start.index shouldBe 11
+        start.column shouldBe 3
+        start.line shouldBe 2
+        end.index shouldBe 11
+        end.column shouldBe 3
+        end.line shouldBe 2
         input.skip()
-        assertSame(ShakeTokenType.LINE_SEPARATOR, input.peek().type)
-        assertSame(null, input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.LINE_SEPARATOR
+        input.peek().value shouldBe null
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(13, start.index)
-        assertSame(5, start.column)
-        assertSame(2, start.line)
-        assertSame(13, end.index)
-        assertSame(5, end.column)
-        assertSame(2, end.line)
+        start.index shouldBe 13
+        start.column shouldBe 5
+        start.line shouldBe 2
+        end.index shouldBe 13
+        end.column shouldBe 5
+        end.line shouldBe 2
         input.skip()
-        assertSame(ShakeTokenType.INTEGER, input.peek().type)
-        assertEquals("10", input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.INTEGER
+        input.peek().value shouldBe "10"
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(14, start.index)
-        assertSame(1, start.column)
-        assertSame(3, start.line)
-        assertSame(15, end.index)
-        assertSame(2, end.column)
-        assertSame(3, end.line)
+        start.index shouldBe 14
+        start.column shouldBe 1
+        start.line shouldBe 3
+        end.index shouldBe 15
+        end.column shouldBe 2
+        end.line shouldBe 3
         input.skip()
-        assertSame(ShakeTokenType.SEMICOLON, input.peek().type)
-        assertSame(null, input.peek().value)
+        input.peek().type shouldBe ShakeTokenType.SEMICOLON
+        input.peek().value shouldBe null
         start = input.map.resolve(input.peek().start)
         end = input.map.resolve(input.peek().end)
-        assertSame(16, start.index)
-        assertSame(3, start.column)
-        assertSame(3, start.line)
-        assertSame(16, end.index)
-        assertSame(3, end.column)
-        assertSame(3, end.line)
+        start.index shouldBe 16
+        start.column shouldBe 3
+        start.line shouldBe 3
+        end.index shouldBe 16
+        end.column shouldBe 3
+        end.line shouldBe 3
     }
-}
+})
