@@ -4,10 +4,9 @@ import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
-import kotlin.test.Test
 
+@Suppress("unused")
 class TokenPosition : FreeSpec({
 
     "get basic position" {
