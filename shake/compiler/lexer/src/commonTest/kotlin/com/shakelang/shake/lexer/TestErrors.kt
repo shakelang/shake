@@ -9,7 +9,7 @@ import io.kotest.matchers.shouldBe
 @Suppress("unused")
 class TestErrors : FreeSpec({
 
-    "testStringMustEndError" {
+    "string must end error" {
         // String type 1 not finished
         val error = shouldThrow<ShakeLexingBase.LexerError> {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"test")
@@ -25,7 +25,7 @@ class TestErrors : FreeSpec({
         error.marker.marker shouldBe "       ^"
     }
 
-    "testUnknownEscapeSequenceError" {
+    "unknown escape sequence error" {
         // Unknown escape sequence (using \a here)
         val error = shouldThrow<ShakeLexingBase.LexerError> {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"\\a\"")
@@ -41,7 +41,7 @@ class TestErrors : FreeSpec({
         error.marker.marker shouldBe "     ^"
     }
 
-    "testExpectHexCharacterError" {
+    "expect hex character error" {
         // Wrong input to unicode character
         val error = shouldThrow<ShakeLexingBase.LexerError> {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\"\\uatea\"")
@@ -57,7 +57,7 @@ class TestErrors : FreeSpec({
         error.marker.marker shouldBe "       ^"
     }
 
-    "testUnexpectedTokenError" {
+    "unexpected token error" {
         // Unexpected Token
         val error = shouldThrow<ShakeLexingBase.LexerError> {
             val chars: CharacterInputStream = SourceCharacterInputStream("<tests>", "\u00dc")
