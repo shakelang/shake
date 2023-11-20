@@ -9,6 +9,7 @@ import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
+@Suppress("unused")
 class TokenBasedTokenInputStreamTests : FreeSpec({
 
     "next type" {

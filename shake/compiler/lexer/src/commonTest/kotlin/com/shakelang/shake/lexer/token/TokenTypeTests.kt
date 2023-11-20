@@ -1,20 +1,19 @@
 package com.shakelang.shake.lexer.token
 
+import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TokenTypeTests {
+@Suppress("unused")
+class TokenTypeTests : FreeSpec({
 
-    @Test
-    fun testGetName() {
+    "get name" {
         ShakeTokenType.entries.forEach {
             assertEquals(it.name, it.tokenName)
         }
     }
 
-    @Test
-    fun testTokenLength() {
+    "token length field" {
         ShakeTokenType.IDENTIFIER.tokenLength shouldBe -1
         ShakeTokenType.INTEGER.tokenLength shouldBe -1
         ShakeTokenType.DOUBLE.tokenLength shouldBe -1
@@ -86,8 +85,7 @@ class TokenTypeTests {
         ShakeTokenType.KEYWORD_AS.tokenLength shouldBe 2
     }
 
-    @Test
-    fun testTokenLength3() {
+    "token length function" {
         ShakeTokenType.IDENTIFIER.length("hello") shouldBe 5
         ShakeTokenType.INTEGER.length("10") shouldBe 2
         ShakeTokenType.DOUBLE.length("10.0") shouldBe 4
@@ -157,6 +155,5 @@ class TokenTypeTests {
         ShakeTokenType.KEYWORD_VOID.length("") shouldBe 4
         ShakeTokenType.KEYWORD_CONSTRUCTOR.length("") shouldBe 11
         ShakeTokenType.KEYWORD_AS.length("") shouldBe 2
-
     }
-}
+})

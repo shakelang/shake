@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
+@Suppress("unused")
 class TokenTests : FreeSpec({
 
     "token one argument" {

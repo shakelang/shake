@@ -7,6 +7,7 @@ import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
+@Suppress("unused")
 class OnDemandLexingTokenInputStreamTests : FreeSpec({
 
     "next type" {
