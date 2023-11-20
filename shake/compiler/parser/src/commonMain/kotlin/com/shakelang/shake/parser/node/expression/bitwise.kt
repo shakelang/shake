@@ -20,6 +20,24 @@ class ShakeBitwiseXOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeV
         get() = "^"
 }
 
+class ShakeBitwiseNAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
+    ShakeExpressionNode(map, left, right, operatorPosition) {
+    override val operator: String
+        get() = "~&"
+}
+
+class ShakeBitwiseNOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
+    ShakeExpressionNode(map, left, right, operatorPosition) {
+    override val operator: String
+        get() = "~|"
+}
+
+class ShakeBitwiseXNOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
+    ShakeExpressionNode(map, left, right, operatorPosition) {
+    override val operator: String
+        get() = "~^"
+}
+
 class ShakeBitwiseNotNode(map: PositionMap, node: ShakeValuedNode, operatorPosition: Int) :
     ShakeUnaryNode(map, node, operatorPosition) {
     override val operator: String
@@ -56,6 +74,15 @@ fun createSyntheticBitwiseOrNode(left: ShakeValuedNode, right: ShakeValuedNode) 
 
 fun createSyntheticBitwiseXOrNode(left: ShakeValuedNode, right: ShakeValuedNode) =
     ShakeBitwiseXOrNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticBitwiseNAndNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeBitwiseNAndNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticBitwiseNOrNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeBitwiseNOrNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticBitwiseXNOrNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeBitwiseXNOrNode(PositionMap.empty(), left, right, -1)
 
 fun createSyntheticBitwiseNotNode(node: ShakeValuedNode) =
     ShakeBitwiseNotNode(PositionMap.empty(), node, -1)

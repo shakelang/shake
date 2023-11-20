@@ -167,12 +167,15 @@ class IntegrationTestValues : FreeSpec({
         ),
         listOf(
             OperatorTestSpec("&", "bitwise and", ShakeBitwiseAndNode::class),
+            OperatorTestSpec("~&", "bitwise nand",ShakeBitwiseNAndNode::class),
         ),
         listOf(
             OperatorTestSpec("^", "bitwise xor", ShakeBitwiseXOrNode::class),
+            OperatorTestSpec("~^", "bitwise xnor", ShakeBitwiseXNOrNode::class),
         ),
         listOf(
             OperatorTestSpec("|", "bitwise or", ShakeBitwiseOrNode::class),
+            OperatorTestSpec("~|", "bitwise nor", ShakeBitwiseNOrNode::class),
         ),
         listOf(
             OperatorTestSpec("&&", "logical and", ShakeLogicalAndNode::class),

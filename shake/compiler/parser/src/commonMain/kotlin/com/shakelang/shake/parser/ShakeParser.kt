@@ -1288,30 +1288,45 @@ class ShakeParserImpl(
 
     private fun expectValuedBitwiseOr(): ShakeValuedNode {
         var result = expectValuedBitwiseXOr()
-        while (input.hasNext() && input.peekType() == ShakeTokenType.BITWISE_OR) {
+        while (input.hasNext() && (input.peekType() == ShakeTokenType.BITWISE_OR
+            || input.peekType() == ShakeTokenType.BITWISE_NOR)) {
             input.skip()
             val pos = input.actualStart
-            result = ShakeBitwiseOrNode(map, result, expectValuedBitwiseXOr(), pos)
+            result = if (input.actualType == ShakeTokenType.BITWISE_OR) {
+                ShakeBitwiseOrNode(map, result, expectValuedBitwiseXOr(), pos)
+            } else {
+                ShakeBitwiseNOrNode(map, result, expectValuedBitwiseXOr(), pos)
+            }
         }
         return result
     }
 
     private fun expectValuedBitwiseXOr(): ShakeValuedNode {
         var result = expectValuedBitwiseAnd()
-        while (input.hasNext() && input.peekType() == ShakeTokenType.BITWISE_XOR) {
+        while (input.hasNext() && (input.peekType() == ShakeTokenType.BITWISE_XOR
+            || input.peekType() == ShakeTokenType.BITWISE_XNOR)) {
             input.skip()
             val pos = input.actualStart
-            result = ShakeBitwiseXOrNode(map, result, expectValuedBitwiseAnd(), pos)
+            result = if (input.actualType == ShakeTokenType.BITWISE_XOR) {
+                ShakeBitwiseXOrNode(map, result, expectValuedBitwiseAnd(), pos)
+            } else {
+                ShakeBitwiseXNOrNode(map, result, expectValuedBitwiseAnd(), pos)
+            }
         }
         return result
     }
 
     private fun expectValuedBitwiseAnd(): ShakeValuedNode {
         var result = expectValuedEquality()
-        while (input.hasNext() && input.peekType() == ShakeTokenType.BITWISE_AND) {
+        while (input.hasNext() && (input.peekType() == ShakeTokenType.BITWISE_AND
+            || input.peekType() == ShakeTokenType.BITWISE_NAND)) {
             input.skip()
             val pos = input.actualStart
-            result = ShakeBitwiseAndNode(map, result, expectValuedEquality(), pos)
+            result = if (input.actualType == ShakeTokenType.BITWISE_AND) {
+                ShakeBitwiseAndNode(map, result, expectValuedEquality(), pos)
+            } else {
+                ShakeBitwiseNAndNode(map, result, expectValuedEquality(), pos)
+            }
         }
         return result
     }
