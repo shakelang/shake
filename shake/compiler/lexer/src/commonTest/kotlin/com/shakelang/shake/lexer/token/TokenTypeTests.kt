@@ -2,14 +2,13 @@ package com.shakelang.shake.lexer.token
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import kotlin.test.assertEquals
 
 @Suppress("unused")
 class TokenTypeTests : FreeSpec({
 
     "get name" {
         ShakeTokenType.entries.forEach {
-            assertEquals(it.name, it.tokenName)
+            it.tokenName shouldBe it.name
         }
     }
 

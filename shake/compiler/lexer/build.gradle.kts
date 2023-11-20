@@ -15,7 +15,6 @@ description = "Utilities for parsing stuff with kotlin"
 kotlin {
     dependencies {
         implementation(project(":util:parseutils"))
-        testImplementation(kotlin("test"))
         testImplementation("io.kotest:kotest-framework-engine:$KOTEST_VERSION")
         testImplementation("io.kotest:kotest-assertions-core:$KOTEST_VERSION")
         testImplementation("io.kotest:kotest-property:$KOTEST_VERSION")
