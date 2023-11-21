@@ -1,7 +1,9 @@
 package com.shakelang.shake.parser.node
 
+import com.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
+
 @Suppress("unused")
-open class ShakeVariableType {
+open class ShakeVariableType : ShakeNode {
     val type: Type
 
     constructor(subtype: ShakeNamespaceNode?) {
@@ -14,19 +16,39 @@ open class ShakeVariableType {
 
     override fun toString(): String = com.shakelang.shake.util.shason.JSON.stringify(this.json)
 
-    val json: Map<String, *>
+    override val json: Map<String, *>
         get() = toJson()
 
-    fun toJson(): Map<String, *> =
+    override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "VariableType",
-            "type" to type
+            "name" to nodeName,
+            "type" to type.name.lowercase(),
         )
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeVariableType) return false
+        if (type != other.type) return false
+
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeVariableType) return false
+        if (type != other.type) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return type.hashCode()
+    }
 
     class Object(val namespace: ShakeNamespaceNode?) : ShakeVariableType(Type.OBJECT)
     class Array(val subtype: ShakeVariableType) : ShakeVariableType(Type.ARRAY)
 
     enum class Type {
+        UNKNOWN,
         DYNAMIC,
         BYTE,
         SHORT,
@@ -52,6 +74,7 @@ open class ShakeVariableType {
     companion object {
 
         val DYNAMIC = ShakeVariableType(Type.DYNAMIC)
+        val UNKNOWN = ShakeVariableType(Type.UNKNOWN)
         val BYTE = ShakeVariableType(Type.BYTE)
         val SHORT = ShakeVariableType(Type.SHORT)
         val INTEGER = ShakeVariableType(Type.INTEGER)
@@ -68,12 +91,12 @@ open class ShakeVariableType {
 
         fun objectType(subtype: ShakeNamespaceNode): ShakeVariableType = Object(subtype)
 
-        fun objectType(subtype: ShakeIdentifierNode): ShakeVariableType {
+        fun objectType(subtype: ShakeVariableUsageNode): ShakeVariableType {
             val namespace = mutableListOf<String>()
             var node: ShakeValuedNode? = subtype
-            while (node is ShakeIdentifierNode) {
-                namespace += node.name
-                node = node.parent
+            while (node is ShakeVariableUsageNode) {
+                namespace += node.identifier.name
+                node = node.identifier.parent
             }
             if (node != null) {
                 throw IllegalArgumentException("Invalid subtype for OBJECT type")

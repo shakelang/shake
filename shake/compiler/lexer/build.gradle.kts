@@ -1,4 +1,5 @@
 import com.shakelang.shake.util.changelog.resolveVersion
+import conventions.KOTEST_VERSION
 import conventions.dependencies
 import conventions.projectGroup
 
@@ -14,6 +15,6 @@ description = "Utilities for parsing stuff with kotlin"
 kotlin {
     dependencies {
         implementation(project(":util:parseutils"))
-        testImplementation(kotlin("test"))
+        kotest()
     }
 }

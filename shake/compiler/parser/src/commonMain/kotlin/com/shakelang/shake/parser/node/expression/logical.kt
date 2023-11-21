@@ -6,21 +6,34 @@ import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 class ShakeLogicalAndNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String get() = "&&"
-    override fun toJson(): Map<String, *> = mapOf("name" to "LogicalAndNode", "left" to left, "right" to right)
 }
 
 class ShakeLogicalOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
         get() = "||"
-
-    override fun toJson(): Map<String, *> = mapOf("name" to "LogicalOrNode", "left" to left, "right" to right)
 }
 
 class ShakeLogicalXOrNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
         get() = "^^"
-
-    override fun toJson(): Map<String, *> = mapOf("name" to "LogicalXOrNode", "left" to left, "right" to right)
 }
+
+class ShakeLogicalNotNode(map: PositionMap, node: ShakeValuedNode, operatorPosition: Int) :
+    ShakeUnaryNode(map, node, operatorPosition) {
+    override val operator: String
+        get() = "!"
+}
+
+fun createSyntheticLogicalAndNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeLogicalAndNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticLogicalOrNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeLogicalOrNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticLogicalXOrNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeLogicalXOrNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticLogicalNotNode(node: ShakeValuedNode) =
+    ShakeLogicalNotNode(PositionMap.empty(), node, -1)

@@ -4,15 +4,16 @@ import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
 import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.throwables.shouldThrowWithMessage
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 
-class TokenBasedTokenInputStreamTests {
+@Suppress("unused")
+class TokenBasedTokenInputStreamTests : FreeSpec({
 
-    @Test
-    fun testNextType() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "next type" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testNextType()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -27,21 +28,20 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.nextType())
-        assertEquals(2, dbtis.actualEnd)
-        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.nextType())
-        assertEquals(4, dbtis.actualEnd)
-        assertEquals(ShakeTokenType.ASSIGN, dbtis.nextType())
-        assertEquals(6, dbtis.actualEnd)
-        assertEquals(ShakeTokenType.INTEGER, dbtis.nextType())
-        assertEquals(9, dbtis.actualEnd)
-        assertEquals(ShakeTokenType.SEMICOLON, dbtis.nextType())
-        assertEquals(10, dbtis.actualEnd)
+        tis.nextType() shouldBe ShakeTokenType.KEYWORD_INT
+        tis.actualEnd shouldBe 2
+        tis.nextType() shouldBe ShakeTokenType.IDENTIFIER
+        tis.actualEnd shouldBe 4
+        tis.nextType() shouldBe ShakeTokenType.ASSIGN
+        tis.actualEnd shouldBe 6
+        tis.nextType() shouldBe ShakeTokenType.INTEGER
+        tis.actualEnd shouldBe 9
+        tis.nextType() shouldBe ShakeTokenType.SEMICOLON
+        tis.actualEnd shouldBe 10
     }
 
-    @Test
-    fun testNextValue() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "next value" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testNextValue()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -56,21 +56,15 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(null, dbtis.nextValue())
-        assertEquals(2, dbtis.actualEnd)
-        assertEquals("i", dbtis.nextValue())
-        assertEquals(4, dbtis.actualEnd)
-        assertEquals(null, dbtis.nextValue())
-        assertEquals(6, dbtis.actualEnd)
-        assertEquals("10", dbtis.nextValue())
-        assertEquals(9, dbtis.actualEnd)
-        assertEquals(null, dbtis.nextValue())
-        assertEquals(10, dbtis.actualEnd)
+        tis.nextValue() shouldBe null
+        tis.nextValue() shouldBe "i"
+        tis.nextValue() shouldBe null
+        tis.nextValue() shouldBe "10"
+        tis.nextValue() shouldBe null
     }
 
-    @Test
-    fun testNextToken() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "next token" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testNextToken()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -85,36 +79,43 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        var next = dbtis.next()
-        assertEquals(ShakeTokenType.KEYWORD_INT, next.type)
-        assertEquals(2, next.end)
-        assertEquals(null, next.value)
-        assertEquals(0, next.start)
-        next = dbtis.next()
-        assertEquals(ShakeTokenType.IDENTIFIER, next.type)
-        assertEquals(4, next.end)
-        assertEquals("i", next.value)
-        assertEquals(4, next.start)
-        next = dbtis.next()
-        assertEquals(ShakeTokenType.ASSIGN, next.type)
-        assertEquals(6, next.end)
-        assertEquals(null, next.value)
-        assertEquals(6, next.start)
-        next = dbtis.next()
-        assertEquals(ShakeTokenType.INTEGER, next.type)
-        assertEquals(9, next.end)
-        assertEquals("10", next.value)
-        assertEquals(8, next.start)
-        next = dbtis.next()
-        assertEquals(ShakeTokenType.SEMICOLON, next.type)
-        assertEquals(10, next.end)
-        assertEquals(null, next.value)
-        assertEquals(10, next.start)
+        var token = tis.next()
+        token.type shouldBe ShakeTokenType.KEYWORD_INT
+        token.value shouldBe null
+        token.end shouldBe 2
+        token.start shouldBe 0
+
+        token = tis.next()
+
+        token.type shouldBe ShakeTokenType.IDENTIFIER
+        token.value shouldBe "i"
+        token.end shouldBe 4
+        token.start shouldBe 4
+
+        token = tis.next()
+
+        token.type shouldBe ShakeTokenType.ASSIGN
+        token.value shouldBe null
+        token.end shouldBe 6
+        token.start shouldBe 6
+
+        token = tis.next()
+
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "10"
+        token.end shouldBe 9
+        token.start shouldBe 8
+
+        token = tis.next()
+
+        token.type shouldBe ShakeTokenType.SEMICOLON
+        token.value shouldBe null
+        token.end shouldBe 10
+        token.start shouldBe 10
     }
 
-    @Test
-    fun testGetType() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "get type" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetType()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -129,16 +130,15 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.getType(0))
-        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.getType(1))
-        assertEquals(ShakeTokenType.ASSIGN, dbtis.getType(2))
-        assertEquals(ShakeTokenType.INTEGER, dbtis.getType(3))
-        assertEquals(ShakeTokenType.SEMICOLON, dbtis.getType(4))
+        tis.getType(0) shouldBe ShakeTokenType.KEYWORD_INT
+        tis.getType(1) shouldBe ShakeTokenType.IDENTIFIER
+        tis.getType(2) shouldBe ShakeTokenType.ASSIGN
+        tis.getType(3) shouldBe ShakeTokenType.INTEGER
+        tis.getType(4) shouldBe ShakeTokenType.SEMICOLON
     }
 
-    @Test
-    fun testGetEnd() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "get end" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetEnd()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -153,16 +153,15 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(2, dbtis.getEnd(0))
-        assertEquals(4, dbtis.getEnd(1))
-        assertEquals(6, dbtis.getEnd(2))
-        assertEquals(9, dbtis.getEnd(3))
-        assertEquals(10, dbtis.getEnd(4))
+        tis.getEnd(0) shouldBe 2
+        tis.getEnd(1) shouldBe 4
+        tis.getEnd(2) shouldBe 6
+        tis.getEnd(3) shouldBe 9
+        tis.getEnd(4) shouldBe 10
     }
 
-    @Test
-    fun testGetStart() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "get start" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetStart()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -177,16 +176,15 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(0, dbtis.getStart(0))
-        assertEquals(4, dbtis.getStart(1))
-        assertEquals(6, dbtis.getStart(2))
-        assertEquals(8, dbtis.getStart(3))
-        assertEquals(10, dbtis.getStart(4))
+        tis.getStart(0) shouldBe 0
+        tis.getStart(1) shouldBe 4
+        tis.getStart(2) shouldBe 6
+        tis.getStart(3) shouldBe 8
+        tis.getStart(4) shouldBe 10
     }
 
-    @Test
-    fun testGetValue() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "get value" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetValue()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -201,16 +199,15 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(null, dbtis.getValue(0))
-        assertEquals("i", dbtis.getValue(1))
-        assertEquals(null, dbtis.getValue(2))
-        assertEquals("10", dbtis.getValue(3))
-        assertEquals(null, dbtis.getValue(4))
+        tis.getValue(0) shouldBe null
+        tis.getValue(1) shouldBe "i"
+        tis.getValue(2) shouldBe null
+        tis.getValue(3) shouldBe "10"
+        tis.getValue(4) shouldBe null
     }
 
-    @Test
-    fun testGetHasValue() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "get has value" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testGetHasValue()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -225,16 +222,15 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(false, dbtis.getHasValue(0))
-        assertEquals(true, dbtis.getHasValue(1))
-        assertEquals(false, dbtis.getHasValue(2))
-        assertEquals(true, dbtis.getHasValue(3))
-        assertEquals(false, dbtis.getHasValue(4))
+        tis.getHasValue(0) shouldBe false
+        tis.getHasValue(1) shouldBe true
+        tis.getHasValue(2) shouldBe false
+        tis.getHasValue(3) shouldBe true
+        tis.getHasValue(4) shouldBe false
     }
 
-    @Test
-    fun testSkip() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "skip" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testSkip()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -249,21 +245,20 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(dbtis.position, -1)
-        dbtis.skip()
-        assertEquals(dbtis.position, 0)
-        dbtis.skip(2)
-        assertEquals(dbtis.position, 2)
-        dbtis.skip()
-        assertEquals(dbtis.position, 3)
-        dbtis.skip()
-        assertEquals(dbtis.position, 4)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.skip() }.message)
+        tis.position shouldBe -1
+        tis.skip()
+        tis.position shouldBe 0
+        tis.skip(2)
+        tis.position shouldBe 2
+        tis.skip()
+        tis.position shouldBe 3
+        tis.skip()
+        tis.position shouldBe 4
+        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.skip() }
     }
 
-    @Test
-    fun testSetPosition() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "set position" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testSetPosition()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -278,36 +273,35 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(dbtis.position, -1)
-        dbtis.position = 0
-        assertEquals(dbtis.position, 0)
-        assertEquals(2, dbtis.actualEnd)
-        assertEquals(null, dbtis.actualValue)
-        dbtis.position = 1
-        assertEquals(dbtis.position, 1)
-        assertEquals(4, dbtis.actualEnd)
-        assertEquals("i", dbtis.actualValue)
-        dbtis.position = 2
-        assertEquals(dbtis.position, 2)
-        assertEquals(6, dbtis.actualEnd)
-        assertEquals(null, dbtis.actualValue)
-        dbtis.position = 3
-        assertEquals(dbtis.position, 3)
-        assertEquals(9, dbtis.actualEnd)
-        assertEquals("10", dbtis.actualValue)
-        dbtis.position = 4
-        assertEquals(dbtis.position, 4)
-        assertEquals(10, dbtis.actualEnd)
-        assertEquals(null, dbtis.actualValue)
-        dbtis.position = 3
-        assertEquals(dbtis.position, 3)
-        assertEquals(9, dbtis.actualEnd)
-        assertEquals("10", dbtis.actualValue)
+        tis.position shouldBe -1
+        tis.position = 0
+        tis.position shouldBe 0
+        tis.actualEnd shouldBe 2
+        tis.actualValue shouldBe null
+        tis.position = 1
+        tis.position shouldBe 1
+         tis.actualEnd shouldBe 4
+        tis.actualValue shouldBe "i"
+        tis.position = 2
+        tis.position shouldBe 2
+        tis.actualEnd shouldBe 6
+        tis.actualValue shouldBe null
+        tis.position = 3
+        tis.position shouldBe 3
+        tis.actualEnd shouldBe 9
+        tis.actualValue shouldBe "10"
+        tis.position = 4
+        tis.position shouldBe 4
+        tis.actualEnd shouldBe 10
+        tis.actualValue shouldBe null
+        tis.position = 3
+        tis.position shouldBe 3
+        tis.actualEnd shouldBe 9
+        tis.actualValue shouldBe "10"
     }
 
-    @Test
-    fun testHas() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "has" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHas()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -322,22 +316,21 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(true, dbtis.has(1))
-        assertEquals(true, dbtis.has(2))
-        assertEquals(true, dbtis.has(3))
-        assertEquals(true, dbtis.has(4))
-        assertEquals(true, dbtis.has(5))
-        assertEquals(false, dbtis.has(6))
-        dbtis.skip(2)
-        assertEquals(true, dbtis.has(1))
-        assertEquals(true, dbtis.has(2))
-        assertEquals(true, dbtis.has(3))
-        assertEquals(false, dbtis.has(4))
+        tis.has(1) shouldBe true
+        tis.has(2) shouldBe true
+        tis.has(3) shouldBe true
+        tis.has(4) shouldBe true
+        tis.has(5) shouldBe true
+        tis.has(6) shouldBe false
+        tis.skip(2)
+        tis.has(1) shouldBe true
+        tis.has(2) shouldBe true
+        tis.has(3) shouldBe true
+        tis.has(4) shouldBe false
     }
 
-    @Test
-    fun testHasNext() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "has next" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHasNext()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -352,16 +345,15 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(true, dbtis.hasNext())
-        dbtis.skip(2)
-        assertEquals(true, dbtis.hasNext())
-        dbtis.skip(3)
-        assertEquals(false, dbtis.hasNext())
+        tis.hasNext() shouldBe true
+        tis.skip(2)
+        tis.hasNext() shouldBe true
+        tis.skip(3)
+        tis.hasNext() shouldBe false
     }
 
-    @Test
-    fun testHasNextWithEmpty() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "has next with empty" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHasNextWithEmpty()",
             arrayOf(),
             PositionMap.PositionMapImplementation(
@@ -370,12 +362,11 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(false, dbtis.hasNext())
+        tis.hasNext() shouldBe false
     }
 
-    @Test
-    fun testHasNextWithEmptyAndPosition() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "has next with empty and position" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testHasNextWithEmptyAndPosition()",
             arrayOf(),
             PositionMap.PositionMapImplementation(
@@ -384,13 +375,12 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(false, dbtis.hasNext())
-        assertEquals(-1, dbtis.position)
+        tis.hasNext() shouldBe false
+        tis.position shouldBe -1
     }
 
-    @Test
-    fun testActualEnd() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "actual end" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActualEnd()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -405,21 +395,20 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        dbtis.skip()
-        assertEquals(2, dbtis.actualEnd)
-        dbtis.skip()
-        assertEquals(4, dbtis.actualEnd)
-        dbtis.skip()
-        assertEquals(6, dbtis.actualEnd)
-        dbtis.skip()
-        assertEquals(9, dbtis.actualEnd)
-        dbtis.skip()
-        assertEquals(10, dbtis.actualEnd)
+        tis.skip()
+        tis.actualEnd shouldBe 2
+        tis.skip()
+        tis.actualEnd shouldBe 4
+        tis.skip()
+        tis.actualEnd shouldBe 6
+        tis.skip()
+        tis.actualEnd shouldBe 9
+        tis.skip()
+        tis.actualEnd shouldBe 10
     }
 
-    @Test
-    fun testActualStart() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "actual start" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActualStart()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -434,21 +423,20 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        dbtis.skip()
-        assertEquals(0, dbtis.actualStart)
-        dbtis.skip()
-        assertEquals(4, dbtis.actualStart)
-        dbtis.skip()
-        assertEquals(6, dbtis.actualStart)
-        dbtis.skip()
-        assertEquals(8, dbtis.actualStart)
-        dbtis.skip()
-        assertEquals(10, dbtis.actualStart)
+        tis.skip()
+        tis.actualStart shouldBe 0
+        tis.skip()
+        tis.actualStart shouldBe 4
+        tis.skip()
+        tis.actualStart shouldBe 6
+        tis.skip()
+        tis.actualStart shouldBe 8
+        tis.skip()
+        tis.actualStart shouldBe 10
     }
 
-    @Test
-    fun testActualType() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "actual type" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActualType()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -463,21 +451,20 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        dbtis.skip()
-        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.actualType)
-        dbtis.skip()
-        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.actualType)
-        dbtis.skip()
-        assertEquals(ShakeTokenType.ASSIGN, dbtis.actualType)
-        dbtis.skip()
-        assertEquals(ShakeTokenType.INTEGER, dbtis.actualType)
-        dbtis.skip()
-        assertEquals(ShakeTokenType.SEMICOLON, dbtis.actualType)
+        tis.skip()
+        tis.actualType shouldBe ShakeTokenType.KEYWORD_INT
+        tis.skip()
+        tis.actualType shouldBe ShakeTokenType.IDENTIFIER
+        tis.skip()
+        tis.actualType shouldBe ShakeTokenType.ASSIGN
+        tis.skip()
+        tis.actualType shouldBe ShakeTokenType.INTEGER
+        tis.skip()
+        tis.actualType shouldBe ShakeTokenType.SEMICOLON
     }
 
-    @Test
-    fun testActualValue() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "actual value" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActualValue()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -492,21 +479,20 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        dbtis.skip()
-        assertEquals(null, dbtis.actualValue)
-        dbtis.skip()
-        assertEquals("i", dbtis.actualValue)
-        dbtis.skip()
-        assertEquals(null, dbtis.actualValue)
-        dbtis.skip()
-        assertEquals("10", dbtis.actualValue)
-        dbtis.skip()
-        assertEquals(null, dbtis.actualValue)
+        tis.skip()
+        tis.actualValue shouldBe null
+        tis.skip()
+        tis.actualValue shouldBe "i"
+        tis.skip()
+        tis.actualValue shouldBe null
+        tis.skip()
+        tis.actualValue shouldBe "10"
+        tis.skip()
+        tis.actualValue shouldBe null
     }
 
-    @Test
-    fun testActual() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "actual" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testActual()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -521,41 +507,40 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        dbtis.skip()
-        var actual = dbtis.actual
-        assertEquals(ShakeTokenType.KEYWORD_INT, actual.type)
-        assertEquals(null, actual.value)
-        assertEquals(2, actual.end)
-        assertEquals(0, actual.start)
-        dbtis.skip()
-        actual = dbtis.actual
-        assertEquals(ShakeTokenType.IDENTIFIER, actual.type)
-        assertEquals("i", actual.value)
-        assertEquals(4, actual.end)
-        assertEquals(4, actual.start)
-        dbtis.skip()
-        actual = dbtis.actual
-        assertEquals(ShakeTokenType.ASSIGN, actual.type)
-        assertEquals(null, actual.value)
-        assertEquals(6, actual.end)
-        assertEquals(6, actual.start)
-        dbtis.skip()
-        actual = dbtis.actual
-        assertEquals(ShakeTokenType.INTEGER, actual.type)
-        assertEquals("10", actual.value)
-        assertEquals(9, actual.end)
-        assertEquals(8, actual.start)
-        dbtis.skip()
-        actual = dbtis.actual
-        assertEquals(ShakeTokenType.SEMICOLON, actual.type)
-        assertEquals(null, actual.value)
-        assertEquals(10, actual.end)
-        assertEquals(10, actual.start)
+        tis.skip()
+        var actual = tis.actual
+        actual.type shouldBe ShakeTokenType.KEYWORD_INT
+        actual.value shouldBe null
+        actual.end shouldBe 2
+        actual.start shouldBe 0
+        tis.skip()
+        actual = tis.actual
+        actual.type shouldBe ShakeTokenType.IDENTIFIER
+        actual.value shouldBe "i"
+        actual.end shouldBe 4
+        actual.start shouldBe 4
+        tis.skip()
+        actual = tis.actual
+        actual.type shouldBe ShakeTokenType.ASSIGN
+        actual.value shouldBe null
+        actual.end shouldBe 6
+        actual.start shouldBe 6
+        tis.skip()
+        actual = tis.actual
+        actual.type shouldBe ShakeTokenType.INTEGER
+        actual.value shouldBe "10"
+        actual.end shouldBe 9
+        actual.start shouldBe 8
+        tis.skip()
+        actual = tis.actual
+        actual.type shouldBe ShakeTokenType.SEMICOLON
+        actual.value shouldBe null
+        actual.end shouldBe 10
+        actual.start shouldBe 10
     }
 
-    @Test
-    fun testPeekType() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek type" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekType()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -570,20 +555,19 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.peekType())
-        dbtis.skip()
-        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.peekType())
-        dbtis.skip()
-        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType())
-        dbtis.skip()
-        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType())
-        dbtis.skip()
-        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType())
+        tis.peekType() shouldBe ShakeTokenType.KEYWORD_INT
+        tis.skip()
+        tis.peekType() shouldBe ShakeTokenType.IDENTIFIER
+        tis.skip()
+        tis.peekType() shouldBe ShakeTokenType.ASSIGN
+        tis.skip()
+        tis.peekType() shouldBe ShakeTokenType.INTEGER
+        tis.skip()
+        tis.peekType() shouldBe ShakeTokenType.SEMICOLON
     }
 
-    @Test
-    fun testPeekEnd() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek end" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekEnd()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -598,20 +582,19 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(2, dbtis.peekEnd())
-        dbtis.skip()
-        assertEquals(4, dbtis.peekEnd())
-        dbtis.skip()
-        assertEquals(6, dbtis.peekEnd())
-        dbtis.skip()
-        assertEquals(9, dbtis.peekEnd())
-        dbtis.skip()
-        assertEquals(10, dbtis.peekEnd())
+        tis.peekEnd() shouldBe 2
+        tis.skip()
+        tis.peekEnd() shouldBe 4
+        tis.skip()
+        tis.peekEnd() shouldBe 6
+        tis.skip()
+        tis.peekEnd() shouldBe 9
+        tis.skip()
+        tis.peekEnd() shouldBe 10
     }
 
-    @Test
-    fun testPeekStart() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek start" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekStart()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -626,20 +609,19 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(0, dbtis.peekStart())
-        dbtis.skip()
-        assertEquals(4, dbtis.peekStart())
-        dbtis.skip()
-        assertEquals(6, dbtis.peekStart())
-        dbtis.skip()
-        assertEquals(8, dbtis.peekStart())
-        dbtis.skip()
-        assertEquals(10, dbtis.peekStart())
+        tis.peekStart() shouldBe 0
+        tis.skip()
+        tis.peekStart() shouldBe 4
+        tis.skip()
+        tis.peekStart() shouldBe 6
+        tis.skip()
+        tis.peekStart() shouldBe 8
+        tis.skip()
+        tis.peekStart() shouldBe 10
     }
 
-    @Test
-    fun testPeekValue() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek value" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekValue()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -654,20 +636,19 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(null, dbtis.peekValue())
-        dbtis.skip()
-        assertEquals("i", dbtis.peekValue())
-        dbtis.skip()
-        assertEquals(null, dbtis.peekValue())
-        dbtis.skip()
-        assertEquals("10", dbtis.peekValue())
-        dbtis.skip()
-        assertEquals(null, dbtis.peekValue())
+        tis.peekValue() shouldBe null
+        tis.skip()
+        tis.peekValue() shouldBe "i"
+        tis.skip()
+        tis.peekValue() shouldBe null
+        tis.skip()
+        tis.peekValue() shouldBe "10"
+        tis.skip()
+        tis.peekValue() shouldBe null
     }
 
-    @Test
-    fun testPeek() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeek()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -682,40 +663,39 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        var token = dbtis.peek()
-        assertEquals(ShakeTokenType.KEYWORD_INT, token.type)
-        assertEquals(null, token.value)
-        assertEquals(0, token.start)
-        assertEquals(2, token.end)
-        dbtis.skip()
-        token = dbtis.peek()
-        assertEquals(ShakeTokenType.IDENTIFIER, token.type)
-        assertEquals("i", token.value)
-        assertEquals(4, token.start)
-        assertEquals(4, token.end)
-        dbtis.skip()
-        token = dbtis.peek()
-        assertEquals(ShakeTokenType.ASSIGN, token.type)
-        assertEquals(null, token.value)
-        assertEquals(6, token.start)
-        assertEquals(6, token.end)
-        dbtis.skip()
-        token = dbtis.peek()
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("10", token.value)
-        assertEquals(8, token.start)
-        assertEquals(9, token.end)
-        dbtis.skip()
-        token = dbtis.peek()
-        assertEquals(ShakeTokenType.SEMICOLON, token.type)
-        assertEquals(null, token.value)
-        assertEquals(10, token.start)
-        assertEquals(10, token.end)
+        var token = tis.peek()
+        token.type shouldBe ShakeTokenType.KEYWORD_INT
+        token.value shouldBe null
+        token.start shouldBe 0
+        token.end shouldBe 2
+        tis.skip()
+        token = tis.peek()
+        token.type shouldBe ShakeTokenType.IDENTIFIER
+        token.value shouldBe "i"
+        token.start shouldBe 4
+        token.end shouldBe 4
+        tis.skip()
+        token = tis.peek()
+        token.type shouldBe ShakeTokenType.ASSIGN
+        token.value shouldBe null
+        token.start shouldBe 6
+        token.end shouldBe 6
+        tis.skip()
+        token = tis.peek()
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "10"
+        token.start shouldBe 8
+        token.end shouldBe 9
+        tis.skip()
+        token = tis.peek()
+        token.type shouldBe ShakeTokenType.SEMICOLON
+        token.value shouldBe null
+        token.start shouldBe 10
+        token.end shouldBe 10
     }
 
-    @Test
-    fun testPeekType2() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek type 2" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekType2()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -730,40 +710,39 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(ShakeTokenType.KEYWORD_INT, dbtis.peekType(1))
-        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.peekType(2))
-        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType(3))
-        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(4))
-        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(5))
-        dbtis.skip()
-        assertEquals(ShakeTokenType.IDENTIFIER, dbtis.peekType(1))
-        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType(2))
-        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(3))
-        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(4))
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
-        dbtis.skip()
-        assertEquals(ShakeTokenType.ASSIGN, dbtis.peekType(1))
-        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(2))
-        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(3))
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
-        dbtis.skip()
-        assertEquals(ShakeTokenType.INTEGER, dbtis.peekType(1))
-        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(2))
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(3) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
-        dbtis.skip()
-        assertEquals(ShakeTokenType.SEMICOLON, dbtis.peekType(1))
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(2) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(3) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekType(5) }.message)
+        tis.peekType(1) shouldBe ShakeTokenType.KEYWORD_INT
+        tis.peekType(2) shouldBe ShakeTokenType.IDENTIFIER
+        tis.peekType(3) shouldBe ShakeTokenType.ASSIGN
+        tis.peekType(4) shouldBe ShakeTokenType.INTEGER
+        tis.peekType(5) shouldBe ShakeTokenType.SEMICOLON
+        tis.skip()
+        tis.peekType(1) shouldBe ShakeTokenType.IDENTIFIER
+        tis.peekType(2) shouldBe ShakeTokenType.ASSIGN
+        tis.peekType(3) shouldBe ShakeTokenType.INTEGER
+        tis.peekType(4) shouldBe ShakeTokenType.SEMICOLON
+        shouldThrowWithMessage <Error> ("Not enough tokens left") { tis.peekType(5) }
+        tis.skip()
+        tis.peekType(1) shouldBe ShakeTokenType.ASSIGN
+        tis.peekType(2) shouldBe ShakeTokenType.INTEGER
+        tis.peekType(3) shouldBe ShakeTokenType.SEMICOLON
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(5) }
+        tis.skip()
+        tis.peekType(1) shouldBe ShakeTokenType.INTEGER
+        tis.peekType(2) shouldBe ShakeTokenType.SEMICOLON
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(5) }
+        tis.skip()
+        tis.peekType(1) shouldBe ShakeTokenType.SEMICOLON
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(2) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(5) }
     }
 
-    @Test
-    fun testPeekEnd2() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek end 2" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekEnd2()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -778,40 +757,39 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(2, dbtis.peekEnd(1))
-        assertEquals(4, dbtis.peekEnd(2))
-        assertEquals(6, dbtis.peekEnd(3))
-        assertEquals(9, dbtis.peekEnd(4))
-        assertEquals(10, dbtis.peekEnd(5))
-        dbtis.skip()
-        assertEquals(4, dbtis.peekEnd(1))
-        assertEquals(6, dbtis.peekEnd(2))
-        assertEquals(9, dbtis.peekEnd(3))
-        assertEquals(10, dbtis.peekEnd(4))
-        assertFailsWith<Error> { dbtis.peekEnd(5) }
-        dbtis.skip()
-        assertEquals(6, dbtis.peekEnd(1))
-        assertEquals(9, dbtis.peekEnd(2))
-        assertEquals(10, dbtis.peekEnd(3))
-        assertFailsWith<Error> { dbtis.peekEnd(4) }
-        assertFailsWith<Error> { dbtis.peekEnd(5) }
-        dbtis.skip()
-        assertEquals(9, dbtis.peekEnd(1))
-        assertEquals(10, dbtis.peekEnd(2))
-        assertFailsWith<Error> { dbtis.peekEnd(3) }
-        assertFailsWith<Error> { dbtis.peekEnd(4) }
-        assertFailsWith<Error> { dbtis.peekEnd(5) }
-        dbtis.skip()
-        assertEquals(10, dbtis.peekEnd(1))
-        assertFailsWith<Error> { dbtis.peekEnd(2) }
-        assertFailsWith<Error> { dbtis.peekEnd(3) }
-        assertFailsWith<Error> { dbtis.peekEnd(4) }
-        assertFailsWith<Error> { dbtis.peekEnd(5) }
+        tis.peekEnd(1) shouldBe 2
+        tis.peekEnd(2) shouldBe 4
+        tis.peekEnd(3) shouldBe 6
+        tis.peekEnd(4) shouldBe 9
+        tis.peekEnd(5) shouldBe 10
+        tis.skip()
+        tis.peekEnd(1) shouldBe 4
+        tis.peekEnd(2) shouldBe 6
+        tis.peekEnd(3) shouldBe 9
+        tis.peekEnd(4) shouldBe 10
+        shouldThrow<Error> { tis.peekEnd(5) }
+        tis.skip()
+        tis.peekEnd(1) shouldBe 6
+        tis.peekEnd(2) shouldBe 9
+        tis.peekEnd(3) shouldBe 10
+        shouldThrow<Error> { tis.peekEnd(4) }
+        shouldThrow<Error> { tis.peekEnd(5) }
+        tis.skip()
+        tis.peekEnd(1) shouldBe 9
+        tis.peekEnd(2) shouldBe 10
+        shouldThrow<Error> { tis.peekEnd(3) }
+        shouldThrow<Error> { tis.peekEnd(4) }
+        shouldThrow<Error> { tis.peekEnd(5) }
+        tis.skip()
+        tis.peekEnd(1) shouldBe 10
+        shouldThrow<Error> { tis.peekEnd(2) }
+        shouldThrow<Error> { tis.peekEnd(3) }
+        shouldThrow<Error> { tis.peekEnd(4) }
+        shouldThrow<Error> { tis.peekEnd(5) }
     }
 
-    @Test
-    fun testPeekStart2() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek start 2" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekStart2()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -826,46 +804,45 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(0, dbtis.peekStart(1))
-        assertEquals(4, dbtis.peekStart(2))
-        assertEquals(6, dbtis.peekStart(3))
-        assertEquals(8, dbtis.peekStart(4))
-        assertEquals(10, dbtis.peekStart(5))
-        dbtis.skip()
-        assertEquals(4, dbtis.peekStart(1))
-        assertEquals(6, dbtis.peekStart(2))
-        assertEquals(8, dbtis.peekStart(3))
-        assertEquals(10, dbtis.peekStart(4))
-        assertFailsWith<Error> { dbtis.peekStart(5) }
-        dbtis.skip()
-        assertEquals(6, dbtis.peekStart(1))
-        assertEquals(8, dbtis.peekStart(2))
-        assertEquals(10, dbtis.peekStart(3))
-        assertFailsWith<Error> { dbtis.peekStart(4) }
-        assertFailsWith<Error> { dbtis.peekStart(5) }
-        dbtis.skip()
-        assertEquals(8, dbtis.peekStart(1))
-        assertEquals(10, dbtis.peekStart(2))
-        assertFailsWith<Error> { dbtis.peekStart(3) }
-        assertFailsWith<Error> { dbtis.peekStart(4) }
-        assertFailsWith<Error> { dbtis.peekStart(5) }
-        dbtis.skip()
-        assertEquals(10, dbtis.peekStart(1))
-        assertFailsWith<Error> { dbtis.peekStart(2) }
-        assertFailsWith<Error> { dbtis.peekStart(3) }
-        assertFailsWith<Error> { dbtis.peekStart(4) }
-        assertFailsWith<Error> { dbtis.peekStart(5) }
-        dbtis.skip()
-        assertFailsWith<Error> { dbtis.peekStart(1) }
-        assertFailsWith<Error> { dbtis.peekStart(2) }
-        assertFailsWith<Error> { dbtis.peekStart(3) }
-        assertFailsWith<Error> { dbtis.peekStart(4) }
-        assertFailsWith<Error> { dbtis.peekStart(5) }
+        tis.peekStart(1) shouldBe 0
+        tis.peekStart(2) shouldBe 4
+        tis.peekStart(3) shouldBe 6
+        tis.peekStart(4) shouldBe 8
+        tis.peekStart(5) shouldBe 10
+        tis.skip()
+        tis.peekStart(1) shouldBe 4
+        tis.peekStart(2) shouldBe 6
+        tis.peekStart(3) shouldBe 8
+        tis.peekStart(4) shouldBe 10
+        shouldThrow<Error> { tis.peekStart(5) }
+        tis.skip()
+        tis.peekStart(1) shouldBe 6
+        tis.peekStart(2) shouldBe 8
+        tis.peekStart(3) shouldBe 10
+        shouldThrow<Error> { tis.peekStart(4) }
+        shouldThrow<Error> { tis.peekStart(5) }
+        tis.skip()
+        tis.peekStart(1) shouldBe 8
+        tis.peekStart(2) shouldBe 10
+        shouldThrow<Error> { tis.peekStart(3) }
+        shouldThrow<Error> { tis.peekStart(4) }
+        shouldThrow<Error> { tis.peekStart(5) }
+        tis.skip()
+        tis.peekStart(1) shouldBe 10
+        shouldThrow<Error> { tis.peekStart(2) }
+        shouldThrow<Error> { tis.peekStart(3) }
+        shouldThrow<Error> { tis.peekStart(4) }
+        shouldThrow<Error> { tis.peekStart(5) }
+        tis.skip()
+        shouldThrow<Error> { tis.peekStart(1) }
+        shouldThrow<Error> { tis.peekStart(2) }
+        shouldThrow<Error> { tis.peekStart(3) }
+        shouldThrow<Error> { tis.peekStart(4) }
+        shouldThrow<Error> { tis.peekStart(5) }
     }
 
-    @Test
-    fun testPeekValue2() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek value 2" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeekValue2()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -880,46 +857,45 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        assertEquals(null, dbtis.peekValue(1))
-        assertEquals("i", dbtis.peekValue(2))
-        assertEquals(null, dbtis.peekValue(3))
-        assertEquals("10", dbtis.peekValue(4))
-        assertEquals(null, dbtis.peekValue(5))
-        dbtis.skip()
-        assertEquals("i", dbtis.peekValue(1))
-        assertEquals(null, dbtis.peekValue(2))
-        assertEquals("10", dbtis.peekValue(3))
-        assertEquals(null, dbtis.peekValue(4))
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(5) }.message)
-        dbtis.skip()
-        assertEquals(null, dbtis.peekValue(1))
-        assertEquals("10", dbtis.peekValue(2))
-        assertEquals(null, dbtis.peekValue(3))
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(5) }.message)
-        dbtis.skip()
-        assertEquals("10", dbtis.peekValue(1))
-        assertEquals(null, dbtis.peekValue(2))
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(3) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(5) }.message)
-        dbtis.skip()
-        assertEquals(null, dbtis.peekValue(1))
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(2) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(3) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(5) }.message)
-        dbtis.skip()
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(1) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(2) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(3) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peekValue(5) }.message)
+        tis.peekValue(1) shouldBe null
+        tis.peekValue(2) shouldBe "i"
+        tis.peekValue(3) shouldBe null
+        tis.peekValue(4) shouldBe "10"
+        tis.peekValue(5) shouldBe null
+        tis.skip()
+        tis.peekValue(1) shouldBe "i"
+        tis.peekValue(2) shouldBe null
+        tis.peekValue(3) shouldBe "10"
+        tis.peekValue(4) shouldBe null
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(5) }
+        tis.skip()
+        tis.peekValue(1) shouldBe null
+        tis.peekValue(2) shouldBe "10"
+        tis.peekValue(3) shouldBe null
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(5) }
+        tis.skip()
+        tis.peekValue(1) shouldBe "10"
+        tis.peekValue(2) shouldBe null
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(5) }
+        tis.skip()
+        tis.peekValue(1) shouldBe null
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(2) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(5) }
+        tis.skip()
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(1) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(2) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(5) }
     }
 
-    @Test
-    fun testPeek2() {
-        val dbtis = ShakeTokenBasedTokenInputStream(
+    "peek 2" {
+        val tis = ShakeTokenBasedTokenInputStream(
             "TokenBasedTokenInputStreamTests#testPeek2()",
             arrayOf(
                 ShakeToken(ShakeTokenType.KEYWORD_INT, 0, 2),
@@ -934,102 +910,102 @@ class TokenBasedTokenInputStreamTests {
             )
         )
 
-        var token = dbtis.peek(1)
-        assertEquals(ShakeTokenType.KEYWORD_INT, token.type)
-        assertEquals(null, token.value)
-        assertEquals(0, token.start)
-        assertEquals(2, token.end)
-        token = dbtis.peek(2)
-        assertEquals(ShakeTokenType.IDENTIFIER, token.type)
-        assertEquals("i", token.value)
-        assertEquals(4, token.start)
-        assertEquals(4, token.end)
-        token = dbtis.peek(3)
-        assertEquals(ShakeTokenType.ASSIGN, token.type)
-        assertEquals(null, token.value)
-        assertEquals(6, token.start)
-        assertEquals(6, token.end)
-        token = dbtis.peek(4)
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("10", token.value)
-        assertEquals(8, token.start)
-        assertEquals(9, token.end)
-        token = dbtis.peek(5)
-        assertEquals(ShakeTokenType.SEMICOLON, token.type)
-        assertEquals(null, token.value)
-        assertEquals(10, token.start)
-        assertEquals(10, token.end)
+        var token = tis.peek(1)
+        token.type shouldBe ShakeTokenType.KEYWORD_INT
+        token.value shouldBe null
+        token.start shouldBe 0
+        token.end shouldBe 2
+        token = tis.peek(2)
+        token.type shouldBe ShakeTokenType.IDENTIFIER
+        token.value shouldBe "i"
+        token.start shouldBe 4
+        token.end shouldBe 4
+        token = tis.peek(3)
+        token.type shouldBe ShakeTokenType.ASSIGN
+        token.value shouldBe null
+        token.start shouldBe 6
+        token.end shouldBe 6
+        token = tis.peek(4)
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "10"
+        token.start shouldBe 8
+        token.end shouldBe 9
+        token = tis.peek(5)
+        token.type shouldBe ShakeTokenType.SEMICOLON
+        token.value shouldBe null
+        token.start shouldBe 10
+        token.end shouldBe 10
 
-        dbtis.skip()
+        tis.skip()
 
-        token = dbtis.peek(1)
-        assertEquals(ShakeTokenType.IDENTIFIER, token.type)
-        assertEquals("i", token.value)
-        assertEquals(4, token.start)
-        assertEquals(4, token.end)
-        token = dbtis.peek(2)
-        assertEquals(ShakeTokenType.ASSIGN, token.type)
-        assertEquals(null, token.value)
-        assertEquals(6, token.start)
-        assertEquals(6, token.end)
-        token = dbtis.peek(3)
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("10", token.value)
-        assertEquals(8, token.start)
-        assertEquals(9, token.end)
-        token = dbtis.peek(4)
-        assertEquals(ShakeTokenType.SEMICOLON, token.type)
-        assertEquals(null, token.value)
-        assertEquals(10, token.start)
-        assertEquals(10, token.end)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(5) }.message)
+        token = tis.peek(1)
+        token.type shouldBe ShakeTokenType.IDENTIFIER
+        token.value shouldBe "i"
+        token.start shouldBe 4
+        token.end shouldBe 4
+        token = tis.peek(2)
+        token.type shouldBe ShakeTokenType.ASSIGN
+        token.value shouldBe null
+        token.start shouldBe 6
+        token.end shouldBe 6
+        token = tis.peek(3)
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "10"
+        token.start shouldBe 8
+        token.end shouldBe 9
+        token = tis.peek(4)
+        token.type shouldBe ShakeTokenType.SEMICOLON
+        token.value shouldBe null
+        token.start shouldBe 10
+        token.end shouldBe 10
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(5) }
 
-        dbtis.skip()
+        tis.skip()
 
-        token = dbtis.peek(1)
-        assertEquals(ShakeTokenType.ASSIGN, token.type)
-        assertEquals(null, token.value)
-        assertEquals(6, token.start)
-        assertEquals(6, token.end)
-        token = dbtis.peek(2)
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("10", token.value)
-        assertEquals(8, token.start)
-        assertEquals(9, token.end)
-        token = dbtis.peek(3)
-        assertEquals(ShakeTokenType.SEMICOLON, token.type)
-        assertEquals(null, token.value)
-        assertEquals(10, token.start)
-        assertEquals(10, token.end)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(5) }.message)
+        token = tis.peek(1)
+        token.type shouldBe ShakeTokenType.ASSIGN
+        token.value shouldBe null
+        token.start shouldBe 6
+        token.end shouldBe 6
+        token = tis.peek(2)
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "10"
+        token.start shouldBe 8
+        token.end shouldBe 9
+        token = tis.peek(3)
+        token.type shouldBe ShakeTokenType.SEMICOLON
+        token.value shouldBe null
+        token.start shouldBe 10
+        token.end shouldBe 10
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(5) }
 
-        dbtis.skip()
+        tis.skip()
 
-        token = dbtis.peek(1)
-        assertEquals(ShakeTokenType.INTEGER, token.type)
-        assertEquals("10", token.value)
-        assertEquals(8, token.start)
-        assertEquals(9, token.end)
-        token = dbtis.peek(2)
-        assertEquals(ShakeTokenType.SEMICOLON, token.type)
-        assertEquals(null, token.value)
-        assertEquals(10, token.start)
-        assertEquals(10, token.end)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(3) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(5) }.message)
+        token = tis.peek(1)
+        token.type shouldBe ShakeTokenType.INTEGER
+        token.value shouldBe "10"
+        token.start shouldBe 8
+        token.end shouldBe 9
+        token = tis.peek(2)
+        token.type shouldBe ShakeTokenType.SEMICOLON
+        token.value shouldBe null
+        token.start shouldBe 10
+        token.end shouldBe 10
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(5) }
 
-        dbtis.skip()
+        tis.skip()
 
-        token = dbtis.peek(1)
-        assertEquals(ShakeTokenType.SEMICOLON, token.type)
-        assertEquals(null, token.value)
-        assertEquals(10, token.start)
-        assertEquals(10, token.end)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(2) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(3) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(4) }.message)
-        assertEquals("Not enough tokens left", assertFailsWith<Error> { dbtis.peek(5) }.message)
+        token = tis.peek(1)
+        token.type shouldBe ShakeTokenType.SEMICOLON
+        token.value shouldBe null
+        token.start shouldBe 10
+        token.end shouldBe 10
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(2) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(5) }
     }
-}
+})

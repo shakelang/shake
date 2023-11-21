@@ -8,8 +8,6 @@ class ShakeAddNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNo
 
     override val operator: String
         get() = "+"
-
-    override fun toJson(): Map<String, *> = mapOf("name" to "AddNode", "left" to left, "right" to right)
 }
 
 class ShakeSubNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
@@ -17,40 +15,30 @@ class ShakeSubNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNo
 
     override val operator: String
         get() = "-"
-
-    override fun toJson(): Map<String, *> = mapOf("name" to "SubNode", "left" to left, "right" to right)
 }
 
 class ShakeMulNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
         get() = "*"
-
-    override fun toJson(): Map<String, *> = mapOf("name" to "MulNode", "left" to left, "right" to right)
 }
 
 class ShakeDivNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
         get() = "/"
-
-    override fun toJson(): Map<String, *> = mapOf("name" to "DivNode", "left" to left, "right" to right)
 }
 
 class ShakeModNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
         get() = "%"
-
-    override fun toJson(): Map<String, *> = mapOf("name" to "ModNode", "left" to left, "right" to right)
 }
 
 class ShakePowNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNode, operatorPosition: Int) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
         get() = "^"
-
-    override fun toJson(): Map<String, *> = mapOf("name" to "PowNode", "left" to left, "right" to right)
 }
 
 class ShakeUnaryPlusNode(
@@ -59,7 +47,6 @@ class ShakeUnaryPlusNode(
     operatorPosition: Int
 ) : ShakeUnaryNode(map, contents, operatorPosition) {
     override val operator: String get() = "+"
-    override fun toJson(): Map<String, *> = mapOf("name" to "UnaryMinusNode", "node" to node)
 }
 
 class ShakeUnaryMinusNode(
@@ -68,5 +55,24 @@ class ShakeUnaryMinusNode(
     operatorPosition: Int
 ) : ShakeUnaryNode(map, contents, operatorPosition) {
     override val operator: String get() = "-"
-    override fun toJson(): Map<String, *> = mapOf("name" to "UnaryMinusNode", "node" to node)
 }
+
+fun createSyntheticAddNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeAddNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticSubNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeSubNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticMulNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeMulNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticDivNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeDivNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticModNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakeModNode(PositionMap.empty(), left, right, -1)
+
+fun createSyntheticPowNode(left: ShakeValuedNode, right: ShakeValuedNode) =
+    ShakePowNode(PositionMap.empty(), left, right, -1)
+
+

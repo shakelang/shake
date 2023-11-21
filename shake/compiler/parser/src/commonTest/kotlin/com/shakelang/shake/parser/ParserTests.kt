@@ -1,147 +1,161 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.assertArrayEquals
-import com.shakelang.shake.assertType
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeIfNode
 import com.shakelang.shake.parser.node.ShakeImportNode
-import com.shakelang.shake.parser.node.expression.ShakeLogicalSmallerNode
+import com.shakelang.shake.parser.node.expression.ShakeLessThanNode
 import com.shakelang.shake.parser.node.factor.ShakeLogicalTrueNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.loops.ShakeDoWhileNode
 import com.shakelang.shake.parser.node.loops.ShakeForNode
 import com.shakelang.shake.parser.node.loops.ShakeWhileNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
-import kotlin.test.*
+import com.shakelang.shake.shouldBeOfType
+import com.shakelang.shake.shouldHaveSameContents
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
-class ParserTests {
-    @Test
-    fun testImport() {
+class ParserTests : FreeSpec({
+    "test import" {
         var node = ParserTestUtil.parse("<ImportTest>", "import com;")
-        assertEquals(1, node.children.size)
-        assertType(ShakeImportNode::class, node.children[0])
-        assertArrayEquals(arrayOf("com"), (node.children[0] as ShakeImportNode).import)
+        node.children.size shouldBe 1
+        node.children[0] shouldBeOfType ShakeImportNode::class
+        (node.children[0] as ShakeImportNode).import shouldHaveSameContents arrayOf("com")
         node = ParserTestUtil.parse("<ImportTest>", "import com.shakelang.shake;")
-        assertEquals(1, node.children.size)
-        assertType(ShakeImportNode::class, node.children[0])
-        assertArrayEquals(
-            arrayOf("com", "shakelang", "shake"),
-            (node.children[0] as ShakeImportNode).import
-        )
+        node.children.size shouldBe 1
+        node.children[0] shouldBeOfType ShakeImportNode::class
+        (node.children[0] as ShakeImportNode).import shouldHaveSameContents arrayOf("com", "shakelang", "shake")
         node = ParserTestUtil.parse("<ImportTest>", "import com.shakelang.shake.*;")
-        assertEquals(1, node.children.size)
-        assertType(ShakeImportNode::class, node.children[0])
-        assertArrayEquals(
-            arrayOf("com", "shakelang", "shake", "*"),
-            (node.children[0] as ShakeImportNode).import
-        )
+        node.children.size shouldBe 1
+        node.children[0] shouldBeOfType ShakeImportNode::class
+        (node.children[0] as ShakeImportNode).import shouldHaveSameContents arrayOf("com", "shakelang", "shake", "*")
     }
 
-    @Test
-    fun testMultiStatement() {
+    "test multi statement" {
         var node = ParserTestUtil.parseStatement("<MultiStatementTest>", "var i; println(i);")
-        assertEquals(2, node.children.size)
-        assertType(ShakeVariableDeclarationNode::class, node.children[0])
-        assertType(ShakeFunctionCallNode::class, node.children[1])
+        node.children.size shouldBe 2
+        node.children[0] shouldBeOfType ShakeVariableDeclarationNode::class
+        node.children[1] shouldBeOfType ShakeInvocationNode::class
         node = ParserTestUtil.parseStatement("<MultiStatementTest>", "var i\nprintln(i)")
-        assertEquals(2, node.children.size)
-        assertType(ShakeVariableDeclarationNode::class, node.children[0])
-        assertType(ShakeFunctionCallNode::class, node.children[1])
+        node.children.size shouldBe 2
+        node.children[0] shouldBeOfType ShakeVariableDeclarationNode::class
+        node.children[1] shouldBeOfType ShakeInvocationNode::class
     }
 
-    @Test
-    fun testWhile() {
+    "test while" {
         var node = ParserTestUtil.parseStatement("<WhileTest>", "while (true) { println(); }", ShakeWhileNode::class)
-        assertNotNull(node.condition)
-        assertNotNull(node.body)
-        assertType(ShakeLogicalTrueNode::class, node.condition)
-        assertType(ShakeBlockNode::class, node.body)
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
         node = ParserTestUtil.parseStatement("<WhileTest>", "while (true) println();", ShakeWhileNode::class)
-        assertNotNull(node.condition)
-        assertNotNull(node.body)
-        assertType(ShakeLogicalTrueNode::class, node.condition)
-        assertType(ShakeBlockNode::class, node.body)
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        val body = node.body
+        body.children.size shouldBe 1
+        body.children[0] shouldBeOfType ShakeInvocationNode::class
     }
 
-    @Test
-    fun testDoWhile() {
+    "test do while" {
         var node =
             ParserTestUtil.parseStatement("<DoWhileTest>", "do { println(i) } while (true);", ShakeDoWhileNode::class)
-        assertNotNull(node.condition)
-        assertNotNull(node.body)
-        assertType(ShakeLogicalTrueNode::class, node.condition)
-        assertType(ShakeBlockNode::class, node.body)
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
         node = ParserTestUtil.parseStatement("<DpWhileTest>", "do println(i); while (true);", ShakeDoWhileNode::class)
-        assertNotNull(node.condition)
-        assertNotNull(node.body)
-        assertType(ShakeLogicalTrueNode::class, node.condition)
-        assertType(ShakeBlockNode::class, node.body)
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
     }
 
-    @Test
-    fun testFor() {
+    "test for" {
         var node = ParserTestUtil.parseStatement(
             "<ForTest>",
             "for(var i = 0; i < 100; i++) { println(); }",
             ShakeForNode::class
         )
-        assertNotNull(node.declaration)
-        assertNotNull(node.condition)
-        assertNotNull(node.round)
-        assertNotNull(node.body)
-        assertType(ShakeVariableDeclarationNode::class, node.declaration)
-        assertType(ShakeLogicalSmallerNode::class, node.condition)
-        assertType(ShakeVariableIncreaseNode::class, node.round)
-        assertType(ShakeBlockNode::class, node.body)
+        node.declaration shouldNotBe null
+        node.condition shouldNotBe null
+        node.round shouldNotBe null
+        node.body shouldNotBe null
+        node.declaration shouldBeOfType ShakeVariableDeclarationNode::class
+        node.condition shouldBeOfType ShakeLessThanNode::class
+        node.round shouldBeOfType ShakeVariableIncreaseNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
         node =
             ParserTestUtil.parseStatement("<ForTest>", "for(var i = 0; i < 100; i++) println();", ShakeForNode::class)
-        assertNotNull(node.declaration)
-        assertNotNull(node.condition)
-        assertNotNull(node.round)
-        assertNotNull(node.body)
-        assertType(ShakeVariableDeclarationNode::class, node.declaration)
-        assertType(ShakeLogicalSmallerNode::class, node.condition)
-        assertType(ShakeVariableIncreaseNode::class, node.round)
-        assertType(ShakeBlockNode::class, node.body)
+        node.declaration shouldNotBe null
+        node.condition shouldNotBe null
+        node.round shouldNotBe null
+        node.body shouldNotBe null
+        node.declaration shouldBeOfType ShakeVariableDeclarationNode::class
+        node.condition shouldBeOfType ShakeLessThanNode::class
+        node.round shouldBeOfType ShakeVariableIncreaseNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
     }
 
-    @Test
-    fun testIf() {
+    "test if" {
         var node = ParserTestUtil.parseStatement("<IfTest>", "if (true) { println(i) }", ShakeIfNode::class)
-        assertNotNull(node.condition)
-        assertNotNull(node.body)
-        assertType(ShakeLogicalTrueNode::class, node.condition)
-        assertType(ShakeBlockNode::class, node.body)
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.elseBody shouldBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
         node = ParserTestUtil.parseStatement("<IfTest>", "if (true) println(i);", ShakeIfNode::class)
-        assertNotNull(node.condition)
-        assertNotNull(node.body)
-        assertNull(node.elseBody)
-        assertType(ShakeLogicalTrueNode::class, node.condition)
-        assertType(ShakeBlockNode::class, node.body)
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.elseBody shouldBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
         node = ParserTestUtil.parseStatement("<IfTest>", "if (true) println(i); else println(i);", ShakeIfNode::class)
-        assertNotNull(node.condition)
-        assertNotNull(node.body)
-        assertNotNull(node.elseBody)
-        assertType(ShakeLogicalTrueNode::class, node.condition)
-        assertType(ShakeBlockNode::class, node.body)
-        assertType(ShakeBlockNode::class, node.elseBody!!)
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.elseBody shouldNotBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+        node.elseBody shouldBeOfType ShakeBlockNode::class
+        node.elseBody!!.children.size shouldBe 1
+        node.elseBody!!.children[0] shouldBeOfType ShakeInvocationNode::class
+
         node = ParserTestUtil.parseStatement(
             "<IfTest>",
             "if (true) println(i); else if (true) println(i); else println(i);",
             ShakeIfNode::class
         )
-        assertNotNull(node.condition)
-        assertNotNull(node.body)
-        assertNotNull(node.elseBody)
-        assertType(ShakeLogicalTrueNode::class, node.condition)
-        assertType(ShakeBlockNode::class, node.body)
-        assertType(ShakeBlockNode::class, node.elseBody!!)
-        val elseBody = node.elseBody!!
-        assertSame(1, elseBody.children.size)
-        assertType(ShakeIfNode::class, elseBody.children[0])
-        val if2 = elseBody.children[0] as ShakeIfNode
-        assertType(ShakeBlockNode::class, if2.body)
-        assertType(ShakeBlockNode::class, if2.elseBody!!)
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.elseBody shouldNotBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+        node.elseBody shouldBeOfType ShakeBlockNode::class
+        node.elseBody!!.children.size shouldBe 1
+        node.elseBody!!.children[0] shouldBeOfType ShakeIfNode::class
+        node = node.elseBody!!.children[0] as ShakeIfNode
+        node.condition shouldNotBe null
+        node.body shouldNotBe null
+        node.elseBody shouldNotBe null
+        node.condition shouldBeOfType ShakeLogicalTrueNode::class
+        node.body shouldBeOfType ShakeBlockNode::class
+        node.body.children.size shouldBe 1
+        node.body.children[0] shouldBeOfType ShakeInvocationNode::class
+        node.elseBody shouldBeOfType ShakeBlockNode::class
+        node.elseBody!!.children.size shouldBe 1
+        node.elseBody!!.children[0] shouldBeOfType ShakeInvocationNode::class
     }
-}
+})

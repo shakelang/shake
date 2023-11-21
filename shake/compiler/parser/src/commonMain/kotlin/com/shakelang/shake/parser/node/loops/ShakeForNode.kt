@@ -17,10 +17,39 @@ class ShakeForNode(
 
     override fun toJson(): Map<String, *> =
         mapOf(
-            "name" to "ForNode",
+            "name" to nodeName,
             "body" to body.json,
             "declaration" to declaration.json,
             "condition" to condition.json,
             "round" to round.json
         )
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeForNode) return false
+        if (body != other.body) return false
+        if (declaration != other.declaration) return false
+        if (condition != other.condition) return false
+        return round == other.round
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeForNode) return false
+        if (body != other.body) return false
+        if (declaration != other.declaration) return false
+        if (condition != other.condition) return false
+        if (round != other.round) return false
+        if (map != other.map) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = body.hashCode()
+        result = 31 * result + declaration.hashCode()
+        result = 31 * result + condition.hashCode()
+        result = 31 * result + round.hashCode()
+        result = 31 * result + map.hashCode()
+        return result
+    }
 }

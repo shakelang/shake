@@ -14,6 +14,24 @@ class ShakeTypeArgumentsDeclarationNode(
             "typeArguments" to typeArguments.map { it.toJson() }
         )
     }
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeTypeArgumentsDeclarationNode) return false
+        if (!typeArguments.contentEquals(other.typeArguments)) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeTypeArgumentsDeclarationNode) return false
+        if (!typeArguments.contentEquals(other.typeArguments)) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return typeArguments.contentHashCode()
+    }
 }
 
 class ShakeTypeArgumentDeclarationNode(
@@ -26,9 +44,32 @@ class ShakeTypeArgumentDeclarationNode(
 
     override fun toJson(): Map<String, *> {
         return mapOf(
-            "type" to "TypeArgumentDeclarationNode",
+            "type" to nodeName,
             "name" to name,
             "extends" to extends?.toJson()
         )
+    }
+
+    override fun equalsIgnorePosition(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeTypeArgumentDeclarationNode) return false
+        if (name != other.name) return false
+        if (extends != other.extends) return false
+        return true
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ShakeTypeArgumentDeclarationNode) return false
+        if (name != other.name) return false
+        if (extends != other.extends) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + (extends?.hashCode() ?: 0)
+        return result
     }
 }

@@ -44,6 +44,7 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
     id("io.gitlab.arturbosch.detekt") version "1.23.3"
+    id("io.kotest.multiplatform") version "5.8.0" apply false
 }
 
 apply<Changelog>()
@@ -261,6 +262,8 @@ extensions.getByType<NexusStagingExtension>().apply {
 
     username = System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
     password = System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
+
+    stagingProfileId = "com.shakelang"
 }
 
 val testAggregate = tasks.register<TestReport>("testAggregate") {
