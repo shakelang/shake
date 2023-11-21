@@ -535,6 +535,7 @@ abstract class CreationShakeType(
         val CHAR = Primitive.CHAR
         val VOID = Primitive.VOID
         val DYNAMIC = Primitive.DYNAMIC
+        val UNKNOWN = Primitive.DYNAMIC // TODO: Change this
     }
 
     companion object {

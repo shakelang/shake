@@ -278,14 +278,17 @@ open class ShakeCodeProcessor {
     }
 
     fun getAssignable(scope: CreationShakeScope, n: ShakeValuedNode): CreationShakeAssignable? {
-        return if (n !is ShakeIdentifierNode) {
-            CreationShakeAssignable.wrap(scope.project, visitValue(scope, n))
-        } else if (n.parent != null) {
-            val parent = visitValue(scope, n.parent!!)
-            CreationShakeChild(scope.project, scope, parent, n.name)
-        } else {
-            scope.get(n.name)
+        if(n is ShakeVariableUsageNode) {
+            val identifier = n.identifier
+            if (identifier.parent != null) {
+                val parent = visitValue(scope, identifier.parent!!)
+                val type = parent.type.childType(identifier.name, scope)
+                    ?: throw Exception("Cannot access ${identifier.name} in ${parent.type}")
+                return CreationShakeChild(scope.project, scope, parent, identifier.name)
+            }
+            return scope.get(identifier.name)
         }
+        return CreationShakeAssignable.wrap(scope.project, visitValue(scope, n))
     }
 
     fun visitVariableAssignmentNode(
@@ -529,11 +532,12 @@ open class ShakeCodeProcessor {
 
     fun visitClassConstruction(scope: CreationShakeScope, n: ShakeClassConstructionNode): CreationShakeNew {
         val classNode = n.type
-        if (classNode is ShakeIdentifierNode) {
-            if (classNode.parent != null) {
+        if (classNode is ShakeVariableUsageNode) {
+            val identifierNode = classNode.identifier
+            if (identifierNode.parent != null) {
                 TODO("Construction of inner classes not implemented")
             }
-            val className = classNode.name
+            val className = identifierNode.name
             val clz = scope.getClass(className) ?: throw Exception("Class $className not found")
             val args = n.args.map { visitValue(scope, it) }
             val types = args.map { it.type }
@@ -548,10 +552,11 @@ open class ShakeCodeProcessor {
 
     fun visitFunctionCallNode(scope: CreationShakeScope, n: ShakeInvocationNode): CreationShakeInvocation {
         val functionNode = n.function
-        if (functionNode is ShakeIdentifierNode) {
-            if (functionNode.parent != null) {
-                val parent = visitValue(scope, functionNode.parent!!)
-                val name = functionNode.name
+        if (functionNode is ShakeVariableUsageNode) {
+            val identifierNode = functionNode.identifier
+            if (identifierNode.parent != null) {
+                val parent = visitValue(scope, identifierNode.parent!!)
+                val name = identifierNode.name
                 val args = n.args.map { visitValue(scope, it) }
                 val types = args.map { it.type }
                 val functions = parent.type.childFunctions(name, scope)
@@ -561,7 +566,7 @@ open class ShakeCodeProcessor {
                 return CreationShakeInvocation(scope.project, function, args, parent)
             }
 
-            val name = functionNode.name
+            val name = identifierNode.name
             val args = n.args.map { visitValue(scope, it) }
             val types = args.map { it.type }
             val functions = scope.getFunctions(name)
