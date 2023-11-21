@@ -19,7 +19,6 @@ class InterfaceTests : FreeSpec({
         }
     }
 
-
     ShakeAccessDescriber.entries.forEach { access ->
 
         val accessPrefix = access.prefix?.plus(" ") ?: ""
@@ -38,7 +37,6 @@ class InterfaceTests : FreeSpec({
             node.fields.size shouldBe 0
             node.methods.size shouldBe 0
             node.classes.size shouldBe 0
-
         }
 
         "${accessPrefix}final interface" {
@@ -46,7 +44,6 @@ class InterfaceTests : FreeSpec({
             shouldThrow<ShakeParserImpl.ParserError> {
                 ParserTestUtil.parse("<${accessPrefix}interface test>", "${accessPrefix}final interface test {}")
             }
-
         }
 
         ShakeAccessDescriber.entries.forEach { access2 ->
@@ -79,7 +76,6 @@ class InterfaceTests : FreeSpec({
                 variable.name shouldBe "i"
                 variable.isStatic shouldBe false
                 variable.isFinal shouldBe false
-
             }
 
             "${accessPrefix}interface with a ${accessPrefix2}method" {
@@ -107,7 +103,6 @@ class InterfaceTests : FreeSpec({
                 function.name shouldBe "f"
                 function.isStatic shouldBe false
                 function.isFinal shouldBe false
-
             }
 
             "${accessPrefix}interface with a ${accessPrefix2}interface" {

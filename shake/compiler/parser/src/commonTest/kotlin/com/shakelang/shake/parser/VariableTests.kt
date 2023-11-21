@@ -30,7 +30,7 @@ class VariableTests : FreeSpec({
         AssignmentTestDescriptor("variable mul assignment", "*=", ShakeVariableMulAssignmentNode::class),
         AssignmentTestDescriptor("variable div assignment", "/=", ShakeVariableDivAssignmentNode::class),
         AssignmentTestDescriptor("variable mod assignment", "%=", ShakeVariableModAssignmentNode::class),
-        AssignmentTestDescriptor("variable pow assignment", "**=", ShakeVariablePowAssignmentNode::class),
+        AssignmentTestDescriptor("variable pow assignment", "**=", ShakeVariablePowAssignmentNode::class)
     ).forEach {
         it.name {
             val node = ParserTestUtil.parseStatement("<${it.name}>", "i ${it.operator} 0", it.nodeClass)
@@ -93,7 +93,7 @@ class VariableTests : FreeSpec({
         VariableDeclarationDescriptor("float", ShakeVariableType.FLOAT),
         VariableDeclarationDescriptor("double", ShakeVariableType.DOUBLE),
         VariableDeclarationDescriptor("char", ShakeVariableType.CHAR),
-        VariableDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN),
+        VariableDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN)
     ).forEach {
 
         ShakeAccessDescriber.entries.forEach { access ->
@@ -150,7 +150,6 @@ class VariableTests : FreeSpec({
                     node.access shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe true
-
                 }
             }
 
@@ -175,7 +174,6 @@ class VariableTests : FreeSpec({
                     node.access shouldBe access
                     node.isStatic shouldBe false
                     node.isFinal shouldBe true
-
                 }
             }
         }

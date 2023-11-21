@@ -388,25 +388,25 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec({
         tis.peekType(2) shouldBe ShakeTokenType.ASSIGN
         tis.peekType(3) shouldBe ShakeTokenType.INTEGER
         tis.peekType(4) shouldBe ShakeTokenType.SEMICOLON
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekType(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(5) }
         tis.skip()
         tis.peekType(1) shouldBe ShakeTokenType.ASSIGN
         tis.peekType(2) shouldBe ShakeTokenType.INTEGER
         tis.peekType(3) shouldBe ShakeTokenType.SEMICOLON
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekType(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(4) }
         shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(5) }
         tis.skip()
         tis.peekType(1) shouldBe ShakeTokenType.INTEGER
         tis.peekType(2) shouldBe ShakeTokenType.SEMICOLON
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekType(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekType(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekType(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(5) }
         tis.skip()
         tis.peekType(1) shouldBe ShakeTokenType.SEMICOLON
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekType(2) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekType(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekType(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekType(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(2) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(5) }
     }
 
     "peek end 2" {
@@ -426,25 +426,25 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec({
         tis.peekEnd(2) shouldBe 6
         tis.peekEnd(3) shouldBe 9
         tis.peekEnd(4) shouldBe 10
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(5) }
         tis.skip()
         tis.peekEnd(1) shouldBe 6
         tis.peekEnd(2) shouldBe 9
         tis.peekEnd(3) shouldBe 10
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(5) }
         tis.skip()
         tis.peekEnd(1) shouldBe 9
         tis.peekEnd(2) shouldBe 10
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(5) }
         tis.skip()
         tis.peekEnd(1) shouldBe 10
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(2) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekEnd(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(2) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekEnd(5) }
     }
 
     "peek start 2" {
@@ -464,25 +464,25 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec({
         tis.peekStart(2) shouldBe 6
         tis.peekStart(3) shouldBe 8
         tis.peekStart(4) shouldBe 10
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(5) }
         tis.skip()
         tis.peekStart(1) shouldBe 6
         tis.peekStart(2) shouldBe 8
         tis.peekStart(3) shouldBe 10
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(5) }
         tis.skip()
         tis.peekStart(1) shouldBe 8
         tis.peekStart(2) shouldBe 10
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(5) }
         tis.skip()
         tis.peekStart(1) shouldBe 10
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(2) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekStart(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(2) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekStart(5) }
     }
 
     "peek value 2" {
@@ -502,25 +502,25 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec({
         tis.peekValue(2) shouldBe null
         tis.peekValue(3) shouldBe "10"
         tis.peekValue(4) shouldBe null
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(5) }
         tis.skip()
         tis.peekValue(1) shouldBe null
         tis.peekValue(2) shouldBe "10"
         tis.peekValue(3) shouldBe null
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(5) }
         tis.skip()
         tis.peekValue(1) shouldBe "10"
         tis.peekValue(2) shouldBe null
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(5) }
         tis.skip()
         tis.peekValue(1) shouldBe null
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(2) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peekValue(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(2) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekValue(5) }
     }
 
     "peek 2" {
@@ -586,7 +586,7 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec({
         token.start shouldBe 10
         token.end shouldBe 10
 
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(5) }
 
         tis.skip()
 
@@ -608,8 +608,8 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec({
         token.start shouldBe 10
         token.end shouldBe 10
 
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(5) }
 
         tis.skip()
 
@@ -625,9 +625,9 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec({
         token.start shouldBe 10
         token.end shouldBe 10
 
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(5) }
 
         tis.skip()
 
@@ -637,9 +637,9 @@ class OnDemandLexingTokenInputStreamTests : FreeSpec({
         token.start shouldBe 10
         token.end shouldBe 10
 
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(2) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(3) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(4) }
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.peek(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(2) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(3) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(4) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peek(5) }
     }
 })

@@ -17,7 +17,6 @@ class IntegrationTestValues : FreeSpec({
         val json = parsed.json
 
         json shouldBe expected
-
     }
 
     "integer literal" {
@@ -51,10 +50,10 @@ class IntegrationTestValues : FreeSpec({
         )
     }
 
-
     "field" {
         testCodeSnippetValue(
-            "a.b", mapOf(
+            "a.b",
+            mapOf(
                 "name" to "ShakeVariableUsageNode",
                 "variable" to mapOf(
                     "name" to "b",
@@ -69,7 +68,8 @@ class IntegrationTestValues : FreeSpec({
 
     "function call" {
         testCodeSnippetValue(
-            "a()", mapOf(
+            "a()",
+            mapOf(
                 "name" to "ShakeInvocationNode",
                 "function" to mapOf(
                     "name" to "ShakeVariableUsageNode",
@@ -82,7 +82,8 @@ class IntegrationTestValues : FreeSpec({
 
     "field of call" {
         testCodeSnippetValue(
-            "a().b", mapOf(
+            "a().b",
+            mapOf(
                 "name" to "ShakeVariableUsageNode",
                 "variable" to mapOf(
                     "name" to "b",
@@ -101,7 +102,8 @@ class IntegrationTestValues : FreeSpec({
 
     "function call with arguments" {
         testCodeSnippetValue(
-            "a(1, 2)", mapOf(
+            "a(1, 2)",
+            mapOf(
                 "name" to "ShakeInvocationNode",
                 "function" to mapOf(
                     "name" to "ShakeVariableUsageNode",
@@ -116,7 +118,8 @@ class IntegrationTestValues : FreeSpec({
     }
     "call of return value" {
         testCodeSnippetValue(
-            "a()()", mapOf(
+            "a()()",
+            mapOf(
                 "name" to "ShakeInvocationNode",
                 "function" to mapOf(
                     "name" to "ShakeInvocationNode",
@@ -131,7 +134,6 @@ class IntegrationTestValues : FreeSpec({
         )
     }
 
-
     class OperatorTestSpec(
         val operator: String,
         val name: String,
@@ -140,52 +142,52 @@ class IntegrationTestValues : FreeSpec({
 
     val toTest = listOf(
         listOf(
-            OperatorTestSpec("**", "power", ShakePowNode::class),
+            OperatorTestSpec("**", "power", ShakePowNode::class)
         ),
         listOf(
             OperatorTestSpec("*", "multiplication", ShakeMulNode::class),
             OperatorTestSpec("/", "division", ShakeDivNode::class),
-            OperatorTestSpec("%", "modulo", ShakeModNode::class),
+            OperatorTestSpec("%", "modulo", ShakeModNode::class)
         ),
         listOf(
             OperatorTestSpec("+", "addition", ShakeAddNode::class),
-            OperatorTestSpec("-", "subtraction", ShakeSubNode::class),
+            OperatorTestSpec("-", "subtraction", ShakeSubNode::class)
         ),
         listOf(
             OperatorTestSpec("<<", "bitwise shift left", ShakeBitwiseShiftLeftNode::class),
-            OperatorTestSpec(">>", "bitwise shift right", ShakeBitwiseShiftRightNode::class),
+            OperatorTestSpec(">>", "bitwise shift right", ShakeBitwiseShiftRightNode::class)
         ),
         listOf(
             OperatorTestSpec("<", "less than", ShakeLessThanNode::class),
             OperatorTestSpec("<=", "less than or equals", ShakeLessThanOrEqualNode::class),
             OperatorTestSpec(">", "greater than", ShakeGreaterThanNode::class),
-            OperatorTestSpec(">=", "greater than or equals", ShakeGreaterThanOrEqualNode::class),
+            OperatorTestSpec(">=", "greater than or equals", ShakeGreaterThanOrEqualNode::class)
         ),
         listOf(
             OperatorTestSpec("==", "equals", ShakeEqualNode::class),
-            OperatorTestSpec("!=", "not equals", ShakeNotEqualNode::class),
+            OperatorTestSpec("!=", "not equals", ShakeNotEqualNode::class)
         ),
         listOf(
             OperatorTestSpec("&", "bitwise and", ShakeBitwiseAndNode::class),
-            OperatorTestSpec("~&", "bitwise nand",ShakeBitwiseNAndNode::class),
+            OperatorTestSpec("~&", "bitwise nand", ShakeBitwiseNAndNode::class)
         ),
         listOf(
             OperatorTestSpec("^", "bitwise xor", ShakeBitwiseXOrNode::class),
-            OperatorTestSpec("~^", "bitwise xnor", ShakeBitwiseXNOrNode::class),
+            OperatorTestSpec("~^", "bitwise xnor", ShakeBitwiseXNOrNode::class)
         ),
         listOf(
             OperatorTestSpec("|", "bitwise or", ShakeBitwiseOrNode::class),
-            OperatorTestSpec("~|", "bitwise nor", ShakeBitwiseNOrNode::class),
+            OperatorTestSpec("~|", "bitwise nor", ShakeBitwiseNOrNode::class)
         ),
         listOf(
-            OperatorTestSpec("&&", "logical and", ShakeLogicalAndNode::class),
+            OperatorTestSpec("&&", "logical and", ShakeLogicalAndNode::class)
         ),
         listOf(
-            OperatorTestSpec("^^", "logical xor", ShakeLogicalXOrNode::class),
+            OperatorTestSpec("^^", "logical xor", ShakeLogicalXOrNode::class)
         ),
         listOf(
-            OperatorTestSpec("||", "logical or", ShakeLogicalOrNode::class),
-        ),
+            OperatorTestSpec("||", "logical or", ShakeLogicalOrNode::class)
+        )
 //        listOf(
 //            OperatorTestSpec("=", "assignment", ShakeVariableAssignmentNode::class),
 //            OperatorTestSpec("+=", "addition assignment", ShakeVariableAddAssignmentNode::class),
@@ -242,7 +244,8 @@ class Statements : FreeSpec({
 
     "test variable declaration" {
         testCodeSnippet(
-            "var a = 2", mapOf(
+            "var a = 2",
+            mapOf(
                 "name" to "ShakeBlockNode",
                 "children" to listOf(
                     mapOf(
