@@ -52,14 +52,14 @@ jobs:
       #          reporter: java-junit
 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
           name: Test Report
           path: build/reports/tests
 
       - name: Upload Kover Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
           name: Kover Report
