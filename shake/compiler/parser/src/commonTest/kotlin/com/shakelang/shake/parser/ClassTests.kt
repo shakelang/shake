@@ -32,7 +32,6 @@ class ClassTests : FreeSpec({
             node.fields.size shouldBe 0
             node.methods.size shouldBe 0
             node.classes.size shouldBe 0
-
         }
 
         "${accessPrefix}final class" {
@@ -48,7 +47,6 @@ class ClassTests : FreeSpec({
             node.fields.size shouldBe 0
             node.methods.size shouldBe 0
             node.classes.size shouldBe 0
-
         }
 
         ShakeAccessDescriber.entries.forEach { access2 ->
@@ -81,7 +79,6 @@ class ClassTests : FreeSpec({
                 variable.name shouldBe "i"
                 variable.isStatic shouldBe false
                 variable.isFinal shouldBe false
-
             }
 
             "${accessPrefix}class with a ${accessPrefix2}method" {
@@ -109,7 +106,6 @@ class ClassTests : FreeSpec({
                 function.name shouldBe "f"
                 function.isStatic shouldBe false
                 function.isFinal shouldBe false
-
             }
 
             "${accessPrefix}class with a ${accessPrefix2}class" {
@@ -138,7 +134,6 @@ class ClassTests : FreeSpec({
                 clazz.fields.size shouldBe 0
                 clazz.methods.size shouldBe 0
                 clazz.classes.size shouldBe 0
-
             }
 
             "${accessPrefix}class with a ${accessPrefix2}constructor" {

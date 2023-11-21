@@ -44,7 +44,6 @@ class TestErrors : FreeSpec({
         error.marker.marker shouldBe "            ^"
     }
 
-
     "test RCURL" {
         val error = shouldThrow<ParserError> {
             ParserTestUtil.parseStatement("<TestAwaitSemicolonError>", "for(var i = 0 i<10) {", ShakeIfNode::class)

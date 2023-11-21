@@ -278,7 +278,7 @@ open class ShakeCodeProcessor {
     }
 
     fun getAssignable(scope: CreationShakeScope, n: ShakeValuedNode): CreationShakeAssignable? {
-        if(n is ShakeVariableUsageNode) {
+        if (n is ShakeVariableUsageNode) {
             val identifier = n.identifier
             if (identifier.parent != null) {
                 val parent = visitValue(scope, identifier.parent!!)

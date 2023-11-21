@@ -254,7 +254,7 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
         tis.position shouldBe 3
         tis.skip()
         tis.position shouldBe 4
-        shouldThrowWithMessage <Error>("Not enough tokens left") { tis.skip() }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.skip() }
     }
 
     "set position" {
@@ -280,7 +280,7 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
         tis.actualValue shouldBe null
         tis.position = 1
         tis.position shouldBe 1
-         tis.actualEnd shouldBe 4
+        tis.actualEnd shouldBe 4
         tis.actualValue shouldBe "i"
         tis.position = 2
         tis.position shouldBe 2
@@ -720,7 +720,7 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
         tis.peekType(2) shouldBe ShakeTokenType.ASSIGN
         tis.peekType(3) shouldBe ShakeTokenType.INTEGER
         tis.peekType(4) shouldBe ShakeTokenType.SEMICOLON
-        shouldThrowWithMessage <Error> ("Not enough tokens left") { tis.peekType(5) }
+        shouldThrowWithMessage<Error> ("Not enough tokens left") { tis.peekType(5) }
         tis.skip()
         tis.peekType(1) shouldBe ShakeTokenType.ASSIGN
         tis.peekType(2) shouldBe ShakeTokenType.INTEGER

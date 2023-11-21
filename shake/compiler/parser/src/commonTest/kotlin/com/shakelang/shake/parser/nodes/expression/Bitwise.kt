@@ -13,7 +13,7 @@ import io.kotest.matchers.shouldNotBe
 class BitwiseTest : FreeSpec({
 
     class DummyValuedNode(
-        val uid: Int = 0,
+        val uid: Int = 0
     ) : ShakeValuedNodeImpl(PositionMap.empty()) {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true

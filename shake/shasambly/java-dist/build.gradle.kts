@@ -1,6 +1,5 @@
 import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.projectGroup
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     application
