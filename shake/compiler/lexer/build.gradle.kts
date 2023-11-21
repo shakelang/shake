@@ -14,6 +14,6 @@ description = "Utilities for parsing stuff with kotlin"
 kotlin {
     dependencies {
         implementation(project(":util:parseutils"))
-        testImplementation(kotlin("test"))
+        kotest()
     }
 }

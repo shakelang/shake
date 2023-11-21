@@ -1,225 +1,158 @@
 package com.shakelang.shake.lexer.token
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 
-class TokenTypeTests {
+@Suppress("unused")
+class TokenTypeTests : FreeSpec({
 
-    @Test
-    fun testGetName() {
-        assertEquals("IDENTIFIER", ShakeTokenType.IDENTIFIER.tokenName)
-        assertEquals("INTEGER", ShakeTokenType.INTEGER.tokenName)
-        assertEquals("DOUBLE", ShakeTokenType.DOUBLE.tokenName)
-        assertEquals("CHARACTER", ShakeTokenType.CHARACTER.tokenName)
-        assertEquals("STRING", ShakeTokenType.STRING.tokenName)
-        assertEquals("COMMA", ShakeTokenType.COMMA.tokenName)
-        assertEquals("DOT", ShakeTokenType.DOT.tokenName)
-        assertEquals("SEMICOLON", ShakeTokenType.SEMICOLON.tokenName)
-        assertEquals("ADD", ShakeTokenType.ADD.tokenName)
-        assertEquals("SUB", ShakeTokenType.SUB.tokenName)
-        assertEquals("MUL", ShakeTokenType.MUL.tokenName)
-        assertEquals("DIV", ShakeTokenType.DIV.tokenName)
-        assertEquals("MOD", ShakeTokenType.MOD.tokenName)
-        assertEquals("POW", ShakeTokenType.POW.tokenName)
-        assertEquals("EQ_EQUALS", ShakeTokenType.EQ_EQUALS.tokenName)
-        assertEquals("BIGGER_EQUALS", ShakeTokenType.BIGGER_EQUALS.tokenName)
-        assertEquals("SMALLER_EQUALS", ShakeTokenType.SMALLER_EQUALS.tokenName)
-        assertEquals("BIGGER", ShakeTokenType.BIGGER.tokenName)
-        assertEquals("SMALLER", ShakeTokenType.SMALLER.tokenName)
-        assertEquals("LOGICAL_OR", ShakeTokenType.LOGICAL_OR.tokenName)
-        assertEquals("LOGICAL_XOR", ShakeTokenType.LOGICAL_XOR.tokenName)
-        assertEquals("LOGICAL_AND", ShakeTokenType.LOGICAL_AND.tokenName)
-        assertEquals("LINE_SEPARATOR", ShakeTokenType.LINE_SEPARATOR.tokenName)
-        assertEquals("ASSIGN", ShakeTokenType.ASSIGN.tokenName)
-        assertEquals("INCR", ShakeTokenType.INCR.tokenName)
-        assertEquals("DECR", ShakeTokenType.DECR.tokenName)
-        assertEquals("ADD_ASSIGN", ShakeTokenType.ADD_ASSIGN.tokenName)
-        assertEquals("SUB_ASSIGN", ShakeTokenType.SUB_ASSIGN.tokenName)
-        assertEquals("MUL_ASSIGN", ShakeTokenType.MUL_ASSIGN.tokenName)
-        assertEquals("DIV_ASSIGN", ShakeTokenType.DIV_ASSIGN.tokenName)
-        assertEquals("MOD_ASSIGN", ShakeTokenType.MOD_ASSIGN.tokenName)
-        assertEquals("POW_ASSIGN", ShakeTokenType.POW_ASSIGN.tokenName)
-        assertEquals("LPAREN", ShakeTokenType.LPAREN.tokenName)
-        assertEquals("RPAREN", ShakeTokenType.RPAREN.tokenName)
-        assertEquals("LCURL", ShakeTokenType.LCURL.tokenName)
-        assertEquals("RCURL", ShakeTokenType.RCURL.tokenName)
-        assertEquals("KEYWORD_DO", ShakeTokenType.KEYWORD_DO.tokenName)
-        assertEquals("KEYWORD_WHILE", ShakeTokenType.KEYWORD_WHILE.tokenName)
-        assertEquals("KEYWORD_FOR", ShakeTokenType.KEYWORD_FOR.tokenName)
-        assertEquals("KEYWORD_IF", ShakeTokenType.KEYWORD_IF.tokenName)
-        assertEquals("KEYWORD_ELSE", ShakeTokenType.KEYWORD_ELSE.tokenName)
-        assertEquals("KEYWORD_TRUE", ShakeTokenType.KEYWORD_TRUE.tokenName)
-        assertEquals("KEYWORD_FALSE", ShakeTokenType.KEYWORD_FALSE.tokenName)
-        assertEquals("KEYWORD_CLASS", ShakeTokenType.KEYWORD_CLASS.tokenName)
-        assertEquals("KEYWORD_EXTENDS", ShakeTokenType.KEYWORD_EXTENDS.tokenName)
-        assertEquals("KEYWORD_IMPLEMENTS", ShakeTokenType.KEYWORD_IMPLEMENTS.tokenName)
-        assertEquals("KEYWORD_STATIC", ShakeTokenType.KEYWORD_STATIC.tokenName)
-        assertEquals("KEYWORD_FINAL", ShakeTokenType.KEYWORD_FINAL.tokenName)
-        assertEquals("KEYWORD_PUBLIC", ShakeTokenType.KEYWORD_PUBLIC.tokenName)
-        assertEquals("KEYWORD_PROTECTED", ShakeTokenType.KEYWORD_PROTECTED.tokenName)
-        assertEquals("KEYWORD_PRIVATE", ShakeTokenType.KEYWORD_PRIVATE.tokenName)
-        assertEquals("KEYWORD_NEW", ShakeTokenType.KEYWORD_NEW.tokenName)
-        assertEquals("KEYWORD_FUNCTION", ShakeTokenType.KEYWORD_FUNCTION.tokenName)
-        assertEquals("KEYWORD_RETURN", ShakeTokenType.KEYWORD_RETURN.tokenName)
-        assertEquals("KEYWORD_CONST", ShakeTokenType.KEYWORD_CONST.tokenName)
-        assertEquals("KEYWORD_DYNAMIC", ShakeTokenType.KEYWORD_DYNAMIC.tokenName)
-        assertEquals("KEYWORD_BYTE", ShakeTokenType.KEYWORD_BYTE.tokenName)
-        assertEquals("KEYWORD_SHORT", ShakeTokenType.KEYWORD_SHORT.tokenName)
-        assertEquals("KEYWORD_INT", ShakeTokenType.KEYWORD_INT.tokenName)
-        assertEquals("KEYWORD_LONG", ShakeTokenType.KEYWORD_LONG.tokenName)
-        assertEquals("KEYWORD_FLOAT", ShakeTokenType.KEYWORD_FLOAT.tokenName)
-        assertEquals("KEYWORD_DOUBLE", ShakeTokenType.KEYWORD_DOUBLE.tokenName)
-        assertEquals("KEYWORD_CHAR", ShakeTokenType.KEYWORD_CHAR.tokenName)
-        assertEquals("KEYWORD_BOOLEAN", ShakeTokenType.KEYWORD_BOOLEAN.tokenName)
-        assertEquals("KEYWORD_IMPORT", ShakeTokenType.KEYWORD_IMPORT.tokenName)
-        assertEquals("KEYWORD_VOID", ShakeTokenType.KEYWORD_VOID.tokenName)
-        assertEquals("KEYWORD_CONSTRUCTOR", ShakeTokenType.KEYWORD_CONSTRUCTOR.tokenName)
-        assertEquals("KEYWORD_AS", ShakeTokenType.KEYWORD_AS.tokenName)
+    "get name" {
+        ShakeTokenType.entries.forEach {
+            it.tokenName shouldBe it.name
+        }
     }
 
-    @Test
-    fun testTokenLength() {
-        assertEquals(-1, ShakeTokenType.IDENTIFIER.tokenLength)
-        assertEquals(-1, ShakeTokenType.INTEGER.tokenLength)
-        assertEquals(-1, ShakeTokenType.DOUBLE.tokenLength)
-        assertEquals(-1, ShakeTokenType.CHARACTER.tokenLength)
-        assertEquals(-1, ShakeTokenType.STRING.tokenLength)
-        assertEquals(1, ShakeTokenType.COMMA.tokenLength)
-        assertEquals(1, ShakeTokenType.DOT.tokenLength)
-        assertEquals(1, ShakeTokenType.SEMICOLON.tokenLength)
-        assertEquals(1, ShakeTokenType.ADD.tokenLength)
-        assertEquals(1, ShakeTokenType.SUB.tokenLength)
-        assertEquals(1, ShakeTokenType.MUL.tokenLength)
-        assertEquals(1, ShakeTokenType.DIV.tokenLength)
-        assertEquals(1, ShakeTokenType.MOD.tokenLength)
-        assertEquals(2, ShakeTokenType.POW.tokenLength)
-        assertEquals(2, ShakeTokenType.EQ_EQUALS.tokenLength)
-        assertEquals(2, ShakeTokenType.BIGGER_EQUALS.tokenLength)
-        assertEquals(2, ShakeTokenType.SMALLER_EQUALS.tokenLength)
-        assertEquals(1, ShakeTokenType.BIGGER.tokenLength)
-        assertEquals(1, ShakeTokenType.SMALLER.tokenLength)
-        assertEquals(2, ShakeTokenType.LOGICAL_OR.tokenLength)
-        assertEquals(1, ShakeTokenType.LOGICAL_XOR.tokenLength)
-        assertEquals(2, ShakeTokenType.LOGICAL_AND.tokenLength)
-        assertEquals(1, ShakeTokenType.LINE_SEPARATOR.tokenLength)
-        assertEquals(1, ShakeTokenType.ASSIGN.tokenLength)
-        assertEquals(2, ShakeTokenType.INCR.tokenLength)
-        assertEquals(2, ShakeTokenType.DECR.tokenLength)
-        assertEquals(2, ShakeTokenType.ADD_ASSIGN.tokenLength)
-        assertEquals(2, ShakeTokenType.SUB_ASSIGN.tokenLength)
-        assertEquals(2, ShakeTokenType.MUL_ASSIGN.tokenLength)
-        assertEquals(2, ShakeTokenType.DIV_ASSIGN.tokenLength)
-        assertEquals(2, ShakeTokenType.MOD_ASSIGN.tokenLength)
-        assertEquals(3, ShakeTokenType.POW_ASSIGN.tokenLength)
-        assertEquals(1, ShakeTokenType.LPAREN.tokenLength)
-        assertEquals(1, ShakeTokenType.RPAREN.tokenLength)
-        assertEquals(1, ShakeTokenType.LCURL.tokenLength)
-        assertEquals(1, ShakeTokenType.RCURL.tokenLength)
-        assertEquals(2, ShakeTokenType.KEYWORD_DO.tokenLength)
-        assertEquals(5, ShakeTokenType.KEYWORD_WHILE.tokenLength)
-        assertEquals(3, ShakeTokenType.KEYWORD_FOR.tokenLength)
-        assertEquals(2, ShakeTokenType.KEYWORD_IF.tokenLength)
-        assertEquals(4, ShakeTokenType.KEYWORD_ELSE.tokenLength)
-        assertEquals(4, ShakeTokenType.KEYWORD_TRUE.tokenLength)
-        assertEquals(5, ShakeTokenType.KEYWORD_FALSE.tokenLength)
-        assertEquals(5, ShakeTokenType.KEYWORD_CLASS.tokenLength)
-        assertEquals(7, ShakeTokenType.KEYWORD_EXTENDS.tokenLength)
-        assertEquals(10, ShakeTokenType.KEYWORD_IMPLEMENTS.tokenLength)
-        assertEquals(6, ShakeTokenType.KEYWORD_STATIC.tokenLength)
-        assertEquals(5, ShakeTokenType.KEYWORD_FINAL.tokenLength)
-        assertEquals(6, ShakeTokenType.KEYWORD_PUBLIC.tokenLength)
-        assertEquals(9, ShakeTokenType.KEYWORD_PROTECTED.tokenLength)
-        assertEquals(7, ShakeTokenType.KEYWORD_PRIVATE.tokenLength)
-        assertEquals(3, ShakeTokenType.KEYWORD_NEW.tokenLength)
-        assertEquals(8, ShakeTokenType.KEYWORD_FUNCTION.tokenLength)
-        assertEquals(6, ShakeTokenType.KEYWORD_RETURN.tokenLength)
-        assertEquals(3, ShakeTokenType.KEYWORD_INT.tokenLength)
-        assertEquals(5, ShakeTokenType.KEYWORD_CONST.tokenLength)
-        assertEquals(7, ShakeTokenType.KEYWORD_DYNAMIC.tokenLength)
-        assertEquals(4, ShakeTokenType.KEYWORD_BYTE.tokenLength)
-        assertEquals(5, ShakeTokenType.KEYWORD_SHORT.tokenLength)
-        assertEquals(3, ShakeTokenType.KEYWORD_INT.tokenLength)
-        assertEquals(4, ShakeTokenType.KEYWORD_LONG.tokenLength)
-        assertEquals(5, ShakeTokenType.KEYWORD_FLOAT.tokenLength)
-        assertEquals(6, ShakeTokenType.KEYWORD_DOUBLE.tokenLength)
-        assertEquals(4, ShakeTokenType.KEYWORD_CHAR.tokenLength)
-        assertEquals(7, ShakeTokenType.KEYWORD_BOOLEAN.tokenLength)
-        assertEquals(6, ShakeTokenType.KEYWORD_IMPORT.tokenLength)
-        assertEquals(4, ShakeTokenType.KEYWORD_VOID.tokenLength)
-        assertEquals(11, ShakeTokenType.KEYWORD_CONSTRUCTOR.tokenLength)
-        assertEquals(2, ShakeTokenType.KEYWORD_AS.tokenLength)
+    "token length field" {
+        ShakeTokenType.IDENTIFIER.tokenLength shouldBe -1
+        ShakeTokenType.INTEGER.tokenLength shouldBe -1
+        ShakeTokenType.DOUBLE.tokenLength shouldBe -1
+        ShakeTokenType.CHARACTER.tokenLength shouldBe -1
+        ShakeTokenType.STRING.tokenLength shouldBe -1
+        ShakeTokenType.COMMA.tokenLength shouldBe 1
+        ShakeTokenType.DOT.tokenLength shouldBe 1
+        ShakeTokenType.SEMICOLON.tokenLength shouldBe 1
+        ShakeTokenType.ADD.tokenLength shouldBe 1
+        ShakeTokenType.SUB.tokenLength shouldBe 1
+        ShakeTokenType.MUL.tokenLength shouldBe 1
+        ShakeTokenType.DIV.tokenLength shouldBe 1
+        ShakeTokenType.MOD.tokenLength shouldBe 1
+        ShakeTokenType.POW.tokenLength shouldBe 2
+        ShakeTokenType.EQ_EQUALS.tokenLength shouldBe 2
+        ShakeTokenType.BIGGER_EQUALS.tokenLength shouldBe 2
+        ShakeTokenType.SMALLER_EQUALS.tokenLength shouldBe 2
+        ShakeTokenType.BIGGER.tokenLength shouldBe 1
+        ShakeTokenType.SMALLER.tokenLength shouldBe 1
+        ShakeTokenType.LOGICAL_OR.tokenLength shouldBe 2
+        ShakeTokenType.LOGICAL_XOR.tokenLength shouldBe 1
+        ShakeTokenType.LOGICAL_AND.tokenLength shouldBe 2
+        ShakeTokenType.LINE_SEPARATOR.tokenLength shouldBe 1
+        ShakeTokenType.ASSIGN.tokenLength shouldBe 1
+        ShakeTokenType.INCR.tokenLength shouldBe 2
+        ShakeTokenType.DECR.tokenLength shouldBe 2
+        ShakeTokenType.ADD_ASSIGN.tokenLength shouldBe 2
+        ShakeTokenType.SUB_ASSIGN.tokenLength shouldBe 2
+        ShakeTokenType.MUL_ASSIGN.tokenLength shouldBe 2
+        ShakeTokenType.DIV_ASSIGN.tokenLength shouldBe 2
+        ShakeTokenType.MOD_ASSIGN.tokenLength shouldBe 2
+        ShakeTokenType.POW_ASSIGN.tokenLength shouldBe 3
+        ShakeTokenType.LPAREN.tokenLength shouldBe 1
+        ShakeTokenType.RPAREN.tokenLength shouldBe 1
+        ShakeTokenType.LCURL.tokenLength shouldBe 1
+        ShakeTokenType.RCURL.tokenLength shouldBe 1
+        ShakeTokenType.KEYWORD_DO.tokenLength shouldBe 2
+        ShakeTokenType.KEYWORD_WHILE.tokenLength shouldBe 5
+        ShakeTokenType.KEYWORD_FOR.tokenLength shouldBe 3
+        ShakeTokenType.KEYWORD_IF.tokenLength shouldBe 2
+        ShakeTokenType.KEYWORD_ELSE.tokenLength shouldBe 4
+        ShakeTokenType.KEYWORD_TRUE.tokenLength shouldBe 4
+        ShakeTokenType.KEYWORD_FALSE.tokenLength shouldBe 5
+        ShakeTokenType.KEYWORD_CLASS.tokenLength shouldBe 5
+        ShakeTokenType.KEYWORD_EXTENDS.tokenLength shouldBe 7
+        ShakeTokenType.KEYWORD_IMPLEMENTS.tokenLength shouldBe 10
+        ShakeTokenType.KEYWORD_STATIC.tokenLength shouldBe 6
+        ShakeTokenType.KEYWORD_FINAL.tokenLength shouldBe 5
+        ShakeTokenType.KEYWORD_PUBLIC.tokenLength shouldBe 6
+        ShakeTokenType.KEYWORD_PROTECTED.tokenLength shouldBe 9
+        ShakeTokenType.KEYWORD_PRIVATE.tokenLength shouldBe 7
+        ShakeTokenType.KEYWORD_NEW.tokenLength shouldBe 3
+        ShakeTokenType.KEYWORD_FUNCTION.tokenLength shouldBe 8
+        ShakeTokenType.KEYWORD_RETURN.tokenLength shouldBe 6
+        ShakeTokenType.KEYWORD_INT.tokenLength shouldBe 3
+        ShakeTokenType.KEYWORD_CONST.tokenLength shouldBe 5
+        ShakeTokenType.KEYWORD_DYNAMIC.tokenLength shouldBe 7
+        ShakeTokenType.KEYWORD_BYTE.tokenLength shouldBe 4
+        ShakeTokenType.KEYWORD_SHORT.tokenLength shouldBe 5
+        ShakeTokenType.KEYWORD_INT.tokenLength shouldBe 3
+        ShakeTokenType.KEYWORD_LONG.tokenLength shouldBe 4
+        ShakeTokenType.KEYWORD_FLOAT.tokenLength shouldBe 5
+        ShakeTokenType.KEYWORD_DOUBLE.tokenLength shouldBe 6
+        ShakeTokenType.KEYWORD_CHAR.tokenLength shouldBe 4
+        ShakeTokenType.KEYWORD_BOOLEAN.tokenLength shouldBe 7
+        ShakeTokenType.KEYWORD_IMPORT.tokenLength shouldBe 6
+        ShakeTokenType.KEYWORD_VOID.tokenLength shouldBe 4
+        ShakeTokenType.KEYWORD_CONSTRUCTOR.tokenLength shouldBe 11
+        ShakeTokenType.KEYWORD_AS.tokenLength shouldBe 2
     }
 
-    @Test
-    fun testTokenLength3() {
-        assertEquals(5, ShakeTokenType.IDENTIFIER.length("hello"))
-        assertEquals(2, ShakeTokenType.INTEGER.length("10"))
-        assertEquals(4, ShakeTokenType.DOUBLE.length("10.0"))
-        assertEquals(3, ShakeTokenType.CHARACTER.length("'a'"))
-        assertEquals(7, ShakeTokenType.STRING.length("\"hello\""))
-        assertEquals(1, ShakeTokenType.COMMA.length(""))
-        assertEquals(1, ShakeTokenType.DOT.length(""))
-        assertEquals(1, ShakeTokenType.SEMICOLON.length(""))
-        assertEquals(1, ShakeTokenType.ADD.length(""))
-        assertEquals(1, ShakeTokenType.SUB.length(""))
-        assertEquals(1, ShakeTokenType.MUL.length(""))
-        assertEquals(1, ShakeTokenType.DIV.length(""))
-        assertEquals(1, ShakeTokenType.MOD.length(""))
-        assertEquals(2, ShakeTokenType.POW.length(""))
-        assertEquals(2, ShakeTokenType.EQ_EQUALS.length(""))
-        assertEquals(2, ShakeTokenType.BIGGER_EQUALS.length(""))
-        assertEquals(2, ShakeTokenType.SMALLER_EQUALS.length(""))
-        assertEquals(1, ShakeTokenType.BIGGER.length(""))
-        assertEquals(1, ShakeTokenType.SMALLER.length(""))
-        assertEquals(2, ShakeTokenType.LOGICAL_OR.length(""))
-        assertEquals(1, ShakeTokenType.LOGICAL_XOR.length(""))
-        assertEquals(2, ShakeTokenType.LOGICAL_AND.length(""))
-        assertEquals(1, ShakeTokenType.LINE_SEPARATOR.length(""))
-        assertEquals(1, ShakeTokenType.ASSIGN.length(""))
-        assertEquals(2, ShakeTokenType.INCR.length(""))
-        assertEquals(2, ShakeTokenType.DECR.length(""))
-        assertEquals(2, ShakeTokenType.ADD_ASSIGN.length(""))
-        assertEquals(2, ShakeTokenType.SUB_ASSIGN.length(""))
-        assertEquals(2, ShakeTokenType.MUL_ASSIGN.length(""))
-        assertEquals(2, ShakeTokenType.DIV_ASSIGN.length(""))
-        assertEquals(2, ShakeTokenType.MOD_ASSIGN.length(""))
-        assertEquals(3, ShakeTokenType.POW_ASSIGN.length(""))
-        assertEquals(1, ShakeTokenType.LPAREN.length(""))
-        assertEquals(1, ShakeTokenType.RPAREN.length(""))
-        assertEquals(1, ShakeTokenType.LCURL.length(""))
-        assertEquals(1, ShakeTokenType.RCURL.length(""))
-        assertEquals(2, ShakeTokenType.KEYWORD_DO.length(""))
-        assertEquals(5, ShakeTokenType.KEYWORD_WHILE.length(""))
-        assertEquals(3, ShakeTokenType.KEYWORD_FOR.length(""))
-        assertEquals(2, ShakeTokenType.KEYWORD_IF.length(""))
-        assertEquals(4, ShakeTokenType.KEYWORD_ELSE.length(""))
-        assertEquals(4, ShakeTokenType.KEYWORD_TRUE.length(""))
-        assertEquals(5, ShakeTokenType.KEYWORD_FALSE.length(""))
-        assertEquals(5, ShakeTokenType.KEYWORD_CLASS.length(""))
-        assertEquals(7, ShakeTokenType.KEYWORD_EXTENDS.length(""))
-        assertEquals(10, ShakeTokenType.KEYWORD_IMPLEMENTS.length(""))
-        assertEquals(6, ShakeTokenType.KEYWORD_STATIC.length(""))
-        assertEquals(5, ShakeTokenType.KEYWORD_FINAL.length(""))
-        assertEquals(6, ShakeTokenType.KEYWORD_PUBLIC.length(""))
-        assertEquals(9, ShakeTokenType.KEYWORD_PROTECTED.length(""))
-        assertEquals(7, ShakeTokenType.KEYWORD_PRIVATE.length(""))
-        assertEquals(3, ShakeTokenType.KEYWORD_NEW.length(""))
-        assertEquals(8, ShakeTokenType.KEYWORD_FUNCTION.length(""))
-        assertEquals(6, ShakeTokenType.KEYWORD_RETURN.length(""))
-        assertEquals(3, ShakeTokenType.KEYWORD_INT.length(""))
-        assertEquals(5, ShakeTokenType.KEYWORD_CONST.length(""))
-        assertEquals(7, ShakeTokenType.KEYWORD_DYNAMIC.length(""))
-        assertEquals(4, ShakeTokenType.KEYWORD_BYTE.length(""))
-        assertEquals(5, ShakeTokenType.KEYWORD_SHORT.length(""))
-        assertEquals(3, ShakeTokenType.KEYWORD_INT.length(""))
-        assertEquals(4, ShakeTokenType.KEYWORD_LONG.length(""))
-        assertEquals(5, ShakeTokenType.KEYWORD_FLOAT.length(""))
-        assertEquals(6, ShakeTokenType.KEYWORD_DOUBLE.length(""))
-        assertEquals(4, ShakeTokenType.KEYWORD_CHAR.length(""))
-        assertEquals(7, ShakeTokenType.KEYWORD_BOOLEAN.length(""))
-        assertEquals(6, ShakeTokenType.KEYWORD_IMPORT.length(""))
-        assertEquals(4, ShakeTokenType.KEYWORD_VOID.length(""))
-        assertEquals(11, ShakeTokenType.KEYWORD_CONSTRUCTOR.length(""))
-        assertEquals(2, ShakeTokenType.KEYWORD_AS.length(""))
+    "token length function" {
+        ShakeTokenType.IDENTIFIER.length("hello") shouldBe 5
+        ShakeTokenType.INTEGER.length("10") shouldBe 2
+        ShakeTokenType.DOUBLE.length("10.0") shouldBe 4
+        ShakeTokenType.CHARACTER.length("'a'") shouldBe 3
+        ShakeTokenType.STRING.length("\"hello\"") shouldBe 7
+        ShakeTokenType.COMMA.length("") shouldBe 1
+        ShakeTokenType.DOT.length("") shouldBe 1
+        ShakeTokenType.SEMICOLON.length("") shouldBe 1
+        ShakeTokenType.ADD.length("") shouldBe 1
+        ShakeTokenType.SUB.length("") shouldBe 1
+        ShakeTokenType.MUL.length("") shouldBe 1
+        ShakeTokenType.DIV.length("") shouldBe 1
+        ShakeTokenType.MOD.length("") shouldBe 1
+        ShakeTokenType.POW.length("") shouldBe 2
+        ShakeTokenType.EQ_EQUALS.length("") shouldBe 2
+        ShakeTokenType.BIGGER_EQUALS.length("") shouldBe 2
+        ShakeTokenType.SMALLER_EQUALS.length("") shouldBe 2
+        ShakeTokenType.BIGGER.length("") shouldBe 1
+        ShakeTokenType.SMALLER.length("") shouldBe 1
+        ShakeTokenType.LOGICAL_OR.length("") shouldBe 2
+        ShakeTokenType.LOGICAL_XOR.length("") shouldBe 1
+        ShakeTokenType.LOGICAL_AND.length("") shouldBe 2
+        ShakeTokenType.LINE_SEPARATOR.length("") shouldBe 1
+        ShakeTokenType.ASSIGN.length("") shouldBe 1
+        ShakeTokenType.INCR.length("") shouldBe 2
+        ShakeTokenType.DECR.length("") shouldBe 2
+        ShakeTokenType.ADD_ASSIGN.length("") shouldBe 2
+        ShakeTokenType.SUB_ASSIGN.length("") shouldBe 2
+        ShakeTokenType.MUL_ASSIGN.length("") shouldBe 2
+        ShakeTokenType.DIV_ASSIGN.length("") shouldBe 2
+        ShakeTokenType.MOD_ASSIGN.length("") shouldBe 2
+        ShakeTokenType.POW_ASSIGN.length("") shouldBe 3
+        ShakeTokenType.LPAREN.length("") shouldBe 1
+        ShakeTokenType.RPAREN.length("") shouldBe 1
+        ShakeTokenType.LCURL.length("") shouldBe 1
+        ShakeTokenType.RCURL.length("") shouldBe 1
+        ShakeTokenType.KEYWORD_DO.length("") shouldBe 2
+        ShakeTokenType.KEYWORD_WHILE.length("") shouldBe 5
+        ShakeTokenType.KEYWORD_FOR.length("") shouldBe 3
+        ShakeTokenType.KEYWORD_IF.length("") shouldBe 2
+        ShakeTokenType.KEYWORD_ELSE.length("") shouldBe 4
+        ShakeTokenType.KEYWORD_TRUE.length("") shouldBe 4
+        ShakeTokenType.KEYWORD_FALSE.length("") shouldBe 5
+        ShakeTokenType.KEYWORD_CLASS.length("") shouldBe 5
+        ShakeTokenType.KEYWORD_EXTENDS.length("") shouldBe 7
+        ShakeTokenType.KEYWORD_IMPLEMENTS.length("") shouldBe 10
+        ShakeTokenType.KEYWORD_STATIC.length("") shouldBe 6
+        ShakeTokenType.KEYWORD_FINAL.length("") shouldBe 5
+        ShakeTokenType.KEYWORD_PUBLIC.length("") shouldBe 6
+        ShakeTokenType.KEYWORD_PROTECTED.length("") shouldBe 9
+        ShakeTokenType.KEYWORD_PRIVATE.length("") shouldBe 7
+        ShakeTokenType.KEYWORD_NEW.length("") shouldBe 3
+        ShakeTokenType.KEYWORD_FUNCTION.length("") shouldBe 8
+        ShakeTokenType.KEYWORD_RETURN.length("") shouldBe 6
+        ShakeTokenType.KEYWORD_INT.length("") shouldBe 3
+        ShakeTokenType.KEYWORD_CONST.length("") shouldBe 5
+        ShakeTokenType.KEYWORD_DYNAMIC.length("") shouldBe 7
+        ShakeTokenType.KEYWORD_BYTE.length("") shouldBe 4
+        ShakeTokenType.KEYWORD_SHORT.length("") shouldBe 5
+        ShakeTokenType.KEYWORD_INT.length("") shouldBe 3
+        ShakeTokenType.KEYWORD_LONG.length("") shouldBe 4
+        ShakeTokenType.KEYWORD_FLOAT.length("") shouldBe 5
+        ShakeTokenType.KEYWORD_DOUBLE.length("") shouldBe 6
+        ShakeTokenType.KEYWORD_CHAR.length("") shouldBe 4
+        ShakeTokenType.KEYWORD_BOOLEAN.length("") shouldBe 7
+        ShakeTokenType.KEYWORD_IMPORT.length("") shouldBe 6
+        ShakeTokenType.KEYWORD_VOID.length("") shouldBe 4
+        ShakeTokenType.KEYWORD_CONSTRUCTOR.length("") shouldBe 11
+        ShakeTokenType.KEYWORD_AS.length("") shouldBe 2
     }
-}
+})

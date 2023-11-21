@@ -69,6 +69,7 @@ abstract class CreationShakeScope : ShakeScope {
             }
 
             ShakeVariableType.Type.VOID -> then(CreationShakeType.Primitives.VOID)
+            ShakeVariableType.Type.UNKNOWN -> then(CreationShakeType.Primitives.DYNAMIC) // TODO: Change this
         }
     }
 

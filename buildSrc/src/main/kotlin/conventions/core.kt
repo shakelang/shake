@@ -43,6 +43,16 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
     val common = KotlinSourceType(commonMain, commonTest)
     val jvm = KotlinSourceType(jvmMain, jvmTest)
     val js = KotlinSourceType(jsMain, jsTest)
+
+    fun kotest() {
+        testImplementation("io.kotest:kotest-framework-engine:$KOTEST_VERSION")
+        testImplementation("io.kotest:kotest-assertions-core:$KOTEST_VERSION")
+        testImplementation("io.kotest:kotest-property:$KOTEST_VERSION")
+
+        jvmTest {
+            implementation("io.kotest:kotest-runner-junit5-jvm:5.8.0")
+        }
+    }
     //val native = KotlinSourceType(nativeMain, nativeTest)
 
     fun commonMain(configure: KotlinDependencyHandler.() -> Unit) {

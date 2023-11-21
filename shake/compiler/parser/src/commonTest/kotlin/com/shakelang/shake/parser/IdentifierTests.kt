@@ -1,46 +1,43 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.assertType
-import com.shakelang.shake.parser.node.ShakeIdentifierNode
-import com.shakelang.shake.parser.node.functions.ShakeFunctionCallNode
+import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
+import com.shakelang.shake.shouldBeOfType
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
-class IdentifierTests {
-    @Test
-    fun testBasicIdentifier() {
+class IdentifierTests : FreeSpec({
+
+    "test basic identifier" {
         val node = ParserTestUtil.parseValue("<BasicIdentifierTest>", "test", ShakeVariableUsageNode::class)
-        assertEquals("test", node.variable.name)
-        assertNull(node.variable.parent)
+        node.identifier.name shouldBe "test"
+        node.identifier.parent shouldBe null
     }
 
-    @Test
-    fun testComplexIdentifier() {
+    "test complex identifier" {
         var node = ParserTestUtil.parseValue("<BasicIdentifierTest>", "test.test2", ShakeVariableUsageNode::class)
-        assertEquals("test2", node.variable.name)
-        assertNotNull(node.variable.parent)
-        assertType(ShakeVariableUsageNode::class, node.variable.parent!!)
-        node = node.variable.parent as ShakeVariableUsageNode
-        assertEquals("test", node.variable.name)
-        assertNull(node.variable.parent)
+        node.identifier.name shouldBe "test2"
+        node.identifier.parent shouldNotBe null
+        node.identifier.parent shouldBeOfType ShakeVariableUsageNode::class
+        node = node.identifier.parent as ShakeVariableUsageNode
+        node.identifier.name shouldBe "test"
+        node.identifier.parent shouldBe null
     }
 
-    @Test
-    fun testComplexIdentifierWithFunctions() {
+    "test complex identifier with invocation" {
         var node = ParserTestUtil.parseValue("<BasicIdentifierTest>", "aaa.test().test2", ShakeVariableUsageNode::class)
-        assertEquals("test2", node.variable.name)
-        assertNotNull(node.variable.parent)
-        assertType(ShakeFunctionCallNode::class, node.variable.parent!!)
-        val node2 = node.variable.parent as ShakeFunctionCallNode
-        assertNotNull(node.variable.parent)
-        assertType(ShakeIdentifierNode::class, node2.function)
-        assertEquals("test", (node2.function as ShakeIdentifierNode).name)
-        assertType(ShakeVariableUsageNode::class, (node2.function as ShakeIdentifierNode).parent!!)
-        node = (node2.function as ShakeIdentifierNode).parent as ShakeVariableUsageNode
-        assertEquals("aaa", node.variable.name)
-        assertNull(node.variable.parent)
+        node.identifier.name shouldBe "test2"
+        node.identifier.parent shouldNotBe null
+        node.identifier.parent shouldBeOfType ShakeInvocationNode::class
+        val node2 = node.identifier.parent as ShakeInvocationNode
+        node.identifier.parent shouldNotBe null
+        node2.function shouldBeOfType ShakeVariableUsageNode::class
+        (node2.function as ShakeVariableUsageNode).identifier.name shouldBe "test"
+        (node2.function as ShakeVariableUsageNode).identifier.parent shouldNotBe null
+        (node2.function as ShakeVariableUsageNode).identifier.parent shouldBeOfType ShakeVariableUsageNode::class
+        node = (node2.function as ShakeVariableUsageNode).identifier.parent as ShakeVariableUsageNode
+        node.identifier.name shouldBe "aaa"
+        node.identifier.parent shouldBe null
     }
-}
+})

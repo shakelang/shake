@@ -197,6 +197,7 @@ class CreationShakeProject(
             ShakeVariableType.Type.DYNAMIC -> TODO()
             ShakeVariableType.Type.ARRAY -> TODO()
             ShakeVariableType.Type.VOID -> TODO()
+            ShakeVariableType.Type.UNKNOWN -> TODO()
         }
     }
 
