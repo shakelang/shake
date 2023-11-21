@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        java-version: [ 16 ]
+        java-version: [16]
 
     steps:
       - name: Checkout 🛎️
@@ -68,3 +68,5 @@ jobs:
           branch-suffix: timestamp
           delete-branch: true
           author: shakebot[bot] <bot@shakelang.com>
+          signoff: true
+          labels: automated, style, kotlin
