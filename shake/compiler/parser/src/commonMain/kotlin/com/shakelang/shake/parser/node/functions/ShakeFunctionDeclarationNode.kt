@@ -4,7 +4,6 @@ import com.shakelang.shake.parser.node.*
 import com.shakelang.shake.util.parseutils.characters.position.PositionMap
 import kotlin.jvm.JvmOverloads
 
-
 class ShakeFunctionParameterNode @JvmOverloads constructor(
     map: PositionMap,
     val name: String,

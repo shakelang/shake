@@ -1,5 +1,4 @@
 import com.shakelang.shake.util.changelog.resolveVersion
-import conventions.KOTEST_VERSION
 import conventions.dependencies
 import conventions.projectGroup
 
