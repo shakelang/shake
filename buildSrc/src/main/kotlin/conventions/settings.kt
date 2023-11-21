@@ -2,7 +2,7 @@ package conventions
 
 const val JVM_TARGET = "11"
 const val KOTLIN_TARGET = "11"
-const val KOTLIN_VERSION = "1.9.10"
+const val KOTLIN_VERSION = "1.9.20"
 
 const val GROUP = "com.shakelang.shake"
 
