@@ -24,7 +24,7 @@ kotlin {
     }
     jvm {
         dependencies {
-            implementation("org.reflections:reflections:0.9.12")
+            implementation("org.reflections:reflections:0.10.2")
         }
     }
 }

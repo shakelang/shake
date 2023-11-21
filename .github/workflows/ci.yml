@@ -52,21 +52,21 @@ jobs:
       #          reporter: java-junit
 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
           name: Test Report
           path: build/reports/tests
 
       - name: Upload Kover Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
           name: Kover Report
           path: build/reports/kover/html.zip
 
       - name: Upload Coverage Report to CodeCov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
