@@ -33,7 +33,7 @@ class FunctionTests : FreeSpec({
         FunctionDeclarationDescriptor("float", ShakeVariableType.FLOAT),
         FunctionDeclarationDescriptor("double", ShakeVariableType.DOUBLE),
         FunctionDeclarationDescriptor("char", ShakeVariableType.CHAR),
-        FunctionDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN),
+        FunctionDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN)
     ).forEach {
         ShakeAccessDescriber.entries.forEach { access ->
 
@@ -58,7 +58,6 @@ class FunctionTests : FreeSpec({
                 ret.value shouldBeOfType ShakeIntegerNode::class
                 val int = ret.value as ShakeIntegerNode
                 int.number shouldBe 10
-
             }
 
             "${accessPrefix}final ${it.name}" {
@@ -79,7 +78,6 @@ class FunctionTests : FreeSpec({
                     ret.value shouldBeOfType ShakeIntegerNode::class
                     val int = ret.value as ShakeIntegerNode
                     int.number shouldBe 10
-
                 }
             }
         }
@@ -88,10 +86,9 @@ class FunctionTests : FreeSpec({
     // ********************************************************************
     // C-Style
 
-
     "return" {
         val tree = ParserTestUtil.parseStatement("<FunctionTest>", "return 10;")
-        tree.children.size shouldBe 1;
+        tree.children.size shouldBe 1
         tree.children[0] shouldBeOfType ShakeReturnNode::class
         val node = tree.children[0] as ShakeReturnNode
         node.value shouldBeOfType ShakeIntegerNode::class

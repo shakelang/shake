@@ -24,7 +24,7 @@ class TokenTests : FreeSpec({
 
         token0 shouldBe token0
         token0 shouldBe token1
-        token0 shouldBe  token2
+        token0 shouldBe token2
         token0 shouldNotBe token3
         token0 shouldNotBe token4
 

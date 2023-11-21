@@ -113,8 +113,7 @@ abstract class ShakeLexingBase(
         } else if (next == '!' && peek == '=') {
             input.skip()
             ShakeToken(ShakeTokenType.NOT_EQUALS, input.position, input.position)
-        }
-        else if (next == '>') {
+        } else if (next == '>') {
             ShakeToken(ShakeTokenType.BIGGER, input.position, input.position)
         } else if (next == '<') {
             ShakeToken(ShakeTokenType.SMALLER, input.position, input.position)

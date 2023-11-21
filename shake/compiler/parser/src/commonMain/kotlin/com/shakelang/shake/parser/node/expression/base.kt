@@ -14,7 +14,7 @@ abstract class ShakeExpressionNode(
     override fun toJson(): Map<String, *> = mapOf(
         "name" to nodeName,
         "left" to left.json,
-        "right" to right.json,
+        "right" to right.json
     )
 
     override fun equals(other: Any?): Boolean {
@@ -59,7 +59,7 @@ abstract class ShakeUnaryNode(
     abstract val operator: String
     override fun toJson(): Map<String, *> = mapOf(
         "name" to nodeName,
-        "value" to value.json,
+        "value" to value.json
     )
 
     override fun equals(other: Any?): Boolean {

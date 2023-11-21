@@ -74,5 +74,3 @@ fun createSyntheticModNode(left: ShakeValuedNode, right: ShakeValuedNode) =
 
 fun createSyntheticPowNode(left: ShakeValuedNode, right: ShakeValuedNode) =
     ShakePowNode(PositionMap.empty(), left, right, -1)
-
-
