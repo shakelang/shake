@@ -14,5 +14,7 @@ description = "Utilities for parsing stuff with kotlin"
 val projectName = name
 
 kotlin {
-    dependencies {}
+    dependencies {
+        kotest()
+    }
 }
