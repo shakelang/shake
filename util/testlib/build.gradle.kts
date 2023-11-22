@@ -15,6 +15,6 @@ val projectName = name
 
 kotlin {
     dependencies {
-        implementation(kotlin("test"))
+        kotest()
     }
 }

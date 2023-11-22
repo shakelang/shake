@@ -186,6 +186,12 @@
           "changes": [
             "Update to new package structure"
           ]
+        },
+        {
+          "version": "0.2.1",
+          "changes": [
+            "Remove  dependency in testlib (as it is not used or needed) "
+          ]
         }
       ]
     },

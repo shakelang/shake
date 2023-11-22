@@ -1,47 +1,52 @@
 package com.shakelang.shake.util.testlib
 
-import kotlin.test.Test
-import kotlin.test.expect
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 
-class CallCounterTests {
+@Suppress("unused")
+class CallCounterTests : FreeSpec({
 
-    @Test
-    fun testCallCounter() {
+    "call counter"{
         val counter = CallCounter()
-        expect(0) { counter.calls }
+        counter.calls shouldBe 0
         counter.call()
-        expect(1) { counter.calls }
+        counter.calls shouldBe 1
         counter.call()
-        expect(2) { counter.calls }
+        counter.calls shouldBe 2
 
         1.rangeTo(100).forEach { _ -> counter.call() }
-        expect(102) { counter.calls }
+        counter.calls shouldBe 102
 
         counter.reset()
 
-        expect(0) { counter.calls }
+        counter.calls shouldBe 0
 
         counter.call()
-        expect(1) { counter.calls }
+        counter.calls shouldBe 1
     }
 
-    @Test
-    fun testShouldBeCalled() {
+    "should be called" {
         val counter = CallCounter()
         counter shouldBeCalled 0
+        counter.calls shouldBe 0
         counter.call()
         counter shouldBeCalled 1
+        counter.calls shouldBe 1
         counter.call()
         counter shouldBeCalled 2
+        counter.calls shouldBe 2
 
         1.rangeTo(100).forEach { _ -> counter.call() }
         counter shouldBeCalled 102
+        counter.calls shouldBe 102
 
         counter.reset()
 
         counter shouldBeCalled 0
+        counter.calls shouldBe 0
 
         counter.call()
         counter shouldBeCalled 1
+        counter.calls shouldBe 1
     }
-}
+})
