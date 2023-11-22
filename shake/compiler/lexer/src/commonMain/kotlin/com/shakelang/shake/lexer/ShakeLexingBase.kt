@@ -22,136 +22,156 @@ abstract class ShakeLexingBase(
         val start = input.position
 
         // Linebreaks
-        return if (next == '\n') {
-            ShakeToken(ShakeTokenType.LINE_SEPARATOR, start, start)
-        } else if (next == ';') {
-            ShakeToken(ShakeTokenType.SEMICOLON, start, start)
-        } else if (next == ',') {
-            ShakeToken(ShakeTokenType.COMMA, start, start)
-        } else if (next == '.') {
-            ShakeToken(ShakeTokenType.DOT, start, start)
-        } else if (Characters.isNumberCharacter(next)) {
-            makeNumber()
-        } else if (Characters.isIdentifierStartCharacter(next)) {
-            makeIdentifier()
-        } else if (next == '"') {
-            makeString()
-        } else if (next == '`') {
-            makeIdentifier2()
-        } else if (next == '\'') {
-            makeCharacter()
-        } else if (next == '/' && peek == '/') {
-            singleLineComment()
-            makeToken()
-        } else if (next == '/' && peek == '*') {
-            multiLineComment()
-            makeToken()
-        } else if (input.has(2) && next == '*' && peek == '*' && input.peek(2) == '=') {
-            input.skip(2)
-            ShakeToken(ShakeTokenType.POW_ASSIGN, input.position, input.position)
-        } else if (next == '%' && peek == '=') {
-            input.skip()
-            ShakeToken(ShakeTokenType.MOD_ASSIGN, input.position, input.position)
-        } else if (next == '/' && peek == '=') {
-            input.skip()
-            ShakeToken(ShakeTokenType.DIV_ASSIGN, input.position, input.position)
-        } else if (next == '*' && peek == '=') {
-            input.skip()
-            ShakeToken(ShakeTokenType.MUL_ASSIGN, input.position, input.position)
-        } else if (next == '-' && peek == '=') {
-            input.skip()
-            ShakeToken(ShakeTokenType.SUB_ASSIGN, input.position, input.position)
-        } else if (next == '+' && peek == '=') {
-            input.skip()
-            ShakeToken(ShakeTokenType.ADD_ASSIGN, input.position, input.position)
-        } else if (next == '+' && peek == '+') {
-            input.skip()
-            ShakeToken(ShakeTokenType.INCR, input.position, input.position)
-        } else if (next == '-' && peek == '-') {
-            input.skip()
-            ShakeToken(ShakeTokenType.DECR, input.position, input.position)
-        } else if (next == '*' && peek == '*') {
-            input.skip()
-            ShakeToken(ShakeTokenType.POW, input.position, input.position)
-        } else if (next == '%') {
-            ShakeToken(ShakeTokenType.MOD, input.position, input.position)
-        } else if (next == '/') {
-            ShakeToken(ShakeTokenType.DIV, input.position, input.position)
-        } else if (next == '*') {
-            ShakeToken(ShakeTokenType.MUL, input.position, input.position)
-        } else if (next == '-') {
-            ShakeToken(ShakeTokenType.SUB, input.position, input.position)
-        } else if (next == '+') {
-            ShakeToken(ShakeTokenType.ADD, input.position, input.position)
-        } else if (next == '<' && peek == '<') {
-            input.skip()
-            ShakeToken(ShakeTokenType.BITWISE_SHL, input.position, input.position)
-        } else if (next == '>' && peek == '>') {
-            input.skip()
-            ShakeToken(ShakeTokenType.BITWISE_SHR, input.position, input.position)
-        } else if (next == '|' && peek == '|') {
-            input.skip()
-            ShakeToken(ShakeTokenType.LOGICAL_OR, input.position, input.position)
-        } else if (next == '|' && peek == '|') {
-            input.skip()
-            ShakeToken(ShakeTokenType.LOGICAL_OR, input.position, input.position)
-        } else if (next == '&' && peek == '&') {
-            input.skip()
-            ShakeToken(ShakeTokenType.LOGICAL_AND, input.position, input.position)
-        } else if (next == '^' && peek == '^') {
-            input.skip()
-            ShakeToken(ShakeTokenType.LOGICAL_XOR, input.position, input.position)
-        } else if (next == '=' && peek == '=') {
-            input.skip()
-            ShakeToken(ShakeTokenType.EQ_EQUALS, input.position, input.position)
-        } else if (next == '>' && peek == '=') {
-            input.skip()
-            ShakeToken(ShakeTokenType.BIGGER_EQUALS, input.position, input.position)
-        } else if (next == '<' && peek == '=') {
-            input.skip()
-            ShakeToken(ShakeTokenType.SMALLER_EQUALS, input.position, input.position)
-        } else if (next == '!' && peek == '=') {
-            input.skip()
-            ShakeToken(ShakeTokenType.NOT_EQUALS, input.position, input.position)
-        } else if (next == '>') {
-            ShakeToken(ShakeTokenType.BIGGER, input.position, input.position)
-        } else if (next == '<') {
-            ShakeToken(ShakeTokenType.SMALLER, input.position, input.position)
-        } else if (next == '!') {
-            ShakeToken(ShakeTokenType.LOGICAL_NOT, input.position, input.position)
-        } else if (next == '~' && peek == '&') {
-            input.skip()
-            ShakeToken(ShakeTokenType.BITWISE_NAND, input.position, input.position)
-        } else if (next == '~' && peek == '|') {
-            input.skip()
-            ShakeToken(ShakeTokenType.BITWISE_NOR, input.position, input.position)
-        } else if (next == '~' && peek == '^') {
-            input.skip()
-            ShakeToken(ShakeTokenType.BITWISE_XNOR, input.position, input.position)
-        } else if (next == '~') {
-            ShakeToken(ShakeTokenType.BITWISE_NOT, input.position, input.position)
-        } else if (next == '&') {
-            ShakeToken(ShakeTokenType.BITWISE_AND, input.position, input.position)
-        } else if (next == '|') {
-            ShakeToken(ShakeTokenType.BITWISE_OR, input.position, input.position)
-        } else if (next == '^') {
-            ShakeToken(ShakeTokenType.BITWISE_XOR, input.position, input.position)
-        } else if (next == '=') {
-            ShakeToken(ShakeTokenType.ASSIGN, input.position, input.position)
-        } else if (next == '(') {
-            ShakeToken(ShakeTokenType.LPAREN, input.position, input.position)
-        } else if (next == ')') {
-            ShakeToken(ShakeTokenType.RPAREN, input.position, input.position)
-        } else if (next == '{') {
-            ShakeToken(ShakeTokenType.LCURL, input.position, input.position)
-        } else if (next == '}') {
-            return ShakeToken(ShakeTokenType.RCURL, input.position, input.position)
-        } else if (next == '[') {
-            ShakeToken(ShakeTokenType.LSQBR, input.position, input.position)
-        } else if (next == ']') {
-            ShakeToken(ShakeTokenType.RSQBR, input.position, input.position)
-        } else {
-            throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
+        return when {
+            next == '\n' -> ShakeToken(ShakeTokenType.LINE_SEPARATOR, start, start)
+            next == ';' -> ShakeToken(ShakeTokenType.SEMICOLON, start, start)
+            next == ',' -> ShakeToken(ShakeTokenType.COMMA, start, start)
+            next == '.' -> ShakeToken(ShakeTokenType.DOT, start, start)
+            Characters.isNumberCharacter(next) -> makeNumber()
+            Characters.isIdentifierStartCharacter(next) -> makeIdentifier()
+            next == '"' -> makeString()
+            next == '`' -> makeIdentifier2()
+            next == '\'' -> makeCharacter()
+            next == '/' && peek == '/' -> {
+                singleLineComment()
+                makeToken()
+            }
+
+            next == '/' && peek == '*' -> {
+                multiLineComment()
+                makeToken()
+            }
+
+            input.has(2) && next == '*' && peek == '*' && input.peek(2) == '=' -> {
+                input.skip(2)
+                ShakeToken(ShakeTokenType.POW_ASSIGN, input.position, input.position)
+            }
+
+            next == '%' && peek == '=' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.MOD_ASSIGN, input.position, input.position)
+            }
+
+            next == '/' && peek == '=' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.DIV_ASSIGN, input.position, input.position)
+            }
+
+            next == '*' && peek == '=' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.MUL_ASSIGN, input.position, input.position)
+            }
+
+            next == '-' && peek == '=' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.SUB_ASSIGN, input.position, input.position)
+            }
+
+            next == '+' && peek == '=' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.ADD_ASSIGN, input.position, input.position)
+            }
+
+            next == '+' && peek == '+' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.INCR, input.position, input.position)
+            }
+
+            next == '-' && peek == '-' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.DECR, input.position, input.position)
+            }
+
+            next == '*' && peek == '*' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.POW, input.position, input.position)
+            }
+
+            next == '%' -> ShakeToken(ShakeTokenType.MOD, input.position, input.position)
+            next == '/' -> ShakeToken(ShakeTokenType.DIV, input.position, input.position)
+            next == '*' -> ShakeToken(ShakeTokenType.MUL, input.position, input.position)
+            next == '-' -> ShakeToken(ShakeTokenType.SUB, input.position, input.position)
+            next == '+' -> ShakeToken(ShakeTokenType.ADD, input.position, input.position)
+            next == '<' && peek == '<' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.BITWISE_SHL, input.position, input.position)
+            }
+
+            next == '>' && peek == '>' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.BITWISE_SHR, input.position, input.position)
+            }
+
+            next == '|' && peek == '|' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.LOGICAL_OR, input.position, input.position)
+            }
+
+            next == '|' && peek == '|' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.LOGICAL_OR, input.position, input.position)
+            }
+
+            next == '&' && peek == '&' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.LOGICAL_AND, input.position, input.position)
+            }
+
+            next == '^' && peek == '^' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.LOGICAL_XOR, input.position, input.position)
+            }
+
+            next == '=' && peek == '=' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.EQ_EQUALS, input.position, input.position)
+            }
+
+            next == '>' && peek == '=' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.BIGGER_EQUALS, input.position, input.position)
+            }
+
+            next == '<' && peek == '=' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.SMALLER_EQUALS, input.position, input.position)
+            }
+
+            next == '!' && peek == '=' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.NOT_EQUALS, input.position, input.position)
+            }
+
+            next == '>' -> ShakeToken(ShakeTokenType.BIGGER, input.position, input.position)
+            next == '<' -> ShakeToken(ShakeTokenType.SMALLER, input.position, input.position)
+            next == '!' -> ShakeToken(ShakeTokenType.LOGICAL_NOT, input.position, input.position)
+            next == '~' && peek == '&' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.BITWISE_NAND, input.position, input.position)
+            }
+
+            next == '~' && peek == '|' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.BITWISE_NOR, input.position, input.position)
+            }
+
+            next == '~' && peek == '^' -> {
+                input.skip()
+                ShakeToken(ShakeTokenType.BITWISE_XNOR, input.position, input.position)
+            }
+
+            next == '~' -> ShakeToken(ShakeTokenType.BITWISE_NOT, input.position, input.position)
+            next == '&' -> ShakeToken(ShakeTokenType.BITWISE_AND, input.position, input.position)
+            next == '|' -> ShakeToken(ShakeTokenType.BITWISE_OR, input.position, input.position)
+            next == '^' -> ShakeToken(ShakeTokenType.BITWISE_XOR, input.position, input.position)
+            next == '=' -> ShakeToken(ShakeTokenType.ASSIGN, input.position, input.position)
+            next == '(' -> ShakeToken(ShakeTokenType.LPAREN, input.position, input.position)
+            next == ')' -> ShakeToken(ShakeTokenType.RPAREN, input.position, input.position)
+            next == '{' -> ShakeToken(ShakeTokenType.LCURL, input.position, input.position)
+            next == '}' -> ShakeToken(ShakeTokenType.RCURL, input.position, input.position)
+            next == '[' -> ShakeToken(ShakeTokenType.LSQBR, input.position, input.position)
+            next == ']' -> ShakeToken(ShakeTokenType.RSQBR, input.position, input.position)
+            else -> throw LexerError("UnexpectedTokenError", "Unrecognised Token: '$next'")
         }
     }
 
