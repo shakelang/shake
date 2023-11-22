@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 @Suppress("unused")
 class CallCounterTests : FreeSpec({
 
-    "call counter"{
+    "call counter" {
         val counter = CallCounter()
         counter.calls shouldBe 0
         counter.call()
