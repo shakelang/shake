@@ -584,7 +584,7 @@ interface ShakeType {
      * itself. This isi the default implementation of [binaryShiftLeftType], we don't know anything about the type here and so
      * we just try to search for an overloaded operator.
      *
-     * In implementation of [binaryLeftShiftType] should look something like this:
+     * In implementation of [binaryShiftLeftType] should look something like this:
      * ```kotlin
      * override fun binaryLeftShiftType(other: ShakeType, scope: ShakeScope): ShakeType? {
      *   return super.binaryLeftShiftType(other, scope) ?: ... // default operator stuff
@@ -1024,104 +1024,367 @@ interface ShakeType {
         scope.getFunctions("binaryShitRight").filter { it.expanding == this && it.isOperator }
 
 
+    /**
+     * Select the assign operator overload for the given type
+     * @param scope The scope in which the assign is done
+     * @return The assign operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun assignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(assignOverloads(scope), listOf(other))
 
+    /**
+     * Select the add-assign operator overload for the given type
+     * @param scope The scope in which the add-assign is done
+     * @return The add-assign operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun additionAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(additionAssignOverloads(scope), listOf(other))
 
+    /**
+     * Select the sub-assign operator overload for the given type
+     * @param scope The scope in which the sub-assign is done
+     * @return The sub-assign operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun subtractionAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(subtractionAssignOverloads(scope), listOf(other))
 
+    /**
+     * Select the mul-assign operator overload for the given type
+     * @param scope The scope in which the mul-assign is done
+     * @return The mul-assign operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun multiplicationAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(multiplicationAssignOverloads(scope), listOf(other))
 
+    /**
+     * Select the div-assign operator overload for the given type
+     * @param scope The scope in which the div-assign is done
+     * @return The div-assign operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun divisionAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(divisionAssignOverloads(scope), listOf(other))
 
+    /**
+     * Select the mod-assign operator overload for the given type
+     * @param scope The scope in which the mod-assign is done
+     * @return The mod-assign operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun modulusAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(modulusAssignOverloads(scope), listOf(other))
 
+    /**
+     * Select the pow-assign operator overload for the given type
+     * @param scope The scope in which the pow-assign is done
+     * @return The pow-assign operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun powerAssignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(powerAssignOverloads(scope), listOf(other))
 
+    /**
+     * Select the increment-before operator overload for the given type
+     * @param scope The scope in which the increment-before is done
+     * @return The increment-before operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun incrementBeforeOverload(scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(incrementBeforeOverloads(scope), emptyList())
 
+    /**
+     * Select the increment-after operator overload for the given type
+     * @param scope The scope in which the increment-after is done
+     * @return The increment-after operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun incrementAfterOverload(scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(incrementAfterOverloads(scope), emptyList())
 
+    /**
+     * Select the decrement-before operator overload for the given type
+     * @param scope The scope in which the decrement-before is done
+     * @return The decrement-before operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun decrementBeforeOverload(scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(decrementBeforeOverloads(scope), emptyList())
 
+    /**
+     * Select the decrement-after operator overload for the given type
+     * @param scope The scope in which the decrement-after is done
+     * @return The decrement-after operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun decrementAfterOverload(scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(decrementAfterOverloads(scope), emptyList())
 
+    /**
+     * Select the add operator overload for the given type
+     * @param scope The scope in which the add is done
+     * @return The add operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun additionOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(additionOverloads(scope), listOf(other))
 
+    /**
+     * Select the sub operator overload for the given type
+     * @param scope The scope in which the sub is done
+     * @return The sub operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun subtractionOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(subtractionOverloads(scope), listOf(other))
 
+    /**
+     * Select the mul operator overload for the given type
+     * @param scope The scope in which the mul is done
+     * @return The mul operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun multiplicationOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(multiplicationOverloads(scope), listOf(other))
 
+    /**
+     * Select the div operator overload for the given type
+     * @param scope The scope in which the div is done
+     * @return The div operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun divisionOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(divisionOverloads(scope), listOf(other))
 
+    /**
+     * Select the mod operator overload for the given type
+     * @param scope The scope in which the mod is done
+     * @return The mod operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun modulusOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(modulusOverloads(scope), listOf(other))
 
+    /**
+     * Select the pow operator overload for the given type
+     * @param scope The scope in which the pow is done
+     * @return The pow operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun powerOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(powerOverloads(scope), listOf(other))
 
+    /**
+     * Select the equals operator overload for the given type
+     * @param scope The scope in which the equals is done
+     * @return The equals operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun equalsOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(equalsOverloads(scope), listOf(other))
 
+    /**
+     * Select the not-equals operator overload for the given type
+     * @param scope The scope in which the not-equals is done
+     * @return The not-equals operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun notEqualsOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(notEqualsOverloads(scope), listOf(other))
 
+    /**
+     * Select the greater-than operator overload for the given type
+     * @param scope The scope in which the greater-than is done
+     * @return The greater-than operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun greaterThanOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(greaterThanOverloads(scope), listOf(other))
 
+    /**
+     * Select the greater-than-or-equals operator overload for the given type
+     * @param scope The scope in which the greater-than-or-equals is done
+     * @return The greater-than-or-equals operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun greaterThanOrEqualOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(greaterThanOrEqualOverloads(scope), listOf(other))
 
+    /**
+     * Select the less-than operator overload for the given type
+     * @param scope The scope in which the less-than is done
+     * @return The less-than operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun lessThanOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(lessThanOverloads(scope), listOf(other))
 
+    /**
+     * Select the less-than-or-equals operator overload for the given type
+     * @param scope The scope in which the less-than-or-equals is done
+     * @return The less-than-or-equals operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun lessThanOrEqualOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(lessThanOrEqualOverloads(scope), listOf(other))
 
+    /**
+     * Select the and operator overload for the given type
+     * @param scope The scope in which the and is done
+     * @return The and operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun logicalAndOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(logicalAndOverloads(scope), listOf(other))
 
+    /**
+     * Select the or operator overload for the given type
+     * @param scope The scope in which the or is done
+     * @return The or operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun logicalOrOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(logicalOrOverloads(scope), listOf(other))
 
+    /**
+     * Select the xor operator overload for the given type
+     * @param scope The scope in which the xor is done
+     * @return The xor operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun logicalXorOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(logicalXorOverloads(scope), listOf(other))
 
+    /**
+     * Select the not operator overload for the given type
+     * @param scope The scope in which the not is done
+     * @return The not operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun logicalNotOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(notOverloads(scope), emptyList())
 
+    /**
+     * Select the binary-and operator overload for the given type
+     * @param scope The scope in which the binary-and is done
+     * @return The binary-and operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryAndOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(binaryAndOverloads(scope), listOf(other))
 
+    /**
+     * Select the binary-or operator overload for the given type
+     * @param scope The scope in which the binary-or is done
+     * @return The binary-or operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryOrOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(binaryOrOverloads(scope), listOf(other))
 
+    /**
+     * Select the binary-xor operator overload for the given type
+     * @param scope The scope in which the binary-xor is done
+     * @return The binary-xor operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryXorOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(binaryXorOverloads(scope), listOf(other))
 
+    /**
+     * Select the binary-not operator overload for the given type
+     * @param scope The scope in which the binary-not is done
+     * @return The binary-not operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryNotOverload(scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(binaryNotOverloads(scope), emptyList())
 
+    /**
+     * Select the binary-left-shift operator overload for the given type
+     * @param scope The scope in which the binary-left-shift is done
+     * @return The binary-left-shift operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryShiftLeftOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(binaryShiftLeftOverloads(scope), listOf(other))
 
+    /**
+     * Select the binary-right-shift operator overload for the given type
+     * @param scope The scope in which the binary-right-shift is done
+     * @return The binary-right-shift operator overload for the given type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryShiftRightOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(binaryShiftRightOverloads(scope), listOf(other))
-
 
     fun assignOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
         val method = assignOverload(other, scope)
