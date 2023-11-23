@@ -467,7 +467,7 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun logicalAndType(other: ShakeType, scope: ShakeScope): ShakeType? = andOverload(other, scope)?.returnType
+    fun logicalAndType(other: ShakeType, scope: ShakeScope): ShakeType? = logicalAndOverload(other, scope)?.returnType
 
     /**
      * Returns the type of the expression `this || other`
@@ -489,7 +489,7 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun logicalOrType(other: ShakeType, scope: ShakeScope): ShakeType? = orOverload(other, scope)?.returnType
+    fun logicalOrType(other: ShakeType, scope: ShakeScope): ShakeType? = logicalOrOverload(other, scope)?.returnType
 
     /**
      * Returns the type of the expression `!this`
@@ -510,7 +510,117 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun logicalNotType(scope: ShakeScope): ShakeType? = notOverload(scope)?.returnType
+    fun logicalNotType(scope: ShakeScope): ShakeType? = logicalNotOverload(scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this & other`
+     * If the binary-and operator is not overloaded, this method should look for a default binary-and operator and resolve the type
+     * itself. This isi the default implementation of [binaryAndType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [binaryAndType] should look something like this:
+     * ```kotlin
+     * override fun binaryAndType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.binaryAndType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to binary-and
+     * @param scope The scope in which the binary-and is done
+     * @return The return type of the binary-and expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun binaryAndType(other: ShakeType, scope: ShakeScope): ShakeType? = binaryAndOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this | other`
+     * If the binary-or operator is not overloaded, this method should look for a default binary-or operator and resolve the type
+     * itself. This isi the default implementation of [binaryOrType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [binaryOrType] should look something like this:
+     * ```kotlin
+     * override fun binaryOrType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.binaryOrType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to binary-or
+     * @param scope The scope in which the binary-or is done
+     * @return The return type of the binary-or expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun binaryOrType(other: ShakeType, scope: ShakeScope): ShakeType? = binaryOrOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this ^ other`
+     * If the binary-xor operator is not overloaded, this method should look for a default binary-xor operator and resolve the type
+     * itself. This isi the default implementation of [binaryXorType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [binaryXorType] should look something like this:
+     * ```kotlin
+     * override fun binaryXorType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.binaryXorType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to binary-xor
+     * @param scope The scope in which the binary-xor is done
+     * @return The return type of the binary-xor expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun binaryXorType(other: ShakeType, scope: ShakeScope): ShakeType? = binaryXorOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this << other`
+     * If the binary-left-shift operator is not overloaded, this method should look for a default binary-left-shift operator and resolve the type
+     * itself. This isi the default implementation of [binaryShiftLeftType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [binaryLeftShiftType] should look something like this:
+     * ```kotlin
+     * override fun binaryLeftShiftType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.binaryLeftShiftType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to binary-left-shift
+     * @param scope The scope in which the binary-left-shift is done
+     * @return The return type of the binary-left-shift expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun binaryShiftLeftType(other: ShakeType, scope: ShakeScope): ShakeType? = binaryShiftLeftOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this >> other`
+     * If the binary-right-shift operator is not overloaded, this method should look for a default binary-right-shift operator and resolve the type
+     * itself. This isi the default implementation of [binaryShiftRightType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [binaryShiftRightType] should look something like this:
+     * ```kotlin
+     * override fun binaryRightShiftType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.binaryRightShiftType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to binary-right-shift
+     * @param scope The scope in which the binary-right-shift is done
+     * @return The return type of the binary-right-shift expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun binaryShiftRightType(other: ShakeType, scope: ShakeScope): ShakeType? = binaryShiftRightOverload(other, scope)?.returnType
 
     fun childType(name: String, scope: ShakeScope): ShakeType? = null
 
@@ -588,14 +698,35 @@ interface ShakeType {
     fun lessThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("lessThanOrEqual").filter { it.expanding == this && it.isOperator }
 
-    fun andOverloads(scope: ShakeScope): List<ShakeMethod> =
+    fun logicalAndOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("and").filter { it.expanding == this && it.isOperator }
 
-    fun orOverloads(scope: ShakeScope): List<ShakeMethod> =
+    fun logicalOrOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("or").filter { it.expanding == this && it.isOperator }
+
+    fun logicalXorOverloads(scope: ShakeScope): List<ShakeMethod> =
+        scope.getFunctions("xor").filter { it.expanding == this && it.isOperator }
 
     fun notOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("not").filter { it.expanding == this && it.isOperator }
+
+    fun binaryAndOverloads(scope: ShakeScope): List<ShakeMethod> =
+        scope.getFunctions("binaryAnd").filter { it.expanding == this && it.isOperator }
+
+    fun binaryOrOverloads(scope: ShakeScope): List<ShakeMethod> =
+        scope.getFunctions("binaryOr").filter { it.expanding == this && it.isOperator }
+
+    fun binaryXorOverloads(scope: ShakeScope): List<ShakeMethod> =
+        scope.getFunctions("binaryXor").filter { it.expanding == this && it.isOperator }
+
+    fun binaryNotOverloads(scope: ShakeScope): List<ShakeMethod> =
+        scope.getFunctions("binaryNot").filter { it.expanding == this && it.isOperator }
+
+    fun binaryShiftLeftOverloads(scope: ShakeScope): List<ShakeMethod> =
+        scope.getFunctions("binaryShitLeft").filter { it.expanding == this && it.isOperator }
+
+    fun binaryShiftRightOverloads(scope: ShakeScope): List<ShakeMethod> =
+        scope.getFunctions("binaryShitRight").filter { it.expanding == this && it.isOperator }
 
     fun assignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(assignOverloads(scope), listOf(other))
@@ -666,13 +797,35 @@ interface ShakeType {
     fun lessThanOrEqualOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(lessThanOrEqualOverloads(scope), listOf(other))
 
-    fun andOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
-        ShakeSelect.selectFunction(andOverloads(scope), listOf(other))
+    fun logicalAndOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(logicalAndOverloads(scope), listOf(other))
 
-    fun orOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
-        ShakeSelect.selectFunction(orOverloads(scope), listOf(other))
+    fun logicalOrOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(logicalOrOverloads(scope), listOf(other))
 
-    fun notOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(notOverloads(scope), emptyList())
+    fun logicalXorOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(logicalXorOverloads(scope), listOf(other))
+
+    fun logicalNotOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(notOverloads(scope), emptyList())
+
+    fun binaryAndOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(binaryAndOverloads(scope), listOf(other))
+
+    fun binaryOrOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(binaryOrOverloads(scope), listOf(other))
+
+    fun binaryXorOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(binaryXorOverloads(scope), listOf(other))
+
+    fun binaryNotOverload(scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(binaryNotOverloads(scope), emptyList())
+
+    fun binaryShiftLeftOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(binaryShiftLeftOverloads(scope), listOf(other))
+
+    fun binaryShiftRightOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(binaryShiftRightOverloads(scope), listOf(other))
+
 
     fun assignOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
         val method = assignOverload(other, scope)
@@ -801,19 +954,55 @@ interface ShakeType {
     }
 
     fun andOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
-        val method = andOverload(other, scope)
+        val method = logicalAndOverload(other, scope)
         if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
         return ShakeOperatorRequestResult(null, null)
     }
 
     fun orOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
-        val method = orOverload(other, scope)
+        val method = logicalOrOverload(other, scope)
         if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
         return ShakeOperatorRequestResult(null, null)
     }
 
     fun notOperator(scope: ShakeScope): ShakeOperatorRequestResult {
-        val method = notOverload(scope)
+        val method = logicalNotOverload(scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun binaryAndOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = binaryAndOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun binaryOrOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = binaryOrOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun binaryXorOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = binaryXorOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun binaryNotOperator(scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = binaryNotOverload(scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun binaryShiftLeftOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = binaryShiftLeftOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun binaryShiftRightOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = binaryShiftRightOverload(other, scope)
         if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
         return ShakeOperatorRequestResult(null, null)
     }
@@ -950,11 +1139,11 @@ interface ShakeType {
                 scope
             )
 
-        override fun andOverloads(scope: ShakeScope): List<ShakeMethod> =
-            clazz.methods.filter { it.name == "and" && it.isOperator } + super.andOverloads(scope)
+        override fun logicalAndOverloads(scope: ShakeScope): List<ShakeMethod> =
+            clazz.methods.filter { it.name == "and" && it.isOperator } + super.logicalAndOverloads(scope)
 
-        override fun orOverloads(scope: ShakeScope): List<ShakeMethod> =
-            clazz.methods.filter { it.name == "or" && it.isOperator } + super.orOverloads(scope)
+        override fun logicalOrOverloads(scope: ShakeScope): List<ShakeMethod> =
+            clazz.methods.filter { it.name == "or" && it.isOperator } + super.logicalOrOverloads(scope)
 
         override fun notOverloads(scope: ShakeScope): List<ShakeMethod> =
             clazz.methods.filter { it.name == "not" && it.isOperator } + super.notOverloads(scope)
