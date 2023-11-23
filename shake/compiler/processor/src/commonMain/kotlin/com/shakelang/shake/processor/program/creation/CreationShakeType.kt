@@ -111,9 +111,9 @@ abstract class CreationShakeType(
                 override fun greaterThanOrEqualType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
                 override fun lessThanType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
                 override fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
-                override fun andType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
-                override fun orType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
-                override fun notType(scope: ShakeScope): CreationShakeType = bool()
+                override fun logicalAndType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun logicalOrType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun logicalNotType(scope: ShakeScope): CreationShakeType = bool()
 
                 override fun castableTo(other: ShakeType): Boolean =
                     other is Primitive && other.type == ShakeType.PrimitiveType.BOOLEAN

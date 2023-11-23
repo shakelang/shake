@@ -3,45 +3,517 @@ package com.shakelang.shake.processor.program.types
 import com.shakelang.shake.processor.ShakeSelect
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 
+/**
+ * A ShakeType is a type of a variable, field, method return type or a literal
+ */
 interface ShakeType {
 
+    /**
+     * The name of the type
+     */
     val name: String
+
+    /**
+     * The qualified name of the type
+     */
     val qualifiedName: String
 
+    /**
+     * If I overload the assign operator, what is the return type (null if not overloaded) of the expression `this = other`
+     * If the assign operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.assignType] will know that the assign operator is not overloaded and will use the default
+     * assign operator and resolve the type itself.
+     *
+     * @param other The type to assign
+     * @param scope The scope in which the assign is done
+     * @return The return type of the assign expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
+
+    /**
+     * If I overload the add-assign operator, what is the return type (null if not overloaded) of the expression `this += other`
+     * If the add-assign operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.additionAssignType] will know that the add-assign operator is not overloaded and will use the default
+     * add-assign operator and resolve the type itself.
+     *
+     * @param other The type to add
+     * @param scope The scope in which the add-assign is done
+     * @return The return type of the add-assign expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = additionAssignOverload(other, scope)?.returnType
+
+    /**
+     * If I overload the sub-assign operator, what is the return type (null if not overloaded) of the expression `this -= other`
+     * If the sub-assign operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.subtractionAssignType] will know that the sub-assign operator is not overloaded and will use the default
+     * sub-assign operator and resolve the type itself.
+     *
+     * @param other The type to sub
+     * @param scope The scope in which the sub-assign is done
+     * @return The return type of the sub-assign expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = subtractionAssignOverload(other, scope)?.returnType
+
+    /**
+     * If I overload the mul-assign operator, what is the return type (null if not overloaded) of the expression `this *= other`
+     * If the mul-assign operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.multiplicationAssignType] will know that the mul-assign operator is not overloaded and will use the default
+     * mul-assign operator and resolve the type itself.
+     *
+     * @param other The type to mul
+     * @param scope The scope in which the mul-assign is done
+     * @return The return type of the mul-assign expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = multiplicationAssignOverload(other, scope)?.returnType
+
+    /**
+     * If I overload the div-assign operator, what is the return type (null if not overloaded) of the expression `this /= other`
+     * If the div-assign operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.divisionAssignType] will know that the div-assign operator is not overloaded and will use the default
+     * div-assign operator and resolve the type itself.
+     *
+     * @param other The type to div
+     * @param scope The scope in which the div-assign is done
+     * @return The return type of the div-assign expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = divisionAssignOverload(other, scope)?.returnType
+
+    /**
+     * If I overload the mod-assign operator, what is the return type (null if not overloaded) of the expression `this %= other`
+     * If the mod-assign operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.modulusAssignType] will know that the mod-assign operator is not overloaded and will use the default
+     * mod-assign operator and resolve the type itself.
+     *
+     * @param other The type to mod
+     * @param scope The scope in which the mod-assign is done
+     * @return The return type of the mod-assign expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = modulusAssignOverload(other, scope)?.returnType
+
+    /**
+     * If I overload the pow-assign operator, what is the return type (null if not overloaded) of the expression `this **= other`
+     * If the pow-assign operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.powerAssignType] will know that the pow-assign operator is not overloaded and will use the default
+     * pow-assign operator and resolve the type itself.
+     *
+     * @param other The type to pow
+     * @param scope The scope in which the pow-assign is done
+     * @return The return type of the pow-assign expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = powerAssignOverload(other, scope)?.returnType
+
+    /**
+     * If I overload the increment-before operator, what is the return type (null if not overloaded) of the expression `++this`
+     * If the increment-before operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.incrementBeforeType] will know that the increment-before operator is not overloaded and will use the default
+     * increment-before operator and resolve the type itself.
+     *
+     * @param scope The scope in which the increment-before is done
+     * @return The return type of the increment-before expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun incrementBeforeType(scope: ShakeScope): ShakeType? = incrementBeforeOverload(scope)?.returnType
+
+    /**
+     * If I overload the increment-after operator, what is the return type (null if not overloaded) of the expression `this++`
+     * If the increment-after operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.incrementAfterType] will know that the increment-after operator is not overloaded and will use the default
+     * increment-after operator and resolve the type itself.
+     *
+     * @param scope The scope in which the increment-after is done
+     * @return The return type of the increment-after expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun incrementAfterType(scope: ShakeScope): ShakeType? = incrementAfterOverload(scope)?.returnType
+
+    /**
+     * If I overload the decrement-before operator, what is the return type (null if not overloaded) of the expression `--this`
+     * If the decrement-before operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.decrementBeforeType] will know that the decrement-before operator is not overloaded and will use the default
+     * decrement-before operator and resolve the type itself.
+     *
+     * @param scope The scope in which the decrement-before is done
+     * @return The return type of the decrement-before expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun decrementBeforeType(scope: ShakeScope): ShakeType? = decrementBeforeOverload(scope)?.returnType
+
+    /**
+     * If I overload the decrement-after operator, what is the return type (null if not overloaded) of the expression `this--`
+     * If the decrement-after operator is not overloaded, this method should return null. When returning null,
+     * [ShakeAssignable.decrementAfterType] will know that the decrement-after operator is not overloaded and will use the default
+     * decrement-after operator and resolve the type itself.
+     *
+     * @param scope The scope in which the decrement-after is done
+     * @return The return type of the decrement-after expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun decrementAfterType(scope: ShakeScope): ShakeType? = decrementAfterOverload(scope)?.returnType
 
+    /**
+     * Returns the type of the expression `this + other`
+     * If the add operator is not overloaded, this method should look for a default add operator and resolve the type
+     * itself. This isi the default implementation of [additionType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [additionType] should look something like this:
+     * ```kotlin
+     * override fun additionType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.additionType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to add
+     * @param scope The scope in which the add is done
+     * @return The return type of the add expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun additionType(other: ShakeType, scope: ShakeScope): ShakeType? = additionOverload(other, scope)?.returnType
-    fun subtractionType(other: ShakeType, scope: ShakeScope): ShakeType? = subtractionOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this - other`
+     * If the sub operator is not overloaded, this method should look for a default sub operator and resolve the type
+     * itself. This isi the default implementation of [subtractionType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [subtractionType] should look something like this:
+     * ```kotlin
+     * override fun subtractionType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.subtractionType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to sub
+     * @param scope The scope in which the sub is done
+     * @return The return type of the sub expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun subtractionType(other: ShakeType, scope: ShakeScope): ShakeType? =
+        subtractionOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this * other`
+     * If the mul operator is not overloaded, this method should look for a default mul operator and resolve the type
+     * itself. This isi the default implementation of [multiplicationType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [multiplicationType] should look something like this:
+     * ```kotlin
+     * override fun multiplicationType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.multiplicationType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to mul
+     * @param scope The scope in which the mul is done
+     * @return The return type of the mul expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun multiplicationType(other: ShakeType, scope: ShakeScope): ShakeType? =
         multiplicationOverload(other, scope)?.returnType
 
+    /**
+     * Returns the type of the expression `this / other`
+     * If the div operator is not overloaded, this method should look for a default div operator and resolve the type
+     * itself. This isi the default implementation of [divisionType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [divisionType] should look something like this:
+     * ```kotlin
+     * override fun divisionType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.divisionType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to div
+     * @param scope The scope in which the div is done
+     * @return The return type of the div expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun divisionType(other: ShakeType, scope: ShakeScope): ShakeType? = divisionOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this % other`
+     * If the mod operator is not overloaded, this method should look for a default mod operator and resolve the type
+     * itself. This isi the default implementation of [modulusType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [modulusType] should look something like this:
+     * ```kotlin
+     * override fun modulusType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.modulusType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to mod
+     * @param scope The scope in which the mod is done
+     * @return The return type of the mod expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun modulusType(other: ShakeType, scope: ShakeScope): ShakeType? = modulusOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this ** other`
+     * If the pow operator is not overloaded, this method should look for a default pow operator and resolve the type
+     * itself. This isi the default implementation of [powerType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [powerType] should look something like this:
+     * ```kotlin
+     * override fun powerType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.powerType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to pow
+     * @param scope The scope in which the pow is done
+     * @return The return type of the pow expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun powerType(other: ShakeType, scope: ShakeScope): ShakeType? = powerOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this == other`
+     * If the equals operator is not overloaded, this method should look for a default equals operator and resolve the type
+     * itself. This isi the default implementation of [equalsType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [equalsType] should look something like this:
+     * ```kotlin
+     * override fun equalsType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.equalsType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to compare
+     * @param scope The scope in which the compare is done
+     * @return The return type of the compare expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun equalsType(other: ShakeType, scope: ShakeScope): ShakeType? = equalsOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this != other`
+     * If the not-equals operator is not overloaded, this method should look for a default not-equals operator and resolve the type
+     * itself. This isi the default implementation of [notEqualsType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [notEqualsType] should look something like this:
+     * ```kotlin
+     * override fun notEqualsType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.notEqualsType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to compare
+     * @param scope The scope in which the compare is done
+     * @return The return type of the compare expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun notEqualsType(other: ShakeType, scope: ShakeScope): ShakeType? = notEqualsOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this > other`
+     * If the greater-than operator is not overloaded, this method should look for a default greater-than operator and resolve the type
+     * itself. This isi the default implementation of [greaterThanType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [greaterThanType] should look something like this:
+     * ```kotlin
+     * override fun greaterThanType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.greaterThanType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to compare
+     * @param scope The scope in which the compare is done
+     * @return The return type of the compare expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun greaterThanType(other: ShakeType, scope: ShakeScope): ShakeType? = greaterThanOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this >= other`
+     * If the greater-than-or-equals operator is not overloaded, this method should look for a default greater-than-or-equals operator and resolve the type
+     * itself. This isi the default implementation of [greaterThanOrEqualType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [greaterThanOrEqualType] should look something like this:
+     * ```kotlin
+     * override fun greaterThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.greaterThanOrEqualType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to compare
+     * @param scope The scope in which the compare is done
+     * @return The return type of the compare expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun greaterThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? =
         greaterThanOrEqualOverload(other, scope)?.returnType
 
+    /**
+     * Returns the type of the expression `this < other`
+     * If the less-than operator is not overloaded, this method should look for a default less-than operator and resolve the type
+     * itself. This isi the default implementation of [lessThanType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [lessThanType] should look something like this:
+     * ```kotlin
+     * override fun lessThanType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.lessThanType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to compare
+     * @param scope The scope in which the compare is done
+     * @return The return type of the compare expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun lessThanType(other: ShakeType, scope: ShakeScope): ShakeType? = lessThanOverload(other, scope)?.returnType
-    fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? =
+
+    /**
+     * Returns the type of the expression `this <= other`
+     * If the less-than-or-equals operator is not overloaded, this method should look for a default less-than-or-equals operator and resolve the type
+     * itself. This isi the default implementation of [lessThanOrEqualType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [lessThanOrEqualType] should look something like this:
+     * ```kotlin
+     * override fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.lessThanOrEqualType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to compare
+     * @param scope The scope in which the compare is done
+     * @return The return type of the compare expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun  lessThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? =
         lessThanOrEqualOverload(other, scope)?.returnType
 
-    fun andType(other: ShakeType, scope: ShakeScope): ShakeType? = andOverload(other, scope)?.returnType
-    fun orType(other: ShakeType, scope: ShakeScope): ShakeType? = orOverload(other, scope)?.returnType
-    fun notType(scope: ShakeScope): ShakeType? = notOverload(scope)?.returnType
+    /**
+     * Returns the type of the expression `this && other`
+     * If the and operator is not overloaded, this method should look for a default and operator and resolve the type
+     * itself. This isi the default implementation of [logicalAndType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [logicalAndType] should look something like this:
+     * ```kotlin
+     * override fun logicalAndType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.logicalAndType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to and
+     * @param scope The scope in which the and is done
+     * @return The return type of the and expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun logicalAndType(other: ShakeType, scope: ShakeScope): ShakeType? = andOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `this || other`
+     * If the or operator is not overloaded, this method should look for a default or operator and resolve the type
+     * itself. This isi the default implementation of [logicalOrType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [logicalOrType] should look something like this:
+     * ```kotlin
+     * override fun logicalOrType(other: ShakeType, scope: ShakeScope): ShakeType? {
+     *   return super.logicalOrType(other, scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param other The type to or
+     * @param scope The scope in which the or is done
+     * @return The return type of the or expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun logicalOrType(other: ShakeType, scope: ShakeScope): ShakeType? = orOverload(other, scope)?.returnType
+
+    /**
+     * Returns the type of the expression `!this`
+     * If the not operator is not overloaded, this method should look for a default not operator and resolve the type
+     * itself. This isi the default implementation of [logicalNotType], we don't know anything about the type here and so
+     * we just try to search for an overloaded operator.
+     *
+     * In implementation of [logicalNotType] should look something like this:
+     * ```kotlin
+     * override fun logicalNotType(scope: ShakeScope): ShakeType? {
+     *   return super.logicalNotType(scope) ?: ... // default operator stuff
+     * }
+     * ```
+     *
+     * @param scope The scope in which the not is done
+     * @return The return type of the not expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun logicalNotType(scope: ShakeScope): ShakeType? = notOverload(scope)?.returnType
+
     fun childType(name: String, scope: ShakeScope): ShakeType? = null
+
     fun childFunctions(name: String, scope: ShakeScope): List<ShakeMethod>? =
         scope.getFunctions(name).filter { it.expanding == this }
 
@@ -528,9 +1000,9 @@ interface ShakeType {
         override fun greaterThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? = null
         override fun lessThanType(other: ShakeType, scope: ShakeScope): ShakeType? = null
         override fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun andType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun orType(other: ShakeType, scope: ShakeScope): ShakeType? = null
-        override fun notType(scope: ShakeScope): ShakeType? = null
+        override fun logicalAndType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun logicalOrType(other: ShakeType, scope: ShakeScope): ShakeType? = null
+        override fun logicalNotType(scope: ShakeScope): ShakeType? = null
 
         override val kind: Kind
             get() = Kind.ARRAY
