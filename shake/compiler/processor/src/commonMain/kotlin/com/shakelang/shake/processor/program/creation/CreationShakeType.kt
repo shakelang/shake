@@ -128,6 +128,18 @@ abstract class CreationShakeType(
                 override val qualifiedName: String get() = "Z"
             }
 
+            val NULL: Primitive = object : Primitive("null", ShakeType.PrimitiveType.NULL) {
+                override fun compatibilityDistance(other: ShakeType): Int {
+                    TODO("Not yet implemented")
+                }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "null")
+                }
+
+                override val qualifiedName: String get() = "N"
+            }
+
             val BYTE: Primitive = object : Primitive("byte", ShakeType.PrimitiveType.BYTE) {
                 override fun compatibilityDistance(other: ShakeType): Int =
                     if (other !is Primitive) {
@@ -518,6 +530,7 @@ abstract class CreationShakeType(
 
     object Primitives {
         val BOOLEAN = Primitive.BOOLEAN
+        val NULL = Primitive.NULL
         val BYTE = Primitive.BYTE
         val SHORT = Primitive.SHORT
         val INT = Primitive.INT

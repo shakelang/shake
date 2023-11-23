@@ -58,6 +58,22 @@ class CreationShakeBooleanLiteral(
     }
 }
 
+class CreationShakeNullLiteral(
+    override val project: CreationShakeProject
+) : CreationShakeValue, ShakeNullLiteral {
+
+    override val type: CreationShakeType
+        get() = CreationShakeType.Primitives.NULL
+
+    override fun toString(): String = "null"
+
+    override fun toJson(): Map<String, Any?> {
+        return mapOf(
+            "type" to "null"
+        )
+    }
+}
+
 class CreationShakeCharacterLiteral(
     override val project: CreationShakeProject,
     override val value: Char

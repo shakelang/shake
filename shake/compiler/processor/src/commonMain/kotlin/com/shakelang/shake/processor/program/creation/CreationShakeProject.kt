@@ -7,11 +7,11 @@ import com.shakelang.shake.parser.node.ShakeVariableType
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import com.shakelang.shake.processor.ShakeCodeProcessor
+import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.types.ShakeProject
 
 class CreationShakeProject(
-    processor: ShakeCodeProcessor,
+    processor: ShakeASTProcessor,
     override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
     override val classes: MutableList<CreationShakeClass> = mutableListOf(),
     override val functions: MutableList<CreationShakeMethod> = mutableListOf(),
@@ -28,7 +28,7 @@ class CreationShakeProject(
         override val parent: CreationShakeScope? = null
         override val project: CreationShakeProject get() = this@CreationShakeProject
 
-        override val processor: ShakeCodeProcessor = processor
+        override val processor: ShakeASTProcessor = processor
 
         val imported: Array<CreationShakePackage> = arrayOf(
             getPackage("shake.lang"),

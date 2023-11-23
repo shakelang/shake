@@ -9,20 +9,17 @@ interface ShakeType {
     val qualifiedName: String
 
     fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
-    fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
-    fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? =
-        assignOverload(other, scope)?.returnType
-
-    fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? =
-        assignOverload(other, scope)?.returnType
-
-    fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
-    fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
-    fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = assignOverload(other, scope)?.returnType
+    fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = additionAssignOverload(other, scope)?.returnType
+    fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = subtractionAssignOverload(other, scope)?.returnType
+    fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = multiplicationAssignOverload(other, scope)?.returnType
+    fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = divisionAssignOverload(other, scope)?.returnType
+    fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = modulusAssignOverload(other, scope)?.returnType
+    fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = powerAssignOverload(other, scope)?.returnType
     fun incrementBeforeType(scope: ShakeScope): ShakeType? = incrementBeforeOverload(scope)?.returnType
     fun incrementAfterType(scope: ShakeScope): ShakeType? = incrementAfterOverload(scope)?.returnType
     fun decrementBeforeType(scope: ShakeScope): ShakeType? = decrementBeforeOverload(scope)?.returnType
     fun decrementAfterType(scope: ShakeScope): ShakeType? = decrementAfterOverload(scope)?.returnType
+
     fun additionType(other: ShakeType, scope: ShakeScope): ShakeType? = additionOverload(other, scope)?.returnType
     fun subtractionType(other: ShakeType, scope: ShakeScope): ShakeType? = subtractionOverload(other, scope)?.returnType
     fun multiplicationType(other: ShakeType, scope: ShakeScope): ShakeType? =
@@ -366,6 +363,7 @@ interface ShakeType {
 
     enum class PrimitiveType {
         BOOLEAN,
+        NULL,
         BYTE,
         CHAR,
         SHORT,
