@@ -622,111 +622,407 @@ interface ShakeType {
      */
     fun binaryShiftRightType(other: ShakeType, scope: ShakeScope): ShakeType? = binaryShiftRightOverload(other, scope)?.returnType
 
-    fun childType(name: String, scope: ShakeScope): ShakeType? = null
+    /**
+     * Returns the type of the expression `this."name"`
+     *
+     * @param name The name of the child
+     * @param scope The scope in which the child is accessed
+     * @return The return type of the child expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun childType(name: String, scope: ShakeScope): ShakeType? = null // TODO : Extension fields?
 
+    /**
+     * Returns the type of the expression `this."name"()`
+     *
+     * @param name The name of the child
+     * @param scope The scope in which the child is accessed
+     * @return The return type of the child expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun childFunctions(name: String, scope: ShakeScope): List<ShakeMethod>? =
         scope.getFunctions(name).filter { it.expanding == this }
 
+    /**
+     * Returns the type of the expression `this."name"()`
+     *
+     * @param name The name of the child
+     * @param scope The scope in which the child is accessed
+     * @return The return type of the child expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun childInvokable(name: String, scope: ShakeScope): List<ShakeMethod>? = childFunctions(name, scope)
 
+    /**
+     * Get a list of all overloads for the assign operator of this type
+     * @param scope The scope in which the assign is done
+     * @return A list of all overloads for the assign operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun assignOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("assign").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the add-assign operator of this type
+     * @param scope The scope in which the add-assign is done
+     * @return A list of all overloads for the add-assign operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun additionAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("additionAssign").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the sub-assign operator of this type
+     * @param scope The scope in which the sub-assign is done
+     * @return A list of all overloads for the sub-assign operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun subtractionAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("subtractionAssign").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the mul-assign operator of this type
+     * @param scope The scope in which the mul-assign is done
+     * @return A list of all overloads for the mul-assign operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun multiplicationAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("multiplicationAssign").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the div-assign operator of this type
+     * @param scope The scope in which the div-assign is done
+     * @return A list of all overloads for the div-assign operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun divisionAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("divisionAssign").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the mod-assign operator of this type
+     * @param scope The scope in which the mod-assign is done
+     * @return A list of all overloads for the mod-assign operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun modulusAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("modulusAssign").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the pow-assign operator of this type
+     * @param scope The scope in which the pow-assign is done
+     * @return A list of all overloads for the pow-assign operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun powerAssignOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("powerAssign").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the increment-before operator of this type
+     * @param scope The scope in which the increment-before is done
+     * @return A list of all overloads for the increment-before operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun incrementBeforeOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("incrementBefore").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the increment-after operator of this type
+     * @param scope The scope in which the increment-after is done
+     * @return A list of all overloads for the increment-after operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun incrementAfterOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("incrementAfter").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the decrement-before operator of this type
+     * @param scope The scope in which the decrement-before is done
+     * @return A list of all overloads for the decrement-before operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun decrementBeforeOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("decrementBefore").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the decrement-after operator of this type
+     * @param scope The scope in which the decrement-after is done
+     * @return A list of all overloads for the decrement-after operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun decrementAfterOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("decrementAfter").filter { it.expanding == this && it.isOperator }
 
+
+    /**
+     * Get a list of all overloads for the add operator of this type
+     * @param scope The scope in which the add is done
+     * @return A list of all overloads for the add operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun additionOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("plus").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the sub operator of this type
+     * @param scope The scope in which the sub is done
+     * @return A list of all overloads for the sub operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun subtractionOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("minus").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the mul operator of this type
+     * @param scope The scope in which the mul is done
+     * @return A list of all overloads for the mul operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun multiplicationOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("times").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the div operator of this type
+     * @param scope The scope in which the div is done
+     * @return A list of all overloads for the div operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun divisionOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("div").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the mod operator of this type
+     * @param scope The scope in which the mod is done
+     * @return A list of all overloads for the mod operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun modulusOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("mod").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the pow operator of this type
+     * @param scope The scope in which the pow is done
+     * @return A list of all overloads for the pow operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun powerOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("pow").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the equals operator of this type
+     * @param scope The scope in which the equals is done
+     * @return A list of all overloads for the equals operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun equalsOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("equals").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the not-equals operator of this type
+     * @param scope The scope in which the not-equals is done
+     * @return A list of all overloads for the not-equals operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun notEqualsOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("notEquals").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the greater-than operator of this type
+     * @param scope The scope in which the greater-than is done
+     * @return A list of all overloads for the greater-than operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun greaterThanOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("greaterThan").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the greater-than-or-equals operator of this type
+     * @param scope The scope in which the greater-than-or-equals is done
+     * @return A list of all overloads for the greater-than-or-equals operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun greaterThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("greaterThanOrEqual").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the less-than operator of this type
+     * @param scope The scope in which the less-than is done
+     * @return A list of all overloads for the less-than operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun lessThanOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("lessThan").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the less-than-or-equals operator of this type
+     * @param scope The scope in which the less-than-or-equals is done
+     * @return A list of all overloads for the less-than-or-equals operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun lessThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("lessThanOrEqual").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the and operator of this type
+     * @param scope The scope in which the and is done
+     * @return A list of all overloads for the and operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun logicalAndOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("and").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the or operator of this type
+     * @param scope The scope in which the or is done
+     * @return A list of all overloads for the or operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun logicalOrOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("or").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the xor operator of this type
+     * @param scope The scope in which the xor is done
+     * @return A list of all overloads for the xor operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun logicalXorOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("xor").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the not operator of this type
+     * @param scope The scope in which the not is done
+     * @return A list of all overloads for the not operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun notOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("not").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the binary-and operator of this type
+     * @param scope The scope in which the binary-and is done
+     * @return A list of all overloads for the binary-and operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryAndOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("binaryAnd").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the binary-or operator of this type
+     * @param scope The scope in which the binary-or is done
+     * @return A list of all overloads for the binary-or operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryOrOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("binaryOr").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the binary-xor operator of this type
+     * @param scope The scope in which the binary-xor is done
+     * @return A list of all overloads for the binary-xor operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryXorOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("binaryXor").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the binary-not operator of this type
+     * @param scope The scope in which the binary-not is done
+     * @return A list of all overloads for the binary-not operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryNotOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("binaryNot").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the binary-left-shift operator of this type
+     * @param scope The scope in which the binary-left-shift is done
+     * @return A list of all overloads for the binary-left-shift operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryShiftLeftOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("binaryShitLeft").filter { it.expanding == this && it.isOperator }
 
+    /**
+     * Get a list of all overloads for the binary-right-shift operator of this type
+     * @param scope The scope in which the binary-right-shift is done
+     * @return A list of all overloads for the binary-right-shift operator of this type
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun binaryShiftRightOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("binaryShitRight").filter { it.expanding == this && it.isOperator }
+
 
     fun assignOverload(other: ShakeType, scope: ShakeScope): ShakeMethod? =
         ShakeSelect.selectFunction(assignOverloads(scope), listOf(other))
