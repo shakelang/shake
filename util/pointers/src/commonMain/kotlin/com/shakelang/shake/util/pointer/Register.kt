@@ -74,8 +74,9 @@ class PointerRegister<T> {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun get(index: Int): Pointer<T> {
-        return pointers[index] ?: throw IllegalStateException("pointer at index $index is null")
+    operator fun get(index: Int): Pointer<T> {
+        return (if (index < pointers.size) pointers[index]
+        else null) ?: throw IllegalStateException("pointer at index $index is null")
     }
 
     /**
@@ -86,7 +87,8 @@ class PointerRegister<T> {
      * @version 0.1.0
      */
     fun getOrNull(index: Int): Pointer<T>? {
-        return pointers[index]
+        return if (index < pointers.size) pointers[index]
+        else null
     }
 
     /**
@@ -156,6 +158,7 @@ class PointerRegister<T> {
      * @version 0.1.0
      */
     fun destroy() {
+        this.pointers.clear()
         instances.remove(this)
     }
 

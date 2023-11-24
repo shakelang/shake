@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.shakelang.shake.util
+package com.shakelang.shake.util.pointer
 
 import com.shakelang.shake.util.pointer.*
 import io.kotest.assertions.throwables.shouldThrow

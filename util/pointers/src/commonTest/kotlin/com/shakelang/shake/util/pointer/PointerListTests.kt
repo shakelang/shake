@@ -1,7 +1,6 @@
 @file:Suppress("unused")
-package com.shakelang.shake.util
+package com.shakelang.shake.util.pointer
 
-import com.shakelang.shake.util.pointer.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
