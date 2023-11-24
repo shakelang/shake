@@ -184,7 +184,7 @@ interface Pointer<out T> {
          * @version 0.1.0
          */
         fun <T> task(task: () -> T) = object : Pointer<T> {
-            override val value: T = task()
+            override val value: T get() = task()
         }
     }
 }

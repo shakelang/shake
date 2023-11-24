@@ -2,7 +2,6 @@ package com.shakelang.shake.util
 
 import com.shakelang.shake.util.pointer.Pointer
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -329,4 +328,47 @@ class PointerLateMutableTests : FreeSpec({
         pointer.value shouldBe pointer2.value
     }
 
+})
+
+class PointerTaskTests : FreeSpec({
+
+    "test value" {
+        var i = 0
+        val pointer = Pointer.task { ++i }
+        pointer.value shouldBe 1
+        pointer.value shouldBe 2
+    }
+
+    "test transform" {
+        var i = 0
+        val pointer = Pointer.task { ++i }
+        pointer.transform { it + 1 }.value shouldBe 2
+        pointer.transform { it + 1 }.value shouldBe 3
+    }
+
+    "test chain" {
+        var i = 0
+        val pointer = Pointer.task { ++i }
+        pointer.chain { Pointer.of(it + 1) }.value shouldBe 2
+        pointer.chain { Pointer.of(it + 1) }.value shouldBe 3
+    }
+
+    "test chain with null" {
+        var i = 0
+        val pointer = Pointer.task { ++i }
+        pointer.chainAllowNull { Pointer.of(it + 1) }.value shouldBe 2
+        pointer.chainAllowNull { Pointer.of(it + 1) }.value shouldBe 3
+    }
+
+    "test equals" {
+        var i = 0
+        var i2 = 0
+        val pointer = Pointer.task { ++i }
+        val pointer2 = Pointer.task { ++i2 }
+
+        pointer shouldNotBe pointer2
+        pointer shouldBe pointer
+        pointer2 shouldBe pointer2
+        pointer.value shouldBe pointer2.value
+    }
 })
