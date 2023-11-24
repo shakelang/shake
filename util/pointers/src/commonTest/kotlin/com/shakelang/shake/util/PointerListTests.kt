@@ -304,7 +304,7 @@ class PointingListTests : FreeSpec({
         val pointerList = list.points()
         val pointingList = PointingList.from(pointerList)
 
-        pointingList.reduceRightIndexed { index, acc, i -> acc + i + index } shouldBe 25
+        pointingList.reduceRightIndexed { index, acc, i -> acc + i + index } shouldBe 21
 
     }
 
