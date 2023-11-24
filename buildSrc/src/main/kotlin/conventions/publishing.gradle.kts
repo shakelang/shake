@@ -10,6 +10,10 @@ plugins {
     id("org.gradle.crypto.checksum")
 }
 
+val publishScopes = PublishScopesConfig(project)
+
+fun publishScopes(block: PublishScopesConfig.() -> Unit) = block(publishScopes)
+
 tasks.register("listDependencies") {
     group = "info"
     doLast {
@@ -33,53 +37,6 @@ tasks.register("listDependencies") {
 //        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
 //}
 
-publishing {
-
-    repositories {
-        maven("Sonatype") {
-            name = "Sonatype"
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-
-            val _username =
-                System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
-            val _password =
-                System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
-
-            if (_username == null || _password == null) {
-                logger.log(
-                    LogLevel.WARN,
-                    "No Sonatype credentials found, skipping Sonatype publishing configuration"
-                )
-                return@maven
-            }
-
-            credentials {
-                username = _username
-                password = _password
-            }
-        }
-
-        maven("GitHub") {
-            name = "GitHub"
-            url = uri("https://maven.pkg.github.com/shakelang/shake")
-
-            val _username =
-                System.getenv("GRADLE_GITHUB_USERNAME") ?: project.properties["github.username"] as String?
-            val _token = System.getenv("GRADLE_GITHUB_TOKEN") ?: project.properties["github.token"] as String?
-
-            if (_username == null || _token == null) {
-                logger.log(LogLevel.WARN, "No GitHub credentials found, skipping GitHub publishing configuration")
-                return@maven
-            }
-
-            credentials {
-                username = _username
-                password = _token
-            }
-        }
-        mavenLocal()
-    }
-}
 //tasks.withType(PublishToMavenRepository::class.java) {
 //    println(this.name)
 //
@@ -98,7 +55,61 @@ signing {
 
 afterEvaluate {
 
+
     publishing {
+
+        repositories {
+
+            val sonartype = if (publishScopes.configured) publishScopes.sonartype.get() else true
+            val githubPackages = if (publishScopes.configured) publishScopes.githubPackages.get() else true
+            val mavenLocal = if (publishScopes.configured) publishScopes.mavenLocal.get() else true
+            val gradlePluginPortal = if (publishScopes.configured) publishScopes.gradlePluginPortal.get() else false
+
+            if(sonartype) maven("Sonatype") {
+                name = "Sonatype"
+                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+
+                val _username =
+                    System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
+                val _password =
+                    System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
+
+                if (_username == null || _password == null) {
+                    logger.log(
+                        LogLevel.WARN,
+                        "No Sonatype credentials found, skipping Sonatype publishing configuration"
+                    )
+                    return@maven
+                }
+
+                credentials {
+                    username = _username
+                    password = _password
+                }
+            }
+
+            if(githubPackages) maven("GitHub") {
+                name = "GitHub"
+                url = uri("https://maven.pkg.github.com/shakelang/shake")
+
+                val _username =
+                    System.getenv("GRADLE_GITHUB_USERNAME") ?: project.properties["github.username"] as String?
+                val _token = System.getenv("GRADLE_GITHUB_TOKEN") ?: project.properties["github.token"] as String?
+
+                if (_username == null || _token == null) {
+                    logger.log(LogLevel.WARN, "No GitHub credentials found, skipping GitHub publishing configuration")
+                    return@maven
+                }
+
+                credentials {
+                    username = _username
+                    password = _token
+                }
+            }
+
+            if(mavenLocal) mavenLocal()
+        }
+
         publications.withType<MavenPublication> {
 
             if (!project.ext.has("isMultiplatform") || project.ext["isMultiplatform"] == false)
