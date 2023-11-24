@@ -1,3 +1,4 @@
+@file:Suppress("unused")
 package com.shakelang.shake.util
 
 import com.shakelang.shake.util.pointer.Pointer
@@ -153,7 +154,7 @@ class PointerLateTests : FreeSpec({
     "test transform before init" {
         val pointer = Pointer.late<Int>()
         val transformed = pointer.transform { it + 1 }
-        shouldThrow<IllegalStateException>() {
+        shouldThrow<IllegalStateException> {
             transformed.value
         }
         pointer.init(1)
@@ -169,7 +170,7 @@ class PointerLateTests : FreeSpec({
     "test chain before init" {
         val pointer = Pointer.late<Int>()
         val chained = pointer.chain { Pointer.of(it + 1) }
-        shouldThrow<IllegalStateException>() {
+        shouldThrow<IllegalStateException> {
             chained.value
         }
         pointer.init(1)
@@ -197,7 +198,7 @@ class PointerLateTests : FreeSpec({
             if(it == 1) null
             else Pointer.of(it + 1)
         }
-        shouldThrow<IllegalStateException>() {
+        shouldThrow<IllegalStateException> {
             chained.value
         }
         pointer.init(1)
@@ -256,7 +257,7 @@ class PointerLateMutableTests : FreeSpec({
     "test transform before init" {
         val pointer = Pointer.lateMutable<Int>()
         val transformed = pointer.transform { it + 1 }
-        shouldThrow<IllegalStateException>() {
+        shouldThrow<IllegalStateException> {
             transformed.value
         }
         pointer.init(1)
@@ -281,7 +282,7 @@ class PointerLateMutableTests : FreeSpec({
     "test chain before init" {
         val pointer = Pointer.lateMutable<Int>()
         val chained = pointer.chain { Pointer.of(it + 1) }
-        shouldThrow<IllegalStateException>() {
+        shouldThrow<IllegalStateException> {
             chained.value
         }
         pointer.init(1)
@@ -309,7 +310,7 @@ class PointerLateMutableTests : FreeSpec({
             if(it == 1) null
             else Pointer.of(it + 1)
         }
-        shouldThrow<IllegalStateException>() {
+        shouldThrow<IllegalStateException> {
             chained.value
         }
         pointer.init(1)
