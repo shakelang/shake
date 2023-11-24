@@ -319,6 +319,10 @@ class PointerRegister<T> {
     private val pointers = mutableListOf<Pointer<T>?>()
     private val unusedIndices = mutableListOf<Int>()
 
+    init {
+        instances.add(this)
+    }
+
     fun register(pointer: Pointer<T>): Int {
         val index = unusedIndices.removeLastOrNull()
         if (index != null) pointers[index] = pointer
@@ -327,6 +331,13 @@ class PointerRegister<T> {
             return pointers.size - 1
         }
         return index
+    }
+
+    fun indexOf(pointer: Pointer<Any?>): Int {
+        this.pointers.forEachIndexed { index, p ->
+            if (p == pointer) return index
+        }
+        return -1
     }
 
     fun unregister(index: Int) {
@@ -345,4 +356,53 @@ class PointerRegister<T> {
     fun getPosition(pointer: Pointer<T>): Int {
         return pointers.indexOf(pointer)
     }
+
+    fun createPointer(): LateInitPointer<T> {
+        val pointer = Pointer.late<T>()
+        register(pointer)
+        return pointer
+    }
+
+    fun createPointer(value: T): Pointer<T> {
+        val pointer = Pointer.of(value)
+        register(pointer)
+        return pointer
+    }
+
+    fun createMutablePointer(): LateInitMutablePointer<T> {
+        val pointer = Pointer.lateMutable<T>()
+        register(pointer)
+        return pointer
+    }
+
+    fun createMutablePointer(value: T): MutablePointer<T> {
+        val pointer = Pointer.mutableOf(value)
+        register(pointer)
+        return pointer
+    }
+
+    companion object {
+        val instances = mutableListOf<PointerRegister<*>>()
+    }
+}
+
+fun <T> Pointer<T>.register(register: PointerRegister<T>): Int {
+    return register.register(this)
+}
+
+fun <T> Pointer<T>.unregister(register: PointerRegister<T>) {
+    val index = register.getPosition(this)
+    if (index == -1) throw IllegalStateException("pointer is not registered")
+    register.unregister(index)
+}
+
+fun Pointer<*>.unregister() {
+    PointerRegister.instances.forEach {
+        val index = it.indexOf(this)
+        if (index != -1) it.unregister(index)
+    }
+}
+
+fun Pointer<*>.close() {
+    unregister()
 }
