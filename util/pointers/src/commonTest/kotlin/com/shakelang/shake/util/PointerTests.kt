@@ -414,11 +414,10 @@ class ShortcutFunctionTests : FreeSpec({
         val notNull = pointer.notNull()
 
         shouldThrow<IllegalStateException> {
-            pointer.notNull().value
+            notNull.value
         }
 
         pointer.value = 1
-
-        pointer.notNull().value shouldBe 1
+        notNull.value shouldBe 1
     }
 })
