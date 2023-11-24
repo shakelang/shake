@@ -13,6 +13,7 @@ include(":util:primitives")
 include(":util:shason")
 include(":util:testlib")
 
+include(":shake:bytecode:interpreter")
 include(":shake:compiler:shakelib")
 include(":shake:compiler:lexer")
 include(":shake:compiler:parser")
