@@ -670,4 +670,132 @@ class MutablePointingListTests : FreeSpec({
 
     }
 
+    "clear" {
+
+        val list = mutableListOf(1, 2, 3, 4, 5)
+        val pointerList = list.mutablePoints()
+
+        val pointingList = MutablePointingList.from(pointerList)
+
+        pointingList.clear()
+
+        pointingList.size shouldBe 0
+
+    }
+
+    "removeAt" {
+
+        val list = mutableListOf(1, 2, 3, 4, 5)
+        val pointerList = list.mutablePoints()
+
+        val pointingList = MutablePointingList.from(pointerList)
+        pointingList.removeAt(2)
+
+        pointingList.size shouldBe 4
+        pointingList[0] shouldBe 1
+        pointingList[1] shouldBe 2
+        pointingList[2] shouldBe 4
+        pointingList[3] shouldBe 5
+
+    }
+
+    "remove" {
+
+        val list = mutableListOf(1, 2, 3, 4, 5)
+        val pointerList = list.mutablePoints()
+
+        val pointingList = MutablePointingList.from(pointerList)
+        pointingList.remove(3)
+
+        pointingList.size shouldBe 4
+        pointingList[0] shouldBe 1
+        pointingList[1] shouldBe 2
+        pointingList[2] shouldBe 4
+        pointingList[3] shouldBe 5
+
+    }
+
+    "removeAll" {
+
+        val list = mutableListOf(1, 2, 3, 4, 5)
+        val pointerList = list.mutablePoints()
+
+        val pointingList = MutablePointingList.from(pointerList)
+        pointingList.removeAll(listOf(3, 4))
+
+        pointingList.size shouldBe 3
+        pointingList[0] shouldBe 1
+        pointingList[1] shouldBe 2
+        pointingList[2] shouldBe 5
+
+    }
+
+    "retainAll" {
+
+        val list = mutableListOf(1, 2, 3, 4, 5)
+        val pointerList = list.mutablePoints()
+
+        val pointingList = MutablePointingList.from(pointerList)
+        pointingList.retainAll(listOf(3, 4))
+
+        pointingList.size shouldBe 2
+        pointingList[0] shouldBe 3
+        pointingList[1] shouldBe 4
+
+    }
+
+    "set" {
+
+        val list = mutableListOf(1, 2, 3, 4, 5)
+        val pointerList = list.mutablePoints()
+        val pointingList = MutablePointingList.from(pointerList)
+        pointingList[2] = 6
+
+        pointingList.size shouldBe 5
+        pointingList[0] shouldBe 1
+        pointingList[1] shouldBe 2
+        pointingList[2] shouldBe 6
+        pointingList[3] shouldBe 4
+        pointingList[4] shouldBe 5
+
+    }
+
+    "addAll" {
+
+        val list = mutableListOf(1, 2, 3, 4, 5)
+        val pointerList = list.mutablePoints()
+        val pointingList = MutablePointingList.from(pointerList)
+        pointingList.addAll(listOf(6, 7, 8))
+
+        pointingList.size shouldBe 8
+        pointingList[0] shouldBe 1
+        pointingList[1] shouldBe 2
+        pointingList[2] shouldBe 3
+        pointingList[3] shouldBe 4
+        pointingList[4] shouldBe 5
+        pointingList[5] shouldBe 6
+        pointingList[6] shouldBe 7
+        pointingList[7] shouldBe 8
+
+    }
+
+    "addAll2" {
+
+        val list = mutableListOf(1, 2, 3, 4, 5)
+        val pointerList = list.mutablePoints()
+        val pointingList = MutablePointingList.from(pointerList)
+        pointingList.addAll(2, listOf(6, 7, 8))
+
+        pointingList.size shouldBe 8
+        pointingList[0] shouldBe 1
+        pointingList[1] shouldBe 2
+        pointingList[2] shouldBe 6
+        pointingList[3] shouldBe 7
+        pointingList[4] shouldBe 8
+        pointingList[5] shouldBe 3
+        pointingList[6] shouldBe 4
+        pointingList[7] shouldBe 5
+
+    }
+
 })
