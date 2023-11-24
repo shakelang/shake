@@ -164,7 +164,7 @@ interface PointingList<T> : List<T> {
          * Returns `true` if all elements in the specified collection are contained in this collection.
          */
         override fun containsAll(elements: Collection<T>): Boolean {
-            return pointers.all { it.value in elements }
+            return elements.all { contains(it) }
         }
 
         /**
