@@ -190,24 +190,6 @@ interface Pointer<out T> {
 }
 
 /**
- * Create a new pointer pointing to the given value
- * @param it The value the pointer should point to
- * @return The new pointer
- * @since 0.1.0
- * @version 0.1.0
- */
-fun <T> point(it: T): Pointer<T> = Pointer.of(it)
-
-/**
- * Create a new mutable pointer pointing to the given value
- * @param it The value the pointer should point to
- * @return The new pointer
- * @since 0.1.0
- * @version 0.1.0
- */
-fun <T> mutablePoint(it: T): MutablePointer<T> = Pointer.mutableOf(it)
-
-/**
  * Create a new pointer which is not initialized yet and can
  * be initialized later
  * @return The new pointer
