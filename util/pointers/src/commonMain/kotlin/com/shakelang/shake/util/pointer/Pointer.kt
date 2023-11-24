@@ -314,3 +314,35 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
 fun <T> Pointer<T?>.notNull(msg: String? = null): Pointer<T> {
     return this.transform { it ?: throw IllegalStateException(msg ?: "null value not allowed") }
 }
+
+class PointerRegister<T> {
+    private val pointers = mutableListOf<Pointer<T>?>()
+    private val unusedIndices = mutableListOf<Int>()
+
+    fun register(pointer: Pointer<T>): Int {
+        val index = unusedIndices.removeLastOrNull()
+        if (index != null) pointers[index] = pointer
+        else {
+            pointers.add(pointer)
+            return pointers.size - 1
+        }
+        return index
+    }
+
+    fun unregister(index: Int) {
+        pointers[index] = null
+        unusedIndices.add(index)
+    }
+
+    fun get(index: Int): Pointer<T> {
+        return pointers[index] ?: throw IllegalStateException("pointer at index $index is null")
+    }
+
+    fun getOrNull(index: Int): Pointer<T>? {
+        return pointers[index]
+    }
+
+    fun getPosition(pointer: Pointer<T>): Int {
+        return pointers.indexOf(pointer)
+    }
+}
