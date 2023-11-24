@@ -1,8 +1,38 @@
 package com.shakelang.shake.util.pointer
 
+/**
+ * A pointer points to a value in memory. It can be used to pass a value by reference.
+ * The advantage of a pointer is that it can be used to change the value of a variable
+ * in a function.
+ *
+ * @param T The type of the value the pointer points to
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 interface Pointer<out T> {
+
+    /**
+     * The value the pointer points to
+     */
     val value: T
 
+    /**
+     * Transform the value of the pointer. Creates a new pointer which will
+     * get the value on access, transform it and return it. So if you change
+     * the value of the original pointer the value of the new pointer will
+     * change too.
+     *
+     * WARNING: If you access the value of the transformed pointer multiple
+     * times the transform function will be called multiple times too. So
+     * for performance reasons you should get the value of the pointer and
+     * store it in a variable if you need it multiple times (and don't need
+     * the changes of the original pointer).
+     *
+     * @param transform The transform function
+     * @return The new pointer
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun <A> transform(transform: (T) -> A): Pointer<A> {
         return object : Pointer<A> {
             override val value: A
@@ -10,6 +40,24 @@ interface Pointer<out T> {
         }
     }
 
+    /**
+     * Chain the value of the pointer. Creates a new pointer which will
+     * get the value on access, transform it and return it. So if you change
+     * the value of the original pointer the value of the new pointer will
+     * change too. Is the same as [transform] but the transform functions parameter
+     * should return a value, this function parameter should return a pointer.
+     *
+     * WARNING: If you access the value of the transformed pointer multiple
+     * times the transform function will be called multiple times too. So
+     * for performance reasons you should get the value of the pointer and
+     * store it in a variable if you need it multiple times (and don't need
+     * the changes of the original pointer).
+     *
+     * @param transform The transform function
+     * @return The new pointer
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun <A> chain(transform: (T) -> Pointer<A>): Pointer<A> {
         return object : Pointer<A> {
             override val value: A
@@ -17,6 +65,28 @@ interface Pointer<out T> {
         }
     }
 
+
+    /**
+     * Chain the value of the pointer. Creates a new pointer which will
+     * get the value on access, transform it and return it. So if you change
+     * the value of the original pointer the value of the new pointer will
+     * change too. Is the same as [transform] but the transform functions parameter
+     * should return a value, this function parameter should return a pointer.
+     * This function allows null values.
+     *
+     * Additionally, in contrast to [chain], this function allows null values.
+     *
+     * WARNING: If you access the value of the transformed pointer multiple
+     * times the transform function will be called multiple times too. So
+     * for performance reasons you should get the value of the pointer and
+     * store it in a variable if you need it multiple times (and don't need
+     * the changes of the original pointer).
+     *
+     * @param transform The transform function
+     * @return The new pointer
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun <A> chainAllowNull(transform: (T) -> Pointer<A?>?): Pointer<A?> {
         return object : Pointer<A?> {
             override val value: A?
@@ -25,14 +95,39 @@ interface Pointer<out T> {
     }
 
     companion object {
+
+        /**
+         * Create a new pointer pointing to the given value
+         *
+         * @param value The value the pointer should point to
+         * @return The new pointer
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun <T> of(value: T) = object : Pointer<T> {
             override val value: T = value
         }
 
+        /**
+         * Create a new mutable pointer pointing to the given value
+         *
+         * @param value The value the pointer should point to
+         * @return The new pointer
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun <T> mutableOf(value: T) = object : MutablePointer<T> {
             override var value: T = value
         }
 
+        /**
+         * Create a new pointer which is not initialized yet and can
+         * be initialized later
+         *
+         * @return The new pointer
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun <T> late() = object : LateInitPointer<T> {
             var realValue: T? = null
 
@@ -50,6 +145,14 @@ interface Pointer<out T> {
             }
         }
 
+        /**
+         * Create a new mutable pointer which is not initialized yet
+         * and can be initialized later
+         *
+         * @return The new pointer
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun <T> lateMutable() = object : LateInitMutablePointer<T> {
             var realValue: T? = null
 
@@ -71,16 +174,84 @@ interface Pointer<out T> {
             }
         }
 
+        /**
+         * Create a new pointer which performs the given task on access
+         * and returns the result of the task
+         *
+         * @param task The task to perform
+         * @return The new pointer
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun <T> task(task: () -> T) = object : Pointer<T> {
             override val value: T = task()
         }
     }
 }
 
+/**
+ * Create a new pointer pointing to the given value
+ * @param it The value the pointer should point to
+ * @return The new pointer
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+fun <T> point(it: T): Pointer<T> = Pointer.of(it)
+
+/**
+ * Create a new mutable pointer pointing to the given value
+ * @param it The value the pointer should point to
+ * @return The new pointer
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+fun <T> mutablePoint(it: T): MutablePointer<T> = Pointer.mutableOf(it)
+
+/**
+ * Create a new pointer which is not initialized yet and can
+ * be initialized later
+ * @return The new pointer
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 fun <T> latePoint(): LateInitPointer<T> = Pointer.late()
+
+/**
+ * Create a new mutable pointer which is not initialized yet
+ * and can be initialized later
+ * @return The new pointer
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 fun <T> lateMutablePoint(): LateInitMutablePointer<T> = Pointer.lateMutable()
 
+/**
+ * Create a new pointer which performs the given task on access
+ * and returns the result of the task
+ * @param task The task to perform
+ * @return The new pointer
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+fun <T> taskPoint(task: () -> T): Pointer<T> = Pointer.task(task)
+
+
+/**
+ * Create a new pointer pointing to the given value
+ * @receiver The value the pointer should point to
+ * @return The new pointer
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 fun <T> T.point(): Pointer<T> = Pointer.of(this)
+
+/**
+ * Create a new mutable pointer pointing to the given value
+ * @receiver The value the pointer should point to
+ * @return The new pointer
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 fun <T> T.mutablePoint(): MutablePointer<T> = Pointer.mutableOf(this)
 
 fun <T> Iterable<T>.points(): PointerList<T> = map { Pointer.of(it) }
