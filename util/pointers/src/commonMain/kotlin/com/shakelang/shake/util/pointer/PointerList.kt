@@ -10,6 +10,15 @@ package com.shakelang.shake.util.pointer
 fun <T> Iterable<T>.points(): PointerList<T> = map { Pointer.of(it) }
 
 /**
+ * Create a mutable list of pointers pointing to the values of the list
+ * @receiver The list of values the pointers should point to
+ * @return The list of pointers
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+fun <T> MutableIterable<T>.mutablePoints(): MutablePointerList<T> = map { Pointer.of(it) }.toMutableList()
+
+/**
  * A PointerList refers to a list of pointers.
  *
  * @param T The type of the value the pointers point to
@@ -311,7 +320,7 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
         }
 
         override fun containsAll(elements: Collection<T>): Boolean {
-            return pointers.all { it.value in elements }
+            return elements.all { contains(it) }
         }
 
         override fun contains(element: T): Boolean {
