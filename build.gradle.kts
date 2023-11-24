@@ -17,6 +17,7 @@ dependencies {
     kover(project(":util:logger"))
     kover(project(":util:markdown"))
     kover(project(":util:parseutils"))
+    kover(project(":util:pointers"))
     kover(project(":util:primitives"))
     kover(project(":util:shason"))
     kover(project(":util:testlib"))
@@ -24,6 +25,8 @@ dependencies {
     kover(project(":shake:compiler:lexer"))
     kover(project(":shake:compiler:parser"))
     kover(project(":shake:compiler:shakelib"))
+
+    kover(project(":shake:bytecode:interpreter"))
 
     kover(project(":shake:compiler:jsgenerator"))
     kover(project(":shake:compiler:processor"))

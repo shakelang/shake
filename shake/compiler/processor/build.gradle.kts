@@ -13,6 +13,7 @@ description = "Utilities for parsing stuff with kotlin"
 
 kotlin {
     dependencies {
+        implementation(project(":util:pointers"))
         implementation(project(":util:parseutils"))
         implementation(project(":util:shason"))
         implementation(project(":util:common-io"))

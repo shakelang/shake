@@ -1,4 +1,4 @@
-package com.shakelang.shake.processor.util
+package com.shakelang.shake.util.pointer
 
 interface Pointer<out T> {
     val value: T
