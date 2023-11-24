@@ -1,7 +1,8 @@
 @file:Suppress("unused")
+
 package com.shakelang.shake.util
 
-import com.shakelang.shake.util.pointer.Pointer
+import com.shakelang.shake.util.pointer.*
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -33,7 +34,7 @@ class PointerOfTests : FreeSpec({
         // block will always return null
         val i: Number? = null
         pointer.chainAllowNull {
-            if(i == null) null
+            if (i == null) null
             else Pointer.of(it + 1)
         }.value shouldBe null
     }
@@ -98,7 +99,7 @@ class PointerMutableOfTests : FreeSpec({
         // block will always return null
         val i: Number? = null
         pointer.chainAllowNull {
-            if(i == null) null
+            if (i == null) null
             else Pointer.of(it + 1)
         }.value shouldBe null
     }
@@ -106,7 +107,7 @@ class PointerMutableOfTests : FreeSpec({
     "test chain with null and changed value" {
         val pointer = Pointer.mutableOf(1)
         val chained = pointer.chainAllowNull {
-            if(it == 1) null
+            if (it == 1) null
             else Pointer.of(it + 1)
         }
         chained.value shouldBe null
@@ -187,7 +188,7 @@ class PointerLateTests : FreeSpec({
         // block will always return null
         val i: Number? = null
         pointer.chainAllowNull {
-            if(i == null) null
+            if (i == null) null
             else Pointer.of(it + 1)
         }.value shouldBe null
     }
@@ -195,7 +196,7 @@ class PointerLateTests : FreeSpec({
     "test chain with null before init" {
         val pointer = Pointer.late<Int>()
         val chained = pointer.chainAllowNull {
-            if(it == 1) null
+            if (it == 1) null
             else Pointer.of(it + 1)
         }
         shouldThrow<IllegalStateException> {
@@ -299,7 +300,7 @@ class PointerLateMutableTests : FreeSpec({
         // block will always return null
         val i: Number? = null
         pointer.chainAllowNull {
-            if(i == null) null
+            if (i == null) null
             else Pointer.of(it + 1)
         }.value shouldBe null
     }
@@ -307,7 +308,7 @@ class PointerLateMutableTests : FreeSpec({
     "test chain with null before init" {
         val pointer = Pointer.lateMutable<Int>()
         val chained = pointer.chainAllowNull {
-            if(it == 1) null
+            if (it == 1) null
             else Pointer.of(it + 1)
         }
         shouldThrow<IllegalStateException> {
@@ -371,5 +372,53 @@ class PointerTaskTests : FreeSpec({
         pointer shouldBe pointer
         pointer2 shouldBe pointer2
         pointer.value shouldBe pointer2.value
+    }
+})
+
+class ShortcutFunctionTests : FreeSpec({
+    "latePoint" {
+        val pointer = latePoint<Int>()
+        pointer.init(1)
+        pointer.value shouldBe 1
+    }
+
+    "lateMutablePoint" {
+        val pointer = lateMutablePoint<Int>()
+        pointer.init(1)
+        pointer.value shouldBe 1
+    }
+
+    "taskPoint" {
+        var i = 0
+        val pointer = taskPoint { ++i }
+        pointer.value shouldBe 1
+        pointer.value shouldBe 2
+    }
+
+    "point" {
+        val pointer = 1.point()
+        pointer.value shouldBe 1
+    }
+
+    "mutablePoint" {
+        val pointer = 1.mutablePoint()
+        pointer.value shouldBe 1
+        pointer.value = 2
+        pointer.value shouldBe 2
+    }
+
+    "notNull" {
+        val v: Int? = null
+
+        val pointer = v.mutablePoint()
+        val notNull = pointer.notNull()
+
+        shouldThrow<IllegalStateException> {
+            pointer.notNull().value
+        }
+
+        pointer.value = 1
+
+        pointer.notNull().value shouldBe 1
     }
 })
