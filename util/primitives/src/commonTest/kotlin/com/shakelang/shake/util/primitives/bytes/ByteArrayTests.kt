@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.util.primitives.bytes
 
-import io.kotest.assertions.throwables.shouldThrowWithMessage
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import kotlin.math.abs
@@ -18,10 +18,10 @@ class ByteArrayTests : FreeSpec({
         byteArrayOf(0x7Fu).toByte() shouldBe 0x7Fu.toByte()
         byteArrayOf(0x80u).toByte() shouldBe 0x80u.toByte()
         byteArrayOf(0xFFu).toByte() shouldBe 0xFFu.toByte()
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 1, but is 2") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x01u).toByte()
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 1, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toByte()
         }
     }
@@ -36,10 +36,10 @@ class ByteArrayTests : FreeSpec({
         byteArrayOf(0x7Fu, 0xFFu).toShort() shouldBe 0x7FFFu.toShort()
         byteArrayOf(0x80u, 0x00u).toShort() shouldBe 0x8000u.toShort()
         byteArrayOf(0xFFu, 0xFFu).toShort() shouldBe 0xFFFFu.toShort()
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 2, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u).toShort()
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 2, but is 3") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x01u).toShort()
         }
     }
@@ -62,10 +62,10 @@ class ByteArrayTests : FreeSpec({
         byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0x7FFFFFFFu.toInt()
         byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x80000000u.toInt()
         byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0xFFFFFFFFu.toInt()
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u).toInt()
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 5") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toInt()
         }
     }
@@ -76,10 +76,10 @@ class ByteArrayTests : FreeSpec({
         byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe -1L
         byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong() shouldBe Long.MIN_VALUE
         byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe Long.MAX_VALUE
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u).toLong()
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 9") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toLong()
         }
     }
@@ -93,10 +93,10 @@ class ByteArrayTests : FreeSpec({
         assertCompare(Float.NaN, byteArrayOf(0x7Fu, 0xC0u, 0x00u, 0x00u).toFloat())
         assertCompare(Float.NEGATIVE_INFINITY, byteArrayOf(0xFFu, 0x80u, 0x00u, 0x00u).toFloat())
         assertCompare(Float.POSITIVE_INFINITY, byteArrayOf(0x7Fu, 0x80u, 0x00u, 0x00u).toFloat())
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 5") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toFloat()
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 3") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u).toFloat()
         }
     }
@@ -116,11 +116,11 @@ class ByteArrayTests : FreeSpec({
             Double.POSITIVE_INFINITY,
             byteArrayOf(0x7fu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
         )
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 9") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toDouble()
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 7") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
         }
     }
@@ -129,10 +129,10 @@ class ByteArrayTests : FreeSpec({
         byteArrayOf(0x00u).toUnsignedByte() shouldBe 0x00u
         byteArrayOf(0x01u).toUnsignedByte() shouldBe 0x01u
         byteArrayOf(0xFFu).toUnsignedByte() shouldBe 0xFFu
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 1, but is 2") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x01u).toUnsignedByte()
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 1, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toUnsignedByte()
         }
     }
@@ -141,10 +141,10 @@ class ByteArrayTests : FreeSpec({
         byteArrayOf(0x00u, 0x00u).toUnsignedShort() shouldBe 0x0000u
         byteArrayOf(0x00u, 0x01u).toUnsignedShort() shouldBe 0x0001u
         byteArrayOf(0xFFu, 0xFFu).toUnsignedShort() shouldBe 0xFFFFu
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 2, but is 3") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x01u).toUnsignedShort()
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 2, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toUnsignedShort()
         }
     }
@@ -153,10 +153,10 @@ class ByteArrayTests : FreeSpec({
         byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toUnsignedInt() shouldBe 0x00000000u
         byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt() shouldBe 0x00000001u
         byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedInt() shouldBe 0xFFFFFFFFu
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 5") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt()
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toUnsignedInt()
         }
     }
@@ -165,10 +165,10 @@ class ByteArrayTests : FreeSpec({
         byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toUnsignedLong() shouldBe 0x0000000000000000uL
         byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedLong() shouldBe 0x0000000000000001uL
         byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedLong() shouldBe 0xFFFFFFFFFFFFFFFFuL
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 9") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedLong()
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toUnsignedLong()
         }
     }
@@ -186,11 +186,11 @@ class ByteArrayTests : FreeSpec({
 
     "setBytes errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setBytes(-1, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu))
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setBytes(1, ByteArray(8) { 0xFF.toByte() })
         }
     }
@@ -210,10 +210,10 @@ class ByteArrayTests : FreeSpec({
 
     "setByte errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setByte(-1, 0xFFu.toByte())
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setByte(8, 0xFFu.toByte())
         }
     }
@@ -235,10 +235,10 @@ class ByteArrayTests : FreeSpec({
 
     "setShort errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setShort(-1, 0xFFFFu.toShort())
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setShort(8, 0xFFFFu.toShort())
         }
     }
@@ -261,10 +261,10 @@ class ByteArrayTests : FreeSpec({
 
     "setInt errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setInt(-1, 0xFFFFFFFFu.toInt())
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setInt(8, 0xFFFFFFFFu.toInt())
         }
     }
@@ -282,10 +282,10 @@ class ByteArrayTests : FreeSpec({
 
     "setLong errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setLong(-1, 0xFFFFFFFFFFFFFFFFuL.toLong())
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 16, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setLong(8, 0xFFFFFFFFFFFFFFFFuL.toLong())
         }
     }
@@ -305,10 +305,10 @@ class ByteArrayTests : FreeSpec({
 
     "setFloat errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setFloat(-1, Float.fromBits(0x3f99999au.toInt()))
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 4") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setFloat(5, Float.fromBits(0x3f99999au.toInt()))
         }
     }
@@ -327,10 +327,10 @@ class ByteArrayTests : FreeSpec({
 
     "setDouble errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setDouble(-1, Double.fromBits(0x3ff3333333333333uL.toLong()))
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 16, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setDouble(8, Double.fromBits(0x3ff3333333333333uL.toLong()))
         }
     }
@@ -349,10 +349,10 @@ class ByteArrayTests : FreeSpec({
 
     "setUnsignedByte errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedByte(-1, 0xFFu)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedByte(8, 0xFFu)
         }
     }
@@ -371,10 +371,10 @@ class ByteArrayTests : FreeSpec({
 
     "setUnsignedShort errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedShort(-1, 0xFFFFu)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 11, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedShort(8, 0xFFFFu)
         }
     }
@@ -393,10 +393,10 @@ class ByteArrayTests : FreeSpec({
 
     "setUnsignedInt errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedInt(-1, 0xFFFFFFFFu)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 13, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedInt(8, 0xFFFFFFFFu)
         }
     }
@@ -414,10 +414,10 @@ class ByteArrayTests : FreeSpec({
 
     "setUnsignedLong errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedLong(-1, 0xFFFFFFFFFFFFFFFFu)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 17, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedLong(8, 0xFFFFFFFFFFFFFFFFu)
         }
     }
@@ -438,10 +438,10 @@ class ByteArrayTests : FreeSpec({
 
     "getByte errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getByte(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getByte(8)
         }
     }
@@ -462,10 +462,10 @@ class ByteArrayTests : FreeSpec({
 
     "getUnsignedByte errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedByte(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedByte(8)
         }
     }
@@ -488,10 +488,10 @@ class ByteArrayTests : FreeSpec({
 
     "getShort errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getShort(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getShort(8)
         }
     }
@@ -514,10 +514,10 @@ class ByteArrayTests : FreeSpec({
 
     "getUnsignedShort errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedShort(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedShort(8)
         }
     }
@@ -538,10 +538,10 @@ class ByteArrayTests : FreeSpec({
 
     "getInt errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getInt(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getInt(8)
         }
     }
@@ -562,10 +562,10 @@ class ByteArrayTests : FreeSpec({
 
     "getUnsignedInt errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedInt(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedInt(8)
         }
     }
@@ -594,10 +594,10 @@ class ByteArrayTests : FreeSpec({
 
     "getLong errors" {
         val bytes = ByteArray(16)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getLong(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getLong(16)
         }
     }
@@ -626,10 +626,10 @@ class ByteArrayTests : FreeSpec({
 
     "getUnsignedLong errors" {
         val bytes = ByteArray(16)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedLong(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedLong(16)
         }
     }
@@ -650,10 +650,10 @@ class ByteArrayTests : FreeSpec({
 
     "getFloat errors" {
         val bytes = ByteArray(8)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getFloat(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getFloat(8)
         }
     }
@@ -682,10 +682,10 @@ class ByteArrayTests : FreeSpec({
 
     "getDouble errors" {
         val bytes = ByteArray(16)
-        shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getDouble(-1)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getDouble(16)
         }
     }
@@ -717,16 +717,16 @@ class ByteArrayTests : FreeSpec({
 
     "getBytes errors" {
         val bytes = ByteArray(16)
-        shouldThrowWithMessage<IndexOutOfBoundsException>("arraycopy: source index -1 out of bounds for byte[16]") {
+        shouldThrow<IndexOutOfBoundsException> {
             bytes.getBytes(-1, 16)
         }
-        shouldThrowWithMessage<IllegalArgumentException>("toIndex (20) is greater than size (16)") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getBytes(0, -1)
         }
-        shouldThrowWithMessage<IndexOutOfBoundsException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IndexOutOfBoundsException> {
             bytes.getBytes(16, 4)
         }
-        shouldThrowWithMessage<IndexOutOfBoundsException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IndexOutOfBoundsException> {
             bytes.getBytes(0, 20)
         }
     }

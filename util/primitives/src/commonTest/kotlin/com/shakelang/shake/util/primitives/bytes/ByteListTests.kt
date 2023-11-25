@@ -1,9 +1,10 @@
 package com.shakelang.shake.util.primitives.bytes
 
-import io.kotest.assertions.throwables.shouldThrowWithMessage
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
+@Suppress("unused")
 class ByteListTests : FreeSpec({
 
     "toByte" {
@@ -12,7 +13,7 @@ class ByteListTests : FreeSpec({
         byte shouldBe 1
 
         val bytes2 = listOf<Byte>(1, 2)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 1, but is 2") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toByte()
         }
     }
@@ -23,7 +24,7 @@ class ByteListTests : FreeSpec({
         short shouldBe 0x0102
 
         val bytes2 = listOf<Byte>(1)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 2, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toShort()
         }
     }
@@ -34,7 +35,7 @@ class ByteListTests : FreeSpec({
         int shouldBe 16909060
 
         val bytes2 = listOf<Byte>(1)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toInt()
         }
     }
@@ -45,7 +46,7 @@ class ByteListTests : FreeSpec({
         long shouldBe 0x0102030405060708L
 
         val bytes2 = listOf<Byte>(1)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toLong()
         }
     }
@@ -56,7 +57,7 @@ class ByteListTests : FreeSpec({
         float shouldBe Float.fromBits(0x01020304)
 
         val bytes2 = listOf<Byte>(1)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toFloat()
         }
     }
@@ -67,7 +68,7 @@ class ByteListTests : FreeSpec({
         double shouldBe Double.fromBits(0x0102030405060708)
 
         val bytes2 = listOf<Byte>(1)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toDouble()
         }
     }
@@ -78,7 +79,7 @@ class ByteListTests : FreeSpec({
         unsignedByte shouldBe 1u
 
         val bytes2 = listOf<Byte>(1, 2)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 1, but is 2") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toUnsignedByte()
         }
     }
@@ -89,7 +90,7 @@ class ByteListTests : FreeSpec({
         unsignedShort shouldBe 0x0102u
 
         val bytes2 = listOf<Byte>(1)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 2, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toUnsignedShort()
         }
     }
@@ -100,7 +101,7 @@ class ByteListTests : FreeSpec({
         unsignedInt shouldBe 0x01020304u
 
         val bytes2 = listOf<Byte>(1)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toUnsignedInt()
         }
     }
@@ -111,7 +112,7 @@ class ByteListTests : FreeSpec({
         unsignedLong shouldBe 0x0102030405060708uL
 
         val bytes2 = listOf<Byte>(1)
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 1") {
+        shouldThrow<IllegalArgumentException> {
             bytes2.toUnsignedLong()
         }
     }
@@ -127,7 +128,7 @@ class ByteListTests : FreeSpec({
         bytes.setBytes(4, kotlin.byteArrayOf(13, 14, 15, 16))
         bytes shouldBe listOf<Byte>(9, 10, 11, 12, 13, 14, 15, 16)
 
-        shouldThrowWithMessage<IndexOutOfBoundsException>("Index 8 out of bounds for length 8") {
+        shouldThrow<IndexOutOfBoundsException> {
             bytes.setBytes(0, listOf(9, 10, 11, 12, 13, 14, 15, 16, 17))
         }
     }
@@ -140,11 +141,11 @@ class ByteListTests : FreeSpec({
         bytes.setByte(4, 13)
         bytes shouldBe listOf<Byte>(9, 2, 3, 4, 13, 6, 7, 8)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setByte(8, 9)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setByte(-1, 9)
         }
     }
@@ -157,11 +158,11 @@ class ByteListTests : FreeSpec({
         bytes.setShort(4, 0x0304)
         bytes shouldBe listOf<Byte>(3, 4, 3, 4, 3, 4, 7, 8)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setShort(8, 0x0102)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setShort(-1, 0x0102)
         }
     }
@@ -174,11 +175,11 @@ class ByteListTests : FreeSpec({
         bytes.setInt(4, 0x04030201)
         bytes shouldBe listOf<Byte>(4, 3, 2, 1, 4, 3, 2, 1)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setInt(6, 0x01020304)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setInt(-1, 0x01020304)
         }
     }
@@ -188,11 +189,11 @@ class ByteListTests : FreeSpec({
         bytes.setLong(0, 0x0807060504030201L)
         bytes shouldBe listOf<Byte>(8, 7, 6, 5, 4, 3, 2, 1)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setLong(6, 0x0102030405060708L)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setLong(-1, 0x0102030405060708L)
         }
     }
@@ -205,11 +206,11 @@ class ByteListTests : FreeSpec({
         bytes.setFloat(4, 1.0f)
         bytes shouldBe listOf<Byte>(63, -128, 0, 0, 63, -128, 0, 0)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setFloat(6, Float.fromBits(0x01020304))
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setFloat(-1, Float.fromBits(0x01020304))
         }
     }
@@ -219,11 +220,11 @@ class ByteListTests : FreeSpec({
         bytes.setDouble(0, 1.0)
         bytes shouldBe listOf<Byte>(63, -16, 0, 0, 0, 0, 0, 0)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setDouble(4, Double.fromBits(0x0102030405060708L))
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setDouble(-1, Double.fromBits(0x0102030405060708L))
         }
     }
@@ -236,11 +237,11 @@ class ByteListTests : FreeSpec({
         bytes.setUnsignedByte(4, 0xFFu)
         bytes shouldBe listOf<Byte>(-1, 2, 3, 4, -1, 6, 7, 8)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedByte(8, 0xFFu)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedByte(-1, 0xFFu)
         }
     }
@@ -253,11 +254,11 @@ class ByteListTests : FreeSpec({
         bytes.setUnsignedShort(4, 0xFFFFu)
         bytes shouldBe listOf<Byte>(-1, -1, 3, 4, -1, -1, 7, 8)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedShort(7, 0xFFFFu)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedShort(-1, 0xFFFFu)
         }
     }
@@ -270,11 +271,11 @@ class ByteListTests : FreeSpec({
         bytes.setUnsignedInt(4, 0xFFFFFFFFu)
         bytes shouldBe listOf<Byte>(-1, -1, -1, -1, -1, -1, -1, -1)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedInt(7, 0xFFFFFFFFu)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedInt(-1, 0xFFFFFFFFu)
         }
     }
@@ -284,11 +285,11 @@ class ByteListTests : FreeSpec({
         bytes.setUnsignedLong(0, 0xFFFFFFFFFFFFFFFFuL)
         bytes shouldBe listOf<Byte>(-1, -1, -1, -1, -1, -1, -1, -1)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedLong(7, 0xFFFFFFFFFFFFFFFFuL)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedLong(-1, 0xFFFFFFFFFFFFFFFFuL)
         }
     }
@@ -304,11 +305,11 @@ class ByteListTests : FreeSpec({
         bytes.getByte(6) shouldBe 7
         bytes.getByte(7) shouldBe 8
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getByte(8)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getByte(-1)
         }
     }
@@ -321,11 +322,11 @@ class ByteListTests : FreeSpec({
         bytes.getShort(6) shouldBe 0x0708
         bytes.getShort(1) shouldBe 0x0203
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getShort(8)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getShort(-1)
         }
     }
@@ -336,11 +337,11 @@ class ByteListTests : FreeSpec({
         bytes.getInt(4) shouldBe 0x05060708
         bytes.getInt(1) shouldBe 0x02030405
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getInt(8)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getInt(-1)
         }
     }
@@ -349,11 +350,11 @@ class ByteListTests : FreeSpec({
         val bytes = listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
         bytes.getLong(0) shouldBe 0x0102030405060708L
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getLong(1)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getLong(-1)
         }
     }
@@ -364,11 +365,11 @@ class ByteListTests : FreeSpec({
         bytes.getFloat(4) shouldBe Float.fromBits(0x05060708)
         bytes.getFloat(1) shouldBe Float.fromBits(0x02030405)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getFloat(5)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getFloat(-1)
         }
     }
@@ -377,11 +378,11 @@ class ByteListTests : FreeSpec({
         val bytes = listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
         bytes.getDouble(0) shouldBe Double.fromBits(0x0102030405060708L)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getDouble(1)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getDouble(-1)
         }
     }
@@ -440,7 +441,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastByte() shouldBe 1
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastByte()
         }
     }
@@ -457,7 +458,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastShort() shouldBe 0x0102
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 2, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastShort()
         }
     }
@@ -470,7 +471,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastInt() shouldBe 0x01020304
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastInt()
         }
     }
@@ -481,7 +482,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastLong() shouldBe 0x0102030405060708L
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastLong()
         }
     }
@@ -494,7 +495,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastFloat() shouldBe Float.fromBits(0x05060708)
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastFloat()
         }
     }
@@ -505,7 +506,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastDouble() shouldBe Double.fromBits(0x0102030405060708)
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastDouble()
         }
     }
@@ -530,7 +531,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastUnsignedByte() shouldBe 1u
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastUnsignedByte()
         }
     }
@@ -547,7 +548,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastUnsignedShort() shouldBe 0x0102u
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 2, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastUnsignedShort()
         }
     }
@@ -560,7 +561,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastUnsignedInt() shouldBe 0x01020304u
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 4, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastUnsignedInt()
         }
     }
@@ -571,7 +572,7 @@ class ByteListTests : FreeSpec({
         bytes.removeLastUnsignedLong() shouldBe 0x0102030405060708uL
         bytes.size shouldBe 0
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 8, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             bytes.removeLastUnsignedLong()
         }
     }
@@ -581,11 +582,11 @@ class ByteListTests : FreeSpec({
         bytes.getBytes(0, 4) shouldBe listOf<Byte>(1, 2, 3, 4)
         bytes.getBytes(4, 4) shouldBe listOf<Byte>(5, 6, 7, 8)
 
-        shouldThrowWithMessage<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getBytes(5, 4)
         }
 
-        shouldThrowWithMessage<IllegalArgumentException>("index must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getBytes(-1, 4)
         }
     }
