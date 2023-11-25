@@ -1,3 +1,11 @@
 {
-  "bumps": []
+  "bumps": [
+    {
+      "type": "minor",
+      "message": "Add shift library",
+      "paths": [
+        ":util:primitives"
+      ]
+    }
+  ]
 }
