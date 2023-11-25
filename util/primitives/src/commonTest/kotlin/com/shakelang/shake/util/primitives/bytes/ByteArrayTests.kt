@@ -181,7 +181,9 @@ class ByteArrayTests : FreeSpec({
         bytes.setBytes(2, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu))
         bytes[0] shouldBe 0x00u.toByte()
         bytes[1] shouldBe 0x00u.toByte()
-        (2..11).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (2..9).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        bytes[10] shouldBe 0x00u.toByte()
+        bytes[11] shouldBe 0x00u.toByte()
     }
 
     "setBytes errors" {
@@ -293,13 +295,16 @@ class ByteArrayTests : FreeSpec({
     "setFloat" {
         var bytes = ByteArray(8)
         bytes.setFloat(0, Float.fromBits(0x3f99999au.toInt()))
-        (0..3).forEach { bytes[it] shouldBe 0x3Fu.toByte() }
-        (4..7).forEach { bytes[it] shouldBe 0x99u.toByte() }
+        bytes[0] shouldBe 0x3Fu.toByte()
+        (1..2).forEach { bytes[it] shouldBe 0x99u.toByte() }
+        bytes[3] shouldBe 0x9Au.toByte()
+        (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setFloat(2, Float.fromBits(0x3f99999au.toInt()))
         (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes[2] shouldBe 0x3Fu.toByte()
-        (3..7).forEach { bytes[it] shouldBe 0x99u.toByte() }
+        (3..4).forEach { bytes[it] shouldBe 0x99u.toByte() }
+        bytes[5] shouldBe 0x9Au.toByte()
         (8..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
@@ -316,13 +321,16 @@ class ByteArrayTests : FreeSpec({
     "setDouble" {
         var bytes = ByteArray(8)
         bytes.setDouble(0, Double.fromBits(0x3ff3333333333333uL.toLong()))
-        (0..7).forEach { bytes[it] shouldBe 0x3Fu.toByte() }
+        bytes[0] shouldBe 0x3Fu.toByte()
+        bytes[1] shouldBe 0xf3u.toByte()
+        (2..7).forEach { bytes[it] shouldBe 0x33u.toByte() }
         bytes = ByteArray(12)
         bytes.setDouble(2, Double.fromBits(0x3ff3333333333333uL.toLong()))
         (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes[2] shouldBe 0x3Fu.toByte()
-        (3..10).forEach { bytes[it] shouldBe 0xf3u.toByte() }
-        (11..11).forEach { bytes[it] shouldBe 0x33u.toByte() }
+        bytes[3] shouldBe 0xf3u.toByte()
+        (4..9).forEach { bytes[it] shouldBe 0x33u.toByte() }
+        (10..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
     "setDouble errors" {

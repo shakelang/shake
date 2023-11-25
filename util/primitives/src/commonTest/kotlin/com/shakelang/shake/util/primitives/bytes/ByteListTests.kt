@@ -490,9 +490,9 @@ class ByteListTests : FreeSpec({
     "removeLastFloat" {
         val bytes = mutableListOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
         bytes.size shouldBe 8
-        bytes.removeLastFloat() shouldBe Float.fromBits(0x01020304)
-        bytes.size shouldBe 4
         bytes.removeLastFloat() shouldBe Float.fromBits(0x05060708)
+        bytes.size shouldBe 4
+        bytes.removeLastFloat() shouldBe Float.fromBits(0x01020304)
         bytes.size shouldBe 0
 
         shouldThrow<IllegalArgumentException> {
