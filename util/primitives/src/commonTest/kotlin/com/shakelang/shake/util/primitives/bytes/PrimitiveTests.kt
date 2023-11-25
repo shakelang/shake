@@ -1,203 +1,180 @@
 package com.shakelang.shake.util.primitives.bytes
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 
-class PrimitiveTests {
+@Suppress("unused")
+class PrimitiveTests : FreeSpec({
 
-    @Test
-    fun testByteToBytes() {
+    "byte to bytes" {
         val b = 0xFFu.toByte()
         val bytes = b.toBytes()
-        assertEquals(1, bytes.size)
-        assertEquals(b, bytes[0])
+        bytes.size shouldBe 1
+        bytes[0] shouldBe b
     }
 
-    @Test
-    fun testShortToBytes() {
-        val s = 0xFFFFu.toShort()
+    "short to bytes" {
+        val s = 0xFFFEu.toShort()
         val bytes = s.toBytes()
-        assertEquals(2, bytes.size)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xFFu.toByte(), bytes[1])
+        bytes.size shouldBe 2
+        bytes[0] shouldBe 0xFFu.toByte()
+        bytes[1] shouldBe 0xFEu.toByte()
     }
 
-    @Test
-    fun testIntToBytes() {
-        val i = 0xFFFFFFFFu
+    "int to bytes" {
+        val i = 0xFFFEFDFCu
         val bytes = i.toBytes()
-        assertEquals(4, bytes.size)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xFFu.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
+        bytes.size shouldBe 4
+        bytes[0] shouldBe 0xFFu.toByte()
+        bytes[1] shouldBe 0xFEu.toByte()
+        bytes[2] shouldBe 0xFDu.toByte()
+        bytes[3] shouldBe 0xFCu.toByte()
     }
 
-    @Test
-    fun testLongToBytes() {
-        val l = 0xFFFFFFFFFFFFFFFFuL
+    "long to bytes" {
+        val l = 0x0FFEFDFCFBF9F8F7L
         val bytes = l.toBytes()
-        assertEquals(8, bytes.size)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xFFu.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0xFFu.toByte(), bytes[4])
-        assertEquals(0xFFu.toByte(), bytes[5])
-        assertEquals(0xFFu.toByte(), bytes[6])
-        assertEquals(0xFFu.toByte(), bytes[7])
+        bytes.size shouldBe 8
+        bytes[0] shouldBe 0x0Fu.toByte()
+        bytes[1] shouldBe 0xFEu.toByte()
+        bytes[2] shouldBe 0xFDu.toByte()
+        bytes[3] shouldBe 0xFCu.toByte()
+        bytes[4] shouldBe 0xFBu.toByte()
+        bytes[5] shouldBe 0xF9u.toByte()
+        bytes[6] shouldBe 0xF8u.toByte()
+        bytes[7] shouldBe 0xF7u.toByte()
     }
 
-    @Test
-    fun testFloatToBytes() {
-        val f = Float.fromBits(0x3f99999a)
+    "float to bytes" {
+        val f = Float.fromBits(0x3f333333)
         val bytes = f.toBytes()
-        assertEquals(4, bytes.size)
-        assertEquals(0x3fu.toByte(), bytes[0])
-        assertEquals(0x99u.toByte(), bytes[1])
-        assertEquals(0x99u.toByte(), bytes[2])
-        assertEquals(0x9au.toByte(), bytes[3])
+        bytes.size shouldBe 4
+        bytes[0] shouldBe 0x3fu.toByte()
+        bytes[1] shouldBe 0x33u.toByte()
+        bytes[2] shouldBe 0x33u.toByte()
+        bytes[3] shouldBe 0x33u.toByte()
     }
 
-    @Test
-    fun testDoubleToBytes() {
+    "double to bytes" {
         val d = Double.fromBits(0x3ff3333333333333)
         val bytes = d.toBytes()
-        assertEquals(8, bytes.size)
-        assertEquals(0x3fu.toByte(), bytes[0])
-        assertEquals(0xf3u.toByte(), bytes[1])
-        assertEquals(0x33u.toByte(), bytes[2])
-        assertEquals(0x33u.toByte(), bytes[3])
-        assertEquals(0x33u.toByte(), bytes[4])
-        assertEquals(0x33u.toByte(), bytes[5])
-        assertEquals(0x33u.toByte(), bytes[6])
-        assertEquals(0x33u.toByte(), bytes[7])
+        bytes.size shouldBe 8
+        bytes[0] shouldBe 0x3fu.toByte()
+        bytes[1] shouldBe 0xf3u.toByte()
+        bytes[2] shouldBe 0x33u.toByte()
+        bytes[3] shouldBe 0x33u.toByte()
+        bytes[4] shouldBe 0x33u.toByte()
+        bytes[5] shouldBe 0x33u.toByte()
+        bytes[6] shouldBe 0x33u.toByte()
+        bytes[7] shouldBe 0x33u.toByte()
     }
 
-    @Test
-    fun testUByteToBytes() {
+    "ubyte to bytes" {
         val b: UByte = 0xFFu
         val bytes = b.toBytes()
-        assertEquals(1, bytes.size)
-        assertEquals(b.toByte(), bytes[0])
+        bytes.size shouldBe 1
+        bytes[0] shouldBe 0xFFu.toByte()
     }
 
-    @Test
-    fun testUShortToBytes() {
+    "ushort to bytes" {
         val s: UShort = 0xFFAAu
         val bytes = s.toBytes()
-        assertEquals(2, bytes.size)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xAAu.toByte(), bytes[1])
+        bytes.size shouldBe 2
+        bytes[0] shouldBe 0xFFu.toByte()
+        bytes[1] shouldBe 0xAAu.toByte()
     }
 
-    @Test
-    fun testUIntToBytes() {
-        val i: UInt = 0xFFAABBCCu
+    "uint to bytes" {
+        val i = 0xFFAABBCCu
         val bytes = i.toBytes()
-        assertEquals(4, bytes.size)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xAAu.toByte(), bytes[1])
-        assertEquals(0xBBu.toByte(), bytes[2])
-        assertEquals(0xCCu.toByte(), bytes[3])
+        bytes.size shouldBe 4
+        bytes[0] shouldBe 0xFFu.toByte()
+        bytes[1] shouldBe 0xAAu.toByte()
+        bytes[2] shouldBe 0xBBu.toByte()
+        bytes[3] shouldBe 0xCCu.toByte()
     }
 
-    @Test
-    fun testULongToBytes() {
-        val l: ULong = 0xFFAABBCCDDEE0011uL
+    "ulong to bytes" {
+        val l = 0xFFAABBCCDDEE0011uL
         val bytes = l.toBytes()
-        assertEquals(8, bytes.size)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xAAu.toByte(), bytes[1])
-        assertEquals(0xBBu.toByte(), bytes[2])
-        assertEquals(0xCCu.toByte(), bytes[3])
-        assertEquals(0xDDu.toByte(), bytes[4])
-        assertEquals(0xEEu.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x11u.toByte(), bytes[7])
+        bytes.size shouldBe 8
+        bytes[0] shouldBe 0xFFu.toByte()
+        bytes[1] shouldBe 0xAAu.toByte()
+        bytes[2] shouldBe 0xBBu.toByte()
+        bytes[3] shouldBe 0xCCu.toByte()
+        bytes[4] shouldBe 0xDDu.toByte()
+        bytes[5] shouldBe 0xEEu.toByte()
+        bytes[6] shouldBe 0x00u.toByte()
+        bytes[7] shouldBe 0x11u.toByte()
     }
 
-    @Test
-    fun testByteOf() {
+    "byteOf" {
         val b = byteOf(1)
-        assertEquals(1, b.toInt())
+        b shouldBe 1
     }
 
-    @Test
-    fun testShortOf() {
+    "shortOf" {
         val s = shortOf(1, 2)
-        assertEquals(0x0102, s)
+        s shouldBe 0x0102
     }
 
-    @Test
-    fun testIntOf() {
+    "intOf" {
         val i = intOf(1, 2, 3, 4)
-        assertEquals(0x01020304, i)
+        i shouldBe 0x01020304
     }
 
-    @Test
-    fun testLongOf() {
+    "longOf" {
         val l = longOf(1, 2, 3, 4, 5, 6, 7, 8)
-        assertEquals(0x0102030405060708, l)
+        l shouldBe 0x0102030405060708
     }
 
-    @Test
-    fun testFloatOf() {
+    "floatOf" {
         val f = floatOf(1, 2, 3, 4)
-        assertEquals(0x01020304, f.toBits())
+        f.toBits() shouldBe 0x01020304
     }
 
-    @Test
-    fun testDoubleOf() {
+    "doubleOf" {
         val d = doubleOf(1, 2, 3, 4, 5, 6, 7, 8)
-        assertEquals(0x0102030405060708, d.toBits())
+        d.toBits() shouldBe 0x0102030405060708
     }
 
-    @Test
-    fun testUByteOf() {
+    "ubyteOf" {
         val b = ubyteOf(1)
-        assertEquals(1u, b)
+        b shouldBe 1u
     }
 
-    @Test
-    fun testUShortOf() {
+    "ushortOf" {
         val s = ushortOf(1, 2)
-        assertEquals(0x0102u, s)
+        s shouldBe 0x0102u
     }
 
-    @Test
-    fun testUIntOf() {
+    "uintOf" {
         val i = uintOf(1, 2, 3, 4)
-        assertEquals(0x01020304u, i)
+        i shouldBe 0x01020304u
     }
 
-    @Test
-    fun testULongOf() {
+    "ulongOf" {
         val l = ulongOf(1, 2, 3, 4, 5, 6, 7, 8)
-        assertEquals(0x0102030405060708uL, l)
+        l shouldBe 0x0102030405060708uL
     }
 
-    @Test
-    fun testUnsignedByteOf() {
+    "unsignedByteOf" {
         val b = unsignedByteOf(1)
-        assertEquals(1u, b)
+        b shouldBe 1u
     }
 
-    @Test
-    fun testUnsignedShortOf() {
+    "unsignedShortOf" {
         val s = unsignedShortOf(1, 2)
-        assertEquals(0x0102u, s)
+        s shouldBe 0x0102u
     }
 
-    @Test
-    fun testUnsignedIntOf() {
+    "unsignedIntOf" {
         val i = unsignedIntOf(1, 2, 3, 4)
-        assertEquals(0x01020304u, i)
+        i shouldBe 0x01020304u
     }
 
-    @Test
-    fun testUnsignedLongOf() {
+    "unsignedLongOf" {
         val l = unsignedLongOf(1, 2, 3, 4, 5, 6, 7, 8)
-        assertEquals(0x0102030405060708uL, l)
+        l shouldBe 0x0102030405060708uL
     }
-}
+})
