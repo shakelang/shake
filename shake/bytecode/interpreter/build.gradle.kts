@@ -14,7 +14,10 @@ plugins {
 
 kotlin {
     dependencies {
+        implementation(project(":util:pointers"))
         implementation(project(":util:primitives"))
         implementation(project(":util:common-io"))
+
+        kotest()
     }
 }
