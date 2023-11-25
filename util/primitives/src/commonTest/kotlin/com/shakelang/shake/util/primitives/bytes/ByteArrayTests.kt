@@ -325,8 +325,7 @@ class ByteArrayTests : FreeSpec({
         (11..11).forEach { bytes[it] shouldBe 0x33u.toByte() }
     }
 
-    @Test
-    fun testSetDoubleErrors() {
+    "setDouble errors" {
         val bytes = ByteArray(8)
         shouldThrowWithMessage<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
             bytes.setDouble(-1, Double.fromBits(0x3ff3333333333333uL.toLong()))
