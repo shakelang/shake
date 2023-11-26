@@ -1,7 +1,11 @@
 package com.shakelang.shake.bytecode.interpreter
 
 import com.shakelang.shake.util.primitives.bytes.*
+import com.shakelang.shake.util.primitives.calc.shl
+import com.shakelang.shake.util.primitives.calc.shr
+import com.shakelang.shake.util.primitives.calc.ushr
 import kotlin.experimental.and
+import kotlin.experimental.inv
 import kotlin.experimental.or
 import kotlin.experimental.xor
 
@@ -170,6 +174,32 @@ class ShakeInterpreter {
                 Opcodes.SXOR -> stack.push(stack.popShort() xor stack.popShort())
                 Opcodes.IXOR -> stack.push(stack.popInt() xor stack.popInt())
                 Opcodes.LXOR -> stack.push(stack.popLong() xor stack.popLong())
+
+                Opcodes.BNOT -> stack.push(stack.pop().inv())
+                Opcodes.SNOT -> stack.push(stack.popShort().inv())
+                Opcodes.INOT -> stack.push(stack.popInt().inv())
+                Opcodes.LNOT -> stack.push(stack.popLong().inv())
+
+                Opcodes.BSHL -> stack.push(stack.pop() shl stack.pop())
+                Opcodes.SSHL -> stack.push(stack.popShort() shl stack.pop())
+                Opcodes.ISHL -> stack.push(stack.popInt() shl stack.pop())
+                Opcodes.LSHL -> stack.push(stack.popLong() shl stack.pop())
+
+                Opcodes.BSHR -> stack.push(stack.pop() shr stack.pop())
+                Opcodes.SSHR -> stack.push(stack.popShort() shr stack.pop())
+                Opcodes.ISHR -> stack.push(stack.popInt() shr stack.pop())
+                Opcodes.LSHR -> stack.push(stack.popLong() shr stack.pop())
+
+                Opcodes.BSHRU -> stack.push(stack.popUByte() ushr stack.popUByte())
+                Opcodes.SSHRU -> stack.push(stack.popUShort() ushr stack.popUShort())
+                Opcodes.ISHRU -> stack.push(stack.popUInt() ushr stack.popUInt())
+                Opcodes.LSHRU -> stack.push(stack.popULong() ushr stack.popULong())
+
+                Opcodes.PCAST -> {
+                    val type = readByte()
+                    // First 4 bits are the "from" type, last 4 bits are the "to" type
+                }
+
             }
         }
 

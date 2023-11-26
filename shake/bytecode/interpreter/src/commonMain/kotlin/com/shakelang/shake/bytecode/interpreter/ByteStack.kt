@@ -1,6 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter
 
 import com.shakelang.shake.util.primitives.bytes.*
+import kotlin.jvm.JvmName
 
 class StackOverflowException : Exception("Stack overflow")
 class StackUnderflowException : Exception("Stack underflow")
@@ -59,4 +60,12 @@ class ByteStack(
     fun popUInt(): UInt = popInt().toUInt()
     fun popULong(): ULong = popLong().toULong()
 
+    @JvmName("pushUByte")
+    fun push(uByte: UByte) = push(uByte.toByte())
+    @JvmName("pushUShort")
+    fun push(uShort: UShort) = push(uShort.toShort())
+    @JvmName("pushUInt")
+    fun push(uInt: UInt) = push(uInt.toInt())
+    @JvmName("pushULong")
+    fun push(uLong: ULong) = push(uLong.toLong())
 }

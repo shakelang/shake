@@ -120,5 +120,20 @@ object Opcodes {
     val ISHRU: Byte = 86 // Syntax: ISHRU ; Bitwise shift right unsigned an int
     val LSHRU: Byte = 87 // Syntax: LSHRU ; Bitwise shift right unsigned a long
 
+    val PCAST: Byte = 88 // Syntax: PCAST ; Pop a value from the stack and cast it to a primitive type
+}
+
+object PCast {
+
+    val BYTE: Byte = 0
+    val SHORT: Byte = 1
+    val INT: Byte = 2
+    val LONG: Byte = 3
+    val UBYTE: Byte = 4
+    val USHORT: Byte = 5
+    val UINT: Byte = 6
+    val ULONG: Byte = 7
+    val FLOAT: Byte = 8
+    val DOUBLE: Byte = 9
 
 }
