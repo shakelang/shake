@@ -1,7 +1,7 @@
+@file:Suppress("unused")
 package com.shakelang.shake.bytecode.interpreter
 
-import com.shakelang.shake.util.primitives.bytes.toDouble
-import com.shakelang.shake.util.primitives.bytes.toFloat
+import com.shakelang.shake.util.primitives.bytes.toHexString
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -669,5 +669,427 @@ class ShakeCodeInterpreterTests : FreeSpec({
         stack.popDouble() shouldBe 0.0
     }
 
+    "band" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(5)
+                bpush(3)
+                band()
+            }, 0
+        )
 
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "sand" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(5)
+                spush(3)
+                sand()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 2
+        stack.popShort() shouldBe 1
+    }
+
+    "iand" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(5)
+                ipush(3)
+                iand()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe 1
+    }
+
+    "land" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(5)
+                lpush(3)
+                land()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 8
+        stack.popLong() shouldBe 1
+    }
+
+    "bor" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(5)
+                bpush(3)
+                bor()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 7
+    }
+
+    "sor" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(5)
+                spush(3)
+                sor()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 2
+        stack.popShort() shouldBe 7
+    }
+
+    "ior" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(5)
+                ipush(3)
+                ior()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe 7
+    }
+
+    "lor" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(5)
+                lpush(3)
+                lor()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 8
+        stack.popLong() shouldBe 7
+    }
+
+    "bxor" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(5)
+                bpush(3)
+                bxor()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 6
+    }
+
+    "sxor" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(5)
+                spush(3)
+                sxor()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 2
+        stack.popShort() shouldBe 6
+    }
+
+    "ixor" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(5)
+                ipush(3)
+                ixor()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe 6
+    }
+
+    "lxor" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(5)
+                lpush(3)
+                lxor()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 8
+        stack.popLong() shouldBe 6
+    }
+
+    "bshl" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(5)
+                bpush(3)
+                bshl()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 40
+    }
+
+    "sshl" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(5)
+                spush(3)
+                sshl()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 2
+        stack.popShort() shouldBe 40
+    }
+
+    "ishl" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(5)
+                ipush(3)
+                ishl()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe 40
+    }
+
+    "lshl" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(5)
+                lpush(3)
+                lshl()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 8
+        stack.popLong() shouldBe 40
+    }
+
+    "bshr" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(40)
+                bpush(3)
+                bshr()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 5
+    }
+
+    "sshr" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(40)
+                spush(3)
+                sshr()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 2
+        stack.popShort() shouldBe 5
+    }
+
+    "ishr" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(40)
+                ipush(3)
+                ishr()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe 5
+    }
+
+    "lshr" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(40)
+                lpush(3)
+                lshr()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 8
+        stack.popLong() shouldBe 5
+    }
+
+    "bshru" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(-40)
+                bpush(3)
+                bshru()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe (-5).toByte()
+    }
+
+    "sshru" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(-40)
+                spush(3)
+                sshru()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 2
+        stack.popShort() shouldBe (-5).toShort()
+    }
+
+    "ishru" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(-40)
+                ipush(3)
+                ishru()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe 536870907
+    }
+
+    "lshru" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(-40)
+                lpush(3)
+                lshru()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 8
+        stack.popLong() shouldBe 2305843009213693947L
+    }
+
+    "cast" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                pcast(PCast.BYTE, PCast.INT)
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe 1
+    }
 })

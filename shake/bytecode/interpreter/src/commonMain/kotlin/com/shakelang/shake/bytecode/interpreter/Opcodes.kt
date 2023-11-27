@@ -127,5 +127,12 @@ object Opcodes {
     val ISHRU: Byte = 92 // Syntax: ISHRU ; Bitwise shift right unsigned an int
     val LSHRU: Byte = 93 // Syntax: LSHRU ; Bitwise shift right unsigned a long
 
-    val PCAST: Byte = 94 // Syntax: PCAST ; Pop a value from the stack and cast it to a primitive type
+    val BINC: Byte = 94 // Syntax: BINC ; Increment a byte
+    val SINC: Byte = 95 // Syntax: SINC ; Increment a short
+    val IINC: Byte = 96 // Syntax: IINC ; Increment an int
+    val LINC: Byte = 97 // Syntax: LINC ; Increment a long
+    val FINC: Byte = 98 // Syntax: FINC ; Increment a float
+    val DINC: Byte = 99 // Syntax: DINC ; Increment a double
+
+    val PCAST: Byte = 100 // Syntax: PCAST ; Pop a value from the stack and cast it to a primitive type
 }

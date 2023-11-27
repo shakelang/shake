@@ -1,6 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter
 
 import com.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.shake.util.primitives.calc.shl
 
 class ShakeBytecodeGenerator(
     val bytes: MutableList<Byte> = mutableListOf <Byte>(),
@@ -8,6 +9,7 @@ class ShakeBytecodeGenerator(
 
     fun addByte(byte: Byte) = bytes.add(byte)
     fun addBytes(bytes: List<Byte>) = this.bytes.addAll(bytes)
+    fun addBytes(vararg bytes: Byte) = this.bytes.addAll(bytes.toList())
 
     fun nop() = addByte(Opcodes.NOP)
 
@@ -118,6 +120,7 @@ class ShakeBytecodeGenerator(
     fun sshru() = addByte(Opcodes.SSHRU)
     fun ishru() = addByte(Opcodes.ISHRU)
     fun lshru() = addByte(Opcodes.LSHRU)
+    fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
 
     fun toByteArray() = bytes.toByteArray()
 }
