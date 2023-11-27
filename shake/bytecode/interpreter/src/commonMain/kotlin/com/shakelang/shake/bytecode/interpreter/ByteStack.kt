@@ -21,11 +21,13 @@ class ByteStack(
     private var top: ByteStackElement? = null
 
     fun push(value: Byte) {
+        if (size >= maxSize) throw StackOverflowException()
         top = ByteStackElement(value, top)
         size++
     }
 
     fun pop(): Byte {
+        if (size <= 0) throw StackUnderflowException()
         val value = top!!.value
         top = top!!.below
         size--
@@ -35,7 +37,7 @@ class ByteStack(
     fun peek(): Byte = top!!.value
 
     fun push(values: ByteArray) {
-        for (value in values) push(value)
+        for (value in values.reversed()) push(value)
     }
 
     fun pop(size: Int): ByteArray {
