@@ -523,16 +523,6 @@ infix fun Int.shl(other: Short): Int = this shl other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun Int.shl(other: Int): Int = this shl other
-
-/**
- * Performs a shl operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise shl operation
- * @since 0.3.0
- * @version 0.3.0
- */
 infix fun Int.shl(other: Long): Int = this shl other.toInt()
 
 /**
@@ -594,16 +584,6 @@ infix fun Int.shr(other: Byte): Int = this shr other.toInt()
  * @version 0.3.0
  */
 infix fun Int.shr(other: Short): Int = this shr other.toInt()
-
-/**
- * Performs a shr operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise shr operation
- * @since 0.3.0
- * @version 0.3.0
- */
-infix fun Int.shr(other: Int): Int = this shr other
 
 /**
  * Performs a shr operation on this value and [other]
@@ -683,16 +663,6 @@ infix fun Int.ushr(other: Short): Int = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun Int.ushr(other: Int): Int = this ushr other
-
-/**
- * Performs an ushr operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise ushr operation
- * @since 0.3.0
- * @version 0.3.0
- */
 infix fun Int.ushr(other: Long): Int = this ushr other.toInt()
 
 /**
@@ -754,16 +724,6 @@ infix fun Long.shl(other: Byte): Long = this shl other.toInt()
  * @version 0.3.0
  */
 infix fun Long.shl(other: Short): Long = this shl other.toInt()
-
-/**
- * Performs a shl operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise shl operation
- * @since 0.3.0
- * @version 0.3.0
- */
-infix fun Long.shl(other: Int): Long = this shl other
 
 /**
  * Performs a shl operation on this value and [other]
@@ -843,16 +803,6 @@ infix fun Long.shr(other: Short): Long = this shr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun Long.shr(other: Int): Long = this shr other
-
-/**
- * Performs a shr operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise shr operation
- * @since 0.3.0
- * @version 0.3.0
- */
 infix fun Long.shr(other: Long): Long = this shr other.toInt()
 
 /**
@@ -914,16 +864,6 @@ infix fun Long.ushr(other: Byte): Long = this ushr other.toInt()
  * @version 0.3.0
  */
 infix fun Long.ushr(other: Short): Long = this ushr other.toInt()
-
-/**
- * Performs an ushr operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise ushr operation
- * @since 0.3.0
- * @version 0.3.0
- */
-infix fun Long.ushr(other: Int): Long = this ushr other
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1093,7 +1033,7 @@ infix fun UByte.shr(other: Int): UByte = (this.toInt() shr other).toUByte()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.shr(other: Long): UByte = (this.toInt() shr other.toInt()).toUByte()
+infix fun UByte.shr(other: Long): UByte = (this.toInt() ushr other.toInt()).toUByte()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1103,7 +1043,7 @@ infix fun UByte.shr(other: Long): UByte = (this.toInt() shr other.toInt()).toUBy
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.shr(other: UByte): UByte = (this.toInt() shr other.toInt()).toUByte()
+infix fun UByte.shr(other: UByte): UByte = (this.toInt() ushr other.toInt()).toUByte()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1113,7 +1053,7 @@ infix fun UByte.shr(other: UByte): UByte = (this.toInt() shr other.toInt()).toUB
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.shr(other: UShort): UByte = (this.toInt() shr other.toInt()).toUByte()
+infix fun UByte.shr(other: UShort): UByte = (this.toInt() ushr other.toInt()).toUByte()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1123,7 +1063,7 @@ infix fun UByte.shr(other: UShort): UByte = (this.toInt() shr other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.shr(other: UInt): UByte = (this.toInt() shr other.toInt()).toUByte()
+infix fun UByte.shr(other: UInt): UByte = (this.toInt() ushr other.toInt()).toUByte()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1133,7 +1073,7 @@ infix fun UByte.shr(other: UInt): UByte = (this.toInt() shr other.toInt()).toUBy
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.shr(other: ULong): UByte = (this.toInt() shr other.toInt()).toUByte()
+infix fun UByte.shr(other: ULong): UByte = (this.toInt() ushr other.toInt()).toUByte()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1143,7 +1083,7 @@ infix fun UByte.shr(other: ULong): UByte = (this.toInt() shr other.toInt()).toUB
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.ushr(other: Byte): UByte = (this.toInt() ushr other.toInt()).toUByte()
+infix fun UByte.ushr(other: Byte): UByte = (this.toByte() ushr other.toInt()).toUByte()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1153,7 +1093,7 @@ infix fun UByte.ushr(other: Byte): UByte = (this.toInt() ushr other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.ushr(other: Short): UByte = (this.toInt() ushr other.toInt()).toUByte()
+infix fun UByte.ushr(other: Short): UByte = (this.toByte() ushr other.toInt()).toUByte()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1163,7 +1103,7 @@ infix fun UByte.ushr(other: Short): UByte = (this.toInt() ushr other.toInt()).to
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.ushr(other: Int): UByte = (this.toInt() ushr other).toUByte()
+infix fun UByte.ushr(other: Int): UByte = (this.toByte() ushr other).toUByte()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1173,7 +1113,7 @@ infix fun UByte.ushr(other: Int): UByte = (this.toInt() ushr other).toUByte()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.ushr(other: Long): UByte = (this.toInt() ushr other.toInt()).toUByte()
+infix fun UByte.ushr(other: Long): UByte = (this.toByte() ushr other.toInt()).toUByte()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1183,7 +1123,7 @@ infix fun UByte.ushr(other: Long): UByte = (this.toInt() ushr other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.ushr(other: UByte): UByte = (this.toInt() ushr other.toInt()).toUByte()
+infix fun UByte.ushr(other: UByte): UByte = (this.toByte() ushr other.toInt()).toUByte()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1193,7 +1133,7 @@ infix fun UByte.ushr(other: UByte): UByte = (this.toInt() ushr other.toInt()).to
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.ushr(other: UShort): UByte = (this.toInt() ushr other.toInt()).toUByte()
+infix fun UByte.ushr(other: UShort): UByte = (this.toByte() ushr other.toInt()).toUByte()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1203,7 +1143,7 @@ infix fun UByte.ushr(other: UShort): UByte = (this.toInt() ushr other.toInt()).t
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.ushr(other: UInt): UByte = (this.toInt() ushr other.toInt()).toUByte()
+infix fun UByte.ushr(other: UInt): UByte = (this.toByte() ushr other.toInt()).toUByte()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1213,7 +1153,7 @@ infix fun UByte.ushr(other: UInt): UByte = (this.toInt() ushr other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UByte.ushr(other: ULong): UByte = (this.toInt() ushr other.toInt()).toUByte()
+infix fun UByte.ushr(other: ULong): UByte = (this.toByte() ushr other.toInt()).toUByte()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1223,7 +1163,7 @@ infix fun UByte.ushr(other: ULong): UByte = (this.toInt() ushr other.toInt()).to
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shl(other: Byte): UShort = (this.toInt() shl other.toInt()).toUShort()
+infix fun UShort.shl(other: Byte): UShort = (this.toShort() shl other.toInt()).toUShort()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1233,7 +1173,7 @@ infix fun UShort.shl(other: Byte): UShort = (this.toInt() shl other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shl(other: Short): UShort = (this.toInt() shl other.toInt()).toUShort()
+infix fun UShort.shl(other: Short): UShort = (this.toShort() shl other.toInt()).toUShort()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1243,7 +1183,7 @@ infix fun UShort.shl(other: Short): UShort = (this.toInt() shl other.toInt()).to
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shl(other: Int): UShort = (this.toInt() shl other).toUShort()
+infix fun UShort.shl(other: Int): UShort = (this.toShort() shl other).toUShort()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1253,7 +1193,7 @@ infix fun UShort.shl(other: Int): UShort = (this.toInt() shl other).toUShort()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shl(other: Long): UShort = (this.toInt() shl other.toInt()).toUShort()
+infix fun UShort.shl(other: Long): UShort = (this.toShort() shl other.toInt()).toUShort()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1263,7 +1203,7 @@ infix fun UShort.shl(other: Long): UShort = (this.toInt() shl other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shl(other: UByte): UShort = (this.toInt() shl other.toInt()).toUShort()
+infix fun UShort.shl(other: UByte): UShort = (this.toShort() shl other.toInt()).toUShort()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1273,7 +1213,7 @@ infix fun UShort.shl(other: UByte): UShort = (this.toInt() shl other.toInt()).to
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shl(other: UShort): UShort = (this.toInt() shl other.toInt()).toUShort()
+infix fun UShort.shl(other: UShort): UShort = (this.toShort() shl other.toInt()).toUShort()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1283,7 +1223,7 @@ infix fun UShort.shl(other: UShort): UShort = (this.toInt() shl other.toInt()).t
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shl(other: UInt): UShort = (this.toInt() shl other.toInt()).toUShort()
+infix fun UShort.shl(other: UInt): UShort = (this.toShort() shl other.toInt()).toUShort()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1293,7 +1233,7 @@ infix fun UShort.shl(other: UInt): UShort = (this.toInt() shl other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shl(other: ULong): UShort = (this.toInt() shl other.toInt()).toUShort()
+infix fun UShort.shl(other: ULong): UShort = (this.toShort() shl other.toInt()).toUShort()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1303,7 +1243,7 @@ infix fun UShort.shl(other: ULong): UShort = (this.toInt() shl other.toInt()).to
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shr(other: Byte): UShort = (this.toInt() shr other.toInt()).toUShort()
+infix fun UShort.shr(other: Byte): UShort = (this.toShort() shr other.toInt()).toUShort()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1313,7 +1253,7 @@ infix fun UShort.shr(other: Byte): UShort = (this.toInt() shr other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shr(other: Short): UShort = (this.toInt() shr other.toInt()).toUShort()
+infix fun UShort.shr(other: Short): UShort = (this.toShort() shr other.toInt()).toUShort()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1323,7 +1263,7 @@ infix fun UShort.shr(other: Short): UShort = (this.toInt() shr other.toInt()).to
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shr(other: Int): UShort = (this.toInt() shr other).toUShort()
+infix fun UShort.shr(other: Int): UShort = (this.toShort() shr other).toUShort()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1333,7 +1273,7 @@ infix fun UShort.shr(other: Int): UShort = (this.toInt() shr other).toUShort()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shr(other: Long): UShort = (this.toInt() shr other.toInt()).toUShort()
+infix fun UShort.shr(other: Long): UShort = (this.toShort() shr other.toInt()).toUShort()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1343,7 +1283,7 @@ infix fun UShort.shr(other: Long): UShort = (this.toInt() shr other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shr(other: UByte): UShort = (this.toInt() shr other.toInt()).toUShort()
+infix fun UShort.shr(other: UByte): UShort = (this.toShort() shr other.toInt()).toUShort()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1353,7 +1293,7 @@ infix fun UShort.shr(other: UByte): UShort = (this.toInt() shr other.toInt()).to
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shr(other: UShort): UShort = (this.toInt() shr other.toInt()).toUShort()
+infix fun UShort.shr(other: UShort): UShort = (this.toShort() shr other.toInt()).toUShort()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1363,7 +1303,7 @@ infix fun UShort.shr(other: UShort): UShort = (this.toInt() shr other.toInt()).t
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shr(other: UInt): UShort = (this.toInt() shr other.toInt()).toUShort()
+infix fun UShort.shr(other: UInt): UShort = (this.toShort() shr other.toInt()).toUShort()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1373,7 +1313,7 @@ infix fun UShort.shr(other: UInt): UShort = (this.toInt() shr other.toInt()).toU
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.shr(other: ULong): UShort = (this.toInt() shr other.toInt()).toUShort()
+infix fun UShort.shr(other: ULong): UShort = (this.toShort() shr other.toInt()).toUShort()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1383,7 +1323,7 @@ infix fun UShort.shr(other: ULong): UShort = (this.toInt() shr other.toInt()).to
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.ushr(other: Byte): UShort = (this.toInt() ushr other.toInt()).toUShort()
+infix fun UShort.ushr(other: Byte): UShort = (this.toShort() ushr other.toInt()).toUShort()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1393,7 +1333,7 @@ infix fun UShort.ushr(other: Byte): UShort = (this.toInt() ushr other.toInt()).t
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.ushr(other: Short): UShort = (this.toInt() ushr other.toInt()).toUShort()
+infix fun UShort.ushr(other: Short): UShort = (this.toShort() ushr other.toInt()).toUShort()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1403,7 +1343,7 @@ infix fun UShort.ushr(other: Short): UShort = (this.toInt() ushr other.toInt()).
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.ushr(other: Int): UShort = (this.toInt() ushr other).toUShort()
+infix fun UShort.ushr(other: Int): UShort = (this.toShort() ushr other).toUShort()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1413,7 +1353,7 @@ infix fun UShort.ushr(other: Int): UShort = (this.toInt() ushr other).toUShort()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.ushr(other: Long): UShort = (this.toInt() ushr other.toInt()).toUShort()
+infix fun UShort.ushr(other: Long): UShort = (this.toShort() ushr other.toInt()).toUShort()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1423,7 +1363,7 @@ infix fun UShort.ushr(other: Long): UShort = (this.toInt() ushr other.toInt()).t
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.ushr(other: UByte): UShort = (this.toInt() ushr other.toInt()).toUShort()
+infix fun UShort.ushr(other: UByte): UShort = (this.toShort() ushr other.toInt()).toUShort()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1433,7 +1373,7 @@ infix fun UShort.ushr(other: UByte): UShort = (this.toInt() ushr other.toInt()).
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.ushr(other: UShort): UShort = (this.toInt() ushr other.toInt()).toUShort()
+infix fun UShort.ushr(other: UShort): UShort = (this.toShort() ushr other.toInt()).toUShort()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1443,7 +1383,7 @@ infix fun UShort.ushr(other: UShort): UShort = (this.toInt() ushr other.toInt())
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.ushr(other: UInt): UShort = (this.toInt() ushr other.toInt()).toUShort()
+infix fun UShort.ushr(other: UInt): UShort = (this.toShort() ushr other.toInt()).toUShort()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1453,7 +1393,7 @@ infix fun UShort.ushr(other: UInt): UShort = (this.toInt() ushr other.toInt()).t
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UShort.ushr(other: ULong): UShort = (this.toInt() ushr other.toInt()).toUShort()
+infix fun UShort.ushr(other: ULong): UShort = (this.toShort() ushr other.toInt()).toUShort()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1474,16 +1414,6 @@ infix fun UInt.shl(other: Byte): UInt = this shl other.toInt()
  * @version 0.3.0
  */
 infix fun UInt.shl(other: Short): UInt = this shl other.toInt()
-
-/**
- * Performs a shl operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise shl operation
- * @since 0.3.0
- * @version 0.3.0
- */
-infix fun UInt.shl(other: Int): UInt = this shl other
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1563,16 +1493,6 @@ infix fun UInt.shr(other: Short): UInt = this shr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UInt.shr(other: Int): UInt = this shr other
-
-/**
- * Performs a shr operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise shr operation
- * @since 0.3.0
- * @version 0.3.0
- */
 infix fun UInt.shr(other: Long): UInt = this shr other.toInt()
 
 /**
@@ -1623,7 +1543,7 @@ infix fun UInt.shr(other: ULong): UInt = this shr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UInt.ushr(other: Byte): UInt = this ushr other.toInt()
+infix fun UInt.ushr(other: Byte): UInt = (this.toInt() ushr other.toInt()).toUInt()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1633,7 +1553,7 @@ infix fun UInt.ushr(other: Byte): UInt = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UInt.ushr(other: Short): UInt = this ushr other.toInt()
+infix fun UInt.ushr(other: Short): UInt = (this.toInt() ushr other.toInt()).toUInt()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1643,7 +1563,7 @@ infix fun UInt.ushr(other: Short): UInt = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UInt.ushr(other: Int): UInt = this ushr other
+infix fun UInt.ushr(other: Int): UInt = (this.toInt() ushr other).toUInt()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1653,7 +1573,7 @@ infix fun UInt.ushr(other: Int): UInt = this ushr other
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UInt.ushr(other: Long): UInt = this ushr other.toInt()
+infix fun UInt.ushr(other: Long): UInt = (this.toInt() ushr other.toInt()).toUInt()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1663,7 +1583,7 @@ infix fun UInt.ushr(other: Long): UInt = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun UInt.ushr(other: UByte): UInt = this ushr other.toInt()
+infix fun UInt.ushr(other: UByte): UInt = (this.toInt() ushr other.toInt()).toUInt()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1703,7 +1623,7 @@ infix fun UInt.ushr(other: ULong): UInt = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shl(other: Byte): ULong = this shl other.toInt()
+infix fun ULong.shl(other: Byte): ULong = (this.toLong() shl other.toInt()).toULong()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1713,7 +1633,7 @@ infix fun ULong.shl(other: Byte): ULong = this shl other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shl(other: Short): ULong = this shl other.toInt()
+infix fun ULong.shl(other: Short): ULong = (this.toLong() shl other.toInt()).toULong()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1723,7 +1643,7 @@ infix fun ULong.shl(other: Short): ULong = this shl other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shl(other: Int): ULong = this shl other
+infix fun ULong.shl(other: Long): ULong = (this.toLong() shl other.toInt()).toULong()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1733,7 +1653,7 @@ infix fun ULong.shl(other: Int): ULong = this shl other
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shl(other: Long): ULong = this shl other.toInt()
+infix fun ULong.shl(other: UByte): ULong = (this.toLong() shl other.toInt()).toULong()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1743,7 +1663,7 @@ infix fun ULong.shl(other: Long): ULong = this shl other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shl(other: UByte): ULong = this shl other.toInt()
+infix fun ULong.shl(other: UShort): ULong = (this.toLong() shl other.toInt()).toULong()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1753,7 +1673,7 @@ infix fun ULong.shl(other: UByte): ULong = this shl other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shl(other: UShort): ULong = this shl other.toInt()
+infix fun ULong.shl(other: UInt): ULong = (this.toLong() shl other.toInt()).toULong()
 
 /**
  * Performs a shl operation on this value and [other]
@@ -1763,17 +1683,7 @@ infix fun ULong.shl(other: UShort): ULong = this shl other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shl(other: UInt): ULong = this shl other.toInt()
-
-/**
- * Performs a shl operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise shl operation
- * @since 0.3.0
- * @version 0.3.0
- */
-infix fun ULong.shl(other: ULong): ULong = this shl other.toInt()
+infix fun ULong.shl(other: ULong): ULong = (this.toLong() shl other.toInt()).toULong()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1783,7 +1693,7 @@ infix fun ULong.shl(other: ULong): ULong = this shl other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shr(other: Byte): ULong = this shr other.toInt()
+infix fun ULong.shr(other: Byte): ULong = (this.toLong() shr other.toInt()).toULong()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1793,7 +1703,7 @@ infix fun ULong.shr(other: Byte): ULong = this shr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shr(other: Short): ULong = this shr other.toInt()
+infix fun ULong.shr(other: Short): ULong = (this.toLong() shr other.toInt()).toULong()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1803,7 +1713,7 @@ infix fun ULong.shr(other: Short): ULong = this shr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shr(other: Int): ULong = this shr other
+infix fun ULong.shr(other: Long): ULong = (this.toLong() shr other.toInt()).toULong()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1813,7 +1723,7 @@ infix fun ULong.shr(other: Int): ULong = this shr other
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shr(other: Long): ULong = this shr other.toInt()
+infix fun ULong.shr(other: UByte): ULong = (this.toLong() shr other.toInt()).toULong()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1823,7 +1733,7 @@ infix fun ULong.shr(other: Long): ULong = this shr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shr(other: UByte): ULong = this shr other.toInt()
+infix fun ULong.shr(other: UShort): ULong = (this.toLong() shr other.toInt()).toULong()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1833,7 +1743,7 @@ infix fun ULong.shr(other: UByte): ULong = this shr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shr(other: UShort): ULong = this shr other.toInt()
+infix fun ULong.shr(other: UInt): ULong = (this.toLong() shr other.toInt()).toULong()
 
 /**
  * Performs a shr operation on this value and [other]
@@ -1843,17 +1753,7 @@ infix fun ULong.shr(other: UShort): ULong = this shr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.shr(other: UInt): ULong = this shr other.toInt()
-
-/**
- * Performs a shr operation on this value and [other]
- *
- * @param other The other value
- * @return The result of the bitwise shr operation
- * @since 0.3.0
- * @version 0.3.0
- */
-infix fun ULong.shr(other: ULong): ULong = this shr other.toInt()
+infix fun ULong.shr(other: ULong): ULong = (this.toLong() ushr other).toULong()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1863,7 +1763,7 @@ infix fun ULong.shr(other: ULong): ULong = this shr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.ushr(other: Byte): ULong = this ushr other.toInt()
+infix fun ULong.ushr(other: Byte): ULong = (this.toLong() ushr other).toULong()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1873,7 +1773,7 @@ infix fun ULong.ushr(other: Byte): ULong = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.ushr(other: Short): ULong = this ushr other.toInt()
+infix fun ULong.ushr(other: Short): ULong = (this.toLong() ushr other).toULong()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1883,7 +1783,7 @@ infix fun ULong.ushr(other: Short): ULong = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.ushr(other: Int): ULong = this ushr other
+infix fun ULong.ushr(other: Int): ULong = (this.toLong() ushr other).toULong()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1893,7 +1793,7 @@ infix fun ULong.ushr(other: Int): ULong = this ushr other
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.ushr(other: Long): ULong = this ushr other.toInt()
+infix fun ULong.ushr(other: Long): ULong = (this.toLong() ushr other).toULong()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1903,7 +1803,7 @@ infix fun ULong.ushr(other: Long): ULong = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.ushr(other: UByte): ULong = this ushr other.toInt()
+infix fun ULong.ushr(other: UByte): ULong = (this.toLong() ushr other.toInt()).toULong()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1913,7 +1813,7 @@ infix fun ULong.ushr(other: UByte): ULong = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.ushr(other: UShort): ULong = this ushr other.toInt()
+infix fun ULong.ushr(other: UShort): ULong = (this.toLong() ushr other.toInt()).toULong()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1923,7 +1823,7 @@ infix fun ULong.ushr(other: UShort): ULong = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.ushr(other: UInt): ULong = this ushr other.toInt()
+infix fun ULong.ushr(other: UInt): ULong = (this.toLong() ushr other.toInt()).toULong()
 
 /**
  * Performs an ushr operation on this value and [other]
@@ -1933,4 +1833,4 @@ infix fun ULong.ushr(other: UInt): ULong = this ushr other.toInt()
  * @since 0.3.0
  * @version 0.3.0
  */
-infix fun ULong.ushr(other: ULong): ULong = this ushr other.toInt()
+infix fun ULong.ushr(other: ULong): ULong = (this.toLong() ushr other.toInt()).toULong()
