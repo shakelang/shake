@@ -1,6 +1,7 @@
 import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
+import conventions.useKotest
 
 plugins {
     id("conventions.all")
@@ -15,6 +16,6 @@ val projectName = name
 
 kotlin {
     dependencies {
-        kotest()
     }
 }
+useKotest()

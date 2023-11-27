@@ -1,15 +1,27 @@
 package conventions
 
+import gradle.kotlin.dsl.accessors._bed5c5adebf3efe38c055e8c4dfb71ee.kotlin
 import groovy.lang.Closure
+import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.api.artifacts.ProjectDependency
+import org.gradle.api.tasks.testing.Test
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.getting
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import java.io.File
+
+fun Project.useKotest() {
+    apply(plugin="io.kotest.multiplatform")
+    kotlin.dependencies.kotest()
+    tasks.withType(Test::class.java).configureEach {
+        useJUnitPlatform()
+    }
+}
 
 fun KotlinMultiplatformExtension.dependencies(configure: KotlinMultiplatformExtensionDependencies.() -> Unit) {
     configure(dependencies)
