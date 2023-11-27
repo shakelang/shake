@@ -14,7 +14,10 @@ class ShakeInterpreter {
     val stack = ByteStack(1024 * 1024 * 10) // 10 MB stack size
 
     fun tick() {
+    }
 
+    fun createCodeInterpreter(code: ByteArray, localsSize: Int): ShakeCodeInterpreter {
+        return ShakeCodeInterpreter(code, localsSize)
     }
 
     inner class ShakeCodeInterpreter(
@@ -26,53 +29,55 @@ class ShakeInterpreter {
 
         var pc = 0
 
-        fun readByte(): Byte {
+        private fun readByte(): Byte {
             val byte = code[pc]
             pc++
             return byte
         }
 
-        fun readShort(): Short {
+        private fun readShort(): Short {
             val v = code.getShort(pc)
             pc += 2
             return v
         }
-        fun readInt(): Int {
+        private fun readInt(): Int {
             val v = code.getInt(pc)
             pc += 4
             return v
         }
-        fun readLong(): Long {
+        private fun readLong(): Long {
             val v = code.getLong(pc)
             pc += 8
             return v
         }
 
-        fun readUByte(): UByte {
+        private fun readUByte(): UByte {
             val v = code.getUnsignedByte(pc)
             pc++
             return v
         }
 
-        fun readUShort(): UShort {
+        private fun readUShort(): UShort {
             val v = code.getUnsignedShort(pc)
             pc += 2
             return v
         }
 
-        fun readUInt(): UInt {
+        private fun readUInt(): UInt {
             val v = code.getUnsignedInt(pc)
             pc += 4
             return v
         }
 
-        fun readULong(): ULong {
+        private fun readULong(): ULong {
             val v = code.getUnsignedLong(pc)
             pc += 8
             return v
         }
 
-
+        fun tick(times: Int) {
+            for (i in 0 until times) tick()
+        }
 
         fun tick() {
             val opcode = readByte()
@@ -89,26 +94,32 @@ class ShakeInterpreter {
 
                 Opcodes.BLOAD -> stack.push(locals[readUShort().toInt()])
                 Opcodes.SLOAD -> {
-                    stack.push(locals[readUShort().toInt()])
-                    stack.push(locals[readUShort().toInt() + 1])
+                    val pos = readUShort().toInt()
+                    stack.push(locals[pos])
+                    stack.push(locals[pos + 1])
                 }
                 Opcodes.ILOAD -> {
-                    for (i in 0 until 4) stack.push(locals[readUShort().toInt() + i])
+                    val pos = readUShort().toInt()
+                    for (i in 0 until 4) stack.push(locals[pos + i])
                 }
                 Opcodes.LLOAD -> {
-                    for (i in 0 until 8) stack.push(locals[readUShort().toInt() + i])
+                    val pos = readUShort().toInt()
+                    for (i in 0 until 8) stack.push(locals[pos + i])
                 }
 
                 Opcodes.BSTORE -> locals[readUShort().toInt()] = stack.pop()
                 Opcodes.SSTORE -> {
-                    locals[readUShort().toInt()] = stack.pop()
-                    locals[readUShort().toInt() + 1] = stack.pop()
+                    val pos = readUShort().toInt()
+                    locals[pos+1] = stack.pop()
+                    locals[pos] = stack.pop()
                 }
                 Opcodes.ISTORE -> {
-                    for (i in 0 until 4) locals[readUShort().toInt() + i] = stack.pop()
+                    val pos = readUShort().toInt()
+                    for (i in 3 downTo  0) locals[pos + i] = stack.pop()
                 }
                 Opcodes.LSTORE -> {
-                    for (i in 0 until 8) locals[readUShort().toInt() + i] = stack.pop()
+                    val pos = readUShort().toInt()
+                    for (i in 7 downTo 0) locals[pos + i] = stack.pop()
                 }
 
                 Opcodes.BADD -> stack.push(stack.pop() + stack.pop())
@@ -118,16 +129,56 @@ class ShakeInterpreter {
                 Opcodes.FADD -> stack.push(stack.popFloat() + stack.popFloat())
                 Opcodes.DADD -> stack.push(stack.popDouble() + stack.popDouble())
 
-                Opcodes.BSUB -> stack.push(stack.pop() - stack.pop())
-                Opcodes.SSUB -> stack.push(stack.popShort() - stack.popShort())
-                Opcodes.ISUB -> stack.push(stack.popInt() - stack.popInt())
-                Opcodes.LSUB -> stack.push(stack.popLong() - stack.popLong())
-                Opcodes.UBSUB -> stack.push((stack.popUByte() - stack.popUByte()).toByte())
-                Opcodes.USSUB -> stack.push((stack.popUShort() - stack.popUShort()).toShort())
-                Opcodes.UISUB -> stack.push((stack.popUInt() - stack.popUInt()).toInt())
-                Opcodes.ULSUB -> stack.push((stack.popULong() - stack.popULong()).toLong())
-                Opcodes.FSUB -> stack.push(stack.popFloat() - stack.popFloat())
-                Opcodes.DSUB -> stack.push(stack.popDouble() - stack.popDouble())
+                Opcodes.BSUB -> {
+                    val a = stack.pop()
+                    val b = stack.pop()
+                    stack.push(b - a)
+                }
+                Opcodes.SSUB -> {
+                    val a = stack.popShort()
+                    val b = stack.popShort()
+                    stack.push(b - a)
+                }
+                Opcodes.ISUB -> {
+                    val a = stack.popInt()
+                    val b = stack.popInt()
+                    stack.push(b - a)
+                }
+                Opcodes.LSUB -> {
+                    val a = stack.popLong()
+                    val b = stack.popLong()
+                    stack.push(b - a)
+                }
+                Opcodes.UBSUB -> {
+                    val a = stack.popUByte()
+                    val b = stack.popUByte()
+                    stack.push((b - a).toByte())
+                }
+                Opcodes.USSUB -> {
+                    val a = stack.popUShort()
+                    val b = stack.popUShort()
+                    stack.push((b - a).toShort())
+                }
+                Opcodes.UISUB -> {
+                    val a = stack.popUInt()
+                    val b = stack.popUInt()
+                    stack.push((b - a).toInt())
+                }
+                Opcodes.ULSUB -> {
+                    val a = stack.popULong()
+                    val b = stack.popULong()
+                    stack.push((b - a).toLong())
+                }
+                Opcodes.FSUB -> {
+                    val a = stack.popFloat()
+                    val b = stack.popFloat()
+                    stack.push(b - a)
+                }
+                Opcodes.DSUB -> {
+                    val a = stack.popDouble()
+                    val b = stack.popDouble()
+                    stack.push(b - a)
+                }
 
                 Opcodes.BMUL -> stack.push(stack.pop() * stack.pop())
                 Opcodes.SMUL -> stack.push(stack.popShort() * stack.popShort())
@@ -140,25 +191,107 @@ class ShakeInterpreter {
                 Opcodes.UIMUL -> stack.push((stack.popUInt() * stack.popUInt()).toInt())
                 Opcodes.ULMUL -> stack.push((stack.popULong() * stack.popULong()).toLong())
 
-                Opcodes.BDIV -> stack.push(stack.pop() / stack.pop())
-                Opcodes.SDIV -> stack.push(stack.popShort() / stack.popShort())
-                Opcodes.IDIV -> stack.push(stack.popInt() / stack.popInt())
-                Opcodes.LDIV -> stack.push(stack.popLong() / stack.popLong())
-                Opcodes.FDIV -> stack.push(stack.popFloat() / stack.popFloat())
-                Opcodes.DDIV -> stack.push(stack.popDouble() / stack.popDouble())
-                Opcodes.UBDIV -> stack.push((stack.popUByte() / stack.popUByte()).toByte())
-                Opcodes.USDIV -> stack.push((stack.popUShort() / stack.popUShort()).toShort())
-                Opcodes.UIDIV -> stack.push((stack.popUInt() / stack.popUInt()).toInt())
-                Opcodes.ULDIV -> stack.push((stack.popULong() / stack.popULong()).toLong())
+                Opcodes.BDIV -> {
+                    val a = stack.pop()
+                    val b = stack.pop()
+                    stack.push(b / a)
+                }
+                Opcodes.SDIV -> {
+                    val a = stack.popShort()
+                    val b = stack.popShort()
+                    stack.push(b / a)
+                }
+                Opcodes.IDIV -> {
+                    val a = stack.popInt()
+                    val b = stack.popInt()
+                    stack.push(b / a)
+                }
+                Opcodes.LDIV -> {
+                    val a = stack.popLong()
+                    val b = stack.popLong()
+                    stack.push(b / a)
+                }
+                Opcodes.FDIV -> {
+                    val a = stack.popFloat()
+                    val b = stack.popFloat()
+                    stack.push(b / a)
+                }
+                Opcodes.DDIV -> {
+                    val a = stack.popDouble()
+                    val b = stack.popDouble()
+                    stack.push(b / a)
+                }
+                Opcodes.UBDIV -> {
+                    val a = stack.popUByte()
+                    val b = stack.popUByte()
+                    stack.push((b / a).toByte())
+                }
+                Opcodes.USDIV -> {
+                    val a = stack.popUShort()
+                    val b = stack.popUShort()
+                    stack.push((b / a).toShort())
+                }
+                Opcodes.UIDIV -> {
+                    val a = stack.popUInt()
+                    val b = stack.popUInt()
+                    stack.push((b / a).toInt())
+                }
+                Opcodes.ULDIV -> {
+                    val a = stack.popULong()
+                    val b = stack.popULong()
+                    stack.push((b / a).toLong())
+                }
 
-                Opcodes.BMOD -> stack.push(stack.pop() % stack.pop())
-                Opcodes.SMOD -> stack.push(stack.popShort() % stack.popShort())
-                Opcodes.IMOD -> stack.push(stack.popInt() % stack.popInt())
-                Opcodes.LMOD -> stack.push(stack.popLong() % stack.popLong())
-                Opcodes.UBMOD -> stack.push((stack.popUByte() % stack.popUByte()).toByte())
-                Opcodes.USMOD -> stack.push((stack.popUShort() % stack.popUShort()).toShort())
-                Opcodes.UIMOD -> stack.push((stack.popUInt() % stack.popUInt()).toInt())
-                Opcodes.ULMOD -> stack.push((stack.popULong() % stack.popULong()).toLong())
+                Opcodes.BMOD -> {
+                    val a = stack.pop()
+                    val b = stack.pop()
+                    stack.push(b % a)
+                }
+                Opcodes.SMOD -> {
+                    val a = stack.popShort()
+                    val b = stack.popShort()
+                    stack.push(b % a)
+                }
+                Opcodes.IMOD -> {
+                    val a = stack.popInt()
+                    val b = stack.popInt()
+                    stack.push(b % a)
+                }
+                Opcodes.LMOD -> {
+                    val a = stack.popLong()
+                    val b = stack.popLong()
+                    stack.push(b % a)
+                }
+                Opcodes.UBMOD -> {
+                    val a = stack.popUByte()
+                    val b = stack.popUByte()
+                    stack.push((b % a).toByte())
+                }
+                Opcodes.USMOD -> {
+                    val a = stack.popUShort()
+                    val b = stack.popUShort()
+                    stack.push((b % a).toShort())
+                }
+                Opcodes.UIMOD -> {
+                    val a = stack.popUInt()
+                    val b = stack.popUInt()
+                    stack.push((b % a).toInt())
+                }
+                Opcodes.ULMOD -> {
+                    val a = stack.popULong()
+                    val b = stack.popULong()
+                    stack.push((b % a).toLong())
+                }
+                Opcodes.FMOD -> {
+                    val a = stack.popFloat()
+                    val b = stack.popFloat()
+                    stack.push(b % a)
+                }
+                Opcodes.DMOD -> {
+                    val a = stack.popDouble()
+                    val b = stack.popDouble()
+                    stack.push(b % a)
+                }
 
                 Opcodes.BAND -> stack.push(stack.pop() and stack.pop())
                 Opcodes.SAND -> stack.push(stack.popShort() and stack.popShort())
@@ -180,20 +313,68 @@ class ShakeInterpreter {
                 Opcodes.INOT -> stack.push(stack.popInt().inv())
                 Opcodes.LNOT -> stack.push(stack.popLong().inv())
 
-                Opcodes.BSHL -> stack.push(stack.pop() shl stack.pop())
-                Opcodes.SSHL -> stack.push(stack.popShort() shl stack.pop())
-                Opcodes.ISHL -> stack.push(stack.popInt() shl stack.pop())
-                Opcodes.LSHL -> stack.push(stack.popLong() shl stack.pop())
+                Opcodes.BSHL -> {
+                    val a = stack.pop()
+                    val b = stack.pop()
+                    stack.push(b shl a)
+                }
+                Opcodes.SSHL -> {
+                    val a = stack.popShort()
+                    val b = stack.popShort()
+                    stack.push(b shl a)
+                }
+                Opcodes.ISHL -> {
+                    val a = stack.popInt()
+                    val b = stack.popInt()
+                    stack.push(b shl a)
+                }
+                Opcodes.LSHL -> {
+                    val a = stack.popLong()
+                    val b = stack.popLong()
+                    stack.push(b shl a)
+                }
 
-                Opcodes.BSHR -> stack.push(stack.pop() shr stack.pop())
-                Opcodes.SSHR -> stack.push(stack.popShort() shr stack.pop())
-                Opcodes.ISHR -> stack.push(stack.popInt() shr stack.pop())
-                Opcodes.LSHR -> stack.push(stack.popLong() shr stack.pop())
+                Opcodes.BSHR -> {
+                    val a = stack.pop()
+                    val b = stack.pop()
+                    stack.push(b shr a)
+                }
+                Opcodes.SSHR -> {
+                    val a = stack.popShort()
+                    val b = stack.popShort()
+                    stack.push(b shr a)
+                }
+                Opcodes.ISHR -> {
+                    val a = stack.popInt()
+                    val b = stack.popInt()
+                    stack.push(b shr a)
+                }
+                Opcodes.LSHR -> {
+                    val a = stack.popLong()
+                    val b = stack.popLong()
+                    stack.push(b shr a)
+                }
 
-                Opcodes.BSHRU -> stack.push(stack.popUByte() ushr stack.popUByte())
-                Opcodes.SSHRU -> stack.push(stack.popUShort() ushr stack.popUShort())
-                Opcodes.ISHRU -> stack.push(stack.popUInt() ushr stack.popUInt())
-                Opcodes.LSHRU -> stack.push(stack.popULong() ushr stack.popULong())
+                Opcodes.BSHRU -> {
+                    val a = stack.pop()
+                    val b = stack.pop()
+                    stack.push(b ushr a)
+                }
+                Opcodes.SSHRU -> {
+                    val a = stack.popShort()
+                    val b = stack.popShort()
+                    stack.push(b ushr a)
+                }
+                Opcodes.ISHRU -> {
+                    val a = stack.popInt()
+                    val b = stack.popInt()
+                    stack.push(b ushr a)
+                }
+                Opcodes.LSHRU -> {
+                    val a = stack.popLong()
+                    val b = stack.popLong()
+                    stack.push(b ushr a)
+                }
 
                 Opcodes.PCAST -> {
                     val type = readByte()

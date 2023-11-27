@@ -70,4 +70,14 @@ class ByteStack(
     fun push(uInt: UInt) = push(uInt.toInt())
     @JvmName("pushULong")
     fun push(uLong: ULong) = push(uLong.toLong())
+
+    fun toByteArray(): ByteArray {
+        val bytes = ByteArray(size)
+        var element = top
+        for (i in 0 until size) {
+            bytes[i] = element!!.value
+            element = element.below
+        }
+        return bytes
+    }
 }
