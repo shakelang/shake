@@ -120,7 +120,28 @@ class ShakeBytecodeGenerator(
     fun sshru() = addByte(Opcodes.SSHRU)
     fun ishru() = addByte(Opcodes.ISHRU)
     fun lshru() = addByte(Opcodes.LSHRU)
+
+    fun binc() = addByte(Opcodes.BINC)
+    fun sinc() = addByte(Opcodes.SINC)
+    fun iinc() = addByte(Opcodes.IINC)
+    fun linc() = addByte(Opcodes.LINC)
+
+    fun bdec() = addByte(Opcodes.BDEC)
+    fun sdec() = addByte(Opcodes.SDEC)
+    fun idec() = addByte(Opcodes.IDEC)
+    fun ldec() = addByte(Opcodes.LDEC)
+    fun fdec() = addByte(Opcodes.FDEC)
+    fun ddec() = addByte(Opcodes.DDEC)
+
+    fun bcmp() = addByte(Opcodes.BCMP)
+    fun scmp() = addByte(Opcodes.SCMP)
+    fun icmp() = addByte(Opcodes.ICMP)
+    fun lcmp() = addByte(Opcodes.LCMP)
+    fun fcmp() = addByte(Opcodes.FCMP)
+    fun dcmp() = addByte(Opcodes.DCMP)
+
     fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
+
 
     fun toByteArray() = bytes.toByteArray()
 }

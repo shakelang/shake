@@ -293,6 +293,11 @@ class ShakeInterpreter {
                     stack.push(b % a)
                 }
 
+                Opcodes.BNEG -> stack.push(stack.pop().inv())
+                Opcodes.SNEG -> stack.push(stack.popShort().inv())
+                Opcodes.INEG -> stack.push(stack.popInt().inv())
+                Opcodes.LNEG -> stack.push(stack.popLong().inv())
+
                 Opcodes.BAND -> stack.push(stack.pop() and stack.pop())
                 Opcodes.SAND -> stack.push(stack.popShort() and stack.popShort())
                 Opcodes.IAND -> stack.push(stack.popInt() and stack.popInt())
@@ -374,6 +379,56 @@ class ShakeInterpreter {
                     val a = stack.popLong()
                     val b = stack.popLong()
                     stack.push(b ushr a)
+                }
+
+                Opcodes.BINC -> stack.push(stack.pop() + 1)
+                Opcodes.SINC -> stack.push(stack.popShort() + 1)
+                Opcodes.IINC -> stack.push(stack.popInt() + 1)
+                Opcodes.LINC -> stack.push(stack.popLong() + 1)
+                Opcodes.FINC -> stack.push(stack.popFloat() + 1)
+                Opcodes.DINC -> stack.push(stack.popDouble() + 1)
+
+                Opcodes.BDEC -> stack.push(stack.pop() - 1)
+                Opcodes.SDEC -> stack.push(stack.popShort() - 1)
+                Opcodes.IDEC -> stack.push(stack.popInt() - 1)
+                Opcodes.LDEC -> stack.push(stack.popLong() - 1)
+                Opcodes.FDEC -> stack.push(stack.popFloat() - 1)
+                Opcodes.DDEC -> stack.push(stack.popDouble() - 1)
+
+                Opcodes.BCMP -> {
+                    val a = stack.pop()
+                    val b = stack.pop()
+                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                }
+
+                Opcodes.SCMP -> {
+                    val a = stack.popShort()
+                    val b = stack.popShort()
+                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                }
+
+                Opcodes.ICMP -> {
+                    val a = stack.popInt()
+                    val b = stack.popInt()
+                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                }
+
+                Opcodes.LCMP -> {
+                    val a = stack.popLong()
+                    val b = stack.popLong()
+                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                }
+
+                Opcodes.FCMP -> {
+                    val a = stack.popFloat()
+                    val b = stack.popFloat()
+                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                }
+
+                Opcodes.DCMP -> {
+                    val a = stack.popDouble()
+                    val b = stack.popDouble()
+                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
                 }
 
                 Opcodes.PCAST -> {
