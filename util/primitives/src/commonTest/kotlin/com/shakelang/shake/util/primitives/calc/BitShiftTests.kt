@@ -1,3 +1,4 @@
+@file:Suppress("unused")
 package com.shakelang.shake.util.primitives.calc
 
 import io.kotest.core.spec.style.FreeSpec
