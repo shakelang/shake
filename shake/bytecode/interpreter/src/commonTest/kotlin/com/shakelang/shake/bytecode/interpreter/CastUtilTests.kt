@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 
 class CastUtilTests : FreeSpec({
 
-    "test byte to byte cast" {
+    "byte to byte cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.BYTE)
@@ -15,7 +15,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test byte to short cast" {
+    "byte to short cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.SHORT)
@@ -23,7 +23,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test byte to int cast" {
+    "byte to int cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.INT)
@@ -31,7 +31,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test byte to long cast" {
+    "byte to long cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.LONG)
@@ -39,7 +39,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test byte to float cast" {
+    "byte to float cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.FLOAT)
@@ -47,7 +47,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test byte to double cast" {
+    "byte to double cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.DOUBLE)
@@ -55,7 +55,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test byte to ubyte cast" {
+    "byte to ubyte cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.UBYTE)
@@ -63,7 +63,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test byte to ushort cast" {
+    "byte to ushort cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.USHORT)
@@ -71,7 +71,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test byte to uint cast" {
+    "byte to uint cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.UINT)
@@ -79,7 +79,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test byte to ulong cast" {
+    "byte to ulong cast" {
         val stack = ByteStack()
         stack.push(1.toByte())
         CastUtil.performCast(stack, PCast.ULONG)
@@ -87,7 +87,7 @@ class CastUtilTests : FreeSpec({
         stack.popULong() shouldBe 1.toULong()
     }
 
-    "test short to byte cast" {
+    "short to byte cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.BYTE)
@@ -95,7 +95,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test short to short cast" {
+    "short to short cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.SHORT)
@@ -103,7 +103,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test short to int cast" {
+    "short to int cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.INT)
@@ -111,7 +111,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test short to long cast" {
+    "short to long cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.LONG)
@@ -119,7 +119,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test short to float cast" {
+    "short to float cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.FLOAT)
@@ -127,7 +127,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test short to double cast" {
+    "short to double cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.DOUBLE)
@@ -135,7 +135,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test short to ubyte cast" {
+    "short to ubyte cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.UBYTE)
@@ -143,7 +143,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test short to ushort cast" {
+    "short to ushort cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.USHORT)
@@ -151,7 +151,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test short to uint cast" {
+    "short to uint cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.UINT)
@@ -159,7 +159,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test short to ulong cast" {
+    "short to ulong cast" {
         val stack = ByteStack()
         stack.push(1.toShort())
         CastUtil.performCast(stack, PCast.SHORT shl 4 or PCast.ULONG)
@@ -167,7 +167,7 @@ class CastUtilTests : FreeSpec({
         stack.popULong() shouldBe 1.toULong()
     }
 
-    "test int to byte cast" {
+    "int to byte cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.BYTE)
@@ -175,7 +175,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test int to short cast" {
+    "int to short cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.SHORT)
@@ -183,7 +183,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test int to int cast" {
+    "int to int cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.INT)
@@ -191,7 +191,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test int to long cast" {
+    "int to long cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.LONG)
@@ -199,7 +199,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test int to float cast" {
+    "int to float cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.FLOAT)
@@ -207,7 +207,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test int to double cast" {
+    "int to double cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.DOUBLE)
@@ -215,7 +215,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test int to ubyte cast" {
+    "int to ubyte cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.UBYTE)
@@ -223,7 +223,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test int to ushort cast" {
+    "int to ushort cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.USHORT)
@@ -231,7 +231,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test int to uint cast" {
+    "int to uint cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.UINT)
@@ -239,7 +239,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test int to ulong cast" {
+    "int to ulong cast" {
         val stack = ByteStack()
         stack.push(1)
         CastUtil.performCast(stack, PCast.INT shl 4 or PCast.ULONG)
@@ -247,7 +247,7 @@ class CastUtilTests : FreeSpec({
         stack.popULong() shouldBe 1.toULong()
     }
 
-    "test long to byte cast" {
+    "long to byte cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.BYTE)
@@ -255,7 +255,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test long to short cast" {
+    "long to short cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.SHORT)
@@ -263,7 +263,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test long to int cast" {
+    "long to int cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.INT)
@@ -271,7 +271,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test long to long cast" {
+    "long to long cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.LONG)
@@ -279,7 +279,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test long to float cast" {
+    "long to float cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.FLOAT)
@@ -287,7 +287,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test long to double cast" {
+    "long to double cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.DOUBLE)
@@ -295,7 +295,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test long to ubyte cast" {
+    "long to ubyte cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.UBYTE)
@@ -303,7 +303,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test long to ushort cast" {
+    "long to ushort cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.USHORT)
@@ -311,7 +311,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test long to uint cast" {
+    "long to uint cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.UINT)
@@ -319,7 +319,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test long to ulong cast" {
+    "long to ulong cast" {
         val stack = ByteStack()
         stack.push(1L)
         CastUtil.performCast(stack, PCast.LONG shl 4 or PCast.ULONG)
@@ -327,7 +327,7 @@ class CastUtilTests : FreeSpec({
         stack.popULong() shouldBe 1.toULong()
     }
 
-    "test float to byte cast" {
+    "float to byte cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.BYTE)
@@ -335,7 +335,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test float to short cast" {
+    "float to short cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.SHORT)
@@ -343,7 +343,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test float to int cast" {
+    "float to int cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.INT)
@@ -351,7 +351,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test float to long cast" {
+    "float to long cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.LONG)
@@ -359,7 +359,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test float to float cast" {
+    "float to float cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.FLOAT)
@@ -367,7 +367,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test float to double cast" {
+    "float to double cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.DOUBLE)
@@ -375,7 +375,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test float to ubyte cast" {
+    "float to ubyte cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.UBYTE)
@@ -383,7 +383,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test float to ushort cast" {
+    "float to ushort cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.USHORT)
@@ -391,7 +391,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test float to uint cast" {
+    "float to uint cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.UINT)
@@ -399,7 +399,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test float to ulong cast" {
+    "float to ulong cast" {
         val stack = ByteStack()
         stack.push(1.0f)
         CastUtil.performCast(stack, PCast.FLOAT shl 4 or PCast.ULONG)
@@ -407,7 +407,7 @@ class CastUtilTests : FreeSpec({
         stack.popULong() shouldBe 1.toULong()
     }
 
-    "test double to byte cast" {
+    "double to byte cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.BYTE)
@@ -415,7 +415,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test double to short cast" {
+    "double to short cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.SHORT)
@@ -423,7 +423,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test double to int cast" {
+    "double to int cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.INT)
@@ -431,7 +431,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test double to long cast" {
+    "double to long cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.LONG)
@@ -439,7 +439,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test double to float cast" {
+    "double to float cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.FLOAT)
@@ -447,7 +447,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test double to double cast" {
+    "double to double cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.DOUBLE)
@@ -455,7 +455,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test double to ubyte cast" {
+    "double to ubyte cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.UBYTE)
@@ -463,7 +463,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test double to ushort cast" {
+    "double to ushort cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.USHORT)
@@ -471,7 +471,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test double to uint cast" {
+    "double to uint cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.UINT)
@@ -479,7 +479,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test double to ulong cast" {
+    "double to ulong cast" {
         val stack = ByteStack()
         stack.push(1.0)
         CastUtil.performCast(stack, PCast.DOUBLE shl 4 or PCast.ULONG)
@@ -487,7 +487,7 @@ class CastUtilTests : FreeSpec({
         stack.popULong() shouldBe 1.toULong()
     }
 
-    "test ubyte to byte cast" {
+    "ubyte to byte cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.BYTE)
@@ -495,7 +495,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test ubyte to short cast" {
+    "ubyte to short cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.SHORT)
@@ -503,7 +503,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test ubyte to int cast" {
+    "ubyte to int cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.INT)
@@ -511,7 +511,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test ubyte to long cast" {
+    "ubyte to long cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.LONG)
@@ -519,7 +519,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test ubyte to float cast" {
+    "ubyte to float cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.FLOAT)
@@ -527,7 +527,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test ubyte to double cast" {
+    "ubyte to double cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.DOUBLE)
@@ -535,7 +535,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test ubyte to ubyte cast" {
+    "ubyte to ubyte cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.UBYTE)
@@ -543,7 +543,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test ubyte to ushort cast" {
+    "ubyte to ushort cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.USHORT)
@@ -551,7 +551,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test ubyte to uint cast" {
+    "ubyte to uint cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.UINT)
@@ -559,7 +559,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test ubyte to ulong cast" {
+    "ubyte to ulong cast" {
         val stack = ByteStack()
         stack.push(1.toUByte())
         CastUtil.performCast(stack, PCast.UBYTE shl 4 or PCast.ULONG)
@@ -567,7 +567,7 @@ class CastUtilTests : FreeSpec({
         stack.popULong() shouldBe 1.toULong()
     }
 
-    "test ushort to byte cast" {
+    "ushort to byte cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.BYTE)
@@ -575,7 +575,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test ushort to short cast" {
+    "ushort to short cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.SHORT)
@@ -583,7 +583,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test ushort to int cast" {
+    "ushort to int cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.INT)
@@ -591,7 +591,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test ushort to long cast" {
+    "ushort to long cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.LONG)
@@ -599,7 +599,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test ushort to float cast" {
+    "ushort to float cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.FLOAT)
@@ -607,7 +607,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test ushort to double cast" {
+    "ushort to double cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.DOUBLE)
@@ -615,7 +615,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test ushort to ubyte cast" {
+    "ushort to ubyte cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.UBYTE)
@@ -623,7 +623,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test ushort to ushort cast" {
+    "ushort to ushort cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.USHORT)
@@ -631,7 +631,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test ushort to uint cast" {
+    "ushort to uint cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.UINT)
@@ -639,7 +639,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test ushort to ulong cast" {
+    "ushort to ulong cast" {
         val stack = ByteStack()
         stack.push(1.toUShort())
         CastUtil.performCast(stack, PCast.USHORT shl 4 or PCast.ULONG)
@@ -647,7 +647,7 @@ class CastUtilTests : FreeSpec({
         stack.popULong() shouldBe 1.toULong()
     }
 
-    "test uint to byte cast" {
+    "uint to byte cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.BYTE)
@@ -655,7 +655,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test uint to short cast" {
+    "uint to short cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.SHORT)
@@ -663,7 +663,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test uint to int cast" {
+    "uint to int cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.INT)
@@ -671,7 +671,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test uint to long cast" {
+    "uint to long cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.LONG)
@@ -679,7 +679,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test uint to float cast" {
+    "uint to float cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.FLOAT)
@@ -687,7 +687,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test uint to double cast" {
+    "uint to double cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.DOUBLE)
@@ -695,7 +695,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test uint to ubyte cast" {
+    "uint to ubyte cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.UBYTE)
@@ -703,7 +703,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test uint to ushort cast" {
+    "uint to ushort cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.USHORT)
@@ -711,7 +711,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test uint to uint cast" {
+    "uint to uint cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.UINT)
@@ -719,7 +719,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test uint to ulong cast" {
+    "uint to ulong cast" {
         val stack = ByteStack()
         stack.push(1.toUInt())
         CastUtil.performCast(stack, PCast.UINT shl 4 or PCast.ULONG)
@@ -727,7 +727,7 @@ class CastUtilTests : FreeSpec({
         stack.popULong() shouldBe 1.toULong()
     }
 
-    "test ulong to byte cast" {
+    "ulong to byte cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.BYTE)
@@ -735,7 +735,7 @@ class CastUtilTests : FreeSpec({
         stack.pop() shouldBe 1.toByte()
     }
 
-    "test ulong to short cast" {
+    "ulong to short cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.SHORT)
@@ -743,7 +743,7 @@ class CastUtilTests : FreeSpec({
         stack.popShort() shouldBe 1.toShort()
     }
 
-    "test ulong to int cast" {
+    "ulong to int cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.INT)
@@ -751,7 +751,7 @@ class CastUtilTests : FreeSpec({
         stack.popInt() shouldBe 1
     }
 
-    "test ulong to long cast" {
+    "ulong to long cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.LONG)
@@ -759,7 +759,7 @@ class CastUtilTests : FreeSpec({
         stack.popLong() shouldBe 1L
     }
 
-    "test ulong to float cast" {
+    "ulong to float cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.FLOAT)
@@ -767,7 +767,7 @@ class CastUtilTests : FreeSpec({
         stack.popFloat() shouldBe 1.0f
     }
 
-    "test ulong to double cast" {
+    "ulong to double cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.DOUBLE)
@@ -775,7 +775,7 @@ class CastUtilTests : FreeSpec({
         stack.popDouble() shouldBe 1.0
     }
 
-    "test ulong to ubyte cast" {
+    "ulong to ubyte cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.UBYTE)
@@ -783,7 +783,7 @@ class CastUtilTests : FreeSpec({
         stack.popUByte() shouldBe 1.toUByte()
     }
 
-    "test ulong to ushort cast" {
+    "ulong to ushort cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.USHORT)
@@ -791,7 +791,7 @@ class CastUtilTests : FreeSpec({
         stack.popUShort() shouldBe 1.toUShort()
     }
 
-    "test ulong to uint cast" {
+    "ulong to uint cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.UINT)
@@ -799,7 +799,7 @@ class CastUtilTests : FreeSpec({
         stack.popUInt() shouldBe 1.toUInt()
     }
 
-    "test ulong to ulong cast" {
+    "ulong to ulong cast" {
         val stack = ByteStack()
         stack.push(1.toULong())
         CastUtil.performCast(stack, PCast.ULONG shl 4 or PCast.ULONG)

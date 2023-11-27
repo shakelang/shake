@@ -84,41 +84,48 @@ object Opcodes {
     val FMOD: Byte = 58 // Syntax: FMOD ; Modulo two floats
     val DMOD: Byte = 59 // Syntax: DMOD ; Modulo two doubles
 
+    val BNEG: Byte = 60 // Syntax: BNEG ; Negate a byte
+    val SNEG: Byte = 61 // Syntax: SNEG ; Negate a short
+    val INEG: Byte = 62 // Syntax: INEG ; Negate an int
+    val LNEG: Byte = 63 // Syntax: LNEG ; Negate a long
+    val FNEG: Byte = 64 // Syntax: FNEG ; Negate a float
+    val DNEG: Byte = 65 // Syntax: DNEG ; Negate a double
+
     // Bitwise instructions
-    val BAND: Byte = 60 // Syntax: BAND ; Bitwise AND two bytes
-    val SAND: Byte = 61 // Syntax: SAND ; Bitwise AND two shorts
-    val IAND: Byte = 62 // Syntax: IAND ; Bitwise AND two ints
-    val LAND: Byte = 63 // Syntax: LAND ; Bitwise AND two longs
+    val BAND: Byte = 66 // Syntax: BAND ; Bitwise AND two bytes
+    val SAND: Byte = 67 // Syntax: SAND ; Bitwise AND two shorts
+    val IAND: Byte = 68 // Syntax: IAND ; Bitwise AND two ints
+    val LAND: Byte = 69 // Syntax: LAND ; Bitwise AND two longs
 
-    val BOR: Byte = 64 // Syntax: BOR ; Bitwise OR two bytes
-    val SOR: Byte = 65 // Syntax: SOR ; Bitwise OR two shorts
-    val IOR: Byte = 66 // Syntax: IOR ; Bitwise OR two ints
-    val LOR: Byte = 67 // Syntax: LOR ; Bitwise OR two longs
+    val BOR: Byte = 70 // Syntax: BOR ; Bitwise OR two bytes
+    val SOR: Byte = 71 // Syntax: SOR ; Bitwise OR two shorts
+    val IOR: Byte = 72 // Syntax: IOR ; Bitwise OR two ints
+    val LOR: Byte = 73 // Syntax: LOR ; Bitwise OR two longs
 
-    val BXOR: Byte = 68 // Syntax: BXOR ; Bitwise XOR two bytes
-    val SXOR: Byte = 69 // Syntax: SXOR ; Bitwise XOR two shorts
-    val IXOR: Byte = 70 // Syntax: IXOR ; Bitwise XOR two ints
-    val LXOR: Byte = 71 // Syntax: LXOR ; Bitwise XOR two longs
+    val BXOR: Byte = 74 // Syntax: BXOR ; Bitwise XOR two bytes
+    val SXOR: Byte = 75 // Syntax: SXOR ; Bitwise XOR two shorts
+    val IXOR: Byte = 76 // Syntax: IXOR ; Bitwise XOR two ints
+    val LXOR: Byte = 77 // Syntax: LXOR ; Bitwise XOR two longs
 
-    val BNOT: Byte = 72 // Syntax: BNOT ; Bitwise NOT a byte
-    val SNOT: Byte = 73 // Syntax: SNOT ; Bitwise NOT a short
-    val INOT: Byte = 74 // Syntax: INOT ; Bitwise NOT an int
-    val LNOT: Byte = 75 // Syntax: LNOT ; Bitwise NOT a long
+    val BNOT: Byte = 78 // Syntax: BNOT ; Bitwise NOT a byte
+    val SNOT: Byte = 79 // Syntax: SNOT ; Bitwise NOT a short
+    val INOT: Byte = 80 // Syntax: INOT ; Bitwise NOT an int
+    val LNOT: Byte = 81 // Syntax: LNOT ; Bitwise NOT a long
 
-    val BSHL: Byte = 76 // Syntax: BSHL ; Bitwise shift left a byte
-    val SSHL: Byte = 77 // Syntax: SSHL ; Bitwise shift left a short
-    val ISHL: Byte = 78 // Syntax: ISHL ; Bitwise shift left an int
-    val LSHL: Byte = 79 // Syntax: LSHL ; Bitwise shift left a long
+    val BSHL: Byte = 82 // Syntax: BSHL ; Bitwise shift left a byte
+    val SSHL: Byte = 83 // Syntax: SSHL ; Bitwise shift left a short
+    val ISHL: Byte = 84 // Syntax: ISHL ; Bitwise shift left an int
+    val LSHL: Byte = 85 // Syntax: LSHL ; Bitwise shift left a long
 
-    val BSHR: Byte = 80 // Syntax: BSHR ; Bitwise shift right a byte
-    val SSHR: Byte = 81 // Syntax: SSHR ; Bitwise shift right a short
-    val ISHR: Byte = 82 // Syntax: ISHR ; Bitwise shift right an int
-    val LSHR: Byte = 83 // Syntax: LSHR ; Bitwise shift right a long
+    val BSHR: Byte = 86 // Syntax: BSHR ; Bitwise shift right a byte
+    val SSHR: Byte = 87 // Syntax: SSHR ; Bitwise shift right a short
+    val ISHR: Byte = 88 // Syntax: ISHR ; Bitwise shift right an int
+    val LSHR: Byte = 89 // Syntax: LSHR ; Bitwise shift right a long
 
-    val BSHRU: Byte = 84 // Syntax: BSHRU ; Bitwise shift right unsigned a byte
-    val SSHRU: Byte = 85 // Syntax: SSHRU ; Bitwise shift right unsigned a short
-    val ISHRU: Byte = 86 // Syntax: ISHRU ; Bitwise shift right unsigned an int
-    val LSHRU: Byte = 87 // Syntax: LSHRU ; Bitwise shift right unsigned a long
+    val BSHRU: Byte = 90 // Syntax: BSHRU ; Bitwise shift right unsigned a byte
+    val SSHRU: Byte = 91 // Syntax: SSHRU ; Bitwise shift right unsigned a short
+    val ISHRU: Byte = 92 // Syntax: ISHRU ; Bitwise shift right unsigned an int
+    val LSHRU: Byte = 93 // Syntax: LSHRU ; Bitwise shift right unsigned a long
 
-    val PCAST: Byte = 88 // Syntax: PCAST ; Pop a value from the stack and cast it to a primitive type
+    val PCAST: Byte = 94 // Syntax: PCAST ; Pop a value from the stack and cast it to a primitive type
 }
