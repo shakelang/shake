@@ -111,9 +111,9 @@ abstract class CreationShakeType(
                 override fun greaterThanOrEqualType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
                 override fun lessThanType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
                 override fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
-                override fun andType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
-                override fun orType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
-                override fun notType(scope: ShakeScope): CreationShakeType = bool()
+                override fun logicalAndType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun logicalOrType(other: ShakeType, scope: ShakeScope): CreationShakeType = bool()
+                override fun logicalNotType(scope: ShakeScope): CreationShakeType = bool()
 
                 override fun castableTo(other: ShakeType): Boolean =
                     other is Primitive && other.type == ShakeType.PrimitiveType.BOOLEAN
@@ -126,6 +126,18 @@ abstract class CreationShakeType(
                 }
 
                 override val qualifiedName: String get() = "Z"
+            }
+
+            val NULL: Primitive = object : Primitive("null", ShakeType.PrimitiveType.NULL) {
+                override fun compatibilityDistance(other: ShakeType): Int {
+                    TODO("Not yet implemented")
+                }
+
+                override fun toJson(): Map<String, Any?> {
+                    return mapOf("type" to "null")
+                }
+
+                override val qualifiedName: String get() = "N"
             }
 
             val BYTE: Primitive = object : Primitive("byte", ShakeType.PrimitiveType.BYTE) {
@@ -518,6 +530,7 @@ abstract class CreationShakeType(
 
     object Primitives {
         val BOOLEAN = Primitive.BOOLEAN
+        val NULL = Primitive.NULL
         val BYTE = Primitive.BYTE
         val SHORT = Primitive.SHORT
         val INT = Primitive.INT

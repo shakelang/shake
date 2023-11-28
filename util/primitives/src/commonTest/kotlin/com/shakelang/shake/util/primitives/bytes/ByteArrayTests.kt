@@ -2,102 +2,89 @@
 
 package com.shakelang.shake.util.primitives.bytes
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 import kotlin.math.abs
 import kotlin.math.max
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 
-class ByteArrayTests {
+@Suppress("unused")
+@OptIn(ExperimentalUnsignedTypes::class)
+class ByteArrayTests : FreeSpec({
 
-    @Test
-    fun testToByte() {
-        assertEquals(0x00u.toByte(), byteArrayOf(0x00u).toByte())
-        assertEquals(0x01u.toByte(), byteArrayOf(0x01u).toByte())
-        assertEquals(0x7Fu.toByte(), byteArrayOf(0x7Fu).toByte())
-        assertEquals(0x80u.toByte(), byteArrayOf(0x80u).toByte())
-        assertEquals(0xFFu.toByte(), byteArrayOf(0xFFu).toByte())
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 1, but is 2") {
+    "toByte" {
+        byteArrayOf(0x00u).toByte() shouldBe 0x00u.toByte()
+        byteArrayOf(0x01u).toByte() shouldBe 0x01u.toByte()
+        byteArrayOf(0x7Fu).toByte() shouldBe 0x7Fu.toByte()
+        byteArrayOf(0x80u).toByte() shouldBe 0x80u.toByte()
+        byteArrayOf(0xFFu).toByte() shouldBe 0xFFu.toByte()
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x01u).toByte()
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 1, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toByte()
         }
     }
 
-    @Test
-    fun testToShort() {
-        assertEquals(0x0000u.toShort(), byteArrayOf(0x00u, 0x00u).toShort())
-        assertEquals(0x0001u.toShort(), byteArrayOf(0x00u, 0x01u).toShort())
-        assertEquals(0x007Fu.toShort(), byteArrayOf(0x00u, 0x7Fu).toShort())
-        assertEquals(0x0080u.toShort(), byteArrayOf(0x00u, 0x80u).toShort())
-        assertEquals(0x00FFu.toShort(), byteArrayOf(0x00u, 0xFFu).toShort())
-        assertEquals(0x0100u.toShort(), byteArrayOf(0x01u, 0x00u).toShort())
-        assertEquals(0x7FFFu.toShort(), byteArrayOf(0x7Fu, 0xFFu).toShort())
-        assertEquals(0x8000u.toShort(), byteArrayOf(0x80u, 0x00u).toShort())
-        assertEquals(0xFFFFu.toShort(), byteArrayOf(0xFFu, 0xFFu).toShort())
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 2, but is 1") {
+    "toShort" {
+        byteArrayOf(0x00u, 0x00u).toShort() shouldBe 0x0000u.toShort()
+        byteArrayOf(0x00u, 0x01u).toShort() shouldBe 0x0001u.toShort()
+        byteArrayOf(0x00u, 0x7Fu).toShort() shouldBe 0x007Fu.toShort()
+        byteArrayOf(0x00u, 0x80u).toShort() shouldBe 0x0080u.toShort()
+        byteArrayOf(0x00u, 0xFFu).toShort() shouldBe 0x00FFu.toShort()
+        byteArrayOf(0x01u, 0x00u).toShort() shouldBe 0x0100u.toShort()
+        byteArrayOf(0x7Fu, 0xFFu).toShort() shouldBe 0x7FFFu.toShort()
+        byteArrayOf(0x80u, 0x00u).toShort() shouldBe 0x8000u.toShort()
+        byteArrayOf(0xFFu, 0xFFu).toShort() shouldBe 0xFFFFu.toShort()
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u).toShort()
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 2, but is 3") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x01u).toShort()
         }
     }
 
-    @Test
-    fun testToInt() {
-        assertEquals(0x00000000u.toInt(), byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toInt())
-        assertEquals(0x00000001u.toInt(), byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toInt())
-        assertEquals(0x0000007Fu.toInt(), byteArrayOf(0x00u, 0x00u, 0x00u, 0x7Fu).toInt())
-        assertEquals(0x00000080u.toInt(), byteArrayOf(0x00u, 0x00u, 0x00u, 0x80u).toInt())
-        assertEquals(0x000000FFu.toInt(), byteArrayOf(0x00u, 0x00u, 0x00u, 0xFFu).toInt())
-        assertEquals(0x00000100u.toInt(), byteArrayOf(0x00u, 0x00u, 0x01u, 0x00u).toInt())
-        assertEquals(0x00007FFFu.toInt(), byteArrayOf(0x00u, 0x00u, 0x7Fu, 0xFFu).toInt())
-        assertEquals(0x00008000u.toInt(), byteArrayOf(0x00u, 0x00u, 0x80u, 0x00u).toInt())
-        assertEquals(0x0000FFFFu.toInt(), byteArrayOf(0x00u, 0x00u, 0xFFu, 0xFFu).toInt())
-        assertEquals(0x00010000u.toInt(), byteArrayOf(0x00u, 0x01u, 0x00u, 0x00u).toInt())
-        assertEquals(0x007FFFFFu.toInt(), byteArrayOf(0x00u, 0x7Fu, 0xFFu, 0xFFu).toInt())
-        assertEquals(0x00800000u.toInt(), byteArrayOf(0x00u, 0x80u, 0x00u, 0x00u).toInt())
-        assertEquals(0x00FFFFFFu.toInt(), byteArrayOf(0x00u, 0xFFu, 0xFFu, 0xFFu).toInt())
-        assertEquals(0x01000000u.toInt(), byteArrayOf(0x01u, 0x00u, 0x00u, 0x00u).toInt())
-        assertEquals(0x7FFFFFFFu.toInt(), byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu).toInt())
-        assertEquals(0x80000000u.toInt(), byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u).toInt())
-        assertEquals(
-            0xFFFFFFFFu.toInt(),
-            byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toInt()
-        )
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 4, but is 1") {
+    "toInt" {
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x00000000u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toInt() shouldBe 0x00000001u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x7Fu).toInt() shouldBe 0x0000007Fu.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x80u).toInt() shouldBe 0x00000080u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0xFFu).toInt() shouldBe 0x000000FFu.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x01u, 0x00u).toInt() shouldBe 0x00000100u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x7Fu, 0xFFu).toInt() shouldBe 0x00007FFFu.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x80u, 0x00u).toInt() shouldBe 0x00008000u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0xFFu, 0xFFu).toInt() shouldBe 0x0000FFFFu.toInt()
+        byteArrayOf(0x00u, 0x01u, 0x00u, 0x00u).toInt() shouldBe 0x00010000u.toInt()
+        byteArrayOf(0x00u, 0x7Fu, 0xFFu, 0xFFu).toInt() shouldBe 0x007FFFFFu.toInt()
+        byteArrayOf(0x00u, 0x80u, 0x00u, 0x00u).toInt() shouldBe 0x00800000u.toInt()
+        byteArrayOf(0x00u, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0x00FFFFFFu.toInt()
+        byteArrayOf(0x01u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x01000000u.toInt()
+        byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0x7FFFFFFFu.toInt()
+        byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x80000000u.toInt()
+        byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0xFFFFFFFFu.toInt()
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u).toInt()
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 4, but is 5") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toInt()
         }
     }
 
-    @Test
-    fun testToLong() {
-        assertEquals(
-            0x0000000000000000UL.toLong(),
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong()
-        )
-        assertEquals(
-            0x0000000000000010UL.toLong(),
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x10u).toLong()
-        )
-        assertEquals(-1, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong())
-        assertEquals(Long.MIN_VALUE, byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong())
-        assertEquals(Long.MAX_VALUE, byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong())
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 1") {
+    "toLong" {
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong() shouldBe 0x0000000000000000uL.toLong()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x10u).toLong() shouldBe 0x0000000000000010uL.toLong()
+        byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe -1L
+        byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong() shouldBe Long.MIN_VALUE
+        byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe Long.MAX_VALUE
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u).toLong()
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 9") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toLong()
         }
     }
 
-    @Test
-    fun testToFloat() {
+    "toFloat" {
         assertCompare(0.0f, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toFloat())
         assertCompare(1.0f, byteArrayOf(0x3Fu, 0x80u, 0x00u, 0x00u).toFloat())
         assertCompare(-1.0f, byteArrayOf(0xBFu, 0x80u, 0x00u, 0x00u).toFloat())
@@ -106,16 +93,15 @@ class ByteArrayTests {
         assertCompare(Float.NaN, byteArrayOf(0x7Fu, 0xC0u, 0x00u, 0x00u).toFloat())
         assertCompare(Float.NEGATIVE_INFINITY, byteArrayOf(0xFFu, 0x80u, 0x00u, 0x00u).toFloat())
         assertCompare(Float.POSITIVE_INFINITY, byteArrayOf(0x7Fu, 0x80u, 0x00u, 0x00u).toFloat())
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 4, but is 5") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toFloat()
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 4, but is 3") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u).toFloat()
         }
     }
 
-    @Test
-    fun testToDouble() {
+    "toDouble" {
         assertCompare(0.0, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble())
         assertCompare(1.0, byteArrayOf(0x3Fu, 0xF0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble())
         assertCompare(-1.0, byteArrayOf(0xBFu, 0xF0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble())
@@ -130,502 +116,321 @@ class ByteArrayTests {
             Double.POSITIVE_INFINITY,
             byteArrayOf(0x7fu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
         )
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 9") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toDouble()
         }
 
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 7") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
         }
     }
 
-    @Test
-    fun testToUnsignedByte() {
-        assertEquals(0u, byteArrayOf(0x00u).toUnsignedByte())
-        assertEquals(1u, byteArrayOf(0x01u).toUnsignedByte())
-        assertEquals(255u, byteArrayOf(0xFFu).toUnsignedByte())
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 1, but is 2") {
+    "toUnsignedByte" {
+        byteArrayOf(0x00u).toUnsignedByte() shouldBe 0x00u
+        byteArrayOf(0x01u).toUnsignedByte() shouldBe 0x01u
+        byteArrayOf(0xFFu).toUnsignedByte() shouldBe 0xFFu
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x01u).toUnsignedByte()
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 1, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toUnsignedByte()
         }
     }
 
-    @Test
-    fun testToUnsignedShort() {
-        assertEquals(0u, byteArrayOf(0x00u, 0x00u).toUnsignedShort())
-        assertEquals(1u, byteArrayOf(0x00u, 0x01u).toUnsignedShort())
-        assertEquals(65535u, byteArrayOf(0xFFu, 0xFFu).toUnsignedShort())
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 2, but is 3") {
+    "toUnsignedShort" {
+        byteArrayOf(0x00u, 0x00u).toUnsignedShort() shouldBe 0x0000u
+        byteArrayOf(0x00u, 0x01u).toUnsignedShort() shouldBe 0x0001u
+        byteArrayOf(0xFFu, 0xFFu).toUnsignedShort() shouldBe 0xFFFFu
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x01u).toUnsignedShort()
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 2, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toUnsignedShort()
         }
     }
 
-    @Test
-    fun testToUnsignedInt() {
-        assertEquals(0u, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toUnsignedInt())
-        assertEquals(1u, byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt())
-        assertEquals(4294967295u, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedInt())
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 4, but is 5") {
+    "toUnsignedInt" {
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toUnsignedInt() shouldBe 0x00000000u
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt() shouldBe 0x00000001u
+        byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedInt() shouldBe 0xFFFFFFFFu
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt()
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 4, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toUnsignedInt()
         }
     }
 
-    @Test
-    fun testToUnsignedLong() {
-        assertEquals(0uL, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toUnsignedLong())
-        assertEquals(1uL, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedLong())
-        assertEquals(
-            18446744073709551615uL,
-            byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedLong()
-        )
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 9") {
+    "toUnsignedLong" {
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toUnsignedLong() shouldBe 0x0000000000000000uL
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedLong() shouldBe 0x0000000000000001uL
+        byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedLong() shouldBe 0xFFFFFFFFFFFFFFFFuL
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedLong()
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 0") {
+        shouldThrow<IllegalArgumentException> {
             byteArrayOf().toUnsignedLong()
         }
     }
 
-    @Test
-    fun testSetBytes() {
+    "setBytes" {
         var bytes = ByteArray(8)
         bytes.setBytes(0, byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u))
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0x00u.toByte(), bytes[2])
-        assertEquals(0x00u.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
+        (0..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setBytes(2, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu))
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0xFFu.toByte(), bytes[4])
-        assertEquals(0xFFu.toByte(), bytes[5])
-        assertEquals(0xFFu.toByte(), bytes[6])
-        assertEquals(0xFFu.toByte(), bytes[7])
-        assertEquals(0xFFu.toByte(), bytes[8])
-        assertEquals(0xFFu.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        bytes[0] shouldBe 0x00u.toByte()
+        bytes[1] shouldBe 0x00u.toByte()
+        (2..9).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        bytes[10] shouldBe 0x00u.toByte()
+        bytes[11] shouldBe 0x00u.toByte()
     }
 
-    @Test
-    fun testSetBytesErrors() {
+    "setBytes errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setBytes(-1, byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu))
         }
 
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setBytes(1, ByteArray(8) { 0xFF.toByte() })
         }
     }
 
-    @Test
-    fun testSetByte() {
+    "setByte" {
         var bytes = ByteArray(8)
         bytes.setByte(0, 0xFFu.toByte())
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0x00u.toByte(), bytes[2])
-        assertEquals(0x00u.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
+        bytes[0] shouldBe 0xFFu.toByte()
+        (1..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setByte(2, 0xFFu.toByte())
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0x00u.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
-        assertEquals(0x00u.toByte(), bytes[8])
-        assertEquals(0x00u.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        bytes[0] shouldBe 0x00u.toByte()
+        bytes[1] shouldBe 0x00u.toByte()
+        bytes[2] shouldBe 0xFFu.toByte()
+        (3..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetByteErrors() {
+    "setByte errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setByte(-1, 0xFFu.toByte())
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setByte(8, 0xFFu.toByte())
         }
     }
 
-    @Test
-    fun testSetShort() {
+    "setShort" {
         var bytes = ByteArray(8)
         bytes.setShort(0, 0xFFFFu.toShort())
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xFFu.toByte(), bytes[1])
-        assertEquals(0x00u.toByte(), bytes[2])
-        assertEquals(0x00u.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
+        bytes[0] shouldBe 0xFFu.toByte()
+        bytes[1] shouldBe 0xFFu.toByte()
+        (2..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setShort(2, 0xFFFFu.toShort())
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
-        assertEquals(0x00u.toByte(), bytes[8])
-        assertEquals(0x00u.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        bytes[0] shouldBe 0x00u.toByte()
+        bytes[1] shouldBe 0x00u.toByte()
+        bytes[2] shouldBe 0xFFu.toByte()
+        bytes[3] shouldBe 0xFFu.toByte()
+        (4..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetShortErrors() {
+    "setShort errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setShort(-1, 0xFFFFu.toShort())
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setShort(8, 0xFFFFu.toShort())
         }
     }
 
-    @Test
-    fun testSetInt() {
+    "setInt" {
         var bytes = ByteArray(8)
         bytes.setInt(0, 0xFFFFFFFFu.toInt())
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xFFu.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
+        bytes[0] shouldBe 0xFFu.toByte()
+        bytes[1] shouldBe 0xFFu.toByte()
+        bytes[2] shouldBe 0xFFu.toByte()
+        bytes[3] shouldBe 0xFFu.toByte()
+        (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setInt(2, 0xFFFFFFFFu.toInt())
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0xFFu.toByte(), bytes[4])
-        assertEquals(0xFFu.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
-        assertEquals(0x00u.toByte(), bytes[8])
-        assertEquals(0x00u.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        bytes[0] shouldBe 0x00u.toByte()
+        bytes[1] shouldBe 0x00u.toByte()
+        (2..5).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (6..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetIntErrors() {
+    "setInt errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setInt(-1, 0xFFFFFFFFu.toInt())
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setInt(8, 0xFFFFFFFFu.toInt())
         }
     }
 
-    @Test
-    fun testSetLong() {
+    "setLong" {
         var bytes = ByteArray(8)
         bytes.setLong(0, 0xFFFFFFFFFFFFFFFFuL.toLong())
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xFFu.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0xFFu.toByte(), bytes[4])
-        assertEquals(0xFFu.toByte(), bytes[5])
-        assertEquals(0xFFu.toByte(), bytes[6])
-        assertEquals(0xFFu.toByte(), bytes[7])
+        (0..7).forEach { bytes[it] shouldBe 0xFFu.toByte() }
         bytes = ByteArray(12)
         bytes.setLong(2, 0xFFFFFFFFFFFFFFFFuL.toLong())
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0xFFu.toByte(), bytes[4])
-        assertEquals(0xFFu.toByte(), bytes[5])
-        assertEquals(0xFFu.toByte(), bytes[6])
-        assertEquals(0xFFu.toByte(), bytes[7])
-        assertEquals(0xFFu.toByte(), bytes[8])
-        assertEquals(0xFFu.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
+        (2..9).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (10..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetLongErrors() {
+    "setLong errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setLong(-1, 0xFFFFFFFFFFFFFFFFuL.toLong())
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 16, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setLong(8, 0xFFFFFFFFFFFFFFFFuL.toLong())
         }
     }
 
-    @Test
-    fun testSetFloat() {
+    "setFloat" {
         var bytes = ByteArray(8)
         bytes.setFloat(0, Float.fromBits(0x3f99999au.toInt()))
-        assertEquals(0x3Fu.toByte(), bytes[0])
-        assertEquals(0x99u.toByte(), bytes[1])
-        assertEquals(0x99u.toByte(), bytes[2])
-        assertEquals(0x9au.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
+        bytes[0] shouldBe 0x3Fu.toByte()
+        (1..2).forEach { bytes[it] shouldBe 0x99u.toByte() }
+        bytes[3] shouldBe 0x9Au.toByte()
+        (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setFloat(2, Float.fromBits(0x3f99999au.toInt()))
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0x3Fu.toByte(), bytes[2])
-        assertEquals(0x99u.toByte(), bytes[3])
-        assertEquals(0x99u.toByte(), bytes[4])
-        assertEquals(0x9au.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
-        assertEquals(0x00u.toByte(), bytes[8])
-        assertEquals(0x00u.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
+        bytes[2] shouldBe 0x3Fu.toByte()
+        (3..4).forEach { bytes[it] shouldBe 0x99u.toByte() }
+        bytes[5] shouldBe 0x9Au.toByte()
+        (8..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetFloatErrors() {
+    "setFloat errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setFloat(-1, Float.fromBits(0x3f99999au.toInt()))
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 8, but is 4") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setFloat(5, Float.fromBits(0x3f99999au.toInt()))
         }
     }
 
-    @Test
-    fun testSetDouble() {
+    "setDouble" {
         var bytes = ByteArray(8)
         bytes.setDouble(0, Double.fromBits(0x3ff3333333333333uL.toLong()))
-        assertEquals(0x3Fu.toByte(), bytes[0])
-        assertEquals(0xF3u.toByte(), bytes[1])
-        assertEquals(0x33u.toByte(), bytes[2])
-        assertEquals(0x33u.toByte(), bytes[3])
-        assertEquals(0x33u.toByte(), bytes[4])
-        assertEquals(0x33u.toByte(), bytes[5])
-        assertEquals(0x33u.toByte(), bytes[6])
-        assertEquals(0x33u.toByte(), bytes[7])
+        bytes[0] shouldBe 0x3Fu.toByte()
+        bytes[1] shouldBe 0xf3u.toByte()
+        (2..7).forEach { bytes[it] shouldBe 0x33u.toByte() }
         bytes = ByteArray(12)
         bytes.setDouble(2, Double.fromBits(0x3ff3333333333333uL.toLong()))
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0x3Fu.toByte(), bytes[2])
-        assertEquals(0xF3u.toByte(), bytes[3])
-        assertEquals(0x33u.toByte(), bytes[4])
-        assertEquals(0x33u.toByte(), bytes[5])
-        assertEquals(0x33u.toByte(), bytes[6])
-        assertEquals(0x33u.toByte(), bytes[7])
-        assertEquals(0x33u.toByte(), bytes[8])
-        assertEquals(0x33u.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
+        bytes[2] shouldBe 0x3Fu.toByte()
+        bytes[3] shouldBe 0xf3u.toByte()
+        (4..9).forEach { bytes[it] shouldBe 0x33u.toByte() }
+        (10..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetDoubleErrors() {
+    "setDouble errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setDouble(-1, Double.fromBits(0x3ff3333333333333uL.toLong()))
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 16, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setDouble(8, Double.fromBits(0x3ff3333333333333uL.toLong()))
         }
     }
 
-    @Test
-    fun testSetUnsignedByte() {
+    "setUnsignedByte" {
         var bytes = ByteArray(8)
         bytes.setUnsignedByte(0, 0xFFu)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0x00u.toByte(), bytes[2])
-        assertEquals(0x00u.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
+        bytes[0] shouldBe 0xFFu.toByte()
+        (1..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setUnsignedByte(2, 0xFFu)
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0x00u.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
-        assertEquals(0x00u.toByte(), bytes[8])
-        assertEquals(0x00u.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
+        bytes[2] shouldBe 0xFFu.toByte()
+        (3..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetUnsignedByteErrors() {
+    "setUnsignedByte errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedByte(-1, 0xFFu)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedByte(8, 0xFFu)
         }
     }
 
-    @Test
-    fun testSetUnsignedShort() {
+    "setUnsignedShort" {
         var bytes = ByteArray(8)
         bytes.setUnsignedShort(0, 0xFFFFu)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xFFu.toByte(), bytes[1])
-        assertEquals(0x00u.toByte(), bytes[2])
-        assertEquals(0x00u.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
+        (0..1).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (2..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setUnsignedShort(2, 0xFFFFu)
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
-        assertEquals(0x00u.toByte(), bytes[8])
-        assertEquals(0x00u.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
+        (2..3).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (4..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetUnsignedShortErrors() {
+    "setUnsignedShort errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedShort(-1, 0xFFFFu)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 11, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedShort(8, 0xFFFFu)
         }
     }
 
-    @Test
-    fun testSetUnsignedInt() {
+    "setUnsignedInt" {
         var bytes = ByteArray(8)
         bytes.setUnsignedInt(0, 0xFFFFFFFFu)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xFFu.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0x00u.toByte(), bytes[4])
-        assertEquals(0x00u.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
+        (0..3).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setUnsignedInt(2, 0xFFFFFFFFu)
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0xFFu.toByte(), bytes[4])
-        assertEquals(0xFFu.toByte(), bytes[5])
-        assertEquals(0x00u.toByte(), bytes[6])
-        assertEquals(0x00u.toByte(), bytes[7])
-        assertEquals(0x00u.toByte(), bytes[8])
-        assertEquals(0x00u.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
+        (2..5).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (6..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetUnsignedIntErrors() {
+    "setUnsignedInt errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedInt(-1, 0xFFFFFFFFu)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 13, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedInt(8, 0xFFFFFFFFu)
         }
     }
 
-    @Test
-    fun testSetUnsignedLong() {
+    "setUnsignedLong" {
         var bytes = ByteArray(8)
         bytes.setUnsignedLong(0, 0xFFFFFFFFFFFFFFFFu)
-        assertEquals(0xFFu.toByte(), bytes[0])
-        assertEquals(0xFFu.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0xFFu.toByte(), bytes[4])
-        assertEquals(0xFFu.toByte(), bytes[5])
-        assertEquals(0xFFu.toByte(), bytes[6])
-        assertEquals(0xFFu.toByte(), bytes[7])
+        (0..7).forEach { bytes[it] shouldBe 0xFFu.toByte() }
         bytes = ByteArray(12)
         bytes.setUnsignedLong(2, 0xFFFFFFFFFFFFFFFFu)
-        assertEquals(0x00u.toByte(), bytes[0])
-        assertEquals(0x00u.toByte(), bytes[1])
-        assertEquals(0xFFu.toByte(), bytes[2])
-        assertEquals(0xFFu.toByte(), bytes[3])
-        assertEquals(0xFFu.toByte(), bytes[4])
-        assertEquals(0xFFu.toByte(), bytes[5])
-        assertEquals(0xFFu.toByte(), bytes[6])
-        assertEquals(0xFFu.toByte(), bytes[7])
-        assertEquals(0xFFu.toByte(), bytes[8])
-        assertEquals(0xFFu.toByte(), bytes[9])
-        assertEquals(0x00u.toByte(), bytes[10])
-        assertEquals(0x00u.toByte(), bytes[11])
+        (0..1).forEach { bytes[it] shouldBe 0x00u.toByte() }
+        (2..9).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (10..11).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testSetUnsignedLongErrors() {
+    "setUnsignedLong errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedLong(-1, 0xFFFFFFFFFFFFFFFFu)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 17, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.setUnsignedLong(8, 0xFFFFFFFFFFFFFFFFu)
         }
     }
 
-    @Test
-    fun testGetByte() {
+    "getByte" {
         val bytes = ByteArray(8)
         bytes[0] = 0xFFu.toByte()
         bytes[1] = 0xFFu.toByte()
@@ -635,29 +440,21 @@ class ByteArrayTests {
         bytes[5] = 0x00u.toByte()
         bytes[6] = 0x00u.toByte()
         bytes[7] = 0x00u.toByte()
-        assertEquals(0xFFu.toByte(), bytes.getByte(0))
-        assertEquals(0xFFu.toByte(), bytes.getByte(1))
-        assertEquals(0xFFu.toByte(), bytes.getByte(2))
-        assertEquals(0xFFu.toByte(), bytes.getByte(3))
-        assertEquals(0x00u.toByte(), bytes.getByte(4))
-        assertEquals(0x00u.toByte(), bytes.getByte(5))
-        assertEquals(0x00u.toByte(), bytes.getByte(6))
-        assertEquals(0x00u.toByte(), bytes.getByte(7))
+        (0..3).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testGetByteErrors() {
+    "getByte errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getByte(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getByte(8)
         }
     }
 
-    @Test
-    fun testGetUnsignedByte() {
+    "getUnsignedByte" {
         val bytes = ByteArray(8)
         bytes[0] = 0xFFu.toByte()
         bytes[1] = 0xFFu.toByte()
@@ -667,29 +464,21 @@ class ByteArrayTests {
         bytes[5] = 0x00u.toByte()
         bytes[6] = 0x00u.toByte()
         bytes[7] = 0x00u.toByte()
-        assertEquals(0xFFu, bytes.getUnsignedByte(0))
-        assertEquals(0xFFu, bytes.getUnsignedByte(1))
-        assertEquals(0xFFu, bytes.getUnsignedByte(2))
-        assertEquals(0xFFu, bytes.getUnsignedByte(3))
-        assertEquals(0x00u, bytes.getUnsignedByte(4))
-        assertEquals(0x00u, bytes.getUnsignedByte(5))
-        assertEquals(0x00u, bytes.getUnsignedByte(6))
-        assertEquals(0x00u, bytes.getUnsignedByte(7))
+        (0..3).forEach { bytes[it] shouldBe 0xFFu.toByte() }
+        (4..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
     }
 
-    @Test
-    fun testGetUnsignedByteErrors() {
+    "getUnsignedByte errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedByte(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 9, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedByte(8)
         }
     }
 
-    @Test
-    fun testGetShort() {
+    "getShort" {
         val bytes = ByteArray(8)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -699,25 +488,23 @@ class ByteArrayTests {
         bytes[5] = 0x55u.toByte()
         bytes[6] = 0x66u.toByte()
         bytes[7] = 0x77u.toByte()
-        assertEquals(0x0011u.toShort(), bytes.getShort(0))
-        assertEquals(0x2233u.toShort(), bytes.getShort(2))
-        assertEquals(0x4455u.toShort(), bytes.getShort(4))
-        assertEquals(0x6677u.toShort(), bytes.getShort(6))
+        bytes.getShort(0) shouldBe 0x0011u.toShort()
+        bytes.getShort(2) shouldBe 0x2233u.toShort()
+        bytes.getShort(4) shouldBe 0x4455u.toShort()
+        bytes.getShort(6) shouldBe 0x6677u.toShort()
     }
 
-    @Test
-    fun testGetShortErrors() {
+    "getShort errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getShort(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getShort(8)
         }
     }
 
-    @Test
-    fun testGetUnsignedShort() {
+    "getUnsignedShort" {
         val bytes = ByteArray(8)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -727,25 +514,23 @@ class ByteArrayTests {
         bytes[5] = 0x55u.toByte()
         bytes[6] = 0x66u.toByte()
         bytes[7] = 0x77u.toByte()
-        assertEquals(0x0011u, bytes.getUnsignedShort(0))
-        assertEquals(0x2233u, bytes.getUnsignedShort(2))
-        assertEquals(0x4455u, bytes.getUnsignedShort(4))
-        assertEquals(0x6677u, bytes.getUnsignedShort(6))
+        bytes.getUnsignedShort(0) shouldBe 0x0011u
+        bytes.getUnsignedShort(2) shouldBe 0x2233u
+        bytes.getUnsignedShort(4) shouldBe 0x4455u
+        bytes.getUnsignedShort(6) shouldBe 0x6677u
     }
 
-    @Test
-    fun testGetUnsignedShortErrors() {
+    "getUnsignedShort errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedShort(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 10, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedShort(8)
         }
     }
 
-    @Test
-    fun testGetInt() {
+    "getInt" {
         val bytes = ByteArray(8)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -755,23 +540,21 @@ class ByteArrayTests {
         bytes[5] = 0x55u.toByte()
         bytes[6] = 0x66u.toByte()
         bytes[7] = 0x77u.toByte()
-        assertEquals(0x00112233u.toInt(), bytes.getInt(0))
-        assertEquals(0x44556677u.toInt(), bytes.getInt(4))
+        bytes.getInt(0) shouldBe 0x00112233u.toInt()
+        bytes.getInt(4) shouldBe 0x44556677u.toInt()
     }
 
-    @Test
-    fun testGetIntErrors() {
+    "getInt errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getInt(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getInt(8)
         }
     }
 
-    @Test
-    fun testGetUnsignedInt() {
+    "getUnsignedInt" {
         val bytes = ByteArray(8)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -781,23 +564,21 @@ class ByteArrayTests {
         bytes[5] = 0x55u.toByte()
         bytes[6] = 0x66u.toByte()
         bytes[7] = 0x77u.toByte()
-        assertEquals(0x00112233u, bytes.getUnsignedInt(0))
-        assertEquals(0x44556677u, bytes.getUnsignedInt(4))
+        bytes.getUnsignedInt(0) shouldBe 0x00112233u
+        bytes.getUnsignedInt(4) shouldBe 0x44556677u
     }
 
-    @Test
-    fun testGetUnsignedIntErrors() {
+    "getUnsignedInt errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedInt(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedInt(8)
         }
     }
 
-    @Test
-    fun testGetLong() {
+    "getLong" {
         val bytes = ByteArray(16)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -815,23 +596,21 @@ class ByteArrayTests {
         bytes[13] = 0xDDu.toByte()
         bytes[14] = 0xEEu.toByte()
         bytes[15] = 0xFFu.toByte()
-        assertEquals(0x0011223344556677uL.toLong(), bytes.getLong(0))
-        assertEquals(0x8899AABBCCDDEEFFuL.toLong(), bytes.getLong(8))
+        bytes.getLong(0) shouldBe 0x0011223344556677uL.toLong()
+        bytes.getLong(8) shouldBe 0x8899AABBCCDDEEFFuL.toLong()
     }
 
-    @Test
-    fun testGetLongErrors() {
+    "getLong errors" {
         val bytes = ByteArray(16)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getLong(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getLong(16)
         }
     }
 
-    @Test
-    fun testGetUnsignedLong() {
+    "getUnsignedLong" {
         val bytes = ByteArray(16)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -849,23 +628,21 @@ class ByteArrayTests {
         bytes[13] = 0xDDu.toByte()
         bytes[14] = 0xEEu.toByte()
         bytes[15] = 0xFFu.toByte()
-        assertEquals(0x0011223344556677uL, bytes.getUnsignedLong(0))
-        assertEquals(0x8899AABBCCDDEEFFuL, bytes.getUnsignedLong(8))
+        bytes.getUnsignedLong(0) shouldBe 0x0011223344556677uL
+        bytes.getUnsignedLong(8) shouldBe 0x8899AABBCCDDEEFFuL
     }
 
-    @Test
-    fun testGetUnsignedLongErrors() {
+    "getUnsignedLong errors" {
         val bytes = ByteArray(16)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedLong(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getUnsignedLong(16)
         }
     }
 
-    @Test
-    fun testGetFloat() {
+    "getFloat" {
         val bytes = ByteArray(8)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -875,23 +652,21 @@ class ByteArrayTests {
         bytes[5] = 0x55u.toByte()
         bytes[6] = 0x66u.toByte()
         bytes[7] = 0x77u.toByte()
-        assertEquals(Float.fromBits(0x00112233u.toInt()), bytes.getFloat(0))
-        assertEquals(Float.fromBits(0x44556677u.toInt()), bytes.getFloat(4))
+        bytes.getFloat(0) shouldBe Float.fromBits(0x00112233u.toInt())
+        bytes.getFloat(4) shouldBe Float.fromBits(0x44556677u.toInt())
     }
 
-    @Test
-    fun testGetFloatErrors() {
+    "getFloat errors" {
         val bytes = ByteArray(8)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getFloat(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 12, but is 8") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getFloat(8)
         }
     }
 
-    @Test
-    fun testGetDouble() {
+    "getDouble" {
         val bytes = ByteArray(16)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -909,23 +684,21 @@ class ByteArrayTests {
         bytes[13] = 0xDDu.toByte()
         bytes[14] = 0xEEu.toByte()
         bytes[15] = 0xFFu.toByte()
-        assertEquals(Double.fromBits(0x0011223344556677uL.toLong()), bytes.getDouble(0))
-        assertEquals(Double.fromBits(0x8899AABBCCDDEEFFuL.toLong()), bytes.getDouble(8))
+        bytes.getDouble(0) shouldBe Double.fromBits(0x0011223344556677uL.toLong())
+        bytes.getDouble(8) shouldBe Double.fromBits(0x8899AABBCCDDEEFFuL.toLong())
     }
 
-    @Test
-    fun testGetDoubleErrors() {
+    "getDouble errors" {
         val bytes = ByteArray(16)
-        assertFailsWith<IllegalArgumentException>("startIndex must be >= 0, but is -1") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getDouble(-1)
         }
-        assertFailsWith<IllegalArgumentException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getDouble(16)
         }
     }
 
-    @Test
-    fun testGetBytes() {
+    "getBytes" {
         val bytes = ByteArray(16)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -943,35 +716,30 @@ class ByteArrayTests {
         bytes[13] = 0xDDu.toByte()
         bytes[14] = 0xEEu.toByte()
         bytes[15] = 0xFFu.toByte()
-        assertEquals(
-            byteArrayOf(
-                0x00u, 0x11u, 0x22u, 0x33u, 0x44u, 0x55u, 0x66u, 0x77u, 0x88u, 0x99u,
-                0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu
-            ).toList(),
-            bytes.getBytes(0, 16).toList()
-        )
-        assertEquals(byteArrayOf(0x11u, 0x22u).toList(), bytes.getBytes(1, 2).toList())
+        bytes.getBytes(0, 16).toList() shouldBe byteArrayOf(
+            0x00u, 0x11u, 0x22u, 0x33u, 0x44u, 0x55u, 0x66u, 0x77u, 0x88u, 0x99u,
+            0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu
+        ).toList()
+        bytes.getBytes(1, 2).toList() shouldBe byteArrayOf(0x11u, 0x22u).toList()
     }
 
-    @Test
-    fun testGetBytesErrors() {
+    "getBytes errors" {
         val bytes = ByteArray(16)
-        assertFailsWith<IndexOutOfBoundsException>("arraycopy: source index -1 out of bounds for byte[16]") {
+        shouldThrow<IndexOutOfBoundsException> {
             bytes.getBytes(-1, 16)
         }
-        assertFailsWith<IllegalArgumentException>("toIndex (20) is greater than size (16)") {
+        shouldThrow<IllegalArgumentException> {
             bytes.getBytes(0, -1)
         }
-        assertFailsWith<IndexOutOfBoundsException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IndexOutOfBoundsException> {
             bytes.getBytes(16, 4)
         }
-        assertFailsWith<IndexOutOfBoundsException>("ByteArray must be of size 20, but is 16") {
+        shouldThrow<IndexOutOfBoundsException> {
             bytes.getBytes(0, 20)
         }
     }
 
-    @Test
-    fun testToHexString() {
+    "getUnsignedBytes" {
         val bytes = ByteArray(16)
         bytes[0] = 0x00u.toByte()
         bytes[1] = 0x11u.toByte()
@@ -989,37 +757,29 @@ class ByteArrayTests {
         bytes[13] = 0xDDu.toByte()
         bytes[14] = 0xEEu.toByte()
         bytes[15] = 0xFFu.toByte()
-        assertEquals("00112233445566778899aabbccddeeff", bytes.toHexString())
+        bytes.toHexString() shouldBe "00112233445566778899aabbccddeeff"
     }
 
-    @Test
-    fun testToUtf8String() {
+    "getUnsignedBytes errors" {
         val bytes = "hello world".toCharArray().map { it.code.toUByte().toByte() }.toByteArray()
-        assertEquals("hello world", bytes.toUtf8String())
+        bytes.toUtf8String() shouldBe "hello world"
     }
 
-    @Test
-    fun testByteArrayOf() {
+    "toHexString" {
         val byteArray = byteArrayOf(0x00u, 0xFFu)
-        assertEquals(0x00, byteArray[0])
-        assertEquals(-1, byteArray[1])
+        byteArray[0] shouldBe 0x00u.toByte()
+        byteArray[1] shouldBe 0xFFu.toByte()
     }
-}
+})
 
 fun assertCompare(expected: Float, actual: Float) {
     val delta = max(abs(expected / 1000), 0.001f)
-    assertTrue(
-        compare(expected, actual, delta),
-        "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)"
-    )
+    compare(expected, actual, delta) shouldBe true
 }
 
 fun assertCompare(expected: Double, actual: Double) {
     val delta = max(abs(expected / 1000000), 0.000001)
-    assertTrue(
-        compare(expected, actual, delta),
-        "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)"
-    )
+    compare(expected, actual, delta) shouldBe true
 }
 
 fun compare(f0: Float, f1: Float, delta: Float): Boolean = (f0.isNaN() && f1.isNaN()) ||

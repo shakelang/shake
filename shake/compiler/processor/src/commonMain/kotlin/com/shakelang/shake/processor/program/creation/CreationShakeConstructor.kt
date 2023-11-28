@@ -1,6 +1,6 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.processor.ShakeCodeProcessor
+import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.ShakeConstructor
@@ -82,7 +82,7 @@ open class CreationShakeConstructor(
             throw IllegalStateException("Cannot set class in method scope")
         }
 
-        override val processor: ShakeCodeProcessor
+        override val processor: ShakeASTProcessor
             get() = parent.processor
     }
 }

@@ -1,117 +1,98 @@
-package com.shakelang.shake.processor.util
+package com.shakelang.shake.util.pointer
 
-interface Pointer<out T> {
-    val value: T
-
-    fun <A> transform(transform: (T) -> A): Pointer<A> {
-        return object : Pointer<A> {
-            override val value: A
-                get() = transform(this@Pointer.value)
-        }
-    }
-
-    fun <A> chain(transform: (T) -> Pointer<A>): Pointer<A> {
-        return object : Pointer<A> {
-            override val value: A
-                get() = transform(this@Pointer.value).value
-        }
-    }
-
-    fun <A> chainAllowNull(transform: (T) -> Pointer<A?>?): Pointer<A?> {
-        return object : Pointer<A?> {
-            override val value: A?
-                get() = transform(this@Pointer.value)?.value
-        }
-    }
-
-    companion object {
-        fun <T> of(value: T) = object : Pointer<T> {
-            override val value: T = value
-        }
-
-        fun <T> mutableOf(value: T) = object : MutablePointer<T> {
-            override var value: T = value
-        }
-
-        fun <T> late() = object : LateInitPointer<T> {
-            var realValue: T? = null
-
-            override var isInitialized = false
-                private set
-
-            @Suppress("UNCHECKED_CAST")
-            override val value: T
-                get() = if (isInitialized) realValue as T else throw IllegalStateException("lateinit pointer is not initialized")
-
-            override fun init(value: T) {
-                if (isInitialized) throw IllegalStateException("late init pointer is already initialized")
-                this.realValue = value
-                isInitialized = true
-            }
-        }
-
-        fun <T> lateMutable() = object : LateInitMutablePointer<T> {
-            var realValue: T? = null
-
-            override var isInitialized = false
-                private set
-
-            @Suppress("UNCHECKED_CAST")
-            override var value: T
-                get() = if (isInitialized) realValue as T else throw IllegalStateException("late init pointer is not initialized")
-                set(value) {
-                    realValue = value
-                    isInitialized = true
-                }
-
-            override fun init(value: T) {
-                if (isInitialized) throw IllegalStateException("late init pointer is already initialized")
-                this.realValue = value
-                isInitialized = true
-            }
-        }
-
-        fun <T> task(task: () -> T) = object : Pointer<T> {
-            override val value: T = task()
-        }
-    }
-}
-
-fun <T> latePoint(): LateInitPointer<T> = Pointer.late()
-fun <T> lateMutablePoint(): LateInitMutablePointer<T> = Pointer.lateMutable()
-
-fun <T> T.point(): Pointer<T> = Pointer.of(this)
-fun <T> T.mutablePoint(): MutablePointer<T> = Pointer.mutableOf(this)
-
+/**
+ * Create a list of pointers pointing to the values of the list
+ * @receiver The list of values the pointers should point to
+ * @return The list of pointers
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 fun <T> Iterable<T>.points(): PointerList<T> = map { Pointer.of(it) }
-fun <T> Iterable<T>.mutablePoints(): MutablePointerList<T> = map { Pointer.of(it) }.toMutableList()
 
-interface MutablePointer<T> : Pointer<T> {
-    override var value: T
-}
+/**
+ * Create a mutable list of pointers pointing to the values of the list
+ * @receiver The list of values the pointers should point to
+ * @return The list of pointers
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+fun <T> MutableIterable<T>.mutablePoints(): MutablePointerList<T> = map { Pointer.of(it) }.toMutableList()
 
-interface LateInitPointer<T> : Pointer<T> {
-    override val value: T
-    val isInitialized: Boolean
-    fun init(value: T)
-}
-
-interface LateInitMutablePointer<T> : MutablePointer<T>, LateInitPointer<T> {
-    override var value: T
-}
-
+/**
+ * A PointerList refers to a list of pointers.
+ *
+ * @param T The type of the value the pointers point to
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 typealias PointerList<T> = List<Pointer<T>>
+
+/**
+ * A MutablePointerList refers to a list of mutable pointers.
+ *
+ * @param T The type of the value the pointers point to
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 typealias MutablePointerList<T> = MutableList<Pointer<T>>
 
+/**
+ * You can create a list that points to the values of a [PointerList] with this function.
+ *
+ * @receiver The list of pointers
+ * @return The list of values
+ * @since 0.1.0
+ * @version 0.1.0
+ * @see PointerList
+ * @see PointingList
+ */
 fun <T> PointerList<T>.values(): PointingList<T> = PointingList.from(this)
+
+/**
+ * You can create a list that points to the values of a [MutablePointerList] with this function.
+ *
+ * @receiver The list of pointers
+ * @return The list of values
+ * @since 0.1.0
+ * @version 0.1.0
+ * @see MutablePointerList
+ * @see MutablePointingList
+ */
 fun <T> MutablePointerList<T>.values(): MutablePointingList<T> = MutablePointingList.from(this)
 
+/**
+ * A PointingList refers to a list of values that are pointed to by pointers.
+ *
+ * @param T The type of the value the pointers point to
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 interface PointingList<T> : List<T> {
+
+    /**
+     * The list of pointers
+     */
     val pointers: List<Pointer<T>>
 
+    /**
+     * The implementation of the [PointingList].
+     * @param T The type of the value the pointers point to
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see PointingList
+     */
     private class Impl<T>(
+
+        /**
+         * The list of pointers
+         */
         override val pointers: List<Pointer<T>>
+
     ) : PointingList<T> {
+
+        /**
+         * Returns the element at the specified index in the list.
+         */
         override val size: Int
             get() = pointers.size
 
@@ -122,10 +103,16 @@ interface PointingList<T> : List<T> {
             return pointers[index].value
         }
 
+        /**
+         * Returns `true` if the list is empty (contains no elements), `false` otherwise.
+         */
         override fun isEmpty(): Boolean {
             return pointers.isEmpty()
         }
 
+        /**
+         * Returns an iterator over the elements of this list in proper sequence.
+         */
         override fun iterator(): Iterator<T> {
             val iterator = pointers.iterator()
             return object : Iterator<T> {
@@ -182,26 +169,63 @@ interface PointingList<T> : List<T> {
             return pointers.indexOfFirst { it.value == element }
         }
 
+        /**
+         * Returns `true` if all elements in the specified collection are contained in this collection.
+         */
         override fun containsAll(elements: Collection<T>): Boolean {
-            return pointers.all { it.value in elements }
+            return elements.all { contains(it) }
         }
 
+        /**
+         * Returns `true` if the specified element is contained in this collection.
+         */
         override fun contains(element: T): Boolean {
             return pointers.any { it.value == element }
         }
     }
 
     companion object {
+
+        /**
+         * Create a new [PointingList] from the given list of pointers
+         *
+         * @param it The list of pointers
+         * @return The new [PointingList]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun <T> from(it: List<Pointer<T>>): PointingList<T> {
             return Impl(it)
         }
     }
 }
 
+
+/**
+ * A MutablePointingList refers to a list of values that are pointed to by mutable pointers.
+ *
+ * @param T The type of the value the pointers point to
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
+
+    /**
+     * The list of pointers
+     */
     override val pointers: MutableList<Pointer<T>>
 
+    /**
+     * The implementation of the [MutablePointingList].
+     * @param T The type of the value the pointers point to
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see MutablePointingList
+     */
     class Impl<T>(
+        /**
+         * The list of pointers
+         */
         override val pointers: MutablePointerList<T>
     ) : MutablePointingList<T> {
         override val size: Int
@@ -296,7 +320,7 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
         }
 
         override fun containsAll(elements: Collection<T>): Boolean {
-            return pointers.all { it.value in elements }
+            return elements.all { contains(it) }
         }
 
         override fun contains(element: T): Boolean {
@@ -305,12 +329,17 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
     }
 
     companion object {
+
+        /**
+         * Create a new [MutablePointingList] from the given list of pointers
+         *
+         * @param it The list of pointers
+         * @return The new [MutablePointingList]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun <T> from(it: MutablePointerList<T>): MutablePointingList<T> {
             return Impl(it)
         }
     }
-}
-
-fun <T> Pointer<T?>.notNull(msg: String? = null): Pointer<T> {
-    return this.transform { it ?: throw IllegalStateException(msg ?: "null value not allowed") }
 }

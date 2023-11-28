@@ -12,6 +12,8 @@ interface ShakeBooleanLiteral : ShakeValue {
     val value: Boolean
 }
 
+interface ShakeNullLiteral : ShakeValue
+
 interface ShakeCharacterLiteral : ShakeValue {
     val value: Char
 }

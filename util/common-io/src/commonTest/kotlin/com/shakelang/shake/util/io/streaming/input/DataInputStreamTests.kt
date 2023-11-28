@@ -264,7 +264,7 @@ class DataInputStreamTests {
     fun testReadUTF() {
         val bytes = ByteArrayInputStream(
             listOf(
-                listOf<Byte>(0, 0, 0, 11),
+                listOf<Byte>(0, 11),
                 "hello world".toCharArray().map { it.code.toByte() },
                 "hello 2".toCharArray().map { it.code.toByte() }
             ).flatten().toByteArray()

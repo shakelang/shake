@@ -1,327 +1,288 @@
 package com.shakelang.shake.util.primitives.calc
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 
-class OperationTests {
+@Suppress("unused")
+class OperationTests : FreeSpec({
 
-    @Test
-    fun testBytePlus() {
-        assertEquals(2, 1.toByte().plus(1.toUByte()))
-        assertEquals(2, 1.toByte().plus(1.toUShort()))
-        assertEquals(2, 1.toByte().plus(1.toUInt()))
-        assertEquals(2, 1.toByte().plus(1.toULong()))
+    "byte plus" {
+        1.toByte().plus(1.toUByte()) shouldBe 2
+        1.toByte().plus(1.toUShort()) shouldBe 2
+        1.toByte().plus(1.toUInt()) shouldBe 2
+        1.toByte().plus(1.toULong()) shouldBe 2
     }
 
-    @Test
-    fun testShortPlus() {
-        assertEquals(2, 1.toShort().plus(1.toUByte()))
-        assertEquals(2, 1.toShort().plus(1.toUShort()))
-        assertEquals(2, 1.toShort().plus(1.toUInt()))
-        assertEquals(2, 1.toShort().plus(1.toULong()))
+    "short plus" {
+        1.toShort().plus(1.toUByte()) shouldBe 2
+        1.toShort().plus(1.toUShort()) shouldBe 2
+        1.toShort().plus(1.toUInt()) shouldBe 2
+        1.toShort().plus(1.toULong()) shouldBe 2
     }
 
-    @Test
-    fun testIntPlus() {
-        assertEquals(2, 1.plus(1.toUByte()))
-        assertEquals(2, 1.plus(1.toUShort()))
-        assertEquals(2, 1.plus(1.toUInt()))
-        assertEquals(2, 1.plus(1.toULong()))
+    "int plus" {
+        1.plus(1.toUByte()) shouldBe 2
+        1.plus(1.toUShort()) shouldBe 2
+        1.plus(1.toUInt()) shouldBe 2
+        1.plus(1.toULong()) shouldBe 2
     }
 
-    @Test
-    fun testLongPlus() {
-        assertEquals(2, 1.toLong().plus(1.toUByte()))
-        assertEquals(2, 1.toLong().plus(1.toUShort()))
-        assertEquals(2, 1.toLong().plus(1.toUInt()))
-        assertEquals(2, 1.toLong().plus(1.toULong()))
+    "long plus" {
+        1.toLong().plus(1.toUByte()) shouldBe 2
+        1.toLong().plus(1.toUShort()) shouldBe 2
+        1.toLong().plus(1.toUInt()) shouldBe 2
+        1.toLong().plus(1.toULong()) shouldBe 2
     }
 
-    @Test
-    fun testByteMinus() {
-        assertEquals(0, 1.toByte().minus(1.toUByte()))
-        assertEquals(0, 1.toByte().minus(1.toUShort()))
-        assertEquals(0, 1.toByte().minus(1.toUInt()))
-        assertEquals(0, 1.toByte().minus(1.toULong()))
+    "byte minus" {
+        1.toByte().minus(1.toUByte()) shouldBe 0
+        1.toByte().minus(1.toUShort()) shouldBe 0
+        1.toByte().minus(1.toUInt()) shouldBe 0
+        1.toByte().minus(1.toULong()) shouldBe 0
     }
 
-    @Test
-    fun testShortMinus() {
-        assertEquals(0, 1.toShort().minus(1.toUByte()))
-        assertEquals(0, 1.toShort().minus(1.toUShort()))
-        assertEquals(0, 1.toShort().minus(1.toUInt()))
-        assertEquals(0, 1.toShort().minus(1.toULong()))
+    "short minus" {
+        1.toShort().minus(1.toUByte()) shouldBe 0
+        1.toShort().minus(1.toUShort()) shouldBe 0
+        1.toShort().minus(1.toUInt()) shouldBe 0
+        1.toShort().minus(1.toULong()) shouldBe 0
     }
 
-    @Test
-    fun testIntMinus() {
-        assertEquals(0, 1.minus(1.toUByte()))
-        assertEquals(0, 1.minus(1.toUShort()))
-        assertEquals(0, 1.minus(1.toUInt()))
-        assertEquals(0, 1.minus(1.toULong()))
+    "int minus" {
+        1.minus(1.toUByte()) shouldBe 0
+        1.minus(1.toUShort()) shouldBe 0
+        1.minus(1.toUInt()) shouldBe 0
+        1.minus(1.toULong()) shouldBe 0
     }
 
-    @Test
-    fun testLongMinus() {
-        assertEquals(0, 1.toLong().minus(1.toUByte()))
-        assertEquals(0, 1.toLong().minus(1.toUShort()))
-        assertEquals(0, 1.toLong().minus(1.toUInt()))
-        assertEquals(0, 1.toLong().minus(1.toULong()))
+    "long minus" {
+        1.toLong().minus(1.toUByte()) shouldBe 0
+        1.toLong().minus(1.toUShort()) shouldBe 0
+        1.toLong().minus(1.toUInt()) shouldBe 0
+        1.toLong().minus(1.toULong()) shouldBe 0
     }
 
-    @Test
-    fun testByteTimes() {
-        assertEquals(8, 2.toByte().times(4.toUByte()))
-        assertEquals(8, 2.toByte().times(4.toUShort()))
-        assertEquals(8, 2.toByte().times(4.toUInt()))
-        assertEquals(8, 2.toByte().times(4.toULong()))
+    "byte times" {
+        2.toByte().times(4.toUByte()) shouldBe 8
+        2.toByte().times(4.toUShort()) shouldBe 8
+        2.toByte().times(4.toUInt()) shouldBe 8
+        2.toByte().times(4.toULong()) shouldBe 8
     }
 
-    @Test
-    fun testShortTimes() {
-        assertEquals(8, 2.toShort().times(4.toUByte()))
-        assertEquals(8, 2.toShort().times(4.toUShort()))
-        assertEquals(8, 2.toShort().times(4.toUInt()))
-        assertEquals(8, 2.toShort().times(4.toULong()))
+    "short times" {
+        2.toShort().times(4.toUByte()) shouldBe 8
+        2.toShort().times(4.toUShort()) shouldBe 8
+        2.toShort().times(4.toUInt()) shouldBe 8
+        2.toShort().times(4.toULong()) shouldBe 8
     }
 
-    @Test
-    fun testIntTimes() {
-        assertEquals(8, 2.times(4.toUByte()))
-        assertEquals(8, 2.times(4.toUShort()))
-        assertEquals(8, 2.times(4.toUInt()))
-        assertEquals(8, 2.times(4.toULong()))
+    "int times" {
+        2.times(4.toUByte()) shouldBe 8
+        2.times(4.toUShort()) shouldBe 8
+        2.times(4.toUInt()) shouldBe 8
+        2.times(4.toULong()) shouldBe 8
     }
 
-    @Test
-    fun testLongTimes() {
-        assertEquals(8, 2.toLong().times(4.toUByte()))
-        assertEquals(8, 2.toLong().times(4.toUShort()))
-        assertEquals(8, 2.toLong().times(4.toUInt()))
-        assertEquals(8, 2.toLong().times(4.toULong()))
+    "long times" {
+        2.toLong().times(4.toUByte()) shouldBe 8
+        2.toLong().times(4.toUShort()) shouldBe 8
+        2.toLong().times(4.toUInt()) shouldBe 8
+        2.toLong().times(4.toULong()) shouldBe 8
     }
 
-    @Test
-    fun testByteDiv() {
-        assertEquals(2, 8.toByte().div(4.toUByte()))
-        assertEquals(2, 8.toByte().div(4.toUShort()))
-        assertEquals(2, 8.toByte().div(4.toUInt()))
-        assertEquals(2, 8.toByte().div(4.toULong()))
+    "byte div" {
+        8.toByte().div(4.toUByte()) shouldBe 2
+        8.toByte().div(4.toUShort()) shouldBe 2
+        8.toByte().div(4.toUInt()) shouldBe 2
+        8.toByte().div(4.toULong()) shouldBe 2
     }
 
-    @Test
-    fun testShortDiv() {
-        assertEquals(2, 8.toShort().div(4.toUByte()))
-        assertEquals(2, 8.toShort().div(4.toUShort()))
-        assertEquals(2, 8.toShort().div(4.toUInt()))
-        assertEquals(2, 8.toShort().div(4.toULong()))
+    "short div" {
+        8.toShort().div(4.toUByte()) shouldBe 2
+        8.toShort().div(4.toUShort()) shouldBe 2
+        8.toShort().div(4.toUInt()) shouldBe 2
+        8.toShort().div(4.toULong()) shouldBe 2
     }
 
-    @Test
-    fun testIntDiv() {
-        assertEquals(2, 8.div(4.toUByte()))
-        assertEquals(2, 8.div(4.toUShort()))
-        assertEquals(2, 8.div(4.toUInt()))
-        assertEquals(2, 8.div(4.toULong()))
+    "int div" {
+        8.div(4.toUByte()) shouldBe 2
+        8.div(4.toUShort()) shouldBe 2
+        8.div(4.toUInt()) shouldBe 2
+        8.div(4.toULong()) shouldBe 2
     }
 
-    @Test
-    fun testLongDiv() {
-        assertEquals(2, 8.toLong().div(4.toUByte()))
-        assertEquals(2, 8.toLong().div(4.toUShort()))
-        assertEquals(2, 8.toLong().div(4.toUInt()))
-        assertEquals(2, 8.toLong().div(4.toULong()))
+    "long div" {
+        8.toLong().div(4.toUByte()) shouldBe 2
+        8.toLong().div(4.toUShort()) shouldBe 2
+        8.toLong().div(4.toUInt()) shouldBe 2
+        8.toLong().div(4.toULong()) shouldBe 2
     }
 
-    @Test
-    fun testByteRem() {
-        assertEquals(0, 8.toByte().rem(4.toUByte()))
-        assertEquals(0, 8.toByte().rem(4.toUShort()))
-        assertEquals(0, 8.toByte().rem(4.toUInt()))
-        assertEquals(0, 8.toByte().rem(4.toULong()))
+    "byte rem" {
+        8.toByte().rem(4.toUByte()) shouldBe 0
+        8.toByte().rem(4.toUShort()) shouldBe 0
+        8.toByte().rem(4.toUInt()) shouldBe 0
+        8.toByte().rem(4.toULong()) shouldBe 0
     }
 
-    @Test
-    fun testShortRem() {
-        assertEquals(0, 8.toShort().rem(4.toUByte()))
-        assertEquals(0, 8.toShort().rem(4.toUShort()))
-        assertEquals(0, 8.toShort().rem(4.toUInt()))
-        assertEquals(0, 8.toShort().rem(4.toULong()))
+    "short rem" {
+        8.toShort().rem(4.toUByte()) shouldBe 0
+        8.toShort().rem(4.toUShort()) shouldBe 0
+        8.toShort().rem(4.toUInt()) shouldBe 0
+        8.toShort().rem(4.toULong()) shouldBe 0
     }
 
-    @Test
-    fun testIntRem() {
-        assertEquals(0, 8.rem(4.toUByte()))
-        assertEquals(0, 8.rem(4.toUShort()))
-        assertEquals(0, 8.rem(4.toUInt()))
-        assertEquals(0, 8.rem(4.toULong()))
+    "int rem" {
+        8.rem(4.toUByte()) shouldBe 0
+        8.rem(4.toUShort()) shouldBe 0
+        8.rem(4.toUInt()) shouldBe 0
+        8.rem(4.toULong()) shouldBe 0
     }
 
-    @Test
-    fun testLongRem() {
-        assertEquals(0, 8.toLong().rem(4.toUByte()))
-        assertEquals(0, 8.toLong().rem(4.toUShort()))
-        assertEquals(0, 8.toLong().rem(4.toUInt()))
-        assertEquals(0, 8.toLong().rem(4.toULong()))
+    "long rem" {
+        8.toLong().rem(4.toUByte()) shouldBe 0
+        8.toLong().rem(4.toUShort()) shouldBe 0
+        8.toLong().rem(4.toUInt()) shouldBe 0
+        8.toLong().rem(4.toULong()) shouldBe 0
     }
 
-    @Test
-    fun testUBytePlus() {
-        assertEquals(2, 1.toUByte().plus(1.toByte()))
-        assertEquals(2, 1.toUByte().plus(1.toShort()))
-        assertEquals(2.toLong(), 1.toUByte().plus(1.toInt()))
-        assertEquals(2.toLong(), 1.toUByte().plus(1.toLong()))
+    "ubyte plus" {
+        1.toUByte().plus(1.toByte()) shouldBe 2
+        1.toUByte().plus(1.toShort()) shouldBe 2
+        1.toUByte().plus(1.toInt()) shouldBe 2
+        1.toUByte().plus(1.toLong()) shouldBe 2
     }
 
-    @Test
-    fun testUShortPlus() {
-        assertEquals(2, 1.toUShort().plus(1.toByte()))
-        assertEquals(2, 1.toUShort().plus(1.toShort()))
-        assertEquals(2.toLong(), 1.toUShort().plus(1.toInt()))
-        assertEquals(2.toLong(), 1.toUShort().plus(1.toLong()))
+    "ushort plus" {
+        1.toUShort().plus(1.toByte()) shouldBe 2
+        1.toUShort().plus(1.toShort()) shouldBe 2
+        1.toUShort().plus(1.toInt()) shouldBe 2
+        1.toUShort().plus(1.toLong()) shouldBe 2
     }
 
-    @Test
-    fun testUIntPlus() {
-        assertEquals(2, 1.toUInt().plus(1.toByte()))
-        assertEquals(2, 1.toUInt().plus(1.toShort()))
-        assertEquals(2.toLong(), 1.toUInt().plus(1.toInt()))
-        assertEquals(2.toLong(), 1.toUInt().plus(1.toLong()))
+    "uint plus" {
+        1.toUInt().plus(1.toByte()) shouldBe 2
+        1.toUInt().plus(1.toShort()) shouldBe 2
+        1.toUInt().plus(1.toInt()) shouldBe 2
+        1.toUInt().plus(1.toLong()) shouldBe 2
     }
 
-    @Test
-    fun testULongPlus() {
-        assertEquals(2, 1.toULong().plus(1.toByte()))
-        assertEquals(2, 1.toULong().plus(1.toShort()))
-        assertEquals(2.toLong(), 1.toULong().plus(1.toInt()))
-        assertEquals(2.toLong(), 1.toULong().plus(1.toLong()))
+    "ulong plus" {
+        1.toULong().plus(1.toByte()) shouldBe 2
+        1.toULong().plus(1.toShort()) shouldBe 2
+        1.toULong().plus(1.toInt()) shouldBe 2
+        1.toULong().plus(1.toLong()) shouldBe 2
     }
 
-    @Test
-    fun testUByteMinus() {
-        assertEquals(0, 1.toUByte().minus(1.toByte()))
-        assertEquals(0, 1.toUByte().minus(1.toShort()))
-        assertEquals(0.toLong(), 1.toUByte().minus(1.toInt()))
-        assertEquals(0.toLong(), 1.toUByte().minus(1.toLong()))
+    "ubyte minus" {
+        1.toUByte().minus(1.toByte()) shouldBe 0
+        1.toUByte().minus(1.toShort()) shouldBe 0
+        1.toUByte().minus(1.toInt()) shouldBe 0
+        1.toUByte().minus(1.toLong()) shouldBe 0
     }
 
-    @Test
-    fun testUShortMinus() {
-        assertEquals(0, 1.toUShort().minus(1.toByte()))
-        assertEquals(0, 1.toUShort().minus(1.toShort()))
-        assertEquals(0.toLong(), 1.toUShort().minus(1.toInt()))
-        assertEquals(0.toLong(), 1.toUShort().minus(1.toLong()))
+    "ushort minus" {
+        1.toUShort().minus(1.toByte()) shouldBe 0
+        1.toUShort().minus(1.toShort()) shouldBe 0
+        1.toUShort().minus(1.toInt()) shouldBe 0
+        1.toUShort().minus(1.toLong()) shouldBe 0
     }
 
-    @Test
-    fun testUIntMinus() {
-        assertEquals(0, 1.toUInt().minus(1.toByte()))
-        assertEquals(0, 1.toUInt().minus(1.toShort()))
-        assertEquals(0.toLong(), 1.toUInt().minus(1.toInt()))
-        assertEquals(0.toLong(), 1.toUInt().minus(1.toLong()))
+    "uint minus" {
+        1.toUInt().minus(1.toByte()) shouldBe 0
+        1.toUInt().minus(1.toShort()) shouldBe 0
+        1.toUInt().minus(1.toInt()) shouldBe 0
+        1.toUInt().minus(1.toLong()) shouldBe 0
     }
 
-    @Test
-    fun testULongMinus() {
-        assertEquals(0, 1.toULong().minus(1.toByte()))
-        assertEquals(0, 1.toULong().minus(1.toShort()))
-        assertEquals(0.toLong(), 1.toULong().minus(1.toInt()))
-        assertEquals(0.toLong(), 1.toULong().minus(1.toLong()))
+    "ulong minus" {
+        1.toULong().minus(1.toByte()) shouldBe 0
+        1.toULong().minus(1.toShort()) shouldBe 0
+        1.toULong().minus(1.toInt()) shouldBe 0
+        1.toULong().minus(1.toLong()) shouldBe 0
     }
 
-    @Test
-    fun testUByteTimes() {
-        assertEquals(1, 1.toUByte().times(1.toByte()))
-        assertEquals(1, 1.toUByte().times(1.toShort()))
-        assertEquals(1.toLong(), 1.toUByte().times(1.toInt()))
-        assertEquals(1.toLong(), 1.toUByte().times(1.toLong()))
+    "ubyte times" {
+        1.toUByte().times(1.toByte()) shouldBe 1
+        1.toUByte().times(1.toShort()) shouldBe 1
+        1.toUByte().times(1.toInt()) shouldBe 1
+        1.toUByte().times(1.toLong()) shouldBe 1
     }
 
-    @Test
-    fun testUShortTimes() {
-        assertEquals(1, 1.toUShort().times(1.toByte()))
-        assertEquals(1, 1.toUShort().times(1.toShort()))
-        assertEquals(1.toLong(), 1.toUShort().times(1.toInt()))
-        assertEquals(1.toLong(), 1.toUShort().times(1.toLong()))
+    "ushort times" {
+        1.toUShort().times(1.toByte()) shouldBe 1
+        1.toUShort().times(1.toShort()) shouldBe 1
+        1.toUShort().times(1.toInt()) shouldBe 1
+        1.toUShort().times(1.toLong()) shouldBe 1
     }
 
-    @Test
-    fun testUIntTimes() {
-        assertEquals(1, 1.toUInt().times(1.toByte()))
-        assertEquals(1, 1.toUInt().times(1.toShort()))
-        assertEquals(1.toLong(), 1.toUInt().times(1.toInt()))
-        assertEquals(1.toLong(), 1.toUInt().times(1.toLong()))
+    "uint times" {
+        1.toUInt().times(1.toByte()) shouldBe 1
+        1.toUInt().times(1.toShort()) shouldBe 1
+        1.toUInt().times(1.toInt()) shouldBe 1
+        1.toUInt().times(1.toLong()) shouldBe 1
     }
 
-    @Test
-    fun testULongTimes() {
-        assertEquals(1, 1.toULong().times(1.toByte()))
-        assertEquals(1, 1.toULong().times(1.toShort()))
-        assertEquals(1.toLong(), 1.toULong().times(1.toInt()))
-        assertEquals(1.toLong(), 1.toULong().times(1.toLong()))
+    "ulong times" {
+        1.toULong().times(1.toByte()) shouldBe 1
+        1.toULong().times(1.toShort()) shouldBe 1
+        1.toULong().times(1.toInt()) shouldBe 1
+        1.toULong().times(1.toLong()) shouldBe 1
     }
 
-    @Test
-    fun testUByteDiv() {
-        assertEquals(1, 1.toUByte().div(1.toByte()))
-        assertEquals(1, 1.toUByte().div(1.toShort()))
-        assertEquals(1.toLong(), 1.toUByte().div(1.toInt()))
-        assertEquals(1.toLong(), 1.toUByte().div(1.toLong()))
+    "ubyte div" {
+        1.toUByte().div(1.toByte()) shouldBe 1
+        1.toUByte().div(1.toShort()) shouldBe 1
+        1.toUByte().div(1.toInt()) shouldBe 1
+        1.toUByte().div(1.toLong()) shouldBe 1
     }
 
-    @Test
-    fun testUShortDiv() {
-        assertEquals(1, 1.toUShort().div(1.toByte()))
-        assertEquals(1, 1.toUShort().div(1.toShort()))
-        assertEquals(1.toLong(), 1.toUShort().div(1.toInt()))
-        assertEquals(1.toLong(), 1.toUShort().div(1.toLong()))
+    "ushort div" {
+        1.toUShort().div(1.toByte()) shouldBe 1
+        1.toUShort().div(1.toShort()) shouldBe 1
+        1.toUShort().div(1.toInt()) shouldBe 1
+        1.toUShort().div(1.toLong()) shouldBe 1
     }
 
-    @Test
-    fun testUIntDiv() {
-        assertEquals(1, 1.toUInt().div(1.toByte()))
-        assertEquals(1, 1.toUInt().div(1.toShort()))
-        assertEquals(1.toLong(), 1.toUInt().div(1.toInt()))
-        assertEquals(1.toLong(), 1.toUInt().div(1.toLong()))
+    "uint div" {
+        1.toUInt().div(1.toByte()) shouldBe 1
+        1.toUInt().div(1.toShort()) shouldBe 1
+        1.toUInt().div(1.toInt()) shouldBe 1
+        1.toUInt().div(1.toLong()) shouldBe 1
     }
 
-    @Test
-    fun testULongDiv() {
-        assertEquals(1, 1.toULong().div(1.toByte()))
-        assertEquals(1, 1.toULong().div(1.toShort()))
-        assertEquals(1.toLong(), 1.toULong().div(1.toInt()))
-        assertEquals(1.toLong(), 1.toULong().div(1.toLong()))
+    "ulong div" {
+        1.toULong().div(1.toByte()) shouldBe 1
+        1.toULong().div(1.toShort()) shouldBe 1
+        1.toULong().div(1.toInt()) shouldBe 1
+        1.toULong().div(1.toLong()) shouldBe 1
     }
 
-    @Test
-    fun testUByteRem() {
-        assertEquals(0, 1.toUByte().rem(1.toByte()))
-        assertEquals(0, 1.toUByte().rem(1.toShort()))
-        assertEquals(0.toLong(), 1.toUByte().rem(1.toInt()))
-        assertEquals(0.toLong(), 1.toUByte().rem(1.toLong()))
+    "ubyte rem" {
+        1.toUByte().rem(1.toByte()) shouldBe 0
+        1.toUByte().rem(1.toShort()) shouldBe 0
+        1.toUByte().rem(1.toInt()) shouldBe 0
+        1.toUByte().rem(1.toLong()) shouldBe 0
     }
 
-    @Test
-    fun testUShortRem() {
-        assertEquals(0, 1.toUShort().rem(1.toByte()))
-        assertEquals(0, 1.toUShort().rem(1.toShort()))
-        assertEquals(0.toLong(), 1.toUShort().rem(1.toInt()))
-        assertEquals(0.toLong(), 1.toUShort().rem(1.toLong()))
+    "ushort rem" {
+        1.toUShort().rem(1.toByte()) shouldBe 0
+        1.toUShort().rem(1.toShort()) shouldBe 0
+        1.toUShort().rem(1.toInt()) shouldBe 0
+        1.toUShort().rem(1.toLong()) shouldBe 0
     }
 
-    @Test
-    fun testUIntRem() {
-        assertEquals(0, 1.toUInt().rem(1.toByte()))
-        assertEquals(0, 1.toUInt().rem(1.toShort()))
-        assertEquals(0.toLong(), 1.toUInt().rem(1.toInt()))
-        assertEquals(0.toLong(), 1.toUInt().rem(1.toLong()))
+    "uint rem" {
+        1.toUInt().rem(1.toByte()) shouldBe 0
+        1.toUInt().rem(1.toShort()) shouldBe 0
+        1.toUInt().rem(1.toInt()) shouldBe 0
+        1.toUInt().rem(1.toLong()) shouldBe 0
     }
 
-    @Test
-    fun testULongRem() {
-        assertEquals(0, 1.toULong().rem(1.toByte()))
-        assertEquals(0, 1.toULong().rem(1.toShort()))
-        assertEquals(0.toLong(), 1.toULong().rem(1.toInt()))
-        assertEquals(0.toLong(), 1.toULong().rem(1.toLong()))
+    "ulong rem" {
+        1.toULong().rem(1.toByte()) shouldBe 0
+        1.toULong().rem(1.toShort()) shouldBe 0
+        1.toULong().rem(1.toInt()) shouldBe 0
+        1.toULong().rem(1.toLong()) shouldBe 0
     }
-}
+})

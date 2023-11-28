@@ -8,7 +8,7 @@
       "author": "shake",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@2f78e8cb"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@7a29aee4"
       ]
     },
     {
@@ -19,7 +19,18 @@
       "author": "shake",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@60f2fbb2"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@542885c9"
+      ]
+    },
+    {
+      "path": ":shake:bytecode",
+      "name": "shake.shake:bytecode",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "",
+      "author": "shake.shake",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@4a37c478"
       ]
     },
     {
@@ -30,7 +41,7 @@
       "author": "shake.shake",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@34b551de"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@490e7937"
       ]
     },
     {
@@ -41,18 +52,18 @@
       "author": "shake.shake",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@5e27728c"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@7e67b07c"
       ]
     },
     {
       "path": ":util:changelog",
       "name": "com.shakelang.shake.util.changelog:changelog",
-      "version": "0.3.2",
+      "version": "0.3.4",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.shake.util.changelog",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@3671e733"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@6ef164b4"
       ]
     },
     {
@@ -63,18 +74,18 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@4129b524"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@1a117916"
       ]
     },
     {
       "path": ":util:common-io",
       "name": "com.shakelang.shake.util:common-io",
-      "version": "0.2.0",
+      "version": "0.2.2",
       "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@5f0c377e"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@206c6ca2"
       ]
     },
     {
@@ -85,7 +96,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@3a5a8d01"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@634bdc83"
       ]
     },
     {
@@ -96,7 +107,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@32bbd06"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@67ad09a"
       ]
     },
     {
@@ -107,7 +118,7 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@f27a8d2"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@17b2c08a"
       ]
     },
     {
@@ -118,40 +129,51 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@312ec98f"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@54f8b7a2"
       ]
     },
     {
       "path": ":util:parseutils",
       "name": "com.shakelang.shake.util:parseutils",
-      "version": "0.2.1",
+      "version": "0.2.3",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@5ff2782e"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@69ead67a"
+      ]
+    },
+    {
+      "path": ":util:pointers",
+      "name": "com.shakelang.shake.util:pointers",
+      "version": "0.1.0",
+      "description": "Utility for using pointers in Kotlin",
+      "author": "com.shakelang.shake.util",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@39c435dd"
       ]
     },
     {
       "path": ":util:primitives",
       "name": "com.shakelang.shake.util:primitives",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@16f2d5b"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@38f314ff"
       ]
     },
     {
       "path": ":util:shason",
       "name": "com.shakelang.shake.util:shason",
-      "version": "0.2.1",
+      "version": "0.2.3",
       "description": "A json parser implemented in kotlin (mpp)",
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@33bc649c"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@2927e1e4"
       ]
     },
     {
@@ -162,7 +184,18 @@
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@7499b1d5"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@16c1bbbc"
+      ]
+    },
+    {
+      "path": ":shake:bytecode:interpreter",
+      "name": "com.shakelang.shake.compiler.jsgenerator:interpreter",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "js-generator",
+      "author": "com.shakelang.shake.compiler.jsgenerator",
+      "license": "",
+      "dependencies": [
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@eb31e64"
       ]
     },
     {
@@ -173,7 +206,7 @@
       "author": "com.shakelang.shake.compiler.jsgenerator",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@38e68460"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@2ec7b7a1"
       ]
     },
     {
@@ -184,7 +217,7 @@
       "author": "com.shakelang.shake.compiler.lexer",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@401b73d2"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@38f94b5c"
       ]
     },
     {
@@ -195,7 +228,7 @@
       "author": "com.shakelang.shake.compiler.parser",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@105377c9"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@237e1ba4"
       ]
     },
     {
@@ -206,7 +239,7 @@
       "author": "com.shakelang.shake.compiler.processor",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@29fd7b0f"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@35286191"
       ]
     },
     {
@@ -217,7 +250,7 @@
       "author": "com.shakelang.shake.compiler.shakelib",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@25342fd4"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@26c1a22a"
       ]
     },
     {
@@ -228,7 +261,7 @@
       "author": "com.shakelang.shake.shasambly.java-dist",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@3eaa5d43"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@5410be05"
       ]
     },
     {
@@ -239,7 +272,7 @@
       "author": "com.shakelang.shake.shasambly",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@35cc9860"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@7603c18"
       ]
     },
     {
@@ -250,7 +283,7 @@
       "author": "com.shakelang.shake.shasambly.shasp",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@77abb8d5"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@7132f18c"
       ]
     },
     {
@@ -261,9 +294,9 @@
       "author": "com.shakelang.shake.shasambly.shastools",
       "license": "",
       "dependencies": [
-        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@73e5737b"
+        "org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler_Decorated@5a49dd72"
       ]
     }
   ],
-  "lastUpdate": 1700642306587
+  "lastUpdate": 1701209708837
 }

@@ -6,3 +6,7 @@ A json parser implemented in kotlin (mpp)
 Update to new package structure
 ### 0.2.1
 Update dependencies
+### 0.2.2
+Update dependencies
+### 0.2.3
+Update dependencies

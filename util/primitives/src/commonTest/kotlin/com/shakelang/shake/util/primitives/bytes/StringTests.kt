@@ -1,27 +1,27 @@
 package com.shakelang.shake.util.primitives.bytes
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 
-class StringTests {
+@Suppress("unused")
+class StringTests : FreeSpec({
 
-    @Test
-    fun testStringToBytes() {
+    "string to bytes" {
         val str = "Hello, world!"
         val bytes = str.toBytes()
-        assertEquals(str.length, bytes.size)
-        assertEquals('H'.code.toByte(), bytes[0])
-        assertEquals('e'.code.toByte(), bytes[1])
-        assertEquals('l'.code.toByte(), bytes[2])
-        assertEquals('l'.code.toByte(), bytes[3])
-        assertEquals('o'.code.toByte(), bytes[4])
-        assertEquals(','.code.toByte(), bytes[5])
-        assertEquals(' '.code.toByte(), bytes[6])
-        assertEquals('w'.code.toByte(), bytes[7])
-        assertEquals('o'.code.toByte(), bytes[8])
-        assertEquals('r'.code.toByte(), bytes[9])
-        assertEquals('l'.code.toByte(), bytes[10])
-        assertEquals('d'.code.toByte(), bytes[11])
-        assertEquals('!'.code.toByte(), bytes[12])
+        bytes.size shouldBe str.length
+        bytes[0] shouldBe 'H'.code.toByte()
+        bytes[1] shouldBe 'e'.code.toByte()
+        bytes[2] shouldBe 'l'.code.toByte()
+        bytes[3] shouldBe 'l'.code.toByte()
+        bytes[4] shouldBe 'o'.code.toByte()
+        bytes[5] shouldBe ','.code.toByte()
+        bytes[6] shouldBe ' '.code.toByte()
+        bytes[7] shouldBe 'w'.code.toByte()
+        bytes[8] shouldBe 'o'.code.toByte()
+        bytes[9] shouldBe 'r'.code.toByte()
+        bytes[10] shouldBe 'l'.code.toByte()
+        bytes[11] shouldBe 'd'.code.toByte()
+        bytes[12] shouldBe '!'.code.toByte()
     }
-}
+})
