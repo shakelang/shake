@@ -661,7 +661,7 @@ class ByteListTests : FreeSpec({
         bytes shouldBe listOf<Byte>(1, 2, 3, 4, 5, 6, 7, 8)
     }
 
-    "appendWithUnsignedByte"{
+    "appendWithUnsignedByte" {
         val bytes = mutableListOf<Byte>()
         bytes.append(1u.toUByte())
         bytes shouldBe listOf<Byte>(1)

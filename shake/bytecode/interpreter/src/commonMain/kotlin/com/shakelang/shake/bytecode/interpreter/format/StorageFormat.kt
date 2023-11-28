@@ -5,7 +5,6 @@ import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
-import kotlin.experimental.and
 
 open class StorageFormat(
     open val magic: Int,
@@ -14,7 +13,7 @@ open class StorageFormat(
     open val constantPool: ConstantPool,
     open val classes: List<Class>,
     open val fields: List<Field>,
-    open val methods: List<Method>,
+    open val methods: List<Method>
 ) {
     fun dump(stream: DataOutputStream) {
         stream.writeInt(magic)
@@ -75,7 +74,7 @@ class MutableStorageFormat(
     override var constantPool: MutableConstantPool,
     override var classes: MutableList<Class>,
     override var fields: MutableList<Field>,
-    override var methods: MutableList<Method>,
+    override var methods: MutableList<Method>
 ) : StorageFormat(
     magic,
     major,

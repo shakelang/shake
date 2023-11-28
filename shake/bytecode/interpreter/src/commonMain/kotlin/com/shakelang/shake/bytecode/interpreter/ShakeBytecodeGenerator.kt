@@ -4,7 +4,7 @@ import com.shakelang.shake.util.primitives.bytes.toBytes
 import com.shakelang.shake.util.primitives.calc.shl
 
 class ShakeBytecodeGenerator(
-    val bytes: MutableList<Byte> = mutableListOf <Byte>(),
+    val bytes: MutableList<Byte> = mutableListOf<Byte>()
 ) {
 
     fun addByte(byte: Byte) = bytes.add(byte)
@@ -153,7 +153,6 @@ class ShakeBytecodeGenerator(
     fun jge(address: Int) = addBytes(listOf(Opcodes.JGE, *address.toBytes().toTypedArray()))
 
     fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
-
 
     fun toByteArray() = bytes.toByteArray()
 }

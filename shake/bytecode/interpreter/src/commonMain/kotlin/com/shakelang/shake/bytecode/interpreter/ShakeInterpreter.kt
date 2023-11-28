@@ -122,12 +122,12 @@ class ShakeInterpreter {
                 Opcodes.BSTORE -> locals[readUShort().toInt()] = stack.pop()
                 Opcodes.SSTORE -> {
                     val pos = readUShort().toInt()
-                    locals[pos+1] = stack.pop()
+                    locals[pos + 1] = stack.pop()
                     locals[pos] = stack.pop()
                 }
                 Opcodes.ISTORE -> {
                     val pos = readUShort().toInt()
-                    for (i in 3 downTo  0) locals[pos + i] = stack.pop()
+                    for (i in 3 downTo 0) locals[pos + i] = stack.pop()
                 }
                 Opcodes.LSTORE -> {
                     val pos = readUShort().toInt()
@@ -519,7 +519,6 @@ class ShakeInterpreter {
     }
 }
 
-
 object ClassRegister {
 
     private val classes = mutableMapOf<String, ShakeInterpreterClass>()
@@ -528,5 +527,4 @@ object ClassRegister {
         classes[name] = clazz
     }
     fun getClass(name: String): ShakeInterpreterClass? = classes[name]
-
 }

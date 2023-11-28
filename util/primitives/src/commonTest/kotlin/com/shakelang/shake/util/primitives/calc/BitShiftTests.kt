@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package com.shakelang.shake.util.primitives.calc
 
 import io.kotest.core.spec.style.FreeSpec
@@ -907,7 +908,6 @@ class SHRTest : FreeSpec({
         (0b100000u.toUByte() shr 5L) shouldBe 0b01u.toUByte()
         (0b1000000u.toUByte() shr 6L) shouldBe 0b01u.toUByte()
     }
-
 
     "unsigned byte shr unsigned byte" {
         (0b10u.toUByte() shr 1u.toUByte()) shouldBe 0b01u.toUByte()

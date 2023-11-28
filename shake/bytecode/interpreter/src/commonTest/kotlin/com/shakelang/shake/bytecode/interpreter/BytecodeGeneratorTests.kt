@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package com.shakelang.shake.bytecode.interpreter
 
 import io.kotest.core.spec.style.FreeSpec
@@ -862,5 +863,4 @@ class BytecodeGeneratorTests : FreeSpec({
         }
         bytes shouldBe arrayOf(Opcodes.BSHRU, Opcodes.SSHRU, Opcodes.ISHRU, Opcodes.LSHRU)
     }
-
 })

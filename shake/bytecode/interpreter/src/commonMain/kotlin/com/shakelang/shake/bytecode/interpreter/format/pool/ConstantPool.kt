@@ -5,7 +5,6 @@ import com.shakelang.shake.util.io.streaming.input.dataStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
-
 open class ConstantPool(
     open val entries: List<ConstantPoolEntry>
 ) : List<ConstantPoolEntry> by entries {
@@ -146,7 +145,6 @@ open class ConstantPool(
         }
     }
 }
-
 
 class MutableConstantPool(
     override val entries: MutableList<ConstantPoolEntry> = mutableListOf()

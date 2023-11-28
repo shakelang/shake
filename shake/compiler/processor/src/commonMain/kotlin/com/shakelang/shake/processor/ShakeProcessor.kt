@@ -77,7 +77,6 @@ open class ShakeASTProcessor {
 
     fun visitValue(scope: CreationShakeScope, value: ShakeValuedNode): CreationShakeValue {
         return when (value) {
-
             // Literals
             is ShakeIntegerNode -> visitIntegerNode(scope, value)
             is ShakeDoubleNode -> visitDoubleNode(scope, value)
