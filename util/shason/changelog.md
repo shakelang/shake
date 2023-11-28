@@ -8,3 +8,5 @@ Update to new package structure
 Update dependencies
 ### 0.2.2
 Update dependencies
+### 0.2.3
+Update dependencies

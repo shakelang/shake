@@ -1,20 +1,3 @@
 {
-  "bumps": [
-    {
-      "type": "patch",
-      "message": "writeUTF8() should write an ushort as size (readUTF8 as well)",
-      "paths": [
-        ":util:common-io"
-      ]
-    },
-    {
-      "type": "patch",
-      "message": "Update dependencies",
-      "paths": [
-        ":util:parseutils",
-        ":util:shason",
-        ":util:changelog"
-      ]
-    }
-  ]
+  "bumps": []
 }

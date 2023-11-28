@@ -14,3 +14,5 @@ Remove unused JGit Dependency
 Update dependencies
 ### 0.3.3
 Update dependencies
+### 0.3.4
+Update dependencies

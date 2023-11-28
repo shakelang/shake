@@ -6,3 +6,5 @@ Utility for working with colors in console applications (Kotlin Multiplatform)
 Update to new package structure
 ### 0.2.1
 writeUTF8() should write an int as size (as readUTF8 also reads an int)
+### 0.2.2
+writeUTF8() should write an ushort as size (readUTF8 as well)
