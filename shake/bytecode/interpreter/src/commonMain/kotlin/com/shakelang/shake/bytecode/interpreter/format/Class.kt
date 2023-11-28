@@ -6,7 +6,6 @@ import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
-
 open class Class(
     open val pool: ConstantPool,
     open val nameConstant: Int,
@@ -17,9 +16,9 @@ open class Class(
     open val subClasses: List<Int>,
 ) {
 
-    val name: String get() = pool.getUtf8(nameConstant).value
-    val superName: String get() = pool.getUtf8(superNameConstant).value
-    val interfaces: List<String> get() = interfacesConstants.map { pool.getUtf8(it).value }
+    open val name: String get() = pool.getUtf8(nameConstant).value
+    open val superName: String get() = pool.getUtf8(superNameConstant).value
+    open val interfaces: List<String> get() = interfacesConstants.map { pool.getUtf8(it).value }
 
     fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
@@ -95,29 +94,22 @@ class MutableClass(
     override var methods: MutableList<Int>,
     override var subClasses: MutableList<Int>,
 ) : Class(pool, nameConstant, superNameConstant, interfacesConstants, fields, methods, subClasses) {
-    fun setName(name: String) {
-        nameConstant = pool.resolveUtf8(name)
-    }
 
-    fun setSuperName(superName: String) {
-        superNameConstant = pool.resolveUtf8(superName)
-    }
+    override var name: String
+        get() = pool.getUtf8(nameConstant).value
+        set(value) { nameConstant = pool.resolveUtf8(value) }
 
-    fun addInterface(interfaceName: String) {
-        interfacesConstants.add(pool.resolveUtf8(interfaceName))
-    }
+    override var superName: String
+        get() = pool.getUtf8(superNameConstant).value
+        set(value) { superNameConstant = pool.resolveUtf8(value) }
 
-    fun addField(field: Int) {
-        fields.add(field)
-    }
+    override var interfaces: List<String>
+        get() = interfacesConstants.map { pool.getUtf8(it).value }
+        set(value) { interfacesConstants = value.map { pool.resolveUtf8(it) }.toMutableList() }
 
-    fun addMethod(method: Int) {
-        methods.add(method)
-    }
-
-    fun addSubClass(subClass: Int) {
-        subClasses.add(subClass)
-    }
+    fun addField(field: Int) = fields.add(field)
+    fun addMethod(method: Int) = methods.add(method)
+    fun addSubClass(subClass: Int) = subClasses.add(subClass)
 
     companion object {
         fun fromStream(stream: DataInputStream): MutableClass {
