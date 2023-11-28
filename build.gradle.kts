@@ -46,11 +46,21 @@ plugins {
     id("org.jetbrains.dokka")
     id("org.jetbrains.kotlinx.kover")
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
+    id("io.kotest.multiplatform") version "5.8.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.4"
 }
 
 apply<Changelog>()
 apply(plugin = "io.codearte.nexus-staging")
+
+val dokkaPlugin by configurations
+tasks.register<org.jetbrains.dokka.gradle.DokkaMultiModuleTask>("dokkaRoot") {
+    dependencies {
+        dokkaPlugin("org.jetbrains.dokka:all-modules-page-plugin:1.9.10")
+    }
+    outputDirectory.set(file("$buildDir/docs"))
+    addChildTasks(childProjects.values, "dokkaHtmlPartial")
+}
 
 tasks.withType<VersionTask>().configureEach {
     this.tagFormat {
