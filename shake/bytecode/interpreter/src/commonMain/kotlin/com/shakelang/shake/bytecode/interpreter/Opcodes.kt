@@ -1009,5 +1009,5 @@ object Opcodes {
      * @example Syntax `PCAST` <u1 cast-type>
      * @see
      */
-    const val PCAST: Byte = 124 // Syntax: PCAST ; Pop a value from the stack and cast it to a primitive type
+    const val PCAST: Byte = 125 // Syntax: PCAST ; Pop a value from the stack and cast it to a primitive type
 }
