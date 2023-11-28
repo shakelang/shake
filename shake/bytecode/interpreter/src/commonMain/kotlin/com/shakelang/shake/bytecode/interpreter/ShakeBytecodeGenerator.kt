@@ -125,6 +125,8 @@ class ShakeBytecodeGenerator(
     fun sinc() = addByte(Opcodes.SINC)
     fun iinc() = addByte(Opcodes.IINC)
     fun linc() = addByte(Opcodes.LINC)
+    fun finc() = addByte(Opcodes.FINC)
+    fun dinc() = addByte(Opcodes.DINC)
 
     fun bdec() = addByte(Opcodes.BDEC)
     fun sdec() = addByte(Opcodes.SDEC)
@@ -139,6 +141,16 @@ class ShakeBytecodeGenerator(
     fun lcmp() = addByte(Opcodes.LCMP)
     fun fcmp() = addByte(Opcodes.FCMP)
     fun dcmp() = addByte(Opcodes.DCMP)
+
+    fun jmp(address: UInt) = addBytes(listOf(Opcodes.JMP, *address.toBytes().toTypedArray()))
+    fun jz(address: UInt) = addBytes(listOf(Opcodes.JZ, *address.toBytes().toTypedArray()))
+    fun jnz(address: UInt) = addBytes(listOf(Opcodes.JNZ, *address.toBytes().toTypedArray()))
+    fun je(address: UInt) = addBytes(listOf(Opcodes.JE, *address.toBytes().toTypedArray()))
+    fun jne(address: UInt) = addBytes(listOf(Opcodes.JNE, *address.toBytes().toTypedArray()))
+    fun jl(address: UInt) = addBytes(listOf(Opcodes.JL, *address.toBytes().toTypedArray()))
+    fun jle(address: UInt) = addBytes(listOf(Opcodes.JLE, *address.toBytes().toTypedArray()))
+    fun jg(address: UInt) = addBytes(listOf(Opcodes.JG, *address.toBytes().toTypedArray()))
+    fun jge(address: UInt) = addBytes(listOf(Opcodes.JGE, *address.toBytes().toTypedArray()))
 
     fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
 

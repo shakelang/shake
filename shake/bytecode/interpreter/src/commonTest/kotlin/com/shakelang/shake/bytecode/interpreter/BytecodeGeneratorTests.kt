@@ -657,6 +657,202 @@ class BytecodeGeneratorTests : FreeSpec({
         bytes shouldBe arrayOf(Opcodes.LSHRU)
     }
 
+    "binc" {
+        val bytes = bytecode {
+            binc()
+        }
+        bytes shouldBe arrayOf(Opcodes.BINC)
+    }
+
+    "sinc" {
+        val bytes = bytecode {
+            sinc()
+        }
+        bytes shouldBe arrayOf(Opcodes.SINC)
+    }
+
+    "iinc" {
+        val bytes = bytecode {
+            iinc()
+        }
+        bytes shouldBe arrayOf(Opcodes.IINC)
+    }
+
+    "linc" {
+        val bytes = bytecode {
+            linc()
+        }
+        bytes shouldBe arrayOf(Opcodes.LINC)
+    }
+
+    "finc" {
+        val bytes = bytecode {
+            finc()
+        }
+        bytes shouldBe arrayOf(Opcodes.FINC)
+    }
+
+    "dinc" {
+        val bytes = bytecode {
+            dinc()
+        }
+        bytes shouldBe arrayOf(Opcodes.DINC)
+    }
+
+    "bdec" {
+        val bytes = bytecode {
+            bdec()
+        }
+        bytes shouldBe arrayOf(Opcodes.BDEC)
+    }
+
+    "sdec" {
+        val bytes = bytecode {
+            sdec()
+        }
+        bytes shouldBe arrayOf(Opcodes.SDEC)
+    }
+
+    "idec" {
+        val bytes = bytecode {
+            idec()
+        }
+        bytes shouldBe arrayOf(Opcodes.IDEC)
+    }
+
+    "ldec" {
+        val bytes = bytecode {
+            ldec()
+        }
+        bytes shouldBe arrayOf(Opcodes.LDEC)
+    }
+
+    "fdec" {
+        val bytes = bytecode {
+            fdec()
+        }
+        bytes shouldBe arrayOf(Opcodes.FDEC)
+    }
+
+    "ddec" {
+        val bytes = bytecode {
+            ddec()
+        }
+        bytes shouldBe arrayOf(Opcodes.DDEC)
+    }
+
+    "bcmp" {
+        val bytes = bytecode {
+            bcmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.BCMP)
+    }
+
+    "scmp" {
+        val bytes = bytecode {
+            scmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.SCMP)
+    }
+
+    "icmp" {
+        val bytes = bytecode {
+            icmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.ICMP)
+    }
+
+    "lcmp" {
+        val bytes = bytecode {
+            lcmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.LCMP)
+    }
+
+    "fcmp" {
+        val bytes = bytecode {
+            fcmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.FCMP)
+    }
+
+    "dcmp" {
+        val bytes = bytecode {
+            dcmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.DCMP)
+    }
+
+    "jmp" {
+        val bytes = bytecode {
+            jmp(0x01020304u)
+        }
+        bytes shouldBe arrayOf(Opcodes.JMP, 0x01, 0x02, 0x03, 0x04)
+    }
+
+    "jz" {
+        val bytes = bytecode {
+            jz(0x01020304u)
+        }
+        bytes shouldBe arrayOf(Opcodes.JZ, 0x01, 0x02, 0x03, 0x04)
+    }
+
+    "jnz" {
+        val bytes = bytecode {
+            jnz(0x01020304u)
+        }
+        bytes shouldBe arrayOf(Opcodes.JNZ, 0x01, 0x02, 0x03, 0x04)
+    }
+
+    "je" {
+        val bytes = bytecode {
+            je(0x01020304u)
+        }
+        bytes shouldBe arrayOf(Opcodes.JE, 0x01, 0x02, 0x03, 0x04)
+    }
+
+    "jne" {
+        val bytes = bytecode {
+            jne(0x01020304u)
+        }
+        bytes shouldBe arrayOf(Opcodes.JNE, 0x01, 0x02, 0x03, 0x04)
+    }
+
+    "jl" {
+        val bytes = bytecode {
+            jl(0x01020304u)
+        }
+        bytes shouldBe arrayOf(Opcodes.JL, 0x01, 0x02, 0x03, 0x04)
+    }
+
+    "jle" {
+        val bytes = bytecode {
+            jle(0x01020304u)
+        }
+        bytes shouldBe arrayOf(Opcodes.JLE, 0x01, 0x02, 0x03, 0x04)
+    }
+
+    "jg" {
+        val bytes = bytecode {
+            jg(0x01020304u)
+        }
+        bytes shouldBe arrayOf(Opcodes.JG, 0x01, 0x02, 0x03, 0x04)
+    }
+
+    "jge" {
+        val bytes = bytecode {
+            jge(0x01020304u)
+        }
+        bytes shouldBe arrayOf(Opcodes.JGE, 0x01, 0x02, 0x03, 0x04)
+    }
+
+    "pcast" {
+        val bytes = bytecode {
+            pcast(0x01u, 0x02u)
+        }
+        bytes shouldBe arrayOf(Opcodes.PCAST, 0x12)
+    }
+
     "toByteArray" {
         val bytes = bytecode {
             bshru()

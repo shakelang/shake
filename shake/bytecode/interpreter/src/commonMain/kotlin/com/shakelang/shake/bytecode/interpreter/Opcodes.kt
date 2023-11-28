@@ -871,7 +871,9 @@ object Opcodes {
      */
     const val DCMP: Byte = 111 // Syntax: DCMP ; Compare two doubles
 
+
     // Jump instructions
+
     /**
      * Jump to an address
      * @example Syntax: `JMP` <u4 address>
