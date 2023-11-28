@@ -381,54 +381,114 @@ class ShakeInterpreter {
                     stack.push(b ushr a)
                 }
 
-                Opcodes.BINC -> stack.push(stack.pop() + 1)
-                Opcodes.SINC -> stack.push(stack.popShort() + 1)
+                Opcodes.BINC -> stack.push((stack.pop() + 1).toByte())
+                Opcodes.SINC -> stack.push((stack.popShort() + 1).toShort())
                 Opcodes.IINC -> stack.push(stack.popInt() + 1)
                 Opcodes.LINC -> stack.push(stack.popLong() + 1)
                 Opcodes.FINC -> stack.push(stack.popFloat() + 1)
                 Opcodes.DINC -> stack.push(stack.popDouble() + 1)
 
-                Opcodes.BDEC -> stack.push(stack.pop() - 1)
-                Opcodes.SDEC -> stack.push(stack.popShort() - 1)
+                Opcodes.BDEC -> stack.push((stack.pop() - 1).toByte())
+                Opcodes.SDEC -> stack.push((stack.popShort() - 1).toShort())
                 Opcodes.IDEC -> stack.push(stack.popInt() - 1)
                 Opcodes.LDEC -> stack.push(stack.popLong() - 1)
                 Opcodes.FDEC -> stack.push(stack.popFloat() - 1)
                 Opcodes.DDEC -> stack.push(stack.popDouble() - 1)
 
                 Opcodes.BCMP -> {
-                    val a = stack.pop()
-                    val b = stack.pop()
-                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                    val b = stack.popUByte()
+                    val a = stack.popUByte()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
                 }
 
                 Opcodes.SCMP -> {
-                    val a = stack.popShort()
-                    val b = stack.popShort()
-                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                    val b = stack.popUShort()
+                    val a = stack.popUShort()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
                 }
 
                 Opcodes.ICMP -> {
-                    val a = stack.popInt()
-                    val b = stack.popInt()
-                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                    val b = stack.popUInt()
+                    val a = stack.popUInt()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
                 }
 
                 Opcodes.LCMP -> {
-                    val a = stack.popLong()
-                    val b = stack.popLong()
-                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                    val b = stack.popULong()
+                    val a = stack.popULong()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
                 }
 
                 Opcodes.FCMP -> {
-                    val a = stack.popFloat()
                     val b = stack.popFloat()
-                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                    val a = stack.popFloat()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
                 }
 
                 Opcodes.DCMP -> {
-                    val a = stack.popDouble()
                     val b = stack.popDouble()
-                    stack.push(if (b > a) 1 else if (b == a) 0 else -1)
+                    val a = stack.popDouble()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
+                }
+
+                Opcodes.UBCMP -> {
+                    val b = stack.popUByte()
+                    val a = stack.popUByte()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
+                }
+
+                Opcodes.USCMP -> {
+                    val b = stack.popUShort()
+                    val a = stack.popUShort()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
+                }
+
+                Opcodes.UICMP -> {
+                    val b = stack.popUInt()
+                    val a = stack.popUInt()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
+                }
+
+                Opcodes.ULCMP -> {
+                    val b = stack.popULong()
+                    val a = stack.popULong()
+                    stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
+                }
+
+                Opcodes.JMP -> pc = readInt()
+                Opcodes.JZ -> {
+                    val pos = readInt()
+                    if (stack.pop() == 0.toByte()) pc = pos
+                }
+
+                Opcodes.JNZ -> {
+                    val pos = readInt()
+                    if (stack.pop() != 0.toByte()) pc = pos
+                }
+
+                Opcodes.JE -> {
+                    val pos = readInt()
+                    if (stack.pop() == 1.toByte()) pc = pos
+                }
+
+                Opcodes.JNE -> {
+                    val pos = readInt()
+                    if (stack.pop() != 1.toByte()) pc = pos
+                }
+
+                Opcodes.JGE -> {
+                    val pos = readInt()
+                    if (stack.pop() <= 1.toByte()) pc = pos
+                }
+
+                Opcodes.JL -> {
+                    val pos = readInt()
+                    if (stack.pop() == 2.toByte()) pc = pos
+                }
+
+                Opcodes.JLE -> {
+                    val pos = readInt()
+                    if (stack.pop() >= 1.toByte()) pc = pos
                 }
 
                 Opcodes.PCAST -> {

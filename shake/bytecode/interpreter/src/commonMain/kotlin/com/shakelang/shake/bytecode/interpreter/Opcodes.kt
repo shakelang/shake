@@ -871,6 +871,57 @@ object Opcodes {
      */
     const val DCMP: Byte = 111 // Syntax: DCMP ; Compare two doubles
 
+    /**
+     * Compare two unsigned bytes
+     *
+     * Place the result on the stack (as a byte):
+     * - 0 (00000000) if the first value is less than the second
+     * - 1 (00000001) if the first value is equal to the second
+     * - 2 (00000010) if the first value is greater than the second
+     *
+     * @example Syntax: `UBCMP`
+     * @see - https://shakelang.com/specification/bytecode/instructions/#-417-ubcmp
+     */
+    const val UBCMP: Byte = 112 // Syntax: UBCMP ; Compare two unsigned bytes
+
+    /**
+     * Compare two unsigned shorts
+     *
+     * Place the result on the stack (as a byte):
+     * - 0 (00000000) if the first value is less than the second
+     * - 1 (00000001) if the first value is equal to the second
+     * - 2 (00000010) if the first value is greater than the second
+     *
+     * @example Syntax: `USCMP`
+     * @see - https://shakelang.com/specification/bytecode/instructions/#-418-uscmp
+     */
+    const val USCMP: Byte = 113 // Syntax: USCMP ; Compare two unsigned shorts
+
+    /**
+     * Compare two unsigned ints
+     *
+     * Place the result on the stack (as a byte):
+     * - 0 (00000000) if the first value is less than the second
+     * - 1 (00000001) if the first value is equal to the second
+     * - 2 (00000010) if the first value is greater than the second
+     *
+     * @example Syntax: `UICMP`
+     * @see - https://shakelang.com/specification/bytecode/instructions/#-419-uicmp
+     */
+    const val UICMP: Byte = 114 // Syntax: UICMP ; Compare two unsigned ints
+
+    /**
+     * Compare two unsigned longs
+     *
+     * Place the result on the stack (as a byte):
+     * - 0 (00000000) if the first value is less than the second
+     * - 1 (00000001) if the first value is equal to the second
+     * - 2 (00000010) if the first value is greater than the second
+     *
+     * @example Syntax: `ULCMP`
+     * @see - https://shakelang.com/specification/bytecode/instructions/#-4110-ulcmp
+     */
+    const val ULCMP: Byte = 115 // Syntax: ULCMP ; Compare two unsigned longs
 
     // Jump instructions
 
@@ -879,7 +930,7 @@ object Opcodes {
      * @example Syntax: `JMP` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions/#-511-jmp
      */
-    const val JMP: Byte = 113 // Syntax: JMP u4 address ; Jump to an address
+    const val JMP: Byte = 116 // Syntax: JMP u4 address ; Jump to an address
 
     /**
      * Jump to an address if the top two values are equal
@@ -887,7 +938,7 @@ object Opcodes {
      * @example Syntax: `JE` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions/#-514-je
      */
-    const val JE: Byte = 114 // Syntax: JE u4 address ; Jump to an address if the top two values are equal
+    const val JE: Byte = 117 // Syntax: JE u4 address ; Jump to an address if the top two values are equal
 
     /**
      * Jump to an address if the top two values are not equal
@@ -895,7 +946,7 @@ object Opcodes {
      * @example Syntax: `JNE` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions/#-515-jne
      */
-    const val JNE: Byte = 115 // Syntax: JNE u4 address ; Jump to an address if the top two values are not equal
+    const val JNE: Byte = 118 // Syntax: JNE u4 address ; Jump to an address if the top two values are not equal
 
     /**
      * Jump to an address if the top two values are less than
@@ -912,7 +963,7 @@ object Opcodes {
      * @example Syntax: `JGT` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-516-jg
      */
-    const val JG: Byte = 116 // Syntax: JGT u4 address ; Jump to an address if the top two values are greater than
+    const val JG: Byte = 122 // Syntax: JGT u4 address ; Jump to an address if the top two values are greater than
 
     /**
      * Jump to an address if the top two values are less than or equal
@@ -920,7 +971,7 @@ object Opcodes {
      * @example Syntax: `JLE` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-519-jle
      */
-    const val JLE: Byte = 117 // Syntax: JLE u4 address ; Jump to an address if the top two values are less than or equal
+    const val JLE: Byte = 120 // Syntax: JLE u4 address ; Jump to an address if the top two values are less than or equal
 
     /**
      * Jump to an address if the top two values are greater than or equal
@@ -928,7 +979,7 @@ object Opcodes {
      * @example Syntax: `JGE` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-517-jge
      */
-    const val JGE: Byte = 118 // Syntax: JGE u4 address ; Jump to an address if the top two values are greater than or equal
+    const val JGE: Byte = 121 // Syntax: JGE u4 address ; Jump to an address if the top two values are greater than or equal
 
     /**
      * Jump to an address if there is a zero on top of the stack
@@ -936,7 +987,7 @@ object Opcodes {
      * @example Syntax: `JZ` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-512-jz
      */
-    const val JZ: Byte = 119 // Syntax: JZ u4 address ; Jump to an address if there is a zero on top of the stack
+    const val JZ: Byte = 122 // Syntax: JZ u4 address ; Jump to an address if there is a zero on top of the stack
 
     /**
      * Jump to an address if there is not a zero on top of the stack
@@ -944,12 +995,12 @@ object Opcodes {
      * @example Syntax: `JNZ` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-513-jnz
      */
-    const val JNZ: Byte = 120 // Syntax: JNZ u4 address ; Jump to an address if there is not a zero on top of the stack
+    const val JNZ: Byte = 123 // Syntax: JNZ u4 address ; Jump to an address if there is not a zero on top of the stack
 
     /**
      * Primitive cast operation. The top element of the stack will be cast.
      * @example Syntax `PCAST` <u1 cast-type>
      * @see
      */
-    const val PCAST: Byte = 121 // Syntax: PCAST ; Pop a value from the stack and cast it to a primitive type
+    const val PCAST: Byte = 124 // Syntax: PCAST ; Pop a value from the stack and cast it to a primitive type
 }

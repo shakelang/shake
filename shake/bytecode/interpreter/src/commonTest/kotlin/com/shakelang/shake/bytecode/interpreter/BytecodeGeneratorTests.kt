@@ -785,63 +785,63 @@ class BytecodeGeneratorTests : FreeSpec({
 
     "jmp" {
         val bytes = bytecode {
-            jmp(0x01020304u)
+            jmp(0x01020304)
         }
         bytes shouldBe arrayOf(Opcodes.JMP, 0x01, 0x02, 0x03, 0x04)
     }
 
     "jz" {
         val bytes = bytecode {
-            jz(0x01020304u)
+            jz(0x01020304)
         }
         bytes shouldBe arrayOf(Opcodes.JZ, 0x01, 0x02, 0x03, 0x04)
     }
 
     "jnz" {
         val bytes = bytecode {
-            jnz(0x01020304u)
+            jnz(0x01020304)
         }
         bytes shouldBe arrayOf(Opcodes.JNZ, 0x01, 0x02, 0x03, 0x04)
     }
 
     "je" {
         val bytes = bytecode {
-            je(0x01020304u)
+            je(0x01020304)
         }
         bytes shouldBe arrayOf(Opcodes.JE, 0x01, 0x02, 0x03, 0x04)
     }
 
     "jne" {
         val bytes = bytecode {
-            jne(0x01020304u)
+            jne(0x01020304)
         }
         bytes shouldBe arrayOf(Opcodes.JNE, 0x01, 0x02, 0x03, 0x04)
     }
 
     "jl" {
         val bytes = bytecode {
-            jl(0x01020304u)
+            jl(0x01020304)
         }
         bytes shouldBe arrayOf(Opcodes.JL, 0x01, 0x02, 0x03, 0x04)
     }
 
     "jle" {
         val bytes = bytecode {
-            jle(0x01020304u)
+            jle(0x01020304)
         }
         bytes shouldBe arrayOf(Opcodes.JLE, 0x01, 0x02, 0x03, 0x04)
     }
 
     "jg" {
         val bytes = bytecode {
-            jg(0x01020304u)
+            jg(0x01020304)
         }
         bytes shouldBe arrayOf(Opcodes.JG, 0x01, 0x02, 0x03, 0x04)
     }
 
     "jge" {
         val bytes = bytecode {
-            jge(0x01020304u)
+            jge(0x01020304)
         }
         bytes shouldBe arrayOf(Opcodes.JGE, 0x01, 0x02, 0x03, 0x04)
     }

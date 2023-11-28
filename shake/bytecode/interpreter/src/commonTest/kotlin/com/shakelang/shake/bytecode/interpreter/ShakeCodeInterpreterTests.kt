@@ -1,7 +1,6 @@
 @file:Suppress("unused")
 package com.shakelang.shake.bytecode.interpreter
 
-import com.shakelang.shake.util.primitives.bytes.toHexString
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -1075,6 +1074,760 @@ class ShakeCodeInterpreterTests : FreeSpec({
 
         stack.size shouldBe 8
         stack.popLong() shouldBe 2305843009213693947L
+    }
+
+    "bnot" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(5)
+                bnot()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe -6
+    }
+
+    "snot" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(5)
+                snot()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 2
+        stack.popShort() shouldBe -6
+    }
+
+    "inot" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(5)
+                inot()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe -6
+    }
+
+    "lnot" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(5)
+                lnot()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 8
+        stack.popLong() shouldBe -6
+    }
+
+    "binc" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(5)
+                binc()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 6
+    }
+
+    "sinc" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(5)
+                sinc()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 2
+        stack.popShort() shouldBe 6
+    }
+
+    "iinc" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(5)
+                iinc()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe 6
+    }
+
+    "linc" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(5)
+                linc()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 8
+        stack.popLong() shouldBe 6
+    }
+
+    "bdec" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(5)
+                bdec()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 4
+    }
+
+    "sdec" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(5)
+                sdec()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 2
+        stack.popShort() shouldBe 4
+    }
+
+    "idec" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(5)
+                idec()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 4
+        stack.popInt() shouldBe 4
+    }
+
+    "ldec" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(5)
+                ldec()
+            }, 0
+        )
+
+        code.tick(2)
+
+        stack.size shouldBe 8
+        stack.popLong() shouldBe 4
+    }
+    "byte compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(0)
+                bpush(1)
+                bcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+    "byte compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(1)
+                bcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+    "byte compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(0)
+                bcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "short compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(0)
+                spush(1)
+                scmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+    "short compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(1)
+                spush(1)
+                scmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+    "short compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(1)
+                spush(0)
+                scmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "int compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(0)
+                ipush(1)
+                icmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+    "int compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(1)
+                icmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+    "int compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(0)
+                icmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "long compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(0)
+                lpush(1)
+                lcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+    "long compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(1)
+                lpush(1)
+                lcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+    "long compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(1)
+                lpush(0)
+                lcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "float compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(0f.toBits())
+                ipush(1f.toBits())
+                fcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+    "float compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1f.toBits())
+                ipush(1f.toBits())
+                fcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+    "float compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1f.toBits())
+                ipush(0f.toBits())
+                fcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "double compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(0.0.toBits())
+                lpush(1.0.toBits())
+                dcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+    "double compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(1.0.toBits())
+                lpush(1.0.toBits())
+                dcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+    "double compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(1.0.toBits())
+                lpush(0.0.toBits())
+                dcmp()
+            }, 0
+        )
+
+        code.tick(3)
+
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "jmp" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(2)
+                jmp(0)
+            }, 0
+        )
+
+        code.tick(6)
+
+        code.pc shouldBe 0
+        stack.size shouldBe 4
+    }
+
+    "jz" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(0)
+                bcmp()
+                jz(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 0
+        stack.size shouldBe 0
+    }
+
+    "jz (false)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(0)
+                bpush(1)
+                bcmp()
+                jz(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 10
+        stack.size shouldBe 0
+    }
+
+    "jnz" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(0)
+                bcmp()
+                jnz(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 10
+        stack.size shouldBe 0
+    }
+
+    "jnz (false)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(0)
+                bpush(1)
+                bcmp()
+                jnz(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 0
+        stack.size shouldBe 0
+    }
+
+    "jl" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(0)
+                bpush(1)
+                bcmp()
+                jl(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 0
+        stack.size shouldBe 0
+    }
+
+    "jl (false)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(0)
+                bcmp()
+                jl(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 10
+        stack.size shouldBe 0
+    }
+
+    "jle" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(0)
+                bpush(1)
+                bcmp()
+                jle(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 0
+        stack.size shouldBe 0
+    }
+
+    "jle (equal)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(1)
+                bcmp()
+                jle(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 0
+        stack.size shouldBe 0
+    }
+
+"jle (false)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(0)
+                bcmp()
+                jle(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 10
+        stack.size shouldBe 0
+    }
+
+    "jg" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(0)
+                bcmp()
+                jg(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 0
+        stack.size shouldBe 0
+    }
+
+    "jg (false)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(0)
+                bpush(1)
+                bcmp()
+                jg(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 10
+        stack.size shouldBe 0
+    }
+
+"jge" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(0)
+                bcmp()
+                jge(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 0
+        stack.size shouldBe 0
+    }
+
+    "jge (equal)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(1)
+                bcmp()
+                jge(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 0
+        stack.size shouldBe 0
+    }
+
+    "jge (false)" {
+        val interpreter = ShakeInterpreter()
+        val stack = interpreter.stack
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(0)
+                bpush(1)
+                bcmp()
+                jge(0)
+            }, 0
+        )
+
+        code.tick(4)
+
+        code.pc shouldBe 10
+        stack.size shouldBe 0
     }
 
     "cast" {
