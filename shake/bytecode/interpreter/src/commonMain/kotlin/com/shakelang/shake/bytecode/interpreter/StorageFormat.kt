@@ -4,87 +4,29 @@ import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.input.dataStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import kotlin.experimental.and
 
-open class ConstantPool (
+open class ConstantPool(
     open val entries: List<ConstantPoolEntry>
-) {
-    companion object {
-        fun fromStream(stream: DataInputStream): ConstantPool {
-            val entries = mutableListOf<ConstantPoolEntry>()
-            val count = stream.readInt()
-            for (i in 0 until count) {
-                entries.add(ConstantPoolEntry.fromStream(stream))
-            }
-            return ConstantPool(entries)
-        }
+) : List<ConstantPoolEntry> by entries {
 
-        fun fromByteArray(array: ByteArray): ConstantPool {
-            return fromStream(array.dataStream())
-        }
+    fun isUtf8(identifier: Int) = entries[identifier] is ConstantPoolEntry.Utf8Constant
+    fun isByte(identifier: Int) = entries[identifier] is ConstantPoolEntry.ByteConstant
+    fun isShort(identifier: Int) = entries[identifier] is ConstantPoolEntry.ShortConstant
+    fun isInt(identifier: Int) = entries[identifier] is ConstantPoolEntry.IntConstant
+    fun isLong(identifier: Int) = entries[identifier] is ConstantPoolEntry.LongConstant
+    fun isFloat(identifier: Int) = entries[identifier] is ConstantPoolEntry.FloatConstant
+    fun isDouble(identifier: Int) = entries[identifier] is ConstantPoolEntry.DoubleConstant
+    fun isClass(identifier: Int) = entries[identifier] is ConstantPoolEntry.ClassConstant
 
-        fun fromList(list: List<ConstantPoolEntry>): ConstantPool {
-            return ConstantPool(list)
-        }
-    }
-}
-
-
-class MutableConstantPool(
-    override val entries: MutableList<ConstantPoolEntry> = mutableListOf()
-) : ConstantPool(entries) {
-    fun add(entry: ConstantPoolEntry) {
-        (entries as MutableList).add(entry)
-    }
-
-    fun createUtf8(value: String): Int {
-        val entry = ConstantPoolEntry.Utf8Constant(value)
-        add(entry)
-        return entries.indexOf(entry)
-    }
-
-    fun createByte(value: Byte): Int {
-        val entry = ConstantPoolEntry.ByteConstant(value)
-        add(entry)
-        return entries.indexOf(entry)
-    }
-
-    fun createShort(value: Short): Int {
-        val entry = ConstantPoolEntry.ShortConstant(value)
-        add(entry)
-        return entries.indexOf(entry)
-    }
-
-    fun createInt(value: Int): Int {
-        val entry = ConstantPoolEntry.IntConstant(value)
-        add(entry)
-        return entries.indexOf(entry)
-    }
-
-    fun createLong(value: Long): Int {
-        val entry = ConstantPoolEntry.LongConstant(value)
-        add(entry)
-        return entries.indexOf(entry)
-    }
-
-    fun createFloat(value: Float): Int {
-        val entry = ConstantPoolEntry.FloatConstant(value)
-        add(entry)
-        return entries.indexOf(entry)
-    }
-
-    fun createDouble(value: Double): Int {
-        val entry = ConstantPoolEntry.DoubleConstant(value)
-        add(entry)
-        return entries.indexOf(entry)
-    }
-
-    fun createClass(identifier: Int): Int {
-        val entry = ConstantPoolEntry.ClassConstant(identifier)
-        add(entry)
-        return entries.indexOf(entry)
-    }
-
-    fun createClass(name: String) = createClass(createUtf8(name))
+    fun getUtf8(identifier: Int) = entries[identifier] as ConstantPoolEntry.Utf8Constant
+    fun getByte(identifier: Int) = entries[identifier] as ConstantPoolEntry.ByteConstant
+    fun getShort(identifier: Int) = entries[identifier] as ConstantPoolEntry.ShortConstant
+    fun getInt(identifier: Int) = entries[identifier] as ConstantPoolEntry.IntConstant
+    fun getLong(identifier: Int) = entries[identifier] as ConstantPoolEntry.LongConstant
+    fun getFloat(identifier: Int) = entries[identifier] as ConstantPoolEntry.FloatConstant
+    fun getDouble(identifier: Int) = entries[identifier] as ConstantPoolEntry.DoubleConstant
+    fun getClass(identifier: Int) = entries[identifier] as ConstantPoolEntry.ClassConstant
 
     fun findUtf8(value: String): Int? {
         for (i in entries.indices) {
@@ -171,16 +113,6 @@ class MutableConstantPool(
         return findClass(identifier)
     }
 
-    fun getUtf8(identifier: String) = findUtf8(identifier) ?: createUtf8(identifier)
-    fun getByte(identifier: Byte) = findByte(identifier) ?: createByte(identifier)
-    fun getShort(identifier: Short) = findShort(identifier) ?: createShort(identifier)
-    fun getInt(identifier: Int) = findInt(identifier) ?: createInt(identifier)
-    fun getLong(identifier: Long) = findLong(identifier) ?: createLong(identifier)
-    fun getFloat(identifier: Float) = findFloat(identifier) ?: createFloat(identifier)
-    fun getDouble(identifier: Double) = findDouble(identifier) ?: createDouble(identifier)
-    fun getClass(identifier: Int) = findClass(identifier) ?: createClass(identifier)
-    fun getClass(identifier: String) = findClass(identifier) ?: createClass(identifier)
-
     fun dump(stream: DataOutputStream) {
         stream.writeInt(entries.size)
         for (entry in entries) {
@@ -194,6 +126,90 @@ class MutableConstantPool(
         dump(stream)
         return byteStream.toByteArray()
     }
+
+    companion object {
+        fun fromStream(stream: DataInputStream): ConstantPool {
+            val entries = mutableListOf<ConstantPoolEntry>()
+            val count = stream.readInt()
+            for (i in 0 until count) {
+                entries.add(ConstantPoolEntry.fromStream(stream))
+            }
+            return ConstantPool(entries)
+        }
+
+        fun fromByteArray(array: ByteArray): ConstantPool {
+            return fromStream(array.dataStream())
+        }
+
+        fun fromList(list: List<ConstantPoolEntry>): ConstantPool {
+            return ConstantPool(list)
+        }
+    }
+}
+
+
+class MutableConstantPool(
+    override val entries: MutableList<ConstantPoolEntry> = mutableListOf()
+) : ConstantPool(entries), MutableList<ConstantPoolEntry> by entries {
+    fun createUtf8(value: String): Int {
+        val entry = ConstantPoolEntry.Utf8Constant(value)
+        add(entry)
+        return entries.indexOf(entry)
+    }
+
+    fun createByte(value: Byte): Int {
+        val entry = ConstantPoolEntry.ByteConstant(value)
+        add(entry)
+        return entries.indexOf(entry)
+    }
+
+    fun createShort(value: Short): Int {
+        val entry = ConstantPoolEntry.ShortConstant(value)
+        add(entry)
+        return entries.indexOf(entry)
+    }
+
+    fun createInt(value: Int): Int {
+        val entry = ConstantPoolEntry.IntConstant(value)
+        add(entry)
+        return entries.indexOf(entry)
+    }
+
+    fun createLong(value: Long): Int {
+        val entry = ConstantPoolEntry.LongConstant(value)
+        add(entry)
+        return entries.indexOf(entry)
+    }
+
+    fun createFloat(value: Float): Int {
+        val entry = ConstantPoolEntry.FloatConstant(value)
+        add(entry)
+        return entries.indexOf(entry)
+    }
+
+    fun createDouble(value: Double): Int {
+        val entry = ConstantPoolEntry.DoubleConstant(value)
+        add(entry)
+        return entries.indexOf(entry)
+    }
+
+    fun createClass(identifier: Int): Int {
+        val entry = ConstantPoolEntry.ClassConstant(identifier)
+        add(entry)
+        return entries.indexOf(entry)
+    }
+
+    fun createClass(name: String) = createClass(createUtf8(name))
+
+    fun resolveUtf8(identifier: String) = findUtf8(identifier) ?: createUtf8(identifier)
+    fun resolveByte(identifier: Byte) = findByte(identifier) ?: createByte(identifier)
+    fun resolveShort(identifier: Short) = findShort(identifier) ?: createShort(identifier)
+    fun resolveInt(identifier: Int) = findInt(identifier) ?: createInt(identifier)
+    fun resolveLong(identifier: Long) = findLong(identifier) ?: createLong(identifier)
+    fun resolveFloat(identifier: Float) = findFloat(identifier) ?: createFloat(identifier)
+    fun resolveDouble(identifier: Double) = findDouble(identifier) ?: createDouble(identifier)
+    fun resolveClass(identifier: Int) = findClass(identifier) ?: createClass(identifier)
+    fun resolveClass(identifier: String) = findClass(identifier) ?: createClass(identifier)
 
     companion object {
         fun fromStream(stream: DataInputStream): MutableConstantPool {
@@ -244,6 +260,7 @@ sealed class ConstantPoolEntry {
         }
 
     }
+
     class ByteConstant(val value: Byte) : ConstantPoolEntry() {
         override fun toString(): String {
             return "ByteConstant(value=$value)"
@@ -260,6 +277,7 @@ sealed class ConstantPoolEntry {
             }
         }
     }
+
     class ShortConstant(val value: Short) : ConstantPoolEntry() {
         override fun toString(): String {
             return "ShortConstant(value=$value)"
@@ -276,6 +294,7 @@ sealed class ConstantPoolEntry {
             }
         }
     }
+
     class IntConstant(val value: Int) : ConstantPoolEntry() {
         override fun toString(): String {
             return "IntConstant(value=$value)"
@@ -292,6 +311,7 @@ sealed class ConstantPoolEntry {
             }
         }
     }
+
     class LongConstant(val value: Long) : ConstantPoolEntry() {
         override fun toString(): String {
             return "LongConstant(value=$value)"
@@ -308,6 +328,7 @@ sealed class ConstantPoolEntry {
             }
         }
     }
+
     class FloatConstant(val value: Float) : ConstantPoolEntry() {
         override fun toString(): String {
             return "FloatConstant(value=$value)"
@@ -324,6 +345,7 @@ sealed class ConstantPoolEntry {
             }
         }
     }
+
     class DoubleConstant(val value: Double) : ConstantPoolEntry() {
         override fun toString(): String {
             return "DoubleConstant(value=$value)"
@@ -340,6 +362,7 @@ sealed class ConstantPoolEntry {
             }
         }
     }
+
     class ClassConstant(val identifier: Int) : ConstantPoolEntry() {
         override fun toString(): String {
             return "ClassConstant(identifier=$identifier)"
@@ -375,9 +398,224 @@ sealed class ConstantPoolEntry {
     }
 }
 
-class StorageFormat (
+class Field(
+    val pool: ConstantPool,
+    val nameConstant: Int,
+    val attributes: Short,
+) {
+    val isPublic: Boolean
+        get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
+    val isPrivate: Boolean
+        get() = attributes and 0b00000000_00000010.toShort() != 0.toShort()
+    val isProtected: Boolean
+        get() = attributes and 0b00000000_00000100.toShort() != 0.toShort()
+    val isStatic: Boolean
+        get() = attributes and 0b00000000_00001000.toShort() != 0.toShort()
+    val isFinal: Boolean
+        get() = attributes and 0b00000000_00010000.toShort() != 0.toShort()
+
+    val name: String get() = pool.getUtf8(nameConstant).value
+
+    fun dump(stream: DataOutputStream) {
+        stream.writeInt(nameConstant)
+        stream.writeShort(attributes)
+    }
+
+    fun dump(): ByteArray {
+        val byteStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(byteStream)
+        dump(stream)
+        return byteStream.toByteArray()
+    }
+
+    companion object {
+        fun fromStream(pool: ConstantPool, stream: DataInputStream): Field {
+            val name = stream.readInt()
+            val attributes = stream.readShort()
+            return Field(pool, name, attributes)
+        }
+    }
+}
+
+class Method(
+    val pool: ConstantPool,
+    val nameConstant: Int,
+    val qualifiedNameConstant: Int,
+    val attributes: Short,
+) {
+    val isPublic: Boolean
+        get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
+    val isPrivate: Boolean
+        get() = attributes and 0b00000000_00000010.toShort() != 0.toShort()
+    val isProtected: Boolean
+        get() = attributes and 0b00000000_00000100.toShort() != 0.toShort()
+    val isStatic: Boolean
+        get() = attributes and 0b00000000_00001000.toShort() != 0.toShort()
+    val isFinal: Boolean
+        get() = attributes and 0b00000000_00010000.toShort() != 0.toShort()
+
+    val name: String get() = pool.getUtf8(nameConstant).value
+    val qualifiedName: String get() = pool.getUtf8(qualifiedNameConstant).value
+
+    fun dump(stream: DataOutputStream) {
+        stream.writeInt(nameConstant)
+        stream.writeInt(qualifiedNameConstant)
+        stream.writeShort(attributes)
+    }
+
+    fun dump(): ByteArray {
+        val byteStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(byteStream)
+        dump(stream)
+        return byteStream.toByteArray()
+    }
+
+    companion object {
+        fun fromStream(pool: ConstantPool, stream: DataInputStream): Method {
+            val name = stream.readInt()
+            val qualifiedName = stream.readInt()
+            val attributes = stream.readShort()
+            return Method(pool, name, qualifiedName, attributes)
+        }
+    }
+}
+
+class Class(
+    val pool: ConstantPool,
+    val nameConstant: Int,
+    val superNameConstant: Int,
+    val interfacesConstants: List<Int>,
+    val fields: List<Int>,
+    val methods: List<Int>,
+    val subClasses: List<Int>,
+) {
+
+    val name: String get() = pool.getUtf8(nameConstant).value
+    val superName: String get() = pool.getUtf8(superNameConstant).value
+    val interfaces: List<String> get() = interfacesConstants.map { pool.getUtf8(it).value }
+
+    fun dump(stream: DataOutputStream) {
+        stream.writeInt(nameConstant)
+        stream.writeInt(superNameConstant)
+        stream.writeInt(interfacesConstants.size)
+        for (interfaceConstant in interfacesConstants) {
+            stream.writeInt(interfaceConstant)
+        }
+        stream.writeInt(fields.size)
+        for (field in fields) {
+            stream.writeInt(field)
+        }
+        stream.writeInt(methods.size)
+        for (method in methods) {
+            stream.writeInt(method)
+        }
+        stream.writeInt(subClasses.size)
+        for (subClass in subClasses) {
+            stream.writeInt(subClass)
+        }
+    }
+
+    fun dump(): ByteArray {
+        val byteStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(byteStream)
+        dump(stream)
+        return byteStream.toByteArray()
+    }
+
+    companion object {
+        fun fromStream(stream: DataInputStream): Class {
+            val name = stream.readInt()
+            val superName = stream.readInt()
+            val interfacesCount = stream.readInt()
+            val interfaces = mutableListOf<Int>()
+            for (i in 0 until interfacesCount) {
+                interfaces.add(stream.readInt())
+            }
+            val fieldsCount = stream.readInt()
+            val fields = mutableListOf<Int>()
+            for (i in 0 until fieldsCount) {
+                fields.add(stream.readInt())
+            }
+            val methodsCount = stream.readInt()
+            val methods = mutableListOf<Int>()
+            for (i in 0 until methodsCount) {
+                methods.add(stream.readInt())
+            }
+            val subClassesCount = stream.readInt()
+            val subClasses = mutableListOf<Int>()
+            for (i in 0 until subClassesCount) {
+                subClasses.add(stream.readInt())
+            }
+            return Class(
+                ConstantPool.fromStream(stream),
+                name,
+                superName,
+                interfaces,
+                fields,
+                methods,
+                subClasses
+            )
+        }
+    }
+}
+
+class StorageFormat(
     val magic: Int,
     val major: Short,
     val minor: Short,
-    val constantPool: List<ConstantPoolEntry>,
-)
+    val constantPool: ConstantPool,
+    val classes: List<Class>,
+    val fields: List<Field>,
+    val methods: List<Method>,
+) {
+    fun dump(stream: DataOutputStream) {
+        stream.writeInt(magic)
+        stream.writeShort(major)
+        stream.writeShort(minor)
+        constantPool.dump(stream)
+        stream.writeInt(classes.size)
+        for (class_ in classes) {
+            class_.dump(stream)
+        }
+        stream.writeInt(fields.size)
+        for (field in fields) {
+            field.dump(stream)
+        }
+        stream.writeInt(methods.size)
+        for (method in methods) {
+            method.dump(stream)
+        }
+    }
+
+    fun dump(): ByteArray {
+        val byteStream = ByteArrayOutputStream()
+        val stream = DataOutputStream(byteStream)
+        dump(stream)
+        return byteStream.toByteArray()
+    }
+
+    companion object {
+        fun fromStream(stream: DataInputStream): StorageFormat {
+            val magic = stream.readInt()
+            val major = stream.readShort()
+            val minor = stream.readShort()
+            val constantPool = ConstantPool.fromStream(stream)
+            val classesCount = stream.readInt()
+            val classes = mutableListOf<Class>()
+            for (i in 0 until classesCount) {
+                classes.add(Class.fromStream(stream))
+            }
+            val fieldsCount = stream.readInt()
+            val fields = mutableListOf<Field>()
+            for (i in 0 until fieldsCount) {
+                fields.add(Field.fromStream(constantPool, stream))
+            }
+            val methodsCount = stream.readInt()
+            val methods = mutableListOf<Method>()
+            for (i in 0 until methodsCount) {
+                methods.add(Method.fromStream(constantPool, stream))
+            }
+            return StorageFormat(magic, major, minor, constantPool, classes, fields, methods)
+        }
+    }
+}
