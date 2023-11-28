@@ -1818,5 +1818,19 @@ infix fun ULong.ushr(other: UShort): ULong = (this.toLong() ushr other.toInt()).
 /**
  * Performs an ushr operation on this value and [other]
  *
+ * @param other The other value
+ * @return The result of the bitwise ushr operation
+ * @since 0.3.0
+ * @version 0.3.0
+ */
+infix fun ULong.ushr(other: UInt): ULong = (this.toLong() ushr other.toInt()).toULong()
+
+/**
+ * Performs an ushr operation on this value and [other]
+ *
+ * @param other The other value
+ * @return The result of the bitwise ushr operation
+ * @since 0.3.0
+ * @version 0.3.0
  */
 infix fun ULong.ushr(other: ULong): ULong = (this.toLong() ushr other.toInt()).toULong()
