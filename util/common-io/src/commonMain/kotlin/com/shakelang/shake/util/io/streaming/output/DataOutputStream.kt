@@ -1143,7 +1143,7 @@ class DataOutputStream(
      */
     fun writeUTF8(str: CharSequence, off: Int, len: Int) {
         val bytes = str.toBytes()
-        writeInt(len)
+        writeUnsignedShort(len.toUShort())
         writeByteArray(bytes, off, len)
     }
 

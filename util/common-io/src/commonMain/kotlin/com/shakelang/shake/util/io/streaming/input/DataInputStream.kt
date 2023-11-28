@@ -334,7 +334,7 @@ class DataInputStream(private val data: InputStream) : InputStream() {
      * @version 0.1.1
      */
     fun readUTF(): String {
-        val length = readInt()
-        return readUTF(length)
+        val length = readUnsignedShort()
+        return readUTF(length.toInt())
     }
 }
