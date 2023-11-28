@@ -780,7 +780,7 @@ class DataOutputStreamTests {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
         stream.writeUTF8("abc")
-        assertEquals(byteArrayOf(0x00, 0x03, 0x61, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
+        assertEquals(byteArrayOf(0x00, 0x00, 0x00, 0x03, 0x61, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
     }
 
     @Test
@@ -788,7 +788,7 @@ class DataOutputStreamTests {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
         stream.writeUTF8("abcd", 1, 2)
-        assertEquals(byteArrayOf(0x00, 0x02, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
+        assertEquals(byteArrayOf(0x00, 0x00, 0x00, 0x02, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
     }
 
     @Test
@@ -796,7 +796,7 @@ class DataOutputStreamTests {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
         stream.writeStringUTF8("abc")
-        assertEquals(byteArrayOf(0x00, 0x03, 0x61, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
+        assertEquals(byteArrayOf(0x00, 0x00, 0x00, 0x03, 0x61, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
     }
 
     @Test
@@ -804,7 +804,7 @@ class DataOutputStreamTests {
         val baseStream = ByteArrayOutputStream()
         val stream = DataOutputStream(baseStream)
         stream.writeStringUTF8("abcd", 1, 2)
-        assertEquals(byteArrayOf(0x00, 0x02, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
+        assertEquals(byteArrayOf(0x00, 0x00, 0x00, 0x02, 0x62, 0x63).toList(), baseStream.toByteArray().toList())
     }
 
     @Test
