@@ -51,7 +51,7 @@ abstract class ShakeProcessor<T> {
 
 open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
 
-    val codeProcessor = ShakeCodeProcessor()
+    val codeProcessor = ShakeASTProcessor()
     open val project = CreationShakeProject(codeProcessor)
     override val src: CreationShakeProject
         get() = project
@@ -73,15 +73,18 @@ open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
     }
 }
 
-open class ShakeCodeProcessor {
+open class ShakeASTProcessor {
 
     fun visitValue(scope: CreationShakeScope, value: ShakeValuedNode): CreationShakeValue {
         return when (value) {
+            // Literals
             is ShakeIntegerNode -> visitIntegerNode(scope, value)
             is ShakeDoubleNode -> visitDoubleNode(scope, value)
             is ShakeStringNode -> visitStringNode(scope, value)
             is ShakeLogicalTrueNode -> visitLogicalTrueNode(scope, value)
             is ShakeLogicalFalseNode -> visitLogicalFalseNode(scope, value)
+            is ShakeNullNode -> visitNullNode(scope, value)
+
             is ShakeLogicalAndNode -> visitLogicalAndNode(scope, value)
             is ShakeLogicalOrNode -> visitLogicalOrNode(scope, value)
             is ShakeLogicalXOrNode -> visitLogicalXOrNode(scope, value)
@@ -584,6 +587,10 @@ open class ShakeCodeProcessor {
 
     fun visitLogicalFalseNode(scope: CreationShakeScope, n: ShakeLogicalFalseNode): CreationShakeValue {
         return CreationShakeBooleanLiteral(scope.project, false)
+    }
+
+    fun visitNullNode(scope: CreationShakeScope, n: ShakeNullNode): CreationShakeValue {
+        return CreationShakeNullLiteral(scope.project)
     }
 
     fun visitCastNode(scope: CreationShakeScope, n: ShakeCastNode): CreationShakeCast {

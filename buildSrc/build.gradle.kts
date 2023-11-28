@@ -18,4 +18,5 @@ dependencies {
     implementation("gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:0.16.1")
     implementation("com.shakelang.shake.util.changelog:plugin:0.3.2")
     implementation("io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0")
+    implementation("io.kotest:kotest-framework-multiplatform-plugin-gradle:5.8.0")
 }

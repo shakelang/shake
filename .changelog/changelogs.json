@@ -58,6 +58,18 @@
           "changes": [
             "Update dependencies"
           ]
+        },
+        {
+          "version": "0.3.3",
+          "changes": [
+            "Update dependencies"
+          ]
+        },
+        {
+          "version": "0.3.4",
+          "changes": [
+            "Update dependencies"
+          ]
         }
       ]
     },
@@ -83,6 +95,18 @@
           "version": "0.2.0",
           "changes": [
             "Update to new package structure"
+          ]
+        },
+        {
+          "version": "0.2.1",
+          "changes": [
+            "writeUTF8() should write an int as size (as readUTF8 also reads an int)"
+          ]
+        },
+        {
+          "version": "0.2.2",
+          "changes": [
+            "writeUTF8() should write an ushort as size (readUTF8 as well)"
           ]
         }
       ]
@@ -141,6 +165,18 @@
           "changes": [
             "Update documentation"
           ]
+        },
+        {
+          "version": "0.2.2",
+          "changes": [
+            "Update dependencies"
+          ]
+        },
+        {
+          "version": "0.2.3",
+          "changes": [
+            "Update dependencies"
+          ]
         }
       ]
     },
@@ -153,6 +189,12 @@
           "version": "0.2.0",
           "changes": [
             "Update to new package structure"
+          ]
+        },
+        {
+          "version": "0.3.0",
+          "changes": [
+            "Add shift library"
           ]
         }
       ]
@@ -170,6 +212,18 @@
         },
         {
           "version": "0.2.1",
+          "changes": [
+            "Update dependencies"
+          ]
+        },
+        {
+          "version": "0.2.2",
+          "changes": [
+            "Update dependencies"
+          ]
+        },
+        {
+          "version": "0.2.3",
           "changes": [
             "Update dependencies"
           ]

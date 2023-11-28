@@ -181,7 +181,7 @@ open class VersionTask : DefaultTask() {
                 it = PackageChangelog(
                     path,
                     path,
-                    description
+                    description ?: ""
                 )
                 mapFile.add(it)
             }

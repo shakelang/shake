@@ -2,7 +2,7 @@ package com.shakelang.shake.processor.program.creation
 
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import com.shakelang.shake.processor.ShakeCodeProcessor
+import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
@@ -159,7 +159,7 @@ class CreationShakeMethod(
             throw IllegalArgumentException("Cannot set a class in a method scope")
         }
 
-        override val processor: ShakeCodeProcessor
+        override val processor: ShakeASTProcessor
             get() = prj.projectScope.processor
     }
 

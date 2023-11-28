@@ -2,7 +2,7 @@ package com.shakelang.shake.processor.program.creation
 
 import com.shakelang.shake.parser.node.ShakeImportNode
 import com.shakelang.shake.parser.node.ShakeVariableType
-import com.shakelang.shake.processor.ShakeCodeProcessor
+import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 
@@ -92,7 +92,7 @@ abstract class CreationShakeScope : ShakeScope {
         return this
     }
 
-    abstract val processor: ShakeCodeProcessor
+    abstract val processor: ShakeASTProcessor
 }
 
 class CreationFileScope(
@@ -141,6 +141,6 @@ class CreationFileScope(
         parent.setClass(klass)
     }
 
-    override val processor: ShakeCodeProcessor
+    override val processor: ShakeASTProcessor
         get() = parent.processor
 }

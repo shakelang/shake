@@ -2,7 +2,7 @@ package com.shakelang.shake.processor.program.creation
 
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import com.shakelang.shake.processor.ShakeCodeProcessor
+import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.types.ShakeClass
 
@@ -187,7 +187,7 @@ class CreationShakeClass : ShakeClass {
 
     inner class StaticScope : CreationShakeScope() {
 
-        override val processor: ShakeCodeProcessor get() = parent.processor
+        override val processor: ShakeASTProcessor get() = parent.processor
         override val parent: CreationShakeScope get() = parentScope
         override val project get() = prj
 
@@ -218,7 +218,7 @@ class CreationShakeClass : ShakeClass {
 
     inner class InstanceScope : CreationShakeScope() {
 
-        override val processor: ShakeCodeProcessor get() = parent.processor
+        override val processor: ShakeASTProcessor get() = parent.processor
         override val parent: CreationShakeScope get() = parentScope
         override val project get() = parent.project
 

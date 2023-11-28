@@ -6,3 +6,7 @@ Utilities for parsing stuff with kotlin
 Update to new package structure
 ### 0.2.1
 Update documentation
+### 0.2.2
+Update dependencies
+### 0.2.3
+Update dependencies

@@ -5,14 +5,14 @@ import com.shakelang.shake.processor.program.types.*
 import com.shakelang.shake.processor.program.types.code.ShakeCode
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 import com.shakelang.shake.processor.program.types.code.values.ShakeValue
-import com.shakelang.shake.processor.util.PointerList
-import com.shakelang.shake.processor.util.latePoint
-import com.shakelang.shake.processor.util.values
 import com.shakelang.shake.util.io.streaming.input.ByteArrayInputStream
 import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.input.InputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.OutputStream
+import com.shakelang.shake.util.pointer.PointerList
+import com.shakelang.shake.util.pointer.latePoint
+import com.shakelang.shake.util.pointer.values
 import com.shakelang.shake.util.primitives.bytes.toBytes
 import com.shakelang.shake.util.shason.json
 

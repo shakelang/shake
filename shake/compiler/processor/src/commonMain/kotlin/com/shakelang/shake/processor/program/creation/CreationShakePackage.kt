@@ -6,7 +6,7 @@ import com.shakelang.shake.parser.node.ShakePackageNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import com.shakelang.shake.processor.ShakeCodeProcessor
+import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.types.ShakePackage
 
 open class CreationShakePackage(
@@ -114,7 +114,7 @@ open class CreationShakePackage(
             throw IllegalStateException("Cannot set a class in a package scope")
         }
 
-        override val processor: ShakeCodeProcessor
+        override val processor: ShakeASTProcessor
             get() = parent.processor
     }
 
