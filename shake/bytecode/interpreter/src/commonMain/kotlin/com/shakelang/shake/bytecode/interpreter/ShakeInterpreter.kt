@@ -12,12 +12,20 @@ import kotlin.experimental.xor
 class ShakeInterpreter {
 
     val stack = ByteStack(1024 * 1024 * 10) // 10 MB stack size
+    val callStack: MutableList<ShakeCodeInterpreter> = mutableListOf()
 
     fun tick() {
+        if (callStack.isEmpty()) return
+        callStack.last().tick()
+        if (callStack.last().finished) callStack.removeLast()
     }
 
     fun createCodeInterpreter(code: ByteArray, localsSize: Int): ShakeCodeInterpreter {
         return ShakeCodeInterpreter(code, localsSize)
+    }
+
+    fun putFunctionOnStack(function: ShakeInterpreterMethod) {
+        callStack.add(createCodeInterpreter(function.code, 100))
     }
 
     inner class ShakeCodeInterpreter(
@@ -27,6 +35,8 @@ class ShakeInterpreter {
 
         val locals = ByteArray(localsSize)
 
+        var finished = false
+            private set
         var pc = 0
 
         private fun readByte(): Byte {
@@ -40,11 +50,13 @@ class ShakeInterpreter {
             pc += 2
             return v
         }
+
         private fun readInt(): Int {
             val v = code.getInt(pc)
             pc += 4
             return v
         }
+
         private fun readLong(): Long {
             val v = code.getLong(pc)
             pc += 8
@@ -82,9 +94,7 @@ class ShakeInterpreter {
         fun tick() {
             val opcode = readByte()
             when (opcode) {
-                Opcodes.NOP -> {
-                    // do nothing
-                }
+                Opcodes.NOP -> { /* do nothing */ }
 
                 // Pushing values to the stack
                 Opcodes.BPUSH -> stack.push(readByte())
@@ -92,6 +102,7 @@ class ShakeInterpreter {
                 Opcodes.IPUSH -> stack.push(readInt())
                 Opcodes.LPUSH -> stack.push(readLong())
 
+                // Load a value from local variables to the stack
                 Opcodes.BLOAD -> stack.push(locals[readUShort().toInt()])
                 Opcodes.SLOAD -> {
                     val pos = readUShort().toInt()
@@ -107,6 +118,7 @@ class ShakeInterpreter {
                     for (i in 0 until 8) stack.push(locals[pos + i])
                 }
 
+                // Store a value from the stack to local variables
                 Opcodes.BSTORE -> locals[readUShort().toInt()] = stack.pop()
                 Opcodes.SSTORE -> {
                     val pos = readUShort().toInt()
@@ -122,6 +134,7 @@ class ShakeInterpreter {
                     for (i in 7 downTo 0) locals[pos + i] = stack.pop()
                 }
 
+                // Arithmetic operations
                 Opcodes.BADD -> stack.push(stack.pop() + stack.pop())
                 Opcodes.SADD -> stack.push(stack.popShort() + stack.popShort())
                 Opcodes.IADD -> stack.push(stack.popInt() + stack.popInt())
@@ -491,6 +504,10 @@ class ShakeInterpreter {
                     if (stack.pop() >= 1.toByte()) pc = pos
                 }
 
+                Opcodes.RET -> {
+                    finished = true
+                }
+
                 Opcodes.PCAST -> {
                     // First 4 bits are the "from" type, last 4 bits are the "to" type
                     // See CastUtil.kt
@@ -511,46 +528,5 @@ object ClassRegister {
         classes[name] = clazz
     }
     fun getClass(name: String): ShakeInterpreterClass? = classes[name]
-
-}
-
-class ShakeInterpreterClass (
-    val methods : List<ShakeInterpreterMethod>,
-    val fields : List<ShakeInterpreterField>,
-) {
-
-}
-
-class ShakeInterpreterMethod (
-    val qualifiedName: String,
-    val isStatic: Boolean
-) {
-
-}
-
-class ShakeInterpreterField (val name: String) {
-}
-
-open class ShakeInterpreterType (
-    val name: String,
-    val type: Type,
-    val subType : ShakeInterpreterType? = null,
-    val classType: ShakeInterpreterClass? = null
-) {
-
-    enum class Type {
-        INT,
-        FLOAT,
-        DOUBLE,
-        LONG,
-        SHORT,
-        BYTE,
-        CHAR,
-        BOOLEAN,
-        STRING,
-        OBJECT,
-        ARRAY,
-        VOID
-    }
 
 }

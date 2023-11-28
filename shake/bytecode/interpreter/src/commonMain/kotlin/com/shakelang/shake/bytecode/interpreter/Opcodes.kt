@@ -998,6 +998,13 @@ object Opcodes {
     const val JNZ: Byte = 123 // Syntax: JNZ u4 address ; Jump to an address if there is not a zero on top of the stack
 
     /**
+     * Return from a function
+     * @example Syntax: `RET`
+     * @see - https://shakelang.com/specification/bytecode/instructions#-521-ret
+     */
+    const val RET: Byte = 124 // Syntax: RET ; Return from a function
+
+    /**
      * Primitive cast operation. The top element of the stack will be cast.
      * @example Syntax `PCAST` <u1 cast-type>
      * @see
