@@ -398,10 +398,10 @@ sealed class ConstantPoolEntry {
     }
 }
 
-class Field(
-    val pool: ConstantPool,
-    val nameConstant: Int,
-    val attributes: Short,
+open class Field(
+    open val pool: ConstantPool,
+    open val nameConstant: Int,
+    open val attributes: Short,
 ) {
     val isPublic: Boolean
         get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
@@ -437,11 +437,29 @@ class Field(
     }
 }
 
-class Method(
-    val pool: ConstantPool,
-    val nameConstant: Int,
-    val qualifiedNameConstant: Int,
-    val attributes: Short,
+class MutableField(
+    override val pool: MutableConstantPool,
+    override var nameConstant: Int,
+    override var attributes: Short,
+) : Field(pool, nameConstant, attributes) {
+    fun setName(name: String) {
+        nameConstant = pool.resolveUtf8(name)
+    }
+
+    companion object {
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableField {
+            val name = stream.readInt()
+            val attributes = stream.readShort()
+            return MutableField(pool, name, attributes)
+        }
+    }
+}
+
+open class Method(
+    open val pool: ConstantPool,
+    open val nameConstant: Int,
+    open val qualifiedNameConstant: Int,
+    open val attributes: Short,
 ) {
     val isPublic: Boolean
         get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
@@ -480,14 +498,38 @@ class Method(
     }
 }
 
-class Class(
-    val pool: ConstantPool,
-    val nameConstant: Int,
-    val superNameConstant: Int,
-    val interfacesConstants: List<Int>,
-    val fields: List<Int>,
-    val methods: List<Int>,
-    val subClasses: List<Int>,
+class MutableMethod(
+    override val pool: MutableConstantPool,
+    override var nameConstant: Int,
+    override var qualifiedNameConstant: Int,
+    override var attributes: Short,
+) : Method(pool, nameConstant, qualifiedNameConstant, attributes) {
+    fun setName(name: String) {
+        nameConstant = pool.resolveUtf8(name)
+    }
+
+    fun setQualifiedName(qualifiedName: String) {
+        qualifiedNameConstant = pool.resolveUtf8(qualifiedName)
+    }
+
+    companion object {
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableMethod {
+            val name = stream.readInt()
+            val qualifiedName = stream.readInt()
+            val attributes = stream.readShort()
+            return MutableMethod(pool, name, qualifiedName, attributes)
+        }
+    }
+}
+
+open class Class(
+    open val pool: ConstantPool,
+    open val nameConstant: Int,
+    open val superNameConstant: Int,
+    open val interfacesConstants: List<Int>,
+    open val fields: List<Int>,
+    open val methods: List<Int>,
+    open val subClasses: List<Int>,
 ) {
 
     val name: String get() = pool.getUtf8(nameConstant).value
@@ -559,14 +601,84 @@ class Class(
     }
 }
 
-class StorageFormat(
-    val magic: Int,
-    val major: Short,
-    val minor: Short,
-    val constantPool: ConstantPool,
-    val classes: List<Class>,
-    val fields: List<Field>,
-    val methods: List<Method>,
+class MutableClass(
+    override val pool: MutableConstantPool,
+    override var nameConstant: Int,
+    override var superNameConstant: Int,
+    override var interfacesConstants: MutableList<Int>,
+    override var fields: MutableList<Int>,
+    override var methods: MutableList<Int>,
+    override var subClasses: MutableList<Int>,
+) : Class(pool, nameConstant, superNameConstant, interfacesConstants, fields, methods, subClasses) {
+    fun setName(name: String) {
+        nameConstant = pool.resolveUtf8(name)
+    }
+
+    fun setSuperName(superName: String) {
+        superNameConstant = pool.resolveUtf8(superName)
+    }
+
+    fun addInterface(interfaceName: String) {
+        interfacesConstants.add(pool.resolveUtf8(interfaceName))
+    }
+
+    fun addField(field: Int) {
+        fields.add(field)
+    }
+
+    fun addMethod(method: Int) {
+        methods.add(method)
+    }
+
+    fun addSubClass(subClass: Int) {
+        subClasses.add(subClass)
+    }
+
+    companion object {
+        fun fromStream(stream: DataInputStream): MutableClass {
+            val name = stream.readInt()
+            val superName = stream.readInt()
+            val interfacesCount = stream.readInt()
+            val interfaces = mutableListOf<Int>()
+            for (i in 0 until interfacesCount) {
+                interfaces.add(stream.readInt())
+            }
+            val fieldsCount = stream.readInt()
+            val fields = mutableListOf<Int>()
+            for (i in 0 until fieldsCount) {
+                fields.add(stream.readInt())
+            }
+            val methodsCount = stream.readInt()
+            val methods = mutableListOf<Int>()
+            for (i in 0 until methodsCount) {
+                methods.add(stream.readInt())
+            }
+            val subClassesCount = stream.readInt()
+            val subClasses = mutableListOf<Int>()
+            for (i in 0 until subClassesCount) {
+                subClasses.add(stream.readInt())
+            }
+            return MutableClass(
+                MutableConstantPool.fromStream(stream),
+                name,
+                superName,
+                interfaces,
+                fields,
+                methods,
+                subClasses
+            )
+        }
+    }
+}
+
+open class StorageFormat(
+    open val magic: Int,
+    open val major: Short,
+    open val minor: Short,
+    open val constantPool: ConstantPool,
+    open val classes: List<Class>,
+    open val fields: List<Field>,
+    open val methods: List<Method>,
 ) {
     fun dump(stream: DataOutputStream) {
         stream.writeInt(magic)
@@ -616,6 +728,73 @@ class StorageFormat(
                 methods.add(Method.fromStream(constantPool, stream))
             }
             return StorageFormat(magic, major, minor, constantPool, classes, fields, methods)
+        }
+    }
+}
+
+class MutableStorageFormat(
+    override var magic: Int,
+    override var major: Short,
+    override var minor: Short,
+    override var constantPool: MutableConstantPool,
+    override var classes: MutableList<Class>,
+    override var fields: MutableList<Field>,
+    override var methods: MutableList<Method>,
+) : StorageFormat (
+    magic,
+    major,
+    minor,
+    constantPool,
+    classes,
+    fields,
+    methods
+) {
+    fun createClass(name: String, superName: String, interfaces: List<String>): Int {
+        val nameConstant = constantPool.resolveUtf8(name)
+        val superNameConstant = constantPool.resolveUtf8(superName)
+        val interfacesConstants = interfaces.map { constantPool.resolveUtf8(it) }
+        val class_ = Class(constantPool, nameConstant, superNameConstant, interfacesConstants, emptyList(), emptyList(), emptyList())
+        classes.add(class_)
+        return classes.indexOf(class_)
+    }
+
+    fun createField(name: String, attributes: Short): Int {
+        val nameConstant = constantPool.resolveUtf8(name)
+        val field = Field(constantPool, nameConstant, attributes)
+        fields.add(field)
+        return fields.indexOf(field)
+    }
+
+    fun createMethod(name: String, qualifiedName: String, attributes: Short): Int {
+        val nameConstant = constantPool.resolveUtf8(name)
+        val qualifiedNameConstant = constantPool.resolveUtf8(qualifiedName)
+        val method = Method(constantPool, nameConstant, qualifiedNameConstant, attributes)
+        methods.add(method)
+        return methods.indexOf(method)
+    }
+
+    companion object {
+        fun fromStream(stream: DataInputStream): MutableStorageFormat {
+            val magic = stream.readInt()
+            val major = stream.readShort()
+            val minor = stream.readShort()
+            val constantPool = MutableConstantPool.fromStream(stream)
+            val classesCount = stream.readInt()
+            val classes = mutableListOf<Class>()
+            for (i in 0 until classesCount) {
+                classes.add(Class.fromStream(stream))
+            }
+            val fieldsCount = stream.readInt()
+            val fields = mutableListOf<Field>()
+            for (i in 0 until fieldsCount) {
+                fields.add(Field.fromStream(constantPool, stream))
+            }
+            val methodsCount = stream.readInt()
+            val methods = mutableListOf<Method>()
+            for (i in 0 until methodsCount) {
+                methods.add(Method.fromStream(constantPool, stream))
+            }
+            return MutableStorageFormat(magic, major, minor, constantPool, classes, fields, methods)
         }
     }
 }
