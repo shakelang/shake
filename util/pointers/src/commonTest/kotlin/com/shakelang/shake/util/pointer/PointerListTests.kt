@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package com.shakelang.shake.util.pointer
 
 import io.kotest.core.spec.style.FreeSpec
@@ -16,7 +17,6 @@ class PointerListShortcutTests : FreeSpec({
         pointerList[2].value shouldBe 3
         pointerList[3].value shouldBe 4
         pointerList[4].value shouldBe 5
-
     }
 
     "MutableList.mutablePoints" {
@@ -29,7 +29,6 @@ class PointerListShortcutTests : FreeSpec({
         pointerList[2].value shouldBe 3
         pointerList[3].value shouldBe 4
         pointerList[4].value shouldBe 5
-
     }
 
     "PointerList.values" {
@@ -44,7 +43,6 @@ class PointerListShortcutTests : FreeSpec({
         values[2] shouldBe 3
         values[3] shouldBe 4
         values[4] shouldBe 5
-
     }
 })
 
@@ -57,7 +55,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.pointers shouldBe pointerList
-
     }
 
     "size" {
@@ -67,7 +64,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.size shouldBe 5
-
     }
 
     "get" {
@@ -81,7 +77,6 @@ class PointingListTests : FreeSpec({
         pointingList[2] shouldBe 3
         pointingList[3] shouldBe 4
         pointingList[4] shouldBe 5
-
     }
 
     "isEmpty" {
@@ -97,7 +92,6 @@ class PointingListTests : FreeSpec({
         val emptyPointingList = PointingList.from(emptyPointerList)
 
         emptyPointingList.isEmpty() shouldBe true
-
     }
 
     "isNotEmpty" {
@@ -113,7 +107,6 @@ class PointingListTests : FreeSpec({
         val emptyPointingList = PointingList.from(emptyPointerList)
 
         emptyPointingList.isNotEmpty() shouldBe false
-
     }
 
     "contains" {
@@ -124,7 +117,6 @@ class PointingListTests : FreeSpec({
 
         (1..5).forEach { pointingList.contains(it) shouldBe true }
         (6..10).forEach { pointingList.contains(it) shouldBe false }
-
     }
 
     "containsAll" {
@@ -135,7 +127,6 @@ class PointingListTests : FreeSpec({
 
         pointingList.containsAll(list) shouldBe true
         pointingList.containsAll(listOf(1, 2, 3, 4, 5, 6)) shouldBe false
-
     }
 
     "iterator" {
@@ -152,7 +143,6 @@ class PointingListTests : FreeSpec({
         }
 
         iterator.hasNext() shouldBe false
-
     }
 
     "listIterator" {
@@ -169,7 +159,6 @@ class PointingListTests : FreeSpec({
         }
 
         iterator.hasNext() shouldBe false
-
     }
 
     "listIterator(index)" {
@@ -188,7 +177,6 @@ class PointingListTests : FreeSpec({
         }
 
         iterator.hasNext() shouldBe false
-
     }
 
     "subList" {
@@ -204,7 +192,6 @@ class PointingListTests : FreeSpec({
         subList[0] shouldBe 2
         subList[1] shouldBe 3
         subList[2] shouldBe 4
-
     }
 
     "lastIndexOf" {
@@ -218,7 +205,6 @@ class PointingListTests : FreeSpec({
         pointingList.lastIndexOf(3) shouldBe 7
         pointingList.lastIndexOf(4) shouldBe 8
         pointingList.lastIndexOf(5) shouldBe 9
-
     }
 
     "indexOf" {
@@ -232,7 +218,6 @@ class PointingListTests : FreeSpec({
         pointingList.indexOf(3) shouldBe 2
         pointingList.indexOf(4) shouldBe 3
         pointingList.indexOf(5) shouldBe 4
-
     }
 
     "first" {
@@ -242,7 +227,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.first() shouldBe 1
-
     }
 
     "last" {
@@ -252,7 +236,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.last() shouldBe 5
-
     }
 
     "forEach" {
@@ -266,7 +249,6 @@ class PointingListTests : FreeSpec({
             it shouldBe i
             i++
         }
-
     }
 
     "forEachIndexed" {
@@ -278,7 +260,6 @@ class PointingListTests : FreeSpec({
         pointingList.forEachIndexed { index, value ->
             index shouldBe value - 1
         }
-
     }
 
     "reduce" {
@@ -288,7 +269,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.reduce { acc, i -> acc + i } shouldBe 15
-
     }
 
     "reduceIndexed" {
@@ -298,7 +278,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.reduceIndexed { index, acc, i -> acc + i + index } shouldBe 25
-
     }
 
     "reduceRight" {
@@ -308,7 +287,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.reduceRight { acc, i -> acc + i } shouldBe 15
-
     }
 
     "reduceRightIndexed" {
@@ -318,7 +296,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.reduceRightIndexed { index, acc, i -> acc + i + index } shouldBe 21
-
     }
 
     "fold" {
@@ -329,7 +306,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.fold(0) { acc, i -> acc + i } shouldBe 15
-
     }
 
     "foldIndexed" {
@@ -340,7 +316,6 @@ class PointingListTests : FreeSpec({
         val pointingList = PointingList.from(pointerList)
 
         pointingList.foldIndexed(0) { index, acc, i -> acc + i + index } shouldBe 25
-
     }
 })
 
@@ -353,7 +328,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.pointers shouldBe pointerList
-
     }
 
     "size" {
@@ -363,7 +337,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.size shouldBe 5
-
     }
 
     "get" {
@@ -377,7 +350,6 @@ class MutablePointingListTests : FreeSpec({
         pointingList[2] shouldBe 3
         pointingList[3] shouldBe 4
         pointingList[4] shouldBe 5
-
     }
 
     "isEmpty" {
@@ -393,7 +365,6 @@ class MutablePointingListTests : FreeSpec({
         val emptyPointingList = MutablePointingList.from(emptyPointerList)
 
         emptyPointingList.isEmpty() shouldBe true
-
     }
 
     "isNotEmpty" {
@@ -409,7 +380,6 @@ class MutablePointingListTests : FreeSpec({
         val emptyPointingList = MutablePointingList.from(emptyPointerList)
 
         emptyPointingList.isNotEmpty() shouldBe false
-
     }
 
     "contains" {
@@ -420,7 +390,6 @@ class MutablePointingListTests : FreeSpec({
 
         (1..5).forEach { pointingList.contains(it) shouldBe true }
         (6..10).forEach { pointingList.contains(it) shouldBe false }
-
     }
 
     "containsAll" {
@@ -431,7 +400,6 @@ class MutablePointingListTests : FreeSpec({
 
         pointingList.containsAll(list) shouldBe true
         pointingList.containsAll(listOf(1, 2, 3, 4, 5, 6)) shouldBe false
-
     }
 
     "iterator" {
@@ -448,7 +416,6 @@ class MutablePointingListTests : FreeSpec({
         }
 
         iterator.hasNext() shouldBe false
-
     }
 
     "listIterator" {
@@ -465,7 +432,6 @@ class MutablePointingListTests : FreeSpec({
         }
 
         iterator.hasNext() shouldBe false
-
     }
 
     "listIterator(index)" {
@@ -484,7 +450,6 @@ class MutablePointingListTests : FreeSpec({
         }
 
         iterator.hasNext() shouldBe false
-
     }
 
     "subList" {
@@ -500,7 +465,6 @@ class MutablePointingListTests : FreeSpec({
         subList[0] shouldBe 2
         subList[1] shouldBe 3
         subList[2] shouldBe 4
-
     }
 
     "lastIndexOf" {
@@ -512,7 +476,6 @@ class MutablePointingListTests : FreeSpec({
         for (i in 1..5) {
             pointingList.lastIndexOf(i) shouldBe 4 + i
         }
-
     }
 
     "indexOf" {
@@ -524,7 +487,6 @@ class MutablePointingListTests : FreeSpec({
         for (i in 1..5) {
             pointingList.indexOf(i) shouldBe i - 1
         }
-
     }
 
     "first" {
@@ -534,7 +496,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.first() shouldBe 1
-
     }
 
     "last" {
@@ -544,7 +505,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.last() shouldBe 5
-
     }
 
     "forEach" {
@@ -559,7 +519,6 @@ class MutablePointingListTests : FreeSpec({
             it shouldBe i
             i++
         }
-
     }
 
     "forEachIndexed" {
@@ -572,7 +531,6 @@ class MutablePointingListTests : FreeSpec({
         pointingList.forEachIndexed { index, value ->
             index shouldBe value - 1
         }
-
     }
 
     "reduce" {
@@ -583,7 +541,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.reduce { acc, i -> acc + i } shouldBe 15
-
     }
 
     "reduceIndexed" {
@@ -594,7 +551,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.reduceIndexed { index, acc, i -> acc + i + index } shouldBe 25
-
     }
 
     "reduceRight" {
@@ -605,7 +561,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.reduceRight { acc, i -> acc + i } shouldBe 15
-
     }
 
     "reduceRightIndexed" {
@@ -616,7 +571,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.reduceRightIndexed { index, acc, i -> acc + i + index } shouldBe 21
-
     }
 
     "fold" {
@@ -627,7 +581,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.fold(0) { acc, i -> acc + i } shouldBe 15
-
     }
 
     "foldIndexed" {
@@ -638,7 +591,6 @@ class MutablePointingListTests : FreeSpec({
         val pointingList = MutablePointingList.from(pointerList)
 
         pointingList.foldIndexed(0) { index, acc, i -> acc + i + index } shouldBe 25
-
     }
 
     "add" {
@@ -652,7 +604,6 @@ class MutablePointingListTests : FreeSpec({
 
         pointingList.size shouldBe 6
         pointingList[5] shouldBe 6
-
     }
 
     "add(index, element)" {
@@ -666,7 +617,6 @@ class MutablePointingListTests : FreeSpec({
 
         pointingList.size shouldBe 6
         pointingList[2] shouldBe 6
-
     }
 
     "clear" {
@@ -679,7 +629,6 @@ class MutablePointingListTests : FreeSpec({
         pointingList.clear()
 
         pointingList.size shouldBe 0
-
     }
 
     "removeAt" {
@@ -695,7 +644,6 @@ class MutablePointingListTests : FreeSpec({
         pointingList[1] shouldBe 2
         pointingList[2] shouldBe 4
         pointingList[3] shouldBe 5
-
     }
 
     "remove" {
@@ -711,7 +659,6 @@ class MutablePointingListTests : FreeSpec({
         pointingList[1] shouldBe 2
         pointingList[2] shouldBe 4
         pointingList[3] shouldBe 5
-
     }
 
     "removeAll" {
@@ -726,7 +673,6 @@ class MutablePointingListTests : FreeSpec({
         pointingList[0] shouldBe 1
         pointingList[1] shouldBe 2
         pointingList[2] shouldBe 5
-
     }
 
     "retainAll" {
@@ -740,7 +686,6 @@ class MutablePointingListTests : FreeSpec({
         pointingList.size shouldBe 2
         pointingList[0] shouldBe 3
         pointingList[1] shouldBe 4
-
     }
 
     "set" {
@@ -756,7 +701,6 @@ class MutablePointingListTests : FreeSpec({
         pointingList[2] shouldBe 6
         pointingList[3] shouldBe 4
         pointingList[4] shouldBe 5
-
     }
 
     "addAll" {
@@ -775,7 +719,6 @@ class MutablePointingListTests : FreeSpec({
         pointingList[5] shouldBe 6
         pointingList[6] shouldBe 7
         pointingList[7] shouldBe 8
-
     }
 
     "addAll2" {
@@ -794,7 +737,5 @@ class MutablePointingListTests : FreeSpec({
         pointingList[5] shouldBe 3
         pointingList[6] shouldBe 4
         pointingList[7] shouldBe 5
-
     }
-
 })

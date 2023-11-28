@@ -10,7 +10,7 @@ import kotlin.experimental.and
 open class Field(
     open val pool: ConstantPool,
     open val nameConstant: Int,
-    open val attributes: Short,
+    open val attributes: Short
 ) {
     val isPublic: Boolean
         get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
@@ -49,7 +49,7 @@ open class Field(
 class MutableField(
     override val pool: MutableConstantPool,
     override var nameConstant: Int,
-    override var attributes: Short,
+    override var attributes: Short
 ) : Field(pool, nameConstant, attributes) {
     fun setName(name: String) {
         nameConstant = pool.resolveUtf8(name)

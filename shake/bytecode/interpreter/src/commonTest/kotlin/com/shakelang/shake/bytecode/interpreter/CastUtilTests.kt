@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package com.shakelang.shake.bytecode.interpreter
 
 import com.shakelang.shake.util.primitives.calc.shl

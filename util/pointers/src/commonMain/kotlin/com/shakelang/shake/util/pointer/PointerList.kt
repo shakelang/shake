@@ -200,7 +200,6 @@ interface PointingList<T> : List<T> {
     }
 }
 
-
 /**
  * A MutablePointingList refers to a list of values that are pointed to by mutable pointers.
  *

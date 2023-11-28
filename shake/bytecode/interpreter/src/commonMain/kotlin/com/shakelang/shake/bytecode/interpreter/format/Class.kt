@@ -13,7 +13,7 @@ open class Class(
     open val interfacesConstants: List<Int>,
     open val fields: List<Int>,
     open val methods: List<Int>,
-    open val subClasses: List<Int>,
+    open val subClasses: List<Int>
 ) {
 
     open val name: String get() = pool.getUtf8(nameConstant).value
@@ -92,7 +92,7 @@ class MutableClass(
     override var interfacesConstants: MutableList<Int>,
     override var fields: MutableList<Int>,
     override var methods: MutableList<Int>,
-    override var subClasses: MutableList<Int>,
+    override var subClasses: MutableList<Int>
 ) : Class(pool, nameConstant, superNameConstant, interfacesConstants, fields, methods, subClasses) {
 
     override var name: String

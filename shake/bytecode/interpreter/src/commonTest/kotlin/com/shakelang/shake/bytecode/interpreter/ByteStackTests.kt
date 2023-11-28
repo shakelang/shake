@@ -18,7 +18,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 3
         stack.pop() shouldBe 2
         stack.pop() shouldBe 1
-
     }
 
     "push short" {
@@ -35,7 +34,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 2.toByte()
         stack.pop() shouldBe 0.toByte()
         stack.pop() shouldBe 1.toByte()
-
     }
 
     "push int" {
@@ -52,7 +50,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 2.toByte()
         for (i in 0 until 3) stack.pop() shouldBe 0.toByte()
         stack.pop() shouldBe 1.toByte()
-
     }
 
     "push long" {
@@ -69,7 +66,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 2.toByte()
         for (i in 0 until 7) stack.pop() shouldBe 0.toByte()
         stack.pop() shouldBe 1.toByte()
-
     }
 
     "push float" {
@@ -86,7 +82,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 2.toByte()
         for (i in 0 until 3) stack.pop() shouldBe 0.toByte()
         stack.pop() shouldBe 1.toByte()
-
     }
 
     "push double" {
@@ -103,7 +98,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 2.toByte()
         for (i in 0 until 7) stack.pop() shouldBe 0.toByte()
         stack.pop() shouldBe 1.toByte()
-
     }
 
     "push ubyte" {
@@ -117,7 +111,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 3.toByte()
         stack.pop() shouldBe 2.toByte()
         stack.pop() shouldBe 1.toByte()
-
     }
 
     "push ushort" {
@@ -134,7 +127,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 2.toByte()
         stack.pop() shouldBe 0.toByte()
         stack.pop() shouldBe 1.toByte()
-
     }
 
     "push uint" {
@@ -151,7 +143,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 2.toByte()
         for (i in 0 until 3) stack.pop() shouldBe 0.toByte()
         stack.pop() shouldBe 1.toByte()
-
     }
 
     "push ulong" {
@@ -168,7 +159,6 @@ class ByteStackTests : FreeSpec({
         stack.pop() shouldBe 2.toByte()
         for (i in 0 until 7) stack.pop() shouldBe 0.toByte()
         stack.pop() shouldBe 1.toByte()
-
     }
 
     "pop short" {
@@ -185,7 +175,6 @@ class ByteStackTests : FreeSpec({
         stack.popShort() shouldBe 3.toShort()
         stack.popShort() shouldBe 2.toShort()
         stack.popShort() shouldBe 1.toShort()
-
     }
 
     "pop int" {
@@ -202,7 +191,6 @@ class ByteStackTests : FreeSpec({
         stack.popInt() shouldBe 3
         stack.popInt() shouldBe 2
         stack.popInt() shouldBe 1
-
     }
 
     "pop long" {
@@ -219,7 +207,6 @@ class ByteStackTests : FreeSpec({
         stack.popLong() shouldBe 3L
         stack.popLong() shouldBe 2L
         stack.popLong() shouldBe 1L
-
     }
 
     "pop float" {
@@ -236,7 +223,6 @@ class ByteStackTests : FreeSpec({
         stack.popFloat() shouldBe Float.fromBits(3)
         stack.popFloat() shouldBe Float.fromBits(2)
         stack.popFloat() shouldBe Float.fromBits(1)
-
     }
 
     "pop double" {
@@ -253,7 +239,6 @@ class ByteStackTests : FreeSpec({
         stack.popDouble() shouldBe Double.fromBits(3)
         stack.popDouble() shouldBe Double.fromBits(2)
         stack.popDouble() shouldBe Double.fromBits(1)
-
     }
 
     "pop ubyte" {
@@ -267,7 +252,6 @@ class ByteStackTests : FreeSpec({
         stack.popUByte() shouldBe 3.toUByte()
         stack.popUByte() shouldBe 2.toUByte()
         stack.popUByte() shouldBe 1.toUByte()
-
     }
 
     "pop ushort" {
@@ -284,7 +268,6 @@ class ByteStackTests : FreeSpec({
         stack.popUShort() shouldBe 3.toUShort()
         stack.popUShort() shouldBe 2.toUShort()
         stack.popUShort() shouldBe 1.toUShort()
-
     }
 
     "pop uint" {
@@ -301,7 +284,6 @@ class ByteStackTests : FreeSpec({
         stack.popUInt() shouldBe 3.toUInt()
         stack.popUInt() shouldBe 2.toUInt()
         stack.popUInt() shouldBe 1.toUInt()
-
     }
 
     "pop ulong" {
@@ -318,8 +300,5 @@ class ByteStackTests : FreeSpec({
         stack.popULong() shouldBe 3.toULong()
         stack.popULong() shouldBe 2.toULong()
         stack.popULong() shouldBe 1.toULong()
-
     }
-
-
 })

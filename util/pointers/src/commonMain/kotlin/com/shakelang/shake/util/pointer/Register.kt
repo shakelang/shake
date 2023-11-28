@@ -33,8 +33,9 @@ class PointerRegister<T> {
      */
     fun register(pointer: Pointer<T>): Int {
         val index = unusedIndices.removeLastOrNull()
-        if (index != null) pointers[index] = pointer
-        else {
+        if (index != null) {
+            pointers[index] = pointer
+        } else {
             pointers.add(pointer)
             return pointers.size - 1
         }
@@ -75,8 +76,13 @@ class PointerRegister<T> {
      * @version 0.1.0
      */
     operator fun get(index: Int): Pointer<T> {
-        return (if (index < pointers.size) pointers[index]
-        else null) ?: throw IllegalStateException("pointer at index $index is null")
+        return (
+            if (index < pointers.size) {
+                pointers[index]
+            } else {
+                null
+            }
+            ) ?: throw IllegalStateException("pointer at index $index is null")
     }
 
     /**
@@ -87,8 +93,11 @@ class PointerRegister<T> {
      * @version 0.1.0
      */
     fun getOrNull(index: Int): Pointer<T>? {
-        return if (index < pointers.size) pointers[index]
-        else null
+        return if (index < pointers.size) {
+            pointers[index]
+        } else {
+            null
+        }
     }
 
     /**

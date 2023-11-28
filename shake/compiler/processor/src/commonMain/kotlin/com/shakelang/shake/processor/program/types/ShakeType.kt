@@ -444,7 +444,7 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun  lessThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? =
+    fun lessThanOrEqualType(other: ShakeType, scope: ShakeScope): ShakeType? =
         lessThanOrEqualOverload(other, scope)?.returnType
 
     /**
@@ -780,7 +780,6 @@ interface ShakeType {
     fun decrementAfterOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("decrementAfter").filter { it.expanding == this && it.isOperator }
 
-
     /**
      * Get a list of all overloads for the add operator of this type
      * @param scope The scope in which the add is done
@@ -1022,7 +1021,6 @@ interface ShakeType {
      */
     fun binaryShiftRightOverloads(scope: ShakeScope): List<ShakeMethod> =
         scope.getFunctions("binaryShitRight").filter { it.expanding == this && it.isOperator }
-
 
     /**
      * Select the assign operator overload for the given type

@@ -39,7 +39,6 @@ object Opcodes {
      */
     const val LPUSH: Byte = 4 // Syntax: LPUSH u8 long ; Push a long onto the stack
 
-
     // Load instructions
     // No need for unsigned or floating point values for load operation (as they have the same sizes)
 
@@ -71,7 +70,6 @@ object Opcodes {
      */
     const val LLOAD: Byte = 8 // Syntax: LLOAD u2 variable ; Load a long from a local v ariable onto the stack
 
-
     // Store instructions
     // No need for unsigned or floating point values for store operation (as they have the same sizes)
 
@@ -102,7 +100,6 @@ object Opcodes {
      * @see - https://shakelang.com/specification/bytecode/instructions#-134-lstore
      */
     const val LSTORE: Byte = 12 // Syntax: LSTORE u2 variable ; Store a long from the stack into a local variable
-
 
     // Add instructions
     // Unsigned adding is not needed as it is the same as signed adding
@@ -148,7 +145,6 @@ object Opcodes {
      * @see - https://shakelang.com/specification/bytecode/instructions#-216-dadd
      */
     const val DADD: Byte = 18 // Syntax: DADD ; Add two doubles
-
 
     // Subtract instructions
     // Unsigned subtracting is not needed as it is the same as signed subtracting
@@ -365,7 +361,6 @@ object Opcodes {
      */
     const val DDIV: Byte = 49 // Syntax: DDIV ; Divide two doubles
 
-
     // Modulo instructions
 
     /**
@@ -438,7 +433,6 @@ object Opcodes {
      */
     const val DMOD: Byte = 59 // Syntax: DMOD ; Modulo two doubles
 
-
     // Negate instructions
 
     /**
@@ -483,7 +477,6 @@ object Opcodes {
      */
     const val DNEG: Byte = 65 // Syntax: DNEG ; Negate a double
 
-
     // Bitwise And instructions
 
     /**
@@ -513,7 +506,6 @@ object Opcodes {
      * @see - https://shakelang.com/specification/bytecode/instructions/#-314-land
      */
     const val LAND: Byte = 69 // Syntax: LAND ; Bitwise AND two longs
-
 
     // Bitwise OR instructions
 
@@ -545,7 +537,6 @@ object Opcodes {
      */
     const val LOR: Byte = 73 // Syntax: LOR ; Bitwise OR two longs
 
-
     // Bitwise XOR instructions
 
     /**
@@ -575,7 +566,6 @@ object Opcodes {
      * @see - https://shakelang.com/specification/bytecode/instructions/#-334-lxor
      */
     const val LXOR: Byte = 77 // Syntax: LXOR ; Bitwise XOR two longs
-
 
     // Bitwise NOT
 
@@ -607,7 +597,6 @@ object Opcodes {
      */
     const val LNOT: Byte = 81
 
-
     // Shift instructions
 
     /**
@@ -637,7 +626,6 @@ object Opcodes {
      * @see - https://shakelang.com/specification/bytecode/instructions/#-354-lshl
      */
     const val LSHL: Byte = 85 // Syntax: LSHL ; Bitwise shift left a long
-
 
     // Shift right instructions
 
@@ -669,7 +657,6 @@ object Opcodes {
      */
     const val LSHR: Byte = 89 // Syntax: LSHR ; Bitwise shift right a long
 
-
     // Shift right unsigned instructions
 
     /**
@@ -699,7 +686,6 @@ object Opcodes {
      * @see - https://shakelang.com/specification/bytecode/instructions/#-374-lshr
      */
     const val LSHRU: Byte = 93 // Syntax: LSHRU ; Bitwise shift right unsigned a long
-
 
     // Increment instructions
 
@@ -745,7 +731,6 @@ object Opcodes {
      */
     const val DINC: Byte = 99 // Syntax: DINC ; Increment a double
 
-
     // Decrement instructions
 
     /**
@@ -789,7 +774,6 @@ object Opcodes {
      * @see - https://shakelang.com/specification/bytecode/instructions/#-286-ddec
      */
     const val DDEC: Byte = 105 // Syntax: DDEC ; Decrement a double
-
 
     // Compare instructions
 

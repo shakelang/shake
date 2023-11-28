@@ -4,7 +4,6 @@ import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
-
 sealed class ConstantPoolEntry {
 
     abstract override fun toString(): String
@@ -32,7 +31,6 @@ sealed class ConstantPoolEntry {
                 return Utf8Constant(stream.readUTF())
             }
         }
-
     }
 
     class ByteConstant(val value: Byte) : ConstantPoolEntry() {

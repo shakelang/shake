@@ -13,7 +13,6 @@ class RegisterTests : FreeSpec({
         PointerRegister.instances.contains(register) shouldBe true
         register.destroy()
         PointerRegister.instances.contains(register) shouldBe false
-
     }
 
     "registering" {
@@ -24,7 +23,6 @@ class RegisterTests : FreeSpec({
         register.register(pointer) shouldBe 0
 
         register.destroy()
-
     }
 
     "indexOf" {
@@ -36,7 +34,6 @@ class RegisterTests : FreeSpec({
         register.indexOf(pointer) shouldBe 0
 
         register.destroy()
-
     }
 
     "unregister" {
@@ -51,7 +48,6 @@ class RegisterTests : FreeSpec({
         register.indexOf(pointer) shouldBe -1
 
         register.destroy()
-
     }
 
     "get" {
@@ -69,7 +65,6 @@ class RegisterTests : FreeSpec({
         }
 
         register.destroy()
-
     }
 
     "getOrNull" {
@@ -84,7 +79,6 @@ class RegisterTests : FreeSpec({
         register.getOrNull(1) shouldBe null
 
         register.destroy()
-
     }
 
     "createPointer" {
@@ -95,7 +89,6 @@ class RegisterTests : FreeSpec({
         register.indexOf(pointer) shouldBe 0
 
         register.destroy()
-
     }
 
     "createPointer (late)" {
@@ -107,7 +100,6 @@ class RegisterTests : FreeSpec({
         register.indexOf(pointer) shouldBe 0
 
         register.destroy()
-
     }
 
     "createMutablePointer" {
@@ -118,7 +110,6 @@ class RegisterTests : FreeSpec({
         register.indexOf(pointer) shouldBe 0
 
         register.destroy()
-
     }
 
     "createMutablePointer (late)" {
@@ -130,7 +121,6 @@ class RegisterTests : FreeSpec({
         register.indexOf(pointer) shouldBe 0
 
         register.destroy()
-
     }
 
     "destroyAllContainedPointers" {
@@ -179,7 +169,6 @@ class RegisterTests : FreeSpec({
         register.indexOf(pointer) shouldBe 0
 
         register.destroy()
-
     }
 
     "Pointer.unregister(Register)" {
@@ -194,7 +183,6 @@ class RegisterTests : FreeSpec({
         register.indexOf(pointer) shouldBe -1
 
         register.destroy()
-
     }
 
     "Pointer.unregister" {

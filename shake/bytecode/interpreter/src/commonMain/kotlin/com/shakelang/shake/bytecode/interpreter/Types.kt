@@ -2,12 +2,12 @@ package com.shakelang.shake.bytecode.interpreter
 
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
-class ShakeInterpreterClass (
-    val methods : List<ShakeInterpreterMethod>,
-    val fields : List<ShakeInterpreterField>,
+class ShakeInterpreterClass(
+    val methods: List<ShakeInterpreterMethod>,
+    val fields: List<ShakeInterpreterField>
 )
 
-class ShakeInterpreterMethod (
+class ShakeInterpreterMethod(
     val qualifiedName: String,
     val simpleName: String,
     val isStatic: Boolean,
@@ -19,17 +19,17 @@ class ShakeInterpreterMethod (
     }
 }
 
-class ShakeInterpreterField (
+class ShakeInterpreterField(
     val qualifiedName: String,
     val simpleName: String,
     val isStatic: Boolean,
     val type: ShakeInterpreterType
 )
 
-open class ShakeInterpreterType (
+open class ShakeInterpreterType(
     val name: String,
     val type: Type,
-    val subType : ShakeInterpreterType? = null,
+    val subType: ShakeInterpreterType? = null,
     val classType: ShakeInterpreterClass? = null
 ) {
 
@@ -47,5 +47,4 @@ open class ShakeInterpreterType (
         ARRAY,
         VOID
     }
-
 }

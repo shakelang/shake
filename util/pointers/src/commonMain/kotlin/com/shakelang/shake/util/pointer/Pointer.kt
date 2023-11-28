@@ -65,7 +65,6 @@ interface Pointer<out T> {
         }
     }
 
-
     /**
      * Chain the value of the pointer. Creates a new pointer which will
      * get the value on access, transform it and return it. So if you change
@@ -216,7 +215,6 @@ fun <T> lateMutablePoint(): LateInitMutablePointer<T> = Pointer.lateMutable()
  * @version 0.1.0
  */
 fun <T> taskPoint(task: () -> T): Pointer<T> = Pointer.task(task)
-
 
 /**
  * Create a new pointer pointing to the given value

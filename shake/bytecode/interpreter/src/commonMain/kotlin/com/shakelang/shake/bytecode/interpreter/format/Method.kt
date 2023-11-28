@@ -7,12 +7,11 @@ import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 import kotlin.experimental.and
 
-
 open class Method(
     open val pool: ConstantPool,
     open val nameConstant: Int,
     open val qualifiedNameConstant: Int,
-    open val attributes: Short,
+    open val attributes: Short
 ) {
     val isPublic: Boolean
         get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
@@ -55,7 +54,7 @@ class MutableMethod(
     override val pool: MutableConstantPool,
     override var nameConstant: Int,
     override var qualifiedNameConstant: Int,
-    override var attributes: Short,
+    override var attributes: Short
 ) : Method(pool, nameConstant, qualifiedNameConstant, attributes) {
     fun setName(name: String) {
         nameConstant = pool.resolveUtf8(name)
