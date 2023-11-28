@@ -229,6 +229,19 @@ class MutableConstantPool(
             return MutableConstantPool(list.toMutableList())
         }
     }
+
+    override fun contains(element: ConstantPoolEntry) = entries.contains(element)
+    override fun containsAll(elements: Collection<ConstantPoolEntry>) = entries.containsAll(elements)
+    override fun get(index: Int) = entries[index]
+    override fun indexOf(element: ConstantPoolEntry) = entries.indexOf(element)
+    override fun isEmpty() = entries.isEmpty()
+    override fun iterator() = entries.iterator()
+    override fun lastIndexOf(element: ConstantPoolEntry) = entries.lastIndexOf(element)
+    override fun listIterator() = entries.listIterator()
+    override fun listIterator(index: Int) = entries.listIterator(index)
+    override val size get() = entries.size
+
+    override fun subList(fromIndex: Int, toIndex: Int) = entries.subList(fromIndex, toIndex)
 }
 
 sealed class ConstantPoolEntry {
