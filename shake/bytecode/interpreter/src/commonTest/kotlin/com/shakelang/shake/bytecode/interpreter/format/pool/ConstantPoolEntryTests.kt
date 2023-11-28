@@ -10,11 +10,11 @@ class ConstantPoolEntryTests : FreeSpec({
     "utf8 constant to bytes" {
         val constant = ConstantPoolEntry.Utf8Constant("test")
         val bytes = constant.dump()
-        bytes shouldBe byteArrayOf(1, 0, 0, 0, 4, *"test".toBytes())
+        bytes shouldBe byteArrayOf(1, 0, 4, *"test".toBytes())
     }
 
     "utf8 constant from bytes" {
-        val constant = ConstantPoolEntry.Utf8Constant.fromStream(byteArrayOf(0, 0, 0, 4, *"test".toBytes()).dataStream())
+        val constant = ConstantPoolEntry.Utf8Constant.fromStream(byteArrayOf(0, 4, *"test".toBytes()).dataStream())
         constant.value shouldBe "test"
     }
 
