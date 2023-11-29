@@ -12,6 +12,28 @@ import java.io.IOException
 import java.io.InputStreamReader
 import kotlin.math.max
 
+var Project.private : Boolean
+    get() {
+        if(!extensions.extraProperties.has("private")) {
+            println("Project $path is private by default")
+            return true
+        }
+        if(extensions.extraProperties.get("private") as Boolean) println("Project $path is private")
+        else println("Project $path is public")
+        return extensions.extraProperties.get("private") as Boolean
+    }
+    set(value) {
+        if(value) println("Setting project $path to private")
+        else println("Setting project $path to public")
+        extensions.extraProperties.set("private", value)
+    }
+
+var Project.public : Boolean
+    get() = !private
+    set(value) {
+        private = !value
+    }
+
 class Changelog : Plugin<Project> {
 
     init {
@@ -35,7 +57,7 @@ class Changelog : Plugin<Project> {
         project.tasks.create("version", VersionTask::class.java)
         project.tasks.create("createTags", VersionTags::class.java)
         project.tasks.create("resolveProjectDependencies", ResolveProjectDependenciesTask::class.java)
-        project.tasks.create("printProjectDependents", ResolveProjectDependentsTask::class.java)
+        project.tasks.create("resolveProjectDependents", ResolveProjectDependentsTask::class.java)
 
         project.allprojects.forEach {
             it.afterEvaluate {
@@ -123,8 +145,8 @@ open class BumpTask : DefaultTask() {
                 ?: throw Exception("Project $project not found")
         }
 
-        logger.info("Bumping version with type $typeValue and message $messageValue")
-        logger.info("Projects: ${projects.joinToString(", ") { it.path }}")
+        println("Bumping version with type $typeValue and message $messageValue")
+        println("Projects: ${projects.joinToString(", ") { it.path }}")
 
         val bump = Bump(type, message, projects.map { it.path })
         val bumpFile = Changelog.instance.readBumpFile()
@@ -160,6 +182,8 @@ open class VersionTask : DefaultTask() {
         val changelog = structureFile.projects.associate { it.path to mutableListOf<String>() }
         val bumpTypes = mutableMapOf<String, BumpType>()
 
+        println("Updating dependencies...")
+
         val packagesWithUpdatedDependencies = mutableSetOf<Project>()
 
         bumpFile.bumps.forEach { bump ->
@@ -170,6 +194,12 @@ open class VersionTask : DefaultTask() {
                     }
                 }
             }
+        }
+
+        println("Noticed changed dependencies for the following packages (bumping patch):")
+
+        packagesWithUpdatedDependencies.forEach {
+            println(" - ${it.path}")
         }
 
         val dependenciesUpdated = Bump(
@@ -198,6 +228,11 @@ open class VersionTask : DefaultTask() {
             if (messages.isEmpty() || bumpType == null) return@forEach
 
             // Update version
+            if(project.project(path).private) {
+                project.logger.warn("Skipping version bump for private project $path")
+                return@forEach
+            }
+
             val prj = structureFile.projects.find { it.path == path }!!
             val version = prj.version
             when (bumpType) {
