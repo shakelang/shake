@@ -19,11 +19,11 @@ repositories {
     mavenCentral()
 }
 
-java {
-    sourceCompatibility = JVM_TARGET
-    targetCompatibility = JVM_TARGET
-    version = JVM_TARGET
-}
+//java {
+//    sourceCompatibility = JVM_TARGET
+//    targetCompatibility = JVM_TARGET
+//    version = JVM_TARGET
+//}
 
 kotlin {
     withSourcesJar(publish = true)

@@ -51,6 +51,7 @@ plugins {
 }
 
 apply<Changelog>()
+//apply<DependencyPlugin>()
 apply(plugin = "io.codearte.nexus-staging")
 
 nexusPublishing {

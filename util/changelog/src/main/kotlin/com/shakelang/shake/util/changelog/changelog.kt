@@ -31,6 +31,13 @@ class Changelog : Plugin<Project> {
         project.tasks.create("bump", BumpTask::class.java)
         project.tasks.create("version", VersionTask::class.java)
         project.tasks.create("createTags", VersionTags::class.java)
+
+        project.allprojects.forEach {
+            it.afterEvaluate {
+                it.tasks.create("resolveDependencies", DependencyResolveTreeTask::class.java)
+                it.tasks.create("printDependencies", PrintDependencyTreeTask::class.java)
+            }
+        }
     }
 
     companion object {
