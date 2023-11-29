@@ -12,6 +12,7 @@ repositories {
 dependencies {
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.9.10")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
+//    implementation("io.github.gradle-nexus:publish-plugin:1.3.0")
     implementation("org.jetbrains.kotlinx:kover-gradle-plugin:0.7.5")
     implementation("com.github.node-gradle:gradle-node-plugin:7.0.1")
     implementation("gradle.plugin.org.gradle.crypto:checksum:1.4.0")

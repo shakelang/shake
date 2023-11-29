@@ -193,4 +193,6 @@ jobs:
           GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_PASSWORD }}
           GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
           GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
-        run: ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToSonatypeRepository
+        run: |
+          ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToSonatypeRepository
+          ./gradlew closeAndReleaseSonatypeStagingRepository
