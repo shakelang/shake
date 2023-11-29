@@ -160,8 +160,6 @@ open class DependencyResolveTreeTask : DefaultTask() {
 
     private fun Project.resolveDependencies(sourceSet: String): List<Dependency> {
 
-        println(project.configurations.names)
-
         if (!hasDependencyConfiguration(sourceSet))
             return emptyList()
 
@@ -170,10 +168,7 @@ open class DependencyResolveTreeTask : DefaultTask() {
         dependencies.forEach { dep ->
             // Check if it is a project dependency
 
-            if (dep is org.gradle.api.artifacts.ProjectDependency) {
-
-                println(dep.dependencyProject.extensions.extraProperties.get("dependencies"))
-
+            if (dep is org.gradle.api.artifacts.ProjectDependency)
                 deps.add(
                     ProjectDependency(
                         dep.dependencyProject.path,
@@ -183,7 +178,6 @@ open class DependencyResolveTreeTask : DefaultTask() {
                         dep.dependencyProject
                     )
                 )
-            }
             else
                 deps.add(
                     ExternalDependency(
@@ -215,8 +209,105 @@ open class PrintDependencyTreeTask : DefaultTask() {
     }
 }
 
+open class ResolveDirectDependentsTask : DefaultTask() {
+    init {
+        group = "changelog"
+        description = "Resolve the dependents of the project"
+        project.rootProject.allprojects.forEach { project ->
+            project.tasks.findByName("resolveDependencies")?.let { dependsOn(it) }
+        }
+    }
+
+    @TaskAction
+    open fun resolveDependents() {
+        val dependents = project.rootProject.allprojects.filter {
+            if (!it.extensions.extraProperties.has("dependencies")) return@filter false
+            val dependencies = it.extensions.extraProperties.get("dependencies") as List<*>
+
+            dependencies.any { dep ->
+                (dep as Dependency).isProjectDependency() && dep.asProjectDependency().subproject == project
+            }
+        }
+        project.extensions.extraProperties.set("directDependents", dependents)
+    }
+}
+
+open class PrintDirectDependentsTask : DefaultTask() {
+    init {
+        group = "changelog"
+        description = "Print the dependents of the project"
+        project.rootProject.allprojects.forEach {
+            dependsOn("${it.path}:resolveDirectDependents")
+        }
+    }
+
+    @TaskAction
+    open fun printDependents() {
+        val dependents = project.extensions.extraProperties.get("directDependents") as List<*>
+        println("Dependents of ${project.path} (${dependents.size}):")
+        dependents.forEach { (it as Project).printDependents(0) }
+    }
+}
+
+open class ResolveAllDependentsTask : DefaultTask() {
+    init {
+        group = "changelog"
+        description = "Resolve all dependents of the project"
+        project.rootProject.allprojects.forEach {
+            dependsOn("${it.path}:resolveDirectDependents")
+        }
+    }
+
+    @TaskAction
+    open fun resolveDependents() {
+        val dependents = project.resolveAllDependents()
+        project.extensions.extraProperties.set("dependents", dependents)
+    }
+
+    private fun Project.resolveAllDependents(): List<Project> {
+        val directDependents = extensions.extraProperties.get("directDependents") as List<Project>
+        val dependents = mutableListOf<Project>()
+        directDependents.forEach { dependent ->
+            if (!dependents.contains(dependent)) {
+                dependents.add(dependent)
+                dependent.resolveAllDependents().forEach {
+                    if (!dependents.contains(it)) dependents.add(it)
+                }
+            }
+        }
+        return dependents
+    }
+}
+
+open class PrintAllDependentsTask : DefaultTask() {
+    init {
+        group = "changelog"
+        description = "Print all dependents of the project"
+        this.dependsOn("resolveAllDependents")
+    }
+
+    @TaskAction
+    open fun printDependents() {
+        val dependents = project.extensions.extraProperties.get("dependents") as List<*>
+        println("All dependents of ${project.path} (${dependents.size}):")
+        dependents.forEach {
+            println("- ${(it as Project).path}")
+        }
+    }
+}
+
+
 fun Dependency.printTree(indent: Int = 0) {
     val indentString = " ".repeat(indent)
     println("$indentString- $this")
     dependencies.forEach { it.printTree(indent + 2) }
+}
+
+fun Project.printDependents(indent: Int) {
+    val indentString = " ".repeat(indent)
+    val dependents = extensions.extraProperties.get("directDependents") as List<*>
+    println("$indentString- $path")
+    dependents.forEach {
+        (it as Project).printDependents(indent + 2)
+    }
 }

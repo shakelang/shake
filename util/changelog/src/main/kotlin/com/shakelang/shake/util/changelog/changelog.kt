@@ -36,6 +36,10 @@ class Changelog : Plugin<Project> {
             it.afterEvaluate {
                 it.tasks.create("resolveDependencies", DependencyResolveTreeTask::class.java)
                 it.tasks.create("printDependencies", PrintDependencyTreeTask::class.java)
+                it.tasks.create("resolveDirectDependents", ResolveDirectDependentsTask::class.java)
+                it.tasks.create("printDependentsTree", PrintDirectDependentsTask::class.java)
+                it.tasks.create("resolveAllDependents", ResolveAllDependentsTask::class.java)
+                it.tasks.create("printAllDependents", PrintAllDependentsTask::class.java)
             }
         }
     }
