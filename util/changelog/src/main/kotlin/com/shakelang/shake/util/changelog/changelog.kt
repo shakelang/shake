@@ -14,17 +14,11 @@ import kotlin.math.max
 
 var Project.private : Boolean
     get() {
-        if(!extensions.extraProperties.has("private")) {
-            println("Project $path is private by default")
+        if(!extensions.extraProperties.has("private"))
             return true
-        }
-        if(extensions.extraProperties.get("private") as Boolean) println("Project $path is private")
-        else println("Project $path is public")
         return extensions.extraProperties.get("private") as Boolean
     }
     set(value) {
-        if(value) println("Setting project $path to private")
-        else println("Setting project $path to public")
         extensions.extraProperties.set("private", value)
     }
 

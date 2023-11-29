@@ -331,7 +331,7 @@ fun Project.printDependents(indent: Int) {
     }
 }
 
-val Project.dependencies: List<Dependency>
+val Project.dependencyList: List<Dependency>
     get() = extensions.extraProperties.get("dependencies") as List<Dependency>
 
 val Project.directDependents: List<Project>
