@@ -19,13 +19,24 @@ repositories {
     mavenCentral()
 }
 
+java {
+    sourceCompatibility = JVM_TARGET
+    targetCompatibility = JVM_TARGET
+    version = JVM_TARGET
+}
+
 kotlin {
     withSourcesJar(publish = true)
 //    dependencies {
 //        implementation("dev.icerock.moko:resources:0.23.0")
 //        testImplementation("dev.icerock.moko:resources-test:0.23.0")
 //    }
-    jvm { }
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(KOTLIN_TARGET))
+        }
+    }
+    jvm {}
     js(IR) {
         browser {
             testTask(Action {
@@ -90,7 +101,7 @@ kotlin {
 //    }
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = jvmTarget
+            kotlinOptions.jvmTarget = KOTLIN_TARGET
         }
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
