@@ -55,6 +55,14 @@ signing {
 
 afterEvaluate {
 
+//    nexusPublishing {
+//        repositories {
+//            sonatype {  //only for users registered in Sonatype after 24 Feb 2021
+//                nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+//                snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+//            }
+//        }
+//    }
 
     publishing {
 
@@ -65,28 +73,28 @@ afterEvaluate {
             val mavenLocal = if (publishScopes.configured) publishScopes.mavenLocal.get() else true
             val gradlePluginPortal = if (publishScopes.configured) publishScopes.gradlePluginPortal.get() else false
 
-            if(sonartype) maven("Sonatype") {
-                name = "Sonatype"
-                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-
-                val _username =
-                    System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
-                val _password =
-                    System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
-
-                if (_username == null || _password == null) {
-                    logger.log(
-                        LogLevel.WARN,
-                        "No Sonatype credentials found, skipping Sonatype publishing configuration"
-                    )
-                    return@maven
-                }
-
-                credentials {
-                    username = _username
-                    password = _password
-                }
-            }
+//            if(sonartype) maven("Sonatype") {
+//                name = "Sonatype"
+//                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+//
+//                val _username =
+//                    System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
+//                val _password =
+//                    System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
+//
+//                if (_username == null || _password == null) {
+//                    logger.log(
+//                        LogLevel.WARN,
+//                        "No Sonatype credentials found, skipping Sonatype publishing configuration"
+//                    )
+//                    return@maven
+//                }
+//
+//                credentials {
+//                    username = _username
+//                    password = _password
+//                }
+//            }
 
             if(githubPackages) maven("GitHub") {
                 name = "GitHub"

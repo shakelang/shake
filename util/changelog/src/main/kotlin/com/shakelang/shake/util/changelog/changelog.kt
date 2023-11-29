@@ -12,6 +12,22 @@ import java.io.IOException
 import java.io.InputStreamReader
 import kotlin.math.max
 
+var Project.private : Boolean
+    get() {
+        if(!extensions.extraProperties.has("private"))
+            return true
+        return extensions.extraProperties.get("private") as Boolean
+    }
+    set(value) {
+        extensions.extraProperties.set("private", value)
+    }
+
+var Project.public : Boolean
+    get() = !private
+    set(value) {
+        private = !value
+    }
+
 class Changelog : Plugin<Project> {
 
     init {
@@ -27,10 +43,26 @@ class Changelog : Plugin<Project> {
 
     override fun apply(project: Project) {
         this.project = project
+
+        if(project != project.rootProject) throw Exception("Changelog plugin can only be applied to root project")
+
         project.tasks.create("initChangelog", InitChangelogTask::class.java)
         project.tasks.create("bump", BumpTask::class.java)
         project.tasks.create("version", VersionTask::class.java)
         project.tasks.create("createTags", VersionTags::class.java)
+        project.tasks.create("resolveProjectDependencies", ResolveProjectDependenciesTask::class.java)
+        project.tasks.create("resolveProjectDependents", ResolveProjectDependentsTask::class.java)
+
+        project.allprojects.forEach {
+            it.afterEvaluate {
+                it.tasks.create("resolveDependencies", DependencyResolveTreeTask::class.java)
+                it.tasks.create("printDependencies", PrintDependencyTreeTask::class.java)
+                it.tasks.create("resolveDirectDependents", ResolveDirectDependentsTask::class.java)
+                it.tasks.create("printDependentsTree", PrintDirectDependentsTask::class.java)
+                it.tasks.create("resolveAllDependents", ResolveAllDependentsTask::class.java)
+                it.tasks.create("printAllDependents", PrintAllDependentsTask::class.java)
+            }
+        }
     }
 
     companion object {
@@ -44,6 +76,7 @@ open class InitChangelogTask : DefaultTask() {
     init {
         group = "changelog"
         description = "Initializes the changelog plugin"
+        this.dependsOn("resolveProjectDependencies", "resolveProjectDependents")
     }
 
     @org.gradle.api.tasks.TaskAction
@@ -106,8 +139,8 @@ open class BumpTask : DefaultTask() {
                 ?: throw Exception("Project $project not found")
         }
 
-        logger.info("Bumping version with type $typeValue and message $messageValue")
-        logger.info("Projects: ${projects.joinToString(", ") { it.path }}")
+        println("Bumping version with type $typeValue and message $messageValue")
+        println("Projects: ${projects.joinToString(", ") { it.path }}")
 
         val bump = Bump(type, message, projects.map { it.path })
         val bumpFile = Changelog.instance.readBumpFile()
@@ -120,6 +153,11 @@ data class TagCreationInfo(val project: ProjectStructure, val version: Version, 
 typealias TagCreation = (TagCreationInfo) -> String
 
 open class VersionTask : DefaultTask() {
+    init {
+        group = "changelog"
+        description = "Prints the current version"
+        this.dependsOn("initChangelog")
+    }
 
     private var tagFormat: TagCreation = {
         "${it.project.name}@${it.version}"
@@ -127,12 +165,6 @@ open class VersionTask : DefaultTask() {
 
     fun tagFormat(tagFormat: TagCreation) {
         this.tagFormat = tagFormat
-    }
-
-    init {
-        group = "changelog"
-        description = "Prints the current version"
-        this.dependsOn("initChangelog")
     }
 
     @org.gradle.api.tasks.TaskAction
@@ -143,6 +175,34 @@ open class VersionTask : DefaultTask() {
 
         val changelog = structureFile.projects.associate { it.path to mutableListOf<String>() }
         val bumpTypes = mutableMapOf<String, BumpType>()
+
+        println("Updating dependencies...")
+
+        val packagesWithUpdatedDependencies = mutableSetOf<Project>()
+
+        bumpFile.bumps.forEach { bump ->
+            bump.paths.forEach { path ->
+                project.project(path).allDependents.forEach {
+                    if(it !in packagesWithUpdatedDependencies) {
+                        packagesWithUpdatedDependencies.add(it)
+                    }
+                }
+            }
+        }
+
+        println("Noticed changed dependencies for the following packages (bumping patch):")
+
+        packagesWithUpdatedDependencies.forEach {
+            println(" - ${it.path}")
+        }
+
+        val dependenciesUpdated = Bump(
+            BumpType.PATCH,
+            "Updated dependencies",
+            packagesWithUpdatedDependencies.map { it.path }
+        )
+
+        bumpFile.add(dependenciesUpdated)
 
         bumpFile.bumps.forEach { bump ->
             bump.paths.forEach { path ->
@@ -162,6 +222,11 @@ open class VersionTask : DefaultTask() {
             if (messages.isEmpty() || bumpType == null) return@forEach
 
             // Update version
+            if(project.project(path).private) {
+                project.logger.warn("Skipping version bump for private project $path")
+                return@forEach
+            }
+
             val prj = structureFile.projects.find { it.path == path }!!
             val version = prj.version
             when (bumpType) {
