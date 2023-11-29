@@ -296,6 +296,25 @@ open class PrintAllDependentsTask : DefaultTask() {
     }
 }
 
+open class ResolveProjectDependentsTask : DefaultTask() {
+    init {
+        group = "changelog"
+        description = "Resolve all dependents of the project"
+        project.rootProject.allprojects.forEach {
+            dependsOn("${it.path}:resolveAllDependents")
+        }
+    }
+}
+
+open class ResolveProjectDependenciesTask : DefaultTask() {
+    init {
+        group = "changelog"
+        description = "Resolve all dependencies of the project"
+        project.rootProject.allprojects.forEach {
+            dependsOn("${it.path}:resolveDependencies")
+        }
+    }
+}
 
 fun Dependency.printTree(indent: Int = 0) {
     val indentString = " ".repeat(indent)
@@ -311,3 +330,12 @@ fun Project.printDependents(indent: Int) {
         (it as Project).printDependents(indent + 2)
     }
 }
+
+val Project.dependencies: List<Dependency>
+    get() = extensions.extraProperties.get("dependencies") as List<Dependency>
+
+val Project.directDependents: List<Project>
+    get() = extensions.extraProperties.get("directDependents") as List<Project>
+
+val Project.allDependents: List<Project>
+    get() = extensions.extraProperties.get("dependents") as List<Project>

@@ -27,10 +27,15 @@ class Changelog : Plugin<Project> {
 
     override fun apply(project: Project) {
         this.project = project
+
+        if(project != project.rootProject) throw Exception("Changelog plugin can only be applied to root project")
+
         project.tasks.create("initChangelog", InitChangelogTask::class.java)
         project.tasks.create("bump", BumpTask::class.java)
         project.tasks.create("version", VersionTask::class.java)
         project.tasks.create("createTags", VersionTags::class.java)
+        project.tasks.create("resolveProjectDependencies", ResolveProjectDependenciesTask::class.java)
+        project.tasks.create("printProjectDependents", ResolveProjectDependentsTask::class.java)
 
         project.allprojects.forEach {
             it.afterEvaluate {
@@ -55,6 +60,7 @@ open class InitChangelogTask : DefaultTask() {
     init {
         group = "changelog"
         description = "Initializes the changelog plugin"
+        this.dependsOn("resolveProjectDependencies", "resolveProjectDependents")
     }
 
     @org.gradle.api.tasks.TaskAction
@@ -131,6 +137,11 @@ data class TagCreationInfo(val project: ProjectStructure, val version: Version, 
 typealias TagCreation = (TagCreationInfo) -> String
 
 open class VersionTask : DefaultTask() {
+    init {
+        group = "changelog"
+        description = "Prints the current version"
+        this.dependsOn("initChangelog")
+    }
 
     private var tagFormat: TagCreation = {
         "${it.project.name}@${it.version}"
@@ -138,12 +149,6 @@ open class VersionTask : DefaultTask() {
 
     fun tagFormat(tagFormat: TagCreation) {
         this.tagFormat = tagFormat
-    }
-
-    init {
-        group = "changelog"
-        description = "Prints the current version"
-        this.dependsOn("initChangelog")
     }
 
     @org.gradle.api.tasks.TaskAction
@@ -154,6 +159,26 @@ open class VersionTask : DefaultTask() {
 
         val changelog = structureFile.projects.associate { it.path to mutableListOf<String>() }
         val bumpTypes = mutableMapOf<String, BumpType>()
+
+        val packagesWithUpdatedDependencies = mutableSetOf<Project>()
+
+        bumpFile.bumps.forEach { bump ->
+            bump.paths.forEach { path ->
+                project.project(path).allDependents.forEach {
+                    if(it !in packagesWithUpdatedDependencies) {
+                        packagesWithUpdatedDependencies.add(it)
+                    }
+                }
+            }
+        }
+
+        val dependenciesUpdated = Bump(
+            BumpType.PATCH,
+            "Updated dependencies",
+            packagesWithUpdatedDependencies.map { it.path }
+        )
+
+        bumpFile.add(dependenciesUpdated)
 
         bumpFile.bumps.forEach { bump ->
             bump.paths.forEach { path ->
