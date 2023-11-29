@@ -56,8 +56,9 @@ apply(plugin = "io.codearte.nexus-staging")
 
 nexusPublishing {
     repositories {
-        sonatype {  //only for users registered in Sonatype after 24 Feb 2021
+        sonatype {
 
+//            stagingProfileId.set("com.shakelang")
             val _username =
                 System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
             val _password =

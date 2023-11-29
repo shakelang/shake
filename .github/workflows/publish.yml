@@ -195,4 +195,4 @@ jobs:
           GRADLE_SIGNING_PASSWORD: ${{ secrets.RELEASE_GPG_PASS }}
         run: |
           ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToSonatypeRepository
-          ./gradlew closeAndReleaseSonatypeStagingRepository
+          # ./gradlew closeAndReleaseSonatypeStagingRepository
