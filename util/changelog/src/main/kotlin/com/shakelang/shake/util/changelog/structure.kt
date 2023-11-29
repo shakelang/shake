@@ -163,7 +163,9 @@ fun Changelog.readStructure() = project.subprojects.map {
         it.description ?: "",
         it.group.toString(),
         null ?: "",
-        it.dependencies.toString().split(",")
+        it.dependencyList.map { dependency ->
+            dependency.group + ":" + dependency.name + ":" + dependency.version
+        }
     )
 }
 

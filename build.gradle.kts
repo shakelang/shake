@@ -47,10 +47,31 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
     id("io.gitlab.arturbosch.detekt") version "1.23.4"
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
 apply<Changelog>()
+//apply<DependencyPlugin>()
 apply(plugin = "io.codearte.nexus-staging")
+
+nexusPublishing {
+    repositories {
+        sonatype {
+
+//            stagingProfileId.set("com.shakelang")
+            val _username =
+                System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
+            val _password =
+                System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
+
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            username.set(_username)
+            password.set(_password)
+
+        }
+    }
+}
 
 val dokkaPlugin by configurations
 tasks.register<org.jetbrains.dokka.gradle.DokkaMultiModuleTask>("dokkaRoot") {
