@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.public
 import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
@@ -5,7 +6,7 @@ import conventions.projectGroup
 group = projectGroup("util")
 version = resolveVersion()
 description = "A json parser implemented in kotlin (mpp)"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+public = true
 
 plugins {
     id("conventions.all")

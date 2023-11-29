@@ -16,3 +16,6 @@ Update dependencies
 Update dependencies
 ### 0.3.4
 Update dependencies
+### 0.4.0
+Automatically update depending packages on release
+Add option to make package private (and make packages private by default)
