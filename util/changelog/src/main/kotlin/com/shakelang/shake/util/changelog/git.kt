@@ -241,5 +241,5 @@ fun Changelog.getAllTags(): List<ReleaseTag> {
                 struct.path == prjPath
             } ?: throw IllegalArgumentException("Invalid path in tag-name: \"$name\" (Extracted Path: \"$prjPath\")"),
             getTimestampForTag(it))
-    }
+    }.sortedBy { it.timestamp }
 }
