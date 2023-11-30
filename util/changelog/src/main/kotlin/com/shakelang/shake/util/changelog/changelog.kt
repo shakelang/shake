@@ -41,7 +41,7 @@ class Changelog : Plugin<Project> {
         project.tasks.create("initChangelog", InitChangelogTask::class.java)
         project.tasks.create("bump", BumpTask::class.java)
         project.tasks.create("version", VersionTask::class.java)
-        project.tasks.create("createTags", VersionTags::class.java)
+        project.tasks.create("createTags", VersionTagsTask::class.java)
         project.tasks.create("resolveProjectDependencies", ResolveProjectDependenciesTask::class.java)
         project.tasks.create("resolveProjectDependents", ResolveProjectDependentsTask::class.java)
 
