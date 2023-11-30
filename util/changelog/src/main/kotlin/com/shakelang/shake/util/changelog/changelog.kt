@@ -367,6 +367,13 @@ open class ChangelogCliTask : DefaultTask() {
             unchangedEntries
         )
 
+        frame.requestFocus()
+
+        println("Waiting for frame to close")
+
+        while(!frame.closed) Thread.sleep(100)
+
+
     }
 
 }
