@@ -13,11 +13,13 @@ class HomePage(
     onCanceled: () -> Unit,
     onBump: () -> Unit,
     onRelease: () -> Unit,
+    onCreateTags: () -> Unit,
 ) : JPanel() {
 
     private val label: JLabel = JLabel("What do you want to do?")
     private val bumpButton: JButton
     private val releaseButton: JButton
+    private val createTagButton: JButton
     private val cancelButton: JButton
 
     init {
@@ -38,9 +40,15 @@ class HomePage(
         releaseButton.addActionListener { onRelease() }
         add(releaseButton)
 
+        createTagButton = JButton("Create Tag")
+        createTagButton.setSize(480, 30)
+        createTagButton.setLocation(10, 140)
+        createTagButton.addActionListener { onCreateTags() }
+        add(createTagButton)
+
         cancelButton = JButton("Cancel")
         cancelButton.setSize(480, 30)
-        cancelButton.setLocation(10, 140)
+        cancelButton.setLocation(10, 180)
         cancelButton.addActionListener { onCanceled() }
         add(cancelButton)
 

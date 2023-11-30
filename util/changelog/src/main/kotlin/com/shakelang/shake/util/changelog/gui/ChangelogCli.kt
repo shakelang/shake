@@ -1,6 +1,8 @@
 package com.shakelang.shake.util.changelog.gui
 
 import com.shakelang.shake.util.changelog.Version
+import com.shakelang.shake.util.changelog.tasks.VersionTagsTask
+import com.shakelang.shake.util.changelog.tasks.VersionTask
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger
 import javax.swing.JFrame
@@ -42,8 +44,11 @@ class ChangelogCli(
             onCanceled = { close() },
             onBump = { showBumpPage(changed, unchanged) },
             onRelease = {
-                JOptionPane.showMessageDialog(this, "Released successfully")
-            }
+                performRelease()
+            },
+            onCreateTags = {
+                performCreateTags()
+            },
         )
     }
 
@@ -60,12 +65,35 @@ class ChangelogCli(
     }
 
     private fun performRelease() {
-        JOptionPane.showConfirmDialog(
+        val res = JOptionPane.showConfirmDialog(
             this,
-            "You are about to release the following packages:\n\n${changed.joinToString("\n") { it.name }}\n\nAre you sure?",
+            "You are about to release all bumped changes. Are you sure?",
             "Release",
             JOptionPane.YES_NO_OPTION
         )
+
+        if (res != JOptionPane.YES_OPTION) return
+
+        println("Releasing packages")
+
+        val versionTask = project.tasks.getByName("version") as VersionTask
+        versionTask.version()
+    }
+
+    private fun performCreateTags() {
+        val res = JOptionPane.showConfirmDialog(
+            this,
+            "You are about to create tags for all newly released packages. Are you sure?",
+            "Create Tags",
+            JOptionPane.YES_NO_OPTION
+        )
+
+        if (res != JOptionPane.YES_OPTION) return
+
+        println("Creating tags")
+
+        val versionTask = project.tasks.getByName("createTags") as VersionTagsTask
+        versionTask.versionTags()
     }
 
     fun close() {
