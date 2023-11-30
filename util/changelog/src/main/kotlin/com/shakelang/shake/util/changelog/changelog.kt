@@ -1,16 +1,10 @@
 package com.shakelang.shake.util.changelog
 
-import com.googlecode.lanterna.input.KeyStroke
-import com.googlecode.lanterna.input.KeyType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.JavaExec
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
 import kotlin.math.max
 
 var Project.private : Boolean
@@ -53,6 +47,7 @@ class Changelog : Plugin<Project> {
         project.tasks.create("createTags", VersionTags::class.java)
         project.tasks.create("resolveProjectDependencies", ResolveProjectDependenciesTask::class.java)
         project.tasks.create("resolveProjectDependents", ResolveProjectDependentsTask::class.java)
+        project.tasks.create("resolveTags", ResolveTagsTask::class.java)
 
         project.afterEvaluate {
             project.tasks.create("changelog", ChangelogCliTask::class.java)
@@ -350,4 +345,20 @@ open class ChangelogCliTask : DefaultTask() {
 
     }
 
+}
+
+open class ResolveTagsTask : DefaultTask() {
+
+    init {
+        group = "changelog"
+        description = "Resolves tags"
+        this.dependsOn("initChangelog")
+    }
+
+    @org.gradle.api.tasks.TaskAction
+    open fun resolveTags() {
+        Changelog.instance.getAllTags().forEach {
+            println(it)
+        }
+    }
 }

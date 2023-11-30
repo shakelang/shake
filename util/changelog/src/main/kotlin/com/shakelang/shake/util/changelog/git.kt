@@ -3,6 +3,8 @@ package com.shakelang.shake.util.changelog
 import com.shakelang.shake.util.shason.elements.JsonElement
 import com.shakelang.shake.util.shason.elements.JsonObject
 import com.shakelang.shake.util.shason.json
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 fun tagRef(name: String): String {
     return "refs/tags/$name"
@@ -26,7 +28,7 @@ class TagStash(
             if (!obj.containsKey("name")) throw IllegalArgumentException("TagStash object has no name")
             val name = obj["name"]!!
             if (!name.isJsonPrimitive() || !name.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("TagStash name is not a string")
             }
@@ -114,4 +116,110 @@ fun Changelog.readStash(): TagStashList {
 fun Changelog.writeStash(stash: TagStashList) {
     val file = project.file(".changelog/stash.json")
     file.writeText(stash.toString())
+}
+
+class ReleaseTag(
+    val tagName: String,
+    val sha: String,
+    val version: Version,
+    val project: ProjectStructure,
+) {
+    override fun toString(): String {
+        return json.stringify(mapOf(
+            "tagName" to tagName,
+            "sha" to sha,
+            "version" to version.toString(),
+            "project" to project.path
+        ))
+    }
+}
+
+fun Changelog.getLocalGitTags(): List<ParsedGitTag> {
+    val rt = Runtime.getRuntime()
+    val process = rt.exec(arrayOf("git", "show-ref", "--tags"), null, this.project.file("."))
+    return getOutputLines(process)
+}
+
+fun Changelog.getRemoteGitTags(): List<ParsedGitTag> {
+    val rt = Runtime.getRuntime()
+    val process = rt.exec(arrayOf("git", "ls-remote", "--tags"), null, this.project.file("."))
+    return getOutputLines(process)
+}
+
+data class ParsedGitTag(
+    val name: String,
+    val sha: String
+) {
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is ParsedGitTag) return false
+        return this.sha == other.sha
+    }
+
+    override fun hashCode(): Int {
+        return sha.hashCode()
+    }
+
+    companion object {
+        fun parse(line: String): ParsedGitTag {
+            val parts = line.split("\\s+".toRegex(), 2)
+
+            if (parts.size < 2) {
+                throw IllegalArgumentException("Invalid git tag line: $line")
+            }
+
+            return ParsedGitTag(parts[1], parts[0])
+        }
+    }
+}
+
+fun Changelog.getAllGitTags(): List<ParsedGitTag> {
+    val remoteTags = getRemoteGitTags()
+    val localTags = getLocalGitTags()
+
+    val tags = mutableListOf<ParsedGitTag>()
+
+    for (tag in remoteTags) if (!tags.contains(tag)) tags.add(tag)
+    for (tag in localTags) if (!tags.contains(tag)) tags.add(tag)
+
+    return tags
+}
+
+fun getOutputLines(process: Process): List<ParsedGitTag> {
+    val reader = BufferedReader(InputStreamReader(process.inputStream))
+    val lines = mutableListOf<String>()
+
+    reader.useLines { it.forEach { line -> lines.add(line) } }
+
+    return lines.map {
+        // remove annotated tag suffix (^{})
+        it.replace("\\^\\{\\}\$".toRegex(), "")
+    }.map {
+        ParsedGitTag.parse(it)
+    }
+}
+
+fun extractPathAndVersionFromTag(tagName: String): Pair<String, String> {
+    val regex = Regex("""refs/tags/release/(.+?)/v(.+)""")
+
+    println("Tag Name: $tagName")
+    println("Regex Pattern: ${regex.pattern}")
+
+    return regex.find(tagName)?.let { matchResult ->
+        val path = matchResult.groupValues[1]
+        val version = matchResult.groupValues[2]
+        path to version
+    } ?: throw IllegalArgumentException("Invalid tag name: $tagName")
+}
+
+fun Changelog.getAllTags(): List<ReleaseTag> {
+    val structure = this.readStructure()
+    return getAllGitTags().filter { it.name.startsWith("refs/tags/release/") }.map {
+        val name = it.name
+        val (path, version) = extractPathAndVersionFromTag(name)
+        val prjPath = ":${path.replace("/", ":")}"
+        ReleaseTag(name, it.sha, Version.fromString(version), structure.find { struct ->
+            struct.path == prjPath
+        } ?: throw IllegalArgumentException("Invalid path in tag-name: \"$name\" (Extracted Path: \"$prjPath\")"))
+    }
 }
