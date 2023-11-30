@@ -62,8 +62,8 @@ class BumpPanel (
 
         unchangedBoxes = Array(unchanged.size) {
             val box = JCheckBox(unchanged[it].name)
-            box.setSize(100, 20)
-            box.setLocation(0, top)
+            box.setSize(480, 20)
+            box.setLocation(10, top)
             top += 20
             add(box)
             box

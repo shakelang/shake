@@ -47,7 +47,6 @@ class Changelog : Plugin<Project> {
         project.tasks.create("createTags", VersionTags::class.java)
         project.tasks.create("resolveProjectDependencies", ResolveProjectDependenciesTask::class.java)
         project.tasks.create("resolveProjectDependents", ResolveProjectDependentsTask::class.java)
-        project.tasks.create("resolveTags", ResolveTagsTask::class.java)
 
         project.afterEvaluate {
             project.tasks.create("changelog", ChangelogCliTask::class.java)
@@ -338,27 +337,36 @@ open class ChangelogCliTask : DefaultTask() {
             PackageEntry(it.path, it.version)
         }
 
+        val changelogs = Changelog.instance.readMap()
+
+        val zipped = entries.map {
+            it to changelogs.packages.find { pkg ->
+                pkg.path == it.name
+            }
+        }
+
+        val changedEntries = mutableListOf<PackageEntry>()
+        val unchangedEntries = mutableListOf<PackageEntry>()
+
+        zipped.forEach {
+            val (entry, changelog) = it
+            if(changelog == null) {
+                changedEntries.add(it.first)
+                return@forEach
+            }
+
+            if(changelog.changedSinceLastRelease) {
+                changedEntries.add(it.first)
+            } else {
+                unchangedEntries.add(it.first)
+            }
+        }
+
         val frame = ChangelogCli(
-            entries,
-            listOf()
+            changedEntries,
+            unchangedEntries
         )
 
     }
 
-}
-
-open class ResolveTagsTask : DefaultTask() {
-
-    init {
-        group = "changelog"
-        description = "Resolves tags"
-        this.dependsOn("initChangelog")
-    }
-
-    @org.gradle.api.tasks.TaskAction
-    open fun resolveTags() {
-        Changelog.instance.getAllTags().forEach {
-            println(it)
-        }
-    }
 }

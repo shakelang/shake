@@ -144,14 +144,15 @@ class ReleaseTag(
 fun Changelog.getLocalGitTags(): List<ParsedGitTag> {
     val rt = Runtime.getRuntime()
     val process = rt.exec(arrayOf("git", "show-ref", "--tags"), null, this.project.file("."))
-    return getOutputLines(process)
+    return parseGit(getOutputLines(process))
 }
 
-fun Changelog.getRemoteGitTags(): List<ParsedGitTag> {
-    val rt = Runtime.getRuntime()
-    val process = rt.exec(arrayOf("git", "ls-remote", "--tags"), null, this.project.file("."))
-    return getOutputLines(process)
-}
+fun parseGit(list: List<String>) = list.map {
+        // remove annotated tag suffix (^{})
+        it.replace("\\^\\{\\}\$".toRegex(), "")
+    }.map {
+        ParsedGitTag.parse(it)
+    }
 
 
 val dateFormat = SimpleDateFormat("HH:mm:ss Z")
@@ -159,7 +160,7 @@ fun Changelog.getTimestampForTag(tag: ParsedGitTag): Date {
     val rt = Runtime.getRuntime()
     val process =
         rt.exec(arrayOf("git", "log", "-n", "1", "--pretty=format:\"%ci\"", tag.name), null, this.project.file("."))
-    val lines = getOutputLines(process)
+    val lines = parseGit(getOutputLines(process))
     if (lines.size != 1) throw IllegalArgumentException("Invalid git log output")
 
     return dateFormat.parse(lines[0].name.replace("\"", ""))
@@ -191,31 +192,13 @@ data class ParsedGitTag(
         }
     }
 }
-
-fun Changelog.getAllGitTags(): List<ParsedGitTag> {
-    val remoteTags = getRemoteGitTags()
-    val localTags = getLocalGitTags()
-
-    val tags = mutableListOf<ParsedGitTag>()
-
-    for (tag in remoteTags) if (!tags.contains(tag)) tags.add(tag)
-    for (tag in localTags) if (!tags.contains(tag)) tags.add(tag)
-
-    return tags
-}
-
-fun getOutputLines(process: Process): List<ParsedGitTag> {
+fun getOutputLines(process: Process): List<String> {
     val reader = BufferedReader(InputStreamReader(process.inputStream))
     val lines = mutableListOf<String>()
 
     reader.useLines { it.forEach { line -> lines.add(line) } }
 
-    return lines.map {
-        // remove annotated tag suffix (^{})
-        it.replace("\\^\\{\\}\$".toRegex(), "")
-    }.map {
-        ParsedGitTag.parse(it)
-    }
+    return lines
 }
 
 fun extractPathAndVersionFromTag(tagName: String): Pair<String, String> {
@@ -229,7 +212,7 @@ fun extractPathAndVersionFromTag(tagName: String): Pair<String, String> {
 
 fun Changelog.getAllTags(): List<ReleaseTag> {
     val structure = this.readStructure()
-    return getAllGitTags().filter { it.name.startsWith("refs/tags/release/") }.map {
+    return getLocalGitTags().filter { it.name.startsWith("refs/tags/release/") }.map {
         val name = it.name
         val (path, version) = extractPathAndVersionFromTag(name)
         val prjPath = ":${path.replace("/", ":")}"
@@ -241,5 +224,19 @@ fun Changelog.getAllTags(): List<ReleaseTag> {
                 struct.path == prjPath
             } ?: throw IllegalArgumentException("Invalid path in tag-name: \"$name\" (Extracted Path: \"$prjPath\")"),
             getTimestampForTag(it))
-    }.sortedBy { it.timestamp }
+    }
+}
+
+fun Changelog.getChangesSinceTag(tag: String): List<String> {
+    val rt = Runtime.getRuntime()
+    val process = rt.exec(arrayOf("git", "diff", "--name-only", tag), null, this.project.file("."))
+    val lines = getOutputLines(process)
+    return lines.map { it.replace("\"", "") }
+}
+
+fun Changelog.dirChangedSinceTag(tag: String, dir: String): Boolean {
+    val rt = Runtime.getRuntime()
+    val process = rt.exec(arrayOf("git", "diff", "--name-only", tag, "--", dir), null, this.project.file("."))
+    val lines = getOutputLines(process)
+    return lines.isNotEmpty()
 }
