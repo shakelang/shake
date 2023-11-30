@@ -1,104 +1,7 @@
-package com.shakelang.shake.util.changelog
+package com.shakelang.shake.util.changelog.gui
 
-import javax.swing.ButtonGroup
-import javax.swing.JButton
-import javax.swing.JCheckBox
-import javax.swing.JFrame
-import javax.swing.JLabel
-import javax.swing.JOptionPane
-import javax.swing.JPanel
-import javax.swing.JRadioButton
-import javax.swing.JScrollPane
-import javax.swing.JTextField
-
-data class PackageEntry (
-    val name: String,
-    val version: Version,
-)
-
-class ChangelogCli (
-    private val changed: List<PackageEntry>,
-    private val unchanged: List<PackageEntry>,
-) : JFrame("Changelog") {
-
-    var closed: Boolean = false
-        private set
-
-    init {
-        setSize(500, 500)
-        setLocationRelativeTo(null)
-        defaultCloseOperation = DO_NOTHING_ON_CLOSE
-        isVisible = true
-        addWindowListener(object : java.awt.event.WindowAdapter() {
-            override fun windowClosing(e: java.awt.event.WindowEvent?) = this@ChangelogCli.close()
-        })
-        this.showHomePage()
-    }
-
-    private fun showHomePage() {
-        println("Showing home page")
-        val content = JScrollPane()
-
-        contentPane = HomePage(
-            onCanceled = { close() },
-            onBump = { showBumpPage(changed, unchanged) },
-            onRelease = { JOptionPane.showMessageDialog(this, "Released successfully") }
-        )
-    }
-
-    private fun showBumpPage(changed: List<PackageEntry>, unchanged: List<PackageEntry>) {
-        println("Showing bump page")
-        contentPane = BumpPanel(changed, unchanged, onCanceled = { showHomePage() })
-    }
-
-    fun close() {
-        this.closed = true
-        this.isVisible = false
-        dispose()
-    }
-
-}
-
-class HomePage(
-    onCanceled: () -> Unit,
-    onBump: () -> Unit,
-    onRelease: () -> Unit,
-) : JPanel() {
-
-    private val label: JLabel = JLabel("What do you want to do?")
-    private val bumpButton: JButton
-    private val releaseButton: JButton
-    private val cancelButton: JButton
-
-    init {
-        label.setSize(480, 40)
-        label.setLocation(10, 10)
-        label.font = label.font.deriveFont(20f)
-        add(label)
-
-        bumpButton = JButton("Bump")
-        bumpButton.setSize(480, 30)
-        bumpButton.setLocation(10, 60)
-        bumpButton.addActionListener { onBump() }
-        add(bumpButton)
-
-        releaseButton = JButton("Release")
-        releaseButton.setSize(480, 30)
-        releaseButton.setLocation(10, 100)
-        releaseButton.addActionListener { onRelease() }
-        add(releaseButton)
-
-        cancelButton = JButton("Cancel")
-        cancelButton.setSize(480, 30)
-        cancelButton.setLocation(10, 140)
-        cancelButton.addActionListener { onCanceled() }
-        add(cancelButton)
-
-        setSize(500, 500)
-        layout = null
-    }
-
-}
+import com.shakelang.shake.util.changelog.BumpType
+import javax.swing.*
 
 class BumpPanel (
     private val changed: List<PackageEntry>,
@@ -207,7 +110,7 @@ class BumpPanel (
                 println("Changed: $changed")
                 println("Unchanged: $unchanged")
 
-                JOptionPane.showMessageDialog(this, "Bumped successfully")
+            JOptionPane.showMessageDialog(this, "Bumped successfully")
                 onCanceled()
         }
 
