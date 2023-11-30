@@ -28,9 +28,6 @@ kotlin {
         implementation(project(":util:colorlib"))
         implementation(project(":util:shason"))
         implementation(project(":util:markdown"))
-        implementation("com.googlecode.lanterna:lanterna:3.1.1")
-        implementation("org.jline:jline:3.1.3")
-        implementation("org.fusesource.jansi:jansi:2.4.1")
     }
 }
 
