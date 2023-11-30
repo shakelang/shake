@@ -6,6 +6,13 @@ plugins {
     id("conventions.publishing")
     id("conventions.dokka")
     `kotlin-dsl`
+    java
+}
+
+repositories {
+    maven {
+        url = uri("https://clojars.org/repo")
+    }
 }
 
 group = projectGroup("util.changelog")
@@ -22,16 +29,17 @@ kotlin {
         implementation(project(":util:shason"))
         implementation(project(":util:markdown"))
         implementation("com.googlecode.lanterna:lanterna:3.1.1")
-        testImplementation(kotlin("test"))
+        implementation("org.jline:jline:3.1.3")
+        implementation("org.fusesource.jansi:jansi:2.4.1")
     }
 }
 
 sourceSets {
     main {
-        java.srcDirs("src/main/kotlin")
+        java.srcDirs("src/main/kotlin", "src/main/java")
     }
     test {
-        java.srcDirs("src/test/kotlin")
+        java.srcDirs("src/test/kotlin", "src/test/java")
     }
 }
 

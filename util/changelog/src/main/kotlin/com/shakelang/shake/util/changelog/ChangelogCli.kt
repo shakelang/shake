@@ -1,87 +1,75 @@
 package com.shakelang.shake.util.changelog
 
-import com.googlecode.lanterna.input.KeyStroke
-import com.googlecode.lanterna.input.KeyType
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
+import javax.swing.JCheckBox
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.JPanel
 
-fun main() {
-    val options = Changelog.instance.readStructureFile().projects.map { it.path }.toTypedArray()
+data class PackageEntry (
+    val name: String,
+    val version: Version,
+)
 
-    val checkboxList = CheckboxList(options)
+class ChangelogCli (
+    changed: List<PackageEntry>,
+    unchanged: List<PackageEntry>,
+) : JFrame("Changelog") {
 
-    while (true) {
-        checkboxList.draw()
-        val keyStroke = readKeyStroke()
-
-        if (keyStroke.keyType == KeyType.Enter) {
-            println("Selected options: ${checkboxList.getSelectedOptions().joinToString(", ")}")
-            break
-        }
-
-        checkboxList.handleInput(keyStroke)
+    init {
+        setSize(500, 500)
+        setLocationRelativeTo(null)
+        defaultCloseOperation = EXIT_ON_CLOSE
+        add(BumpPanel(changed, unchanged))
+        isVisible = true
     }
+
 }
 
-class CheckboxList(private val options: Array<String>) {
-    private var selectedIndices = mutableSetOf<Int>()
-    private var currentIndex = 0
+class BumpPanel (
+    val changed: List<PackageEntry>,
+    val unchanged: List<PackageEntry>,
+) : JPanel() {
+    val changedBoxes: Array<JCheckBox>
+    val unchangedBoxes: Array<JCheckBox>
+    val changedLabel: JLabel
+    val unchangedLabel: JLabel
 
-    fun handleInput(keyStroke: KeyStroke) {
-        when (keyStroke.keyType) {
-            KeyType.ArrowUp -> moveUp()
-            KeyType.ArrowDown -> moveDown()
-            KeyType.Character -> toggleCheckbox()
-            else -> {
-            }
+    init {
+
+        var top = 0
+
+        changedLabel = JLabel("Changed:")
+        changedLabel.setSize(100, 20)
+        changedLabel.setLocation(0, top)
+        add(changedLabel)
+        top += 20
+
+        changedBoxes = Array(changed.size) {
+            val box = JCheckBox(changed[it].name)
+            box.setSize(480, 20)
+            box.setLocation(10, top)
+            top += 20
+            add(box)
+            box
         }
-    }
 
-    private fun moveUp() {
-        currentIndex = (currentIndex - 1 + options.size) % options.size
-    }
+        unchangedLabel = JLabel("Unchanged:")
+        unchangedLabel.setSize(480, 20)
+        unchangedLabel.setLocation(10, top)
+        add(unchangedLabel)
+        top += 20
 
-    private fun moveDown() {
-        currentIndex = (currentIndex + 1) % options.size
-    }
 
-    private fun toggleCheckbox() {
-        if (currentIndex in selectedIndices) {
-            selectedIndices.remove(currentIndex)
-        } else {
-            selectedIndices.add(currentIndex)
+        unchangedBoxes = Array(unchanged.size) {
+            val box = JCheckBox(unchanged[it].name)
+            box.setSize(100, 20)
+            box.setLocation(0, top)
+            top += 20
+            add(box)
+            box
         }
-    }
 
-    fun draw() {
-        options.forEachIndexed { index, option ->
-            val checkbox = if (index in selectedIndices) "[*]" else "[ ]"
-            val displayText = "$checkbox $option"
-            println(displayText)
-        }
-    }
-
-    fun getSelectedOptions(): List<String> {
-        return selectedIndices.map { options[it] }
-    }
-}
-
-fun readKeyStroke(): KeyStroke {
-    val console = System.console()
-
-    if (console != null) {
-        // Reading a single character without echoing it to the console
-        val input = console.reader().read()
-        return KeyStroke.fromString(input.toString())
-    }
-
-    val reader = BufferedReader(InputStreamReader(System.`in`))
-
-    try {
-        val input = reader.read()
-        return KeyStroke.fromString(input.toString())
-    } catch (e: IOException) {
-        throw RuntimeException("Error reading input", e)
+        setSize(500, top)
+        layout = null
     }
 }

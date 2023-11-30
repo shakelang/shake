@@ -53,7 +53,10 @@ class Changelog : Plugin<Project> {
         project.tasks.create("createTags", VersionTags::class.java)
         project.tasks.create("resolveProjectDependencies", ResolveProjectDependenciesTask::class.java)
         project.tasks.create("resolveProjectDependents", ResolveProjectDependentsTask::class.java)
-        project.tasks.create("changelog", ChangelogCliTask::class.java)
+
+        project.afterEvaluate {
+            project.tasks.create("changelog", ChangelogCliTask::class.java)
+        }
 
         project.allprojects.forEach {
             it.afterEvaluate {
@@ -321,14 +324,30 @@ open class VersionTags : DefaultTask() {
     }
 }
 
-open class ChangelogCliTask : JavaExec() {
+open class ChangelogCliTask : DefaultTask() {
 
     init {
         group = "changelog"
         description = "Changelog CLI"
-        // Add this plugin's jar to the classpath of the forked process
-        classpath = project.files(project.configurations.getByName("runtimeClasspath"))
-        mainClass.set("com.shakelang.shake.util.changelog.ChangelogCliKt")
+        this.dependsOn("initChangelog")
+    }
+
+    @org.gradle.api.tasks.TaskAction
+    open fun changelogCli() {
+        // Set gradle console to plain
+        val structure = Changelog.instance.readStructureFile()
+
+        val entries = structure.projects.filter {
+            it.project.public
+        } . map {
+            PackageEntry(it.path, it.version)
+        }
+
+        val frame = ChangelogCli(
+            entries,
+            listOf()
+        )
+
     }
 
 }
