@@ -5,6 +5,9 @@ import com.shakelang.shake.util.shason.elements.JsonObject
 import com.shakelang.shake.util.shason.json
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 fun tagRef(name: String): String {
     return "refs/tags/$name"
@@ -123,14 +126,18 @@ class ReleaseTag(
     val sha: String,
     val version: Version,
     val project: ProjectStructure,
+    val timestamp: Date
 ) {
     override fun toString(): String {
-        return json.stringify(mapOf(
-            "tagName" to tagName,
-            "sha" to sha,
-            "version" to version.toString(),
-            "project" to project.path
-        ))
+        return json.stringify(
+            mapOf(
+                "tagName" to tagName,
+                "sha" to sha,
+                "version" to version.toString(),
+                "project" to project.path,
+                "timestamp" to timestamp.time
+            )
+        )
     }
 }
 
@@ -144,6 +151,18 @@ fun Changelog.getRemoteGitTags(): List<ParsedGitTag> {
     val rt = Runtime.getRuntime()
     val process = rt.exec(arrayOf("git", "ls-remote", "--tags"), null, this.project.file("."))
     return getOutputLines(process)
+}
+
+
+val dateFormat = SimpleDateFormat("HH:mm:ss Z")
+fun Changelog.getTimestampForTag(tag: ParsedGitTag): Date {
+    val rt = Runtime.getRuntime()
+    val process =
+        rt.exec(arrayOf("git", "log", "-n", "1", "--pretty=format:\"%ci\"", tag.name), null, this.project.file("."))
+    val lines = getOutputLines(process)
+    if (lines.size != 1) throw IllegalArgumentException("Invalid git log output")
+
+    return dateFormat.parse(lines[0].name.replace("\"", ""))
 }
 
 data class ParsedGitTag(
@@ -201,10 +220,6 @@ fun getOutputLines(process: Process): List<ParsedGitTag> {
 
 fun extractPathAndVersionFromTag(tagName: String): Pair<String, String> {
     val regex = Regex("""refs/tags/release/(.+?)/v(.+)""")
-
-    println("Tag Name: $tagName")
-    println("Regex Pattern: ${regex.pattern}")
-
     return regex.find(tagName)?.let { matchResult ->
         val path = matchResult.groupValues[1]
         val version = matchResult.groupValues[2]
@@ -218,8 +233,13 @@ fun Changelog.getAllTags(): List<ReleaseTag> {
         val name = it.name
         val (path, version) = extractPathAndVersionFromTag(name)
         val prjPath = ":${path.replace("/", ":")}"
-        ReleaseTag(name, it.sha, Version.fromString(version), structure.find { struct ->
-            struct.path == prjPath
-        } ?: throw IllegalArgumentException("Invalid path in tag-name: \"$name\" (Extracted Path: \"$prjPath\")"))
+        ReleaseTag(
+            name,
+            it.sha,
+            Version.fromString(version),
+            structure.find { struct ->
+                struct.path == prjPath
+            } ?: throw IllegalArgumentException("Invalid path in tag-name: \"$name\" (Extracted Path: \"$prjPath\")"),
+            getTimestampForTag(it))
     }
 }
