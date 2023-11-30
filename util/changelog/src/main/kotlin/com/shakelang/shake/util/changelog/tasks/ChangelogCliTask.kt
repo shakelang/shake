@@ -14,6 +14,7 @@ open class ChangelogCliTask : DefaultTask() {
     }
 
     @org.gradle.api.tasks.TaskAction
+    @Suppress("unused_variable")
     open fun changelogCli() {
         // Set gradle console to plain
         val structure = Changelog.instance.readStructureFile()
@@ -50,6 +51,8 @@ open class ChangelogCliTask : DefaultTask() {
         }
 
         val frame = ChangelogCli(
+            project,
+            logger,
             changedEntries,
             unchangedEntries
         )

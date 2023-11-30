@@ -1,3 +1,11 @@
 {
-  "bumps": []
+  "bumps": [
+    {
+      "type": "minor",
+      "message": "Add changelog cli (gui)",
+      "paths": [
+        ":util:changelog"
+      ]
+    }
+  ]
 }

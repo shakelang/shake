@@ -1,10 +1,15 @@
 package com.shakelang.shake.util.changelog.gui
 
+import org.gradle.api.Project
+import org.gradle.api.logging.Logger
 import javax.swing.JButton
 import javax.swing.JLabel
 import javax.swing.JPanel
 
+@Suppress("unused")
 class HomePage(
+    private val project: Project,
+    private val logger: Logger,
     onCanceled: () -> Unit,
     onBump: () -> Unit,
     onRelease: () -> Unit,

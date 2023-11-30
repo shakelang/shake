@@ -1,12 +1,19 @@
 package com.shakelang.shake.util.changelog.gui
 
 import com.shakelang.shake.util.changelog.BumpType
+import com.shakelang.shake.util.changelog.tasks.BumpTask
+import org.gradle.api.Project
+import org.gradle.api.logging.Logger
 import javax.swing.*
 
-class BumpPanel (
+@Suppress("unused")
+class BumpPanel(
+    private val project: Project,
+    private val logger: Logger,
     private val changed: List<PackageEntry>,
     private val unchanged: List<PackageEntry>,
-    private val onCanceled: () -> Unit = {},
+    private val onCanceled: () -> Unit,
+    private val onBumped: () -> Unit
 ) : JPanel() {
     private val changedBoxes: Array<JCheckBox>
     private val unchangedBoxes: Array<JCheckBox>
@@ -92,26 +99,33 @@ class BumpPanel (
         add(bumpButton)
 
         bumpButton.addActionListener {
-           val message = messageField.text
-                if (message.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Please enter a message")
-                    return@addActionListener
-                }
-                val bumpType = when {
-                    majorButton.isSelected -> BumpType.MAJOR
-                    minorButton.isSelected -> BumpType.MINOR
-                    else -> BumpType.PATCH
-                }
-                val changed = changedBoxes.filter { it.isSelected }.map { it.text }
-                val unchanged = unchangedBoxes.filter { it.isSelected }.map { it.text }
+            val message = messageField.text
+            if (message.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a message")
+                return@addActionListener
+            }
+            val bumpType = when {
+                majorButton.isSelected -> BumpType.MAJOR
+                minorButton.isSelected -> BumpType.MINOR
+                else -> BumpType.PATCH
+            }
+            val changed = changedBoxes.filter { it.isSelected }.map { it.text }
+            val unchanged = unchangedBoxes.filter { it.isSelected }.map { it.text }
 
-                println("BumpType: $bumpType")
-                println("Message: $message")
-                println("Changed: $changed")
-                println("Unchanged: $unchanged")
+            val combined = changed + unchanged
+
+            println("BumpType: $bumpType")
+            println("Message: $message")
+            println("Bumped: $changed")
+
+            BumpTask.performBump(
+                bumpType,
+                message,
+                combined
+            )
 
             JOptionPane.showMessageDialog(this, "Bumped successfully")
-                onCanceled()
+            onBumped()
         }
 
         cancelButton = JButton("Cancel")
