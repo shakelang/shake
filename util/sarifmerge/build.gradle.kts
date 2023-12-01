@@ -1,17 +1,22 @@
 import com.shakelang.shake.util.changelog.public
 import com.shakelang.shake.util.changelog.resolveVersion
-import conventions.dependencies
 import conventions.projectGroup
 
 plugins {
-    id("conventions.dokka")
     id("conventions.publishing")
+    id("conventions.dokka")
     `kotlin-dsl`
+}
+
+repositories {
+    maven {
+        url = uri("https://clojars.org/repo")
+    }
 }
 
 group = projectGroup("util")
 version = resolveVersion()
-description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
+description = "Utility package to merged sarif files for ktlint github report"
 public = true
 
 val projectName = name
@@ -20,11 +25,8 @@ kotlin {
     dependencies {
         implementation(gradleApi())
         implementation(project(":util:shason"))
-        testImplementation(kotlin("test"))
     }
 }
-
-
 
 sourceSets {
     main {
@@ -44,10 +46,9 @@ val sourcesJar by tasks.registering(Jar::class) {
 publishing {
     publications {
         // kotlin plugin
-        create<MavenPublication>("plugin") {
-            from(components["kotlin"])
+        withType<MavenPublication> {
             groupId = project.group.toString()
-            artifactId = "plugin"
+            artifactId = projectName
             version = project.version.toString()
         }
     }

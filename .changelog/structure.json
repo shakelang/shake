@@ -119,7 +119,7 @@
         "unspecified:path-browserify:1.0.1",
         ":util:environment:environment:0.2.0",
         ":util:colorlib:colorlib:0.2.0",
-        "org.jetbrains.kotlinx:kotlinx-html-js:0.9.1"
+        "org.jetbrains.kotlinx:kotlinx-html-js:0.10.1"
       ]
     },
     {
@@ -167,6 +167,18 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1"
+      ]
+    },
+    {
+      "path": ":util:sarifmerge",
+      "name": "com.shakelang.shake.util:sarifmerge",
+      "version": "0.1.0",
+      "description": "Utility package to merged sarif files for ktlint github report",
+      "author": "com.shakelang.shake.util",
+      "license": "",
+      "dependencies": [
+        "unspecified:unspecified:unspecified",
+        ":util:shason:shason:0.2.3"
       ]
     },
     {
@@ -340,5 +352,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701389152016
+  "lastUpdate": 1701424049636
 }

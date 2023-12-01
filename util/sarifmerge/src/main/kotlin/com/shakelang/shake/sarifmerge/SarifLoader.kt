@@ -3,7 +3,8 @@ package com.shakelang.shake.sarifmerge
 import com.shakelang.shake.util.shason.elements.JsonArray
 import com.shakelang.shake.util.shason.elements.JsonElement
 import com.shakelang.shake.util.shason.elements.JsonObject
-
+import com.shakelang.shake.util.shason.json
+import java.io.File
 
 class SarifEntry(
     val level: String,
@@ -23,7 +24,7 @@ class SarifEntry(
 }
 
 class SarifLoaderWithSRCRoot(
-    val srcRoot: String
+    val srcRoot: String?
 ) {
 
     val entries = mutableListOf<SarifEntry>()
@@ -39,12 +40,11 @@ class SarifLoaderWithSRCRoot(
         if (!json.containsKey("message")) throw IllegalArgumentException("SarifEntry does not contain 'message' key")
         if (!json.containsKey("ruleId")) throw IllegalArgumentException("SarifEntry does not contain 'ruleId' key")
 
-        if (!json["level"]!!.isJsonPrimitive() || json["level"]!!.toJsonPrimitive()
-                .isString()
-        ) throw IllegalArgumentException("SarifEntry 'level' key is not a string")
-        if (!json["ruleId"]!!.isJsonPrimitive() || json["ruleId"]!!.toJsonPrimitive()
-                .isString()
-        ) throw IllegalArgumentException("SarifEntry 'ruleId' key is not a string")
+        if (!json["level"]!!.isJsonPrimitive() || !json["level"]!!.toJsonPrimitive().isString())
+            throw IllegalArgumentException("SarifEntry 'level' key is not a string")
+
+        if (!json["ruleId"]!!.isJsonPrimitive() || !json["ruleId"]!!.toJsonPrimitive().isString())
+            throw IllegalArgumentException("SarifEntry 'ruleId' key is not a string")
 
         val level = json["level"]!!.toJsonPrimitive().toStringElement().value
         val locations = json["locations"]!!
@@ -70,24 +70,16 @@ class SarifLoaderWithSRCRoot(
         run: JsonObject
     ): Boolean {
 
-        if (!run.containsKey("originalUriBaseIds")) throw IllegalArgumentException("Sarif run does not contain 'originalUriBaseIds' key")
         if (!run.containsKey("results")) throw IllegalArgumentException("Sarif run does not contain 'results' key")
         if (!run.containsKey("tool") || !run["tool"]!!.isJsonObject()) throw IllegalArgumentException("Sarif run does not contain 'tool' key or 'tool' key is not a JsonObject")
 
-        if (!run["originalUriBaseIds"]!!.isJsonObject()) throw IllegalArgumentException("Sarif run 'originalUriBaseIds' key is not a JsonObject")
+        val srcRoot = if (run.containsKey("originalUriBaseIds") && run["originalUriBaseIds"]!!.isJsonObject())
+            parseSourceRootElement(run["originalUriBaseIds"]!!.toJsonObject()["%SRCROOT%"]!!) else null
+
         if (!run["results"]!!.isJsonArray()) throw IllegalArgumentException("Sarif run 'results' key is not a JsonArray")
         if (!run["tool"]!!.isJsonObject()) throw IllegalArgumentException("Sarif run 'tool' key is not a JsonObject")
 
-        val originalUriBaseIds = run["originalUriBaseIds"]!!.toJsonObject()
-        if (!originalUriBaseIds.containsKey("%SRCROOT%")) throw IllegalArgumentException("Sarif run 'originalUriBaseIds' key does not contain 'SRCROOT' key")
-        if (!originalUriBaseIds["%SRCROOT%"]!!.isJsonPrimitive()) throw IllegalArgumentException("Sarif run 'originalUriBaseIds' key 'SRCROOT' key is not a JsonPrimitive")
-        if (!originalUriBaseIds["%SRCROOT%"]!!.toJsonPrimitive()
-                .isString()
-        ) throw IllegalArgumentException("Sarif run 'originalUriBaseIds' key 'SRCROOT' key is not a string")
-
-        val srcRoot = originalUriBaseIds["%SRCROOT%"]!!.toJsonPrimitive().toStringElement().value
-
-        return srcRoot == this.srcRoot
+        return srcRoot == this.srcRoot || srcRoot == null || this.srcRoot == ""
     }
 
     fun addRun(
@@ -140,7 +132,9 @@ class SarifLoaderWithSRCRoot(
             runs.add(
                 JsonObject.of(
                     "originalUriBaseIds" to JsonObject.of(
-                        "%SRCROOT%" to srcRoot
+                        "%SRCROOT%" to JsonObject.of(
+                            "uri" to (srcRoot ?: "")
+                        )
                     ),
                     "results" to JsonArray.of(results),
                     "tool" to tool!!
@@ -161,23 +155,14 @@ class SarifLoader {
     fun addRun(
         run: JsonObject
     ) {
-
-        if (!run.containsKey("originalUriBaseIds")) throw IllegalArgumentException("Sarif run does not contain 'originalUriBaseIds' key")
         if (!run.containsKey("results")) throw IllegalArgumentException("Sarif run does not contain 'results' key")
-        if (!run.containsKey("tool") || !run["tool"]!!.isJsonObject()) throw IllegalArgumentException("Sarif run does not contain 'tool' key or 'tool' key is not a JsonObject")
 
-        if (!run["originalUriBaseIds"]!!.isJsonObject()) throw IllegalArgumentException("Sarif run 'originalUriBaseIds' key is not a JsonObject")
+        val srcRoot = if (run.containsKey("originalUriBaseIds") && run["originalUriBaseIds"]!!.isJsonObject())
+            parseSourceRootElement(run["originalUriBaseIds"]!!.toJsonObject()["%SRCROOT%"]!!) else null
         if (!run["results"]!!.isJsonArray()) throw IllegalArgumentException("Sarif run 'results' key is not a JsonArray")
-        if (!run["tool"]!!.isJsonObject()) throw IllegalArgumentException("Sarif run 'tool' key is not a JsonObject")
-
-        val originalUriBaseIds = run["originalUriBaseIds"]!!.toJsonObject()
-        if (!originalUriBaseIds.containsKey("%SRCROOT%")) throw IllegalArgumentException("Sarif run 'originalUriBaseIds' key does not contain 'SRCROOT' key")
-        if (!originalUriBaseIds["%SRCROOT%"]!!.isJsonPrimitive()) throw IllegalArgumentException("Sarif run 'originalUriBaseIds' key 'SRCROOT' key is not a JsonPrimitive")
-
-        val srcRoot = originalUriBaseIds["%SRCROOT%"]!!.toJsonPrimitive().toStringElement().value
 
         for (loader in subLoaders) {
-            if (loader.srcRoot == srcRoot) {
+            if (loader.acceptsRun(run)) {
                 loader.addRun(run)
                 return
             }
@@ -211,6 +196,60 @@ class SarifLoader {
         addRuns(runs.toJsonArray())
     }
 
+    fun addFile(
+        file: JsonObject
+    ) {
+        if (!file.containsKey("version")) throw IllegalArgumentException("Sarif file does not contain 'version' key")
+        if (!file.containsKey("\$schema")) throw IllegalArgumentException("Sarif file does not contain '\$schema' key")
+        if (!file.containsKey("runs")) throw IllegalArgumentException("Sarif file does not contain 'runs' key")
+
+        if (!file["version"]!!.isJsonPrimitive() || !file["version"]!!.toJsonPrimitive().isString())
+            throw IllegalArgumentException("Sarif file 'version' key is not a string, but '${file["version"]!!::class.java}'")
+
+        if (!file["\$schema"]!!.isJsonPrimitive() || !file["\$schema"]!!.toJsonPrimitive().isString())
+            throw IllegalArgumentException("Sarif file '\$schema' key is not a string, but '${file["\$schema"]!!::class.java}'")
+
+        if (!file["runs"]!!.isJsonArray())
+            throw IllegalArgumentException("Sarif file 'runs' key is not a JsonArray, but '${file["runs"]!!::class.java}'")
+
+        val version = file["version"]!!.toJsonPrimitive().toStringElement().value
+        val schema = file["\$schema"]!!.toJsonPrimitive().toStringElement().value
+        val runs = file["runs"]!!.toJsonArray()
+
+        if (version != this.version) throw IllegalArgumentException("Sarif file version does not match")
+        if (schema != this.schema) throw IllegalArgumentException("Sarif file schema does not match")
+
+        addRuns(runs)
+    }
+
+    fun addFile(
+        file: JsonElement
+    ) {
+        if (!file.isJsonObject()) throw IllegalArgumentException("Sarif file is not a JsonObject")
+        addFile(file.toJsonObject())
+    }
+
+    fun addFile(
+        file: File
+    ) {
+        val reader = file.reader()
+        val contents = reader.readText()
+        reader.close()
+        try {
+            addFile(json.parse(contents))
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Sarif file ${file.path} is not a valid sarif file", e)
+        }
+    }
+
+    fun addFiles(
+        files: Set<File>
+    ) {
+        for (file in files) {
+            addFile(file)
+        }
+    }
+
     fun getRuns(): List<JsonObject> {
         val runs = mutableListOf<JsonObject>()
         for (loader in subLoaders) {
@@ -226,4 +265,45 @@ class SarifLoader {
         }
         return runs
     }
+
+    fun generateFiles(
+        limitRunsPerFile: Int = -1,
+        limitEntriesPerRun: Int = -1
+    ): List<JsonObject> {
+        val runs = getRuns(limitEntriesPerRun)
+        val numberOfFiles = if (limitRunsPerFile == -1) 1 else (runs.size / limitRunsPerFile) + 1
+
+        val files = mutableListOf<JsonObject>()
+
+        for (i in 0 until numberOfFiles) {
+
+            val runsInFile = mutableListOf<JsonObject>()
+
+            for (j in 0 until limitRunsPerFile) {
+                val index = i * limitRunsPerFile + j
+                if (index >= runs.size) break
+                runsInFile.add(runs[index])
+            }
+
+            files.add(
+                JsonObject.of(
+                    "version" to version,
+                    "\$schema" to schema,
+                    "runs" to JsonArray.of(runsInFile)
+                )
+            )
+        }
+
+        return files
+    }
+}
+
+fun parseSourceRootElement(element: JsonElement): String {
+    return if (element.isJsonPrimitive() && element.toJsonPrimitive()
+            .isString()) element.toJsonPrimitive().toStringElement().value
+    else if (element.isJsonObject() && element.toJsonObject()
+            .containsKey("uri") && element.toJsonObject()["uri"]!!.isJsonPrimitive() &&
+        element.toJsonObject()["uri"]!!.toJsonPrimitive().isString())
+        element.toJsonObject()["uri"]!!.toJsonPrimitive().toStringElement().value
+    else throw IllegalArgumentException("Sarif run 'originalUriBaseIds' key '%SRCROOT%' key is invalid (${element::class.java})}")
 }

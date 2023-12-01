@@ -1,3 +1,4 @@
+import com.shakelang.shake.sarifmerge.SarifMerge
 import com.shakelang.shake.util.changelog.Changelog
 import com.shakelang.shake.util.changelog.tasks.VersionTask
 import io.codearte.gradle.nexus.NexusStagingExtension
@@ -51,6 +52,7 @@ plugins {
 }
 
 apply<Changelog>()
+apply<SarifMerge>()
 // apply<DependencyPlugin>()
 apply(plugin = "io.codearte.nexus-staging")
 
@@ -120,29 +122,6 @@ subprojects {
             reporter(ReporterType.PLAIN)
             reporter(ReporterType.HTML)
             reporter(ReporterType.SARIF)
-        }
-    }
-
-    tasks.create("copyKtlintSarifReports") {
-        group = "verification"
-        description = "Copies ktlint reports to build directory"
-        dependsOn("ktlintCheck")
-
-        doLast {
-            copy {
-                from("$buildDir/reports/ktlint/") {
-                    include("**/*.sarif")
-                }
-                rename {
-                    println("${path.replace(":", "-").substring(1)}$it")
-                    "${path.substringBeforeLast(":").replace(":", "-").substring(1)}-$it"
-                }
-                into("${rootProject.buildDir}/reports/ktlint/all/")
-                // Flatten the file tree
-                eachFile {
-                    this.path = this.name
-                }
-            }
         }
     }
 
