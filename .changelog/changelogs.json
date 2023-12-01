@@ -326,6 +326,12 @@
           "changes": [
             "Fix generated sarif format"
           ]
+        },
+        {
+          "version": "0.1.2",
+          "changes": [
+            "Fix bugs in sarif generation"
+          ]
         }
       ]
     }

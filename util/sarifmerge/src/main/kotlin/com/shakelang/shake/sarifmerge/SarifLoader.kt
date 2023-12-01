@@ -3,6 +3,7 @@ package com.shakelang.shake.sarifmerge
 import com.shakelang.shake.util.shason.elements.JsonArray
 import com.shakelang.shake.util.shason.elements.JsonElement
 import com.shakelang.shake.util.shason.elements.JsonObject
+import com.shakelang.shake.util.shason.elements.JsonStringElement
 import com.shakelang.shake.util.shason.json
 import java.io.File
 
@@ -12,8 +13,8 @@ class SarifEntry(
     val message: JsonElement,
     val ruleId: String
 ) {
-    fun toJsonObject(): JsonObject {
-        val obj = JsonObject.of(
+    fun toJsonObject(): Any {
+        val obj = mapOf(
             "level" to level,
             "locations" to locations,
             "message" to message,
@@ -114,14 +115,14 @@ class SarifLoaderWithSRCRoot(
         addRuns(runs.toJsonArray())
     }
 
-    fun toRuns(limitEntriesPerRun: Int = -1): List<JsonObject> {
+    fun toRuns(limitEntriesPerRun: Int = -1): List<Any> {
         val numberOfRuns = if (limitEntriesPerRun == -1) 1 else (entries.size / limitEntriesPerRun) + 1
 
-        val runs = mutableListOf<JsonObject>()
+        val runs = mutableListOf<Any>()
 
         for (i in 0 until numberOfRuns) {
 
-            val results = mutableListOf<JsonObject>()
+            val results = mutableListOf<Any>()
 
             for (j in 0 until limitEntriesPerRun) {
                 val index = i * limitEntriesPerRun + j
@@ -130,11 +131,11 @@ class SarifLoaderWithSRCRoot(
             }
 
             runs.add(
-                JsonObject.of(
-                    "originalUriBaseIds" to JsonObject.of(
-                        "%SRCROOT%" to (srcRoot ?: "")
+                mapOf(
+                    "originalUriBaseIds" to mapOf(
+                        "%SRCROOT%" to(srcRoot ?: "")
                     ),
-                    "results" to JsonArray.of(results),
+                    "results" to results,
                     "tool" to tool!!
                 )
             )
@@ -248,16 +249,16 @@ class SarifLoader {
         }
     }
 
-    fun getRuns(): List<JsonObject> {
-        val runs = mutableListOf<JsonObject>()
+    fun getRuns(): List<Any> {
+        val runs = mutableListOf<Any>()
         for (loader in subLoaders) {
             runs.addAll(loader.toRuns())
         }
         return runs
     }
 
-    fun getRuns(limitEntriesPerRun: Int): List<JsonObject> {
-        val runs = mutableListOf<JsonObject>()
+    fun getRuns(limitEntriesPerRun: Int): List<Any> {
+        val runs = mutableListOf<Any>()
         for (loader in subLoaders) {
             runs.addAll(loader.toRuns(limitEntriesPerRun))
         }
@@ -267,15 +268,15 @@ class SarifLoader {
     fun generateFiles(
         limitRunsPerFile: Int = -1,
         limitEntriesPerRun: Int = -1
-    ): List<JsonObject> {
+    ): List<Any> {
         val runs = getRuns(limitEntriesPerRun)
         val numberOfFiles = if (limitRunsPerFile == -1) 1 else (runs.size / limitRunsPerFile) + 1
 
-        val files = mutableListOf<JsonObject>()
+        val files = mutableListOf<Any>()
 
         for (i in 0 until numberOfFiles) {
 
-            val runsInFile = mutableListOf<JsonObject>()
+            val runsInFile = mutableListOf<Any>()
 
             for (j in 0 until limitRunsPerFile) {
                 val index = i * limitRunsPerFile + j
@@ -284,10 +285,10 @@ class SarifLoader {
             }
 
             files.add(
-                JsonObject.of(
+                mapOf(
                     "version" to version,
                     "\$schema" to schema,
-                    "runs" to JsonArray.of(runsInFile)
+                    "runs" to runsInFile
                 )
             )
         }
