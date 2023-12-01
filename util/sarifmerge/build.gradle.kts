@@ -14,9 +14,9 @@ repositories {
     }
 }
 
-group = projectGroup("util.changelog")
+group = projectGroup("util")
 version = resolveVersion()
-description = "Changelog generation plugin for Shake"
+description = "Utility package to merged sarif files for ktlint github report"
 public = true
 
 val projectName = name
@@ -24,9 +24,7 @@ val projectName = name
 kotlin {
     dependencies {
         implementation(gradleApi())
-        implementation(project(":util:colorlib"))
         implementation(project(":util:shason"))
-        implementation(project(":util:markdown"))
     }
 }
 
@@ -48,10 +46,9 @@ val sourcesJar by tasks.registering(Jar::class) {
 publishing {
     publications {
         // kotlin plugin
-        create<MavenPublication>("plugin") {
-            from(components["kotlin"])
+        withType<MavenPublication> {
             groupId = project.group.toString()
-            artifactId = "plugin"
+            artifactId = projectName
             version = project.version.toString()
         }
     }

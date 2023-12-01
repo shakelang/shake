@@ -2,9 +2,10 @@ package com.shakelang.shake.util.markdown
 
 interface MarkdownDocument {
     val elements: List<MarkdownElement>
-    fun render(): String = elements.joinToString("\n") { it.toMarkdown().joinToString("\n") }
+    fun render(): String = elements.joinToString("\n\n") { it.toMarkdown().joinToString("\n") }
 }
 
+@Suppress("unused")
 class MarkdownDocumentImpl(override val elements: List<MarkdownElement>) : MarkdownDocument {
     override fun toString(): String = elements.joinToString("\n") { it.toMarkdown().joinToString("\n") }
 }
