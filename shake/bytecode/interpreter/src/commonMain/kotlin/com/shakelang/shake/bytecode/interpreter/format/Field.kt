@@ -63,3 +63,20 @@ class MutableField(
         }
     }
 }
+
+class FieldBuilder(
+    pool: MutableConstantPool,
+    override var nameConstant: Int,
+    override var attributes: Short
+) : Field (pool, nameConstant, attributes) {
+    override val pool: MutableConstantPool
+        get() = super.pool as MutableConstantPool
+
+    companion object {
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): FieldBuilder {
+            val name = stream.readInt()
+            val attributes = stream.readShort()
+            return FieldBuilder(pool, name, attributes)
+        }
+    }
+}

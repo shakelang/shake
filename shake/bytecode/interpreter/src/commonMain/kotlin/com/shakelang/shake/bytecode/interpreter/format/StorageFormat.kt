@@ -133,3 +133,35 @@ class MutableStorageFormat(
         }
     }
 }
+
+class StorageFormatBuilder (
+    override var magic: Int = 0,
+    override var major: Short = 0,
+    override var minor: Short = 0,
+    constantPool: MutableConstantPool = MutableConstantPool(),
+    classes: MutableList<Class> = mutableListOf(),
+    fields: MutableList<Field> = mutableListOf(),
+    methods: MutableList<Method> = mutableListOf()
+) : StorageFormat(
+    magic,
+    major,
+    minor,
+    constantPool,
+    classes,
+    fields,
+    methods
+) {
+
+    override val classes: MutableList<Class>
+        get() = super.classes as MutableList<Class>
+
+    override val fields: MutableList<Field>
+        get() = super.fields as MutableList<Field>
+
+    override val methods: MutableList<Method>
+        get() = super.methods as MutableList<Method>
+
+    override val constantPool: MutableConstantPool
+        get() = super.constantPool as MutableConstantPool
+
+}

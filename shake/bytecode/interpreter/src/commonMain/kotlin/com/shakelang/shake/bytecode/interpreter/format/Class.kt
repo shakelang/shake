@@ -147,3 +147,26 @@ class MutableClass(
         }
     }
 }
+
+class ClassBuilder(
+    pool: ConstantPool,
+    override val nameConstant: Int,
+    override val superNameConstant: Int,
+    override val interfacesConstants: MutableList<Int>,
+    fields: MutableList<Int>,
+    methods: MutableList<Int>,
+    subClasses: MutableList<Int>
+) : Class (
+    pool,
+    nameConstant,
+    superNameConstant,
+    interfacesConstants,
+    fields,
+    methods,
+    subClasses
+) {
+    override val pool: MutableConstantPool get() = super.pool as MutableConstantPool
+    override val fields: MutableList<Int> get() = super.fields as MutableList<Int>
+    override val methods: MutableList<Int> get() = super.methods as MutableList<Int>
+    override val subClasses: MutableList<Int> get() = super.subClasses as MutableList<Int>
+}

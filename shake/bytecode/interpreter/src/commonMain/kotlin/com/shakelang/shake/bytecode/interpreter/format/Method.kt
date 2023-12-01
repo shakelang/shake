@@ -6,6 +6,7 @@ import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 import kotlin.experimental.and
+import kotlin.experimental.or
 
 open class Method(
     open val pool: ConstantPool,
@@ -13,19 +14,19 @@ open class Method(
     open val qualifiedNameConstant: Int,
     open val attributes: Short
 ) {
-    val isPublic: Boolean
+    open val isPublic: Boolean
         get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
-    val isPrivate: Boolean
+    open val isPrivate: Boolean
         get() = attributes and 0b00000000_00000010.toShort() != 0.toShort()
-    val isProtected: Boolean
+    open val isProtected: Boolean
         get() = attributes and 0b00000000_00000100.toShort() != 0.toShort()
-    val isStatic: Boolean
+    open val isStatic: Boolean
         get() = attributes and 0b00000000_00001000.toShort() != 0.toShort()
-    val isFinal: Boolean
+    open val isFinal: Boolean
         get() = attributes and 0b00000000_00010000.toShort() != 0.toShort()
 
-    val name: String get() = pool.getUtf8(nameConstant).value
-    val qualifiedName: String get() = pool.getUtf8(qualifiedNameConstant).value
+    open val name: String get() = pool.getUtf8(nameConstant).value
+    open val qualifiedName: String get() = pool.getUtf8(qualifiedNameConstant).value
 
     fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
@@ -70,6 +71,60 @@ class MutableMethod(
             val qualifiedName = stream.readInt()
             val attributes = stream.readShort()
             return MutableMethod(pool, name, qualifiedName, attributes)
+        }
+    }
+}
+
+class MethodBuilder(
+    pool: MutableConstantPool,
+    override var nameConstant: Int,
+    override var qualifiedNameConstant: Int,
+    override var attributes: Short
+) : Method(pool, nameConstant, qualifiedNameConstant, attributes) {
+    override val pool: MutableConstantPool
+        get() = super.pool as MutableConstantPool
+
+    override var isPublic: Boolean
+        get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00000001.toShort()
+                else attributes and 0b11111111_11111110.toShort()
+        }
+
+    override var isPrivate: Boolean
+        get() = attributes and 0b00000000_00000010.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00000010.toShort()
+                else attributes and 0b11111111_11111101.toShort()
+        }
+
+    override var isProtected: Boolean
+        get() = attributes and 0b00000000_00000100.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00000100.toShort()
+                else attributes and 0b11111111_11111011.toShort()
+        }
+
+    override var isStatic: Boolean
+        get() = attributes and 0b00000000_00001000.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00001000.toShort()
+                else attributes and 0b11111111_11110111.toShort()
+        }
+
+    override var isFinal: Boolean
+        get() = attributes and 0b00000000_00010000.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00010000.toShort()
+                else attributes and 0b11111111_11101111.toShort()
+        }
+
+    companion object {
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MethodBuilder {
+            val name = stream.readInt()
+            val qualifiedName = stream.readInt()
+            val attributes = stream.readShort()
+            return MethodBuilder(pool, name, qualifiedName, attributes)
         }
     }
 }
