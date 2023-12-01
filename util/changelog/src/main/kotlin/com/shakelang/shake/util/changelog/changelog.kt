@@ -4,17 +4,18 @@ import com.shakelang.shake.util.changelog.tasks.*
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-var Project.private : Boolean
+var Project.private: Boolean
     get() {
-        if(!extensions.extraProperties.has("private"))
+        if (!extensions.extraProperties.has("private")) {
             return true
+        }
         return extensions.extraProperties.get("private") as Boolean
     }
     set(value) {
         extensions.extraProperties.set("private", value)
     }
 
-var Project.public : Boolean
+var Project.public: Boolean
     get() = !private
     set(value) {
         private = !value
@@ -36,7 +37,7 @@ class Changelog : Plugin<Project> {
     override fun apply(project: Project) {
         this.project = project
 
-        if(project != project.rootProject) throw Exception("Changelog plugin can only be applied to root project")
+        if (project != project.rootProject) throw Exception("Changelog plugin can only be applied to root project")
 
         project.tasks.create("initChangelog", InitChangelogTask::class.java)
         project.tasks.create("bump", BumpTask::class.java)
@@ -69,4 +70,3 @@ class Changelog : Plugin<Project> {
 
 data class TagCreationInfo(val project: ProjectStructure, val version: Version, val message: String)
 typealias TagCreation = (TagCreationInfo) -> String
-

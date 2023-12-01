@@ -21,7 +21,7 @@ open class ChangelogCliTask : DefaultTask() {
 
         val entries = structure.projects.filter {
             it.project.public
-        } . map {
+        }.map {
             PackageEntry(it.path, it.version)
         }
 
@@ -38,12 +38,12 @@ open class ChangelogCliTask : DefaultTask() {
 
         zipped.forEach {
             val (entry, changelog) = it
-            if(changelog == null) {
+            if (changelog == null) {
                 changedEntries.add(it.first)
                 return@forEach
             }
 
-            if(changelog.changedSinceLastRelease) {
+            if (changelog.changedSinceLastRelease) {
                 changedEntries.add(it.first)
             } else {
                 unchangedEntries.add(it.first)
@@ -61,9 +61,6 @@ open class ChangelogCliTask : DefaultTask() {
 
         println("Waiting for frame to close")
 
-        while(!frame.closed) Thread.sleep(100)
-
-
+        while (!frame.closed) Thread.sleep(100)
     }
-
 }
