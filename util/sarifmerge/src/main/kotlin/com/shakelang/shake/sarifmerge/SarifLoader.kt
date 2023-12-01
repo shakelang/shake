@@ -132,9 +132,7 @@ class SarifLoaderWithSRCRoot(
             runs.add(
                 JsonObject.of(
                     "originalUriBaseIds" to JsonObject.of(
-                        "%SRCROOT%" to JsonObject.of(
-                            "uri" to (srcRoot ?: "")
-                        )
+                        "%SRCROOT%" to (srcRoot ?: "")
                     ),
                     "results" to JsonArray.of(results),
                     "tool" to tool!!
