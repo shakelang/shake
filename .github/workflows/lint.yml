@@ -4,8 +4,6 @@ name: Lint using ktlint
 # The scheduled workflow runs every Thursday at 15:45 UTC.
 on:
   push:
-    branches:
-      - master
   schedule:
     - cron: "45 15 * * 4"
 
@@ -27,11 +25,6 @@ jobs:
       - name: Setup Gradle 📦
         uses: gradle/gradle-build-action@v2
 
-      - name: Setup Node.js 📦
-        uses: actions/setup-node@v4
-        with:
-          node-version: "16"
-
       - name: Grant execute permission for gradlew 📜
         run: chmod +x gradlew
 
@@ -47,29 +40,17 @@ jobs:
 
       - name: Lint with KtLint 🔬
         run: |
-          ./gradlew check copyKtlintSarifReports
+          ./gradlew lint sarifmerge
 
       - name: Upload Artifact ⬆️
         uses: actions/upload-artifact@v3
         with:
           name: reports
-          path: ./build/reports/ktlint/all
-
-      - name: Merge SARIF files 📂
-        run: |
-          npm i -g @microsoft/sarif-multitool
-          chmod +x ./merge-sarif.sh
-          ./merge-sarif.sh
-
-      - name: Upload Artifact ⬆️
-        uses: actions/upload-artifact@v3
-        with:
-          name: report
-          path: ./build/reports/ktlint/merged/*.sarif
+          path: ./build/reports/sarifmerge
 
       - name: Upload SARIF file for GitHub Advanced Security 📂
         uses: github/codeql-action/upload-sarif@v2
         with:
           # Path to SARIF file relative to the root of the repository
-          sarif_file: ./build/reports/ktlint/merged
+          sarif_file: ./build/reports/sarifmerge
           category: KtLint
