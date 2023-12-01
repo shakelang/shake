@@ -1,5 +1,5 @@
 import com.shakelang.shake.util.changelog.Changelog
-import com.shakelang.shake.util.changelog.VersionTask
+import com.shakelang.shake.util.changelog.tasks.VersionTask
 import io.codearte.gradle.nexus.NexusStagingExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
