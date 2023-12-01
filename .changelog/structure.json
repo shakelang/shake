@@ -48,7 +48,7 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.shake.util.changelog:changelog",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.shake.util.changelog",
       "license": "",
@@ -56,8 +56,7 @@
         "unspecified:unspecified:unspecified",
         ":util:colorlib:colorlib:0.2.0",
         ":util:shason:shason:0.2.3",
-        ":util:markdown:markdown:0.1.0",
-        "com.googlecode.lanterna:lanterna:3.1.1"
+        ":util:markdown:markdown:0.1.0"
       ]
     },
     {
@@ -341,5 +340,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701276483861
+  "lastUpdate": 1701387926625
 }
