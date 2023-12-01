@@ -126,6 +126,24 @@ open class ConstantPool(
         return byteStream.toByteArray()
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ConstantPool) return false
+
+        // find matching entries
+
+        // TODO this is not the best way to do this (O(n^2))
+        for (entry in entries) {
+            if (entry !in other.entries) return false
+        }
+
+        for (entry in other.entries) {
+            if (entry !in entries) return false
+        }
+
+        return true
+    }
+
     companion object {
         fun fromStream(stream: DataInputStream): ConstantPool {
             val entries = mutableListOf<ConstantPoolEntry>()

@@ -63,6 +63,37 @@ class MutableField(
         nameConstant = pool.resolveUtf8(name)
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is MutableField) return false
+
+        if (pool != other.pool) return false
+        if (nameConstant != other.nameConstant) return false
+        if (flags != other.flags) return false
+
+        // TODO this is not the best way to do this (O(n^2))
+
+        // find matching attributes
+
+        for (attribute in attributes) {
+            if (attribute !in other.attributes) return false
+        }
+
+        for (attribute in other.attributes) {
+            if (attribute !in attributes) return false
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = pool.hashCode()
+        result = 31 * result + nameConstant
+        result = 31 * result + flags
+        result = 31 * result + attributes.hashCode()
+        return result
+    }
+
     companion object {
         fun fromField(pool: MutableConstantPool, field: Field): MutableField {
             return MutableField(

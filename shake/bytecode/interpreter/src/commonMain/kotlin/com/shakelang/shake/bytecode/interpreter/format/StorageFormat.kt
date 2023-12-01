@@ -45,6 +45,47 @@ open class StorageFormat(
         return byteStream.toByteArray()
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is StorageFormat) return false
+
+        if (major != other.major) return false
+        if (minor != other.minor) return false
+        if (constantPool != other.constantPool) return false
+        
+        // TODO this is not the best way to do this (O(n^2))
+
+        // find matching classes
+
+        for (class_ in classes) {
+            if (!other.classes.contains(class_)) return false
+        }
+
+        // find matching fields
+
+        for (field in fields) {
+            if (!other.fields.contains(field)) return false
+        }
+
+        // find matching methods
+
+        for (method in methods) {
+            if (!other.methods.contains(method)) return false
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = major.toInt()
+        result = 31 * result + minor.toInt()
+        result = 31 * result + constantPool.hashCode()
+        result = 31 * result + classes.hashCode()
+        result = 31 * result + fields.hashCode()
+        result = 31 * result + methods.hashCode()
+        return result
+    }
+
     companion object {
         fun fromStream(stream: DataInputStream): StorageFormat {
             val magic = stream.readInt()

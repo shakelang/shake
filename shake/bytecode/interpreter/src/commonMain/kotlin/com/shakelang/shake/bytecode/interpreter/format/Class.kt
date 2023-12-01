@@ -68,6 +68,83 @@ open class Class(
         return byteStream.toByteArray()
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Class) return false
+
+        if (pool != other.pool) return false
+        if (nameConstant != other.nameConstant) return false
+        if (superNameConstant != other.superNameConstant) return false
+        if (flags != other.flags) return false
+        
+        // TODO this is not the best way to do this (O(n^2))
+
+        // find matching interfaces
+
+        for (interfaceConstant in interfacesConstants) {
+            if (interfaceConstant !in other.interfacesConstants) return false
+        }
+
+        for (interfaceConstant in other.interfacesConstants) {
+            if (interfaceConstant !in interfacesConstants) return false
+        }
+
+        // find matching fields
+
+        for (field in fields) {
+            if (field !in other.fields) return false
+        }
+
+        for (field in other.fields) {
+            if (field !in fields) return false
+        }
+
+        // find matching methods
+
+        for (method in methods) {
+            if (method !in other.methods) return false
+        }
+
+        for (method in other.methods) {
+            if (method !in methods) return false
+        }
+
+        // find matching subclasses
+
+        for (subClass in subClasses) {
+            if (subClass !in other.subClasses) return false
+        }
+
+        for (subClass in other.subClasses) {
+            if (subClass !in subClasses) return false
+        }
+
+        // find matching attributes
+
+        for (attribute in attributes) {
+            if (attribute !in other.attributes) return false
+        }
+
+        for (attribute in other.attributes) {
+            if (attribute !in attributes) return false
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = pool.hashCode()
+        result = 31 * result + nameConstant
+        result = 31 * result + superNameConstant
+        result = 31 * result + flags
+        result = 31 * result + interfacesConstants.hashCode()
+        result = 31 * result + fields.hashCode()
+        result = 31 * result + methods.hashCode()
+        result = 31 * result + subClasses.hashCode()
+        result = 31 * result + attributes.hashCode()
+        return result
+    }
+
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): Class {
             val name = stream.readInt()
