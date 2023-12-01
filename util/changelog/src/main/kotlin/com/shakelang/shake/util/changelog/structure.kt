@@ -12,7 +12,8 @@ class ProjectStructure(
     val description: String,
     val author: String,
     val license: String,
-    val dependencies: List<String>
+    val dependencies: List<String>,
+    val project: Project
 ) {
     val toJsonObject
         get() = mapOf(
@@ -30,7 +31,7 @@ class ProjectStructure(
     }
 
     companion object {
-        fun fromJsonObject(structure: JsonObject): ProjectStructure {
+        fun fromJsonObject(structure: JsonObject, baseProject: Project): ProjectStructure {
             if (!structure.containsKey("path")) throw IllegalArgumentException("Structure does not contain key 'path'")
             if (!structure.containsKey("version")) throw IllegalArgumentException("Structure does not contain key 'version'")
             if (!structure.containsKey("description")) throw IllegalArgumentException("Structure does not contain key 'description'")
@@ -80,8 +81,10 @@ class ProjectStructure(
             }
             if (!(dependencies.isJsonArray())) throw IllegalArgumentException("Structure key 'dependencies' is not a array")
 
+            val pathString = path.toJsonPrimitive().toStringElement().value
+
             return ProjectStructure(
-                path.toJsonPrimitive().toStringElement().value,
+                pathString,
                 name,
                 Version.fromString(version.toJsonPrimitive().toStringElement().value),
                 description.toJsonPrimitive().toStringElement().value,
@@ -94,7 +97,8 @@ class ProjectStructure(
                         throw IllegalArgumentException("Structure key 'dependencies' is not a string")
                     }
                     it.toJsonPrimitive().toStringElement().value
-                }
+                },
+                baseProject.project(pathString)
             )
         }
     }
@@ -119,7 +123,7 @@ class ChangelogStructure(
 
     companion object {
 
-        fun fromJsonObject(structure: JsonObject): ChangelogStructure {
+        fun fromJsonObject(structure: JsonObject, baseProject: Project): ChangelogStructure {
             if (!structure.containsKey("projects")) throw IllegalArgumentException("Structure does not contain key 'projects'")
             if (!structure.containsKey("lastUpdate")) throw IllegalArgumentException("Structure does not contain key 'lastUpdate'")
 
@@ -137,15 +141,15 @@ class ChangelogStructure(
                 Date(lastUpdate.toJsonPrimitive().toInt().value),
                 projects.toJsonArray().map {
                     if (!(it.isJsonObject())) throw IllegalArgumentException("Structure key 'projects' is not a object")
-                    ProjectStructure.fromJsonObject(it.toJsonObject())
+                    ProjectStructure.fromJsonObject(it.toJsonObject(), baseProject)
                 }
             )
         }
 
-        fun fromString(structure: String): ChangelogStructure {
+        fun fromString(structure: String, baseProject: Project): ChangelogStructure {
             val result = json.parse(structure)
             if (!(result.isJsonObject())) throw IllegalArgumentException("Structure is not a object")
-            return fromJsonObject(result.toJsonObject())
+            return fromJsonObject(result.toJsonObject(), baseProject)
         }
     }
 }
@@ -165,7 +169,8 @@ fun Changelog.readStructure() = project.subprojects.map {
         null ?: "",
         it.dependencyList.map { dependency ->
             dependency.group + ":" + dependency.name + ":" + dependency.version
-        }
+        },
+        this.project
     )
 }
 
@@ -192,7 +197,8 @@ fun Changelog.updateStructure() {
 
 fun Changelog.readStructureFile(): ChangelogStructure {
     return ChangelogStructure.fromString(
-        project.file(".changelog/structure.json").readText()
+        project.file(".changelog/structure.json").readText(),
+        project
     )
 }
 

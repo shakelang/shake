@@ -45,6 +45,18 @@ class PackageChangelog(
     val versions: MutableList<ChangelogVersion> = mutableListOf()
 ) {
 
+    val folderPath: String
+        get() = path.replace(":", "/").substring(1)
+
+    val changedSinceLastRelease: Boolean
+        get() {
+            if (versions.isEmpty()) return true
+            return Changelog.instance.dirChangedSinceTag(
+                tagRef("release/$folderPath/v${versions.last().version}"),
+                folderPath
+            )
+        }
+
     fun addVersion(version: ChangelogVersion) = versions.add(version)
     fun add(version: ChangelogVersion) = addVersion(version)
 

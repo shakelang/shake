@@ -122,7 +122,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   publish-gpr:
-    needs: [ build, extract_info, draft-release ]
+    needs: [ build, extract_info ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -159,7 +159,7 @@ jobs:
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToGitHubRepository
 
   publish-sonartype:
-    needs: [ build, extract_info, draft-release ]
+    needs: [ build, extract_info ]
     runs-on: ubuntu-latest
     permissions:
       contents: write

@@ -77,6 +77,24 @@
             "Automatically update depending packages on release",
             "Add option to make package private (and make packages private by default)"
           ]
+        },
+        {
+          "version": "0.5.0",
+          "changes": [
+            "Add changelog cli (gui)"
+          ]
+        },
+        {
+          "version": "0.5.1",
+          "changes": [
+            "Updated dependencies"
+          ]
+        },
+        {
+          "version": "0.5.2",
+          "changes": [
+            "Updated dependencies"
+          ]
         }
       ]
     },
@@ -154,7 +172,14 @@
       "path": ":util:markdown",
       "name": "com.shakelang.shake.util:markdown",
       "description": "Utility package for working with markdown (Kotlin Multiplatform)",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.1.1",
+          "changes": [
+            "Join multiple markdown elements with two line separators (to make sure markdown does not render them into one line)"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:parseutils",
@@ -234,6 +259,12 @@
           "changes": [
             "Update dependencies"
           ]
+        },
+        {
+          "version": "0.2.4",
+          "changes": [
+            "Generation of JsonElement class fixed"
+          ]
         }
       ]
     },
@@ -309,6 +340,38 @@
       "name": "com.shakelang.shake.shasambly.shastools:shastools",
       "description": "Shake\'s own bytecode format interpreter",
       "versions": []
+    },
+    {
+      "path": ":util:sarifmerge",
+      "name": ":util:sarifmerge",
+      "description": "Prints the current version",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "changes": [
+            "Fix generated sarif format"
+          ]
+        },
+        {
+          "version": "0.1.2",
+          "changes": [
+            "Fix bugs in sarif generation"
+          ]
+        },
+        {
+          "version": "0.1.3",
+          "changes": [
+            "Bugfixes when generating sarif reports",
+            "Updated dependencies"
+          ]
+        },
+        {
+          "version": "0.1.4",
+          "changes": [
+            "Fixes to SarifLoader to fix errors with github upload sarif"
+          ]
+        }
+      ]
     }
   ]
 }

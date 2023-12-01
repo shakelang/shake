@@ -19,3 +19,9 @@ Update dependencies
 ### 0.4.0
 Automatically update depending packages on release
 Add option to make package private (and make packages private by default)
+### 0.5.0
+Add changelog cli (gui)
+### 0.5.1
+Updated dependencies
+### 0.5.2
+Updated dependencies

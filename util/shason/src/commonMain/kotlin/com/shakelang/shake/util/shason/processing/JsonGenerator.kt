@@ -1,6 +1,7 @@
 package com.shakelang.shake.util.shason.processing
 
 import com.shakelang.shake.util.parseutils.characters.Characters
+import com.shakelang.shake.util.shason.elements.*
 
 /**
  * API for generating json
@@ -82,6 +83,10 @@ object JsonGenerator {
             is Array<*> -> generate(o, indent = indent, indentAmount = indentAmount)
             is Set<*> -> generate(o.toTypedArray(), indent = indent, indentAmount = indentAmount)
             is List<*> -> generate(o.toTypedArray(), indent = indent, indentAmount = indentAmount)
+            is JsonNullElement -> "null"
+            is JsonPrimitive -> generate(o.value)
+            is JsonObject -> generate(o.value, indent = indent, indentAmount = indentAmount)
+            is JsonArray -> generate(o.value, indent = indent, indentAmount = indentAmount)
             else -> generate(o.toString())
         }
     }
