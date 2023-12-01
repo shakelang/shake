@@ -10,7 +10,8 @@ import kotlin.experimental.and
 open class Field(
     open val pool: ConstantPool,
     open val nameConstant: Int,
-    open val flags: Short
+    open val flags: Short,
+    open val attributes: List<Attribute>
 ) {
     val isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
@@ -40,8 +41,10 @@ open class Field(
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): Field {
             val name = stream.readInt()
-            val attributes = stream.readShort()
-            return Field(pool, name, attributes)
+            val flags = stream.readShort()
+            val attributeCount = stream.readInt()
+            val attributes = (0 until attributeCount).map { Attribute.fromStream(pool, stream) }
+            return Field(pool, name, flags, attributes)
         }
     }
 }
@@ -49,8 +52,13 @@ open class Field(
 class MutableField(
     override val pool: MutableConstantPool,
     override var nameConstant: Int,
-    override var flags: Short
-) : Field(pool, nameConstant, flags) {
+    override var flags: Short,
+    attributes: MutableList<Attribute>
+) : Field(pool, nameConstant, flags, attributes) {
+
+    override val attributes: MutableList<Attribute>
+        get() = super.attributes as MutableList<Attribute>
+
     fun setName(name: String) {
         nameConstant = pool.resolveUtf8(name)
     }
@@ -60,7 +68,8 @@ class MutableField(
             return MutableField(
                 pool,
                 field.nameConstant,
-                field.flags
+                field.flags,
+                field.attributes.toMutableList()
             )
         }
     }

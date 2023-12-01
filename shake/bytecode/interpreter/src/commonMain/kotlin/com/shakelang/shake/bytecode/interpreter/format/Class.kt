@@ -16,7 +16,8 @@ open class Class(
     open val interfacesConstants: List<Int>,
     open val fields: List<Field>,
     open val methods: List<Method>,
-    open val subClasses: List<Class>
+    open val subClasses: List<Class>,
+    open val attributes: List<Attribute>
 ) {
 
     open val isPublic: Boolean
@@ -92,6 +93,8 @@ open class Class(
             for (i in 0 until subClassesCount) {
                 subClasses.add(fromStream(pool, stream))
             }
+            val attributesCount = stream.readInt()
+            val attributes = (0 until attributesCount).map { Attribute.fromStream(pool, stream) }
             return Class(
                 ConstantPool.fromStream(stream),
                 name,
@@ -100,7 +103,8 @@ open class Class(
                 interfaces,
                 fields,
                 methods,
-                subClasses
+                subClasses,
+                attributes
             )
         }
     }
@@ -112,10 +116,23 @@ class MutableClass(
     override var superNameConstant: Int,
     override var flags: Short,
     override var interfacesConstants: MutableList<Int>,
-    override var fields: MutableList<MutableField>,
-    override var methods: MutableList<MutableMethod>,
-    override var subClasses: MutableList<MutableClass>
-) : Class(pool, nameConstant, superNameConstant, flags, interfacesConstants, fields, methods, subClasses) {
+    fields: MutableList<MutableField>,
+    methods: MutableList<MutableMethod>,
+    subClasses: MutableList<MutableClass>,
+    attributes: MutableList<MutableAttribute>
+) : Class(pool, nameConstant, superNameConstant, flags, interfacesConstants, fields, methods, subClasses, attributes) {
+
+    @Suppress("UNCHECKED_CAST")
+    override val fields: MutableList<MutableField>
+        get() = super.fields as MutableList<MutableField>
+
+    @Suppress("UNCHECKED_CAST")
+    override val methods: MutableList<MutableMethod>
+        get() = super.methods as MutableList<MutableMethod>
+
+    @Suppress("UNCHECKED_CAST")
+    override val subClasses: MutableList<MutableClass>
+        get() = super.subClasses as MutableList<MutableClass>
 
     override var isPublic: Boolean
         get() = super.isPublic
@@ -163,7 +180,8 @@ class MutableClass(
                 class_.interfacesConstants.toMutableList(),
                 class_.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
                 class_.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
-                class_.subClasses.map { fromClass(pool, it) }.toMutableList()
+                class_.subClasses.map { fromClass(pool, it) }.toMutableList(),
+                class_.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
             )
         }
     }

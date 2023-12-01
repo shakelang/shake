@@ -89,30 +89,6 @@ class MutableStorageFormat(
     fields,
     methods
 ) {
-    fun createClass(name: String, superName: String, interfaces: List<String>): Int {
-        val nameConstant = constantPool.resolveUtf8(name)
-        val superNameConstant = constantPool.resolveUtf8(superName)
-        val interfacesConstants = interfaces.map { constantPool.resolveUtf8(it) }
-        val class_ = Class(constantPool, nameConstant, superNameConstant, interfacesConstants, emptyList(), emptyList(), emptyList())
-        classes.add(class_)
-        return classes.indexOf(class_)
-    }
-
-    fun createField(name: String, attributes: Short): Int {
-        val nameConstant = constantPool.resolveUtf8(name)
-        val field = Field(constantPool, nameConstant, attributes)
-        fields.add(field)
-        return fields.indexOf(field)
-    }
-
-    fun createMethod(name: String, qualifiedName: String, attributes: Short): Int {
-        val nameConstant = constantPool.resolveUtf8(name)
-        val qualifiedNameConstant = constantPool.resolveUtf8(qualifiedName)
-        val method = Method(constantPool, nameConstant, qualifiedNameConstant, attributes)
-        methods.add(method)
-        return methods.indexOf(method)
-    }
-
     companion object {
         fun fromStorageFormat(storageFormat: StorageFormat): MutableStorageFormat {
             val pool = MutableConstantPool.fromConstantPool(storageFormat.constantPool)

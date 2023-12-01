@@ -12,7 +12,8 @@ open class Method(
     open val pool: ConstantPool,
     open val nameConstant: Int,
     open val qualifiedNameConstant: Int,
-    open val flags: Short
+    open val flags: Short,
+    open val attributes: List<Attribute>
 ) {
     open val isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
@@ -32,6 +33,10 @@ open class Method(
         stream.writeInt(nameConstant)
         stream.writeInt(qualifiedNameConstant)
         stream.writeShort(flags)
+        stream.writeInt(attributes.size)
+        for (attribute in attributes) {
+            attribute.bump(stream)
+        }
     }
 
     fun dump(): ByteArray {
@@ -45,8 +50,10 @@ open class Method(
         fun fromStream(pool: ConstantPool, stream: DataInputStream): Method {
             val name = stream.readInt()
             val qualifiedName = stream.readInt()
-            val attributes = stream.readShort()
-            return Method(pool, name, qualifiedName, attributes)
+            val flags = stream.readShort()
+            val attributeCount = stream.readInt()
+            val attributes = (0 until attributeCount).map { Attribute.fromStream(pool, stream) }
+            return Method(pool, name, qualifiedName, flags, attributes)
         }
     }
 }
@@ -55,8 +62,12 @@ class MutableMethod(
     override val pool: MutableConstantPool,
     override var nameConstant: Int,
     override var qualifiedNameConstant: Int,
-    override var flags: Short
-) : Method(pool, nameConstant, qualifiedNameConstant, flags) {
+    override var flags: Short,
+    attributes: MutableList<Attribute>,
+) : Method(pool, nameConstant, qualifiedNameConstant, flags, attributes) {
+
+    override val attributes: MutableList<Attribute>
+        get() = super.attributes as MutableList<Attribute>
 
     override var isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
@@ -107,7 +118,8 @@ class MutableMethod(
                 pool,
                 method.nameConstant,
                 method.qualifiedNameConstant,
-                method.flags
+                method.flags,
+                method.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
             )
         }
     }
