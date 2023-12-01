@@ -10,24 +10,24 @@ import kotlin.experimental.and
 open class Field(
     open val pool: ConstantPool,
     open val nameConstant: Int,
-    open val attributes: Short
+    open val flags: Short
 ) {
     val isPublic: Boolean
-        get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
     val isPrivate: Boolean
-        get() = attributes and 0b00000000_00000010.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00000010.toShort() != 0.toShort()
     val isProtected: Boolean
-        get() = attributes and 0b00000000_00000100.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00000100.toShort() != 0.toShort()
     val isStatic: Boolean
-        get() = attributes and 0b00000000_00001000.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
     val isFinal: Boolean
-        get() = attributes and 0b00000000_00010000.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
 
     val name: String get() = pool.getUtf8(nameConstant).value
 
     fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
-        stream.writeShort(attributes)
+        stream.writeShort(flags)
     }
 
     fun dump(): ByteArray {
@@ -49,8 +49,8 @@ open class Field(
 class MutableField(
     override val pool: MutableConstantPool,
     override var nameConstant: Int,
-    override var attributes: Short
-) : Field(pool, nameConstant, attributes) {
+    override var flags: Short
+) : Field(pool, nameConstant, flags) {
     fun setName(name: String) {
         nameConstant = pool.resolveUtf8(name)
     }
@@ -60,7 +60,7 @@ class MutableField(
             return MutableField(
                 pool,
                 field.nameConstant,
-                field.attributes
+                field.flags
             )
         }
     }
