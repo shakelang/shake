@@ -4,8 +4,6 @@ name: Lint using ktlint
 # The scheduled workflow runs every Thursday at 15:45 UTC.
 on:
   push:
-    branches:
-      - master
   schedule:
     - cron: "45 15 * * 4"
 
