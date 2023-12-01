@@ -351,6 +351,12 @@
             "Bugfixes when generating sarif reports",
             "Updated dependencies"
           ]
+        },
+        {
+          "version": "0.1.4",
+          "changes": [
+            "Fixes to SarifLoader to fix errors with github upload sarif"
+          ]
         }
       ]
     }

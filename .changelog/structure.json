@@ -172,7 +172,7 @@
     {
       "path": ":util:sarifmerge",
       "name": "com.shakelang.shake.util:sarifmerge",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "description": "Utility package to merged sarif files for ktlint github report",
       "author": "com.shakelang.shake.util",
       "license": "",
@@ -352,5 +352,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701454683954
+  "lastUpdate": 1701456048284
 }

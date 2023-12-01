@@ -133,7 +133,9 @@ class SarifLoaderWithSRCRoot(
             runs.add(
                 mapOf(
                     "originalUriBaseIds" to mapOf(
-                        "%SRCROOT%" to(srcRoot ?: "")
+                        "%SRCROOT%" to mapOf(
+                            "uri" to (srcRoot ?: "")
+                        )
                     ),
                     "results" to results,
                     "tool" to tool!!
