@@ -25,11 +25,6 @@ jobs:
       - name: Setup Gradle 📦
         uses: gradle/gradle-build-action@v2
 
-      - name: Setup Node.js 📦
-        uses: actions/setup-node@v4
-        with:
-          node-version: "16"
-
       - name: Grant execute permission for gradlew 📜
         run: chmod +x gradlew
 
