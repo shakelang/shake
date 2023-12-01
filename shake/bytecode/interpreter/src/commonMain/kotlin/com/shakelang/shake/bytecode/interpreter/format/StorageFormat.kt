@@ -6,8 +6,9 @@ import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
+val MAGIC = 0x5348414B // SHAK
+
 open class StorageFormat(
-    open val magic: Int,
     open val major: Short,
     open val minor: Short,
     open val constantPool: ConstantPool,
@@ -15,6 +16,9 @@ open class StorageFormat(
     open val fields: List<Field>,
     open val methods: List<Method>
 ) {
+
+    open val magic: Int = MAGIC
+
     fun dump(stream: DataOutputStream) {
         stream.writeInt(magic)
         stream.writeShort(major)
@@ -44,13 +48,16 @@ open class StorageFormat(
     companion object {
         fun fromStream(stream: DataInputStream): StorageFormat {
             val magic = stream.readInt()
+
+            if (magic != MAGIC) throw IllegalArgumentException("Magic number is not correct")
+
             val major = stream.readShort()
             val minor = stream.readShort()
             val constantPool = ConstantPool.fromStream(stream)
             val classesCount = stream.readInt()
             val classes = mutableListOf<Class>()
             for (i in 0 until classesCount) {
-                classes.add(Class.fromStream(stream))
+                classes.add(Class.fromStream(constantPool, stream))
             }
             val fieldsCount = stream.readInt()
             val fields = mutableListOf<Field>()
@@ -62,13 +69,12 @@ open class StorageFormat(
             for (i in 0 until methodsCount) {
                 methods.add(Method.fromStream(constantPool, stream))
             }
-            return StorageFormat(magic, major, minor, constantPool, classes, fields, methods)
+            return StorageFormat(major, minor, constantPool, classes, fields, methods)
         }
     }
 }
 
 class MutableStorageFormat(
-    override var magic: Int,
     override var major: Short,
     override var minor: Short,
     override var constantPool: MutableConstantPool,
@@ -76,7 +82,6 @@ class MutableStorageFormat(
     override var fields: MutableList<Field>,
     override var methods: MutableList<Method>
 ) : StorageFormat(
-    magic,
     major,
     minor,
     constantPool,
@@ -109,59 +114,16 @@ class MutableStorageFormat(
     }
 
     companion object {
-        fun fromStream(stream: DataInputStream): MutableStorageFormat {
-            val magic = stream.readInt()
-            val major = stream.readShort()
-            val minor = stream.readShort()
-            val constantPool = MutableConstantPool.fromStream(stream)
-            val classesCount = stream.readInt()
-            val classes = mutableListOf<Class>()
-            for (i in 0 until classesCount) {
-                classes.add(Class.fromStream(stream))
-            }
-            val fieldsCount = stream.readInt()
-            val fields = mutableListOf<Field>()
-            for (i in 0 until fieldsCount) {
-                fields.add(Field.fromStream(constantPool, stream))
-            }
-            val methodsCount = stream.readInt()
-            val methods = mutableListOf<Method>()
-            for (i in 0 until methodsCount) {
-                methods.add(Method.fromStream(constantPool, stream))
-            }
-            return MutableStorageFormat(magic, major, minor, constantPool, classes, fields, methods)
+        fun fromStorageFormat(storageFormat: StorageFormat): MutableStorageFormat {
+            val pool = MutableConstantPool.fromConstantPool(storageFormat.constantPool)
+            return MutableStorageFormat(
+                storageFormat.major,
+                storageFormat.minor,
+                pool,
+                storageFormat.classes.map { MutableClass.fromClass(pool, it) }.toMutableList(),
+                storageFormat.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
+                storageFormat.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList()
+            )
         }
     }
-}
-
-class StorageFormatBuilder (
-    override var magic: Int = 0,
-    override var major: Short = 0,
-    override var minor: Short = 0,
-    constantPool: MutableConstantPool = MutableConstantPool(),
-    classes: MutableList<Class> = mutableListOf(),
-    fields: MutableList<Field> = mutableListOf(),
-    methods: MutableList<Method> = mutableListOf()
-) : StorageFormat(
-    magic,
-    major,
-    minor,
-    constantPool,
-    classes,
-    fields,
-    methods
-) {
-
-    override val classes: MutableList<Class>
-        get() = super.classes as MutableList<Class>
-
-    override val fields: MutableList<Field>
-        get() = super.fields as MutableList<Field>
-
-    override val methods: MutableList<Method>
-        get() = super.methods as MutableList<Method>
-
-    override val constantPool: MutableConstantPool
-        get() = super.constantPool as MutableConstantPool
-
 }

@@ -226,6 +226,10 @@ class MutableConstantPool(
         fun fromList(list: List<ConstantPoolEntry>): MutableConstantPool {
             return MutableConstantPool(list.toMutableList())
         }
+
+        fun fromConstantPool(pool: ConstantPool): MutableConstantPool {
+            return MutableConstantPool(pool.entries.toMutableList())
+        }
     }
 
     override fun contains(element: ConstantPoolEntry) = entries.contains(element)

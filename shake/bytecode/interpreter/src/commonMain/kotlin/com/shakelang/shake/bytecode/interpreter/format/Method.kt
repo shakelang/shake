@@ -57,6 +57,42 @@ class MutableMethod(
     override var qualifiedNameConstant: Int,
     override var attributes: Short
 ) : Method(pool, nameConstant, qualifiedNameConstant, attributes) {
+
+    override var isPublic: Boolean
+        get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00000001.toShort()
+            else attributes and 0b11111111_11111110.toShort()
+        }
+
+    override var isPrivate: Boolean
+        get() = attributes and 0b00000000_00000010.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00000010.toShort()
+            else attributes and 0b11111111_11111101.toShort()
+        }
+
+    override var isProtected: Boolean
+        get() = attributes and 0b00000000_00000100.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00000100.toShort()
+            else attributes and 0b11111111_11111011.toShort()
+        }
+
+    override var isStatic: Boolean
+        get() = attributes and 0b00000000_00001000.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00001000.toShort()
+            else attributes and 0b11111111_11110111.toShort()
+        }
+
+    override var isFinal: Boolean
+        get() = attributes and 0b00000000_00010000.toShort() != 0.toShort()
+        set(value) {
+            attributes = if (value) attributes or 0b00000000_00010000.toShort()
+            else attributes and 0b11111111_11101111.toShort()
+        }
+
     fun setName(name: String) {
         nameConstant = pool.resolveUtf8(name)
     }
@@ -66,65 +102,13 @@ class MutableMethod(
     }
 
     companion object {
-        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableMethod {
-            val name = stream.readInt()
-            val qualifiedName = stream.readInt()
-            val attributes = stream.readShort()
-            return MutableMethod(pool, name, qualifiedName, attributes)
-        }
-    }
-}
-
-class MethodBuilder(
-    pool: MutableConstantPool,
-    override var nameConstant: Int,
-    override var qualifiedNameConstant: Int,
-    override var attributes: Short
-) : Method(pool, nameConstant, qualifiedNameConstant, attributes) {
-    override val pool: MutableConstantPool
-        get() = super.pool as MutableConstantPool
-
-    override var isPublic: Boolean
-        get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
-        set(value) {
-            attributes = if (value) attributes or 0b00000000_00000001.toShort()
-                else attributes and 0b11111111_11111110.toShort()
-        }
-
-    override var isPrivate: Boolean
-        get() = attributes and 0b00000000_00000010.toShort() != 0.toShort()
-        set(value) {
-            attributes = if (value) attributes or 0b00000000_00000010.toShort()
-                else attributes and 0b11111111_11111101.toShort()
-        }
-
-    override var isProtected: Boolean
-        get() = attributes and 0b00000000_00000100.toShort() != 0.toShort()
-        set(value) {
-            attributes = if (value) attributes or 0b00000000_00000100.toShort()
-                else attributes and 0b11111111_11111011.toShort()
-        }
-
-    override var isStatic: Boolean
-        get() = attributes and 0b00000000_00001000.toShort() != 0.toShort()
-        set(value) {
-            attributes = if (value) attributes or 0b00000000_00001000.toShort()
-                else attributes and 0b11111111_11110111.toShort()
-        }
-
-    override var isFinal: Boolean
-        get() = attributes and 0b00000000_00010000.toShort() != 0.toShort()
-        set(value) {
-            attributes = if (value) attributes or 0b00000000_00010000.toShort()
-                else attributes and 0b11111111_11101111.toShort()
-        }
-
-    companion object {
-        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MethodBuilder {
-            val name = stream.readInt()
-            val qualifiedName = stream.readInt()
-            val attributes = stream.readShort()
-            return MethodBuilder(pool, name, qualifiedName, attributes)
+        fun fromMethod(pool: MutableConstantPool, method: Method): MutableMethod {
+            return MutableMethod(
+                pool,
+                method.nameConstant,
+                method.qualifiedNameConstant,
+                method.attributes
+            )
         }
     }
 }

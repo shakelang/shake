@@ -56,27 +56,12 @@ class MutableField(
     }
 
     companion object {
-        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableField {
-            val name = stream.readInt()
-            val attributes = stream.readShort()
-            return MutableField(pool, name, attributes)
-        }
-    }
-}
-
-class FieldBuilder(
-    pool: MutableConstantPool,
-    override var nameConstant: Int,
-    override var attributes: Short
-) : Field (pool, nameConstant, attributes) {
-    override val pool: MutableConstantPool
-        get() = super.pool as MutableConstantPool
-
-    companion object {
-        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): FieldBuilder {
-            val name = stream.readInt()
-            val attributes = stream.readShort()
-            return FieldBuilder(pool, name, attributes)
+        fun fromField(pool: MutableConstantPool, field: Field): MutableField {
+            return MutableField(
+                pool,
+                field.nameConstant,
+                field.attributes
+            )
         }
     }
 }

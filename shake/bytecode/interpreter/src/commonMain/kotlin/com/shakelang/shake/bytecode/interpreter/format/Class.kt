@@ -11,9 +11,9 @@ open class Class(
     open val nameConstant: Int,
     open val superNameConstant: Int,
     open val interfacesConstants: List<Int>,
-    open val fields: List<Int>,
-    open val methods: List<Int>,
-    open val subClasses: List<Int>
+    open val fields: List<Field>,
+    open val methods: List<Method>,
+    open val subClasses: List<Class>
 ) {
 
     open val name: String get() = pool.getUtf8(nameConstant).value
@@ -29,15 +29,15 @@ open class Class(
         }
         stream.writeInt(fields.size)
         for (field in fields) {
-            stream.writeInt(field)
+            field.dump(stream)
         }
         stream.writeInt(methods.size)
         for (method in methods) {
-            stream.writeInt(method)
+            method.dump(stream)
         }
         stream.writeInt(subClasses.size)
         for (subClass in subClasses) {
-            stream.writeInt(subClass)
+            subClass.dump(stream)
         }
     }
 
@@ -49,7 +49,7 @@ open class Class(
     }
 
     companion object {
-        fun fromStream(stream: DataInputStream): Class {
+        fun fromStream(pool: ConstantPool, stream: DataInputStream): Class {
             val name = stream.readInt()
             val superName = stream.readInt()
             val interfacesCount = stream.readInt()
@@ -58,19 +58,19 @@ open class Class(
                 interfaces.add(stream.readInt())
             }
             val fieldsCount = stream.readInt()
-            val fields = mutableListOf<Int>()
+            val fields = mutableListOf<Field>()
             for (i in 0 until fieldsCount) {
-                fields.add(stream.readInt())
+                fields.add(Field.fromStream(pool, stream))
             }
             val methodsCount = stream.readInt()
-            val methods = mutableListOf<Int>()
+            val methods = mutableListOf<Method>()
             for (i in 0 until methodsCount) {
-                methods.add(stream.readInt())
+                methods.add(Method.fromStream(pool, stream))
             }
             val subClassesCount = stream.readInt()
-            val subClasses = mutableListOf<Int>()
+            val subClasses = mutableListOf<Class>()
             for (i in 0 until subClassesCount) {
-                subClasses.add(stream.readInt())
+                subClasses.add(fromStream(pool, stream))
             }
             return Class(
                 ConstantPool.fromStream(stream),
@@ -90,9 +90,9 @@ class MutableClass(
     override var nameConstant: Int,
     override var superNameConstant: Int,
     override var interfacesConstants: MutableList<Int>,
-    override var fields: MutableList<Int>,
-    override var methods: MutableList<Int>,
-    override var subClasses: MutableList<Int>
+    override var fields: MutableList<MutableField>,
+    override var methods: MutableList<MutableMethod>,
+    override var subClasses: MutableList<MutableClass>
 ) : Class(pool, nameConstant, superNameConstant, interfacesConstants, fields, methods, subClasses) {
 
     override var name: String
@@ -107,66 +107,21 @@ class MutableClass(
         get() = interfacesConstants.map { pool.getUtf8(it).value }
         set(value) { interfacesConstants = value.map { pool.resolveUtf8(it) }.toMutableList() }
 
-    fun addField(field: Int) = fields.add(field)
-    fun addMethod(method: Int) = methods.add(method)
-    fun addSubClass(subClass: Int) = subClasses.add(subClass)
+    fun addField(field: MutableField) = fields.add(field)
+    fun addMethod(method: MutableMethod) = methods.add(method)
+    fun addSubClass(subClass: MutableClass) = subClasses.add(subClass)
 
     companion object {
-        fun fromStream(stream: DataInputStream): MutableClass {
-            val name = stream.readInt()
-            val superName = stream.readInt()
-            val interfacesCount = stream.readInt()
-            val interfaces = mutableListOf<Int>()
-            for (i in 0 until interfacesCount) {
-                interfaces.add(stream.readInt())
-            }
-            val fieldsCount = stream.readInt()
-            val fields = mutableListOf<Int>()
-            for (i in 0 until fieldsCount) {
-                fields.add(stream.readInt())
-            }
-            val methodsCount = stream.readInt()
-            val methods = mutableListOf<Int>()
-            for (i in 0 until methodsCount) {
-                methods.add(stream.readInt())
-            }
-            val subClassesCount = stream.readInt()
-            val subClasses = mutableListOf<Int>()
-            for (i in 0 until subClassesCount) {
-                subClasses.add(stream.readInt())
-            }
+        fun fromClass(pool: MutableConstantPool, class_: Class): MutableClass {
             return MutableClass(
-                MutableConstantPool.fromStream(stream),
-                name,
-                superName,
-                interfaces,
-                fields,
-                methods,
-                subClasses
+                pool,
+                class_.nameConstant,
+                class_.superNameConstant,
+                class_.interfacesConstants.toMutableList(),
+                class_.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
+                class_.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
+                class_.subClasses.map { fromClass(pool, it) }.toMutableList()
             )
         }
     }
-}
-
-class ClassBuilder(
-    pool: ConstantPool,
-    override val nameConstant: Int,
-    override val superNameConstant: Int,
-    override val interfacesConstants: MutableList<Int>,
-    fields: MutableList<Int>,
-    methods: MutableList<Int>,
-    subClasses: MutableList<Int>
-) : Class (
-    pool,
-    nameConstant,
-    superNameConstant,
-    interfacesConstants,
-    fields,
-    methods,
-    subClasses
-) {
-    override val pool: MutableConstantPool get() = super.pool as MutableConstantPool
-    override val fields: MutableList<Int> get() = super.fields as MutableList<Int>
-    override val methods: MutableList<Int> get() = super.methods as MutableList<Int>
-    override val subClasses: MutableList<Int> get() = super.subClasses as MutableList<Int>
 }
