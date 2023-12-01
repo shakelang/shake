@@ -38,7 +38,7 @@ class ChangelogVersion(
     }
 }
 
-class PackageChangelog (
+class PackageChangelog(
     val path: String,
     val name: String,
     val description: String,
@@ -52,7 +52,9 @@ class PackageChangelog (
         get() {
             if (versions.isEmpty()) return true
             return Changelog.instance.dirChangedSinceTag(
-                tagRef( "release/$folderPath/v${versions.last().version}"), folderPath)
+                tagRef("release/$folderPath/v${versions.last().version}"),
+                folderPath
+            )
         }
 
     fun addVersion(version: ChangelogVersion) = versions.add(version)

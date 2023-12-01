@@ -10,7 +10,7 @@ import javax.swing.JOptionPane
 
 data class PackageEntry(
     val name: String,
-    val version: Version,
+    val version: Version
 )
 
 @Suppress("unused")
@@ -18,7 +18,7 @@ class ChangelogCli(
     private val project: Project,
     private val logger: Logger,
     private val changed: List<PackageEntry>,
-    private val unchanged: List<PackageEntry>,
+    private val unchanged: List<PackageEntry>
 ) : JFrame("Changelog") {
 
     var closed: Boolean = false
@@ -48,7 +48,7 @@ class ChangelogCli(
             },
             onCreateTags = {
                 performCreateTags()
-            },
+            }
         )
     }
 
@@ -101,5 +101,4 @@ class ChangelogCli(
         this.isVisible = false
         dispose()
     }
-
 }

@@ -36,7 +36,7 @@ open class VersionTask : DefaultTask() {
         bumpFile.bumps.forEach { bump ->
             bump.paths.forEach { path ->
                 project.project(path).allDependents.forEach {
-                    if(it !in packagesWithUpdatedDependencies) {
+                    if (it !in packagesWithUpdatedDependencies) {
                         packagesWithUpdatedDependencies.add(it)
                     }
                 }
@@ -75,7 +75,7 @@ open class VersionTask : DefaultTask() {
             if (messages.isEmpty() || bumpType == null) return@forEach
 
             // Update version
-            if(project.project(path).private) {
+            if (project.project(path).private) {
                 project.logger.warn("Skipping version bump for private project $path")
                 return@forEach
             }

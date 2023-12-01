@@ -1,5 +1,5 @@
 import com.shakelang.shake.util.changelog.Changelog
-import com.shakelang.shake.util.changelog.VersionTask
+import com.shakelang.shake.util.changelog.tasks.VersionTask
 import io.codearte.gradle.nexus.NexusStagingExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
@@ -51,7 +51,7 @@ plugins {
 }
 
 apply<Changelog>()
-//apply<DependencyPlugin>()
+// apply<DependencyPlugin>()
 apply(plugin = "io.codearte.nexus-staging")
 
 nexusPublishing {
@@ -68,7 +68,6 @@ nexusPublishing {
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
             username.set(_username)
             password.set(_password)
-
         }
     }
 }

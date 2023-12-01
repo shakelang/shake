@@ -8,7 +8,6 @@ import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 fun tagRef(name: String): String {
     return "refs/tags/$name"
 }
@@ -31,7 +30,7 @@ class TagStash(
             if (!obj.containsKey("name")) throw IllegalArgumentException("TagStash object has no name")
             val name = obj["name"]!!
             if (!name.isJsonPrimitive() || !name.toJsonPrimitive()
-                    .isString()
+                .isString()
             ) {
                 throw IllegalArgumentException("TagStash name is not a string")
             }
@@ -148,12 +147,11 @@ fun Changelog.getLocalGitTags(): List<ParsedGitTag> {
 }
 
 fun parseGit(list: List<String>) = list.map {
-        // remove annotated tag suffix (^{})
-        it.replace("\\^\\{\\}\$".toRegex(), "")
-    }.map {
-        ParsedGitTag.parse(it)
-    }
-
+    // remove annotated tag suffix (^{})
+    it.replace("\\^\\{\\}\$".toRegex(), "")
+}.map {
+    ParsedGitTag.parse(it)
+}
 
 val dateFormat = SimpleDateFormat("HH:mm:ss Z")
 fun Changelog.getTimestampForTag(tag: ParsedGitTag): Date {
@@ -223,7 +221,8 @@ fun Changelog.getAllTags(): List<ReleaseTag> {
             structure.find { struct ->
                 struct.path == prjPath
             } ?: throw IllegalArgumentException("Invalid path in tag-name: \"$name\" (Extracted Path: \"$prjPath\")"),
-            getTimestampForTag(it))
+            getTimestampForTag(it)
+        )
     }
 }
 
