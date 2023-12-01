@@ -1,22 +1,17 @@
 import com.shakelang.shake.util.changelog.public
 import com.shakelang.shake.util.changelog.resolveVersion
+import conventions.dependencies
 import conventions.projectGroup
 
 plugins {
-    id("conventions.publishing")
     id("conventions.dokka")
+    id("conventions.publishing")
     `kotlin-dsl`
 }
 
-repositories {
-    maven {
-        url = uri("https://clojars.org/repo")
-    }
-}
-
-group = projectGroup("util.changelog")
+group = projectGroup("util")
 version = resolveVersion()
-description = "Changelog generation plugin for Shake"
+description = "Utility for working with colors in console applications (Kotlin Multiplatform)"
 public = true
 
 val projectName = name
@@ -24,11 +19,12 @@ val projectName = name
 kotlin {
     dependencies {
         implementation(gradleApi())
-        implementation(project(":util:colorlib"))
         implementation(project(":util:shason"))
-        implementation(project(":util:markdown"))
+        testImplementation(kotlin("test"))
     }
 }
+
+
 
 sourceSets {
     main {
