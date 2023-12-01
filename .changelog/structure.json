@@ -48,7 +48,7 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.shake.util.changelog:changelog",
-      "version": "0.5.1",
+      "version": "0.5.2",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.shake.util.changelog",
       "license": "",
@@ -125,7 +125,7 @@
     {
       "path": ":util:markdown",
       "name": "com.shakelang.shake.util:markdown",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Utility package for working with markdown (Kotlin Multiplatform)",
       "author": "com.shakelang.shake.util",
       "license": "",
@@ -352,5 +352,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701456048284
+  "lastUpdate": 1701456475372
 }

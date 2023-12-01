@@ -23,3 +23,5 @@ Add option to make package private (and make packages private by default)
 Add changelog cli (gui)
 ### 0.5.1
 Updated dependencies
+### 0.5.2
+Updated dependencies

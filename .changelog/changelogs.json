@@ -89,6 +89,12 @@
           "changes": [
             "Updated dependencies"
           ]
+        },
+        {
+          "version": "0.5.2",
+          "changes": [
+            "Updated dependencies"
+          ]
         }
       ]
     },
@@ -166,7 +172,14 @@
       "path": ":util:markdown",
       "name": "com.shakelang.shake.util:markdown",
       "description": "Utility package for working with markdown (Kotlin Multiplatform)",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.1.1",
+          "changes": [
+            "Join multiple markdown elements with two line separators (to make sure markdown does not render them into one line)"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:parseutils",
