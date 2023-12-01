@@ -51,7 +51,7 @@ plugins {
 }
 
 apply<Changelog>()
-//apply<DependencyPlugin>()
+// apply<DependencyPlugin>()
 apply(plugin = "io.codearte.nexus-staging")
 
 nexusPublishing {
@@ -68,7 +68,6 @@ nexusPublishing {
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
             username.set(_username)
             password.set(_password)
-
         }
     }
 }

@@ -13,7 +13,7 @@ class HomePage(
     onCanceled: () -> Unit,
     onBump: () -> Unit,
     onRelease: () -> Unit,
-    onCreateTags: () -> Unit,
+    onCreateTags: () -> Unit
 ) : JPanel() {
 
     private val label: JLabel = JLabel("What do you want to do?")
@@ -55,5 +55,4 @@ class HomePage(
         setSize(500, 500)
         layout = null
     }
-
 }
