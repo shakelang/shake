@@ -315,6 +315,19 @@
       "name": "com.shakelang.shake.shasambly.shastools:shastools",
       "description": "Shake\'s own bytecode format interpreter",
       "versions": []
+    },
+    {
+      "path": ":util:sarifmerge",
+      "name": ":util:sarifmerge",
+      "description": "Prints the current version",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "changes": [
+            "Fix generated sarif format"
+          ]
+        }
+      ]
     }
   ]
 }
