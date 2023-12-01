@@ -88,7 +88,7 @@ open class DependencyResolveTreeTask : DefaultTask() {
             project.resolveDirectDependencies("linuxMainImplementation"),
             project.resolveDirectDependencies("macosMainImplementation"),
             project.resolveDirectDependencies("mingwMainImplementation"),
-            project.resolveDirectDependencies("nativeMainImplementation"),
+            project.resolveDirectDependencies("nativeMainImplementation")
         ).filter { it.isProjectDependency() }.forEach {
             dependsOn("${it.asProjectDependency().subproject.path}:resolveDependencies")
         }
@@ -106,13 +106,13 @@ open class DependencyResolveTreeTask : DefaultTask() {
             project.resolveDependencies("linuxMainImplementation"),
             project.resolveDependencies("macosMainImplementation"),
             project.resolveDependencies("mingwMainImplementation"),
-            project.resolveDependencies("nativeMainImplementation"),
+            project.resolveDependencies("nativeMainImplementation")
         )
         project.extensions.extraProperties.set("dependencies", dependencies)
     }
 
     private fun concatDependencies(
-        vararg dependencies: List<Dependency>,
+        vararg dependencies: List<Dependency>
     ): List<Dependency> {
         val result = mutableListOf<Dependency>()
         dependencies.forEach { list ->
@@ -126,8 +126,9 @@ open class DependencyResolveTreeTask : DefaultTask() {
     }
 
     private fun Project.resolveDirectDependencies(sourceSet: String): List<Dependency> {
-        if (!hasDependencyConfiguration(sourceSet))
+        if (!hasDependencyConfiguration(sourceSet)) {
             return emptyList()
+        }
         val dependencies = project.configurations.getByName(sourceSet).dependencies
         val deps = mutableListOf<Dependency>()
         dependencies.forEach { dep ->
@@ -143,7 +144,7 @@ open class DependencyResolveTreeTask : DefaultTask() {
                         dep.dependencyProject
                     )
                 )
-            } else
+            } else {
                 deps.add(
                     ExternalDependency(
                         dep.group ?: "unspecified",
@@ -152,23 +153,23 @@ open class DependencyResolveTreeTask : DefaultTask() {
                         emptyList()
                     )
                 )
-
+            }
         }
 
         return deps
     }
 
     private fun Project.resolveDependencies(sourceSet: String): List<Dependency> {
-
-        if (!hasDependencyConfiguration(sourceSet))
+        if (!hasDependencyConfiguration(sourceSet)) {
             return emptyList()
+        }
 
         val dependencies = project.configurations.getByName(sourceSet).dependencies
         val deps = mutableListOf<Dependency>()
         dependencies.forEach { dep ->
             // Check if it is a project dependency
 
-            if (dep is org.gradle.api.artifacts.ProjectDependency)
+            if (dep is org.gradle.api.artifacts.ProjectDependency) {
                 deps.add(
                     ProjectDependency(
                         dep.dependencyProject.path,
@@ -178,7 +179,7 @@ open class DependencyResolveTreeTask : DefaultTask() {
                         dep.dependencyProject
                     )
                 )
-            else
+            } else {
                 deps.add(
                     ExternalDependency(
                         dep.group ?: "unspecified",
@@ -187,7 +188,7 @@ open class DependencyResolveTreeTask : DefaultTask() {
                         emptyList()
                     )
                 )
-
+            }
         }
 
         return deps

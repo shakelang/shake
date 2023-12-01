@@ -81,7 +81,7 @@ class ProjectStructure(
             }
             if (!(dependencies.isJsonArray())) throw IllegalArgumentException("Structure key 'dependencies' is not a array")
 
-            val pathString = path.toJsonPrimitive().toStringElement().value;
+            val pathString = path.toJsonPrimitive().toStringElement().value
 
             return ProjectStructure(
                 pathString,
@@ -197,7 +197,8 @@ fun Changelog.updateStructure() {
 
 fun Changelog.readStructureFile(): ChangelogStructure {
     return ChangelogStructure.fromString(
-        project.file(".changelog/structure.json").readText(), project
+        project.file(".changelog/structure.json").readText(),
+        project
     )
 }
 
