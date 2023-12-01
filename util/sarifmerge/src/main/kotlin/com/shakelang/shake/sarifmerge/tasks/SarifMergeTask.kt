@@ -19,7 +19,7 @@ open class SarifMergeTask : DefaultTask() {
     @TaskAction
     fun mergeSarifReports() {
         println("Merging sarif reports...")
-        val pattern = "reports/sarifmerge-input/**/*.sarif";
+        val pattern = "reports/sarifmerge-input/**/*.sarif"
 
         // find all files matching the pattern
         val files = project.fileTree(mapOf("dir" to "build/reports/sarifmerge-input", "include" to listOf("**/*.sarif"))).files
@@ -35,7 +35,5 @@ open class SarifMergeTask : DefaultTask() {
             project.file("build/reports/sarifmerge/$index.sarif").writeText(json.stringify(file, indent = 2))
             project.logger.info("Generated build/reports/sarifmerge/$index.sarif")
         }
-
     }
-
 }

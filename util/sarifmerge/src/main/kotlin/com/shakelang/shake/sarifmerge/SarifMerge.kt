@@ -14,4 +14,3 @@ open class SarifMerge : Plugin<Project> {
         project.tasks.register("sarifmerge", SarifMergeTask::class.java)
     }
 }
-

@@ -1,4 +1,4 @@
-//import com.shakelang.shake.sarifmerge.SarifMerge
+// import com.shakelang.shake.sarifmerge.SarifMerge
 import com.shakelang.shake.sarifmerge.SarifMerge
 import com.shakelang.shake.util.changelog.Changelog
 import com.shakelang.shake.util.changelog.tasks.VersionTask
