@@ -48,7 +48,7 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.shake.util.changelog:changelog",
-      "version": "0.5.0",
+      "version": "0.5.1",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.shake.util.changelog",
       "license": "",
@@ -172,7 +172,7 @@
     {
       "path": ":util:sarifmerge",
       "name": "com.shakelang.shake.util:sarifmerge",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "description": "Utility package to merged sarif files for ktlint github report",
       "author": "com.shakelang.shake.util",
       "license": "",
@@ -184,7 +184,7 @@
     {
       "path": ":util:shason",
       "name": "com.shakelang.shake.util:shason",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "description": "A json parser implemented in kotlin (mpp)",
       "author": "com.shakelang.shake.util",
       "license": "",
@@ -352,5 +352,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701439952786
+  "lastUpdate": 1701453350755
 }

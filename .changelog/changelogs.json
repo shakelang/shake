@@ -83,6 +83,12 @@
           "changes": [
             "Add changelog cli (gui)"
           ]
+        },
+        {
+          "version": "0.5.1",
+          "changes": [
+            "Updated dependencies"
+          ]
         }
       ]
     },
@@ -240,6 +246,12 @@
           "changes": [
             "Update dependencies"
           ]
+        },
+        {
+          "version": "0.2.4",
+          "changes": [
+            "Generation of JsonElement class fixed"
+          ]
         }
       ]
     },
@@ -331,6 +343,13 @@
           "version": "0.1.2",
           "changes": [
             "Fix bugs in sarif generation"
+          ]
+        },
+        {
+          "version": "0.1.3",
+          "changes": [
+            "Bugfixes when generating sarif reports",
+            "Updated dependencies"
           ]
         }
       ]

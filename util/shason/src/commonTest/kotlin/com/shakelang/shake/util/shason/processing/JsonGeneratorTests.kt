@@ -1,5 +1,8 @@
 package com.shakelang.shake.util.shason.processing
 
+import com.shakelang.shake.util.shason.elements.JsonBooleanElement
+import com.shakelang.shake.util.shason.elements.JsonNullElement
+import com.shakelang.shake.util.shason.elements.JsonStringElement
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -171,5 +174,16 @@ class JsonGeneratorTests {
             "{\n    \"hello\": {\n        \"world\": 1\n    }\n}",
             JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1)), indent = " ".repeat(4))
         )
+    }
+
+    @Test
+    fun testGenerateJsonElement() {
+        assertEquals("\"42\"", JsonGenerator.generate(JsonStringElement("42")))
+        assertEquals("null", JsonGenerator.generate(JsonNullElement.INSTANCE))
+        assertEquals("null", JsonGenerator.generate(JsonNullElement.INSTANCE, indentAmount = 2))
+        assertEquals("null", JsonGenerator.generate(JsonNullElement.INSTANCE, indentAmount = 4))
+        assertEquals("\"42\"", JsonGenerator.generate(JsonStringElement("42"), indentAmount = 2))
+        assertEquals("true", JsonGenerator.generate(JsonBooleanElement.TRUE))
+        assertEquals("false", JsonGenerator.generate(JsonBooleanElement.FALSE))
     }
 }
