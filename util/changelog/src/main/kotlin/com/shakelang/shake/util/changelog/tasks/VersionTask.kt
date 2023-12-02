@@ -100,6 +100,8 @@ open class VersionTask : DefaultTask() {
 
             if(type != "") version.suffix = type
 
+            println("Bumping $path to $version")
+
             val tagName = tagFormat(TagCreationInfo(prj, version, messages.joinToString("\n")))
 
             // stash tag

@@ -73,7 +73,7 @@ class ChangelogCli(
             JOptionPane.YES_NO_OPTION
         )
 
-        val type = if (snapshot == JOptionPane.YES_OPTION) "snapshot" else "release"
+        val type = if (snapshot == JOptionPane.YES_OPTION) "SNAPSHOT" else ""
 
         val res = JOptionPane.showConfirmDialog(
             this,
