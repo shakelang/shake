@@ -1,3 +1,11 @@
 {
-  "bumps": []
+  "bumps": [
+    {
+      "type": "patch",
+      "message": "Add shortcuts for getting version information for a package-changelog",
+      "paths": [
+        ":util:changelog"
+      ]
+    }
+  ]
 }

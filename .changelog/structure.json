@@ -229,8 +229,8 @@
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.2.3",
         ":util:shason:shason:0.2.4",
-        ":shake:compiler:lexer:lexer:0.1.0",
-        ":shake:compiler:parser:parser:0.1.0",
+        ":shake:compiler:lexer:lexer:0.1.1-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.1-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0"
       ]
     },
@@ -257,7 +257,7 @@
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.2.3",
         ":util:shason:shason:0.2.4",
-        ":shake:compiler:lexer:lexer:0.1.0"
+        ":shake:compiler:lexer:lexer:0.1.1-SNAPSHOT"
       ]
     },
     {
@@ -274,8 +274,8 @@
         ":util:shason:shason:0.2.4",
         ":util:common-io:common-io:0.2.2",
         ":util:primitives:primitives:0.3.0",
-        ":shake:compiler:lexer:lexer:0.1.0",
-        ":shake:compiler:parser:parser:0.1.0",
+        ":shake:compiler:lexer:lexer:0.1.1-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.1-SNAPSHOT",
         "org.reflections:reflections:0.10.2"
       ]
     },
@@ -352,5 +352,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701532405905
+  "lastUpdate": 1701533308652
 }
