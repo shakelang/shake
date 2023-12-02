@@ -159,7 +159,14 @@
       "path": ":util:jvmlib",
       "name": "com.shakelang.shake.util:jvmlib",
       "description": "A library for jvm stuff in java",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.1.1-SNAPSHOT",
+          "changes": [
+            "Initial release of snapshot packages"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:logger",
@@ -303,13 +310,28 @@
       "path": ":shake:compiler:lexer",
       "name": "com.shakelang.shake.compiler.lexer:lexer",
       "description": "Utilities for parsing stuff with kotlin",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.1.1-SNAPSHOT",
+          "changes": [
+            "Initial release of snapshot packages"
+          ]
+        }
+      ]
     },
     {
       "path": ":shake:compiler:parser",
       "name": "com.shakelang.shake.compiler.parser:parser",
       "description": "Utilities for parsing stuff with kotlin",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.1.1-SNAPSHOT",
+          "changes": [
+            "Initial release of snapshot packages",
+            "Updated dependencies"
+          ]
+        }
+      ]
     },
     {
       "path": ":shake:compiler:processor",

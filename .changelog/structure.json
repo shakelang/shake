@@ -96,7 +96,7 @@
     {
       "path": ":util:jvmlib",
       "name": "com.shakelang.shake.util:jvmlib",
-      "version": "0.1.0",
+      "version": "0.1.1-SNAPSHOT",
       "description": "A library for jvm stuff in java",
       "author": "com.shakelang.shake.util",
       "license": "",
@@ -237,7 +237,7 @@
     {
       "path": ":shake:compiler:lexer",
       "name": "com.shakelang.shake.compiler.lexer:lexer",
-      "version": "0.1.0",
+      "version": "0.1.1-SNAPSHOT",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.compiler.lexer",
       "license": "",
@@ -249,7 +249,7 @@
     {
       "path": ":shake:compiler:parser",
       "name": "com.shakelang.shake.compiler.parser:parser",
-      "version": "0.1.0",
+      "version": "0.1.1-SNAPSHOT",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.compiler.parser",
       "license": "",
@@ -352,5 +352,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701532190189
+  "lastUpdate": 1701532405905
 }
