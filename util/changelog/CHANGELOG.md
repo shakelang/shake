@@ -25,3 +25,5 @@ Add changelog cli (gui)
 Updated dependencies
 ### 0.5.2
 Updated dependencies
+### 0.6.0
+Add snapshot functionality

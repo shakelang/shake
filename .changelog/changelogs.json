@@ -95,6 +95,12 @@
           "changes": [
             "Updated dependencies"
           ]
+        },
+        {
+          "version": "0.6.0",
+          "changes": [
+            "Add snapshot functionality"
+          ]
         }
       ]
     },
