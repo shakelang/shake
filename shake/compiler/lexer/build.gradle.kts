@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.public
 import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
@@ -9,6 +10,7 @@ plugins {
 
 group = projectGroup("compiler.lexer")
 version = resolveVersion()
+public = true
 description = "Utilities for parsing stuff with kotlin"
 
 kotlin {
