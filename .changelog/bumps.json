@@ -6,6 +6,20 @@
       "paths": [
         ":util:changelog"
       ]
+    },
+    {
+      "type": "patch",
+      "message": "Improve changelog generation (Specify updated dependencies)",
+      "paths": [
+        ":util:changelog"
+      ]
+    },
+    {
+      "type": "patch",
+      "message": "Don\'t generate release for auto-updates when previous version was a snapshot",
+      "paths": [
+        ":util:changelog"
+      ]
     }
   ]
 }
