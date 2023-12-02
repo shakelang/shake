@@ -27,3 +27,7 @@ Updated dependencies
 Updated dependencies
 ### 0.6.0
 Add snapshot functionality
+### 0.6.1
+Add shortcuts for getting version information for a package-changelog
+Improve changelog generation (Specify updated dependencies)
+Don't generate release for auto-updates when previous version was a snapshot

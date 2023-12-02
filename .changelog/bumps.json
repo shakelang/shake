@@ -20,6 +20,11 @@
       "paths": [
         ":util:changelog"
       ]
+    },
+    {
+      "type": "patch",
+      "message": "Update com.shakelang.shake.util.changelog:changelog to 0.6.1",
+      "paths": []
     }
   ]
 }
