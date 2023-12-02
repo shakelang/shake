@@ -65,9 +65,19 @@ class ChangelogCli(
     }
 
     private fun performRelease() {
+
+        val snapshot = JOptionPane.showConfirmDialog(
+            this,
+            "You are about to release version. Do you want to release it as a snapshot?",
+            "Release",
+            JOptionPane.YES_NO_OPTION
+        )
+
+        val type = if (snapshot == JOptionPane.YES_OPTION) "snapshot" else "release"
+
         val res = JOptionPane.showConfirmDialog(
             this,
-            "You are about to release all bumped changes. Are you sure?",
+            "You are about to release all bumped changes as a $type. Are you sure?",
             "Release",
             JOptionPane.YES_NO_OPTION
         )
@@ -77,7 +87,7 @@ class ChangelogCli(
         println("Releasing packages")
 
         val versionTask = project.tasks.getByName("version") as VersionTask
-        versionTask.version()
+        versionTask.applyVersion(type)
     }
 
     private fun performCreateTags() {

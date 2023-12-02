@@ -117,7 +117,10 @@ class BumpPanel(
             println("Message: $message")
             println("Bumped: $changed")
 
-            BumpTask.performBump(
+            val bumpTask = project.tasks.getByName("bump") as BumpTask
+
+
+            bumpTask.performBump(
                 bumpType,
                 message,
                 combined

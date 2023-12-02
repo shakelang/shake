@@ -22,6 +22,16 @@ open class VersionTask : DefaultTask() {
 
     @org.gradle.api.tasks.TaskAction
     open fun version() {
+
+        var typeValue: String = project.findProperty("type")?.toString() ?: "SNAPSHOT"
+        if (typeValue == "RELEASE") typeValue = ""
+
+        applyVersion(typeValue)
+
+    }
+
+    open fun applyVersion(type: String) {
+
         val structureFile = Changelog.instance.readStructureFile()
         val bumpFile = Changelog.instance.readBumpFile()
         val mapFile = Changelog.instance.readMap()
@@ -87,6 +97,8 @@ open class VersionTask : DefaultTask() {
                 BumpType.MINOR -> version.incrementMinor()
                 BumpType.PATCH -> version.incrementPatch()
             }
+
+            if(type != "") version.suffix = type
 
             val tagName = tagFormat(TagCreationInfo(prj, version, messages.joinToString("\n")))
 
