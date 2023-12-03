@@ -5,6 +5,7 @@ import com.shakelang.shake.util.changelog.tasks.VersionTagsTask
 import com.shakelang.shake.util.changelog.tasks.VersionTask
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger
+import java.awt.FlowLayout
 import javax.swing.JFrame
 import javax.swing.JOptionPane
 import javax.swing.JScrollPane
@@ -33,6 +34,8 @@ class ChangelogCli(
         addWindowListener(object : java.awt.event.WindowAdapter() {
             override fun windowClosing(e: java.awt.event.WindowEvent?) = this@ChangelogCli.close()
         })
+        this.layout = FlowLayout()
+
         this.showHomePage()
     }
 
@@ -56,8 +59,10 @@ class ChangelogCli(
     private fun showBumpPage(changed: List<PackageEntry>, unchanged: List<PackageEntry>) {
         println("Showing bump page")
         val bumpPanel = BumpPanel(project, logger, changed, unchanged, onCanceled = { showHomePage() }, onBumped = { showHomePage() })
-        val scrollPane = JScrollPane(bumpPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED)
-        scrollPane.setSize(contentPane.width, contentPane.height)
+        val scrollPane = JScrollPane(bumpPanel);
+        scrollPane.verticalScrollBarPolicy = JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
+        scrollPane.horizontalScrollBarPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+        scrollPane.setSize(contentPane.width, contentPane.height - 20)
 
         scrollPane.setLocation(0, 0)
         scrollPane.isVisible = true
@@ -107,7 +112,6 @@ class ChangelogCli(
     }
 
     fun close() {
-        this.closed = true
         this.isVisible = false
         dispose()
     }

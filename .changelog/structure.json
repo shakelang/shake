@@ -48,7 +48,7 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.shake.util.changelog:changelog",
-      "version": "0.6.2",
+      "version": "0.6.1",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.shake.util.changelog",
       "license": "",
@@ -352,5 +352,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701599778139
+  "lastUpdate": 1701642474522
 }

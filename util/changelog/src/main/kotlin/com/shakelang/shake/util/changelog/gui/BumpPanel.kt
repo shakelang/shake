@@ -136,6 +136,7 @@ class BumpPanel(
         cancelButton.isVisible = true
         add(cancelButton)
         cancelButton.addActionListener { onCanceled() }
-        setSize(500, top + 100)
+        setSize(500, top + 40)
+        preferredSize = size
     }
 }
