@@ -10,24 +10,25 @@ import kotlin.experimental.and
 open class Field(
     open val pool: ConstantPool,
     open val nameConstant: Int,
-    open val attributes: Short
+    open val flags: Short,
+    open val attributes: List<Attribute>
 ) {
     val isPublic: Boolean
-        get() = attributes and 0b00000000_00000001.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
     val isPrivate: Boolean
-        get() = attributes and 0b00000000_00000010.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00000010.toShort() != 0.toShort()
     val isProtected: Boolean
-        get() = attributes and 0b00000000_00000100.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00000100.toShort() != 0.toShort()
     val isStatic: Boolean
-        get() = attributes and 0b00000000_00001000.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
     val isFinal: Boolean
-        get() = attributes and 0b00000000_00010000.toShort() != 0.toShort()
+        get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
 
     val name: String get() = pool.getUtf8(nameConstant).value
 
     fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
-        stream.writeShort(attributes)
+        stream.writeShort(flags)
     }
 
     fun dump(): ByteArray {
@@ -40,8 +41,10 @@ open class Field(
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): Field {
             val name = stream.readInt()
-            val attributes = stream.readShort()
-            return Field(pool, name, attributes)
+            val flags = stream.readShort()
+            val attributeCount = stream.readInt()
+            val attributes = (0 until attributeCount).map { Attribute.fromStream(pool, stream) }
+            return Field(pool, name, flags, attributes)
         }
     }
 }
@@ -49,17 +52,56 @@ open class Field(
 class MutableField(
     override val pool: MutableConstantPool,
     override var nameConstant: Int,
-    override var attributes: Short
-) : Field(pool, nameConstant, attributes) {
+    override var flags: Short,
+    attributes: MutableList<Attribute>
+) : Field(pool, nameConstant, flags, attributes) {
+
+    override val attributes: MutableList<Attribute>
+        get() = super.attributes as MutableList<Attribute>
+
     fun setName(name: String) {
         nameConstant = pool.resolveUtf8(name)
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is MutableField) return false
+
+        if (pool != other.pool) return false
+        if (nameConstant != other.nameConstant) return false
+        if (flags != other.flags) return false
+
+        // TODO this is not the best way to do this (O(n^2))
+
+        // find matching attributes
+
+        for (attribute in attributes) {
+            if (attribute !in other.attributes) return false
+        }
+
+        for (attribute in other.attributes) {
+            if (attribute !in attributes) return false
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = pool.hashCode()
+        result = 31 * result + nameConstant
+        result = 31 * result + flags
+        result = 31 * result + attributes.hashCode()
+        return result
+    }
+
     companion object {
-        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableField {
-            val name = stream.readInt()
-            val attributes = stream.readShort()
-            return MutableField(pool, name, attributes)
+        fun fromField(pool: MutableConstantPool, field: Field): MutableField {
+            return MutableField(
+                pool,
+                field.nameConstant,
+                field.flags,
+                field.attributes.toMutableList()
+            )
         }
     }
 }

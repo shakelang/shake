@@ -1,3 +1,4 @@
+import com.shakelang.shake.util.changelog.public
 import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
@@ -8,6 +9,7 @@ plugins {
     id("io.kotest.multiplatform")
 }
 
+public = true
 group = projectGroup("compiler.parser")
 version = resolveVersion()
 description = "Utilities for parsing stuff with kotlin"

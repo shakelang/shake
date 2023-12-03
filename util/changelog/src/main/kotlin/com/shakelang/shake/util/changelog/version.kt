@@ -29,6 +29,10 @@ class Version(
         suffix = ""
     }
 
+    fun clone(): Version {
+        return Version(major, minor, patch, suffix)
+    }
+
     companion object {
 
         fun fromString(version: String): Version {

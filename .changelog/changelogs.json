@@ -95,6 +95,28 @@
           "changes": [
             "Updated dependencies"
           ]
+        },
+        {
+          "version": "0.6.0",
+          "changes": [
+            "Add snapshot functionality"
+          ]
+        },
+        {
+          "version": "0.6.1",
+          "changes": [
+            "Add shortcuts for getting version information for a package-changelog",
+            "Improve changelog generation (Specify updated dependencies)",
+            "Don\'t generate release for auto-updates when previous version was a snapshot"
+          ]
+        },
+        {
+          "version": "0.6.2",
+          "changes": [
+            "Fix: overflow in bump panel",
+            "Fix: Structure file version not updated",
+            "Fix: Bump file not cleared after version generation"
+          ]
         }
       ]
     },
@@ -153,7 +175,14 @@
       "path": ":util:jvmlib",
       "name": "com.shakelang.shake.util:jvmlib",
       "description": "A library for jvm stuff in java",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.1.1-SNAPSHOT",
+          "changes": [
+            "Initial release of snapshot packages"
+          ]
+        }
+      ]
     },
     {
       "path": ":util:logger",
@@ -297,13 +326,28 @@
       "path": ":shake:compiler:lexer",
       "name": "com.shakelang.shake.compiler.lexer:lexer",
       "description": "Utilities for parsing stuff with kotlin",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.1.1-SNAPSHOT",
+          "changes": [
+            "Initial release of snapshot packages"
+          ]
+        }
+      ]
     },
     {
       "path": ":shake:compiler:parser",
       "name": "com.shakelang.shake.compiler.parser:parser",
       "description": "Utilities for parsing stuff with kotlin",
-      "versions": []
+      "versions": [
+        {
+          "version": "0.1.1-SNAPSHOT",
+          "changes": [
+            "Initial release of snapshot packages",
+            "Updated dependencies"
+          ]
+        }
+      ]
     },
     {
       "path": ":shake:compiler:processor",

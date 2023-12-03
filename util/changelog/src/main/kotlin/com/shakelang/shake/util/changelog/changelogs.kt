@@ -48,13 +48,30 @@ class PackageChangelog(
     val folderPath: String
         get() = path.replace(":", "/").substring(1)
 
+    val latestRelease: ChangelogVersion?
+        get() {
+            if (versions.isEmpty()) return null
+            return versions.last()
+        }
+
     val changedSinceLastRelease: Boolean
         get() {
-            if (versions.isEmpty()) return true
+            val latestRelease = latestRelease ?: return true
             return Changelog.instance.dirChangedSinceTag(
-                tagRef("release/$folderPath/v${versions.last().version}"),
+                tagRef("release/$folderPath/v${latestRelease.version}"),
                 folderPath
             )
+        }
+
+    val latestReleaseVersion: Version
+        get() {
+            val latestRelease = latestRelease ?: return Version(0, 0, 0, "SNAPSHOT")
+            return latestRelease.version
+        }
+
+    val latestReleaseWasSnapshot: Boolean
+        get() {
+            return latestReleaseVersion.suffix != ""
         }
 
     fun addVersion(version: ChangelogVersion) = versions.add(version)
