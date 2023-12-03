@@ -2,29 +2,24 @@
   "bumps": [
     {
       "type": "patch",
-      "message": "Add shortcuts for getting version information for a package-changelog",
+      "message": "Fix: overflow in bump panel",
       "paths": [
         ":util:changelog"
       ]
     },
     {
       "type": "patch",
-      "message": "Improve changelog generation (Specify updated dependencies)",
+      "message": "Fix: Structure file version not updated",
       "paths": [
         ":util:changelog"
       ]
     },
     {
       "type": "patch",
-      "message": "Don\'t generate release for auto-updates when previous version was a snapshot",
+      "message": "Fix: Bump file not cleared after version generation",
       "paths": [
         ":util:changelog"
       ]
-    },
-    {
-      "type": "patch",
-      "message": "Update com.shakelang.shake.util.changelog:changelog to 0.6.1",
-      "paths": []
     }
   ]
 }

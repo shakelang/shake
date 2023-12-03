@@ -31,3 +31,8 @@ Add snapshot functionality
 Add shortcuts for getting version information for a package-changelog
 Improve changelog generation (Specify updated dependencies)
 Don't generate release for auto-updates when previous version was a snapshot
+### 0.6.1
+Add shortcuts for getting version information for a package-changelog
+Improve changelog generation (Specify updated dependencies)
+Don't generate release for auto-updates when previous version was a snapshot
+Fix overflow in bump panel

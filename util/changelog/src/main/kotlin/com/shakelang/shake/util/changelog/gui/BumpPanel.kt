@@ -61,7 +61,7 @@ class BumpPanel(
 
         changedLabel = JLabel("Changed:")
         changedLabel.setSize(100, 20)
-        changedLabel.setLocation(0, top)
+        changedLabel.setLocation(10, top)
         add(changedLabel)
         top += 20
 

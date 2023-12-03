@@ -114,7 +114,11 @@ open class VersionTask : DefaultTask() {
 
             val tagName = tagFormat(TagCreationInfo(projectStructure, version, messages.joinToString("\n")))
             stash.add(TagStash(tagName))
+
+            projectStructure.version = version
         }
+
+        bumpFile.bumps.clear()
 
         // save files
         Changelog.instance.writeBumpFile(bumpFile)

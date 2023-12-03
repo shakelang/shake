@@ -8,7 +8,7 @@ import java.util.*
 class ProjectStructure(
     val path: String,
     val name: String,
-    val version: Version,
+    var version: Version,
     val description: String,
     val author: String,
     val license: String,

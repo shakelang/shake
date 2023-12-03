@@ -7,6 +7,7 @@ import org.gradle.api.Project
 import org.gradle.api.logging.Logger
 import javax.swing.JFrame
 import javax.swing.JOptionPane
+import javax.swing.JScrollPane
 
 data class PackageEntry(
     val name: String,
@@ -54,14 +55,13 @@ class ChangelogCli(
 
     private fun showBumpPage(changed: List<PackageEntry>, unchanged: List<PackageEntry>) {
         println("Showing bump page")
-        contentPane = BumpPanel(
-            project,
-            logger,
-            changed,
-            unchanged,
-            onCanceled = { showHomePage() },
-            onBumped = { showHomePage() }
-        )
+        val bumpPanel = BumpPanel(project, logger, changed, unchanged, onCanceled = { showHomePage() }, onBumped = { showHomePage() })
+        val scrollPane = JScrollPane(bumpPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED)
+        scrollPane.setSize(contentPane.width, contentPane.height)
+
+        scrollPane.setLocation(0, 0)
+        scrollPane.isVisible = true
+        contentPane = scrollPane
     }
 
     private fun performRelease() {
