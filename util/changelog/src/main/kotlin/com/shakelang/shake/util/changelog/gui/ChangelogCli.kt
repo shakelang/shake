@@ -59,7 +59,7 @@ class ChangelogCli(
     private fun showBumpPage(changed: List<PackageEntry>, unchanged: List<PackageEntry>) {
         println("Showing bump page")
         val bumpPanel = BumpPanel(project, logger, changed, unchanged, onCanceled = { showHomePage() }, onBumped = { showHomePage() })
-        val scrollPane = JScrollPane(bumpPanel);
+        val scrollPane = JScrollPane(bumpPanel)
         scrollPane.verticalScrollBarPolicy = JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
         scrollPane.horizontalScrollBarPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
         scrollPane.setSize(contentPane.width, contentPane.height - 20)
@@ -70,7 +70,6 @@ class ChangelogCli(
     }
 
     private fun performRelease() {
-
         val snapshot = JOptionPane.showConfirmDialog(
             this,
             "You are about to release version. Do you want to release it as a snapshot?",

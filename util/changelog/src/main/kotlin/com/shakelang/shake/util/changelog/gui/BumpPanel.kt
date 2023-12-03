@@ -119,7 +119,6 @@ class BumpPanel(
 
             val bumpTask = project.tasks.getByName("bump") as BumpTask
 
-
             bumpTask.performBump(
                 bumpType,
                 message,
