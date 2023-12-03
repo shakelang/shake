@@ -1,25 +1,3 @@
 {
-  "bumps": [
-    {
-      "type": "patch",
-      "message": "Fix: overflow in bump panel",
-      "paths": [
-        ":util:changelog"
-      ]
-    },
-    {
-      "type": "patch",
-      "message": "Fix: Structure file version not updated",
-      "paths": [
-        ":util:changelog"
-      ]
-    },
-    {
-      "type": "patch",
-      "message": "Fix: Bump file not cleared after version generation",
-      "paths": [
-        ":util:changelog"
-      ]
-    }
-  ]
+  "bumps": []
 }

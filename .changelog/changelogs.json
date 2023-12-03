@@ -109,6 +109,14 @@
             "Improve changelog generation (Specify updated dependencies)",
             "Don\'t generate release for auto-updates when previous version was a snapshot"
           ]
+        },
+        {
+          "version": "0.6.2",
+          "changes": [
+            "Fix: overflow in bump panel",
+            "Fix: Structure file version not updated",
+            "Fix: Bump file not cleared after version generation"
+          ]
         }
       ]
     },
