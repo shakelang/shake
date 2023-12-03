@@ -25,3 +25,13 @@ Add changelog cli (gui)
 Updated dependencies
 ### 0.5.2
 Updated dependencies
+### 0.6.0
+Add snapshot functionality
+### 0.6.1
+Add shortcuts for getting version information for a package-changelog
+Improve changelog generation (Specify updated dependencies)
+Don't generate release for auto-updates when previous version was a snapshot
+### 0.6.2
+Fix: overflow in bump panel
+Fix: Structure file version not updated
+Fix: Bump file not cleared after version generation

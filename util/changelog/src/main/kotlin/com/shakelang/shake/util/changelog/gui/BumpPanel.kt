@@ -61,7 +61,7 @@ class BumpPanel(
 
         changedLabel = JLabel("Changed:")
         changedLabel.setSize(100, 20)
-        changedLabel.setLocation(0, top)
+        changedLabel.setLocation(10, top)
         add(changedLabel)
         top += 20
 
@@ -117,7 +117,10 @@ class BumpPanel(
             println("Message: $message")
             println("Bumped: $changed")
 
-            BumpTask.performBump(
+            val bumpTask = project.tasks.getByName("bump") as BumpTask
+
+
+            bumpTask.performBump(
                 bumpType,
                 message,
                 combined
@@ -133,6 +136,7 @@ class BumpPanel(
         cancelButton.isVisible = true
         add(cancelButton)
         cancelButton.addActionListener { onCanceled() }
-        setSize(500, top + 100)
+        setSize(500, top + 40)
+        preferredSize = size
     }
 }

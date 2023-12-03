@@ -1,8 +1,11 @@
 package com.shakelang.shake.util.changelog.tasks
 
-import com.shakelang.shake.util.changelog.*
+import com.shakelang.shake.util.changelog.Changelog
 import com.shakelang.shake.util.changelog.gui.ChangelogCli
 import com.shakelang.shake.util.changelog.gui.PackageEntry
+import com.shakelang.shake.util.changelog.public
+import com.shakelang.shake.util.changelog.readMap
+import com.shakelang.shake.util.changelog.readStructureFile
 import org.gradle.api.DefaultTask
 
 open class ChangelogCliTask : DefaultTask() {
