@@ -315,7 +315,8 @@ class AttributeGenerationContext {
 
 }
 
-fun generate(generator: GenerationContext.() -> Unit) {
+fun generate(generator: GenerationContext.() -> Unit): StorageFormat {
     val ctx = GenerationContext()
     ctx.generator()
+    return ctx.toStorageFormat()
 }
