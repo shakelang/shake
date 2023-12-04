@@ -6,7 +6,7 @@ import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
-val MAGIC = 0x5348414B // SHAK
+const val MAGIC = 0x4a16a478 // SHAKE MAGIC
 
 open class StorageFormat(
     open val major: Short,
