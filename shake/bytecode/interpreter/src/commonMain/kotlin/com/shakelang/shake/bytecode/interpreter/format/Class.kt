@@ -230,17 +230,17 @@ class MutableClass(
         set(value) { interfacesConstants = value.map { pool.resolveUtf8(it) }.toMutableList() }
 
     companion object {
-        fun fromClass(pool: MutableConstantPool, class_: Class): MutableClass {
+        fun fromClass(pool: MutableConstantPool, clazz: Class): MutableClass {
             return MutableClass(
                 pool,
-                class_.nameConstant,
-                class_.superNameConstant,
-                class_.flags,
-                class_.interfacesConstants.toMutableList(),
-                class_.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
-                class_.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
-                class_.subClasses.map { fromClass(pool, it) }.toMutableList(),
-                class_.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
+                clazz.nameConstant,
+                clazz.superNameConstant,
+                clazz.flags,
+                clazz.interfacesConstants.toMutableList(),
+                clazz.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
+                clazz.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
+                clazz.subClasses.map { fromClass(pool, it) }.toMutableList(),
+                clazz.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
             )
         }
 
