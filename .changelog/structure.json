@@ -196,12 +196,15 @@
     {
       "path": ":util:testlib",
       "name": "com.shakelang.shake.util:testlib",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.util",
       "license": "",
       "dependencies": [
-        "unspecified:path-browserify:1.0.1"
+        "unspecified:path-browserify:1.0.1",
+        "io.kotest:kotest-framework-engine:5.8.0",
+        "io.kotest:kotest-assertions-core:5.8.0",
+        "io.kotest:kotest-property:5.8.0"
       ]
     },
     {
@@ -352,5 +355,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701642579676
+  "lastUpdate": 1701724749373
 }
