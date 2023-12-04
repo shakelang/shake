@@ -1,0 +1,592 @@
+package com.shakelang.shake.bytecode.interpreter.format
+
+import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
+import com.shakelang.shake.util.io.streaming.input.dataStream
+import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.shake.util.primitives.bytes.toBytes
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+
+class MethodTests : FreeSpec({
+
+    "name constant" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0, emptyList())
+        method.nameConstant shouldBe 0
+
+    }
+
+    "qualified name constant" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0, emptyList())
+        method.qualifiedNameConstant shouldBe 1
+
+    }
+
+    "name getter" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, pool.resolveUtf8("name"), 1, 0, emptyList())
+        method.name shouldBe "name"
+
+    }
+
+    "qualified name getter" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, pool.resolveUtf8("qualifiedName"), 0, emptyList())
+        method.qualifiedName shouldBe "qualifiedName"
+
+    }
+
+    "flags" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00000001, emptyList())
+        method.isPublic shouldBe true
+        method.isPrivate shouldBe false
+        method.isProtected shouldBe false
+        method.isStatic shouldBe false
+        method.isFinal shouldBe false
+
+    }
+
+    "is public" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00000001, emptyList())
+        method.isPublic shouldBe true
+
+    }
+
+    "is private" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00000010, emptyList())
+        method.isPrivate shouldBe true
+
+    }
+
+    "is protected" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00000100, emptyList())
+        method.isProtected shouldBe true
+
+    }
+
+    "is static" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00001000, emptyList())
+        method.isStatic shouldBe true
+
+    }
+
+    "is final" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
+        method.isFinal shouldBe true
+
+    }
+
+    "equals" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
+        val method2 = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
+        val method3 = Method(pool, 0, 1, 0b00000000_00010000, listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
+        val method4 = Method(pool, 0, 1, 0b00000000_00010000, listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3, 4))))
+        val method5 = Method(pool, 1, 0, 0b00000000_00010000, emptyList())
+        val method6 = Method(pool, 1, 0, 0b00000000_00001000, emptyList())
+
+        method shouldBe method
+        method shouldBe method2
+        method shouldNotBe method3
+        method shouldNotBe method4
+        method shouldNotBe method5
+        method shouldNotBe method6
+        method3 shouldNotBe method4
+
+    }
+
+    "hashcode" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
+        val method2 = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
+        val method3 = Method(pool, 0, 1, 0b00000000_00010000, listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
+        val method4 = Method(pool, 0, 1, 0b00000000_00010000, listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3, 4))))
+        val method5 = Method(pool, 1, 0, 0b00000000_00010000, emptyList())
+        val method6 = Method(pool, 1, 0, 0b00000000_00001000, emptyList())
+
+        method.hashCode() shouldBe method.hashCode()
+        method.hashCode() shouldBe method2.hashCode()
+        method.hashCode() shouldNotBe method3.hashCode()
+        method.hashCode() shouldNotBe method4.hashCode()
+        method.hashCode() shouldNotBe method5.hashCode()
+        method.hashCode() shouldNotBe method6.hashCode()
+        method3.hashCode() shouldNotBe method4.hashCode()
+
+    }
+
+
+
+    "dump" {
+
+        val pool = MutableConstantPool()
+        val stream = ByteArrayOutputStream()
+        val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
+        method.dump(DataOutputStream(stream))
+
+        stream.toByteArray() shouldBe byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *0.toShort().toBytes() // attributes size
+        )
+    }
+
+    "dump to byte array" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
+        method.dump() shouldBe byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *0.toShort().toBytes() // attributes size
+        )
+
+    }
+
+    "dump with attributes" {
+
+        val pool = MutableConstantPool()
+        val stream = ByteArrayOutputStream()
+        val method = Method(
+            pool, 0, 1, 0b00000000_00010000,
+            listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
+        )
+        method.dump(DataOutputStream(stream))
+
+        stream.toByteArray() shouldBe byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *1.toShort().toBytes(), // attributes size
+            *0.toBytes(), // attribute name constant
+            *3.toBytes(), // attribute data size
+            1, 2, 3 // attribute data
+        )
+    }
+
+    "dump to byte array with attributes" {
+
+        val pool = MutableConstantPool()
+        val method = Method(
+            pool, 0, 1, 0b00000000_00010000,
+            listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
+        )
+        method.dump() shouldBe byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *1.toShort().toBytes(), // attributes size
+            *0.toBytes(), // attribute name constant
+            *3.toBytes(), // attribute data size
+            1, 2, 3 // attribute data
+        )
+
+    }
+
+    "from stream" {
+
+        val pool = MutableConstantPool()
+        val stream = byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *0.toShort().toBytes() // attributes size
+        ).dataStream()
+
+        val method = Method.fromStream(pool, stream)
+        method.nameConstant shouldBe 0
+        method.qualifiedNameConstant shouldBe 1
+        method.flags shouldBe 0x10.toShort()
+        method.attributes.size shouldBe 0
+
+    }
+
+    "from stream with attributes" {
+
+        val pool = MutableConstantPool()
+        val stream = byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *1.toShort().toBytes(), // attributes size
+            *0.toBytes(), // attribute name constant
+            *3.toBytes(), // attribute data size
+            1, 2, 3 // attribute data
+        ).dataStream()
+
+        val method = Method.fromStream(pool, stream)
+        method.nameConstant shouldBe 0
+        method.qualifiedNameConstant shouldBe 1
+        method.flags shouldBe 0x10.toShort()
+        method.attributes.size shouldBe 1
+        method.attributes[0].nameConstant shouldBe 0
+        method.attributes[0].value contentEquals byteArrayOf(1, 2, 3) shouldBe true
+
+    }
+})
+
+class MutableMethodTests : FreeSpec({
+
+    "name constant" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.nameConstant shouldBe 0
+
+    }
+
+    "set name constant" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.nameConstant = 1
+        method.nameConstant shouldBe 1
+
+    }
+
+    "qualified name constant" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.qualifiedNameConstant shouldBe 1
+
+    }
+
+    "set qualified name constant" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.qualifiedNameConstant = 0
+        method.qualifiedNameConstant shouldBe 0
+
+    }
+
+    "name getter" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, pool.resolveUtf8("name"), 1, 0, mutableListOf())
+        method.name shouldBe "name"
+
+    }
+
+    "name setter" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, pool.resolveUtf8("name"), 1, 0, mutableListOf())
+        method.name = "name2"
+        method.name shouldBe "name2"
+
+    }
+
+    "qualified name getter" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, pool.resolveUtf8("qualifiedName"), 0, mutableListOf())
+        method.qualifiedName shouldBe "qualifiedName"
+
+    }
+
+    "qualified name setter" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, pool.resolveUtf8("qualifiedName"), 0, mutableListOf())
+        method.qualifiedName = "qualifiedName2"
+        method.qualifiedName shouldBe "qualifiedName2"
+
+    }
+
+    "flags" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00000001, mutableListOf())
+        method.isPublic shouldBe true
+        method.isPrivate shouldBe false
+        method.isProtected shouldBe false
+        method.isStatic shouldBe false
+        method.isFinal shouldBe false
+
+    }
+
+    "set flags" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.isPublic = true
+        method.isPrivate = true
+        method.isProtected = true
+        method.isStatic = true
+        method.isFinal = true
+        method.flags shouldBe 0b00000000_00011111.toShort()
+
+    }
+
+    "is public" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00000001, mutableListOf())
+        method.isPublic shouldBe true
+
+    }
+
+    "set is public" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.isPublic = true
+        method.isPublic shouldBe true
+
+    }
+
+    "is private" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00000010, mutableListOf())
+        method.isPrivate shouldBe true
+
+    }
+
+    "set is private" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.isPrivate = true
+        method.isPrivate shouldBe true
+
+    }
+
+    "is protected" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00000100, mutableListOf())
+        method.isProtected shouldBe true
+
+    }
+
+    "set is protected" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.isProtected = true
+        method.isProtected shouldBe true
+
+    }
+
+    "is static" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00001000, mutableListOf())
+        method.isStatic shouldBe true
+
+    }
+
+    "set is static" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.isStatic = true
+        method.isStatic shouldBe true
+
+    }
+
+    "is final" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
+        method.isFinal shouldBe true
+
+    }
+
+    "set is final" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.isFinal = true
+        method.isFinal shouldBe true
+
+    }
+
+    "equals" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
+        val method2 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
+        val method3 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
+        val method4 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3, 4))))
+        val method5 = MutableMethod(pool, 1, 0, 0b00000000_00010000, mutableListOf())
+        val method6 = MutableMethod(pool, 1, 0, 0b00000000_00001000, mutableListOf())
+
+        method shouldBe method
+        method shouldBe method2
+        method shouldNotBe method3
+        method shouldNotBe method4
+        method shouldNotBe method5
+        method shouldNotBe method6
+        method3 shouldNotBe method4
+
+    }
+
+    "hashcode" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
+        val method2 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
+        val method3 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
+        val method4 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3, 4))))
+        val method5 = MutableMethod(pool, 1, 0, 0b00000000_00010000, mutableListOf())
+        val method6 = MutableMethod(pool, 1, 0, 0b00000000_00001000, mutableListOf())
+
+        method.hashCode() shouldBe method.hashCode()
+        method.hashCode() shouldBe method2.hashCode()
+        method.hashCode() shouldNotBe method3.hashCode()
+        method.hashCode() shouldNotBe method4.hashCode()
+        method.hashCode() shouldNotBe method5.hashCode()
+        method.hashCode() shouldNotBe method6.hashCode()
+        method3.hashCode() shouldNotBe method4.hashCode()
+
+    }
+
+    "dump" {
+
+        val pool = MutableConstantPool()
+        val stream = ByteArrayOutputStream()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
+        method.dump(DataOutputStream(stream))
+
+        stream.toByteArray() shouldBe byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *0.toShort().toBytes() // attributes size
+        )
+    }
+
+    "dump to byte array" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
+        method.dump() shouldBe byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *0.toShort().toBytes() // attributes size
+        )
+
+    }
+
+    "dump with attributes" {
+
+        val pool = MutableConstantPool()
+        val stream = ByteArrayOutputStream()
+        val method = MutableMethod(
+            pool, 0, 1, 0b00000000_00010000,
+            mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
+        )
+        method.dump(DataOutputStream(stream))
+
+        stream.toByteArray() shouldBe byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *1.toShort().toBytes(), // attributes size
+            *0.toBytes(), // attribute name constant
+            *3.toBytes(), // attribute data size
+            1, 2, 3 // attribute data
+        )
+    }
+
+    "dump to byte array with attributes" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(
+            pool, 0, 1, 0b00000000_00010000,
+            mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
+        )
+        method.dump() shouldBe byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *1.toShort().toBytes(), // attributes size
+            *0.toBytes(), // attribute name constant
+            *3.toBytes(), // attribute data size
+            1, 2, 3 // attribute data
+        )
+
+    }
+
+    "from stream" {
+
+        val pool = MutableConstantPool()
+        val stream = byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *0.toShort().toBytes() // attributes size
+        ).dataStream()
+
+        val method = MutableMethod.fromStream(pool, stream)
+        method.nameConstant shouldBe 0
+        method.qualifiedNameConstant shouldBe 1
+        method.flags shouldBe 0x10.toShort()
+        method.attributes.size shouldBe 0
+
+    }
+
+    "from stream with attributes" {
+
+        val pool = MutableConstantPool()
+        val stream = byteArrayOf(
+            *0.toBytes(), // name constant
+            *1.toBytes(), // qualified name constant
+            *0x10.toShort().toBytes(), // flags
+            *1.toShort().toBytes(), // attributes size
+            *0.toBytes(), // attribute name constant
+            *3.toBytes(), // attribute data size
+            1, 2, 3 // attribute data
+        ).dataStream()
+
+        val method = MutableMethod.fromStream(pool, stream)
+        method.nameConstant shouldBe 0
+        method.qualifiedNameConstant shouldBe 1
+        method.flags shouldBe 0x10.toShort()
+        method.attributes.size shouldBe 1
+        method.attributes[0].nameConstant shouldBe 0
+        method.attributes[0].value contentEquals byteArrayOf(1, 2, 3) shouldBe true
+
+    }
+
+    "from method" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
+        val method2 = MutableMethod.fromMethod(pool, method)
+        method2.nameConstant shouldBe 0
+        method2.qualifiedNameConstant shouldBe 1
+        method2.flags shouldBe 0b00000000_00010000.toShort()
+        method2.attributes.size shouldBe 1
+        method2.attributes[0].nameConstant shouldBe 0
+        method2.attributes[0].value contentEquals byteArrayOf(1, 2, 3) shouldBe true
+
+    }
+})
