@@ -35,7 +35,7 @@ open class Method(
         stream.writeShort(flags)
         stream.writeInt(attributes.size)
         for (attribute in attributes) {
-            attribute.bump(stream)
+            attribute.dump(stream)
         }
     }
 

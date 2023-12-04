@@ -14,15 +14,15 @@ open class Attribute(
 
     open val name: String get() = pool.getUtf8(nameConstant).value
 
-    open fun bump(stream: DataOutputStream) {
+    open fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
         stream.writeInt(value.size)
         stream.write(value)
     }
 
-    open fun bump(): ByteArray {
+    open fun dump(): ByteArray {
         val stream = ByteArrayOutputStream()
-        bump(DataOutputStream(stream))
+        dump(DataOutputStream(stream))
         return stream.toByteArray()
     }
 

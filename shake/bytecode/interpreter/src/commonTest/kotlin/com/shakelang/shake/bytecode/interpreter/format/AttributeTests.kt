@@ -35,7 +35,7 @@ class AttributeTests : FreeSpec({
         val attribute = Attribute(pool, 0, byteArrayOf(1, 2, 3))
 
         val stream = ByteArrayOutputStream()
-        attribute.bump(DataOutputStream(stream))
+        attribute.dump(DataOutputStream(stream))
         val arr = stream.toByteArray()
 
         arr contentEquals byteArrayOf(0, 0, 0, 0, 0, 0, 0, 3, 1, 2, 3) shouldBe true
@@ -45,7 +45,7 @@ class AttributeTests : FreeSpec({
         val pool = MutableConstantPool()
         val attribute = Attribute(pool, 0, byteArrayOf(1, 2, 3))
 
-        val arr = attribute.bump()
+        val arr = attribute.dump()
 
         arr contentEquals byteArrayOf(0, 0, 0, 0, 0, 0, 0, 3, 1, 2, 3) shouldBe true
     }
@@ -137,7 +137,7 @@ class MutableAttributeTests : FreeSpec({
         val attribute = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
 
         val stream = ByteArrayOutputStream()
-        attribute.bump(DataOutputStream(stream))
+        attribute.dump(DataOutputStream(stream))
         val arr = stream.toByteArray()
 
         arr contentEquals byteArrayOf(0, 0, 0, 0, 0, 0, 0, 3, 1, 2, 3) shouldBe true
@@ -147,7 +147,7 @@ class MutableAttributeTests : FreeSpec({
         val pool = MutableConstantPool()
         val attribute = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
 
-        val arr = attribute.bump()
+        val arr = attribute.dump()
 
         arr contentEquals byteArrayOf(0, 0, 0, 0, 0, 0, 0, 3, 1, 2, 3) shouldBe true
     }
