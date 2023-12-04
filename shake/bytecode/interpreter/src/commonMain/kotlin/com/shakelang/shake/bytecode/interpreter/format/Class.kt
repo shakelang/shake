@@ -20,6 +20,10 @@ open class Class(
     open val attributes: List<Attribute>
 ) {
 
+    open val name: String get() = pool.getUtf8(nameConstant).value
+    open val superName: String get() = pool.getUtf8(superNameConstant).value
+    open val interfaces: List<String> get() = interfacesConstants.map { pool.getUtf8(it).value }
+
     open val isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
 
@@ -35,30 +39,20 @@ open class Class(
     open  val isFinal: Boolean
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
 
-    open val name: String get() = pool.getUtf8(nameConstant).value
-    open val superName: String get() = pool.getUtf8(superNameConstant).value
-    open val interfaces: List<String> get() = interfacesConstants.map { pool.getUtf8(it).value }
-
     fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
         stream.writeInt(superNameConstant)
         stream.writeShort(flags)
-        stream.writeInt(interfacesConstants.size)
-        for (interfaceConstant in interfacesConstants) {
-            stream.writeInt(interfaceConstant)
-        }
-        stream.writeInt(fields.size)
-        for (field in fields) {
-            field.dump(stream)
-        }
-        stream.writeInt(methods.size)
-        for (method in methods) {
-            method.dump(stream)
-        }
-        stream.writeInt(subClasses.size)
-        for (subClass in subClasses) {
-            subClass.dump(stream)
-        }
+        stream.writeShort(interfacesConstants.size.toShort())
+        for (interfaceConstant in interfacesConstants) stream.writeInt(interfaceConstant)
+        stream.writeShort(fields.size.toShort())
+        for (field in fields) field.dump(stream)
+        stream.writeShort(methods.size.toShort())
+        for (method in methods) method.dump(stream)
+        stream.writeShort(subClasses.size.toShort())
+        for (subClass in subClasses) subClass.dump(stream)
+        stream.writeShort(attributes.size.toShort())
+        for (attribute in attributes) attribute.dump(stream)
     }
 
     fun dump(): ByteArray {
@@ -150,30 +144,18 @@ open class Class(
             val name = stream.readInt()
             val superName = stream.readInt()
             val flags = stream.readShort()
-            val interfacesCount = stream.readInt()
-            val interfaces = mutableListOf<Int>()
-            for (i in 0 until interfacesCount) {
-                interfaces.add(stream.readInt())
-            }
-            val fieldsCount = stream.readInt()
-            val fields = mutableListOf<Field>()
-            for (i in 0 until fieldsCount) {
-                fields.add(Field.fromStream(pool, stream))
-            }
-            val methodsCount = stream.readInt()
-            val methods = mutableListOf<Method>()
-            for (i in 0 until methodsCount) {
-                methods.add(Method.fromStream(pool, stream))
-            }
-            val subClassesCount = stream.readInt()
-            val subClasses = mutableListOf<Class>()
-            for (i in 0 until subClassesCount) {
-                subClasses.add(fromStream(pool, stream))
-            }
-            val attributesCount = stream.readInt()
+            val interfacesCount = stream.readShort().toInt()
+            val interfaces = (0 until interfacesCount).map { stream.readInt() }
+            val fieldsCount = stream.readShort().toInt()
+            val fields = (0 until fieldsCount).map { Field.fromStream(pool, stream) }
+            val methodsCount = stream.readShort().toInt()
+            val methods = (0 until methodsCount).map { Method.fromStream(pool, stream) }
+            val subClassesCount = stream.readShort().toInt()
+            val subClasses = (0 until subClassesCount).map { fromStream(pool, stream) }
+            val attributesCount = stream.readShort().toInt()
             val attributes = (0 until attributesCount).map { Attribute.fromStream(pool, stream) }
             return Class(
-                ConstantPool.fromStream(stream),
+                pool,
                 name,
                 superName,
                 flags,

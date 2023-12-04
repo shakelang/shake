@@ -18,6 +18,7 @@ kotlin {
         implementation(project(":util:pointers"))
         implementation(project(":util:primitives"))
         implementation(project(":util:common-io"))
+        testImplementation(project(":util:testlib"))
     }
 }
 
