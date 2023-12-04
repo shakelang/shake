@@ -12,20 +12,20 @@ import io.kotest.matchers.shouldNotBe
 
 class FieldTests : FreeSpec({
 
-    "test name constant" {
+    "name constant" {
         val pool = MutableConstantPool()
         val field = Field(pool, 0, 0, listOf())
         field.nameConstant shouldBe 0
     }
 
-    "test name getter" {
+    "name getter" {
         val pool = MutableConstantPool()
         val constant = pool.resolveUtf8("test")
         val field = Field(pool, constant, 0, listOf())
         field.name shouldBe "test"
     }
 
-    "test flags" {
+    "flags" {
         val pool = MutableConstantPool()
         var field = Field(pool, 0, 0b00000000_00000001.toShort(), listOf())
         field.isPublic shouldBe true
@@ -105,7 +105,7 @@ class FieldTests : FreeSpec({
         field.isFinal shouldBe true
     }
 
-    "test dump" {
+    "dump" {
         val pool = MutableConstantPool()
         val field = Field(pool, 0, 0b00000000_00000001.toShort(), listOf())
         val stream = ByteArrayOutputStream()
@@ -118,7 +118,7 @@ class FieldTests : FreeSpec({
         ) shouldBe true
     }
 
-    "test dump to array" {
+    "dump to array" {
         val pool = MutableConstantPool()
         val field = Field(pool, 0, 0b00000000_00000001.toShort(), listOf())
         val arr = field.dump()
@@ -129,7 +129,7 @@ class FieldTests : FreeSpec({
         ) shouldBe true
     }
 
-    "test from stream" {
+    "from stream" {
         val pool = MutableConstantPool()
         val stream = byteArrayOf(
             *pool.resolveUtf8("test").toBytes(),
@@ -145,20 +145,20 @@ class FieldTests : FreeSpec({
 
 class MutableFieldTests : FreeSpec({
 
-    "test name constant" {
+    "name constant" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         field.nameConstant shouldBe 0
     }
 
-    "test name getter" {
+    "name getter" {
         val pool = MutableConstantPool()
         val constant = pool.resolveUtf8("test")
         val field = MutableField(pool, constant, 0, mutableListOf())
         field.name shouldBe "test"
     }
 
-    "test flags" {
+    "flags" {
         val pool = MutableConstantPool()
         var field = MutableField(pool, 0, 0b00000000_00000001.toShort(), mutableListOf())
         field.isPublic shouldBe true
@@ -238,7 +238,7 @@ class MutableFieldTests : FreeSpec({
         field.isFinal shouldBe true
     }
 
-    "test dump" {
+    "dump" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0b00000000_00000001.toShort(), mutableListOf())
         val stream = ByteArrayOutputStream()
@@ -251,7 +251,7 @@ class MutableFieldTests : FreeSpec({
         ) shouldBe true
     }
 
-    "test dump to array" {
+    "dump to array" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0b00000000_00000001.toShort(), mutableListOf())
         val arr = field.dump()
@@ -262,7 +262,7 @@ class MutableFieldTests : FreeSpec({
         ) shouldBe true
     }
 
-    "test from stream" {
+    "from stream" {
         val pool = MutableConstantPool()
         val stream = byteArrayOf(
             *pool.resolveUtf8("test").toBytes(),
@@ -275,7 +275,7 @@ class MutableFieldTests : FreeSpec({
         field.flags shouldBe 1.toShort()
     }
 
-    "test equals" {
+    "equals" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         val field2 = MutableField(pool, 0, 0, mutableListOf())
@@ -290,7 +290,7 @@ class MutableFieldTests : FreeSpec({
         field shouldNotBe field5
     }
 
-    "test hash code" {
+    "hash code" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         val field2 = MutableField(pool, 0, 0, mutableListOf())
@@ -305,7 +305,7 @@ class MutableFieldTests : FreeSpec({
         field.hashCode() shouldNotBe field5.hashCode()
     }
 
-    "test from field" {
+    "from field" {
         val pool = MutableConstantPool()
         val field = Field(pool, pool.resolveUtf8("aaa"), 0, listOf())
         val mutableField = MutableField.fromField(pool, field)
@@ -314,14 +314,14 @@ class MutableFieldTests : FreeSpec({
         mutableField.attributes shouldContainExactly field.attributes
     }
 
-    "test set name" {
+    "set name" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         field.name = "test"
         field.name shouldBe "test"
     }
 
-    "test attributes" {
+    "attributes" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         field.attributes.size shouldBe 0
@@ -333,7 +333,7 @@ class MutableFieldTests : FreeSpec({
         field.attributes.size shouldBe 3
     }
 
-    "test set name constant" {
+    "set name constant" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, pool.resolveUtf8("aaa"), 0, mutableListOf())
         field.nameConstant shouldBe 0
@@ -342,42 +342,42 @@ class MutableFieldTests : FreeSpec({
         field.nameConstant shouldBe 1
     }
 
-    "test set public" {
+    "set public" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         field.isPublic = true
         field.isPublic shouldBe true
     }
 
-    "test set private" {
+    "set private" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         field.isPrivate = true
         field.isPrivate shouldBe true
     }
 
-    "test set protected" {
+    "set protected" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         field.isProtected = true
         field.isProtected shouldBe true
     }
 
-    "test set static" {
+    "set static" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         field.isStatic = true
         field.isStatic shouldBe true
     }
 
-    "test set final" {
+    "set final" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         field.isFinal = true
         field.isFinal shouldBe true
     }
 
-    "test set flags" {
+    "set flags" {
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, mutableListOf())
         field.flags shouldBe 0
