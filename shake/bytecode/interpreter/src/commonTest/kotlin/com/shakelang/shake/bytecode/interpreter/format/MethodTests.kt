@@ -55,7 +55,7 @@ class MethodTests : FreeSpec({
 
     }
 
-    "is public" {
+    "is public (true)" {
 
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000001, emptyList())
@@ -63,7 +63,15 @@ class MethodTests : FreeSpec({
 
     }
 
-    "is private" {
+    "is public (false)" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
+        method.isPublic shouldBe false
+
+    }
+
+    "is private (true)" {
 
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000010, emptyList())
@@ -71,7 +79,15 @@ class MethodTests : FreeSpec({
 
     }
 
-    "is protected" {
+    "is private (false)" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
+        method.isPrivate shouldBe false
+
+    }
+
+    "is protected (true)" {
 
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000100, emptyList())
@@ -79,7 +95,15 @@ class MethodTests : FreeSpec({
 
     }
 
-    "is static" {
+    "is protected (false)" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
+        method.isProtected shouldBe false
+
+    }
+
+    "is static (true)" {
 
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00001000, emptyList())
@@ -87,11 +111,27 @@ class MethodTests : FreeSpec({
 
     }
 
-    "is final" {
+    "is static (false)" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
+        method.isStatic shouldBe false
+
+    }
+
+    "is final (true)" {
 
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
         method.isFinal shouldBe true
+
+    }
+
+    "is final (false)" {
+
+        val pool = MutableConstantPool()
+        val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
+        method.isFinal shouldBe false
 
     }
 
@@ -342,7 +382,7 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "is public" {
+    "is public (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000001, mutableListOf())
@@ -350,7 +390,7 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "set is public" {
+    "set is public (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
@@ -359,7 +399,33 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "is private" {
+    "is public (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b1111111_11111110, mutableListOf())
+        method.isPublic shouldBe false
+
+    }
+
+    "set public (true)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
+        method.isPublic = true
+        method.isPublic shouldBe true
+
+    }
+
+    "set public (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b1111111_11111111, mutableListOf())
+        method.isPublic = false
+        method.isPublic shouldBe false
+
+    }
+
+    "is private (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000010, mutableListOf())
@@ -367,7 +433,15 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "set is private" {
+    "is private (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00000000, mutableListOf())
+        method.isPrivate shouldBe false
+
+    }
+
+    "set is private (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
@@ -376,7 +450,16 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "is protected" {
+    "set is private (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b1111111_11111101, mutableListOf())
+        method.isPrivate = false
+        method.isPrivate shouldBe false
+
+    }
+
+    "is protected (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000100, mutableListOf())
@@ -384,7 +467,15 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "set is protected" {
+    "is protected (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00000000, mutableListOf())
+        method.isProtected shouldBe false
+
+    }
+
+    "set is protected (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
@@ -393,7 +484,16 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "is static" {
+    "set is protected (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b1111111_11111011, mutableListOf())
+        method.isProtected = false
+        method.isProtected shouldBe false
+
+    }
+
+    "is static (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00001000, mutableListOf())
@@ -401,7 +501,15 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "set is static" {
+    "is static (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00000000, mutableListOf())
+        method.isStatic shouldBe false
+
+    }
+
+    "set is static (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
@@ -410,7 +518,16 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "is final" {
+    "set is static (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b1111111_11110111, mutableListOf())
+        method.isStatic = false
+        method.isStatic shouldBe false
+
+    }
+
+    "is final (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
@@ -418,12 +535,29 @@ class MutableMethodTests : FreeSpec({
 
     }
 
-    "set is final" {
+    "is final (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b00000000_00000000, mutableListOf())
+        method.isFinal shouldBe false
+
+    }
+
+    "set is final (true)" {
 
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.isFinal = true
         method.isFinal shouldBe true
+
+    }
+
+    "set is final (false)" {
+
+        val pool = MutableConstantPool()
+        val method = MutableMethod(pool, 0, 1, 0b1111111_11101111, mutableListOf())
+        method.isFinal = false
+        method.isFinal shouldBe false
 
     }
 
