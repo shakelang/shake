@@ -193,6 +193,10 @@ class MutableClass(
     override val subClasses: MutableList<MutableClass>
         get() = super.subClasses as MutableList<MutableClass>
 
+    @Suppress("UNCHECKED_CAST")
+    override val attributes: MutableList<MutableAttribute>
+        get() = super.attributes as MutableList<MutableAttribute>
+
     override var isPublic: Boolean
         get() = super.isPublic
         set(value) { flags = if (value) flags or 0b00000000_00000001.toShort() else flags and 0b11111111_11111110.toShort() }
@@ -225,10 +229,6 @@ class MutableClass(
         get() = interfacesConstants.map { pool.getUtf8(it).value }
         set(value) { interfacesConstants = value.map { pool.resolveUtf8(it) }.toMutableList() }
 
-    fun addField(field: MutableField) = fields.add(field)
-    fun addMethod(method: MutableMethod) = methods.add(method)
-    fun addSubClass(subClass: MutableClass) = subClasses.add(subClass)
-
     companion object {
         fun fromClass(pool: MutableConstantPool, class_: Class): MutableClass {
             return MutableClass(
@@ -241,6 +241,33 @@ class MutableClass(
                 class_.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
                 class_.subClasses.map { fromClass(pool, it) }.toMutableList(),
                 class_.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
+            )
+        }
+
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableClass {
+            val name = stream.readInt()
+            val superName = stream.readInt()
+            val flags = stream.readShort()
+            val interfacesCount = stream.readShort().toInt()
+            val interfaces = (0 until interfacesCount).map { stream.readInt() }.toMutableList()
+            val fieldsCount = stream.readShort().toInt()
+            val fields = (0 until fieldsCount).map { MutableField.fromStream(pool, stream) }.toMutableList()
+            val methodsCount = stream.readShort().toInt()
+            val methods = (0 until methodsCount).map { MutableMethod.fromStream(pool, stream) }.toMutableList()
+            val subClassesCount = stream.readShort().toInt()
+            val subClasses = (0 until subClassesCount).map { fromStream(pool, stream) }.toMutableList()
+            val attributesCount = stream.readShort().toInt()
+            val attributes = (0 until attributesCount).map { MutableAttribute.fromStream(pool, stream) }.toMutableList()
+            return MutableClass(
+                pool,
+                name,
+                superName,
+                flags,
+                interfaces,
+                fields,
+                methods,
+                subClasses,
+                attributes
             )
         }
     }
