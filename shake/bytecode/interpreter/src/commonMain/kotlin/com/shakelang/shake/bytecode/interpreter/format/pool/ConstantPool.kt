@@ -130,18 +130,9 @@ open class ConstantPool(
         if (this === other) return true
         if (other !is ConstantPool) return false
 
-        // find matching entries
-
-        // TODO this is not the best way to do this (O(n^2))
-        for (entry in entries) {
-            if (entry !in other.entries) return false
+        return entries.mapIndexed { index, entry -> index to entry }.all { (index, entry) ->
+            other.entries[index] == entry
         }
-
-        for (entry in other.entries) {
-            if (entry !in entries) return false
-        }
-
-        return true
     }
 
     companion object {

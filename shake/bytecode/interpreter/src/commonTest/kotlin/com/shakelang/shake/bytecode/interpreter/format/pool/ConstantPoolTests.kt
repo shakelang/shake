@@ -1,8 +1,13 @@
 package com.shakelang.shake.bytecode.interpreter.format.pool
 
+import com.shakelang.shake.util.io.streaming.input.dataStream
+import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.shake.util.primitives.bytes.toBytes
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class ConstantPoolTests : FreeSpec({
 
@@ -291,5 +296,109 @@ class ConstantPoolTests : FreeSpec({
         pool.findClass(0) shouldBe 1
         pool.findClass(1) shouldBe 2
         pool.findClass(2) shouldBe null
+    }
+
+    "test bump" {
+        val stream = ByteArrayOutputStream()
+        val dataStream = DataOutputStream(stream)
+        val pool = ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.ClassConstant(0),
+                ConstantPoolEntry.ClassConstant(1)
+            )
+        )
+
+        pool.dump(dataStream)
+
+        stream.toByteArray() contentEquals byteArrayOf(
+            *3.toBytes(), // size
+            1.toByte(), // constant type (utf8)
+            *4.toShort().toBytes(), // length of utf8
+            *"test".toBytes(), // value of utf8
+            8.toByte(), // constant type (class)
+            *0.toBytes(), // identifier of class
+            8.toByte(), // constant type (class)
+            *1.toBytes() // identifier of class
+        ) shouldBe true
+    }
+
+    "test bump to array" {
+        val pool = ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.ClassConstant(0),
+                ConstantPoolEntry.ClassConstant(1)
+            )
+        )
+
+        val arr = pool.dump()
+
+        arr contentEquals byteArrayOf(
+            *3.toBytes(), // size
+            1.toByte(), // constant type (utf8)
+            *4.toShort().toBytes(), // length of utf8
+            *"test".toBytes(), // value of utf8
+            8.toByte(), // constant type (class)
+            *0.toBytes(), // identifier of class
+            8.toByte(), // constant type (class)
+            *1.toBytes() // identifier of class
+        ) shouldBe true
+    }
+
+    "equals" {
+        val pool = ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.ClassConstant(0),
+                ConstantPoolEntry.ClassConstant(1)
+            )
+        )
+
+        pool shouldBe pool
+        pool shouldBe ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.ClassConstant(0),
+                ConstantPoolEntry.ClassConstant(1)
+            )
+        )
+        pool shouldNotBe ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.ClassConstant(1),
+                ConstantPoolEntry.ClassConstant(0),
+            )
+        )
+        pool shouldNotBe ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.ClassConstant(0),
+                ConstantPoolEntry.ClassConstant(2)
+            )
+        )
+    }
+
+    "from stream" {
+        val stream = byteArrayOf(
+            *3.toBytes(), // size
+            1.toByte(), // constant type (utf8)
+            *4.toShort().toBytes(), // length of utf8
+            *"test".toBytes(), // value of utf8
+            8.toByte(), // constant type (class)
+            *0.toBytes(), // identifier of class
+            8.toByte(), // constant type (class)
+            *1.toBytes() // identifier of class
+        ).dataStream()
+
+        val pool = ConstantPool.fromStream(stream)
+
+        pool shouldBe ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.ClassConstant(0),
+                ConstantPoolEntry.ClassConstant(1)
+            )
+        )
     }
 })
