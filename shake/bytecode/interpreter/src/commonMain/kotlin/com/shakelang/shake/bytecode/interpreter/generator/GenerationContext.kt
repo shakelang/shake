@@ -62,6 +62,7 @@ class FieldGenerationContext {
     var name : String = UNDEFINED
         set(value) {
             if(field != UNDEFINED) throw Error("Name already specified")
+            field = value
         }
 
     var flags : Short = 0x00
@@ -116,6 +117,7 @@ class MethodGenerationContext {
     var name: String = UNDEFINED
         set(value) {
             if (field != UNDEFINED) throw Error("Name already specified")
+            field = value
         }
 
     var flags: Short = 0x00
@@ -174,11 +176,13 @@ class ClassGenerationContext {
     var name: String = UNDEFINED
         set(value) {
             if (field != UNDEFINED) throw Error("Name already specified")
+            field = value
         }
 
     var superName: String = UNDEFINED
         set(value) {
             if (field != UNDEFINED) throw Error("SuperName already specified")
+            field = value
         }
 
     var interfaces: MutableList<String> = mutableListOf()
@@ -287,6 +291,7 @@ class AttributeGenerationContext {
     var name: String = UNDEFINED
         set(value) {
             if (field != UNDEFINED) throw Error("Name already specified")
+            field = value
         }
 
     var data: ByteArray = byteArrayOf()

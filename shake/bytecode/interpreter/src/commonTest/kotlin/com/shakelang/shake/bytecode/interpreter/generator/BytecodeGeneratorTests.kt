@@ -1,8 +1,8 @@
 @file:Suppress("unused")
 
-package com.shakelang.shake.bytecode.interpreter
+package com.shakelang.shake.bytecode.interpreter.generator
 
-import com.shakelang.shake.bytecode.interpreter.generator.bytecode
+import com.shakelang.shake.bytecode.interpreter.Opcodes
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
