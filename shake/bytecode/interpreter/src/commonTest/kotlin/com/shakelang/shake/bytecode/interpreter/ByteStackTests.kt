@@ -326,4 +326,17 @@ class ByteStackTests : FreeSpec({
         stack.push(3.toByte())
         stack.toByteArray() shouldContainExactly byteArrayOf(3, 2, 1)
     }
+
+    "test peek" {
+        val stack = ByteStack()
+        stack.push(1.toByte())
+        stack.push(2.toByte())
+        stack.push(3.toByte())
+        stack.peek() shouldBe 3.toByte()
+        stack.pop() shouldBe 3.toByte()
+        stack.peek() shouldBe 2.toByte()
+        stack.pop() shouldBe 2.toByte()
+        stack.peek() shouldBe 1.toByte()
+        stack.pop() shouldBe 1.toByte()
+    }
 })
