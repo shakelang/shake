@@ -2,6 +2,8 @@
 
 package com.shakelang.shake.bytecode.interpreter
 
+import com.shakelang.shake.util.testlib.shouldContainExactly
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -300,5 +302,28 @@ class ByteStackTests : FreeSpec({
         stack.popULong() shouldBe 3.toULong()
         stack.popULong() shouldBe 2.toULong()
         stack.popULong() shouldBe 1.toULong()
+    }
+
+    "test stack overflow" {
+        val stack = ByteStack(256)
+        for (i in 0 until 256) stack.push(1.toByte())
+        shouldThrow<StackOverflowException> {
+            stack.push(1.toByte())
+        }
+    }
+
+    "test stack underflow" {
+        val stack = ByteStack()
+        shouldThrow<StackUnderflowException> {
+            stack.pop()
+        }
+    }
+
+    "test to byte array" {
+        val stack = ByteStack()
+        stack.push(1.toByte())
+        stack.push(2.toByte())
+        stack.push(3.toByte())
+        stack.toByteArray() shouldContainExactly byteArrayOf(3, 2, 1)
     }
 })
