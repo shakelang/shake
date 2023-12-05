@@ -142,6 +142,10 @@ class MutableStorageFormat(
         }
 
         fun fromStream(stream: DataInputStream): MutableStorageFormat {
+            val magic = stream.readInt()
+            if (magic != MAGIC) throw IllegalArgumentException("Magic number is not correct")
+            val major = stream.readShort()
+            val minor = stream.readShort()
             val pool = MutableConstantPool.fromStream(stream)
             val classesCount = stream.readShort().toInt()
             val classes = mutableListOf<MutableClass>()
@@ -159,8 +163,8 @@ class MutableStorageFormat(
                 methods.add(MutableMethod.fromStream(pool, stream))
             }
             return MutableStorageFormat(
-                stream.readShort(),
-                stream.readShort(),
+                major,
+                minor,
                 pool,
                 classes,
                 fields,
