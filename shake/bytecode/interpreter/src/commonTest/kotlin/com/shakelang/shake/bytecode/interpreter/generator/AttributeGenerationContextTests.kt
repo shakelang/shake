@@ -1,8 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.generator
 
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.shake.bytecode.interpreter.generator.AttributeGenerationContext
-import com.shakelang.shake.bytecode.interpreter.generator.FieldGenerationContext
 import com.shakelang.shake.util.testlib.shouldContainExactly
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -12,7 +10,7 @@ class AttributeGenerationContextTests : FreeSpec({
     "test attribute generation" {
 
         val ctx = AttributeGenerationContext()
-        ctx.name shouldBe ":undefined:"
+        ctx.name shouldBe GenerationContext.UNDEFINED
         ctx.data shouldBe byteArrayOf()
 
         ctx.name = "test"
@@ -43,7 +41,7 @@ class FieldGenerationContextTests : FreeSpec({
     "test field generation" {
 
         val ctx = FieldGenerationContext()
-        ctx.name shouldBe ":undefined:"
+        ctx.name shouldBe GenerationContext.UNDEFINED
         ctx.flags shouldBe 0
         ctx.isFinal shouldBe false
         ctx.isStatic shouldBe false
@@ -56,7 +54,7 @@ class FieldGenerationContextTests : FreeSpec({
     "test name" {
 
         val ctx = FieldGenerationContext()
-        ctx.name shouldBe ":undefined:"
+        ctx.name shouldBe GenerationContext.UNDEFINED
         ctx.name = "test"
         ctx.name shouldBe "test"
 

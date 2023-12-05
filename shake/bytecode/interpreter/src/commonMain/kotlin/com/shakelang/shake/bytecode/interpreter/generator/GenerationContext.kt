@@ -5,8 +5,6 @@ import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-const val UNDEFINED = ":undefined:"
-
 class GenerationContext {
 
     val classes: MutableList<ClassGenerationContext> = mutableListOf()
@@ -55,13 +53,17 @@ class GenerationContext {
         )
     }
 
+    companion object {
+        const val UNDEFINED = ":undefined:"
+    }
+
 }
 
 class FieldGenerationContext {
 
-    var name : String = UNDEFINED
+    var name : String = GenerationContext.UNDEFINED
         set(value) {
-            if(field != UNDEFINED) throw Error("Name already specified")
+            if(field != GenerationContext.UNDEFINED) throw Error("Name already specified")
             field = value
         }
 
@@ -114,9 +116,9 @@ class FieldGenerationContext {
 
 class MethodGenerationContext {
 
-    var name: String = UNDEFINED
+    var name: String = GenerationContext.UNDEFINED
         set(value) {
-            if (field != UNDEFINED) throw Error("Name already specified")
+            if (field != GenerationContext.UNDEFINED) throw Error("Name already specified")
             field = value
         }
 
@@ -173,15 +175,15 @@ class MethodGenerationContext {
 
 class ClassGenerationContext {
 
-    var name: String = UNDEFINED
+    var name: String = GenerationContext.UNDEFINED
         set(value) {
-            if (field != UNDEFINED) throw Error("Name already specified")
+            if (field != GenerationContext.UNDEFINED) throw Error("Name already specified")
             field = value
         }
 
-    var superName: String = UNDEFINED
+    var superName: String = GenerationContext.UNDEFINED
         set(value) {
-            if (field != UNDEFINED) throw Error("SuperName already specified")
+            if (field != GenerationContext.UNDEFINED) throw Error("SuperName already specified")
             field = value
         }
 
@@ -288,9 +290,9 @@ class ClassGenerationContext {
 
 class AttributeGenerationContext {
 
-    var name: String = UNDEFINED
+    var name: String = GenerationContext.UNDEFINED
         set(value) {
-            if (field != UNDEFINED) throw Error("Name already specified")
+            if (field != GenerationContext.UNDEFINED) throw Error("Name already specified")
             field = value
         }
 
