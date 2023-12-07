@@ -52,7 +52,7 @@ open class StorageFormat(
         if (major != other.major) return false
         if (minor != other.minor) return false
         if (constantPool != other.constantPool) return false
-        
+
         // TODO this is not the best way to do this (O(n^2))
 
         // find matching classes
