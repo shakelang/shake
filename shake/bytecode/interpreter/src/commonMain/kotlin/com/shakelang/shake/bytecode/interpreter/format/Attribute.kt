@@ -47,9 +47,7 @@ open class Attribute(
             }
             return Attribute(pool, name, value)
         }
-
     }
-
 }
 
 class MutableAttribute(
