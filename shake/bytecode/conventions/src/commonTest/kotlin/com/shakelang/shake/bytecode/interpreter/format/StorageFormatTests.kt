@@ -17,6 +17,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(),
@@ -30,6 +31,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(),
@@ -43,6 +45,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(),
@@ -56,6 +59,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(),
@@ -69,6 +73,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(),
@@ -96,6 +101,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(clazz),
             fields = listOf(),
@@ -109,6 +115,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(),
@@ -131,6 +138,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(field),
@@ -144,6 +152,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(),
@@ -167,6 +176,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(),
@@ -209,6 +219,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -218,6 +229,7 @@ class StorageFormatTests : FreeSpec({
         val format2 = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -227,6 +239,7 @@ class StorageFormatTests : FreeSpec({
         val format3 = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -236,6 +249,7 @@ class StorageFormatTests : FreeSpec({
         val format4 = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(),
@@ -245,6 +259,7 @@ class StorageFormatTests : FreeSpec({
         val format5 = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(),
             fields = listOf(field),
@@ -254,6 +269,7 @@ class StorageFormatTests : FreeSpec({
         val format6 = StorageFormat(
             major = 1,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -263,6 +279,7 @@ class StorageFormatTests : FreeSpec({
         val format7 = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -311,6 +328,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -320,6 +338,7 @@ class StorageFormatTests : FreeSpec({
         val format2 = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -329,6 +348,7 @@ class StorageFormatTests : FreeSpec({
         val format3 = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -338,6 +358,7 @@ class StorageFormatTests : FreeSpec({
         val format4 = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(),
@@ -347,6 +368,7 @@ class StorageFormatTests : FreeSpec({
         val format5 = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(),
             fields = listOf(field),
@@ -356,6 +378,7 @@ class StorageFormatTests : FreeSpec({
         val format6 = StorageFormat(
             major = 1,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -365,6 +388,7 @@ class StorageFormatTests : FreeSpec({
         val format7 = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -386,6 +410,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = listOf(),
             fields = listOf(),
@@ -398,6 +423,7 @@ class StorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
+            *0.toBytes(),
             *0.toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
@@ -440,6 +466,7 @@ class StorageFormatTests : FreeSpec({
         val format = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -452,6 +479,7 @@ class StorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
+            *0.toBytes(),
             *pool.dump(),
             *1.toShort().toBytes(),
             *clazz.dump(),
@@ -468,6 +496,7 @@ class StorageFormatTests : FreeSpec({
         val storageFormat = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(),
             fields = listOf(),
@@ -480,6 +509,7 @@ class StorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
+            *0.toBytes(),
             *0.toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
@@ -520,6 +550,7 @@ class StorageFormatTests : FreeSpec({
         val storageFormat = StorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = listOf(clazz),
             fields = listOf(field),
@@ -532,6 +563,7 @@ class StorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
+            *0.toBytes(),
             *pool.dump(),
             *1.toShort().toShort().toBytes(),
             *clazz.dump(),
@@ -545,10 +577,13 @@ class StorageFormatTests : FreeSpec({
     "from stream" {
         val pool = MutableConstantPool()
 
+        pool.resolveUtf8("test")
+
         val stream = byteArrayOf(
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
+            *0.toBytes(),
             *pool.dump(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
@@ -563,6 +598,7 @@ class StorageFormatTests : FreeSpec({
             constantPool = pool,
             classes = listOf(),
             fields = listOf(),
+            packageNameConstant = 0,
             methods = listOf()
         )
     }
@@ -601,6 +637,7 @@ class StorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
+            *0.toBytes(),
             *pool.dump(),
             *1.toShort().toBytes(),
             *clazz.dump(),
@@ -624,6 +661,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -637,6 +675,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -650,6 +689,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -663,6 +703,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -676,6 +717,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -689,6 +731,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -702,6 +745,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -716,6 +760,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -743,6 +788,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(clazz),
             fields = mutableListOf(),
@@ -770,6 +816,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -783,6 +830,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -803,6 +851,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(field),
@@ -825,6 +874,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -838,6 +888,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -859,6 +910,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -882,6 +934,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -924,6 +977,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -933,6 +987,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format2 = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -942,6 +997,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format3 = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -951,6 +1007,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format4 = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(),
@@ -960,6 +1017,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format5 = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(),
             fields = mutableListOf(field),
@@ -969,6 +1027,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format6 = MutableStorageFormat(
             major = 1,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -978,6 +1037,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format7 = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -1026,6 +1086,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -1035,6 +1096,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format2 = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -1044,6 +1106,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format3 = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -1053,6 +1116,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format4 = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(),
@@ -1062,6 +1126,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format5 = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(),
             fields = mutableListOf(field),
@@ -1071,6 +1136,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format6 = MutableStorageFormat(
             major = 1,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -1080,6 +1146,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format7 = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -1101,6 +1168,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 0,
+            packageNameConstant = 0,
             constantPool = MutableConstantPool(),
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -1113,6 +1181,7 @@ class MutableStorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
+            *0.toBytes(),
             *0.toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
@@ -1155,6 +1224,7 @@ class MutableStorageFormatTests : FreeSpec({
         val format = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -1167,6 +1237,7 @@ class MutableStorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
+            *0.toBytes(),
             *pool.dump(),
             *1.toShort().toBytes(),
             *clazz.dump(),
@@ -1183,6 +1254,7 @@ class MutableStorageFormatTests : FreeSpec({
         val storageFormat = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -1195,10 +1267,11 @@ class MutableStorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
-            *0.toBytes(),
-            *0.toShort().toBytes(),
-            *0.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toBytes(), // packageNameConstant
+            *0.toBytes(), // constantPool
+            *0.toShort().toBytes(), // classes
+            *0.toShort().toBytes(), // fields
+            *0.toShort().toBytes(), // methods
         )
     }
 
@@ -1235,6 +1308,7 @@ class MutableStorageFormatTests : FreeSpec({
         val storageFormat = MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(clazz),
             fields = mutableListOf(field),
@@ -1247,6 +1321,7 @@ class MutableStorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
+            *0.toBytes(),
             *pool.dump(),
             *1.toShort().toShort().toBytes(),
             *clazz.dump(),
@@ -1264,6 +1339,7 @@ class MutableStorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
+            *pool.resolveUtf8("test").toBytes(),
             *pool.dump(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
@@ -1275,6 +1351,7 @@ class MutableStorageFormatTests : FreeSpec({
         format shouldBe MutableStorageFormat(
             major = 0,
             minor = 1,
+            packageNameConstant = 0,
             constantPool = pool,
             classes = mutableListOf(),
             fields = mutableListOf(),
@@ -1316,6 +1393,7 @@ class MutableStorageFormatTests : FreeSpec({
             *0x4a16a478.toBytes(),
             *0.toShort().toBytes(),
             *1.toShort().toBytes(),
+            *0.toBytes(),
             *pool.dump(),
             *1.toShort().toBytes(),
             *clazz.dump(),

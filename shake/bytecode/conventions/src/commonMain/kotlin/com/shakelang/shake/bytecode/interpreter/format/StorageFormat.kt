@@ -11,6 +11,7 @@ const val MAGIC = 0x4a16a478 // SHAKE MAGIC
 open class StorageFormat(
     open val major: Short,
     open val minor: Short,
+    open val packageNameConstant: Int,
     open val constantPool: ConstantPool,
     open val classes: List<Class>,
     open val fields: List<Field>,
@@ -18,11 +19,14 @@ open class StorageFormat(
 ) {
 
     open val magic: Int = MAGIC
+    open val packageName: String
+        get() = constantPool.getUtf8(packageNameConstant).value
 
     fun dump(stream: DataOutputStream) {
         stream.writeInt(magic)
         stream.writeShort(major)
         stream.writeShort(minor)
+        stream.writeInt(packageNameConstant)
         constantPool.dump(stream)
         stream.writeShort(classes.size.toShort())
         for (clazz in classes) {
@@ -51,6 +55,7 @@ open class StorageFormat(
 
         if (major != other.major) return false
         if (minor != other.minor) return false
+        if (packageName != other.packageName) return false
         if (constantPool != other.constantPool) return false
         
         // TODO this is not the best way to do this (O(n^2))
@@ -92,6 +97,7 @@ open class StorageFormat(
 
             val major = stream.readShort()
             val minor = stream.readShort()
+            val packageNameConstant = stream.readInt()
             val constantPool = ConstantPool.fromStream(stream)
             val classesCount = stream.readShort().toInt()
             val classes = mutableListOf<Class>()
@@ -108,7 +114,7 @@ open class StorageFormat(
             for (i in 0 until methodsCount) {
                 methods.add(Method.fromStream(constantPool, stream))
             }
-            return StorageFormat(major, minor, constantPool, classes, fields, methods)
+            return StorageFormat(major, minor, packageNameConstant, constantPool, classes, fields, methods)
         }
     }
 }
@@ -116,6 +122,7 @@ open class StorageFormat(
 class MutableStorageFormat(
     override var major: Short,
     override var minor: Short,
+    override var packageNameConstant: Int,
     override var constantPool: MutableConstantPool,
     override var classes: MutableList<MutableClass>,
     override var fields: MutableList<MutableField>,
@@ -123,17 +130,25 @@ class MutableStorageFormat(
 ) : StorageFormat(
     major,
     minor,
+    packageNameConstant,
     constantPool,
     classes,
     fields,
     methods
 ) {
+    override var packageName: String
+        get() = constantPool.getUtf8(packageNameConstant).value
+        set(value) {
+            packageNameConstant = constantPool.resolveUtf8(value)
+        }
+
     companion object {
         fun fromStorageFormat(storageFormat: StorageFormat): MutableStorageFormat {
             val pool = MutableConstantPool.fromConstantPool(storageFormat.constantPool)
             return MutableStorageFormat(
                 storageFormat.major,
                 storageFormat.minor,
+                storageFormat.packageNameConstant,
                 pool,
                 storageFormat.classes.map { MutableClass.fromClass(pool, it) }.toMutableList(),
                 storageFormat.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
@@ -146,6 +161,7 @@ class MutableStorageFormat(
             if (magic != MAGIC) throw IllegalArgumentException("Magic number is not correct")
             val major = stream.readShort()
             val minor = stream.readShort()
+            val packageNameConstant = stream.readInt()
             val pool = MutableConstantPool.fromStream(stream)
             val classesCount = stream.readShort().toInt()
             val classes = mutableListOf<MutableClass>()
@@ -165,6 +181,7 @@ class MutableStorageFormat(
             return MutableStorageFormat(
                 major,
                 minor,
+                packageNameConstant,
                 pool,
                 classes,
                 fields,

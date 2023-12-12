@@ -7,6 +7,12 @@ import kotlin.experimental.or
 
 class GenerationContext {
 
+    var name: String = UNDEFINED
+        set(value) {
+            if (field != UNDEFINED) throw Error("Name already specified")
+            field = value
+        }
+
     val classes: MutableList<ClassGenerationContext> = mutableListOf()
     val methods: MutableList<MethodGenerationContext> = mutableListOf()
     val fields: MutableList<FieldGenerationContext> = mutableListOf()
@@ -30,10 +36,11 @@ class GenerationContext {
     }
 
     fun toStorageFormat(): StorageFormat {
-        val pool: MutableConstantPool = MutableConstantPool()
+        val pool = MutableConstantPool()
         return StorageFormat(
             0x00,
             0x01,
+            pool.resolveUtf8(name),
             pool,
             classes.map { it.toClass(pool) },
             fields.map { it.toField(pool) },
@@ -42,10 +49,11 @@ class GenerationContext {
     }
 
     fun toMutableStorageFormat(): MutableStorageFormat {
-        val pool: MutableConstantPool = MutableConstantPool()
+        val pool = MutableConstantPool()
         return MutableStorageFormat(
             0x00,
             0x01,
+            pool.resolveUtf8(name),
             pool,
             classes.map { it.toMutableClass(pool) }.toMutableList(),
             fields.map { it.toMutableField(pool) }.toMutableList(),
@@ -240,6 +248,7 @@ class ClassGenerationContext {
     var interfaces: MutableList<String> = mutableListOf()
         set(value) {
             if (field.isNotEmpty()) throw Error("Interfaces already specified")
+            field = value
         }
 
     var flags: Short = 0x00
