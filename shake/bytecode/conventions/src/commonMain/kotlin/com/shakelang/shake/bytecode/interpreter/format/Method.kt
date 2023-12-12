@@ -54,7 +54,7 @@ open class Method(
         if (nameConstant != other.nameConstant) return false
         if (qualifiedNameConstant != other.qualifiedNameConstant) return false
         if (flags != other.flags) return false
-        
+
         // TODO this is not the best way to do this (O(n^2))
 
         // find matching attributes
@@ -96,7 +96,7 @@ class MutableMethod(
     override var nameConstant: Int,
     override var qualifiedNameConstant: Int,
     override var flags: Short,
-    attributes: MutableList<Attribute>,
+    attributes: MutableList<Attribute>
 ) : Method(pool, nameConstant, qualifiedNameConstant, flags, attributes) {
 
     override var name: String
@@ -119,36 +119,51 @@ class MutableMethod(
     override var isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
         set(value) {
-            flags = if (value) flags or 0b00000000_00000001.toShort()
-            else flags and 0b11111111_11111110.toShort()
+            flags = if (value) {
+                flags or 0b00000000_00000001.toShort()
+            } else {
+                flags and 0b11111111_11111110.toShort()
+            }
         }
 
     override var isPrivate: Boolean
         get() = flags and 0b00000000_00000010.toShort() != 0.toShort()
         set(value) {
-            flags = if (value) flags or 0b00000000_00000010.toShort()
-            else flags and 0b11111111_11111101.toShort()
+            flags = if (value) {
+                flags or 0b00000000_00000010.toShort()
+            } else {
+                flags and 0b11111111_11111101.toShort()
+            }
         }
 
     override var isProtected: Boolean
         get() = flags and 0b00000000_00000100.toShort() != 0.toShort()
         set(value) {
-            flags = if (value) flags or 0b00000000_00000100.toShort()
-            else flags and 0b11111111_11111011.toShort()
+            flags = if (value) {
+                flags or 0b00000000_00000100.toShort()
+            } else {
+                flags and 0b11111111_11111011.toShort()
+            }
         }
 
     override var isStatic: Boolean
         get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
         set(value) {
-            flags = if (value) flags or 0b00000000_00001000.toShort()
-            else flags and 0b11111111_11110111.toShort()
+            flags = if (value) {
+                flags or 0b00000000_00001000.toShort()
+            } else {
+                flags and 0b11111111_11110111.toShort()
+            }
         }
 
     override var isFinal: Boolean
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
         set(value) {
-            flags = if (value) flags or 0b00000000_00010000.toShort()
-            else flags and 0b11111111_11101111.toShort()
+            flags = if (value) {
+                flags or 0b00000000_00010000.toShort()
+            } else {
+                flags and 0b11111111_11101111.toShort()
+            }
         }
 
     companion object {

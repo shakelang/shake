@@ -36,7 +36,7 @@ open class Class(
     open val isStatic: Boolean
         get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
 
-    open  val isFinal: Boolean
+    open val isFinal: Boolean
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
 
     fun dump(stream: DataOutputStream) {
@@ -70,7 +70,7 @@ open class Class(
         if (nameConstant != other.nameConstant) return false
         if (superNameConstant != other.superNameConstant) return false
         if (flags != other.flags) return false
-        
+
         // TODO this is not the best way to do this (O(n^2))
 
         // find matching interfaces
