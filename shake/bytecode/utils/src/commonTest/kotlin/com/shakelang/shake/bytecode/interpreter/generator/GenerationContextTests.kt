@@ -759,4 +759,28 @@ class GenerationContextTests : FreeSpec({
 
     }
 
+    "generate shortcut" {
+        val format = generate {
+            Class {
+                name = "test"
+                superName = "super"
+                flags = 0b0000000_00010000.toShort()
+            }
+
+            Method {
+                name = "test"
+                flags = 0b0000000_00010000.toShort()
+            }
+
+            Field {
+                name = "test"
+                flags = 0b0000000_00010000.toShort()
+            }
+        }
+
+        format.classes.size shouldBe 1
+        format.methods.size shouldBe 1
+        format.fields.size shouldBe 1
+    }
+
 })
