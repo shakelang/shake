@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 
 class AttributeGenerationContextTests : FreeSpec({
 
-    "test attribute generation" {
+    "attribute generation" {
 
         val ctx = AttributeGenerationContext()
         ctx.name shouldBe GenerationContext.UNDEFINED
@@ -21,7 +21,7 @@ class AttributeGenerationContextTests : FreeSpec({
 
     }
 
-    "test to attribute" {
+    "to attribute" {
 
         val ctx = AttributeGenerationContext()
         ctx.name = "test"
@@ -34,7 +34,7 @@ class AttributeGenerationContextTests : FreeSpec({
 
     }
 
-    "test to mutable attribute" {
+    "to mutable attribute" {
 
         val ctx = AttributeGenerationContext()
         ctx.name = "test"
@@ -51,7 +51,7 @@ class AttributeGenerationContextTests : FreeSpec({
 
 class FieldGenerationContextTests : FreeSpec({
 
-    "test field generation" {
+    "field generation" {
 
         val ctx = FieldGenerationContext()
         ctx.name shouldBe GenerationContext.UNDEFINED
@@ -64,7 +64,7 @@ class FieldGenerationContextTests : FreeSpec({
 
     }
 
-    "test name" {
+    "name" {
 
         val ctx = FieldGenerationContext()
         ctx.name shouldBe GenerationContext.UNDEFINED
@@ -73,7 +73,7 @@ class FieldGenerationContextTests : FreeSpec({
 
     }
 
-    "test flags" {
+    "flags" {
 
         val ctx = FieldGenerationContext()
         ctx.flags shouldBe 0
@@ -82,7 +82,7 @@ class FieldGenerationContextTests : FreeSpec({
 
     }
 
-    "test isPublic" {
+    "isPublic" {
 
         val ctx = FieldGenerationContext()
         ctx.isPublic shouldBe false
@@ -93,7 +93,7 @@ class FieldGenerationContextTests : FreeSpec({
 
     }
 
-    "test isPrivate" {
+    "isPrivate" {
 
         val ctx = FieldGenerationContext()
         ctx.isPrivate shouldBe false
@@ -105,7 +105,7 @@ class FieldGenerationContextTests : FreeSpec({
     }
 
 
-    "test isProtected" {
+    "isProtected" {
 
         val ctx = FieldGenerationContext()
         ctx.isProtected shouldBe false
@@ -116,7 +116,7 @@ class FieldGenerationContextTests : FreeSpec({
 
     }
 
-    "test isStatic" {
+    "isStatic" {
 
         val ctx = FieldGenerationContext()
         ctx.isStatic shouldBe false
@@ -127,7 +127,7 @@ class FieldGenerationContextTests : FreeSpec({
 
     }
 
-    "test isFinal" {
+    "isFinal" {
 
         val ctx = FieldGenerationContext()
         ctx.isFinal shouldBe false
@@ -138,7 +138,7 @@ class FieldGenerationContextTests : FreeSpec({
 
     }
 
-    "test to field" {
+    "to field" {
 
         val ctx = FieldGenerationContext()
         ctx.name = "test"
@@ -151,7 +151,7 @@ class FieldGenerationContextTests : FreeSpec({
 
     }
 
-    "test to mutable field" {
+    "to mutable field" {
 
         val ctx = FieldGenerationContext()
         ctx.name = "test"
@@ -167,7 +167,7 @@ class FieldGenerationContextTests : FreeSpec({
 
 class MethodGenerationContextTests : FreeSpec({
 
-    "test method generation" {
+    "method generation" {
 
         val ctx = MethodGenerationContext()
         ctx.name shouldBe GenerationContext.UNDEFINED
@@ -180,7 +180,7 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
-    "test name" {
+    "name" {
 
         val ctx = MethodGenerationContext()
         ctx.name shouldBe GenerationContext.UNDEFINED
@@ -189,7 +189,7 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
-    "test flags" {
+    "flags" {
 
         val ctx = MethodGenerationContext()
         ctx.flags shouldBe 0
@@ -198,7 +198,7 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
-    "test isPublic" {
+    "isPublic" {
 
         val ctx = MethodGenerationContext()
         ctx.isPublic shouldBe false
@@ -209,7 +209,7 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
-    "test isPrivate" {
+    "isPrivate" {
 
         val ctx = MethodGenerationContext()
         ctx.isPrivate shouldBe false
@@ -220,7 +220,7 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
-    "test isProtected" {
+    "isProtected" {
 
         val ctx = MethodGenerationContext()
         ctx.isProtected shouldBe false
@@ -231,7 +231,7 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
-    "test isStatic" {
+    "isStatic" {
 
         val ctx = MethodGenerationContext()
         ctx.isStatic shouldBe false
@@ -242,7 +242,7 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
-    "test isFinal" {
+    "isFinal" {
 
         val ctx = MethodGenerationContext()
         ctx.isFinal shouldBe false
@@ -253,7 +253,7 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
-    "test to method" {
+    "to method" {
 
         val ctx = MethodGenerationContext()
         ctx.name = "test"
@@ -266,7 +266,7 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
-    "test to mutable method" {
+    "to mutable method" {
 
         val ctx = MethodGenerationContext()
         ctx.name = "test"
@@ -283,7 +283,7 @@ class MethodGenerationContextTests : FreeSpec({
 
 class ClassGenerationContextTests : FreeSpec({
 
-    "test class generation" {
+    "class generation" {
 
         val ctx = ClassGenerationContext()
         ctx.name shouldBe GenerationContext.UNDEFINED
@@ -297,7 +297,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test name" {
+    "name" {
 
         val ctx = ClassGenerationContext()
         ctx.name shouldBe GenerationContext.UNDEFINED
@@ -306,7 +306,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test superName" {
+    "superName" {
 
         val ctx = ClassGenerationContext()
         ctx.superName shouldBe GenerationContext.UNDEFINED
@@ -315,7 +315,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test flags" {
+    "flags" {
 
         val ctx = ClassGenerationContext()
         ctx.flags shouldBe 0
@@ -324,7 +324,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test isPublic" {
+    "isPublic" {
 
         val ctx = ClassGenerationContext()
         ctx.isPublic shouldBe false
@@ -335,7 +335,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test isPrivate" {
+    "isPrivate" {
 
         val ctx = ClassGenerationContext()
         ctx.isPrivate shouldBe false
@@ -346,7 +346,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test isProtected" {
+    "isProtected" {
 
         val ctx = ClassGenerationContext()
         ctx.isProtected shouldBe false
@@ -357,7 +357,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test isStatic" {
+    "isStatic" {
 
         val ctx = ClassGenerationContext()
         ctx.isStatic shouldBe false
@@ -368,7 +368,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test isFinal" {
+    "isFinal" {
 
         val ctx = ClassGenerationContext()
         ctx.isFinal shouldBe false
@@ -379,7 +379,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test to class" {
+    "to class" {
 
         val ctx = ClassGenerationContext()
         ctx.name = "test"
@@ -394,7 +394,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
-    "test to mutable class" {
+    "to mutable class" {
 
         val ctx = ClassGenerationContext()
         ctx.name = "test"
@@ -406,6 +406,108 @@ class ClassGenerationContextTests : FreeSpec({
         clazz.name shouldBe "test"
         clazz.superName shouldBe "super"
         clazz.flags shouldBe 0b0000000_00010000.toShort()
+
+    }
+
+})
+
+class GenerationContextTests : FreeSpec({
+
+    "generation context" {
+
+        val ctx = GenerationContext()
+        ctx.classes.size shouldBe 0
+        ctx.methods.size shouldBe 0
+        ctx.fields.size shouldBe 0
+
+    }
+
+    "field generation" {
+
+        val ctx = GenerationContext()
+        ctx.Field {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.fields.size shouldBe 1
+
+    }
+
+    "method generation" {
+
+        val ctx = GenerationContext()
+        ctx.Method {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.methods.size shouldBe 1
+
+    }
+
+    "class generation" {
+
+        val ctx = GenerationContext()
+        ctx.Class {
+            name = "test"
+            superName = "super"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.classes.size shouldBe 1
+
+    }
+
+    "toStorageFormat" {
+
+        val ctx = GenerationContext()
+        ctx.Class {
+            name = "test"
+            superName = "super"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.Method {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.Field {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        val format = ctx.toStorageFormat()
+        format.classes.size shouldBe 1
+        format.methods.size shouldBe 1
+        format.fields.size shouldBe 1
+
+    }
+
+    "toMutableStorageFormat" {
+
+        val ctx = GenerationContext()
+        ctx.Class {
+            name = "test"
+            superName = "super"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.Method {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.Field {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        val format = ctx.toMutableStorageFormat()
+        format.classes.size shouldBe 1
+        format.methods.size shouldBe 1
+        format.fields.size shouldBe 1
 
     }
 
