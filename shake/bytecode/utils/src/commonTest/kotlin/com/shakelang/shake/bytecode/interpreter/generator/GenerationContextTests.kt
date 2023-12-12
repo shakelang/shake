@@ -487,7 +487,7 @@ class ClassGenerationContextTests : FreeSpec({
 
     "attribute generation" {
 
-        val ctx = FieldGenerationContext()
+        val ctx = ClassGenerationContext()
         ctx.name shouldBe GenerationContext.UNDEFINED
 
         ctx.attribute {
