@@ -5,7 +5,7 @@ import conventions.useKotest
 
 group = projectGroup("bytecode")
 version = resolveVersion()
-description = "Bytecode interpreter for Shake"
+description = "Utilities for bytecode manipulation"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 plugins {
@@ -20,7 +20,6 @@ kotlin {
         implementation(project(":util:common-io"))
         implementation(project(":shake:bytecode:conventions"))
         testImplementation(project(":util:testlib"))
-        testImplementation(project(":shake:bytecode:utils"))
     }
 }
 
