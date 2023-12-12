@@ -566,6 +566,25 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
+    "extends" {
+
+        val ctx = ClassGenerationContext()
+        ctx.superName shouldBe GenerationContext.UNDEFINED
+        ctx.extends("test")
+        ctx.superName shouldBe "test"
+
+    }
+
+    "implements" {
+
+        val ctx = ClassGenerationContext()
+        ctx.interfaces.size shouldBe 0
+        ctx.implements("test")
+        ctx.interfaces.size shouldBe 1
+        ctx.interfaces[0] shouldBe "test"
+
+    }
+
     "to class" {
 
         val ctx = ClassGenerationContext()
