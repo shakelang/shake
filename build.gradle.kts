@@ -28,6 +28,8 @@ dependencies {
     kover(project(":shake:compiler:parser"))
     kover(project(":shake:compiler:shakelib"))
 
+    kover(project(":shake:bytecode:conventions"))
+    kover(project(":shake:bytecode:utils"))
     kover(project(":shake:bytecode:interpreter"))
 
     kover(project(":shake:compiler:jsgenerator"))
