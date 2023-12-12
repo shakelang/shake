@@ -257,10 +257,11 @@ class ClassGenerationContext {
         pool: MutableConstantPool
     ): Class {
         val nameConstant = pool.resolveUtf8(name)
+        val superConstant = pool.resolveUtf8(superName)
         return Class(
             pool,
             nameConstant,
-            nameConstant,
+            superConstant,
             flags,
             listOf(),
             fields.map { it.toField(pool) }.toMutableList(),
@@ -274,10 +275,11 @@ class ClassGenerationContext {
         pool: MutableConstantPool
     ): MutableClass {
         val nameConstant = pool.resolveUtf8(name)
+        val superConstant = pool.resolveUtf8(superName)
         return MutableClass(
             pool,
             nameConstant,
-            nameConstant,
+            superConstant,
             flags,
             mutableListOf(),
             fields.map { it.toMutableField(pool) }.toMutableList(),
