@@ -75,6 +75,12 @@ class FieldGenerationContext {
             field = value
         }
 
+    var type : String = GenerationContext.UNDEFINED
+        set(value) {
+            if(field != GenerationContext.UNDEFINED) throw Error("Type already specified")
+            field = value
+        }
+
     var flags : Short = 0x00
 
     var isPublic: Boolean
@@ -125,9 +131,11 @@ class FieldGenerationContext {
         pool: MutableConstantPool
     ): Field {
         val nameConstant = pool.resolveUtf8(name)
+        val typeConstant = pool.resolveUtf8(type)
         return Field(
             pool,
             nameConstant,
+            typeConstant,
             flags,
             attributes.map { it.toAttribute(pool) }
         )
@@ -137,9 +145,11 @@ class FieldGenerationContext {
         pool: MutableConstantPool
     ): MutableField {
         val nameConstant = pool.resolveUtf8(name)
+        val typeConstant = pool.resolveUtf8(type)
         return MutableField(
             pool,
             nameConstant,
+            typeConstant,
             flags,
             attributes.map { it.toMutableAttribute(pool) }.toMutableList()
         )

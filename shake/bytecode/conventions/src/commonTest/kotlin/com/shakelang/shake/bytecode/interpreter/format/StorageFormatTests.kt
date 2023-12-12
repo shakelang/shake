@@ -131,6 +131,7 @@ class StorageFormatTests : FreeSpec({
         val field = Field(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             listOf(),
         )
@@ -204,6 +205,7 @@ class StorageFormatTests : FreeSpec({
         val field = Field(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             listOf(),
         )
@@ -313,6 +315,7 @@ class StorageFormatTests : FreeSpec({
         val field = Field(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             listOf(),
         )
@@ -449,6 +452,7 @@ class StorageFormatTests : FreeSpec({
         val field = Field(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             listOf(),
         )
@@ -535,6 +539,7 @@ class StorageFormatTests : FreeSpec({
         val field = Field(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             listOf(),
         )
@@ -621,6 +626,7 @@ class StorageFormatTests : FreeSpec({
         val field = Field(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             listOf(),
         )
@@ -844,6 +850,7 @@ class MutableStorageFormatTests : FreeSpec({
         val field = MutableField(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             mutableListOf(),
         )
@@ -867,6 +874,7 @@ class MutableStorageFormatTests : FreeSpec({
         val field = MutableField(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             mutableListOf(),
         )
@@ -962,6 +970,7 @@ class MutableStorageFormatTests : FreeSpec({
         val field = MutableField(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             mutableListOf(),
         )
@@ -1071,6 +1080,7 @@ class MutableStorageFormatTests : FreeSpec({
         val field = MutableField(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             mutableListOf(),
         )
@@ -1207,6 +1217,7 @@ class MutableStorageFormatTests : FreeSpec({
         val field = MutableField(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             mutableListOf(),
         )
@@ -1293,6 +1304,7 @@ class MutableStorageFormatTests : FreeSpec({
         val field = MutableField(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             mutableListOf(),
         )
@@ -1377,6 +1389,7 @@ class MutableStorageFormatTests : FreeSpec({
         val field = Field(
             pool,
             pool.resolveUtf8("test"),
+            0,
             10,
             mutableListOf(),
         )

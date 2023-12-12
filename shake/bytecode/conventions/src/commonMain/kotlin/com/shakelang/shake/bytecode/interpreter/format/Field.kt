@@ -11,6 +11,7 @@ import kotlin.experimental.or
 open class Field(
     open val pool: ConstantPool,
     open val nameConstant: Int,
+    open val typeConstant: Int,
     open val flags: Short,
     open val attributes: List<Attribute>
 ) {
@@ -26,9 +27,11 @@ open class Field(
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
 
     open val name: String get() = pool.getUtf8(nameConstant).value
+    open val type: String get() = pool.getUtf8(typeConstant).value
 
     fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
+        stream.writeInt(typeConstant)
         stream.writeShort(flags)
         stream.writeShort(attributes.size.toShort())
         for (attribute in attributes) attribute.dump(stream)
@@ -44,10 +47,11 @@ open class Field(
     companion object {
         fun fromStream(pool: ConstantPool, stream: DataInputStream): Field {
             val name = stream.readInt()
+            val type = stream.readInt()
             val flags = stream.readShort()
             val attributeCount = stream.readShort()
             val attributes = (0 until attributeCount).map { Attribute.fromStream(pool, stream) }
-            return Field(pool, name, flags, attributes)
+            return Field(pool, name, type, flags, attributes)
         }
     }
 }
@@ -55,14 +59,21 @@ open class Field(
 class MutableField(
     override val pool: MutableConstantPool,
     override var nameConstant: Int,
+    override var typeConstant: Int,
     override var flags: Short,
     attributes: MutableList<Attribute>
-) : Field(pool, nameConstant, flags, attributes) {
+) : Field(pool, nameConstant, typeConstant, flags, attributes) {
 
     override var name: String
         get() = pool.getUtf8(nameConstant).value
         set(value) {
             nameConstant = pool.resolveUtf8(value)
+        }
+
+    override var type: String
+        get() = pool.getUtf8(typeConstant).value
+        set(value) {
+            typeConstant = pool.resolveUtf8(value)
         }
 
     override val attributes: MutableList<Attribute>
@@ -136,6 +147,7 @@ class MutableField(
             return MutableField(
                 pool,
                 field.nameConstant,
+                field.typeConstant,
                 field.flags,
                 field.attributes.toMutableList()
             )
@@ -143,10 +155,11 @@ class MutableField(
 
         fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableField {
             val name = stream.readInt()
+            val type = stream.readInt()
             val flags = stream.readShort()
             val attributeCount = stream.readShort()
             val attributes = (0 until attributeCount).map { Attribute.fromStream(pool, stream) }.toMutableList()
-            return MutableField(pool, name, flags, attributes)
+            return MutableField(pool, name, type, flags, attributes)
         }
     }
 }

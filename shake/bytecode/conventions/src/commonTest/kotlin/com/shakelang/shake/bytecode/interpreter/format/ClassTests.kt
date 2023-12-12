@@ -94,6 +94,7 @@ class ClassTests : FreeSpec({
             pool,
             0,
             0,
+            0,
             emptyList()
         )
 
@@ -269,7 +270,7 @@ class ClassTests : FreeSpec({
             pool.resolveUtf8("test2"),
             0,
             emptyList(),
-            listOf(Field(pool, 0, 0, emptyList())),
+            listOf(Field(pool, 0, 0, 0, emptyList())),
             emptyList(),
             emptyList(),
             emptyList()
@@ -916,6 +917,7 @@ class MutableClassTests : FreeSpec({
             pool,
             0,
             0,
+            0,
             mutableListOf()
         )
 
@@ -938,6 +940,7 @@ class MutableClassTests : FreeSpec({
         val pool = MutableConstantPool()
         val field = MutableField(
             pool,
+            0,
             0,
             0,
             mutableListOf()
@@ -1196,7 +1199,7 @@ class MutableClassTests : FreeSpec({
             pool.resolveUtf8("test2"),
             0,
             mutableListOf(),
-            mutableListOf(MutableField(pool, 0, 0, mutableListOf())),
+            mutableListOf(MutableField(pool, 0, 0, 0, mutableListOf())),
             mutableListOf(),
             mutableListOf(),
             mutableListOf()
