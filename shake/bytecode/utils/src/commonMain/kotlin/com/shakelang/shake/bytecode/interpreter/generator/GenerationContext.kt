@@ -87,6 +87,31 @@ class FieldGenerationContext {
         set(value) = if(value)  flags = flags or 0b00000000_00010000 else flags = flags and 0b1111111_11101111
     val attributes: MutableList<AttributeGenerationContext> = mutableListOf()
 
+    fun attribute(generator: AttributeGenerationContext.() -> Unit) {
+        val ctx = AttributeGenerationContext()
+        ctx.generator()
+        attributes.add(ctx)
+    }
+
+    fun attribute(name: String, data: ByteArray) {
+        val ctx = AttributeGenerationContext()
+        ctx.name = name
+        ctx.data = data
+        attributes.add(ctx)
+    }
+
+    fun Attribute(generator: AttributeGenerationContext.() -> Unit) {
+        val ctx = AttributeGenerationContext()
+        ctx.generator()
+        attributes.add(ctx)
+    }
+
+    fun Attribute(name: String, data: ByteArray) {
+        val ctx = AttributeGenerationContext()
+        ctx.name = name
+        ctx.data = data
+        attributes.add(ctx)
+    }
 
     fun toField(
         pool: MutableConstantPool
@@ -145,6 +170,31 @@ class MethodGenerationContext {
 
     val attributes: MutableList<AttributeGenerationContext> = mutableListOf()
 
+    fun attribute(generator: AttributeGenerationContext.() -> Unit) {
+        val ctx = AttributeGenerationContext()
+        ctx.generator()
+        attributes.add(ctx)
+    }
+
+    fun attribute(name: String, data: ByteArray) {
+        val ctx = AttributeGenerationContext()
+        ctx.name = name
+        ctx.data = data
+        attributes.add(ctx)
+    }
+
+    fun Attribute(generator: AttributeGenerationContext.() -> Unit) {
+        val ctx = AttributeGenerationContext()
+        ctx.generator()
+        attributes.add(ctx)
+    }
+
+    fun Attribute(name: String, data: ByteArray) {
+        val ctx = AttributeGenerationContext()
+        ctx.name = name
+        ctx.data = data
+        attributes.add(ctx)
+    }
 
     fun toMethod(
         pool: MutableConstantPool
@@ -221,6 +271,32 @@ class ClassGenerationContext {
 
     val attributes: MutableList<AttributeGenerationContext> = mutableListOf()
 
+    fun attribute(generator: AttributeGenerationContext.() -> Unit) {
+        val ctx = AttributeGenerationContext()
+        ctx.generator()
+        attributes.add(ctx)
+    }
+
+    fun attribute(name: String, data: ByteArray) {
+        val ctx = AttributeGenerationContext()
+        ctx.name = name
+        ctx.data = data
+        attributes.add(ctx)
+    }
+
+    fun Attribute(generator: AttributeGenerationContext.() -> Unit) {
+        val ctx = AttributeGenerationContext()
+        ctx.generator()
+        attributes.add(ctx)
+    }
+
+    fun Attribute(name: String, data: ByteArray) {
+        val ctx = AttributeGenerationContext()
+        ctx.name = name
+        ctx.data = data
+        attributes.add(ctx)
+    }
+
     fun extends(it: String) {
         superName = it
     }
@@ -247,12 +323,6 @@ class ClassGenerationContext {
         subClasses.add(ctx)
     }
 
-    fun Attribute(generator: AttributeGenerationContext.() -> Unit) {
-        val ctx = AttributeGenerationContext()
-        ctx.generator()
-        attributes.add(ctx)
-    }
-
     fun toClass(
         pool: MutableConstantPool
     ): Class {
@@ -264,10 +334,10 @@ class ClassGenerationContext {
             superConstant,
             flags,
             listOf(),
-            fields.map { it.toField(pool) }.toMutableList(),
-            methods.map { it.toMethod(pool) }.toMutableList(),
-            subClasses.map { it.toClass(pool) }.toMutableList(),
-            listOf()
+            fields.map { it.toField(pool) },
+            methods.map { it.toMethod(pool) },
+            subClasses.map { it.toClass(pool) },
+            attributes.map { it.toAttribute(pool) }
         )
     }
 

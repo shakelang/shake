@@ -138,16 +138,64 @@ class FieldGenerationContextTests : FreeSpec({
 
     }
 
+    "attribute generation" {
+
+        val ctx = FieldGenerationContext()
+        ctx.name shouldBe GenerationContext.UNDEFINED
+
+        ctx.attribute {
+            name = "test"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+        ctx.attributes.clear()
+
+        ctx.attribute("test2", byteArrayOf(1, 2, 3, 4, 5))
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test2"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+        ctx.attributes.clear()
+
+        ctx.Attribute {
+            name = "test2"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test2"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+        ctx.attributes.clear()
+
+        ctx.Attribute("test3", byteArrayOf(1, 2, 3, 4, 5))
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test3"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+    }
+
     "to field" {
 
         val ctx = FieldGenerationContext()
         ctx.name = "test"
         ctx.flags = 0b0000000_00010000.toShort()
+        ctx.attribute {
+            name = "test"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
 
         val pool = MutableConstantPool()
         val field = ctx.toField(pool)
         field.name shouldBe "test"
         field.flags shouldBe 0b0000000_00010000.toShort()
+        field.attributes.size shouldBe 1
 
     }
 
@@ -156,11 +204,16 @@ class FieldGenerationContextTests : FreeSpec({
         val ctx = FieldGenerationContext()
         ctx.name = "test"
         ctx.flags = 0b0000000_00010000.toShort()
+        ctx.attribute {
+            name = "test"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
 
         val pool = MutableConstantPool()
         val field = ctx.toMutableField(pool)
         field.name shouldBe "test"
         field.flags shouldBe 0b0000000_00010000.toShort()
+        field.attributes.size shouldBe 1
 
     }
 })
@@ -253,16 +306,64 @@ class MethodGenerationContextTests : FreeSpec({
 
     }
 
+    "attribute generation" {
+
+        val ctx = MethodGenerationContext()
+        ctx.name shouldBe GenerationContext.UNDEFINED
+
+        ctx.attribute {
+            name = "test"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+        ctx.attributes.clear()
+
+        ctx.attribute("test2", byteArrayOf(1, 2, 3, 4, 5))
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test2"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+        ctx.attributes.clear()
+
+        ctx.Attribute {
+            name = "test2"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test2"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+        ctx.attributes.clear()
+
+        ctx.Attribute("test3", byteArrayOf(1, 2, 3, 4, 5))
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test3"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+    }
+
     "to method" {
 
         val ctx = MethodGenerationContext()
         ctx.name = "test"
         ctx.flags = 0b0000000_00010000.toShort()
+        ctx.attribute {
+            name = "test"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
 
         val pool = MutableConstantPool()
         val method = ctx.toMethod(pool)
         method.name shouldBe "test"
         method.flags shouldBe 0b0000000_00010000.toShort()
+        method.attributes.size shouldBe 1
 
     }
 
@@ -271,11 +372,16 @@ class MethodGenerationContextTests : FreeSpec({
         val ctx = MethodGenerationContext()
         ctx.name = "test"
         ctx.flags = 0b0000000_00010000.toShort()
+        ctx.attribute {
+            name = "test"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
 
         val pool = MutableConstantPool()
         val method = ctx.toMutableMethod(pool)
         method.name shouldBe "test"
         method.flags shouldBe 0b0000000_00010000.toShort()
+        method.attributes.size shouldBe 1
 
     }
 
@@ -379,18 +485,120 @@ class ClassGenerationContextTests : FreeSpec({
 
     }
 
+    "attribute generation" {
+
+        val ctx = FieldGenerationContext()
+        ctx.name shouldBe GenerationContext.UNDEFINED
+
+        ctx.attribute {
+            name = "test"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+        ctx.attributes.clear()
+
+        ctx.attribute("test2", byteArrayOf(1, 2, 3, 4, 5))
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test2"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+        ctx.attributes.clear()
+
+        ctx.Attribute {
+            name = "test2"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test2"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+        ctx.attributes.clear()
+
+        ctx.Attribute("test3", byteArrayOf(1, 2, 3, 4, 5))
+
+        ctx.attributes.size shouldBe 1
+        ctx.attributes[0].name shouldBe "test3"
+        ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+
+
+    }
+
+    "field generation" {
+
+        val ctx = ClassGenerationContext()
+        ctx.Field {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.fields.size shouldBe 1
+
+    }
+
+    "method generation" {
+
+        val ctx = ClassGenerationContext()
+        ctx.Method {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.methods.size shouldBe 1
+
+    }
+
+    "subclass generation" {
+
+        val ctx = ClassGenerationContext()
+        ctx.Class {
+            name = "test"
+            superName = "super"
+            flags = 0b0000000_00010000.toShort()
+        }
+
+        ctx.subClasses.size shouldBe 1
+
+    }
+
     "to class" {
 
         val ctx = ClassGenerationContext()
         ctx.name = "test"
         ctx.superName = "super"
         ctx.flags = 0b0000000_00010000.toShort()
+        ctx.attribute {
+            name = "test"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
+        ctx.Field {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+        ctx.Method {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+        ctx.Class {
+            name = "test"
+            superName = "super"
+            flags = 0b0000000_00010000.toShort()
+        }
 
         val pool = MutableConstantPool()
         val clazz = ctx.toClass(pool)
         clazz.name shouldBe "test"
         clazz.superName shouldBe "super"
         clazz.flags shouldBe 0b0000000_00010000.toShort()
+        clazz.attributes.size shouldBe 1
+        clazz.fields.size shouldBe 1
+        clazz.methods.size shouldBe 1
+        clazz.subClasses.size shouldBe 1
 
     }
 
@@ -400,12 +608,33 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.name = "test"
         ctx.superName = "super"
         ctx.flags = 0b0000000_00010000.toShort()
+        ctx.attribute {
+            name = "test"
+            data = byteArrayOf(1, 2, 3, 4, 5)
+        }
+        ctx.Field {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+        ctx.Method {
+            name = "test"
+            flags = 0b0000000_00010000.toShort()
+        }
+        ctx.Class {
+            name = "test"
+            superName = "super"
+            flags = 0b0000000_00010000.toShort()
+        }
 
         val pool = MutableConstantPool()
         val clazz = ctx.toMutableClass(pool)
         clazz.name shouldBe "test"
         clazz.superName shouldBe "super"
         clazz.flags shouldBe 0b0000000_00010000.toShort()
+        clazz.attributes.size shouldBe 1
+        clazz.fields.size shouldBe 1
+        clazz.methods.size shouldBe 1
+        clazz.subClasses.size shouldBe 1
 
     }
 
