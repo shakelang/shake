@@ -120,7 +120,7 @@ class ClassTests : FreeSpec({
             0,
             0,
             0,
-            emptyList(),
+            emptyList()
         )
 
         val clazz = Class(
@@ -172,7 +172,7 @@ class ClassTests : FreeSpec({
         val attribute = Attribute(
             pool,
             0,
-            byteArrayOf(0),
+            byteArrayOf(0)
         )
 
         val clazz = Class(
@@ -519,7 +519,7 @@ class ClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         )
     }
 
@@ -545,7 +545,7 @@ class ClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         )
     }
 
@@ -559,7 +559,7 @@ class ClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         ).dataStream()
 
         val clazz = Class.fromStream(pool, stream)
@@ -746,9 +746,7 @@ class ClassTests : FreeSpec({
 
         clazz.isFinal shouldBe false
     }
-
 })
-
 
 class MutableClassTests : FreeSpec({
 
@@ -969,7 +967,7 @@ class MutableClassTests : FreeSpec({
             0,
             0,
             0,
-            mutableListOf(),
+            mutableListOf()
         )
 
         val clazz = MutableClass(
@@ -994,7 +992,7 @@ class MutableClassTests : FreeSpec({
             0,
             0,
             0,
-            mutableListOf(),
+            mutableListOf()
         )
 
         val clazz = MutableClass(
@@ -1077,7 +1075,7 @@ class MutableClassTests : FreeSpec({
         val attribute = MutableAttribute(
             pool,
             0,
-            byteArrayOf(0),
+            byteArrayOf(0)
         )
 
         val clazz = MutableClass(
@@ -1100,7 +1098,7 @@ class MutableClassTests : FreeSpec({
         val attribute = MutableAttribute(
             pool,
             0,
-            byteArrayOf(0),
+            byteArrayOf(0)
         )
 
         val clazz = MutableClass(
@@ -1460,7 +1458,7 @@ class MutableClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         )
     }
 
@@ -1486,7 +1484,7 @@ class MutableClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         )
     }
 
@@ -1500,7 +1498,7 @@ class MutableClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         ).dataStream()
 
         val clazz = MutableClass.fromStream(pool, stream)

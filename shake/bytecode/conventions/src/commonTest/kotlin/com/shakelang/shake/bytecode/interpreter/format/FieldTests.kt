@@ -14,7 +14,7 @@ class FieldTests : FreeSpec({
 
     "name constant" {
         val pool = MutableConstantPool()
-        val field = Field(pool, 0, 0,0, listOf())
+        val field = Field(pool, 0, 0, 0, listOf())
         field.nameConstant shouldBe 0
     }
 
@@ -115,7 +115,7 @@ class FieldTests : FreeSpec({
             *0.toBytes(),
             *0.toBytes(),
             *1.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         ) shouldBe true
     }
 
@@ -127,7 +127,7 @@ class FieldTests : FreeSpec({
             *0.toBytes(),
             *0.toBytes(),
             *1.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         ) shouldBe true
     }
 
@@ -137,7 +137,7 @@ class FieldTests : FreeSpec({
             *pool.resolveUtf8("test").toBytes(),
             *0.toBytes(),
             *1.toShort().toBytes(),
-            *0.toBytes(),
+            *0.toBytes()
         ).dataStream()
 
         val field = Field.fromStream(pool, stream)
@@ -251,7 +251,7 @@ class MutableFieldTests : FreeSpec({
             *0.toBytes(),
             *0.toBytes(),
             *1.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         ) shouldBe true
     }
 
@@ -263,7 +263,7 @@ class MutableFieldTests : FreeSpec({
             *0.toBytes(),
             *0.toBytes(),
             *1.toShort().toBytes(),
-            *0.toShort().toBytes(),
+            *0.toShort().toBytes()
         ) shouldBe true
     }
 
@@ -273,7 +273,7 @@ class MutableFieldTests : FreeSpec({
             *pool.resolveUtf8("test").toBytes(),
             *0.toBytes(),
             *1.toShort().toBytes(),
-            *0.toBytes(),
+            *0.toBytes()
         ).dataStream()
 
         val field = MutableField.fromStream(pool, stream)
@@ -283,7 +283,7 @@ class MutableFieldTests : FreeSpec({
 
     "equals" {
         val pool = MutableConstantPool()
-        val field = MutableField(pool, 0, 0,0, mutableListOf())
+        val field = MutableField(pool, 0, 0, 0, mutableListOf())
         val field2 = MutableField(pool, 0, 0, 0, mutableListOf())
         val field3 = MutableField(pool, 1, 0, 0, mutableListOf())
         val field4 = MutableField(pool, 0, 0, 1, mutableListOf())

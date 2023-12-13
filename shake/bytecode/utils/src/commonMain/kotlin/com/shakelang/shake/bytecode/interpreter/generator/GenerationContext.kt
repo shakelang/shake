@@ -44,7 +44,7 @@ class GenerationContext {
             pool,
             classes.map { it.toClass(pool) },
             fields.map { it.toField(pool) },
-            methods.map { it.toMethod(pool) },
+            methods.map { it.toMethod(pool) }
         )
     }
 
@@ -57,48 +57,47 @@ class GenerationContext {
             pool,
             classes.map { it.toMutableClass(pool) }.toMutableList(),
             fields.map { it.toMutableField(pool) }.toMutableList(),
-            methods.map { it.toMutableMethod(pool) }.toMutableList(),
+            methods.map { it.toMutableMethod(pool) }.toMutableList()
         )
     }
 
     companion object {
         const val UNDEFINED = ":undefined:"
     }
-
 }
 
 class FieldGenerationContext {
 
-    var name : String = GenerationContext.UNDEFINED
+    var name: String = GenerationContext.UNDEFINED
         set(value) {
-            if(field != GenerationContext.UNDEFINED) throw Error("Name already specified")
+            if (field != GenerationContext.UNDEFINED) throw Error("Name already specified")
             field = value
         }
 
-    var type : String = GenerationContext.UNDEFINED
+    var type: String = GenerationContext.UNDEFINED
         set(value) {
-            if(field != GenerationContext.UNDEFINED) throw Error("Type already specified")
+            if (field != GenerationContext.UNDEFINED) throw Error("Type already specified")
             field = value
         }
 
-    var flags : Short = 0x00
+    var flags: Short = 0x00
 
     var isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
-        set(value) = if(value)  flags = flags or 0b00000000_00000001 else flags = flags and 0b1111111_11111110
+        set(value) = if (value) flags = flags or 0b00000000_00000001 else flags = flags and 0b1111111_11111110
     var isPrivate: Boolean
         get() = flags and 0b00000000_00000010.toShort() != 0.toShort()
-        set(value) = if(value)  flags = flags or 0b00000000_00000010 else flags = flags and 0b1111111_11111101
+        set(value) = if (value) flags = flags or 0b00000000_00000010 else flags = flags and 0b1111111_11111101
 
     var isProtected: Boolean
         get() = flags and 0b00000000_00000100.toShort() != 0.toShort()
-        set(value) = if(value)  flags = flags or 0b00000000_00000100 else flags = flags and 0b1111111_11111011
+        set(value) = if (value) flags = flags or 0b00000000_00000100 else flags = flags and 0b1111111_11111011
     var isStatic: Boolean
         get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
-        set(value) = if(value)  flags = flags or 0b00000000_00001000 else flags = flags and 0b1111111_11110111
+        set(value) = if (value) flags = flags or 0b00000000_00001000 else flags = flags and 0b1111111_11110111
     var isFinal: Boolean
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
-        set(value) = if(value)  flags = flags or 0b00000000_00010000 else flags = flags and 0b1111111_11101111
+        set(value) = if (value) flags = flags or 0b00000000_00010000 else flags = flags and 0b1111111_11101111
     val attributes: MutableList<AttributeGenerationContext> = mutableListOf()
 
     fun attribute(generator: AttributeGenerationContext.() -> Unit) {
@@ -154,7 +153,6 @@ class FieldGenerationContext {
             attributes.map { it.toMutableAttribute(pool) }.toMutableList()
         )
     }
-
 }
 
 class MethodGenerationContext {
@@ -410,7 +408,6 @@ class AttributeGenerationContext {
             data
         )
     }
-
 }
 
 fun generate(generator: GenerationContext.() -> Unit): StorageFormat {
