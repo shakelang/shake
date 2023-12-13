@@ -15,12 +15,13 @@ include(":util:primitives")
 include(":util:shason")
 include(":util:testlib")
 
+include(":shake:bytecode:conventions")
+include(":shake:bytecode:utils")
 include(":shake:bytecode:interpreter")
+
 include(":shake:compiler:shakelib")
 include(":shake:compiler:lexer")
 include(":shake:compiler:parser")
-
-// include(":shake:compiler:interpreter")
 include(":shake:compiler:jsgenerator")
 include(":shake:compiler:processor")
 include(":shake:shasambly:shastools")
@@ -44,3 +45,5 @@ gradleEnterprise {
         }
     }
 }
+include("shake:bytecode:generation")
+findProject(":shake:bytecode:generation")?.name = "generation"
