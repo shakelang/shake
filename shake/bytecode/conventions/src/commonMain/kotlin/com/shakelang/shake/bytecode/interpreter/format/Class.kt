@@ -20,6 +20,10 @@ open class Class(
     open val attributes: List<Attribute>
 ) {
 
+    open val name: String get() = pool.getUtf8(nameConstant).value
+    open val superName: String get() = pool.getUtf8(superNameConstant).value
+    open val interfaces: List<String> get() = interfacesConstants.map { pool.getUtf8(it).value }
+
     open val isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
 
@@ -35,30 +39,20 @@ open class Class(
     open val isFinal: Boolean
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
 
-    open val name: String get() = pool.getUtf8(nameConstant).value
-    open val superName: String get() = pool.getUtf8(superNameConstant).value
-    open val interfaces: List<String> get() = interfacesConstants.map { pool.getUtf8(it).value }
-
     fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
         stream.writeInt(superNameConstant)
         stream.writeShort(flags)
-        stream.writeInt(interfacesConstants.size)
-        for (interfaceConstant in interfacesConstants) {
-            stream.writeInt(interfaceConstant)
-        }
-        stream.writeInt(fields.size)
-        for (field in fields) {
-            field.dump(stream)
-        }
-        stream.writeInt(methods.size)
-        for (method in methods) {
-            method.dump(stream)
-        }
-        stream.writeInt(subClasses.size)
-        for (subClass in subClasses) {
-            subClass.dump(stream)
-        }
+        stream.writeShort(interfacesConstants.size.toShort())
+        for (interfaceConstant in interfacesConstants) stream.writeInt(interfaceConstant)
+        stream.writeShort(fields.size.toShort())
+        for (field in fields) field.dump(stream)
+        stream.writeShort(methods.size.toShort())
+        for (method in methods) method.dump(stream)
+        stream.writeShort(subClasses.size.toShort())
+        for (subClass in subClasses) subClass.dump(stream)
+        stream.writeShort(attributes.size.toShort())
+        for (attribute in attributes) attribute.dump(stream)
     }
 
     fun dump(): ByteArray {
@@ -150,30 +144,18 @@ open class Class(
             val name = stream.readInt()
             val superName = stream.readInt()
             val flags = stream.readShort()
-            val interfacesCount = stream.readInt()
-            val interfaces = mutableListOf<Int>()
-            for (i in 0 until interfacesCount) {
-                interfaces.add(stream.readInt())
-            }
-            val fieldsCount = stream.readInt()
-            val fields = mutableListOf<Field>()
-            for (i in 0 until fieldsCount) {
-                fields.add(Field.fromStream(pool, stream))
-            }
-            val methodsCount = stream.readInt()
-            val methods = mutableListOf<Method>()
-            for (i in 0 until methodsCount) {
-                methods.add(Method.fromStream(pool, stream))
-            }
-            val subClassesCount = stream.readInt()
-            val subClasses = mutableListOf<Class>()
-            for (i in 0 until subClassesCount) {
-                subClasses.add(fromStream(pool, stream))
-            }
-            val attributesCount = stream.readInt()
+            val interfacesCount = stream.readShort().toInt()
+            val interfaces = (0 until interfacesCount).map { stream.readInt() }
+            val fieldsCount = stream.readShort().toInt()
+            val fields = (0 until fieldsCount).map { Field.fromStream(pool, stream) }
+            val methodsCount = stream.readShort().toInt()
+            val methods = (0 until methodsCount).map { Method.fromStream(pool, stream) }
+            val subClassesCount = stream.readShort().toInt()
+            val subClasses = (0 until subClassesCount).map { fromStream(pool, stream) }
+            val attributesCount = stream.readShort().toInt()
             val attributes = (0 until attributesCount).map { Attribute.fromStream(pool, stream) }
             return Class(
-                ConstantPool.fromStream(stream),
+                pool,
                 name,
                 superName,
                 flags,
@@ -211,6 +193,10 @@ class MutableClass(
     override val subClasses: MutableList<MutableClass>
         get() = super.subClasses as MutableList<MutableClass>
 
+    @Suppress("UNCHECKED_CAST")
+    override val attributes: MutableList<MutableAttribute>
+        get() = super.attributes as MutableList<MutableAttribute>
+
     override var isPublic: Boolean
         get() = super.isPublic
         set(value) { flags = if (value) flags or 0b00000000_00000001.toShort() else flags and 0b11111111_11111110.toShort() }
@@ -243,22 +229,45 @@ class MutableClass(
         get() = interfacesConstants.map { pool.getUtf8(it).value }
         set(value) { interfacesConstants = value.map { pool.resolveUtf8(it) }.toMutableList() }
 
-    fun addField(field: MutableField) = fields.add(field)
-    fun addMethod(method: MutableMethod) = methods.add(method)
-    fun addSubClass(subClass: MutableClass) = subClasses.add(subClass)
-
     companion object {
-        fun fromClass(pool: MutableConstantPool, class_: Class): MutableClass {
+        fun fromClass(pool: MutableConstantPool, clazz: Class): MutableClass {
             return MutableClass(
                 pool,
-                class_.nameConstant,
-                class_.superNameConstant,
-                class_.flags,
-                class_.interfacesConstants.toMutableList(),
-                class_.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
-                class_.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
-                class_.subClasses.map { fromClass(pool, it) }.toMutableList(),
-                class_.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
+                clazz.nameConstant,
+                clazz.superNameConstant,
+                clazz.flags,
+                clazz.interfacesConstants.toMutableList(),
+                clazz.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
+                clazz.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
+                clazz.subClasses.map { fromClass(pool, it) }.toMutableList(),
+                clazz.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
+            )
+        }
+
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableClass {
+            val name = stream.readInt()
+            val superName = stream.readInt()
+            val flags = stream.readShort()
+            val interfacesCount = stream.readShort().toInt()
+            val interfaces = (0 until interfacesCount).map { stream.readInt() }.toMutableList()
+            val fieldsCount = stream.readShort().toInt()
+            val fields = (0 until fieldsCount).map { MutableField.fromStream(pool, stream) }.toMutableList()
+            val methodsCount = stream.readShort().toInt()
+            val methods = (0 until methodsCount).map { MutableMethod.fromStream(pool, stream) }.toMutableList()
+            val subClassesCount = stream.readShort().toInt()
+            val subClasses = (0 until subClassesCount).map { fromStream(pool, stream) }.toMutableList()
+            val attributesCount = stream.readShort().toInt()
+            val attributes = (0 until attributesCount).map { MutableAttribute.fromStream(pool, stream) }.toMutableList()
+            return MutableClass(
+                pool,
+                name,
+                superName,
+                flags,
+                interfaces,
+                fields,
+                methods,
+                subClasses,
+                attributes
             )
         }
     }

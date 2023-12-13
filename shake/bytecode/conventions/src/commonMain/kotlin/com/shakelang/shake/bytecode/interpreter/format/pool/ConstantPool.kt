@@ -130,18 +130,9 @@ open class ConstantPool(
         if (this === other) return true
         if (other !is ConstantPool) return false
 
-        // find matching entries
-
-        // TODO this is not the best way to do this (O(n^2))
-        for (entry in entries) {
-            if (entry !in other.entries) return false
+        return entries.mapIndexed { index, entry -> index to entry }.all { (index, entry) ->
+            other.entries[index] == entry
         }
-
-        for (entry in other.entries) {
-            if (entry !in entries) return false
-        }
-
-        return true
     }
 
     companion object {
@@ -169,53 +160,61 @@ class MutableConstantPool(
 ) : ConstantPool(entries), MutableList<ConstantPoolEntry> by entries {
     fun createUtf8(value: String): Int {
         val entry = ConstantPoolEntry.Utf8Constant(value)
+        val index = entries.size
         add(entry)
-        return entries.indexOf(entry)
+        return index
     }
 
     fun createByte(value: Byte): Int {
         val entry = ConstantPoolEntry.ByteConstant(value)
+        val index = entries.size
         add(entry)
-        return entries.indexOf(entry)
+        return index
     }
 
     fun createShort(value: Short): Int {
         val entry = ConstantPoolEntry.ShortConstant(value)
+        val index = entries.size
         add(entry)
-        return entries.indexOf(entry)
+        return index
     }
 
     fun createInt(value: Int): Int {
         val entry = ConstantPoolEntry.IntConstant(value)
+        val index = entries.size
         add(entry)
-        return entries.indexOf(entry)
+        return index
     }
 
     fun createLong(value: Long): Int {
         val entry = ConstantPoolEntry.LongConstant(value)
+        val index = entries.size
         add(entry)
-        return entries.indexOf(entry)
+        return index
     }
 
     fun createFloat(value: Float): Int {
         val entry = ConstantPoolEntry.FloatConstant(value)
+        val index = entries.size
         add(entry)
-        return entries.indexOf(entry)
+        return index
     }
 
     fun createDouble(value: Double): Int {
         val entry = ConstantPoolEntry.DoubleConstant(value)
+        val index = entries.size
         add(entry)
-        return entries.indexOf(entry)
+        return index
     }
 
     fun createClass(identifier: Int): Int {
         val entry = ConstantPoolEntry.ClassConstant(identifier)
+        val index = entries.size
         add(entry)
-        return entries.indexOf(entry)
+        return index
     }
 
-    fun createClass(name: String) = createClass(createUtf8(name))
+    fun createClass(name: String) = createClass(resolveUtf8(name))
 
     fun resolveUtf8(identifier: String) = findUtf8(identifier) ?: createUtf8(identifier)
     fun resolveByte(identifier: Byte) = findByte(identifier) ?: createByte(identifier)

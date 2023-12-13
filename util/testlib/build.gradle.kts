@@ -1,7 +1,9 @@
 import com.shakelang.shake.util.changelog.public
 import com.shakelang.shake.util.changelog.resolveVersion
+import conventions.KOTEST_VERSION
 import conventions.dependencies
 import conventions.projectGroup
+import conventions.useKotest
 
 plugins {
     id("conventions.all")
@@ -17,6 +19,9 @@ val projectName = name
 
 kotlin {
     dependencies {
-        kotest()
+        implementation("io.kotest:kotest-framework-engine:$KOTEST_VERSION")
+        implementation("io.kotest:kotest-assertions-core:$KOTEST_VERSION")
+        implementation("io.kotest:kotest-property:$KOTEST_VERSION")
     }
 }
+useKotest()

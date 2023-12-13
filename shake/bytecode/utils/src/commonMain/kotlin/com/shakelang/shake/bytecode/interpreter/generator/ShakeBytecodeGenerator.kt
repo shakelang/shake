@@ -1,5 +1,6 @@
-package com.shakelang.shake.bytecode.interpreter
+package com.shakelang.shake.bytecode.interpreter.generator
 
+import com.shakelang.shake.bytecode.interpreter.Opcodes
 import com.shakelang.shake.util.primitives.bytes.toBytes
 import com.shakelang.shake.util.primitives.calc.shl
 

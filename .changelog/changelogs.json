@@ -313,6 +313,12 @@
           "changes": [
             "Remove  dependency in testlib (as it is not used or needed) "
           ]
+        },
+        {
+          "version": "0.2.2",
+          "changes": [
+            "Create Array matching api in testlib"
+          ]
         }
       ]
     },

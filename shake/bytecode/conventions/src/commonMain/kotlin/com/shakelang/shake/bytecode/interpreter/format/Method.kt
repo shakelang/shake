@@ -33,9 +33,9 @@ open class Method(
         stream.writeInt(nameConstant)
         stream.writeInt(qualifiedNameConstant)
         stream.writeShort(flags)
-        stream.writeInt(attributes.size)
+        stream.writeShort(attributes.size.toShort())
         for (attribute in attributes) {
-            attribute.bump(stream)
+            attribute.dump(stream)
         }
     }
 
@@ -84,7 +84,7 @@ open class Method(
             val name = stream.readInt()
             val qualifiedName = stream.readInt()
             val flags = stream.readShort()
-            val attributeCount = stream.readInt()
+            val attributeCount = stream.readShort().toInt()
             val attributes = (0 until attributeCount).map { Attribute.fromStream(pool, stream) }
             return Method(pool, name, qualifiedName, flags, attributes)
         }
@@ -98,6 +98,20 @@ class MutableMethod(
     override var flags: Short,
     attributes: MutableList<Attribute>
 ) : Method(pool, nameConstant, qualifiedNameConstant, flags, attributes) {
+
+    override var name: String
+        get() = pool.getUtf8(nameConstant).value
+        set(value) {
+            nameConstant = pool.resolveUtf8(value)
+        }
+
+    override var qualifiedName: String
+        get() = pool.getUtf8(qualifiedNameConstant).value
+        set(value) {
+            qualifiedNameConstant = pool.resolveUtf8(value)
+        }
+
+
 
     override val attributes: MutableList<Attribute>
         get() = super.attributes as MutableList<Attribute>
@@ -152,14 +166,6 @@ class MutableMethod(
             }
         }
 
-    fun setName(name: String) {
-        nameConstant = pool.resolveUtf8(name)
-    }
-
-    fun setQualifiedName(qualifiedName: String) {
-        qualifiedNameConstant = pool.resolveUtf8(qualifiedName)
-    }
-
     companion object {
         fun fromMethod(pool: MutableConstantPool, method: Method): MutableMethod {
             return MutableMethod(
@@ -169,6 +175,15 @@ class MutableMethod(
                 method.flags,
                 method.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
             )
+        }
+
+            fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableMethod {
+                val name = stream.readInt()
+                val qualifiedName = stream.readInt()
+                val flags = stream.readShort()
+                val attributeCount = stream.readShort().toInt()
+                val attributes = (0 until attributeCount).map { MutableAttribute.fromStream(pool, stream) }
+                return MutableMethod(pool, name, qualifiedName, flags, attributes.toMutableList())
         }
     }
 }

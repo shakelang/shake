@@ -3,6 +3,7 @@ package com.shakelang.shake.bytecode.interpreter.format
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.util.io.streaming.input.DataInputStream
+import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
 open class Attribute(
@@ -11,12 +12,18 @@ open class Attribute(
     open val value: ByteArray
 ) {
 
-    val name: String get() = pool.getUtf8(nameConstant).value
+    open val name: String get() = pool.getUtf8(nameConstant).value
 
-    open fun bump(stream: DataOutputStream) {
+    open fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
         stream.writeInt(value.size)
         stream.write(value)
+    }
+
+    open fun dump(): ByteArray {
+        val stream = ByteArrayOutputStream()
+        dump(DataOutputStream(stream))
+        return stream.toByteArray()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -56,8 +63,14 @@ class MutableAttribute(
     override var value: ByteArray
 ) : Attribute(pool, nameConstant, value) {
 
-    override val pool: ConstantPool
+    override val pool: MutableConstantPool
         get() = super.pool as MutableConstantPool
+
+    override var name: String
+        get() = super.name
+        set(value) {
+            nameConstant = pool.resolveUtf8(value)
+        }
 
     companion object {
         fun fromAttribute(attribute: Attribute): MutableAttribute {
@@ -66,6 +79,15 @@ class MutableAttribute(
                 attribute.nameConstant,
                 attribute.value
             )
+        }
+
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableAttribute {
+            val name = stream.readInt()
+            val size = stream.readInt()
+            val value = ByteArray(size) {
+                stream.readByte()
+            }
+            return MutableAttribute(pool, name, value)
         }
     }
 }
