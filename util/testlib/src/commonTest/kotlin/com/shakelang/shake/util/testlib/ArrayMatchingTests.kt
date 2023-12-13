@@ -4,123 +4,123 @@ import io.kotest.core.spec.style.FreeSpec
 
 @OptIn(ExperimentalUnsignedTypes::class)
 class ArrayMatchingTests : FreeSpec({
-    
+
     "ByteArray shouldContainExactly ByteArray" {
         byteArrayOf(1, 2, 3) shouldContainExactly byteArrayOf(1, 2, 3)
     }
-    
+
     "ByteArray shouldContainExactly Collection" {
         byteArrayOf(1, 2, 3) shouldContainExactly listOf(1, 2, 3)
     }
-    
+
     "ByteArray shouldContainExactly List" {
         byteArrayOf(1, 2, 3) shouldContainExactly listOf(1, 2, 3)
     }
-    
+
     "ByteArray shouldContainExactly Set" {
         byteArrayOf(1, 2, 3) shouldContainExactly setOf(1, 2, 3)
     }
-    
+
     "ByteArray shouldContainExactly Sequence" {
         byteArrayOf(1, 2, 3) shouldContainExactly sequenceOf(1, 2, 3)
     }
-    
+
     "ShortArray shouldContainExactly ShortArray" {
         shortArrayOf(1, 2, 3) shouldContainExactly shortArrayOf(1, 2, 3)
     }
-    
+
     "ShortArray shouldContainExactly Collection" {
         shortArrayOf(1, 2, 3) shouldContainExactly listOf(1, 2, 3)
     }
-    
+
     "ShortArray shouldContainExactly List" {
         shortArrayOf(1, 2, 3) shouldContainExactly listOf(1, 2, 3)
     }
-    
+
     "ShortArray shouldContainExactly Set" {
         shortArrayOf(1, 2, 3) shouldContainExactly setOf(1, 2, 3)
     }
-    
+
     "ShortArray shouldContainExactly Sequence" {
         shortArrayOf(1, 2, 3) shouldContainExactly sequenceOf(1, 2, 3)
     }
-    
+
     "IntArray shouldContainExactly IntArray" {
         intArrayOf(1, 2, 3) shouldContainExactly intArrayOf(1, 2, 3)
     }
-    
+
     "IntArray shouldContainExactly Collection" {
         intArrayOf(1, 2, 3) shouldContainExactly listOf(1, 2, 3)
     }
-    
+
     "IntArray shouldContainExactly List" {
         intArrayOf(1, 2, 3) shouldContainExactly listOf(1, 2, 3)
     }
-    
+
     "IntArray shouldContainExactly Set" {
         intArrayOf(1, 2, 3) shouldContainExactly setOf(1, 2, 3)
     }
-    
+
     "IntArray shouldContainExactly Sequence" {
         intArrayOf(1, 2, 3) shouldContainExactly sequenceOf(1, 2, 3)
     }
-    
+
     "LongArray shouldContainExactly LongArray" {
         longArrayOf(1, 2, 3) shouldContainExactly longArrayOf(1, 2, 3)
     }
-    
+
     "LongArray shouldContainExactly Collection" {
         longArrayOf(1, 2, 3) shouldContainExactly listOf(1, 2, 3)
     }
-    
+
     "LongArray shouldContainExactly List" {
         longArrayOf(1, 2, 3) shouldContainExactly listOf(1, 2, 3)
     }
-    
+
     "LongArray shouldContainExactly Set" {
         longArrayOf(1, 2, 3) shouldContainExactly setOf(1, 2, 3)
     }
-    
+
     "LongArray shouldContainExactly Sequence" {
         longArrayOf(1, 2, 3) shouldContainExactly sequenceOf(1, 2, 3)
     }
-    
+
     "FloatArray shouldContainExactly FloatArray" {
         floatArrayOf(1f, 2f, 3f) shouldContainExactly floatArrayOf(1f, 2f, 3f)
     }
-    
+
     "FloatArray shouldContainExactly Collection" {
         floatArrayOf(1f, 2f, 3f) shouldContainExactly listOf(1f, 2f, 3f)
     }
-    
+
     "FloatArray shouldContainExactly List" {
         floatArrayOf(1f, 2f, 3f) shouldContainExactly listOf(1f, 2f, 3f)
     }
-    
+
     "FloatArray shouldContainExactly Set" {
         floatArrayOf(1f, 2f, 3f) shouldContainExactly setOf(1f, 2f, 3f)
     }
-    
+
     "FloatArray shouldContainExactly Sequence" {
         floatArrayOf(1f, 2f, 3f) shouldContainExactly sequenceOf(1f, 2f, 3f)
     }
-    
+
     "DoubleArray shouldContainExactly DoubleArray" {
         doubleArrayOf(1.0, 2.0, 3.0) shouldContainExactly doubleArrayOf(1.0, 2.0, 3.0)
     }
-    
+
     "DoubleArray shouldContainExactly Collection" {
         doubleArrayOf(1.0, 2.0, 3.0) shouldContainExactly listOf(1.0, 2.0, 3.0)
     }
-    
+
     "DoubleArray shouldContainExactly List" {
         doubleArrayOf(1.0, 2.0, 3.0) shouldContainExactly listOf(1.0, 2.0, 3.0)
     }
-    
+
     "DoubleArray shouldContainExactly Set" {
         doubleArrayOf(1.0, 2.0, 3.0) shouldContainExactly setOf(1.0, 2.0, 3.0)
     }
-    
+
     "DoubleArray shouldContainExactly Sequence" {
         doubleArrayOf(1.0, 2.0, 3.0) shouldContainExactly sequenceOf(1.0, 2.0, 3.0)
     }
@@ -244,7 +244,6 @@ class ArrayMatchingTests : FreeSpec({
     "ULongArray shouldContainExactly Sequence" {
         ulongArrayOf(1u, 2u, 3u) shouldContainExactly sequenceOf(1u, 2u, 3u)
     }
-
 
     "ByteArray shouldNotContainExactly ByteArray with different order" {
         byteArrayOf(1, 2, 3) shouldNotContainExactly byteArrayOf(3, 2, 1)

@@ -49,7 +49,7 @@ class AttributeTests : FreeSpec({
 
         arr contentEquals byteArrayOf(0, 0, 0, 0, 0, 0, 0, 3, 1, 2, 3) shouldBe true
     }
-    
+
     "test equals" {
         val pool = MutableConstantPool()
         val attribute = Attribute(pool, 0, byteArrayOf(1, 2, 3))

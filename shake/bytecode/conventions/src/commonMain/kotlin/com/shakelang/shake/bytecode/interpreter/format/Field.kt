@@ -109,8 +109,6 @@ class MutableField(
             flags = if (value) flags or 0b00000000_00010000.toShort() else flags and 0b11111111_11101111.toShort()
         }
 
-
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is MutableField) return false

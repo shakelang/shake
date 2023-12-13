@@ -16,7 +16,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0, emptyList())
         method.nameConstant shouldBe 0
-
     }
 
     "qualified name constant" {
@@ -24,7 +23,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0, emptyList())
         method.qualifiedNameConstant shouldBe 1
-
     }
 
     "name getter" {
@@ -32,7 +30,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, pool.resolveUtf8("name"), 1, 0, emptyList())
         method.name shouldBe "name"
-
     }
 
     "qualified name getter" {
@@ -40,7 +37,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, pool.resolveUtf8("qualifiedName"), 0, emptyList())
         method.qualifiedName shouldBe "qualifiedName"
-
     }
 
     "flags" {
@@ -52,7 +48,6 @@ class MethodTests : FreeSpec({
         method.isProtected shouldBe false
         method.isStatic shouldBe false
         method.isFinal shouldBe false
-
     }
 
     "is public (true)" {
@@ -60,7 +55,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000001, emptyList())
         method.isPublic shouldBe true
-
     }
 
     "is public (false)" {
@@ -68,7 +62,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
         method.isPublic shouldBe false
-
     }
 
     "is private (true)" {
@@ -76,7 +69,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000010, emptyList())
         method.isPrivate shouldBe true
-
     }
 
     "is private (false)" {
@@ -84,7 +76,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
         method.isPrivate shouldBe false
-
     }
 
     "is protected (true)" {
@@ -92,7 +83,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000100, emptyList())
         method.isProtected shouldBe true
-
     }
 
     "is protected (false)" {
@@ -100,7 +90,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
         method.isProtected shouldBe false
-
     }
 
     "is static (true)" {
@@ -108,7 +97,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00001000, emptyList())
         method.isStatic shouldBe true
-
     }
 
     "is static (false)" {
@@ -116,7 +104,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
         method.isStatic shouldBe false
-
     }
 
     "is final (true)" {
@@ -124,7 +111,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
         method.isFinal shouldBe true
-
     }
 
     "is final (false)" {
@@ -132,7 +118,6 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00000000, emptyList())
         method.isFinal shouldBe false
-
     }
 
     "equals" {
@@ -152,7 +137,6 @@ class MethodTests : FreeSpec({
         method shouldNotBe method5
         method shouldNotBe method6
         method3 shouldNotBe method4
-
     }
 
     "hashcode" {
@@ -172,10 +156,7 @@ class MethodTests : FreeSpec({
         method.hashCode() shouldNotBe method5.hashCode()
         method.hashCode() shouldNotBe method6.hashCode()
         method3.hashCode() shouldNotBe method4.hashCode()
-
     }
-
-
 
     "dump" {
 
@@ -202,7 +183,6 @@ class MethodTests : FreeSpec({
             *0x10.toShort().toBytes(), // flags
             *0.toShort().toBytes() // attributes size
         )
-
     }
 
     "dump with attributes" {
@@ -210,7 +190,10 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val stream = ByteArrayOutputStream()
         val method = Method(
-            pool, 0, 1, 0b00000000_00010000,
+            pool,
+            0,
+            1,
+            0b00000000_00010000,
             listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
         )
         method.dump(DataOutputStream(stream))
@@ -230,7 +213,10 @@ class MethodTests : FreeSpec({
 
         val pool = MutableConstantPool()
         val method = Method(
-            pool, 0, 1, 0b00000000_00010000,
+            pool,
+            0,
+            1,
+            0b00000000_00010000,
             listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
         )
         method.dump() shouldBe byteArrayOf(
@@ -242,7 +228,6 @@ class MethodTests : FreeSpec({
             *3.toBytes(), // attribute data size
             1, 2, 3 // attribute data
         )
-
     }
 
     "from stream" {
@@ -260,7 +245,6 @@ class MethodTests : FreeSpec({
         method.qualifiedNameConstant shouldBe 1
         method.flags shouldBe 0x10.toShort()
         method.attributes.size shouldBe 0
-
     }
 
     "from stream with attributes" {
@@ -283,7 +267,6 @@ class MethodTests : FreeSpec({
         method.attributes.size shouldBe 1
         method.attributes[0].nameConstant shouldBe 0
         method.attributes[0].value contentEquals byteArrayOf(1, 2, 3) shouldBe true
-
     }
 })
 
@@ -294,7 +277,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.nameConstant shouldBe 0
-
     }
 
     "set name constant" {
@@ -303,7 +285,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.nameConstant = 1
         method.nameConstant shouldBe 1
-
     }
 
     "qualified name constant" {
@@ -311,7 +292,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.qualifiedNameConstant shouldBe 1
-
     }
 
     "set qualified name constant" {
@@ -320,7 +300,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.qualifiedNameConstant = 0
         method.qualifiedNameConstant shouldBe 0
-
     }
 
     "name getter" {
@@ -328,7 +307,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, pool.resolveUtf8("name"), 1, 0, mutableListOf())
         method.name shouldBe "name"
-
     }
 
     "name setter" {
@@ -337,7 +315,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, pool.resolveUtf8("name"), 1, 0, mutableListOf())
         method.name = "name2"
         method.name shouldBe "name2"
-
     }
 
     "qualified name getter" {
@@ -345,7 +322,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, pool.resolveUtf8("qualifiedName"), 0, mutableListOf())
         method.qualifiedName shouldBe "qualifiedName"
-
     }
 
     "qualified name setter" {
@@ -354,7 +330,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, pool.resolveUtf8("qualifiedName"), 0, mutableListOf())
         method.qualifiedName = "qualifiedName2"
         method.qualifiedName shouldBe "qualifiedName2"
-
     }
 
     "flags" {
@@ -366,7 +341,6 @@ class MutableMethodTests : FreeSpec({
         method.isProtected shouldBe false
         method.isStatic shouldBe false
         method.isFinal shouldBe false
-
     }
 
     "set flags" {
@@ -379,7 +353,6 @@ class MutableMethodTests : FreeSpec({
         method.isStatic = true
         method.isFinal = true
         method.flags shouldBe 0b00000000_00011111.toShort()
-
     }
 
     "is public (true)" {
@@ -387,7 +360,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000001, mutableListOf())
         method.isPublic shouldBe true
-
     }
 
     "set is public (true)" {
@@ -396,7 +368,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.isPublic = true
         method.isPublic shouldBe true
-
     }
 
     "is public (false)" {
@@ -404,7 +375,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b1111111_11111110, mutableListOf())
         method.isPublic shouldBe false
-
     }
 
     "set public (true)" {
@@ -413,7 +383,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.isPublic = true
         method.isPublic shouldBe true
-
     }
 
     "set public (false)" {
@@ -422,7 +391,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0b1111111_11111111, mutableListOf())
         method.isPublic = false
         method.isPublic shouldBe false
-
     }
 
     "is private (true)" {
@@ -430,7 +398,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000010, mutableListOf())
         method.isPrivate shouldBe true
-
     }
 
     "is private (false)" {
@@ -438,7 +405,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000000, mutableListOf())
         method.isPrivate shouldBe false
-
     }
 
     "set is private (true)" {
@@ -447,7 +413,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.isPrivate = true
         method.isPrivate shouldBe true
-
     }
 
     "set is private (false)" {
@@ -456,7 +421,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0b1111111_11111101, mutableListOf())
         method.isPrivate = false
         method.isPrivate shouldBe false
-
     }
 
     "is protected (true)" {
@@ -464,7 +428,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000100, mutableListOf())
         method.isProtected shouldBe true
-
     }
 
     "is protected (false)" {
@@ -472,7 +435,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000000, mutableListOf())
         method.isProtected shouldBe false
-
     }
 
     "set is protected (true)" {
@@ -481,7 +443,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.isProtected = true
         method.isProtected shouldBe true
-
     }
 
     "set is protected (false)" {
@@ -490,7 +451,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0b1111111_11111011, mutableListOf())
         method.isProtected = false
         method.isProtected shouldBe false
-
     }
 
     "is static (true)" {
@@ -498,7 +458,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00001000, mutableListOf())
         method.isStatic shouldBe true
-
     }
 
     "is static (false)" {
@@ -506,7 +465,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000000, mutableListOf())
         method.isStatic shouldBe false
-
     }
 
     "set is static (true)" {
@@ -515,7 +473,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.isStatic = true
         method.isStatic shouldBe true
-
     }
 
     "set is static (false)" {
@@ -524,7 +481,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0b1111111_11110111, mutableListOf())
         method.isStatic = false
         method.isStatic shouldBe false
-
     }
 
     "is final (true)" {
@@ -532,7 +488,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
         method.isFinal shouldBe true
-
     }
 
     "is final (false)" {
@@ -540,7 +495,6 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00000000, mutableListOf())
         method.isFinal shouldBe false
-
     }
 
     "set is final (true)" {
@@ -549,7 +503,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0, mutableListOf())
         method.isFinal = true
         method.isFinal shouldBe true
-
     }
 
     "set is final (false)" {
@@ -558,7 +511,6 @@ class MutableMethodTests : FreeSpec({
         val method = MutableMethod(pool, 0, 1, 0b1111111_11101111, mutableListOf())
         method.isFinal = false
         method.isFinal shouldBe false
-
     }
 
     "equals" {
@@ -578,7 +530,6 @@ class MutableMethodTests : FreeSpec({
         method shouldNotBe method5
         method shouldNotBe method6
         method3 shouldNotBe method4
-
     }
 
     "hashcode" {
@@ -598,7 +549,6 @@ class MutableMethodTests : FreeSpec({
         method.hashCode() shouldNotBe method5.hashCode()
         method.hashCode() shouldNotBe method6.hashCode()
         method3.hashCode() shouldNotBe method4.hashCode()
-
     }
 
     "dump" {
@@ -626,7 +576,6 @@ class MutableMethodTests : FreeSpec({
             *0x10.toShort().toBytes(), // flags
             *0.toShort().toBytes() // attributes size
         )
-
     }
 
     "dump with attributes" {
@@ -634,7 +583,10 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val stream = ByteArrayOutputStream()
         val method = MutableMethod(
-            pool, 0, 1, 0b00000000_00010000,
+            pool,
+            0,
+            1,
+            0b00000000_00010000,
             mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
         )
         method.dump(DataOutputStream(stream))
@@ -654,7 +606,10 @@ class MutableMethodTests : FreeSpec({
 
         val pool = MutableConstantPool()
         val method = MutableMethod(
-            pool, 0, 1, 0b00000000_00010000,
+            pool,
+            0,
+            1,
+            0b00000000_00010000,
             mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
         )
         method.dump() shouldBe byteArrayOf(
@@ -666,7 +621,6 @@ class MutableMethodTests : FreeSpec({
             *3.toBytes(), // attribute data size
             1, 2, 3 // attribute data
         )
-
     }
 
     "from stream" {
@@ -684,7 +638,6 @@ class MutableMethodTests : FreeSpec({
         method.qualifiedNameConstant shouldBe 1
         method.flags shouldBe 0x10.toShort()
         method.attributes.size shouldBe 0
-
     }
 
     "from stream with attributes" {
@@ -707,7 +660,6 @@ class MutableMethodTests : FreeSpec({
         method.attributes.size shouldBe 1
         method.attributes[0].nameConstant shouldBe 0
         method.attributes[0].value contentEquals byteArrayOf(1, 2, 3) shouldBe true
-
     }
 
     "from method" {
@@ -721,6 +673,5 @@ class MutableMethodTests : FreeSpec({
         method2.attributes.size shouldBe 1
         method2.attributes[0].nameConstant shouldBe 0
         method2.attributes[0].value contentEquals byteArrayOf(1, 2, 3) shouldBe true
-
     }
 })

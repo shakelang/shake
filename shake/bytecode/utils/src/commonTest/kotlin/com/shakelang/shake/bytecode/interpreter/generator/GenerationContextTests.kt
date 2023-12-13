@@ -18,7 +18,6 @@ class AttributeGenerationContextTests : FreeSpec({
 
         ctx.name shouldBe "test"
         ctx.data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "to attribute" {
@@ -31,7 +30,6 @@ class AttributeGenerationContextTests : FreeSpec({
         val attribute = ctx.toAttribute(pool)
         attribute.name shouldBe "test"
         attribute.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "to mutable attribute" {
@@ -44,9 +42,7 @@ class AttributeGenerationContextTests : FreeSpec({
         val attribute = ctx.toMutableAttribute(pool)
         attribute.name shouldBe "test"
         attribute.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
-
 })
 
 class FieldGenerationContextTests : FreeSpec({
@@ -61,7 +57,6 @@ class FieldGenerationContextTests : FreeSpec({
         ctx.isPublic shouldBe false
         ctx.isProtected shouldBe false
         ctx.isPrivate shouldBe false
-
     }
 
     "name" {
@@ -70,7 +65,6 @@ class FieldGenerationContextTests : FreeSpec({
         ctx.name shouldBe GenerationContext.UNDEFINED
         ctx.name = "test"
         ctx.name shouldBe "test"
-
     }
 
     "flags" {
@@ -79,7 +73,6 @@ class FieldGenerationContextTests : FreeSpec({
         ctx.flags shouldBe 0
         ctx.flags = 1
         ctx.flags shouldBe 1
-
     }
 
     "isPublic" {
@@ -90,7 +83,6 @@ class FieldGenerationContextTests : FreeSpec({
         ctx.isPublic = true
         ctx.isPublic shouldBe true
         ctx.flags shouldBe 0b0000000_00000001.toShort()
-
     }
 
     "isPrivate" {
@@ -101,9 +93,7 @@ class FieldGenerationContextTests : FreeSpec({
         ctx.isPrivate = true
         ctx.isPrivate shouldBe true
         ctx.flags shouldBe 0b0000000_00000010.toShort()
-
     }
-
 
     "isProtected" {
 
@@ -113,7 +103,6 @@ class FieldGenerationContextTests : FreeSpec({
         ctx.isProtected = true
         ctx.isProtected shouldBe true
         ctx.flags shouldBe 0b0000000_00000100.toShort()
-
     }
 
     "isStatic" {
@@ -124,7 +113,6 @@ class FieldGenerationContextTests : FreeSpec({
         ctx.isStatic = true
         ctx.isStatic shouldBe true
         ctx.flags shouldBe 0b0000000_00001000.toShort()
-
     }
 
     "isFinal" {
@@ -135,7 +123,6 @@ class FieldGenerationContextTests : FreeSpec({
         ctx.isFinal = true
         ctx.isFinal shouldBe true
         ctx.flags shouldBe 0b0000000_00010000.toShort()
-
     }
 
     "attribute generation" {
@@ -178,7 +165,6 @@ class FieldGenerationContextTests : FreeSpec({
         ctx.attributes.size shouldBe 1
         ctx.attributes[0].name shouldBe "test3"
         ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "to field" {
@@ -196,7 +182,6 @@ class FieldGenerationContextTests : FreeSpec({
         field.name shouldBe "test"
         field.flags shouldBe 0b0000000_00010000.toShort()
         field.attributes.size shouldBe 1
-
     }
 
     "to mutable field" {
@@ -214,7 +199,6 @@ class FieldGenerationContextTests : FreeSpec({
         field.name shouldBe "test"
         field.flags shouldBe 0b0000000_00010000.toShort()
         field.attributes.size shouldBe 1
-
     }
 })
 
@@ -230,7 +214,6 @@ class MethodGenerationContextTests : FreeSpec({
         ctx.isPublic shouldBe false
         ctx.isProtected shouldBe false
         ctx.isPrivate shouldBe false
-
     }
 
     "name" {
@@ -239,7 +222,6 @@ class MethodGenerationContextTests : FreeSpec({
         ctx.name shouldBe GenerationContext.UNDEFINED
         ctx.name = "test"
         ctx.name shouldBe "test"
-
     }
 
     "flags" {
@@ -248,7 +230,6 @@ class MethodGenerationContextTests : FreeSpec({
         ctx.flags shouldBe 0
         ctx.flags = 1
         ctx.flags shouldBe 1
-
     }
 
     "isPublic" {
@@ -259,7 +240,6 @@ class MethodGenerationContextTests : FreeSpec({
         ctx.isPublic = true
         ctx.isPublic shouldBe true
         ctx.flags shouldBe 0b0000000_00000001.toShort()
-
     }
 
     "isPrivate" {
@@ -270,7 +250,6 @@ class MethodGenerationContextTests : FreeSpec({
         ctx.isPrivate = true
         ctx.isPrivate shouldBe true
         ctx.flags shouldBe 0b0000000_00000010.toShort()
-
     }
 
     "isProtected" {
@@ -281,7 +260,6 @@ class MethodGenerationContextTests : FreeSpec({
         ctx.isProtected = true
         ctx.isProtected shouldBe true
         ctx.flags shouldBe 0b0000000_00000100.toShort()
-
     }
 
     "isStatic" {
@@ -292,7 +270,6 @@ class MethodGenerationContextTests : FreeSpec({
         ctx.isStatic = true
         ctx.isStatic shouldBe true
         ctx.flags shouldBe 0b0000000_00001000.toShort()
-
     }
 
     "isFinal" {
@@ -303,7 +280,6 @@ class MethodGenerationContextTests : FreeSpec({
         ctx.isFinal = true
         ctx.isFinal shouldBe true
         ctx.flags shouldBe 0b0000000_00010000.toShort()
-
     }
 
     "attribute generation" {
@@ -346,7 +322,6 @@ class MethodGenerationContextTests : FreeSpec({
         ctx.attributes.size shouldBe 1
         ctx.attributes[0].name shouldBe "test3"
         ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "to method" {
@@ -364,7 +339,6 @@ class MethodGenerationContextTests : FreeSpec({
         method.name shouldBe "test"
         method.flags shouldBe 0b0000000_00010000.toShort()
         method.attributes.size shouldBe 1
-
     }
 
     "to mutable method" {
@@ -382,9 +356,7 @@ class MethodGenerationContextTests : FreeSpec({
         method.name shouldBe "test"
         method.flags shouldBe 0b0000000_00010000.toShort()
         method.attributes.size shouldBe 1
-
     }
-
 })
 
 class ClassGenerationContextTests : FreeSpec({
@@ -400,7 +372,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.isPublic shouldBe false
         ctx.isProtected shouldBe false
         ctx.isPrivate shouldBe false
-
     }
 
     "name" {
@@ -409,7 +380,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.name shouldBe GenerationContext.UNDEFINED
         ctx.name = "test"
         ctx.name shouldBe "test"
-
     }
 
     "superName" {
@@ -418,7 +388,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.superName shouldBe GenerationContext.UNDEFINED
         ctx.superName = "test"
         ctx.superName shouldBe "test"
-
     }
 
     "flags" {
@@ -427,7 +396,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.flags shouldBe 0
         ctx.flags = 1
         ctx.flags shouldBe 1
-
     }
 
     "isPublic" {
@@ -438,7 +406,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.isPublic = true
         ctx.isPublic shouldBe true
         ctx.flags shouldBe 0b0000000_00000001.toShort()
-
     }
 
     "isPrivate" {
@@ -449,7 +416,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.isPrivate = true
         ctx.isPrivate shouldBe true
         ctx.flags shouldBe 0b0000000_00000010.toShort()
-
     }
 
     "isProtected" {
@@ -460,7 +426,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.isProtected = true
         ctx.isProtected shouldBe true
         ctx.flags shouldBe 0b0000000_00000100.toShort()
-
     }
 
     "isStatic" {
@@ -471,7 +436,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.isStatic = true
         ctx.isStatic shouldBe true
         ctx.flags shouldBe 0b0000000_00001000.toShort()
-
     }
 
     "isFinal" {
@@ -482,7 +446,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.isFinal = true
         ctx.isFinal shouldBe true
         ctx.flags shouldBe 0b0000000_00010000.toShort()
-
     }
 
     "attribute generation" {
@@ -525,8 +488,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.attributes.size shouldBe 1
         ctx.attributes[0].name shouldBe "test3"
         ctx.attributes[0].data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
-
     }
 
     "field generation" {
@@ -538,7 +499,6 @@ class ClassGenerationContextTests : FreeSpec({
         }
 
         ctx.fields.size shouldBe 1
-
     }
 
     "method generation" {
@@ -550,7 +510,6 @@ class ClassGenerationContextTests : FreeSpec({
         }
 
         ctx.methods.size shouldBe 1
-
     }
 
     "subclass generation" {
@@ -563,7 +522,6 @@ class ClassGenerationContextTests : FreeSpec({
         }
 
         ctx.subClasses.size shouldBe 1
-
     }
 
     "extends" {
@@ -572,7 +530,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.superName shouldBe GenerationContext.UNDEFINED
         ctx.extends("test")
         ctx.superName shouldBe "test"
-
     }
 
     "implements" {
@@ -582,7 +539,6 @@ class ClassGenerationContextTests : FreeSpec({
         ctx.implements("test")
         ctx.interfaces.size shouldBe 1
         ctx.interfaces[0] shouldBe "test"
-
     }
 
     "to class" {
@@ -618,7 +574,6 @@ class ClassGenerationContextTests : FreeSpec({
         clazz.fields.size shouldBe 1
         clazz.methods.size shouldBe 1
         clazz.subClasses.size shouldBe 1
-
     }
 
     "to mutable class" {
@@ -654,9 +609,7 @@ class ClassGenerationContextTests : FreeSpec({
         clazz.fields.size shouldBe 1
         clazz.methods.size shouldBe 1
         clazz.subClasses.size shouldBe 1
-
     }
-
 })
 
 class GenerationContextTests : FreeSpec({
@@ -667,7 +620,6 @@ class GenerationContextTests : FreeSpec({
         ctx.classes.size shouldBe 0
         ctx.methods.size shouldBe 0
         ctx.fields.size shouldBe 0
-
     }
 
     "field generation" {
@@ -679,7 +631,6 @@ class GenerationContextTests : FreeSpec({
         }
 
         ctx.fields.size shouldBe 1
-
     }
 
     "method generation" {
@@ -691,7 +642,6 @@ class GenerationContextTests : FreeSpec({
         }
 
         ctx.methods.size shouldBe 1
-
     }
 
     "class generation" {
@@ -704,7 +654,6 @@ class GenerationContextTests : FreeSpec({
         }
 
         ctx.classes.size shouldBe 1
-
     }
 
     "toStorageFormat" {
@@ -730,7 +679,6 @@ class GenerationContextTests : FreeSpec({
         format.classes.size shouldBe 1
         format.methods.size shouldBe 1
         format.fields.size shouldBe 1
-
     }
 
     "toMutableStorageFormat" {
@@ -756,7 +704,6 @@ class GenerationContextTests : FreeSpec({
         format.classes.size shouldBe 1
         format.methods.size shouldBe 1
         format.fields.size shouldBe 1
-
     }
 
     "generate shortcut" {
@@ -782,5 +729,4 @@ class GenerationContextTests : FreeSpec({
         format.methods.size shouldBe 1
         format.fields.size shouldBe 1
     }
-
 })

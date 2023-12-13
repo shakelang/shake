@@ -111,8 +111,6 @@ class MutableMethod(
             qualifiedNameConstant = pool.resolveUtf8(value)
         }
 
-
-
     override val attributes: MutableList<Attribute>
         get() = super.attributes as MutableList<Attribute>
 
@@ -177,13 +175,13 @@ class MutableMethod(
             )
         }
 
-            fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableMethod {
-                val name = stream.readInt()
-                val qualifiedName = stream.readInt()
-                val flags = stream.readShort()
-                val attributeCount = stream.readShort().toInt()
-                val attributes = (0 until attributeCount).map { MutableAttribute.fromStream(pool, stream) }
-                return MutableMethod(pool, name, qualifiedName, flags, attributes.toMutableList())
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableMethod {
+            val name = stream.readInt()
+            val qualifiedName = stream.readInt()
+            val flags = stream.readShort()
+            val attributeCount = stream.readShort().toInt()
+            val attributes = (0 until attributeCount).map { MutableAttribute.fromStream(pool, stream) }
+            return MutableMethod(pool, name, qualifiedName, flags, attributes.toMutableList())
         }
     }
 }
