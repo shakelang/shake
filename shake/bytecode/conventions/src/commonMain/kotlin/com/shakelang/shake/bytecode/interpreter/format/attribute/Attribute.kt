@@ -1,4 +1,4 @@
-package com.shakelang.shake.bytecode.interpreter.format
+package com.shakelang.shake.bytecode.interpreter.format.attribute
 
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
@@ -6,7 +6,7 @@ import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
-open class Attribute(
+open class Attribute (
     open val pool: ConstantPool,
     open val nameConstant: Int,
     open val value: ByteArray
