@@ -15,11 +15,7 @@ open class CodeAttribute (
     open val code: ByteArray,
     open val exceptionTable: Array<ExceptionTableEntry>,
     open val attributes: Array<Attribute>
-) : Attribute(
-    pool,
-    nameConstant,
-    ByteArray(0)
-) {
+) : Attribute {
 
     init {
         checkAttributeName()
@@ -28,6 +24,9 @@ open class CodeAttribute (
     fun checkAttributeName() {
         if (name != "Code") throw IllegalArgumentException("Name must be 'Code' (is $name). Pointer: $nameConstant")
     }
+
+    override fun equals(other: Any?): Boolean = compareHelper(other)
+    override fun hashCode(): Int = hashCodeHelper()
 
     override val value: ByteArray
         get() {
@@ -85,9 +84,13 @@ open class CodeAttribute (
     }
 
     companion object {
+
         fun fromStream(pool: ConstantPool, stream: DataInputStream): CodeAttribute {
             val name = stream.readInt()
-            val size = stream.readInt()
+            return fromStream(pool, stream, name)
+        }
+
+        fun fromStream(pool: ConstantPool, stream: DataInputStream, name: Int): CodeAttribute {
             val maxStack = stream.readUnsignedShort().toInt()
             val maxLocals = stream.readUnsignedShort().toInt()
             val codeSize = stream.readInt()
@@ -150,7 +153,7 @@ class MutableCodeAttribute(
     ByteArray(0),
     arrayOf(),
     arrayOf()
-) {
+), MutableAttribute {
 
     override val pool: MutableConstantPool
         get() = super.pool as MutableConstantPool
@@ -171,6 +174,10 @@ class MutableCodeAttribute(
 
         fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableCodeAttribute {
             val name = stream.readInt()
+            return fromStream(pool, stream, name)
+        }
+
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream, name: Int): MutableCodeAttribute {
             val size = stream.readInt()
             val maxStack = stream.readUnsignedShort().toInt()
             val maxLocals = stream.readUnsignedShort().toInt()
