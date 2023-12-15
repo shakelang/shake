@@ -1,3 +1,11 @@
 {
-  "bumps": []
+  "bumps": [
+    {
+      "type": "minor",
+      "message": "Introduce BufferedInputStream#peek() (As it can be helpfull and is no problem to do a peek operation on a buffered stream)",
+      "paths": [
+        ":util:common-io"
+      ]
+    }
+  ]
 }
