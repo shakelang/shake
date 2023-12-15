@@ -1,4 +1,4 @@
-package com.shakelang.shake.bytecode.interpreter.format
+package com.shakelang.shake.bytecode.interpreter.format.attribute
 
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
@@ -6,21 +6,21 @@ import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
-open class Attribute(
-    open val pool: ConstantPool,
-    open val nameConstant: Int,
-    open val value: ByteArray
-) {
+open class AnonymousAttributeImpl (
+    override val pool: ConstantPool,
+    override val nameConstant: Int,
+    override val value: ByteArray
+) : Attribute {
 
-    open val name: String get() = pool.getUtf8(nameConstant).value
+    override val name: String get() = pool.getUtf8(nameConstant).value
 
-    open fun dump(stream: DataOutputStream) {
+    override fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
         stream.writeInt(value.size)
         stream.write(value)
     }
 
-    open fun dump(): ByteArray {
+    override fun dump(): ByteArray {
         val stream = ByteArrayOutputStream()
         dump(DataOutputStream(stream))
         return stream.toByteArray()
@@ -52,42 +52,58 @@ open class Attribute(
             val value = ByteArray(size) {
                 stream.readByte()
             }
-            return Attribute(pool, name, value)
+            return AnonymousAttributeImpl(pool, name, value)
+        }
+
+        fun fromStream(pool: ConstantPool, stream: DataInputStream, nameConstant: Int): Attribute {
+            val size = stream.readInt()
+            val value = ByteArray(size) {
+                stream.readByte()
+            }
+            return AnonymousAttributeImpl(pool, nameConstant, value)
         }
     }
 }
 
-class MutableAttribute(
+class MutableAnonymousAttributeImpl(
     pool: MutableConstantPool,
     override var nameConstant: Int,
     override var value: ByteArray
-) : Attribute(pool, nameConstant, value) {
+) : AnonymousAttributeImpl(pool, nameConstant, value), MutableAttribute {
 
     override val pool: MutableConstantPool
         get() = super.pool as MutableConstantPool
 
     override var name: String
-        get() = super.name
+        get() = pool.getUtf8(nameConstant).value
         set(value) {
             nameConstant = pool.resolveUtf8(value)
         }
 
     companion object {
-        fun fromAttribute(attribute: Attribute): MutableAttribute {
-            return MutableAttribute(
+        fun fromAttribute(attribute: Attribute): MutableAnonymousAttributeImpl {
+            return MutableAnonymousAttributeImpl(
                 attribute.pool as MutableConstantPool,
                 attribute.nameConstant,
                 attribute.value
             )
         }
 
-        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableAttribute {
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableAnonymousAttributeImpl {
             val name = stream.readInt()
             val size = stream.readInt()
             val value = ByteArray(size) {
                 stream.readByte()
             }
-            return MutableAttribute(pool, name, value)
+            return MutableAnonymousAttributeImpl(pool, name, value)
+        }
+
+        fun fromStream(pool: MutableConstantPool, stream: DataInputStream, nameConstant: Int): MutableAnonymousAttributeImpl {
+            val size = stream.readInt()
+            val value = ByteArray(size) {
+                stream.readByte()
+            }
+            return MutableAnonymousAttributeImpl(pool, nameConstant, value)
         }
     }
 }
