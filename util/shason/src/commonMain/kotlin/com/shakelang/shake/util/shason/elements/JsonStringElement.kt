@@ -38,5 +38,4 @@ class JsonStringElement(
     override fun isJsonInteger(): Boolean = false
     override fun isJsonNull(): Boolean = false
     override fun isJsonBoolean(): Boolean = false
-
 }
