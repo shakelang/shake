@@ -1,6 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter.generator
 
 import com.shakelang.shake.bytecode.interpreter.format.*
+import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
+import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAttribute
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import kotlin.experimental.and
 import kotlin.experimental.or

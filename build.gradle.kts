@@ -353,7 +353,6 @@ val testAggregate = tasks.register<TestReport>("testAggregate") {
     testResults.from(subprojects.flatMap { it.tasks.withType<Test>() })
 }
 
-
 afterEvaluate {
     tasks.withType<DokkaTaskPartial>().configureEach {
         pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
