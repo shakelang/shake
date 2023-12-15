@@ -21,6 +21,12 @@ jobs:
           persist-credentials: false
           submodules: "recursive"
 
+      # Update references
+      - name: Git Submodule Update
+        run: |
+          git pull --recurse-submodules
+          git submodule update --remote --recursive
+
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
