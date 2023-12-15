@@ -44,5 +44,4 @@ enum class JsonNullElement : JsonPrimitive {
     override fun isJsonInteger(): Boolean = false
     override fun isJsonNull(): Boolean = true
     override fun isJsonBoolean(): Boolean = false
-
 }
