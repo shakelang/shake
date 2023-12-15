@@ -48,7 +48,7 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.shake.util.changelog:changelog",
-      "version": "0.6.2",
+      "version": "0.6.3",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.shake.util.changelog",
       "license": "",
@@ -96,7 +96,7 @@
     {
       "path": ":util:jvmlib",
       "name": "com.shakelang.shake.util:jvmlib",
-      "version": "0.1.1-SNAPSHOT",
+      "version": "0.1.2-SNAPSHOT",
       "description": "A library for jvm stuff in java",
       "author": "com.shakelang.shake.util",
       "license": "",
@@ -172,7 +172,7 @@
     {
       "path": ":util:sarifmerge",
       "name": "com.shakelang.shake.util:sarifmerge",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "description": "Utility package to merged sarif files for ktlint github report",
       "author": "com.shakelang.shake.util",
       "license": "",
@@ -184,7 +184,7 @@
     {
       "path": ":util:shason",
       "name": "com.shakelang.shake.util:shason",
-      "version": "0.2.4",
+      "version": "0.3.0",
       "description": "A json parser implemented in kotlin (mpp)",
       "author": "com.shakelang.shake.util",
       "license": "",
@@ -208,17 +208,56 @@
       ]
     },
     {
-      "path": ":shake:bytecode:interpreter",
-      "name": "com.shakelang.shake.compiler.jsgenerator:interpreter",
+      "path": ":shake:bytecode:conventions",
+      "name": "com.shakelang.shake.bytecode:conventions",
       "version": "0.1.0-SNAPSHOT",
-      "description": "js-generator",
-      "author": "com.shakelang.shake.compiler.jsgenerator",
+      "description": "Bytecode conventions for Shake",
+      "author": "com.shakelang.shake.bytecode",
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.1.0",
         ":util:primitives:primitives:0.3.0",
         ":util:common-io:common-io:0.2.2"
+      ]
+    },
+    {
+      "path": ":shake:bytecode:generation",
+      "name": "shake.shake.bytecode:generation",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "",
+      "author": "shake.shake.bytecode",
+      "license": "",
+      "dependencies": []
+    },
+    {
+      "path": ":shake:bytecode:interpreter",
+      "name": "com.shakelang.shake.bytecode:interpreter",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Bytecode interpreter for Shake",
+      "author": "com.shakelang.shake.bytecode",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1",
+        ":util:pointers:pointers:0.1.0",
+        ":util:primitives:primitives:0.3.0",
+        ":util:common-io:common-io:0.2.2",
+        ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT"
+      ]
+    },
+    {
+      "path": ":shake:bytecode:utils",
+      "name": "com.shakelang.shake.bytecode:utils",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Utilities for bytecode manipulation",
+      "author": "com.shakelang.shake.bytecode",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1",
+        ":util:pointers:pointers:0.1.0",
+        ":util:primitives:primitives:0.3.0",
+        ":util:common-io:common-io:0.2.2",
+        ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT"
       ]
     },
     {
@@ -252,7 +291,7 @@
     {
       "path": ":shake:compiler:parser",
       "name": "com.shakelang.shake.compiler.parser:parser",
-      "version": "0.1.1-SNAPSHOT",
+      "version": "0.1.2-SNAPSHOT",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.compiler.parser",
       "license": "",
@@ -355,5 +394,5 @@
       ]
     }
   ],
-  "lastUpdate": 1701724749373
+  "lastUpdate": 1702643783248
 }

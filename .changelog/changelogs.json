@@ -117,6 +117,12 @@
             "Fix: Structure file version not updated",
             "Fix: Bump file not cleared after version generation"
           ]
+        },
+        {
+          "version": "0.6.3",
+          "changes": [
+            "Update com.shakelang.shake.util:shason to 0.3.0"
+          ]
         }
       ]
     },
@@ -180,6 +186,12 @@
           "version": "0.1.1-SNAPSHOT",
           "changes": [
             "Initial release of snapshot packages"
+          ]
+        },
+        {
+          "version": "0.1.2-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.shake.util:shason to 0.3.0"
           ]
         }
       ]
@@ -294,6 +306,14 @@
           "changes": [
             "Generation of JsonElement class fixed"
           ]
+        },
+        {
+          "version": "0.3.0",
+          "changes": [
+            "Introduce JsonElement#toJson[PrimitiveType]",
+            "Introduce JsonElement#isJson[PrimitiveType]",
+            "Make int compatible to double"
+          ]
         }
       ]
     },
@@ -351,6 +371,12 @@
           "changes": [
             "Initial release of snapshot packages",
             "Updated dependencies"
+          ]
+        },
+        {
+          "version": "0.1.2-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.shake.util:shason to 0.3.0"
           ]
         }
       ]
@@ -419,6 +445,12 @@
           "version": "0.1.4",
           "changes": [
             "Fixes to SarifLoader to fix errors with github upload sarif"
+          ]
+        },
+        {
+          "version": "0.1.5",
+          "changes": [
+            "Update com.shakelang.shake.util:shason to 0.3.0"
           ]
         }
       ]
