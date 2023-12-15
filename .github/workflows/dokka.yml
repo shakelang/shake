@@ -36,11 +36,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Clone "docs" branc
+      - name: Clone "docs" branch
         run: |
           mkdir -p build/dokka/
           # Clone the repository into build/dokka/htmlMultiModule/
-          git clone --depth 1 --branch docs https://github.com/shakelang/shake build/dokka/htmlMultiModule/
+          git clone --depth 1 --branch docs https://github.com/shakelang/docs.git build/dokka/htmlMultiModule/
 
       - name: Build with Gradle
         run: ./gradlew dokkaHtmlMultiModule
@@ -67,8 +67,8 @@ jobs:
             git config --global user.email "$GIT_AUTHOR_EMAIL"
 
           # Commit and push changes
-            git add .
+            git add . -f
             git commit -m "Update documentation"
 
           # Push using the GITHUB_TOKEN
-            git push https://$GITHUB_ACTOR:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/shake.git
+            git push https://$GITHUB_ACTOR:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/docs.git
