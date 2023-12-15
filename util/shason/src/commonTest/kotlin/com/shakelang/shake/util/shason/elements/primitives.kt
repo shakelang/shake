@@ -127,6 +127,15 @@ class JsonDoubleElementTests : FreeSpec({
     "isJsonBoolean() should return false" {
         JsonDoubleElement(123.0).isJsonBoolean() shouldBe false
     }
+
+    "toString() should return null if value is NaN" {
+        JsonDoubleElement(Double.NaN).toString() shouldBe "null"
+    }
+
+    "toString() should return null if value is Infinity" {
+        JsonDoubleElement(Double.POSITIVE_INFINITY).toString() shouldBe "null"
+    }
+
 })
 
 class JsonStringElementTests : FreeSpec({
