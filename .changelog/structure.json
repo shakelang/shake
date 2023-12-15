@@ -55,7 +55,7 @@
       "dependencies": [
         "unspecified:unspecified:unspecified",
         ":util:colorlib:colorlib:0.2.0",
-        ":util:shason:shason:0.2.4",
+        ":util:shason:shason:0.3.0",
         ":util:markdown:markdown:0.1.1"
       ]
     },
@@ -103,7 +103,7 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.2.3",
-        ":util:shason:shason:0.2.4",
+        ":util:shason:shason:0.3.0",
         ":util:common-io:common-io:0.2.2",
         ":util:primitives:primitives:0.3.0"
       ]
@@ -178,7 +178,7 @@
       "license": "",
       "dependencies": [
         "unspecified:unspecified:unspecified",
-        ":util:shason:shason:0.2.4"
+        ":util:shason:shason:0.3.0"
       ]
     },
     {
@@ -270,9 +270,9 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.2.3",
-        ":util:shason:shason:0.2.4",
+        ":util:shason:shason:0.3.0",
         ":shake:compiler:lexer:lexer:0.1.1-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.1-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.2-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0"
       ]
     },
@@ -298,7 +298,7 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.2.3",
-        ":util:shason:shason:0.2.4",
+        ":util:shason:shason:0.3.0",
         ":shake:compiler:lexer:lexer:0.1.1-SNAPSHOT"
       ]
     },
@@ -313,11 +313,11 @@
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.1.0",
         ":util:parseutils:parseutils:0.2.3",
-        ":util:shason:shason:0.2.4",
+        ":util:shason:shason:0.3.0",
         ":util:common-io:common-io:0.2.2",
         ":util:primitives:primitives:0.3.0",
         ":shake:compiler:lexer:lexer:0.1.1-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.1-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.2-SNAPSHOT",
         "org.reflections:reflections:0.10.2"
       ]
     },
@@ -373,7 +373,7 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.2.3",
-        ":util:shason:shason:0.2.4",
+        ":util:shason:shason:0.3.0",
         ":shake:shasambly:shasambly:shasambly:0.1.0",
         ":shake:shasambly:shastools:shastools:0.1.0"
       ]
@@ -394,5 +394,5 @@
       ]
     }
   ],
-  "lastUpdate": 1702643783248
+  "lastUpdate": 1702643988499
 }
