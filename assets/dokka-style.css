@@ -1,0 +1,3 @@
+div.library-name a.library-name--link::before {
+    background-image: url('https://assets.shakelang.com/shake/logo/basic/logo-base-x512.png') !important;
+}
