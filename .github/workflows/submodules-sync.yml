@@ -1,0 +1,51 @@
+name: "Submodules Sync"
+
+on:
+  # Allows you to run this workflow manually from the Actions tab or through HTTP API
+  workflow_dispatch:
+  schedule:
+    # Runs every hour
+    - cron: "0 * * * *"
+
+jobs:
+  sync:
+    name: "Submodules Sync"
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      discussions: write
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          submodules: true
+
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.ACTIONS_GPG_KEY }}
+          passphrase: ${{ secrets.ACTIONS_GPG_PASS }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      # Update references
+      - name: Git Sumbodule Update
+        run: |
+          git pull --recurse-submodules
+          git submodule update --remote --recursive
+
+      - name: Commit changes 📝
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update submodules 📝"
+          commit_user_name: "shake-bot [bot]"
+          commit_user_email: "bot@shakelang.com"
