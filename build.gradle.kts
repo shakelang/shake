@@ -4,11 +4,22 @@ import com.shakelang.shake.util.changelog.Changelog
 import com.shakelang.shake.util.changelog.tasks.VersionTask
 import io.codearte.gradle.nexus.NexusStagingExtension
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.dokka.DokkaConfiguration.Visibility
+import org.jetbrains.dokka.gradle.DokkaTaskPartial
+import org.jetbrains.dokka.versioning.VersioningConfiguration
+import org.jetbrains.dokka.versioning.VersioningPlugin
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import java.net.URL
 
 group = "com.shakelang.shake"
 version = "0.1.0"
 description = "Shake"
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.dokka:versioning-plugin:1.9.10")
+    }
+}
 
 dependencies {
 //    kover(project(":util:changelog"))
@@ -91,6 +102,16 @@ tasks.withType<VersionTask>().configureEach {
     }
 }
 
+val currentVersion = "1.0"
+val previousVersionsDirectory = project.rootProject.projectDir.resolve("previousDocVersions").invariantSeparatorsPath
+
+tasks.dokkaHtmlMultiModule {
+    pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
+        version = currentVersion
+        olderVersionsDir = file(previousVersionsDirectory)
+    }
+}
+
 // apply(plugin = "com.shakelang.shake.util.changelog.Changelog")
 detekt {
     toolVersion = "1.23.3"
@@ -142,6 +163,30 @@ subprojects {
             txt.required.set(true)
             sarif.required.set(true)
             md.required.set(true)
+        }
+    }
+
+    afterEvaluate {
+        tasks.withType<DokkaTaskPartial>().configureEach {
+
+            moduleName.set(project.group.toString() + "." + project.name.toString())
+            moduleVersion.set(project.version.toString())
+
+            dokkaSourceSets.configureEach {
+                documentedVisibilities.set(setOf(
+                    Visibility.PUBLIC,
+                    Visibility.PROTECTED
+                ))
+
+                // Read docs for more details: https://kotlinlang.org/docs/dokka-gradle.html#source-link-configuration
+                sourceLink {
+                    val exampleDir = "https://github.com/Kotlin/dokka/tree/master/examples/gradle/dokka-multimodule-example"
+
+                    localDirectory.set(rootProject.projectDir)
+                    remoteUrl.set(URL("$exampleDir"))
+                    remoteLineSuffix.set("#L")
+                }
+            }
         }
     }
 }
