@@ -365,19 +365,19 @@ class JsonBooleanElementTests : FreeSpec({
     "JsonBooleanElement.TRUE should return true" {
         JsonBooleanElement.TRUE.value shouldBe true
     }
-    
+
     "JsonBooleanElement.FALSE should return false" {
         JsonBooleanElement.FALSE.value shouldBe false
     }
-    
+
     "JsonBooleanElement.from(true) should return true" {
         JsonBooleanElement.from(true).value shouldBe true
     }
-    
+
     "JsonBooleanElement.from(false) should return false" {
         JsonBooleanElement.from(false).value shouldBe false
     }
-    
+
     "value should return the value" {
         JsonBooleanElement.TRUE.value shouldBe true
     }
@@ -605,5 +605,3 @@ class JsonNullElementTests : FreeSpec({
         JsonNullElement.INSTANCE.toJsonPrimitive() shouldBe JsonNullElement.INSTANCE
     }
 })
-
-
