@@ -23,7 +23,17 @@ class JsonDoubleElement(
      * @since 0.1.0
      * @version 0.1.0
      */
-    override fun toString(): String = JSON.stringify(value)
+    override fun toString(): String {
+
+        // Verify value
+        if(value.isInfinite()) return "null"
+        if(value.isNaN()) return "null"
+
+        val string = value.toString()
+        if(!string.contains('.')) return "$string.0"
+        return string
+
+    }
 
     override fun isNull(): Boolean = false
     override fun isBoolean(): Boolean = false
