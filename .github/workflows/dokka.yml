@@ -1,0 +1,75 @@
+# Workflow to generate dokka documentation
+
+name: Dokka
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [16]
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Clone "docs" branc
+        run: |
+          mkdir -p build/dokka/
+
+          # Clone the repository into build/dokka/htmlMultiModule/
+          git clone --depth 1 --branch docs https://github.com/shakelang/shake
+
+      - name: Build with Gradle
+        run: ./gradlew dokkaHtmlMultiModule
+
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.ACTIONS_GPG_KEY }}
+          passphrase: ${{ secrets.ACTIONS_GPG_PASS }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Commit and push changes
+        working-directory: build/dokka/htmlMultiModule/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
+          GITHUB_ACTOR: shakelang-bot
+          GIT_AUTHOR_NAME: shakebot[bot]
+          GIT_AUTHOR_EMAIL: bot@shakelang.com
+
+        run: |
+          # Configure git
+            git config --global user.name "$GIT_AUTHOR_NAME"
+            git config --global user.email "$GIT_AUTHOR_EMAIL"
+
+          # Commit and push changes
+            git add .
+            git commit -m "Update documentation"
+
+          # Push using the GITHUB_TOKEN
+            git push https://$GITHUB_ACTOR:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/shake.git
