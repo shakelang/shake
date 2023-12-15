@@ -22,9 +22,6 @@ jobs:
           submodules: "recursive"
 
       # Update references
-      - name: Initialize and update submodule
-        run: git submodule update --init --recursive
-
       - name: Git Submodule Update
         run: |
           git pull --recurse-submodules
@@ -56,6 +53,9 @@ jobs:
           passphrase: ${{ secrets.ACTIONS_GPG_PASS }}
           git_user_signingkey: true
           git_commit_gpgsign: true
+
+      - name: Initialize and update submodule
+        run: git submodule update --init --recursive
 
       - name: Check Git Status
         working-directory: build/dokka/htmlMultiModule/
