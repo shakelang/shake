@@ -64,6 +64,58 @@ class JsonIntegerElementTests : FreeSpec({
     "isJsonBoolean() should return false" {
         JsonIntegerElement(123).isJsonBoolean() shouldBe false
     }
+
+    "toNull() should throw an exception" {
+        runCatching { JsonIntegerElement(123).toNull() }.isFailure shouldBe true
+    }
+
+    "toBoolean() should throw an exception" {
+        runCatching { JsonIntegerElement(123).toBoolean() }.isFailure shouldBe true
+    }
+
+    "toInt() should return the value" {
+        JsonIntegerElement(123).toInt()
+    }
+
+    "toDouble() should return the value" {
+        JsonIntegerElement(123).toDouble()
+    }
+
+    "toStringElement() should throw an exception" {
+        runCatching { JsonIntegerElement(123).toStringElement() }.isFailure shouldBe true
+    }
+
+    "toJsonNull() should throw an exception" {
+        runCatching { JsonIntegerElement(123).toJsonNull() }.isFailure shouldBe true
+    }
+
+    "toJsonBoolean() should throw an exception" {
+        runCatching { JsonIntegerElement(123).toJsonBoolean() }.isFailure shouldBe true
+    }
+
+    "toJsonInteger() should return the value" {
+        JsonIntegerElement(123).toJsonInteger()
+    }
+
+    "toJsonDouble() should return the value" {
+        JsonIntegerElement(123).toJsonDouble()
+    }
+
+    "toJsonString() should throw an exception" {
+        runCatching { JsonIntegerElement(123).toJsonString() }.isFailure shouldBe true
+    }
+
+    "toJsonArray() should throw an exception" {
+        runCatching { JsonIntegerElement(123).toJsonArray() }.isFailure shouldBe true
+    }
+
+    "toJsonObject() should throw an exception" {
+        runCatching { JsonIntegerElement(123).toJsonObject() }.isFailure shouldBe true
+    }
+
+    "toJsonPrimitive() should return the value" {
+        JsonIntegerElement(123).toJsonPrimitive()
+    }
 })
 
 class JsonDoubleElementTests : FreeSpec({
@@ -136,6 +188,61 @@ class JsonDoubleElementTests : FreeSpec({
         JsonDoubleElement(Double.POSITIVE_INFINITY).toString() shouldBe "null"
     }
 
+    "toString() should return null if value is -Infinity" {
+        JsonDoubleElement(Double.NEGATIVE_INFINITY).toString() shouldBe "null"
+    }
+
+    "toNull() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toNull() }.isFailure shouldBe true
+    }
+
+    "toBoolean() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toBoolean() }.isFailure shouldBe true
+    }
+
+    "toInt() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toInt() }.isFailure shouldBe true
+    }
+
+    "toDouble() should return the value" {
+        JsonDoubleElement(123.0).toDouble()
+    }
+
+    "toStringElement() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toStringElement() }.isFailure shouldBe true
+    }
+
+    "toJsonNull() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toJsonNull() }.isFailure shouldBe true
+    }
+
+    "toJsonBoolean() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toJsonBoolean() }.isFailure shouldBe true
+    }
+
+    "toJsonInteger() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toJsonInteger() }.isFailure shouldBe true
+    }
+
+    "toJsonDouble() should return the value" {
+        JsonDoubleElement(123.0).toJsonDouble()
+    }
+
+    "toJsonString() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toJsonString() }.isFailure shouldBe true
+    }
+
+    "toJsonArray() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toJsonArray() }.isFailure shouldBe true
+    }
+
+    "toJsonObject() should throw an exception" {
+        runCatching { JsonDoubleElement(123.0).toJsonObject() }.isFailure shouldBe true
+    }
+
+    "toJsonPrimitive() should return the value" {
+        JsonDoubleElement(123.0).toJsonPrimitive()
+    }
 })
 
 class JsonStringElementTests : FreeSpec({
@@ -198,6 +305,58 @@ class JsonStringElementTests : FreeSpec({
 
     "isJsonBoolean() should return false" {
         JsonStringElement("123").isJsonBoolean() shouldBe false
+    }
+
+    "toNull() should throw an exception" {
+        runCatching { JsonStringElement("123").toNull() }.isFailure shouldBe true
+    }
+
+    "toBoolean() should throw an exception" {
+        runCatching { JsonStringElement("123").toBoolean() }.isFailure shouldBe true
+    }
+
+    "toInt() should throw an exception" {
+        runCatching { JsonStringElement("123").toInt() }.isFailure shouldBe true
+    }
+
+    "toDouble() should throw an exception" {
+        runCatching { JsonStringElement("123").toDouble() }.isFailure shouldBe true
+    }
+
+    "toStringElement() should return the value" {
+        JsonStringElement("123").toStringElement()
+    }
+
+    "toJsonNull() should throw an exception" {
+        runCatching { JsonStringElement("123").toJsonNull() }.isFailure shouldBe true
+    }
+
+    "toJsonBoolean() should throw an exception" {
+        runCatching { JsonStringElement("123").toJsonBoolean() }.isFailure shouldBe true
+    }
+
+    "toJsonInteger() should throw an exception" {
+        runCatching { JsonStringElement("123").toJsonInteger() }.isFailure shouldBe true
+    }
+
+    "toJsonDouble() should throw an exception" {
+        runCatching { JsonStringElement("123").toJsonDouble() }.isFailure shouldBe true
+    }
+
+    "toJsonString() should return the value" {
+        JsonStringElement("123").toJsonString()
+    }
+
+    "toJsonArray() should throw an exception" {
+        runCatching { JsonStringElement("123").toJsonArray() }.isFailure shouldBe true
+    }
+
+    "toJsonObject() should throw an exception" {
+        runCatching { JsonStringElement("123").toJsonObject() }.isFailure shouldBe true
+    }
+
+    "toJsonPrimitive() should return the value" {
+        JsonStringElement("123").toJsonPrimitive()
     }
 })
 
@@ -278,6 +437,58 @@ class JsonBooleanElementTests : FreeSpec({
     "isJsonBoolean() should return true" {
         JsonBooleanElement.TRUE.isJsonBoolean() shouldBe true
     }
+
+    "toNull() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toNull() }.isFailure shouldBe true
+    }
+
+    "toBoolean() should return the value" {
+        JsonBooleanElement.TRUE.toBoolean()
+    }
+
+    "toInt() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toInt() }.isFailure shouldBe true
+    }
+
+    "toDouble() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toDouble() }.isFailure shouldBe true
+    }
+
+    "toStringElement() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toStringElement() }.isFailure shouldBe true
+    }
+
+    "toJsonNull() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toJsonNull() }.isFailure shouldBe true
+    }
+
+    "toJsonBoolean() should return the value" {
+        JsonBooleanElement.TRUE.toJsonBoolean() shouldBe JsonBooleanElement.TRUE
+    }
+
+    "toJsonInteger() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toJsonInteger() }.isFailure shouldBe true
+    }
+
+    "toJsonDouble() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toJsonDouble() }.isFailure shouldBe true
+    }
+
+    "toJsonString() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toJsonString() }.isFailure shouldBe true
+    }
+
+    "toJsonArray() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toJsonArray() }.isFailure shouldBe true
+    }
+
+    "toJsonObject() should throw an exception" {
+        runCatching { JsonBooleanElement.TRUE.toJsonObject() }.isFailure shouldBe true
+    }
+
+    "toJsonPrimitive() should return the value" {
+        JsonBooleanElement.TRUE.toJsonPrimitive() shouldBe JsonBooleanElement.TRUE
+    }
 })
 
 class JsonNullElementTests : FreeSpec({
@@ -340,6 +551,58 @@ class JsonNullElementTests : FreeSpec({
 
     "isJsonBoolean() should return false" {
         JsonNullElement.INSTANCE.isJsonBoolean() shouldBe false
+    }
+
+    "toNull() should return null" {
+        JsonNullElement.INSTANCE.toNull()
+    }
+
+    "toBoolean() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toBoolean() }.isFailure shouldBe true
+    }
+
+    "toInt() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toInt() }.isFailure shouldBe true
+    }
+
+    "toDouble() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toDouble() }.isFailure shouldBe true
+    }
+
+    "toStringElement() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toStringElement() }.isFailure shouldBe true
+    }
+
+    "toJsonNull() should return the value" {
+        JsonNullElement.INSTANCE.toJsonNull() shouldBe JsonNullElement.INSTANCE
+    }
+
+    "toJsonBoolean() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toJsonBoolean() }.isFailure shouldBe true
+    }
+
+    "toJsonInteger() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toJsonInteger() }.isFailure shouldBe true
+    }
+
+    "toJsonDouble() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toJsonDouble() }.isFailure shouldBe true
+    }
+
+    "toJsonString() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toJsonString() }.isFailure shouldBe true
+    }
+
+    "toJsonArray() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toJsonArray() }.isFailure shouldBe true
+    }
+
+    "toJsonObject() should throw an exception" {
+        runCatching { JsonNullElement.INSTANCE.toJsonObject() }.isFailure shouldBe true
+    }
+
+    "toJsonPrimitive() should return the value" {
+        JsonNullElement.INSTANCE.toJsonPrimitive() shouldBe JsonNullElement.INSTANCE
     }
 })
 
