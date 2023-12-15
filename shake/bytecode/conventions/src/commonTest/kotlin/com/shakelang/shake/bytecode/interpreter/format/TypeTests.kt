@@ -152,23 +152,23 @@ class TypeTests : FreeSpec({
     "Parsing of ByteType should return ByteType.INSTANCE" {
         Type.parse("B") shouldBe Type.ByteType.INSTANCE
     }
-    
+
     "Parsing of ShortType should return ShortType.INSTANCE" {
         Type.parse("S") shouldBe Type.ShortType.INSTANCE
     }
-    
+
     "Parsing of IntType should return IntType.INSTANCE" {
         Type.parse("I") shouldBe Type.IntType.INSTANCE
     }
-    
+
     "Parsing of LongType should return LongType.INSTANCE" {
         Type.parse("J") shouldBe Type.LongType.INSTANCE
     }
-    
+
     "Parsing of UnsignedByteType should return UnsignedByteType.INSTANCE" {
         Type.parse("b") shouldBe Type.UnsignedByteType.INSTANCE
     }
-    
+
     "Parsing of UnsignedShortType should return UnsignedShortType.INSTANCE" {
         Type.parse("s") shouldBe Type.UnsignedShortType.INSTANCE
     }
@@ -240,5 +240,4 @@ class TypeTests : FreeSpec({
     "Parsing of ObjectType with generic object type" {
         Type.parse("Ltest@Ltest2;;") shouldBe Type.ObjectType("test", listOf(Type.ObjectType("test2")))
     }
-    
 })

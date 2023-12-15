@@ -7,7 +7,7 @@ import com.shakelang.shake.util.io.streaming.input.dataStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
-open class CodeAttribute (
+open class CodeAttribute(
     override val pool: ConstantPool,
     override val nameConstant: Int,
     open val maxStack: Int,
@@ -121,11 +121,11 @@ open class CodeAttribute (
             )
         }
 
-        fun fromByteArray(pool: ConstantPool, array: ByteArray): CodeAttribute
-            = fromStream(pool, array.dataStream())
+        fun fromByteArray(pool: ConstantPool, array: ByteArray): CodeAttribute =
+            fromStream(pool, array.dataStream())
 
-        fun fromCodeAttribute(attribute: CodeAttribute): CodeAttribute
-            = CodeAttribute(
+        fun fromCodeAttribute(attribute: CodeAttribute): CodeAttribute =
+            CodeAttribute(
                 attribute.pool,
                 attribute.nameConstant,
                 attribute.maxStack,
@@ -153,7 +153,8 @@ class MutableCodeAttribute(
     ByteArray(0),
     arrayOf(),
     arrayOf()
-), MutableAttribute {
+),
+    MutableAttribute {
 
     override val pool: MutableConstantPool
         get() = super.pool as MutableConstantPool
@@ -209,8 +210,7 @@ class MutableCodeAttribute(
             )
         }
 
-        fun fromByteArray(pool: MutableConstantPool, array: ByteArray): MutableCodeAttribute
-            = fromStream(pool, array.dataStream())
+        fun fromByteArray(pool: MutableConstantPool, array: ByteArray): MutableCodeAttribute =
+            fromStream(pool, array.dataStream())
     }
-
 }

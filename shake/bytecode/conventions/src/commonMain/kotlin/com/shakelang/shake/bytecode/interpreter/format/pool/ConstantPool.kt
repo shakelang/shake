@@ -14,7 +14,7 @@ import com.shakelang.shake.util.io.streaming.output.DataOutputStream
  * @since 0.1.0
  * @version 0.1.0
  */
-open class ConstantPool (
+open class ConstantPool(
 
     /**
      * The entries of the [ConstantPool]
@@ -23,7 +23,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     open val entries: List<ConstantPoolEntry>
-    
+
 ) : List<ConstantPoolEntry> by entries {
 
     /**
@@ -35,7 +35,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun isUtf8(identifier: Int) = entries[identifier] is ConstantPoolEntry.Utf8Constant
-    
+
     /**
      * Check if the constant at the given [identifier] is a [ConstantPoolEntry.ByteConstant]
      * @param identifier The identifier of the constant
@@ -45,7 +45,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun isByte(identifier: Int) = entries[identifier] is ConstantPoolEntry.ByteConstant
-    
+
     /**
      * Check if the constant at the given [identifier] is a [ConstantPoolEntry.ShortConstant]
      * @param identifier The identifier of the constant
@@ -55,7 +55,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun isShort(identifier: Int) = entries[identifier] is ConstantPoolEntry.ShortConstant
-    
+
     /**
      * Check if the constant at the given [identifier] is a [ConstantPoolEntry.IntConstant]
      * @param identifier The identifier of the constant
@@ -65,7 +65,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun isInt(identifier: Int) = entries[identifier] is ConstantPoolEntry.IntConstant
-    
+
     /**
      * Check if the constant at the given [identifier] is a [ConstantPoolEntry.LongConstant]
      * @param identifier The identifier of the constant
@@ -75,17 +75,17 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun isLong(identifier: Int) = entries[identifier] is ConstantPoolEntry.LongConstant
-    
+
 /**
      * Check if the constant at the given [identifier] is a [ConstantPoolEntry.FloatConstant]
      * @param identifier The identifier of the constant
      * @return If the constant at the given [identifier] is a [ConstantPoolEntry.FloatConstant]
- *
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
     fun isFloat(identifier: Int) = entries[identifier] is ConstantPoolEntry.FloatConstant
-    
+
     /**
      * Check if the constant at the given [identifier] is a [ConstantPoolEntry.DoubleConstant]
      * @param identifier The identifier of the constant
@@ -95,7 +95,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun isDouble(identifier: Int) = entries[identifier] is ConstantPoolEntry.DoubleConstant
-    
+
     /**
      * Check if the constant at the given [identifier] is a [ConstantPoolEntry.ClassConstant]
      * @param identifier The identifier of the constant
@@ -106,7 +106,6 @@ open class ConstantPool (
      */
     fun isClass(identifier: Int) = entries[identifier] is ConstantPoolEntry.ClassConstant
 
-    
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.Utf8Constant]
      * @param identifier The identifier of the constant
@@ -116,7 +115,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun getUtf8(identifier: Int) = entries[identifier] as ConstantPoolEntry.Utf8Constant
-    
+
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.ByteConstant]
      * @param identifier The identifier of the constant
@@ -126,7 +125,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun getByte(identifier: Int) = entries[identifier] as ConstantPoolEntry.ByteConstant
-    
+
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.ShortConstant]
      * @param identifier The identifier of the constant
@@ -136,7 +135,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun getShort(identifier: Int) = entries[identifier] as ConstantPoolEntry.ShortConstant
-    
+
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.IntConstant]
      * @param identifier The identifier of the constant
@@ -146,7 +145,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun getInt(identifier: Int) = entries[identifier] as ConstantPoolEntry.IntConstant
-    
+
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.LongConstant]
      * @param identifier The identifier of the constant
@@ -156,7 +155,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun getLong(identifier: Int) = entries[identifier] as ConstantPoolEntry.LongConstant
-    
+
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.FloatConstant]
      * @param identifier The identifier of the constant
@@ -166,7 +165,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun getFloat(identifier: Int) = entries[identifier] as ConstantPoolEntry.FloatConstant
-    
+
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.DoubleConstant]
      * @param identifier The identifier of the constant
@@ -176,7 +175,7 @@ open class ConstantPool (
      * @version 0.1.0
      */
     fun getDouble(identifier: Int) = entries[identifier] as ConstantPoolEntry.DoubleConstant
-    
+
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.ClassConstant]
      * @param identifier The identifier of the constant
@@ -187,7 +186,6 @@ open class ConstantPool (
      */
     fun getClass(identifier: Int) = entries[identifier] as ConstantPoolEntry.ClassConstant
 
-    
     /**
      * Find the [ConstantPoolEntry.Utf8Constant] with the given [value]
      * @param value The value of the [ConstantPoolEntry.Utf8Constant]
@@ -395,7 +393,7 @@ open class ConstantPool (
     }
 
     companion object {
-        
+
         /**
          * Create a [ConstantPool] from the given [stream]
          * @param stream The [DataInputStream] to read the [ConstantPool] from
@@ -412,7 +410,7 @@ open class ConstantPool (
             }
             return ConstantPool(entries)
         }
-        
+
         /**
          * Create a [ConstantPool] from the given [ByteArray]
          * @param array The [ByteArray] to read the [ConstantPool] from
@@ -424,7 +422,7 @@ open class ConstantPool (
         fun fromByteArray(array: ByteArray): ConstantPool {
             return fromStream(array.dataStream())
         }
-        
+
         /**
          * Create a [ConstantPool] from the given [List]
          * @param list The [List] to create the [ConstantPool] from
@@ -575,7 +573,6 @@ class MutableConstantPool(
      * @version 0.1.0
      */
     fun createClass(value: String) = createClass(resolveUtf8(value))
-
 
     /**
      * Resolve the [ConstantPoolEntry.Utf8Constant] with the given [value]

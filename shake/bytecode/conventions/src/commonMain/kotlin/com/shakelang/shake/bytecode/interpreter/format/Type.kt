@@ -1,6 +1,5 @@
 package com.shakelang.shake.bytecode.interpreter.format
 
-import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.input.InputStream
 import com.shakelang.shake.util.io.streaming.input.byteStream
 
@@ -32,7 +31,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class ByteType : Type {
-        
+
         /**
          * The [INSTANCE] of the [ByteType]
          * @since 0.1.0
@@ -45,7 +44,7 @@ interface Type {
          * @since 0.1.0
          */
         override val descriptor: String get() = "B"
-        
+
         /**
          * The size of the [ByteType]
          * @since 0.1.0
@@ -66,7 +65,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class ShortType : Type {
-        
+
         /**
          * The [INSTANCE] of the [ShortType]
          * @since 0.1.0
@@ -79,7 +78,7 @@ interface Type {
          * @since 0.1.0
          */
         override val descriptor: String get() = "S"
-        
+
         /**
          * The size of the [ShortType]
          * @since 0.1.0
@@ -100,7 +99,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class IntType : Type {
-        
+
         /**
          * The [INSTANCE] of the [IntType]
          * @since 0.1.0
@@ -115,7 +114,7 @@ interface Type {
          * @version 0.1.0
          */
         override val descriptor: String get() = "I"
-        
+
         /**
          * The size of the [IntType]
          * @since 0.1.0
@@ -138,7 +137,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class LongType : Type {
-        
+
         /**
          * The [INSTANCE] of the [LongType]
          * @since 0.1.0
@@ -153,7 +152,7 @@ interface Type {
          * @version 0.1.0
          */
         override val descriptor: String get() = "J"
-        
+
         /**
          * The size of the [LongType]
          * @since 0.1.0
@@ -176,7 +175,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class UnsignedByteType : Type {
-        
+
         /**
          * The [INSTANCE] of the [UnsignedByteType]
          * @since 0.1.0
@@ -191,14 +190,14 @@ interface Type {
          * @version 0.1.0
          */
         override val descriptor: String get() = "b"
-        
+
         /**
          * The size of the [UnsignedByteType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 1
-        
+
         /**
          * Get the [String] representation of the [UnsignedByteType]
          * @since 0.1.0
@@ -214,7 +213,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class UnsignedShortType : Type {
-        
+
         /**
          * The [INSTANCE] of the [UnsignedShortType]
          * @since 0.1.0
@@ -229,14 +228,14 @@ interface Type {
          * @version 0.1.0
          */
         override val descriptor: String get() = "s"
-        
+
         /**
          * The size of the [UnsignedShortType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 2
-        
+
         /**
          * Get the [String] representation of the [UnsignedShortType]
          * @since 0.1.0
@@ -252,7 +251,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class UnsignedIntType : Type {
-        
+
         /**
          * The [INSTANCE] of the [UnsignedIntType]
          * @since 0.1.0
@@ -267,14 +266,14 @@ interface Type {
          * @version 0.1.0
          */
         override val descriptor: String get() = "i"
-        
+
         /**
          * The size of the [UnsignedIntType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 4
-        
+
         /**
          * Get the [String] representation of the [UnsignedIntType]
          * @since 0.1.0
@@ -290,7 +289,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class UnsignedLongType : Type {
-        
+
         /**
          * The [INSTANCE] of the [UnsignedLongType]
          * @since 0.1.0
@@ -298,14 +297,14 @@ interface Type {
          */
         INSTANCE
         ;
-        
+
         /**
          * The descriptor of the [UnsignedLongType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val descriptor: String get() = "l"
-        
+
         /**
          * The size of the [UnsignedLongType]
          * @since 0.1.0
@@ -328,7 +327,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class FloatType : Type {
-        
+
         /**
          * The [INSTANCE] of the [FloatType]
          * @since 0.1.0
@@ -343,7 +342,7 @@ interface Type {
          * @version 0.1.0
          */
         override val descriptor: String get() = "F"
-        
+
         /**
          * The size of the [FloatType]
          * @since 0.1.0
@@ -366,7 +365,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class DoubleType : Type {
-        
+
         /**
          * The [INSTANCE] of the [DoubleType]
          * @since 0.1.0
@@ -381,14 +380,14 @@ interface Type {
          * @version 0.1.0
          */
         override val descriptor: String get() = "D"
-        
+
         /**
          * The size of the [DoubleType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 8
-        
+
         /**
          * Get the [String] representation of the [DoubleType]
          * @since 0.1.0
@@ -404,7 +403,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class CharType : Type {
-        
+
         /**
          * The [INSTANCE] of the [CharType]
          * @since 0.1.0
@@ -419,14 +418,14 @@ interface Type {
          * @version 0.1.0
          */
         override val descriptor: String get() = "C"
-        
+
         /**
          * The size of the [CharType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 2
-        
+
         /**
          * Get the [String] representation of the [CharType]
          * @since 0.1.0
@@ -442,7 +441,7 @@ interface Type {
      * @version 0.1.0
      */
     enum class BooleanType : Type {
-        
+
         /**
          * The [INSTANCE] of the [BooleanType]
          * @since 0.1.0
@@ -450,7 +449,7 @@ interface Type {
          */
         INSTANCE
         ;
-        
+
         /**
          * The descriptor of the [BooleanType]
          * @since 0.1.0
@@ -526,8 +525,11 @@ interface Type {
          */
         override val descriptor: String
             get() {
-                if (genericTypes.isEmpty()) return "L$className;"
-                else return "L$className@${genericTypes.joinToString("+") { it.descriptor }};"
+                if (genericTypes.isEmpty()) {
+                    return "L$className;"
+                } else {
+                    return "L$className@${genericTypes.joinToString("+") { it.descriptor }};"
+                }
             }
 
         /**
@@ -633,7 +635,6 @@ interface Type {
          * @version 0.1.0
          */
         fun parse(name: InputStream): Type {
-
             val next = name.read().toChar()
 
             when (next) {
@@ -670,7 +671,6 @@ interface Type {
 
                 else -> throw Exception("Unknown type: $next")
             }
-
         }
 
         /**
