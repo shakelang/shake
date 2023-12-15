@@ -76,4 +76,4 @@ jobs:
         working-directory: build/dokka/htmlMultiModule/
         run: |
           # Push using the GITHUB_TOKEN
-            git push https://shakelang-bot:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/docs.git --force
+            git push https://shakelang-bot:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/docs.git HEAD:master --force
