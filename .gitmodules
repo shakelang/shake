@@ -1,1 +1,4 @@
 
+[submodule "build/dokka/htmlMultiModule"]
+	path = build/dokka/htmlMultiModule
+	url = https://github.com/shakelang/docs.git
