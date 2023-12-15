@@ -40,7 +40,7 @@ jobs:
         run: |
           mkdir -p build/dokka/
           # Clone the repository into build/dokka/htmlMultiModule/
-          git clone --depth 1 --branch docs https://github.com/shakelang/docs.git build/dokka/htmlMultiModule/
+          git clone --depth 1 https://github.com/shakelang/docs.git build/dokka/htmlMultiModule/
 
       - name: Build with Gradle
         run: ./gradlew dokkaHtmlMultiModule
