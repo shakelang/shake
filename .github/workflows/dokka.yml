@@ -55,20 +55,14 @@ jobs:
 
       - name: Commit and push changes
         working-directory: build/dokka/htmlMultiModule/
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
-          GITHUB_ACTOR: shakelang-bot
-          GIT_AUTHOR_NAME: shakebot[bot]
-          GIT_AUTHOR_EMAIL: bot@shakelang.com
-
         run: |
           # Configure git
-            git config --global user.name "$GIT_AUTHOR_NAME"
-            git config --global user.email "$GIT_AUTHOR_EMAIL"
+            git config --global user.name "shakebot[bot]"
+            git config --global user.email "bot@shakelang.com"
 
           # Commit and push changes
             git add . -f
             git commit -m "Update documentation"
 
           # Push using the GITHUB_TOKEN
-            git push https://$GITHUB_ACTOR:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/docs.git
+            git push https://shakelang-bot:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/docs.git
