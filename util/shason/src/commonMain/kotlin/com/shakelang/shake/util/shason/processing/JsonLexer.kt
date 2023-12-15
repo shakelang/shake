@@ -11,12 +11,16 @@ import kotlin.jvm.JvmOverloads
 
 /**
  * A [JsonLexer] creates a [JsonTokenInputStream] from a [CharacterInputStream]
+ * @since 0.1.0
+ * @version 0.1.0
  */
 @Suppress("unused")
 class JsonLexer(
 
     /**
      * The [CharacterInputStream] to create the [JsonTokenInputStream] from
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private val chars: CharacterInputStream
 
@@ -25,6 +29,8 @@ class JsonLexer(
     /**
      * Make a [JsonTokenInputStream] from the [chars] of the [JsonLexer]
      * This function executes the [JsonLexer]
+     * @since 0.1.0
+     * @version 0.1.0
      */
     fun makeTokens(): JsonTokenInputStream {
         // Set for storing the generated tokens
@@ -92,6 +98,8 @@ class JsonLexer(
      * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
      * there and not here to improve performance. The condition **must** be checked before the call of this
      * function!)_
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private fun makeIdentifier(): JsonToken {
         // Store the start position
@@ -117,6 +125,8 @@ class JsonLexer(
      * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
      * there and not here to improve performance. The condition **must** be checked before the call of this
      * function!)_
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private fun makeString(): JsonToken {
         // Store the start position
@@ -171,6 +181,8 @@ class JsonLexer(
      * _(Only called from [makeTokens]() workflow, because the condition for the first letter is checked
      * there and not here to improve performance. The condition **must** be checked before the call of this
      * function!)_
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private fun makeNumber(): JsonToken {
         // Store the start position
@@ -214,6 +226,8 @@ class JsonLexer(
 
     /**
      * An [CompilerError] thrown by the [JsonLexer]
+     * @since 0.1.0
+     * @version 0.3.0
      */
     private inner class JsonTokenLexerError(
         message: String,
@@ -221,7 +235,7 @@ class JsonLexer(
         details: String,
         start: Position,
         end: Position
-    ) : com.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
+    ) : CompilerError(message, name, details, start, end) {
 
         /**
          * Constructor for [JsonTokenLexerError]
@@ -230,7 +244,8 @@ class JsonLexer(
          * @param details the details of the [CompilerError]
          * @param start the start position of the [CompilerError]
          * @param end the end position of the [CompilerError]
-         *
+         * @since 0.1.0
+         * @version 0.3.0
          */
         @JvmOverloads
         constructor(
@@ -239,7 +254,7 @@ class JsonLexer(
             start: Position = chars.positionMaker.createPositionAtLocation(),
             end: Position = start
         ) : this(
-            "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
+            "Error occurred in lexer: $details in ${start.source}:${start.line}:${start.column}",
             name,
             details,
             start,
@@ -252,7 +267,8 @@ class JsonLexer(
          * @param details the details of the [CompilerError]
          * @param start the start position of the [CompilerError]
          * @param end the end position of the [CompilerError]
-         *
+         * @since 0.1.0
+         * @version 0.3.0
          */
         @JvmOverloads
         constructor(
@@ -260,7 +276,7 @@ class JsonLexer(
             start: Position = chars.positionMaker.createPositionAtLocation(),
             end: Position = start
         ) : this(
-            "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
+            "Error occurred in lexer: $details in ${start.source}:${start.line}:${start.column}",
             "LexerError",
             details,
             start,

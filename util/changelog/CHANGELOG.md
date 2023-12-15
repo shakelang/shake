@@ -35,3 +35,5 @@ Don't generate release for auto-updates when previous version was a snapshot
 Fix: overflow in bump panel
 Fix: Structure file version not updated
 Fix: Bump file not cleared after version generation
+### 0.6.3
+Update com.shakelang.shake.util:shason to 0.3.0

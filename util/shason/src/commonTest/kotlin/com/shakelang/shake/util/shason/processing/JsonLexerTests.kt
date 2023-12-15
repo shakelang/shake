@@ -1,199 +1,198 @@
 package com.shakelang.shake.util.shason.processing
 
 import com.shakelang.shake.util.shason.processing.TestUtilities.makeTokens
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertSame
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.shouldBe
 
-class JsonLexerTests {
+class JsonLexerTests : FreeSpec({
 
-    @Test
-    fun testLCURL() =
+    fun testTokens(src: String, content: String, vararg expectedTokens: JsonToken) {
+        val input = makeTokens(src, content)
+        input.size shouldBe  expectedTokens.size
+        for (t in expectedTokens) input.next() shouldBe t
+    }
+
+    "testLCURL" {
         testTokens(
             "JsonLexerTests#testLCURL()",
             "{",
             JsonToken(JsonTokenType.LCURL, 0)
         )
-
-    @Test
-    fun testRCURL() =
+    }
+    
+    "testRCURL" {
         testTokens(
             "JsonLexerTests#testRCURL()",
             "}",
             JsonToken(JsonTokenType.RCURL, 0)
         )
-
-    @Test
-    fun testLSQUARE() =
+    }
+    
+    "testLSQUARE" {
         testTokens(
             "JsonLexerTests#testLQUARE()",
             "[",
             JsonToken(JsonTokenType.LSQUARE, 0)
         )
-
-    @Test
-    fun testRSQUARE() =
+    }
+    
+    "testRSQUARE" {
         testTokens(
             "JsonLexerTests#testRSQUARE()",
             "]",
             JsonToken(JsonTokenType.RSQUARE, 0)
         )
-
-    @Test
-    fun testCOMMA() =
+    }
+    
+    "testCOMMA" {
         testTokens(
             "JsonLexerTests#testCOMMA()",
             ",",
             JsonToken(JsonTokenType.COMMA, 0)
         )
-
-    @Test
-    fun testCOLON() =
+    }
+    
+    "testCOLON" {
         testTokens(
             "JsonLexerTests#testCOLON()",
             ":",
             JsonToken(JsonTokenType.COLON, 0)
         )
-
-    @Test
-    fun testSTRING() =
+    }
+    
+    "testSTRING" {
         testTokens(
             "JsonLexerTests#testSTRING()",
             "\"\"",
             JsonToken(JsonTokenType.STRING, 0, 1, "")
         )
-
-    @Test
-    fun testSTRINGContent() =
+    }
+    
+    "testSTRINGContent" {
         testTokens(
             "JsonLexerTests#testSTRINGContent()",
             "\"a\"",
             JsonToken(JsonTokenType.STRING, 0, 2, "a")
         )
-
-    @Test
-    fun testSTRINGContents() =
+    }
+    
+    "testSTRINGContents" {
         testTokens(
             "JsonLexerTests#testSTRINGContents()",
             "\"abc\"",
             JsonToken(JsonTokenType.STRING, 0, 4, "abc")
         )
-
-    @Test
-    fun testSTRINGContentEscapeN() =
+    }
+    
+    "testSTRINGContentEscapeN" {
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeN()",
             "\"\\n\"",
             JsonToken(JsonTokenType.STRING, 0, 3, "\n")
         )
-
-    @Test
-    fun testSTRINGContentEscapeT() =
+    }
+    
+    "testSTRINGContentEscapeT" {
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeT()",
             "\"\\t\"",
             JsonToken(JsonTokenType.STRING, 0, 3, "\t")
         )
-
-    @Test
-    fun testSTRINGContentEscapeB() =
+    }
+    
+    "testSTRINGContentEscapeB" {
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeB()",
             "\"\\b\"",
             JsonToken(JsonTokenType.STRING, 0, 3, "\b")
         )
-
-    @Test
-    fun testSTRINGContentEscapeR() =
+    }
+    
+    "testSTRINGContentEscapeR" {
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeB()",
             "\"\\r\"",
             JsonToken(JsonTokenType.STRING, 0, 3, "\r")
         )
-
-    @Test
-    fun testSTRINGContentEscapeBS() =
+    }
+    
+    "testSTRINGContentEscapeBS" {
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeBS()",
             "\"\\\\\"",
             JsonToken(JsonTokenType.STRING, 0, 3, "\\")
         )
-
-    @Test
-    fun testSTRINGContentEscapeSQ() =
+    }
+    
+    "testSTRINGContentEscapeSQ" {
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeSQ()",
             "\"\\'\"",
             JsonToken(JsonTokenType.STRING, 0, 3, "'")
         )
-
-    @Test
-    fun testSTRINGContentEscapeDQ() =
+    }
+    
+    "testSTRINGContentEscapeDQ" {
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeDQ()",
             "\"\\\"\"",
             JsonToken(JsonTokenType.STRING, 0, 3, "\"")
         )
-
-    @Test
-    fun testSTRINGContentUnicode() =
+    }
+    
+    "testSTRINGContentUnicode" {
         testTokens(
             "JsonLexerTests#testSTRINGContentUnicode()",
             "\"\\ue0af\"",
             JsonToken(JsonTokenType.STRING, 0, 7, "e0af".toInt(radix = 16).toChar().toString())
         )
-
-    @Test
-    fun testDOUBLE() =
+    }
+    
+    "testDOUBLE" {
         testTokens(
             "JsonLexerTests#testDOUBLE()",
             "1.2",
             JsonToken(JsonTokenType.DOUBLE, 0, 2, "1.2")
         )
-
-    @Test
-    fun testDOUBLENoPrefix() =
+    }
+    
+    "testDOUBLENoPrefix" {
         testTokens(
             "JsonLexerTests#testDOUBLENoPrefix()",
             ".2",
             JsonToken(JsonTokenType.DOUBLE, 0, 1, ".2")
         )
+    }
 
-    @Test
-    fun testDOUBLENoSuffix() =
+    "testDOUBLENoSuffix" {
         testTokens(
             "JsonLexerTests#testDOUBLENoPrefix()",
             "2.",
             JsonToken(JsonTokenType.DOUBLE, 0, 1, "2.")
         )
+    }
 
-    @Test
-    fun testINT() =
+    "testINT" {
         testTokens(
             "JsonLexerTests#testINT()",
             "42",
             JsonToken(JsonTokenType.INT, 0, 1, "42")
         )
+    }
 
-    @Test
-    fun testTRUE() =
+    "testTRUE" {
         testTokens(
             "JsonLexerTests#testTRUE()",
             "true",
             JsonToken(JsonTokenType.TRUE, 0, 3)
         )
+    }
 
-    @Test
-    fun testFALSE() =
+    "testFALSE" {
         testTokens(
             "JsonLexerTests#testFALSE()",
             "false",
             JsonToken(JsonTokenType.FALSE, 0, 4)
         )
-
-    fun testTokens(src: String, content: String, vararg expectedTokens: JsonToken) {
-        val input = makeTokens(src, content)
-        assertSame(expectedTokens.size, input.size, "Expected ${expectedTokens.size} tokens, but got ${input.size}")
-        for (t in expectedTokens) assertEquals(t, input.next())
     }
-}
+})
