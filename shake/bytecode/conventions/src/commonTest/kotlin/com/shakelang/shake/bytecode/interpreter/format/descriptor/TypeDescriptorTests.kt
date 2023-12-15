@@ -1,10 +1,9 @@
-package com.shakelang.shake.bytecode.interpreter.format
+package com.shakelang.shake.bytecode.interpreter.format.descriptor
 
-import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class TypeTests : FreeSpec({
+class TypeDescriptorTests : FreeSpec({
 
     "ByteType#descriptor should return \"B\"" {
         TypeDescriptor.ByteType.INSTANCE.descriptor shouldBe "B"

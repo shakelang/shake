@@ -8,6 +8,7 @@ import com.shakelang.shake.util.io.streaming.input.byteStream
  * @since 0.1.0
  * @version 0.1.0
  */
+@Suppress("unused")
 interface TypeDescriptor {
 
     /**
@@ -31,7 +32,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class ByteType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [ByteType]
          * @since 0.1.0
@@ -44,7 +45,7 @@ interface TypeDescriptor {
          * @since 0.1.0
          */
         override val descriptor: String get() = "B"
-        
+
         /**
          * The size of the [ByteType]
          * @since 0.1.0
@@ -65,7 +66,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class ShortType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [ShortType]
          * @since 0.1.0
@@ -78,7 +79,7 @@ interface TypeDescriptor {
          * @since 0.1.0
          */
         override val descriptor: String get() = "S"
-        
+
         /**
          * The size of the [ShortType]
          * @since 0.1.0
@@ -99,7 +100,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class IntType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [IntType]
          * @since 0.1.0
@@ -114,7 +115,7 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         override val descriptor: String get() = "I"
-        
+
         /**
          * The size of the [IntType]
          * @since 0.1.0
@@ -137,7 +138,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class LongType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [LongType]
          * @since 0.1.0
@@ -152,7 +153,7 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         override val descriptor: String get() = "J"
-        
+
         /**
          * The size of the [LongType]
          * @since 0.1.0
@@ -175,7 +176,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class UnsignedByteType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [UnsignedByteType]
          * @since 0.1.0
@@ -190,14 +191,14 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         override val descriptor: String get() = "b"
-        
+
         /**
          * The size of the [UnsignedByteType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 1
-        
+
         /**
          * Get the [String] representation of the [UnsignedByteType]
          * @since 0.1.0
@@ -213,7 +214,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class UnsignedShortType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [UnsignedShortType]
          * @since 0.1.0
@@ -228,14 +229,14 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         override val descriptor: String get() = "s"
-        
+
         /**
          * The size of the [UnsignedShortType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 2
-        
+
         /**
          * Get the [String] representation of the [UnsignedShortType]
          * @since 0.1.0
@@ -251,7 +252,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class UnsignedIntType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [UnsignedIntType]
          * @since 0.1.0
@@ -266,14 +267,14 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         override val descriptor: String get() = "i"
-        
+
         /**
          * The size of the [UnsignedIntType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 4
-        
+
         /**
          * Get the [String] representation of the [UnsignedIntType]
          * @since 0.1.0
@@ -289,7 +290,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class UnsignedLongType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [UnsignedLongType]
          * @since 0.1.0
@@ -297,14 +298,14 @@ interface TypeDescriptor {
          */
         INSTANCE
         ;
-        
+
         /**
          * The descriptor of the [UnsignedLongType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val descriptor: String get() = "l"
-        
+
         /**
          * The size of the [UnsignedLongType]
          * @since 0.1.0
@@ -327,7 +328,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class FloatType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [FloatType]
          * @since 0.1.0
@@ -342,7 +343,7 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         override val descriptor: String get() = "F"
-        
+
         /**
          * The size of the [FloatType]
          * @since 0.1.0
@@ -365,7 +366,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class DoubleType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [DoubleType]
          * @since 0.1.0
@@ -380,14 +381,14 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         override val descriptor: String get() = "D"
-        
+
         /**
          * The size of the [DoubleType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 8
-        
+
         /**
          * Get the [String] representation of the [DoubleType]
          * @since 0.1.0
@@ -403,7 +404,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class CharType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [CharType]
          * @since 0.1.0
@@ -418,14 +419,14 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         override val descriptor: String get() = "C"
-        
+
         /**
          * The size of the [CharType]
          * @since 0.1.0
          * @version 0.1.0
          */
         override val byteSize: Int get() = 2
-        
+
         /**
          * Get the [String] representation of the [CharType]
          * @since 0.1.0
@@ -441,7 +442,7 @@ interface TypeDescriptor {
      * @version 0.1.0
      */
     enum class BooleanType : TypeDescriptor {
-        
+
         /**
          * The [INSTANCE] of the [BooleanType]
          * @since 0.1.0
@@ -449,7 +450,7 @@ interface TypeDescriptor {
          */
         INSTANCE
         ;
-        
+
         /**
          * The descriptor of the [BooleanType]
          * @since 0.1.0
@@ -524,10 +525,9 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         override val descriptor: String
-            get() {
-                if (genericTypes.isEmpty()) return "L$className;"
-                else return "L$className@${genericTypes.joinToString("+") { it.descriptor }};"
-            }
+            get() =
+                if (genericTypes.isEmpty()) "L$className;"
+                else "L$className@${genericTypes.joinToString("+") { it.descriptor }};"
 
         /**
          * The size of the [ObjectType]
@@ -625,6 +625,151 @@ interface TypeDescriptor {
     }
 
     companion object {
+
+        // Shortcuts
+
+        /**
+         * A [ByteType] represents the primitive type `byte` in shake
+         * It has the descriptor `B` and a size of 1
+         *
+         * This is a shortcut for [TypeDescriptor.ByteType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val BYTE = ByteType.INSTANCE
+
+        /**
+         * A [ShortType] represents the primitive type `short` in shake
+         * It has the descriptor `S` and a size of 2
+         *
+         * This is a shortcut for [TypeDescriptor.ShortType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val SHORT = ShortType.INSTANCE
+
+        /**
+         * A [IntType] represents the primitive type `int` in shake
+         * It has the descriptor `I` and a size of 4
+         *
+         * This is a shortcut for [TypeDescriptor.IntType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val INT = IntType.INSTANCE
+
+        /**
+         * A [LongType] represents the primitive type `long` in shake
+         * It has the descriptor `J` and a size of 8
+         *
+         * This is a shortcut for [TypeDescriptor.LongType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val LONG = LongType.INSTANCE
+
+        /**
+         * A [UnsignedByteType] represents the primitive type `ubyte` in shake
+         * It has the descriptor `b` and a size of 1
+         *
+         * This is a shortcut for [TypeDescriptor.UnsignedByteType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val UNSIGNED_BYTE = UnsignedByteType.INSTANCE
+
+        /**
+         * A [UnsignedShortType] represents the primitive type `ushort` in shake
+         * It has the descriptor `s` and a size of 2
+         *
+         * This is a shortcut for [TypeDescriptor.UnsignedShortType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val UNSIGNED_SHORT = UnsignedShortType.INSTANCE
+
+        /**
+         * A [UnsignedIntType] represents the primitive type `uint` in shake
+         * It has the descriptor `i` and a size of 4
+         *
+         * This is a shortcut for [TypeDescriptor.UnsignedIntType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val UNSIGNED_INT = UnsignedIntType.INSTANCE
+
+        /**
+         * A [UnsignedLongType] represents the primitive type `ulong` in shake
+         * It has the descriptor `l` and a size of 8
+         *
+         * This is a shortcut for [TypeDescriptor.UnsignedLongType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val UNSIGNED_LONG = UnsignedLongType.INSTANCE
+
+        /**
+         * A [FloatType] represents the primitive type `float` in shake
+         * It has the descriptor `F` and a size of 4
+         *
+         * This is a shortcut for [TypeDescriptor.FloatType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val FLOAT = FloatType.INSTANCE
+
+        /**
+         * A [DoubleType] represents the primitive type `double` in shake
+         * It has the descriptor `D` and a size of 8
+         *
+         * This is a shortcut for [TypeDescriptor.DoubleType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val DOUBLE = DoubleType.INSTANCE
+
+        /**
+         * A [CharType] represents the primitive type `char` in shake
+         * It has the descriptor `C` and a size of 2
+         *
+         * This is a shortcut for [TypeDescriptor.CharType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val CHAR = CharType.INSTANCE
+
+        /**
+         * A [BooleanType] represents the primitive type `boolean` in shake
+         * It has the descriptor `Z` and a size of 1
+         *
+         * This is a shortcut for [TypeDescriptor.BooleanType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val BOOLEAN = BooleanType.INSTANCE
+
+        /**
+         * A [VoidType] represents the primitive type `void` in shake
+         * It has the descriptor `V` and a size of 0
+         *
+         * This is a shortcut for [TypeDescriptor.VoidType.INSTANCE]
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        val VOID = VoidType.INSTANCE
 
         /**
          * Parse a [TypeDescriptor] from an [InputStream]
