@@ -22,10 +22,13 @@ jobs:
           submodules: "recursive"
 
       # Update references
+      - name: Initialize and update submodule
+        run: git submodule update --init --recursive
+
       - name: Git Submodule Update
         run: |
           git pull --recurse-submodules
-          git submodule update --init --remote --recursive
+          git submodule update --remote --recursive
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
