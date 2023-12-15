@@ -53,6 +53,10 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
 
+      - name: Check Git Status
+        working-directory: build/dokka/htmlMultiModule/
+        run: git status
+
       - name: Commit Changes
         working-directory: build/dokka/htmlMultiModule/
         run: |
@@ -68,4 +72,4 @@ jobs:
         working-directory: build/dokka/htmlMultiModule/
         run: |
           # Push using the GITHUB_TOKEN
-            git push https://shakelang-bot:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/docs.git
+            git push https://shakelang-bot:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/docs.git --force
