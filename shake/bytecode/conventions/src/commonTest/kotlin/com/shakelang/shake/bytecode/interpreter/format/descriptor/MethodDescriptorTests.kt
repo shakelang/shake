@@ -8,7 +8,7 @@ import io.kotest.matchers.shouldNotBe
 class MethodDescriptorTests : FreeSpec({
 
     "empty method name" {
-        val exception = shouldThrow <IllegalArgumentException> {
+        val exception = shouldThrow<IllegalArgumentException> {
             MethodDescriptor("", arrayOf(), TypeDescriptor.VOID)
         }
         exception.message shouldBe "Method name cannot be empty"
@@ -33,7 +33,11 @@ class MethodDescriptorTests : FreeSpec({
         val descriptor1 = MethodDescriptor("test", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
         val descriptor2 = MethodDescriptor("test", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
         val descriptor3 = MethodDescriptor("test", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.VOID)
-        val descriptor4 = MethodDescriptor("test", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
+        val descriptor4 = MethodDescriptor(
+            "test",
+            arrayOf(TypeDescriptor.INT, TypeDescriptor.INT, TypeDescriptor.INT),
+            TypeDescriptor.INT
+        )
         val descriptor5 = MethodDescriptor("test2", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
 
         descriptor1 shouldBe descriptor2
@@ -46,7 +50,11 @@ class MethodDescriptorTests : FreeSpec({
         val descriptor1 = MethodDescriptor("test", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
         val descriptor2 = MethodDescriptor("test", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
         val descriptor3 = MethodDescriptor("test", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.VOID)
-        val descriptor4 = MethodDescriptor("test", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
+        val descriptor4 = MethodDescriptor(
+            "test",
+            arrayOf(TypeDescriptor.INT, TypeDescriptor.INT, TypeDescriptor.INT),
+            TypeDescriptor.INT
+        )
         val descriptor5 = MethodDescriptor("test2", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
 
         descriptor1.hashCode() shouldBe descriptor2.hashCode()

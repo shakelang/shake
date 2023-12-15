@@ -17,7 +17,7 @@ import com.shakelang.shake.util.io.streaming.input.byteStream
  * @since 0.1.0
  * @version 0.1.0
  */
-class MethodDescriptor (
+class MethodDescriptor(
 
     /**
      * The name of the method
@@ -112,7 +112,7 @@ class MethodDescriptor (
         fun parse(stream: BufferedInputStream): MethodDescriptor {
             val nameBuilder = buildString {
                 var char = stream.read().toChar()
-                while(char != '(') {
+                while (char != '(') {
                     append(char)
                     char = stream.read().toChar()
                 }
@@ -120,7 +120,7 @@ class MethodDescriptor (
 
 
             val parameters = mutableListOf<TypeDescriptor>()
-            if(stream.peek().toChar() != ')') {
+            if (stream.peek().toChar() != ')') {
 
                 do {
                     parameters.add(TypeDescriptor.parse(stream))

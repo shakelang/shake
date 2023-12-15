@@ -16,11 +16,13 @@ interface Attribute {
         stream.writeInt(value.size)
         stream.write(value)
     }
+
     fun dump(): ByteArray {
         val stream = ByteArrayOutputStream()
         dump(DataOutputStream(stream))
         return stream.toByteArray()
     }
+
     override fun equals(other: Any?): Boolean
     override fun hashCode(): Int
 
