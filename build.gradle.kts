@@ -182,6 +182,11 @@ subprojects {
             moduleName.set(project.group.toString() + "." + project.name.toString())
             moduleVersion.set(project.version.toString())
 
+            pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+//                customAssets = listOf(file("./assets/docs-logo.svg"))
+                customStyleSheets = listOf(file("./assets/dokka-style.css").absoluteFile)
+            }
+
             dokkaSourceSets.configureEach {
                 documentedVisibilities.set(
                     setOf(
@@ -349,8 +354,9 @@ val testAggregate = tasks.register<TestReport>("testAggregate") {
 }
 
 afterEvaluate {
-    tasks.withType<DokkaTask>().configureEach {
+    tasks.withType<DokkaTaskPartial>().configureEach {
         pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+//                customAssets = listOf(file("./assets/docs-logo.svg"))
             customStyleSheets = listOf(file("./assets/dokka-style.css").absoluteFile)
         }
     }
