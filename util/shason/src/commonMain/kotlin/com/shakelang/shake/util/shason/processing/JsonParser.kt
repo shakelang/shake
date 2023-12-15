@@ -8,12 +8,16 @@ import com.shakelang.shake.util.shason.processing.JsonTokenType.*
 
 /**
  * A [JsonParser] creates a [JsonElement] from a [JsonTokenInputStream]
+ * @since 0.1.0
+ * @version 0.1.0
  */
 @Suppress("unused")
 class JsonParser(
 
     /**
      * The [JsonToken]s to parse ([JsonTokenInputStream])
+     * @since 0.1.0
+     * @version 0.1.0
      */
     val tokens: JsonTokenInputStream
 
@@ -27,6 +31,8 @@ class JsonParser(
 
     /**
      * Parse a [JsonElement]
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private fun parseValue(): JsonElement {
         return when (val next = tokens.next().type) {
@@ -44,6 +50,8 @@ class JsonParser(
 
     /**
      * Parse a [JsonObject]
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private fun parseMap(): JsonObject {
         if (tokens.actual.type != LCURL) throw ParserError("Expecting '{'")
@@ -67,6 +75,8 @@ class JsonParser(
 
     /**
      * Parse a [JsonArray]
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private fun parseArray(): JsonArray {
         if (tokens.actual.type != LSQUARE) throw ParserError("Expecting '['")
@@ -90,9 +100,11 @@ class JsonParser(
 
     /**
      * An [CompilerError] thrown by the [JsonParser]
+     * @since 0.1.0
+     * @version 0.3.0
      */
     inner class ParserError(message: String, name: String, details: String, start: Position, end: Position) :
-        com.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
+        CompilerError(message, name, details, start, end) {
 
         /**
          * Constructor for [ParserError]
@@ -101,7 +113,8 @@ class JsonParser(
          * @param details the details of the [ParserError]
          * @param start the start position of the [ParserError]
          * @param end the end position of the [ParserError]
-         *
+         * @since 0.1.0
+         * @version 0.3.0
          */
         constructor(
             name: String,
@@ -109,7 +122,7 @@ class JsonParser(
             start: Position,
             end: Position
         ) : this(
-            "Error occurred in parser: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
+            "Error occurred in parser: $name, $details in ${start.source}:${start.line}:${start.column}",
             name,
             details,
             start,
@@ -122,17 +135,18 @@ class JsonParser(
          * @param details the details of the [ParserError]
          * @param start the start position of the [ParserError]
          * @param end the end position of the [ParserError]
-         *
+         * @since 0.1.0
+         * @version 0.1.0
          */
         constructor(details: String, start: Position, end: Position) : this("ParserError", details, start, end)
 
         /**
          * Constructor for [ParserError]
-         *
          * @param details the details of the [ParserError]
          * @param start the start position of the [ParserError]
          * @param end the end position of the [ParserError]
-         *
+         * @since 0.1.0
+         * @version 0.1.0
          */
         constructor(details: String, start: Int, end: Int) : this(
             "ParserError",
@@ -143,9 +157,9 @@ class JsonParser(
 
         /**
          * Constructor for [ParserError]
-         *
          * @param error the error message
-         *
+         * @since 0.1.0
+         * @version 0.1.0
          */
         constructor(error: String) : this(
             error,

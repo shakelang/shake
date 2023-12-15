@@ -2,6 +2,7 @@ import com.shakelang.shake.util.changelog.public
 import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
+import conventions.useKotest
 
 group = projectGroup("util")
 version = resolveVersion()
@@ -16,6 +17,7 @@ plugins {
 kotlin {
     dependencies {
         implementation(project(":util:parseutils"))
-        testImplementation(kotlin("test"))
     }
 }
+
+useKotest()

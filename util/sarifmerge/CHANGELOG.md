@@ -11,3 +11,5 @@ Bugfixes when generating sarif reports
 Updated dependencies
 ### 0.1.4
 Fixes to SarifLoader to fix errors with github upload sarif
+### 0.1.5
+Update com.shakelang.shake.util:shason to 0.3.0

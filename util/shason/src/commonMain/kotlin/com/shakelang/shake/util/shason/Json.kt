@@ -9,14 +9,16 @@ import com.shakelang.shake.util.shason.processing.JsonParser
 
 /**
  * Api for processing json
+ * @since 0.1.0
+ * @version 0.1.0
  */
-@Suppress("unused")
 object JSON {
 
     /**
      * Parse json code
-     *
      * @param code the json to parse
+     * @since 0.1.0
+     * @version 0.1.0
      */
     fun parse(code: String): JsonElement {
         val source = CharacterSource.from(code, "JSON.parse")
@@ -29,10 +31,11 @@ object JSON {
 
     /**
      * Stringify json
-     *
      * @param input the objects to stringify
      * @param indent the indent for the json (or null for no indent). Can be an Int (number of spaces) or a string
      * to indent with
+     * @since 0.1.0
+     * @version 0.1.0
      */
     fun stringify(input: Any?, indent: Any? = null): String {
         return JsonGenerator.generate(
@@ -50,5 +53,7 @@ object JSON {
 
 /**
  * Api for processing json
+ * @since 0.1.0
+ * @version 0.1.0
  */
-typealias json = com.shakelang.shake.util.shason.JSON
+typealias json = JSON

@@ -5,16 +5,22 @@ import com.shakelang.shake.util.shason.elements.*
 
 /**
  * API for generating json
+ * @since 0.1.0
+ * @version 0.1.0
  */
 object JsonGenerator {
 
     /**
      * The line-separator to generate when generating beautified json
+     * @since 0.1.0
+     * @version 0.1.0
      */
-    const val LINE_SEPARATOR = "\n"
+    private const val LINE_SEPARATOR = "\n"
 
     /**
      * Generate an Array
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private fun generate(o: Array<*>, indent: String? = null, indentAmount: Int = 0): String {
         return "[" +
@@ -45,6 +51,8 @@ object JsonGenerator {
 
     /**
      * Generate an Object
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private fun generate(o: Map<*, *>, indent: String? = null, indentAmount: Int = 0): String {
         var ret = "{"
@@ -69,11 +77,15 @@ object JsonGenerator {
 
     /**
      * Generate a String
+     * @since 0.1.0
+     * @version 0.1.0
      */
     private fun generate(s: String) = "\"${Characters.escapeString(s)}\""
 
     /**
      * Generate something
+     * @since 0.1.0
+     * @version 0.1.0
      */
     fun generate(o: Any?, indent: String? = null, indentAmount: Int = 0): String {
         return when (o) {
