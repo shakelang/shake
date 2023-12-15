@@ -5,6 +5,9 @@ import com.shakelang.shake.util.changelog.tasks.VersionTask
 import io.codearte.gradle.nexus.NexusStagingExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.dokka.DokkaConfiguration.Visibility
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
+import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.dokka.versioning.VersioningConfiguration
 import org.jetbrains.dokka.versioning.VersioningPlugin
@@ -167,20 +170,30 @@ subprojects {
     }
 
     afterEvaluate {
+
+        tasks.withType<DokkaTask>().configureEach {
+            pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+                customStyleSheets = listOf(file("./assets/dokka-style.css").absoluteFile)
+            }
+        }
+
         tasks.withType<DokkaTaskPartial>().configureEach {
 
             moduleName.set(project.group.toString() + "." + project.name.toString())
             moduleVersion.set(project.version.toString())
 
             dokkaSourceSets.configureEach {
-                documentedVisibilities.set(setOf(
-                    Visibility.PUBLIC,
-                    Visibility.PROTECTED
-                ))
+                documentedVisibilities.set(
+                    setOf(
+                        Visibility.PUBLIC,
+                        Visibility.PROTECTED
+                    )
+                )
 
                 // Read docs for more details: https://kotlinlang.org/docs/dokka-gradle.html#source-link-configuration
                 sourceLink {
-                    val exampleDir = "https://github.com/Kotlin/dokka/tree/master/examples/gradle/dokka-multimodule-example"
+                    val exampleDir =
+                        "https://github.com/Kotlin/dokka/tree/master/examples/gradle/dokka-multimodule-example"
 
                     localDirectory.set(rootProject.projectDir)
                     remoteUrl.set(URL("$exampleDir"))
@@ -314,7 +327,8 @@ tasks.named("closeRepository") { group = "publishing" }
 tasks.named("releaseRepository") { group = "publishing" }
 
 extensions.getByType<NexusStagingExtension>().apply {
-    serverUrl = "https://s01.oss.sonatype.org/service/local/" // required only for projects registered in Sonatype after 2021-02-24
+    serverUrl =
+        "https://s01.oss.sonatype.org/service/local/" // required only for projects registered in Sonatype after 2021-02-24
     packageGroup = "com.shakelang" // optional if packageGroup == project.getGroup()
 
     username = System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
@@ -332,4 +346,13 @@ val testAggregate = tasks.register<TestReport>("testAggregate") {
 //    }
     destinationDirectory.set(file("$buildDir/reports/tests/aggregate"))
     testResults.from(subprojects.flatMap { it.tasks.withType<Test>() })
+}
+
+
+afterEvaluate {
+    tasks.withType<DokkaTask>().configureEach {
+        pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+            customStyleSheets = listOf(file("./assets/dokka-style.css").absoluteFile)
+        }
+    }
 }
