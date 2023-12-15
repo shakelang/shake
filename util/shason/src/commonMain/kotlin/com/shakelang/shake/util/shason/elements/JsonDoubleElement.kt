@@ -24,15 +24,13 @@ class JsonDoubleElement(
      * @version 0.1.0
      */
     override fun toString(): String {
-
         // Verify value
-        if(value.isInfinite()) return "null"
-        if(value.isNaN()) return "null"
+        if (value.isInfinite()) return "null"
+        if (value.isNaN()) return "null"
 
         val string = value.toString()
-        if(!string.contains('.')) return "$string.0"
+        if (!string.contains('.')) return "$string.0"
         return string
-
     }
 
     override fun isNull(): Boolean = false
@@ -48,5 +46,4 @@ class JsonDoubleElement(
     override fun isJsonInteger(): Boolean = false
     override fun isJsonNull(): Boolean = false
     override fun isJsonBoolean(): Boolean = false
-
 }

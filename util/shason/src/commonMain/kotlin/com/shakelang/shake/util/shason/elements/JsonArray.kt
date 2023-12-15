@@ -24,7 +24,7 @@ interface JsonArray : JsonElement, ListType<JsonElement, JsonArray, MutableJsonA
     override fun isJsonArray(): Boolean = true
     override fun isJsonObject(): Boolean = false
     override fun isJsonPrimitive(): Boolean = false
-    
+
     /**
      * Implementation of [JsonArray]
      * @since 0.1.0

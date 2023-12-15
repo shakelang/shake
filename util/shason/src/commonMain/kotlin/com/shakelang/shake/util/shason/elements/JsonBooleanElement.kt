@@ -38,7 +38,7 @@ enum class JsonBooleanElement(
      * @version 0.1.0
      */
     override fun toString(): String = JSON.stringify(value)
-    
+
     override fun isBoolean(): Boolean = true
     override fun isString(): Boolean = false
     override fun isDouble(): Boolean = false

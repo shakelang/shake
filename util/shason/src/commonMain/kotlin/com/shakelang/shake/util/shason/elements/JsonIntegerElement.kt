@@ -65,5 +65,4 @@ class JsonIntegerElement(
     override fun toInt(): JsonIntegerElement {
         return this
     }
-
 }

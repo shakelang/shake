@@ -9,11 +9,14 @@
 
 # Compilation results
 **/target/
-**/build/
+**/build/*
 **/reports/
 !**/src/**/build/
 Compiler.userlibraries
 .project
+!build/dokka
+build/dokka/*
+!build/dokka/htmlMultiModule/
 
 *.jar
 *.log
