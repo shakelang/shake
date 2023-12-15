@@ -1,6 +1,5 @@
-package com.shakelang.shake.bytecode.interpreter.format
+package com.shakelang.shake.bytecode.interpreter.format.descriptor
 
-import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.input.InputStream
 import com.shakelang.shake.util.io.streaming.input.byteStream
 
@@ -9,7 +8,7 @@ import com.shakelang.shake.util.io.streaming.input.byteStream
  * @since 0.1.0
  * @version 0.1.0
  */
-interface Type {
+interface TypeDescriptor {
 
     /**
      * Get the name of the type
@@ -31,7 +30,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class ByteType : Type {
+    enum class ByteType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [ByteType]
@@ -65,7 +64,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class ShortType : Type {
+    enum class ShortType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [ShortType]
@@ -99,7 +98,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class IntType : Type {
+    enum class IntType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [IntType]
@@ -137,7 +136,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class LongType : Type {
+    enum class LongType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [LongType]
@@ -175,7 +174,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class UnsignedByteType : Type {
+    enum class UnsignedByteType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [UnsignedByteType]
@@ -213,7 +212,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class UnsignedShortType : Type {
+    enum class UnsignedShortType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [UnsignedShortType]
@@ -251,7 +250,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class UnsignedIntType : Type {
+    enum class UnsignedIntType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [UnsignedIntType]
@@ -289,7 +288,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class UnsignedLongType : Type {
+    enum class UnsignedLongType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [UnsignedLongType]
@@ -327,7 +326,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class FloatType : Type {
+    enum class FloatType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [FloatType]
@@ -365,7 +364,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class DoubleType : Type {
+    enum class DoubleType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [DoubleType]
@@ -403,7 +402,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class CharType : Type {
+    enum class CharType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [CharType]
@@ -441,7 +440,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class BooleanType : Type {
+    enum class BooleanType : TypeDescriptor {
         
         /**
          * The [INSTANCE] of the [BooleanType]
@@ -479,7 +478,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class VoidType : Type {
+    enum class VoidType : TypeDescriptor {
 
         /**
          * The [INSTANCE] of the [VoidType]
@@ -517,7 +516,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    class ObjectType(val className: String, val genericTypes: List<Type> = emptyList()) : Type {
+    class ObjectType(val className: String, val genericTypes: List<TypeDescriptor> = emptyList()) : TypeDescriptor {
 
         /**
          * The descriptor of the [ObjectType]
@@ -585,7 +584,7 @@ interface Type {
      * @since 0.1.0
      * @version 0.1.0
      */
-    class ArrayType(val type: Type) : Type {
+    class ArrayType(val type: TypeDescriptor) : TypeDescriptor {
 
         /**
          * The descriptor of the [ArrayType]
@@ -628,11 +627,11 @@ interface Type {
     companion object {
 
         /**
-         * Parse a [Type] from an [InputStream]
+         * Parse a [TypeDescriptor] from an [InputStream]
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun parse(name: InputStream): Type {
+        fun parse(name: InputStream): TypeDescriptor {
 
             val next = name.read().toChar()
 
@@ -660,7 +659,7 @@ interface Type {
                     }
                     if (next2 == ';') return ObjectType(className.toString(), emptyList())
 
-                    val genericTypes = mutableListOf<Type>()
+                    val genericTypes = mutableListOf<TypeDescriptor>()
                     while (next2 != ';') {
                         genericTypes.add(parse(name))
                         next2 = name.read().toChar()
@@ -674,10 +673,10 @@ interface Type {
         }
 
         /**
-         * Parse a [Type] from a [String]
+         * Parse a [TypeDescriptor] from a [String]
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun parse(name: String): Type = parse(name.byteStream())
+        fun parse(name: String): TypeDescriptor = parse(name.byteStream())
     }
 }

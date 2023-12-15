@@ -1,6 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter.format
 
+import com.shakelang.shake.bytecode.interpreter.format.attribute.AnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
+import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAttribute
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.util.io.streaming.input.dataStream
@@ -15,26 +17,26 @@ class AttributeTests : FreeSpec({
 
     "test name constant" {
         val pool = MutableConstantPool()
-        val attribute = Attribute(pool, 0, byteArrayOf())
+        val attribute = AnonymousAttributeImpl(pool, 0, byteArrayOf())
         attribute.nameConstant shouldBe 0
     }
 
     "test name getter" {
         val pool = MutableConstantPool()
         val constant = pool.resolveUtf8("test")
-        val attribute = Attribute(pool, constant, byteArrayOf())
+        val attribute = AnonymousAttributeImpl(pool, constant, byteArrayOf())
         attribute.name shouldBe "test"
     }
 
     "test value" {
         val pool = MutableConstantPool()
-        val attribute = Attribute(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute = AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
         attribute.value contentEquals byteArrayOf(1, 2, 3) shouldBe true
     }
 
     "test bump" {
         val pool = MutableConstantPool()
-        val attribute = Attribute(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute = AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
 
         val stream = ByteArrayOutputStream()
         attribute.dump(DataOutputStream(stream))
@@ -45,7 +47,7 @@ class AttributeTests : FreeSpec({
 
     "test bump to array" {
         val pool = MutableConstantPool()
-        val attribute = Attribute(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute = AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
 
         val arr = attribute.dump()
 
@@ -54,11 +56,11 @@ class AttributeTests : FreeSpec({
 
     "test equals" {
         val pool = MutableConstantPool()
-        val attribute = Attribute(pool, 0, byteArrayOf(1, 2, 3))
-        val attribute2 = Attribute(pool, 0, byteArrayOf(1, 2, 3))
-        val attribute3 = Attribute(pool, 0, byteArrayOf(1, 2, 4))
-        val attribute4 = Attribute(pool, 1, byteArrayOf(1, 2, 3))
-        val attribute5 = Attribute(pool, 1, byteArrayOf(1, 2, 4))
+        val attribute = AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute2 = AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute3 = AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 4))
+        val attribute4 = AnonymousAttributeImpl(pool, 1, byteArrayOf(1, 2, 3))
+        val attribute5 = AnonymousAttributeImpl(pool, 1, byteArrayOf(1, 2, 4))
 
         attribute shouldBe attribute
         attribute shouldBe attribute2
@@ -69,11 +71,11 @@ class AttributeTests : FreeSpec({
 
     "test hash code" {
         val pool = MutableConstantPool()
-        val attribute = Attribute(pool, 0, byteArrayOf(1, 2, 3))
-        val attribute2 = Attribute(pool, 0, byteArrayOf(1, 2, 3))
-        val attribute3 = Attribute(pool, 0, byteArrayOf(1, 2, 4))
-        val attribute4 = Attribute(pool, 1, byteArrayOf(1, 2, 3))
-        val attribute5 = Attribute(pool, 1, byteArrayOf(1, 2, 4))
+        val attribute = AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute2 = AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute3 = AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 4))
+        val attribute4 = AnonymousAttributeImpl(pool, 1, byteArrayOf(1, 2, 3))
+        val attribute5 = AnonymousAttributeImpl(pool, 1, byteArrayOf(1, 2, 4))
 
         attribute.hashCode() shouldBe attribute.hashCode()
         attribute.hashCode() shouldBe attribute2.hashCode()
@@ -96,47 +98,47 @@ class MutableAttributeTests : FreeSpec({
 
     "test name constant" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(pool, 0, byteArrayOf())
+        val attribute = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf())
         attribute.nameConstant shouldBe 0
     }
 
     "test name getter" {
         val pool = MutableConstantPool()
         val constant = pool.resolveUtf8("test")
-        val attribute = MutableAttribute(pool, constant, byteArrayOf())
+        val attribute = MutableAnonymousAttributeImpl(pool, constant, byteArrayOf())
         attribute.name shouldBe "test"
     }
 
     "test set name constant" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(pool, 0, byteArrayOf())
+        val attribute = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf())
         attribute.nameConstant = 1
         attribute.nameConstant shouldBe 1
     }
 
     "test set name" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(pool, 0, byteArrayOf())
+        val attribute = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf())
         attribute.name = "test"
         attribute.name shouldBe "test"
     }
 
     "test value" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
         attribute.value contentEquals byteArrayOf(1, 2, 3) shouldBe true
     }
 
     "test set value" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
         attribute.value = byteArrayOf(1, 2, 4)
         attribute.value contentEquals byteArrayOf(1, 2, 4) shouldBe true
     }
 
     "test bump" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
 
         val stream = ByteArrayOutputStream()
         attribute.dump(DataOutputStream(stream))
@@ -147,7 +149,7 @@ class MutableAttributeTests : FreeSpec({
 
     "test bump to array" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
 
         val arr = attribute.dump()
 
@@ -156,11 +158,11 @@ class MutableAttributeTests : FreeSpec({
 
     "test equals" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
-        val attribute2 = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
-        val attribute3 = MutableAttribute(pool, 0, byteArrayOf(1, 2, 4))
-        val attribute4 = MutableAttribute(pool, 1, byteArrayOf(1, 2, 3))
-        val attribute5 = MutableAttribute(pool, 1, byteArrayOf(1, 2, 4))
+        val attribute = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute2 = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute3 = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 4))
+        val attribute4 = MutableAnonymousAttributeImpl(pool, 1, byteArrayOf(1, 2, 3))
+        val attribute5 = MutableAnonymousAttributeImpl(pool, 1, byteArrayOf(1, 2, 4))
 
         attribute shouldBe attribute
         attribute shouldBe attribute2
@@ -171,11 +173,11 @@ class MutableAttributeTests : FreeSpec({
 
     "test hash code" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
-        val attribute2 = MutableAttribute(pool, 0, byteArrayOf(1, 2, 3))
-        val attribute3 = MutableAttribute(pool, 0, byteArrayOf(1, 2, 4))
-        val attribute4 = MutableAttribute(pool, 1, byteArrayOf(1, 2, 3))
-        val attribute5 = MutableAttribute(pool, 1, byteArrayOf(1, 2, 4))
+        val attribute = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute2 = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))
+        val attribute3 = MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 4))
+        val attribute4 = MutableAnonymousAttributeImpl(pool, 1, byteArrayOf(1, 2, 3))
+        val attribute5 = MutableAnonymousAttributeImpl(pool, 1, byteArrayOf(1, 2, 4))
 
         attribute.hashCode() shouldBe attribute.hashCode()
         attribute.hashCode() shouldBe attribute2.hashCode()
@@ -194,7 +196,7 @@ class MutableAttributeTests : FreeSpec({
 
     "test from attribute" {
         val pool = MutableConstantPool()
-        val attribute = Attribute(pool, pool.resolveUtf8("test"), byteArrayOf(1, 2, 3))
+        val attribute = AnonymousAttributeImpl(pool, pool.resolveUtf8("test"), byteArrayOf(1, 2, 3))
         val attribute2 = MutableAttribute.fromAttribute(attribute)
         attribute2.name shouldBe attribute.name
         attribute2.value contentEquals attribute.value shouldBe true

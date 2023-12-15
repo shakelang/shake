@@ -1,6 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter.format
 
+import com.shakelang.shake.bytecode.interpreter.format.attribute.AnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
+import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAttribute
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.util.io.streaming.input.dataStream
@@ -171,7 +173,7 @@ class ClassTests : FreeSpec({
 
     "attributes" {
         val pool = MutableConstantPool()
-        val attribute = Attribute(
+        val attribute = AnonymousAttributeImpl(
             pool,
             0,
             byteArrayOf(0)
@@ -311,7 +313,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            listOf(Attribute(pool, 0, byteArrayOf(0)))
+            listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(0)))
         )
 
         clazz shouldBe clazz
@@ -1074,7 +1076,7 @@ class MutableClassTests : FreeSpec({
 
     "attributes" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(
+        val attribute = MutableAnonymousAttributeImpl(
             pool,
             0,
             byteArrayOf(0)
@@ -1097,7 +1099,7 @@ class MutableClassTests : FreeSpec({
 
     "modify attributes" {
         val pool = MutableConstantPool()
-        val attribute = MutableAttribute(
+        val attribute = MutableAnonymousAttributeImpl(
             pool,
             0,
             byteArrayOf(0)
@@ -1250,7 +1252,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf(MutableAttribute(pool, 0, byteArrayOf(0)))
+            mutableListOf(MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(0)))
         )
 
         clazz shouldBe clazz

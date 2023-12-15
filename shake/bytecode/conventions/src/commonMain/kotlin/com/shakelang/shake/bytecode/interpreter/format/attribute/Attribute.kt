@@ -73,6 +73,13 @@ interface MutableAttribute : Attribute {
                 else -> MutableAnonymousAttributeImpl.fromStream(pool, stream, nameConstant)
             }
         }
+
+        fun fromAttribute(attribute: Attribute): MutableAttribute {
+            return when (attribute) {
+                is CodeAttribute -> MutableCodeAttribute.fromCodeAttribute(attribute)
+                else -> MutableAnonymousAttributeImpl.fromAttribute(attribute)
+            }
+        }
     }
 }
 
