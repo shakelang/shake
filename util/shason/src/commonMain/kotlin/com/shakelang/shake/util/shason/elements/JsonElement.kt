@@ -205,4 +205,74 @@ interface JsonElement {
      * @version 0.1.0
      */
     fun toJsonArray() = if (this.isJsonArray()) this as JsonArray else throw Error("Element is not a JsonObject")
+
+    /**
+     * Is the [JsonElement] a [JsonNullElement]?
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun isJsonNull() = this is JsonNullElement
+
+    /**
+     * Cast the [JsonElement] to a [JsonNullElement]
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun toJsonNull() = if (this.isJsonNull()) this as JsonNullElement else throw Error("Element is not a JsonNullElement")
+
+    /**
+     * Is the [JsonElement] a [JsonStringElement]?
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun isJsonString() = this is JsonStringElement
+
+    /**
+     * Cast the [JsonElement] to a [JsonStringElement]
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun toJsonString() = if (this.isJsonString()) this as JsonStringElement else throw Error("Element is not a JsonStringElement")
+
+    /**
+     * Is the [JsonElement] a [JsonIntegerElement]?
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun isJsonInteger() = this is JsonIntegerElement
+
+    /**
+     * Cast the [JsonElement] to a [JsonIntegerElement]
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun toJsonInteger() = if (this.isJsonInteger()) this as JsonIntegerElement else throw Error("Element is not a JsonIntegerElement")
+
+    /**
+     * Is the [JsonElement] a [JsonDoubleElement]?
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun isJsonDouble() = this is JsonDoubleElement
+
+    /**
+     * Cast the [JsonElement] to a [JsonDoubleElement]
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun toJsonDouble() = if (this.isJsonDouble()) this as JsonDoubleElement else throw Error("Element is not a JsonDoubleElement")
+
+    /**
+     * Is the [JsonElement] a [JsonBooleanElement]?
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun isJsonBoolean() = this is JsonBooleanElement
+
+    /**
+     * Cast the [JsonElement] to a [JsonBooleanElement]
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun toJsonBoolean() = if (this.isJsonBoolean()) this as JsonBooleanElement else throw Error("Element is not a JsonBooleanElement")
 }

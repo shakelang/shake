@@ -15,6 +15,15 @@ import kotlin.jvm.JvmName
 @Suppress("unused")
 interface JsonObject : JsonElement, MapType<String, JsonElement, JsonObject, MutableJsonObject> {
 
+    override fun isJsonNull(): Boolean = false
+    override fun isJsonBoolean(): Boolean = false
+    override fun isJsonInteger(): Boolean = false
+    override fun isJsonDouble(): Boolean = false
+    override fun isJsonString(): Boolean = false
+    override fun isJsonArray(): Boolean = false
+    override fun isJsonObject(): Boolean = true
+    override fun isJsonPrimitive(): Boolean = false
+
     /**
      * Implementation of [JsonObject]
      * @since 0.1.0

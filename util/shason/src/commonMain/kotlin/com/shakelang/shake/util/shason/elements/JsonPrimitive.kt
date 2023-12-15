@@ -8,6 +8,20 @@ package com.shakelang.shake.util.shason.elements
 interface JsonPrimitive : JsonElement {
 
     /**
+     * Is the [JsonPrimitive] a [JsonNullElement]?
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun isNull() = this is JsonNullElement
+
+    /**
+     * Is the [JsonPrimitive] a [JsonNullElement]?
+     * @since 0.3.0
+     * @version 0.3.0
+     */
+    fun toNull() = if (this.isNull()) this as JsonNullElement else throw Error("Element is not a JsonNullElement")
+
+    /**
      * Is the [JsonPrimitive] a [JsonIntegerElement]?
      * @since 0.1.0
      * @version 0.1.0
@@ -65,4 +79,9 @@ interface JsonPrimitive : JsonElement {
      */
     fun toBoolean() =
         if (this.isBoolean()) this as JsonBooleanElement else throw Error("Element is not a JsonBooleanElement")
+
+    // For optimization, override the following methods
+    override fun isJsonArray() = false
+    override fun isJsonObject() = false
+    override fun isJsonPrimitive() = true
 }

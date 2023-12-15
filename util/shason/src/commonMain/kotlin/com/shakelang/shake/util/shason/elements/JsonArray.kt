@@ -15,6 +15,16 @@ import kotlin.jvm.JvmName
 @Suppress("unused")
 interface JsonArray : JsonElement, ListType<JsonElement, JsonArray, MutableJsonArray> {
 
+    // Override the methods for optimization
+    override fun isJsonNull(): Boolean = false
+    override fun isJsonBoolean(): Boolean = false
+    override fun isJsonInteger(): Boolean = false
+    override fun isJsonDouble(): Boolean = false
+    override fun isJsonString(): Boolean = false
+    override fun isJsonArray(): Boolean = true
+    override fun isJsonObject(): Boolean = false
+    override fun isJsonPrimitive(): Boolean = false
+    
     /**
      * Implementation of [JsonArray]
      * @since 0.1.0

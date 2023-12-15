@@ -30,4 +30,19 @@ enum class JsonNullElement : JsonPrimitive {
      * @version 0.1.0
      */
     override fun toString(): String = JSON.stringify(value)
+
+    override fun isNull(): Boolean = true
+    override fun isBoolean(): Boolean = false
+    override fun isString(): Boolean = false
+    override fun isDouble(): Boolean = false
+    override fun isInt(): Boolean = false
+    override fun isJsonPrimitive(): Boolean = true
+    override fun isJsonArray(): Boolean = false
+    override fun isJsonObject(): Boolean = false
+    override fun isJsonDouble(): Boolean = false
+    override fun isJsonString(): Boolean = false
+    override fun isJsonInteger(): Boolean = false
+    override fun isJsonNull(): Boolean = true
+    override fun isJsonBoolean(): Boolean = false
+
 }
