@@ -373,4 +373,65 @@ class BufferedInputStreamTests {
             stream.toString()
         )
     }
+
+    @Test
+    fun testPeek() {
+        val counter = "Hello".toBytes().inputStream().countingStream
+        val stream = counter.bufferedStream
+
+        assertEquals(0, counter.byteCount)
+        assertEquals(0, counter.operationCount)
+
+        assertEquals('H'.code, stream.peek())
+
+        assertEquals(0, counter.byteCount)
+        assertEquals(0, counter.operationCount)
+
+        assertEquals('H'.code, stream.read())
+
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
+
+        assertEquals('e'.code, stream.peek())
+
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
+
+        assertEquals('e'.code, stream.read())
+
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
+
+        assertEquals('l'.code, stream.peek())
+
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
+
+        assertEquals('l'.code, stream.read())
+
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
+
+        assertEquals('l'.code, stream.peek())
+
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
+
+        assertEquals('l'.code, stream.read())
+
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
+
+        assertEquals('o'.code, stream.peek())
+
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
+
+        assertEquals('o'.code, stream.read())
+
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
+
+        assertEquals(-1, stream.peek())
+    }
 }

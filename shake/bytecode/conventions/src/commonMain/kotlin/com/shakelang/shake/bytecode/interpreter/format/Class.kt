@@ -201,35 +201,51 @@ class MutableClass(
 
     override var isPublic: Boolean
         get() = super.isPublic
-        set(value) { flags = if (value) flags or 0b00000000_00000001.toShort() else flags and 0b11111111_11111110.toShort() }
+        set(value) {
+            flags = if (value) flags or 0b00000000_00000001.toShort() else flags and 0b11111111_11111110.toShort()
+        }
 
     override var isPrivate: Boolean
         get() = super.isPrivate
-        set(value) { flags = if (value) flags or 0b00000000_00000010.toShort() else flags and 0b11111111_11111101.toShort() }
+        set(value) {
+            flags = if (value) flags or 0b00000000_00000010.toShort() else flags and 0b11111111_11111101.toShort()
+        }
 
     override var isProtected: Boolean
         get() = super.isProtected
-        set(value) { flags = if (value) flags or 0b00000000_00000100.toShort() else flags and 0b11111111_11111011.toShort() }
+        set(value) {
+            flags = if (value) flags or 0b00000000_00000100.toShort() else flags and 0b11111111_11111011.toShort()
+        }
 
     override var isStatic: Boolean
         get() = super.isStatic
-        set(value) { flags = if (value) flags or 0b00000000_00001000.toShort() else flags and 0b11111111_11110111.toShort() }
+        set(value) {
+            flags = if (value) flags or 0b00000000_00001000.toShort() else flags and 0b11111111_11110111.toShort()
+        }
 
     override var isFinal: Boolean
         get() = super.isFinal
-        set(value) { flags = if (value) flags or 0b00000000_00010000.toShort() else flags and 0b11111111_11101111.toShort() }
+        set(value) {
+            flags = if (value) flags or 0b00000000_00010000.toShort() else flags and 0b11111111_11101111.toShort()
+        }
 
     override var name: String
         get() = pool.getUtf8(nameConstant).value
-        set(value) { nameConstant = pool.resolveUtf8(value) }
+        set(value) {
+            nameConstant = pool.resolveUtf8(value)
+        }
 
     override var superName: String
         get() = pool.getUtf8(superNameConstant).value
-        set(value) { superNameConstant = pool.resolveUtf8(value) }
+        set(value) {
+            superNameConstant = pool.resolveUtf8(value)
+        }
 
     override var interfaces: List<String>
         get() = interfacesConstants.map { pool.getUtf8(it).value }
-        set(value) { interfacesConstants = value.map { pool.resolveUtf8(it) }.toMutableList() }
+        set(value) {
+            interfacesConstants = value.map { pool.resolveUtf8(it) }.toMutableList()
+        }
 
     companion object {
         fun fromClass(pool: MutableConstantPool, clazz: Class): MutableClass {

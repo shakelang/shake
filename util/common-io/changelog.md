@@ -8,3 +8,6 @@ Update to new package structure
 writeUTF8() should write an int as size (as readUTF8 also reads an int)
 ### 0.2.2
 writeUTF8() should write an ushort as size (readUTF8 as well)
+### 0.3.0
+Introduce BufferedInputStream#peek() (As it can be helpfull and is no problem to do a peek operation on a buffered stream)
+Introduce DumpAble interface (for objects that have the ability to be dumped into binary)

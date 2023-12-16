@@ -16,11 +16,13 @@ interface Attribute {
         stream.writeInt(value.size)
         stream.write(value)
     }
+
     fun dump(): ByteArray {
         val stream = ByteArrayOutputStream()
         dump(DataOutputStream(stream))
         return stream.toByteArray()
     }
+
     override fun equals(other: Any?): Boolean
     override fun hashCode(): Int
 
@@ -71,6 +73,13 @@ interface MutableAttribute : Attribute {
             return when (name) {
                 "Code" -> MutableCodeAttribute.fromStream(pool, stream, nameConstant)
                 else -> MutableAnonymousAttributeImpl.fromStream(pool, stream, nameConstant)
+            }
+        }
+
+        fun fromAttribute(attribute: Attribute): MutableAttribute {
+            return when (attribute) {
+                is CodeAttribute -> MutableCodeAttribute.fromCodeAttribute(attribute)
+                else -> MutableAnonymousAttributeImpl.fromAttribute(attribute)
             }
         }
     }
