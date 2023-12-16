@@ -108,6 +108,8 @@ tasks.withType<VersionTask>().configureEach {
 val currentVersion = "1.0"
 val previousVersionsDirectory = project.rootProject.projectDir.resolve("previousDocVersions").invariantSeparatorsPath
 
+val styleSheet = file("./assets/dokka-style.css").absoluteFile
+
 tasks.dokkaHtmlMultiModule {
     pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
         version = currentVersion
@@ -173,7 +175,7 @@ subprojects {
 
         tasks.withType<DokkaTask>().configureEach {
             pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-                customStyleSheets = listOf(file("./assets/dokka-style.css").absoluteFile)
+                customStyleSheets = listOf(styleSheet)
             }
         }
 
@@ -357,7 +359,7 @@ afterEvaluate {
     tasks.withType<DokkaTaskPartial>().configureEach {
         pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
 //                customAssets = listOf(file("./assets/docs-logo.svg"))
-            customStyleSheets = listOf(file("./assets/dokka-style.css").absoluteFile)
+            customStyleSheets = listOf(styleSheet)
         }
     }
 }
