@@ -106,7 +106,6 @@ open class ConstantPool(
      */
     fun isClass(identifier: Int) = entries[identifier] is ConstantPoolEntry.ClassConstant
 
-
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.Utf8Constant]
      * @param identifier The identifier of the constant
@@ -186,7 +185,6 @@ open class ConstantPool(
      * @version 0.1.0
      */
     fun getClass(identifier: Int) = entries[identifier] as ConstantPoolEntry.ClassConstant
-
 
     /**
      * Find the [ConstantPoolEntry.Utf8Constant] with the given [value]
@@ -575,7 +573,6 @@ class MutableConstantPool(
      * @version 0.1.0
      */
     fun createClass(value: String) = createClass(resolveUtf8(value))
-
 
     /**
      * Resolve the [ConstantPoolEntry.Utf8Constant] with the given [value]

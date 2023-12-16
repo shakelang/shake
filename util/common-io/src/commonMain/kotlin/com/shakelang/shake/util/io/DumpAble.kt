@@ -34,5 +34,4 @@ interface DumpAble {
         dump(stream)
         return stream.toByteArray()
     }
-
 }

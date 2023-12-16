@@ -118,15 +118,14 @@ class MethodDescriptor(
                 }
             }
 
-
             val parameters = mutableListOf<TypeDescriptor>()
             if (stream.peek().toChar() != ')') {
-
                 do {
                     parameters.add(TypeDescriptor.parse(stream))
                 } while (stream.read().toChar() == ',')
-
-            } else stream.read()
+            } else {
+                stream.read()
+            }
 
             val returnType = TypeDescriptor.parse(stream)
 
