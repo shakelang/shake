@@ -1,6 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.format
 
-import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
+import com.shakelang.shake.bytecode.interpreter.format.attribute.AnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.util.io.streaming.input.dataStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
@@ -126,8 +126,10 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
         val method2 = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
-        val method3 = Method(pool, 0, 1, 0b00000000_00010000, listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
-        val method4 = Method(pool, 0, 1, 0b00000000_00010000, listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3, 4))))
+        val method3 =
+            Method(pool, 0, 1, 0b00000000_00010000, listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))))
+        val method4 =
+            Method(pool, 0, 1, 0b00000000_00010000, listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3, 4))))
         val method5 = Method(pool, 1, 0, 0b00000000_00010000, emptyList())
         val method6 = Method(pool, 1, 0, 0b00000000_00001000, emptyList())
 
@@ -145,8 +147,10 @@ class MethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
         val method2 = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
-        val method3 = Method(pool, 0, 1, 0b00000000_00010000, listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
-        val method4 = Method(pool, 0, 1, 0b00000000_00010000, listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3, 4))))
+        val method3 =
+            Method(pool, 0, 1, 0b00000000_00010000, listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))))
+        val method4 =
+            Method(pool, 0, 1, 0b00000000_00010000, listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3, 4))))
         val method5 = Method(pool, 1, 0, 0b00000000_00010000, emptyList())
         val method6 = Method(pool, 1, 0, 0b00000000_00001000, emptyList())
 
@@ -195,7 +199,7 @@ class MethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
+            listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
         )
         method.dump(DataOutputStream(stream))
 
@@ -218,7 +222,7 @@ class MethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            listOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
+            listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
         )
         method.dump() shouldBe byteArrayOf(
             *0.toBytes(), // name constant
@@ -251,6 +255,7 @@ class MethodTests : FreeSpec({
     "from stream with attributes" {
 
         val pool = MutableConstantPool()
+        pool.resolveUtf8("SomeUnknownAttributeType")
         val stream = byteArrayOf(
             *0.toBytes(), // name constant
             *1.toBytes(), // qualified name constant
@@ -519,8 +524,20 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
         val method2 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
-        val method3 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
-        val method4 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3, 4))))
+        val method3 = MutableMethod(
+            pool,
+            0,
+            1,
+            0b00000000_00010000,
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+        )
+        val method4 = MutableMethod(
+            pool,
+            0,
+            1,
+            0b00000000_00010000,
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3, 4)))
+        )
         val method5 = MutableMethod(pool, 1, 0, 0b00000000_00010000, mutableListOf())
         val method6 = MutableMethod(pool, 1, 0, 0b00000000_00001000, mutableListOf())
 
@@ -538,8 +555,20 @@ class MutableMethodTests : FreeSpec({
         val pool = MutableConstantPool()
         val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
         val method2 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
-        val method3 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
-        val method4 = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3, 4))))
+        val method3 = MutableMethod(
+            pool,
+            0,
+            1,
+            0b00000000_00010000,
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+        )
+        val method4 = MutableMethod(
+            pool,
+            0,
+            1,
+            0b00000000_00010000,
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3, 4)))
+        )
         val method5 = MutableMethod(pool, 1, 0, 0b00000000_00010000, mutableListOf())
         val method6 = MutableMethod(pool, 1, 0, 0b00000000_00001000, mutableListOf())
 
@@ -588,7 +617,7 @@ class MutableMethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
         )
         method.dump(DataOutputStream(stream))
 
@@ -611,7 +640,7 @@ class MutableMethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3)))
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
         )
         method.dump() shouldBe byteArrayOf(
             *0.toBytes(), // name constant
@@ -644,6 +673,7 @@ class MutableMethodTests : FreeSpec({
     "from stream with attributes" {
 
         val pool = MutableConstantPool()
+        pool.resolveUtf8("SomeUnknownAttributeType")
         val stream = byteArrayOf(
             *0.toBytes(), // name constant
             *1.toBytes(), // qualified name constant
@@ -666,7 +696,13 @@ class MutableMethodTests : FreeSpec({
     "from method" {
 
         val pool = MutableConstantPool()
-        val method = Method(pool, 0, 1, 0b00000000_00010000, mutableListOf(Attribute(pool, 0, byteArrayOf(1, 2, 3))))
+        val method = Method(
+            pool,
+            0,
+            1,
+            0b00000000_00010000,
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+        )
         val method2 = MutableMethod.fromMethod(pool, method)
         method2.nameConstant shouldBe 0
         method2.qualifiedNameConstant shouldBe 1

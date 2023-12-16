@@ -37,3 +37,7 @@ Fix: Structure file version not updated
 Fix: Bump file not cleared after version generation
 ### 0.6.3
 Update com.shakelang.shake.util:shason to 0.3.0
+### 0.6.4
+Update com.shakelang.shake.util:common-io to 0.3.0
+Update com.shakelang.shake.util:parseutils to 0.2.4
+Update com.shakelang.shake.util:shason to 0.3.1

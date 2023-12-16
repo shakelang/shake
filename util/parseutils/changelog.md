@@ -10,3 +10,5 @@ Update documentation
 Update dependencies
 ### 0.2.3
 Update dependencies
+### 0.2.4
+Update com.shakelang.shake.util:common-io to 0.3.0

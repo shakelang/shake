@@ -955,7 +955,8 @@ object Opcodes {
      * @example Syntax: `JLE` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-519-jle
      */
-    const val JLE: Byte = 120 // Syntax: JLE u4 address ; Jump to an address if the top two values are less than or equal
+    const val JLE: Byte =
+        120 // Syntax: JLE u4 address ; Jump to an address if the top two values are less than or equal
 
     /**
      * Jump to an address if the top two values are greater than or equal
@@ -963,7 +964,8 @@ object Opcodes {
      * @example Syntax: `JGE` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-517-jge
      */
-    const val JGE: Byte = 121 // Syntax: JGE u4 address ; Jump to an address if the top two values are greater than or equal
+    const val JGE: Byte =
+        121 // Syntax: JGE u4 address ; Jump to an address if the top two values are greater than or equal
 
     /**
      * Jump to an address if there is a zero on top of the stack

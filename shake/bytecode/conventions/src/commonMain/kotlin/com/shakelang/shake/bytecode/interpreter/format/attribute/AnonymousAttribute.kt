@@ -6,7 +6,7 @@ import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
-open class AnonymousAttributeImpl (
+open class AnonymousAttributeImpl(
     override val pool: ConstantPool,
     override val nameConstant: Int,
     override val value: ByteArray
@@ -98,7 +98,11 @@ class MutableAnonymousAttributeImpl(
             return MutableAnonymousAttributeImpl(pool, name, value)
         }
 
-        fun fromStream(pool: MutableConstantPool, stream: DataInputStream, nameConstant: Int): MutableAnonymousAttributeImpl {
+        fun fromStream(
+            pool: MutableConstantPool,
+            stream: DataInputStream,
+            nameConstant: Int
+        ): MutableAnonymousAttributeImpl {
             val size = stream.readInt()
             val value = ByteArray(size) {
                 stream.readByte()

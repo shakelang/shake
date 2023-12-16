@@ -24,9 +24,9 @@ class BufferedInputStream(
      * @since 0.1.0
      * @version 0.1.0
      */
-    private val input: com.shakelang.shake.util.io.streaming.input.InputStream,
+    private val input: InputStream,
     maxBuffer: Int = 8192
-) : com.shakelang.shake.util.io.streaming.input.InputStream() {
+) : InputStream() {
 
     /**
      * The buffer of the [BufferedInputStream]
@@ -220,6 +220,15 @@ class BufferedInputStream(
      */
     override fun close() {
         input.close()
+    }
+
+    fun peek(): Int {
+        if (bufferPos == bufferSize) {
+            bufferSize = input.read(buffer)
+            bufferPos = 0
+        }
+
+        return if (bufferSize == -1) -1 else buffer[bufferPos].toInt() and 0xff
     }
 
     override fun toString(): String {

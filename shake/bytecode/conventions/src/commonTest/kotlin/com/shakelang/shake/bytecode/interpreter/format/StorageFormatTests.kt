@@ -488,9 +488,9 @@ class StorageFormatTests : FreeSpec({
             *1.toShort().toBytes(),
             *clazz.dump(),
             *1.toShort().toBytes(),
-            *field.dump(),
+            *method.dump(),
             *1.toShort().toBytes(),
-            *method.dump()
+            *field.dump()
         )
     }
 
@@ -573,9 +573,9 @@ class StorageFormatTests : FreeSpec({
             *1.toShort().toShort().toBytes(),
             *clazz.dump(),
             *1.toShort().toBytes(),
-            *field.dump(),
+            *method.dump(),
             *1.toShort().toBytes(),
-            *method.dump()
+            *field.dump()
         )
     }
 
@@ -1253,9 +1253,9 @@ class MutableStorageFormatTests : FreeSpec({
             *1.toShort().toBytes(),
             *clazz.dump(),
             *1.toShort().toBytes(),
-            *field.dump(),
+            *method.dump(),
             *1.toShort().toBytes(),
-            *method.dump()
+            *field.dump()
         )
     }
 
@@ -1338,9 +1338,9 @@ class MutableStorageFormatTests : FreeSpec({
             *1.toShort().toShort().toBytes(),
             *clazz.dump(),
             *1.toShort().toBytes(),
-            *field.dump(),
+            *method.dump(),
             *1.toShort().toBytes(),
-            *method.dump()
+            *field.dump()
         )
     }
 

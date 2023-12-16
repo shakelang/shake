@@ -1,6 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.format
 
-import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
+import com.shakelang.shake.bytecode.interpreter.format.attribute.AnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.util.io.streaming.input.dataStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
@@ -332,11 +332,11 @@ class MutableFieldTests : FreeSpec({
         val pool = MutableConstantPool()
         val field = MutableField(pool, 0, 0, 0, mutableListOf())
         field.attributes.size shouldBe 0
-        field.attributes.add(Attribute(pool, 0, byteArrayOf()))
+        field.attributes.add(AnonymousAttributeImpl(pool, 0, byteArrayOf()))
         field.attributes.size shouldBe 1
-        field.attributes.add(Attribute(pool, 0, byteArrayOf()))
+        field.attributes.add(AnonymousAttributeImpl(pool, 0, byteArrayOf()))
         field.attributes.size shouldBe 2
-        field.attributes.add(Attribute(pool, 0, byteArrayOf()))
+        field.attributes.add(AnonymousAttributeImpl(pool, 0, byteArrayOf()))
         field.attributes.size shouldBe 3
     }
 
