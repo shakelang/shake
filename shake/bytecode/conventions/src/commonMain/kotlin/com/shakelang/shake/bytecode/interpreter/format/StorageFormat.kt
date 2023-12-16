@@ -2,27 +2,127 @@ package com.shakelang.shake.bytecode.interpreter.format
 
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
+import com.shakelang.shake.util.io.DumpAble
 import com.shakelang.shake.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
+/**
+ * The magic number of the storage format is used to identify the storage format. It is always the same.
+ * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#magic)
+ * for more information
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 const val MAGIC = 0x4a16a478 // SHAKE MAGIC
 
+/**
+ * Implementation of the storage format.
+ * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format) for more information
+ *
+ * @param major The major version of the storage format
+ * @param minor The minor version of the storage format
+ * @param packageNameConstant The constant of the package name
+ * @param constantPool The constant pool
+ * @param classes The classes
+ * @param fields The fields
+ * @param methods The methods
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 open class StorageFormat(
-    open val major: Short,
-    open val minor: Short,
-    open val packageNameConstant: Int,
-    open val constantPool: ConstantPool,
-    open val classes: List<Class>,
-    open val fields: List<Field>,
-    open val methods: List<Method>
-) {
 
+    /**
+     * The major version of the storage format
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#major-and-minor)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    open val major: Short,
+
+    /**
+     * The minor version of the storage format
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#major-and-minor)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    open val minor: Short,
+
+    /**
+     * The constant of the package name
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#package-name)
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    open val packageNameConstant: Int,
+
+    /**
+     * The constant pool
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#constant-pool-count--constant-pool)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    open val constantPool: ConstantPool,
+
+    /**
+     * The classes
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#class-count--classes)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    open val classes: List<Class>,
+
+    /**
+     * The methods
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#method-count--methods)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    open val methods: List<Method>,
+
+    /**
+     * The fields
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#field-count--fields)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    open val fields: List<Field>,
+) : DumpAble {
+
+    /**
+     * The magic number of the storage format is used to identify the storage format. It is always the same.
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#magic)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val magic: Int = MAGIC
+
+    /**
+     * The package name
+     * This is a shortcut for `constantPool.getUtf8(packageNameConstant).value`
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#package-name)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val packageName: String
         get() = constantPool.getUtf8(packageNameConstant).value
 
-    fun dump(stream: DataOutputStream) {
+    /**
+     * Dump the storage format to a [DataOutputStream]
+     * @param stream The stream to dump the storage format to
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    override fun dump(stream: DataOutputStream) {
         stream.writeInt(magic)
         stream.writeShort(major)
         stream.writeShort(minor)
@@ -32,23 +132,23 @@ open class StorageFormat(
         for (clazz in classes) {
             clazz.dump(stream)
         }
-        stream.writeShort(fields.size.toShort())
-        for (field in fields) {
-            field.dump(stream)
-        }
         stream.writeShort(methods.size.toShort())
         for (method in methods) {
             method.dump(stream)
         }
+        stream.writeShort(fields.size.toShort())
+        for (field in fields) {
+            field.dump(stream)
+        }
     }
 
-    fun dump(): ByteArray {
-        val byteStream = ByteArrayOutputStream()
-        val stream = DataOutputStream(byteStream)
-        dump(stream)
-        return byteStream.toByteArray()
-    }
-
+    /**
+     * Check if this storage format is equal to another object
+     * @param other The other object
+     * @return If the storage formats are equal
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is StorageFormat) return false
@@ -59,6 +159,9 @@ open class StorageFormat(
         if (constantPool != other.constantPool) return false
 
         // TODO this is not the best way to do this (O(n^2))
+        // This should be improved in the future
+        // It is not that important because this is only used for testing
+        // and not for the actual bytecode
 
         // find matching classes
 
@@ -74,11 +177,15 @@ open class StorageFormat(
             if (clazz !in other.classes) return false
         }
 
-        println("done")
-
         return true
     }
 
+    /**
+     * Get the hash code of this storage format
+     * @return The hash code
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override fun hashCode(): Int {
         var result = major.toInt()
         result = 31 * result + minor.toInt()
@@ -90,6 +197,14 @@ open class StorageFormat(
     }
 
     companion object {
+
+        /**
+         * Create a [StorageFormat] from a [DataInputStream]
+         * @param stream The stream to read the storage format from
+         * @return The storage format
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun fromStream(stream: DataInputStream): StorageFormat {
             val magic = stream.readInt()
 
@@ -104,38 +219,108 @@ open class StorageFormat(
             for (i in 0 until classesCount) {
                 classes.add(Class.fromStream(constantPool, stream))
             }
-            val fieldsCount = stream.readShort().toInt()
-            val fields = mutableListOf<Field>()
-            for (i in 0 until fieldsCount) {
-                fields.add(Field.fromStream(constantPool, stream))
-            }
             val methodsCount = stream.readShort().toInt()
             val methods = mutableListOf<Method>()
             for (i in 0 until methodsCount) {
                 methods.add(Method.fromStream(constantPool, stream))
             }
-            return StorageFormat(major, minor, packageNameConstant, constantPool, classes, fields, methods)
+            val fieldsCount = stream.readShort().toInt()
+            val fields = mutableListOf<Field>()
+            for (i in 0 until fieldsCount) {
+                fields.add(Field.fromStream(constantPool, stream))
+            }
+            return StorageFormat(major, minor, packageNameConstant, constantPool, classes, methods, fields)
         }
     }
 }
 
+/**
+ * Mutable implementation of the [StorageFormat]
+ * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format) for more information
+ * @see StorageFormat
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 class MutableStorageFormat(
+
+    /**
+     * The major version of the storage format
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#major-and-minor)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var major: Short,
+
+    /**
+     * The minor version of the storage format
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#major-and-minor)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var minor: Short,
+
+    /**
+     * The constant of the package name
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#package-name)
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var packageNameConstant: Int,
+
+    /**
+     * The constant pool
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#constant-pool-count--constant-pool)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var constantPool: MutableConstantPool,
+
+    /**
+     * The classes
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#class-count--classes)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var classes: MutableList<MutableClass>,
+
+    /**
+     * The methods
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#method-count--methods)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    override var methods: MutableList<MutableMethod>,
+
+    /**
+     * The fields
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#field-count--fields)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var fields: MutableList<MutableField>,
-    override var methods: MutableList<MutableMethod>
 ) : StorageFormat(
     major,
     minor,
     packageNameConstant,
     constantPool,
     classes,
+    methods,
     fields,
-    methods
 ) {
+
+    /**
+     * The magic number of the storage format is used to identify the storage format. It is always the same.
+     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#magic)
+     * for more information
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var packageName: String
         get() = constantPool.getUtf8(packageNameConstant).value
         set(value) {
@@ -143,6 +328,14 @@ class MutableStorageFormat(
         }
 
     companion object {
+
+        /**
+         * Create a [MutableStorageFormat] from a [StorageFormat]
+         * @param storageFormat The storage format to create the mutable storage format from
+         * @return The mutable storage format
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun fromStorageFormat(storageFormat: StorageFormat): MutableStorageFormat {
             val pool = MutableConstantPool.fromConstantPool(storageFormat.constantPool)
             return MutableStorageFormat(
@@ -151,11 +344,18 @@ class MutableStorageFormat(
                 storageFormat.packageNameConstant,
                 pool,
                 storageFormat.classes.map { MutableClass.fromClass(pool, it) }.toMutableList(),
+                storageFormat.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
                 storageFormat.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
-                storageFormat.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList()
             )
         }
 
+        /**
+         * Create a [MutableStorageFormat] from a [DataInputStream]
+         * @param stream The stream to read the storage format from
+         * @return The storage format
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun fromStream(stream: DataInputStream): MutableStorageFormat {
             val magic = stream.readInt()
             if (magic != MAGIC) throw IllegalArgumentException("Magic number is not correct")
@@ -184,8 +384,8 @@ class MutableStorageFormat(
                 packageNameConstant,
                 pool,
                 classes,
-                fields,
-                methods
+                methods,
+                fields
             )
         }
     }
