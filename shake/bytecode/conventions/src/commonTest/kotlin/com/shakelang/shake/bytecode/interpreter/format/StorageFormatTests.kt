@@ -490,7 +490,7 @@ class StorageFormatTests : FreeSpec({
             *1.toShort().toBytes(),
             *method.dump(),
             *1.toShort().toBytes(),
-            *field.dump(),
+            *field.dump()
         )
     }
 
@@ -575,7 +575,7 @@ class StorageFormatTests : FreeSpec({
             *1.toShort().toBytes(),
             *method.dump(),
             *1.toShort().toBytes(),
-            *field.dump(),
+            *field.dump()
         )
     }
 
@@ -1255,7 +1255,7 @@ class MutableStorageFormatTests : FreeSpec({
             *1.toShort().toBytes(),
             *method.dump(),
             *1.toShort().toBytes(),
-            *field.dump(),
+            *field.dump()
         )
     }
 
@@ -1340,7 +1340,7 @@ class MutableStorageFormatTests : FreeSpec({
             *1.toShort().toBytes(),
             *method.dump(),
             *1.toShort().toBytes(),
-            *field.dump(),
+            *field.dump()
         )
     }
 
