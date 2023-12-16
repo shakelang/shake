@@ -151,7 +151,8 @@ class MutableCodeAttribute(
     ByteArray(0),
     arrayOf(),
     arrayOf()
-), MutableAttribute {
+),
+    MutableAttribute {
 
     override val pool: MutableConstantPool
         get() = super.pool as MutableConstantPool
@@ -210,5 +211,4 @@ class MutableCodeAttribute(
         fun fromByteArray(pool: MutableConstantPool, array: ByteArray): MutableCodeAttribute =
             fromStream(pool, array.dataStream())
     }
-
 }

@@ -526,8 +526,11 @@ interface TypeDescriptor {
          */
         override val descriptor: String
             get() =
-                if (genericTypes.isEmpty()) "L$className;"
-                else "L$className@${genericTypes.joinToString("+") { it.descriptor }};"
+                if (genericTypes.isEmpty()) {
+                    "L$className;"
+                } else {
+                    "L$className@${genericTypes.joinToString("+") { it.descriptor }};"
+                }
 
         /**
          * The size of the [ObjectType]
@@ -777,7 +780,6 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         fun parse(name: InputStream): TypeDescriptor {
-
             val next = name.read().toChar()
 
             when (next) {
@@ -814,7 +816,6 @@ interface TypeDescriptor {
 
                 else -> throw Exception("Unknown type: $next")
             }
-
         }
 
         /**
