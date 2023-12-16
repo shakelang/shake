@@ -1,7 +1,9 @@
 package com.shakelang.shake.bytecode.interpreter.generator
 
 import com.shakelang.shake.bytecode.interpreter.format.*
+import com.shakelang.shake.bytecode.interpreter.format.attribute.AnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
+import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAttribute
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import kotlin.experimental.and
@@ -45,8 +47,8 @@ class GenerationContext {
             pool.resolveUtf8(name),
             pool,
             classes.map { it.toClass(pool) },
+            methods.map { it.toMethod(pool) },
             fields.map { it.toField(pool) },
-            methods.map { it.toMethod(pool) }
         )
     }
 
@@ -58,8 +60,8 @@ class GenerationContext {
             pool.resolveUtf8(name),
             pool,
             classes.map { it.toMutableClass(pool) }.toMutableList(),
+            methods.map { it.toMutableMethod(pool) }.toMutableList(),
             fields.map { it.toMutableField(pool) }.toMutableList(),
-            methods.map { it.toMutableMethod(pool) }.toMutableList()
         )
     }
 
@@ -393,7 +395,7 @@ class AttributeGenerationContext {
         pool: MutableConstantPool
     ): Attribute {
         val nameConstant = pool.resolveUtf8(name)
-        return Attribute(
+        return AnonymousAttributeImpl(
             pool,
             nameConstant,
             data
@@ -404,7 +406,7 @@ class AttributeGenerationContext {
         pool: MutableConstantPool
     ): MutableAttribute {
         val nameConstant = pool.resolveUtf8(name)
-        return MutableAttribute(
+        return MutableAnonymousAttributeImpl(
             pool,
             nameConstant,
             data
