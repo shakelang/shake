@@ -384,8 +384,8 @@ class BufferedInputStreamTests {
 
         assertEquals('H'.code, stream.peek())
 
-        assertEquals(0, counter.byteCount)
-        assertEquals(0, counter.operationCount)
+        assertEquals(5, counter.byteCount)
+        assertEquals(1, counter.operationCount)
 
         assertEquals('H'.code, stream.read())
 
