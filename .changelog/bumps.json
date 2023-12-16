@@ -6,6 +6,13 @@
       "paths": [
         ":util:common-io"
       ]
+    },
+    {
+      "type": "minor",
+      "message": "Introduce DumpAble interface (for objects that have the ability to be dumped into binary)",
+      "paths": [
+        ":util:common-io"
+      ]
     }
   ]
 }
