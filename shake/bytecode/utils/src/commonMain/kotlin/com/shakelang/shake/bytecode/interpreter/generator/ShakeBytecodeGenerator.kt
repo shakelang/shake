@@ -61,6 +61,7 @@ class ShakeBytecodeGenerator(
     fun bdiv() = addByte(Opcodes.BDIV)
     fun sdiv() = addByte(Opcodes.SDIV)
     fun idiv() = addByte(Opcodes.IDIV)
+
     fun ldiv() = addByte(Opcodes.LDIV)
     fun ubdiv() = addByte(Opcodes.UBDIV)
     fun usdiv() = addByte(Opcodes.USDIV)

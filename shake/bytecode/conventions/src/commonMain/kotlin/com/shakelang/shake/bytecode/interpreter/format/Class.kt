@@ -1,6 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter.format
 
 import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
+import com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAttribute
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
