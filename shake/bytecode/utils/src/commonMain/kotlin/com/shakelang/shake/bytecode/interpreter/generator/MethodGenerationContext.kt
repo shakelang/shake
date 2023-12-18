@@ -4,6 +4,7 @@ import com.shakelang.shake.bytecode.interpreter.format.Method
 import com.shakelang.shake.bytecode.interpreter.format.MutableMethod
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.bytecode.interpreter.generator.attributes.AttributeGenerationContext
+import com.shakelang.shake.bytecode.interpreter.generator.attributes.CodeAttributeGenerationContext
 import kotlin.experimental.and
 import kotlin.experimental.or
 
@@ -61,6 +62,22 @@ class MethodGenerationContext {
         val ctx = AttributeGenerationContext()
         ctx.name = name
         ctx.data = data
+        attributes.add(ctx)
+    }
+
+    fun code(
+        generator: CodeAttributeGenerationContext.() -> Unit
+    ) {
+        val ctx = CodeAttributeGenerationContext()
+        ctx.generator()
+        attributes.add(ctx)
+    }
+
+    fun Code(
+        generator: CodeAttributeGenerationContext.() -> Unit
+    ) {
+        val ctx = CodeAttributeGenerationContext()
+        ctx.generator()
         attributes.add(ctx)
     }
 
