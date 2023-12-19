@@ -9,6 +9,9 @@ import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 
 interface ShakePackage {
+
+    // This is a list of storages, because we could potentially have two libraries that add classes to
+    // the same package.
     val storages: List<StorageFormat>
 
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
@@ -26,7 +29,50 @@ interface ShakePackage {
         fun of(storages: List<StorageFormat>): ShakePackage {
             return object : ShakePackage {
 
+                // We use a mutable list here, because we want to be able to add storages later
+                // and not just at the initial load.
+                // The only reason we would need to add storages later is if we load a library
+                // later during runtime (e.g. a plugin) and it adds classes to the package we
+                // already have from another library.
+                // For this (quite rare) case we need to be able to add storages later.
                 override val storages: MutableList<StorageFormat> = mutableListOf()
+
+
+                // Specification of the dynamic loading system:
+                // Please read this before you try to understand the code below.
+                //
+                // The following code has the functionality of dynamically loading the stuff we
+                // actually need.
+                // We don't want to load all classes/methods/fields at the start,
+                // if we have a big library/classpath, and a very small program.
+                //
+                // But we also need to cache loaded classes/methods/fields.
+                // For this reason, we use a list of nulls, and if we load a class/method/field,
+                // we replace the null with the loaded class/method/field.
+                // We also have lists of the formats here.
+                // Their main purpose is to map an index
+                // to a class/method/field.
+                // This is needed because we can load multiple storages.
+                // If we take the index of the class/method/field in the storage, we
+                // could run into cases, where we try to map two different classes/methods/fields
+                // to the same index.
+                // We also have private methods to load classes/methods/fields (loadClass, loadMethod,
+                // loadField).
+                // These methods load the class/method/field from the storage save it into
+                // our cache list and return it.
+                // And we have private methods to get them (getClass, getMethod, getField).
+                // These
+                // methods check if the class/method/field is already loaded, and if not, they call
+                // the load methods.
+                // Both load and get methods should return null if the class/method/field is not
+                // found.
+                // To resolve the index of a class/method/field by their name (in the case of a method
+                // we need to include the parameters),
+                // we have the resolveClassIndex, resolveMethodIndex
+                // and resolveFieldIndex methods.
+                // They look for them inside the storage format and
+                // return the indexes they are mapped to.
+                // The indexes will depend on the order the storages are loaded in.
 
                 val classList: MutableList<ShakeInterpreterClass?> = mutableListOf()
                 val methodList: MutableList<ShakeInterpreterMethod?> = mutableListOf()
@@ -174,10 +220,43 @@ interface ShakeInterpreterClass {
         fun of(storage: Class): ShakeInterpreterClass {
             return object : ShakeInterpreterClass {
 
+                // These fields can be directly used from the storage; they involve no
+                // expensive logic to load them, so they are not loaded lazily.
+
                 override val storage: Class = storage
                 override val qualifiedName: String = storage.name
                 override val simpleName: String = storage.name
                 override val isStatic: Boolean = storage.isStatic
+
+                // Specification of the dynamic loading system:
+                // Please read this before you try to understand the code below!
+                //
+                // The following code has the functionality of dynamically loading the stuff we
+                // actually need.
+                // We don't want to load all classes/methods/fields at the start,
+                // if we have a big library/classpath, and a very small program.
+                //
+                // But we also need to cache loaded classes/methods/fields.
+                // For this reason, we use a list of nulls, and if we load a class/method/field,
+                // we replace the null with the loaded class/method/field.
+                // We don't have lists of the formats here, (as in the ShakePackage implementation), because
+                // we can't declare a class/method/field twice.
+                // We have private methods to load classes/methods/fields (loadClass, loadMethod,
+                // loadField).
+                // These methods load the class/method/field from the storage save it into
+                // our cache list and return it.
+                // And we have private methods to get them (getClass, getMethod, getField).
+                // These methods check if the class/method/field is already loaded, and if not, they call
+                // the load methods.
+                // Both load and get methods should return null if the class/method/field is not
+                // found.
+                // To resolve the index of a class/method/field by their name (in the case of a method
+                // we need to include the parameters),
+                // we have the resolveClassIndex, resolveMethodIndex
+                // and resolveFieldIndex methods.
+                // They look for them inside the storage format and
+                // return the indexes they are mapped to.
+                // The indexes will depend on the order the storages are loaded in.
 
                 val subclassList: MutableList<ShakeInterpreterClass?> = mutableListOf()
                 val methodList: MutableList<ShakeInterpreterMethod?> = mutableListOf()
