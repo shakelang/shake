@@ -10,6 +10,7 @@ import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 
 interface ShakePackage {
     val storages: List<StorageFormat>
+
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
     fun getMethod(descriptor: PathDescriptor): ShakeInterpreterMethod?
@@ -17,22 +18,135 @@ interface ShakePackage {
     fun getField(descriptor: PathDescriptor): ShakeInterpreterField
     fun getField(descriptor: String): ShakeInterpreterField = getField(PathDescriptor.parse(descriptor))
 
+    fun getDirectChildClass(name: String): ShakeInterpreterClass?
+    fun getDirectChildMethod(name: String): ShakeInterpreterMethod?
+    fun getDirectChildField(name: String): ShakeInterpreterField?
+
     companion object {
         fun of(storages: List<StorageFormat>): ShakePackage {
             return object : ShakePackage {
 
-                override val storages: List<StorageFormat> = storages.toMutableList()
+                override val storages: MutableList<StorageFormat> = mutableListOf()
+
+                val classList: MutableList<ShakeInterpreterClass?> = mutableListOf()
+                val methodList: MutableList<ShakeInterpreterMethod?> = mutableListOf()
+                val fieldList: MutableList<ShakeInterpreterField?> = mutableListOf()
+
+                val classFormatList: MutableList<Class> = mutableListOf()
+                val methodFormatList: MutableList<Method> = mutableListOf()
+                val fieldFormatList: MutableList<Field> = mutableListOf()
+
+                init {
+                    for (s in storages) addStorageFormat(s)
+                }
+
+                fun loadClass(index: Int): ShakeInterpreterClass? {
+                    val c = storages[index].classes[0]
+                    val cls = ShakeInterpreterClass.of(c)
+                    classList[index] = cls
+                    return cls
+                }
+
+                fun loadMethod(index: Int): ShakeInterpreterMethod? {
+                    val m = storages[index].methods[0]
+                    val method = ShakeInterpreterMethod.of(m)
+                    methodList[index] = method
+                    return method
+                }
+
+                fun loadField(index: Int): ShakeInterpreterField? {
+                    val f = storages[index].fields[0]
+                    val field = ShakeInterpreterField.of(f)
+                    fieldList[index] = field
+                    return field
+                }
+
+                fun getClass(index: Int): ShakeInterpreterClass? {
+                    return classList[index] ?: loadClass(index)
+                }
+
+                fun getMethod(index: Int): ShakeInterpreterMethod? {
+                    return methodList[index] ?: loadMethod(index)
+                }
+
+                fun getField(index: Int): ShakeInterpreterField? {
+                    return fieldList[index] ?: loadField(index)
+                }
+
+                fun loadAllClasses() {
+                    for (i in storages.indices) loadClass(i)
+                }
+
+                fun loadAllMethods() {
+                    for (i in storages.indices) loadMethod(i)
+                }
+
+                fun loadAllFields() {
+                    for (i in storages.indices) loadField(i)
+                }
+
+                fun resolveClassIndex(name: String): Int {
+                    for (i in storages.indices) {
+                        if (storages[i].classes[0].name == name) return i
+                    }
+                    throw NullPointerException("Class $name not found!")
+                }
+
+                fun resolveMethodIndex(name: String): Int {
+                    for (i in storages.indices) {
+                        if (storages[i].methods[0].name == name) return i
+                    }
+                    throw NullPointerException("Method $name not found!")
+                }
+
+                fun resolveFieldIndex(name: String): Int {
+                    for (i in storages.indices) {
+                        if (storages[i].fields[0].name == name) return i
+                    }
+                    throw NullPointerException("Field $name not found!")
+                }
+
+                fun addStorageFormat(storage: StorageFormat) {
+                    this.storages.add(storage)
+                    for(c in storage.classes) classFormatList.add(c)
+                    for(m in storage.methods) methodFormatList.add(m)
+                    for(f in storage.fields) fieldFormatList.add(f)
+                }
 
                 override fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass? {
-                    TODO()
+                    if (descriptor.classEntities.isNotEmpty()) {
+                        val clazz = getDirectChildClass(descriptor.classEntities[0])
+                        return clazz?.getClass(descriptor)
+                    }
+                    return getDirectChildClass(descriptor.entity)
                 }
 
                 override fun getMethod(descriptor: PathDescriptor): ShakeInterpreterMethod? {
-                    TODO()
+                    if (descriptor.classEntities.isNotEmpty()) {
+                        val clazz = getDirectChildClass(descriptor.classEntities[0])
+                        return clazz?.getMethod(descriptor)
+                    }
+                    return getDirectChildMethod(descriptor.entity)
                 }
 
                 override fun getField(descriptor: PathDescriptor): ShakeInterpreterField {
-                    TODO()
+                    if (descriptor.classEntities.isNotEmpty()) {
+                        val clazz = getDirectChildClass(descriptor.classEntities[0])
+                        return clazz?.getField(descriptor) ?: throw NullPointerException()
+                    }
+                    return getDirectChildField(descriptor.entity) ?: throw NullPointerException()
+                }
+
+                override fun getDirectChildClass(name: String): ShakeInterpreterClass? {
+                    return getClass(this.resolveClassIndex(name))
+                }
+
+                override fun getDirectChildMethod(name: String): ShakeInterpreterMethod? {
+                    return getMethod(this.resolveMethodIndex(name))
+                }
+
+                override fun getDirectChildField(name: String): ShakeInterpreterField? {
+                    return getField(this.resolveFieldIndex(name))
                 }
             }
         }
@@ -147,7 +261,7 @@ interface ShakeInterpreterClass {
                     // We also don't care about the type of the element.
 
                     var current: ShakeInterpreterClass? = this
-                    for (e in descriptor.classEntities) {
+                    for (e in descriptor.classEntities.drop(1)) {
                         current = current?.getDirectChildClass(e)
                     }
                     return current
