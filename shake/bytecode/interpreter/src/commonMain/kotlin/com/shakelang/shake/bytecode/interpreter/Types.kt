@@ -8,7 +8,7 @@ import com.shakelang.shake.bytecode.interpreter.format.descriptor.MethodDescript
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 
-interface ShakePackage {
+interface ShakeInterpreterPackage {
 
     // This is a list of storages, because we could potentially have two libraries that add classes to
     // the same package.
@@ -26,8 +26,8 @@ interface ShakePackage {
     fun getDirectChildField(name: String): ShakeInterpreterField?
 
     companion object {
-        fun of(storages: List<StorageFormat>): ShakePackage {
-            return object : ShakePackage {
+        fun of(storages: List<StorageFormat>): ShakeInterpreterPackage {
+            return object : ShakeInterpreterPackage {
 
                 // We use a mutable list here, because we want to be able to add storages later
                 // and not just at the initial load.
