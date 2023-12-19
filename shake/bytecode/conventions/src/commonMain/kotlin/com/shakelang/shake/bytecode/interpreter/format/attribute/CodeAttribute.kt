@@ -17,14 +17,6 @@ open class CodeAttribute(
     open val attributes: Array<Attribute>
 ) : Attribute {
 
-    init {
-        checkAttributeName()
-    }
-
-    fun checkAttributeName() {
-        if (name != "Code") throw IllegalArgumentException("Name must be 'Code' (is $name). Pointer: $nameConstant")
-    }
-
     override fun equals(other: Any?): Boolean = compareHelper(other)
     override fun hashCode(): Int = hashCodeHelper()
 
