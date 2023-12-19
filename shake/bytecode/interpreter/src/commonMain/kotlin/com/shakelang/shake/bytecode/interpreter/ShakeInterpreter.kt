@@ -1,5 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter
 
+import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClass
+import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterMethod
 import com.shakelang.shake.util.primitives.bytes.*
 import com.shakelang.shake.util.primitives.calc.shl
 import com.shakelang.shake.util.primitives.calc.shr
