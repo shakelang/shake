@@ -8,6 +8,44 @@ import com.shakelang.shake.bytecode.interpreter.format.descriptor.MethodDescript
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 
+interface ShakeClasspath {
+    val packages: List<ShakeInterpreterPackage>
+
+    fun getPackage(descriptor: PathDescriptor): ShakeInterpreterPackage?
+    fun getPackage(descriptor: String): ShakeInterpreterPackage? = getPackage(PathDescriptor.parse(descriptor))
+
+    fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass? = getPackage(descriptor)?.getClass(descriptor)
+    fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
+
+    fun getMethod(descriptor: PathDescriptor): ShakeInterpreterMethod? = getPackage(descriptor)?.getMethod(descriptor)
+    fun getMethod(descriptor: String): ShakeInterpreterMethod? = getMethod(PathDescriptor.parse(descriptor))
+
+    fun getField(descriptor: PathDescriptor): ShakeInterpreterField? = getPackage(descriptor)?.getField(descriptor)
+    fun getField(descriptor: String): ShakeInterpreterField? = getField(PathDescriptor.parse(descriptor))
+
+    fun load(storage: StorageFormat)
+
+    companion object {
+        fun create(): ShakeClasspath {
+            return object : ShakeClasspath {
+
+                override val packages: MutableList<ShakeInterpreterPackage> = mutableListOf()
+
+                override fun getPackage(descriptor: PathDescriptor): ShakeInterpreterPackage? {
+                    val search = descriptor.packageEntities
+                    return packages.find { it.storages[0].packageName == search[0] }
+                }
+
+                override fun load(storage: StorageFormat) {
+                    val pkg = getPackage(PathDescriptor.parse(storage.packageName))
+                    if (pkg != null) pkg.load(storage)
+                    else packages.add(ShakeInterpreterPackage.of(listOf(storage), this))
+                }
+            }
+        }
+    }
+}
+
 interface ShakeInterpreterPackage {
 
     // This is a list of storages, because we could potentially have two libraries that add classes to
@@ -25,8 +63,10 @@ interface ShakeInterpreterPackage {
     fun getDirectChildMethod(name: String): ShakeInterpreterMethod?
     fun getDirectChildField(name: String): ShakeInterpreterField?
 
+    fun load(storage: StorageFormat)
+
     companion object {
-        fun of(storages: List<StorageFormat>): ShakeInterpreterPackage {
+        fun of(storages: List<StorageFormat>, classpath: ShakeClasspath): ShakeInterpreterPackage {
             return object : ShakeInterpreterPackage {
 
                 // We use a mutable list here, because we want to be able to add storages later
@@ -88,14 +128,14 @@ interface ShakeInterpreterPackage {
 
                 fun loadClass(index: Int): ShakeInterpreterClass? {
                     val c = storages[index].classes[0]
-                    val cls = ShakeInterpreterClass.of(c)
+                    val cls = ShakeInterpreterClass.of(c, classpath)
                     classList[index] = cls
                     return cls
                 }
 
                 fun loadMethod(index: Int): ShakeInterpreterMethod? {
                     val m = storages[index].methods[0]
-                    val method = ShakeInterpreterMethod.of(m)
+                    val method = ShakeInterpreterMethod.of(m, classpath)
                     methodList[index] = method
                     return method
                 }
@@ -194,6 +234,10 @@ interface ShakeInterpreterPackage {
                 override fun getDirectChildField(name: String): ShakeInterpreterField? {
                     return getField(this.resolveFieldIndex(name))
                 }
+
+                override fun load(storage: StorageFormat) {
+                    addStorageFormat(storage)
+                }
             }
         }
     }
@@ -217,7 +261,7 @@ interface ShakeInterpreterClass {
     fun getDirectChildField(name: String): ShakeInterpreterField?
 
     companion object {
-        fun of(storage: Class): ShakeInterpreterClass {
+        fun of(storage: Class, classpath: ShakeClasspath): ShakeInterpreterClass {
             return object : ShakeInterpreterClass {
 
                 // These fields can be directly used from the storage; they involve no
@@ -263,21 +307,21 @@ interface ShakeInterpreterClass {
                 val fieldList: MutableList<ShakeInterpreterField?> = mutableListOf()
 
                 init {
-                    for (c in storage.subClasses) subclassList.add(ShakeInterpreterClass.of(c))
-                    for (m in storage.methods) methodList.add(ShakeInterpreterMethod.of(m))
+                    for (c in storage.subClasses) subclassList.add(ShakeInterpreterClass.of(c, classpath))
+                    for (m in storage.methods) methodList.add(ShakeInterpreterMethod.of(m, classpath))
                     for (f in storage.fields) fieldList.add(ShakeInterpreterField.of(f))
                 }
 
                 fun loadClass(index: Int): ShakeInterpreterClass? {
                     val c = storage.subClasses[index]
-                    val cls = ShakeInterpreterClass.of(c)
+                    val cls = ShakeInterpreterClass.of(c, classpath)
                     subclassList[index] = cls
                     return cls
                 }
 
                 fun loadMethod(index: Int): ShakeInterpreterMethod? {
                     val m = storage.methods[index]
-                    val method = ShakeInterpreterMethod.of(m)
+                    val method = ShakeInterpreterMethod.of(m, classpath)
                     methodList[index] = method
                     return method
                 }
@@ -387,7 +431,7 @@ interface ShakeInterpreterMethod {
     val code: ByteArray
 
     companion object {
-        fun of(storage: Method): ShakeInterpreterMethod {
+        fun of(storage: Method, classpath: ShakeClasspath): ShakeInterpreterMethod {
 
             val attributes = storage.attributes
             val code = attributes.find { it.name == "Code" }?.let { it as com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute }
@@ -400,8 +444,8 @@ interface ShakeInterpreterMethod {
                 override val qualifiedName: String = storage.name
                 override val simpleName: String = storage.name
                 override val isStatic: Boolean = storage.isStatic
-                override val returnType: ShakeInterpreterType = ShakeInterpreterType.of(parsed.returnType)
-                override val parameters: List<ShakeInterpreterType> = parsed.parameters.map { ShakeInterpreterType.of(it) }
+                override val returnType: ShakeInterpreterType = ShakeInterpreterType.of(parsed.returnType, classpath)
+                override val parameters: List<ShakeInterpreterType> = parsed.parameters.map { ShakeInterpreterType.of(it, classpath) }
                 override val code: ByteArray get() = code?.code ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
 
             }
@@ -426,8 +470,6 @@ interface ShakeInterpreterField {
 open class ShakeInterpreterType(
     val name: String,
     val type: Type,
-    val subType: ShakeInterpreterType? = null,
-    val classType: ShakeInterpreterClass? = null
 ) {
 
     enum class Type {
@@ -439,15 +481,51 @@ open class ShakeInterpreterType(
         BYTE,
         CHAR,
         BOOLEAN,
+        VOID,
         STRING,
         OBJECT,
-        ARRAY,
-        VOID
+        ARRAY
     }
 
+    class ArrayType(val arrayType: ShakeInterpreterType) : ShakeInterpreterType(
+        "[${arrayType.name}",
+        Type.ARRAY,
+    )
+
+    class ObjectType(val objectType: ShakeInterpreterClass) : ShakeInterpreterType(
+        objectType.qualifiedName,
+        Type.OBJECT,
+    )
+
+
+
     companion object {
-        fun of(storage: TypeDescriptor): ShakeInterpreterType {
-            TODO()
+
+        val INT = ShakeInterpreterType("int", Type.INT)
+        val FLOAT = ShakeInterpreterType("float", Type.FLOAT)
+        val DOUBLE = ShakeInterpreterType("double", Type.DOUBLE)
+        val LONG = ShakeInterpreterType("long", Type.LONG)
+        val SHORT = ShakeInterpreterType("short", Type.SHORT)
+        val BYTE = ShakeInterpreterType("byte", Type.BYTE)
+        val CHAR = ShakeInterpreterType("char", Type.CHAR)
+        val BOOLEAN = ShakeInterpreterType("boolean", Type.BOOLEAN)
+        val VOID = ShakeInterpreterType("void", Type.VOID)
+
+        fun of(storage: TypeDescriptor, classpath: ShakeClasspath): ShakeInterpreterType {
+            return when (storage) {
+                is TypeDescriptor.ByteType -> BYTE
+                is TypeDescriptor.CharType -> CHAR
+                is TypeDescriptor.DoubleType -> DOUBLE
+                is TypeDescriptor.FloatType -> FLOAT
+                is TypeDescriptor.IntType -> INT
+                is TypeDescriptor.LongType -> LONG
+                is TypeDescriptor.ShortType -> SHORT
+                is TypeDescriptor.BooleanType -> BOOLEAN
+                is TypeDescriptor.VoidType -> VOID
+                is TypeDescriptor.ArrayType -> ArrayType(of(storage.type, classpath))
+                is TypeDescriptor.ObjectType -> ObjectType(classpath.getClass(storage.className)!!)
+                else -> throw IllegalArgumentException("Unknown type: ${storage::class.simpleName}")
+            }
         }
     }
 }
