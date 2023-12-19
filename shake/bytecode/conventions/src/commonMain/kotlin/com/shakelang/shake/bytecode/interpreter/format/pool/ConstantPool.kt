@@ -113,9 +113,9 @@ open class ConstantPool(
 
     override operator fun get(index: Int) : ConstantPoolEntry {
         try {
-            return entries[index] as ConstantPoolEntry.ByteConstant
-        } catch (e: ClassCastException) {
-            throw ConstantPoolOverflowException("ConstantPool is of size ${entries.size} but tried to get entry at $index")
+            return entries[index]
+        } catch (e: IndexOutOfBoundsException) {
+            throw ConstantPoolOverflowException("ConstantPool overflow at $index", e)
         }
     }
 
