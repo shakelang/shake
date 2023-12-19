@@ -7,7 +7,6 @@ import com.shakelang.shake.bytecode.interpreter.generator.ShakeBytecodeGenerator
 
 class CodeAttributeGenerationContext : AttributeGenerationContext() {
 
-    val generator = ShakeBytecodeGenerator()
     var maxStack = 0
     var maxLocals = 0
     var code: ByteArray = byteArrayOf()
@@ -18,7 +17,13 @@ class CodeAttributeGenerationContext : AttributeGenerationContext() {
      * @deprecated Modify the data of the attribute directly
      */
     override var data: ByteArray
+        /**
+         * @deprecated Modify the data of the attribute directly
+         */
         get() = toAttribute(MutableConstantPool()).value
+        /**
+         * @deprecated Modify the data of the attribute directly
+         */
         set(value) {
             TODO()
         }
@@ -53,7 +58,7 @@ class CodeAttributeGenerationContext : AttributeGenerationContext() {
             maxLocals,
             code,
             exceptionTable.toTypedArray(),
-            arrayOf()
+            attributes.map { it.toAttribute(pool) }.toTypedArray()
         )
     }
 
@@ -65,7 +70,7 @@ class CodeAttributeGenerationContext : AttributeGenerationContext() {
             maxLocals,
             code,
             exceptionTable.toTypedArray(),
-            arrayOf()
+            attributes.map { it.toMutableAttribute(pool) }.toTypedArray()
         )
     }
     class ExceptionTableEntryGenerationContext {
