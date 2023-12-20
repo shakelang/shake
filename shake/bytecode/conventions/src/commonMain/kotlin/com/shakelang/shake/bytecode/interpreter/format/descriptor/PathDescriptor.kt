@@ -64,7 +64,13 @@ class PathDescriptor(
 
             var current = StringBuilder()
 
-            descriptor.forEach {
+            var finished = false
+
+            for(it in descriptor) {
+                if(finished) {
+                    current.append(it)
+                    continue
+                }
                 when (it) {
                     '/' -> {
                         packageEntities.add(current.toString())
@@ -73,6 +79,10 @@ class PathDescriptor(
                     ':' -> {
                         classEntities.add(current.toString())
                         current = StringBuilder()
+                    }
+                    '(' -> {
+                        current.append(it)
+                        finished = true
                     }
                     else -> {
                         current.append(it)
