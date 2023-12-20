@@ -13,7 +13,7 @@ interface ShakeInterpreterMethod {
     val code: ByteArray
 
     companion object {
-        fun of(storage: Method, classpath: ShakeClasspath): ShakeInterpreterMethod {
+        fun of(storage: Method, classpath: ShakeClasspath, parentPath: String): ShakeInterpreterMethod {
 
             val attributes = storage.attributes
             val code = attributes.find { it.name == "Code" }?.let { it as com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute }
@@ -23,8 +23,8 @@ interface ShakeInterpreterMethod {
             return object : ShakeInterpreterMethod {
 
                 override val storage: Method = storage
-                override val qualifiedName: String = storage.name
                 override val simpleName: String = storage.name
+                override val qualifiedName: String = "$parentPath$simpleName"
                 override val isStatic: Boolean = storage.isStatic
                 override val returnType: ShakeInterpreterType = ShakeInterpreterType.of(parsed.returnType, classpath)
                 override val parameters: List<ShakeInterpreterType> = parsed.parameters.map {

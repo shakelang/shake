@@ -12,6 +12,8 @@ interface ShakeInterpreterPackage {
     // the same package.
     val storages: List<StorageFormat>
 
+    val name: String
+
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
     fun getMethod(descriptor: PathDescriptor): ShakeInterpreterMethod?
@@ -28,6 +30,9 @@ interface ShakeInterpreterPackage {
     companion object {
         fun of(storages: List<StorageFormat>, classpath: ShakeClasspath): ShakeInterpreterPackage {
             return object : ShakeInterpreterPackage {
+
+                override val name: String = storages[0].packageName
+                val parentPath = "$name/"
 
                 // We use a mutable list here, because we want to be able to add storages later
                 // and not just at the initial load.
@@ -86,36 +91,36 @@ interface ShakeInterpreterPackage {
                     for (s in storages) addStorageFormat(s)
                 }
 
-                fun loadClass(index: Int): ShakeInterpreterClass? {
+                fun loadClass(index: Int): ShakeInterpreterClass {
                     val c = storages[index].classes[0]
-                    val cls = ShakeInterpreterClass.of(c, classpath)
+                    val cls = ShakeInterpreterClass.of(c, classpath, parentPath)
                     classList[index] = cls
                     return cls
                 }
 
-                fun loadMethod(index: Int): ShakeInterpreterMethod? {
+                fun loadMethod(index: Int): ShakeInterpreterMethod {
                     val m = storages[index].methods[0]
-                    val method = ShakeInterpreterMethod.of(m, classpath)
+                    val method = ShakeInterpreterMethod.of(m, classpath, parentPath)
                     methodList[index] = method
                     return method
                 }
 
-                fun loadField(index: Int): ShakeInterpreterField? {
+                fun loadField(index: Int): ShakeInterpreterField {
                     val f = storages[index].fields[0]
-                    val field = ShakeInterpreterField.of(f)
+                    val field = ShakeInterpreterField.of(f, classpath, parentPath)
                     fieldList[index] = field
                     return field
                 }
 
-                fun getClass(index: Int): ShakeInterpreterClass? {
+                fun getClass(index: Int): ShakeInterpreterClass {
                     return classList[index] ?: loadClass(index)
                 }
 
-                fun getMethod(index: Int): ShakeInterpreterMethod? {
+                fun getMethod(index: Int): ShakeInterpreterMethod {
                     return methodList[index] ?: loadMethod(index)
                 }
 
-                fun getField(index: Int): ShakeInterpreterField? {
+                fun getField(index: Int): ShakeInterpreterField {
                     return fieldList[index] ?: loadField(index)
                 }
 
@@ -154,9 +159,18 @@ interface ShakeInterpreterPackage {
 
                 fun addStorageFormat(storage: StorageFormat) {
                     this.storages.add(storage)
-                    for(c in storage.classes) classFormatList.add(c)
-                    for(m in storage.methods) methodFormatList.add(m)
-                    for(f in storage.fields) fieldFormatList.add(f)
+                    for(c in storage.classes) {
+                        classFormatList.add(c)
+                        classList.add(null)
+                    }
+                    for(m in storage.methods) {
+                        methodFormatList.add(m)
+                        methodList.add(null)
+                    }
+                    for(f in storage.fields) {
+                        fieldFormatList.add(f)
+                        fieldList.add(null)
+                    }
                 }
 
                 override fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass? {

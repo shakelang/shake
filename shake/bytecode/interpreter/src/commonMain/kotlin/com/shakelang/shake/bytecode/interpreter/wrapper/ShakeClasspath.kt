@@ -27,8 +27,10 @@ interface ShakeClasspath {
                 override val packages: MutableList<ShakeInterpreterPackage> = mutableListOf()
 
                 override fun getPackage(descriptor: PathDescriptor): ShakeInterpreterPackage? {
-                    val search = descriptor.packageEntities
-                    return packages.find { it.storages[0].packageName == search[0] }
+                    val search = descriptor.packagePath
+                    return packages.find {
+                        it.name == search
+                    }
                 }
 
                 override fun load(storage: StorageFormat) {
