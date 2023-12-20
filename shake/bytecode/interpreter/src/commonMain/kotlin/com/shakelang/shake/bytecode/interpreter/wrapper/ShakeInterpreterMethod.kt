@@ -1,9 +1,9 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
 import com.shakelang.shake.bytecode.interpreter.format.Method
-import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
 import com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.MethodDescriptor
+import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
 interface ShakeInterpreterMethod {
     val storage: Method
@@ -16,13 +16,22 @@ interface ShakeInterpreterMethod {
     val exceptionHandlers: List<CodeAttribute.ExceptionTableEntry>
     val maxStack: Int
     val maxLocals: Int
+    val pkg: ShakeInterpreterPackage
+    val constantPool: ConstantPool
 
 
     companion object {
-        fun of(storage: Method, classpath: ShakeClasspath, parentPath: String): ShakeInterpreterMethod {
+        fun of(
+            storage: Method,
+            classpath: ShakeClasspath,
+            parentPath: String,
+            constantPool: ConstantPool,
+            pkg: ShakeInterpreterPackage
+        ): ShakeInterpreterMethod {
 
             val attributes = storage.attributes
-            val code = attributes.find { it.name == "Code" }?.let { it as com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute }
+            val code = attributes.find { it.name == "Code" }
+                ?.let { it as CodeAttribute }
             val qualifiedName = storage.qualifiedName
             val parsed = MethodDescriptor.parse(qualifiedName)
 
@@ -39,6 +48,9 @@ interface ShakeInterpreterMethod {
                         classpath
                     )
                 }
+                override val constantPool: ConstantPool = constantPool
+                override val pkg: ShakeInterpreterPackage = pkg
+
                 override val code: ByteArray
                     get() = code?.code ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
                 override val exceptionHandlers: List<CodeAttribute.ExceptionTableEntry>
@@ -48,7 +60,7 @@ interface ShakeInterpreterMethod {
                     get() = code?.maxStack ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
                 override val maxLocals: Int
                     get() = code?.maxLocals ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
-                
+
             }
         }
     }

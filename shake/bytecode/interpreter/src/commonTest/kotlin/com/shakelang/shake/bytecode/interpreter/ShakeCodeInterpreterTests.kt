@@ -2111,4 +2111,40 @@ class ShakeCodeInterpreterTests : FreeSpec({
         stack.size shouldBe 4
         stack.popInt() shouldBe 1
     }
+
+    "call" {
+        val interpreter = ShakeInterpreter()
+        interpreter.classPath.load(generatePackage {
+            name = "test"
+            Method {
+                name = "and(B,B)B"
+                isPublic = true
+
+                code {
+                    maxStack = 100
+                    maxLocals = 100
+
+                    bytecode {
+                        band()
+                        bret()
+                        ret()
+                    }
+                }
+            }
+            Method {
+                name = "main()V"
+                isPublic = true
+
+                code {
+                    maxStack = 100
+                    maxLocals = 100
+
+                    bytecode {
+                        bpush(1)
+                        bpush(1)
+                    }
+                }
+            }
+        })
+    }
 })

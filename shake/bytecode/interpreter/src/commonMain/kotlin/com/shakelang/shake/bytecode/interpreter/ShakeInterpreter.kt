@@ -26,17 +26,25 @@ class ShakeInterpreter(
 
     fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
 
-    fun putFunctionOnStack(method: ShakeInterpreterMethod) = callStack.add(createCodeInterpreter(method.code, method))
+    fun putFunctionOnStack(code: ByteArray, method: ShakeInterpreterMethod, args: ByteArray = kotlin.byteArrayOf()) : ShakeCodeInterpreter {
+        val interpreter = createCodeInterpreter(method.code, method)
+        // Put the arguments on the stack
+        interpreter.stack.push(args)
+        callStack.add(interpreter)
+        return interpreter
+    }
+    fun putFunctionOnStack(method: ShakeInterpreterMethod, args: ByteArray = kotlin.byteArrayOf()) : ShakeCodeInterpreter {
+        return putFunctionOnStack(method.code, method, args)
+    }
 
     inner class ShakeCodeInterpreter(
         val code: ByteArray,
-        val fn: ShakeInterpreterMethod
+        val method: ShakeInterpreterMethod
     ) {
 
-        val locals = ByteArray(fn.maxLocals)
-        val returnData = ByteArray (fn.returnType.byteSize)
-        val stack = ByteStack(fn.maxStack)
-
+        val locals = ByteArray(method.maxLocals)
+        val returnData = ByteArray (method.returnType.byteSize)
+        val stack = ByteStack(method.maxStack)
 
         var finished = false
             private set
@@ -566,10 +574,20 @@ class ShakeInterpreter(
                 }
 
                 Opcodes.PCAST -> {
-                    // The First 4 bits are the "from" type, last 4 bits are the "to" type
+                    // The First 4 bits are the "from" type, the last 4 bits are the "to" type
                     // See CastUtil.kt
                     val type = readUByte()
                     CastUtil.performCast(stack, type)
+                }
+
+                Opcodes.CALL -> {
+                    val methodName = this.method.constantPool.getUtf8(readInt()).value
+                    val method = classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
+                    val argsSize = method.parameters.sumOf { it.byteSize }
+                    val args = ByteArray(argsSize) {
+                        stack.pop()
+                    }
+                    putFunctionOnStack(method, args)
                 }
             }
         }

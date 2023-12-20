@@ -2,12 +2,15 @@ package com.shakelang.shake.bytecode.interpreter.wrapper
 
 import com.shakelang.shake.bytecode.interpreter.format.Class
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
+import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
 interface ShakeInterpreterClass {
     val storage: Class
     val qualifiedName: String
     val simpleName: String
     val isStatic: Boolean
+    val pkg: ShakeInterpreterPackage
+    val constantPool: ConstantPool
 
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
@@ -21,7 +24,13 @@ interface ShakeInterpreterClass {
     fun getDirectChildField(name: String): ShakeInterpreterField?
 
     companion object {
-        fun of(storage: Class, classpath: ShakeClasspath, parentPath: String): ShakeInterpreterClass {
+        fun of(
+            storage: Class,
+            classpath: ShakeClasspath,
+            parentPath: String,
+            constantPool: ConstantPool,
+            pkg: ShakeInterpreterPackage
+        ): ShakeInterpreterClass {
 
             val thisParentPath = "$parentPath${storage.name}:"
 
@@ -34,6 +43,8 @@ interface ShakeInterpreterClass {
                 override val simpleName: String = storage.name
                 override val qualifiedName: String = "$parentPath$simpleName"
                 override val isStatic: Boolean = storage.isStatic
+                override val constantPool: ConstantPool = constantPool
+                override val pkg: ShakeInterpreterPackage = pkg
 
                 // Specification of the dynamic loading system:
                 // Please read this before you try to understand the code below!
@@ -77,21 +88,21 @@ interface ShakeInterpreterClass {
 
                 fun loadClass(index: Int): ShakeInterpreterClass {
                     val c = storage.subClasses[index]
-                    val cls = ShakeInterpreterClass.of(c, classpath, thisParentPath)
+                    val cls = of(c, classpath, thisParentPath, constantPool, pkg)
                     subclassList[index] = cls
                     return cls
                 }
 
                 fun loadMethod(index: Int): ShakeInterpreterMethod {
                     val m = storage.methods[index]
-                    val method = ShakeInterpreterMethod.of(m, classpath, thisParentPath)
+                    val method = ShakeInterpreterMethod.of(m, classpath, thisParentPath, constantPool, pkg)
                     methodList[index] = method
                     return method
                 }
 
                 fun loadField(index: Int): ShakeInterpreterField {
                     val f = storage.fields[index]
-                    val field = ShakeInterpreterField.of(f, classpath, thisParentPath)
+                    val field = ShakeInterpreterField.of(f, classpath, thisParentPath, constantPool, pkg)
                     fieldList[index] = field
                     return field
                 }
