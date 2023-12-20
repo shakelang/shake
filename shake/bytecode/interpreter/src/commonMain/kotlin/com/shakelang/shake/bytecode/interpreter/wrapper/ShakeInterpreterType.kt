@@ -28,7 +28,7 @@ open class ShakeInterpreterType(
     )
 
     class ObjectType(val objectType: ShakeInterpreterClass) : ShakeInterpreterType(
-        objectType.qualifiedName,
+        "L${objectType.qualifiedName};",
         Type.OBJECT,
     )
 

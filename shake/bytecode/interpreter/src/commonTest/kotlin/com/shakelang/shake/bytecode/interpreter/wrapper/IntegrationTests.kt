@@ -220,4 +220,43 @@ class IntegrationTests : FreeSpec({
         testField!!.simpleName shouldBe "test"
         testField.qualifiedName shouldBe "com/shakelang/shake/test/Test:Test2:test"
     }
+
+    "resolve type of field with type object" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Field {
+                name = "test"
+                type = "Lcom/shakelang/Object;"
+                isPublic = true
+            }
+        })
+
+        classpath.load(generatePackage {
+            name = "com/shakelang"
+
+            Class {
+                name = "Object"
+                superName = "com/shakelang/Object"
+                isPublic = true
+            }
+        })
+
+        val testField = classpath.getField("com/shakelang/shake/test/test")
+        testField shouldNotBe null
+        testField!!.simpleName shouldBe "test"
+        testField.qualifiedName shouldBe "com/shakelang/shake/test/test"
+
+        val type = testField.type
+
+        type shouldNotBe null
+        type.type shouldBe ShakeInterpreterType.Type.OBJECT
+        (type is ShakeInterpreterType.ObjectType) shouldBe true
+        type.name shouldBe "Lcom/shakelang/Object;"
+        val clz = (type as ShakeInterpreterType.ObjectType).objectType
+        clz shouldNotBe null
+        clz.simpleName shouldBe "Object"
+        clz.qualifiedName shouldBe "com/shakelang/Object"
+    }
 })
