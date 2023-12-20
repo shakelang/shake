@@ -174,6 +174,8 @@ class ShakeBytecodeGenerator(
 
     fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
 
+    fun call(address: Int) = addBytes(listOf(Opcodes.CALL, *address.toBytes().toTypedArray()))
+
     fun toByteArray() = bytes.toByteArray()
 }
 

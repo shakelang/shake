@@ -1397,16 +1397,6 @@ object Opcodes {
     const val LRET: Byte = -108
 
     /**
-     * Primitive cast operation. The top element of the stack will be cast.
-     *
-     * Value: `0xA0`
-     *
-     * @example Syntax `PCAST` <u1 cast-type>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-531-pcast
-     */
-    const val PCAST: Byte = -96
-
-    /**
      * Pop the top element of the stack
      *
      * Value: `0xA1`
@@ -1486,4 +1476,23 @@ object Opcodes {
      */
     const val LDUP: Byte = -88
 
+    /**
+     * Primitive cast operation. The top element of the stack will be cast.
+     *
+     * Value: `0xA0`
+     *
+     * @example Syntax `PCAST` <u1 cast-type>
+     * @see - https://shakelang.com/specification/bytecode/instructions#-531-pcast
+     */
+    const val PCAST: Byte = -96
+
+    /**
+     * Call instruction
+     *
+     * Value: `0xA9`
+     *
+     * @example Syntax: `CALL` <u4 address>
+     * @see - https://shakelang.com/specification/bytecode/instructions#-561-call
+     */
+    const val CALL: Byte = -87
 }

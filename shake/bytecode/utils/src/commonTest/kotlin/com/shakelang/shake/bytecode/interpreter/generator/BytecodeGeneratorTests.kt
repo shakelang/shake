@@ -964,6 +964,13 @@ class BytecodeGeneratorTests : FreeSpec({
         }
     }
 
+    "call" {
+        val bytes = bytecode {
+            call(0x01020304)
+        }
+        bytes shouldBe arrayOf(Opcodes.CALL, 0x01, 0x02, 0x03, 0x04)
+    }
+
     "toByteArray" {
         val bytes = bytecode {
             bshru()
