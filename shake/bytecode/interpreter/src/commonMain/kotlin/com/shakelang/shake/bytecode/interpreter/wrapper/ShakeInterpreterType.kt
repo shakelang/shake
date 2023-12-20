@@ -2,10 +2,10 @@ package com.shakelang.shake.bytecode.interpreter.wrapper
 
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 
-open class ShakeInterpreterType(
-    val name: String,
-    val type: Type,
-) {
+interface ShakeInterpreterType {
+    val name: String
+    val type: Type
+    val byteSize: Int
 
     enum class Type {
         INT,
@@ -21,33 +21,86 @@ open class ShakeInterpreterType(
         ARRAY
     }
 
-    class ArrayType(val arrayType: ShakeInterpreterType) : ShakeInterpreterType(
-        "[${arrayType.name}",
-        Type.ARRAY,
-    )
+    class ArrayType(val arrayType: ShakeInterpreterType) : ShakeInterpreterType {
+        override val name: String = "[${arrayType.name}"
+        override val type: Type = Type.ARRAY
+        override val byteSize: Int = 8
+    }
 
-    class ObjectType(val objectType: ShakeInterpreterClass) : ShakeInterpreterType(
-        "L${objectType.qualifiedName};",
-        Type.OBJECT,
-    )
+    class ObjectType(val objectType: ShakeInterpreterClass) : ShakeInterpreterType {
+        override val name: String = "L${objectType.qualifiedName};"
+        override val type: Type = Type.OBJECT
+        override val byteSize: Int = 8
+    }
 
 
 
     companion object {
-
-        val BYTE = ShakeInterpreterType("B", Type.BYTE)
-        val SHORT = ShakeInterpreterType("S", Type.SHORT)
-        val INT = ShakeInterpreterType("I", Type.INT)
-        val LONG = ShakeInterpreterType("J", Type.LONG)
-        val UNSIGNED_BYTE = ShakeInterpreterType("b", Type.BYTE)
-        val UNSIGNED_SHORT = ShakeInterpreterType("s", Type.SHORT)
-        val UNSIGNED_INT = ShakeInterpreterType("i", Type.INT)
-        val UNSIGNED_LONG = ShakeInterpreterType("j", Type.LONG)
-        val FLOAT = ShakeInterpreterType("F", Type.FLOAT)
-        val DOUBLE = ShakeInterpreterType("D", Type.DOUBLE)
-        val CHAR = ShakeInterpreterType("C", Type.CHAR)
-        val BOOLEAN = ShakeInterpreterType("Z", Type.BOOLEAN)
-        val VOID = ShakeInterpreterType("V", Type.VOID)
+        val BYTE = object : ShakeInterpreterType {
+            override val name: String = "B"
+            override val type: Type = Type.BYTE
+            override val byteSize: Int = 1
+        }
+        val SHORT = object : ShakeInterpreterType {
+            override val name: String = "S"
+            override val type: Type = Type.SHORT
+            override val byteSize: Int = 2
+        }
+        val INT = object : ShakeInterpreterType {
+            override val name: String = "I"
+            override val type: Type = Type.INT
+            override val byteSize: Int = 4
+        }
+        val LONG = object : ShakeInterpreterType {
+            override val name: String = "J"
+            override val type: Type = Type.LONG
+            override val byteSize: Int = 8
+        }
+        val UNSIGNED_BYTE = object : ShakeInterpreterType {
+            override val name: String = "b"
+            override val type: Type = Type.BYTE
+            override val byteSize: Int = 1
+        }
+        val UNSIGNED_SHORT = object : ShakeInterpreterType {
+            override val name: String = "s"
+            override val type: Type = Type.SHORT
+            override val byteSize: Int = 2
+        }
+        val UNSIGNED_INT = object : ShakeInterpreterType {
+            override val name: String = "i"
+            override val type: Type = Type.INT
+            override val byteSize: Int = 4
+        }
+        val UNSIGNED_LONG = object : ShakeInterpreterType {
+            override val name: String = "j"
+            override val type: Type = Type.LONG
+            override val byteSize: Int = 8
+        }
+        val FLOAT = object : ShakeInterpreterType {
+            override val name: String = "F"
+            override val type: Type = Type.FLOAT
+            override val byteSize: Int = 4
+        }
+        val DOUBLE = object : ShakeInterpreterType {
+            override val name: String = "D"
+            override val type: Type = Type.DOUBLE
+            override val byteSize: Int = 8
+        }
+        val CHAR = object : ShakeInterpreterType {
+            override val name: String = "C"
+            override val type: Type = Type.CHAR
+            override val byteSize: Int = 2
+        }
+        val BOOLEAN = object : ShakeInterpreterType {
+            override val name: String = "Z"
+            override val type: Type = Type.BOOLEAN
+            override val byteSize: Int = 1
+        }
+        val VOID = object : ShakeInterpreterType {
+            override val name: String = "V"
+            override val type: Type = Type.VOID
+            override val byteSize: Int = 0
+        }
 
         fun of(storage: TypeDescriptor, classpath: ShakeClasspath): ShakeInterpreterType {
             return when (storage) {
