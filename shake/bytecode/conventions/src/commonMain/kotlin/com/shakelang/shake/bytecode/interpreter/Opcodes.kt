@@ -1333,7 +1333,7 @@ object Opcodes {
      * @example Syntax: `JL` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-518-jl
      */
-    const val JL: Byte = -123
+    const val JL: Byte = -122
 
     /**
      * Jump to an address if the top two values are less than or equal
