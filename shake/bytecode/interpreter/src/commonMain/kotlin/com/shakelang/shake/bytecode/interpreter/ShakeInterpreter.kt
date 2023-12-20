@@ -22,20 +22,19 @@ class ShakeInterpreter {
         if (callStack.last().finished) callStack.removeLast()
     }
 
-    fun createCodeInterpreter(code: ByteArray, localsSize: Int): ShakeCodeInterpreter {
-        return ShakeCodeInterpreter(code, localsSize)
-    }
+    fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
 
-    fun putFunctionOnStack(function: ShakeInterpreterMethod) {
-        callStack.add(createCodeInterpreter(function.code, 100))
-    }
+    fun putFunctionOnStack(method: ShakeInterpreterMethod) = callStack.add(createCodeInterpreter(method.code, method))
 
     inner class ShakeCodeInterpreter(
         val code: ByteArray,
-        localsSize: Int
+        val fn: ShakeInterpreterMethod
     ) {
 
-        val locals = ByteArray(localsSize)
+        val locals = ByteArray(fn.maxLocals)
+        val returnData = ByteArray (fn.returnType.byteSize)
+        val stack = ByteStack(fn.maxStack)
+
 
         var finished = false
             private set
@@ -511,8 +510,13 @@ class ShakeInterpreter {
                     finished = true
                 }
 
+                Opcodes.BRET -> {
+                    finished = true
+                    stack.push(stack.pop())
+                }
+
                 Opcodes.PCAST -> {
-                    // First 4 bits are the "from" type, last 4 bits are the "to" type
+                    // The First 4 bits are the "from" type, last 4 bits are the "to" type
                     // See CastUtil.kt
                     val type = readUByte()
                     CastUtil.performCast(stack, type)
