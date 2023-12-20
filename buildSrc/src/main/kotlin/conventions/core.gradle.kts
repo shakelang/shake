@@ -19,8 +19,6 @@ repositories {
     mavenCentral()
 }
 
-val testConfiguration = System.getenv("TEST_CONFIGURATION") ?: "minimal"
-
 //java {
 //    sourceCompatibility = JVM_TARGET
 //    targetCompatibility = JVM_TARGET
@@ -43,10 +41,8 @@ kotlin {
         browser {
             testTask(Action {
                 useKarma {
-                    if (testConfiguration == "full") {
-                        useChrome()
-                        useFirefox()
-                    }
+                    useChromeHeadless()
+//                    useFirefoxHeadless()
                 }
             })
         }

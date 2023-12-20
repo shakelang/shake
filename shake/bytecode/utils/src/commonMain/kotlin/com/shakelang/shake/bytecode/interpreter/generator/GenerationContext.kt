@@ -65,7 +65,7 @@ class GenerationContext {
 }
 
 
-fun generate(generator: GenerationContext.() -> Unit): StorageFormat {
+fun generatePackage(generator: GenerationContext.() -> Unit): StorageFormat {
     val ctx = GenerationContext()
     ctx.generator()
     return ctx.toStorageFormat()

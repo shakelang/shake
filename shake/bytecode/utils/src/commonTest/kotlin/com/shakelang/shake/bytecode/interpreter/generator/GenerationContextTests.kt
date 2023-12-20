@@ -98,7 +98,7 @@ class GenerationContextTests : FreeSpec({
     }
 
     "generate shortcut" {
-        val format = generate {
+        val format = generatePackage {
             Class {
                 name = "test"
                 superName = "super"
