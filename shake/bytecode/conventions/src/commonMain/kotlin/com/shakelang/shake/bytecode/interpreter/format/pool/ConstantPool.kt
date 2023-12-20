@@ -468,6 +468,62 @@ open class ConstantPool(
             return ConstantPool(list)
         }
     }
+
+    fun forEach (action: (ConstantPoolEntry) -> Unit) {
+        entries.forEach(action)
+    }
+
+    fun forEachIndexed (action: (Int, ConstantPoolEntry) -> Unit) {
+        entries.forEachIndexed(action)
+    }
+
+    fun forEachUtf8 (action: (ConstantPoolEntry.Utf8Constant) -> Unit) {
+        entries.forEach {
+            if(it is ConstantPoolEntry.Utf8Constant) action(it)
+        }
+    }
+
+    fun forEachByte (action: (ConstantPoolEntry.ByteConstant) -> Unit) {
+        entries.forEach {
+            if(it is ConstantPoolEntry.ByteConstant) action(it)
+        }
+    }
+
+    fun forEachShort (action: (ConstantPoolEntry.ShortConstant) -> Unit) {
+        entries.forEach {
+            if(it is ConstantPoolEntry.ShortConstant) action(it)
+        }
+    }
+
+    fun forEachInt (action: (ConstantPoolEntry.IntConstant) -> Unit) {
+        entries.forEach {
+            if(it is ConstantPoolEntry.IntConstant) action(it)
+        }
+    }
+
+    fun forEachLong (action: (ConstantPoolEntry.LongConstant) -> Unit) {
+        entries.forEach {
+            if(it is ConstantPoolEntry.LongConstant) action(it)
+        }
+    }
+
+    fun forEachFloat (action: (ConstantPoolEntry.FloatConstant) -> Unit) {
+        entries.forEach {
+            if(it is ConstantPoolEntry.FloatConstant) action(it)
+        }
+    }
+
+    fun forEachDouble (action: (ConstantPoolEntry.DoubleConstant) -> Unit) {
+        entries.forEach {
+            if(it is ConstantPoolEntry.DoubleConstant) action(it)
+        }
+    }
+
+    fun forEachClass (action: (ConstantPoolEntry.ClassConstant) -> Unit) {
+        entries.forEach {
+            if(it is ConstantPoolEntry.ClassConstant) action(it)
+        }
+    }
 }
 
 /**

@@ -24,6 +24,10 @@ class ShakeInterpreter(
         if (callStack.last().finished) callStack.removeLast()
     }
 
+    fun tick(times: Int) {
+        for (i in 0 until times) tick()
+    }
+
     fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
 
     fun putFunctionOnStack(code: ByteArray, method: ShakeInterpreterMethod, args: ByteArray = kotlin.byteArrayOf()) : ShakeCodeInterpreter {

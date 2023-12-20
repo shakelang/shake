@@ -5,6 +5,7 @@ import com.shakelang.shake.bytecode.interpreter.format.Field
 import com.shakelang.shake.bytecode.interpreter.format.Method
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
+import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
 interface ShakeInterpreterPackage {
 
@@ -83,9 +84,9 @@ interface ShakeInterpreterPackage {
                 val methodList: MutableList<ShakeInterpreterMethod?> = mutableListOf()
                 val fieldList: MutableList<ShakeInterpreterField?> = mutableListOf()
 
-                val classFormatList: MutableList<Class> = mutableListOf()
-                val methodFormatList: MutableList<Method> = mutableListOf()
-                val fieldFormatList: MutableList<Field> = mutableListOf()
+                val classFormatList: MutableList<Pair<Class, StorageFormat>> = mutableListOf()
+                val methodFormatList: MutableList<Pair<Method, StorageFormat>> = mutableListOf()
+                val fieldFormatList: MutableList<Pair<Field, StorageFormat>> = mutableListOf()
 
                 init {
                     for (s in storages) addStorageFormat(s)
@@ -93,21 +94,39 @@ interface ShakeInterpreterPackage {
 
                 fun loadClass(index: Int): ShakeInterpreterClass {
                     val c = classFormatList[index]
-                    val cls = ShakeInterpreterClass.of(c, classpath, parentPath)
+                    val cls = ShakeInterpreterClass.of(
+                        c.first,
+                        classpath,
+                        parentPath,
+                        c.second.constantPool,
+                        this
+                    )
                     classList[index] = cls
                     return cls
                 }
 
                 fun loadMethod(index: Int): ShakeInterpreterMethod {
                     val m = methodFormatList[index]
-                    val method = ShakeInterpreterMethod.of(m, classpath, parentPath)
+                    val method = ShakeInterpreterMethod.of(
+                        m.first,
+                        classpath,
+                        parentPath,
+                        m.second.constantPool,
+                        this
+                    )
                     methodList[index] = method
                     return method
                 }
 
                 fun loadField(index: Int): ShakeInterpreterField {
                     val f = fieldFormatList[index]
-                    val field = ShakeInterpreterField.of(f, classpath, parentPath)
+                    val field = ShakeInterpreterField.of(
+                        f.first,
+                        classpath,
+                        parentPath,
+                        f.second.constantPool,
+                        this
+                    )
                     fieldList[index] = field
                     return field
                 }
@@ -138,21 +157,21 @@ interface ShakeInterpreterPackage {
 
                 fun resolveClassIndex(name: String): Int {
                     for (i in classFormatList.indices) {
-                        if (classFormatList[i].name == name) return i
+                        if (classFormatList[i].first.name == name) return i
                     }
                     return -1
                 }
 
                 fun resolveMethodIndex(name: String): Int {
                     for (i in methodFormatList.indices) {
-                        if (methodFormatList[i].name == name) return i
+                        if (methodFormatList[i].first.name == name) return i
                     }
                     return -1
                 }
 
                 fun resolveFieldIndex(name: String): Int {
                     for (i in fieldFormatList.indices) {
-                        if (fieldFormatList[i].name == name) return i
+                        if (fieldFormatList[i].first.name == name) return i
                     }
                     return -1
                 }
@@ -160,15 +179,15 @@ interface ShakeInterpreterPackage {
                 fun addStorageFormat(storage: StorageFormat) {
                     this.storages.add(storage)
                     for(c in storage.classes) {
-                        classFormatList.add(c)
+                        classFormatList.add(c to storage)
                         classList.add(null)
                     }
                     for(m in storage.methods) {
-                        methodFormatList.add(m)
+                        methodFormatList.add(m to storage)
                         methodList.add(null)
                     }
                     for(f in storage.fields) {
-                        fieldFormatList.add(f)
+                        fieldFormatList.add(f to storage)
                         fieldList.add(null)
                     }
                 }

@@ -2124,7 +2124,7 @@ class ShakeCodeInterpreterTests : FreeSpec({
                     maxStack = 100
                     maxLocals = 100
 
-                    bytecode {
+                    this.bytecode {
                         band()
                         bret()
                         ret()
@@ -2139,12 +2139,19 @@ class ShakeCodeInterpreterTests : FreeSpec({
                     maxStack = 100
                     maxLocals = 100
 
-                    bytecode {
+                    this.bytecode {
                         bpush(1)
                         bpush(1)
+                        call("test/and(B,B)B")
+                        ret()
                     }
                 }
             }
         })
+
+        val method = interpreter.classPath.getMethod("test/main()V")!!
+
+        val code = interpreter.putFunctionOnStack(method)
+        interpreter.tick(7)
     }
 })
