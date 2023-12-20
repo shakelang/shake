@@ -1257,93 +1257,94 @@ object Opcodes {
     const val JMP: Byte = -128
 
     /**
-     * Jump to an address if the top two values are equal
-     * (takes the top byte value and jumps if it is 1)
-     *
-     * Value: `0x81`
-     *
-     * @example Syntax: `JE` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-514-je
-     */
-    const val JE: Byte = -127
-
-    /**
-     * Jump to an address if the top two values are not equal
-     * (takes the top byte value and jumps if it is not 1)
-     *
-     * Value: `0x82`
-     *
-     * @example Syntax: `JNE` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-515-jne
-     */
-    const val JNE: Byte = -126
-
-    /**
-     * Jump to an address if the top two values are less than
-     * (takes the top byte value and jumps if it is 2)
-     *
-     * Value: `0x83`
-     *
-     * @example Syntax: `JL` <u4 address>
-     * @deprecated Use [JZ] instead, it does the same thing
-     * @see - https://shakelang.com/specification/bytecode/instructions#-518-jl
-     */
-    const val JL: Byte = -125
-
-    /**
-     * Jump to an address if the top two values are greater than
-     * (takes the top byte value and jumps if it is 0)
-     *
-     * Value: `0x84`
-     *
-     * @example Syntax: `JGT` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-516-jg
-     */
-    const val JG: Byte = -124
-
-    /**
-     * Jump to an address if the top two values are less than or equal
-     * (takes the top byte value and jumps if it is 1 or 2)
-     *
-     * Value: `0x85`
-     *
-     * @example Syntax: `JLE` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-519-jle
-     */
-    const val JLE: Byte = -123
-
-    /**
-     * Jump to an address if the top two values are greater than or equal
-     * (takes the top byte value and jumps if it is 0 or 1)
-     *
-     * Value: `0x86`
-     *
-     * @example Syntax: `JGE` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-517-jge
-     */
-    const val JGE: Byte = -122
-
-    /**
      * Jump to an address if there is a zero on top of the stack
      * (takes the top byte value and jumps if it is 0)
      *
-     * Value: `0x87`
+     * Value: `0x81`
      *
      * @example Syntax: `JZ` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-512-jz
      */
-    const val JZ: Byte = -121
+    const val JZ: Byte = -127
 
     /**
      * Jump to an address if there is not a zero on top of the stack
      * (takes the top byte value and jumps if it is 1)
      *
-     * Value: `0x88`
+     * Value: `0x82`
      *
      * @example Syntax: `JNZ` <u4 address>
      * @see - https://shakelang.com/specification/bytecode/instructions#-513-jnz
      */
-    const val JNZ: Byte = -120
+    const val JNZ: Byte = -126
+
+    /**
+     * Jump to an address if the top two values are equal
+     * (takes the top byte value and jumps if it is 1)
+     *
+     * Value: `0x83`
+     *
+     * @example Syntax: `JE` <u4 address>
+     * @see - https://shakelang.com/specification/bytecode/instructions/#-514-je
+     */
+    const val JE: Byte = -125
+
+    /**
+     * Jump to an address if the top two values are not equal
+     * (takes the top byte value and jumps if it is not 1)
+     *
+     * Value: `0x84`
+     *
+     * @example Syntax: `JNE` <u4 address>
+     * @see - https://shakelang.com/specification/bytecode/instructions/#-515-jne
+     */
+    const val JNE: Byte = -124
+
+    /**
+     * Jump to an address if the top two values are greater than
+     * (takes the top byte value and jumps if it is 0)
+     *
+     * Value: `0x81`
+     *
+     * @deprecated Use [JNZ] instead, it does the same thing
+     *
+     * @example Syntax: `JG` <u4 address>
+     * @see - https://shakelang.com/specification/bytecode/instructions#-516-jg
+     */
+    const val JG: Byte = -127
+
+    /**
+     * Jump to an address if the top two values are greater than or equal
+     * (takes the top byte value and jumps if it is 0 or 1)
+     *
+     * Value: `0x85`
+     *
+     * @example Syntax: `JGE` <u4 address>
+     * @see - https://shakelang.com/specification/bytecode/instructions#-517-jge
+     */
+    const val JGE: Byte = -123
+
+    /**
+     * Jump to an address if the top two values are less than
+     * (takes the top byte value and jumps if it is 2)
+     *
+     * Value: `0x86`
+     *
+     * @example Syntax: `JL` <u4 address>
+     * @see - https://shakelang.com/specification/bytecode/instructions#-518-jl
+     */
+    const val JL: Byte = -123
+
+    /**
+     * Jump to an address if the top two values are less than or equal
+     * (takes the top byte value and jumps if it is 1 or 2)
+     *
+     * Value: `0x87`
+     *
+     * @example Syntax: `JLE` <u4 address>
+     * @see - https://shakelang.com/specification/bytecode/instructions#-519-jle
+     */
+    const val JLE: Byte = -121
 
     /**
      * Return from a function
