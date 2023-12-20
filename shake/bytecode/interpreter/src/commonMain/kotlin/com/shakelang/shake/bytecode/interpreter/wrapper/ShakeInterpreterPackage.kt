@@ -137,22 +137,22 @@ interface ShakeInterpreterPackage {
                 }
 
                 fun resolveClassIndex(name: String): Int {
-                    for (i in storages.indices) {
-                        if (storages[i].classes[0].name == name) return i
+                    for (i in classFormatList.indices) {
+                        if (classFormatList[i].name == name) return i
                     }
                     return -1
                 }
 
                 fun resolveMethodIndex(name: String): Int {
-                    for (i in storages.indices) {
-                        if (storages[i].methods[0].name == name) return i
+                    for (i in methodFormatList.indices) {
+                        if (methodFormatList[i].name == name) return i
                     }
                     return -1
                 }
 
                 fun resolveFieldIndex(name: String): Int {
-                    for (i in storages.indices) {
-                        if (storages[i].fields[0].name == name) return i
+                    for (i in fieldFormatList.indices) {
+                        if (fieldFormatList[i].name == name) return i
                     }
                     return -1
                 }
