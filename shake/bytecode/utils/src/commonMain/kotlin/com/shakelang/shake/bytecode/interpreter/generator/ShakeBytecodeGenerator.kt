@@ -154,6 +154,24 @@ class ShakeBytecodeGenerator(
     fun jg(address: Int) = addBytes(listOf(Opcodes.JG, *address.toBytes().toTypedArray()))
     fun jge(address: Int) = addBytes(listOf(Opcodes.JGE, *address.toBytes().toTypedArray()))
 
+    fun ret() = addByte(Opcodes.RET)
+    fun bret() = addByte(Opcodes.BRET)
+    fun sret() = addByte(Opcodes.SRET)
+    fun iret() = addByte(Opcodes.IRET)
+    fun lret() = addByte(Opcodes.LRET)
+
+    fun pop() = addByte(Opcodes.POP)
+    fun bpop() = addByte(Opcodes.POP)
+    fun spop() = addByte(Opcodes.SPOP)
+    fun ipop() = addByte(Opcodes.IPOP)
+    fun lpop() = addByte(Opcodes.LPOP)
+
+    fun dup() = addByte(Opcodes.DUP)
+    fun bdup() = addByte(Opcodes.DUP)
+    fun sdup() = addByte(Opcodes.SDUP)
+    fun idup() = addByte(Opcodes.IDUP)
+    fun ldup() = addByte(Opcodes.LDUP)
+
     fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
 
     fun toByteArray() = bytes.toByteArray()

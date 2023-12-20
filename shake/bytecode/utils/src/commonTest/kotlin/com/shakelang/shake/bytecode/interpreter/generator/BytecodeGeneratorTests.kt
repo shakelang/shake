@@ -848,11 +848,120 @@ class BytecodeGeneratorTests : FreeSpec({
         bytes shouldBe arrayOf(Opcodes.JGE, 0x01, 0x02, 0x03, 0x04)
     }
 
-    "pcast" {
+    "ret" {
         val bytes = bytecode {
-            pcast(0x01u, 0x02u)
+            ret()
         }
-        bytes shouldBe arrayOf(Opcodes.PCAST, 0x12)
+        bytes shouldBe arrayOf(Opcodes.RET)
+    }
+
+    "bret" {
+        val bytes = bytecode {
+            bret()
+        }
+        bytes shouldBe arrayOf(Opcodes.BRET)
+    }
+
+    "sret" {
+        val bytes = bytecode {
+            sret()
+        }
+        bytes shouldBe arrayOf(Opcodes.SRET)
+    }
+
+    "iret" {
+        val bytes = bytecode {
+            iret()
+        }
+        bytes shouldBe arrayOf(Opcodes.IRET)
+    }
+
+    "lret" {
+        val bytes = bytecode {
+            lret()
+        }
+        bytes shouldBe arrayOf(Opcodes.LRET)
+    }
+
+    "pop" {
+        val bytes = bytecode {
+            pop()
+        }
+        bytes shouldBe arrayOf(Opcodes.POP)
+    }
+
+    "bpop" {
+        val bytes = bytecode {
+            bpop()
+        }
+        bytes shouldBe arrayOf(Opcodes.POP)
+    }
+
+    "spop" {
+        val bytes = bytecode {
+            spop()
+        }
+        bytes shouldBe arrayOf(Opcodes.SPOP)
+    }
+
+    "ipop" {
+        val bytes = bytecode {
+            ipop()
+        }
+        bytes shouldBe arrayOf(Opcodes.IPOP)
+    }
+
+    "lpop" {
+        val bytes = bytecode {
+            lpop()
+        }
+        bytes shouldBe arrayOf(Opcodes.LPOP)
+    }
+
+    "dup" {
+        val bytes = bytecode {
+            dup()
+        }
+        bytes shouldBe arrayOf(Opcodes.DUP)
+    }
+
+    "bdup" {
+        val bytes = bytecode {
+            bdup()
+        }
+        bytes shouldBe arrayOf(Opcodes.DUP)
+    }
+
+    "sdup" {
+        val bytes = bytecode {
+            sdup()
+        }
+        bytes shouldBe arrayOf(Opcodes.SDUP)
+    }
+
+    "idup" {
+        val bytes = bytecode {
+            idup()
+        }
+        bytes shouldBe arrayOf(Opcodes.IDUP)
+    }
+
+    "ldup" {
+        val bytes = bytecode {
+            ldup()
+        }
+        bytes shouldBe arrayOf(Opcodes.LDUP)
+    }
+
+    "pcast" {
+        for (from in 0u..0xFu) {
+            for (to in 0u..0xFu) {
+                val bytes = bytecode {
+                    pcast(from.toUByte(), to.toUByte())
+                }
+                bytes shouldBe arrayOf(Opcodes.PCAST, ((from shl 4) or to).toByte())
+            }
+        }
     }
 
     "toByteArray" {
