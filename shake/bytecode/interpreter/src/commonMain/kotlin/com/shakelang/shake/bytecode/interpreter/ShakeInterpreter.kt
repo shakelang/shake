@@ -95,6 +95,7 @@ class ShakeInterpreter {
 
         fun tick() {
             val opcode = readByte()
+            println("Opcode: ${opcode.toUByte().toString(16)}")
             when (opcode) {
                 Opcodes.NOP -> { /* do nothing */ }
 

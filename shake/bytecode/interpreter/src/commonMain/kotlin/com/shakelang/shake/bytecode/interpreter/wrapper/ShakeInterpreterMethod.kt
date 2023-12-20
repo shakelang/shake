@@ -1,6 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
 import com.shakelang.shake.bytecode.interpreter.format.Method
+import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
+import com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.MethodDescriptor
 
 interface ShakeInterpreterMethod {
@@ -11,6 +13,10 @@ interface ShakeInterpreterMethod {
     val returnType: ShakeInterpreterType
     val parameters: List<ShakeInterpreterType>
     val code: ByteArray
+    val exceptionHandlers: List<CodeAttribute.ExceptionTableEntry>
+    val maxStack: Int
+    val maxLocals: Int
+
 
     companion object {
         fun of(storage: Method, classpath: ShakeClasspath, parentPath: String): ShakeInterpreterMethod {
@@ -33,8 +39,16 @@ interface ShakeInterpreterMethod {
                         classpath
                     )
                 }
-                override val code: ByteArray get() = code?.code ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
-
+                override val code: ByteArray
+                    get() = code?.code ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
+                override val exceptionHandlers: List<CodeAttribute.ExceptionTableEntry>
+                    get() = code?.exceptionTable?.toList()
+                        ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
+                override val maxStack: Int
+                    get() = code?.maxStack ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
+                override val maxLocals: Int
+                    get() = code?.maxLocals ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
+                
             }
         }
     }

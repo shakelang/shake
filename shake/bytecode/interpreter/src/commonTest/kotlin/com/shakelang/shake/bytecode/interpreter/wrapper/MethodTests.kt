@@ -350,6 +350,8 @@ class MethodTests : FreeSpec({
                         ipush(5)
                         iadd()
                     }
+                    this.maxStack = 32
+                    this.maxLocals = 100
                 }
             }
         })
@@ -361,5 +363,7 @@ class MethodTests : FreeSpec({
             ipush(5)
             iadd()
         }
+        testMethod.maxStack shouldBe 32
+        testMethod.maxLocals shouldBe 100
     }
 })
