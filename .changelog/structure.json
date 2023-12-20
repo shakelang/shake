@@ -222,15 +222,6 @@
       ]
     },
     {
-      "path": ":shake:bytecode:generation",
-      "name": "shake.shake.bytecode:generation",
-      "version": "0.1.0-SNAPSHOT",
-      "description": "",
-      "author": "shake.shake.bytecode",
-      "license": "",
-      "dependencies": []
-    },
-    {
       "path": ":shake:bytecode:interpreter",
       "name": "com.shakelang.shake.bytecode:interpreter",
       "version": "0.1.0-SNAPSHOT",
