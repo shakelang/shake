@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter
 
+import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClass
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterMethod
 import com.shakelang.shake.util.primitives.bytes.*
@@ -11,9 +12,10 @@ import kotlin.experimental.inv
 import kotlin.experimental.or
 import kotlin.experimental.xor
 
-class ShakeInterpreter {
+class ShakeInterpreter(
+    val classPath: ShakeClasspath = ShakeClasspath.create()
+) {
 
-    val stack = ByteStack(1024 * 1024 * 10) // 10 MB stack size
     val callStack: MutableList<ShakeCodeInterpreter> = mutableListOf()
 
     fun tick() {
@@ -94,7 +96,6 @@ class ShakeInterpreter {
 
         fun tick() {
             val opcode = readByte()
-            println("Opcode: ${opcode.toUByte().toString(16)}")
             when (opcode) {
                 Opcodes.NOP -> { /* do nothing */ }
 
@@ -512,7 +513,56 @@ class ShakeInterpreter {
 
                 Opcodes.BRET -> {
                     finished = true
-                    stack.push(stack.pop())
+                    returnData[0] = stack.pop()
+                }
+
+                Opcodes.SRET -> {
+                    finished = true
+                    returnData[0] = stack.pop()
+                    returnData[1] = stack.pop()
+                }
+
+                Opcodes.IRET -> {
+                    finished = true
+                    for (i in 0 until 4) returnData[i] = stack.pop()
+                }
+
+                Opcodes.LRET -> {
+                    finished = true
+                    for (i in 0 until 8) returnData[i] = stack.pop()
+                }
+
+                Opcodes.POP -> stack.pop()
+                Opcodes.SPOP -> stack.pop(2)
+                Opcodes.IPOP -> stack.pop(4)
+                Opcodes.LPOP -> stack.pop(8)
+
+                Opcodes.DUP -> stack.push(stack.peek())
+                Opcodes.SDUP -> {
+                    val arr = ByteArray(2) {
+                        stack.pop()
+                    }
+
+                    stack.push(arr)
+                    stack.push(arr)
+                }
+
+                Opcodes.IDUP -> {
+                    val arr = ByteArray(4) {
+                        stack.pop()
+                    }
+
+                    stack.push(arr)
+                    stack.push(arr)
+                }
+
+                Opcodes.LDUP -> {
+                    val arr = ByteArray(8) {
+                        stack.pop()
+                    }
+
+                    stack.push(arr)
+                    stack.push(arr)
                 }
 
                 Opcodes.PCAST -> {

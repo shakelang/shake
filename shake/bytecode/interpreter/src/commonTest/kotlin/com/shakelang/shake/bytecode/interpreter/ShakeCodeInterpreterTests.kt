@@ -21,9 +21,49 @@ class ShakeCodeInterpreterTests : FreeSpec({
                 bytecode {}
             }
         }
+
+        Method {
+            name = "btest()B"
+            code {
+                maxLocals = 100
+                maxStack = 100
+                bytecode {}
+            }
+        }
+
+        Method {
+            name = "stest()S"
+            code {
+                maxLocals = 100
+                maxStack = 100
+                bytecode {}
+            }
+        }
+
+        Method {
+            name = "itest()I"
+            code {
+                maxLocals = 100
+                maxStack = 100
+                bytecode {}
+            }
+        }
+
+        Method {
+            name = "ltest()J"
+            code {
+                maxLocals = 100
+                maxStack = 100
+                bytecode {}
+            }
+        }
     })
 
     val method = classpath.getMethod("test/main()V")!!
+    val bmethod = classpath.getMethod("test/btest()B")!!
+    val smethod = classpath.getMethod("test/stest()S")!!
+    val imethod = classpath.getMethod("test/itest()I")!!
+    val lmethod = classpath.getMethod("test/ltest()J")!!
 
 
     "bpush" {
@@ -1959,7 +1999,103 @@ class ShakeCodeInterpreterTests : FreeSpec({
         stack.size shouldBe 0
     }
 
-    "cast" {
+    "ret" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                ret()
+            },
+            method
+        )
+
+        code.tick(2)
+
+        code.pc shouldBe 3
+        code.finished shouldBe true
+        val stack = code.stack
+        stack.size shouldBe 1
+    }
+
+    "bret" {
+
+
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bret()
+            },
+            bmethod
+        )
+
+        code.tick(2)
+
+        code.pc shouldBe 3
+        code.finished shouldBe true
+        code.returnData shouldBe byteArrayOf(1)
+        val stack = code.stack
+        stack.size shouldBe 0
+    }
+
+    "sret" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(1)
+                sret()
+            },
+            smethod
+        )
+
+        code.tick(2)
+
+        code.pc shouldBe 4
+        code.finished shouldBe true
+        code.returnData shouldBe byteArrayOf(0, 1)
+        val stack = code.stack
+        stack.size shouldBe 0
+    }
+
+    "iret" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                iret()
+            },
+            imethod
+        )
+
+        code.tick(2)
+
+        code.pc shouldBe 6
+        code.finished shouldBe true
+        code.returnData shouldBe byteArrayOf(0, 0, 0, 1)
+        val stack = code.stack
+        stack.size shouldBe 0
+    }
+
+    "lret" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(1)
+                lret()
+            },
+            lmethod
+        )
+
+        code.tick(2)
+
+        code.pc shouldBe 10
+        code.finished shouldBe true
+        code.returnData shouldBe byteArrayOf(0, 0, 0, 0, 0, 0, 0, 1)
+        val stack = code.stack
+        stack.size shouldBe 0
+    }
+
+    "pcast" {
         val interpreter = ShakeInterpreter()
         val code = interpreter.createCodeInterpreter(
             bytecode {

@@ -92,21 +92,21 @@ interface ShakeInterpreterPackage {
                 }
 
                 fun loadClass(index: Int): ShakeInterpreterClass {
-                    val c = storages[index].classes[0]
+                    val c = classFormatList[index]
                     val cls = ShakeInterpreterClass.of(c, classpath, parentPath)
                     classList[index] = cls
                     return cls
                 }
 
                 fun loadMethod(index: Int): ShakeInterpreterMethod {
-                    val m = storages[index].methods[0]
+                    val m = methodFormatList[index]
                     val method = ShakeInterpreterMethod.of(m, classpath, parentPath)
                     methodList[index] = method
                     return method
                 }
 
                 fun loadField(index: Int): ShakeInterpreterField {
-                    val f = storages[index].fields[0]
+                    val f = fieldFormatList[index]
                     val field = ShakeInterpreterField.of(f, classpath, parentPath)
                     fieldList[index] = field
                     return field
