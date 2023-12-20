@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.generator.bytecode
 import com.shakelang.shake.bytecode.interpreter.generator.generatePackage
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -333,5 +334,32 @@ class MethodTests : FreeSpec({
         clz shouldNotBe null
         clz.qualifiedName shouldBe "com/shakelang/Object"
         clz.simpleName shouldBe "Object"
+    }
+
+    "get method code" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Method {
+                name = "test()I"
+                isPublic = true
+                code {
+                    this.bytecode {
+                        ipush(4)
+                        ipush(5)
+                        iadd()
+                    }
+                }
+            }
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test/test()I")
+        testMethod shouldNotBe null
+        testMethod!!.code shouldBe bytecode {
+            ipush(4)
+            ipush(5)
+            iadd()
+        }
     }
 })
