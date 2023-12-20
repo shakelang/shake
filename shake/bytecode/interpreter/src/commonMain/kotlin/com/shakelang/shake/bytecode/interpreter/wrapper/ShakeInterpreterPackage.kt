@@ -18,8 +18,8 @@ interface ShakeInterpreterPackage {
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
     fun getMethod(descriptor: PathDescriptor): ShakeInterpreterMethod?
     fun getMethod(descriptor: String): ShakeInterpreterMethod? = getMethod(PathDescriptor.parse(descriptor))
-    fun getField(descriptor: PathDescriptor): ShakeInterpreterField
-    fun getField(descriptor: String): ShakeInterpreterField = getField(PathDescriptor.parse(descriptor))
+    fun getField(descriptor: PathDescriptor): ShakeInterpreterField?
+    fun getField(descriptor: String): ShakeInterpreterField? = getField(PathDescriptor.parse(descriptor))
 
     fun getDirectChildClass(name: String): ShakeInterpreterClass?
     fun getDirectChildMethod(name: String): ShakeInterpreterMethod?
@@ -140,21 +140,21 @@ interface ShakeInterpreterPackage {
                     for (i in storages.indices) {
                         if (storages[i].classes[0].name == name) return i
                     }
-                    throw NullPointerException("Class $name not found!")
+                    return -1
                 }
 
                 fun resolveMethodIndex(name: String): Int {
                     for (i in storages.indices) {
                         if (storages[i].methods[0].name == name) return i
                     }
-                    throw NullPointerException("Method $name not found!")
+                    return -1
                 }
 
                 fun resolveFieldIndex(name: String): Int {
                     for (i in storages.indices) {
                         if (storages[i].fields[0].name == name) return i
                     }
-                    throw NullPointerException("Field $name not found!")
+                    return -1
                 }
 
                 fun addStorageFormat(storage: StorageFormat) {
@@ -189,24 +189,27 @@ interface ShakeInterpreterPackage {
                     return getDirectChildMethod(descriptor.entity)
                 }
 
-                override fun getField(descriptor: PathDescriptor): ShakeInterpreterField {
+                override fun getField(descriptor: PathDescriptor): ShakeInterpreterField? {
                     if (descriptor.classEntities.isNotEmpty()) {
                         val clazz = getDirectChildClass(descriptor.classEntities[0])
-                        return clazz?.getField(descriptor) ?: throw NullPointerException()
+                        return clazz?.getField(descriptor)
                     }
-                    return getDirectChildField(descriptor.entity) ?: throw NullPointerException()
+                    return getDirectChildField(descriptor.entity)
                 }
 
                 override fun getDirectChildClass(name: String): ShakeInterpreterClass? {
-                    return getClass(this.resolveClassIndex(name))
+                    val index = resolveClassIndex(name)
+                    return if (index == -1) null else getClass(index)
                 }
 
                 override fun getDirectChildMethod(name: String): ShakeInterpreterMethod? {
-                    return getMethod(this.resolveMethodIndex(name))
+                    val index = resolveMethodIndex(name)
+                    return if (index == -1) null else getMethod(index)
                 }
 
                 override fun getDirectChildField(name: String): ShakeInterpreterField? {
-                    return getField(this.resolveFieldIndex(name))
+                    val index = resolveFieldIndex(name)
+                    return if (index == -1) null else getField(index)
                 }
 
                 override fun load(storage: StorageFormat) {

@@ -124,21 +124,21 @@ interface ShakeInterpreterClass {
                     for (i in storage.subClasses.indices) {
                         if (storage.subClasses[i].name == name) return i
                     }
-                    throw NullPointerException("Class $name not found in ${this.qualifiedName}!")
+                    return -1
                 }
 
                 fun resolveMethodIndex(name: String): Int {
                     for (i in storage.methods.indices) {
                         if (storage.methods[i].name == name) return i
                     }
-                    throw NullPointerException("Method $name not found in ${this.qualifiedName}!")
+                    return -1
                 }
 
                 fun resolveFieldIndex(name: String): Int {
                     for (i in storage.fields.indices) {
                         if (storage.fields[i].name == name) return i
                     }
-                    throw NullPointerException("Field $name not found in ${this.qualifiedName}!")
+                    return -1
                 }
 
                 fun getParentClassFor(descriptor: PathDescriptor): ShakeInterpreterClass? {
@@ -169,15 +169,18 @@ interface ShakeInterpreterClass {
                 }
 
                 override fun getDirectChildClass(name: String): ShakeInterpreterClass? {
-                    return getClass(this.resolveClassIndex(name))
+                    val index = resolveClassIndex(name)
+                    return if (index == -1) null else getClass(index)
                 }
 
                 override fun getDirectChildMethod(name: String): ShakeInterpreterMethod? {
-                    return getMethod(this.resolveMethodIndex(name))
+                    val index = resolveMethodIndex(name)
+                    return if (index == -1) null else getMethod(index)
                 }
 
                 override fun getDirectChildField(name: String): ShakeInterpreterField? {
-                    return getField(this.resolveFieldIndex(name))
+                    val index = resolveFieldIndex(name)
+                    return if (index == -1) null else getField(index)
                 }
             }
         }
