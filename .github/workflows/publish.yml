@@ -63,6 +63,8 @@ jobs:
 
       - name: Build 🔨
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+        env:
+          TEST_CONFIGURATION: full
 
   draft-release:
     name: Draft Release for tag 📦
