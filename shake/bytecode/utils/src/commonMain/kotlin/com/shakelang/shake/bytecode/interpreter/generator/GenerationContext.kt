@@ -70,7 +70,6 @@ class GenerationContext {
 
 
     fun toStorageFormat(): StorageFormat {
-        val pool = MutableConstantPool()
         return StorageFormat(
             0x00,
             0x01,

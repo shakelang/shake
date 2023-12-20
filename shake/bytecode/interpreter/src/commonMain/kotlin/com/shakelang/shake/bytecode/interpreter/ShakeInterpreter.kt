@@ -21,7 +21,15 @@ class ShakeInterpreter(
     fun tick() {
         if (callStack.isEmpty()) return
         callStack.last().tick()
-        if (callStack.last().finished) callStack.removeLast()
+        if (callStack.last().finished) popStack()
+    }
+
+    private fun popStack() {
+        val last = callStack.removeLast()
+        if (callStack.isNotEmpty()) {
+            val stack = callStack.last().stack
+            stack.push(last.returnData)
+        }
     }
 
     fun tick(times: Int) {
@@ -586,6 +594,7 @@ class ShakeInterpreter(
 
                 Opcodes.CALL -> {
                     val methodName = this.method.constantPool.getUtf8(readInt()).value
+                    println(method.constantPool)
                     val method = classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
                     val argsSize = method.parameters.sumOf { it.byteSize }
                     val args = ByteArray(argsSize) {

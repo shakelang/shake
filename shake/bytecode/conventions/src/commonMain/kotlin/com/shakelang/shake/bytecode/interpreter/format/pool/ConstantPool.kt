@@ -524,6 +524,10 @@ open class ConstantPool(
             if(it is ConstantPoolEntry.ClassConstant) action(it)
         }
     }
+
+    override fun toString(): String {
+        return "ConstantPool(entries=$entries)"
+    }
 }
 
 /**
