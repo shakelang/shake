@@ -104,13 +104,43 @@ class FieldTests: FreeSpec({
         testField shouldBe null
     }
 
-    "getField when field of child does not exist" {
+    "getField when field of child child does not exist" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+        })
+
+        val testField = classpath.getField("com/shakelang/shake/test/test:test:test")
+        testField shouldBe null
+    }
+
+    "getField when class of child does not exist" {
         val classpath = ShakeClasspath.create()
         classpath.load(generatePackage {
             name = "com/shakelang/shake/test"
         })
 
         val testField = classpath.getField("com/shakelang/shake/test/test:test")
+        testField shouldBe null
+    }
+
+    "getField when package does not exist" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+        })
+
+        val testField = classpath.getField("com/shakelang/shake/test2/test")
+        testField shouldBe null
+    }
+
+    "getField with child when package does not exist" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang"
+        })
+
+        val testField = classpath.getField("com/shakelang/shake/test/test")
         testField shouldBe null
     }
 

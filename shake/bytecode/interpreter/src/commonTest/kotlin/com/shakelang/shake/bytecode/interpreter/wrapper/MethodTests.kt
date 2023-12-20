@@ -101,7 +101,7 @@ class MethodTests : FreeSpec({
         testMethod shouldBe null
     }
 
-    "getMethod when method of child does not exist" {
+    "getMethod when class of child does not exist" {
         val classpath = ShakeClasspath.create()
         classpath.load(generatePackage {
             name = "com/shakelang/shake/test"
@@ -111,4 +111,227 @@ class MethodTests : FreeSpec({
         testMethod shouldBe null
     }
 
+    "getMethod when package does not exist" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test2/test(I)I")
+        testMethod shouldBe null
+    }
+
+    "getMethod with child when package does not exist" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test2/Test:test(I)I")
+        testMethod shouldBe null
+    }
+
+    "resolve return type" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Method {
+                name = "test(I)I"
+                isPublic = true
+            }
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test/test(I)I")
+        testMethod shouldNotBe null
+        testMethod!!.returnType shouldBe ShakeInterpreterType.INT
+    }
+
+    "resolve return type with object" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Method {
+                name = "test()Lcom/shakelang/Object;"
+                isPublic = true
+            }
+        })
+
+        classpath.load(generatePackage {
+            name = "com/shakelang"
+
+            Class {
+                name = "Object"
+                superName = "java/lang/Object"
+                isPublic = true
+            }
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test/test()Lcom/shakelang/Object;")
+        testMethod shouldNotBe null
+        testMethod!!.returnType.type shouldBe ShakeInterpreterType.Type.OBJECT
+        testMethod.returnType.name shouldBe "Lcom/shakelang/Object;"
+        val clz = (testMethod.returnType as ShakeInterpreterType.ObjectType).objectType
+        clz shouldNotBe null
+        clz.qualifiedName shouldBe "com/shakelang/Object"
+        clz.simpleName shouldBe "Object"
+    }
+
+    "resolve return type with array" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Method {
+                name = "test()[I"
+                isPublic = true
+            }
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test/test()[I")
+        testMethod shouldNotBe null
+        testMethod!!.returnType.type shouldBe ShakeInterpreterType.Type.ARRAY
+        testMethod.returnType.name shouldBe "[I"
+        val type = (testMethod.returnType as ShakeInterpreterType.ArrayType).arrayType
+        type shouldBe ShakeInterpreterType.INT
+    }
+
+    "resolve return type with array of object" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Method {
+                name = "test()[Lcom/shakelang/Object;"
+                isPublic = true
+            }
+        })
+
+        classpath.load(generatePackage {
+            name = "com/shakelang"
+
+            Class {
+                name = "Object"
+                superName = "java/lang/Object"
+                isPublic = true
+            }
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test/test()[Lcom/shakelang/Object;")
+        testMethod shouldNotBe null
+        testMethod!!.returnType.type shouldBe ShakeInterpreterType.Type.ARRAY
+        testMethod.returnType.name shouldBe "[Lcom/shakelang/Object;"
+        val type = (testMethod.returnType as ShakeInterpreterType.ArrayType).arrayType
+        type.type shouldBe ShakeInterpreterType.Type.OBJECT
+        type.name shouldBe "Lcom/shakelang/Object;"
+        val clz = (type as ShakeInterpreterType.ObjectType).objectType
+        clz shouldNotBe null
+        clz.qualifiedName shouldBe "com/shakelang/Object"
+        clz.simpleName shouldBe "Object"
+    }
+
+    "resolve parameter types" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Method {
+                name = "test(I)I"
+                isPublic = true
+            }
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test/test(I)I")
+        testMethod shouldNotBe null
+        testMethod!!.parameters.size shouldBe 1
+        testMethod.parameters[0] shouldBe ShakeInterpreterType.INT
+    }
+
+    "resolve parameter types with object" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Method {
+                name = "test(Lcom/shakelang/Object;)I"
+                isPublic = true
+            }
+        })
+
+        classpath.load(generatePackage {
+            name = "com/shakelang"
+
+            Class {
+                name = "Object"
+                superName = "java/lang/Object"
+                isPublic = true
+            }
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test/test(Lcom/shakelang/Object;)I")
+        testMethod shouldNotBe null
+        testMethod!!.parameters.size shouldBe 1
+        testMethod.parameters[0].type shouldBe ShakeInterpreterType.Type.OBJECT
+        testMethod.parameters[0].name shouldBe "Lcom/shakelang/Object;"
+        val clz = (testMethod.parameters[0] as ShakeInterpreterType.ObjectType).objectType
+        clz shouldNotBe null
+        clz.qualifiedName shouldBe "com/shakelang/Object"
+        clz.simpleName shouldBe "Object"
+    }
+
+    "resolve parameter types with array" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Method {
+                name = "test([I)I"
+                isPublic = true
+            }
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test/test([I)I")
+        testMethod shouldNotBe null
+        testMethod!!.parameters.size shouldBe 1
+        testMethod.parameters[0].type shouldBe ShakeInterpreterType.Type.ARRAY
+        testMethod.parameters[0].name shouldBe "[I"
+        val type = (testMethod.parameters[0] as ShakeInterpreterType.ArrayType).arrayType
+        type shouldBe ShakeInterpreterType.INT
+    }
+
+    "resolve parameter types with array of object" {
+        val classpath = ShakeClasspath.create()
+        classpath.load(generatePackage {
+            name = "com/shakelang/shake/test"
+
+            Method {
+                name = "test([Lcom/shakelang/Object;)I"
+                isPublic = true
+            }
+        })
+
+        classpath.load(generatePackage {
+            name = "com/shakelang"
+
+            Class {
+                name = "Object"
+                superName = "java/lang/Object"
+                isPublic = true
+            }
+        })
+
+        val testMethod = classpath.getMethod("com/shakelang/shake/test/test([Lcom/shakelang/Object;)I")
+        testMethod shouldNotBe null
+        testMethod!!.parameters.size shouldBe 1
+        testMethod.parameters[0].type shouldBe ShakeInterpreterType.Type.ARRAY
+        testMethod.parameters[0].name shouldBe "[Lcom/shakelang/Object;"
+        val type = (testMethod.parameters[0] as ShakeInterpreterType.ArrayType).arrayType
+        type.type shouldBe ShakeInterpreterType.Type.OBJECT
+        type.name shouldBe "Lcom/shakelang/Object;"
+        val clz = (type as ShakeInterpreterType.ObjectType).objectType
+        clz shouldNotBe null
+        clz.qualifiedName shouldBe "com/shakelang/Object"
+        clz.simpleName shouldBe "Object"
+    }
 })

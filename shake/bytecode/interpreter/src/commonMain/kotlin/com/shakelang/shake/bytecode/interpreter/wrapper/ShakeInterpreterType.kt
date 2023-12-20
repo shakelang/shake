@@ -17,7 +17,6 @@ open class ShakeInterpreterType(
         CHAR,
         BOOLEAN,
         VOID,
-        STRING,
         OBJECT,
         ARRAY
     }
