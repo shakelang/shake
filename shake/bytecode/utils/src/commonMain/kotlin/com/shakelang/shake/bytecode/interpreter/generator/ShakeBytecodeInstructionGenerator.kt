@@ -5,6 +5,7 @@ import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.util.primitives.bytes.setBytes
 import com.shakelang.shake.util.primitives.bytes.toBytes
 import com.shakelang.shake.util.primitives.calc.shl
+import kotlin.jvm.JvmName
 
 open class ShakeBytecodeInstructionGenerator(
     val bytes: MutableList<Byte> = mutableListOf<Byte>()
@@ -20,6 +21,20 @@ open class ShakeBytecodeInstructionGenerator(
     fun spush(short: Short) = addBytes(listOf(Opcodes.SPUSH, *short.toBytes().toTypedArray()))
     fun ipush(int: Int) = addBytes(listOf(Opcodes.IPUSH, *int.toBytes().toTypedArray()))
     fun lpush(long: Long) = addBytes(listOf(Opcodes.LPUSH, *long.toBytes().toTypedArray()))
+
+    fun bpush(value: Boolean) = addBytes(listOf(Opcodes.BPUSH, if (value) 1 else 0))
+    fun spush(value: Char) = addBytes(listOf(Opcodes.SPUSH, *value.code.toShort().toBytes().toTypedArray()))
+    fun ipush(value: Float) = addBytes(listOf(Opcodes.IPUSH, *value.toRawBits().toBytes().toTypedArray()))
+    fun lpush(value: Double) = addBytes(listOf(Opcodes.LPUSH, *value.toRawBits().toBytes().toTypedArray()))
+
+    @JvmName("bpushUByte")
+    fun bpush(value: UByte) = addBytes(listOf(Opcodes.BPUSH, value.toByte()))
+    @JvmName("spushUShort")
+    fun spush(value: UShort) = addBytes(listOf(Opcodes.SPUSH, *value.toBytes().toTypedArray()))
+    @JvmName("ipushUInt")
+    fun ipush(value: UInt) = addBytes(listOf(Opcodes.IPUSH, *value.toBytes().toTypedArray()))
+    @JvmName("lpushULong")
+    fun lpush(value: ULong) = addBytes(listOf(Opcodes.LPUSH, *value.toBytes().toTypedArray()))
 
     fun bload(variable: UShort) = addBytes(listOf(Opcodes.BLOAD, *variable.toBytes().toTypedArray()))
     fun sload(variable: UShort) = addBytes(listOf(Opcodes.SLOAD, *variable.toBytes().toTypedArray()))
