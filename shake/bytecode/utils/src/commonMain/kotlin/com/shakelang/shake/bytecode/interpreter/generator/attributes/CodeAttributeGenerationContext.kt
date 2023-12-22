@@ -3,9 +3,10 @@ package com.shakelang.shake.bytecode.interpreter.generator.attributes
 import com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableCodeAttribute
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.shake.bytecode.interpreter.generator.ShakeBytecodeGenerator
+import com.shakelang.shake.bytecode.interpreter.generator.PooledShakeBytecodeInstructionGenerator
+import com.shakelang.shake.bytecode.interpreter.generator.ShakeBytecodeInstructionGenerator
 
-class CodeAttributeGenerationContext : AttributeGenerationContext() {
+class CodeAttributeGenerationContext(constantPool: MutableConstantPool) : AttributeGenerationContext(constantPool) {
 
     var maxStack = 0
     var maxLocals = 0
@@ -28,10 +29,8 @@ class CodeAttributeGenerationContext : AttributeGenerationContext() {
             TODO()
         }
 
-    fun bytecode(init: ShakeBytecodeGenerator.() -> Unit) {
-        val generator = ShakeBytecodeGenerator()
-        generator.init()
-        this.code = generator.toByteArray()
+    fun bytecode(init: PooledShakeBytecodeInstructionGenerator.() -> Unit) {
+        this.code = com.shakelang.shake.bytecode.interpreter.generator.bytecode(this.constantPool, init)
     }
 
     fun exceptionTableEntry(init: ExceptionTableEntryGenerationContext.() -> Unit) {
@@ -45,7 +44,7 @@ class CodeAttributeGenerationContext : AttributeGenerationContext() {
     }
 
     fun attribute(init: AttributeGenerationContext.() -> Unit) {
-        val context = AttributeGenerationContext()
+        val context = AttributeGenerationContext(constantPool)
         context.init()
         attributes.add(context)
     }

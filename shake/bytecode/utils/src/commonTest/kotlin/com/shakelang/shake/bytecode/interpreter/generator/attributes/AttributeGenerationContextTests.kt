@@ -10,7 +10,7 @@ class AttributeGenerationContextTests : FreeSpec({
 
     "attribute generation" {
 
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(MutableConstantPool())
         ctx.name shouldBe GenerationContext.UNDEFINED
         ctx.data shouldBe byteArrayOf()
 
@@ -23,7 +23,7 @@ class AttributeGenerationContextTests : FreeSpec({
 
     "to attribute" {
 
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(MutableConstantPool())
         ctx.name = "test"
         ctx.data = byteArrayOf(1, 2, 3, 4, 5)
 
@@ -35,7 +35,7 @@ class AttributeGenerationContextTests : FreeSpec({
 
     "to mutable attribute" {
 
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(MutableConstantPool())
         ctx.name = "test"
         ctx.data = byteArrayOf(1, 2, 3, 4, 5)
 

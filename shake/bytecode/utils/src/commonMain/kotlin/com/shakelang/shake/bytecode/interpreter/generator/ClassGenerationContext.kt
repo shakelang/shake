@@ -7,7 +7,9 @@ import com.shakelang.shake.bytecode.interpreter.generator.attributes.AttributeGe
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-class ClassGenerationContext {
+class ClassGenerationContext (
+    val constantPool: MutableConstantPool
+) {
 
     var name: String = GenerationContext.UNDEFINED
         set(value) {
@@ -57,26 +59,26 @@ class ClassGenerationContext {
     val attributes: MutableList<AttributeGenerationContext> = mutableListOf()
 
     fun attribute(generator: AttributeGenerationContext.() -> Unit) {
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(constantPool)
         ctx.generator()
         attributes.add(ctx)
     }
 
     fun attribute(name: String, data: ByteArray) {
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(constantPool)
         ctx.name = name
         ctx.data = data
         attributes.add(ctx)
     }
 
     fun Attribute(generator: AttributeGenerationContext.() -> Unit) {
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(constantPool)
         ctx.generator()
         attributes.add(ctx)
     }
 
     fun Attribute(name: String, data: ByteArray) {
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(constantPool)
         ctx.name = name
         ctx.data = data
         attributes.add(ctx)
@@ -91,19 +93,19 @@ class ClassGenerationContext {
     }
 
     fun Field(generator: FieldGenerationContext.() -> Unit) {
-        val ctx = FieldGenerationContext()
+        val ctx = FieldGenerationContext(constantPool)
         ctx.generator()
         fields.add(ctx)
     }
 
     fun Method(generator: MethodGenerationContext.() -> Unit) {
-        val ctx = MethodGenerationContext()
+        val ctx = MethodGenerationContext(constantPool)
         ctx.generator()
         methods.add(ctx)
     }
 
     fun Class(generator: ClassGenerationContext.() -> Unit) {
-        val ctx = ClassGenerationContext()
+        val ctx = ClassGenerationContext(constantPool)
         ctx.generator()
         subClasses.add(ctx)
     }

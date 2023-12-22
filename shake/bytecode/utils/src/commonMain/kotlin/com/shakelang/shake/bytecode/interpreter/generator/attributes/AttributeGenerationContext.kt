@@ -7,7 +7,9 @@ import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAttribut
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.bytecode.interpreter.generator.GenerationContext
 
-open class AttributeGenerationContext {
+open class AttributeGenerationContext(
+    val constantPool: MutableConstantPool
+) {
 
     var name: String = GenerationContext.UNDEFINED
         set(value) {

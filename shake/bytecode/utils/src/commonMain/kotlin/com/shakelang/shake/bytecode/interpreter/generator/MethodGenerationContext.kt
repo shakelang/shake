@@ -8,7 +8,9 @@ import com.shakelang.shake.bytecode.interpreter.generator.attributes.CodeAttribu
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-class MethodGenerationContext {
+class MethodGenerationContext(
+    val constantPool: MutableConstantPool
+) {
 
     var name: String = GenerationContext.UNDEFINED
         set(value) {
@@ -40,26 +42,26 @@ class MethodGenerationContext {
     val attributes: MutableList<AttributeGenerationContext> = mutableListOf()
 
     fun attribute(generator: AttributeGenerationContext.() -> Unit) {
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(constantPool)
         ctx.generator()
         attributes.add(ctx)
     }
 
     fun attribute(name: String, data: ByteArray) {
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(constantPool)
         ctx.name = name
         ctx.data = data
         attributes.add(ctx)
     }
 
     fun Attribute(generator: AttributeGenerationContext.() -> Unit) {
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(constantPool)
         ctx.generator()
         attributes.add(ctx)
     }
 
     fun Attribute(name: String, data: ByteArray) {
-        val ctx = AttributeGenerationContext()
+        val ctx = AttributeGenerationContext(constantPool)
         ctx.name = name
         ctx.data = data
         attributes.add(ctx)
@@ -68,7 +70,7 @@ class MethodGenerationContext {
     fun code(
         generator: CodeAttributeGenerationContext.() -> Unit
     ) {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(constantPool)
         ctx.generator()
         attributes.add(ctx)
     }
@@ -76,7 +78,7 @@ class MethodGenerationContext {
     fun Code(
         generator: CodeAttributeGenerationContext.() -> Unit
     ) {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(constantPool)
         ctx.generator()
         attributes.add(ctx)
     }

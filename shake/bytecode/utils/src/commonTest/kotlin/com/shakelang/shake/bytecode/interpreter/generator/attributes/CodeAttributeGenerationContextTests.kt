@@ -12,7 +12,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
 
     "code attribute generation (toAttribute)" {
 
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10
@@ -32,7 +32,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
     }
 
     "code attribute generation with bytecode (toAttribute)" {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10
@@ -61,7 +61,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
     }
 
     "code attribute generation with exception table (toAttribute)" {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10
@@ -92,7 +92,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
     }
 
     "code attribute generation with attributes (toAttribute)" {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10
@@ -119,7 +119,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
     }
 
     "code attribute generation with everything (toAttribute)" {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10
@@ -172,7 +172,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
     }
 
     "code attribute generation with everything (toMutableAttribute)" {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10
@@ -225,7 +225,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
     }
 
     "code attribute generation with everything (toAttribute) (with pool)" {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10
@@ -278,7 +278,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
     }
 
     "code attribute generation with everything (toMutableAttribute) (with pool)" {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10
@@ -331,7 +331,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
     }
 
     "code attribute generation with everything (toAttribute) (with pool and generation context)" {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10
@@ -384,7 +384,7 @@ class CodeAttributeGenerationContextTests : FreeSpec({
     }
 
     "code attribute generation with everything (toMutableAttribute) (with pool and generation context)" {
-        val ctx = CodeAttributeGenerationContext()
+        val ctx = CodeAttributeGenerationContext(MutableConstantPool())
         ctx.run {
 
             maxLocals = 10

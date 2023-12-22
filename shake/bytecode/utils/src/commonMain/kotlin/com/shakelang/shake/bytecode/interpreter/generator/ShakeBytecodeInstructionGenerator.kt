@@ -1,10 +1,12 @@
 package com.shakelang.shake.bytecode.interpreter.generator
 
 import com.shakelang.shake.bytecode.interpreter.Opcodes
+import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
+import com.shakelang.shake.util.primitives.bytes.setBytes
 import com.shakelang.shake.util.primitives.bytes.toBytes
 import com.shakelang.shake.util.primitives.calc.shl
 
-class ShakeBytecodeGenerator(
+open class ShakeBytecodeInstructionGenerator(
     val bytes: MutableList<Byte> = mutableListOf<Byte>()
 ) {
 
@@ -154,6 +156,51 @@ class ShakeBytecodeGenerator(
     fun jg(address: Int) = addBytes(listOf(Opcodes.JG, *address.toBytes().toTypedArray()))
     fun jge(address: Int) = addBytes(listOf(Opcodes.JGE, *address.toBytes().toTypedArray()))
 
+    fun jmp(): IntPlaceholder {
+        addByte(Opcodes.JMP)
+        return iPlaceholder()
+    }
+
+    fun jz(): IntPlaceholder {
+        addByte(Opcodes.JZ)
+        return iPlaceholder()
+    }
+
+    fun jnz(): IntPlaceholder {
+        addByte(Opcodes.JNZ)
+        return iPlaceholder()
+    }
+
+    fun je(): IntPlaceholder {
+        addByte(Opcodes.JE)
+        return iPlaceholder()
+    }
+
+    fun jne(): IntPlaceholder {
+        addByte(Opcodes.JNE)
+        return iPlaceholder()
+    }
+
+    fun jl(): IntPlaceholder {
+        addByte(Opcodes.JL)
+        return iPlaceholder()
+    }
+
+    fun jle(): IntPlaceholder {
+        addByte(Opcodes.JLE)
+        return iPlaceholder()
+    }
+
+    fun jg(): IntPlaceholder {
+        addByte(Opcodes.JG)
+        return iPlaceholder()
+    }
+
+    fun jge(): IntPlaceholder {
+        addByte(Opcodes.JGE)
+        return iPlaceholder()
+    }
+
     fun ret() = addByte(Opcodes.RET)
     fun bret() = addByte(Opcodes.BRET)
     fun sret() = addByte(Opcodes.SRET)
@@ -176,11 +223,127 @@ class ShakeBytecodeGenerator(
 
     fun call(address: Int) = addBytes(listOf(Opcodes.CALL, *address.toBytes().toTypedArray()))
 
+    fun call(): IntPlaceholder {
+        addByte(Opcodes.CALL)
+        return iPlaceholder()
+    }
+
     fun toByteArray() = bytes.toByteArray()
+
+    fun bPlaceholder(): BytePlaceholder {
+        val index = bytes.size
+        addByte(0)
+        return BytePlaceholder(index)
+    }
+
+    fun sPlaceholder(): ShortPlaceholder {
+        val index = bytes.size
+        addBytes(0, 0)
+        return ShortPlaceholder(index)
+    }
+
+    fun iPlaceholder(): IntPlaceholder {
+        val index = bytes.size
+        addBytes(0, 0, 0, 0)
+        return IntPlaceholder(index)
+    }
+
+    fun lPlaceholder(): LongPlaceholder {
+        val index = bytes.size
+        addBytes(0, 0, 0, 0, 0, 0, 0, 0)
+        return LongPlaceholder(index)
+    }
+
+    inner class BytePlaceholder(val index: Int) {
+        fun set(byte: Byte) {
+            bytes[index] = byte
+        }
+
+        fun set(boolean: Boolean) {
+            bytes[index] = if (boolean) 1 else 0
+        }
+
+        fun set(unsignedByte: UByte) {
+            bytes[index] = unsignedByte.toByte()
+        }
+    }
+
+    inner class ShortPlaceholder(val index: Int) {
+        fun set(short: Short) {
+            bytes.setBytes(index, short.toBytes())
+        }
+
+        fun set(unsignedShort: UShort) {
+            bytes.setBytes(index, unsignedShort.toBytes())
+        }
+
+        fun set(char: Char) {
+            bytes.setBytes(index, char.code.toShort().toBytes())
+        }
+    }
+
+    inner class IntPlaceholder(val index: Int) {
+        fun set(int: Int) {
+            bytes.setBytes(index, int.toBytes())
+        }
+
+        fun set(unsignedInt: UInt) {
+            bytes.setBytes(index, unsignedInt.toBytes())
+        }
+
+        fun set(float: Float) {
+            bytes.setBytes(index, float.toRawBits().toBytes())
+        }
+    }
+
+    inner class LongPlaceholder(val index: Int) {
+        fun set(long: Long) {
+            bytes.setBytes(index, long.toBytes())
+        }
+
+        fun set(unsignedLong: ULong) {
+            bytes.setBytes(index, unsignedLong.toBytes())
+        }
+
+        fun set(double: Double) {
+            bytes.setBytes(index, double.toRawBits().toBytes())
+        }
+    }
 }
 
-fun bytecode(init: ShakeBytecodeGenerator.() -> Unit): ByteArray {
-    val generator = ShakeBytecodeGenerator()
+open class PooledShakeBytecodeInstructionGenerator(
+    val constantPool: MutableConstantPool,
+    bytes: MutableList<Byte> = mutableListOf<Byte>()
+) : ShakeBytecodeInstructionGenerator(
+    bytes
+) {
+
+    fun utf8Ref(value: String) = addBytes(*constantPool.resolveUtf8(value).toBytes())
+    fun byteRef(value: Byte) = addBytes(*constantPool.resolveByte(value).toBytes())
+    fun shortRef(value: Short) = addBytes(*constantPool.resolveShort(value).toBytes())
+    fun intRef(value: Int) = addBytes(*constantPool.resolveInt(value).toBytes())
+    fun longRef(value: Long) = addBytes(*constantPool.resolveLong(value).toBytes())
+    fun floatRef(value: Float) = addBytes(*constantPool.resolveFloat(value).toBytes())
+    fun doubleRef(value: Double) = addBytes(*constantPool.resolveDouble(value).toBytes())
+    fun classRef(value: String) = addBytes(*constantPool.resolveClass(value).toBytes())
+
+    fun call(descriptor: String) {
+        addByte(Opcodes.CALL)
+        utf8Ref(descriptor)
+    }
+}
+
+fun bytecode(init: ShakeBytecodeInstructionGenerator.() -> Unit): ByteArray {
+    val generator = ShakeBytecodeInstructionGenerator()
+    generator.init()
+    return generator.toByteArray()
+}
+
+fun bytecode(
+    constantPool: MutableConstantPool,
+    init: PooledShakeBytecodeInstructionGenerator.() -> Unit
+): ByteArray {
+    val generator = PooledShakeBytecodeInstructionGenerator(constantPool)
     generator.init()
     return generator.toByteArray()
 }
