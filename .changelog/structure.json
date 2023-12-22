@@ -222,6 +222,23 @@
       ]
     },
     {
+      "path": ":shake:bytecode:generator",
+      "name": "com.shakelang.shake.bytecode:generator",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Generator for Shake Bytecode",
+      "author": "com.shakelang.shake.bytecode",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1",
+        ":util:pointers:pointers:0.1.0",
+        ":util:primitives:primitives:0.3.0",
+        ":util:common-io:common-io:0.3.0",
+        ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT",
+        ":shake:bytecode:utils:utils:0.1.0-SNAPSHOT",
+        ":shake:compiler:processor:processor:0.1.0"
+      ]
+    },
+    {
       "path": ":shake:bytecode:interpreter",
       "name": "com.shakelang.shake.bytecode:interpreter",
       "version": "0.1.0-SNAPSHOT",
@@ -385,5 +402,5 @@
       ]
     }
   ],
-  "lastUpdate": 1702733099431
+  "lastUpdate": 1703287640803
 }

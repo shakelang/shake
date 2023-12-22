@@ -1,3 +1,11 @@
 {
-  "bumps": []
+  "bumps": [
+    {
+      "type": "minor",
+      "message": "Add bits library",
+      "paths": [
+        ":util:primitives"
+      ]
+    }
+  ]
 }
