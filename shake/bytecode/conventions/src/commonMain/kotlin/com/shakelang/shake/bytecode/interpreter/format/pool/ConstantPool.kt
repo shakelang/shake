@@ -111,6 +111,16 @@ open class ConstantPool(
      */
     fun isClass(index: Int) = get(index) is ConstantPoolEntry.ClassConstant
 
+    /**
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.StringConstant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.StringConstant]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun isString(index: Int) = get(index) is ConstantPoolEntry.StringConstant
+
     override operator fun get(index: Int) : ConstantPoolEntry {
         try {
             return entries[index]
@@ -220,6 +230,19 @@ open class ConstantPool(
     fun getClass(index: Int): ConstantPoolEntry.ClassConstant {
         if(!isClass(index)) throw ConstantPoolTypeException("Constant at $index is not a ClassConstant")
         return get(index) as ConstantPoolEntry.ClassConstant
+    }
+
+    /**
+     * Get the constant at the given [index] as a [ConstantPoolEntry.StringConstant]
+     * @param index The identifier of the constant
+     * @return The constant at the given [index] as a [ConstantPoolEntry.StringConstant]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun getString(index: Int): ConstantPoolEntry.StringConstant {
+        if(!isString(index)) throw ConstantPoolTypeException("Constant at $index is not a StringConstant")
+        return get(index) as ConstantPoolEntry.StringConstant
     }
 
     /**
@@ -377,6 +400,37 @@ open class ConstantPool(
     fun findClass(name: String): Int? {
         val identifier = findUtf8(name) ?: return null
         return findClass(identifier)
+    }
+
+    /**
+     * Find the [ConstantPoolEntry.StringConstant] with the given [value]
+     * @param value The value of the [ConstantPoolEntry.StringConstant]
+     * @return The index of the [ConstantPoolEntry.StringConstant] with the given [value]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun findString(value: Int): Int? {
+        for (i in entries.indices) {
+            val entry = entries[i]
+            if (entry is ConstantPoolEntry.StringConstant && entry.identifier == value) {
+                return i
+            }
+        }
+        return null
+    }
+
+    /**
+     * Find the [ConstantPoolEntry.StringConstant] with the given [value]
+     * @param value The value of the [ConstantPoolEntry.StringConstant]
+     * @return The index of the [ConstantPoolEntry.StringConstant] with the given [value]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun findString(value: String): Int? {
+        val identifier = findUtf8(value) ?: return null
+        return findString(identifier)
     }
 
     /**
@@ -671,6 +725,29 @@ class MutableConstantPool(
     fun createClass(value: String) = createClass(resolveUtf8(value))
 
     /**
+     * Create a [ConstantPoolEntry.StringConstant] with the given [value]
+     * @param value The identifier of the [ConstantPoolEntry.StringConstant]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun createString(value: Int): Int {
+        val entry = ConstantPoolEntry.StringConstant(value)
+        val index = entries.size
+        add(entry)
+        return index
+    }
+
+    /**
+     * Create a [ConstantPoolEntry.StringConstant] with the given [value]
+     * @param value The name of the [ConstantPoolEntry.StringConstant]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun createString(value: String) = createString(resolveUtf8(value))
+
+    /**
      * Resolve the [ConstantPoolEntry.Utf8Constant] with the given [value]
      * If a [ConstantPoolEntry.Utf8Constant] with the given [value] does not exist, it will be created
      * @param value The identifier of the [ConstantPoolEntry.Utf8Constant]
@@ -768,6 +845,28 @@ class MutableConstantPool(
      * @version 0.1.0
      */
     fun resolveClass(value: String) = findClass(value) ?: createClass(value)
+
+    /**
+     * Resolve the [ConstantPoolEntry.StringConstant] with the given [value]
+     * If a [ConstantPoolEntry.StringConstant] with the given [value] does not exist, it will be created
+     * @param value The identifier of the [ConstantPoolEntry.StringConstant]
+     * @return The index of the [ConstantPoolEntry.StringConstant] with the given [value]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun resolveString(value: Int) = findString(value) ?: createString(value)
+
+    /**
+     * Resolve the [ConstantPoolEntry.StringConstant] with the given [value]
+     * If a [ConstantPoolEntry.StringConstant] with the given [value] does not exist, it will be created
+     * @param value The name of the [ConstantPoolEntry.StringConstant]
+     * @return The index of the [ConstantPoolEntry.StringConstant] with the given [value]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun resolveString(value: String) = findString(value) ?: createString(value)
 
     companion object {
 
