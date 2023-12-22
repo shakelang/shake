@@ -2,25 +2,30 @@ package com.shakelang.shake.bytecode.generator
 
 import com.shakelang.shake.bytecode.interpreter.generator.*
 import com.shakelang.shake.processor.program.types.*
-import com.shakelang.shake.processor.program.types.code.*
-import com.shakelang.shake.processor.program.types.code.statements.*
+import com.shakelang.shake.processor.program.types.code.statements.ShakeStatement
 import com.shakelang.shake.processor.program.types.code.values.*
 
 class ShakeBytecodeGenerator {
 
     fun PooledShakeBytecodeInstructionGenerator.visitValue(v: ShakeValue, ctx: GenerationContext) {
         when (v) {
-            is ShakeDoubleLiteral -> {
-                lpush(v.value.toBits())
-            }
-            is ShakeIntLiteral -> {
-                ipush(v.value)
+            is ShakeByteLiteral -> bpush(v.value)
+            is ShakeShortLiteral -> spush(v.value)
+            is ShakeIntLiteral -> ipush(v.value)
+            is ShakeLongLiteral -> lpush(v.value)
+            is ShakeFloatLiteral -> ipush(v.value)
+            is ShakeDoubleLiteral -> lpush(v.value)
+            is ShakeUByteLiteral -> bpush(v.value)
+            is ShakeUShortLiteral -> spush(v.value)
+            is ShakeUIntLiteral -> ipush(v.value)
+            is ShakeULongLiteral -> lpush(v.value)
+            is ShakeNullLiteral -> {
+                TODO("Null constant??")
             }
             is ShakeStringLiteral -> {
-
             }
             is ShakeBooleanLiteral -> {
-//                this.lpush(v.value)
+                this.bpush(v.value)
             }
 //            is ShakeAddition -> visitAddition(v)
 //            is ShakeSubtraction -> visitSubtraction(v)
