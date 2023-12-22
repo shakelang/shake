@@ -5,7 +5,7 @@ import com.shakelang.shake.processor.program.types.ShakeType
 import com.shakelang.shake.processor.program.types.code.ShakeInvokable
 
 /**
- * Utilitiy to select the best function or constructor for a given set of parameters
+ * Utility to select the best function or constructor for a given set of parameters
  */
 object ShakeSelect {
 
