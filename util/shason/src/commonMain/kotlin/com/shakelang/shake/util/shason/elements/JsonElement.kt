@@ -218,7 +218,8 @@ interface JsonElement {
      * @since 0.3.0
      * @version 0.3.0
      */
-    fun toJsonNull() = if (this.isJsonNull()) this as JsonNullElement else throw Error("Element is not a JsonNullElement")
+    fun toJsonNull() =
+        if (this.isJsonNull()) this as JsonNullElement else throw Error("Element is not a JsonNullElement")
 
     /**
      * Is the [JsonElement] a [JsonStringElement]?
@@ -232,7 +233,8 @@ interface JsonElement {
      * @since 0.3.0
      * @version 0.3.0
      */
-    fun toJsonString() = if (this.isJsonString()) this as JsonStringElement else throw Error("Element is not a JsonStringElement")
+    fun toJsonString() =
+        if (this.isJsonString()) this as JsonStringElement else throw Error("Element is not a JsonStringElement")
 
     /**
      * Is the [JsonElement] a [JsonIntegerElement]?
@@ -246,7 +248,8 @@ interface JsonElement {
      * @since 0.3.0
      * @version 0.3.0
      */
-    fun toJsonInteger() = if (this.isJsonInteger()) this as JsonIntegerElement else throw Error("Element is not a JsonIntegerElement")
+    fun toJsonInteger() =
+        if (this.isJsonInteger()) this as JsonIntegerElement else throw Error("Element is not a JsonIntegerElement")
 
     /**
      * Is the [JsonElement] a [JsonDoubleElement]?
@@ -260,7 +263,8 @@ interface JsonElement {
      * @since 0.3.0
      * @version 0.3.0
      */
-    fun toJsonDouble() = if (this.isJsonDouble()) this as JsonDoubleElement else throw Error("Element is not a JsonDoubleElement")
+    fun toJsonDouble() =
+        if (this.isJsonDouble()) this as JsonDoubleElement else throw Error("Element is not a JsonDoubleElement")
 
     /**
      * Is the [JsonElement] a [JsonBooleanElement]?
@@ -274,5 +278,6 @@ interface JsonElement {
      * @since 0.3.0
      * @version 0.3.0
      */
-    fun toJsonBoolean() = if (this.isJsonBoolean()) this as JsonBooleanElement else throw Error("Element is not a JsonBooleanElement")
+    fun toJsonBoolean() =
+        if (this.isJsonBoolean()) this as JsonBooleanElement else throw Error("Element is not a JsonBooleanElement")
 }

@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
-class FieldTests: FreeSpec({
+class FieldTests : FreeSpec({
     "getField" {
         val classpath = ShakeClasspath.create()
         classpath.load(generatePackage {

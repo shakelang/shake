@@ -91,9 +91,9 @@ fun assertCompare(expected: Double, actual: Double) {
 }
 
 fun compare(f0: Float, f1: Float, delta: Float): Boolean = (f0.isNaN() && f1.isNaN()) ||
-    (f0.isInfinite() && f1.isInfinite() && ((f0 > 0 && f1 > 0) || (f0 < 0 && f1 < 0))) ||
-    abs(f0 - f1) <= delta
+        (f0.isInfinite() && f1.isInfinite() && ((f0 > 0 && f1 > 0) || (f0 < 0 && f1 < 0))) ||
+        abs(f0 - f1) <= delta
 
 fun compare(d0: Double, d1: Double, delta: Double): Boolean = (d0.isNaN() && d1.isNaN()) ||
-    (d0.isInfinite() && d1.isInfinite() && ((d0 > 0 && d1 > 0) || (d0 < 0 && d1 < 0))) ||
-    abs(d0 - d1) <= delta
+        (d0.isInfinite() && d1.isInfinite() && ((d0 > 0 && d1 > 0) || (d0 < 0 && d1 < 0))) ||
+        abs(d0 - d1) <= delta

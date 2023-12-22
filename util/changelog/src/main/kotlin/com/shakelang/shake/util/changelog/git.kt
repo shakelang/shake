@@ -30,7 +30,7 @@ class TagStash(
             if (!obj.containsKey("name")) throw IllegalArgumentException("TagStash object has no name")
             val name = obj["name"]!!
             if (!name.isJsonPrimitive() || !name.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("TagStash name is not a string")
             }
@@ -190,6 +190,7 @@ data class ParsedGitTag(
         }
     }
 }
+
 fun getOutputLines(process: Process): List<String> {
     val reader = BufferedReader(InputStreamReader(process.inputStream))
     val lines = mutableListOf<String>()

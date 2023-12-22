@@ -92,7 +92,7 @@ open class Token<T : TokenType>(
         if (this === other) return true
         if (other == null || other !is Token<*>) return false
         return type == other.type &&
-            value == other.value
+                value == other.value
     }
 
     /**

@@ -15,12 +15,12 @@ class ShasPToken : Token<ShasPTokenType> {
     override fun toString(): String {
         return if (start == end) if (value != null) {
             "" +
-                "Token{" + "type=" + type + ", value=" + value + ", position=" + start + '}'
+                    "Token{" + "type=" + type + ", value=" + value + ", position=" + start + '}'
         } else {
             "Token{type=$type, position=$start}"
         } else if (value != null) {
             "" +
-                "Token{" + "type=" + type + ", value=" + value + ", start=" + start + ", end=" + end + '}'
+                    "Token{" + "type=" + type + ", value=" + value + ", start=" + start + ", end=" + end + '}'
         } else {
             "Token{type=$type, position=$start, end=$end}"
         }
@@ -31,7 +31,7 @@ class ShasPToken : Token<ShasPTokenType> {
         if (other is Byte) return other == this.type
         if (other == null || other !is ShasPToken) return false
         return type == other.type &&
-            value == other.value
+                value == other.value
     }
 
     override fun hashCode(): Int = hashAll(type, value)

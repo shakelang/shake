@@ -7,7 +7,7 @@ import com.shakelang.shake.bytecode.interpreter.generator.attributes.AttributeGe
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-class FieldGenerationContext (
+class FieldGenerationContext(
     val constantPool: MutableConstantPool
 ) {
 

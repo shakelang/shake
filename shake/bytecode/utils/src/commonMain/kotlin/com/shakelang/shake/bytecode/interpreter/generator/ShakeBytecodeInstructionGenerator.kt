@@ -29,10 +29,13 @@ open class ShakeBytecodeInstructionGenerator(
 
     @JvmName("bpushUByte")
     fun bpush(value: UByte) = addBytes(listOf(Opcodes.BPUSH, value.toByte()))
+
     @JvmName("spushUShort")
     fun spush(value: UShort) = addBytes(listOf(Opcodes.SPUSH, *value.toBytes().toTypedArray()))
+
     @JvmName("ipushUInt")
     fun ipush(value: UInt) = addBytes(listOf(Opcodes.IPUSH, *value.toBytes().toTypedArray()))
+
     @JvmName("lpushULong")
     fun lpush(value: ULong) = addBytes(listOf(Opcodes.LPUSH, *value.toBytes().toTypedArray()))
 

@@ -1,11 +1,9 @@
 package com.shakelang.shake.bytecode.interpreter.generator.attributes
 
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.shake.bytecode.interpreter.generator.GenerationContext
 import com.shakelang.shake.bytecode.interpreter.generator.bytecode
 import com.shakelang.shake.util.testlib.shouldContainExactly
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 
 class CodeAttributeGenerationContextTests : FreeSpec({

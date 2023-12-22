@@ -4,7 +4,6 @@ import com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableCodeAttribute
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.bytecode.interpreter.generator.PooledShakeBytecodeInstructionGenerator
-import com.shakelang.shake.bytecode.interpreter.generator.ShakeBytecodeInstructionGenerator
 
 class CodeAttributeGenerationContext(constantPool: MutableConstantPool) : AttributeGenerationContext(constantPool) {
 
@@ -72,6 +71,7 @@ class CodeAttributeGenerationContext(constantPool: MutableConstantPool) : Attrib
             attributes.map { it.toMutableAttribute(pool) }.toTypedArray()
         )
     }
+
     class ExceptionTableEntryGenerationContext {
 
         var startPc: Int = 0

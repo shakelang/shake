@@ -22,17 +22,18 @@ interface ShakeInterpreterField {
             pkg: ShakeInterpreterPackage
         ): ShakeInterpreterField {
 
-                return object : ShakeInterpreterField {
+            return object : ShakeInterpreterField {
 
-                    override val storage: Field = storage
-                    override val simpleName: String = storage.name
-                    override val qualifiedName: String = "$parentPath$simpleName"
-                    override val isStatic: Boolean = storage.isStatic
-                    override val type: ShakeInterpreterType = ShakeInterpreterType.of(TypeDescriptor.parse(storage.type), classpath)
-                    override val constantPool: ConstantPool = constantPool
-                    override val pkg: ShakeInterpreterPackage = pkg
+                override val storage: Field = storage
+                override val simpleName: String = storage.name
+                override val qualifiedName: String = "$parentPath$simpleName"
+                override val isStatic: Boolean = storage.isStatic
+                override val type: ShakeInterpreterType =
+                    ShakeInterpreterType.of(TypeDescriptor.parse(storage.type), classpath)
+                override val constantPool: ConstantPool = constantPool
+                override val pkg: ShakeInterpreterPackage = pkg
 
-                }
+            }
         }
     }
 }

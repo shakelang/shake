@@ -1,4 +1,3 @@
-
 import com.shakelang.shake.util.changelog.public
 import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies

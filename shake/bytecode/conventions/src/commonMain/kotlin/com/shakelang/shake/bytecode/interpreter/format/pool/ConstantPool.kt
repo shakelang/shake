@@ -7,8 +7,11 @@ import com.shakelang.shake.util.io.streaming.output.DataOutputStream
 
 open class ConstantPoolException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)
 
-open class ConstantPoolOverflowException(message: String? = null, cause: Throwable? = null) : ConstantPoolException(message, cause)
-open class ConstantPoolTypeException(message: String? = null, cause: Throwable? = null) : ConstantPoolException(message, cause)
+open class ConstantPoolOverflowException(message: String? = null, cause: Throwable? = null) :
+    ConstantPoolException(message, cause)
+
+open class ConstantPoolTypeException(message: String? = null, cause: Throwable? = null) :
+    ConstantPoolException(message, cause)
 
 /**
  * A ConstantPool is a list of [ConstantPoolEntry]s
@@ -121,7 +124,7 @@ open class ConstantPool(
      */
     fun isString(index: Int) = get(index) is ConstantPoolEntry.StringConstant
 
-    override operator fun get(index: Int) : ConstantPoolEntry {
+    override operator fun get(index: Int): ConstantPoolEntry {
         try {
             return entries[index]
         } catch (e: IndexOutOfBoundsException) {
@@ -137,8 +140,8 @@ open class ConstantPool(
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getUtf8(identifier: Int) : ConstantPoolEntry.Utf8Constant {
-        if(!isUtf8(identifier)) throw ConstantPoolTypeException("Constant at $identifier is not a Utf8Constant")
+    fun getUtf8(identifier: Int): ConstantPoolEntry.Utf8Constant {
+        if (!isUtf8(identifier)) throw ConstantPoolTypeException("Constant at $identifier is not a Utf8Constant")
         return get(identifier) as ConstantPoolEntry.Utf8Constant
     }
 
@@ -151,9 +154,10 @@ open class ConstantPool(
      * @version 0.1.0
      */
     fun getByte(index: Int): ConstantPoolEntry.ByteConstant {
-        if(!isByte(index)) throw ConstantPoolTypeException("Constant at $index is not a ByteConstant")
+        if (!isByte(index)) throw ConstantPoolTypeException("Constant at $index is not a ByteConstant")
         return get(index) as ConstantPoolEntry.ByteConstant
     }
+
     /**
      * Get the constant at the given [index] as a [ConstantPoolEntry.ShortConstant]
      * @param index The identifier of the constant
@@ -163,7 +167,7 @@ open class ConstantPool(
      * @version 0.1.0
      */
     fun getShort(index: Int): ConstantPoolEntry.ShortConstant {
-        if(!isShort(index)) throw ConstantPoolTypeException("Constant at $index is not a ShortConstant")
+        if (!isShort(index)) throw ConstantPoolTypeException("Constant at $index is not a ShortConstant")
         return get(index) as ConstantPoolEntry.ShortConstant
     }
 
@@ -176,7 +180,7 @@ open class ConstantPool(
      * @version 0.1.0
      */
     fun getInt(index: Int): ConstantPoolEntry.IntConstant {
-        if(!isInt(index)) throw ConstantPoolTypeException("Constant at $index is not a IntConstant")
+        if (!isInt(index)) throw ConstantPoolTypeException("Constant at $index is not a IntConstant")
         return get(index) as ConstantPoolEntry.IntConstant
     }
 
@@ -189,7 +193,7 @@ open class ConstantPool(
      * @version 0.1.0
      */
     fun getLong(index: Int): ConstantPoolEntry.LongConstant {
-        if(!isLong(index)) throw ConstantPoolTypeException("Constant at $index is not a LongConstant")
+        if (!isLong(index)) throw ConstantPoolTypeException("Constant at $index is not a LongConstant")
         return get(index) as ConstantPoolEntry.LongConstant
     }
 
@@ -202,7 +206,7 @@ open class ConstantPool(
      * @version 0.1.0
      */
     fun getFloat(index: Int): ConstantPoolEntry.FloatConstant {
-        if(!isFloat(index)) throw ConstantPoolTypeException("Constant at $index is not a FloatConstant")
+        if (!isFloat(index)) throw ConstantPoolTypeException("Constant at $index is not a FloatConstant")
         return get(index) as ConstantPoolEntry.FloatConstant
     }
 
@@ -215,7 +219,7 @@ open class ConstantPool(
      * @version 0.1.0
      */
     fun getDouble(index: Int): ConstantPoolEntry.DoubleConstant {
-        if(!isDouble(index)) throw ConstantPoolTypeException("Constant at $index is not a DoubleConstant")
+        if (!isDouble(index)) throw ConstantPoolTypeException("Constant at $index is not a DoubleConstant")
         return get(index) as ConstantPoolEntry.DoubleConstant
     }
 
@@ -228,7 +232,7 @@ open class ConstantPool(
      * @version 0.1.0
      */
     fun getClass(index: Int): ConstantPoolEntry.ClassConstant {
-        if(!isClass(index)) throw ConstantPoolTypeException("Constant at $index is not a ClassConstant")
+        if (!isClass(index)) throw ConstantPoolTypeException("Constant at $index is not a ClassConstant")
         return get(index) as ConstantPoolEntry.ClassConstant
     }
 
@@ -241,7 +245,7 @@ open class ConstantPool(
      * @version 0.1.0
      */
     fun getString(index: Int): ConstantPoolEntry.StringConstant {
-        if(!isString(index)) throw ConstantPoolTypeException("Constant at $index is not a StringConstant")
+        if (!isString(index)) throw ConstantPoolTypeException("Constant at $index is not a StringConstant")
         return get(index) as ConstantPoolEntry.StringConstant
     }
 
@@ -523,59 +527,59 @@ open class ConstantPool(
         }
     }
 
-    fun forEach (action: (ConstantPoolEntry) -> Unit) {
+    fun forEach(action: (ConstantPoolEntry) -> Unit) {
         entries.forEach(action)
     }
 
-    fun forEachIndexed (action: (Int, ConstantPoolEntry) -> Unit) {
+    fun forEachIndexed(action: (Int, ConstantPoolEntry) -> Unit) {
         entries.forEachIndexed(action)
     }
 
-    fun forEachUtf8 (action: (ConstantPoolEntry.Utf8Constant) -> Unit) {
+    fun forEachUtf8(action: (ConstantPoolEntry.Utf8Constant) -> Unit) {
         entries.forEach {
-            if(it is ConstantPoolEntry.Utf8Constant) action(it)
+            if (it is ConstantPoolEntry.Utf8Constant) action(it)
         }
     }
 
-    fun forEachByte (action: (ConstantPoolEntry.ByteConstant) -> Unit) {
+    fun forEachByte(action: (ConstantPoolEntry.ByteConstant) -> Unit) {
         entries.forEach {
-            if(it is ConstantPoolEntry.ByteConstant) action(it)
+            if (it is ConstantPoolEntry.ByteConstant) action(it)
         }
     }
 
-    fun forEachShort (action: (ConstantPoolEntry.ShortConstant) -> Unit) {
+    fun forEachShort(action: (ConstantPoolEntry.ShortConstant) -> Unit) {
         entries.forEach {
-            if(it is ConstantPoolEntry.ShortConstant) action(it)
+            if (it is ConstantPoolEntry.ShortConstant) action(it)
         }
     }
 
-    fun forEachInt (action: (ConstantPoolEntry.IntConstant) -> Unit) {
+    fun forEachInt(action: (ConstantPoolEntry.IntConstant) -> Unit) {
         entries.forEach {
-            if(it is ConstantPoolEntry.IntConstant) action(it)
+            if (it is ConstantPoolEntry.IntConstant) action(it)
         }
     }
 
-    fun forEachLong (action: (ConstantPoolEntry.LongConstant) -> Unit) {
+    fun forEachLong(action: (ConstantPoolEntry.LongConstant) -> Unit) {
         entries.forEach {
-            if(it is ConstantPoolEntry.LongConstant) action(it)
+            if (it is ConstantPoolEntry.LongConstant) action(it)
         }
     }
 
-    fun forEachFloat (action: (ConstantPoolEntry.FloatConstant) -> Unit) {
+    fun forEachFloat(action: (ConstantPoolEntry.FloatConstant) -> Unit) {
         entries.forEach {
-            if(it is ConstantPoolEntry.FloatConstant) action(it)
+            if (it is ConstantPoolEntry.FloatConstant) action(it)
         }
     }
 
-    fun forEachDouble (action: (ConstantPoolEntry.DoubleConstant) -> Unit) {
+    fun forEachDouble(action: (ConstantPoolEntry.DoubleConstant) -> Unit) {
         entries.forEach {
-            if(it is ConstantPoolEntry.DoubleConstant) action(it)
+            if (it is ConstantPoolEntry.DoubleConstant) action(it)
         }
     }
 
-    fun forEachClass (action: (ConstantPoolEntry.ClassConstant) -> Unit) {
+    fun forEachClass(action: (ConstantPoolEntry.ClassConstant) -> Unit) {
         entries.forEach {
-            if(it is ConstantPoolEntry.ClassConstant) action(it)
+            if (it is ConstantPoolEntry.ClassConstant) action(it)
         }
     }
 

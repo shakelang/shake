@@ -41,11 +41,12 @@ class PathDescriptor(
     val entity: String,
 ) {
 
-    val descriptor get() = buildString {
-        packageEntities.forEach { append("$it/") }
-        classEntities.forEach { append("$it:") }
-        append(entity)
-    }
+    val descriptor
+        get() = buildString {
+            packageEntities.forEach { append("$it/") }
+            classEntities.forEach { append("$it:") }
+            append(entity)
+        }
 
     val packagePath get() = packageEntities.joinToString("/")
     val classPath get() = classEntities.joinToString(":")
@@ -66,8 +67,8 @@ class PathDescriptor(
 
             var finished = false
 
-            for(it in descriptor) {
-                if(finished) {
+            for (it in descriptor) {
+                if (finished) {
                     current.append(it)
                     continue
                 }
@@ -76,14 +77,17 @@ class PathDescriptor(
                         packageEntities.add(current.toString())
                         current = StringBuilder()
                     }
+
                     ':' -> {
                         classEntities.add(current.toString())
                         current = StringBuilder()
                     }
+
                     '(' -> {
                         current.append(it)
                         finished = true
                     }
+
                     else -> {
                         current.append(it)
                     }

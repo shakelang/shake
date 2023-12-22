@@ -5,7 +5,6 @@ import com.shakelang.shake.bytecode.interpreter.format.Field
 import com.shakelang.shake.bytecode.interpreter.format.Method
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
-import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
 interface ShakeInterpreterPackage {
 
@@ -178,15 +177,15 @@ interface ShakeInterpreterPackage {
 
                 fun addStorageFormat(storage: StorageFormat) {
                     this.storages.add(storage)
-                    for(c in storage.classes) {
+                    for (c in storage.classes) {
                         classFormatList.add(c to storage)
                         classList.add(null)
                     }
-                    for(m in storage.methods) {
+                    for (m in storage.methods) {
                         methodFormatList.add(m to storage)
                         methodList.add(null)
                     }
-                    for(f in storage.fields) {
+                    for (f in storage.fields) {
                         fieldFormatList.add(f to storage)
                         fieldList.add(null)
                     }

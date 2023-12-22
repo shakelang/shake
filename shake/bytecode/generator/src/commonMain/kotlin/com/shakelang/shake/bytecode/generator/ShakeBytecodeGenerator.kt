@@ -22,8 +22,10 @@ class ShakeBytecodeGenerator {
             is ShakeNullLiteral -> {
                 TODO("Null constant??")
             }
+
             is ShakeStringLiteral -> {
             }
+
             is ShakeBooleanLiteral -> {
                 this.bpush(v.value)
             }
@@ -176,7 +178,7 @@ class ShakeBytecodeGenerator {
     }
 
     fun generateTypeDescriptor(type: ShakeType): String {
-        return when(type.kind) {
+        return when (type.kind) {
             ShakeType.Kind.PRIMITIVE -> {
                 when ((type as ShakeType.Primitive).type) {
                     ShakeType.PrimitiveType.BYTE -> "B"

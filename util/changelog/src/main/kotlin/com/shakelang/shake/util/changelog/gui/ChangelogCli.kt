@@ -58,7 +58,13 @@ class ChangelogCli(
 
     private fun showBumpPage(changed: List<PackageEntry>, unchanged: List<PackageEntry>) {
         println("Showing bump page")
-        val bumpPanel = BumpPanel(project, logger, changed, unchanged, onCanceled = { showHomePage() }, onBumped = { showHomePage() })
+        val bumpPanel = BumpPanel(
+            project,
+            logger,
+            changed,
+            unchanged,
+            onCanceled = { showHomePage() },
+            onBumped = { showHomePage() })
         val scrollPane = JScrollPane(bumpPanel)
         scrollPane.verticalScrollBarPolicy = JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
         scrollPane.horizontalScrollBarPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_NEVER

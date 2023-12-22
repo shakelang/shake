@@ -63,14 +63,26 @@ class JsonGeneratorTests : FreeSpec({
 
     "generate array filled multiple elements" {
         JsonGenerator.generate(arrayOf("hello", "world")) shouldBe "[\"hello\",\"world\"]"
-        JsonGenerator.generate(arrayOf("hello", "world"), indent = " ".repeat(2)) shouldBe "[\n  \"hello\",\n  \"world\"\n]"
-        JsonGenerator.generate(arrayOf("hello", "world"), indent = " ".repeat(4)) shouldBe "[\n    \"hello\",\n    \"world\"\n]"
+        JsonGenerator.generate(
+            arrayOf("hello", "world"),
+            indent = " ".repeat(2)
+        ) shouldBe "[\n  \"hello\",\n  \"world\"\n]"
+        JsonGenerator.generate(
+            arrayOf("hello", "world"),
+            indent = " ".repeat(4)
+        ) shouldBe "[\n    \"hello\",\n    \"world\"\n]"
     }
 
     "generate array nested" {
         JsonGenerator.generate(arrayOf(arrayOf("hello"))) shouldBe "[[\"hello\"]]"
-        JsonGenerator.generate(arrayOf(arrayOf("hello")), indent = " ".repeat(2)) shouldBe "[\n  [\n    \"hello\"\n  ]\n]"
-        JsonGenerator.generate(arrayOf(arrayOf("hello")), indent = " ".repeat(4)) shouldBe "[\n    [\n        \"hello\"\n    ]\n]"
+        JsonGenerator.generate(
+            arrayOf(arrayOf("hello")),
+            indent = " ".repeat(2)
+        ) shouldBe "[\n  [\n    \"hello\"\n  ]\n]"
+        JsonGenerator.generate(
+            arrayOf(arrayOf("hello")),
+            indent = " ".repeat(4)
+        ) shouldBe "[\n    [\n        \"hello\"\n    ]\n]"
     }
 
     "generate list empty" {
@@ -87,14 +99,23 @@ class JsonGeneratorTests : FreeSpec({
 
     "generate list filled multiple elements" {
         JsonGenerator.generate(listOf("hello", "world")) shouldBe "[\"hello\",\"world\"]"
-        JsonGenerator.generate(listOf("hello", "world"), indent = " ".repeat(2)) shouldBe "[\n  \"hello\",\n  \"world\"\n]"
-        JsonGenerator.generate(listOf("hello", "world"), indent = " ".repeat(4)) shouldBe "[\n    \"hello\",\n    \"world\"\n]"
+        JsonGenerator.generate(
+            listOf("hello", "world"),
+            indent = " ".repeat(2)
+        ) shouldBe "[\n  \"hello\",\n  \"world\"\n]"
+        JsonGenerator.generate(
+            listOf("hello", "world"),
+            indent = " ".repeat(4)
+        ) shouldBe "[\n    \"hello\",\n    \"world\"\n]"
     }
 
     "generate list nested" {
         JsonGenerator.generate(listOf(listOf("hello"))) shouldBe "[[\"hello\"]]"
         JsonGenerator.generate(listOf(listOf("hello")), indent = " ".repeat(2)) shouldBe "[\n  [\n    \"hello\"\n  ]\n]"
-        JsonGenerator.generate(listOf(listOf("hello")), indent = " ".repeat(4)) shouldBe "[\n    [\n        \"hello\"\n    ]\n]"
+        JsonGenerator.generate(
+            listOf(listOf("hello")),
+            indent = " ".repeat(4)
+        ) shouldBe "[\n    [\n        \"hello\"\n    ]\n]"
     }
 
     "generate map empty" {
@@ -111,14 +132,26 @@ class JsonGeneratorTests : FreeSpec({
 
     "generate map filled multiple elements" {
         JsonGenerator.generate(mapOf("hello" to 1, "world" to 2)) shouldBe "{\"hello\":1,\"world\":2}"
-        JsonGenerator.generate(mapOf("hello" to 1, "world" to 2), indent = " ".repeat(2)) shouldBe "{\n  \"hello\": 1,\n  \"world\": 2\n}"
-        JsonGenerator.generate(mapOf("hello" to 1, "world" to 2), indent = " ".repeat(4)) shouldBe "{\n    \"hello\": 1,\n    \"world\": 2\n}"
+        JsonGenerator.generate(
+            mapOf("hello" to 1, "world" to 2),
+            indent = " ".repeat(2)
+        ) shouldBe "{\n  \"hello\": 1,\n  \"world\": 2\n}"
+        JsonGenerator.generate(
+            mapOf("hello" to 1, "world" to 2),
+            indent = " ".repeat(4)
+        ) shouldBe "{\n    \"hello\": 1,\n    \"world\": 2\n}"
     }
 
     "generate map nested" {
         JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1))) shouldBe "{\"hello\":{\"world\":1}}"
-        JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1)), indent = " ".repeat(2)) shouldBe "{\n  \"hello\": {\n    \"world\": 1\n  }\n}"
-        JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1)), indent = " ".repeat(4)) shouldBe "{\n    \"hello\": {\n        \"world\": 1\n    }\n}"
+        JsonGenerator.generate(
+            mapOf("hello" to mapOf("world" to 1)),
+            indent = " ".repeat(2)
+        ) shouldBe "{\n  \"hello\": {\n    \"world\": 1\n  }\n}"
+        JsonGenerator.generate(
+            mapOf("hello" to mapOf("world" to 1)),
+            indent = " ".repeat(4)
+        ) shouldBe "{\n    \"hello\": {\n        \"world\": 1\n    }\n}"
     }
 
     "generate JsonElement" {

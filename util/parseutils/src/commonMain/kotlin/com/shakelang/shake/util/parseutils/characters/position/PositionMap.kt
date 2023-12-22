@@ -19,7 +19,7 @@ interface PositionMap {
      */
     val source: CharacterSource
 
-/**
+    /**
      * The line separators of the [PositionMap]
      *
      * @since 0.1.0
@@ -27,7 +27,7 @@ interface PositionMap {
      */
     val lineSeparators: IntArray
 
-/**
+    /**
      * The location of the [PositionMap]
      *
      * @since 0.1.0

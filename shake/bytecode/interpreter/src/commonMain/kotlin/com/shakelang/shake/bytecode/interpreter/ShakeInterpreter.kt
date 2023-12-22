@@ -38,14 +38,22 @@ class ShakeInterpreter(
 
     fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
 
-    fun putFunctionOnStack(code: ByteArray, method: ShakeInterpreterMethod, args: ByteArray = kotlin.byteArrayOf()) : ShakeCodeInterpreter {
+    fun putFunctionOnStack(
+        code: ByteArray,
+        method: ShakeInterpreterMethod,
+        args: ByteArray = kotlin.byteArrayOf()
+    ): ShakeCodeInterpreter {
         val interpreter = createCodeInterpreter(method.code, method)
         // Put the arguments on the stack
         interpreter.stack.push(args)
         callStack.add(interpreter)
         return interpreter
     }
-    fun putFunctionOnStack(method: ShakeInterpreterMethod, args: ByteArray = kotlin.byteArrayOf()) : ShakeCodeInterpreter {
+
+    fun putFunctionOnStack(
+        method: ShakeInterpreterMethod,
+        args: ByteArray = kotlin.byteArrayOf()
+    ): ShakeCodeInterpreter {
         return putFunctionOnStack(method.code, method, args)
     }
 
@@ -55,7 +63,7 @@ class ShakeInterpreter(
     ) {
 
         val locals = ByteArray(method.maxLocals)
-        val returnData = ByteArray (method.returnType.byteSize)
+        val returnData = ByteArray(method.returnType.byteSize)
         val stack = ByteStack(method.maxStack)
 
         var finished = false
@@ -117,7 +125,8 @@ class ShakeInterpreter(
         fun tick() {
             val opcode = readByte()
             when (opcode) {
-                Opcodes.NOP -> { /* do nothing */ }
+                Opcodes.NOP -> { /* do nothing */
+                }
 
                 // Pushing values to the stack
                 Opcodes.BPUSH -> stack.push(readByte())
@@ -132,10 +141,12 @@ class ShakeInterpreter(
                     stack.push(locals[pos])
                     stack.push(locals[pos + 1])
                 }
+
                 Opcodes.ILOAD -> {
                     val pos = readUShort().toInt()
                     for (i in 0 until 4) stack.push(locals[pos + i])
                 }
+
                 Opcodes.LLOAD -> {
                     val pos = readUShort().toInt()
                     for (i in 0 until 8) stack.push(locals[pos + i])
@@ -148,10 +159,12 @@ class ShakeInterpreter(
                     locals[pos + 1] = stack.pop()
                     locals[pos] = stack.pop()
                 }
+
                 Opcodes.ISTORE -> {
                     val pos = readUShort().toInt()
                     for (i in 3 downTo 0) locals[pos + i] = stack.pop()
                 }
+
                 Opcodes.LSTORE -> {
                     val pos = readUShort().toInt()
                     for (i in 7 downTo 0) locals[pos + i] = stack.pop()
@@ -170,46 +183,55 @@ class ShakeInterpreter(
                     val b = stack.pop()
                     stack.push(b - a)
                 }
+
                 Opcodes.SSUB -> {
                     val a = stack.popShort()
                     val b = stack.popShort()
                     stack.push(b - a)
                 }
+
                 Opcodes.ISUB -> {
                     val a = stack.popInt()
                     val b = stack.popInt()
                     stack.push(b - a)
                 }
+
                 Opcodes.LSUB -> {
                     val a = stack.popLong()
                     val b = stack.popLong()
                     stack.push(b - a)
                 }
+
                 Opcodes.UBSUB -> {
                     val a = stack.popUByte()
                     val b = stack.popUByte()
                     stack.push((b - a).toByte())
                 }
+
                 Opcodes.USSUB -> {
                     val a = stack.popUShort()
                     val b = stack.popUShort()
                     stack.push((b - a).toShort())
                 }
+
                 Opcodes.UISUB -> {
                     val a = stack.popUInt()
                     val b = stack.popUInt()
                     stack.push((b - a).toInt())
                 }
+
                 Opcodes.ULSUB -> {
                     val a = stack.popULong()
                     val b = stack.popULong()
                     stack.push((b - a).toLong())
                 }
+
                 Opcodes.FSUB -> {
                     val a = stack.popFloat()
                     val b = stack.popFloat()
                     stack.push(b - a)
                 }
+
                 Opcodes.DSUB -> {
                     val a = stack.popDouble()
                     val b = stack.popDouble()
@@ -232,46 +254,55 @@ class ShakeInterpreter(
                     val b = stack.pop()
                     stack.push(b / a)
                 }
+
                 Opcodes.SDIV -> {
                     val a = stack.popShort()
                     val b = stack.popShort()
                     stack.push(b / a)
                 }
+
                 Opcodes.IDIV -> {
                     val a = stack.popInt()
                     val b = stack.popInt()
                     stack.push(b / a)
                 }
+
                 Opcodes.LDIV -> {
                     val a = stack.popLong()
                     val b = stack.popLong()
                     stack.push(b / a)
                 }
+
                 Opcodes.FDIV -> {
                     val a = stack.popFloat()
                     val b = stack.popFloat()
                     stack.push(b / a)
                 }
+
                 Opcodes.DDIV -> {
                     val a = stack.popDouble()
                     val b = stack.popDouble()
                     stack.push(b / a)
                 }
+
                 Opcodes.UBDIV -> {
                     val a = stack.popUByte()
                     val b = stack.popUByte()
                     stack.push((b / a).toByte())
                 }
+
                 Opcodes.USDIV -> {
                     val a = stack.popUShort()
                     val b = stack.popUShort()
                     stack.push((b / a).toShort())
                 }
+
                 Opcodes.UIDIV -> {
                     val a = stack.popUInt()
                     val b = stack.popUInt()
                     stack.push((b / a).toInt())
                 }
+
                 Opcodes.ULDIV -> {
                     val a = stack.popULong()
                     val b = stack.popULong()
@@ -283,46 +314,55 @@ class ShakeInterpreter(
                     val b = stack.pop()
                     stack.push(b % a)
                 }
+
                 Opcodes.SMOD -> {
                     val a = stack.popShort()
                     val b = stack.popShort()
                     stack.push(b % a)
                 }
+
                 Opcodes.IMOD -> {
                     val a = stack.popInt()
                     val b = stack.popInt()
                     stack.push(b % a)
                 }
+
                 Opcodes.LMOD -> {
                     val a = stack.popLong()
                     val b = stack.popLong()
                     stack.push(b % a)
                 }
+
                 Opcodes.UBMOD -> {
                     val a = stack.popUByte()
                     val b = stack.popUByte()
                     stack.push((b % a).toByte())
                 }
+
                 Opcodes.USMOD -> {
                     val a = stack.popUShort()
                     val b = stack.popUShort()
                     stack.push((b % a).toShort())
                 }
+
                 Opcodes.UIMOD -> {
                     val a = stack.popUInt()
                     val b = stack.popUInt()
                     stack.push((b % a).toInt())
                 }
+
                 Opcodes.ULMOD -> {
                     val a = stack.popULong()
                     val b = stack.popULong()
                     stack.push((b % a).toLong())
                 }
+
                 Opcodes.FMOD -> {
                     val a = stack.popFloat()
                     val b = stack.popFloat()
                     stack.push(b % a)
                 }
+
                 Opcodes.DMOD -> {
                     val a = stack.popDouble()
                     val b = stack.popDouble()
@@ -359,16 +399,19 @@ class ShakeInterpreter(
                     val b = stack.pop()
                     stack.push(b shl a)
                 }
+
                 Opcodes.SSHL -> {
                     val a = stack.popShort()
                     val b = stack.popShort()
                     stack.push(b shl a)
                 }
+
                 Opcodes.ISHL -> {
                     val a = stack.popInt()
                     val b = stack.popInt()
                     stack.push(b shl a)
                 }
+
                 Opcodes.LSHL -> {
                     val a = stack.popLong()
                     val b = stack.popLong()
@@ -380,16 +423,19 @@ class ShakeInterpreter(
                     val b = stack.pop()
                     stack.push(b shr a)
                 }
+
                 Opcodes.SSHR -> {
                     val a = stack.popShort()
                     val b = stack.popShort()
                     stack.push(b shr a)
                 }
+
                 Opcodes.ISHR -> {
                     val a = stack.popInt()
                     val b = stack.popInt()
                     stack.push(b shr a)
                 }
+
                 Opcodes.LSHR -> {
                     val a = stack.popLong()
                     val b = stack.popLong()
@@ -401,16 +447,19 @@ class ShakeInterpreter(
                     val b = stack.pop()
                     stack.push(b ushr a)
                 }
+
                 Opcodes.SSHRU -> {
                     val a = stack.popShort()
                     val b = stack.popShort()
                     stack.push(b ushr a)
                 }
+
                 Opcodes.ISHRU -> {
                     val a = stack.popInt()
                     val b = stack.popInt()
                     stack.push(b ushr a)
                 }
+
                 Opcodes.LSHRU -> {
                     val a = stack.popLong()
                     val b = stack.popLong()
@@ -595,7 +644,8 @@ class ShakeInterpreter(
                 Opcodes.CALL -> {
                     val methodName = this.method.constantPool.getUtf8(readInt()).value
                     println(method.constantPool)
-                    val method = classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
+                    val method =
+                        classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
                     val argsSize = method.parameters.sumOf { it.byteSize }
                     val args = ByteArray(argsSize) {
                         stack.pop()
@@ -614,5 +664,6 @@ object ClassRegister {
     fun registerClass(name: String, clazz: ShakeInterpreterClass) {
         classes[name] = clazz
     }
+
     fun getClass(name: String): ShakeInterpreterClass? = classes[name]
 }

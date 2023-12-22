@@ -1,6 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter.generator
 
-import com.shakelang.shake.bytecode.interpreter.format.*
+import com.shakelang.shake.bytecode.interpreter.format.MutableStorageFormat
+import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 
 class GenerationContext {
@@ -66,7 +67,6 @@ class GenerationContext {
     fun classRef(value: String): Int {
         return constantPool.resolveClass(value)
     }
-
 
 
     fun toStorageFormat(): StorageFormat {
