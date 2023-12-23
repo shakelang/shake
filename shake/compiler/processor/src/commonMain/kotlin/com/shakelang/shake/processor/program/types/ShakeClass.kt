@@ -72,4 +72,9 @@ interface ShakeClass {
             "staticClasses" to this.staticClasses.map { it.toJson() }
         )
     }
+
+    fun phase1()
+    fun phase2()
+    fun phase3()
+    fun phase4()
 }

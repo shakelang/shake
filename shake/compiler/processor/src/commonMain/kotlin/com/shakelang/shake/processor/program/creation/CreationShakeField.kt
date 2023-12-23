@@ -86,7 +86,12 @@ open class CreationShakeField(
         return CreationShakeFieldUsage(scope, this)
     }
 
-    open fun processCode() {}
+    override fun phase3() {
+        TODO()
+    }
+    override fun phase4() {
+        TODO()
+    }
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(
@@ -127,7 +132,7 @@ open class CreationShakeField(
                 override var initialValue: CreationShakeValue? = null
                     private set
 
-                override fun processCode() {
+                override fun phase4() {
                     initialValue = node.value?.let { this.parentScope.processor.visitValue(parentScope, it) }
                 }
             }.let {
@@ -162,7 +167,7 @@ open class CreationShakeField(
                 override var initialValue: CreationShakeValue? = null
                     private set
 
-                override fun processCode() {
+                override fun phase4() {
                     initialValue = node.value?.let { this.parentScope.processor.visitValue(parentScope, it) }
                 }
             }.let {

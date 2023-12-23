@@ -59,4 +59,7 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
             "type" to type.toJson()
         )
     }
+    
+    fun phase3()
+    fun phase4()
 }

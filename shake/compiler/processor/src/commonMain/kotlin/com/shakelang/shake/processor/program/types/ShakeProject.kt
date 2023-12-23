@@ -50,4 +50,9 @@ interface ShakeProject {
     fun toJsonString(format: Boolean = false): String {
         return json.stringify(toJson(), format)
     }
+
+    fun phase1()
+    fun phase2()
+    fun phase3()
+    fun phase4()
 }

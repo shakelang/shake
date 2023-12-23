@@ -44,6 +44,11 @@ abstract class ShakeProcessor<T> {
 
     abstract fun loadFile(directory: String, src: String)
 
+    abstract fun phase1()
+    abstract fun phase2()
+    abstract fun phase3()
+    abstract fun phase4()
+
     fun <O> generate(f: (T) -> O): O {
         return f(src)
     }
@@ -65,6 +70,19 @@ open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
         val reformatted = src.replace("\\", "/")
         val contents = parseFile("$directory/$src")
         project.putFile(reformatted.split("/").toTypedArray(), contents)
+    }
+
+    override fun phase1() {
+        project.phase1()
+    }
+    override fun phase2() {
+        project.phase2()
+    }
+    override fun phase3() {
+        project.phase3()
+    }
+    override fun phase4() {
+        project.phase4()
     }
 
     fun finish(): CreationShakeProject {

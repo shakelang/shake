@@ -48,4 +48,9 @@ interface ShakeMethod : ShakeInvokable {
             "body" to body?.toJson()
         )
     }
+
+
+
+    fun phase3()
+    fun phase4()
 }

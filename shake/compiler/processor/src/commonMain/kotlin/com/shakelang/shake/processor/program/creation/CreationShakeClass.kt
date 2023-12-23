@@ -42,6 +42,22 @@ class CreationShakeClass : ShakeClass {
     override val interfaces: List<CreationShakeClass>
         get() = _interfaces.map { it!! }
 
+    override fun phase1() {
+        TODO("Not yet implemented")
+    }
+
+    override fun phase2() {
+        TODO("Not yet implemented")
+    }
+
+    override fun phase3() {
+        TODO("Not yet implemented")
+    }
+
+    override fun phase4() {
+        TODO("Not yet implemented")
+    }
+
     constructor(
         prj: CreationShakeProject,
         pkg: CreationShakePackage?,
@@ -176,10 +192,10 @@ class CreationShakeClass : ShakeClass {
     }
 
     fun processCode() {
-        this.methods.forEach { it.processCode() }
-        this.staticMethods.forEach { it.processCode() }
-        this.fields.forEach { it.processCode() }
-        this.staticFields.forEach { it.processCode() }
+        this.methods.forEach { it.phase4() }
+        this.staticMethods.forEach { it.phase4() }
+        this.fields.forEach { it.phase4() }
+        this.staticFields.forEach { it.phase4() }
         this.constructors.forEach { it.processCode() }
         this.classes.forEach { it.processCode() }
         this.staticClasses.forEach { it.processCode() }

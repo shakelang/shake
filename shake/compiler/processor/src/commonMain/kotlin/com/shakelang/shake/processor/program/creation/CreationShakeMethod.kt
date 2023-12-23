@@ -105,7 +105,11 @@ class CreationShakeMethod(
         }
     }
 
-    fun processCode() {
+    override fun phase3() {
+        TODO("Not yet implemented")
+    }
+
+    override fun phase4() {
         if (body is CreationShakeCode.ShakeLateProcessCode) body.process(scope)
     }
 

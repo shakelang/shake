@@ -118,10 +118,23 @@ open class CreationShakePackage(
             get() = parent.processor
     }
 
-    fun processCode() {
+    override fun phase1() {
+        TODO()
+    }
+
+    override fun phase2() {
+        TODO()
+    }
+
+    override fun phase3() {
+        TODO()
+    }
+
+
+    override fun phase4() {
         classes.forEach { it.processCode() }
-        functions.forEach { it.processCode() }
-        fields.forEach { it.processCode() }
-        subpackages.forEach { it.processCode() }
+        functions.forEach { it.phase4() }
+        fields.forEach { it.phase4() }
+        subpackages.forEach { it.phase4() }
     }
 }

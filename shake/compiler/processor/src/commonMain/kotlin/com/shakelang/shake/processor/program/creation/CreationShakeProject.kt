@@ -139,7 +139,7 @@ class CreationShakeProject(
         }
     }
 
-    open fun putFile(name: Array<String>, contents: ShakeFileNode) {
+    fun putFile(name: Array<String>, contents: ShakeFileNode) {
         val pkg = (contents.children.find { it is ShakePackageNode } as? ShakePackageNode)?.pkg
             ?: name.sliceArray(0 until name.size - 1)
         val file = name.last()
@@ -222,13 +222,29 @@ class CreationShakeProject(
         this.scopes.clear()
 
         this.classes.forEach { it.processCode() }
-        this.functions.forEach { it.processCode() }
-        this.fields.forEach { it.processCode() }
-        this.subpackages.forEach { it.processCode() }
+        this.functions.forEach { it.phase4() }
+        this.fields.forEach { it.phase4() }
+        this.subpackages.forEach { it.phase4() }
     }
 
     fun addScope(creationShakeScope: CreationShakeScope) {
         this.scopes.add(creationShakeScope)
+    }
+
+    override fun phase1() {
+        TODO()
+    }
+
+    override fun phase2() {
+        TODO()
+    }
+
+    override fun phase3() {
+        TODO()
+    }
+
+    override fun phase4() {
+        TODO()
     }
 
     class ClassRequirement(val name: String, val then: (CreationShakeClass) -> Unit)

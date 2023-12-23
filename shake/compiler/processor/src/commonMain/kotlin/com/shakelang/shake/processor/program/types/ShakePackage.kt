@@ -36,4 +36,9 @@ interface ShakePackage {
             "fields" to fields.map { it.toJson() }
         )
     }
+
+    fun phase1()
+    fun phase2()
+    fun phase3()
+    fun phase4()
 }

@@ -1,6 +1,7 @@
 import com.shakelang.shake.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
+import conventions.useKotest
 
 plugins {
     id("conventions.all")
@@ -20,12 +21,9 @@ kotlin {
         implementation(project(":util:primitives"))
         implementation(project(":shake:compiler:lexer"))
         implementation(project(":shake:compiler:parser"))
-
-        testImplementation(kotlin("test"))
-    }
-    jvm {
-        dependencies {
-            implementation("org.reflections:reflections:0.10.2")
-        }
+        testImplementation(project(":util:testlib"))
+        testImplementation(project(":shake:compiler:shakelib"))
     }
 }
+
+useKotest()
