@@ -166,7 +166,9 @@ open class CreationShakeVariableDeclaration :
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to name,
-            "type" to type.toJson(),
+            "type" to "variable-declaration",
+            "variableType" to type.toJson(),
+            "isFinal" to isFinal,
             "initialValue" to initialValue?.toJson(),
             "latestValue" to latestValue?.toJson(),
             "latestType" to latestType.toJson()

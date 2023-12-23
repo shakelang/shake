@@ -1,6 +1,7 @@
 package com.shakelang.shake.processor
 
 import com.shakelang.shake.stdlib.CoreFiles
+import com.shakelang.shake.util.shason.json
 import io.kotest.core.spec.style.FreeSpec
 
 class Test : FreeSpec({
@@ -10,13 +11,17 @@ class Test : FreeSpec({
         processor.loadSynthetic("shake/lang/Object.shake", CoreFiles.OBJECT_SHAKE)
         processor.loadSynthetic("shake/lang/String.shake", CoreFiles.STRING_SHAKE)
         processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
+        processor.loadSynthetic("test2.shake", """
+            package test2
+            val test = "Hello World"
+        """.trimIndent())
         processor.loadSynthetic("test.shake", """
             package test
-            import shake.lang.Object
-            import shake.lang.String
-            import shake.lang.Numbers
+            
+            import test2.test
+            
             class Test {
-                void main() {
+                static void main() {
                     val a = 1
                     val b = 2
                     val c = a + b
@@ -29,6 +34,6 @@ class Test : FreeSpec({
         """.trimIndent())
         processor.finish()
 
-        println(processor.project.cores.String)
+        println(json.stringify(processor.project.getClass("test.Test")?.toJson()))
     }
 })

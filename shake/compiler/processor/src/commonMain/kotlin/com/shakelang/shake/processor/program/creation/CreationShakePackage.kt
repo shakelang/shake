@@ -33,7 +33,7 @@ open class CreationShakePackage(
         return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
     }
 
-    override fun getPackage(name: List<String>): ShakePackage? {
+    override fun getPackage(name: List<String>): CreationShakePackage? {
         return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
     }
 
@@ -41,47 +41,6 @@ open class CreationShakePackage(
 
         this.files.add(FileEntry(name, contents))
 
-//        val imports = contents.children.filterIsInstance<ShakeImportNode>()
-//        val imported = arrayOfNulls<CreationShakePackage>(imports.size)
-//
-//        // TODO This does not work when importing a class child
-//        imports.forEachIndexed { i, import ->
-//            baseProject.getPackage(import.import.dropLast(1).joinToString(".")) {
-//                imported[i] = it
-//            }
-//        }
-//
-//        val fileScope = CreationFileScope(baseProject, scope, imports, imported)
-//
-//        contents.children.forEach {
-//            when (it) {
-//                is ShakeClassDeclarationNode -> {
-//                    if (classes.any { clz -> clz.name == it.name }) {
-//                        throw IllegalStateException("Class ${it.name} already exists")
-//                    }
-//                    classes.add(CreationShakeClass.from(baseProject, this, fileScope, it))
-//                }
-//
-//                is ShakeFunctionDeclarationNode -> {
-//                    val method = CreationShakeMethod.from(baseProject, this, fileScope, it)
-//                    /* TODO: check if method already exists
-//                    if(functions.any { func -> func.signature == method.signature })
-//                        throw IllegalStateException("Method ${method.signature} already exists")
-//                    */
-//                    functions.add(method)
-//                }
-//
-//                is ShakeVariableDeclarationNode -> {
-//                    if (fields.any { field -> field.name == it.name }) {
-//                        throw IllegalStateException("Field ${it.name} already exists")
-//                    }
-//                    fields.add(CreationShakeField.from(baseProject, this, fileScope, it))
-//                }
-//
-//                is ShakePackageNode -> {}
-//                else -> throw IllegalStateException("Unknown node type ${it::class.simpleName}")
-//            }
-//        }
     }
 
     open fun putFile(name: Array<String>, contents: ShakeFileNode) {
@@ -103,7 +62,7 @@ open class CreationShakePackage(
                 if (classes.any { it.name == clz.name }) {
                     throw IllegalStateException("Class ${clz.name} already exists")
                 }
-                classes.add(CreationShakeClass.from(baseProject, this, scope, clz))
+                classes.add(CreationShakeClass.from(baseProject, this, file.scope, clz))
             }
         }
         this.subpackages.forEach { it.phase1() }
@@ -127,11 +86,11 @@ open class CreationShakePackage(
         println("Phase 3 of package $qualifiedName")
         this.files.forEach { file ->
             file.functions.forEach {
-                val method = CreationShakeMethod.from(baseProject, this, scope, it)
+                val method = CreationShakeMethod.from(baseProject, this, file.scope, it)
                 functions.add(method)
             }
             file.fields.forEach {
-                val field = CreationShakeField.from(baseProject, this, scope, it)
+                val field = CreationShakeField.from(baseProject, this, file.scope, it)
                 fields.add(field)
             }
         }
@@ -199,14 +158,74 @@ open class CreationShakePackage(
         val imports: List<ShakeImportNode>
     ) : CreationShakeScope() {
 
+        private val explicitImports = imports.filter {
+            it.import.last() != "*"
+        }.map {
+            it.import
+        }
+
+        private val wildcardImports = imports.filter {
+            it.import.last() == "*"
+        }.map {
+            it.import.dropLast(1)
+        }
+
+        private lateinit var wildcardImportedPackages: List<CreationShakePackage>
+        private lateinit var wildcardImportedClasses: List<CreationShakeClass>
+
+        private lateinit var importedClasses: List<CreationShakeClass>
+        private lateinit var importedFunctions: List<CreationShakeMethod>
+        private lateinit var importedFields: List<CreationShakeField>
+
         override val parent: CreationShakeScope
             get() = baseProject.projectScope
+
+        fun lazyLoadImportedWildcardPackages() {
+            if(this::wildcardImportedPackages.isInitialized) return
+            wildcardImportedPackages = wildcardImports.map { baseProject.getPackage(it) }
+        }
+
+        fun lazyLoadImportedWildcardClasses() {
+            if(this::wildcardImportedClasses.isInitialized) return
+            wildcardImportedClasses = wildcardImports.mapNotNull { baseProject.getClass(it) }
+        }
+
+        fun lazyLoadWildcards() {
+            lazyLoadImportedWildcardPackages()
+            lazyLoadImportedWildcardClasses()
+        }
+
+        fun lazyLoadImportedClasses() {
+            if(this::importedClasses.isInitialized) return
+            lazyLoadWildcards()
+            val imports = wildcardImportedPackages.flatMap { it.classes }.toMutableList()
+            imports.addAll(wildcardImportedClasses.flatMap { it.classes })
+            imports.addAll(explicitImports.mapNotNull { baseProject.getClass(it) })
+            importedClasses = imports
+        }
+
+        fun lazyLoadImportedFunctions() {
+            if(this::importedFunctions.isInitialized) return
+            lazyLoadImportedWildcardPackages()
+            val imports = wildcardImports.flatMap { baseProject.getPackage(it).functions }.toMutableList()
+            imports.addAll(explicitImports.flatMap { baseProject.getFunctions(it) })
+            importedFunctions = imports
+        }
+
+        fun lazyLoadImportedFields() {
+            if(this::importedFields.isInitialized) return
+            lazyLoadImportedWildcardPackages()
+            val imports = wildcardImports.flatMap { baseProject.getPackage(it).fields }.toMutableList()
+            imports.addAll(explicitImports.mapNotNull { baseProject.getField(it) })
+            importedFields = imports
+        }
 
         override val project: CreationShakeProject get() = baseProject
         override val processor: ShakeASTProcessor get() = parent.processor
 
         override fun get(name: String): CreationShakeAssignable? {
-            TODO()
+            lazyLoadImportedFields()
+            return importedFields.find { it.name == name } ?: parent.get(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
@@ -214,7 +233,8 @@ open class CreationShakePackage(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
-            TODO()
+            lazyLoadImportedFunctions()
+            return importedFunctions?.filter { it.name == name }?.plus(parent.getFunctions(name)) ?: parent.getFunctions(name)
         }
 
         override fun setFunctions(function: CreationShakeMethod) {
@@ -222,7 +242,8 @@ open class CreationShakePackage(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
-            TODO()
+            lazyLoadImportedClasses()
+            return importedClasses?.find { it.name == name } ?: parent.getClass(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {

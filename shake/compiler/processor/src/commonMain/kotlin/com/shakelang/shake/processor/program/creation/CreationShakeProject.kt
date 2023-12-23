@@ -3,7 +3,7 @@ package com.shakelang.shake.processor.program.creation
 import com.shakelang.shake.parser.node.ShakeFileNode
 import com.shakelang.shake.parser.node.ShakePackageNode
 import com.shakelang.shake.processor.ShakeASTProcessor
-import com.shakelang.shake.processor.program.types.ShakeClass
+import com.shakelang.shake.processor.program.types.ShakeField
 import com.shakelang.shake.processor.program.types.ShakeProject
 
 class CreationShakeProject(
@@ -63,7 +63,8 @@ class CreationShakeProject(
     }
 
     fun putFile(name: String, content: ShakeFileNode) {
-        val pkgNode = (content.children.find { it is ShakePackageNode } ?: error("No package node found")) as ShakePackageNode
+        val pkgNode =
+            (content.children.find { it is ShakePackageNode } ?: error("No package node found")) as ShakePackageNode
         val pkgName = pkgNode.pkg
         val pkg = getPackage(pkgName)
         pkg.putFile(name, content)
@@ -88,7 +89,27 @@ class CreationShakeProject(
     }
 
     override fun getClass(name: List<String>): CreationShakeClass? = super.getClass(name) as CreationShakeClass?
+    override fun getClass(name: Array<String>): CreationShakeClass? = super.getClass(name) as CreationShakeClass?
     override fun getClass(clz: String): CreationShakeClass? = super.getClass(clz) as CreationShakeClass?
+
+    @Suppress("UNCHECKED_CAST")
+    override fun getFunctions(name: List<String>): List<CreationShakeMethod> =
+        super.getFunctions(name) as List<CreationShakeMethod>
+
+    @Suppress("UNCHECKED_CAST")
+    override fun getFunctions(name: Array<String>): List<CreationShakeMethod> =
+        super.getFunctions(name) as List<CreationShakeMethod>
+
+    @Suppress("UNCHECKED_CAST")
+    override fun getFunctions(name: String): List<CreationShakeMethod> =
+        super.getFunctions(name) as List<CreationShakeMethod>
+
+    override fun getField(name: Array<String>): CreationShakeField? = super.getField(name) as CreationShakeField?
+
+    override fun getField(name: List<String>): CreationShakeField? = super.getField(name) as CreationShakeField?
+
+    override fun getField(name: String): CreationShakeField? = super.getField(name) as CreationShakeField?
+
 
     fun finish() {
         this.phase1()

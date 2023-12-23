@@ -78,6 +78,7 @@ class CreationShakeMethod(
         }
 
         override fun set(value: CreationShakeDeclaration) {
+            println("Setting ${value.name}")
             if (value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
             if (variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
             variables.add(value)

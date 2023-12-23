@@ -16,6 +16,7 @@ open class CreationShakeCode(
         override lateinit var statements: List<CreationShakeStatement>
 
         fun process(scope: CreationShakeScope) {
+            if (this::statements.isInitialized) return
             statements = tree.children.map {
                 scope.processor.visitStatement(scope, it)
             }

@@ -49,9 +49,33 @@ interface ShakePackage {
         return classes.find { it.name == name }
     }
 
-    fun getFunction(name: String): ShakeMethod? {
-        return functions.find { it.name == name }
+    fun getFunctions(name: List<String>): List<ShakeMethod>? {
+        if (name.isEmpty()) return emptyList()
+        if (name.size == 1) return getFunctions(name.first())
+        val subClass = getClass(name.first())
+        val subClassResults = subClass?.getMethods(name.drop(1)) ?: emptyList()
+        val subPackageResults = getPackage(name.first())?.getFunctions(name.drop(1)) ?: emptyList()
+        return subClassResults + subPackageResults
     }
+
+    fun getFunctions(name: Array<String>) = getFunctions(name.toList())
+
+    fun getFunctions(name: String): List<ShakeMethod> {
+        return functions.filter { it.name == name }
+    }
+
+    fun getField(name: List<String>): ShakeField? {
+        if (name.isEmpty()) return null
+        if (name.size == 1) return getField(name.first())
+        val subClass = getClass(name.first())
+        val searched0 = subClass?.getField(name.drop(1))
+        if (searched0 != null) return searched0
+        val searched1 = getPackage(name.first())
+        if (searched1 != null) return searched1.getField(name.drop(1))
+        return null
+    }
+
+    fun getField(name: Array<String>) = getField(name.toList())
 
     fun getField(name: String): ShakeField? {
         return fields.find { it.name == name }

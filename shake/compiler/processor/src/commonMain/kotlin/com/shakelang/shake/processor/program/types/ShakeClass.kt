@@ -61,7 +61,7 @@ interface ShakeClass {
     fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to this.name,
-            "super" to this.superClass?.name,
+            "super" to this.superClass.qualifiedName,
             "interfaces" to this.interfaces.map { it.name },
             "methods" to this.methods.map { it.toJson() },
             "staticMethods" to this.staticMethods.map { it.toJson() },
@@ -80,6 +80,30 @@ interface ShakeClass {
     }
 
     fun getClass(descriptor: Array<String>) = getClass(descriptor.toList())
+    fun getClass(descriptor: String) = classes.find { it.name == descriptor }
+
+    fun getMethods(descriptor: List<String>): List<ShakeMethod>? {
+        if (descriptor.isEmpty()) return null
+        val methodName = descriptor.last()
+        val classDescriptor = descriptor.dropLast(1)
+        val clz = getClass(classDescriptor) ?: return null
+        return clz.methods.filter { it.name == methodName }
+    }
+
+    fun getMethods(descriptor: Array<String>) = getMethods(descriptor.toList())
+    fun getMethods(descriptor: String) = getMethods(descriptor.split("."))
+
+    fun getField(descriptor: List<String>): ShakeField? {
+        if (descriptor.isEmpty()) return null
+        val fieldName = descriptor.last()
+        val classDescriptor = descriptor.dropLast(1)
+        val clz = getClass(classDescriptor) ?: return null
+        return clz.fields.find { it.name == fieldName }
+    }
+
+    fun getField(descriptor: Array<String>) = getField(descriptor.toList())
+    fun getField(descriptor: String) = fields.find { it.name == descriptor }
+
 
     fun phase1()
     fun phase2()
