@@ -15,12 +15,6 @@ class ShakeJsGenerator {
             is ShakeIntLiteral -> visitInteger(v)
             is ShakeStringLiteral -> visitString(v)
             is ShakeBooleanLiteral -> visitBoolean(v)
-            is ShakeAddition -> visitAddition(v)
-            is ShakeSubtraction -> visitSubtraction(v)
-            is ShakeMultiplication -> visitMultiplication(v)
-            is ShakeDivision -> visitDivision(v)
-            is ShakeModulus -> visitModulus(v)
-            is ShakePower -> visitPower(v)
             is ShakeAssignment -> visitAssignment(v)
             is ShakeAddAssignment -> visitAdditionAssignment(v)
             is ShakeSubAssignment -> visitSubtractionAssignment(v)
@@ -33,15 +27,6 @@ class ShakeJsGenerator {
             is ShakeDecrementBefore -> visitDecrementBefore(v)
             is ShakeDecrementAfter -> visitDecrementAfter(v)
             is ShakeUsage -> visitUsage(v)
-            is ShakeEquals -> visitEquals(v)
-            is ShakeNotEquals -> visitNotEquals(v)
-            is ShakeGreaterThan -> visitGreaterThan(v)
-            is ShakeGreaterThanOrEqual -> visitGreaterThanOrEqual(v)
-            is ShakeLessThan -> visitLessThan(v)
-            is ShakeLessThanOrEqual -> visitLessThanOrEqual(v)
-            is ShakeAnd -> visitAnd(v)
-            is ShakeOr -> visitOr(v)
-            is ShakeNot -> visitNot(v)
             is ShakeInvocation -> visitInvocationValue(v)
             is ShakeNew -> visitNew(v)
             is ShakeCast -> visitCast(v)
@@ -51,7 +36,6 @@ class ShakeJsGenerator {
 
     fun visitStatement(s: ShakeStatement): JsStatement {
         return when (s) {
-            is ShakePower -> visitPower(s)
             is ShakeAssignment -> visitAssignment(s)
             is ShakeAddAssignment -> visitAdditionAssignment(s)
             is ShakeSubAssignment -> visitSubtractionAssignment(s)
@@ -93,33 +77,6 @@ class ShakeJsGenerator {
 
     fun visitBoolean(n: ShakeBooleanLiteral): JsLiteral {
         return if (n.value) JsLiteral.TRUE else JsLiteral.FALSE
-    }
-
-    fun visitAddition(n: ShakeAddition): JsAdd {
-        return JsAdd(visitValue(n.left).toValue(), visitValue(n.right).toValue())
-    }
-
-    fun visitSubtraction(n: ShakeSubtraction): JsSubtract {
-        return JsSubtract(visitValue(n.left).toValue(), visitValue(n.right).toValue())
-    }
-
-    fun visitMultiplication(n: ShakeMultiplication): JsMultiply {
-        return JsMultiply(visitValue(n.left).toValue(), visitValue(n.right).toValue())
-    }
-
-    fun visitDivision(n: ShakeDivision): JsDivide {
-        return JsDivide(visitValue(n.left).toValue(), visitValue(n.right).toValue())
-    }
-
-    fun visitModulus(n: ShakeModulus): JsModulo {
-        return JsModulo(visitValue(n.left).toValue(), visitValue(n.right).toValue())
-    }
-
-    fun visitPower(n: ShakePower): JsFunctionCall {
-        return JsFunctionCall(
-            JsField("pow", parent = JsField("Math")),
-            args = listOf(visitValue(n.left).toValue(), visitValue(n.right).toValue())
-        )
     }
 
     fun visitVariableDeclaration(n: ShakeVariableDeclaration): JsDeclaration {
@@ -220,47 +177,6 @@ class ShakeJsGenerator {
         }
         throw IllegalStateException("Unknown usage: $n")
     }
-
-    fun visitEquals(n: ShakeEquals): JsEquals {
-        return JsEquals(visitValue(n.left), visitValue(n.right))
-    }
-
-    fun visitNotEquals(n: ShakeNotEquals): JsNotEquals {
-        return JsNotEquals(visitValue(n.left), visitValue(n.right))
-    }
-
-    fun visitLessThan(n: ShakeLessThan): JsLessThan {
-        return JsLessThan(visitValue(n.left), visitValue(n.right))
-    }
-
-    fun visitLessThanOrEqual(n: ShakeLessThanOrEqual): JsLessThanOrEqual {
-        return JsLessThanOrEqual(visitValue(n.left), visitValue(n.right))
-    }
-
-    fun visitGreaterThan(n: ShakeGreaterThan): JsGreaterThan {
-        return JsGreaterThan(visitValue(n.left), visitValue(n.right))
-    }
-
-    fun visitGreaterThanOrEqual(n: ShakeGreaterThanOrEqual): JsGreaterThanOrEqual {
-        return JsGreaterThanOrEqual(visitValue(n.left), visitValue(n.right))
-    }
-
-    fun visitAnd(n: ShakeAnd): JsAnd {
-        return JsAnd(visitValue(n.left), visitValue(n.right))
-    }
-
-    fun visitOr(n: ShakeOr): JsOr {
-        return JsOr(visitValue(n.left), visitValue(n.right))
-    }
-
-    fun visitXor(n: ShakeXor): JsXor {
-        return JsXor(visitValue(n.left), visitValue(n.right))
-    }
-
-    fun visitNot(n: ShakeNot): JsNot {
-        return JsNot(visitValue(n.value))
-    }
-
     fun visitWhile(n: ShakeWhile): JsWhile {
         return JsWhile(visitValue(n.condition), visitCode(n.body))
     }

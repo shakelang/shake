@@ -1530,6 +1530,12 @@ interface ShakeType {
         return ShakeOperatorRequestResult(null, null)
     }
 
+    fun xorOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = logicalXorOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
     fun notOperator(scope: ShakeScope): ShakeOperatorRequestResult {
         val method = logicalNotOverload(scope)
         if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
@@ -1568,6 +1574,18 @@ interface ShakeType {
 
     fun binaryShiftRightOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
         val method = binaryShiftRightOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun equalsOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = equalsOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun notEqualsOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = notEqualsOverload(other, scope)
         if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
         return ShakeOperatorRequestResult(null, null)
     }
