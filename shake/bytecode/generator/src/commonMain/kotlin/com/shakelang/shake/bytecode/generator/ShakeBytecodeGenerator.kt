@@ -2,6 +2,7 @@ package com.shakelang.shake.bytecode.generator
 
 import com.shakelang.shake.bytecode.interpreter.generator.*
 import com.shakelang.shake.processor.program.types.*
+import com.shakelang.shake.processor.program.types.code.ShakeInvocation
 import com.shakelang.shake.processor.program.types.code.statements.ShakeStatement
 import com.shakelang.shake.processor.program.types.code.values.*
 
@@ -24,17 +25,15 @@ class ShakeBytecodeGenerator {
             }
 
             is ShakeStringLiteral -> {
+                TODO("string push is not implemented in the interpreter")
             }
 
             is ShakeBooleanLiteral -> {
                 this.bpush(v.value)
             }
-//            is ShakeAddition -> visitAddition(v)
-//            is ShakeSubtraction -> visitSubtraction(v)
-//            is ShakeMultiplication -> visitMultiplication(v)
-//            is ShakeDivision -> visitDivision(v)
-//            is ShakeModulus -> visitModulus(v)
-//            is ShakePower -> visitPower(v)
+            is ShakeInvocation -> {
+                visitInvocation(v, ctx, true)
+            }
 //            is ShakeAssignment -> visitAssignment(v)
 //            is ShakeAddAssignment -> visitAdditionAssignment(v)
 //            is ShakeSubAssignment -> visitSubtractionAssignment(v)
@@ -47,20 +46,27 @@ class ShakeBytecodeGenerator {
 //            is ShakeDecrementBefore -> visitDecrementBefore(v)
 //            is ShakeDecrementAfter -> visitDecrementAfter(v)
 //            is ShakeUsage -> visitUsage(v)
-//            is ShakeEquals -> visitEquals(v)
-//            is ShakeNotEquals -> visitNotEquals(v)
-//            is ShakeGreaterThan -> visitGreaterThan(v)
-//            is ShakeGreaterThanOrEqual -> visitGreaterThanOrEqual(v)
-//            is ShakeLessThan -> visitLessThan(v)
-//            is ShakeLessThanOrEqual -> visitLessThanOrEqual(v)
-//            is ShakeAnd -> visitAnd(v)
-//            is ShakeOr -> visitOr(v)
-//            is ShakeNot -> visitNot(v)
 //            is ShakeInvocation -> visitInvocationValue(v)
 //            is ShakeNew -> visitNew(v)
 //            is ShakeCast -> visitCast(v)
             else -> throw IllegalArgumentException("Unsupported value type: ${v::class.simpleName}")
         }
+    }
+
+    private fun PooledShakeBytecodeInstructionGenerator.visitInvocation(
+        v: ShakeInvocation,
+        ctx: GenerationContext,
+        keepResultOnStack: Boolean) {
+        val invokable = v.callable
+        when (invokable) {
+            is ShakeMethod -> {
+                if (invokable.isNative) {
+
+                }
+            }
+            else -> TODO()
+        }
+        
     }
 
     fun visitStatement(s: ShakeStatement) {

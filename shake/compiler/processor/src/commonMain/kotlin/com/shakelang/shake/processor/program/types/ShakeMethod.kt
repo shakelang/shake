@@ -35,6 +35,10 @@ interface ShakeMethod : ShakeInvokable {
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to name,
+            "qualifiedName" to qualifiedName,
+            "signature" to signature,
+            "qualifiedSignature" to qualifiedSignature,
+            "isNative" to isNative,
             "isStatic" to isStatic,
             "isFinal" to isFinal,
             "isAbstract" to isAbstract,

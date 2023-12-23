@@ -13,7 +13,7 @@ class Test : FreeSpec({
         processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
         processor.loadSynthetic("test2.shake", """
             package test2
-            val test = "Hello World"
+            String test = "Hello World"
         """.trimIndent())
         processor.loadSynthetic("test.shake", """
             package test
@@ -22,18 +22,18 @@ class Test : FreeSpec({
             
             class Test {
                 static void main() {
-                    val a = 1
-                    val b = 2
-                    val c = a + b
-                    val d = "Hello World"
-                    val e = d + "!"
-                    val f = e + c
+                    int a = 1
+                    int b = 2
+                    int c = a + b
+                    String d = "Hello World"
+                    int e = d + "!"
+                    int f = e + c
                     // println(f)
                 }
             }
         """.trimIndent())
         processor.finish()
 
-        println(json.stringify(processor.project.getClass("test.Test")?.toJson()))
+        println(json.stringify(processor.project.toJson()))
     }
 })

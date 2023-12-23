@@ -49,22 +49,7 @@ class CreationShakeMethod(
         if (body is CreationShakeCode.ShakeLateProcessCode) body.process(scope)
     }
 
-    override fun toJson(): Map<String, Any?> {
-        return mapOf(
-            "name" to name,
-            "isStatic" to isStatic,
-            "isFinal" to isFinal,
-            "isAbstract" to isAbstract,
-            "isSynchronized" to isSynchronized,
-            "isStrict" to isStrict,
-            "isPrivate" to isPrivate,
-            "isProtected" to isProtected,
-            "isPublic" to isPublic,
-            "returnType" to returnType.toJson(),
-            "parameters" to parameters.map { it.toJson() },
-            "body" to body?.toJson()
-        )
-    }
+    override fun toJson(): Map<String, Any?> = super.toJson()
 
     inner class ShakeFunctionScope : CreationShakeScope() {
 
