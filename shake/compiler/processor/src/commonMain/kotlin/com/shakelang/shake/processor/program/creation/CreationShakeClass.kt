@@ -104,6 +104,7 @@ private constructor(
             val constructor = CreationShakeConstructor.from(this, instanceScope, it)
             this.constructors.add(constructor)
         }
+        classes.forEach { it.phase3() }
     }
 
     /**

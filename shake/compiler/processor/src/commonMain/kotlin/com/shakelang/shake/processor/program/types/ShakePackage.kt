@@ -26,6 +26,37 @@ interface ShakePackage {
         return if (name.isEmpty()) this else getPackage(name.first())?.getPackage(name.drop(1))
     }
 
+    fun getClass(name: List<String>): ShakeClass? {
+
+        println("Searching for class: ${name.joinToString(".")} in package: $qualifiedName")
+
+        if (name.isEmpty()) return null
+        if (name.size == 1) return getClass(name.first())
+
+        val subClass = getClass(name.first())
+        val searched0 = subClass?.getClass(name.drop(1))
+        if (searched0 != null) return searched0
+
+        val searched1 = getPackage(name.first())
+        if (searched1 != null) return searched1.getClass(name.drop(1))
+
+        return null
+    }
+
+    fun getClass(name: Array<String>) = getClass(name.toList())
+
+    fun getClass(name: String): ShakeClass? {
+        return classes.find { it.name == name }
+    }
+
+    fun getFunction(name: String): ShakeMethod? {
+        return functions.find { it.name == name }
+    }
+
+    fun getField(name: String): ShakeField? {
+        return fields.find { it.name == name }
+    }
+
     fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to name,

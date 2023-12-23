@@ -12,7 +12,7 @@ class CreationShakeLambdaDeclaration(
     parameters: List<CreationShakeParameter>,
     override val returnType: CreationShakeType,
     override val content: CreationShakeCode
-) : CreationShakeInvokable(content, parameters), CreationShakeValue, ShakeLambdaDeclaration {
+) : CreationShakeInvokable(content, parameters, returnType), CreationShakeValue, ShakeLambdaDeclaration {
 
     override val type: CreationShakeType = CreationShakeType.Lambda("lambda${parameters.size}", parameters, returnType)
     override val qualifiedName: String

@@ -1,19 +1,15 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeVariableType
+import com.shakelang.shake.parser.node.ShakeFileNode
+import com.shakelang.shake.parser.node.ShakePackageNode
 import com.shakelang.shake.processor.ShakeASTProcessor
+import com.shakelang.shake.processor.program.types.ShakeClass
 import com.shakelang.shake.processor.program.types.ShakeProject
 
 class CreationShakeProject(
     processor: ShakeASTProcessor,
     override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
-    override val classes: MutableList<CreationShakeClass> = mutableListOf(),
-    override val functions: MutableList<CreationShakeMethod> = mutableListOf(),
-    override val fields: MutableList<CreationShakeField> = mutableListOf()
 ) : ShakeProject {
-
-    private val classRequirements = mutableListOf<ClassRequirement>()
-    private val packageRequirements = mutableListOf<PackageRequirement>()
     private val scopes = mutableListOf<CreationShakeScope>()
 
     val cores = Cores()
@@ -30,8 +26,6 @@ class CreationShakeProject(
         )
 
         override fun get(name: String): CreationShakeAssignable? {
-            val localField = fields.find { it.name == name }
-            if (localField != null) return localField
             for (import in imported) {
                 val field = import.fields.find { it.name == name }
                 if (field != null) return field
@@ -44,7 +38,7 @@ class CreationShakeProject(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
-            val functions = functions.filter { it.name == name }.toMutableList()
+            val functions = mutableListOf<CreationShakeMethod>()
             for (import in imported) {
                 functions += import.functions.filter { it.name == name }
             }
@@ -56,11 +50,9 @@ class CreationShakeProject(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
-            val localClass = classes.find { it.name == name }
-            if (localClass != null) return localClass
             for (import in imported) {
-                val class_ = import.classes.find { it.name == name }
-                if (class_ != null) return class_
+                val clazz = import.classes.find { it.name == name }
+                if (clazz != null) return clazz
             }
             return this@CreationShakeProject.getClass(name)
         }
@@ -68,6 +60,13 @@ class CreationShakeProject(
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set a class in the project scope")
         }
+    }
+
+    fun putFile(name: String, content: ShakeFileNode) {
+        val pkgNode = (content.children.find { it is ShakePackageNode } ?: error("No package node found")) as ShakePackageNode
+        val pkgName = pkgNode.pkg
+        val pkg = getPackage(pkgName)
+        pkg.putFile(name, content)
     }
 
     override fun getPackage(name: String): CreationShakePackage {
@@ -88,85 +87,14 @@ class CreationShakeProject(
         return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
     }
 
-    fun getPackage(name: String, then: (CreationShakePackage) -> Unit) {
-        this.packageRequirements.add(PackageRequirement(name, then))
-    }
-
-    @Deprecated("Use Scope.getClass() instead!")
-    fun getClass(name: String, then: (CreationShakeClass) -> Unit) {
-        this.classRequirements.add(ClassRequirement(name, then))
-    }
-
-    override fun getClass(pkg: Array<String>, name: String): CreationShakeClass? {
-        return this.getPackage(pkg).classes.find { it.name == name }
-    }
-
-    override fun getClass(clz: String): CreationShakeClass? {
-        val parts = clz.split(".")
-        val name = parts.last()
-        val pkg = parts.dropLast(1).toTypedArray()
-        return if (pkg.isEmpty()) {
-            this.classes.find { it.name == name }
-        } else {
-            this.getPackage(pkg).classes.find { it.name == name }
-        }
-    }
-
-    @Deprecated("Use Scope.getType() instead")
-    fun getType(type: ShakeVariableType, then: (CreationShakeType) -> Unit) {
-        when (type.type) {
-            ShakeVariableType.Type.BYTE -> then(CreationShakeType.Primitives.BYTE)
-            ShakeVariableType.Type.SHORT -> then(CreationShakeType.Primitives.SHORT)
-            ShakeVariableType.Type.INTEGER -> then(CreationShakeType.Primitives.INT)
-            ShakeVariableType.Type.LONG -> then(CreationShakeType.Primitives.LONG)
-            ShakeVariableType.Type.FLOAT -> then(CreationShakeType.Primitives.FLOAT)
-            ShakeVariableType.Type.DOUBLE -> then(CreationShakeType.Primitives.DOUBLE)
-            ShakeVariableType.Type.UNSIGNED_BYTE -> then(CreationShakeType.Primitives.UBYTE)
-            ShakeVariableType.Type.UNSIGNED_SHORT -> then(CreationShakeType.Primitives.USHORT)
-            ShakeVariableType.Type.UNSIGNED_INTEGER -> then(CreationShakeType.Primitives.UINT)
-            ShakeVariableType.Type.UNSIGNED_LONG -> then(CreationShakeType.Primitives.ULONG)
-            ShakeVariableType.Type.BOOLEAN -> then(CreationShakeType.Primitives.BOOLEAN)
-            ShakeVariableType.Type.CHAR -> then(CreationShakeType.Primitives.CHAR)
-            ShakeVariableType.Type.OBJECT -> {
-                val namespace = (type as ShakeVariableType.Object).namespace
-                    ?: throw IllegalArgumentException("Object type must have subtype")
-                val clzName = namespace.parts.joinToString(".")
-                this.getClass(clzName) {
-                    then(CreationShakeType.objectType(it))
-                }
-            }
-
-            ShakeVariableType.Type.DYNAMIC -> TODO()
-            ShakeVariableType.Type.ARRAY -> TODO()
-            ShakeVariableType.Type.VOID -> TODO()
-            ShakeVariableType.Type.UNKNOWN -> TODO()
-        }
-    }
+    override fun getClass(name: List<String>): CreationShakeClass? = super.getClass(name) as CreationShakeClass?
+    override fun getClass(clz: String): CreationShakeClass? = super.getClass(clz) as CreationShakeClass?
 
     fun finish() {
-        classRequirements.forEach {
-            val cls = this.getClass(it.name)
-            it.then(cls ?: throw IllegalArgumentException("Class ${it.name} not found"))
-        }
-
-        classRequirements.clear()
-
-        packageRequirements.forEach {
-            val pkg = this.getPackage(it.name)
-            it.then(pkg)
-        }
-
-        packageRequirements.clear()
-
-        this.scopes.forEach {
-            it.finish()
-        }
-        this.scopes.clear()
-
-        this.classes.forEach { it.phase4() }
-        this.functions.forEach { it.phase4() }
-        this.fields.forEach { it.phase4() }
-        this.subpackages.forEach { it.phase4() }
+        this.phase1()
+        this.phase2()
+        this.phase3()
+        this.phase4()
     }
 
     fun addScope(creationShakeScope: CreationShakeScope) {
@@ -174,19 +102,19 @@ class CreationShakeProject(
     }
 
     override fun phase1() {
-        TODO()
+        this.subpackages.forEach { it.phase1() }
     }
 
     override fun phase2() {
-        TODO()
+        this.subpackages.forEach { it.phase2() }
     }
 
     override fun phase3() {
-        TODO()
+        this.subpackages.forEach { it.phase3() }
     }
 
     override fun phase4() {
-        TODO()
+        this.subpackages.forEach { it.phase4() }
     }
 
     class ClassRequirement(val name: String, val then: (CreationShakeClass) -> Unit)
@@ -199,10 +127,5 @@ class CreationShakeProject(
         val Object: CreationShakeType get() = CreationShakeType.objectType(ObjectClass)
         val String: CreationShakeType get() = CreationShakeType.objectType(StringClass)
 
-        fun pointString(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.String", init)
-        fun pointObject(init: (CreationShakeType) -> Unit) = projectScope.getType("shake.lang.Object", init)
-
-        fun pointStringClass(init: (CreationShakeClass) -> Unit) = projectScope.getClass("shake.lang.String", init)
-        fun pointObjectClass(init: (CreationShakeClass) -> Unit) = projectScope.getClass("shake.lang.Object", init)
     }
 }

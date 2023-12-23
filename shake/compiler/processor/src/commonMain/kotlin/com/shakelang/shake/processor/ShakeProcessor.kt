@@ -33,9 +33,11 @@ abstract class ShakeProcessor<T> {
     abstract val src: T
 
     open fun parseFile(src: String): ShakeFileNode {
-        val file = File(src).contents
-        val chars: CharacterInputStream = SourceCharacterInputStream(src, file)
+        return parseFile(src, File(src).contents)
+    }
 
+    open fun parseFile(src: String, contents: CharArray): ShakeFileNode {
+        val chars: CharacterInputStream = SourceCharacterInputStream(src, contents)
         val lexer = ShakeLexer(chars)
         val tokens = lexer.makeTokens()
         val parser = com.shakelang.shake.parser.ShakeParser.from(tokens)
@@ -63,13 +65,17 @@ open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
 
     open fun loadSynthetic(src: String, contents: ShakeFileNode) {
         val reformatted = src.replace("\\", "/")
-        project.putFile(reformatted.split("/").toTypedArray(), contents)
+        project.putFile(reformatted, contents)
+    }
+
+    open fun loadSynthetic(src: String, contents: String) {
+        loadSynthetic(src, parseFile(src, contents.toCharArray()))
     }
 
     override fun loadFile(directory: String, src: String) {
         val reformatted = src.replace("\\", "/")
         val contents = parseFile("$directory/$src")
-        project.putFile(reformatted.split("/").toTypedArray(), contents)
+        project.putFile(reformatted, contents)
     }
 
     override fun phase1() {

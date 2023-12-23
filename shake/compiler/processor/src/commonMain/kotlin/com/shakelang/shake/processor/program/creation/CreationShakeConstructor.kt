@@ -16,35 +16,11 @@ open class CreationShakeConstructor(
     override val isProtected: Boolean,
     override val isPublic: Boolean,
     override val isNative: Boolean,
-    override val name: String? = null
+    override val name: String? = null,
+    override var parameters: List<CreationShakeParameter>
 ) : ShakeConstructor {
-    final override lateinit var parameters: List<CreationShakeParameter>
-        private set
-
-    constructor(
-        clazz: CreationShakeClass,
-        parameters: List<CreationShakeParameter>,
-        body: CreationShakeCode,
-        isStrict: Boolean,
-        isPrivate: Boolean,
-        isProtected: Boolean,
-        isPublic: Boolean,
-        isNative: Boolean,
-        name: String? = null
-    ) : this(clazz, body, isStrict, isPrivate, isProtected, isPublic, isNative, name) {
-        this.parameters = parameters
-    }
 
     override val scope: CreationShakeScope = ShakeConstructorScope()
-
-    fun lateinitParameterTypes(names: List<String>): List<(CreationShakeType) -> CreationShakeType> {
-        this.parameters = names.map {
-            CreationShakeParameter(it)
-        }
-        return this.parameters.map {
-            it.lateinitType()
-        }
-    }
 
     override fun phase3() {
         TODO("Not yet implemented")
@@ -107,11 +83,9 @@ open class CreationShakeConstructor(
                 node.access == ShakeAccessDescriber.PROTECTED,
                 node.access == ShakeAccessDescriber.PUBLIC,
                 node.isNative,
-            ).let {
-                it.lateinitParameterTypes(node.args.map { p -> p.name })
-                    .forEachIndexed { i, run -> parentScope.getType(node.args[i].type) { t -> run(t) } }
-                it
-            }
+                node.name,
+                node.args.map { parentScope.getType(it.type) }.map { CreationShakeParameter(it.name, it) }
+            )
         }
     }
 }

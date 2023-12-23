@@ -73,6 +73,14 @@ interface ShakeClass {
         )
     }
 
+    fun getClass(descriptor: List<String>): ShakeClass? {
+        if (descriptor.isEmpty()) return this
+        val subClass = this.classes.find { it.name == descriptor.first() } ?: return null
+        return subClass.getClass(descriptor.drop(1))
+    }
+
+    fun getClass(descriptor: Array<String>) = getClass(descriptor.toList())
+
     fun phase1()
     fun phase2()
     fun phase3()

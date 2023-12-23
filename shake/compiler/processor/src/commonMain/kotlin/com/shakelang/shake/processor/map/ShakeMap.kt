@@ -792,9 +792,6 @@ class ShakeMapCreator {
 
     fun visit(project: ShakeProject) {
         project.subpackages.forEach { this.project_packages.add(visit(it)) }
-        project.classes.forEach { this.project_classes.add(visit(it)) }
-        project.functions.forEach { this.project_methods.add(visit(it)) }
-        project.fields.forEach { this.project_fields.add(visit(it)) }
     }
 
     fun visit(package_: ShakePackage): Int {
@@ -993,9 +990,18 @@ class MapAssembledProject(
 ) : ShakeProject {
 
     override val subpackages: List<ShakePackage> = packagePointers.values()
-    override val classes: List<ShakeClass> = classPointers.values()
-    override val functions: List<ShakeMethod> = methodPointers.values()
-    override val fields: List<ShakeField> = fieldPointers.values()
+    override fun phase1() {
+        subpackages.forEach { it.phase1() }
+    }
+    override fun phase2() {
+        subpackages.forEach { it.phase2() }
+    }
+    override fun phase3() {
+        subpackages.forEach { it.phase3() }
+    }
+    override fun phase4() {
+        subpackages.forEach { it.phase4() }
+    }
 }
 
 class MapAssembledPackage(
@@ -1012,6 +1018,11 @@ class MapAssembledPackage(
     override val classes: List<ShakeClass> get() = classPointers.values()
     override val functions: List<ShakeMethod> get() = methodPointers.values()
     override val fields: List<ShakeField> get() = fieldPointers.values()
+
+    override fun phase1() {}
+    override fun phase2() {}
+    override fun phase3() {}
+    override fun phase4() {}
 }
 
 class MapAssembledClass(
@@ -1040,6 +1051,11 @@ class MapAssembledClass(
 
     override lateinit var interfaces: List<ShakeClass>
     override lateinit var superClass: ShakeClass
+
+    override fun phase1() {}
+    override fun phase2() {}
+    override fun phase3() {}
+    override fun phase4() {}
 }
 
 class MapAssembledMethod(
@@ -1063,7 +1079,10 @@ class MapAssembledMethod(
     override val isNative: Boolean,
     override val isOperator: Boolean,
     override val expanding: ShakeType?
-) : ShakeMethod
+) : ShakeMethod {
+    override fun phase3() {}
+    override fun phase4() {}
+}
 
 class MapAssembledConstructor(
     var clazz_: ShakeClass?,
@@ -1082,6 +1101,9 @@ class MapAssembledConstructor(
         set(value) {
             clazz_ = value
         }
+
+    override fun phase3() {}
+    override fun phase4() {}
 }
 
 class MapAssembledField(
@@ -1103,7 +1125,10 @@ class MapAssembledField(
     override val qualifiedName: String,
     override val initialValue: ShakeValue?,
     override val expanding: ShakeType?
-) : ShakeField
+) : ShakeField {
+    override fun phase3() {}
+    override fun phase4() {}
+}
 
 class ShakeAssembledObjectType(
     override var clazz: ShakeClass

@@ -97,6 +97,7 @@ open class CreationShakePackage(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-1)
      */
     override fun phase1() {
+        println("Phase 1 of package $qualifiedName")
         this.files.forEach { file ->
             file.classes.forEach { clz ->
                 if (classes.any { it.name == clz.name }) {
@@ -105,6 +106,7 @@ open class CreationShakePackage(
                 classes.add(CreationShakeClass.from(baseProject, this, scope, clz))
             }
         }
+        this.subpackages.forEach { it.phase1() }
     }
 
     /**
@@ -112,7 +114,9 @@ open class CreationShakePackage(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-2)
      */
     override fun phase2() {
-        TODO()
+        println("Phase 2 of package $qualifiedName")
+        this.classes.forEach { it.phase2() }
+        this.subpackages.forEach { it.phase2() }
     }
 
     /**
@@ -120,7 +124,19 @@ open class CreationShakePackage(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-3)
      */
     override fun phase3() {
-        TODO()
+        println("Phase 3 of package $qualifiedName")
+        this.files.forEach { file ->
+            file.functions.forEach {
+                val method = CreationShakeMethod.from(baseProject, this, scope, it)
+                functions.add(method)
+            }
+            file.fields.forEach {
+                val field = CreationShakeField.from(baseProject, this, scope, it)
+                fields.add(field)
+            }
+        }
+        this.classes.forEach { it.phase3() }
+        this.subpackages.forEach { it.phase3() }
     }
 
     /**
@@ -128,6 +144,7 @@ open class CreationShakePackage(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-4)
      */
     override fun phase4() {
+        println("Phase 4 of package $qualifiedName")
         classes.forEach { it.phase4() }
         functions.forEach { it.phase4() }
         fields.forEach { it.phase4() }
