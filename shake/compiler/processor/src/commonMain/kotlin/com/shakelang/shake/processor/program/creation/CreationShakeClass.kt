@@ -196,7 +196,7 @@ class CreationShakeClass : ShakeClass {
         this.staticMethods.forEach { it.phase4() }
         this.fields.forEach { it.phase4() }
         this.staticFields.forEach { it.phase4() }
-        this.constructors.forEach { it.processCode() }
+        this.constructors.forEach { it.phase4() }
         this.classes.forEach { it.processCode() }
         this.staticClasses.forEach { it.processCode() }
     }
