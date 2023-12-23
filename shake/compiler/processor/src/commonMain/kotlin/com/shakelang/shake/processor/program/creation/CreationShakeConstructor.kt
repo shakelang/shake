@@ -1,5 +1,8 @@
 package com.shakelang.shake.processor.program.creation
 
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
@@ -88,5 +91,27 @@ open class CreationShakeConstructor(
 
         override val processor: ShakeASTProcessor
             get() = parent.processor
+    }
+
+    companion object {
+        fun from(
+            clazz: CreationShakeClass,
+            parentScope: CreationShakeScope,
+            node: ShakeConstructorDeclarationNode
+        ): CreationShakeConstructor {
+            return CreationShakeConstructor(
+                clazz,
+                CreationShakeCode.fromTree(node.body),
+                false,
+                node.access == ShakeAccessDescriber.PRIVATE,
+                node.access == ShakeAccessDescriber.PROTECTED,
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
+            ).let {
+                it.lateinitParameterTypes(node.args.map { p -> p.name })
+                    .forEachIndexed { i, run -> parentScope.getType(node.args[i].type) { t -> run(t) } }
+                it
+            }
+        }
     }
 }

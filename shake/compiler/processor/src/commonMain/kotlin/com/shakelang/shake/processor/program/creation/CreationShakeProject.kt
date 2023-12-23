@@ -1,12 +1,6 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeFileNode
-import com.shakelang.shake.parser.node.ShakeImportNode
-import com.shakelang.shake.parser.node.ShakePackageNode
 import com.shakelang.shake.parser.node.ShakeVariableType
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
-import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
-import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.types.ShakeProject
 
@@ -98,58 +92,6 @@ class CreationShakeProject(
         this.packageRequirements.add(PackageRequirement(name, then))
     }
 
-    open fun putFile(name: String, contents: ShakeFileNode) {
-        val imports = contents.children.filterIsInstance<ShakeImportNode>()
-        val imported = arrayOfNulls<CreationShakePackage>(imports.size)
-
-        imports.forEachIndexed { i, import ->
-            getPackage(import.import.dropLast(1).joinToString(".")) {
-                imported[i] = it
-            }
-        }
-
-        val fileScope = CreationFileScope(this, projectScope, imports, imported)
-
-        contents.children.forEach {
-            when (it) {
-                is ShakeClassDeclarationNode -> {
-                    if (classes.any { clz -> clz.name == it.name }) {
-                        throw IllegalArgumentException("Class ${it.name} already exists")
-                    }
-                    classes.add(CreationShakeClass.from(this, null, fileScope, it))
-                }
-
-                is ShakeFunctionDeclarationNode -> {
-                    if (functions.any { func -> func.name == it.name }) {
-                        throw IllegalArgumentException("Function ${it.name} already exists")
-                    }
-                    functions.add(CreationShakeMethod.from(this, null, fileScope, it))
-                }
-
-                is ShakeVariableDeclarationNode -> {
-                    if (fields.any { field -> field.name == it.name }) {
-                        throw IllegalArgumentException("Field ${it.name} already exists")
-                    }
-                    fields.add(CreationShakeField.from(this, null, fileScope, it))
-                }
-
-                is ShakeImportNode -> {}
-                else -> throw IllegalArgumentException("Unknown node type ${it::class.simpleName}")
-            }
-        }
-    }
-
-    fun putFile(name: Array<String>, contents: ShakeFileNode) {
-        val pkg = (contents.children.find { it is ShakePackageNode } as? ShakePackageNode)?.pkg
-            ?: name.sliceArray(0 until name.size - 1)
-        val file = name.last()
-        if (pkg.isEmpty()) {
-            putFile(file, contents)
-        } else {
-            getPackage(pkg).putFile(file, contents)
-        }
-    }
-
     @Deprecated("Use Scope.getClass() instead!")
     fun getClass(name: String, then: (CreationShakeClass) -> Unit) {
         this.classRequirements.add(ClassRequirement(name, then))
@@ -221,7 +163,7 @@ class CreationShakeProject(
         }
         this.scopes.clear()
 
-        this.classes.forEach { it.processCode() }
+        this.classes.forEach { it.phase4() }
         this.functions.forEach { it.phase4() }
         this.fields.forEach { it.phase4() }
         this.subpackages.forEach { it.phase4() }
