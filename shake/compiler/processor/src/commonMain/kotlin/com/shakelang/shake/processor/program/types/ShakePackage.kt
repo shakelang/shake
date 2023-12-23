@@ -11,7 +11,9 @@ interface ShakePackage {
     val functions: List<ShakeMethod>
     val fields: List<ShakeField>
 
-    val qualifiedName: String get() = (parent?.qualifiedName?.plus(".") ?: "") + name
+    val qualifierPrefix: String get() = (parent?.qualifierPrefix ?: "") + name + "/"
+    val qualifiedName: String get() = (parent?.qualifierPrefix ?: "") + name
+
     val scope: ShakeScope
 
     fun getPackage(name: String): ShakePackage? {

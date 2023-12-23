@@ -1028,6 +1028,7 @@ class MapAssembledPackage(
 class MapAssembledClass(
     override val prj: ShakeProject,
     override var pkg: ShakePackage?,
+    override val clazz: ShakeClass?,
     override val parentScope: ShakeScope,
     override val staticScope: ShakeScope,
     override val instanceScope: ShakeScope,
@@ -1216,6 +1217,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             point.init(
                 MapAssembledClass(
                     project,
+                    null,
                     null,
                     scopeUnit,
                     scopeUnit,

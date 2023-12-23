@@ -22,13 +22,14 @@ interface ShakeMethod : ShakeInvokable {
     val expanding: ShakeType?
 
     override val qualifiedName: String
-        get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}$name(${
-            parameters.joinToString(
-                ", "
-            ) { it.type.qualifiedName }
-        })${returnType.qualifiedName}"
-    val signature: String get() = "${expanding?.qualifiedName?.plus("$") ?: ""}$name(${parameters.joinToString(", ") { it.type.qualifiedName }})${returnType.qualifiedName}"
-    val qualifiedSignature: String get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}$signature"
+        get() = "${(clazz?.qualifierPrefix ?: pkg?.qualifierPrefix)}$name"
+
+    val parameterTypes: List<ShakeType> get() = listOfNotNull(expanding, *parameters.map { it.type }.toTypedArray())
+    val signature: String
+        get() = "$name(${parameterTypes.joinToString(",") { it.qualifiedName }})${returnType.qualifiedName}}"
+    val qualifiedSignature: String
+        get() = "$qualifiedName(${parameterTypes.joinToString(",") { it.qualifiedName }})${returnType.qualifiedName}"
+
     override val returnType: ShakeType
     val scope: ShakeScope
 

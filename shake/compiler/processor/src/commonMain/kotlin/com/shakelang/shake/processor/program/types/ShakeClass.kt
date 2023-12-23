@@ -8,6 +8,7 @@ interface ShakeClass {
     val instanceScope: ShakeScope
     val prj: ShakeProject
     val pkg: ShakePackage?
+    val clazz: ShakeClass?
     val parentScope: ShakeScope
     val name: String
 
@@ -33,13 +34,17 @@ interface ShakeClass {
 
     val constructors: List<ShakeConstructor>
 
-    val qualifiedName: String get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
+    val qualifierPrefix: String
+        get() = (if (clazz != null) clazz!!.qualifierPrefix else pkg!!.qualifierPrefix) + name + ":"
+    val qualifiedName: String
+        get() = (if (clazz != null) clazz!!.qualifierPrefix else pkg!!.qualifierPrefix) + name
+
     val signature: String get() = qualifiedName
     val superClass: ShakeClass
 
     val interfaces: List<ShakeClass>
 
-    private val isObject get() = qualifiedName == "shake.lang.Object"
+    private val isObject get() = qualifiedName == "shake/lang/Object"
 
     fun compatibleTo(other: ShakeClass): Boolean {
         if (this == other) return true
