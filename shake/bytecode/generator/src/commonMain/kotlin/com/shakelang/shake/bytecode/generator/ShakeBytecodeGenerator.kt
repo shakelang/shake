@@ -2,24 +2,25 @@ package com.shakelang.shake.bytecode.generator
 
 import com.shakelang.shake.bytecode.interpreter.generator.*
 import com.shakelang.shake.processor.program.types.*
+import com.shakelang.shake.processor.program.types.code.ShakeCode
 import com.shakelang.shake.processor.program.types.code.ShakeInvocation
 import com.shakelang.shake.processor.program.types.code.statements.ShakeStatement
 import com.shakelang.shake.processor.program.types.code.values.*
 
 class ShakeBytecodeGenerator {
 
-    fun PooledShakeBytecodeInstructionGenerator.visitValue(v: ShakeValue, ctx: GenerationContext) {
+    fun visitValue(ctx: BytecodeGenerationContext, v: ShakeValue) {
         when (v) {
-            is ShakeByteLiteral -> bpush(v.value)
-            is ShakeShortLiteral -> spush(v.value)
-            is ShakeIntLiteral -> ipush(v.value)
-            is ShakeLongLiteral -> lpush(v.value)
-            is ShakeFloatLiteral -> ipush(v.value)
-            is ShakeDoubleLiteral -> lpush(v.value)
-            is ShakeUByteLiteral -> bpush(v.value)
-            is ShakeUShortLiteral -> spush(v.value)
-            is ShakeUIntLiteral -> ipush(v.value)
-            is ShakeULongLiteral -> lpush(v.value)
+            is ShakeByteLiteral -> ctx.bytecodeInstructionGenerator.bpush(v.value)
+            is ShakeShortLiteral -> ctx.bytecodeInstructionGenerator.spush(v.value)
+            is ShakeIntLiteral -> ctx.bytecodeInstructionGenerator.ipush(v.value)
+            is ShakeLongLiteral -> ctx.bytecodeInstructionGenerator.lpush(v.value)
+            is ShakeFloatLiteral -> ctx.bytecodeInstructionGenerator.ipush(v.value)
+            is ShakeDoubleLiteral -> ctx.bytecodeInstructionGenerator.lpush(v.value)
+            is ShakeUByteLiteral -> ctx.bytecodeInstructionGenerator.bpush(v.value)
+            is ShakeUShortLiteral -> ctx.bytecodeInstructionGenerator.spush(v.value)
+            is ShakeUIntLiteral -> ctx.bytecodeInstructionGenerator.ipush(v.value)
+            is ShakeULongLiteral -> ctx.bytecodeInstructionGenerator.lpush(v.value)
             is ShakeNullLiteral -> {
                 TODO("Null constant??")
             }
@@ -29,10 +30,10 @@ class ShakeBytecodeGenerator {
             }
 
             is ShakeBooleanLiteral -> {
-                this.bpush(v.value)
+                ctx.bytecodeInstructionGenerator.bpush(v.value)
             }
             is ShakeInvocation -> {
-                visitInvocation(v, ctx, true)
+                visitInvocation(ctx, v, true)
             }
 //            is ShakeAssignment -> visitAssignment(v)
 //            is ShakeAddAssignment -> visitAdditionAssignment(v)
@@ -53,25 +54,37 @@ class ShakeBytecodeGenerator {
         }
     }
 
-    private fun PooledShakeBytecodeInstructionGenerator.visitInvocation(
+    private fun visitInvocation(
+        ctx: BytecodeGenerationContext,
         v: ShakeInvocation,
-        ctx: GenerationContext,
         keepResultOnStack: Boolean) {
         val invokable = v.callable
         when (invokable) {
             is ShakeMethod -> {
                 if (invokable.isNative) {
-
+                    val native = Natives.get(invokable.signature)
+                        ?: throw IllegalStateException("Native method ${invokable.signature} is not registered")
+                    native.handle(ctx, v, keepResultOnStack)
                 }
             }
             else -> TODO()
         }
-        
     }
 
-    fun visitStatement(s: ShakeStatement) {
+    fun visitCode(
+        ctx: BytecodeGenerationContext,
+        code: ShakeCode,
+    ) {
+        code.statements.forEach {
+            visitStatement(ctx, it)
+        }
+    }
+
+    fun visitStatement(
+        ctx: BytecodeGenerationContext,
+        s: ShakeStatement,
+    ) {
         return when (s) {
-//            is ShakePower -> visitPower(s)
 //            is ShakeAssignment -> visitAssignment(s)
 //            is ShakeAddAssignment -> visitAdditionAssignment(s)
 //            is ShakeSubAssignment -> visitSubtractionAssignment(s)
@@ -95,12 +108,26 @@ class ShakeBytecodeGenerator {
         }
     }
 
+    fun generateProject(project: ShakeProject): MutableList<GenerationContext> {
+        val contexts = mutableListOf<GenerationContext>()
+        project.subpackages.forEach {
+            contexts.addAll(generatePackage(it))
+        }
+        return contexts
+    }
+
     fun generatePackage(pkg: ShakePackage): List<GenerationContext> {
         val contexts = mutableListOf<GenerationContext>()
         pkg.subpackages.forEach {
             contexts.addAll(generatePackage(it))
         }
-        contexts.add(GenerationContext().apply { generatePackage(pkg, this) })
+
+        val ctx = GenerationContext()
+
+        generatePackage(pkg, ctx)
+
+        contexts.add(ctx)
+
         return contexts
     }
 
@@ -154,6 +181,7 @@ class ShakeBytecodeGenerator {
     }
 
     fun generateMethod(method: ShakeMethod, ctx: MethodGenerationContext) {
+        if (method.isNative) return
         ctx.run {
 
             val returnType = generateTypeDescriptor(method.returnType)
@@ -166,6 +194,28 @@ class ShakeBytecodeGenerator {
             isStatic = method.isStatic
             isFinal = method.isFinal
 
+            if(method.body != null) {
+
+                val body = method.body!!
+
+                code {
+                    maxStack = 100
+                    maxLocals = 100
+
+                    bytecode {
+                        val localTable = LocalTable()
+                        visitCode(
+                            BytecodeGenerationContext(
+                                this@ShakeBytecodeGenerator,
+                                this,
+                                ctx,
+                                localTable,
+                            ),
+                            body
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -219,4 +269,25 @@ class ShakeBytecodeGenerator {
             ShakeType.Kind.LAMBDA -> TODO()
         }
     }
+
+    class LocalTable (
+        val locals: MutableMap<String, Int> = mutableMapOf(),
+        var size : Int = 0
+    ) {
+        fun createLocal(name: String, size: Int) {
+            locals[name] = this.size
+            this.size += size
+        }
+
+        fun getLocal(name: String): Int {
+            return locals[name] ?: throw IllegalStateException("Local $name is not defined")
+        }
+    }
+
+    class BytecodeGenerationContext(
+        val gen: ShakeBytecodeGenerator,
+        val bytecodeInstructionGenerator: PooledShakeBytecodeInstructionGenerator,
+        val method: MethodGenerationContext,
+        val localTable: LocalTable,
+    )
 }

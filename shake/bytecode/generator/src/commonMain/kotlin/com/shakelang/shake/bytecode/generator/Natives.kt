@@ -1,7 +1,6 @@
 package com.shakelang.shake.bytecode.generator
 
 import com.shakelang.shake.bytecode.interpreter.PCast
-import com.shakelang.shake.bytecode.interpreter.generator.GenerationContext
 import com.shakelang.shake.bytecode.interpreter.generator.PooledShakeBytecodeInstructionGenerator
 import com.shakelang.shake.processor.program.types.code.ShakeInvocation
 
@@ -13,30 +12,23 @@ object Natives {
         natives[signature] = handler
     }
 
-    fun register(signature: String, handler: PooledShakeBytecodeInstructionGenerator.(ShakeInvocation, GenerationContext, Boolean) -> Unit) {
-        register(signature, object : NativeHandler {
-            override val signature: String = signature
-            override fun handle(
-                gen: PooledShakeBytecodeInstructionGenerator,
-                v: ShakeInvocation,
-                ctx: GenerationContext,
-                keepResultOnStack: Boolean
-            ) {
-                gen.handler(v, ctx, keepResultOnStack)
-            }
-        })
-    }
+    fun get(signature: String): NativeHandler? = natives[signature]
 
-    fun registerNoArgs(signature: String, handler: PooledShakeBytecodeInstructionGenerator.() -> Unit) {
+    fun registerNoArgs(signature: String, handler: PooledShakeBytecodeInstructionGenerator.(HandleContext) -> Unit) {
         register(signature, object : NativeHandler {
             override val signature: String = signature
             override fun handle(
-                gen: PooledShakeBytecodeInstructionGenerator,
+                ctx: ShakeBytecodeGenerator.BytecodeGenerationContext,
                 v: ShakeInvocation,
-                ctx: GenerationContext,
                 keepResultOnStack: Boolean
             ) {
-                gen.handler()
+                ctx.bytecodeInstructionGenerator.handler(
+                    HandleContext(
+                        ctx,
+                        v,
+                        keepResultOnStack
+                    )
+                )
             }
         })
     }
@@ -71,32 +63,29 @@ object Natives {
 
                 val biggerType = biggerType(type0.first, type1.first)
 
-                fun PooledShakeBytecodeInstructionGenerator.castBeforeCalc() {
-                    if(type0.first != biggerType) {
+                fun PooledShakeBytecodeInstructionGenerator.castBeforeCalc(it: HandleContext) {
+
+                    if(it.v.arguments.size != 2) throw IllegalArgumentException("Native function must have 2 arguments")
+
+                    // Calculate left and right
+                    it.ctx.gen.visitValue(it.ctx, it.v.arguments[0])
+
+                    if(type0.first != biggerType)
 
                         // If type1 is bigger than type0, we need to cast type0 to type1
-                        // We can only cast the top value on the stack.
-                        // So we need to temporarily store the first value (type1) in the variable 0
-
-                        store(type1.first, 0u)
                         pcast(type0.second, type1.second)
-                        load(type1.first, 0u)
 
-                    }
 
-                    if(type1.first != biggerType) {
+                    it.ctx.gen.visitValue(it.ctx, it.v.arguments[1])
+
+                    if(type1.first != biggerType)
 
                         // If type0 is bigger than type1, we need to cast type1 to type0
-                        // This is much easier, because we can just cast the top value on
-                        // the stack without the need of any additional variables
                         pcast(type1.second, type0.second)
-
-                    }
-
                 }
 
                 registerNoArgs("shake/lang/plus(${type0.first},${type1.first})$biggerType}") {
-                    castBeforeCalc()
+                    this.castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
@@ -105,39 +94,39 @@ object Natives {
                 }
 
                 registerNoArgs("shake/lang/minus(${type0.first},${type1.first})$biggerType}") {
-                    castBeforeCalc()
+                    castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
                     // smaller types to the bigger type)
-                    add(biggerType)
+                    sub(biggerType)
                 }
 
                 registerNoArgs("shake/lang/multiply(${type0.first},${type1.first})$biggerType}") {
-                    castBeforeCalc()
+                    castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
                     // smaller types to the bigger type)
-                    add(biggerType)
+                    mul(biggerType)
                 }
 
                 registerNoArgs("shake/lang/divide(${type0.first},${type1.first})$biggerType}") {
-                    castBeforeCalc()
+                    castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
                     // smaller types to the bigger type)
-                    add(biggerType)
+                    div(biggerType)
                 }
 
                 registerNoArgs("shake/lang/modulo(${type0.first},${type1.first})$biggerType}") {
-                    castBeforeCalc()
+                    castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
                     // smaller types to the bigger type)
-                    add(biggerType)
+                    mod(biggerType)
                 }
             }
         }
@@ -145,6 +134,16 @@ object Natives {
 
     interface NativeHandler {
         val signature: String
-        fun handle(gen: PooledShakeBytecodeInstructionGenerator, v: ShakeInvocation, ctx: GenerationContext, keepResultOnStack: Boolean)
+        fun handle(
+            ctx: ShakeBytecodeGenerator.BytecodeGenerationContext,
+            v: ShakeInvocation,
+            keepResultOnStack: Boolean
+        )
     }
+
+    data class HandleContext(
+        val ctx: ShakeBytecodeGenerator.BytecodeGenerationContext,
+        val v: ShakeInvocation,
+        val keepResultOnStack: Boolean
+    )
 }
