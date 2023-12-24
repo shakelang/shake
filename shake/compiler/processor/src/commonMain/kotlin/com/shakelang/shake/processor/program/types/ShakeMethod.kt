@@ -26,7 +26,7 @@ interface ShakeMethod : ShakeInvokable {
 
     val parameterTypes: List<ShakeType> get() = listOfNotNull(expanding, *parameters.map { it.type }.toTypedArray())
     val signature: String
-        get() = "$name(${parameterTypes.joinToString(",") { it.qualifiedName }})${returnType.qualifiedName}}"
+        get() = "$name(${parameterTypes.joinToString(",") { it.qualifiedName }})${returnType.qualifiedName}"
     val qualifiedSignature: String
         get() = "$qualifiedName(${parameterTypes.joinToString(",") { it.qualifiedName }})${returnType.qualifiedName}"
 
