@@ -13,6 +13,9 @@ interface ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeSta
     val latestType: ShakeType
     val isFinal: Boolean
 
+    override val uniqueName: String
+        get() = "$name@${scope.uniqueName}"
+
     fun valueCompatible(value: ShakeValue): Boolean
     // override fun use(scope: ShakeScope): ShakeVariableUsage
 }

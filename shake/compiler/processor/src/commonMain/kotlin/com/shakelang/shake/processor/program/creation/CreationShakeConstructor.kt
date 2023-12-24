@@ -7,6 +7,7 @@ import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.ShakeConstructor
+import com.shakelang.shake.processor.program.types.ShakeType
 
 open class CreationShakeConstructor(
     override val clazz: CreationShakeClass,
@@ -22,6 +23,15 @@ open class CreationShakeConstructor(
 
     override val scope: CreationShakeScope = ShakeConstructorScope()
 
+    val qualifiedName: String
+        get() = "${clazz.qualifierPrefix}+${name?:"default"}"
+
+    val parameterTypes: List<ShakeType> get() = parameters.map { it.type }
+    val signature: String
+        get() = "${name?:"default"}(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
+    val qualifiedSignature: String
+        get() = "$qualifiedName(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
+
     override fun phase3() {
         TODO("Not yet implemented")
     }
@@ -35,6 +45,8 @@ open class CreationShakeConstructor(
     }
 
     inner class ShakeConstructorScope : CreationShakeScope() {
+
+        override val uniqueName: String get() = qualifiedSignature
         override val parent: CreationShakeScope = clazz.instanceScope
         override val project get() = clazz.prj
         val variables = mutableListOf<CreationShakeVariableDeclaration>()

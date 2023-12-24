@@ -140,6 +140,9 @@ private constructor(
 
     inner class StaticScope : CreationShakeScope() {
 
+        override val uniqueName: String
+            get() = "$qualifiedName(static)"
+
         override val processor: ShakeASTProcessor get() = parent.processor
         override val parent: CreationShakeScope get() = parentScope
         override val project get() = prj
@@ -170,6 +173,9 @@ private constructor(
     }
 
     inner class InstanceScope : CreationShakeScope() {
+
+        override val uniqueName: String
+            get() = "$qualifiedName(instance)"
 
         override val processor: ShakeASTProcessor get() = parent.processor
         override val parent: CreationShakeScope get() = parentScope

@@ -136,6 +136,8 @@ open class CreationShakePackage(
     }
 
     private inner class Scope : CreationShakeScope() {
+        override val uniqueName: String
+            get() = qualifiedName
         override val parent: CreationShakeScope get() = baseProject.projectScope
         override val project get() = baseProject
 
@@ -171,6 +173,9 @@ open class CreationShakePackage(
         val name: String,
         val imports: List<ShakeImportNode>
     ) : CreationShakeScope() {
+
+        override val uniqueName: String
+            get() = "file:$name"
 
         private val explicitImports = imports.filter {
             it.import.last() != "*"

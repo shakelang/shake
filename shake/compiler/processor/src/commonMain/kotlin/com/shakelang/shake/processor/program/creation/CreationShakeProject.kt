@@ -14,6 +14,8 @@ class CreationShakeProject(
     val cores = Cores()
 
     override val projectScope = object : CreationShakeScope() {
+        override val uniqueName: String
+            get() = "project"
         override val parent: CreationShakeScope? = null
         override val project: CreationShakeProject get() = this@CreationShakeProject
 

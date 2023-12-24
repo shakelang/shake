@@ -1147,6 +1147,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
 
     val scopeUnit: ShakeScope = object : ShakeScope {
         override val parent = null
+        override val uniqueName: String
+            get() = "scopeUnit"
         override fun get(name: String): ShakeAssignable = error("Should not be called")
         override fun getFunctions(name: String) = error("Should not be called")
         override fun getClass(name: String) = error("Should not be called")

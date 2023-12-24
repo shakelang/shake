@@ -32,8 +32,8 @@ abstract class CreationShakeType(
 
     abstract class Primitive(
         name: String,
-        val type: ShakeType.PrimitiveType
-    ) : CreationShakeType(name) {
+        override val type: ShakeType.PrimitiveType
+    ) : CreationShakeType(name), ShakeType.Primitive {
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.PRIMITIVE
 

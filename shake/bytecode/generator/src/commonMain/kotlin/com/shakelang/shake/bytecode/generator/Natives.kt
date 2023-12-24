@@ -130,6 +130,10 @@ object Natives {
                 }
             }
         }
+
+        this.natives.map {it.key}.sorted().forEach {
+            println("Registered native function: ${it}")
+        }
     }
 
     interface NativeHandler {

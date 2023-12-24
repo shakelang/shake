@@ -53,6 +53,8 @@ class CreationShakeMethod(
 
     inner class ShakeFunctionScope : CreationShakeScope() {
 
+        override val uniqueName: String get() = qualifiedSignature
+
         val variables = mutableListOf<CreationShakeVariableDeclaration>()
 
         override val parent: CreationShakeScope = parentScope

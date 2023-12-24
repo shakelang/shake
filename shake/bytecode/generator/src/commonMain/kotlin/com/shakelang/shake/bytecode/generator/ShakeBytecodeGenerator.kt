@@ -5,6 +5,7 @@ import com.shakelang.shake.processor.program.types.*
 import com.shakelang.shake.processor.program.types.code.ShakeCode
 import com.shakelang.shake.processor.program.types.code.ShakeInvocation
 import com.shakelang.shake.processor.program.types.code.statements.ShakeStatement
+import com.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.code.values.*
 
 class ShakeBytecodeGenerator {
@@ -62,8 +63,8 @@ class ShakeBytecodeGenerator {
         when (invokable) {
             is ShakeMethod -> {
                 if (invokable.isNative) {
-                    val native = Natives.get(invokable.signature)
-                        ?: throw IllegalStateException("Native method ${invokable.signature} is not registered")
+                    val native = Natives.get(invokable.qualifiedSignature)
+                        ?: throw IllegalStateException("Native method ${invokable.qualifiedSignature} is not registered")
                     native.handle(ctx, v, keepResultOnStack)
                 }
             }
@@ -85,6 +86,7 @@ class ShakeBytecodeGenerator {
         s: ShakeStatement,
     ) {
         return when (s) {
+            is ShakeVariableDeclaration -> visitVariableDeclaration(ctx, s)
 //            is ShakeAssignment -> visitAssignment(s)
 //            is ShakeAddAssignment -> visitAdditionAssignment(s)
 //            is ShakeSubAssignment -> visitSubtractionAssignment(s)
@@ -106,6 +108,25 @@ class ShakeBytecodeGenerator {
 //            is ShakeVariableDeclaration -> visitVariableDeclaration(s)
             else -> throw IllegalArgumentException("Unsupported value type: ${s::class.simpleName}")
         }
+    }
+
+    private fun visitVariableDeclaration(ctx: BytecodeGenerationContext, s: ShakeVariableDeclaration) {
+
+        if(ctx.localTable.containsLocal(s.uniqueName)) {
+            throw IllegalStateException("Local ${s.name} is already defined")
+        }
+
+        // Get space needed in local table
+        val size = getTypeSize(s.type)
+        val type = generateTypeDescriptor(s.type)
+
+        val local = ctx.localTable.createLocal(s.uniqueName, size)
+
+        if (s.initialValue != null) {
+            visitValue(ctx, s.initialValue!!)
+            ctx.bytecodeInstructionGenerator.store(type, local)
+        }
+
     }
 
     fun generateProject(project: ShakeProject): MutableList<GenerationContext> {
@@ -270,17 +291,49 @@ class ShakeBytecodeGenerator {
         }
     }
 
+    fun getTypeSize(type: ShakeType): Int {
+        return when (type.kind) {
+            ShakeType.Kind.PRIMITIVE -> {
+                when ((type as ShakeType.Primitive).type) {
+                    ShakeType.PrimitiveType.BYTE -> 1
+                    ShakeType.PrimitiveType.SHORT -> 1
+                    ShakeType.PrimitiveType.INT -> 1
+                    ShakeType.PrimitiveType.LONG -> 2
+                    ShakeType.PrimitiveType.UNSIGNED_BYTE -> 1
+                    ShakeType.PrimitiveType.UNSIGNED_SHORT -> 1
+                    ShakeType.PrimitiveType.UNSIGNED_INT -> 1
+                    ShakeType.PrimitiveType.UNSIGNED_LONG -> 2
+                    ShakeType.PrimitiveType.FLOAT -> 1
+                    ShakeType.PrimitiveType.DOUBLE -> 2
+                    ShakeType.PrimitiveType.BOOLEAN -> 1
+                    ShakeType.PrimitiveType.CHAR -> 1
+                    ShakeType.PrimitiveType.NULL -> 1
+                    ShakeType.PrimitiveType.VOID -> 0
+                    ShakeType.PrimitiveType.DYNAMIC -> 8
+                }
+            }
+
+            ShakeType.Kind.ARRAY, ShakeType.Kind.OBJECT, ShakeType.Kind.LAMBDA -> 8
+        }
+    }
+
     class LocalTable (
         val locals: MutableMap<String, Int> = mutableMapOf(),
         var size : Int = 0
     ) {
-        fun createLocal(name: String, size: Int) {
-            locals[name] = this.size
-            this.size += size
+
+        fun containsLocal(name: String): Boolean {
+            return locals.containsKey(name)
         }
 
-        fun getLocal(name: String): Int {
-            return locals[name] ?: throw IllegalStateException("Local $name is not defined")
+        fun createLocal(name: String, size: Int): UShort {
+            locals[name] = this.size
+            this.size += size
+            return locals[name]!!.toUShort()
+        }
+
+        fun getLocal(name: String): UShort {
+            return (locals[name] ?: throw IllegalStateException("Local $name is not defined")).toUShort()
         }
     }
 
