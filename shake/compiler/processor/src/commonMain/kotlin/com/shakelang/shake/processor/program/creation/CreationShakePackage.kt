@@ -18,7 +18,6 @@ open class CreationShakePackage(
     override val fields: MutableList<CreationShakeField> = mutableListOf()
 ) : ShakePackage {
 
-    override val qualifiedName: String get() = "${parent?.qualifiedName?.plus(".") ?: ""}$name"
     override val scope: CreationShakeScope = Scope()
     private val files: MutableList<FileEntry> = mutableListOf()
 

@@ -37,7 +37,7 @@ class CreationShakeMethod(
 ), ShakeMethod {
 
     override val qualifiedName: String
-        get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
+        get() = super.qualifiedName
 
     override val scope: CreationShakeScope = ShakeFunctionScope()
 
