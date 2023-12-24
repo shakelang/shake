@@ -22,19 +22,33 @@ open class CreationShakePackage(
     override val scope: CreationShakeScope = Scope()
     private val files: MutableList<FileEntry> = mutableListOf()
 
-    override fun getPackage(name: String): CreationShakePackage {
+    fun requirePackage(name: String): CreationShakePackage {
         return subpackages.find { it.name == name } ?: CreationShakePackage(baseProject, name, this).let {
             subpackages.add(it)
             it
         }
     }
 
-    override fun getPackage(name: Array<String>): CreationShakePackage {
-        return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
+    fun requirePackage(name: Array<String>): CreationShakePackage {
+        return name.fold(this) { acc, pkgName -> acc.requirePackage(pkgName) }
+    }
+
+    fun requirePackage(name: List<String>): CreationShakePackage {
+        return name.fold(this) { acc, pkgName -> acc.requirePackage(pkgName) }
+    }
+
+    override fun getPackage(name: String): CreationShakePackage? {
+        return subpackages.find { it.name == name }
+    }
+
+    override fun getPackage(name: Array<String>): CreationShakePackage? {
+        if(name.isEmpty()) return this
+        return getPackage(name.first())?.getPackage(name.drop(1))
     }
 
     override fun getPackage(name: List<String>): CreationShakePackage? {
-        return name.fold(this) { acc, pkgName -> acc.getPackage(pkgName) }
+        if(name.isEmpty()) return this
+        return getPackage(name.first())?.getPackage(name.drop(1))
     }
 
     open fun putFile(name: String, contents: ShakeFileNode) {
@@ -46,7 +60,7 @@ open class CreationShakePackage(
     open fun putFile(name: Array<String>, contents: ShakeFileNode) {
         val pkg = name.sliceArray(0 until name.size - 1)
         val file = name.last()
-        getPackage(pkg).putFile(file, contents)
+        requirePackage(pkg).putFile(file, contents)
     }
 
 
@@ -182,7 +196,7 @@ open class CreationShakePackage(
 
         fun lazyLoadImportedWildcardPackages() {
             if(this::wildcardImportedPackages.isInitialized) return
-            wildcardImportedPackages = wildcardImports.map { baseProject.getPackage(it) }
+            wildcardImportedPackages = wildcardImports.mapNotNull { baseProject.getPackage(it) }
         }
 
         fun lazyLoadImportedWildcardClasses() {
@@ -207,7 +221,7 @@ open class CreationShakePackage(
         fun lazyLoadImportedFunctions() {
             if(this::importedFunctions.isInitialized) return
             lazyLoadImportedWildcardPackages()
-            val imports = wildcardImports.flatMap { baseProject.getPackage(it).functions }.toMutableList()
+            val imports = wildcardImports.flatMap { baseProject.getPackage(it)?.functions ?: listOf() }.toMutableList()
             imports.addAll(explicitImports.flatMap { baseProject.getFunctions(it) })
             importedFunctions = imports
         }
@@ -215,7 +229,7 @@ open class CreationShakePackage(
         fun lazyLoadImportedFields() {
             if(this::importedFields.isInitialized) return
             lazyLoadImportedWildcardPackages()
-            val imports = wildcardImports.flatMap { baseProject.getPackage(it).fields }.toMutableList()
+            val imports = wildcardImports.flatMap { baseProject.getPackage(it)?.fields ?: listOf() }.toMutableList()
             imports.addAll(explicitImports.mapNotNull { baseProject.getField(it) })
             importedFields = imports
         }

@@ -74,7 +74,7 @@ abstract class CreationShakeScope : ShakeScope {
     }
 
     fun getType(clzName: String) : CreationShakeType {
-        return CreationShakeType.objectType(this.getClass(clzName)?:throw IllegalArgumentException("Class $clzName not found"))
+        return CreationShakeType.objectType(this.getClass(clzName) ?: throw IllegalArgumentException("Class $clzName not found"))
     }
 
     fun getType(type: ShakeVariableType): CreationShakeType {

@@ -3,7 +3,6 @@ package com.shakelang.shake.processor.program.creation
 import com.shakelang.shake.parser.node.ShakeFileNode
 import com.shakelang.shake.parser.node.ShakePackageNode
 import com.shakelang.shake.processor.ShakeASTProcessor
-import com.shakelang.shake.processor.program.types.ShakeField
 import com.shakelang.shake.processor.program.types.ShakeProject
 
 class CreationShakeProject(
@@ -20,12 +19,18 @@ class CreationShakeProject(
 
         override val processor: ShakeASTProcessor = processor
 
-        val imported: Array<CreationShakePackage> = arrayOf(
-            getPackage("shake.lang"),
-            getPackage("shake.js")
-        )
+        lateinit var imported: Array<CreationShakePackage>
+
+        fun lazyLoadImportedPackages() {
+            if (this::imported.isInitialized) return
+            imported = arrayOf(
+                getPackage("shake.lang"),
+                getPackage("shake.js")
+            ).filterNotNull().toTypedArray()
+        }
 
         override fun get(name: String): CreationShakeAssignable? {
+            lazyLoadImportedPackages()
             for (import in imported) {
                 val field = import.fields.find { it.name == name }
                 if (field != null) return field
@@ -38,6 +43,7 @@ class CreationShakeProject(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
+            lazyLoadImportedPackages()
             val functions = mutableListOf<CreationShakeMethod>()
             for (import in imported) {
                 functions += import.functions.filter { it.name == name }
@@ -50,6 +56,7 @@ class CreationShakeProject(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
+            lazyLoadImportedPackages()
             for (import in imported) {
                 val clazz = import.classes.find { it.name == name }
                 if (clazz != null) return clazz
@@ -66,26 +73,41 @@ class CreationShakeProject(
         val pkgNode =
             (content.children.find { it is ShakePackageNode } ?: error("No package node found")) as ShakePackageNode
         val pkgName = pkgNode.pkg
-        val pkg = getPackage(pkgName)
-        pkg.putFile(name, content)
+        requirePackage(pkgName).putFile(name, content)
     }
 
-    override fun getPackage(name: String): CreationShakePackage {
+
+    override fun getPackage(name: String): CreationShakePackage? {
         if (name.contains(".")) return getPackage(name.split(".").toTypedArray())
+        return subpackages.find { it.name == name }
+    }
+
+    override fun getPackage(name: Array<String>): CreationShakePackage? {
+        if (name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
+        return getPackage(name.first())?.getPackage(name.drop(1).toTypedArray())
+    }
+
+    override fun getPackage(name: List<String>): CreationShakePackage? {
+        if (name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
+        return getPackage(name.first())?.getPackage(name.drop(1).toTypedArray())
+    }
+
+    fun requirePackage(name: String): CreationShakePackage {
+        if (name.contains(".")) return requirePackage(name.split(".").toTypedArray())
         return subpackages.find { it.name == name } ?: CreationShakePackage(this, name).let {
             subpackages.add(it)
             it
         }
     }
 
-    override fun getPackage(name: Array<String>): CreationShakePackage {
+    fun requirePackage(name: Array<String>): CreationShakePackage {
         if (name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
-        return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
+        return requirePackage(name.first()).requirePackage(name.drop(1).toTypedArray())
     }
 
-    override fun getPackage(name: List<String>): CreationShakePackage {
+    fun requirePackage(name: List<String>): CreationShakePackage {
         if (name.isEmpty()) throw IllegalArgumentException("Cannot get package from empty name")
-        return getPackage(name.first()).getPackage(name.drop(1).toTypedArray())
+        return requirePackage(name.first()).requirePackage(name.drop(1).toTypedArray())
     }
 
     override fun getClass(name: List<String>): CreationShakeClass? = super.getClass(name) as CreationShakeClass?
