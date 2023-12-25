@@ -1,3 +1,23 @@
 {
-  "bumps": []
+  "bumps": [
+    {
+      "type": "minor",
+      "message": "Move `com.shakelang.shake.util` to `com.shakelang.util`",
+      "paths": [
+        ":util:changelog",
+        ":util:colorlib",
+        ":util:common-io",
+        ":util:environment",
+        ":util:jvmlib",
+        ":util:logger",
+        ":util:markdown",
+        ":util:parseutils",
+        ":util:pointers",
+        ":util:primitives",
+        ":util:sarifmerge",
+        ":util:shason",
+        ":util:testlib"
+      ]
+    }
+  ]
 }
