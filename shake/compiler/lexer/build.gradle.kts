@@ -8,7 +8,7 @@ plugins {
     id("conventions.publishing")
 }
 
-group = projectGroup("compiler.lexer")
+group = projectGroup("shake.compiler")
 version = resolveVersion()
 public = true
 description = "Utilities for parsing stuff with kotlin"

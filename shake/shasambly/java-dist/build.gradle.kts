@@ -7,7 +7,7 @@ plugins {
     id("org.jetbrains.dokka")
 }
 
-group = projectGroup("shasambly.java-dist")
+group = projectGroup("shake.shasambly")
 version = resolveVersion()
 description = "Java distribution commands for Shasambly"
 

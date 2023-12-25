@@ -7,7 +7,7 @@ plugins {
     id("conventions.publishing")
 }
 
-group = projectGroup("shasambly.shasp")
+group = projectGroup("shake.shasambly")
 version = resolveVersion()
 description = "Shasp is a very simple programming language that outputs shasambly bytecode."
 
