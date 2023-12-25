@@ -3,11 +3,11 @@ package com.shakelang.shake.bytecode.interpreter.format
 import com.shakelang.shake.bytecode.interpreter.format.attribute.AnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.shake.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.DataOutputStream
-import com.shakelang.shake.util.primitives.bytes.toBytes
-import com.shakelang.shake.util.testlib.shouldContainExactly
+import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.testlib.shouldContainExactly
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe

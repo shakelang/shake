@@ -3,7 +3,7 @@ import conventions.dependencies
 import conventions.projectGroup
 import conventions.useKotest
 
-group = projectGroup("bytecode")
+group = projectGroup("shake.bytecode")
 version = resolveVersion()
 description = "Generator for Shake Bytecode"
 java.sourceCompatibility = JavaVersion.VERSION_1_8

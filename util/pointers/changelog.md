@@ -1,11 +1,6 @@
-# com.shakelang.shake.util:primitives
-
+# pointers
 ## Description
-
-Utility for working with colors in console applications (Kotlin Multiplatform)
-
+Prints the current version
 ## Versions
-
 ### 0.2.0
-
-Update to new package structure
+Move `com.shakelang.shake.util` to `com.shakelang.util`

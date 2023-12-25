@@ -1,6 +1,6 @@
 package com.shakelang.shake.lexer.token
 
-import com.shakelang.shake.util.parseutils.lexer.token.Token
+import com.shakelang.util.parseutils.lexer.token.Token
 
 /**
  * The input of the [com.shakelang.shake.lexer.ShakeLexer] gets converted into [ShakeToken]s. These get parsed

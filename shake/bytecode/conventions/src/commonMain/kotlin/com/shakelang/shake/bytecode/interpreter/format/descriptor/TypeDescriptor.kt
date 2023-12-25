@@ -1,7 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter.format.descriptor
 
-import com.shakelang.shake.util.io.streaming.input.InputStream
-import com.shakelang.shake.util.io.streaming.input.byteStream
+import com.shakelang.util.io.streaming.input.InputStream
+import com.shakelang.util.io.streaming.input.byteStream
 
 /**
  * A type (of a field, method, parameter, variable, etc.)

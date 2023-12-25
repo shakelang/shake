@@ -1,10 +1,10 @@
 package com.shakelang.shake.bytecode.interpreter.format.attribute
 
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.shake.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.DataOutputStream
-import com.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.primitives.bytes.toBytes
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

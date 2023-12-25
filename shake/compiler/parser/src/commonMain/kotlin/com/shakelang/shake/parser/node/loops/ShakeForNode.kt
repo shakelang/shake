@@ -4,7 +4,7 @@ import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeStatementNode
 import com.shakelang.shake.parser.node.ShakeStatementNodeImpl
 import com.shakelang.shake.parser.node.ShakeValuedNode
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class ShakeForNode(
     map: PositionMap,

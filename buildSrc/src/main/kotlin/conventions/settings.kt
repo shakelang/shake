@@ -9,6 +9,6 @@ const val KOTLIN_VERSION = "1.9.10"
 
 const val KOTEST_VERSION = "5.8.0"
 
-const val GROUP = "com.shakelang.shake"
+const val GROUP = "com.shakelang"
 
 fun projectGroup(name: String) = "$GROUP.$name"

@@ -3,10 +3,10 @@ package com.shakelang.shake.bytecode.interpreter
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClass
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterMethod
-import com.shakelang.shake.util.primitives.bytes.*
-import com.shakelang.shake.util.primitives.calc.shl
-import com.shakelang.shake.util.primitives.calc.shr
-import com.shakelang.shake.util.primitives.calc.ushr
+import com.shakelang.util.primitives.bytes.*
+import com.shakelang.util.primitives.calc.shl
+import com.shakelang.util.primitives.calc.shr
+import com.shakelang.util.primitives.calc.ushr
 import kotlin.experimental.and
 import kotlin.experimental.inv
 import kotlin.experimental.or

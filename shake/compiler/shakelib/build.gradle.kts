@@ -9,7 +9,7 @@ plugins {
     id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
 }
 
-group = projectGroup("compiler.shakelib")
+group = projectGroup("shake.compiler")
 version = resolveVersion()
 description = "Utilities for parsing stuff with kotlin"
 

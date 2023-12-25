@@ -2,9 +2,9 @@ package com.shakelang.shake.bytecode.interpreter.generator
 
 import com.shakelang.shake.bytecode.interpreter.Opcodes
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.shake.util.primitives.bytes.setBytes
-import com.shakelang.shake.util.primitives.bytes.toBytes
-import com.shakelang.shake.util.primitives.calc.shl
+import com.shakelang.util.primitives.bytes.setBytes
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.calc.shl
 import kotlin.jvm.JvmName
 
 open class ShakeBytecodeInstructionGenerator(

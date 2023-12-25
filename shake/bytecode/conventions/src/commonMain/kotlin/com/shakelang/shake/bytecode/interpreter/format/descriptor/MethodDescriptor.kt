@@ -1,9 +1,9 @@
 package com.shakelang.shake.bytecode.interpreter.format.descriptor
 
-import com.shakelang.shake.util.io.streaming.input.BufferedInputStream
-import com.shakelang.shake.util.io.streaming.input.InputStream
-import com.shakelang.shake.util.io.streaming.input.bufferedStream
-import com.shakelang.shake.util.io.streaming.input.byteStream
+import com.shakelang.util.io.streaming.input.BufferedInputStream
+import com.shakelang.util.io.streaming.input.InputStream
+import com.shakelang.util.io.streaming.input.bufferedStream
+import com.shakelang.util.io.streaming.input.byteStream
 
 /**
  * A class to represent a method descriptor

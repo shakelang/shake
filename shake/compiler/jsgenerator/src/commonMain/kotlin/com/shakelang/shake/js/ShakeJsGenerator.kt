@@ -338,9 +338,9 @@ class ShakeJsGenerator {
         return JsProject(
             this,
             n.subpackages.toTypedArray(),
-            n.classes.filter { !it.isNative }.toTypedArray(),
-            n.functions.filter { !it.isNative }.toTypedArray(),
-            n.fields.filter { !it.isNative }.toTypedArray()
+            emptyArray(),
+            emptyArray(),
+            emptyArray()
         )
     }
 }

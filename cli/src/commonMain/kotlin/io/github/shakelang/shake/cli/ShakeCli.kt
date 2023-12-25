@@ -6,17 +6,17 @@
 
 package com.shakelang.shake.cli
 
-import com.shakelang.shake.util.parseutils.File
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
-import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.util.parseutils.File
+import com.shakelang.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
 import com.shakelang.shake.interpreter.Interpreter
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.ShakeParser
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.shason.json
 import kotlin.jvm.JvmName
 
 /**

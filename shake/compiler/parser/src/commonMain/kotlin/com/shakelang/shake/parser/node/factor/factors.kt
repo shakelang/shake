@@ -2,7 +2,7 @@ package com.shakelang.shake.parser.node.factor
 
 import com.shakelang.shake.parser.node.ShakeValuedNode
 import com.shakelang.shake.parser.node.ShakeValuedNodeImpl
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class ShakeLogicalTrueNode(map: PositionMap) : ShakeValuedNodeImpl(map) {
     override fun equalsIgnorePosition(other: Any?): Boolean {

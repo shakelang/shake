@@ -13,3 +13,6 @@ Introduce BufferedInputStream#peek() (As it can be helpfull and is no problem to
 Introduce DumpAble interface (for objects that have the ability to be dumped into binary)
 ### 0.3.1
 Update com.shakelang.shake.util:primitives to 0.4.0
+### 0.4.0
+Move `com.shakelang.shake.util` to `com.shakelang.util`
+Update com.shakelang.util:primitives to 0.5.0

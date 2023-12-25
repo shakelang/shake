@@ -3,8 +3,8 @@
 package com.shakelang.shake.shasambly.generator.basic
 
 import com.shakelang.shake.shasambly.interpreter.Opcodes
-import com.shakelang.shake.util.primitives.bytes.toBytes
-import com.shakelang.shake.util.primitives.bytes.toHexString
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toHexString
 
 /**
  * This represents one shasambly opcode in the generation. It will be converted to it's bytes by

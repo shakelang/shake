@@ -1,6 +1,6 @@
 package com.shakelang.shake.shasambly.interpreter
 
-import com.shakelang.shake.util.parseutils.bGenerateUByte
+import com.shakelang.util.parseutils.bGenerateUByte
 
 object Opcodes {
 

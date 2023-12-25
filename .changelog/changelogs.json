@@ -140,6 +140,19 @@
             "Update com.shakelang.shake.util:parseutils to 0.2.5",
             "Update com.shakelang.shake.util:shason to 0.3.2"
           ]
+        },
+        {
+          "version": "0.7.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`",
+            "Update com.shakelang.util:colorlib to 0.3.0",
+            "Update com.shakelang.util:common-io to 0.4.0",
+            "Update com.shakelang.util:environment to 0.3.0",
+            "Update com.shakelang.util:markdown to 0.2.0",
+            "Update com.shakelang.util:parseutils to 0.3.0",
+            "Update com.shakelang.util:primitives to 0.5.0",
+            "Update com.shakelang.util:shason to 0.4.0"
+          ]
         }
       ]
     },
@@ -152,6 +165,12 @@
           "version": "0.2.0",
           "changes": [
             "Update to new package structure"
+          ]
+        },
+        {
+          "version": "0.3.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`"
           ]
         }
       ]
@@ -191,6 +210,13 @@
           "changes": [
             "Update com.shakelang.shake.util:primitives to 0.4.0"
           ]
+        },
+        {
+          "version": "0.4.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`",
+            "Update com.shakelang.util:primitives to 0.5.0"
+          ]
         }
       ]
     },
@@ -203,6 +229,12 @@
           "version": "0.2.0",
           "changes": [
             "Update to new package structure"
+          ]
+        },
+        {
+          "version": "0.3.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`"
           ]
         }
       ]
@@ -240,6 +272,18 @@
             "Update com.shakelang.shake.util:parseutils to 0.2.5",
             "Update com.shakelang.shake.util:shason to 0.3.2"
           ]
+        },
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`",
+            "Update com.shakelang.util:colorlib to 0.3.0",
+            "Update com.shakelang.util:common-io to 0.4.0",
+            "Update com.shakelang.util:environment to 0.3.0",
+            "Update com.shakelang.util:parseutils to 0.3.0",
+            "Update com.shakelang.util:primitives to 0.5.0",
+            "Update com.shakelang.util:shason to 0.4.0"
+          ]
         }
       ]
     },
@@ -261,6 +305,14 @@
             "Bugfixes with logging",
             "Make default logger print to console"
           ]
+        },
+        {
+          "version": "0.4.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`",
+            "Update com.shakelang.util:colorlib to 0.3.0",
+            "Update com.shakelang.util:environment to 0.3.0"
+          ]
         }
       ]
     },
@@ -273,6 +325,12 @@
           "version": "0.1.1",
           "changes": [
             "Join multiple markdown elements with two line separators (to make sure markdown does not render them into one line)"
+          ]
+        },
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`"
           ]
         }
       ]
@@ -318,6 +376,16 @@
             "Update com.shakelang.shake.util:primitives to 0.4.0",
             "Update com.shakelang.shake.util:common-io to 0.3.1"
           ]
+        },
+        {
+          "version": "0.3.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`",
+            "Update com.shakelang.util:colorlib to 0.3.0",
+            "Update com.shakelang.util:common-io to 0.4.0",
+            "Update com.shakelang.util:environment to 0.3.0",
+            "Update com.shakelang.util:primitives to 0.5.0"
+          ]
         }
       ]
     },
@@ -342,6 +410,12 @@
           "version": "0.4.0",
           "changes": [
             "Add bits library"
+          ]
+        },
+        {
+          "version": "0.5.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`"
           ]
         }
       ]
@@ -403,6 +477,17 @@
             "Update com.shakelang.shake.util:common-io to 0.3.1",
             "Update com.shakelang.shake.util:parseutils to 0.2.5"
           ]
+        },
+        {
+          "version": "0.4.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`",
+            "Update com.shakelang.util:colorlib to 0.3.0",
+            "Update com.shakelang.util:common-io to 0.4.0",
+            "Update com.shakelang.util:environment to 0.3.0",
+            "Update com.shakelang.util:parseutils to 0.3.0",
+            "Update com.shakelang.util:primitives to 0.5.0"
+          ]
         }
       ]
     },
@@ -427,6 +512,12 @@
           "version": "0.2.2",
           "changes": [
             "Create Array matching api in testlib"
+          ]
+        },
+        {
+          "version": "0.3.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`"
           ]
         }
       ]
@@ -461,6 +552,16 @@
             "Update com.shakelang.shake.util:primitives to 0.4.0",
             "Update com.shakelang.shake.util:common-io to 0.3.1",
             "Update com.shakelang.shake.util:parseutils to 0.2.5"
+          ]
+        },
+        {
+          "version": "0.1.4-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.util:colorlib to 0.3.0",
+            "Update com.shakelang.util:common-io to 0.4.0",
+            "Update com.shakelang.util:environment to 0.3.0",
+            "Update com.shakelang.util:parseutils to 0.3.0",
+            "Update com.shakelang.util:primitives to 0.5.0"
           ]
         }
       ]
@@ -500,6 +601,18 @@
             "Update com.shakelang.shake.util:parseutils to 0.2.5",
             "Update com.shakelang.shake.util:shason to 0.3.2",
             "Update com.shakelang.shake.compiler.lexer:lexer to 0.1.3-SNAPSHOT"
+          ]
+        },
+        {
+          "version": "0.1.5-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.util:colorlib to 0.3.0",
+            "Update com.shakelang.util:common-io to 0.4.0",
+            "Update com.shakelang.util:environment to 0.3.0",
+            "Update com.shakelang.util:parseutils to 0.3.0",
+            "Update com.shakelang.util:primitives to 0.5.0",
+            "Update com.shakelang.util:shason to 0.4.0",
+            "Update com.shakelang.shake.compiler:lexer to 0.1.4-SNAPSHOT"
           ]
         }
       ]
@@ -591,6 +704,31 @@
             "Update com.shakelang.shake.util:common-io to 0.3.1",
             "Update com.shakelang.shake.util:parseutils to 0.2.5",
             "Update com.shakelang.shake.util:shason to 0.3.2"
+          ]
+        },
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`",
+            "Update com.shakelang.util:colorlib to 0.3.0",
+            "Update com.shakelang.util:common-io to 0.4.0",
+            "Update com.shakelang.util:environment to 0.3.0",
+            "Update com.shakelang.util:parseutils to 0.3.0",
+            "Update com.shakelang.util:primitives to 0.5.0",
+            "Update com.shakelang.util:shason to 0.4.0"
+          ]
+        }
+      ]
+    },
+    {
+      "path": ":util:pointers",
+      "name": "pointers",
+      "description": "Prints the current version",
+      "versions": [
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Move `com.shakelang.shake.util` to `com.shakelang.util`"
           ]
         }
       ]

@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.shasambly.shasp.parser.nodes
 
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.shason.json
 
 interface ShasPNode {
     fun toJson(): Map<String, Any?>?
