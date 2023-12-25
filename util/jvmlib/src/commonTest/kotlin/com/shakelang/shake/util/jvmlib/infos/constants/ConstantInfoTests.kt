@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.util.jvmlib.infos.constants
 
-import com.shakelang.shake.util.io.streaming.input.inputStream
+import com.shakelang.util.io.streaming.input.inputStream
 import com.shakelang.shake.util.jvmlib.infos.InterfaceList
 import com.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
 import com.shakelang.shake.util.jvmlib.infos.fields.FieldList

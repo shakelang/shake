@@ -5,9 +5,9 @@ package com.shakelang.shake.shasambly.generator.shas
 import com.shakelang.shake.shasambly.interpreter.Opcodes
 import com.shakelang.shake.shasambly.interpreter.natives.Natives
 import com.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.DataOutputStream
-import com.shakelang.shake.util.io.streaming.output.OutputStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.output.OutputStream
 import com.shakelang.shake.util.parseutils.characters.Characters.isHexCharacter
 import com.shakelang.shake.util.parseutils.characters.Characters.isIdentifierCharacter
 import com.shakelang.shake.util.parseutils.characters.Characters.isIdentifierStartCharacter

@@ -1,6 +1,6 @@
 package com.shakelang.shake.util.jvmlib.infos.attributes
 
-import com.shakelang.shake.util.io.streaming.input.DataInputStream
+import com.shakelang.util.io.streaming.input.DataInputStream
 import com.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
 import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
 import com.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info

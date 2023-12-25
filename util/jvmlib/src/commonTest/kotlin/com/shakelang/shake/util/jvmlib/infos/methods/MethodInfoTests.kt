@@ -1,7 +1,7 @@
 package com.shakelang.shake.util.jvmlib.infos.methods
 
-import com.shakelang.shake.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
 import com.shakelang.shake.util.jvmlib.infos.constants.Constant
 import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool

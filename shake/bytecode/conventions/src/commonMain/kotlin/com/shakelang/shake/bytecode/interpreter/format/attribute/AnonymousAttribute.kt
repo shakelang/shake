@@ -2,9 +2,9 @@ package com.shakelang.shake.bytecode.interpreter.format.attribute
 
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.shake.util.io.streaming.input.DataInputStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.DataInputStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.DataOutputStream
 
 open class AnonymousAttributeImpl(
     override val pool: ConstantPool,
