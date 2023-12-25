@@ -5,7 +5,7 @@ import com.shakelang.shake.parser.node.ShakeFileChildNodeImpl
 import com.shakelang.shake.parser.node.ShakeNamespaceNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.position.PositionMap
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")

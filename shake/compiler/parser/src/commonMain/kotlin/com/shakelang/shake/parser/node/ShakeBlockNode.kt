@@ -1,6 +1,6 @@
 package com.shakelang.shake.parser.node
 
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class ShakeBlockNode(map: PositionMap, val children: Array<ShakeStatementNode>) : ShakeNodeImpl(map) {
 

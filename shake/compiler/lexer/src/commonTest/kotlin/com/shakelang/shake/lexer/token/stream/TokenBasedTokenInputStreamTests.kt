@@ -2,8 +2,8 @@ package com.shakelang.shake.lexer.token.stream
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
-import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
+import com.shakelang.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.source.CharacterSource
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.FreeSpec

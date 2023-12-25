@@ -1,8 +1,8 @@
 package com.shakelang.shake.util.shason.processing
 
-import com.shakelang.shake.util.parseutils.CompilerError
-import com.shakelang.shake.util.parseutils.characters.Characters
-import com.shakelang.shake.util.parseutils.characters.position.Position
+import com.shakelang.util.parseutils.CompilerError
+import com.shakelang.util.parseutils.characters.Characters
+import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.shake.util.shason.elements.*
 import com.shakelang.shake.util.shason.processing.JsonTokenType.*
 

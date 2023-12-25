@@ -19,9 +19,9 @@ import com.shakelang.shake.processor.program.creation.code.*
 import com.shakelang.shake.processor.program.creation.code.statements.*
 import com.shakelang.shake.processor.program.creation.code.values.*
 import com.shakelang.util.logger.debug
-import com.shakelang.shake.util.parseutils.File
-import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.util.parseutils.File
+import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
 
 class ShakeProcessorOptions {
     var precalculate: Boolean = true

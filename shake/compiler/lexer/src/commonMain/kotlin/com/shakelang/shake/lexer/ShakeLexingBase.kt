@@ -2,10 +2,11 @@ package com.shakelang.shake.lexer
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
-import com.shakelang.shake.util.parseutils.characters.Characters
-import com.shakelang.shake.util.parseutils.characters.position.Position
-import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import com.shakelang.shake.util.parseutils.lexer.LexingBase
+import com.shakelang.util.parseutils.characters.Characters
+import com.shakelang.util.parseutils.characters.position.Position
+import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.util.parseutils.lexer.LexingBase
+import com.shakelang.util.parseutils.CompilerError
 import kotlin.jvm.JvmOverloads
 
 abstract class ShakeLexingBase(
@@ -383,7 +384,7 @@ abstract class ShakeLexingBase(
     }
 
     inner class LexerError(message: String, name: String, details: String, start: Position, end: Position) :
-        com.shakelang.shake.util.parseutils.CompilerError(message, name, details, start, end) {
+        CompilerError(message, name, details, start, end) {
         @JvmOverloads
         constructor(
             name: String,

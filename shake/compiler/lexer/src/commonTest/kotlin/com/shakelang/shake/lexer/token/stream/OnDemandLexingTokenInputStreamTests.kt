@@ -1,8 +1,8 @@
 package com.shakelang.shake.lexer.token.stream
 
 import com.shakelang.shake.lexer.token.ShakeTokenType
-import com.shakelang.shake.util.parseutils.characters.source.CharacterSource
-import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.util.parseutils.characters.source.CharacterSource
+import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
