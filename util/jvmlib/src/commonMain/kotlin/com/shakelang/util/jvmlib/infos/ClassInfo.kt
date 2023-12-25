@@ -18,7 +18,7 @@ class ClassInfo(
     val accessFlags: UShort,
     val thisClass: ConstantClassInfo,
     val superClass: ConstantClassInfo,
-    val interfaces: com.shakelang.shake.util.jvmlib.infos.InterfaceList,
+    val interfaces: InterfaceList,
     val fieldInfos: FieldList,
     val methodInfos: MethodList,
     val attributeInfos: AttributeMap
@@ -97,7 +97,7 @@ class ClassInfo(
 
     fun dump(out: OutputStream) = this.dump(DataOutputStream(out))
     fun dump(out: DataOutputStream) {
-        out.writeInt(com.shakelang.shake.util.jvmlib.infos.ClassInfo.Companion.magic)
+        out.writeInt(ClassInfo.Companion.magic)
         out.writeUnsignedShort(minorVersion)
         out.writeUnsignedShort(majorVersion)
         constantPool.dump(out)
@@ -114,7 +114,7 @@ class ClassInfo(
 
         const val magic: Int = 0xcafebabe.toInt()
 
-        fun fromStream(stream: DataInputStream): com.shakelang.shake.util.jvmlib.infos.ClassInfo {
+        fun fromStream(stream: DataInputStream): ClassInfo {
             val magic = stream.readUnsignedInt()
             if (magic.toLong() != 0xcafebabe) throw IllegalArgumentException("Invalid magic number 0x${magic.toString(16)}")
             val minorVersion = stream.readUnsignedShort()
@@ -125,12 +125,12 @@ class ClassInfo(
             val thisClass = constantPool.getClass(thisClassIndex)
             val superClassIndex = stream.readUnsignedShort()
             val superClass = constantPool.getClass(superClassIndex)
-            val interfaces = com.shakelang.shake.util.jvmlib.infos.InterfaceList.fromStream(constantPool, stream)
+            val interfaces = InterfaceList.fromStream(constantPool, stream)
             val fieldInfos = FieldList.fromStream(constantPool, stream)
             val methodInfos = MethodList.fromStream(constantPool, stream)
             val attributeInfos = AttributeMap.fromStream(constantPool, stream)
 
-            return com.shakelang.shake.util.jvmlib.infos.ClassInfo(
+            return ClassInfo(
                 minorVersion,
                 majorVersion,
                 constantPool,

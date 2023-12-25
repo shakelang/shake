@@ -12,8 +12,8 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         constants.forEach { it.init(this) }
     }
 
-    private lateinit var clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo
-    val classInfo: com.shakelang.shake.util.jvmlib.infos.ClassInfo get() = clazz
+    private lateinit var clazz: com.shakelang.util.jvmlib.infos.ClassInfo
+    val classInfo: com.shakelang.util.jvmlib.infos.ClassInfo get() = clazz
     override val uses: Array<ConstantInfo> = users.map { it.uses.toList() }.flatten().toTypedArray()
     override val users: Array<ConstantUser>
         get() = constants.filter { it is ConstantUser }.map { it as ConstantUser }.toTypedArray()
@@ -27,7 +27,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
         return this.constants.map { it.toJson() }
     }
 
-    fun init(clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo) {
+    fun init(clazz: com.shakelang.util.jvmlib.infos.ClassInfo) {
         this.clazz = clazz
     }
 

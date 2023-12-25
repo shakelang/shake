@@ -11,7 +11,7 @@ abstract class ConstantInfo {
 
     private lateinit var pool: ConstantPool
     val constantPool: ConstantPool get() = pool
-    val classInfo: com.shakelang.shake.util.jvmlib.infos.ClassInfo get() = pool.classInfo
+    val classInfo: com.shakelang.util.jvmlib.infos.ClassInfo get() = pool.classInfo
 
     open val index: UShort get() = (constantPool.indexOf(this) + 1).toUShort()
 

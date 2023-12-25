@@ -158,7 +158,7 @@ class ConstantInfoTests {
             ConstantUtf8Info("I")
         )
         val pool = ConstantPool(testConstants)
-        val clz = com.shakelang.shake.util.jvmlib.infos.ClassInfo(
+        val clz = com.shakelang.util.jvmlib.infos.ClassInfo(
             0u,
             0u,
             pool,

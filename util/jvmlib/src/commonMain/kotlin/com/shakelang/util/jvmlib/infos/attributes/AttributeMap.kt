@@ -12,7 +12,7 @@ open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, 
     override val uses: Array<ConstantInfo> get() = map.values.map { it.uses.toList() }.flatten().toTypedArray()
     override val users: Array<ConstantUser> get() = map.values.toTypedArray()
 
-    private lateinit var clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo
+    private lateinit var clazz: com.shakelang.util.jvmlib.infos.ClassInfo
 
     override fun get(key: String): AttributeInfo? = map[key]
     override val entries: Set<Map.Entry<String, AttributeInfo>>
@@ -45,7 +45,7 @@ open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, 
         it.value.toJson()
     }
 
-    fun init(clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo) {
+    fun init(clazz: com.shakelang.util.jvmlib.infos.ClassInfo) {
         this.clazz = clazz
         for (i in map.values.indices) {
             val attribute = map.values.elementAt(i)

@@ -16,8 +16,8 @@ class InterfaceList(val interfaces: List<ConstantUtf8Info>) : List<ConstantUtf8I
 
     override val uses: Array<ConstantInfo> get() = interfaces.toTypedArray()
 
-    private lateinit var clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo
-    val classInfo: com.shakelang.shake.util.jvmlib.infos.ClassInfo get() = clazz
+    private lateinit var clazz: ClassInfo
+    val classInfo: ClassInfo get() = clazz
 
     constructor(interfaces: Array<ConstantUtf8Info>) : this(interfaces.toList())
 
@@ -35,7 +35,7 @@ class InterfaceList(val interfaces: List<ConstantUtf8Info>) : List<ConstantUtf8I
     override fun listIterator(index: Int): ListIterator<ConstantUtf8Info> = interfaces.listIterator(index)
     override fun subList(fromIndex: Int, toIndex: Int): List<ConstantUtf8Info> = interfaces.subList(fromIndex, toIndex)
 
-    fun init(clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo) {
+    fun init(clazz: ClassInfo) {
         this.clazz = clazz
     }
 

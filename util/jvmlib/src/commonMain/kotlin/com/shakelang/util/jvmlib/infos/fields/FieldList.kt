@@ -16,11 +16,11 @@ class FieldList(val fields: List<FieldInfo>) : List<FieldInfo> by fields, Consta
     override val uses: Array<ConstantInfo> get() = fields.map { it.uses.toList() }.flatten().toTypedArray()
     override val users = fields.map { it.users.toList() }.flatten().toTypedArray()
 
-    private lateinit var clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo
+    private lateinit var clazz: com.shakelang.util.jvmlib.infos.ClassInfo
 
     constructor(fields: Array<FieldInfo>) : this(fields.toList())
 
-    fun init(clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo) {
+    fun init(clazz: com.shakelang.util.jvmlib.infos.ClassInfo) {
         this.clazz = clazz
         this.fields.forEach { it.init(clazz) }
     }

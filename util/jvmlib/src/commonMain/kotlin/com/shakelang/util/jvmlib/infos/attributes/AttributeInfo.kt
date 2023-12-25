@@ -14,7 +14,7 @@ abstract class AttributeInfo(val name: ConstantUtf8Info) : ConstantUser {
 
     val nameIndex get() = name.index
 
-    private lateinit var clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo
+    private lateinit var clazz: com.shakelang.util.jvmlib.infos.ClassInfo
 
     abstract val bytes: ByteArray
     fun toBytes(): ByteArray {
@@ -27,7 +27,7 @@ abstract class AttributeInfo(val name: ConstantUtf8Info) : ConstantUser {
     }
 
     abstract fun toJson(): Map<String, Any>
-    fun init(clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo) {
+    fun init(clazz: com.shakelang.util.jvmlib.infos.ClassInfo) {
         this.clazz = clazz
     }
 

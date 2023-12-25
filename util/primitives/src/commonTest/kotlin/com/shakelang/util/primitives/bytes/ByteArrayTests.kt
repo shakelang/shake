@@ -7,72 +7,71 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import kotlin.math.abs
 import kotlin.math.max
-import kotlin.text.toHexString
 
 @Suppress("unused")
 @OptIn(ExperimentalUnsignedTypes::class)
 class ByteArrayTests : FreeSpec({
 
     "toByte" {
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u).toByte() shouldBe 0x00u.toByte()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x01u).toByte() shouldBe 0x01u.toByte()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x7Fu).toByte() shouldBe 0x7Fu.toByte()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x80u).toByte() shouldBe 0x80u.toByte()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0xFFu).toByte() shouldBe 0xFFu.toByte()
+        byteArrayOf(0x00u).toByte() shouldBe 0x00u.toByte()
+        byteArrayOf(0x01u).toByte() shouldBe 0x01u.toByte()
+        byteArrayOf(0x7Fu).toByte() shouldBe 0x7Fu.toByte()
+        byteArrayOf(0x80u).toByte() shouldBe 0x80u.toByte()
+        byteArrayOf(0xFFu).toByte() shouldBe 0xFFu.toByte()
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x01u).toByte()
+            byteArrayOf(0x00u, 0x01u).toByte()
         }
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf().toByte()
+            byteArrayOf().toByte()
         }
     }
 
     "toShort" {
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u).toShort() shouldBe 0x0000u.toShort()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x01u).toShort() shouldBe 0x0001u.toShort()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x7Fu).toShort() shouldBe 0x007Fu.toShort()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x80u).toShort() shouldBe 0x0080u.toShort()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0xFFu).toShort() shouldBe 0x00FFu.toShort()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x01u, 0x00u).toShort() shouldBe 0x0100u.toShort()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x7Fu, 0xFFu).toShort() shouldBe 0x7FFFu.toShort()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x80u, 0x00u).toShort() shouldBe 0x8000u.toShort()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0xFFu, 0xFFu).toShort() shouldBe 0xFFFFu.toShort()
+        byteArrayOf(0x00u, 0x00u).toShort() shouldBe 0x0000u.toShort()
+        byteArrayOf(0x00u, 0x01u).toShort() shouldBe 0x0001u.toShort()
+        byteArrayOf(0x00u, 0x7Fu).toShort() shouldBe 0x007Fu.toShort()
+        byteArrayOf(0x00u, 0x80u).toShort() shouldBe 0x0080u.toShort()
+        byteArrayOf(0x00u, 0xFFu).toShort() shouldBe 0x00FFu.toShort()
+        byteArrayOf(0x01u, 0x00u).toShort() shouldBe 0x0100u.toShort()
+        byteArrayOf(0x7Fu, 0xFFu).toShort() shouldBe 0x7FFFu.toShort()
+        byteArrayOf(0x80u, 0x00u).toShort() shouldBe 0x8000u.toShort()
+        byteArrayOf(0xFFu, 0xFFu).toShort() shouldBe 0xFFFFu.toShort()
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u).toShort()
+            byteArrayOf(0x00u).toShort()
         }
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x01u).toShort()
+            byteArrayOf(0x00u, 0x00u, 0x01u).toShort()
         }
     }
 
     "toInt" {
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x00000000u.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toInt() shouldBe 0x00000001u.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x7Fu).toInt() shouldBe 0x0000007Fu.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x80u).toInt() shouldBe 0x00000080u.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0xFFu).toInt() shouldBe 0x000000FFu.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x01u, 0x00u).toInt() shouldBe 0x00000100u.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x7Fu, 0xFFu).toInt() shouldBe 0x00007FFFu.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x80u, 0x00u).toInt() shouldBe 0x00008000u.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0xFFu, 0xFFu).toInt() shouldBe 0x0000FFFFu.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x01u, 0x00u, 0x00u).toInt() shouldBe 0x00010000u.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x7Fu, 0xFFu, 0xFFu).toInt() shouldBe 0x007FFFFFu.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x80u, 0x00u, 0x00u).toInt() shouldBe 0x00800000u.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0x00FFFFFFu.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x01u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x01000000u.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0x7FFFFFFFu.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x80000000u.toInt()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0xFFFFFFFFu.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x00000000u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toInt() shouldBe 0x00000001u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x7Fu).toInt() shouldBe 0x0000007Fu.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x80u).toInt() shouldBe 0x00000080u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0xFFu).toInt() shouldBe 0x000000FFu.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x01u, 0x00u).toInt() shouldBe 0x00000100u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x7Fu, 0xFFu).toInt() shouldBe 0x00007FFFu.toInt()
+        byteArrayOf(0x00u, 0x00u, 0x80u, 0x00u).toInt() shouldBe 0x00008000u.toInt()
+        byteArrayOf(0x00u, 0x00u, 0xFFu, 0xFFu).toInt() shouldBe 0x0000FFFFu.toInt()
+        byteArrayOf(0x00u, 0x01u, 0x00u, 0x00u).toInt() shouldBe 0x00010000u.toInt()
+        byteArrayOf(0x00u, 0x7Fu, 0xFFu, 0xFFu).toInt() shouldBe 0x007FFFFFu.toInt()
+        byteArrayOf(0x00u, 0x80u, 0x00u, 0x00u).toInt() shouldBe 0x00800000u.toInt()
+        byteArrayOf(0x00u, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0x00FFFFFFu.toInt()
+        byteArrayOf(0x01u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x01000000u.toInt()
+        byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0x7FFFFFFFu.toInt()
+        byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u).toInt() shouldBe 0x80000000u.toInt()
+        byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toInt() shouldBe 0xFFFFFFFFu.toInt()
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u).toInt()
+            byteArrayOf(0x00u).toInt()
         }
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toInt()
+            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toInt()
         }
     }
 
     "toLong" {
-        com.shakelang.util.primitives.bytes.byteArrayOf(
+        byteArrayOf(
             0x00u,
             0x00u,
             0x00u,
@@ -82,7 +81,7 @@ class ByteArrayTests : FreeSpec({
             0x00u,
             0x00u
         ).toLong() shouldBe 0x0000000000000000uL.toLong()
-        com.shakelang.util.primitives.bytes.byteArrayOf(
+        byteArrayOf(
             0x00u,
             0x00u,
             0x00u,
@@ -92,14 +91,14 @@ class ByteArrayTests : FreeSpec({
             0x00u,
             0x10u
         ).toLong() shouldBe 0x0000000000000010uL.toLong()
-        com.shakelang.util.primitives.bytes.byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe -1L
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong() shouldBe Long.MIN_VALUE
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe Long.MAX_VALUE
+        byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe -1L
+        byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong() shouldBe Long.MIN_VALUE
+        byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe Long.MAX_VALUE
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u).toLong()
+            byteArrayOf(0x00u).toLong()
         }
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(
+            byteArrayOf(
                 0x00u,
                 0x00u,
                 0x00u,
@@ -133,10 +132,10 @@ class ByteArrayTests : FreeSpec({
             0x00u
         ).toFloat())
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toFloat()
+            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toFloat()
         }
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u).toFloat()
+            byteArrayOf(0x00u, 0x00u, 0x00u).toFloat()
         }
     }
 
@@ -210,7 +209,7 @@ class ByteArrayTests : FreeSpec({
             byteArrayOf(0x7fu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
         )
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(
+            byteArrayOf(
                 0x00u,
                 0x00u,
                 0x00u,
@@ -224,48 +223,48 @@ class ByteArrayTests : FreeSpec({
         }
 
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
+            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
         }
     }
 
     "toUnsignedByte" {
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u).toUnsignedByte() shouldBe 0x00u
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x01u).toUnsignedByte() shouldBe 0x01u
-        com.shakelang.util.primitives.bytes.byteArrayOf(0xFFu).toUnsignedByte() shouldBe 0xFFu
+        byteArrayOf(0x00u).toUnsignedByte() shouldBe 0x00u
+        byteArrayOf(0x01u).toUnsignedByte() shouldBe 0x01u
+        byteArrayOf(0xFFu).toUnsignedByte() shouldBe 0xFFu
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x01u).toUnsignedByte()
+            byteArrayOf(0x00u, 0x01u).toUnsignedByte()
         }
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf().toUnsignedByte()
+            byteArrayOf().toUnsignedByte()
         }
     }
 
     "toUnsignedShort" {
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u).toUnsignedShort() shouldBe 0x0000u
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x01u).toUnsignedShort() shouldBe 0x0001u
-        com.shakelang.util.primitives.bytes.byteArrayOf(0xFFu, 0xFFu).toUnsignedShort() shouldBe 0xFFFFu
+        byteArrayOf(0x00u, 0x00u).toUnsignedShort() shouldBe 0x0000u
+        byteArrayOf(0x00u, 0x01u).toUnsignedShort() shouldBe 0x0001u
+        byteArrayOf(0xFFu, 0xFFu).toUnsignedShort() shouldBe 0xFFFFu
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x01u).toUnsignedShort()
+            byteArrayOf(0x00u, 0x00u, 0x01u).toUnsignedShort()
         }
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf().toUnsignedShort()
+            byteArrayOf().toUnsignedShort()
         }
     }
 
     "toUnsignedInt" {
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toUnsignedInt() shouldBe 0x00000000u
-        com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt() shouldBe 0x00000001u
-        com.shakelang.util.primitives.bytes.byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedInt() shouldBe 0xFFFFFFFFu
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u).toUnsignedInt() shouldBe 0x00000000u
+        byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt() shouldBe 0x00000001u
+        byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedInt() shouldBe 0xFFFFFFFFu
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt()
+            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedInt()
         }
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf().toUnsignedInt()
+            byteArrayOf().toUnsignedInt()
         }
     }
 
     "toUnsignedLong" {
-        com.shakelang.util.primitives.bytes.byteArrayOf(
+        byteArrayOf(
             0x00u,
             0x00u,
             0x00u,
@@ -275,7 +274,7 @@ class ByteArrayTests : FreeSpec({
             0x00u,
             0x00u
         ).toUnsignedLong() shouldBe 0x0000000000000000uL
-        com.shakelang.util.primitives.bytes.byteArrayOf(
+        byteArrayOf(
             0x00u,
             0x00u,
             0x00u,
@@ -285,7 +284,7 @@ class ByteArrayTests : FreeSpec({
             0x00u,
             0x01u
         ).toUnsignedLong() shouldBe 0x0000000000000001uL
-        com.shakelang.util.primitives.bytes.byteArrayOf(
+        byteArrayOf(
             0xFFu,
             0xFFu,
             0xFFu,
@@ -296,7 +295,7 @@ class ByteArrayTests : FreeSpec({
             0xFFu
         ).toUnsignedLong() shouldBe 0xFFFFFFFFFFFFFFFFuL
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf(
+            byteArrayOf(
                 0x00u,
                 0x00u,
                 0x00u,
@@ -309,19 +308,19 @@ class ByteArrayTests : FreeSpec({
             ).toUnsignedLong()
         }
         shouldThrow<IllegalArgumentException> {
-            com.shakelang.util.primitives.bytes.byteArrayOf().toUnsignedLong()
+            byteArrayOf().toUnsignedLong()
         }
     }
 
     "setBytes" {
         var bytes = ByteArray(8)
         bytes.setBytes(0,
-            com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u)
+            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u)
         )
         (0..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setBytes(2,
-            com.shakelang.util.primitives.bytes.byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu)
+            byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu)
         )
         bytes[0] shouldBe 0x00u.toByte()
         bytes[1] shouldBe 0x00u.toByte()
@@ -334,7 +333,7 @@ class ByteArrayTests : FreeSpec({
         val bytes = ByteArray(8)
         shouldThrow<IllegalArgumentException> {
             bytes.setBytes(-1,
-                com.shakelang.util.primitives.bytes.byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu)
+                byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu)
             )
         }
 
@@ -862,11 +861,11 @@ class ByteArrayTests : FreeSpec({
         bytes[13] = 0xDDu.toByte()
         bytes[14] = 0xEEu.toByte()
         bytes[15] = 0xFFu.toByte()
-        bytes.getBytes(0, 16).toList() shouldBe com.shakelang.util.primitives.bytes.byteArrayOf(
+        bytes.getBytes(0, 16).toList() shouldBe byteArrayOf(
             0x00u, 0x11u, 0x22u, 0x33u, 0x44u, 0x55u, 0x66u, 0x77u, 0x88u, 0x99u,
             0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu
         ).toList()
-        bytes.getBytes(1, 2).toList() shouldBe com.shakelang.util.primitives.bytes.byteArrayOf(0x11u, 0x22u).toList()
+        bytes.getBytes(1, 2).toList() shouldBe byteArrayOf(0x11u, 0x22u).toList()
     }
 
     "getBytes errors" {
@@ -912,7 +911,7 @@ class ByteArrayTests : FreeSpec({
     }
 
     "toHexString" {
-        val byteArray = com.shakelang.util.primitives.bytes.byteArrayOf(0x00u, 0xFFu)
+        val byteArray = byteArrayOf(0x00u, 0xFFu)
         byteArray[0] shouldBe 0x00u.toByte()
         byteArray[1] shouldBe 0xFFu.toByte()
     }

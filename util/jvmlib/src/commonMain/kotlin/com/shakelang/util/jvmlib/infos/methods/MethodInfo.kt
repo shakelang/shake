@@ -61,7 +61,7 @@ class MethodInfo(
     override val uses get() = arrayOf(name, descriptor, *attributes.uses)
     override val users: Array<ConstantUser> get() = arrayOf(this, *attributes.users)
 
-    private lateinit var clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo
+    private lateinit var clazz: com.shakelang.util.jvmlib.infos.ClassInfo
 
     override fun toString(): String = json.stringify(toJson())
 
@@ -74,7 +74,7 @@ class MethodInfo(
         "attributes" to attributes.toJson()
     )
 
-    fun init(clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo) {
+    fun init(clazz: com.shakelang.util.jvmlib.infos.ClassInfo) {
         this.clazz = clazz
         this.attributes.init(clazz)
     }

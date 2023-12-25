@@ -16,11 +16,11 @@ class MethodList(val methods: List<MethodInfo>) : List<MethodInfo> by methods, C
     override val uses: Array<ConstantInfo> get() = methods.map { it.uses.toList() }.flatten().toTypedArray()
     override val users = methods.map { it.users.toList() }.flatten().toTypedArray()
 
-    private lateinit var clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo
+    private lateinit var clazz: com.shakelang.util.jvmlib.infos.ClassInfo
 
     constructor(methods: Array<MethodInfo>) : this(methods.toList())
 
-    fun init(clazz: com.shakelang.shake.util.jvmlib.infos.ClassInfo) {
+    fun init(clazz: com.shakelang.util.jvmlib.infos.ClassInfo) {
         this.clazz = clazz
         this.methods.forEach { it.init(clazz) }
     }
