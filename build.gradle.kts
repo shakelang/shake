@@ -1,7 +1,7 @@
 // import com.shakelang.shake.sarifmerge.SarifMerge
 import com.shakelang.shake.sarifmerge.SarifMerge
-import com.shakelang.util.changelog.Changelog
-import com.shakelang.util.changelog.tasks.VersionTask
+import com.shakelang.shake.util.changelog.Changelog
+import com.shakelang.shake.util.changelog.tasks.VersionTask
 import io.codearte.gradle.nexus.NexusStagingExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.dokka.DokkaConfiguration.Visibility
