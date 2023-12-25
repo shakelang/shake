@@ -32,26 +32,26 @@ abstract class CreationShakeType(
 
     abstract class Primitive(
         name: String,
-        val type: ShakeType.PrimitiveType
-    ) : CreationShakeType(name) {
+        override val type: ShakeType.PrimitiveType
+    ) : CreationShakeType(name), ShakeType.Primitive {
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.PRIMITIVE
 
         override fun castableTo(other: ShakeType): Boolean =
             other is Primitive &&
-                (
-                    other.type == ShakeType.PrimitiveType.BYTE ||
-                        other.type == ShakeType.PrimitiveType.SHORT ||
-                        other.type == ShakeType.PrimitiveType.INT ||
-                        other.type == ShakeType.PrimitiveType.LONG ||
-                        other.type == ShakeType.PrimitiveType.FLOAT ||
-                        other.type == ShakeType.PrimitiveType.DOUBLE ||
-                        other.type == ShakeType.PrimitiveType.UNSIGNED_BYTE ||
-                        other.type == ShakeType.PrimitiveType.UNSIGNED_SHORT ||
-                        other.type == ShakeType.PrimitiveType.UNSIGNED_INT ||
-                        other.type == ShakeType.PrimitiveType.UNSIGNED_LONG ||
-                        other.type == ShakeType.PrimitiveType.CHAR
-                    )
+                    (
+                            other.type == ShakeType.PrimitiveType.BYTE ||
+                                    other.type == ShakeType.PrimitiveType.SHORT ||
+                                    other.type == ShakeType.PrimitiveType.INT ||
+                                    other.type == ShakeType.PrimitiveType.LONG ||
+                                    other.type == ShakeType.PrimitiveType.FLOAT ||
+                                    other.type == ShakeType.PrimitiveType.DOUBLE ||
+                                    other.type == ShakeType.PrimitiveType.UNSIGNED_BYTE ||
+                                    other.type == ShakeType.PrimitiveType.UNSIGNED_SHORT ||
+                                    other.type == ShakeType.PrimitiveType.UNSIGNED_INT ||
+                                    other.type == ShakeType.PrimitiveType.UNSIGNED_LONG ||
+                                    other.type == ShakeType.PrimitiveType.CHAR
+                            )
 
         companion object {
 

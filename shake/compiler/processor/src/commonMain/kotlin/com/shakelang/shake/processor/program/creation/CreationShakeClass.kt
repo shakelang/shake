@@ -3,20 +3,35 @@ package com.shakelang.shake.processor.program.creation
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
-import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
+import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.types.ShakeClass
 
-class CreationShakeClass : ShakeClass {
+class CreationShakeClass
+// TODO implement abstract
+
+// TODO inner classes
+
+/*
+TODO Interface & Super
+val superClass = cl.lateinitSuper()
+val interfaces = cl.lateinitInterfaces(clz..size)
+ *
+ */
+private constructor(
+    baseProject: CreationShakeProject,
+    override val pkg: CreationShakePackage,
+    override val parentScope: CreationShakeScope,
+    override val clazz: ShakeClass?,
+    val clz: ShakeClassDeclarationNode
+) : ShakeClass {
     override val staticScope: StaticScope
     override val instanceScope: InstanceScope
-    override val prj: CreationShakeProject
-    override val pkg: CreationShakePackage?
-    override val parentScope: CreationShakeScope
-    override val name: String
-    override val methods: List<CreationShakeMethod>
-    override val fields: List<CreationShakeField>
-    override val classes: List<CreationShakeClass>
-    override val constructors: List<CreationShakeConstructor>
+    override val prj: CreationShakeProject = baseProject
+    override val name: String = clz.name
+    override val methods: MutableList<CreationShakeMethod> = mutableListOf()
+    override val fields: MutableList<CreationShakeField> = mutableListOf()
+    override val classes: MutableList<CreationShakeClass> = mutableListOf()
+    override val constructors: MutableList<CreationShakeConstructor> = mutableListOf()
 
     override val isAbstract: Boolean
     override val isFinal: Boolean
@@ -37,155 +52,101 @@ class CreationShakeClass : ShakeClass {
     override lateinit var superClass: CreationShakeClass
         private set
 
-    private var _interfaces: List<CreationShakeClass?> = listOf()
+    private var _interfaces: MutableList<CreationShakeClass?> = mutableListOf()
 
     override val interfaces: List<CreationShakeClass>
         get() = _interfaces.map { it!! }
 
-    constructor(
-        prj: CreationShakeProject,
-        pkg: CreationShakePackage?,
-        parentScope: CreationShakeScope,
-        name: String,
-        methods: List<CreationShakeMethod>,
-        fields: List<CreationShakeField>,
-        classes: List<CreationShakeClass>,
-        constructors: List<CreationShakeConstructor> = listOf(),
-        isAbstract: Boolean = false,
-        isFinal: Boolean = false,
-        isStatic: Boolean = false,
-        isPublic: Boolean = false,
-        isPrivate: Boolean = false,
-        isProtected: Boolean = false,
-        isNative: Boolean = false
-    ) {
-        this.prj = prj
-        this.pkg = pkg
-        this.parentScope = parentScope
-        this.staticScope = StaticScope()
-        this.instanceScope = InstanceScope()
-        this.name = name
-        this.methods = methods
-        this.fields = fields
-        this.classes = classes
-        this.constructors = constructors
-        this.isAbstract = isAbstract
-        this.isFinal = isFinal
-        this.isStatic = isStatic
-        this.isPublic = isPublic
-        this.isPrivate = isPrivate
-        this.isProtected = isProtected
-        this.isNative = isNative
+    /**
+     * Phase 1: Register all classes
+     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-1)
+     */
+    override fun phase1() {
+        debug("phases", "Phase 1 of class ${clz.name}")
+        clz.classes.forEach {
+                if(it.isStatic) {
+                    val clz = from(prj, pkg, this.staticScope, it)
+                    this.classes.add(clz)
+                }
+                else {
+                    val clz = from(prj, pkg, this.instanceScope, it)
+                    this.classes.add(clz)
+                }
+        }
     }
 
-    private constructor(
-        baseProject: CreationShakeProject,
-        pkg: CreationShakePackage?,
-        parentScope: CreationShakeScope,
-        clz: ShakeClassDeclarationNode
-    ) {
-        this.prj = baseProject
-        this.pkg = pkg
-        this.name = clz.name
-        this.parentScope = parentScope
+    /**
+     * Phase 2: Link Superclasses and Interfaces
+     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-2)
+     */
+    override fun phase2() {
+        debug("phases", "Phase 2 of class ${clz.name}")
+        this.superClass = parentScope.getClass(clz.extends?.toString() ?: "shake.lang.Object")
+            ?: throw IllegalStateException("Superclass ${clz.extends} not found in classpath")
+
+        this.clz.implements.forEach {
+            this._interfaces.add(parentScope.getClass(it.toString()))
+        }
+    }
+
+    /**
+     * Phase 3: Process all methods and fields (without code)
+     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-3)
+     */
+    override fun phase3() {
+        debug("phases", "Phase 3 of class ${clz.name}")
+        clz.methods.forEach {
+            val scope = if (it.isStatic) staticScope else instanceScope
+            val method = CreationShakeMethod.from(this, scope, it)
+            this.methods.add(method)
+        }
+        clz.fields.forEach {
+            val scope = if (it.isStatic) staticScope else instanceScope
+            val field = CreationShakeField.from(this, scope, it)
+            this.fields.add(field)
+        }
+        clz.constructors.forEach {
+            val constructor = CreationShakeConstructor.from(this, instanceScope, it)
+            this.constructors.add(constructor)
+        }
+        classes.forEach { it.phase3() }
+    }
+
+    /**
+     * Phase 4: Process all code
+     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-4)
+     */
+    override fun phase4() {
+        debug("phases", "Phase 4 of class ${clz.name}")
+        this.methods.forEach { it.phase4() }
+        this.staticMethods.forEach { it.phase4() }
+        this.fields.forEach { it.phase4() }
+        this.staticFields.forEach { it.phase4() }
+        this.constructors.forEach { it.phase4() }
+        this.classes.forEach { it.phase4() }
+        this.staticClasses.forEach { it.phase4() }
+    }
+
+    init {
         this.staticScope = StaticScope()
         this.instanceScope = InstanceScope()
-
-        this.isAbstract = false // TODO implement abstract
+        this.isAbstract = false
         this.isFinal = clz.isFinal
         this.isStatic = clz.isStatic
         this.isPublic = clz.access == ShakeAccessDescriber.PUBLIC
         this.isPrivate = clz.access == ShakeAccessDescriber.PRIVATE
         this.isProtected = clz.access == ShakeAccessDescriber.PROTECTED
         this.isNative = clz.isNative
-
-        this.methods = clz.methods.map {
-            val method = CreationShakeMethod(
-                this.prj,
-                this.pkg,
-                this,
-                if (it.isStatic) staticScope else instanceScope,
-                it.name,
-                it.body?.let { it1 -> CreationShakeCode.fromTree(it1) },
-                it.isStatic,
-                it.isFinal,
-                false,
-                false,
-                false,
-                it.access == ShakeAccessDescriber.PRIVATE,
-                it.access == ShakeAccessDescriber.PROTECTED,
-                it.access == ShakeAccessDescriber.PUBLIC,
-                it.isNative,
-                it.isOperator
-            )
-            method.lateinitReturnType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
-            it.expandedType?.let { it1 ->
-                method.lateinitExpanding().let { run -> instanceScope.getType(it1) { type -> run(type) } }
-            }
-            method
-                .lateinitParameterTypes(it.args.map { p -> p.name })
-                .forEachIndexed { i, run -> instanceScope.getType(it.args[i].type) { type -> run(type) } }
-            method
-        }
-
-        this.fields = clz.fields.map {
-            val field = CreationShakeField.from(this, if (it.isStatic) staticScope else instanceScope, it)
-            field.lateinitType().let { run -> instanceScope.getType(it.type) { type -> run(type) } }
-            it.expandedType?.let { it1 ->
-                field.lateinitExpanding().let { run -> instanceScope.getType(it1) { type -> run(type) } }
-            }
-            field
-        }
-
-        // TODO inner classes
-
-        this.constructors = clz.constructors.map {
-            val constr = CreationShakeConstructor(
-                this,
-                CreationShakeCode.fromTree(it.body),
-                false,
-                it.access == ShakeAccessDescriber.PRIVATE,
-                it.access == ShakeAccessDescriber.PROTECTED,
-                it.access == ShakeAccessDescriber.PUBLIC,
-                it.isNative,
-                name = it.name
-            )
-            constr.lateinitParameterTypes(it.args.map { p -> p.name })
-                .forEachIndexed { i, run -> instanceScope.getType(it.args[i].type) { type -> run(type) } }
-            constr
-        }
-
-        if (clz.extends != null) {
-            parentScope.getClass(clz.extends.toString()) { this.superClass = it }
-        } else {
-            prj.cores.pointObjectClass { this.superClass = it }
-        }
-
-        /*
-        TODO Interface & Super
-        val superClass = cl.lateinitSuper()
-        val interfaces = cl.lateinitInterfaces(clz..size)
-         *
-         */
-
-        this.classes = emptyList()
     }
 
     fun asType(): CreationShakeType {
         return CreationShakeType.Object(this)
     }
 
-    fun processCode() {
-        this.methods.forEach { it.processCode() }
-        this.staticMethods.forEach { it.processCode() }
-        this.fields.forEach { it.processCode() }
-        this.staticFields.forEach { it.processCode() }
-        this.constructors.forEach { it.processCode() }
-        this.classes.forEach { it.processCode() }
-        this.staticClasses.forEach { it.processCode() }
-    }
-
     inner class StaticScope : CreationShakeScope() {
+
+        override val uniqueName: String
+            get() = "$qualifiedName(static)"
 
         override val processor: ShakeASTProcessor get() = parent.processor
         override val parent: CreationShakeScope get() = parentScope
@@ -217,6 +178,9 @@ class CreationShakeClass : ShakeClass {
     }
 
     inner class InstanceScope : CreationShakeScope() {
+
+        override val uniqueName: String
+            get() = "$qualifiedName(instance)"
 
         override val processor: ShakeASTProcessor get() = parent.processor
         override val parent: CreationShakeScope get() = parentScope
@@ -250,13 +214,25 @@ class CreationShakeClass : ShakeClass {
     }
 
     companion object {
+
+
+        val debug = ShakeProcessor.debug.child("creation", "class")
+
         fun from(
             baseProject: CreationShakeProject,
-            pkg: CreationShakePackage?,
+            pkg: CreationShakePackage,
             parentScope: CreationShakeScope,
             clz: ShakeClassDeclarationNode
         ): CreationShakeClass {
-            return CreationShakeClass(baseProject, pkg, parentScope, clz)
+            return CreationShakeClass(baseProject, pkg, parentScope, null, clz)
+        }
+
+        fun from(
+            clazz: CreationShakeClass,
+            parentScope: CreationShakeScope,
+            clz: ShakeClassDeclarationNode
+        ): CreationShakeClass {
+            return CreationShakeClass(clazz.prj, clazz.pkg, parentScope, clazz, clz)
         }
     }
 }

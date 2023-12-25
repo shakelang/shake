@@ -12,3 +12,9 @@ Update com.shakelang.shake.util:common-io to 0.3.0
 Update com.shakelang.shake.util:parseutils to 0.2.4
 Update com.shakelang.shake.util:shason to 0.3.1
 Update com.shakelang.shake.compiler.lexer:lexer to 0.1.2-SNAPSHOT
+### 0.1.4-SNAPSHOT
+Update com.shakelang.shake.util:primitives to 0.4.0
+Update com.shakelang.shake.util:common-io to 0.3.1
+Update com.shakelang.shake.util:parseutils to 0.2.5
+Update com.shakelang.shake.util:shason to 0.3.2
+Update com.shakelang.shake.compiler.lexer:lexer to 0.1.3-SNAPSHOT

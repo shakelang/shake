@@ -22,7 +22,8 @@ open class SarifMergeTask : DefaultTask() {
         val pattern = "reports/sarifmerge-input/**/*.sarif"
 
         // find all files matching the pattern
-        val files = project.fileTree(mapOf("dir" to "build/reports/sarifmerge-input", "include" to listOf("**/*.sarif"))).files
+        val files =
+            project.fileTree(mapOf("dir" to "build/reports/sarifmerge-input", "include" to listOf("**/*.sarif"))).files
 
         val loader = SarifLoader()
         loader.addFiles(files)

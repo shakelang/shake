@@ -1,9 +1,14 @@
 package com.shakelang.shake.processor.program.creation
 
+import com.shakelang.shake.parser.node.ShakeAccessDescriber
+import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
+import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
+import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.ShakeConstructor
+import com.shakelang.shake.processor.program.types.ShakeType
 
 open class CreationShakeConstructor(
     override val clazz: CreationShakeClass,
@@ -13,37 +18,27 @@ open class CreationShakeConstructor(
     override val isProtected: Boolean,
     override val isPublic: Boolean,
     override val isNative: Boolean,
-    override val name: String? = null
+    override val name: String? = null,
+    override var parameters: List<CreationShakeParameter>
 ) : ShakeConstructor {
-    final override lateinit var parameters: List<CreationShakeParameter>
-        private set
-
-    constructor(
-        clazz: CreationShakeClass,
-        parameters: List<CreationShakeParameter>,
-        body: CreationShakeCode,
-        isStrict: Boolean,
-        isPrivate: Boolean,
-        isProtected: Boolean,
-        isPublic: Boolean,
-        isNative: Boolean,
-        name: String? = null
-    ) : this(clazz, body, isStrict, isPrivate, isProtected, isPublic, isNative, name) {
-        this.parameters = parameters
-    }
 
     override val scope: CreationShakeScope = ShakeConstructorScope()
 
-    fun lateinitParameterTypes(names: List<String>): List<(CreationShakeType) -> CreationShakeType> {
-        this.parameters = names.map {
-            CreationShakeParameter(it)
-        }
-        return this.parameters.map {
-            it.lateinitType()
-        }
+    val qualifiedName: String
+        get() = "${clazz.qualifierPrefix}+${name?:"default"}"
+
+    val parameterTypes: List<ShakeType> get() = parameters.map { it.type }
+    val signature: String
+        get() = "${name?:"default"}(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
+    val qualifiedSignature: String
+        get() = "$qualifiedName(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
+
+    override fun phase3() {
+        debug("phases", "Phase 4 of constructor $qualifiedSignature")
     }
 
-    fun processCode() {
+    override fun phase4() {
+        debug("phases", "Phase 4 of constructor $qualifiedSignature")
         if (body is CreationShakeCode.ShakeLateProcessCode) {
             (body as CreationShakeCode.ShakeLateProcessCode).process(
                 scope
@@ -52,6 +47,8 @@ open class CreationShakeConstructor(
     }
 
     inner class ShakeConstructorScope : CreationShakeScope() {
+
+        override val uniqueName: String get() = qualifiedSignature
         override val parent: CreationShakeScope = clazz.instanceScope
         override val project get() = clazz.prj
         val variables = mutableListOf<CreationShakeVariableDeclaration>()
@@ -84,5 +81,28 @@ open class CreationShakeConstructor(
 
         override val processor: ShakeASTProcessor
             get() = parent.processor
+    }
+
+    companion object {
+
+        val debug = ShakeProcessor.debug.child("creation", "constructor")
+
+        fun from(
+            clazz: CreationShakeClass,
+            parentScope: CreationShakeScope,
+            node: ShakeConstructorDeclarationNode
+        ): CreationShakeConstructor {
+            return CreationShakeConstructor(
+                clazz,
+                CreationShakeCode.fromTree(node.body),
+                false,
+                node.access == ShakeAccessDescriber.PRIVATE,
+                node.access == ShakeAccessDescriber.PROTECTED,
+                node.access == ShakeAccessDescriber.PUBLIC,
+                node.isNative,
+                node.name,
+                node.args.map { parentScope.getType(it.type) }.map { CreationShakeParameter(it.name, it) }
+            )
+        }
     }
 }

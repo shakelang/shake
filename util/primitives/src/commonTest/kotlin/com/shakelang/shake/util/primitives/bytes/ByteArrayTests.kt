@@ -71,8 +71,26 @@ class ByteArrayTests : FreeSpec({
     }
 
     "toLong" {
-        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong() shouldBe 0x0000000000000000uL.toLong()
-        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x10u).toLong() shouldBe 0x0000000000000010uL.toLong()
+        byteArrayOf(
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u
+        ).toLong() shouldBe 0x0000000000000000uL.toLong()
+        byteArrayOf(
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x10u
+        ).toLong() shouldBe 0x0000000000000010uL.toLong()
         byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe -1L
         byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong() shouldBe Long.MIN_VALUE
         byteArrayOf(0x7Fu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe Long.MAX_VALUE
@@ -162,9 +180,36 @@ class ByteArrayTests : FreeSpec({
     }
 
     "toUnsignedLong" {
-        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toUnsignedLong() shouldBe 0x0000000000000000uL
-        byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedLong() shouldBe 0x0000000000000001uL
-        byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toUnsignedLong() shouldBe 0xFFFFFFFFFFFFFFFFuL
+        byteArrayOf(
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u
+        ).toUnsignedLong() shouldBe 0x0000000000000000uL
+        byteArrayOf(
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x00u,
+            0x01u
+        ).toUnsignedLong() shouldBe 0x0000000000000001uL
+        byteArrayOf(
+            0xFFu,
+            0xFFu,
+            0xFFu,
+            0xFFu,
+            0xFFu,
+            0xFFu,
+            0xFFu,
+            0xFFu
+        ).toUnsignedLong() shouldBe 0xFFFFFFFFFFFFFFFFuL
         shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toUnsignedLong()
         }
@@ -783,9 +828,9 @@ fun assertCompare(expected: Double, actual: Double) {
 }
 
 fun compare(f0: Float, f1: Float, delta: Float): Boolean = (f0.isNaN() && f1.isNaN()) ||
-    (f0.isInfinite() && f1.isInfinite() && ((f0 > 0 && f1 > 0) || (f0 < 0 && f1 < 0))) ||
-    abs(f0 - f1) <= delta
+        (f0.isInfinite() && f1.isInfinite() && ((f0 > 0 && f1 > 0) || (f0 < 0 && f1 < 0))) ||
+        abs(f0 - f1) <= delta
 
 fun compare(d0: Double, d1: Double, delta: Double): Boolean = (d0.isNaN() && d1.isNaN()) ||
-    (d0.isInfinite() && d1.isInfinite() && ((d0 > 0 && d1 > 0) || (d0 < 0 && d1 < 0))) ||
-    abs(d0 - d1) <= delta
+        (d0.isInfinite() && d1.isInfinite() && ((d0 > 0 && d1 > 0) || (d0 < 0 && d1 < 0))) ||
+        abs(d0 - d1) <= delta

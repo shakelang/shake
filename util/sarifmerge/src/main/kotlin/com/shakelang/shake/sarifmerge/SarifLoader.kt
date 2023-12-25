@@ -308,11 +308,11 @@ class SarifLoader {
 
 fun parseSourceRootElement(element: JsonElement): String {
     return if (element.isJsonPrimitive() && element.toJsonPrimitive()
-        .isString()
+            .isString()
     ) {
         element.toJsonPrimitive().toStringElement().value
     } else if (element.isJsonObject() && element.toJsonObject()
-        .containsKey("uri") && element.toJsonObject()["uri"]!!.isJsonPrimitive() &&
+            .containsKey("uri") && element.toJsonObject()["uri"]!!.isJsonPrimitive() &&
         element.toJsonObject()["uri"]!!.toJsonPrimitive().isString()
     ) {
         element.toJsonObject()["uri"]!!.toJsonPrimitive().toStringElement().value

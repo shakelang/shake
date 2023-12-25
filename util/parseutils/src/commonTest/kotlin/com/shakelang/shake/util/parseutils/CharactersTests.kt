@@ -130,12 +130,12 @@ fun testCharacterRange(
     for (i in range) {
         // Test character is allowed
         if (allowedCharacters.find {
-            when (it) {
-                is CharRange -> i in it
-                is Char -> i == it
-                else -> throw Error()
-            }
-        } != null
+                when (it) {
+                    is CharRange -> i in it
+                    is Char -> i == it
+                    else -> throw Error()
+                }
+            } != null
         ) {
             assertTrue("Function ${fn::class} should return true for input '$i'") { fn(i) }
         } else {

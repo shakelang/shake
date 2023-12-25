@@ -100,6 +100,18 @@ class ConstantPoolTests : FreeSpec({
         pool.isClass(1) shouldBe true
     }
 
+    "is string" {
+        val pool = ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.StringConstant(0)
+            )
+        )
+
+        pool.isString(0) shouldBe false
+        pool.isString(1) shouldBe true
+    }
+
     "get utf8" {
         val pool = ConstantPool(
             listOf(
@@ -109,7 +121,7 @@ class ConstantPoolTests : FreeSpec({
         )
         pool.getUtf8(0) shouldBe ConstantPoolEntry.Utf8Constant("test")
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getUtf8(1)
         }
     }
@@ -123,7 +135,7 @@ class ConstantPoolTests : FreeSpec({
         )
         pool.getByte(1) shouldBe ConstantPoolEntry.ByteConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getByte(0)
         }
     }
@@ -137,7 +149,7 @@ class ConstantPoolTests : FreeSpec({
         )
         pool.getShort(1) shouldBe ConstantPoolEntry.ShortConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getShort(0)
         }
     }
@@ -151,7 +163,7 @@ class ConstantPoolTests : FreeSpec({
         )
         pool.getInt(1) shouldBe ConstantPoolEntry.IntConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getInt(0)
         }
     }
@@ -165,7 +177,7 @@ class ConstantPoolTests : FreeSpec({
         )
         pool.getLong(1) shouldBe ConstantPoolEntry.LongConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getLong(0)
         }
     }
@@ -179,7 +191,7 @@ class ConstantPoolTests : FreeSpec({
         )
         pool.getFloat(1) shouldBe ConstantPoolEntry.FloatConstant(0f)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getFloat(0)
         }
     }
@@ -193,7 +205,7 @@ class ConstantPoolTests : FreeSpec({
         )
         pool.getDouble(1) shouldBe ConstantPoolEntry.DoubleConstant(0.0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getDouble(0)
         }
     }
@@ -207,8 +219,22 @@ class ConstantPoolTests : FreeSpec({
         )
         pool.getClass(1) shouldBe ConstantPoolEntry.ClassConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getClass(0)
+        }
+    }
+
+    "get string" {
+        val pool = ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.StringConstant(0)
+            )
+        )
+        pool.getString(1) shouldBe ConstantPoolEntry.StringConstant(0)
+
+        shouldThrow<ConstantPoolTypeException> {
+            pool.getString(0)
         }
     }
 
@@ -313,6 +339,20 @@ class ConstantPoolTests : FreeSpec({
         pool.findClass(0) shouldBe 1
         pool.findClass(1) shouldBe 2
         pool.findClass(2) shouldBe null
+    }
+
+    "find string" {
+        val pool = ConstantPool(
+            listOf(
+                ConstantPoolEntry.Utf8Constant("test"),
+                ConstantPoolEntry.StringConstant(0),
+                ConstantPoolEntry.StringConstant(1)
+            )
+        )
+
+        pool.findString(0) shouldBe 1
+        pool.findString(1) shouldBe 2
+        pool.findString(2) shouldBe null
     }
 
     "test bump" {

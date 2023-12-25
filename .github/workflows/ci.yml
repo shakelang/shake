@@ -35,6 +35,8 @@ jobs:
       - name: Build with Gradle
         run: |
           ./gradlew build allTests
+        env:
+          TEST_CONFIGURATION: full
 
       - if: success() || failure()
         name: Generate Test Reports

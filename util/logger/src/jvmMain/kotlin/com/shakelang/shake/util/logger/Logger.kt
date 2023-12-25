@@ -1,6 +1,6 @@
 package com.shakelang.shake.util.logger
 
-object JavaColoredConsoleLogger : LoggerPipe() {
+object JavaColoredConsoleLoggerPipe : LoggerPipe() {
 
     override fun log(level: LogLevel, message: String) {
         when (level) {
@@ -21,7 +21,7 @@ object JavaColoredConsoleLogger : LoggerPipe() {
     private fun printFatal(message: String) = System.err.println(message)
 }
 
-object JavaConsoleLogger : LoggerPipe() {
+object JavaConsoleLoggerPipe : LoggerPipe() {
 
     override fun log(level: LogLevel, message: String) {
         when (level) {

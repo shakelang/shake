@@ -8,6 +8,7 @@ interface ShakeClass {
     val instanceScope: ShakeScope
     val prj: ShakeProject
     val pkg: ShakePackage?
+    val clazz: ShakeClass?
     val parentScope: ShakeScope
     val name: String
 
@@ -33,13 +34,17 @@ interface ShakeClass {
 
     val constructors: List<ShakeConstructor>
 
-    val qualifiedName: String get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
+    val qualifierPrefix: String
+        get() = (if (clazz != null) clazz!!.qualifierPrefix else pkg!!.qualifierPrefix) + name + ":"
+    val qualifiedName: String
+        get() = (if (clazz != null) clazz!!.qualifierPrefix else pkg!!.qualifierPrefix) + name
+
     val signature: String get() = qualifiedName
     val superClass: ShakeClass
 
     val interfaces: List<ShakeClass>
 
-    private val isObject get() = qualifiedName == "shake.lang.Object"
+    private val isObject get() = qualifiedName == "shake/lang/Object"
 
     fun compatibleTo(other: ShakeClass): Boolean {
         if (this == other) return true
@@ -61,7 +66,7 @@ interface ShakeClass {
     fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to this.name,
-            "super" to this.superClass?.name,
+            "super" to this.superClass.qualifiedName,
             "interfaces" to this.interfaces.map { it.name },
             "methods" to this.methods.map { it.toJson() },
             "staticMethods" to this.staticMethods.map { it.toJson() },
@@ -72,4 +77,41 @@ interface ShakeClass {
             "staticClasses" to this.staticClasses.map { it.toJson() }
         )
     }
+
+    fun getClass(descriptor: List<String>): ShakeClass? {
+        if (descriptor.isEmpty()) return this
+        val subClass = this.classes.find { it.name == descriptor.first() } ?: return null
+        return subClass.getClass(descriptor.drop(1))
+    }
+
+    fun getClass(descriptor: Array<String>) = getClass(descriptor.toList())
+    fun getClass(descriptor: String) = classes.find { it.name == descriptor }
+
+    fun getMethods(descriptor: List<String>): List<ShakeMethod>? {
+        if (descriptor.isEmpty()) return null
+        val methodName = descriptor.last()
+        val classDescriptor = descriptor.dropLast(1)
+        val clz = getClass(classDescriptor) ?: return null
+        return clz.methods.filter { it.name == methodName }
+    }
+
+    fun getMethods(descriptor: Array<String>) = getMethods(descriptor.toList())
+    fun getMethods(descriptor: String) = getMethods(descriptor.split("."))
+
+    fun getField(descriptor: List<String>): ShakeField? {
+        if (descriptor.isEmpty()) return null
+        val fieldName = descriptor.last()
+        val classDescriptor = descriptor.dropLast(1)
+        val clz = getClass(classDescriptor) ?: return null
+        return clz.fields.find { it.name == fieldName }
+    }
+
+    fun getField(descriptor: Array<String>) = getField(descriptor.toList())
+    fun getField(descriptor: String) = fields.find { it.name == descriptor }
+
+
+    fun phase1()
+    fun phase2()
+    fun phase3()
+    fun phase4()
 }

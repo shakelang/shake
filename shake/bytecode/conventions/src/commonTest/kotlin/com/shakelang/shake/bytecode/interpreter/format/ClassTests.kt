@@ -106,9 +106,9 @@ class ClassTests : FreeSpec({
             0,
             0,
             emptyList(),
+            emptyList(),
+            emptyList(),
             listOf(field),
-            emptyList(),
-            emptyList(),
             emptyList()
         )
 
@@ -160,9 +160,9 @@ class ClassTests : FreeSpec({
             0,
             0,
             emptyList(),
-            emptyList(),
-            emptyList(),
             listOf(subClass),
+            emptyList(),
+            emptyList(),
             emptyList()
         )
 
@@ -272,9 +272,9 @@ class ClassTests : FreeSpec({
             pool.resolveUtf8("test2"),
             0,
             emptyList(),
+            emptyList(),
+            emptyList(),
             listOf(Field(pool, 0, 0, 0, emptyList())),
-            emptyList(),
-            emptyList(),
             emptyList()
         )
 
@@ -296,9 +296,9 @@ class ClassTests : FreeSpec({
             pool.resolveUtf8("test2"),
             0,
             emptyList(),
-            emptyList(),
-            emptyList(),
             listOf(Class(pool, 0, 0, 0, emptyList(), emptyList(), emptyList(), emptyList(), emptyList())),
+            emptyList(),
+            emptyList(),
             emptyList()
         )
 

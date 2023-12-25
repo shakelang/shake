@@ -12,3 +12,6 @@ Update dependencies
 Update dependencies
 ### 0.2.4
 Update com.shakelang.shake.util:common-io to 0.3.0
+### 0.2.5
+Update com.shakelang.shake.util:primitives to 0.4.0
+Update com.shakelang.shake.util:common-io to 0.3.1

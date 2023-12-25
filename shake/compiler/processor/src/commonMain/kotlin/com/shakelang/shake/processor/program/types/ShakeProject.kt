@@ -5,9 +5,6 @@ import com.shakelang.shake.util.shason.json
 
 interface ShakeProject {
     val subpackages: List<ShakePackage>
-    val classes: List<ShakeClass>
-    val functions: List<ShakeMethod>
-    val fields: List<ShakeField>
 
     val projectScope: ShakeScope
 
@@ -23,26 +20,30 @@ interface ShakeProject {
         return if (name.isEmpty()) null else getPackage(name.first())?.getPackage(name.drop(1))
     }
 
-    fun getClass(pkg: Array<String>, name: String): ShakeClass? {
-        return this.getPackage(pkg)?.classes?.find { it.name == name }
-    }
+    fun getClass(name: List<String>): ShakeClass? = getPackage(name.first())?.getClass(name.drop(1))
 
-    fun getClass(clz: String): ShakeClass? {
-        val parts = clz.split(".")
-        val name = parts.last()
-        val pkg = parts.dropLast(1).toTypedArray()
-        return if (pkg.isEmpty()) {
-            this.classes.find { it.name == name }
-        } else {
-            this.getPackage(pkg)?.classes?.find { it.name == name }
-        }
-    }
+    fun getClass(name: Array<String>): ShakeClass? = getPackage(name.first())?.getClass(name.drop(1))
+    fun getClass(clz: String): ShakeClass? = getClass(clz.split(".", "/"))
+
+    fun getFunctions(name: List<String>): List<ShakeMethod> =
+        getPackage(name.first())?.getFunctions(name.drop(1)) ?: emptyList()
+
+    fun getFunctions(name: Array<String>): List<ShakeMethod> =
+        getPackage(name.first())?.getFunctions(name.drop(1)) ?: emptyList()
+
+    fun getFunctions(name: String): List<ShakeMethod> = getFunctions(name.split("."))
+
+    fun getField(name: List<String>): ShakeField? =
+        getPackage(name.first())?.getField(name.drop(1))
+
+    fun getField(name: Array<String>): ShakeField? =
+        getPackage(name.first())?.getField(name.drop(1))
+
+    fun getField(name: String): ShakeField? = getField(name.split("."))
+
 
     fun toJson(): Map<String, Any?> {
         return mapOf(
-            "classes" to classes.map { it.toJson() },
-            "functions" to functions.map { it.toJson() },
-            "fields" to fields.map { it.toJson() },
             "subpackages" to subpackages.map { it.toJson() }
         )
     }
@@ -50,4 +51,9 @@ interface ShakeProject {
     fun toJsonString(format: Boolean = false): String {
         return json.stringify(toJson(), format)
     }
+
+    fun phase1()
+    fun phase2()
+    fun phase3()
+    fun phase4()
 }

@@ -19,3 +19,7 @@ Make int compatible to double
 ### 0.3.1
 Update com.shakelang.shake.util:common-io to 0.3.0
 Update com.shakelang.shake.util:parseutils to 0.2.4
+### 0.3.2
+Update com.shakelang.shake.util:primitives to 0.4.0
+Update com.shakelang.shake.util:common-io to 0.3.1
+Update com.shakelang.shake.util:parseutils to 0.2.5

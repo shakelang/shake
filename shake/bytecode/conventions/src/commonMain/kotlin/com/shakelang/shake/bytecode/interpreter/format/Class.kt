@@ -16,9 +16,9 @@ open class Class(
     open val superNameConstant: Int,
     open val flags: Short,
     open val interfacesConstants: List<Int>,
-    open val fields: List<Field>,
-    open val methods: List<Method>,
     open val subClasses: List<Class>,
+    open val methods: List<Method>,
+    open val fields: List<Field>,
     open val attributes: List<Attribute>
 ) {
 
@@ -47,12 +47,12 @@ open class Class(
         stream.writeShort(flags)
         stream.writeShort(interfacesConstants.size.toShort())
         for (interfaceConstant in interfacesConstants) stream.writeInt(interfaceConstant)
-        stream.writeShort(fields.size.toShort())
-        for (field in fields) field.dump(stream)
-        stream.writeShort(methods.size.toShort())
-        for (method in methods) method.dump(stream)
         stream.writeShort(subClasses.size.toShort())
         for (subClass in subClasses) subClass.dump(stream)
+        stream.writeShort(methods.size.toShort())
+        for (method in methods) method.dump(stream)
+        stream.writeShort(fields.size.toShort())
+        for (field in fields) field.dump(stream)
         stream.writeShort(attributes.size.toShort())
         for (attribute in attributes) attribute.dump(stream)
     }
@@ -148,12 +148,12 @@ open class Class(
             val flags = stream.readShort()
             val interfacesCount = stream.readShort().toInt()
             val interfaces = (0 until interfacesCount).map { stream.readInt() }
-            val fieldsCount = stream.readShort().toInt()
-            val fields = (0 until fieldsCount).map { Field.fromStream(pool, stream) }
-            val methodsCount = stream.readShort().toInt()
-            val methods = (0 until methodsCount).map { Method.fromStream(pool, stream) }
             val subClassesCount = stream.readShort().toInt()
             val subClasses = (0 until subClassesCount).map { fromStream(pool, stream) }
+            val methodsCount = stream.readShort().toInt()
+            val methods = (0 until methodsCount).map { Method.fromStream(pool, stream) }
+            val fieldsCount = stream.readShort().toInt()
+            val fields = (0 until fieldsCount).map { Field.fromStream(pool, stream) }
             val attributesCount = stream.readShort().toInt()
             val attributes = (0 until attributesCount).map { Attribute.fromStream(pool, stream) }
             return Class(
@@ -162,9 +162,9 @@ open class Class(
                 superName,
                 flags,
                 interfaces,
-                fields,
-                methods,
                 subClasses,
+                methods,
+                fields,
                 attributes
             )
         }
@@ -181,7 +181,7 @@ class MutableClass(
     methods: MutableList<MutableMethod>,
     subClasses: MutableList<MutableClass>,
     attributes: MutableList<MutableAttribute>
-) : Class(pool, nameConstant, superNameConstant, flags, interfacesConstants, fields, methods, subClasses, attributes) {
+) : Class(pool, nameConstant, superNameConstant, flags, interfacesConstants, subClasses, methods, fields, attributes) {
 
     @Suppress("UNCHECKED_CAST")
     override val fields: MutableList<MutableField>

@@ -2,20 +2,6 @@ package com.shakelang.shake.bytecode.interpreter
 
 import com.shakelang.shake.util.primitives.calc.shr
 
-object PCast {
-
-    val BYTE: UByte = 0u
-    val SHORT: UByte = 1u
-    val INT: UByte = 2u
-    val LONG: UByte = 3u
-    val UBYTE: UByte = 4u
-    val USHORT: UByte = 5u
-    val UINT: UByte = 6u
-    val ULONG: UByte = 7u
-    val FLOAT: UByte = 8u
-    val DOUBLE: UByte = 9u
-}
-
 object CastUtil {
 
     fun performCast(stack: ByteStack, cast: UByte) {
@@ -38,7 +24,9 @@ object CastUtil {
 
     private fun performByteCast(stack: ByteStack, target: UByte) {
         when (target) {
-            PCast.BYTE -> { /* do nothing */ }
+            PCast.BYTE -> { /* do nothing */
+            }
+
             PCast.SHORT -> stack.push(stack.pop().toShort())
             PCast.INT -> stack.push(stack.pop().toInt())
             PCast.LONG -> stack.push(stack.pop().toLong())
@@ -54,7 +42,9 @@ object CastUtil {
     private fun performShortCast(stack: ByteStack, target: UByte) {
         when (target) {
             PCast.BYTE -> stack.push(stack.popShort().toByte())
-            PCast.SHORT -> { /* do nothing */ }
+            PCast.SHORT -> { /* do nothing */
+            }
+
             PCast.INT -> stack.push(stack.popShort().toInt())
             PCast.LONG -> stack.push(stack.popShort().toLong())
             PCast.FLOAT -> stack.push(stack.popShort().toFloat())
@@ -70,7 +60,9 @@ object CastUtil {
         when (target) {
             PCast.BYTE -> stack.push(stack.popInt().toByte())
             PCast.SHORT -> stack.push(stack.popInt().toShort())
-            PCast.INT -> { /* do nothing */ }
+            PCast.INT -> { /* do nothing */
+            }
+
             PCast.LONG -> stack.push(stack.popInt().toLong())
             PCast.FLOAT -> stack.push(stack.popInt().toFloat())
             PCast.DOUBLE -> stack.push(stack.popInt().toDouble())
@@ -86,7 +78,9 @@ object CastUtil {
             PCast.BYTE -> stack.push(stack.popLong().toByte())
             PCast.SHORT -> stack.push(stack.popLong().toShort())
             PCast.INT -> stack.push(stack.popLong().toInt())
-            PCast.LONG -> { /* do nothing */ }
+            PCast.LONG -> { /* do nothing */
+            }
+
             PCast.FLOAT -> stack.push(stack.popLong().toFloat())
             PCast.DOUBLE -> stack.push(stack.popLong().toDouble())
             PCast.UBYTE -> stack.push(stack.popLong().toUByte())
@@ -102,7 +96,9 @@ object CastUtil {
             PCast.SHORT -> stack.push(stack.popFloat().toInt().toShort())
             PCast.INT -> stack.push(stack.popFloat().toInt())
             PCast.LONG -> stack.push(stack.popFloat().toLong())
-            PCast.FLOAT -> { /* do nothing */ }
+            PCast.FLOAT -> { /* do nothing */
+            }
+
             PCast.DOUBLE -> stack.push(stack.popFloat().toDouble())
             PCast.UBYTE -> stack.push(stack.popFloat().toInt().toUByte())
             PCast.USHORT -> stack.push(stack.popFloat().toInt().toUShort())
@@ -118,7 +114,9 @@ object CastUtil {
             PCast.INT -> stack.push(stack.popDouble().toInt())
             PCast.LONG -> stack.push(stack.popDouble().toLong())
             PCast.FLOAT -> stack.push(stack.popDouble().toFloat())
-            PCast.DOUBLE -> { /* do nothing */ }
+            PCast.DOUBLE -> { /* do nothing */
+            }
+
             PCast.UBYTE -> stack.push(stack.popDouble().toInt().toUByte())
             PCast.USHORT -> stack.push(stack.popDouble().toInt().toUShort())
             PCast.UINT -> stack.push(stack.popDouble().toUInt())
@@ -134,7 +132,9 @@ object CastUtil {
             PCast.LONG -> stack.push(stack.popUByte().toLong())
             PCast.FLOAT -> stack.push(stack.popUByte().toFloat())
             PCast.DOUBLE -> stack.push(stack.popUByte().toDouble())
-            PCast.UBYTE -> { /* do nothing */ }
+            PCast.UBYTE -> { /* do nothing */
+            }
+
             PCast.USHORT -> stack.push(stack.popUByte().toUShort())
             PCast.UINT -> stack.push(stack.popUByte().toUInt())
             PCast.ULONG -> stack.push(stack.popUByte().toULong())
@@ -150,7 +150,9 @@ object CastUtil {
             PCast.FLOAT -> stack.push(stack.popUShort().toFloat())
             PCast.DOUBLE -> stack.push(stack.popUShort().toDouble())
             PCast.UBYTE -> stack.push(stack.popUShort().toUByte())
-            PCast.USHORT -> { /* do nothing */ }
+            PCast.USHORT -> { /* do nothing */
+            }
+
             PCast.UINT -> stack.push(stack.popUShort().toUInt())
             PCast.ULONG -> stack.push(stack.popUShort().toULong())
         }
@@ -166,7 +168,9 @@ object CastUtil {
             PCast.DOUBLE -> stack.push(stack.popUInt().toDouble())
             PCast.UBYTE -> stack.push(stack.popUInt().toUByte())
             PCast.USHORT -> stack.push(stack.popUInt().toUShort())
-            PCast.UINT -> { /* do nothing */ }
+            PCast.UINT -> { /* do nothing */
+            }
+
             PCast.ULONG -> stack.push(stack.popUInt().toULong())
         }
     }
@@ -182,7 +186,8 @@ object CastUtil {
             PCast.UBYTE -> stack.push(stack.popULong().toUByte())
             PCast.USHORT -> stack.push(stack.popULong().toUShort())
             PCast.UINT -> stack.push(stack.popULong().toUInt())
-            PCast.ULONG -> { /* do nothing */ }
+            PCast.ULONG -> { /* do nothing */
+            }
         }
     }
 }

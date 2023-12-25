@@ -11,3 +11,5 @@ writeUTF8() should write an ushort as size (readUTF8 as well)
 ### 0.3.0
 Introduce BufferedInputStream#peek() (As it can be helpfull and is no problem to do a peek operation on a buffered stream)
 Introduce DumpAble interface (for objects that have the ability to be dumped into binary)
+### 0.3.1
+Update com.shakelang.shake.util:primitives to 0.4.0

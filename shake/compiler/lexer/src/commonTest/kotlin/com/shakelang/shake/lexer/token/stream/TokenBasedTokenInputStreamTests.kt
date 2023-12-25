@@ -720,7 +720,7 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
         tis.peekType(2) shouldBe ShakeTokenType.ASSIGN
         tis.peekType(3) shouldBe ShakeTokenType.INTEGER
         tis.peekType(4) shouldBe ShakeTokenType.SEMICOLON
-        shouldThrowWithMessage<Error> ("Not enough tokens left") { tis.peekType(5) }
+        shouldThrowWithMessage<Error>("Not enough tokens left") { tis.peekType(5) }
         tis.skip()
         tis.peekType(1) shouldBe ShakeTokenType.ASSIGN
         tis.peekType(2) shouldBe ShakeTokenType.INTEGER
