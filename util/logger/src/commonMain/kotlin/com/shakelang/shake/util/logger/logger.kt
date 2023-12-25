@@ -3,13 +3,6 @@ package com.shakelang.shake.util.logger
 class Logger(
     val path: String,
     val name: String = path,
-    var printName: Boolean = true,
-    var printInfo: Boolean = true,
-    var printSuccess: Boolean = true,
-    var printDebug: Boolean = false,
-    var printWarn: Boolean = true,
-    var printError: Boolean = true,
-    var printFatal: Boolean = true,
     val pipes: MutableList<LoggerPipe> = mutableListOf()
 ) {
 
@@ -25,8 +18,6 @@ class Logger(
             it.log(level, message)
         }
     }
-
-    private fun transform(message: String) = if (printName) "[$name] $message" else message
 
     fun debug(message: String) = this.log(LogLevel.DEBUG, message)
     fun info(message: String) = this.log(LogLevel.INFO, message)

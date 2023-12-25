@@ -1,5 +1,12 @@
 package com.shakelang.shake.util.logger
 
+object GlobalDebugConfiguration {
+    /**
+     * The paths that will be shown in the debug output
+     */
+    val paths = mutableListOf<String>()
+}
+
 fun matchesTemplate(template: String, input: String): Boolean {
     return Regex(
         template
@@ -7,9 +14,10 @@ fun matchesTemplate(template: String, input: String): Boolean {
             .replace("*", ".*")) // Replace * with .*
         .matches(input)
 }
+
 class DebuggerDumpConfiguration(
-    val paths: List<String>,
     val out: Logger,
+    val paths: List<String> = GlobalDebugConfiguration.paths,
 ) {
     fun accepts(path: String) = paths.any { matchesTemplate(it, path) }
     fun put(path: String, out: String) {

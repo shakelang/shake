@@ -13,6 +13,7 @@ object CommonTransformers {
             while (str.length < length) str = "0$str"
             return str
         }
+        
         fun generateTimestamp(): String {
             val current = Clock.System.now()
             val timeZone = TimeZone.currentSystemDefault()
@@ -37,7 +38,6 @@ object CommonTransformers {
             return "[${level.name}] $message"
         }
     }
-
 }
 
 object CommonTransformerCombinations {
