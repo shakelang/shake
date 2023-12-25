@@ -1,6 +1,6 @@
 package com.shakelang.util.changelog
 
-import com.shakelang.shake.util.changelog.tasks.*
+import com.shakelang.util.changelog.tasks.*
 import com.shakelang.util.changelog.tasks.*
 import org.gradle.api.Plugin
 import org.gradle.api.Project

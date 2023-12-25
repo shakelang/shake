@@ -2,10 +2,10 @@ package com.shakelang.util.jvmlib.infos.attributes
 
 import com.shakelang.util.io.streaming.input.DataInputStream
 import com.shakelang.util.io.streaming.output.DataOutputStream
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
-import com.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.util.jvmlib.infos.constants.ConstantInfo
+import com.shakelang.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.util.jvmlib.infos.constants.ConstantUser
+import com.shakelang.util.primitives.bytes.toBytes
 
 open class AttributeMap(open val map: Map<String, AttributeInfo>) : Map<String, AttributeInfo>, ConstantUser {
 

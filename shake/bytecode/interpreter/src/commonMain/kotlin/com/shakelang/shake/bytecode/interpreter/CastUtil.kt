@@ -1,6 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter
 
-import com.shakelang.shake.util.primitives.calc.shr
+import com.shakelang.util.primitives.calc.shr
 
 object CastUtil {
 

@@ -1,7 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter.format.pool
 
 import com.shakelang.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toBytes
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

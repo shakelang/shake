@@ -10,12 +10,12 @@ import com.shakelang.util.io.streaming.input.DataInputStream
 import com.shakelang.util.io.streaming.input.InputStream
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.util.io.streaming.output.OutputStream
-import com.shakelang.shake.util.pointer.PointerList
-import com.shakelang.shake.util.pointer.latePoint
-import com.shakelang.shake.util.pointer.values
-import com.shakelang.shake.util.primitives.bits.*
-import com.shakelang.shake.util.primitives.bytes.toBytes
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.pointer.PointerList
+import com.shakelang.util.pointer.latePoint
+import com.shakelang.util.pointer.values
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.shason.json
+import com.shakelang.util.primitives.bits.*
 
 class ShakeMap(
 

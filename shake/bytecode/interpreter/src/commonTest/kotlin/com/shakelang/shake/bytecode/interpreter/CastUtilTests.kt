@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.bytecode.interpreter
 
-import com.shakelang.shake.util.primitives.calc.shl
+import com.shakelang.util.primitives.calc.shl
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 

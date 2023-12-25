@@ -10,8 +10,8 @@ import com.shakelang.util.io.streaming.input.asCountingInputStream
 import com.shakelang.util.io.streaming.input.asDataInputStream
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.util.io.streaming.output.OutputStream
-import com.shakelang.shake.util.primitives.bytes.toBytes
-import com.shakelang.shake.util.primitives.bytes.toHexString
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toHexString
 
 class ShasGenerator(input: InputStream) {
 

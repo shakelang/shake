@@ -5,7 +5,7 @@ package com.shakelang.shake.shasambly.interpreter
 import com.shakelang.shake.shasambly.interpreter.natives.Natives
 import com.shakelang.util.parseutils.ElementLoopController
 import com.shakelang.util.parseutils.IndexedElementLoopController
-import com.shakelang.shake.util.primitives.bytes.*
+import com.shakelang.util.primitives.bytes.*
 import kotlin.experimental.and
 
 /**

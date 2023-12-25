@@ -5,7 +5,7 @@ import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.stdlib.CoreFiles
-import com.shakelang.shake.util.primitives.bytes.toInt
+import com.shakelang.util.primitives.bytes.toInt
 import io.kotest.core.spec.style.FreeSpec
 
 class Test : FreeSpec({

@@ -2,7 +2,7 @@ package com.shakelang.util.jvmlib.infos.constants
 
 import com.shakelang.util.io.streaming.input.DataInputStream
 import com.shakelang.util.io.streaming.output.DataOutputStream
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.shason.json
 
 class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<ConstantInfo> by constants, ConstantUser {
 

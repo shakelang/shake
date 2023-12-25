@@ -1,6 +1,6 @@
 package com.shakelang.util.io.streaming.input
 
-import com.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toBytes
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals

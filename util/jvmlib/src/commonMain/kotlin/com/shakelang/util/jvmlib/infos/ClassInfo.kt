@@ -3,13 +3,13 @@ package com.shakelang.util.jvmlib.infos
 import com.shakelang.util.io.streaming.input.DataInputStream
 import com.shakelang.util.io.streaming.output.DataOutputStream
 import com.shakelang.util.io.streaming.output.OutputStream
-import com.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantClassInfo
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
-import com.shakelang.shake.util.jvmlib.infos.fields.FieldList
-import com.shakelang.shake.util.jvmlib.infos.methods.MethodList
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.jvmlib.infos.attributes.AttributeMap
+import com.shakelang.util.jvmlib.infos.constants.ConstantClassInfo
+import com.shakelang.util.jvmlib.infos.constants.ConstantInfo
+import com.shakelang.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.util.jvmlib.infos.fields.FieldList
+import com.shakelang.util.jvmlib.infos.methods.MethodList
+import com.shakelang.util.shason.json
 
 class ClassInfo(
     val minorVersion: UShort,

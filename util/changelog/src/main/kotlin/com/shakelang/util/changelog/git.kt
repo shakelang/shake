@@ -1,8 +1,8 @@
 package com.shakelang.util.changelog
 
-import com.shakelang.shake.util.shason.elements.JsonElement
-import com.shakelang.shake.util.shason.elements.JsonObject
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.shason.elements.JsonElement
+import com.shakelang.util.shason.elements.JsonObject
+import com.shakelang.util.shason.json
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat

@@ -1,8 +1,8 @@
 package com.shakelang.util.changelog
 
 import com.shakelang.util.markdown.MutableMarkdownDocument
-import com.shakelang.shake.util.shason.elements.JsonObject
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.shason.elements.JsonObject
+import com.shakelang.util.shason.json
 
 class ChangelogVersion(
     val version: Version,

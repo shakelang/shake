@@ -1,13 +1,13 @@
 package com.shakelang.util.jvmlib.infos.attributes
 
 import com.shakelang.util.io.streaming.input.DataInputStream
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
-import com.shakelang.shake.util.primitives.bytes.getBytes
-import com.shakelang.shake.util.primitives.bytes.getInt
-import com.shakelang.shake.util.primitives.bytes.getUnsignedShort
-import com.shakelang.shake.util.primitives.bytes.toHexString
+import com.shakelang.util.jvmlib.infos.constants.ConstantInfo
+import com.shakelang.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.util.jvmlib.infos.constants.ConstantUtf8Info
+import com.shakelang.util.primitives.bytes.getBytes
+import com.shakelang.util.primitives.bytes.getInt
+import com.shakelang.util.primitives.bytes.getUnsignedShort
+import com.shakelang.util.primitives.bytes.toHexString
 
 class AttributeUnknownInfo(name: ConstantUtf8Info, override val bytes: ByteArray) : AttributeInfo(name) {
 

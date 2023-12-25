@@ -6,12 +6,12 @@ import com.shakelang.util.io.streaming.input.dataStream
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.util.io.streaming.output.DataOutputStream
 import com.shakelang.util.io.streaming.output.OutputStream
-import com.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantInfo
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantUser
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantUtf8Info
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.jvmlib.infos.attributes.AttributeMap
+import com.shakelang.util.jvmlib.infos.constants.ConstantInfo
+import com.shakelang.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.util.jvmlib.infos.constants.ConstantUser
+import com.shakelang.util.jvmlib.infos.constants.ConstantUtf8Info
+import com.shakelang.util.shason.json
 
 class FieldInfo(
     val accessFlags: UShort,

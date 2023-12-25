@@ -1,6 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter
 
-import com.shakelang.shake.util.primitives.bytes.*
+import com.shakelang.util.primitives.bytes.*
 import kotlin.jvm.JvmName
 
 class StackOverflowException : Exception("Stack overflow")

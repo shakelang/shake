@@ -1,7 +1,7 @@
 package com.shakelang.util.changelog
 
-import com.shakelang.shake.util.shason.elements.JsonObject
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.shason.elements.JsonObject
+import com.shakelang.util.shason.json
 import org.gradle.api.Project
 import kotlin.math.max
 

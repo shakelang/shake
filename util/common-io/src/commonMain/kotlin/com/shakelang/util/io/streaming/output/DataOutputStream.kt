@@ -3,7 +3,7 @@
 package com.shakelang.util.io.streaming.output
 
 import com.shakelang.util.io.IOException
-import com.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toBytes
 
 /**
  * A [DataOutputStream] is a [OutputStream] that can write primitive types

@@ -1,4 +1,4 @@
-import com.shakelang.shake.util.changelog.resolveVersion
+import com.shakelang.util.changelog.resolveVersion
 import conventions.projectGroup
 
 plugins {

@@ -3,8 +3,8 @@
 package com.shakelang.util.jvmlib.infos.attributes
 
 import com.shakelang.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.jvmlib.infos.constants.Constant
-import com.shakelang.shake.util.jvmlib.infos.constants.ConstantPool
+import com.shakelang.util.jvmlib.infos.constants.Constant
+import com.shakelang.util.jvmlib.infos.constants.ConstantPool
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

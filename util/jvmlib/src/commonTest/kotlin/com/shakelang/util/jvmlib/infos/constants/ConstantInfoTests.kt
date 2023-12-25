@@ -3,10 +3,10 @@
 package com.shakelang.util.jvmlib.infos.constants
 
 import com.shakelang.util.io.streaming.input.inputStream
-import com.shakelang.shake.util.jvmlib.infos.InterfaceList
-import com.shakelang.shake.util.jvmlib.infos.attributes.AttributeMap
-import com.shakelang.shake.util.jvmlib.infos.fields.FieldList
-import com.shakelang.shake.util.jvmlib.infos.methods.MethodList
+import com.shakelang.util.jvmlib.infos.InterfaceList
+import com.shakelang.util.jvmlib.infos.attributes.AttributeMap
+import com.shakelang.util.jvmlib.infos.fields.FieldList
+import com.shakelang.util.jvmlib.infos.methods.MethodList
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
