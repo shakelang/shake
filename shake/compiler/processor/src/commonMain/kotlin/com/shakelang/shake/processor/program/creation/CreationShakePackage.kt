@@ -176,6 +176,9 @@ open class CreationShakePackage(
         override val uniqueName: String
             get() = "file:$name"
 
+        override val project: CreationShakeProject get() = baseProject
+        override val processor: ShakeASTProcessor get() = parent.processor
+
         private val explicitImports = imports.filter {
             it.import.last() != "*"
         }.map {
@@ -195,25 +198,44 @@ open class CreationShakePackage(
         private lateinit var importedFunctions: List<CreationShakeMethod>
         private lateinit var importedFields: List<CreationShakeField>
 
+        private lateinit var fileFields: List<CreationShakeField>
+        private lateinit var fileFunctions: List<CreationShakeMethod>
+        private lateinit var fileClasses: List<CreationShakeClass>
+
         override val parent: CreationShakeScope
             get() = baseProject.projectScope
 
-        fun lazyLoadImportedWildcardPackages() {
+        fun initFields(fields: List<CreationShakeField>) {
+            if(this::fileFields.isInitialized) throw IllegalStateException("Cannot initialize fields twice")
+            fileFields = fields
+        }
+
+        fun initFunctions(functions: List<CreationShakeMethod>) {
+            if(this::fileFunctions.isInitialized) throw IllegalStateException("Cannot initialize functions twice")
+            fileFunctions = functions
+        }
+
+        fun initClasses(classes: List<CreationShakeClass>) {
+            if(this::fileClasses.isInitialized) throw IllegalStateException("Cannot initialize classes twice")
+            fileClasses = classes
+        }
+
+        private fun lazyLoadImportedWildcardPackages() {
             if(this::wildcardImportedPackages.isInitialized) return
             wildcardImportedPackages = wildcardImports.mapNotNull { baseProject.getPackage(it) }
         }
 
-        fun lazyLoadImportedWildcardClasses() {
+        private fun lazyLoadImportedWildcardClasses() {
             if(this::wildcardImportedClasses.isInitialized) return
             wildcardImportedClasses = wildcardImports.mapNotNull { baseProject.getClass(it) }
         }
 
-        fun lazyLoadWildcards() {
+        private fun lazyLoadWildcards() {
             lazyLoadImportedWildcardPackages()
             lazyLoadImportedWildcardClasses()
         }
 
-        fun lazyLoadImportedClasses() {
+        private fun lazyLoadImportedClasses() {
             if(this::importedClasses.isInitialized) return
             lazyLoadWildcards()
             val imports = wildcardImportedPackages.flatMap { it.classes }.toMutableList()
@@ -222,7 +244,7 @@ open class CreationShakePackage(
             importedClasses = imports
         }
 
-        fun lazyLoadImportedFunctions() {
+        private fun lazyLoadImportedFunctions() {
             if(this::importedFunctions.isInitialized) return
             lazyLoadImportedWildcardPackages()
             val imports = wildcardImports.flatMap { baseProject.getPackage(it)?.functions ?: listOf() }.toMutableList()
@@ -230,16 +252,13 @@ open class CreationShakePackage(
             importedFunctions = imports
         }
 
-        fun lazyLoadImportedFields() {
+        private fun lazyLoadImportedFields() {
             if(this::importedFields.isInitialized) return
             lazyLoadImportedWildcardPackages()
             val imports = wildcardImports.flatMap { baseProject.getPackage(it)?.fields ?: listOf() }.toMutableList()
             imports.addAll(explicitImports.mapNotNull { baseProject.getField(it) })
             importedFields = imports
         }
-
-        override val project: CreationShakeProject get() = baseProject
-        override val processor: ShakeASTProcessor get() = parent.processor
 
         override fun get(name: String): CreationShakeAssignable? {
             lazyLoadImportedFields()

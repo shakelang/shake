@@ -78,6 +78,7 @@ private constructor(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-2)
      */
     override fun phase2() {
+        println(parentScope.uniqueName)
         this.superClass = parentScope.getClass(clz.extends?.toString() ?: "shake.lang.Object")
             ?: throw IllegalStateException("Superclass ${clz.extends} not found in classpath")
 

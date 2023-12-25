@@ -23,7 +23,7 @@ interface ShakeProject {
     fun getClass(name: List<String>): ShakeClass? = getPackage(name.first())?.getClass(name.drop(1))
 
     fun getClass(name: Array<String>): ShakeClass? = getPackage(name.first())?.getClass(name.drop(1))
-    fun getClass(clz: String): ShakeClass? = getClass(clz.split("."))
+    fun getClass(clz: String): ShakeClass? = getClass(clz.split(".", "/"))
 
     fun getFunctions(name: List<String>): List<ShakeMethod> =
         getPackage(name.first())?.getFunctions(name.drop(1)) ?: emptyList()
