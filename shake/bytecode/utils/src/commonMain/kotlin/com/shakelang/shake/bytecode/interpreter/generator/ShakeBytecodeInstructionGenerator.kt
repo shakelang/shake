@@ -8,8 +8,10 @@ import com.shakelang.shake.util.primitives.calc.shl
 import kotlin.jvm.JvmName
 
 open class ShakeBytecodeInstructionGenerator(
-    val bytes: MutableList<Byte> = mutableListOf<Byte>()
+    val bytes: MutableList<Byte> = mutableListOf()
 ) {
+
+    fun pointer() = bytes.size
 
     fun addByte(byte: Byte) = bytes.add(byte)
     fun addBytes(bytes: List<Byte>) = this.bytes.addAll(bytes)
