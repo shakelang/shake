@@ -24,6 +24,7 @@ kotlin {
         testImplementation(project(":util:testlib"))
         testImplementation(project(":util:shason"))
         testImplementation(project(":shake:compiler:shakelib"))
+        testImplementation(project(":shake:bytecode:interpreter"))
     }
 }
 

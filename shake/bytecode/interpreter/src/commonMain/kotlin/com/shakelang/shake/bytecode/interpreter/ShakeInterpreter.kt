@@ -16,24 +16,34 @@ class ShakeInterpreter(
     val classPath: ShakeClasspath = ShakeClasspath.create()
 ) {
 
-    val callStack: MutableList<ShakeCodeInterpreter> = mutableListOf()
+    val callStack: List<ShakeCodeInterpreter> get() = _callStack
+    private val _callStack = mutableListOf<ShakeCodeInterpreter>()
 
-    fun tick() {
-        if (callStack.isEmpty()) return
+    var latestReturnData: ByteArray = ByteArray(0)
+        private set
+
+    fun tick(): Boolean {
+        if (callStack.isEmpty()) return false
         callStack.last().tick()
         if (callStack.last().finished) popStack()
+        return true
     }
 
     private fun popStack() {
-        val last = callStack.removeLast()
+        val last = _callStack.removeLast()
         if (callStack.isNotEmpty()) {
             val stack = callStack.last().stack
             stack.push(last.returnData)
         }
+
+        latestReturnData = last.returnData
     }
 
-    fun tick(times: Int) {
-        for (i in 0 until times) tick()
+    fun tick(times: Int): Int {
+        for (i in 0 until times) {
+            if (!tick()) return i
+        }
+        return times
     }
 
     fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
@@ -43,10 +53,12 @@ class ShakeInterpreter(
         method: ShakeInterpreterMethod,
         args: ByteArray = kotlin.byteArrayOf()
     ): ShakeCodeInterpreter {
+
         val interpreter = createCodeInterpreter(method.code, method)
         // Put the arguments on the stack
         interpreter.stack.push(args)
-        callStack.add(interpreter)
+        _callStack.add(interpreter)
+
         return interpreter
     }
 
@@ -55,6 +67,17 @@ class ShakeInterpreter(
         args: ByteArray = kotlin.byteArrayOf()
     ): ShakeCodeInterpreter {
         return putFunctionOnStack(method.code, method, args)
+    }
+
+    fun putFunctionOnStack(
+        method: String,
+        args: ByteArray
+    ): ShakeCodeInterpreter {
+        return putFunctionOnStack(
+            classPath.getMethod(method)
+                ?: throw NullPointerException("Method $method not found"),
+            args
+        )
     }
 
     inner class ShakeCodeInterpreter(
@@ -581,23 +604,19 @@ class ShakeInterpreter(
                 }
 
                 Opcodes.BRET -> {
-                    finished = true
                     returnData[0] = stack.pop()
                 }
 
                 Opcodes.SRET -> {
-                    finished = true
                     returnData[0] = stack.pop()
                     returnData[1] = stack.pop()
                 }
 
                 Opcodes.IRET -> {
-                    finished = true
                     for (i in 0 until 4) returnData[i] = stack.pop()
                 }
 
                 Opcodes.LRET -> {
-                    finished = true
                     for (i in 0 until 8) returnData[i] = stack.pop()
                 }
 
@@ -643,7 +662,6 @@ class ShakeInterpreter(
 
                 Opcodes.CALL -> {
                     val methodName = this.method.constantPool.getUtf8(readInt()).value
-                    println(method.constantPool)
                     val method =
                         classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
                     val argsSize = method.parameters.sumOf { it.byteSize }

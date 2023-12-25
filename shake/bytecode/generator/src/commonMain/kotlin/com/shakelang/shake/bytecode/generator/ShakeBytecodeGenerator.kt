@@ -1,9 +1,11 @@
 package com.shakelang.shake.bytecode.generator
 
+import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.generator.*
 import com.shakelang.shake.processor.program.types.*
 import com.shakelang.shake.processor.program.types.code.ShakeCode
 import com.shakelang.shake.processor.program.types.code.ShakeInvocation
+import com.shakelang.shake.processor.program.types.code.statements.ShakeReturn
 import com.shakelang.shake.processor.program.types.code.statements.ShakeStatement
 import com.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.code.values.*
@@ -112,9 +114,17 @@ class ShakeBytecodeGenerator {
 //            is ShakeWhile -> visitWhile(s)
 //            is ShakeFor -> visitFor(s)
 //            is ShakeIf -> visitIf(s)
-//            is ShakeReturn -> visitReturn(s)
+            is ShakeReturn -> visitReturn(ctx, s)
             else -> throw IllegalArgumentException("Unsupported value type: ${s::class.simpleName}")
         }
+    }
+
+    private fun visitReturn(ctx: BytecodeGenerationContext, s: ShakeReturn) {
+        if(s.value != null) {
+            visitValue(ctx, s.value!!)
+            ctx.bytecodeInstructionGenerator.ret(generateTypeDescriptor(s.value!!.type))
+        }
+        ctx.bytecodeInstructionGenerator.ret()
     }
 
     private fun visitVariableDeclaration(ctx: BytecodeGenerationContext, s: ShakeVariableDeclaration) {
@@ -136,12 +146,14 @@ class ShakeBytecodeGenerator {
 
     }
 
-    fun generateProject(project: ShakeProject): MutableList<GenerationContext> {
+    fun generateProject(project: ShakeProject): List<StorageFormat> {
         val contexts = mutableListOf<GenerationContext>()
         project.subpackages.forEach {
             contexts.addAll(generatePackage(it))
         }
-        return contexts
+        return contexts.map {
+            it.toStorageFormat()
+        }
     }
 
     fun generatePackage(pkg: ShakePackage): List<GenerationContext> {
@@ -241,6 +253,9 @@ class ShakeBytecodeGenerator {
                             ),
                             body
                         )
+
+                        // Return at the end of the method
+                        ret()
                     }
                 }
             }

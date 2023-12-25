@@ -435,6 +435,20 @@ open class ShakeBytecodeInstructionGenerator(
     fun sret() = addByte(Opcodes.SRET)
     fun iret() = addByte(Opcodes.IRET)
     fun lret() = addByte(Opcodes.LRET)
+    fun ret(type: String) {
+        when(type) {
+            "B" -> bret()
+            "S" -> sret()
+            "I" -> iret()
+            "J" -> lret()
+            "F" -> iret()
+            "D" -> lret()
+            "b" -> bret()
+            "s" -> sret()
+            "i" -> iret()
+            "j" -> lret()
+        }
+    }
 
     fun pop() = addByte(Opcodes.POP)
     fun bpop() = addByte(Opcodes.POP)
