@@ -1715,6 +1715,564 @@ class ShakeCodeInterpreterTests : FreeSpec({
         stack.pop() shouldBe 0
     }
 
+    "unsigned byte compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(0)
+                bpush(1)
+                ubcmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+
+    "unsigned byte compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(1)
+                ubcmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "unsigned byte compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                bpush(1)
+                bpush(0)
+                ubcmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "unsigned short compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(0)
+                spush(1)
+                uscmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+
+    "unsigned short compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(1)
+                spush(1)
+                uscmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "unsigned short compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                spush(1)
+                spush(0)
+                uscmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "unsigned int compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(0)
+                ipush(1)
+                uicmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+
+    "unsigned int compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(1)
+                uicmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "unsigned int compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(0)
+                uicmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "unsigned long compare (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(0)
+                lpush(1)
+                ulcmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 2
+    }
+
+    "unsigned long compare (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(1)
+                lpush(1)
+                ulcmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "unsigned long compare (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                lpush(1)
+                lpush(0)
+                ulcmp()
+            },
+            method
+        )
+
+        code.tick(3)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "cgt (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(0)
+                icmp()
+                cgt()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "cgt (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(1)
+                icmp()
+                cgt()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "cgt (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(0)
+                ipush(1)
+                icmp()
+                cgt()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "cge (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(0)
+                icmp()
+                cge()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "cge (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(1)
+                icmp()
+                cge()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "cge (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(0)
+                ipush(1)
+                icmp()
+                cge()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "clt (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(0)
+                icmp()
+                clt()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "clt (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(1)
+                icmp()
+                clt()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "clt (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(0)
+                ipush(1)
+                icmp()
+                clt()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "cle (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(0)
+                icmp()
+                cle()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "cle (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(1)
+                icmp()
+                cle()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "cle (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(0)
+                ipush(1)
+                icmp()
+                cle()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "ceq (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(0)
+                icmp()
+                ceq()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "ceq (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(1)
+                icmp()
+                ceq()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "ceq (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(0)
+                ipush(1)
+                icmp()
+                ceq()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "cne (greater)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(0)
+                icmp()
+                cne()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
+    "cne (equal)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(1)
+                ipush(1)
+                icmp()
+                cne()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 0
+    }
+
+    "cne (less)" {
+        val interpreter = ShakeInterpreter()
+        val code = interpreter.createCodeInterpreter(
+            bytecode {
+                ipush(0)
+                ipush(1)
+                icmp()
+                cne()
+            },
+            method
+        )
+
+        code.tick(4)
+
+        val stack = code.stack
+        stack.size shouldBe 1
+        stack.pop() shouldBe 1
+    }
+
     "jmp" {
         val interpreter = ShakeInterpreter()
         val code = interpreter.createCodeInterpreter(
@@ -2032,7 +2590,7 @@ class ShakeCodeInterpreterTests : FreeSpec({
         code.tick(2)
 
         code.pc shouldBe 3
-        code.finished shouldBe true
+        code.finished shouldBe false
         code.returnData shouldBe byteArrayOf(1)
         val stack = code.stack
         stack.size shouldBe 0
@@ -2051,7 +2609,7 @@ class ShakeCodeInterpreterTests : FreeSpec({
         code.tick(2)
 
         code.pc shouldBe 4
-        code.finished shouldBe true
+        code.finished shouldBe false
         code.returnData shouldBe byteArrayOf(0, 1)
         val stack = code.stack
         stack.size shouldBe 0
@@ -2070,7 +2628,7 @@ class ShakeCodeInterpreterTests : FreeSpec({
         code.tick(2)
 
         code.pc shouldBe 6
-        code.finished shouldBe true
+        code.finished shouldBe false
         code.returnData shouldBe byteArrayOf(0, 0, 0, 1)
         val stack = code.stack
         stack.size shouldBe 0
@@ -2089,7 +2647,7 @@ class ShakeCodeInterpreterTests : FreeSpec({
         code.tick(2)
 
         code.pc shouldBe 10
-        code.finished shouldBe true
+        code.finished shouldBe false
         code.returnData shouldBe byteArrayOf(0, 0, 0, 0, 0, 0, 0, 1)
         val stack = code.stack
         stack.size shouldBe 0
@@ -2152,7 +2710,7 @@ class ShakeCodeInterpreterTests : FreeSpec({
         val method = interpreter.classPath.getMethod("test/main()V")!!
 
         val code = interpreter.putFunctionOnStack(method)
-        interpreter.tick(2)
+        interpreter.tick(3)
 
         val stack = code.stack
 

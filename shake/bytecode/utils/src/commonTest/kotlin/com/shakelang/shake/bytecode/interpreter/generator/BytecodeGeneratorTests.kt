@@ -785,6 +785,103 @@ class BytecodeGeneratorTests : FreeSpec({
         bytes shouldBe arrayOf(Opcodes.DCMP)
     }
 
+    "ubcmp" {
+        val bytes = bytecode {
+            ubcmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.UBCMP)
+    }
+
+    "uscmp" {
+        val bytes = bytecode {
+            uscmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.USCMP)
+    }
+
+    "uicmp" {
+        val bytes = bytecode {
+            uicmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.UICMP)
+    }
+
+    "ulcmp" {
+        val bytes = bytecode {
+            ulcmp()
+        }
+        bytes shouldBe arrayOf(Opcodes.ULCMP)
+    }
+
+    "cmp" {
+        val bytes = bytecode {
+            cmp("B")
+            cmp("S")
+            cmp("I")
+            cmp("J")
+            cmp("F")
+            cmp("D")
+            cmp("b")
+            cmp("s")
+            cmp("i")
+            cmp("j")
+        }
+        bytes shouldBe arrayOf(
+            Opcodes.BCMP,
+            Opcodes.SCMP,
+            Opcodes.ICMP,
+            Opcodes.LCMP,
+            Opcodes.FCMP,
+            Opcodes.DCMP,
+            Opcodes.UBCMP,
+            Opcodes.USCMP,
+            Opcodes.UICMP,
+            Opcodes.ULCMP
+        )
+    }
+
+    "cgt" {
+        val bytes = bytecode {
+            cgt()
+        }
+        bytes shouldBe arrayOf(Opcodes.CGT)
+    }
+
+    "clt" {
+        val bytes = bytecode {
+            clt()
+        }
+        bytes shouldBe arrayOf(Opcodes.CLT)
+    }
+
+    "cge" {
+        val bytes = bytecode {
+            cge()
+        }
+        bytes shouldBe arrayOf(Opcodes.CGE)
+    }
+
+    "cle" {
+        val bytes = bytecode {
+            cle()
+        }
+        bytes shouldBe arrayOf(Opcodes.CLE)
+    }
+
+    "ceq" {
+        val bytes = bytecode {
+            ceq()
+        }
+        bytes shouldBe arrayOf(Opcodes.CEQ)
+    }
+
+    "cne" {
+        val bytes = bytecode {
+            cne()
+        }
+        bytes shouldBe arrayOf(Opcodes.CNE)
+    }
+
     "jmp" {
         val bytes = bytecode {
             jmp(0x01020304)

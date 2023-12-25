@@ -363,8 +363,12 @@ open class ShakeBytecodeInstructionGenerator(
     fun lcmp() = addByte(Opcodes.LCMP)
     fun fcmp() = addByte(Opcodes.FCMP)
     fun dcmp() = addByte(Opcodes.DCMP)
+    fun ubcmp() = addByte(Opcodes.UBCMP)
+    fun uscmp() = addByte(Opcodes.USCMP)
+    fun uicmp() = addByte(Opcodes.UICMP)
+    fun ulcmp() = addByte(Opcodes.ULCMP)
 
-    fun bcmp(type: String) {
+    fun cmp(type: String) {
         when(type) {
             "B" -> bcmp()
             "S" -> scmp()
@@ -372,8 +376,19 @@ open class ShakeBytecodeInstructionGenerator(
             "J" -> lcmp()
             "F" -> fcmp()
             "D" -> dcmp()
+            "b" -> ubcmp()
+            "s" -> uscmp()
+            "i" -> uicmp()
+            "j" -> ulcmp()
         }
     }
+
+    fun cgt() = addByte(Opcodes.CGT)
+    fun clt() = addByte(Opcodes.CLT)
+    fun cge() = addByte(Opcodes.CGE)
+    fun cle() = addByte(Opcodes.CLE)
+    fun ceq() = addByte(Opcodes.CEQ)
+    fun cne() = addByte(Opcodes.CNE)
 
     fun jmp(address: Int) = addBytes(listOf(Opcodes.JMP, *address.toBytes().toTypedArray()))
     fun jz(address: Int) = addBytes(listOf(Opcodes.JZ, *address.toBytes().toTypedArray()))

@@ -563,6 +563,36 @@ class ShakeInterpreter(
                     stack.push(if (a > b) 0.toByte() else if (a == b) 1.toByte() else 2.toByte())
                 }
 
+                Opcodes.CLT -> {
+                    val b = stack.popUByte()
+                    if (b == 2u.toUByte()) stack.push(1.toByte()) else stack.push(0.toByte())
+                }
+
+                Opcodes.CLE -> {
+                    val b = stack.popUByte()
+                    if (b >= 1u.toUByte()) stack.push(1.toByte()) else stack.push(0.toByte())
+                }
+
+                Opcodes.CGT -> {
+                    val b = stack.popUByte()
+                    if (b == 0u.toUByte()) stack.push(1.toByte()) else stack.push(0.toByte())
+                }
+
+                Opcodes.CGE -> {
+                    val b = stack.popUByte()
+                    if (b <= 1u.toUByte()) stack.push(1.toByte()) else stack.push(0.toByte())
+                }
+
+                Opcodes.CEQ -> {
+                    val b = stack.popUByte()
+                    if (b == 1u.toUByte()) stack.push(1.toByte()) else stack.push(0.toByte())
+                }
+
+                Opcodes.CNE -> {
+                    val b = stack.popUByte()
+                    if (b != 1u.toUByte()) stack.push(1.toByte()) else stack.push(0.toByte())
+                }
+
                 Opcodes.JMP -> pc = readInt()
                 Opcodes.JZ -> {
                     val pos = readInt()
