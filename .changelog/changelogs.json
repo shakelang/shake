@@ -131,6 +131,15 @@
             "Update com.shakelang.shake.util:parseutils to 0.2.4",
             "Update com.shakelang.shake.util:shason to 0.3.1"
           ]
+        },
+        {
+          "version": "0.6.5",
+          "changes": [
+            "Update com.shakelang.shake.util:primitives to 0.4.0",
+            "Update com.shakelang.shake.util:common-io to 0.3.1",
+            "Update com.shakelang.shake.util:parseutils to 0.2.5",
+            "Update com.shakelang.shake.util:shason to 0.3.2"
+          ]
         }
       ]
     },
@@ -176,6 +185,12 @@
             "Introduce BufferedInputStream#peek() (As it can be helpfull and is no problem to do a peek operation on a buffered stream)",
             "Introduce DumpAble interface (for objects that have the ability to be dumped into binary)"
           ]
+        },
+        {
+          "version": "0.3.1",
+          "changes": [
+            "Update com.shakelang.shake.util:primitives to 0.4.0"
+          ]
         }
       ]
     },
@@ -215,6 +230,15 @@
             "Update com.shakelang.shake.util:common-io to 0.3.0",
             "Update com.shakelang.shake.util:parseutils to 0.2.4",
             "Update com.shakelang.shake.util:shason to 0.3.1"
+          ]
+        },
+        {
+          "version": "0.1.4-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.shake.util:primitives to 0.4.0",
+            "Update com.shakelang.shake.util:common-io to 0.3.1",
+            "Update com.shakelang.shake.util:parseutils to 0.2.5",
+            "Update com.shakelang.shake.util:shason to 0.3.2"
           ]
         }
       ]
@@ -279,6 +303,13 @@
           "changes": [
             "Update com.shakelang.shake.util:common-io to 0.3.0"
           ]
+        },
+        {
+          "version": "0.2.5",
+          "changes": [
+            "Update com.shakelang.shake.util:primitives to 0.4.0",
+            "Update com.shakelang.shake.util:common-io to 0.3.1"
+          ]
         }
       ]
     },
@@ -297,6 +328,12 @@
           "version": "0.3.0",
           "changes": [
             "Add shift library"
+          ]
+        },
+        {
+          "version": "0.4.0",
+          "changes": [
+            "Add bits library"
           ]
         }
       ]
@@ -350,6 +387,14 @@
             "Update com.shakelang.shake.util:common-io to 0.3.0",
             "Update com.shakelang.shake.util:parseutils to 0.2.4"
           ]
+        },
+        {
+          "version": "0.3.2",
+          "changes": [
+            "Update com.shakelang.shake.util:primitives to 0.4.0",
+            "Update com.shakelang.shake.util:common-io to 0.3.1",
+            "Update com.shakelang.shake.util:parseutils to 0.2.5"
+          ]
         }
       ]
     },
@@ -401,6 +446,14 @@
             "Update com.shakelang.shake.util:common-io to 0.3.0",
             "Update com.shakelang.shake.util:parseutils to 0.2.4"
           ]
+        },
+        {
+          "version": "0.1.3-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.shake.util:primitives to 0.4.0",
+            "Update com.shakelang.shake.util:common-io to 0.3.1",
+            "Update com.shakelang.shake.util:parseutils to 0.2.5"
+          ]
         }
       ]
     },
@@ -429,6 +482,16 @@
             "Update com.shakelang.shake.util:parseutils to 0.2.4",
             "Update com.shakelang.shake.util:shason to 0.3.1",
             "Update com.shakelang.shake.compiler.lexer:lexer to 0.1.2-SNAPSHOT"
+          ]
+        },
+        {
+          "version": "0.1.4-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.shake.util:primitives to 0.4.0",
+            "Update com.shakelang.shake.util:common-io to 0.3.1",
+            "Update com.shakelang.shake.util:parseutils to 0.2.5",
+            "Update com.shakelang.shake.util:shason to 0.3.2",
+            "Update com.shakelang.shake.compiler.lexer:lexer to 0.1.3-SNAPSHOT"
           ]
         }
       ]
@@ -511,6 +574,15 @@
             "Update com.shakelang.shake.util:common-io to 0.3.0",
             "Update com.shakelang.shake.util:parseutils to 0.2.4",
             "Update com.shakelang.shake.util:shason to 0.3.1"
+          ]
+        },
+        {
+          "version": "0.1.7",
+          "changes": [
+            "Update com.shakelang.shake.util:primitives to 0.4.0",
+            "Update com.shakelang.shake.util:common-io to 0.3.1",
+            "Update com.shakelang.shake.util:parseutils to 0.2.5",
+            "Update com.shakelang.shake.util:shason to 0.3.2"
           ]
         }
       ]
