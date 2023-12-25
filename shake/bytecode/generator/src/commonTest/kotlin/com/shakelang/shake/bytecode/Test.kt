@@ -16,7 +16,8 @@ class Test : FreeSpec({
         processor.loadSynthetic("shake/lang/String.shake", CoreFiles.STRING_SHAKE)
         processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             import test2.test
@@ -30,11 +31,11 @@ class Test : FreeSpec({
                     return c
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
         )
         processor.finish()
 
-        //println(json.stringify(processor.project.toJson()))
+        // println(json.stringify(processor.project.toJson()))
 
         val generator = ShakeBytecodeGenerator()
         val out = generator.generateProject(processor.project)

@@ -536,10 +536,10 @@ class ShasPParser(
     private fun term(): ShasPValuedNode {
         var result = cast()
         while (input.hasNext() && input.peekType().let {
-                it == ShasPTokenType.MUL ||
-                        it == ShasPTokenType.DIV ||
-                        it == ShasPTokenType.MOD
-            }
+            it == ShasPTokenType.MUL ||
+                it == ShasPTokenType.DIV ||
+                it == ShasPTokenType.MOD
+        }
         ) {
             input.skip()
             val type = input.actualType
@@ -585,13 +585,13 @@ class ShasPParser(
     private fun compare(): ShasPValuedNode {
         var result = expr()
         while (input.hasNext() && input.peekType().let {
-                it == ShasPTokenType.EQ_EQUALS ||
-                        it == ShasPTokenType.NOT_EQUALS ||
-                        it == ShasPTokenType.BIGGER ||
-                        it == ShasPTokenType.BIGGER_EQUALS ||
-                        it == ShasPTokenType.SMALLER ||
-                        it == ShasPTokenType.SMALLER_EQUALS
-            }
+            it == ShasPTokenType.EQ_EQUALS ||
+                it == ShasPTokenType.NOT_EQUALS ||
+                it == ShasPTokenType.BIGGER ||
+                it == ShasPTokenType.BIGGER_EQUALS ||
+                it == ShasPTokenType.SMALLER ||
+                it == ShasPTokenType.SMALLER_EQUALS
+        }
         ) {
             input.skip()
             val type = input.actualType

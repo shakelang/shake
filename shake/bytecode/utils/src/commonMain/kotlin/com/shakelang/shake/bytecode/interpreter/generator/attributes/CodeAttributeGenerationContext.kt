@@ -21,6 +21,7 @@ class CodeAttributeGenerationContext(constantPool: MutableConstantPool) : Attrib
          * @deprecated Modify the data of the attribute directly
          */
         get() = toAttribute(MutableConstantPool()).value
+
         /**
          * @deprecated Modify the data of the attribute directly
          */
@@ -80,7 +81,5 @@ class CodeAttributeGenerationContext(constantPool: MutableConstantPool) : Attrib
         var catchType: Int = 0
 
         fun toEntry() = CodeAttribute.ExceptionTableEntry(startPc, endPc, handlerPc, catchType)
-
     }
-
 }

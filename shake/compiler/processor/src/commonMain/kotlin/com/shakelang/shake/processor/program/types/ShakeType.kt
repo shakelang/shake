@@ -1630,19 +1630,19 @@ interface ShakeType {
 
         override fun castableTo(other: ShakeType): Boolean =
             other is Primitive &&
-                    (
-                            other.type == PrimitiveType.BYTE ||
-                                    other.type == PrimitiveType.SHORT ||
-                                    other.type == PrimitiveType.INT ||
-                                    other.type == PrimitiveType.LONG ||
-                                    other.type == PrimitiveType.FLOAT ||
-                                    other.type == PrimitiveType.DOUBLE ||
-                                    other.type == PrimitiveType.UNSIGNED_BYTE ||
-                                    other.type == PrimitiveType.UNSIGNED_SHORT ||
-                                    other.type == PrimitiveType.UNSIGNED_INT ||
-                                    other.type == PrimitiveType.UNSIGNED_LONG ||
-                                    other.type == PrimitiveType.CHAR
-                            )
+                (
+                    other.type == PrimitiveType.BYTE ||
+                        other.type == PrimitiveType.SHORT ||
+                        other.type == PrimitiveType.INT ||
+                        other.type == PrimitiveType.LONG ||
+                        other.type == PrimitiveType.FLOAT ||
+                        other.type == PrimitiveType.DOUBLE ||
+                        other.type == PrimitiveType.UNSIGNED_BYTE ||
+                        other.type == PrimitiveType.UNSIGNED_SHORT ||
+                        other.type == PrimitiveType.UNSIGNED_INT ||
+                        other.type == PrimitiveType.UNSIGNED_LONG ||
+                        other.type == PrimitiveType.CHAR
+                    )
     }
 
     interface Object : ShakeType {

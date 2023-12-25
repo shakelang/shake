@@ -38,5 +38,4 @@ class PathDescriptorTests : FreeSpec({
         descriptor.classPath shouldBe "String:Builder"
         descriptor.entity shouldBe "build"
     }
-
 })

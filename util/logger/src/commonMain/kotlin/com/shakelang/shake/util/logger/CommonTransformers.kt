@@ -45,5 +45,4 @@ object CommonTransformerCombinations {
     val DATE_LEVEL = listOf(CommonTransformers.LevelTransformer, CommonTransformers.DateTransformer)
     val DATE = listOf(CommonTransformers.DateTransformer)
     val LEVEL = listOf(CommonTransformers.LevelTransformer)
-
 }

@@ -42,7 +42,6 @@ interface ShakeInterpreterPackage {
                 // For this (quite rare) case we need to be able to add storages later.
                 override val storages: MutableList<StorageFormat> = mutableListOf()
 
-
                 // Specification of the dynamic loading system:
                 // Please read this before you try to understand the code below.
                 //

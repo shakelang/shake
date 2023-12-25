@@ -2,7 +2,7 @@ package com.shakelang.shake.util.logger
 
 class Logger(
     val pipes: MutableList<LoggerPipe> = mutableListOf(),
-    val bufferSize: Int = 8192,
+    val bufferSize: Int = 8192
 ) {
 
     // We'll mainly write to this list
@@ -16,8 +16,9 @@ class Logger(
     fun pushBuffer(entry: LogEntry) {
         if (entries.size >= bufferSize) {
             entries[firstEntry++] = entry
+        } else {
+            entries.add(entry)
         }
-        else entries.add(entry)
     }
 
     fun pushBuffer(level: LogLevel, message: String) = pushBuffer(LogEntry(level, message))
@@ -56,7 +57,7 @@ class Logger(
     fun transform(vararg transformers: LogTransformer) = TransformedOutput(transformers.toList())
 
     inner class TransformedOutput(
-        val transformers: List<LogTransformer>,
+        val transformers: List<LogTransformer>
     ) {
         fun pipe(pipe: LoggerPipe) {
             this@Logger.pipes.add(TransformedPipe(pipe, transformers))

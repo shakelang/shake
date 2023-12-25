@@ -28,28 +28,28 @@ object JsonGenerator {
     private fun generate(o: Array<*>, indent: String? = null, indentAmount: Int = 0): String {
         return "[" +
 
-                // Indention of first line
-                (if (o.isNotEmpty() && indent != null) LINE_SEPARATOR + indent.repeat(indentAmount + 1) else "") +
+            // Indention of first line
+            (if (o.isNotEmpty() && indent != null) LINE_SEPARATOR + indent.repeat(indentAmount + 1) else "") +
 
-                // Join the children
-                (
-                        o.joinToString(
+            // Join the children
+            (
+                o.joinToString(
 
-                            // Indention of all lines (except first) and Comma between elements
-                            if (o.isNotEmpty() && indent != null) {
-                                "," + LINE_SEPARATOR + indent.repeat(indentAmount + 1)
-                            } else {
-                                ","
-                            }
+                    // Indention of all lines (except first) and Comma between elements
+                    if (o.isNotEmpty() && indent != null) {
+                        "," + LINE_SEPARATOR + indent.repeat(indentAmount + 1)
+                    } else {
+                        ","
+                    }
 
-                        ) {
-                            generate(
-                                it!!,
-                                indent,
-                                indentAmount + 1
-                            )
-                        }
-                        ) + (if (o.isNotEmpty() && indent != null) LINE_SEPARATOR + indent.repeat(indentAmount) else "") + "]"
+                ) {
+                    generate(
+                        it!!,
+                        indent,
+                        indentAmount + 1
+                    )
+                }
+                ) + (if (o.isNotEmpty() && indent != null) LINE_SEPARATOR + indent.repeat(indentAmount) else "") + "]"
     }
 
     /**

@@ -42,19 +42,17 @@ open class CreationShakePackage(
     }
 
     override fun getPackage(name: Array<String>): CreationShakePackage? {
-        if(name.isEmpty()) return this
+        if (name.isEmpty()) return this
         return getPackage(name.first())?.getPackage(name.drop(1))
     }
 
     override fun getPackage(name: List<String>): CreationShakePackage? {
-        if(name.isEmpty()) return this
+        if (name.isEmpty()) return this
         return getPackage(name.first())?.getPackage(name.drop(1))
     }
 
     open fun putFile(name: String, contents: ShakeFileNode) {
-
         this.files.add(FileEntry(name, contents))
-
     }
 
     open fun putFile(name: Array<String>, contents: ShakeFileNode) {
@@ -62,8 +60,6 @@ open class CreationShakePackage(
         val file = name.last()
         requirePackage(pkg).putFile(file, contents)
     }
-
-
 
     /**
      * Phase 1: Register all classes
@@ -124,9 +120,9 @@ open class CreationShakePackage(
         subpackages.forEach { it.phase4() }
     }
 
-    private inner class FileEntry (
+    private inner class FileEntry(
         val name: String,
-        contents: ShakeFileNode,
+        contents: ShakeFileNode
     ) {
         val imports: List<ShakeImportNode> = contents.children.filterIsInstance<ShakeImportNode>()
         val scope: CreationShakeScope = FileScope(name, imports)
@@ -207,27 +203,27 @@ open class CreationShakePackage(
             get() = baseProject.projectScope
 
         fun initFields(fields: List<CreationShakeField>) {
-            if(this::fileFields.isInitialized) throw IllegalStateException("Cannot initialize fields twice")
+            if (this::fileFields.isInitialized) throw IllegalStateException("Cannot initialize fields twice")
             fileFields = fields
         }
 
         fun initFunctions(functions: List<CreationShakeMethod>) {
-            if(this::fileFunctions.isInitialized) throw IllegalStateException("Cannot initialize functions twice")
+            if (this::fileFunctions.isInitialized) throw IllegalStateException("Cannot initialize functions twice")
             fileFunctions = functions
         }
 
         fun initClasses(classes: List<CreationShakeClass>) {
-            if(this::fileClasses.isInitialized) throw IllegalStateException("Cannot initialize classes twice")
+            if (this::fileClasses.isInitialized) throw IllegalStateException("Cannot initialize classes twice")
             fileClasses = classes
         }
 
         private fun lazyLoadImportedWildcardPackages() {
-            if(this::wildcardImportedPackages.isInitialized) return
+            if (this::wildcardImportedPackages.isInitialized) return
             wildcardImportedPackages = wildcardImports.mapNotNull { baseProject.getPackage(it) }
         }
 
         private fun lazyLoadImportedWildcardClasses() {
-            if(this::wildcardImportedClasses.isInitialized) return
+            if (this::wildcardImportedClasses.isInitialized) return
             wildcardImportedClasses = wildcardImports.mapNotNull { baseProject.getClass(it) }
         }
 
@@ -237,7 +233,7 @@ open class CreationShakePackage(
         }
 
         private fun lazyLoadImportedClasses() {
-            if(this::importedClasses.isInitialized) return
+            if (this::importedClasses.isInitialized) return
             lazyLoadWildcards()
             val imports = wildcardImportedPackages.flatMap { it.classes }.toMutableList()
             imports.addAll(wildcardImportedClasses.flatMap { it.classes })
@@ -246,7 +242,7 @@ open class CreationShakePackage(
         }
 
         private fun lazyLoadImportedFunctions() {
-            if(this::importedFunctions.isInitialized) return
+            if (this::importedFunctions.isInitialized) return
             lazyLoadImportedWildcardPackages()
             val imports = wildcardImports.flatMap { baseProject.getPackage(it)?.functions ?: listOf() }.toMutableList()
             imports.addAll(explicitImports.flatMap { baseProject.getFunctions(it) })
@@ -254,7 +250,7 @@ open class CreationShakePackage(
         }
 
         private fun lazyLoadImportedFields() {
-            if(this::importedFields.isInitialized) return
+            if (this::importedFields.isInitialized) return
             lazyLoadImportedWildcardPackages()
             val imports = wildcardImports.flatMap { baseProject.getPackage(it)?.fields ?: listOf() }.toMutableList()
             imports.addAll(explicitImports.mapNotNull { baseProject.getField(it) })
