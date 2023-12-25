@@ -8,3 +8,7 @@ Update to new package structure
 Introduce debug
 Bugfixes with logging
 Make default logger print to console
+### 0.4.0
+Move `com.shakelang.shake.util` to `com.shakelang.util`
+Update com.shakelang.util:colorlib to 0.3.0
+Update com.shakelang.util:environment to 0.3.0
