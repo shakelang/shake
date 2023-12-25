@@ -2710,7 +2710,7 @@ class ShakeCodeInterpreterTests : FreeSpec({
         val method = interpreter.classPath.getMethod("test/main()V")!!
 
         val code = interpreter.putFunctionOnStack(method)
-        interpreter.tick(3)
+        interpreter.tick(2)
 
         val stack = code.stack
 
@@ -2718,7 +2718,7 @@ class ShakeCodeInterpreterTests : FreeSpec({
         stack.size shouldBe 2
         interpreter.callStack.size shouldBe 1
 
-        interpreter.tick()
+        interpreter.tick(2)
 
         code.pc shouldBe 9
         stack.size shouldBe 0
