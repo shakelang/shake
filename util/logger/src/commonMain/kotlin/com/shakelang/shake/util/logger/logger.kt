@@ -1,8 +1,6 @@
 package com.shakelang.shake.util.logger
 
 class Logger(
-    val path: String,
-    val name: String = path,
     val pipes: MutableList<LoggerPipe> = mutableListOf(),
     val bufferSize: Int = 8192,
 ) {
@@ -79,4 +77,7 @@ enum class LogLevel {
     SUCCESS;
 }
 
-val logger = Logger("")
+val logger = Logger().run {
+    transform(CommonTransformerCombinations.DATE_LEVEL).pipe(CommonColoredConsoleLoggerPipe)
+    this
+}

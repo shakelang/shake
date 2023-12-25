@@ -13,7 +13,7 @@ object CommonTransformers {
             while (str.length < length) str = "0$str"
             return str
         }
-        
+
         fun generateTimestamp(): String {
             val current = Clock.System.now()
             val timeZone = TimeZone.currentSystemDefault()
@@ -42,7 +42,7 @@ object CommonTransformers {
 
 object CommonTransformerCombinations {
 
-    val DATE_LEVEL = listOf(CommonTransformers.DateTransformer, CommonTransformers.LevelTransformer)
+    val DATE_LEVEL = listOf(CommonTransformers.LevelTransformer, CommonTransformers.DateTransformer)
     val DATE = listOf(CommonTransformers.DateTransformer)
     val LEVEL = listOf(CommonTransformers.LevelTransformer)
 

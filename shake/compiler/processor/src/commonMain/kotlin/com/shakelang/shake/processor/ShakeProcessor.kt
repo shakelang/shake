@@ -57,7 +57,7 @@ abstract class ShakeProcessor<T> {
     }
 
     companion object {
-        val debug = debug("shake-processor")
+        val debug = debug("shake:compiler:processor")
     }
 }
 

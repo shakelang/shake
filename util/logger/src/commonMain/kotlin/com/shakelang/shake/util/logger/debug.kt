@@ -21,11 +21,13 @@ class DebuggerDumpConfiguration(
 ) {
     fun accepts(path: String) = paths.any { matchesTemplate(it, path) }
     fun put(path: String, out: String) {
-        if (accepts(path)) this.out.debug(out)
+        if (accepts(path)) this.out.debug("[$path]: $out")
     }
 }
 
 interface Debug {
+    val pathPrefix: String
+    val path: String?
     fun debug(message: String)
     fun debug(path: String, message: String)
     operator fun invoke(message: String) = debug(message)
@@ -35,26 +37,26 @@ interface Debug {
 
 private class DebugImpl (
     val out: MutableList<DebuggerDumpConfiguration>,
-    val name: String?
+    override val path: String?
 ) : Debug {
-    private val pathPrefix = this.name?.plus(":")?:""
-    override fun debug(message: String) = out.forEach { it.put(name?:"<root>", message) }
-    override fun debug(path: String, message: String) = out.forEach { it.put("$pathPrefix$name", message) }
-    override fun child(vararg name: String) = DebugSubImpl(this, name.joinToString(":")})
+    override val pathPrefix = this.path?.plus(":")?:""
+    override fun debug(message: String) = out.forEach { it.put(path?:"<root>", message) }
+    override fun debug(path: String, message: String) = out.forEach { it.put("$pathPrefix$path", message) }
+    override fun child(vararg name: String) = DebugSubImpl(this, name.joinToString(":"))
 }
 
 private class DebugSubImpl(
     val parent: Debug,
-    val name: String?
+    override val path: String?
 ) : Debug {
-    private val pathPrefix = this.name?.plus(":")?:""
+    override val pathPrefix = this.path?.plus(":")?:""
     override fun debug(message: String) = parent.debug("$pathPrefix$message")
     override fun debug(path: String, message: String) = parent.debug("$pathPrefix$path", message)
-    override fun child(name: String) = DebugSubImpl(this, name)
+    override fun child(vararg name: String) = DebugSubImpl(this, name.joinToString(":"))
 }
 
 fun debug(
     name: String? = null,
     logger: Logger = com.shakelang.shake.util.logger.logger): Debug {
-    return DebugImpl(logger, name)
+    return DebugImpl(mutableListOf(DebuggerDumpConfiguration(logger)), name)
 }

@@ -1,6 +1,7 @@
 package com.shakelang.shake.processor
 
 import com.shakelang.shake.stdlib.CoreFiles
+import com.shakelang.shake.util.logger.GlobalDebugConfiguration
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -16,6 +17,9 @@ fun createBaseProcessor(): ShakePackageBasedProcessor {
 }
 
 class ClassTests : FreeSpec({
+
+    // Output all logs
+    GlobalDebugConfiguration.paths.add("*")
 
     "default supertype" {
 
