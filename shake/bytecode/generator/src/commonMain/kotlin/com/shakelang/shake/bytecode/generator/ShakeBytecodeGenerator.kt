@@ -3,9 +3,7 @@ package com.shakelang.shake.bytecode.generator
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.generator.*
 import com.shakelang.shake.processor.program.types.*
-import com.shakelang.shake.processor.program.types.code.ShakeAssignment
-import com.shakelang.shake.processor.program.types.code.ShakeCode
-import com.shakelang.shake.processor.program.types.code.ShakeInvocation
+import com.shakelang.shake.processor.program.types.code.*
 import com.shakelang.shake.processor.program.types.code.statements.*
 import com.shakelang.shake.processor.program.types.code.values.*
 
@@ -33,7 +31,7 @@ class ShakeBytecodeGenerator {
 
             is ShakeBooleanLiteral -> ctx.bytecodeInstructionGenerator.bpush(v.value)
             is ShakeInvocation -> visitInvocation(ctx, v, true)
-            is ShakeVariableUsage -> visitUsage(ctx, v)
+            is ShakeUsage -> visitUsage(ctx, v)
             is ShakeAssignment -> visitAssignment(ctx, v, true)
 //            is ShakeAddAssignment -> visitAdditionAssignment(v)
 //            is ShakeSubAssignment -> visitSubtractionAssignment(v)
@@ -41,10 +39,10 @@ class ShakeBytecodeGenerator {
 //            is ShakeDivAssignment -> visitDivisionAssignment(v)
 //            is ShakeModAssignment -> visitModulusAssignment(v)
 //            is ShakePowAssignment -> visitPowerAssignment(v)
-//            is ShakeIncrementBefore -> visitIncrementBefore(v)
-//            is ShakeIncrementAfter -> visitIncrementAfter(v)
-//            is ShakeDecrementBefore -> visitDecrementBefore(v)
-//            is ShakeDecrementAfter -> visitDecrementAfter(v)
+            is ShakeIncrementBefore -> visitIncrementBefore(ctx, v, true)
+            is ShakeIncrementAfter -> visitIncrementAfter(ctx, v, true)
+            is ShakeDecrementBefore -> visitDecrementBefore(ctx, v, true)
+            is ShakeDecrementAfter -> visitDecrementAfter(ctx, v, true)
 //            is ShakeInvocation -> visitInvocationValue(v)
 //            is ShakeNew -> visitNew(v)
 //            is ShakeCast -> visitCast(v)
@@ -55,28 +53,39 @@ class ShakeBytecodeGenerator {
     private fun visitAssignment(ctx: BytecodeGenerationContext, v: ShakeAssignment, keepResultOnStack: Boolean = false) {
         visitValue(ctx, v.value)
         val variable = v.variable
-        when (variable) {
-            is ShakeVariableDeclaration -> {
-                val local = ctx.localTable.getLocal(variable.uniqueName)
-                val type = generateTypeDescriptor(variable.type)
-                ctx.bytecodeInstructionGenerator.store(type, local)
-
-                if(keepResultOnStack) {
-                    ctx.bytecodeInstructionGenerator.load(type, local)
-                }
-
-                return
-            }
-            else -> TODO("Only local variables are supported for now")
-        }
+        storeVariable(ctx, variable)
     }
 
+    private fun visitUsage(ctx: BytecodeGenerationContext, v: ShakeUsage) {
+        loadVariable(ctx, v.declaration)
+    }
 
+    private fun visitIncrementBefore(ctx: BytecodeGenerationContext, v: ShakeIncrementBefore, keepResultOnStack: Boolean = false) {
+        loadVariable(ctx, v.variable)
+        ctx.bytecodeInstructionGenerator.inc(generateTypeDescriptor(v.type))
+        if(keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
+        storeVariable(ctx, v.variable)
+    }
 
-    private fun visitUsage(ctx: BytecodeGenerationContext, v: ShakeVariableUsage) {
-        val local = ctx.localTable.getLocal(v.declaration.uniqueName)
-        val type = generateTypeDescriptor(v.type)
-        ctx.bytecodeInstructionGenerator.load(type, local)
+    private fun visitIncrementAfter(ctx: BytecodeGenerationContext, v: ShakeIncrementAfter, keepResultOnStack: Boolean = false) {
+        loadVariable(ctx, v.variable)
+        if(keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
+        ctx.bytecodeInstructionGenerator.inc(generateTypeDescriptor(v.type))
+        storeVariable(ctx, v.variable)
+    }
+
+    private fun visitDecrementBefore(ctx: BytecodeGenerationContext, v: ShakeDecrementBefore, keepResultOnStack: Boolean = false) {
+        loadVariable(ctx, v.variable)
+        ctx.bytecodeInstructionGenerator.dec(generateTypeDescriptor(v.type))
+        if(keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
+        storeVariable(ctx, v.variable)
+    }
+
+    private fun visitDecrementAfter(ctx: BytecodeGenerationContext, v: ShakeDecrementAfter, keepResultOnStack: Boolean = false) {
+        loadVariable(ctx, v.variable)
+        if(keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
+        ctx.bytecodeInstructionGenerator.dec(generateTypeDescriptor(v.type))
+        storeVariable(ctx, v.variable)
     }
 
     private fun visitInvocation(
@@ -123,10 +132,10 @@ class ShakeBytecodeGenerator {
 //            is ShakeDivAssignment -> visitDivisionAssignment(s)
 //            is ShakeModAssignment -> visitModulusAssignment(s)
 //            is ShakePowAssignment -> visitPowerAssignment(s)
-//            is ShakeIncrementBefore -> visitIncrementBefore(s)
-//            is ShakeIncrementAfter -> visitIncrementAfter(s)
-//            is ShakeDecrementBefore -> visitDecrementBefore(s)
-//            is ShakeDecrementAfter -> visitDecrementAfter(s)
+            is ShakeIncrementBefore -> visitIncrementBefore(ctx, s, false)
+            is ShakeIncrementAfter -> visitIncrementAfter(ctx, s, false)
+            is ShakeDecrementBefore -> visitDecrementBefore(ctx, s, false)
+            is ShakeDecrementAfter -> visitDecrementAfter(ctx, s, false)
 //            is ShakeNew -> visitNew(s)
             is ShakeDoWhile -> visitDoWhile(ctx, s)
             is ShakeWhile -> visitWhile(ctx, s)
@@ -161,7 +170,6 @@ class ShakeBytecodeGenerator {
             visitValue(ctx, s.initialValue!!)
             ctx.bytecodeInstructionGenerator.store(type, local)
         }
-
     }
 
     private fun visitIf(ctx: BytecodeGenerationContext, s: ShakeIf) {
@@ -221,6 +229,32 @@ class ShakeBytecodeGenerator {
         visitCode(ctx, s.body)
         visitValue(ctx, s.condition)
         ctx.bytecodeInstructionGenerator.jnz(loopStart)
+    }
+
+    private fun loadVariable(ctx: BytecodeGenerationContext, v: ShakeVariableDeclaration) {
+        val local = ctx.localTable.getLocal(v.uniqueName)
+        val type = generateTypeDescriptor(v.type)
+        ctx.bytecodeInstructionGenerator.load(type, local)
+    }
+
+    private fun loadVariable(ctx: BytecodeGenerationContext, v: ShakeAssignable) {
+        when(v) {
+            is ShakeVariableDeclaration -> loadVariable(ctx, v)
+            else -> TODO()
+        }
+    }
+
+    private fun storeVariable(ctx: BytecodeGenerationContext, v: ShakeVariableDeclaration) {
+        val local = ctx.localTable.getLocal(v.uniqueName)
+        val type = generateTypeDescriptor(v.type)
+        ctx.bytecodeInstructionGenerator.store(type, local)
+    }
+
+    private fun storeVariable(ctx: BytecodeGenerationContext, v: ShakeAssignable) {
+        when(v) {
+            is ShakeVariableDeclaration -> storeVariable(ctx, v)
+            else -> TODO()
+        }
     }
 
     fun generateProject(project: ShakeProject): List<StorageFormat> {

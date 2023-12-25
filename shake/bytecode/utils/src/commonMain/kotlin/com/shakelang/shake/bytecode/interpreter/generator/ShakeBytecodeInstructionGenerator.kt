@@ -330,6 +330,21 @@ open class ShakeBytecodeInstructionGenerator(
     fun finc() = addByte(Opcodes.FINC)
     fun dinc() = addByte(Opcodes.DINC)
 
+    fun inc(type: String) {
+        when(type) {
+            "B" -> binc()
+            "S" -> sinc()
+            "I" -> iinc()
+            "J" -> linc()
+            "F" -> finc()
+            "D" -> dinc()
+            "b" -> binc()
+            "s" -> sinc()
+            "i" -> iinc()
+            "j" -> linc()
+        }
+    }
+
     fun binc(type: String) {
         when(type) {
             "B" -> binc()
@@ -348,7 +363,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun fdec() = addByte(Opcodes.FDEC)
     fun ddec() = addByte(Opcodes.DDEC)
 
-    fun bdec(type: String) {
+    fun dec(type: String) {
         when(type) {
             "B" -> bdec()
             "S" -> sdec()
@@ -493,6 +508,20 @@ open class ShakeBytecodeInstructionGenerator(
     fun sdup() = addByte(Opcodes.SDUP)
     fun idup() = addByte(Opcodes.IDUP)
     fun ldup() = addByte(Opcodes.LDUP)
+    fun dup(type: String) {
+        when(type) {
+            "B" -> bdup()
+            "S" -> sdup()
+            "I" -> idup()
+            "J" -> ldup()
+            "F" -> idup()
+            "D" -> ldup()
+            "b" -> bdup()
+            "s" -> sdup()
+            "i" -> idup()
+            "j" -> ldup()
+        }
+    }
 
     fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
 
