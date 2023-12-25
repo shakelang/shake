@@ -6,9 +6,10 @@ import com.shakelang.util.io.streaming.input.dataStream
 import com.shakelang.util.jvmlib.infos.constants.ConstantInfo
 import com.shakelang.util.jvmlib.infos.constants.ConstantPool
 import com.shakelang.util.jvmlib.infos.constants.ConstantUtf8Info
-import com.shakelang.util.primitives.bytes.*
-import com.shakelang.util.primitives.bytes.*
-import kotlin.text.toHexString
+import com.shakelang.util.primitives.bytes.getUnsignedShort
+import com.shakelang.util.primitives.bytes.setBytes
+import com.shakelang.util.primitives.bytes.setInt
+import com.shakelang.util.primitives.bytes.setUnsignedShort
 
 class AttributeCodeInfo(
 

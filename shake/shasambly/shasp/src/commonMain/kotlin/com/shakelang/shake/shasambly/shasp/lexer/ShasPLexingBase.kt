@@ -2,10 +2,10 @@ package com.shakelang.shake.shasambly.shasp.lexer
 
 import com.shakelang.shake.lexer.token.ShasPToken
 import com.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
+import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.Characters
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
-import com.shakelang.util.parseutils.CompilerError
 import kotlin.jvm.JvmOverloads
 
 abstract class ShasPLexingBase(

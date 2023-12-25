@@ -1,8 +1,5 @@
 package com.shakelang.util.environment
 
-import com.shakelang.util.environment.Environment
-import com.shakelang.util.environment.EnvironmentType
-
 actual class JavaEnvironment : Environment(EnvironmentType.JAVA) {
     actual val javaVersion: String get() = System.getProperty("java.version")
 }

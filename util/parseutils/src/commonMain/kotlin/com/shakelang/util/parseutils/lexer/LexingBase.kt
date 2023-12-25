@@ -1,10 +1,10 @@
 package com.shakelang.util.parseutils.lexer
 
+import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.util.parseutils.lexer.token.Token
 import com.shakelang.util.parseutils.lexer.token.TokenType
-import com.shakelang.util.parseutils.CompilerError
 import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")

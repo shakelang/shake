@@ -1,7 +1,6 @@
 package com.shakelang.util.colorlib.functional
 
 import com.shakelang.util.colorlib.Formatting
-import com.shakelang.util.colorlib.functional.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

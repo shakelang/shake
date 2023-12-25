@@ -1,7 +1,6 @@
 package com.shakelang.util.changelog.tasks
 
 import com.shakelang.util.changelog.*
-import com.shakelang.util.changelog.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 

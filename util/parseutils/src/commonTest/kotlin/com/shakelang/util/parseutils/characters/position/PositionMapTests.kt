@@ -1,8 +1,6 @@
 package com.shakelang.util.parseutils.characters.position
 
 import com.shakelang.util.parseutils.characters.source.CharacterSource
-import com.shakelang.util.parseutils.characters.position.Position
-import com.shakelang.util.parseutils.characters.position.PositionMap
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

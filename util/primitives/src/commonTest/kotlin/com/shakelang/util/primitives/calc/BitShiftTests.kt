@@ -2,9 +2,6 @@
 
 package com.shakelang.util.primitives.calc
 
-import com.shakelang.util.primitives.calc.shl
-import com.shakelang.util.primitives.calc.shr
-import com.shakelang.util.primitives.calc.ushr
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 

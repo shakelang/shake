@@ -1,7 +1,5 @@
 package com.shakelang.util.shason.elements
 
-import com.shakelang.util.shason.elements.JsonArray
-import com.shakelang.util.shason.elements.MutableJsonArray
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 

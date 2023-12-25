@@ -2,11 +2,11 @@ package com.shakelang.shake.lexer
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
+import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.Characters
 import com.shakelang.util.parseutils.characters.position.Position
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.util.parseutils.lexer.LexingBase
-import com.shakelang.util.parseutils.CompilerError
 import kotlin.jvm.JvmOverloads
 
 abstract class ShakeLexingBase(

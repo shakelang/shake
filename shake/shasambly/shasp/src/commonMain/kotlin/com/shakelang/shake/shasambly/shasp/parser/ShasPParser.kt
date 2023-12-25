@@ -3,9 +3,9 @@ package com.shakelang.shake.shasambly.shasp.parser
 import com.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenInputStream
 import com.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenType
 import com.shakelang.shake.shasambly.shasp.parser.nodes.*
+import com.shakelang.util.parseutils.CompilerError
 import com.shakelang.util.parseutils.characters.Characters
 import com.shakelang.util.parseutils.characters.position.Position
-import com.shakelang.util.parseutils.CompilerError
 
 class ShasPParser(
     private val input: ShasPTokenInputStream

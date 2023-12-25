@@ -13,9 +13,9 @@ import com.shakelang.util.io.streaming.output.OutputStream
 import com.shakelang.util.pointer.PointerList
 import com.shakelang.util.pointer.latePoint
 import com.shakelang.util.pointer.values
+import com.shakelang.util.primitives.bits.*
 import com.shakelang.util.primitives.bytes.toBytes
 import com.shakelang.util.shason.json
-import com.shakelang.util.primitives.bits.*
 
 class ShakeMap(
 
