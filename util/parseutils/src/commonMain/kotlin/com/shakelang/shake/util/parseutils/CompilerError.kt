@@ -322,19 +322,19 @@ open class CompilerError : Error {
 
                 // The start of the line
                 val start = (
-                        lineStr +
-                                (if (beforeDif > 0) "+$beforeDif..." else "") +
-                                pos1.source.source[pos1.index - realBefore, pos1.index].concatToString()
-                                    .replace("\t".toRegex(), " ")
-                        )
+                    lineStr +
+                        (if (beforeDif > 0) "+$beforeDif..." else "") +
+                        pos1.source.source[pos1.index - realBefore, pos1.index].concatToString()
+                            .replace("\t".toRegex(), " ")
+                    )
 
                 // The end of the line
                 val end = (
-                        pos1.source.source[pos2.index + 1, pos2.index + realAfter].concatToString()
-                            .replace("\t".toRegex(), " ")
-                            .replace("\n".toRegex(), " ") +
-                                if (afterDif > 0) "...+$afterDif" else ""
-                        )
+                    pos1.source.source[pos2.index + 1, pos2.index + realAfter].concatToString()
+                        .replace("\t".toRegex(), " ")
+                        .replace("\n".toRegex(), " ") +
+                        if (afterDif > 0) "...+$afterDif" else ""
+                    )
 
                 // Generate end-string
                 return ErrorMarker(

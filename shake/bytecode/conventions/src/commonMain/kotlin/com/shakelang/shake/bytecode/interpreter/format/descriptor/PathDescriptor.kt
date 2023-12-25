@@ -38,7 +38,7 @@ package com.shakelang.shake.bytecode.interpreter.format.descriptor
 class PathDescriptor(
     val packageEntities: Array<String>,
     val classEntities: Array<String>,
-    val entity: String,
+    val entity: String
 ) {
 
     val descriptor

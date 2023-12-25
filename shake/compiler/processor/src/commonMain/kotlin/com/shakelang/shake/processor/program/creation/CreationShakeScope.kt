@@ -1,6 +1,5 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeImportNode
 import com.shakelang.shake.parser.node.ShakeVariableType
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
@@ -73,12 +72,12 @@ abstract class CreationShakeScope : ShakeScope {
         }
     }
 
-    fun getType(clzName: String) : CreationShakeType {
+    fun getType(clzName: String): CreationShakeType {
         return CreationShakeType.objectType(this.getClass(clzName) ?: throw IllegalArgumentException("Class $clzName not found"))
     }
 
     fun getType(type: ShakeVariableType): CreationShakeType {
-        return when(type.type) {
+        return when (type.type) {
             ShakeVariableType.Type.OBJECT -> {
                 val namespace = (type as ShakeVariableType.Object).namespace
                     ?: throw IllegalArgumentException("Object type must have subtype")

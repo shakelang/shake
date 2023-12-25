@@ -11,60 +11,61 @@ import io.kotest.matchers.shouldBe
 class ShakeCodeInterpreterTests : FreeSpec({
 
     val classpath = ShakeClasspath.create()
-    classpath.load(generatePackage {
-        name = "test"
-        Method {
-            name = "main()V"
-            code {
-                maxLocals = 100
-                maxStack = 100
-                bytecode {}
+    classpath.load(
+        generatePackage {
+            name = "test"
+            Method {
+                name = "main()V"
+                code {
+                    maxLocals = 100
+                    maxStack = 100
+                    bytecode {}
+                }
             }
-        }
 
-        Method {
-            name = "btest()B"
-            code {
-                maxLocals = 100
-                maxStack = 100
-                bytecode {}
+            Method {
+                name = "btest()B"
+                code {
+                    maxLocals = 100
+                    maxStack = 100
+                    bytecode {}
+                }
             }
-        }
 
-        Method {
-            name = "stest()S"
-            code {
-                maxLocals = 100
-                maxStack = 100
-                bytecode {}
+            Method {
+                name = "stest()S"
+                code {
+                    maxLocals = 100
+                    maxStack = 100
+                    bytecode {}
+                }
             }
-        }
 
-        Method {
-            name = "itest()I"
-            code {
-                maxLocals = 100
-                maxStack = 100
-                bytecode {}
+            Method {
+                name = "itest()I"
+                code {
+                    maxLocals = 100
+                    maxStack = 100
+                    bytecode {}
+                }
             }
-        }
 
-        Method {
-            name = "ltest()J"
-            code {
-                maxLocals = 100
-                maxStack = 100
-                bytecode {}
+            Method {
+                name = "ltest()J"
+                code {
+                    maxLocals = 100
+                    maxStack = 100
+                    bytecode {}
+                }
             }
         }
-    })
+    )
 
     val method = classpath.getMethod("test/main()V")!!
     val bmethod = classpath.getMethod("test/btest()B")!!
     val smethod = classpath.getMethod("test/stest()S")!!
     val imethod = classpath.getMethod("test/itest()I")!!
     val lmethod = classpath.getMethod("test/ltest()J")!!
-
 
     "bpush" {
         val interpreter = ShakeInterpreter()
@@ -2577,7 +2578,6 @@ class ShakeCodeInterpreterTests : FreeSpec({
 
     "bret" {
 
-
         val interpreter = ShakeInterpreter()
         val code = interpreter.createCodeInterpreter(
             bytecode {
@@ -2672,40 +2672,42 @@ class ShakeCodeInterpreterTests : FreeSpec({
 
     "call" {
         val interpreter = ShakeInterpreter()
-        interpreter.classPath.load(generatePackage {
-            name = "test"
-            Method {
-                name = "and(B,B)B"
-                isPublic = true
+        interpreter.classPath.load(
+            generatePackage {
+                name = "test"
+                Method {
+                    name = "and(B,B)B"
+                    isPublic = true
 
-                code {
-                    maxStack = 100
-                    maxLocals = 100
+                    code {
+                        maxStack = 100
+                        maxLocals = 100
 
-                    this.bytecode {
-                        band()
-                        bret()
-                        ret()
+                        this.bytecode {
+                            band()
+                            bret()
+                            ret()
+                        }
+                    }
+                }
+                Method {
+                    name = "main()V"
+                    isPublic = true
+
+                    code {
+                        maxStack = 100
+                        maxLocals = 100
+
+                        this.bytecode {
+                            bpush(1)
+                            bpush(1)
+                            call("test/and(B,B)B")
+                            ret()
+                        }
                     }
                 }
             }
-            Method {
-                name = "main()V"
-                isPublic = true
-
-                code {
-                    maxStack = 100
-                    maxLocals = 100
-
-                    this.bytecode {
-                        bpush(1)
-                        bpush(1)
-                        call("test/and(B,B)B")
-                        ret()
-                    }
-                }
-            }
-        })
+        )
 
         val method = interpreter.classPath.getMethod("test/main()V")!!
 

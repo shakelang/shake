@@ -31,7 +31,6 @@ interface ShakeInterpreterClass {
             constantPool: ConstantPool,
             pkg: ShakeInterpreterPackage
         ): ShakeInterpreterClass {
-
             val thisParentPath = "$parentPath${storage.name}:"
 
             return object : ShakeInterpreterClass {

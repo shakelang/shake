@@ -64,7 +64,8 @@ class ChangelogCli(
             changed,
             unchanged,
             onCanceled = { showHomePage() },
-            onBumped = { showHomePage() })
+            onBumped = { showHomePage() }
+        )
         val scrollPane = JScrollPane(bumpPanel)
         scrollPane.verticalScrollBarPolicy = JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
         scrollPane.horizontalScrollBarPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_NEVER

@@ -30,7 +30,6 @@ interface ShakePackage {
     }
 
     fun getClass(name: List<String>): ShakeClass? {
-
         debug("Searching for class: ${name.joinToString(".")} in package: $qualifiedName")
 
         if (name.isEmpty()) return null

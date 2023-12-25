@@ -54,8 +54,6 @@ interface ShakeMethod : ShakeInvokable {
         )
     }
 
-
-
     fun phase3()
     fun phase4()
 }

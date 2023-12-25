@@ -406,11 +406,11 @@ class JsProject {
 
     fun generatePackageFile(): String {
         return (
-                classes.map { it.generate() } +
-                        functions.map { it.generate() } +
-                        fields.map { it.generate() } +
-                        export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
-                ).joinToString("\n")
+            classes.map { it.generate() } +
+                functions.map { it.generate() } +
+                fields.map { it.generate() } +
+                export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
+            ).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {
@@ -418,24 +418,24 @@ class JsProject {
         if (hasContents()) files += mapOf("index.js" to generatePackageFile())
         files += mapOf(
             "structure.js" to "module.exports=global.packageJsLibrary=global.packageJsLibrary||function(){try{return require(name)}catch(a){if(\"MODULE_NOT_FOUND\"===a.code)return!1;throw a}}()||function(){function c(a){return a&&\"object\"==typeof a&&!Array.isArray(a)}function d(a,...f){if(!f.length)return a;let e=f.shift();if(c(a)&&c(e))for(let b in e)c(e[b])?(a[b]||Object.assign(a,{[b]:{}}),d(a[b],e[b])):Object.assign(a,{[b]:e[b]});return d(a,...f)}function e(a){let b={};return Object.keys(a).forEach(h=>{let g=h.split(/[.\\/]/g),i=a[h],c=b;for(let f=0;f<g.length;f++)c[g[f]]||(c[g[f]]={}),c=c[g[f]];\"function\"==typeof i?Object.defineProperty(c,\"\$it\",{get:function(){let a=i();return Object.defineProperty(c,\"\$it\",{value:a}),a},configurable:!0}):d(c,e(i[h]))}),b}function a(a){let b=a?.packages||{},c=e(b),f;return f={packages:c,pImport(d){let c=d.split(/[.\\/]/g),a=f.packages;for(let b=0;b<c.length;b++){if(!a[c[b]])return;a=a[c[b]]}return a.\$it},add(a){d(f.packages,e(a))}}}let b=a({});return Object.assign(b,{createPackageSystem:a,require:a=>()=>require(`\${a}`),object:a=>()=>a})}();\n\n" +
-                    JsTree(
-                        listOf(
-                            JsFunctionCall(
-                                JsField("add", JsField("packages")),
-                                listOf(
-                                    JsObject(
-                                        packages.map {
-                                            JsStringLiteral(it) to JsFunctionCall(
-                                                JsField("require"),
-                                                listOf(JsStringLiteral("$it.js"))
-                                            )
-                                        }.toTypedArray().toMap()
-                                    )
+                JsTree(
+                    listOf(
+                        JsFunctionCall(
+                            JsField("add", JsField("packages")),
+                            listOf(
+                                JsObject(
+                                    packages.map {
+                                        JsStringLiteral(it) to JsFunctionCall(
+                                            JsField("require"),
+                                            listOf(JsStringLiteral("$it.js"))
+                                        )
+                                    }.toTypedArray().toMap()
                                 )
-                            ),
-                            export(listOf("import"))
-                        )
-                    ).generate()
+                            )
+                        ),
+                        export(listOf("import"))
+                    )
+                ).generate()
 
         )
         return files
@@ -507,11 +507,11 @@ class JsPackage {
 
     fun generatePackageFile(): String {
         return (
-                classes.map { it.generate() } +
-                        functions.map { it.generate() } +
-                        fields.map { it.generate() } +
-                        export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
-                ).joinToString("\n")
+            classes.map { it.generate() } +
+                functions.map { it.generate() } +
+                fields.map { it.generate() } +
+                export(classes.map { it.name } + functions.map { it.name } + fields.map { it.name }).generate()
+            ).joinToString("\n")
     }
 
     fun generatePackageFiles(): Map<String, String> {

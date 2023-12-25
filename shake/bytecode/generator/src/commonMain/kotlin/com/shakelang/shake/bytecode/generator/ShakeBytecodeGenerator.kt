@@ -63,13 +63,13 @@ class ShakeBytecodeGenerator {
     private fun visitIncrementBefore(ctx: BytecodeGenerationContext, v: ShakeIncrementBefore, keepResultOnStack: Boolean = false) {
         loadVariable(ctx, v.variable)
         ctx.bytecodeInstructionGenerator.inc(generateTypeDescriptor(v.type))
-        if(keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
+        if (keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
         storeVariable(ctx, v.variable)
     }
 
     private fun visitIncrementAfter(ctx: BytecodeGenerationContext, v: ShakeIncrementAfter, keepResultOnStack: Boolean = false) {
         loadVariable(ctx, v.variable)
-        if(keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
+        if (keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
         ctx.bytecodeInstructionGenerator.inc(generateTypeDescriptor(v.type))
         storeVariable(ctx, v.variable)
     }
@@ -77,13 +77,13 @@ class ShakeBytecodeGenerator {
     private fun visitDecrementBefore(ctx: BytecodeGenerationContext, v: ShakeDecrementBefore, keepResultOnStack: Boolean = false) {
         loadVariable(ctx, v.variable)
         ctx.bytecodeInstructionGenerator.dec(generateTypeDescriptor(v.type))
-        if(keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
+        if (keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
         storeVariable(ctx, v.variable)
     }
 
     private fun visitDecrementAfter(ctx: BytecodeGenerationContext, v: ShakeDecrementAfter, keepResultOnStack: Boolean = false) {
         loadVariable(ctx, v.variable)
-        if(keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
+        if (keepResultOnStack) ctx.bytecodeInstructionGenerator.dup(generateTypeDescriptor(v.type))
         ctx.bytecodeInstructionGenerator.dec(generateTypeDescriptor(v.type))
         storeVariable(ctx, v.variable)
     }
@@ -91,7 +91,8 @@ class ShakeBytecodeGenerator {
     private fun visitInvocation(
         ctx: BytecodeGenerationContext,
         v: ShakeInvocation,
-        keepResultOnStack: Boolean) {
+        keepResultOnStack: Boolean
+    ) {
         val invokable = v.callable
         when (invokable) {
             is ShakeMethod -> {
@@ -104,14 +105,14 @@ class ShakeBytecodeGenerator {
             else -> TODO()
         }
 
-        if(!keepResultOnStack) {
+        if (!keepResultOnStack) {
             ctx.bytecodeInstructionGenerator.pop(generateTypeDescriptor(v.type))
         }
     }
 
     fun visitCode(
         ctx: BytecodeGenerationContext,
-        code: ShakeCode,
+        code: ShakeCode
     ) {
         code.statements.forEach {
             visitStatement(ctx, it)
@@ -120,7 +121,7 @@ class ShakeBytecodeGenerator {
 
     fun visitStatement(
         ctx: BytecodeGenerationContext,
-        s: ShakeStatement,
+        s: ShakeStatement
     ) {
         return when (s) {
             is ShakeVariableDeclaration -> visitVariableDeclaration(ctx, s)
@@ -147,7 +148,7 @@ class ShakeBytecodeGenerator {
     }
 
     private fun visitReturn(ctx: BytecodeGenerationContext, s: ShakeReturn) {
-        if(s.value != null) {
+        if (s.value != null) {
             visitValue(ctx, s.value!!)
             ctx.bytecodeInstructionGenerator.ret(generateTypeDescriptor(s.value!!.type))
         }
@@ -155,8 +156,7 @@ class ShakeBytecodeGenerator {
     }
 
     private fun visitVariableDeclaration(ctx: BytecodeGenerationContext, s: ShakeVariableDeclaration) {
-
-        if(ctx.localTable.containsLocal(s.uniqueName)) {
+        if (ctx.localTable.containsLocal(s.uniqueName)) {
             throw IllegalStateException("Local ${s.name} is already defined")
         }
 
@@ -173,15 +173,13 @@ class ShakeBytecodeGenerator {
     }
 
     private fun visitIf(ctx: BytecodeGenerationContext, s: ShakeIf) {
-
         // Generate condition
 
         visitValue(ctx, s.condition)
 
         // If-else
 
-        if(s.elseBody != null) {
-
+        if (s.elseBody != null) {
             // If the if condition is false, jump to else
             val elseStart = ctx.bytecodeInstructionGenerator.jz()
             visitCode(ctx, s.body)
@@ -192,7 +190,6 @@ class ShakeBytecodeGenerator {
             elseStart.set(ctx.bytecodeInstructionGenerator.pointer())
             visitCode(ctx, s.elseBody!!)
             ifEnd.set(ctx.bytecodeInstructionGenerator.pointer())
-
         }
 
         // If only
@@ -238,7 +235,7 @@ class ShakeBytecodeGenerator {
     }
 
     private fun loadVariable(ctx: BytecodeGenerationContext, v: ShakeAssignable) {
-        when(v) {
+        when (v) {
             is ShakeVariableDeclaration -> loadVariable(ctx, v)
             else -> TODO()
         }
@@ -251,7 +248,7 @@ class ShakeBytecodeGenerator {
     }
 
     private fun storeVariable(ctx: BytecodeGenerationContext, v: ShakeAssignable) {
-        when(v) {
+        when (v) {
             is ShakeVariableDeclaration -> storeVariable(ctx, v)
             else -> TODO()
         }
@@ -297,13 +294,11 @@ class ShakeBytecodeGenerator {
             pkg.fields.forEach {
                 Field { generateField(it, this) }
             }
-
         }
     }
 
     fun generateClass(clazz: ShakeClass, ctx: ClassGenerationContext) {
         ctx.run {
-
             name = clazz.name
             isPublic = clazz.isPublic
             isStatic = clazz.isStatic
@@ -334,7 +329,6 @@ class ShakeBytecodeGenerator {
     fun generateMethod(method: ShakeMethod, ctx: MethodGenerationContext) {
         if (method.isNative) return
         ctx.run {
-
             val returnType = generateTypeDescriptor(method.returnType)
             val parameters = method.parameters.map { generateTypeDescriptor(it.type) }
 
@@ -345,8 +339,7 @@ class ShakeBytecodeGenerator {
             isStatic = method.isStatic
             isFinal = method.isFinal
 
-            if(method.body != null) {
-
+            if (method.body != null) {
                 val body = method.body!!
 
                 code {
@@ -360,7 +353,7 @@ class ShakeBytecodeGenerator {
                                 this@ShakeBytecodeGenerator,
                                 this,
                                 ctx,
-                                localTable,
+                                localTable
                             ),
                             body
                         )
@@ -375,7 +368,6 @@ class ShakeBytecodeGenerator {
 
     fun generateField(field: ShakeField, ctx: FieldGenerationContext) {
         ctx.run {
-
             name = field.name
             isPublic = field.isPublic
             isStatic = field.isStatic
@@ -383,7 +375,6 @@ class ShakeBytecodeGenerator {
             isStatic = field.isStatic
             isFinal = field.isFinal
             type = generateTypeDescriptor(field.type)
-
         }
     }
 
@@ -450,9 +441,9 @@ class ShakeBytecodeGenerator {
         }
     }
 
-    class LocalTable (
+    class LocalTable(
         val locals: MutableMap<String, Int> = mutableMapOf(),
-        var size : Int = 0
+        var size: Int = 0
     ) {
 
         fun containsLocal(name: String): Boolean {
@@ -474,6 +465,6 @@ class ShakeBytecodeGenerator {
         val gen: ShakeBytecodeGenerator,
         val bytecodeInstructionGenerator: PooledShakeBytecodeInstructionGenerator,
         val method: MethodGenerationContext,
-        val localTable: LocalTable,
+        val localTable: LocalTable
     )
 }

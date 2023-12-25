@@ -9,7 +9,7 @@ import com.shakelang.shake.processor.program.types.code.ShakeInvocation
 import com.shakelang.shake.processor.program.types.code.ShakeInvokable
 
 class CreationShakeInvocation
-private constructor (
+private constructor(
     override val project: ShakeProject,
     override val callable: ShakeInvokable,
     override val arguments: List<CreationShakeValue>,
@@ -39,8 +39,9 @@ private constructor (
             parent: CreationShakeValue? = null
         ): CreationShakeInvocation {
             // If the callable is an extension function, the parent will be the first argument
-            if (callable is CreationShakeMethod && callable.expanding != null && parent != null)
+            if (callable is CreationShakeMethod && callable.expanding != null && parent != null) {
                 return CreationShakeInvocation(project, callable, listOf(parent) + arguments, null)
+            }
             return CreationShakeInvocation(project, callable, arguments, parent)
         }
     }

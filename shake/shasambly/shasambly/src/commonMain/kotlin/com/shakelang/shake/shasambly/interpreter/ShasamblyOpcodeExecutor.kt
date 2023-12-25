@@ -31,7 +31,7 @@ abstract class ShasamblyOpcodeExecutor(
         if (address < 0 || address > memory.size) {
             throw Error(
                 "Address 0x${
-                    address.toBytes().toHexString()
+                address.toBytes().toHexString()
                 } out of range"
             )
         }
@@ -54,13 +54,13 @@ abstract class ShasamblyOpcodeExecutor(
     fun invoke_native() {
         val native = read_short().toUShort().toInt()
         (
-                nativeFunctions[native]
-                    ?: throw Error(
-                        "Unknown native function 0x${
-                            native.toBytes().toHexString()
-                        } at position 0x${position.toBytes().toHexString()}"
-                    )
+            nativeFunctions[native]
+                ?: throw Error(
+                    "Unknown native function 0x${
+                    native.toBytes().toHexString()
+                    } at position 0x${position.toBytes().toHexString()}"
                 )
+            )
             .execute.invoke(this)
     }
 

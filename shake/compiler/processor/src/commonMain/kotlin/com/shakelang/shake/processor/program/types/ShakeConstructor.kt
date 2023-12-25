@@ -27,7 +27,7 @@ interface ShakeConstructor {
             "parameters" to parameters.map { it.toJson() }
         )
     }
-    
+
     fun phase3()
     fun phase4()
 }

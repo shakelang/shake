@@ -8,7 +8,7 @@ import com.shakelang.shake.processor.program.types.ShakeProject
 
 class CreationShakeProject(
     processor: ShakeASTProcessor,
-    override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
+    override val subpackages: MutableList<CreationShakePackage> = mutableListOf()
 ) : ShakeProject {
     private val scopes = mutableListOf<CreationShakeScope>()
 
@@ -79,7 +79,6 @@ class CreationShakeProject(
         requirePackage(pkgName).putFile(name, content)
     }
 
-
     override fun getPackage(name: String): CreationShakePackage? {
         if (name.contains(".")) return getPackage(name.split(".").toTypedArray())
         return subpackages.find { it.name == name }
@@ -135,7 +134,6 @@ class CreationShakeProject(
 
     override fun getField(name: String): CreationShakeField? = super.getField(name) as CreationShakeField?
 
-
     fun finish() {
         this.phase1()
         this.phase2()
@@ -180,7 +178,6 @@ class CreationShakeProject(
 
         val Object: CreationShakeType get() = CreationShakeType.objectType(ObjectClass)
         val String: CreationShakeType get() = CreationShakeType.objectType(StringClass)
-
     }
 
     companion object {

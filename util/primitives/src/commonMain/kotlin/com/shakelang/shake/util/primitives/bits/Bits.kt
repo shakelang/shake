@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package com.shakelang.shake.util.primitives.bits
 
 import kotlin.experimental.and
@@ -134,7 +135,6 @@ class ByteBits(private val byte: Byte) : List<Boolean> {
     override operator fun get(index: Int) = byte and (1 shl index).toByte() != 0.toByte()
 
     override fun containsAll(elements: Collection<Boolean>): Boolean {
-
         for (element in elements) {
             if (!contains(element)) return false
         }
@@ -202,7 +202,6 @@ class ShortBits(private val short: Short) : List<Boolean> {
     override fun lastIndexOf(element: Boolean): Int = toList().lastIndexOf(element)
 
     override fun indexOf(element: Boolean): Int = toList().indexOf(element)
-
 }
 
 val Short.bits: ShortBits get() = ShortBits(this)
@@ -273,7 +272,6 @@ class LongBits(private val long: Long) : List<Boolean> {
     override fun lastIndexOf(element: Boolean): Int = toList().lastIndexOf(element)
 
     override fun indexOf(element: Boolean): Int = toList().indexOf(element)
-
 }
 
 val Long.bits: LongBits get() = LongBits(this)
@@ -401,4 +399,3 @@ fun Long.setBit60(value: Boolean): Long = if (value) this or 0x1000000000000000 
 fun Long.setBit61(value: Boolean): Long = if (value) this or 0x2000000000000000 else this and 0xDFFFFFFFFFFFFFFFu.toLong()
 fun Long.setBit62(value: Boolean): Long = if (value) this or 0x4000000000000000 else this and 0xBFFFFFFFFFFFFFFFu.toLong()
 fun Long.setBit63(value: Boolean): Long = if (value) this or 0x8000000000000000uL.toLong() else this and 0x7FFFFFFFFFFFFFFFu.toLong()
-

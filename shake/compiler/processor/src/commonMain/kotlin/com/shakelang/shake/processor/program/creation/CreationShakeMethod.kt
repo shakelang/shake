@@ -29,13 +29,14 @@ class CreationShakeMethod(
     override val isOperator: Boolean,
     returnType: CreationShakeType,
     parameters: List<CreationShakeParameter>,
-    override val expanding: ShakeType?,
+    override val expanding: ShakeType?
 
 ) : CreationShakeInvokable(
     body,
     parameters,
-    returnType,
-), ShakeMethod {
+    returnType
+),
+    ShakeMethod {
 
     override val qualifiedName: String
         get() = super.qualifiedName

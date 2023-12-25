@@ -77,12 +77,12 @@ class PointerRegister<T> {
      */
     operator fun get(index: Int): Pointer<T> {
         return (
-                if (index < pointers.size) {
-                    pointers[index]
-                } else {
-                    null
-                }
-                ) ?: throw IllegalStateException("pointer at index $index is null")
+            if (index < pointers.size) {
+                pointers[index]
+            } else {
+                null
+            }
+            ) ?: throw IllegalStateException("pointer at index $index is null")
     }
 
     /**

@@ -21,7 +21,6 @@ interface ShakeInterpreterField {
             constantPool: ConstantPool,
             pkg: ShakeInterpreterPackage
         ): ShakeInterpreterField {
-
             return object : ShakeInterpreterField {
 
                 override val storage: Field = storage
@@ -32,7 +31,6 @@ interface ShakeInterpreterField {
                     ShakeInterpreterType.of(TypeDescriptor.parse(storage.type), classpath)
                 override val constantPool: ConstantPool = constantPool
                 override val pkg: ShakeInterpreterPackage = pkg
-
             }
         }
     }
