@@ -6,6 +6,7 @@ import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
+import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.types.ShakePackage
 
 open class CreationShakePackage(
@@ -69,7 +70,7 @@ open class CreationShakePackage(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-1)
      */
     override fun phase1() {
-        println("Phase 1 of package $qualifiedName")
+        debug("phases", "Phase 1 of package $qualifiedName")
         this.files.forEach { file ->
             file.classes.forEach { clz ->
                 if (classes.any { it.name == clz.name }) {
@@ -86,7 +87,7 @@ open class CreationShakePackage(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-2)
      */
     override fun phase2() {
-        println("Phase 2 of package $qualifiedName")
+        debug("phases", "Phase 2 of package $qualifiedName")
         this.classes.forEach { it.phase2() }
         this.subpackages.forEach { it.phase2() }
     }
@@ -96,7 +97,7 @@ open class CreationShakePackage(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-3)
      */
     override fun phase3() {
-        println("Phase 3 of package $qualifiedName")
+        debug("phases", "Phase 3 of package $qualifiedName")
         this.files.forEach { file ->
             file.functions.forEach {
                 val method = CreationShakeMethod.from(baseProject, this, file.scope, it)
@@ -116,7 +117,7 @@ open class CreationShakePackage(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-4)
      */
     override fun phase4() {
-        println("Phase 4 of package $qualifiedName")
+        debug("phases", "Phase 4 of package $qualifiedName")
         classes.forEach { it.phase4() }
         functions.forEach { it.phase4() }
         fields.forEach { it.phase4() }
@@ -286,5 +287,9 @@ open class CreationShakePackage(
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set a class in a package scope")
         }
+    }
+
+    companion object {
+        val debug = ShakeProcessor.debug.child("creation", "package")
     }
 }

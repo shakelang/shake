@@ -3,6 +3,7 @@ package com.shakelang.shake.processor.program.creation
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
+import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.types.ShakeClass
 
 class CreationShakeClass
@@ -61,6 +62,7 @@ private constructor(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-1)
      */
     override fun phase1() {
+        debug("phases", "Phase 1 of class ${clz.name}")
         clz.classes.forEach {
                 if(it.isStatic) {
                     val clz = from(prj, pkg, this.staticScope, it)
@@ -78,7 +80,7 @@ private constructor(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-2)
      */
     override fun phase2() {
-        println(parentScope.uniqueName)
+        debug("phases", "Phase 2 of class ${clz.name}")
         this.superClass = parentScope.getClass(clz.extends?.toString() ?: "shake.lang.Object")
             ?: throw IllegalStateException("Superclass ${clz.extends} not found in classpath")
 
@@ -92,6 +94,7 @@ private constructor(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-3)
      */
     override fun phase3() {
+        debug("phases", "Phase 3 of class ${clz.name}")
         clz.methods.forEach {
             val scope = if (it.isStatic) staticScope else instanceScope
             val method = CreationShakeMethod.from(this, scope, it)
@@ -114,6 +117,7 @@ private constructor(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-4)
      */
     override fun phase4() {
+        debug("phases", "Phase 4 of class ${clz.name}")
         this.methods.forEach { it.phase4() }
         this.staticMethods.forEach { it.phase4() }
         this.fields.forEach { it.phase4() }
@@ -210,6 +214,10 @@ private constructor(
     }
 
     companion object {
+
+
+        val debug = ShakeProcessor.debug.child("creation", "class")
+
         fun from(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage,

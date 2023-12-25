@@ -29,7 +29,8 @@ interface Debug {
     fun debug(message: String)
     fun debug(path: String, message: String)
     operator fun invoke(message: String) = debug(message)
-    fun child(name: String): Debug
+    operator fun invoke(path: String, message: String) = debug(path, message)
+    fun child(vararg name: String): Debug
 }
 
 private class DebugImpl (
@@ -39,7 +40,7 @@ private class DebugImpl (
     private val pathPrefix = this.name?.plus(":")?:""
     override fun debug(message: String) = out.forEach { it.put(name?:"<root>", message) }
     override fun debug(path: String, message: String) = out.forEach { it.put("$pathPrefix$name", message) }
-    override fun child(name: String) = DebugSubImpl(this, name)
+    override fun child(vararg name: String) = DebugSubImpl(this, name.joinToString(":")})
 }
 
 private class DebugSubImpl(

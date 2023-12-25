@@ -1,5 +1,6 @@
 package com.shakelang.shake.processor.program.types
 
+import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 interface ShakePackage {
@@ -30,7 +31,7 @@ interface ShakePackage {
 
     fun getClass(name: List<String>): ShakeClass? {
 
-        println("Searching for class: ${name.joinToString(".")} in package: $qualifiedName")
+        debug("Searching for class: ${name.joinToString(".")} in package: $qualifiedName")
 
         if (name.isEmpty()) return null
         if (name.size == 1) return getClass(name.first())
@@ -98,4 +99,8 @@ interface ShakePackage {
     fun phase2()
     fun phase3()
     fun phase4()
+
+    companion object {
+        val debug = ShakeProcessor.debug.child("package")
+    }
 }

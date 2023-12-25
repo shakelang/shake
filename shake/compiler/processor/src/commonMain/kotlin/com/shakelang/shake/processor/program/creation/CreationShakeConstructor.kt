@@ -4,6 +4,7 @@ import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
+import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.ShakeConstructor
@@ -33,10 +34,11 @@ open class CreationShakeConstructor(
         get() = "$qualifiedName(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
 
     override fun phase3() {
-        TODO("Not yet implemented")
+        debug("phases", "Phase 4 of constructor $qualifiedSignature")
     }
 
     override fun phase4() {
+        debug("phases", "Phase 4 of constructor $qualifiedSignature")
         if (body is CreationShakeCode.ShakeLateProcessCode) {
             (body as CreationShakeCode.ShakeLateProcessCode).process(
                 scope
@@ -82,6 +84,9 @@ open class CreationShakeConstructor(
     }
 
     companion object {
+
+        val debug = ShakeProcessor.debug.child("creation", "constructor")
+
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,

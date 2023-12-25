@@ -3,6 +3,7 @@ package com.shakelang.shake.processor.program.creation
 import com.shakelang.shake.parser.node.ShakeFileNode
 import com.shakelang.shake.parser.node.ShakePackageNode
 import com.shakelang.shake.processor.ShakeASTProcessor
+import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.types.ShakeProject
 
 class CreationShakeProject(
@@ -147,19 +148,27 @@ class CreationShakeProject(
     }
 
     override fun phase1() {
+        debug("phases", "Starting phase 1 of project")
         this.subpackages.forEach { it.phase1() }
+        debug("phases", "Finished phase 1 of project")
     }
 
     override fun phase2() {
+        debug("phases", "Starting phase 2 of project")
         this.subpackages.forEach { it.phase2() }
+        debug("phases", "Finished phase 2 of project")
     }
 
     override fun phase3() {
+        debug("phases", "Starting phase 3 of project")
         this.subpackages.forEach { it.phase3() }
+        debug("phases", "Finished phase 3 of project")
     }
 
     override fun phase4() {
+        debug("phases", "Starting phase 4 of project")
         this.subpackages.forEach { it.phase4() }
+        debug("phases", "Finished phase 4 of project")
     }
 
     class ClassRequirement(val name: String, val then: (CreationShakeClass) -> Unit)
@@ -172,5 +181,9 @@ class CreationShakeProject(
         val Object: CreationShakeType get() = CreationShakeType.objectType(ObjectClass)
         val String: CreationShakeType get() = CreationShakeType.objectType(StringClass)
 
+    }
+
+    companion object {
+        val debug = ShakeProcessor.debug.child("creation", "project")
     }
 }

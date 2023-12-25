@@ -19,6 +19,7 @@ kotlin {
         implementation(project(":util:shason"))
         implementation(project(":util:common-io"))
         implementation(project(":util:primitives"))
+        implementation(project(":util:logger"))
         implementation(project(":shake:compiler:lexer"))
         implementation(project(":shake:compiler:parser"))
         testImplementation(project(":util:testlib"))

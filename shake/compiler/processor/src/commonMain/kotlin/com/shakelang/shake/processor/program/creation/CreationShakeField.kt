@@ -2,6 +2,7 @@ package com.shakelang.shake.processor.program.creation
 
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
+import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeFieldUsage
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
@@ -69,10 +70,12 @@ open class CreationShakeField(
     }
 
     override fun phase3() {
+        debug("phases", "Phase 3 of field $qualifiedName")
         // Nothing to do here
     }
     override fun phase4() {
-        // TODO
+        debug("phases", "Phase 4 of field $qualifiedName")
+        // TODO: Visit initial value
     }
 
     override fun toJson(): Map<String, Any?> {
@@ -89,6 +92,9 @@ open class CreationShakeField(
     }
 
     companion object {
+
+        val debug = ShakeProcessor.debug.child("creation", "field")
+
         fun from(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage?,

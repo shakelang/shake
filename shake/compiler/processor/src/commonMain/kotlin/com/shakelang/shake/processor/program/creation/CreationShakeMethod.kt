@@ -3,6 +3,7 @@ package com.shakelang.shake.processor.program.creation
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
+import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
@@ -42,10 +43,12 @@ class CreationShakeMethod(
     override val scope: CreationShakeScope = ShakeFunctionScope()
 
     override fun phase3() {
-        TODO("Not yet implemented")
+        debug("phases", "Phase 3 of method $qualifiedSignature")
+        // TODO: Implement
     }
 
     override fun phase4() {
+        debug("phases", "Phase 4 of method $qualifiedSignature")
         if (body is CreationShakeCode.ShakeLateProcessCode) body.process(scope)
     }
 
@@ -65,7 +68,6 @@ class CreationShakeMethod(
         }
 
         override fun set(value: CreationShakeDeclaration) {
-            println("Setting ${value.name}")
             if (value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
             if (variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
             variables.add(value)
@@ -92,6 +94,9 @@ class CreationShakeMethod(
     }
 
     companion object {
+
+        val debug = ShakeProcessor.debug.child("creation", "method")
+
         fun from(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage?,
