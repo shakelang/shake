@@ -3,14 +3,34 @@ package com.shakelang.shake.util.logger
 class Logger(
     val path: String,
     val name: String = path,
-    val pipes: MutableList<LoggerPipe> = mutableListOf()
+    val pipes: MutableList<LoggerPipe> = mutableListOf(),
+    val bufferSize: Int = 8192,
 ) {
 
     // We'll mainly write to this list
     // For performance reasons we'll use a linked set
     // (better write performance than arraylists)
-    private val entries = linkedSetOf<LogEntry>()
+    private val entries = mutableListOf<LogEntry>()
+    private var firstEntry = 0
+
     val logs: List<LogEntry> get() = entries.toList()
+
+    fun pushBuffer(entry: LogEntry) {
+        if (entries.size >= bufferSize) {
+            entries[firstEntry++] = entry
+        }
+        else entries.add(entry)
+    }
+
+    fun pushBuffer(level: LogLevel, message: String) = pushBuffer(LogEntry(level, message))
+
+    fun getBuffer(): List<LogEntry> {
+        val buffer = arrayOfNulls<LogEntry>(bufferSize)
+        for (i in 0 until bufferSize) {
+            buffer[i] = entries[(firstEntry + i) % bufferSize]
+        }
+        return buffer.toList().filterNotNull()
+    }
 
     fun log(level: LogLevel, message: String) {
         this.entries.add(LogEntry(level, message))
