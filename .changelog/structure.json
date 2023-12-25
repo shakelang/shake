@@ -111,7 +111,7 @@
     {
       "path": ":util:logger",
       "name": "com.shakelang.shake.util:logger",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "description": "Logger utility for Kotlin Multiplatform.",
       "author": "com.shakelang.shake.util",
       "license": "",
@@ -119,6 +119,7 @@
         "unspecified:path-browserify:1.0.1",
         ":util:environment:environment:0.2.0",
         ":util:colorlib:colorlib:0.2.0",
+        "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0",
         "org.jetbrains.kotlinx:kotlinx-html-js:0.10.1"
       ]
     },
@@ -324,6 +325,7 @@
         ":util:shason:shason:0.3.2",
         ":util:common-io:common-io:0.3.1",
         ":util:primitives:primitives:0.4.0",
+        ":util:logger:logger:0.2.0",
         ":shake:compiler:lexer:lexer:0.1.3-SNAPSHOT",
         ":shake:compiler:parser:parser:0.1.4-SNAPSHOT"
       ]
@@ -401,5 +403,5 @@
       ]
     }
   ],
-  "lastUpdate": 1703463915802
+  "lastUpdate": 1703539266989
 }
