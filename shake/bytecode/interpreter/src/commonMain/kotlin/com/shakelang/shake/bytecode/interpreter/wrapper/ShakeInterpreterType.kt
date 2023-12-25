@@ -33,7 +33,6 @@ interface ShakeInterpreterType {
         override val byteSize: Int = 8
     }
 
-
     companion object {
         val BYTE = object : ShakeInterpreterType {
             override val name: String = "B"

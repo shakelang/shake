@@ -26,7 +26,8 @@ class ClassTests : FreeSpec({
         val processor = createBaseProcessor()
 
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
                 package test;
                 
                 class Test {}
@@ -39,7 +40,6 @@ class ClassTests : FreeSpec({
         val testClass = project.getClass("test.Test")!!
 
         testClass.superClass.qualifiedName shouldBe "shake/lang/Object"
-
     }
 
     "custom supertype".config(false) {
@@ -47,7 +47,8 @@ class ClassTests : FreeSpec({
         val processor = createBaseProcessor()
 
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
                 package test;
                 
                 class TestSuper {}
@@ -61,7 +62,5 @@ class ClassTests : FreeSpec({
         val testClass = project.getClass("test.Test")!!
 
         testClass.superClass.qualifiedName shouldBe "test/TestSuper"
-
     }
-
 })

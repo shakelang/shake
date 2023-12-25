@@ -407,7 +407,6 @@ object Opcodes {
      */
     const val DMUL: Byte = 0x29
 
-
     // Divide instructions
 
     /**

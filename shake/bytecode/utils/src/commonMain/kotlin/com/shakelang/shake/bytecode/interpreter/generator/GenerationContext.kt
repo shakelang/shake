@@ -68,7 +68,6 @@ class GenerationContext {
         return constantPool.resolveClass(value)
     }
 
-
     fun toStorageFormat(): StorageFormat {
         return StorageFormat(
             0x00,
@@ -97,7 +96,6 @@ class GenerationContext {
         const val UNDEFINED = ":undefined:"
     }
 }
-
 
 fun generatePackage(generator: GenerationContext.() -> Unit): StorageFormat {
     val ctx = GenerationContext()

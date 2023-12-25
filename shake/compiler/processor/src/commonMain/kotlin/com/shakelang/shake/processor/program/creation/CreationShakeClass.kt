@@ -64,14 +64,13 @@ private constructor(
     override fun phase1() {
         debug("phases", "Phase 1 of class ${clz.name}")
         clz.classes.forEach {
-                if(it.isStatic) {
-                    val clz = from(prj, pkg, this.staticScope, it)
-                    this.classes.add(clz)
-                }
-                else {
-                    val clz = from(prj, pkg, this.instanceScope, it)
-                    this.classes.add(clz)
-                }
+            if (it.isStatic) {
+                val clz = from(prj, pkg, this.staticScope, it)
+                this.classes.add(clz)
+            } else {
+                val clz = from(prj, pkg, this.instanceScope, it)
+                this.classes.add(clz)
+            }
         }
     }
 
@@ -214,7 +213,6 @@ private constructor(
     }
 
     companion object {
-
 
         val debug = ShakeProcessor.debug.child("creation", "class")
 

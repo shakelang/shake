@@ -21,9 +21,9 @@ object ShakeSelect {
         parameters: List<T>
     ): I? = functions.filter {
         it.parameters.size == parameters.size && // TODO default parameters
-                it.parameters.zip(parameters).all { (parameter, argument) ->
-                    parameter.type.compatibleTo(argument)
-                }
+            it.parameters.zip(parameters).all { (parameter, argument) ->
+                parameter.type.compatibleTo(argument)
+            }
     }.minByOrNull {
         it.parameters.zip(parameters).sumOf { (parameter, argument) ->
             parameter.type.compatibilityDistance(argument)
@@ -42,9 +42,9 @@ object ShakeSelect {
         parameters: List<T>
     ): C? = constructors.filter {
         it.parameters.size == parameters.size && // TODO default parameters
-                it.parameters.zip(parameters).all { (parameter, argument) ->
-                    parameter.type.compatibleTo(argument)
-                }
+            it.parameters.zip(parameters).all { (parameter, argument) ->
+                parameter.type.compatibleTo(argument)
+            }
     }.minByOrNull {
         it.parameters.zip(parameters).sumOf { (parameter, argument) ->
             parameter.type.compatibilityDistance(argument)

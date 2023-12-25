@@ -35,8 +35,11 @@ interface ShakeClasspath {
 
                 override fun load(storage: StorageFormat) {
                     val pkg = getPackage(PathDescriptor.parse(storage.packageName))
-                    if (pkg != null) pkg.load(storage)
-                    else packages.add(ShakeInterpreterPackage.of(listOf(storage), this))
+                    if (pkg != null) {
+                        pkg.load(storage)
+                    } else {
+                        packages.add(ShakeInterpreterPackage.of(listOf(storage), this))
+                    }
                 }
             }
         }

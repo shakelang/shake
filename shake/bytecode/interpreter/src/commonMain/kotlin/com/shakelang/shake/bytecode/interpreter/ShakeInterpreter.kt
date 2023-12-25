@@ -53,7 +53,6 @@ class ShakeInterpreter(
         method: ShakeInterpreterMethod,
         args: ByteArray = kotlin.byteArrayOf()
     ): ShakeCodeInterpreter {
-
         val interpreter = createCodeInterpreter(method.code, method)
         // Put the arguments on the stack
         interpreter.stack.push(args)

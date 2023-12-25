@@ -15,7 +15,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
 
             maxLocals = 10
             maxStack = 11
-
         }
 
         val pool = MutableConstantPool()
@@ -26,7 +25,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
         attribute.code.isEmpty() shouldBe true
         attribute.exceptionTable.isEmpty() shouldBe true
         attribute.attributes.isEmpty() shouldBe true
-
     }
 
     "code attribute generation with bytecode (toAttribute)" {
@@ -41,7 +39,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
                 bpush(11)
                 badd()
             }
-
         }
 
         val pool = MutableConstantPool()
@@ -71,7 +68,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
                 catchType = 10
                 handlerPc = 3
             }
-
         }
 
         val pool = MutableConstantPool()
@@ -86,7 +82,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
         entry.endPc shouldBe 4
         entry.catchType shouldBe 10
         entry.handlerPc shouldBe 3
-
     }
 
     "code attribute generation with attributes (toAttribute)" {
@@ -100,7 +95,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
                 name = "test"
                 data = byteArrayOf(1, 2, 3, 4, 5)
             }
-
         }
 
         val pool = MutableConstantPool()
@@ -113,7 +107,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
         val entry = attribute.attributes[0]
         entry.name shouldBe "test"
         entry.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "code attribute generation with everything (toAttribute)" {
@@ -140,7 +133,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
                 name = "test"
                 data = byteArrayOf(1, 2, 3, 4, 5)
             }
-
         }
 
         val pool = MutableConstantPool()
@@ -166,7 +158,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
         val entry2 = attribute.attributes[0]
         entry2.name shouldBe "test"
         entry2.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "code attribute generation with everything (toMutableAttribute)" {
@@ -193,7 +184,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
                 name = "test"
                 data = byteArrayOf(1, 2, 3, 4, 5)
             }
-
         }
 
         val pool = MutableConstantPool()
@@ -219,7 +209,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
         val entry2 = attribute.attributes[0]
         entry2.name shouldBe "test"
         entry2.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "code attribute generation with everything (toAttribute) (with pool)" {
@@ -246,7 +235,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
                 name = "test"
                 data = byteArrayOf(1, 2, 3, 4, 5)
             }
-
         }
 
         val pool = MutableConstantPool()
@@ -272,7 +260,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
         val entry2 = attribute.attributes[0]
         entry2.name shouldBe "test"
         entry2.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "code attribute generation with everything (toMutableAttribute) (with pool)" {
@@ -299,7 +286,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
                 name = "test"
                 data = byteArrayOf(1, 2, 3, 4, 5)
             }
-
         }
 
         val pool = MutableConstantPool()
@@ -325,7 +311,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
         val entry2 = attribute.attributes[0]
         entry2.name shouldBe "test"
         entry2.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "code attribute generation with everything (toAttribute) (with pool and generation context)" {
@@ -352,7 +337,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
                 name = "test"
                 data = byteArrayOf(1, 2, 3, 4, 5)
             }
-
         }
 
         val pool = MutableConstantPool()
@@ -378,7 +362,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
         val entry2 = attribute.attributes[0]
         entry2.name shouldBe "test"
         entry2.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
 
     "code attribute generation with everything (toMutableAttribute) (with pool and generation context)" {
@@ -405,7 +388,6 @@ class CodeAttributeGenerationContextTests : FreeSpec({
                 name = "test"
                 data = byteArrayOf(1, 2, 3, 4, 5)
             }
-
         }
 
         val pool = MutableConstantPool()
@@ -431,7 +413,5 @@ class CodeAttributeGenerationContextTests : FreeSpec({
         val entry2 = attribute.attributes[0]
         entry2.name shouldBe "test"
         entry2.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-
     }
-
 })

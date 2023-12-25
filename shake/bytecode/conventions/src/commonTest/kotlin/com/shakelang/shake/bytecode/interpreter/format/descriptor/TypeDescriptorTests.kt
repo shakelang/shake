@@ -138,20 +138,20 @@ class TypeDescriptorTests : FreeSpec({
 
     "ObjectType#equals should return false for different object with same name" {
         (
-                TypeDescriptor.ObjectType("test") == TypeDescriptor.ObjectType(
-                    "test",
-                    listOf(TypeDescriptor.ByteType.INSTANCE)
-                )
-                ) shouldBe false
+            TypeDescriptor.ObjectType("test") == TypeDescriptor.ObjectType(
+                "test",
+                listOf(TypeDescriptor.ByteType.INSTANCE)
+            )
+            ) shouldBe false
     }
 
     "ObjectType#equals should return true for different object with same name and same generic types" {
         (
-                TypeDescriptor.ObjectType(
-                    "test",
-                    listOf(TypeDescriptor.ByteType.INSTANCE)
-                ) == TypeDescriptor.ObjectType("test", listOf(TypeDescriptor.ByteType.INSTANCE))
-                ) shouldBe true
+            TypeDescriptor.ObjectType(
+                "test",
+                listOf(TypeDescriptor.ByteType.INSTANCE)
+            ) == TypeDescriptor.ObjectType("test", listOf(TypeDescriptor.ByteType.INSTANCE))
+            ) shouldBe true
     }
 
     "ArrayType#descriptor should return \"[\" + type.descriptor" {

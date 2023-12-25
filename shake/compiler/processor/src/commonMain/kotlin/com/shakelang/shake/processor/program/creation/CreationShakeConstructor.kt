@@ -1,7 +1,6 @@
 package com.shakelang.shake.processor.program.creation
 
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
-import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
@@ -25,11 +24,11 @@ open class CreationShakeConstructor(
     override val scope: CreationShakeScope = ShakeConstructorScope()
 
     val qualifiedName: String
-        get() = "${clazz.qualifierPrefix}+${name?:"default"}"
+        get() = "${clazz.qualifierPrefix}+${name ?: "default"}"
 
     val parameterTypes: List<ShakeType> get() = parameters.map { it.type }
     val signature: String
-        get() = "${name?:"default"}(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
+        get() = "${name ?: "default"}(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
     val qualifiedSignature: String
         get() = "$qualifiedName(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
 

@@ -26,6 +26,7 @@ object PCast {
     const val BYTE_TO_DOUBLE: UByte = 0x09u
 
     const val SHORT_TO_BYTE: UByte = 0x10u
+
     /** @deprecated (No use in casting from short to short)  */
     const val SHORT_TO_SHORT: UByte = 0x11u
     const val SHORT_TO_INT: UByte = 0x12u
@@ -39,6 +40,7 @@ object PCast {
 
     const val INT_TO_BYTE: UByte = 0x20u
     const val INT_TO_SHORT: UByte = 0x21u
+
     /** @deprecated (No use in casting from int to int)  */
     const val INT_TO_INT: UByte = 0x22u
     const val INT_TO_LONG: UByte = 0x23u
@@ -52,6 +54,7 @@ object PCast {
     const val LONG_TO_BYTE: UByte = 0x30u
     const val LONG_TO_SHORT: UByte = 0x31u
     const val LONG_TO_INT: UByte = 0x32u
+
     /** @deprecated (No use in casting from long to long)  */
     const val LONG_TO_LONG: UByte = 0x33u
     const val LONG_TO_UBYTE: UByte = 0x34u
@@ -65,6 +68,7 @@ object PCast {
     const val UBYTE_TO_SHORT: UByte = 0x41u
     const val UBYTE_TO_INT: UByte = 0x42u
     const val UBYTE_TO_LONG: UByte = 0x43u
+
     /** @deprecated (No use in casting from unsigned byte to unsigned byte)  */
     const val UBYTE_TO_UBYTE: UByte = 0x44u
     const val UBYTE_TO_USHORT: UByte = 0x45u
@@ -78,6 +82,7 @@ object PCast {
     const val USHORT_TO_INT: UByte = 0x52u
     const val USHORT_TO_LONG: UByte = 0x53u
     const val USHORT_TO_UBYTE: UByte = 0x54u
+
     /** @deprecated (No use in casting from unsigned short to unsigned short)  */
     const val USHORT_TO_USHORT: UByte = 0x55u
     const val USHORT_TO_UINT: UByte = 0x56u
@@ -91,6 +96,7 @@ object PCast {
     const val UINT_TO_LONG: UByte = 0x63u
     const val UINT_TO_UBYTE: UByte = 0x64u
     const val UINT_TO_USHORT: UByte = 0x65u
+
     /** @deprecated (No use in casting from unsigned int to unsigned int)  */
     const val UINT_TO_UINT: UByte = 0x66u
     const val UINT_TO_ULONG: UByte = 0x67u
@@ -104,6 +110,7 @@ object PCast {
     const val ULONG_TO_UBYTE: UByte = 0x74u
     const val ULONG_TO_USHORT: UByte = 0x75u
     const val ULONG_TO_UINT: UByte = 0x76u
+
     /** @deprecated (No use in casting from unsigned long to unsigned long)  */
     const val ULONG_TO_ULONG: UByte = 0x77u
     const val ULONG_TO_FLOAT: UByte = 0x78u
@@ -117,6 +124,7 @@ object PCast {
     const val FLOAT_TO_USHORT: UByte = 0x85u
     const val FLOAT_TO_UINT: UByte = 0x86u
     const val FLOAT_TO_ULONG: UByte = 0x87u
+
     /** @deprecated (No use in casting from float to float)  */
     const val FLOAT_TO_FLOAT: UByte = 0x88u
     const val FLOAT_TO_DOUBLE: UByte = 0x89u
@@ -130,10 +138,7 @@ object PCast {
     const val DOUBLE_TO_UINT: UByte = 0x96u
     const val DOUBLE_TO_ULONG: UByte = 0x97u
     const val DOUBLE_TO_FLOAT: UByte = 0x98u
+
     /** @deprecated (No use in casting from double to double)  */
     const val DOUBLE_TO_DOUBLE: UByte = 0x99u
-
-
-
-
 }

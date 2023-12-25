@@ -19,7 +19,6 @@ interface ShakeInterpreterMethod {
     val pkg: ShakeInterpreterPackage
     val constantPool: ConstantPool
 
-
     companion object {
         fun of(
             storage: Method,
@@ -28,7 +27,6 @@ interface ShakeInterpreterMethod {
             constantPool: ConstantPool,
             pkg: ShakeInterpreterPackage
         ): ShakeInterpreterMethod {
-
             val attributes = storage.attributes
             val code = attributes.find { it.name == "Code" }
                 ?.let { it as CodeAttribute }
@@ -60,7 +58,6 @@ interface ShakeInterpreterMethod {
                     get() = code?.maxStack ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
                 override val maxLocals: Int
                     get() = code?.maxLocals ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
-
             }
         }
     }

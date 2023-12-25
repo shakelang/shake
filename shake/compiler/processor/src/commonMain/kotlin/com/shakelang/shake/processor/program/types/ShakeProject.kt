@@ -41,7 +41,6 @@ interface ShakeProject {
 
     fun getField(name: String): ShakeField? = getField(name.split("."))
 
-
     fun toJson(): Map<String, Any?> {
         return mapOf(
             "subpackages" to subpackages.map { it.toJson() }

@@ -109,7 +109,6 @@ interface ShakeClass {
     fun getField(descriptor: Array<String>) = getField(descriptor.toList())
     fun getField(descriptor: String) = fields.find { it.name == descriptor }
 
-
     fun phase1()
     fun phase2()
     fun phase3()

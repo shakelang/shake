@@ -47,7 +47,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun lload(variable: UShort) = addBytes(listOf(Opcodes.LLOAD, *variable.toBytes().toTypedArray()))
 
     fun load(type: String, variable: UShort) {
-        when(type) {
+        when (type) {
             "B" -> bload(variable)
             "S" -> sload(variable)
             "I" -> iload(variable)
@@ -67,7 +67,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun lstore(variable: UShort) = addBytes(listOf(Opcodes.LSTORE, *variable.toBytes().toTypedArray()))
 
     fun store(type: String, variable: UShort) {
-        when(type) {
+        when (type) {
             "B" -> bstore(variable)
             "S" -> sstore(variable)
             "I" -> istore(variable)
@@ -89,7 +89,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun dadd() = addByte(Opcodes.DADD)
 
     fun add(type: String) {
-        when(type) {
+        when (type) {
             "B" -> badd()
             "S" -> sadd()
             "I" -> iadd()
@@ -115,7 +115,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun dsub() = addByte(Opcodes.DSUB)
 
     fun sub(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bsub()
             "S" -> ssub()
             "I" -> isub()
@@ -141,7 +141,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun dmul() = addByte(Opcodes.DMUL)
 
     fun mul(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bmul()
             "S" -> smul()
             "I" -> imul()
@@ -167,7 +167,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun ddiv() = addByte(Opcodes.DDIV)
 
     fun div(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bdiv()
             "S" -> sdiv()
             "I" -> idiv()
@@ -193,7 +193,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun dmod() = addByte(Opcodes.DMOD)
 
     fun mod(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bmod()
             "S" -> smod()
             "I" -> imod()
@@ -215,7 +215,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun dneg() = addByte(Opcodes.DNEG)
 
     fun neg(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bneg()
             "S" -> sneg()
             "I" -> ineg()
@@ -231,7 +231,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun land() = addByte(Opcodes.LAND)
 
     fun band(type: String) {
-        when(type) {
+        when (type) {
             "B" -> band()
             "S" -> sand()
             "I" -> iand()
@@ -245,7 +245,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun lor() = addByte(Opcodes.LOR)
 
     fun bor(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bor()
             "S" -> sor()
             "I" -> ior()
@@ -259,7 +259,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun lxor() = addByte(Opcodes.LXOR)
 
     fun bxor(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bxor()
             "S" -> sxor()
             "I" -> ixor()
@@ -273,7 +273,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun lnot() = addByte(Opcodes.LNOT)
 
     fun bnot(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bnot()
             "S" -> snot()
             "I" -> inot()
@@ -287,7 +287,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun lshl() = addByte(Opcodes.LSHL)
 
     fun bshl(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bshl()
             "S" -> sshl()
             "I" -> ishl()
@@ -301,7 +301,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun lshr() = addByte(Opcodes.LSHR)
 
     fun bshr(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bshr()
             "S" -> sshr()
             "I" -> ishr()
@@ -315,7 +315,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun lshru() = addByte(Opcodes.LSHRU)
 
     fun bshru(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bshru()
             "S" -> sshru()
             "I" -> ishru()
@@ -331,7 +331,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun dinc() = addByte(Opcodes.DINC)
 
     fun inc(type: String) {
-        when(type) {
+        when (type) {
             "B" -> binc()
             "S" -> sinc()
             "I" -> iinc()
@@ -346,7 +346,7 @@ open class ShakeBytecodeInstructionGenerator(
     }
 
     fun binc(type: String) {
-        when(type) {
+        when (type) {
             "B" -> binc()
             "S" -> sinc()
             "I" -> iinc()
@@ -364,7 +364,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun ddec() = addByte(Opcodes.DDEC)
 
     fun dec(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bdec()
             "S" -> sdec()
             "I" -> idec()
@@ -386,7 +386,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun ulcmp() = addByte(Opcodes.ULCMP)
 
     fun cmp(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bcmp()
             "S" -> scmp()
             "I" -> icmp()
@@ -468,7 +468,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun iret() = addByte(Opcodes.IRET)
     fun lret() = addByte(Opcodes.LRET)
     fun ret(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bret()
             "S" -> sret()
             "I" -> iret()
@@ -489,7 +489,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun lpop() = addByte(Opcodes.LPOP)
 
     fun pop(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bpop()
             "S" -> spop()
             "I" -> ipop()
@@ -509,7 +509,7 @@ open class ShakeBytecodeInstructionGenerator(
     fun idup() = addByte(Opcodes.IDUP)
     fun ldup() = addByte(Opcodes.LDUP)
     fun dup(type: String) {
-        when(type) {
+        when (type) {
             "B" -> bdup()
             "S" -> sdup()
             "I" -> idup()
