@@ -442,6 +442,21 @@ open class ShakeBytecodeInstructionGenerator(
     fun ipop() = addByte(Opcodes.IPOP)
     fun lpop() = addByte(Opcodes.LPOP)
 
+    fun pop(type: String) {
+        when(type) {
+            "B" -> bpop()
+            "S" -> spop()
+            "I" -> ipop()
+            "J" -> lpop()
+            "F" -> ipop()
+            "D" -> lpop()
+            "b" -> bpop()
+            "s" -> spop()
+            "i" -> ipop()
+            "j" -> lpop()
+        }
+    }
+
     fun dup() = addByte(Opcodes.DUP)
     fun bdup() = addByte(Opcodes.DUP)
     fun sdup() = addByte(Opcodes.SDUP)

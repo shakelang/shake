@@ -202,7 +202,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val aw = left.type.additionOperator(right.type, scope)
         return if (aw.overload != null)
-            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
          else
              throw Exception("No addition operator for ${left.type} and ${right.type}")
     }
@@ -212,7 +212,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val aw = left.type.subtractionOperator(right.type, scope)
         return if (aw.overload != null)
-            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         else
             throw Exception("No subtraction operator for ${left.type} and ${right.type}")
     }
@@ -222,7 +222,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val aw = left.type.multiplicationOperator(right.type, scope)
         return if (aw.overload != null)
-            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         else
             throw Exception("No multiplication operator for ${left.type} and ${right.type}")
     }
@@ -232,7 +232,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val aw = left.type.divisionOperator(right.type, scope)
         return if (aw.overload != null)
-            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         else
             throw Exception("No division operator for ${left.type} and ${right.type}")
     }
@@ -242,7 +242,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val aw = left.type.modulusOperator(right.type, scope)
         return if (aw.overload != null)
-            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         else
             throw Exception("No modulus operator for ${left.type} and ${right.type}")
     }
@@ -252,7 +252,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val aw = left.type.powerOperator(right.type, scope)
         return if (aw.overload != null)
-            CreationShakeInvocation(scope.project, aw.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, aw.overload, listOf(right), left)
         else
             throw Exception("No power operator for ${left.type} and ${right.type}")
     }
@@ -385,7 +385,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val eq = left.type.equalsOperator(right.type, scope)
         return if (eq.overload != null)
-            CreationShakeInvocation(scope.project, eq.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         else
             throw Exception("No equals operator for ${left.type} and ${right.type}")
     }
@@ -398,7 +398,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val eq = left.type.greaterThanOrEqualOperator(right.type, scope)
         return if (eq.overload != null)
-            CreationShakeInvocation(scope.project, eq.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         else
             throw Exception("No greater equals operator for ${left.type} and ${right.type}")
     }
@@ -411,7 +411,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val eq = left.type.lessThanOrEqualOperator(right.type, scope)
         return if (eq.overload != null)
-            CreationShakeInvocation(scope.project, eq.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         else
             throw Exception("No less equals operator for ${left.type} and ${right.type}")
     }
@@ -421,7 +421,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val eq = left.type.greaterThanOperator(right.type, scope)
         return if (eq.overload != null)
-            CreationShakeInvocation(scope.project, eq.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         else
             throw Exception("No greater operator for ${left.type} and ${right.type}")
     }
@@ -431,7 +431,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val eq = left.type.lessThanOperator(right.type, scope)
         return if (eq.overload != null)
-            CreationShakeInvocation(scope.project, eq.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, eq.overload, listOf(right), left)
         else
             throw Exception("No less operator for ${left.type} and ${right.type}")
     }
@@ -441,7 +441,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val operator = left.type.andOperator(right.type, scope)
         return if (operator.overload != null)
-            CreationShakeInvocation(scope.project, operator.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, operator.overload, listOf(right), left)
         else
             throw Exception("No and operator for ${left.type} and ${right.type}")
     }
@@ -451,7 +451,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val operator = left.type.orOperator(right.type, scope)
         return if (operator.overload != null)
-            CreationShakeInvocation(scope.project, operator.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, operator.overload, listOf(right), left)
         else
             throw Exception("No or operator for ${left.type} and ${right.type}")
     }
@@ -461,7 +461,7 @@ open class ShakeASTProcessor {
         val right = visitValue(scope, n.right)
         val operator = left.type.xorOperator(right.type, scope)
         return if (operator.overload != null)
-            CreationShakeInvocation(scope.project, operator.overload, listOf(right), left)
+            CreationShakeInvocation.create(scope.project, operator.overload, listOf(right), left)
         else
             throw Exception("No xor operator for ${left.type} and ${right.type}")
     }
@@ -538,7 +538,7 @@ open class ShakeASTProcessor {
                     ?: throw Exception("No function named $name in ${parent.type}")
                 val function = ShakeSelect.selectFunction(functions, types)
                     ?: throw Exception("No function named $name with arguments $types in ${parent.type}")
-                return CreationShakeInvocation(scope.project, function, args, parent)
+                return CreationShakeInvocation.create(scope.project, function, args, parent)
             }
 
             val name = identifierNode.name
@@ -548,7 +548,7 @@ open class ShakeASTProcessor {
             if (functions.isEmpty()) throw Exception("No function named $name")
             val function = ShakeSelect.selectFunction(functions, types)
                 ?: throw Exception("No function named $name with arguments $types")
-            return CreationShakeInvocation(scope.project, function, args, null)
+            return CreationShakeInvocation.create(scope.project, function, args, null)
         }
         TODO("Direct returned lambda functions")
     }

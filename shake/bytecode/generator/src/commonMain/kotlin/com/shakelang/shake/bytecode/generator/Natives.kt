@@ -84,7 +84,7 @@ object Natives {
                         pcast(type1.second, type0.second)
                 }
 
-                registerNoArgs("shake/lang/plus(${type0.first},${type1.first})$biggerType}") {
+                registerNoArgs("shake/lang/plus(${type0.first},${type1.first})$biggerType") {
                     this.castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
@@ -93,7 +93,7 @@ object Natives {
                     add(biggerType)
                 }
 
-                registerNoArgs("shake/lang/minus(${type0.first},${type1.first})$biggerType}") {
+                registerNoArgs("shake/lang/minus(${type0.first},${type1.first})$biggerType") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack

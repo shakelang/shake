@@ -30,12 +30,9 @@ class ShakeBytecodeGenerator {
                 TODO("string push is not implemented in the interpreter")
             }
 
-            is ShakeBooleanLiteral -> {
-                ctx.bytecodeInstructionGenerator.bpush(v.value)
-            }
-            is ShakeInvocation -> {
-                visitInvocation(ctx, v, true)
-            }
+            is ShakeBooleanLiteral -> ctx.bytecodeInstructionGenerator.bpush(v.value)
+            is ShakeInvocation -> visitInvocation(ctx, v, true)
+            is ShakeVariableUsage -> visitUsage(ctx, v)
 //            is ShakeAssignment -> visitAssignment(v)
 //            is ShakeAddAssignment -> visitAdditionAssignment(v)
 //            is ShakeSubAssignment -> visitSubtractionAssignment(v)
@@ -55,6 +52,12 @@ class ShakeBytecodeGenerator {
         }
     }
 
+    private fun visitUsage(ctx: ShakeBytecodeGenerator.BytecodeGenerationContext, v: ShakeVariableUsage) {
+        val local = ctx.localTable.getLocal(v.declaration.uniqueName)
+        val type = generateTypeDescriptor(v.type)
+        ctx.bytecodeInstructionGenerator.load(type, local)
+    }
+
     private fun visitInvocation(
         ctx: BytecodeGenerationContext,
         v: ShakeInvocation,
@@ -69,6 +72,10 @@ class ShakeBytecodeGenerator {
                 }
             }
             else -> TODO()
+        }
+
+        if(!keepResultOnStack) {
+            ctx.bytecodeInstructionGenerator.pop(generateTypeDescriptor(v.type))
         }
     }
 
@@ -87,6 +94,7 @@ class ShakeBytecodeGenerator {
     ) {
         return when (s) {
             is ShakeVariableDeclaration -> visitVariableDeclaration(ctx, s)
+            is ShakeInvocation -> visitInvocation(ctx, s, false)
 //            is ShakeAssignment -> visitAssignment(s)
 //            is ShakeAddAssignment -> visitAdditionAssignment(s)
 //            is ShakeSubAssignment -> visitSubtractionAssignment(s)
@@ -105,7 +113,6 @@ class ShakeBytecodeGenerator {
 //            is ShakeFor -> visitFor(s)
 //            is ShakeIf -> visitIf(s)
 //            is ShakeReturn -> visitReturn(s)
-//            is ShakeVariableDeclaration -> visitVariableDeclaration(s)
             else -> throw IllegalArgumentException("Unsupported value type: ${s::class.simpleName}")
         }
     }
