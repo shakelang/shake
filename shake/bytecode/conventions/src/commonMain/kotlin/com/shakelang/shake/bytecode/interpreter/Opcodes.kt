@@ -1244,6 +1244,60 @@ object Opcodes {
      */
     const val ULCMP: Byte = 0x79
 
+    /**
+     * Compare result is less than
+     *
+     * Value: `0x7A`
+     *
+     * @example Syntax: `CLT`
+     */
+    const val CLT: Byte = 0x7A
+
+    /**
+     * Compare result is less than or equal
+     *
+     * Value: `0x7B`
+     *
+     * @example Syntax: `CLE`
+     */
+    const val CLE: Byte = 0x7B
+
+    /**
+     * Compare result is equal
+     *
+     * Value: `0x7C`
+     *
+     * @example Syntax: `CEQ`
+     */
+    const val CEQ: Byte = 0x7C
+
+    /**
+     * Compare result is not equal
+     *
+     * Value: `0x7D`
+     *
+     * @example Syntax: `CNE`
+     */
+    const val CNE: Byte = 0x7D
+
+    /**
+     * Compare result is greater than or equal
+     *
+     * Value: `0x7E`
+     *
+     * @example Syntax: `CGE`
+     */
+    const val CGE: Byte = 0x7E
+
+    /**
+     * Compare result is greater than
+     *
+     * Value: `0x7F`
+     *
+     * @example Syntax: `CGT`
+     */
+    const val CGT: Byte = 0x7F
+
     // Jump instructions
 
     /**
