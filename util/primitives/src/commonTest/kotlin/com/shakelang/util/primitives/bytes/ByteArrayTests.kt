@@ -119,18 +119,24 @@ class ByteArrayTests : FreeSpec({
         assertCompare(Float.MIN_VALUE, byteArrayOf(0x00u, 0x00u, 0x00u, 0x01u).toFloat())
         assertCompare(Float.MAX_VALUE, byteArrayOf(0x7Fu, 0x7Fu, 0xFFu, 0xFFu).toFloat())
         assertCompare(Float.NaN, byteArrayOf(0x7Fu, 0xC0u, 0x00u, 0x00u).toFloat())
-        assertCompare(Float.NEGATIVE_INFINITY, byteArrayOf(
-            0xFFu,
-            0x80u,
-            0x00u,
-            0x00u
-        ).toFloat())
-        assertCompare(Float.POSITIVE_INFINITY, byteArrayOf(
-            0x7Fu,
-            0x80u,
-            0x00u,
-            0x00u
-        ).toFloat())
+        assertCompare(
+            Float.NEGATIVE_INFINITY,
+            byteArrayOf(
+                0xFFu,
+                0x80u,
+                0x00u,
+                0x00u
+            ).toFloat()
+        )
+        assertCompare(
+            Float.POSITIVE_INFINITY,
+            byteArrayOf(
+                0x7Fu,
+                0x80u,
+                0x00u,
+                0x00u
+            ).toFloat()
+        )
         shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toFloat()
         }
@@ -140,66 +146,84 @@ class ByteArrayTests : FreeSpec({
     }
 
     "toDouble" {
-        assertCompare(0.0, byteArrayOf(
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u
-        ).toDouble())
-        assertCompare(1.0, byteArrayOf(
-            0x3Fu,
-            0xF0u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u
-        ).toDouble())
-        assertCompare(-1.0, byteArrayOf(
-            0xBFu,
-            0xF0u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u
-        ).toDouble())
-        assertCompare(Double.MIN_VALUE, byteArrayOf(
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x00u,
-            0x01u
-        ).toDouble())
-        assertCompare(Double.MAX_VALUE, byteArrayOf(
-            0x7Fu,
-            0xEFu,
-            0xFFu,
-            0xFFu,
-            0xFFu,
-            0xFFu,
-            0xFFu,
-            0xFFu
-        ).toDouble())
-        assertCompare(Double.NaN, byteArrayOf(
-            0xFFu,
-            0xFFu,
-            0xFFu,
-            0xFFu,
-            0xFFu,
-            0xFFu,
-            0xFFu,
-            0xFFu
-        ).toDouble())
+        assertCompare(
+            0.0,
+            byteArrayOf(
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u
+            ).toDouble()
+        )
+        assertCompare(
+            1.0,
+            byteArrayOf(
+                0x3Fu,
+                0xF0u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u
+            ).toDouble()
+        )
+        assertCompare(
+            -1.0,
+            byteArrayOf(
+                0xBFu,
+                0xF0u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u
+            ).toDouble()
+        )
+        assertCompare(
+            Double.MIN_VALUE,
+            byteArrayOf(
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x00u,
+                0x01u
+            ).toDouble()
+        )
+        assertCompare(
+            Double.MAX_VALUE,
+            byteArrayOf(
+                0x7Fu,
+                0xEFu,
+                0xFFu,
+                0xFFu,
+                0xFFu,
+                0xFFu,
+                0xFFu,
+                0xFFu
+            ).toDouble()
+        )
+        assertCompare(
+            Double.NaN,
+            byteArrayOf(
+                0xFFu,
+                0xFFu,
+                0xFFu,
+                0xFFu,
+                0xFFu,
+                0xFFu,
+                0xFFu,
+                0xFFu
+            ).toDouble()
+        )
         assertCompare(
             Double.NEGATIVE_INFINITY,
             byteArrayOf(0xffu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
@@ -314,12 +338,14 @@ class ByteArrayTests : FreeSpec({
 
     "setBytes" {
         var bytes = ByteArray(8)
-        bytes.setBytes(0,
+        bytes.setBytes(
+            0,
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u)
         )
         (0..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
-        bytes.setBytes(2,
+        bytes.setBytes(
+            2,
             byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu)
         )
         bytes[0] shouldBe 0x00u.toByte()
@@ -332,7 +358,8 @@ class ByteArrayTests : FreeSpec({
     "setBytes errors" {
         val bytes = ByteArray(8)
         shouldThrow<IllegalArgumentException> {
-            bytes.setBytes(-1,
+            bytes.setBytes(
+                -1,
                 byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu)
             )
         }
