@@ -1,4 +1,4 @@
-package com.shakelang.shake.util.logger
+package com.shakelang.util.logger
 
 import com.shakelang.util.colorlib.functional.blue
 import com.shakelang.util.colorlib.functional.cyan

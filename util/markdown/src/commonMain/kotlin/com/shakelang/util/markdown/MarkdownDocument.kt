@@ -1,4 +1,4 @@
-package com.shakelang.shake.util.markdown
+package com.shakelang.util.markdown
 
 interface MarkdownDocument {
     val elements: List<MarkdownElement>

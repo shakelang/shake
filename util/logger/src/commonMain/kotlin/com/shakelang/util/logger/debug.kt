@@ -1,4 +1,4 @@
-package com.shakelang.shake.util.logger
+package com.shakelang.util.logger
 
 object GlobalDebugConfiguration {
     /**
@@ -58,7 +58,7 @@ private class DebugSubImpl(
 
 fun debug(
     name: String? = null,
-    logger: Logger = com.shakelang.shake.util.logger.logger
+    logger: Logger = com.shakelang.util.logger.logger
 ): Debug {
     return DebugImpl(mutableListOf(DebuggerDumpConfiguration(logger)), name)
 }

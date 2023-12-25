@@ -1,4 +1,4 @@
-package com.shakelang.shake.util.logger
+package com.shakelang.util.logger
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone

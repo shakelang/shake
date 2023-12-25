@@ -1,6 +1,6 @@
 package com.shakelang.util.changelog
 
-import com.shakelang.shake.util.markdown.MutableMarkdownDocument
+import com.shakelang.util.markdown.MutableMarkdownDocument
 import com.shakelang.shake.util.shason.elements.JsonObject
 import com.shakelang.shake.util.shason.json
 

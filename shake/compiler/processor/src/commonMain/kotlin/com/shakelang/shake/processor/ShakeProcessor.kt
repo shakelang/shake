@@ -18,7 +18,7 @@ import com.shakelang.shake.processor.program.creation.CreationShakeType
 import com.shakelang.shake.processor.program.creation.code.*
 import com.shakelang.shake.processor.program.creation.code.statements.*
 import com.shakelang.shake.processor.program.creation.code.values.*
-import com.shakelang.shake.util.logger.debug
+import com.shakelang.util.logger.debug
 import com.shakelang.shake.util.parseutils.File
 import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
