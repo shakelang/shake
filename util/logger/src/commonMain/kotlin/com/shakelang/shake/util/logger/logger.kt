@@ -1,27 +1,5 @@
 package com.shakelang.shake.util.logger
 
-import com.shakelang.shake.util.colorlib.functional.blue
-import com.shakelang.shake.util.colorlib.functional.cyan
-import com.shakelang.shake.util.colorlib.functional.red
-import com.shakelang.shake.util.colorlib.functional.yellow
-
-object CommonColoredConsoleLogger : LoggerPipe() {
-    override fun log(level: LogLevel, message: String) {
-        when (level) {
-            LogLevel.DEBUG -> println(message.cyan())
-            LogLevel.INFO -> println(message.blue())
-            LogLevel.SUCCESS -> println(message)
-            LogLevel.WARN -> println(message.yellow())
-            LogLevel.ERROR -> println(message.red())
-            LogLevel.FATAL -> println(message.red())
-        }
-    }
-}
-
-object CommonConsoleLogger : LoggerPipe() {
-    override fun log(level: LogLevel, message: String) = println(message)
-}
-
 class Logger(
     val path: String,
     val name: String = path,
@@ -63,19 +41,23 @@ class Logger(
         }
         this.pipes.add(pipe)
     }
+
+    fun transform(transformer: LogTransformer) = TransformedOutput(listOf(transformer))
+    fun transform(transformers: List<LogTransformer>) = TransformedOutput(transformers)
+    fun transform(vararg transformers: LogTransformer) = TransformedOutput(transformers.toList())
+
+    inner class TransformedOutput(
+        val transformers: List<LogTransformer>,
+    ) {
+        fun pipe(pipe: LoggerPipe) {
+            this@Logger.pipes.add(TransformedPipe(pipe, transformers))
+        }
+
+        fun transform(transformer: LogTransformer) = TransformedOutput(transformers + transformer)
+    }
 }
 
 class LogEntry(val level: LogLevel, val message: String)
-
-abstract class LoggerPipe {
-    abstract fun log(level: LogLevel, message: String)
-    fun debug(message: String) = log(LogLevel.DEBUG, message)
-    fun info(message: String) = log(LogLevel.INFO, message)
-    fun success(message: String) = log(LogLevel.SUCCESS, message)
-    fun warn(message: String) = log(LogLevel.WARN, message)
-    fun error(message: String) = log(LogLevel.ERROR, message)
-    fun fatal(message: String) = log(LogLevel.FATAL, message)
-}
 
 enum class LogLevel {
     DEBUG,

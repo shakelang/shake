@@ -8,7 +8,7 @@ import kotlin.js.Console
 
 inline fun Console.debug(vararg message: String): Unit = asDynamic().debug(message) as Unit
 
-object JsColoredBrowserConsoleLogger : LoggerPipe() {
+object JsColoredBrowserConsoleLoggerPipe : LoggerPipe() {
 
     override fun log(level: LogLevel, message: String) {
         when (level) {
@@ -29,7 +29,7 @@ object JsColoredBrowserConsoleLogger : LoggerPipe() {
     private fun printFatal(message: String) = console.error("%c$message", "color: red;")
 }
 
-object JsColoredConsoleLogger : LoggerPipe() {
+object JsColoredConsoleLoggerPipe : LoggerPipe() {
 
     override fun log(level: LogLevel, message: String) {
         when (level) {
@@ -50,7 +50,7 @@ object JsColoredConsoleLogger : LoggerPipe() {
     private fun printFatal(message: String) = console.error(message.red().string())
 }
 
-object JsConsoleLogger : LoggerPipe() {
+object JsConsoleLoggerPipe : LoggerPipe() {
 
     override fun log(level: LogLevel, message: String) {
         when (level) {
