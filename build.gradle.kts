@@ -135,7 +135,7 @@ val copyOldDocs by tasks.registering {
     description = "Copies the old docs to the build directory"
     dependsOn(gitUpdateSubmodules)
     doLast {
-        println("Copying old docs to build directory (${previousVersionsDirectory})...")
+        println("Copying old docs to build directory ($previousVersionsDirectory)...")
         copy {
             from(project.rootProject.file("docs"))
             into(layout.buildDirectory.dir(previousVersionsDirectory))
