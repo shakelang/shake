@@ -1,4 +1,4 @@
-# com.shakelang.shake.util.changelog:changelog
+# com.shakelang.util.changelog:changelog
 ## Description
 Changelog generation plugin for Shake
 ## Versions
