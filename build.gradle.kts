@@ -1,5 +1,5 @@
 // import com.shakelang.shake.sarifmerge.SarifMerge
-import com.shakelang.shake.sarifmerge.SarifMerge
+import com.shakelang.util.sarifmerge.SarifMerge
 import com.shakelang.util.changelog.Changelog
 import com.shakelang.util.changelog.tasks.VersionTask
 import io.codearte.gradle.nexus.NexusStagingExtension
