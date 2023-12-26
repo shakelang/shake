@@ -136,14 +136,14 @@ val gitCloneDocs by tasks.registering {
     group = "git"
     description = "Clone docs repo"
     doLast {
-        if(!project.file(docsPath).parentFile.exists()) project.file(docsPath).parentFile.mkdirs()
+        if (!project.file(docsPath).parentFile.exists()) project.file(docsPath).parentFile.mkdirs()
 
         // If the repo is already cloned, we will just update it
-        if (!project.rootProject.file(docsPath).exists())
+        if (!project.rootProject.file(docsPath).exists()) {
             exec {
                 commandLine("git", "clone", "https://github.com/shakelang/docs/", docsPath)
             }
-        else
+        } else {
             exec {
                 workingDir = project.rootProject.file(docsPath)
                 // we need to use git pull in the specified directory
@@ -151,6 +151,7 @@ val gitCloneDocs by tasks.registering {
                 println("$ git pull")
                 commandLine("git", "pull")
             }
+        }
     }
 }
 
