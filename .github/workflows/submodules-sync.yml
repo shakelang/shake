@@ -11,6 +11,9 @@ jobs:
   sync:
     name: "Submodules Sync"
     runs-on: ubuntu-latest
+    
+    # We don't want to run this workflow on forks
+    if: github.repository_owner != 'shakelang'
 
     permissions:
       contents: write
