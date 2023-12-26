@@ -130,16 +130,27 @@ val gitUpdateSubmodules by tasks.registering {
     }
 }
 
-val copyOldDocs by tasks.registering {
-    group = "documentation"
-    description = "Copies the old docs to the build directory"
-    dependsOn(gitUpdateSubmodules)
+val docsPath = "build/docs"
+
+val gitCloneDocs by tasks.registering {
+    group = "git"
+    description = "Clone docs repo"
     doLast {
-        println("Copying old docs to build directory ($previousVersionsDirectory)...")
-        copy {
-            from(project.rootProject.file("docs"))
-            into(layout.buildDirectory.dir(previousVersionsDirectory))
-        }
+        if(!project.file(docsPath).parentFile.exists()) project.file(docsPath).parentFile.mkdirs()
+
+        // If the repo is already cloned, we will just update it
+        if (!project.rootProject.file(docsPath).exists())
+            exec {
+                commandLine("git", "clone", "https://github.com/shakelang/docs/", docsPath)
+            }
+        else
+            exec {
+                workingDir = project.rootProject.file(docsPath)
+                // we need to use git pull in the specified directory
+                println("Updating docs repo...")
+                println("$ git pull")
+                commandLine("git", "pull")
+            }
     }
 }
 
@@ -148,7 +159,7 @@ val copyDocs by tasks.registering {
     description = "Copies the docs repo submodule"
     dependsOn(gitUpdateSubmodules)
     doLast {
-        val docsDir = project.rootProject.file("docs")
+        val docsDir = project.rootProject.file(docsPath)
         val buildDir = project.rootProject.file("build/dokka/htmlMultiModule")
         println("Copying docs to ${docsDir.absolutePath} directory (from ${buildDir.absolutePath}...")
         copy {
@@ -159,11 +170,11 @@ val copyDocs by tasks.registering {
 }
 
 tasks.dokkaHtmlMultiModule {
-    dependsOn(copyOldDocs)
+    dependsOn(gitCloneDocs)
     finalizedBy(copyDocs)
     pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
         version = currentVersion
-        olderVersionsDir = file(previousVersionsDirectory)
+        olderVersionsDir = file(docsPath)
     }
 }
 
