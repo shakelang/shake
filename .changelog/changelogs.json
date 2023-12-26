@@ -153,6 +153,14 @@
             "Update com.shakelang.util:primitives to 0.5.0",
             "Update com.shakelang.util:shason to 0.4.0"
           ]
+        },
+        {
+          "version": "0.7.1",
+          "changes": [
+            "Rename changelog files that have the wrong name",
+            "Generated markdown should have two line-separators between elements",
+            "Update com.shakelang.util:markdown to 0.2.1"
+          ]
         }
       ]
     },
@@ -331,6 +339,12 @@
           "version": "0.2.0",
           "changes": [
             "Move `com.shakelang.shake.util` to `com.shakelang.util`"
+          ]
+        },
+        {
+          "version": "0.2.1",
+          "changes": [
+            "Generated markdown should have two line-separators between elements"
           ]
         }
       ]

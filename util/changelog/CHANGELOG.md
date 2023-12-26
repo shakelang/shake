@@ -55,3 +55,7 @@ Update com.shakelang.util:markdown to 0.2.0
 Update com.shakelang.util:parseutils to 0.3.0
 Update com.shakelang.util:primitives to 0.5.0
 Update com.shakelang.util:shason to 0.4.0
+### 0.7.1
+Rename changelog files that have the wrong name
+Generated markdown should have two line-separators between elements
+Update com.shakelang.util:markdown to 0.2.1
