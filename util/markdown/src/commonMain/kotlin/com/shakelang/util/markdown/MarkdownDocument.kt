@@ -36,7 +36,7 @@ class MutableMarkdownDocument() : MarkdownDocument, MarkdownContext() {
 
     fun html(html: String) = elements.add(MarkdownHtmlElement(html))
 
-    override fun render(): String = elements.joinToString("\n") { it.toMarkdown().joinToString("\n") }
+    override fun render(): String = elements.joinToString("\n\n") { it.toMarkdown().joinToString("\n") }
 }
 
 open class MarkdownContext() {

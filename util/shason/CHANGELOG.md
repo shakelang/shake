@@ -1,28 +1,46 @@
-# com.shakelang.shake.util:jvmlib
+# com.shakelang.shake.util:shason
 
 ## Description
 
-A library for jvm stuff in java
+A json parser implemented in kotlin (mpp)
 
 ## Versions
 
-### 0.1.1-SNAPSHOT
+### 0.2.0
 
-* Initial release of snapshot packages
+* Update to new package structure
 
-### 0.1.2-SNAPSHOT
+### 0.2.1
 
-* Update com.shakelang.shake.util:shason to 0.3.0
+* Update dependencies
 
-### 0.1.3-SNAPSHOT
+### 0.2.2
+
+* Update dependencies
+
+### 0.2.3
+
+* Update dependencies
+
+### 0.2.4
+
+* Generation of JsonElement class fixed
+
+### 0.3.0
+
+* Introduce JsonElement#toJson[PrimitiveType]
+
+* Introduce JsonElement#isJson[PrimitiveType]
+
+* Make int compatible to double
+
+### 0.3.1
 
 * Update com.shakelang.shake.util:common-io to 0.3.0
 
 * Update com.shakelang.shake.util:parseutils to 0.2.4
 
-* Update com.shakelang.shake.util:shason to 0.3.1
-
-### 0.1.4-SNAPSHOT
+### 0.3.2
 
 * Update com.shakelang.shake.util:primitives to 0.4.0
 
@@ -30,9 +48,7 @@ A library for jvm stuff in java
 
 * Update com.shakelang.shake.util:parseutils to 0.2.5
 
-* Update com.shakelang.shake.util:shason to 0.3.2
-
-### 0.2.0
+### 0.4.0
 
 * Move `com.shakelang.shake.util` to `com.shakelang.util`
 
@@ -45,5 +61,3 @@ A library for jvm stuff in java
 * Update com.shakelang.util:parseutils to 0.3.0
 
 * Update com.shakelang.util:primitives to 0.5.0
-
-* Update com.shakelang.util:shason to 0.4.0
