@@ -198,7 +198,7 @@ fun Changelog.renderChangelog(map: ChangelogMap) {
         // get project for path
         val project = Changelog.instance.project.project(pkg.path)
         val file = project.file("CHANGELOG.md")
-        if(file.canonicalFile.name != "CHANGELOG.md") {
+        if (file.canonicalFile.name != "CHANGELOG.md") {
             file.canonicalFile.delete()
         }
         file.writeText(renderChangelog(pkg))
