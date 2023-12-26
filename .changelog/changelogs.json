@@ -26,7 +26,7 @@
     },
     {
       "path": ":util:changelog",
-      "name": "com.shakelang.shake.util.changelog:changelog",
+      "name": "com.shakelang.util.changelog:changelog",
       "description": "Changelog generation plugin for Shake",
       "versions": [
         {

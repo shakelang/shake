@@ -1,7 +1,7 @@
 // import com.shakelang.shake.sarifmerge.SarifMerge
-import com.shakelang.shake.sarifmerge.SarifMerge
-import com.shakelang.shake.util.changelog.Changelog
-import com.shakelang.shake.util.changelog.tasks.VersionTask
+import com.shakelang.util.sarifmerge.SarifMerge
+import com.shakelang.util.changelog.Changelog
+import com.shakelang.util.changelog.tasks.VersionTask
 import io.codearte.gradle.nexus.NexusStagingExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.dokka.DokkaConfiguration.Visibility
@@ -118,7 +118,7 @@ tasks.dokkaHtmlMultiModule {
     }
 }
 
-// apply(plugin = "com.shakelang.shake.util.changelog.Changelog")
+// apply(plugin = "com.shakelang.util.changelog.Changelog")
 detekt {
     toolVersion = "1.23.3"
     config.setFrom(rootProject.file("config/detekt/detekt.yml"))
