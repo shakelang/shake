@@ -7,8 +7,12 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  generate-dokka-docs:
     runs-on: ubuntu-latest
+
+    # We don't want to run this workflow on forks
+    # We also don't want to run this workflow when the actor is our bot (shakelang-bot)
+    if: github.repository_owner != 'shakelang' && github.actor != 'shakelang-bot'
 
     strategy:
       matrix:
