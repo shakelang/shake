@@ -56,7 +56,7 @@
         "unspecified:unspecified:unspecified",
         ":util:colorlib:colorlib:0.3.0",
         ":util:shason:shason:0.4.0",
-        ":util:markdown:markdown:0.2.0"
+        ":util:markdown:markdown:0.2.1"
       ]
     },
     {
@@ -403,5 +403,5 @@
       ]
     }
   ],
-  "lastUpdate": 1703590982955
+  "lastUpdate": 1703591522323
 }

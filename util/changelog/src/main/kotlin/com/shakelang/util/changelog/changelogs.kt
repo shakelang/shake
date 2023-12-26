@@ -1,5 +1,6 @@
 package com.shakelang.util.changelog
 
+import com.shakelang.util.markdown.MarkdownTextElement
 import com.shakelang.util.markdown.MutableMarkdownDocument
 import com.shakelang.util.shason.elements.JsonObject
 import com.shakelang.util.shason.json
@@ -187,7 +188,7 @@ fun Changelog.renderChangelog(map: PackageChangelog): String {
         map.versions.forEach { version ->
             h3(version.version.toString())
             version.changes.forEach { change ->
-                p(change)
+                ul(MarkdownTextElement(change))
             }
         }
     }.render()
