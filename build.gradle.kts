@@ -149,7 +149,7 @@ val copyDocs by tasks.registering {
     dependsOn(gitUpdateSubmodules)
     doLast {
         val docsDir = project.rootProject.file("docs")
-        val buildDir = project.rootProject.file("build")
+        val buildDir = project.rootProject.file("build/dokka/htmlMultiModule")
         println("Copying docs to ${docsDir.absolutePath} directory (from ${buildDir.absolutePath}...")
         copy {
             from(buildDir)
@@ -249,11 +249,11 @@ subprojects {
 
                 // Read docs for more details: https://kotlinlang.org/docs/dokka-gradle.html#source-link-configuration
                 sourceLink {
-                    val exampleDir =
-                        "https://github.com/Kotlin/dokka/tree/master/examples/gradle/dokka-multimodule-example"
+                    val source =
+                        "https://github.com/shakelang/shake/tree/master/${project.path.replace(":", "/")}/"
 
                     localDirectory.set(rootProject.projectDir)
-                    remoteUrl.set(URL("$exampleDir"))
+                    remoteUrl.set(URL(source))
                     remoteLineSuffix.set("#L")
                 }
             }
