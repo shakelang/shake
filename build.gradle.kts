@@ -107,11 +107,60 @@ tasks.withType<VersionTask>().configureEach {
 }
 
 val currentVersion = "1.0"
-val previousVersionsDirectory = project.rootProject.projectDir.resolve("previousDocVersions").invariantSeparatorsPath
+val previousVersionsDirectory = project.rootProject.projectDir.resolve("build/previousDocVersions").invariantSeparatorsPath
 
 val styleSheet = file("./assets/dokka-style.css").absoluteFile
 
+val gitUpdateSubmodules by tasks.registering {
+    group = "git"
+    description = "Updates the git submodules"
+    doLast {
+        val update = exec {
+            // git submodule update --init --recursive
+            // git pull --recurse-submodules
+            // git submodule update --remote --recursive
+            println("Updating git submodules...")
+            println("$ git submodule update --init --recursive")
+            commandLine("git", "submodule", "update", "--init", "--recursive")
+            println("$ git pull --recurse-submodules")
+            commandLine("git", "pull", "--recurse-submodules")
+            println("$ git submodule update --remote --recursive")
+            commandLine("git", "submodule", "update", "--remote", "--recursive")
+        }
+    }
+}
+
+val copyOldDocs by tasks.registering {
+    group = "documentation"
+    description = "Copies the old docs to the build directory"
+    dependsOn(gitUpdateSubmodules)
+    doLast {
+        println("Copying old docs to build directory (${previousVersionsDirectory})...")
+        copy {
+            from(project.rootProject.file("docs"))
+            into(layout.buildDirectory.dir(previousVersionsDirectory))
+        }
+    }
+}
+
+val copyDocs by tasks.registering {
+    group = "documentation"
+    description = "Copies the docs repo submodule"
+    dependsOn(gitUpdateSubmodules)
+    doLast {
+        val docsDir = project.rootProject.file("docs")
+        val buildDir = project.rootProject.file("build")
+        println("Copying docs to ${docsDir.absolutePath} directory (from ${buildDir.absolutePath}...")
+        copy {
+            from(buildDir)
+            into(docsDir)
+        }
+    }
+}
+
 tasks.dokkaHtmlMultiModule {
+    dependsOn(copyOldDocs)
+    finalizedBy(copyDocs)
     pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
         version = currentVersion
         olderVersionsDir = file(previousVersionsDirectory)

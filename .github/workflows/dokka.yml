@@ -4,7 +4,7 @@ name: Dokka
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        java-version: [ 16 ]
+        java-version: [16]
 
     steps:
       - name: Checkout 🛎️
@@ -20,12 +20,6 @@ jobs:
         with:
           persist-credentials: false
           submodules: "recursive"
-
-      # Update references
-      - name: Git Submodule Update
-        run: |
-          git pull --recurse-submodules
-          git submodule update --remote --recursive
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -54,26 +48,23 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
 
-      - name: Initialize and update submodule
-        run: git submodule update --init --recursive
-
       - name: Check Git Status
-        working-directory: build/dokka/htmlMultiModule/
+        working-directory: docs/
         run: git status
 
       - name: Commit Changes
-        working-directory: build/dokka/htmlMultiModule/
+        working-directory: docs/
         run: |
           # Configure git
             git config --global user.name "shakebot[bot]"
             git config --global user.email "bot@shakelang.com"
 
           # Commit and push changes
-            git add . -f
+            git add .
             git commit -m "Update documentation"
 
       - name: Push changes
-        working-directory: build/dokka/htmlMultiModule/
+        working-directory: docs/
         run: |
           # Push using the GITHUB_TOKEN
             git push https://shakelang-bot:${{ secrets.GH_BOT_TOKEN }}@github.com/shakelang/docs.git HEAD:master --force
