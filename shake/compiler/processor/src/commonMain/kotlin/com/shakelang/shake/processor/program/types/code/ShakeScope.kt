@@ -5,6 +5,7 @@ import com.shakelang.shake.processor.program.types.ShakeClass
 import com.shakelang.shake.processor.program.types.ShakeMethod
 
 interface ShakeScope {
+    val uniqueName: String
     val parent: ShakeScope?
     fun get(name: String): ShakeAssignable?
     fun getFunctions(name: String): List<ShakeMethod>

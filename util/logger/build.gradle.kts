@@ -20,6 +20,7 @@ kotlin {
     dependencies {
         implementation(project(":util:environment"))
         implementation(project(":util:colorlib"))
+        implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
         testImplementation(kotlin("test"))
 
         this.js {

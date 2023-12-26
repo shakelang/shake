@@ -7,7 +7,7 @@ plugins {
     id("conventions.publishing")
 }
 
-group = projectGroup("shasambly.shastools")
+group = projectGroup("shake.shasambly")
 version = resolveVersion()
 description = "Shake's own bytecode format interpreter"
 

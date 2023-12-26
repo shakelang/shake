@@ -1,8 +1,8 @@
 package com.shakelang.shake.processor.program.types
 
-interface ShakeDeclaration {
+interface ShakeDeclaration : ShakeAssignable {
     val name: String
-    val type: ShakeType
+    val uniqueName: String
     val qualifiedName: String
 
     // fun use(scope: ShakeScope): ShakeUsage

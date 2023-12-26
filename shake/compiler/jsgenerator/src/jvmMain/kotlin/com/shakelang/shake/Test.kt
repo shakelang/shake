@@ -3,7 +3,7 @@ package com.shakelang.shake
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.processor.map.ShakeMap
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.shason.json
 
 fun main(args: Array<String>) {
     val processor = ShakePackageBasedProcessor()

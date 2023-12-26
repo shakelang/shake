@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.lexer.token
 
-import com.shakelang.shake.util.parseutils.lexer.token.TokenType
+import com.shakelang.util.parseutils.lexer.token.TokenType
 
 /**
  * These are the different types of tokens, that the lexer creates

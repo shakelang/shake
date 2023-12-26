@@ -18,6 +18,7 @@ include(":util:testlib")
 include(":shake:bytecode:conventions")
 include(":shake:bytecode:utils")
 include(":shake:bytecode:interpreter")
+include(":shake:bytecode:generator")
 
 include(":shake:compiler:shakelib")
 include(":shake:compiler:lexer")
@@ -45,5 +46,3 @@ gradleEnterprise {
         }
     }
 }
-include("shake:bytecode:generation")
-findProject(":shake:bytecode:generation")?.name = "generation"

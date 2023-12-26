@@ -18,8 +18,11 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
     val initialValue: ShakeValue?
     val expanding: ShakeType?
 
+    override val uniqueName: String
+        get() = qualifiedName
+
     override val qualifiedName: String
-        get() = "${(clazz?.qualifiedName ?: pkg?.qualifiedName)?.plus("$")}${expanding?.qualifiedName?.plus("$") ?: ""}$name"
+        get() = (if (clazz != null) clazz!!.qualifierPrefix else pkg!!.qualifierPrefix) + name
 
     val signature: String get() = name
 
@@ -59,4 +62,7 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
             "type" to type.toJson()
         )
     }
+
+    fun phase3()
+    fun phase4()
 }

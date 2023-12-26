@@ -5,7 +5,7 @@ import com.shakelang.shake.parser.node.expression.ShakeBitwiseAndNode
 import com.shakelang.shake.parser.node.expression.ShakeBitwiseNotNode
 import com.shakelang.shake.parser.node.expression.ShakeBitwiseOrNode
 import com.shakelang.shake.parser.node.expression.ShakeBitwiseXOrNode
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.position.PositionMap
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

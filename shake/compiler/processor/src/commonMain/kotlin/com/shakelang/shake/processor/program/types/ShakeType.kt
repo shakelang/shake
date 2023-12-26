@@ -46,7 +46,8 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = additionAssignOverload(other, scope)?.returnType
+    fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? =
+        additionAssignOverload(other, scope)?.returnType
 
     /**
      * If I overload the sub-assign operator, what is the return type (null if not overloaded) of the expression `this -= other`
@@ -61,7 +62,8 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = subtractionAssignOverload(other, scope)?.returnType
+    fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? =
+        subtractionAssignOverload(other, scope)?.returnType
 
     /**
      * If I overload the mul-assign operator, what is the return type (null if not overloaded) of the expression `this *= other`
@@ -76,7 +78,8 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = multiplicationAssignOverload(other, scope)?.returnType
+    fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? =
+        multiplicationAssignOverload(other, scope)?.returnType
 
     /**
      * If I overload the div-assign operator, what is the return type (null if not overloaded) of the expression `this /= other`
@@ -91,7 +94,8 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = divisionAssignOverload(other, scope)?.returnType
+    fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? =
+        divisionAssignOverload(other, scope)?.returnType
 
     /**
      * If I overload the mod-assign operator, what is the return type (null if not overloaded) of the expression `this %= other`
@@ -106,7 +110,8 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? = modulusAssignOverload(other, scope)?.returnType
+    fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? =
+        modulusAssignOverload(other, scope)?.returnType
 
     /**
      * If I overload the pow-assign operator, what is the return type (null if not overloaded) of the expression `this **= other`
@@ -598,7 +603,8 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun binaryShiftLeftType(other: ShakeType, scope: ShakeScope): ShakeType? = binaryShiftLeftOverload(other, scope)?.returnType
+    fun binaryShiftLeftType(other: ShakeType, scope: ShakeScope): ShakeType? =
+        binaryShiftLeftOverload(other, scope)?.returnType
 
     /**
      * Returns the type of the expression `this >> other`
@@ -620,7 +626,8 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun binaryShiftRightType(other: ShakeType, scope: ShakeScope): ShakeType? = binaryShiftRightOverload(other, scope)?.returnType
+    fun binaryShiftRightType(other: ShakeType, scope: ShakeScope): ShakeType? =
+        binaryShiftRightOverload(other, scope)?.returnType
 
     /**
      * Returns the type of the expression `this."name"`
@@ -1316,7 +1323,8 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun logicalNotOverload(scope: ShakeScope): ShakeMethod? = ShakeSelect.selectFunction(notOverloads(scope), emptyList())
+    fun logicalNotOverload(scope: ShakeScope): ShakeMethod? =
+        ShakeSelect.selectFunction(notOverloads(scope), emptyList())
 
     /**
      * Select the binary-and operator overload for the given type
@@ -1522,6 +1530,12 @@ interface ShakeType {
         return ShakeOperatorRequestResult(null, null)
     }
 
+    fun xorOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = logicalXorOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
     fun notOperator(scope: ShakeScope): ShakeOperatorRequestResult {
         val method = logicalNotOverload(scope)
         if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
@@ -1560,6 +1574,18 @@ interface ShakeType {
 
     fun binaryShiftRightOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
         val method = binaryShiftRightOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun equalsOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = equalsOverload(other, scope)
+        if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
+        return ShakeOperatorRequestResult(null, null)
+    }
+
+    fun notEqualsOperator(other: ShakeType, scope: ShakeScope): ShakeOperatorRequestResult {
+        val method = notEqualsOverload(other, scope)
         if (method != null) return ShakeOperatorRequestResult(method.returnType, method)
         return ShakeOperatorRequestResult(null, null)
     }

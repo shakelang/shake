@@ -1,7 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter.format.pool
 
-import com.shakelang.shake.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.primitives.bytes.toBytes
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -251,6 +251,37 @@ class ConstantPoolEntryTests : FreeSpec({
         val constant2 = ConstantPoolEntry.ClassConstant(1)
         val constant3 = ConstantPoolEntry.ClassConstant(2)
         val constant4 = ConstantPoolEntry.ClassConstant(1)
+        constant1.hashCode() shouldBe constant2.hashCode()
+        constant1.hashCode() shouldNotBe constant3.hashCode()
+        constant1.hashCode() shouldBe constant4.hashCode()
+    }
+
+    "string constant to bytes" {
+        val constant = ConstantPoolEntry.StringConstant(1)
+        val bytes = constant.dump()
+        bytes shouldBe byteArrayOf(9, 0, 0, 0, 1)
+    }
+
+    "string constant from bytes" {
+        val constant = ConstantPoolEntry.StringConstant.fromStream(byteArrayOf(0, 0, 0, 1).dataStream())
+        constant.identifier shouldBe 1
+    }
+
+    "string constant equals" {
+        val constant1 = ConstantPoolEntry.StringConstant(1)
+        val constant2 = ConstantPoolEntry.StringConstant(1)
+        val constant3 = ConstantPoolEntry.StringConstant(2)
+        val constant4 = ConstantPoolEntry.StringConstant(1)
+        constant1 shouldBe constant2
+        constant1 shouldNotBe constant3
+        constant1 shouldBe constant4
+    }
+
+    "string constant hashcode" {
+        val constant1 = ConstantPoolEntry.StringConstant(1)
+        val constant2 = ConstantPoolEntry.StringConstant(1)
+        val constant3 = ConstantPoolEntry.StringConstant(2)
+        val constant4 = ConstantPoolEntry.StringConstant(1)
         constant1.hashCode() shouldBe constant2.hashCode()
         constant1.hashCode() shouldNotBe constant3.hashCode()
         constant1.hashCode() shouldBe constant4.hashCode()

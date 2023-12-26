@@ -1,6 +1,5 @@
 package com.shakelang.shake.processor.program.creation
 
-import com.shakelang.shake.parser.node.ShakeImportNode
 import com.shakelang.shake.parser.node.ShakeVariableType
 import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
@@ -73,15 +72,39 @@ abstract class CreationShakeScope : ShakeScope {
         }
     }
 
-    fun getType(clzName: String, then: (CreationShakeType) -> Unit) {
-        this.getClass(clzName) {
-            then(CreationShakeType.objectType(it))
-        }
+    fun getType(clzName: String): CreationShakeType {
+        return CreationShakeType.objectType(this.getClass(clzName) ?: throw IllegalArgumentException("Class $clzName not found"))
     }
 
-    fun finish() {
-        this.classRequirements.forEach {
-            it.then(this.getClass(it.name) ?: throw IllegalArgumentException("Class ${it.name} not found"))
+    fun getType(type: ShakeVariableType): CreationShakeType {
+        return when (type.type) {
+            ShakeVariableType.Type.OBJECT -> {
+                val namespace = (type as ShakeVariableType.Object).namespace
+                    ?: throw IllegalArgumentException("Object type must have subtype")
+                val clzName = namespace.parts.joinToString(".")
+                this.getType(clzName)
+            }
+
+            ShakeVariableType.Type.ARRAY -> {
+                val subtype = (type as ShakeVariableType.Array).subtype
+                this.getType(subtype)
+            }
+
+            ShakeVariableType.Type.BYTE -> CreationShakeType.Primitives.BYTE
+            ShakeVariableType.Type.SHORT -> CreationShakeType.Primitives.SHORT
+            ShakeVariableType.Type.INTEGER -> CreationShakeType.Primitives.INT
+            ShakeVariableType.Type.LONG -> CreationShakeType.Primitives.LONG
+            ShakeVariableType.Type.FLOAT -> CreationShakeType.Primitives.FLOAT
+            ShakeVariableType.Type.DOUBLE -> CreationShakeType.Primitives.DOUBLE
+            ShakeVariableType.Type.UNSIGNED_BYTE -> CreationShakeType.Primitives.UBYTE
+            ShakeVariableType.Type.UNSIGNED_SHORT -> CreationShakeType.Primitives.USHORT
+            ShakeVariableType.Type.UNSIGNED_INTEGER -> CreationShakeType.Primitives.UINT
+            ShakeVariableType.Type.UNSIGNED_LONG -> CreationShakeType.Primitives.ULONG
+            ShakeVariableType.Type.BOOLEAN -> CreationShakeType.Primitives.BOOLEAN
+            ShakeVariableType.Type.CHAR -> CreationShakeType.Primitives.CHAR
+            ShakeVariableType.Type.DYNAMIC -> CreationShakeType.Primitives.DYNAMIC
+            ShakeVariableType.Type.VOID -> CreationShakeType.Primitives.VOID
+            ShakeVariableType.Type.UNKNOWN -> CreationShakeType.Primitives.DYNAMIC // TODO: Change this
         }
     }
 
@@ -93,54 +116,4 @@ abstract class CreationShakeScope : ShakeScope {
     }
 
     abstract val processor: ShakeASTProcessor
-}
-
-class CreationFileScope(
-    override val project: CreationShakeProject,
-    override val parent: CreationShakeScope,
-    val imports: List<ShakeImportNode>,
-    val imported: Array<CreationShakePackage?>
-) : CreationShakeScope() {
-
-    override fun get(name: String): CreationShakeAssignable? {
-        return imports.zip(imported).filter {
-            val last = it.first.import.last()
-            last == name || last == "*"
-        }.firstNotNullOfOrNull {
-            it.second!!.fields.find { f -> f.name == name }
-        } ?: parent.get(name)
-    }
-
-    override fun set(value: CreationShakeDeclaration) {
-        parent.set(value)
-    }
-
-    override fun getFunctions(name: String): List<CreationShakeMethod> {
-        return imports.zip(imported).filter {
-            val last = it.first.import.last()
-            last == name || last == "*"
-        }.flatMap {
-            it.second!!.functions.filter { f -> f.name == name }
-        } + parent.getFunctions(name)
-    }
-
-    override fun setFunctions(function: CreationShakeMethod) {
-        parent.setFunctions(function)
-    }
-
-    override fun getClass(name: String): CreationShakeClass? {
-        return imports.zip(imported).filter {
-            val last = it.first.import.last()
-            last == name || last == "*"
-        }.firstNotNullOfOrNull {
-            it.second!!.classes.find { c -> c.name == name }
-        } ?: parent.getClass(name)
-    }
-
-    override fun setClass(klass: CreationShakeClass) {
-        parent.setClass(klass)
-    }
-
-    override val processor: ShakeASTProcessor
-        get() = parent.processor
 }

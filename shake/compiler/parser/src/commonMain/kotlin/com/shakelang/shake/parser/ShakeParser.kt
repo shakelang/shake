@@ -18,9 +18,10 @@ import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassType
 import com.shakelang.shake.parser.node.objects.ShakeConstructorDeclarationNode
 import com.shakelang.shake.parser.node.variables.*
-import com.shakelang.shake.util.parseutils.characters.Characters.parseString
-import com.shakelang.shake.util.parseutils.characters.position.Position
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.CompilerError
+import com.shakelang.util.parseutils.characters.Characters.parseString
+import com.shakelang.util.parseutils.characters.position.Position
+import com.shakelang.util.parseutils.characters.position.PositionMap
 
 /**
  * An abstract Parser for the Shake Programming language. An instance is created for each file in the compilation process.
@@ -1671,7 +1672,7 @@ class ShakeParserImpl(
     // Errors
 
     inner class ParserError(message: String?, name: String?, details: String?, start: Position?, end: Position?) :
-        com.shakelang.shake.util.parseutils.CompilerError(
+        CompilerError(
             message!!,
             name!!,
             details!!,

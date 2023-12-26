@@ -5,13 +5,13 @@ package com.shakelang.shake.shasambly.generator.shas
 import com.shakelang.shake.shasambly.interpreter.Opcodes
 import com.shakelang.shake.shasambly.interpreter.natives.Natives
 import com.shakelang.shake.shasambly.interpreter.natives.nativeFunctions
-import com.shakelang.shake.util.io.streaming.input.InputStream
-import com.shakelang.shake.util.io.streaming.input.asCountingInputStream
-import com.shakelang.shake.util.io.streaming.input.asDataInputStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.OutputStream
-import com.shakelang.shake.util.primitives.bytes.toBytes
-import com.shakelang.shake.util.primitives.bytes.toHexString
+import com.shakelang.util.io.streaming.input.InputStream
+import com.shakelang.util.io.streaming.input.asCountingInputStream
+import com.shakelang.util.io.streaming.input.asDataInputStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.OutputStream
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toHexString
 
 class ShasGenerator(input: InputStream) {
 

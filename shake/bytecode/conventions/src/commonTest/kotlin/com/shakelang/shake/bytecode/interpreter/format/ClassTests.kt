@@ -3,11 +3,11 @@ package com.shakelang.shake.bytecode.interpreter.format
 import com.shakelang.shake.bytecode.interpreter.format.attribute.AnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAnonymousAttributeImpl
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.shake.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.DataOutputStream
-import com.shakelang.shake.util.primitives.bytes.toBytes
-import com.shakelang.shake.util.testlib.shouldContainExactly
+import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.testlib.shouldContainExactly
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
@@ -106,9 +106,9 @@ class ClassTests : FreeSpec({
             0,
             0,
             emptyList(),
+            emptyList(),
+            emptyList(),
             listOf(field),
-            emptyList(),
-            emptyList(),
             emptyList()
         )
 
@@ -160,9 +160,9 @@ class ClassTests : FreeSpec({
             0,
             0,
             emptyList(),
-            emptyList(),
-            emptyList(),
             listOf(subClass),
+            emptyList(),
+            emptyList(),
             emptyList()
         )
 
@@ -272,9 +272,9 @@ class ClassTests : FreeSpec({
             pool.resolveUtf8("test2"),
             0,
             emptyList(),
+            emptyList(),
+            emptyList(),
             listOf(Field(pool, 0, 0, 0, emptyList())),
-            emptyList(),
-            emptyList(),
             emptyList()
         )
 
@@ -296,9 +296,9 @@ class ClassTests : FreeSpec({
             pool.resolveUtf8("test2"),
             0,
             emptyList(),
-            emptyList(),
-            emptyList(),
             listOf(Class(pool, 0, 0, 0, emptyList(), emptyList(), emptyList(), emptyList(), emptyList())),
+            emptyList(),
+            emptyList(),
             emptyList()
         )
 

@@ -1,6 +1,6 @@
 package com.shakelang.shake.parser.node
 
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class ShakeIfNode(
     map: PositionMap,

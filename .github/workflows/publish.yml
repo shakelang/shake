@@ -63,10 +63,12 @@ jobs:
 
       - name: Build 🔨
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:build
+        env:
+          TEST_CONFIGURATION: full
 
   draft-release:
     name: Draft Release for tag 📦
-    needs: [ build, extract_info ]
+    needs: [build, extract_info]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -119,10 +121,10 @@ jobs:
           allowUpdates: true
           makeLatest: true
           name: ${{needs.extract_info.outputs.release_type}}/${{needs.extract_info.outputs.version}}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_BOT_TOKEN }}
 
   publish-gpr:
-    needs: [ build, extract_info ]
+    needs: [build, extract_info]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -150,8 +152,8 @@ jobs:
 
       - name: Publish to gpr
         env:
-          GRADLE_GITHUB_USERNAME: ${{ github.actor }}
-          GRADLE_GITHUB_TOKEN: ${{ github.token }}
+          GRADLE_GITHUB_USERNAME: shakelang-bot
+          GRADLE_GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
           GRADLE_SONATYPE_USERNAME: ${{ secrets.SONARTYPE_NEXUS_USERNAME }}
           GRADLE_SONATYPE_PASSWORD: ${{ secrets.SONARTYPE_NEXUS_PASSWORD }}
           GRADLE_SIGNING_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
@@ -159,7 +161,7 @@ jobs:
         run: ./gradlew :${{needs.extract_info.outputs.release_type}}:publishAllPublicationsToGitHubRepository
 
   publish-sonartype:
-    needs: [ build, extract_info ]
+    needs: [build, extract_info]
     runs-on: ubuntu-latest
     permissions:
       contents: write

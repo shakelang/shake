@@ -8,3 +8,5 @@ Update to new package structure
 Remove  dependency in testlib (as it is not used or needed) 
 ### 0.2.2
 Create Array matching api in testlib
+### 0.3.0
+Move `com.shakelang.shake.util` to `com.shakelang.util`

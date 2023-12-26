@@ -10,7 +10,7 @@ plugins {
 }
 
 public = true
-group = projectGroup("compiler.parser")
+group = projectGroup("shake.compiler")
 version = resolveVersion()
 description = "Utilities for parsing stuff with kotlin"
 

@@ -2,12 +2,12 @@ import com.shakelang.shake.interpreter.Interpreter
 import com.shakelang.shake.lexer.Lexer
 import com.shakelang.shake.parser.Parser
 import com.shakelang.shake.parser.node.Tree
-import com.shakelang.shake.util.Promise
-import com.shakelang.shake.util.Request
-import com.shakelang.shake.util.characterinput.characterinputstream.CharacterInputStream
-import com.shakelang.shake.util.characterinput.characterinputstream.SourceCharacterInputStream
-import com.shakelang.shake.util.characterinput.charactersource.CharacterSource
-import com.shakelang.shake.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.Promise
+import com.shakelang.util.Request
+import com.shakelang.util.characterinput.characterinputstream.CharacterInputStream
+import com.shakelang.util.characterinput.characterinputstream.SourceCharacterInputStream
+import com.shakelang.util.characterinput.charactersource.CharacterSource
+import com.shakelang.util.parseutils.characters.position.PositionMap
 
 
 /**

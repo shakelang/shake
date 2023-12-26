@@ -1,6 +1,6 @@
 package com.shakelang.shake.shasambly.interpreter
 
-import com.shakelang.shake.util.parseutils.generateUInt
+import com.shakelang.util.parseutils.generateUInt
 
 object PrimitiveIds {
 

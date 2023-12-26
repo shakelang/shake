@@ -8,10 +8,10 @@ import com.shakelang.shake.shasambly.generator.simple.RelativeShasamblyGenerator
 import com.shakelang.shake.shasambly.generator.simple.SimpleShasambly
 import com.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGenerator
 import com.shakelang.shake.shasambly.generator.simple.SimpleShasamblyGeneratorFunction
-import com.shakelang.shake.util.primitives.bytes.removeLastByte
-import com.shakelang.shake.util.primitives.bytes.removeLastInt
-import com.shakelang.shake.util.primitives.bytes.removeLastLong
-import com.shakelang.shake.util.primitives.bytes.removeLastShort
+import com.shakelang.util.primitives.bytes.removeLastByte
+import com.shakelang.util.primitives.bytes.removeLastInt
+import com.shakelang.util.primitives.bytes.removeLastLong
+import com.shakelang.util.primitives.bytes.removeLastShort
 
 typealias SimpleRoutineShasamblyGenerator = SimpleRoutineShasambly.() -> Unit
 

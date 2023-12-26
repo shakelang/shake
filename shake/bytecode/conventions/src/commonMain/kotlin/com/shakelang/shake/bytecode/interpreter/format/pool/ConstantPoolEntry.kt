@@ -1,8 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter.format.pool
 
-import com.shakelang.shake.util.io.streaming.input.DataInputStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.DataInputStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.DataOutputStream
 
 sealed class ConstantPoolEntry {
 
@@ -25,7 +25,7 @@ sealed class ConstantPoolEntry {
         }
 
         override fun dump(stream: DataOutputStream) {
-            stream.writeByte(1)
+            stream.writeByte(0x01)
             stream.writeUTF8(value)
         }
 
@@ -55,7 +55,7 @@ sealed class ConstantPoolEntry {
         }
 
         override fun dump(stream: DataOutputStream) {
-            stream.writeByte(2)
+            stream.writeByte(0x02)
             stream.writeByte(value)
         }
 
@@ -85,7 +85,7 @@ sealed class ConstantPoolEntry {
         }
 
         override fun dump(stream: DataOutputStream) {
-            stream.writeByte(3)
+            stream.writeByte(0x03)
             stream.writeShort(value)
         }
 
@@ -115,7 +115,7 @@ sealed class ConstantPoolEntry {
         }
 
         override fun dump(stream: DataOutputStream) {
-            stream.writeByte(4)
+            stream.writeByte(0x04)
             stream.writeInt(value)
         }
 
@@ -145,7 +145,7 @@ sealed class ConstantPoolEntry {
         }
 
         override fun dump(stream: DataOutputStream) {
-            stream.writeByte(5)
+            stream.writeByte(0x05)
             stream.writeLong(value)
         }
 
@@ -175,7 +175,7 @@ sealed class ConstantPoolEntry {
         }
 
         override fun dump(stream: DataOutputStream) {
-            stream.writeByte(6)
+            stream.writeByte(0x06)
             stream.writeFloat(value)
         }
 
@@ -205,7 +205,7 @@ sealed class ConstantPoolEntry {
         }
 
         override fun dump(stream: DataOutputStream) {
-            stream.writeByte(7)
+            stream.writeByte(0x07)
             stream.writeDouble(value)
         }
 
@@ -235,7 +235,7 @@ sealed class ConstantPoolEntry {
         }
 
         override fun dump(stream: DataOutputStream) {
-            stream.writeByte(8)
+            stream.writeByte(0x08)
             stream.writeInt(identifier)
         }
 
@@ -259,18 +259,49 @@ sealed class ConstantPoolEntry {
         }
     }
 
+    class StringConstant(val identifier: Int) : ConstantPoolEntry() {
+        override fun toString(): String {
+            return "StringConstant(identifier=$identifier)"
+        }
+
+        override fun dump(stream: DataOutputStream) {
+            stream.writeByte(0x09)
+            stream.writeInt(identifier)
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other !is StringConstant) return false
+
+            if (identifier != other.identifier) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return identifier
+        }
+
+        companion object {
+            fun fromStream(stream: DataInputStream): StringConstant {
+                return StringConstant(stream.readInt())
+            }
+        }
+    }
+
     companion object {
         fun fromStream(stream: DataInputStream): ConstantPoolEntry {
             val type = stream.readByte()
             return when (type) {
-                1.toByte() -> Utf8Constant.fromStream(stream)
-                2.toByte() -> ByteConstant.fromStream(stream)
-                3.toByte() -> ShortConstant.fromStream(stream)
-                4.toByte() -> IntConstant.fromStream(stream)
-                5.toByte() -> LongConstant.fromStream(stream)
-                6.toByte() -> FloatConstant.fromStream(stream)
-                7.toByte() -> DoubleConstant.fromStream(stream)
-                8.toByte() -> ClassConstant.fromStream(stream)
+                0x01.toByte() -> Utf8Constant.fromStream(stream)
+                0x02.toByte() -> ByteConstant.fromStream(stream)
+                0x03.toByte() -> ShortConstant.fromStream(stream)
+                0x04.toByte() -> IntConstant.fromStream(stream)
+                0x05.toByte() -> LongConstant.fromStream(stream)
+                0x06.toByte() -> FloatConstant.fromStream(stream)
+                0x07.toByte() -> DoubleConstant.fromStream(stream)
+                0x08.toByte() -> ClassConstant.fromStream(stream)
+                0x09.toByte() -> StringConstant.fromStream(stream)
                 else -> throw Exception("Unknown constant pool entry type: $type")
             }
         }

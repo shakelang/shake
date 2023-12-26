@@ -2,7 +2,7 @@
 
 package com.shakelang.shake.bytecode.interpreter
 
-import com.shakelang.shake.util.testlib.shouldContainExactly
+import com.shakelang.util.testlib.shouldContainExactly
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe

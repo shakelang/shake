@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import java.io.File
 
 fun Project.useKotest() {
-    apply(plugin="io.kotest.multiplatform")
+    apply(plugin = "io.kotest.multiplatform")
     kotlin.dependencies.kotest()
     tasks.withType(Test::class.java).configureEach {
         useJUnitPlatform()

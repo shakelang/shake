@@ -3,7 +3,7 @@ package com.shakelang.shake.shasambly.shasp.lexer
 import com.shakelang.shake.lexer.token.ShasPToken
 import com.shakelang.shake.shasambly.shasp.lexer.token.OnDemandLexingShasPTokenInputStream
 import com.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenBasedInputStream
-import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 
 class ShasPLexer(
     input: CharacterInputStream

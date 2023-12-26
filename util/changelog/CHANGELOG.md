@@ -41,3 +41,17 @@ Update com.shakelang.shake.util:shason to 0.3.0
 Update com.shakelang.shake.util:common-io to 0.3.0
 Update com.shakelang.shake.util:parseutils to 0.2.4
 Update com.shakelang.shake.util:shason to 0.3.1
+### 0.6.5
+Update com.shakelang.shake.util:primitives to 0.4.0
+Update com.shakelang.shake.util:common-io to 0.3.1
+Update com.shakelang.shake.util:parseutils to 0.2.5
+Update com.shakelang.shake.util:shason to 0.3.2
+### 0.7.0
+Move `com.shakelang.shake.util` to `com.shakelang.util`
+Update com.shakelang.util:colorlib to 0.3.0
+Update com.shakelang.util:common-io to 0.4.0
+Update com.shakelang.util:environment to 0.3.0
+Update com.shakelang.util:markdown to 0.2.0
+Update com.shakelang.util:parseutils to 0.3.0
+Update com.shakelang.util:primitives to 0.5.0
+Update com.shakelang.util:shason to 0.4.0

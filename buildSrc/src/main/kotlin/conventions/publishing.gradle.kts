@@ -96,7 +96,7 @@ afterEvaluate {
 //                }
 //            }
 
-            if(githubPackages) maven("GitHub") {
+            if (githubPackages) maven("GitHub") {
                 name = "GitHub"
                 url = uri("https://maven.pkg.github.com/shakelang/shake")
 
@@ -115,7 +115,7 @@ afterEvaluate {
                 }
             }
 
-            if(mavenLocal) mavenLocal()
+            if (mavenLocal) mavenLocal()
         }
 
         publications.withType<MavenPublication> {

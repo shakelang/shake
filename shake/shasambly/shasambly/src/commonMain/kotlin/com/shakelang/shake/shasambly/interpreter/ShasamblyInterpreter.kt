@@ -2,8 +2,8 @@
 
 package com.shakelang.shake.shasambly.interpreter
 
-import com.shakelang.shake.util.primitives.bytes.toBytes
-import com.shakelang.shake.util.primitives.bytes.toHexString
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toHexString
 
 class ShasamblyInterpreter(
     memorySize: Int,

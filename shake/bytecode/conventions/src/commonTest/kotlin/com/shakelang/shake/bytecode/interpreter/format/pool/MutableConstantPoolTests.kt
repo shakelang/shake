@@ -1,9 +1,9 @@
 package com.shakelang.shake.bytecode.interpreter.format.pool
 
-import com.shakelang.shake.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.DataOutputStream
-import com.shakelang.shake.util.primitives.bytes.toBytes
+import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.primitives.bytes.toBytes
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -109,7 +109,7 @@ class MutableConstantPoolTests : FreeSpec({
         )
         pool.getUtf8(0) shouldBe ConstantPoolEntry.Utf8Constant("test")
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getUtf8(1)
         }
     }
@@ -123,7 +123,7 @@ class MutableConstantPoolTests : FreeSpec({
         )
         pool.getByte(1) shouldBe ConstantPoolEntry.ByteConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getByte(0)
         }
     }
@@ -137,7 +137,7 @@ class MutableConstantPoolTests : FreeSpec({
         )
         pool.getShort(1) shouldBe ConstantPoolEntry.ShortConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getShort(0)
         }
     }
@@ -151,7 +151,7 @@ class MutableConstantPoolTests : FreeSpec({
         )
         pool.getInt(1) shouldBe ConstantPoolEntry.IntConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getInt(0)
         }
     }
@@ -165,7 +165,7 @@ class MutableConstantPoolTests : FreeSpec({
         )
         pool.getLong(1) shouldBe ConstantPoolEntry.LongConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getLong(0)
         }
     }
@@ -179,7 +179,7 @@ class MutableConstantPoolTests : FreeSpec({
         )
         pool.getFloat(1) shouldBe ConstantPoolEntry.FloatConstant(0f)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getFloat(0)
         }
     }
@@ -193,7 +193,7 @@ class MutableConstantPoolTests : FreeSpec({
         )
         pool.getDouble(1) shouldBe ConstantPoolEntry.DoubleConstant(0.0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getDouble(0)
         }
     }
@@ -207,7 +207,7 @@ class MutableConstantPoolTests : FreeSpec({
         )
         pool.getClass(1) shouldBe ConstantPoolEntry.ClassConstant(0)
 
-        shouldThrow<ClassCastException> {
+        shouldThrow<ConstantPoolTypeException> {
             pool.getClass(0)
         }
     }

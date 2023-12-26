@@ -1,9 +1,17 @@
 package com.shakelang.shake.bytecode.interpreter.format.pool
 
-import com.shakelang.shake.util.io.streaming.input.DataInputStream
-import com.shakelang.shake.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.DataInputStream
+import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.DataOutputStream
+
+open class ConstantPoolException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)
+
+open class ConstantPoolOverflowException(message: String? = null, cause: Throwable? = null) :
+    ConstantPoolException(message, cause)
+
+open class ConstantPoolTypeException(message: String? = null, cause: Throwable? = null) :
+    ConstantPoolException(message, cause)
 
 /**
  * A ConstantPool is a list of [ConstantPoolEntry]s
@@ -27,84 +35,102 @@ open class ConstantPool(
 ) : List<ConstantPoolEntry> by entries {
 
     /**
-     * Check if the constant at the given [identifier] is a [ConstantPoolEntry.Utf8Constant]
-     * @param identifier The identifier of the constant
-     * @return If the constant at the given [identifier] is a [ConstantPoolEntry.Utf8Constant]
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.Utf8Constant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.Utf8Constant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun isUtf8(identifier: Int) = entries[identifier] is ConstantPoolEntry.Utf8Constant
+    fun isUtf8(index: Int) = get(index) is ConstantPoolEntry.Utf8Constant
 
     /**
-     * Check if the constant at the given [identifier] is a [ConstantPoolEntry.ByteConstant]
-     * @param identifier The identifier of the constant
-     * @return If the constant at the given [identifier] is a [ConstantPoolEntry.ByteConstant]
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.ByteConstant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.ByteConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun isByte(identifier: Int) = entries[identifier] is ConstantPoolEntry.ByteConstant
+    fun isByte(index: Int) = get(index) is ConstantPoolEntry.ByteConstant
 
     /**
-     * Check if the constant at the given [identifier] is a [ConstantPoolEntry.ShortConstant]
-     * @param identifier The identifier of the constant
-     * @return If the constant at the given [identifier] is a [ConstantPoolEntry.ShortConstant]
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.ShortConstant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.ShortConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun isShort(identifier: Int) = entries[identifier] is ConstantPoolEntry.ShortConstant
+    fun isShort(index: Int) = get(index) is ConstantPoolEntry.ShortConstant
 
     /**
-     * Check if the constant at the given [identifier] is a [ConstantPoolEntry.IntConstant]
-     * @param identifier The identifier of the constant
-     * @return If the constant at the given [identifier] is a [ConstantPoolEntry.IntConstant]
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.IntConstant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.IntConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun isInt(identifier: Int) = entries[identifier] is ConstantPoolEntry.IntConstant
+    fun isInt(index: Int) = get(index) is ConstantPoolEntry.IntConstant
 
     /**
-     * Check if the constant at the given [identifier] is a [ConstantPoolEntry.LongConstant]
-     * @param identifier The identifier of the constant
-     * @return If the constant at the given [identifier] is a [ConstantPoolEntry.LongConstant]
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.LongConstant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.LongConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun isLong(identifier: Int) = entries[identifier] is ConstantPoolEntry.LongConstant
+    fun isLong(index: Int) = get(index) is ConstantPoolEntry.LongConstant
 
     /**
-     * Check if the constant at the given [identifier] is a [ConstantPoolEntry.FloatConstant]
-     * @param identifier The identifier of the constant
-     * @return If the constant at the given [identifier] is a [ConstantPoolEntry.FloatConstant]
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.FloatConstant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.FloatConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun isFloat(identifier: Int) = entries[identifier] is ConstantPoolEntry.FloatConstant
+    fun isFloat(index: Int) = get(index) is ConstantPoolEntry.FloatConstant
 
     /**
-     * Check if the constant at the given [identifier] is a [ConstantPoolEntry.DoubleConstant]
-     * @param identifier The identifier of the constant
-     * @return If the constant at the given [identifier] is a [ConstantPoolEntry.DoubleConstant]
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.DoubleConstant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.DoubleConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun isDouble(identifier: Int) = entries[identifier] is ConstantPoolEntry.DoubleConstant
+    fun isDouble(index: Int) = get(index) is ConstantPoolEntry.DoubleConstant
 
     /**
-     * Check if the constant at the given [identifier] is a [ConstantPoolEntry.ClassConstant]
-     * @param identifier The identifier of the constant
-     * @return If the constant at the given [identifier] is a [ConstantPoolEntry.ClassConstant]
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.ClassConstant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.ClassConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun isClass(identifier: Int) = entries[identifier] is ConstantPoolEntry.ClassConstant
+    fun isClass(index: Int) = get(index) is ConstantPoolEntry.ClassConstant
+
+    /**
+     * Check if the constant at the given [index] is a [ConstantPoolEntry.StringConstant]
+     * @param index The identifier of the constant
+     * @return If the constant at the given [index] is a [ConstantPoolEntry.StringConstant]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun isString(index: Int) = get(index) is ConstantPoolEntry.StringConstant
+
+    override operator fun get(index: Int): ConstantPoolEntry {
+        try {
+            return entries[index]
+        } catch (e: IndexOutOfBoundsException) {
+            throw ConstantPoolOverflowException("ConstantPool overflow at $index", e)
+        }
+    }
 
     /**
      * Get the constant at the given [identifier] as a [ConstantPoolEntry.Utf8Constant]
@@ -114,77 +140,114 @@ open class ConstantPool(
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getUtf8(identifier: Int) = entries[identifier] as ConstantPoolEntry.Utf8Constant
+    fun getUtf8(identifier: Int): ConstantPoolEntry.Utf8Constant {
+        if (!isUtf8(identifier)) throw ConstantPoolTypeException("Constant at $identifier is not a Utf8Constant")
+        return get(identifier) as ConstantPoolEntry.Utf8Constant
+    }
 
     /**
-     * Get the constant at the given [identifier] as a [ConstantPoolEntry.ByteConstant]
-     * @param identifier The identifier of the constant
-     * @return The constant at the given [identifier] as a [ConstantPoolEntry.ByteConstant]
+     * Get the constant at the given [index] as a [ConstantPoolEntry.ByteConstant]
+     * @param index The identifier of the constant
+     * @return The constant at the given [index] as a [ConstantPoolEntry.ByteConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getByte(identifier: Int) = entries[identifier] as ConstantPoolEntry.ByteConstant
+    fun getByte(index: Int): ConstantPoolEntry.ByteConstant {
+        if (!isByte(index)) throw ConstantPoolTypeException("Constant at $index is not a ByteConstant")
+        return get(index) as ConstantPoolEntry.ByteConstant
+    }
 
     /**
-     * Get the constant at the given [identifier] as a [ConstantPoolEntry.ShortConstant]
-     * @param identifier The identifier of the constant
-     * @return The constant at the given [identifier] as a [ConstantPoolEntry.ShortConstant]
+     * Get the constant at the given [index] as a [ConstantPoolEntry.ShortConstant]
+     * @param index The identifier of the constant
+     * @return The constant at the given [index] as a [ConstantPoolEntry.ShortConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getShort(identifier: Int) = entries[identifier] as ConstantPoolEntry.ShortConstant
+    fun getShort(index: Int): ConstantPoolEntry.ShortConstant {
+        if (!isShort(index)) throw ConstantPoolTypeException("Constant at $index is not a ShortConstant")
+        return get(index) as ConstantPoolEntry.ShortConstant
+    }
 
     /**
-     * Get the constant at the given [identifier] as a [ConstantPoolEntry.IntConstant]
-     * @param identifier The identifier of the constant
-     * @return The constant at the given [identifier] as a [ConstantPoolEntry.IntConstant]
+     * Get the constant at the given [index] as a [ConstantPoolEntry.IntConstant]
+     * @param index The identifier of the constant
+     * @return The constant at the given [index] as a [ConstantPoolEntry.IntConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getInt(identifier: Int) = entries[identifier] as ConstantPoolEntry.IntConstant
+    fun getInt(index: Int): ConstantPoolEntry.IntConstant {
+        if (!isInt(index)) throw ConstantPoolTypeException("Constant at $index is not a IntConstant")
+        return get(index) as ConstantPoolEntry.IntConstant
+    }
 
     /**
-     * Get the constant at the given [identifier] as a [ConstantPoolEntry.LongConstant]
-     * @param identifier The identifier of the constant
-     * @return The constant at the given [identifier] as a [ConstantPoolEntry.LongConstant]
+     * Get the constant at the given [index] as a [ConstantPoolEntry.LongConstant]
+     * @param index The identifier of the constant
+     * @return The constant at the given [index] as a [ConstantPoolEntry.LongConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getLong(identifier: Int) = entries[identifier] as ConstantPoolEntry.LongConstant
+    fun getLong(index: Int): ConstantPoolEntry.LongConstant {
+        if (!isLong(index)) throw ConstantPoolTypeException("Constant at $index is not a LongConstant")
+        return get(index) as ConstantPoolEntry.LongConstant
+    }
 
     /**
-     * Get the constant at the given [identifier] as a [ConstantPoolEntry.FloatConstant]
-     * @param identifier The identifier of the constant
-     * @return The constant at the given [identifier] as a [ConstantPoolEntry.FloatConstant]
+     * Get the constant at the given [index] as a [ConstantPoolEntry.FloatConstant]
+     * @param index The identifier of the constant
+     * @return The constant at the given [index] as a [ConstantPoolEntry.FloatConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getFloat(identifier: Int) = entries[identifier] as ConstantPoolEntry.FloatConstant
+    fun getFloat(index: Int): ConstantPoolEntry.FloatConstant {
+        if (!isFloat(index)) throw ConstantPoolTypeException("Constant at $index is not a FloatConstant")
+        return get(index) as ConstantPoolEntry.FloatConstant
+    }
 
     /**
-     * Get the constant at the given [identifier] as a [ConstantPoolEntry.DoubleConstant]
-     * @param identifier The identifier of the constant
-     * @return The constant at the given [identifier] as a [ConstantPoolEntry.DoubleConstant]
+     * Get the constant at the given [index] as a [ConstantPoolEntry.DoubleConstant]
+     * @param index The identifier of the constant
+     * @return The constant at the given [index] as a [ConstantPoolEntry.DoubleConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getDouble(identifier: Int) = entries[identifier] as ConstantPoolEntry.DoubleConstant
+    fun getDouble(index: Int): ConstantPoolEntry.DoubleConstant {
+        if (!isDouble(index)) throw ConstantPoolTypeException("Constant at $index is not a DoubleConstant")
+        return get(index) as ConstantPoolEntry.DoubleConstant
+    }
 
     /**
-     * Get the constant at the given [identifier] as a [ConstantPoolEntry.ClassConstant]
-     * @param identifier The identifier of the constant
-     * @return The constant at the given [identifier] as a [ConstantPoolEntry.ClassConstant]
+     * Get the constant at the given [index] as a [ConstantPoolEntry.ClassConstant]
+     * @param index The identifier of the constant
+     * @return The constant at the given [index] as a [ConstantPoolEntry.ClassConstant]
      *
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getClass(identifier: Int) = entries[identifier] as ConstantPoolEntry.ClassConstant
+    fun getClass(index: Int): ConstantPoolEntry.ClassConstant {
+        if (!isClass(index)) throw ConstantPoolTypeException("Constant at $index is not a ClassConstant")
+        return get(index) as ConstantPoolEntry.ClassConstant
+    }
+
+    /**
+     * Get the constant at the given [index] as a [ConstantPoolEntry.StringConstant]
+     * @param index The identifier of the constant
+     * @return The constant at the given [index] as a [ConstantPoolEntry.StringConstant]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun getString(index: Int): ConstantPoolEntry.StringConstant {
+        if (!isString(index)) throw ConstantPoolTypeException("Constant at $index is not a StringConstant")
+        return get(index) as ConstantPoolEntry.StringConstant
+    }
 
     /**
      * Find the [ConstantPoolEntry.Utf8Constant] with the given [value]
@@ -344,6 +407,37 @@ open class ConstantPool(
     }
 
     /**
+     * Find the [ConstantPoolEntry.StringConstant] with the given [value]
+     * @param value The value of the [ConstantPoolEntry.StringConstant]
+     * @return The index of the [ConstantPoolEntry.StringConstant] with the given [value]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun findString(value: Int): Int? {
+        for (i in entries.indices) {
+            val entry = entries[i]
+            if (entry is ConstantPoolEntry.StringConstant && entry.identifier == value) {
+                return i
+            }
+        }
+        return null
+    }
+
+    /**
+     * Find the [ConstantPoolEntry.StringConstant] with the given [value]
+     * @param value The value of the [ConstantPoolEntry.StringConstant]
+     * @return The index of the [ConstantPoolEntry.StringConstant] with the given [value]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun findString(value: String): Int? {
+        val identifier = findUtf8(value) ?: return null
+        return findString(identifier)
+    }
+
+    /**
      * Dump the [ConstantPool] to the given [stream]
      * @param stream The [DataOutputStream] to dump the [ConstantPool] to
      *
@@ -431,6 +525,66 @@ open class ConstantPool(
         fun fromList(list: List<ConstantPoolEntry>): ConstantPool {
             return ConstantPool(list)
         }
+    }
+
+    fun forEach(action: (ConstantPoolEntry) -> Unit) {
+        entries.forEach(action)
+    }
+
+    fun forEachIndexed(action: (Int, ConstantPoolEntry) -> Unit) {
+        entries.forEachIndexed(action)
+    }
+
+    fun forEachUtf8(action: (ConstantPoolEntry.Utf8Constant) -> Unit) {
+        entries.forEach {
+            if (it is ConstantPoolEntry.Utf8Constant) action(it)
+        }
+    }
+
+    fun forEachByte(action: (ConstantPoolEntry.ByteConstant) -> Unit) {
+        entries.forEach {
+            if (it is ConstantPoolEntry.ByteConstant) action(it)
+        }
+    }
+
+    fun forEachShort(action: (ConstantPoolEntry.ShortConstant) -> Unit) {
+        entries.forEach {
+            if (it is ConstantPoolEntry.ShortConstant) action(it)
+        }
+    }
+
+    fun forEachInt(action: (ConstantPoolEntry.IntConstant) -> Unit) {
+        entries.forEach {
+            if (it is ConstantPoolEntry.IntConstant) action(it)
+        }
+    }
+
+    fun forEachLong(action: (ConstantPoolEntry.LongConstant) -> Unit) {
+        entries.forEach {
+            if (it is ConstantPoolEntry.LongConstant) action(it)
+        }
+    }
+
+    fun forEachFloat(action: (ConstantPoolEntry.FloatConstant) -> Unit) {
+        entries.forEach {
+            if (it is ConstantPoolEntry.FloatConstant) action(it)
+        }
+    }
+
+    fun forEachDouble(action: (ConstantPoolEntry.DoubleConstant) -> Unit) {
+        entries.forEach {
+            if (it is ConstantPoolEntry.DoubleConstant) action(it)
+        }
+    }
+
+    fun forEachClass(action: (ConstantPoolEntry.ClassConstant) -> Unit) {
+        entries.forEach {
+            if (it is ConstantPoolEntry.ClassConstant) action(it)
+        }
+    }
+
+    override fun toString(): String {
+        return "ConstantPool(entries=$entries)"
     }
 }
 
@@ -575,6 +729,29 @@ class MutableConstantPool(
     fun createClass(value: String) = createClass(resolveUtf8(value))
 
     /**
+     * Create a [ConstantPoolEntry.StringConstant] with the given [value]
+     * @param value The identifier of the [ConstantPoolEntry.StringConstant]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun createString(value: Int): Int {
+        val entry = ConstantPoolEntry.StringConstant(value)
+        val index = entries.size
+        add(entry)
+        return index
+    }
+
+    /**
+     * Create a [ConstantPoolEntry.StringConstant] with the given [value]
+     * @param value The name of the [ConstantPoolEntry.StringConstant]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun createString(value: String) = createString(resolveUtf8(value))
+
+    /**
      * Resolve the [ConstantPoolEntry.Utf8Constant] with the given [value]
      * If a [ConstantPoolEntry.Utf8Constant] with the given [value] does not exist, it will be created
      * @param value The identifier of the [ConstantPoolEntry.Utf8Constant]
@@ -672,6 +849,28 @@ class MutableConstantPool(
      * @version 0.1.0
      */
     fun resolveClass(value: String) = findClass(value) ?: createClass(value)
+
+    /**
+     * Resolve the [ConstantPoolEntry.StringConstant] with the given [value]
+     * If a [ConstantPoolEntry.StringConstant] with the given [value] does not exist, it will be created
+     * @param value The identifier of the [ConstantPoolEntry.StringConstant]
+     * @return The index of the [ConstantPoolEntry.StringConstant] with the given [value]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun resolveString(value: Int) = findString(value) ?: createString(value)
+
+    /**
+     * Resolve the [ConstantPoolEntry.StringConstant] with the given [value]
+     * If a [ConstantPoolEntry.StringConstant] with the given [value] does not exist, it will be created
+     * @param value The name of the [ConstantPoolEntry.StringConstant]
+     * @return The index of the [ConstantPoolEntry.StringConstant] with the given [value]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun resolveString(value: String) = findString(value) ?: createString(value)
 
     companion object {
 

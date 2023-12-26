@@ -2,10 +2,10 @@ package com.shakelang.shake.bytecode.interpreter.format.attribute
 
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
-import com.shakelang.shake.util.io.streaming.input.DataInputStream
-import com.shakelang.shake.util.io.streaming.input.dataStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.DataOutputStream
+import com.shakelang.util.io.streaming.input.DataInputStream
+import com.shakelang.util.io.streaming.input.dataStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.DataOutputStream
 
 open class CodeAttribute(
     override val pool: ConstantPool,
@@ -16,14 +16,6 @@ open class CodeAttribute(
     open val exceptionTable: Array<ExceptionTableEntry>,
     open val attributes: Array<Attribute>
 ) : Attribute {
-
-    init {
-        checkAttributeName()
-    }
-
-    fun checkAttributeName() {
-        if (name != "Code") throw IllegalArgumentException("Name must be 'Code' (is $name). Pointer: $nameConstant")
-    }
 
     override fun equals(other: Any?): Boolean = compareHelper(other)
     override fun hashCode(): Int = hashCodeHelper()

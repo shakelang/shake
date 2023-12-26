@@ -2,10 +2,11 @@ package com.shakelang.shake.lexer
 
 import com.shakelang.shake.lexer.token.ShakeToken
 import com.shakelang.shake.lexer.token.ShakeTokenType
-import com.shakelang.shake.util.parseutils.characters.streaming.CharacterInputStream
-import com.shakelang.shake.util.parseutils.characters.streaming.SourceCharacterInputStream
+import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+
 @Suppress("unused")
 class LexerBaseTests : FreeSpec({
 
@@ -21,7 +22,10 @@ class LexerBaseTests : FreeSpec({
     "string" {
         generateToken("\"\"", ShakeTokenType.STRING).value shouldBe ""
         generateToken("\"afvne9214 ro\"", ShakeTokenType.STRING).value shouldBe "afvne9214 ro"
-        generateToken("\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\"", ShakeTokenType.STRING).value shouldBe "\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000"
+        generateToken(
+            "\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\"",
+            ShakeTokenType.STRING
+        ).value shouldBe "\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000"
     }
 
     "character" {

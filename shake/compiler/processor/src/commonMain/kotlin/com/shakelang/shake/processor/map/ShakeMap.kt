@@ -5,16 +5,17 @@ import com.shakelang.shake.processor.program.types.*
 import com.shakelang.shake.processor.program.types.code.ShakeCode
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 import com.shakelang.shake.processor.program.types.code.values.ShakeValue
-import com.shakelang.shake.util.io.streaming.input.ByteArrayInputStream
-import com.shakelang.shake.util.io.streaming.input.DataInputStream
-import com.shakelang.shake.util.io.streaming.input.InputStream
-import com.shakelang.shake.util.io.streaming.output.ByteArrayOutputStream
-import com.shakelang.shake.util.io.streaming.output.OutputStream
-import com.shakelang.shake.util.pointer.PointerList
-import com.shakelang.shake.util.pointer.latePoint
-import com.shakelang.shake.util.pointer.values
-import com.shakelang.shake.util.primitives.bytes.toBytes
-import com.shakelang.shake.util.shason.json
+import com.shakelang.util.io.streaming.input.ByteArrayInputStream
+import com.shakelang.util.io.streaming.input.DataInputStream
+import com.shakelang.util.io.streaming.input.InputStream
+import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
+import com.shakelang.util.io.streaming.output.OutputStream
+import com.shakelang.util.pointer.PointerList
+import com.shakelang.util.pointer.latePoint
+import com.shakelang.util.pointer.values
+import com.shakelang.util.primitives.bits.*
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.shason.json
 
 class ShakeMap(
 
@@ -776,98 +777,6 @@ class ShakeMapField(
     }
 }
 
-val Int.bit0: Boolean get() = (this and 0x01) != 0
-val Int.bit1: Boolean get() = (this and 0x02) != 0
-val Int.bit2: Boolean get() = (this and 0x04) != 0
-val Int.bit3: Boolean get() = (this and 0x08) != 0
-val Int.bit4: Boolean get() = (this and 0x10) != 0
-val Int.bit5: Boolean get() = (this and 0x20) != 0
-val Int.bit6: Boolean get() = (this and 0x40) != 0
-val Int.bit7: Boolean get() = (this and 0x80) != 0
-val Int.bit8: Boolean get() = (this and 0x100) != 0
-val Int.bit9: Boolean get() = (this and 0x200) != 0
-val Int.bit10: Boolean get() = (this and 0x400) != 0
-val Int.bit11: Boolean get() = (this and 0x800) != 0
-val Int.bit12: Boolean get() = (this and 0x1000) != 0
-val Int.bit13: Boolean get() = (this and 0x2000) != 0
-val Int.bit14: Boolean get() = (this and 0x4000) != 0
-val Int.bit15: Boolean get() = (this and 0x8000) != 0
-val Int.bit16: Boolean get() = (this and 0x10000) != 0
-val Int.bit17: Boolean get() = (this and 0x20000) != 0
-val Int.bit18: Boolean get() = (this and 0x40000) != 0
-val Int.bit19: Boolean get() = (this and 0x80000) != 0
-val Int.bit20: Boolean get() = (this and 0x100000) != 0
-val Int.bit21: Boolean get() = (this and 0x200000) != 0
-val Int.bit22: Boolean get() = (this and 0x400000) != 0
-val Int.bit23: Boolean get() = (this and 0x800000) != 0
-val Int.bit24: Boolean get() = (this and 0x1000000) != 0
-val Int.bit25: Boolean get() = (this and 0x2000000) != 0
-val Int.bit26: Boolean get() = (this and 0x4000000) != 0
-val Int.bit27: Boolean get() = (this and 0x8000000) != 0
-val Int.bit28: Boolean get() = (this and 0x10000000) != 0
-val Int.bit29: Boolean get() = (this and 0x20000000) != 0
-val Int.bit30: Boolean get() = (this and 0x40000000) != 0
-val Int.bit31: Boolean get() = (this and 0x80000000u.toInt()) != 0
-
-val Byte.bit0: Boolean get() = this.toInt().bit0
-val Byte.bit1: Boolean get() = this.toInt().bit1
-val Byte.bit2: Boolean get() = this.toInt().bit2
-val Byte.bit3: Boolean get() = this.toInt().bit3
-val Byte.bit4: Boolean get() = this.toInt().bit4
-val Byte.bit5: Boolean get() = this.toInt().bit5
-val Byte.bit6: Boolean get() = this.toInt().bit6
-val Byte.bit7: Boolean get() = this.toUByte().toInt().bit7
-
-val Short.bit0: Boolean get() = this.toInt().bit0
-val Short.bit1: Boolean get() = this.toInt().bit1
-val Short.bit2: Boolean get() = this.toInt().bit2
-val Short.bit3: Boolean get() = this.toInt().bit3
-val Short.bit4: Boolean get() = this.toInt().bit4
-val Short.bit5: Boolean get() = this.toInt().bit5
-val Short.bit6: Boolean get() = this.toInt().bit6
-val Short.bit7: Boolean get() = this.toInt().bit7
-val Short.bit8: Boolean get() = this.toInt().bit8
-val Short.bit9: Boolean get() = this.toInt().bit9
-val Short.bit10: Boolean get() = this.toInt().bit10
-val Short.bit11: Boolean get() = this.toInt().bit11
-val Short.bit12: Boolean get() = this.toInt().bit12
-val Short.bit13: Boolean get() = this.toInt().bit13
-val Short.bit14: Boolean get() = this.toInt().bit14
-val Short.bit15: Boolean get() = this.toUShort().toInt().bit15
-
-fun Int.setBit0(value: Boolean): Int = if (value) this or 0x01 else this and 0xFFFFFFFEu.toInt()
-fun Int.setBit1(value: Boolean): Int = if (value) this or 0x02 else this and 0xFFFFFFFDu.toInt()
-fun Int.setBit2(value: Boolean): Int = if (value) this or 0x04 else this and 0xFFFFFFFBu.toInt()
-fun Int.setBit3(value: Boolean): Int = if (value) this or 0x08 else this and 0xFFFFFFF7u.toInt()
-fun Int.setBit4(value: Boolean): Int = if (value) this or 0x10 else this and 0xFFFFFFEFu.toInt()
-fun Int.setBit5(value: Boolean): Int = if (value) this or 0x20 else this and 0xFFFFFFDFu.toInt()
-fun Int.setBit6(value: Boolean): Int = if (value) this or 0x40 else this and 0xFFFFFFBFu.toInt()
-fun Int.setBit7(value: Boolean): Int = if (value) this or 0x80 else this and 0xFFFFFF7Fu.toInt()
-fun Int.setBit8(value: Boolean): Int = if (value) this or 0x100 else this and 0xFFFFFEFFu.toInt()
-fun Int.setBit9(value: Boolean): Int = if (value) this or 0x200 else this and 0xFFFFFDFFu.toInt()
-fun Int.setBit10(value: Boolean): Int = if (value) this or 0x400 else this and 0xFFFFFBFFu.toInt()
-fun Int.setBit11(value: Boolean): Int = if (value) this or 0x800 else this and 0xFFFFF7FFu.toInt()
-fun Int.setBit12(value: Boolean): Int = if (value) this or 0x1000 else this and 0xFFFFEFFFu.toInt()
-fun Int.setBit13(value: Boolean): Int = if (value) this or 0x2000 else this and 0xFFFFFBFFu.toInt()
-fun Int.setBit14(value: Boolean): Int = if (value) this or 0x4000 else this and 0xFFFFF7FFu.toInt()
-fun Int.setBit15(value: Boolean): Int = if (value) this or 0x8000 else this and 0xFFFF7FFFu.toInt()
-fun Int.setBit16(value: Boolean): Int = if (value) this or 0x10000 else this and 0xFFFEFFFFu.toInt()
-fun Int.setBit17(value: Boolean): Int = if (value) this or 0x20000 else this and 0xFFFDFFFFu.toInt()
-fun Int.setBit18(value: Boolean): Int = if (value) this or 0x40000 else this and 0xFFFBFFFFu.toInt()
-fun Int.setBit19(value: Boolean): Int = if (value) this or 0x80000 else this and 0xFFF7FFFFu.toInt()
-fun Int.setBit20(value: Boolean): Int = if (value) this or 0x100000 else this and 0xFFEFFFFFu.toInt()
-fun Int.setBit21(value: Boolean): Int = if (value) this or 0x200000 else this and 0xFFDFFFFFu.toInt()
-fun Int.setBit22(value: Boolean): Int = if (value) this or 0x400000 else this and 0xFFBFFFFFu.toInt()
-fun Int.setBit23(value: Boolean): Int = if (value) this or 0x800000 else this and 0xFF7FFFFFu.toInt()
-fun Int.setBit24(value: Boolean): Int = if (value) this or 0x1000000 else this and 0xFEFFFFFFu.toInt()
-fun Int.setBit25(value: Boolean): Int = if (value) this or 0x2000000 else this and 0xFDFFFFFFu.toInt()
-fun Int.setBit26(value: Boolean): Int = if (value) this or 0x4000000 else this and 0xFBFFFFFFu.toInt()
-fun Int.setBit27(value: Boolean): Int = if (value) this or 0x8000000 else this and 0xF7FFFFFFu.toInt()
-fun Int.setBit28(value: Boolean): Int = if (value) this or 0x10000000 else this and 0xEFFFFFFFu.toInt()
-fun Int.setBit29(value: Boolean): Int = if (value) this or 0x20000000 else this and 0xDFFFFFFFu.toInt()
-fun Int.setBit30(value: Boolean): Int = if (value) this or 0x40000000 else this and 0xBFFFFFFFu.toInt()
-fun Int.setBit31(value: Boolean): Int = if (value) this or 0x80000000u.toInt() else this and 0x7FFFFFFFu.toInt()
-
 class ShakeMapCreator {
 
     val constants = mutableListOf<ShakeMapConstant>()
@@ -883,9 +792,6 @@ class ShakeMapCreator {
 
     fun visit(project: ShakeProject) {
         project.subpackages.forEach { this.project_packages.add(visit(it)) }
-        project.classes.forEach { this.project_classes.add(visit(it)) }
-        project.functions.forEach { this.project_methods.add(visit(it)) }
-        project.fields.forEach { this.project_fields.add(visit(it)) }
     }
 
     fun visit(package_: ShakePackage): Int {
@@ -1084,9 +990,18 @@ class MapAssembledProject(
 ) : ShakeProject {
 
     override val subpackages: List<ShakePackage> = packagePointers.values()
-    override val classes: List<ShakeClass> = classPointers.values()
-    override val functions: List<ShakeMethod> = methodPointers.values()
-    override val fields: List<ShakeField> = fieldPointers.values()
+    override fun phase1() {
+        subpackages.forEach { it.phase1() }
+    }
+    override fun phase2() {
+        subpackages.forEach { it.phase2() }
+    }
+    override fun phase3() {
+        subpackages.forEach { it.phase3() }
+    }
+    override fun phase4() {
+        subpackages.forEach { it.phase4() }
+    }
 }
 
 class MapAssembledPackage(
@@ -1103,11 +1018,17 @@ class MapAssembledPackage(
     override val classes: List<ShakeClass> get() = classPointers.values()
     override val functions: List<ShakeMethod> get() = methodPointers.values()
     override val fields: List<ShakeField> get() = fieldPointers.values()
+
+    override fun phase1() {}
+    override fun phase2() {}
+    override fun phase3() {}
+    override fun phase4() {}
 }
 
 class MapAssembledClass(
     override val prj: ShakeProject,
     override var pkg: ShakePackage?,
+    override val clazz: ShakeClass?,
     override val parentScope: ShakeScope,
     override val staticScope: ShakeScope,
     override val instanceScope: ShakeScope,
@@ -1131,6 +1052,11 @@ class MapAssembledClass(
 
     override lateinit var interfaces: List<ShakeClass>
     override lateinit var superClass: ShakeClass
+
+    override fun phase1() {}
+    override fun phase2() {}
+    override fun phase3() {}
+    override fun phase4() {}
 }
 
 class MapAssembledMethod(
@@ -1154,7 +1080,10 @@ class MapAssembledMethod(
     override val isNative: Boolean,
     override val isOperator: Boolean,
     override val expanding: ShakeType?
-) : ShakeMethod
+) : ShakeMethod {
+    override fun phase3() {}
+    override fun phase4() {}
+}
 
 class MapAssembledConstructor(
     var clazz_: ShakeClass?,
@@ -1173,6 +1102,9 @@ class MapAssembledConstructor(
         set(value) {
             clazz_ = value
         }
+
+    override fun phase3() {}
+    override fun phase4() {}
 }
 
 class MapAssembledField(
@@ -1194,7 +1126,10 @@ class MapAssembledField(
     override val qualifiedName: String,
     override val initialValue: ShakeValue?,
     override val expanding: ShakeType?
-) : ShakeField
+) : ShakeField {
+    override fun phase3() {}
+    override fun phase4() {}
+}
 
 class ShakeAssembledObjectType(
     override var clazz: ShakeClass
@@ -1212,6 +1147,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
 
     val scopeUnit: ShakeScope = object : ShakeScope {
         override val parent = null
+        override val uniqueName: String
+            get() = "scopeUnit"
         override fun get(name: String): ShakeAssignable = error("Should not be called")
         override fun getFunctions(name: String) = error("Should not be called")
         override fun getClass(name: String) = error("Should not be called")
@@ -1282,6 +1219,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             point.init(
                 MapAssembledClass(
                     project,
+                    null,
                     null,
                     scopeUnit,
                     scopeUnit,
