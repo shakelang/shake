@@ -87,11 +87,11 @@ interface ShakeClass {
     fun getClass(descriptor: Array<String>) = getClass(descriptor.toList())
     fun getClass(descriptor: String) = classes.find { it.name == descriptor }
 
-    fun getMethods(descriptor: List<String>): List<ShakeMethod>? {
-        if (descriptor.isEmpty()) return null
+    fun getMethods(descriptor: List<String>): List<ShakeMethod> {
+        if (descriptor.isEmpty()) return emptyList()
         val methodName = descriptor.last()
         val classDescriptor = descriptor.dropLast(1)
-        val clz = getClass(classDescriptor) ?: return null
+        val clz = getClass(classDescriptor) ?: return emptyList()
         return clz.methods.filter { it.name == methodName }
     }
 

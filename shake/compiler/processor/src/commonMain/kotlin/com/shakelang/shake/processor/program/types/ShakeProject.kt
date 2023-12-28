@@ -31,7 +31,7 @@ interface ShakeProject {
     fun getFunctions(name: Array<String>): List<ShakeMethod> =
         getPackage(name.first())?.getFunctions(name.drop(1)) ?: emptyList()
 
-    fun getFunctions(name: String): List<ShakeMethod> = getFunctions(name.split("."))
+    fun getFunctions(name: String): List<ShakeMethod> = getFunctions(name.split(".", "/"))
 
     fun getField(name: List<String>): ShakeField? =
         getPackage(name.first())?.getField(name.drop(1))
@@ -39,7 +39,7 @@ interface ShakeProject {
     fun getField(name: Array<String>): ShakeField? =
         getPackage(name.first())?.getField(name.drop(1))
 
-    fun getField(name: String): ShakeField? = getField(name.split("."))
+    fun getField(name: String): ShakeField? = getField(name.split(".", "/"))
 
     fun toJson(): Map<String, Any?> {
         return mapOf(

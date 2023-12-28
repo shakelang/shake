@@ -68,12 +68,17 @@ open class CreationShakePackage(
     override fun phase1() {
         debug("phases", "Phase 1 of package $qualifiedName")
         this.files.forEach { file ->
+            val classes = mutableListOf<CreationShakeClass>()
             file.classes.forEach { clz ->
                 if (classes.any { it.name == clz.name }) {
                     throw IllegalStateException("Class ${clz.name} already exists")
                 }
-                classes.add(CreationShakeClass.from(baseProject, this, file.scope, clz))
+                val clazz = CreationShakeClass.from(baseProject, this, file.scope, clz)
+                classes.add(clazz)
             }
+            file.scope.initClasses(classes)
+            this.classes.addAll(classes)
+            classes.forEach { it.phase1() }
         }
         this.subpackages.forEach { it.phase1() }
     }
@@ -95,6 +100,8 @@ open class CreationShakePackage(
     override fun phase3() {
         debug("phases", "Phase 3 of package $qualifiedName")
         this.files.forEach { file ->
+            val functions = mutableListOf<CreationShakeMethod>()
+            val fields = mutableListOf<CreationShakeField>()
             file.functions.forEach {
                 val method = CreationShakeMethod.from(baseProject, this, file.scope, it)
                 functions.add(method)
@@ -103,6 +110,12 @@ open class CreationShakePackage(
                 val field = CreationShakeField.from(baseProject, this, file.scope, it)
                 fields.add(field)
             }
+
+            file.scope.initFunctions(functions)
+            file.scope.initFields(fields)
+
+            this.functions.addAll(functions)
+            this.fields.addAll(fields)
         }
         this.classes.forEach { it.phase3() }
         this.subpackages.forEach { it.phase3() }
@@ -125,7 +138,7 @@ open class CreationShakePackage(
         contents: ShakeFileNode
     ) {
         val imports: List<ShakeImportNode> = contents.children.filterIsInstance<ShakeImportNode>()
-        val scope: CreationShakeScope = FileScope(name, imports)
+        val scope = FileScope(name, imports)
         val classes: List<ShakeClassDeclarationNode> = contents.children.filterIsInstance<ShakeClassDeclarationNode>()
         val functions: List<ShakeFunctionDeclarationNode> = contents.children.filterIsInstance<ShakeFunctionDeclarationNode>()
         val fields: List<ShakeVariableDeclarationNode> = contents.children.filterIsInstance<ShakeVariableDeclarationNode>()
@@ -138,7 +151,10 @@ open class CreationShakePackage(
         override val project get() = baseProject
 
         override fun get(name: String): CreationShakeAssignable? {
-            return fields.find { it.name == name } ?: parent.get(name)
+            val field = fields.find { it.name == name }
+            if (field != null) debug("scope", "Searching for field $name in $uniqueName successful")
+            else debug("scope", "Searching for field $name in $uniqueName had no result")
+            return field ?: parent.get(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
@@ -146,7 +162,10 @@ open class CreationShakePackage(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
-            return functions.filter { it.name == name } + parent.getFunctions(name)
+            val functions = functions.filter { it.name == name }
+            if (functions.isNotEmpty()) debug("scope", "Searching for function $name in $uniqueName successful")
+            else debug("scope", "Searching for function $name in $uniqueName had no result")
+            return functions + parent.getFunctions(name)
         }
 
         override fun setFunctions(function: CreationShakeMethod) {
@@ -154,7 +173,11 @@ open class CreationShakePackage(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
-            return classes.find { it.name == name } ?: parent.getClass(name)
+            val clazz = classes.find { it.name == name }
+            println(classes.map { it.name })
+            if (clazz != null) debug("scope", "Searching for class $name in $uniqueName successful")
+            else debug("scope", "Searching for class $name in $uniqueName had no result")
+            return clazz ?: parent.getClass(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {
@@ -200,7 +223,7 @@ open class CreationShakePackage(
         private lateinit var fileClasses: List<CreationShakeClass>
 
         override val parent: CreationShakeScope
-            get() = baseProject.projectScope
+            get() = scope
 
         fun initFields(fields: List<CreationShakeField>) {
             if (this::fileFields.isInitialized) throw IllegalStateException("Cannot initialize fields twice")
@@ -259,7 +282,10 @@ open class CreationShakePackage(
 
         override fun get(name: String): CreationShakeAssignable? {
             lazyLoadImportedFields()
-            return importedFields.find { it.name == name } ?: parent.get(name)
+            val field = importedFields.find { it.name == name }
+            if (field != null) debug("scope", "Searching for field $name in $uniqueName successful")
+            else debug("scope", "Searching for field $name in $uniqueName had no result")
+            return field ?: parent.get(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
@@ -268,7 +294,10 @@ open class CreationShakePackage(
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
             lazyLoadImportedFunctions()
-            return importedFunctions?.filter { it.name == name }?.plus(parent.getFunctions(name)) ?: parent.getFunctions(name)
+            val functions = importedFunctions.filter { it.name == name }
+            if (functions.isNotEmpty()) debug("scope", "Searching for function $name in $uniqueName successful")
+            else debug("scope", "Searching for function $name in $uniqueName had no result")
+            return functions + parent.getFunctions(name)
         }
 
         override fun setFunctions(function: CreationShakeMethod) {
@@ -277,7 +306,10 @@ open class CreationShakePackage(
 
         override fun getClass(name: String): CreationShakeClass? {
             lazyLoadImportedClasses()
-            return importedClasses?.find { it.name == name } ?: parent.getClass(name)
+            val clazz = importedClasses.find { it.name == name }
+            if (clazz != null) debug("scope", "Searching for class $name in $uniqueName successful")
+            else debug("scope", "Searching for class $name in $uniqueName had no result")
+            return clazz ?: parent.getClass(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {
