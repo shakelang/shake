@@ -500,7 +500,7 @@ class MethodTests : FreeSpec({
 
     }
 
-    "method declaration (no params, void, operator) inside class" {
+    "method declaration (one param, int, operator) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
@@ -518,11 +518,10 @@ class MethodTests : FreeSpec({
         processor.finish()
 
         val project = processor.project
-        val method = project.getClass("test.Test")!!.getMethods("main")[0]
+        val method = project.getClass("test.Test")!!.getMethods("add")[0]
 
-        method.returnType shouldBe CreationShakeType.Primitive.VOID
-        method.parameters.size shouldBe 0
-        method.parameters shouldBe emptyList()
+        method.returnType shouldBe CreationShakeType.Primitive.INT
+        method.parameters.size shouldBe 1
         method.isFinal shouldBe false
         method.isStatic shouldBe false
         method.isAbstract shouldBe false

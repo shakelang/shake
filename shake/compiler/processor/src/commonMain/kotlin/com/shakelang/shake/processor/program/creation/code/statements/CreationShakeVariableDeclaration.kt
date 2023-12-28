@@ -19,7 +19,6 @@ class CreationShakeVariableDeclaration(
     override val isFinal: Boolean
 ) :
     CreationShakeDeclaration,
-    CreationShakeAssignable,
     CreationShakeStatement,
     ShakeVariableDeclaration {
     override var actualValue: CreationShakeValue? = initialValue

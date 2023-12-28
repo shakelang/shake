@@ -174,7 +174,6 @@ open class CreationShakePackage(
 
         override fun getClass(name: String): CreationShakeClass? {
             val clazz = classes.find { it.name == name }
-            println(classes.map { it.name })
             if (clazz != null) debug("scope", "Searching for class $name in $uniqueName successful")
             else debug("scope", "Searching for class $name in $uniqueName had no result")
             return clazz ?: parent.getClass(name)

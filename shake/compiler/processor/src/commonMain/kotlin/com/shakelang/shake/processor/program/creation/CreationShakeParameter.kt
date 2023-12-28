@@ -1,6 +1,8 @@
 package com.shakelang.shake.processor.program.creation
 
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeUsage
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
+import com.shakelang.shake.processor.program.creation.code.values.CreationShakeVariableUsage
 import com.shakelang.shake.processor.program.types.ShakeParameter
 import com.shakelang.shake.processor.program.types.ShakeType
 import com.shakelang.shake.processor.program.types.code.ShakeScope
@@ -11,9 +13,20 @@ class CreationShakeParameter(
     override val type: ShakeType,
     override var actualValue: CreationShakeValue? = null,
     override var actualType: ShakeType = type
-) : ShakeParameter, CreationShakeAssignable {
+) : ShakeParameter, CreationShakeDeclaration {
+
+    // TODO: THESE MAY NOT BE UNIQUE
+    override val qualifiedName: String
+        get() = name
+    override val uniqueName: String
+        get() = name
+
+    override fun use(scope: CreationShakeScope): CreationShakeUsage {
+        return CreationShakeVariableUsage(scope, this)
+    }
+
     override fun access(scope: CreationShakeScope): CreationShakeValue {
-        TODO("Not yet implemented")
+        return CreationShakeVariableUsage(scope, this)
     }
 
     override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? {
