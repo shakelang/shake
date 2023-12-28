@@ -59,28 +59,25 @@ class CreationShakeMethod(
 
         override val uniqueName: String get() = qualifiedSignature
 
-        val variables = mutableListOf<CreationShakeVariableDeclaration>()
-
         override val parent: CreationShakeScope = parentScope
         override val project get() = prj
 
         override fun get(name: String): CreationShakeAssignable? {
-            val variable = variables.find { it.name == name }
-            if (variable != null) debug("scope", "Searching for field $name in $uniqueName successful")
-            else debug("scope", "Searching for field $name in $uniqueName had no result")
-            return variable
+            parameters.find { it.name == name }?.let {
+                debug("scope", "Found parameter $name in $uniqueName")
+                return it
+            }
+            debug("scope", "Searching for variable $name in $uniqueName (just redirecting to parent)")
+            return parentScope.get(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
-            debug("scope", "Setting variable ${value.name} in $uniqueName")
-            if (value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
-            if (variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
-            variables.add(value)
+            throw IllegalArgumentException("Cannot set a value in a method scope")
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
             debug("scope", "Searching for method $name in $uniqueName (just redirecting to parent)")
-            return parent.getFunctions(name)
+            return parentScope.getFunctions(name)
         }
 
         override fun setFunctions(function: CreationShakeMethod) {
@@ -89,7 +86,7 @@ class CreationShakeMethod(
 
         override fun getClass(name: String): CreationShakeClass? {
             debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
-            return parent.getClass(name)
+            return parentScope.getClass(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {
@@ -130,6 +127,7 @@ class CreationShakeMethod(
                 parentScope.getType(node.type),
                 node.args.map {
                     CreationShakeParameter(
+                        baseProject,
                         it.name,
                         parentScope.getType(it.type)
                     )
@@ -163,6 +161,7 @@ class CreationShakeMethod(
                 parentScope.getType(node.type),
                 node.args.map {
                     CreationShakeParameter(
+                        clazz.prj,
                         it.name,
                         parentScope.getType(it.type)
                     )

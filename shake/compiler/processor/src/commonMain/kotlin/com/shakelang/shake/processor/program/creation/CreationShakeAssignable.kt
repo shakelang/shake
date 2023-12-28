@@ -15,17 +15,49 @@ interface CreationShakeAssignable : ShakeAssignable {
 
     fun access(scope: CreationShakeScope): CreationShakeValue
 
-    override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    override fun incrementBeforeType(scope: ShakeScope): ShakeType?
-    override fun incrementAfterType(scope: ShakeScope): ShakeType?
-    override fun decrementBeforeType(scope: ShakeScope): ShakeType?
-    override fun decrementAfterType(scope: ShakeScope): ShakeType?
+    override fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.assignType(other, scope)
+    }
+
+    override fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.additionAssignType(other, scope)
+    }
+
+    override fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.subtractionAssignType(other, scope)
+    }
+
+    override fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.multiplicationAssignType(other, scope)
+    }
+
+    override fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.divisionAssignType(other, scope)
+    }
+
+    override fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.modulusAssignType(other, scope)
+    }
+
+    override fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.powerAssignType(other, scope)
+    }
+
+    override fun incrementBeforeType(scope: ShakeScope): ShakeType? {
+        return type.incrementBeforeType(scope)
+    }
+
+    override fun incrementAfterType(scope: ShakeScope): ShakeType? {
+        return type.incrementAfterType(scope)
+    }
+
+    override fun decrementBeforeType(scope: ShakeScope): ShakeType? {
+        return type.decrementBeforeType(scope)
+    }
+
+    override fun decrementAfterType(scope: ShakeScope): ShakeType? {
+        return type.decrementAfterType(scope)
+    }
 
     fun createAssignment(value: CreationShakeValue, scope: ShakeScope): CreationShakeAssignment {
         val type = assignType(value.type, scope) ?: throw Exception("Cannot assign ${value.type} to ${this.type}")

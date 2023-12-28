@@ -106,7 +106,7 @@ open class CreationShakeConstructor(
                 node.access == ShakeAccessDescriber.PUBLIC,
                 node.isNative,
                 node.name,
-                node.args.map { parentScope.getType(it.type) }.map { CreationShakeParameter(it.name, it) }
+                node.args.map { parentScope.getType(it.type) }.map { CreationShakeParameter(clazz.prj, it.name, it) }
             )
         }
     }
