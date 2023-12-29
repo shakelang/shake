@@ -3,7 +3,6 @@ package com.shakelang.shake.processor.program.types.code.values
 import com.shakelang.shake.processor.program.types.ShakeDeclaration
 import com.shakelang.shake.processor.program.types.ShakeField
 import com.shakelang.shake.processor.program.types.code.ShakeScope
-import com.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
 
 interface ShakeUsage : ShakeValue {
     val scope: ShakeScope

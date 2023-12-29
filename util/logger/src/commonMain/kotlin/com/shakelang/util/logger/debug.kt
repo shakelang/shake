@@ -173,7 +173,6 @@ interface Debug {
      */
     fun debug(path: String, creator: LogMessageLambda) = debug(path, LogMessageCreator.from(creator))
 
-
     /**
      * Put a message to the debug output
      * @param message The message
@@ -230,7 +229,6 @@ interface Debug {
      * @version 0.3.0
      */
     operator fun invoke(path: String, creator: LogMessageLambda) = debug(path, creator)
-
 
     /**
      * Create a child debug context
@@ -292,7 +290,6 @@ private class DebugImpl(
      */
     override fun debug(path: String, message: String) = out.forEach { it.put("$pathPrefix$path", message) }
 
-
     /**
      * Put a message to the debug output (using lazy-generation of the message)
      * @param creator The message
@@ -310,7 +307,6 @@ private class DebugImpl(
      */
     override fun debug(path: String, creator: LogMessageCreator) = out.forEach { it.put("$pathPrefix$path", creator) }
 
-
     /**
      * Create a child debug context
      * @param name The name of the child debug context
@@ -320,7 +316,6 @@ private class DebugImpl(
      */
     override fun child(vararg name: String) = DebugSubImpl(this, name.joinToString(":"))
 }
-
 
 /**
  * A debug implementation for a child debug context
@@ -371,7 +366,6 @@ private class DebugSubImpl(
      */
     override fun debug(path: String, message: String) = parent.debug("$pathPrefix$path", message)
 
-
     /**
      * Put a message to the debug output (using lazy-generation of the message)
      * @param creator The message
@@ -388,7 +382,6 @@ private class DebugSubImpl(
      * @version 0.3.0
      */
     override fun debug(path: String, creator: LogMessageCreator) = parent.debug("$pathPrefix$path", creator)
-
 
     /**
      * Create a child debug context
