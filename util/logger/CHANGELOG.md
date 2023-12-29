@@ -14,3 +14,5 @@ Update com.shakelang.util:colorlib to 0.3.0
 Update com.shakelang.util:environment to 0.3.0
 ### 0.5.0
 Introduce LogMessageCreator
+### 0.5.1
+Add kdoc to logger package

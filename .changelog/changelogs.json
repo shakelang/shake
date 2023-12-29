@@ -327,6 +327,12 @@
           "changes": [
             "Introduce LogMessageCreator"
           ]
+        },
+        {
+          "version": "0.5.1",
+          "changes": [
+            "Add kdoc to logger package"
+          ]
         }
       ]
     },
