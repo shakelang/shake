@@ -325,7 +325,7 @@
         ":util:shason:shason:0.4.0",
         ":util:common-io:common-io:0.4.0",
         ":util:primitives:primitives:0.5.0",
-        ":util:logger:logger:0.4.0",
+        ":util:logger:logger:0.5.0",
         ":shake:compiler:lexer:lexer:0.1.4-SNAPSHOT",
         ":shake:compiler:parser:parser:0.1.5-SNAPSHOT"
       ]
@@ -403,5 +403,5 @@
       ]
     }
   ],
-  "lastUpdate": 1703809812624
+  "lastUpdate": 1703809902109
 }
