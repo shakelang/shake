@@ -1281,6 +1281,10 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                         object : ShakeParameter {
                             override val name: String = getUtf(it.first)
                             override val type: ShakeType = findType(it.second)
+                            override val actualValue: ShakeValue?
+                                get() = null
+                            override val actualType: ShakeType
+                                get() = type
                         }
                     },
                     info.isAbstract,
@@ -1325,6 +1329,10 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                         object : ShakeParameter {
                             override val name: String = getUtf(it.first)
                             override val type: ShakeType = findType(it.second)
+                            override val actualValue: ShakeValue?
+                                get() = null
+                            override val actualType: ShakeType
+                                get() = type
                         }
                     },
                     info.isPublic,

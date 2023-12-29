@@ -561,3 +561,6 @@ abstract class CreationShakeType(
         }
     }
 }
+
+fun ShakeType?.isCreation() = this is CreationShakeType
+fun ShakeType?.asCreation() = this as CreationShakeType

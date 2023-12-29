@@ -53,16 +53,21 @@ open class CreationShakeConstructor(
         val variables = mutableListOf<CreationShakeVariableDeclaration>()
 
         override fun get(name: String): CreationShakeAssignable? {
-            return variables.find { it.name == name } ?: parent.get(name)
+            val variable = variables.find { it.name == name }
+            if(variable != null) debug("scope", "Searching for field $name in $uniqueName successful")
+            else debug("scope", "Searching for field $name in $uniqueName had no result")
+            return variable
         }
 
         override fun set(value: CreationShakeDeclaration) {
+            debug("scope", "Setting variable ${value.name} in $uniqueName")
             if (value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
             if (variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
             variables.add(value)
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
+            debug("scope", "Searching for method $name in $uniqueName (just redirecting to parent)")
             return parent.getFunctions(name)
         }
 
@@ -71,6 +76,7 @@ open class CreationShakeConstructor(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
+            debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
             return parent.getClass(name)
         }
 
@@ -100,7 +106,7 @@ open class CreationShakeConstructor(
                 node.access == ShakeAccessDescriber.PUBLIC,
                 node.isNative,
                 node.name,
-                node.args.map { parentScope.getType(it.type) }.map { CreationShakeParameter(it.name, it) }
+                node.args.map { parentScope.getType(it.type) }.map { CreationShakeParameter(clazz.prj, it.name, it) }
             )
         }
     }

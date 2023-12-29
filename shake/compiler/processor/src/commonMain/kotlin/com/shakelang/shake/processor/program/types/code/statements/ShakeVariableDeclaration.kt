@@ -9,8 +9,8 @@ import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 interface ShakeVariableDeclaration : ShakeDeclaration, ShakeAssignable, ShakeStatement {
     val scope: ShakeScope
     val initialValue: ShakeValue?
-    val latestValue: ShakeValue?
-    val latestType: ShakeType
+    override val actualValue: ShakeValue?
+    override val actualType: ShakeType
     val isFinal: Boolean
 
     override val uniqueName: String

@@ -27,6 +27,6 @@ interface ShakeFieldUsage : ShakeUsage {
 }
 
 interface ShakeVariableUsage : ShakeUsage {
-    override val declaration: ShakeVariableDeclaration
+    override val declaration: ShakeDeclaration
     val name: String
 }

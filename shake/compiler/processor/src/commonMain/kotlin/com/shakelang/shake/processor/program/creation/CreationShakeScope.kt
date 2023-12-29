@@ -36,42 +36,6 @@ abstract class CreationShakeScope : ShakeScope {
         this.classRequirements.add(CreationShakeProject.ClassRequirement(name, then))
     }
 
-    fun getType(type: ShakeVariableType, then: (CreationShakeType) -> Unit) {
-        when (type.type) {
-            ShakeVariableType.Type.BYTE -> then(CreationShakeType.Primitives.BYTE)
-            ShakeVariableType.Type.SHORT -> then(CreationShakeType.Primitives.SHORT)
-            ShakeVariableType.Type.INTEGER -> then(CreationShakeType.Primitives.INT)
-            ShakeVariableType.Type.LONG -> then(CreationShakeType.Primitives.LONG)
-            ShakeVariableType.Type.FLOAT -> then(CreationShakeType.Primitives.FLOAT)
-            ShakeVariableType.Type.DOUBLE -> then(CreationShakeType.Primitives.DOUBLE)
-            ShakeVariableType.Type.UNSIGNED_BYTE -> then(CreationShakeType.Primitives.UBYTE)
-            ShakeVariableType.Type.UNSIGNED_SHORT -> then(CreationShakeType.Primitives.USHORT)
-            ShakeVariableType.Type.UNSIGNED_INTEGER -> then(CreationShakeType.Primitives.UINT)
-            ShakeVariableType.Type.UNSIGNED_LONG -> then(CreationShakeType.Primitives.ULONG)
-            ShakeVariableType.Type.BOOLEAN -> then(CreationShakeType.Primitives.BOOLEAN)
-            ShakeVariableType.Type.CHAR -> then(CreationShakeType.Primitives.CHAR)
-            ShakeVariableType.Type.OBJECT -> {
-                val namespace = (type as ShakeVariableType.Object).namespace
-                    ?: throw IllegalArgumentException("Object type must have subtype")
-                val clzName = namespace.parts.joinToString(".")
-                this.getClass(clzName) {
-                    then(CreationShakeType.objectType(it))
-                }
-            }
-
-            ShakeVariableType.Type.DYNAMIC -> then(CreationShakeType.Primitives.DYNAMIC)
-            ShakeVariableType.Type.ARRAY -> {
-                val subtype = (type as ShakeVariableType.Array).subtype
-                this.getType(subtype) {
-                    then(CreationShakeType.array(it))
-                }
-            }
-
-            ShakeVariableType.Type.VOID -> then(CreationShakeType.Primitives.VOID)
-            ShakeVariableType.Type.UNKNOWN -> then(CreationShakeType.Primitives.DYNAMIC) // TODO: Change this
-        }
-    }
-
     fun getType(clzName: String): CreationShakeType {
         return CreationShakeType.objectType(this.getClass(clzName) ?: throw IllegalArgumentException("Class $clzName not found"))
     }

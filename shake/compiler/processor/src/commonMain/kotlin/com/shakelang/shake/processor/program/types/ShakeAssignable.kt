@@ -11,15 +11,47 @@ interface ShakeAssignable {
 
     // fun access(scope: ShakeScope): ShakeValue
 
-    fun assignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType?
-    fun incrementBeforeType(scope: ShakeScope): ShakeType?
-    fun incrementAfterType(scope: ShakeScope): ShakeType?
-    fun decrementBeforeType(scope: ShakeScope): ShakeType?
-    fun decrementAfterType(scope: ShakeScope): ShakeType?
+    fun assignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.assignType(other, scope)
+    }
+
+    fun additionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.additionAssignType(other, scope)
+    }
+
+    fun subtractionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.subtractionAssignType(other, scope)
+    }
+
+    fun multiplicationAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.multiplicationAssignType(other, scope)
+    }
+
+    fun divisionAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.divisionAssignType(other, scope)
+    }
+
+    fun modulusAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.modulusAssignType(other, scope)
+    }
+
+    fun powerAssignType(other: ShakeType, scope: ShakeScope): ShakeType? {
+        return type.powerAssignType(other, scope)
+    }
+
+    fun incrementBeforeType(scope: ShakeScope): ShakeType? {
+        return type.incrementBeforeType(scope)
+    }
+
+    fun incrementAfterType(scope: ShakeScope): ShakeType? {
+        return type.incrementAfterType(scope)
+    }
+
+    fun decrementBeforeType(scope: ShakeScope): ShakeType? {
+        return type.decrementBeforeType(scope)
+    }
+
+    fun decrementAfterType(scope: ShakeScope): ShakeType? {
+        return type.decrementAfterType(scope)
+    }
 }
