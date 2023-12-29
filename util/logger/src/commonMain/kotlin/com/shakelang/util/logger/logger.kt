@@ -38,12 +38,32 @@ class Logger(
         }
     }
 
+    fun log(level: LogLevel, creator: LogMessageCreator)
+        = this.log(level, creator.toString())
+
+    fun log(level: LogLevel, creator: LogMessageLambda)
+        = this.log(level, com.shakelang.util.logger.LogMessageCreator.from(creator))
+
     fun debug(message: String) = this.log(LogLevel.DEBUG, message)
     fun info(message: String) = this.log(LogLevel.INFO, message)
     fun success(message: String) = this.log(LogLevel.SUCCESS, message)
     fun warn(message: String) = this.log(LogLevel.WARN, message)
     fun error(message: String) = this.log(LogLevel.ERROR, message)
     fun fatal(message: String) = this.log(LogLevel.FATAL, message)
+
+    fun debug(creator: LogMessageCreator) = this.log(LogLevel.DEBUG, creator)
+    fun info(creator: LogMessageCreator) = this.log(LogLevel.INFO, creator)
+    fun success(creator: LogMessageCreator) = this.log(LogLevel.SUCCESS, creator)
+    fun warn(creator: LogMessageCreator) = this.log(LogLevel.WARN, creator)
+    fun error(creator: LogMessageCreator) = this.log(LogLevel.ERROR, creator)
+    fun fatal(creator: LogMessageCreator) = this.log(LogLevel.FATAL, creator)
+
+    fun debug(creator: LogMessageLambda) = this.log(LogLevel.DEBUG, creator)
+    fun info(creator: LogMessageLambda) = this.log(LogLevel.INFO, creator)
+    fun success(creator: LogMessageLambda) = this.log(LogLevel.SUCCESS, creator)
+    fun warn(creator: LogMessageLambda) = this.log(LogLevel.WARN, creator)
+    fun error(creator: LogMessageLambda) = this.log(LogLevel.ERROR, creator)
+    fun fatal(creator: LogMessageLambda) = this.log(LogLevel.FATAL, creator)
 
     fun pipe(pipe: LoggerPipe) {
         this.entries.forEach {

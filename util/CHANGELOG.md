@@ -1,7 +1,4 @@
 # shake:util
-
 ## Description
-
-
 
 ## Versions

@@ -111,7 +111,7 @@
     {
       "path": ":util:logger",
       "name": "com.shakelang.util:logger",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "description": "Logger utility for Kotlin Multiplatform.",
       "author": "com.shakelang.util",
       "license": "",
@@ -403,5 +403,5 @@
       ]
     }
   ],
-  "lastUpdate": 1703591522323
+  "lastUpdate": 1703809812624
 }

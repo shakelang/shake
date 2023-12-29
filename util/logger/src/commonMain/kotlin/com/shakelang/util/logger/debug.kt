@@ -24,6 +24,12 @@ class DebuggerDumpConfiguration(
     fun put(path: String, out: String) {
         if (accepts(path)) this.out.debug("[$path]: $out")
     }
+
+    fun put(path: String, out: LogMessageCreator) {
+        if (accepts(path)) this.out.debug("[$path]: $out")
+    }
+
+    fun put(path: String, out: LogMessageLambda) = this.put(path, LogMessageCreator.from(out))
 }
 
 interface Debug {
@@ -31,8 +37,18 @@ interface Debug {
     val path: String?
     fun debug(message: String)
     fun debug(path: String, message: String)
+    fun debug(creator: LogMessageCreator)
+    fun debug(path: String, creator: LogMessageCreator)
+    fun debug(creator: LogMessageLambda) = debug(LogMessageCreator.from(creator))
+    fun debug(path: String, creator: LogMessageLambda) = debug(path, LogMessageCreator.from(creator))
+
     operator fun invoke(message: String) = debug(message)
     operator fun invoke(path: String, message: String) = debug(path, message)
+    operator fun invoke(creator: LogMessageCreator) = debug(creator)
+    operator fun invoke(path: String, creator: LogMessageCreator) = debug(path, creator)
+    operator fun invoke(creator: LogMessageLambda) = debug(creator)
+    operator fun invoke(path: String, creator: LogMessageLambda) = debug(path, creator)
+
     fun child(vararg name: String): Debug
 }
 
@@ -43,6 +59,10 @@ private class DebugImpl(
     override val pathPrefix = this.path?.plus(":") ?: ""
     override fun debug(message: String) = out.forEach { it.put(path ?: "<root>", message) }
     override fun debug(path: String, message: String) = out.forEach { it.put("$pathPrefix$path", message) }
+
+    override fun debug(creator: LogMessageCreator) = out.forEach { it.put(path ?: "<root>", creator) }
+    override fun debug(path: String, creator: LogMessageCreator) = out.forEach { it.put("$pathPrefix$path", creator) }
+
     override fun child(vararg name: String) = DebugSubImpl(this, name.joinToString(":"))
 }
 
@@ -51,8 +71,13 @@ private class DebugSubImpl(
     override val path: String?
 ) : Debug {
     override val pathPrefix = this.path?.plus(":") ?: ""
-    override fun debug(message: String) = parent.debug("$pathPrefix$message")
+    override fun debug(message: String) = parent.debug(pathPrefix, message)
     override fun debug(path: String, message: String) = parent.debug("$pathPrefix$path", message)
+
+    override fun debug(creator: LogMessageCreator) = parent.debug(pathPrefix, creator)
+    override fun debug(path: String, creator: LogMessageCreator) = parent.debug("$pathPrefix$path", creator)
+
+
     override fun child(vararg name: String) = DebugSubImpl(this, name.joinToString(":"))
 }
 
