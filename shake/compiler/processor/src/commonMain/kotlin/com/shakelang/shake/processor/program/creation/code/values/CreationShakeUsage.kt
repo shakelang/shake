@@ -107,7 +107,7 @@ class CreationShakeFieldUsage(
 
 open class CreationShakeVariableUsage(
     override val scope: CreationShakeScope,
-    override val declaration: CreationShakeVariableDeclaration
+    override val declaration: CreationShakeDeclaration
 ) : CreationShakeUsage(), ShakeVariableUsage {
 
     override val project: ShakeProject

@@ -27,18 +27,21 @@ class CreationShakeProject(
         fun lazyLoadImportedPackages() {
             if (this::imported.isInitialized) return
             imported = arrayOf(
-                getPackage("shake.lang"),
-                getPackage("shake.js")
+                getPackage("shake/lang"),
+                getPackage("shake/js")
             ).filterNotNull().toTypedArray()
         }
 
         override fun get(name: String): CreationShakeAssignable? {
+
+            debug("scope", "Searching for field $name in project scope")
+
             lazyLoadImportedPackages()
             for (import in imported) {
                 val field = import.fields.find { it.name == name }
                 if (field != null) return field
             }
-            return null
+            return getField(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
@@ -46,6 +49,9 @@ class CreationShakeProject(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
+
+            debug("scope", "Searching for function $name in project scope")
+
             lazyLoadImportedPackages()
             val functions = mutableListOf<CreationShakeMethod>()
             for (import in imported) {
@@ -59,6 +65,9 @@ class CreationShakeProject(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
+
+            debug("scope", "Searching for class $name in project scope")
+
             lazyLoadImportedPackages()
             for (import in imported) {
                 val clazz = import.classes.find { it.name == name }
@@ -80,7 +89,8 @@ class CreationShakeProject(
     }
 
     override fun getPackage(name: String): CreationShakePackage? {
-        if (name.contains(".")) return getPackage(name.split(".").toTypedArray())
+        if (name.contains(".") || name.contains("/")) return getPackage(name.split(".", "/")
+            .toTypedArray())
         return subpackages.find { it.name == name }
     }
 

@@ -62,7 +62,7 @@ private constructor(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-1)
      */
     override fun phase1() {
-        debug("phases", "Phase 1 of class ${clz.name}")
+        debug("phases", "Phase 1 of class $qualifiedName")
         clz.classes.forEach {
             if (it.isStatic) {
                 val clz = from(prj, pkg, this.staticScope, it)
@@ -72,6 +72,10 @@ private constructor(
                 this.classes.add(clz)
             }
         }
+
+        classes.forEach {
+            it.phase1()
+        }
     }
 
     /**
@@ -79,9 +83,10 @@ private constructor(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-2)
      */
     override fun phase2() {
-        debug("phases", "Phase 2 of class ${clz.name}")
-        this.superClass = parentScope.getClass(clz.extends?.toString() ?: "shake.lang.Object")
-            ?: throw IllegalStateException("Superclass ${clz.extends} not found in classpath")
+        debug("phases", "Phase 2 of class $qualifiedName")
+        val extends = clz.extends?.toString() ?: "shake.lang.Object"
+        this.superClass = parentScope.getClass(extends)
+            ?: throw IllegalStateException("Superclass $extends not found in classpath")
 
         this.clz.implements.forEach {
             this._interfaces.add(parentScope.getClass(it.toString()))
@@ -93,7 +98,7 @@ private constructor(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-3)
      */
     override fun phase3() {
-        debug("phases", "Phase 3 of class ${clz.name}")
+        debug("phases", "Phase 3 of class $qualifiedName")
         clz.methods.forEach {
             val scope = if (it.isStatic) staticScope else instanceScope
             val method = CreationShakeMethod.from(this, scope, it)
@@ -108,6 +113,10 @@ private constructor(
             val constructor = CreationShakeConstructor.from(this, instanceScope, it)
             this.constructors.add(constructor)
         }
+
+        methods.forEach { it.phase3() }
+        fields.forEach { it.phase3() }
+        constructors.forEach { it.phase3() }
         classes.forEach { it.phase3() }
     }
 
@@ -116,7 +125,7 @@ private constructor(
      * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-4)
      */
     override fun phase4() {
-        debug("phases", "Phase 4 of class ${clz.name}")
+        debug("phases", "Phase 4 of class $qualifiedName")
         this.methods.forEach { it.phase4() }
         this.staticMethods.forEach { it.phase4() }
         this.fields.forEach { it.phase4() }
@@ -152,7 +161,10 @@ private constructor(
         override val project get() = prj
 
         override fun get(name: String): CreationShakeAssignable? {
-            return staticFields.find { it.name == name } ?: parent.get(name)
+            val field = staticFields.find { it.name == name }
+            if(field != null) debug("scope", "Searching for field $name in $uniqueName successful")
+            else debug("scope", "Searching for field $name in $uniqueName had no result")
+            return  field ?: parent.get(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
@@ -160,7 +172,10 @@ private constructor(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
-            return staticMethods.filter { it.name == name } + parent.getFunctions(name)
+            val methods = staticMethods.filter { it.name == name }
+            if(methods.isNotEmpty()) debug("scope", "Searching for method $name in $uniqueName successful")
+            else debug("scope", "Searching for method $name in $uniqueName had no result")
+            return methods + parent.getFunctions(name)
         }
 
         override fun setFunctions(function: CreationShakeMethod) {
@@ -168,7 +183,10 @@ private constructor(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
-            return staticClasses.find { it.name == name } ?: parent.getClass(name)
+            val clazz = staticClasses.find { it.name == name }
+            if(clazz != null) debug("scope", "Searching for class $name in $uniqueName successful")
+            else debug("scope", "Searching for class $name in $uniqueName had no result")
+            return clazz ?: parent.getClass(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {
@@ -186,7 +204,10 @@ private constructor(
         override val project get() = parent.project
 
         override fun get(name: String): CreationShakeAssignable? {
-            return fields.find { it.name == name } ?: staticFields.find { it.name == name } ?: parent.get(name)
+            val field = fields.find { it.name == name }
+            if(field != null) debug("scope", "Searching for field $name in $uniqueName successful")
+            else debug("scope", "Searching for field $name in $uniqueName had no result")
+            return  field ?: parent.get(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
@@ -194,9 +215,10 @@ private constructor(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
-            return methods.filter { it.name == name } + staticMethods.filter { it.name == name } + parent.getFunctions(
-                name
-            )
+            val methods = methods.filter { it.name == name }
+            if(methods.isNotEmpty()) debug("scope", "Searching for method $name in $uniqueName successful")
+            else debug("scope", "Searching for method $name in $uniqueName had no result")
+            return methods + parent.getFunctions(name)
         }
 
         override fun setFunctions(function: CreationShakeMethod) {
@@ -204,7 +226,10 @@ private constructor(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
-            return classes.find { it.name == name } ?: parent.getClass(name)
+            val clazz = classes.find { it.name == name }
+            if(clazz != null) debug("scope", "Searching for class $name in $uniqueName successful")
+            else debug("scope", "Searching for class $name in $uniqueName had no result")
+            return clazz ?: parent.getClass(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {

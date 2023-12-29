@@ -4,7 +4,7 @@ import com.shakelang.shake.processor.program.creation.code.values.CreationShakeU
 import com.shakelang.shake.processor.program.types.ShakeDeclaration
 import com.shakelang.shake.processor.program.types.ShakeType
 
-interface CreationShakeDeclaration : ShakeDeclaration {
+interface CreationShakeDeclaration : ShakeDeclaration, CreationShakeAssignable {
     override val name: String
     override val type: ShakeType
     override val qualifiedName: String

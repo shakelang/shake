@@ -4,7 +4,7 @@ import com.shakelang.shake.processor.ShakeSelect
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 /**
- * A ShakeType is a type of a variable, field, method return type or a literal
+ * A ShakeType is a type of variable, field, method return type or a literal
  */
 interface ShakeType {
 
