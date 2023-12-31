@@ -26,7 +26,7 @@ class CliArgumentParser(
                     for (o in options.indices) if (options[o].name == optionName)
                         throw Error("Option \"$optionName\" already defined!")
 
-                    // find specified option
+                    // find a specified option
                     for (o in this.options.indices) {
                         val option = this.options[o]
                         if (option.name == optionName) {
@@ -46,7 +46,7 @@ class CliArgumentParser(
                     for (o in options.indices) if (options[o].name == optionName)
                         throw Error("Option \"$optionName\" already defined!")
 
-                    // find specified option
+                    // find a specified option
                     for (o in this.options.indices) {
                         val option = this.options[o]
                         if (option.shortName == optionName) {
@@ -60,7 +60,7 @@ class CliArgumentParser(
                     }
                 } else {
 
-                    // in other case this is just a normal argument, so we will just add it to the normal arguments
+                    // in another case this is just a normal argument, so we will just add it to the normal arguments
                     arguments.add(args[i])
                 }
                 i++

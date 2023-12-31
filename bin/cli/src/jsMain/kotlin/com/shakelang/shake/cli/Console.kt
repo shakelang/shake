@@ -1,9 +1,11 @@
 package com.shakelang.shake.cli
 
-import com.shakelang.util.parseutils.Promise
 import com.shakelang.util.parseutils.nodeJsAvailable
 import com.shakelang.util.parseutils.process
 import com.shakelang.util.parseutils.require
+import kotlinx.coroutines.await
+import kotlinx.coroutines.coroutineScope
+import kotlin.js.Promise
 
 val readline = if (nodeJsAvailable) require("readline") else null
 
@@ -14,7 +16,7 @@ private fun expectReadline(): dynamic {
     return rl
 }
 
-actual fun readLine(message: String): Promise<String?> =
+actual suspend fun readLine(message: String): String? = coroutineScope {
     Promise { rs, _ ->
         expectReadline().let { rl ->
             rl.question(message) { it ->
@@ -24,7 +26,10 @@ actual fun readLine(message: String): Promise<String?> =
                 }
             }
         } as Unit
-    }
+    }.await()
+}
 
 
-actual fun readLine(): Promise<String?> = readLine("")
+actual suspend fun readLine() = coroutineScope {
+    readLine("")
+}

@@ -1,6 +1,6 @@
 import conventions.dependencies
 
-group = projectName("compiler.interpreter")
+//group = projectName("bin")
 version = "0.1.0"
 description = "interpreter"
 
@@ -17,26 +17,17 @@ kotlin {
             implementation(project(":shake:compiler:parser"))
             implementation(project(":shake:compiler:processor"))
             implementation(project(":shake:compiler:jsgenerator"))
-            implementation(project(":shake:compiler:interpreter"))
+            implementation(project(":shake:compiler:shakelib"))
+            implementation(project(":shake:compiler:processor"))
+            implementation(project(":shake:bytecode:interpreter"))
+            implementation(project(":shake:bytecode:generator"))
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC")
             testImplementation(kotlin("test"))
         }
-        jvm {
-            implementation("org.reflections:reflections:0.9.12")
-        }
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
-
-    testLogging.showExceptions = true
-    maxHeapSize = "1G"
-    // ignoreFailures = true
-    filter {
-        includeTestsMatching("com.shakelang.shake.*")
-    }
-}
-
+/*
 val projectName = name
 tasks.named<Jar>("jvmJar") {
     archiveBaseName.set("shake-$projectName")
@@ -47,3 +38,4 @@ tasks.named<Jar>("jsJar") {
 tasks.named<Jar>("metadataJar") {
     archiveBaseName.set("shake-$projectName")
 }
+*/

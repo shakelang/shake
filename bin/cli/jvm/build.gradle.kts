@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.dokka")
 }
 
-group = projectName("shasambly")
+//group = projectName("shasambly")
 version = "0.1.0"
 description = "Java distribution commands for Shasambly"
 
@@ -48,7 +48,7 @@ kotlin {
     sourceSets {
         val main by getting {
             dependencies {
-                implementation(project(":cli"))
+                implementation(project(":bin:cli"))
             }
         }
         val test by getting {

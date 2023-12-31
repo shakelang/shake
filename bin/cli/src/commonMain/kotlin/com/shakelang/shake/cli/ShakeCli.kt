@@ -10,19 +10,15 @@ import com.shakelang.util.parseutils.File
 import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
-import com.shakelang.shake.interpreter.Interpreter
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.ShakeParser
 import com.shakelang.shake.parser.node.ShakeBlockNode
+import com.shakelang.shake.parser.node.ShakeFileNode
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
+import com.shakelang.shake.stdlib.CoreFiles
 import com.shakelang.util.shason.json
 import kotlin.jvm.JvmName
-
-/**
- * The interpreter for interpreting the code
- */
-val interpreter = Interpreter()
 
 val jsGenerator = ShakeJsGenerator()
 
@@ -43,6 +39,16 @@ var DEBUG = false
  * The version of the program
  */
 const val VERSION = "0.1.0"
+
+val baseProcessor: ShakePackageBasedProcessor get() {
+    val processor = ShakePackageBasedProcessor()
+
+    processor.loadSynthetic("shake/lang/Object.shake", CoreFiles.OBJECT_SHAKE)
+    processor.loadSynthetic("shake/lang/String.shake", CoreFiles.STRING_SHAKE)
+    processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
+
+    return processor
+}
 
 /**
  * The Main-Method for the ShakeCli
@@ -81,7 +87,7 @@ fun main(args: Array<String>) {
                         "# Using $generator to execute code"
             )
 
-            // Just create a infinite loop for reading from the console
+            // Create an infinite loop for reading from the console
             mainLoop {
 
                 // request the input from the console and create a StringCharacterInputStream from it
@@ -131,16 +137,16 @@ private fun parse(input: CharacterInputStream): ParseResult {
     // Generate the tokens using the lexer
     val tokens = lexer.makeTokens()
 
-    // if debug is enabled we print out the lexer-tokens
+    // if debug is enabled, we print out the lexer-tokens
     if (DEBUG) println("[DEBUG] Lexer-Tokens: $tokens")
 
     // Create a new Parser from the tokens
-    val parser = ShakeParser(tokens)
+    val parser = ShakeParser.from(tokens)
 
     // Let the parser parse the tokens into a Tree
     val tree = parser.parse()
 
-    // If debug is enabled we print out the tree
+    // If debug is enabled, we print out the tree
     if (DEBUG) println("[DEBUG] Parsed Tree: $tree")
 
     // return the Tree
@@ -159,7 +165,10 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
     val targetFile = src?.substring(0, src.length - 6)
     // val baseName = if (src != null) targetFile!!.split("[\\\\/](?=[^\\\\/]+$)").toTypedArray()[1] else null
     when (generator) {
-        "interpreter" -> println(">> ${interpreter.visit(pr.tree)}")
+        "interpreter" -> {
+            val processor = baseProcessor
+            processor.loadSynthetic("stdin.ConsoleInput", pr.tree)
+        }
         "json" ->
             if (src == null) println(">> ${pr.tree}")
             else writeFile(File(target ?: "$targetFile.json"), pr.tree.toString())
@@ -168,11 +177,12 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
             if (src == null) println(">> ${json.stringify(pr.tree, indent = 2)}")
             else writeFile(File(target ?: "$targetFile.json"), json.stringify(pr.tree, indent = 2))
 
-        "java" -> throw Error("Java is not available")
+        "java" -> TODO()
         "js", "javascript" -> {
-            val processor = ShakePackageBasedProcessor()
+            val processor = baseProcessor
             processor.loadSynthetic("stdin.ConsoleInput", pr.tree)
-            println(processor.generate(jsGenerator::generateSingleFile).generate())
+            TODO()
+            //  println(processor.generate(jsGenerator::generateSingleFile).generate())
         }
         //     if (src == null) println(">> ${java.visitProgram(pr.tree, "CliInput").toString("", "  ")}%n")
         //     else writeFile(File(target ?: targetFile + java.extension), java.visitProgram(pr.tree, baseName).toString("", "  "))
@@ -186,4 +196,4 @@ private fun writeFile(f: File, content: String) {
     f.write(content)
 }
 
-private class ParseResult(val tree: ShakeBlockNode, val map: PositionMap)
+private class ParseResult(val tree: ShakeFileNode, val map: PositionMap)
