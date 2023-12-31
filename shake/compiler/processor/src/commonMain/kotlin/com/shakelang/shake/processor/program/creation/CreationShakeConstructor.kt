@@ -54,8 +54,11 @@ open class CreationShakeConstructor(
 
         override fun get(name: String): CreationShakeAssignable? {
             val variable = variables.find { it.name == name }
-            if(variable != null) debug("scope", "Searching for field $name in $uniqueName successful")
-            else debug("scope", "Searching for field $name in $uniqueName had no result")
+            if (variable != null) {
+                debug("scope", "Searching for field $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for field $name in $uniqueName had no result")
+            }
             return variable
         }
 

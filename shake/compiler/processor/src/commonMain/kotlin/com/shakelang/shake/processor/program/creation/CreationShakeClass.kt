@@ -162,9 +162,12 @@ private constructor(
 
         override fun get(name: String): CreationShakeAssignable? {
             val field = staticFields.find { it.name == name }
-            if(field != null) debug("scope", "Searching for field $name in $uniqueName successful")
-            else debug("scope", "Searching for field $name in $uniqueName had no result")
-            return  field ?: parent.get(name)
+            if (field != null) {
+                debug("scope", "Searching for field $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for field $name in $uniqueName had no result")
+            }
+            return field ?: parent.get(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
@@ -173,8 +176,11 @@ private constructor(
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
             val methods = staticMethods.filter { it.name == name }
-            if(methods.isNotEmpty()) debug("scope", "Searching for method $name in $uniqueName successful")
-            else debug("scope", "Searching for method $name in $uniqueName had no result")
+            if (methods.isNotEmpty()) {
+                debug("scope", "Searching for method $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for method $name in $uniqueName had no result")
+            }
             return methods + parent.getFunctions(name)
         }
 
@@ -184,8 +190,11 @@ private constructor(
 
         override fun getClass(name: String): CreationShakeClass? {
             val clazz = staticClasses.find { it.name == name }
-            if(clazz != null) debug("scope", "Searching for class $name in $uniqueName successful")
-            else debug("scope", "Searching for class $name in $uniqueName had no result")
+            if (clazz != null) {
+                debug("scope", "Searching for class $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for class $name in $uniqueName had no result")
+            }
             return clazz ?: parent.getClass(name)
         }
 
@@ -205,9 +214,12 @@ private constructor(
 
         override fun get(name: String): CreationShakeAssignable? {
             val field = fields.find { it.name == name }
-            if(field != null) debug("scope", "Searching for field $name in $uniqueName successful")
-            else debug("scope", "Searching for field $name in $uniqueName had no result")
-            return  field ?: parent.get(name)
+            if (field != null) {
+                debug("scope", "Searching for field $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for field $name in $uniqueName had no result")
+            }
+            return field ?: parent.get(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
@@ -216,8 +228,11 @@ private constructor(
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
             val methods = methods.filter { it.name == name }
-            if(methods.isNotEmpty()) debug("scope", "Searching for method $name in $uniqueName successful")
-            else debug("scope", "Searching for method $name in $uniqueName had no result")
+            if (methods.isNotEmpty()) {
+                debug("scope", "Searching for method $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for method $name in $uniqueName had no result")
+            }
             return methods + parent.getFunctions(name)
         }
 
@@ -227,8 +242,11 @@ private constructor(
 
         override fun getClass(name: String): CreationShakeClass? {
             val clazz = classes.find { it.name == name }
-            if(clazz != null) debug("scope", "Searching for class $name in $uniqueName successful")
-            else debug("scope", "Searching for class $name in $uniqueName had no result")
+            if (clazz != null) {
+                debug("scope", "Searching for class $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for class $name in $uniqueName had no result")
+            }
             return clazz ?: parent.getClass(name)
         }
 

@@ -6,7 +6,6 @@ import com.shakelang.shake.processor.ShakeASTProcessor
 import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.CreationShakeInvokable
-import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.ShakeMethod
 import com.shakelang.shake.processor.program.types.ShakeType
 

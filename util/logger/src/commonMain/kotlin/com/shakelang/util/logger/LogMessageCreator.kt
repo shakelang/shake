@@ -29,7 +29,7 @@ interface LogMessageCreator {
                 lateinit var message: String
 
                 override fun toString(): String {
-                    if(!::message.isInitialized) message = creator()
+                    if (!::message.isInitialized) message = creator()
                     return message
                 }
             }

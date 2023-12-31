@@ -72,7 +72,6 @@ object JavaColoredConsoleLoggerPipe : LoggerPipe() {
      * @version 0.1.0
      */
     private fun printFatal(message: String) = System.err.println(message)
-
 }
 
 /**
@@ -147,5 +146,4 @@ object JavaConsoleLoggerPipe : LoggerPipe() {
      * @version 0.1.0
      */
     private fun printFatal(message: String) = System.err.println(message)
-
 }

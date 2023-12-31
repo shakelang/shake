@@ -33,7 +33,7 @@ open class CreationShakeCode(
         )
     }
 
-    class LocalScope (
+    class LocalScope(
         override val parent: CreationShakeScope
     ) : CreationShakeScope() {
 
@@ -43,16 +43,19 @@ open class CreationShakeCode(
             get() = parent.project
 
         override fun get(name: String): CreationShakeAssignable? {
-            val local = locals.find {it.name == name}
-            if(local != null) debug("scope", "Found local $name in $this")
-            else debug("scope", "Did not find local $name in $this")
-            return locals.find {it.name == name} ?: parent.get(name)
+            val local = locals.find { it.name == name }
+            if (local != null) {
+                debug("scope", "Found local $name in $this")
+            } else {
+                debug("scope", "Did not find local $name in $this")
+            }
+            return locals.find { it.name == name } ?: parent.get(name)
         }
 
         override fun set(value: CreationShakeDeclaration) {
             debug("scope", "Setting local ${value.name} in $this")
-            if(value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
-            if(locals.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
+            if (value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
+            if (locals.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
             locals.add(value)
         }
 

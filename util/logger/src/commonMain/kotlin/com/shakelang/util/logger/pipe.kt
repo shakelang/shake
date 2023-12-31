@@ -28,7 +28,6 @@ object CommonColoredConsoleLoggerPipe : LoggerPipe() {
             LogLevel.FATAL -> println(message.red())
         }
     }
-
 }
 
 /**
@@ -43,7 +42,6 @@ object CommonConsoleLoggerPipe : LoggerPipe() {
      * @param message the message to log
      */
     override fun log(level: LogLevel, message: String) = println(message)
-
 }
 
 /**
@@ -64,9 +62,7 @@ class TransformedPipe(val pipe: LoggerPipe, val transformers: List<LogTransforme
         }
         pipe.log(level, msg)
     }
-
 }
-
 
 /**
  * A [LoggerPipe] is a pipe output for the [Logger]
@@ -115,5 +111,4 @@ abstract class LoggerPipe {
      * @param message the message to log
      */
     fun fatal(message: String) = log(LogLevel.FATAL, message)
-
 }
