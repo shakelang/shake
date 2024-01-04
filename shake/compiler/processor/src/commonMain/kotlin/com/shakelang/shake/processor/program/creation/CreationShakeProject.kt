@@ -33,7 +33,6 @@ class CreationShakeProject(
         }
 
         override fun get(name: String): CreationShakeAssignable? {
-
             debug("scope", "Searching for field $name in project scope")
 
             lazyLoadImportedPackages()
@@ -49,7 +48,6 @@ class CreationShakeProject(
         }
 
         override fun getFunctions(name: String): List<CreationShakeMethod> {
-
             debug("scope", "Searching for function $name in project scope")
 
             lazyLoadImportedPackages()
@@ -65,7 +63,6 @@ class CreationShakeProject(
         }
 
         override fun getClass(name: String): CreationShakeClass? {
-
             debug("scope", "Searching for class $name in project scope")
 
             lazyLoadImportedPackages()
@@ -89,8 +86,12 @@ class CreationShakeProject(
     }
 
     override fun getPackage(name: String): CreationShakePackage? {
-        if (name.contains(".") || name.contains("/")) return getPackage(name.split(".", "/")
-            .toTypedArray())
+        if (name.contains(".") || name.contains("/")) {
+            return getPackage(
+                name.split(".", "/")
+                    .toTypedArray()
+            )
+        }
         return subpackages.find { it.name == name }
     }
 

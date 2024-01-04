@@ -14,13 +14,13 @@ class MethodTests : FreeSpec({
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             void main() {}
-        """.trimIndent()
+            """.trimIndent()
         )
-
 
         processor.finish()
 
@@ -43,18 +43,18 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/main()V"
-
     }
 
     "method declaration (no params, void, final)" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             final void main() {}
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -78,7 +78,6 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/main()V"
-
     }
 
     // TODO: static test. Should fail, static methods are only allowed in classes
@@ -89,11 +88,12 @@ class MethodTests : FreeSpec({
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             native void main();
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -117,7 +117,6 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/main()V"
-
     }
 
     // TODO: operator test.
@@ -128,11 +127,12 @@ class MethodTests : FreeSpec({
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             public void main() {}
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -156,18 +156,18 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/main()V"
-
     }
 
     "method declaration (no params, void, protected)" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             protected void main() {}
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -191,18 +191,18 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/main()V"
-
     }
 
     "method declaration (no params, void, private)" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             private void main() {}
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -226,18 +226,18 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/main()V"
-
     }
 
     "method declaration (no params, int)" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             int main() { return 0; }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -261,18 +261,18 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/main"
         method.signature shouldBe "main()I"
         method.qualifiedSignature shouldBe "test/main()I"
-
     }
 
     "method declaration (one param, int)" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             int main(int a) { return 0; }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -301,18 +301,18 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/main"
         method.signature shouldBe "main(I)I"
         method.qualifiedSignature shouldBe "test/main(I)I"
-
     }
 
     "method declaration (two params, int)" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             int main(int a, int b) { return 0; }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -345,7 +345,6 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/main"
         method.signature shouldBe "main(I,I)I"
         method.qualifiedSignature shouldBe "test/main(I,I)I"
-
     }
 
     // Methods inside classes
@@ -354,13 +353,14 @@ class MethodTests : FreeSpec({
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 void main() {}
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -384,20 +384,20 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/Test:main()V"
-
     }
 
     "method declaration (no params, void, final) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 final void main() {}
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -421,20 +421,20 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/Test:main()V"
-
     }
 
     "method declaration (no params, void, static) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 static void main() {}
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -458,7 +458,6 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/Test:main()V"
-
     }
 
     // TODO: Abstract test
@@ -467,13 +466,14 @@ class MethodTests : FreeSpec({
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 native void main();
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -497,14 +497,14 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/Test:main()V"
-
     }
 
     "method declaration (one param, int, operator) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
@@ -512,7 +512,7 @@ class MethodTests : FreeSpec({
                     return i;
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -535,20 +535,20 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:add"
         method.signature shouldBe "add(I)I"
         method.qualifiedSignature shouldBe "test/Test:add(I)I"
-
     }
 
     "method declaration (no params, void, public) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 public void main() {}
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -572,20 +572,20 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/Test:main()V"
-
     }
 
     "method declaration (no params, void, protected) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 protected void main() {}
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -609,20 +609,20 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/Test:main()V"
-
     }
 
     "method declaration (no params, void, private) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 private void main() {}
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -646,20 +646,20 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main()V"
         method.qualifiedSignature shouldBe "test/Test:main()V"
-
     }
 
     "method declaration (no params, int) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 int main() { return 0; }
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -683,20 +683,20 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main()I"
         method.qualifiedSignature shouldBe "test/Test:main()I"
-
     }
 
     "method declaration (one param, void) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 void main(int a) {}
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -725,20 +725,20 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main(I)V"
         method.qualifiedSignature shouldBe "test/Test:main(I)V"
-
     }
 
     "method declaration (two params, void) inside class" {
 
         val processor = createBaseProcessor()
         processor.loadSynthetic(
-            "test.shake", """
+            "test.shake",
+            """
             package test
             
             class Test {
                 void main(int a, int b) {}
             }
-        """.trimIndent()
+            """.trimIndent()
         )
 
         processor.finish()
@@ -771,6 +771,5 @@ class MethodTests : FreeSpec({
         method.qualifiedName shouldBe "test/Test:main"
         method.signature shouldBe "main(I,I)V"
         method.qualifiedSignature shouldBe "test/Test:main(I,I)V"
-
     }
 })

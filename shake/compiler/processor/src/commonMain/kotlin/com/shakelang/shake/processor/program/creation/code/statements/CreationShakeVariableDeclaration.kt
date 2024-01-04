@@ -1,13 +1,11 @@
 package com.shakelang.shake.processor.program.creation.code.statements
 
-import com.shakelang.shake.processor.program.creation.CreationShakeAssignable
 import com.shakelang.shake.processor.program.creation.CreationShakeDeclaration
 import com.shakelang.shake.processor.program.creation.CreationShakeProject
 import com.shakelang.shake.processor.program.creation.CreationShakeScope
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeValue
 import com.shakelang.shake.processor.program.creation.code.values.CreationShakeVariableUsage
 import com.shakelang.shake.processor.program.types.ShakeType
-import com.shakelang.shake.processor.program.types.code.ShakeScope
 import com.shakelang.shake.processor.program.types.code.statements.ShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 
