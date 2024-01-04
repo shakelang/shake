@@ -6,10 +6,6 @@
 
 package com.shakelang.shake.cli
 
-import com.shakelang.util.parseutils.File
-import com.shakelang.util.parseutils.characters.position.PositionMap
-import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
-import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.ShakeParser
@@ -17,6 +13,10 @@ import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeFileNode
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.stdlib.CoreFiles
+import com.shakelang.util.parseutils.File
+import com.shakelang.util.parseutils.characters.position.PositionMap
+import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
+import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
 import com.shakelang.util.shason.json
 import kotlin.jvm.JvmName
 
@@ -56,7 +56,6 @@ val baseProcessor: ShakePackageBasedProcessor get() {
  * @param args The arguments for the main cli
  */
 fun main(args: Array<String>) {
-
     // Create a parser for the arguments
     val argumentParser = CliArgumentParser()
 
@@ -65,7 +64,6 @@ fun main(args: Array<String>) {
         .option("generator", "g", 1, arrayOf("interpreter"))
         .option("debug", "d")
         .option("target", "t", 1, arrayOf(null))
-
 
     // Parse the arguments given to the main-method
     val arguments = argumentParser.parse(args)
@@ -78,18 +76,16 @@ fun main(args: Array<String>) {
 
     // If no normal argument is given, then we will open a prompt for entering code
     when (arguments.arguments.size) {
-
         0 -> {
             // Info message for Shake console
             println(
                 "# Shake version $VERSION ${if (DEBUG) "in debug mode " else ""}\n" +
-                        "# Enter Shake code below to execute!\n" +
-                        "# Using $generator to execute code"
+                    "# Enter Shake code below to execute!\n" +
+                    "# Using $generator to execute code"
             )
 
             // Create an infinite loop for reading from the console
             mainLoop {
-
                 // request the input from the console and create a StringCharacterInputStream from it
                 val chars: CharacterInputStream = SourceCharacterInputStream("<Console>", it)
 
@@ -109,7 +105,8 @@ fun main(args: Array<String>) {
 
             // Create a new StringCharacterInputStream from the file's contents
             val chars: CharacterInputStream = SourceCharacterInputStream(
-                "<File: " + arguments.arguments[0] + ">", file
+                "<File: " + arguments.arguments[0] + ">",
+                file
             )
 
             // Parse the CharacterInputStream
@@ -130,7 +127,6 @@ fun main(args: Array<String>) {
  * @return the parsed [ShakeBlockNode]
  */
 private fun parse(input: CharacterInputStream): ParseResult {
-
     // Create a new Lexer from the CharacterInputStream
     val lexer = ShakeLexer(input)
 
@@ -170,12 +166,18 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
             processor.loadSynthetic("stdin.ConsoleInput", pr.tree)
         }
         "json" ->
-            if (src == null) println(">> ${pr.tree}")
-            else writeFile(File(target ?: "$targetFile.json"), pr.tree.toString())
+            if (src == null) {
+                println(">> ${pr.tree}")
+            } else {
+                writeFile(File(target ?: "$targetFile.json"), pr.tree.toString())
+            }
 
         "beauty-json", "bjson" ->
-            if (src == null) println(">> ${json.stringify(pr.tree, indent = 2)}")
-            else writeFile(File(target ?: "$targetFile.json"), json.stringify(pr.tree, indent = 2))
+            if (src == null) {
+                println(">> ${json.stringify(pr.tree, indent = 2)}")
+            } else {
+                writeFile(File(target ?: "$targetFile.json"), json.stringify(pr.tree, indent = 2))
+            }
 
         "java" -> TODO()
         "js", "javascript" -> {

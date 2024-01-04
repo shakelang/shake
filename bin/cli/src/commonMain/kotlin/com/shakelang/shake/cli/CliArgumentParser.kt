@@ -14,23 +14,20 @@ class CliArgumentParser(
         run {
             var i = 0
             while (i < args.size) {
-
-
                 // full option-name
                 if (args[i].startsWith("--")) {
-
                     // get the name of the option
                     val optionName = args[i].substring(2)
 
                     // check if this option is already set (throw error if so)
-                    for (o in options.indices) if (options[o].name == optionName)
+                    for (o in options.indices) if (options[o].name == optionName) {
                         throw Error("Option \"$optionName\" already defined!")
+                    }
 
                     // find a specified option
                     for (o in this.options.indices) {
                         val option = this.options[o]
                         if (option.name == optionName) {
-
                             // This is the option we want!
 
                             // Create an array to contain all the option arguments
@@ -38,19 +35,18 @@ class CliArgumentParser(
                         }
                     }
                 } else if (args[i].startsWith("-")) {
-
                     // get the name of the option
                     val optionName = args[i].substring(1)
 
                     // check if this option is already set (throw error if so)
-                    for (o in options.indices) if (options[o].name == optionName)
+                    for (o in options.indices) if (options[o].name == optionName) {
                         throw Error("Option \"$optionName\" already defined!")
+                    }
 
                     // find a specified option
                     for (o in this.options.indices) {
                         val option = this.options[o]
                         if (option.shortName == optionName) {
-
                             // This is the option we want!
 
                             // Create an array to contain all the option arguments
@@ -59,7 +55,6 @@ class CliArgumentParser(
                         }
                     }
                 } else {
-
                     // in another case this is just a normal argument, so we will just add it to the normal arguments
                     arguments.add(args[i])
                 }
@@ -104,7 +99,6 @@ class CliArgumentParser(
         var i1 = i
         val optionArguments = arrayOfNulls<String>(option.argumentAmount)
         for (c in 0 until option.argumentAmount) {
-
             // the index of the next option argument
             val index = c + i1 + 1
 
