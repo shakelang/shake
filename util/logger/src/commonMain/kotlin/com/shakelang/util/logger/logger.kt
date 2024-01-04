@@ -49,14 +49,12 @@ class Logger(
      */
     private var firstEntry = 0
 
-
     /**
      * The logs of the logger
      * @since 0.3.0
      * @version 0.3.0
      */
     val logs: List<LogEntry> get() = entries.toList()
-
 
     /**
      * Pushes a [LogEntry] to the buffer
@@ -82,7 +80,6 @@ class Logger(
      * @version 0.3.0
      */
     fun pushBuffer(level: LogLevel, message: String) = pushBuffer(LogEntry(level, message))
-
 
     /**
      * Pushes a [LogEntry] to the buffer
@@ -121,8 +118,8 @@ class Logger(
      * @since 0.5.0
      * @version 0.5.0
      */
-    fun log(level: LogLevel, creator: LogMessageCreator)
-        = this.log(level, creator.toString())
+    fun log(level: LogLevel, creator: LogMessageCreator) =
+        this.log(level, creator.toString())
 
     /**
      * Logs a message with the given [level] and [creator]
@@ -131,9 +128,8 @@ class Logger(
      * @since 0.5.0
      * @version 0.5.0
      */
-    fun log(level: LogLevel, creator: LogMessageLambda)
-        = this.log(level, com.shakelang.util.logger.LogMessageCreator.from(creator))
-
+    fun log(level: LogLevel, creator: LogMessageLambda) =
+        this.log(level, com.shakelang.util.logger.LogMessageCreator.from(creator))
 
     /**
      * Logs a debug message with the given [message]
@@ -183,7 +179,6 @@ class Logger(
      */
     fun fatal(message: String) = this.log(LogLevel.FATAL, message)
 
-
     /**
      * Logs a debug message with the given [creator]
      * @param creator The [LogMessageCreator] of the message
@@ -231,7 +226,6 @@ class Logger(
      * @version 0.5.0
      */
     fun fatal(creator: LogMessageCreator) = this.log(LogLevel.FATAL, creator)
-
 
     /**
      * Logs a debug message with the given [creator]
@@ -281,7 +275,6 @@ class Logger(
      */
     fun fatal(creator: LogMessageLambda) = this.log(LogLevel.FATAL, creator)
 
-
     /**
      * Pipes the logs to the given [pipe]
      * @param pipe The [LoggerPipe] to pipe to
@@ -322,7 +315,6 @@ class Logger(
      * @version 0.3.0
      */
     fun transform(vararg transformers: LogTransformer) = TransformedOutput(transformers.toList())
-
 
     /**
      * Utility for generating a [TransformedPipe] to transform the logs before piping them to the given pipe
