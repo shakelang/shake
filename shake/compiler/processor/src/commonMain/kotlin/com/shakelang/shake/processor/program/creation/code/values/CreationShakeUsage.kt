@@ -3,7 +3,6 @@ package com.shakelang.shake.processor.program.creation.code.values
 import com.shakelang.shake.processor.program.creation.CreationShakeDeclaration
 import com.shakelang.shake.processor.program.creation.CreationShakeField
 import com.shakelang.shake.processor.program.creation.CreationShakeScope
-import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.ShakeProject
 import com.shakelang.shake.processor.program.types.ShakeType
 import com.shakelang.shake.processor.program.types.code.values.*

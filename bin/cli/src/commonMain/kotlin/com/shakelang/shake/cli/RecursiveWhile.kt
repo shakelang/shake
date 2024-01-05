@@ -35,7 +35,6 @@ fun recursiveDoWhile(condition: ConditionFunction, body: RecursiveWhileBody) =
 fun recursiveWhile(body: RecursiveWhileBody) = recursiveWhile({ true }, body)
 fun recursiveDoWhile(body: RecursiveWhileBody) = recursiveWhile(body)
 
-
 /**
  * [RecursiveWhile] loop for class for executing [recursiveDoWhile] and [recursiveWhile]
  *
@@ -71,7 +70,6 @@ private class RecursiveWhile(
     fun wBreak() {
         if (breakCalled) throw RuntimeException("Break was called multiple times")
         continueCalled = true
-
     }
 
     /**
@@ -91,5 +89,4 @@ private class RecursiveWhile(
     fun iteration() {
         body(loopControls)
     }
-
 }

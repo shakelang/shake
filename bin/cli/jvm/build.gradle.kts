@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.dokka")
 }
 
-//group = projectName("shasambly")
+// group = projectName("shasambly")
 version = "0.1.0"
 description = "Java distribution commands for Shasambly"
 

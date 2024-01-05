@@ -131,7 +131,6 @@ object JsColoredConsoleLoggerPipe : LoggerPipe() {
      * @param message the message
      */
     private fun printFatal(message: String) = console.error(message.red().string())
-
 }
 
 /**
@@ -192,5 +191,4 @@ object JsConsoleLoggerPipe : LoggerPipe() {
      * @param message the message
      */
     private fun printFatal(message: String) = console.error(message)
-
 }

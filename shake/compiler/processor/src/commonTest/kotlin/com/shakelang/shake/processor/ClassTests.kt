@@ -56,33 +56,32 @@ class ClassTests : FreeSpec({
 
     "custom supertype from other file within same package" {
 
-            val processor = createBaseProcessor()
+        val processor = createBaseProcessor()
 
-            processor.loadSynthetic(
-                "test.shake",
-                """
+        processor.loadSynthetic(
+            "test.shake",
+            """
                     package test;
                     
                     class TestSuper {}
-                """.trimIndent()
-            )
+            """.trimIndent()
+        )
 
-            processor.loadSynthetic(
-                "test2.shake",
-                """
+        processor.loadSynthetic(
+            "test2.shake",
+            """
                     package test;
                     
                     class Test extends TestSuper {}
-                """.trimIndent()
-            )
+            """.trimIndent()
+        )
 
-            processor.finish()
+        processor.finish()
 
-            val project = processor.project
-            val testClass = project.getClass("test.Test")!!
+        val project = processor.project
+        val testClass = project.getClass("test.Test")!!
 
-            testClass.superClass.qualifiedName shouldBe "test/TestSuper"
-
+        testClass.superClass.qualifiedName shouldBe "test/TestSuper"
     }
 
     "custom supertype from imported package" {
@@ -115,7 +114,6 @@ class ClassTests : FreeSpec({
         val testClass = project.getClass("test.Test")!!
 
         testClass.superClass.qualifiedName shouldBe "abc/TestSuper"
-
     }
 
     "custom supertype from imported package (wildcard)" {
@@ -148,7 +146,6 @@ class ClassTests : FreeSpec({
         val testClass = project.getClass("test.Test")!!
 
         testClass.superClass.qualifiedName shouldBe "abc/TestSuper"
-
     }
 
     // TODO Not implemented in parser

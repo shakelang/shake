@@ -27,5 +27,4 @@ actual suspend fun readLine(message: String): String? =
         } as Unit
     }.await()
 
-
 actual suspend fun readLine() = readLine("")

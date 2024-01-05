@@ -1,6 +1,6 @@
 import conventions.dependencies
 
-//group = projectName("bin")
+// group = projectName("bin")
 version = "0.1.0"
 description = "interpreter"
 
