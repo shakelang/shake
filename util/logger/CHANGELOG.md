@@ -33,3 +33,7 @@ Logger utility for Kotlin Multiplatform.
 ### 0.5.1
 
 * Add kdoc to logger package
+
+### 0.5.2
+
+* Debug should be enabled when environment variable is set

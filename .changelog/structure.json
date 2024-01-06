@@ -152,7 +152,7 @@
     {
       "path": ":util:logger",
       "name": "com.shakelang.util:logger",
-      "version": "0.5.1",
+      "version": "0.5.2",
       "description": "Logger utility for Kotlin Multiplatform.",
       "author": "com.shakelang.util",
       "license": "",
@@ -377,7 +377,7 @@
         ":util:shason:shason:0.4.1",
         ":util:common-io:common-io:0.4.0",
         ":util:primitives:primitives:0.5.0",
-        ":util:logger:logger:0.5.1",
+        ":util:logger:logger:0.5.2",
         ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
         ":shake:compiler:parser:parser:0.1.6-SNAPSHOT"
       ]
@@ -455,5 +455,5 @@
       ]
     }
   ],
-  "lastUpdate": 1704571149327
+  "lastUpdate": 1704578621242
 }

@@ -347,6 +347,12 @@
           "changes": [
             "Add kdoc to logger package"
           ]
+        },
+        {
+          "version": "0.5.2",
+          "changes": [
+            "Debug should be enabled when environment variable is set"
+          ]
         }
       ]
     },
