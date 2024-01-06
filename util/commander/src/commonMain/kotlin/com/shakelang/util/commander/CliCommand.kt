@@ -1,5 +1,7 @@
 package com.shakelang.util.commander
 
+
+typealias CommandAction = CliCommand.(ParseResult) -> Unit
 class CliCommand(
     val parent: CliCommand? = null,
     val name: String,
@@ -8,7 +10,7 @@ class CliCommand(
     val arguments: MutableList<CliArgument> = mutableListOf(),
     val options: MutableList<CliOption> = mutableListOf(),
     val commands: MutableList<CliCommand> = mutableListOf(),
-    var action: ((CliCommand, Array<String>) -> Unit)? = null
+    var action: CommandAction? = null,
 ) {
     fun getUsage(): String {
         val builder = StringBuilder()
@@ -134,7 +136,7 @@ class CliCommand(
         name: String,
         aliases: Array<String> = arrayOf(),
         description: String? = null,
-        action: ((CliCommand, Array<String>) -> Unit)? = null,
+        action: CommandAction? = null,
         init: (CliCommand.() -> Unit)? = null,
     ): CliCommand {
         val command =
@@ -217,6 +219,10 @@ class CliCommand(
         return ParseResult(newStack.toMutableList())
     }
 
+    fun parse(args: Array<String>): ParseResult {
+        return parse(args, arrayOf())
+    }
+
 
 }
 
@@ -225,7 +231,7 @@ class CliCommandCreationContext {
     lateinit var name: String
     val aliases: MutableList<String> = mutableListOf()
     var description: String? = null
-    var action: ((CliCommand, Array<String>) -> Unit)? = null
+    var action: CommandAction? = null
     val arguments: MutableList<(CliCommand) -> CliArgument> = mutableListOf()
     val options: MutableList<(CliCommand) -> CliOption> = mutableListOf()
     val commands: MutableList<(CliCommand) -> CliCommand> = mutableListOf()
@@ -238,7 +244,7 @@ class CliCommandCreationContext {
         this.description = (this.description?.plus("\n") ?: "") + description
     }
 
-    fun action(action: (CliCommand, Array<String>) -> Unit) {
+    fun action(action: CommandAction) {
         this.action = action
     }
 
@@ -316,21 +322,21 @@ class CliCommandCreationContext {
         }
     }
 
-    fun command(cliCommand: CliCommand) {
+    fun subcommand(cliCommand: CliCommand) {
         commands.add { cliCommand }
     }
 
-    fun command(init: CliCommandCreationContext.() -> Unit) {
+    fun subcommand(init: CliCommandCreationContext.() -> Unit) {
         val context = CliCommandCreationContext()
         context.init()
         commands.add { context.generate(it) }
     }
 
-    fun command(
+    fun subcommand(
         name: String,
         aliases: Array<String> = arrayOf(),
         description: String? = null,
-        action: ((CliCommand, Array<String>) -> Unit)? = null,
+        action: CommandAction? = null,
         init: (CliCommandCreationContext.() -> Unit)? = null,
     ) {
         val context = CliCommandCreationContext()
@@ -342,11 +348,11 @@ class CliCommandCreationContext {
         commands.add { context.generate(it) }
     }
 
-    fun generate(parent: CliCommand): CliCommand {
+    fun generate(parent: CliCommand?): CliCommand {
 
         if(!::name.isInitialized) throw IllegalStateException("Name is not initialized")
 
-        return CliCommand(
+        val cmd = CliCommand(
             parent,
             name,
             aliases.toTypedArray(),
@@ -356,5 +362,25 @@ class CliCommandCreationContext {
             mutableListOf(),
             action
         )
+
+        for (argument in arguments) {
+            cmd.arguments.add(argument(cmd))
+        }
+
+        for (option in options) {
+            cmd.options.add(option(cmd))
+        }
+
+        for (command in commands) {
+            cmd.commands.add(command(cmd))
+        }
+
+        return cmd
     }
+}
+
+fun command(init: CliCommandCreationContext.() -> Unit): CliCommand {
+    val context = CliCommandCreationContext()
+    context.init()
+    return context.generate(null)
 }

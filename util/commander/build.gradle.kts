@@ -17,3 +17,9 @@ public = true
 val projectName = name
 
 useKotest()
+
+kotlin {
+    dependencies {
+        testImplementation(project(":util:testlib"))
+    }
+}
