@@ -55,6 +55,73 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toByte() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toByte.invoke("")
+        }
+    }
+
+    "toByte() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toByte.invoke(" ")
+        }
+    }
+
+    "toByteOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toByteOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toByteOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toByteOrNull.invoke("1")
+        result shouldBe 1
+    }
+
+    "toByteOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toByteOrNull.invoke("-1")
+        result shouldBe -1
+    }
+
+    "toByteOrNull() should be able to parse '127'" {
+        val result = ValueTransformers.toByteOrNull.invoke("127")
+        result shouldBe 127
+    }
+
+    "toByteOrNull() should be able to parse '-128'" {
+        val result = ValueTransformers.toByteOrNull.invoke("-128")
+        result shouldBe -128
+    }
+
+    "toByteOrNull() should fail to parse '128'" {
+        val result = ValueTransformers.toByteOrNull.invoke("128")
+        result shouldBe null
+    }
+
+    "toByteOrNull() should fail to parse '-129'" {
+        val result = ValueTransformers.toByteOrNull.invoke("-129")
+        result shouldBe null
+    }
+
+    "toByteOrNull() should fail to parse 'abc'" {
+        val result = ValueTransformers.toByteOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toByteOrNull() should fail to parse null" {
+        val result = ValueTransformers.toByteOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toByteOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toByteOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toByteOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toByteOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toShort() should be able to parse '0'" {
         val result = ValueTransformers.toShort.invoke("0")
         result shouldBe 0
@@ -102,6 +169,73 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toShort.invoke(null)
         }
+    }
+
+    "toShort() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toShort.invoke("")
+        }
+    }
+
+    "toShort() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toShort.invoke(" ")
+        }
+    }
+
+    "toShortOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toShortOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toShortOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toShortOrNull.invoke("1")
+        result shouldBe 1
+    }
+
+    "toShortOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toShortOrNull.invoke("-1")
+        result shouldBe -1
+    }
+
+    "toShortOrNull() should be able to parse '32767'" {
+        val result = ValueTransformers.toShortOrNull.invoke("32767")
+        result shouldBe 32767
+    }
+
+    "toShortOrNull() should be able to parse '-32768'" {
+        val result = ValueTransformers.toShortOrNull.invoke("-32768")
+        result shouldBe -32768
+    }
+
+    "toShortOrNull() should fail to parse '32768'" {
+        val result = ValueTransformers.toShortOrNull.invoke("32768")
+        result shouldBe null
+    }
+
+    "toShortOrNull() should fail to parse '-32769'" {
+        val result = ValueTransformers.toShortOrNull.invoke("-32769")
+        result shouldBe null
+    }
+
+    "toShortOrNull() should fail to parse 'abc'" {
+        val result = ValueTransformers.toShortOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toShortOrNull() should fail to parse null" {
+        val result = ValueTransformers.toShortOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toShortOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toShortOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toShortOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toShortOrNull.invoke(" ")
+        result shouldBe null
     }
 
     "toInt() should be able to parse '0'" {
@@ -153,6 +287,73 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toInt() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toInt.invoke("")
+        }
+    }
+
+    "toInt() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toInt.invoke(" ")
+        }
+    }
+
+    "toIntOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toIntOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toIntOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toIntOrNull.invoke("1")
+        result shouldBe 1
+    }
+
+    "toIntOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toIntOrNull.invoke("-1")
+        result shouldBe -1
+    }
+
+    "toIntOrNull() should be able to parse '2147483647'" {
+        val result = ValueTransformers.toIntOrNull.invoke("2147483647")
+        result shouldBe 2147483647
+    }
+
+    "toIntOrNull() should be able to parse '-2147483648'" {
+        val result = ValueTransformers.toIntOrNull.invoke("-2147483648")
+        result shouldBe -2147483648
+    }
+
+    "toIntOrNull() should fail to parse '2147483648'" {
+        val result = ValueTransformers.toIntOrNull.invoke("2147483648")
+        result shouldBe null
+    }
+
+    "toIntOrNull() should fail to parse '-2147483649'" {
+        val result = ValueTransformers.toIntOrNull.invoke("-2147483649")
+        result shouldBe null
+    }
+
+    "toIntOrNull() should fail to parse 'abc'" {
+        val result = ValueTransformers.toIntOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toIntOrNull() should fail to parse null" {
+        val result = ValueTransformers.toIntOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toIntOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toIntOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toIntOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toIntOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toLong() should be able to parse '0'" {
         val result = ValueTransformers.toLong.invoke("0")
         result shouldBe 0
@@ -202,6 +403,73 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toLong() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toLong.invoke("")
+        }
+    }
+
+    "toLong() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toLong.invoke(" ")
+        }
+    }
+
+    "toLongOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toLongOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toLongOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toLongOrNull.invoke("1")
+        result shouldBe 1
+    }
+
+    "toLongOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toLongOrNull.invoke("-1")
+        result shouldBe -1
+    }
+
+    "toLongOrNull() should be able to parse '9223372036854775807'" {
+        val result = ValueTransformers.toLongOrNull.invoke("9223372036854775807")
+        result shouldBe 9223372036854775807
+    }
+
+    "toLongOrNull() should be able to parse '-9223372036854775808'" {
+        val result = ValueTransformers.toLongOrNull.invoke("-9223372036854775808")
+        result shouldBe Long.MIN_VALUE
+    }
+
+    "toLongOrNull() should fail to parse '9223372036854775808'" {
+        val result = ValueTransformers.toLongOrNull.invoke("9223372036854775808")
+        result shouldBe null
+    }
+
+    "toLongOrNull() should fail to parse '-9223372036854775809'" {
+        val result = ValueTransformers.toLongOrNull.invoke("-9223372036854775809")
+        result shouldBe null
+    }
+
+    "toLongOrNull() should fail to parse 'abc'" {
+        val result = ValueTransformers.toLongOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toLongOrNull() should fail to parse null" {
+        val result = ValueTransformers.toLongOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toLongOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toLongOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toLongOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toLongOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toFloat() should be able to parse '0'" {
         val result = ValueTransformers.toFloat.invoke("0")
         result shouldBe 0f
@@ -239,6 +507,63 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toFloat() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toFloat.invoke("")
+        }
+    }
+
+    "toFloat() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toFloat.invoke(" ")
+        }
+    }
+
+    "toFloatOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toFloatOrNull.invoke("0")
+        result shouldBe 0f
+    }
+
+    "toFloatOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toFloatOrNull.invoke("1")
+        result shouldBe 1f
+    }
+
+    "toFloatOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toFloatOrNull.invoke("-1")
+        result shouldBe -1f
+    }
+
+    "toFloatOrNull() should be able to parse '3.4028235E38'" {
+        val result = ValueTransformers.toFloatOrNull.invoke("3.4028235E38")
+        result shouldBe 3.4028235E38f
+    }
+
+    "toFloatOrNull() should be able to parse '-3.4028235E38'" {
+        val result = ValueTransformers.toFloatOrNull.invoke("-3.4028235E38")
+        result shouldBe -3.4028235E38f
+    }
+
+    "toFloatOrNull() should fail to parse 'abc'" {
+        val result = ValueTransformers.toFloatOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toFloatOrNull() should fail to parse null" {
+        val result = ValueTransformers.toFloatOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toFloatOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toFloatOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toFloatOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toFloatOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toDouble() should be able to parse '0'" {
         val result = ValueTransformers.toDouble.invoke("0")
         result shouldBe 0.0
@@ -274,6 +599,63 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toDouble.invoke(null)
         }
+    }
+
+    "toDouble() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toDouble.invoke("")
+        }
+    }
+
+    "toDouble() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toDouble.invoke(" ")
+        }
+    }
+
+    "toDoubleOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toDoubleOrNull.invoke("0")
+        result shouldBe 0.0
+    }
+
+    "toDoubleOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toDoubleOrNull.invoke("1")
+        result shouldBe 1.0
+    }
+
+    "toDoubleOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toDoubleOrNull.invoke("-1")
+        result shouldBe -1.0
+    }
+
+    "toDoubleOrNull() should be able to parse '1.7976931348623157E308'" {
+        val result = ValueTransformers.toDoubleOrNull.invoke("1.7976931348623157E308")
+        result shouldBe 1.7976931348623157E308
+    }
+
+    "toDoubleOrNull() should be able to parse '-1.7976931348623157E308'" {
+        val result = ValueTransformers.toDoubleOrNull.invoke("-1.7976931348623157E308")
+        result shouldBe -1.7976931348623157E308
+    }
+
+    "toDoubleOrNull() should fail to parse 'abc'" {
+        val result = ValueTransformers.toDoubleOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toDoubleOrNull() should fail to parse null" {
+        val result = ValueTransformers.toDoubleOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toDoubleOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toDoubleOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toDoubleOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toDoubleOrNull.invoke(" ")
+        result shouldBe null
     }
 
     "toBoolean() should be able to parse 'true'" {
@@ -340,6 +722,88 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toBoolean() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toBoolean.invoke("")
+        }
+    }
+
+    "toBoolean() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toBoolean.invoke(" ")
+        }
+    }
+
+    "toBooleanOrNull() should be able to parse 'true'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("true")
+        result shouldBe true
+    }
+
+    "toBooleanOrNull() should be able to parse 'false'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("false")
+        result shouldBe false
+    }
+
+    "toBooleanOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("1")
+        result shouldBe true
+    }
+
+    "toBooleanOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("0")
+        result shouldBe false
+    }
+
+    "toBooleanOrNull() should fail to parse '2'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("2")
+        result shouldBe null
+    }
+
+    "toBooleanOrNull() should fail to parse '-1'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toBooleanOrNull() should be able to parse 'yes'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("yes")
+        result shouldBe true
+    }
+
+    "toBooleanOrNull() should be able to parse 'no'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("no")
+        result shouldBe false
+    }
+
+    "toBooleanOrNull() should be able to parse 'y'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("y")
+        result shouldBe true
+    }
+
+    "toBooleanOrNull() should be able to parse 'n'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("n")
+        result shouldBe false
+    }
+
+    "toBooleanOrNull() should fail to parse 'abc'" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toBooleanOrNull() should fail to parse null" {
+        val result = ValueTransformers.toBooleanOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toBooleanOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toBooleanOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toBooleanOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toBooleanOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toChar() should be able to parse 'a'" {
         val result = ValueTransformers.toChar.invoke("a")
         result shouldBe 'a'
@@ -382,6 +846,46 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toChar.invoke("abc")
         }
+    }
+
+    "toCharOrNull() should be able to parse 'a'" {
+        val result = ValueTransformers.toCharOrNull.invoke("a")
+        result shouldBe 'a'
+    }
+
+    "toCharOrNull() should be able to parse 'A'" {
+        val result = ValueTransformers.toCharOrNull.invoke("A")
+        result shouldBe 'A'
+    }
+
+    "toCharOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toCharOrNull.invoke("1")
+        result shouldBe '1'
+    }
+
+    "toCharOrNull() should be able to parse ' '" {
+        val result = ValueTransformers.toCharOrNull.invoke(" ")
+        result shouldBe ' '
+    }
+
+    "toCharOrNull() should not be able to parse 'ab'" {
+        val result = ValueTransformers.toCharOrNull.invoke("ab")
+        result shouldBe null
+    }
+
+    "toCharOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toCharOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toCharOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toCharOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toCharOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toCharOrNull.invoke("abc")
+        result shouldBe null
     }
 
     "toUnsignedByte() should be able to parse '0'" {
@@ -433,6 +937,73 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toUnsignedByte() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toUnsignedByte.invoke("")
+        }
+    }
+
+    "toUnsignedByte() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toUnsignedByte.invoke(" ")
+        }
+    }
+
+    "toUnsignedByteOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke("0")
+        result shouldBe 0u.toUByte()
+    }
+
+    "toUnsignedByteOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke("1")
+        result shouldBe 1u.toUByte()
+    }
+
+    "toUnsignedByteOrNull() should be able to parse '127'" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke("127")
+        result shouldBe 127u.toUByte()
+    }
+
+    "toUnsignedByteOrNull() should be able to parse '128'" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke("128")
+        result shouldBe 128u.toUByte()
+    }
+
+    "toUnsignedByteOrNull() should be able to parse '255'" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke("255")
+        result shouldBe 255u.toUByte()
+    }
+
+    "toUnsignedByteOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toUnsignedByteOrNull() should not be able to parse '256'" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke("256")
+        result shouldBe null
+    }
+
+    "toUnsignedByteOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toUnsignedByteOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toUnsignedByteOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toUnsignedByteOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toUnsignedByteOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toUnsignedShort() should be able to parse '0'" {
         val result = ValueTransformers.toUnsignedShort.invoke("0")
         result shouldBe 0u.toUShort()
@@ -475,6 +1046,68 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toUnsignedShort.invoke(null)
         }
+    }
+
+    "toUnsignedShort() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toUnsignedShort.invoke("")
+        }
+    }
+
+    "toUnsignedShort() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toUnsignedShort.invoke(" ")
+        }
+    }
+
+    "toUnsignedShortOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke("0")
+        result shouldBe 0u.toUShort()
+    }
+
+    "toUnsignedShortOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke("1")
+        result shouldBe 1u.toUShort()
+    }
+
+    "toUnsignedShortOrNull() should be able to parse '32767'" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke("65535")
+        result shouldBe 65535u.toUShort()
+    }
+
+    "toUnsignedShortOrNull() should be able to parse '32768'" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke("32768")
+        result shouldBe 32768u.toUShort()
+    }
+
+    "toUnsignedShortOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toUnsignedShortOrNull() should not be able to parse '65536'" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke("65536")
+        result shouldBe null
+    }
+
+    "toUnsignedShortOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toUnsignedShortOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toUnsignedShortOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toUnsignedShortOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toUnsignedShortOrNull.invoke(" ")
+        result shouldBe null
     }
 
     "toUnsignedInt() should be able to parse '0'" {
@@ -521,6 +1154,68 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toUnsignedInt() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toUnsignedInt.invoke("")
+        }
+    }
+
+    "toUnsignedInt() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toUnsignedInt.invoke(" ")
+        }
+    }
+
+    "toUnsignedIntOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke("0")
+        result shouldBe 0u
+    }
+
+    "toUnsignedIntOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke("1")
+        result shouldBe 1u
+    }
+
+    "toUnsignedIntOrNull() should be able to parse '2147483647'" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke("2147483647")
+        result shouldBe 2147483647u
+    }
+
+    "toUnsignedIntOrNull() should be able to parse '4294967295'" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke("4294967295")
+        result shouldBe 4294967295u
+    }
+
+    "toUnsignedIntOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toUnsignedIntOrNull() should not be able to parse '4294967296'" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke("4294967296")
+        result shouldBe null
+    }
+
+    "toUnsignedIntOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toUnsignedIntOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toUnsignedIntOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toUnsignedIntOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toUnsignedIntOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toUnsignedLong() should be able to parse '0'" {
         val result = ValueTransformers.toUnsignedLong.invoke("0")
         result shouldBe 0uL
@@ -537,7 +1232,7 @@ class ValueTransformerLambdaTests : FreeSpec({
     }
 
     "toUnsignedLong() should be able to parse '18446744073709551615'" {
-        val result = ValueTransformers.toUnsignedLong.invoke( "18446744073709551615")
+        val result = ValueTransformers.toUnsignedLong.invoke("18446744073709551615")
         result shouldBe ULong.MAX_VALUE
     }
 
@@ -575,6 +1270,51 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toUnsignedLong.invoke(" ")
         }
+    }
+
+    "toUnsignedLongOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toUnsignedLongOrNull.invoke("0")
+        result shouldBe 0uL
+    }
+
+    "toUnsignedLongOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toUnsignedLongOrNull.invoke("1")
+        result shouldBe 1uL
+    }
+
+    "toUnsignedLongOrNull() should be able to parse '9223372036854775807'" {
+        val result = ValueTransformers.toUnsignedLongOrNull.invoke("9223372036854775807")
+        result shouldBe 9223372036854775807uL
+    }
+
+    "toUnsignedLongOrNull() should be able to parse '18446744073709551615'" {
+        val result = ValueTransformers.toUnsignedLongOrNull.invoke("18446744073709551615")
+        result shouldBe ULong.MAX_VALUE
+    }
+
+    "toUnsignedLongOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toUnsignedLongOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toUnsignedLongOrNull() should not be able to parse '18446744073709551616'" {
+        val result = ValueTransformers.toUnsignedLongOrNull.invoke("18446744073709551616")
+        result shouldBe null
+    }
+
+    "toUnsignedLongOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toUnsignedLongOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toUnsignedLongOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toUnsignedLongOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toUnsignedLongOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toUnsignedLongOrNull.invoke("")
+        result shouldBe null
     }
 
     "toPositiveByte() should be able to parse '0'" {
@@ -616,6 +1356,48 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toPositiveByte() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toPositiveByte.invoke("")
+        }
+    }
+
+    "toPositiveByte() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toPositiveByte.invoke(" ")
+        }
+    }
+
+    "toPositiveByteOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toPositiveByteOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toPositiveByteOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toPositiveByteOrNull.invoke("1")
+        result shouldBe 1
+    }
+
+    "toPositiveByteOrNull() should be able to parse '127'" {
+        val result = ValueTransformers.toPositiveByteOrNull.invoke("127")
+        result shouldBe 127
+    }
+
+    "toPositiveByteOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toPositiveByteOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toPositiveByteOrNull() should not be able to parse '128'" {
+        val result = ValueTransformers.toPositiveByteOrNull.invoke("128")
+        result shouldBe null
+    }
+
+    "toPositiveByteOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toPositiveByteOrNull.invoke("abc")
+        result shouldBe null
+    }
+
     "toPositiveShort() should be able to parse '0'" {
         val result = ValueTransformers.toPositiveShort.invoke("0")
         result shouldBe 0
@@ -637,7 +1419,7 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
-"toPositiveShort() should not be able to parse '32768'" {
+    "toPositiveShort() should not be able to parse '32768'" {
         shouldThrow<ValueException> {
             ValueTransformers.toPositiveShort.invoke("32768")
         }
@@ -653,6 +1435,63 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toPositiveShort.invoke(null)
         }
+    }
+
+    "toPositiveShort() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toPositiveShort.invoke("")
+        }
+    }
+
+    "toPositiveShort() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toPositiveShort.invoke(" ")
+        }
+    }
+
+    "toPositiveShortOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toPositiveShortOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toPositiveShortOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toPositiveShortOrNull.invoke("1")
+        result shouldBe 1
+    }
+
+    "toPositiveShortOrNull() should be able to parse '32767'" {
+        val result = ValueTransformers.toPositiveShortOrNull.invoke("32767")
+        result shouldBe 32767
+    }
+
+    "toPositiveShortOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toPositiveShortOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toPositiveShortOrNull() should not be able to parse '32768'" {
+        val result = ValueTransformers.toPositiveShortOrNull.invoke("32768")
+        result shouldBe null
+    }
+
+    "toPositiveShortOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toPositiveShortOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toPositiveShortOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toPositiveShortOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toPositiveShortOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toPositiveShortOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toPositiveShortOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toPositiveShortOrNull.invoke(" ")
+        result shouldBe null
     }
 
     "toPositiveInt() should be able to parse '0'" {
@@ -692,6 +1531,63 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toPositiveInt.invoke(null)
         }
+    }
+
+    "toPositiveInt() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toPositiveInt.invoke("")
+        }
+    }
+
+    "toPositiveInt() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toPositiveInt.invoke(" ")
+        }
+    }
+
+    "toPositiveIntOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toPositiveIntOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toPositiveIntOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toPositiveIntOrNull.invoke("1")
+        result shouldBe 1
+    }
+
+    "toPositiveIntOrNull() should be able to parse '2147483647'" {
+        val result = ValueTransformers.toPositiveIntOrNull.invoke("2147483647")
+        result shouldBe 2147483647
+    }
+
+    "toPositiveIntOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toPositiveIntOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toPositiveIntOrNull() should not be able to parse '2147483648'" {
+        val result = ValueTransformers.toPositiveIntOrNull.invoke("2147483648")
+        result shouldBe null
+    }
+
+    "toPositiveIntOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toPositiveIntOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toPositiveIntOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toPositiveIntOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toPositiveIntOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toPositiveIntOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toPositiveIntOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toPositiveIntOrNull.invoke(" ")
+        result shouldBe null
     }
 
     "toPositiveLong() should be able to parse '0'" {
@@ -745,6 +1641,51 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toPositiveLongOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toPositiveLongOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toPositiveLongOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toPositiveLongOrNull.invoke("1")
+        result shouldBe 1
+    }
+
+    "toPositiveLongOrNull() should be able to parse '9223372036854775807'" {
+        val result = ValueTransformers.toPositiveLongOrNull.invoke("9223372036854775807")
+        result shouldBe 9223372036854775807
+    }
+
+    "toPositiveLongOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toPositiveLongOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toPositiveLongOrNull() should not be able to parse '9223372036854775808'" {
+        val result = ValueTransformers.toPositiveLongOrNull.invoke("9223372036854775808")
+        result shouldBe null
+    }
+
+    "toPositiveLongOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toPositiveLongOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toPositiveLongOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toPositiveLongOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toPositiveLongOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toPositiveLongOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toPositiveLongOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toPositiveLongOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toPositiveFloat() should be able to parse '0'" {
         val result = ValueTransformers.toPositiveFloat.invoke("0")
         result shouldBe 0f
@@ -788,6 +1729,46 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toPositiveFloat.invoke(" ")
         }
+    }
+
+    "toPositiveFloatOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toPositiveFloatOrNull.invoke("0")
+        result shouldBe 0f
+    }
+
+    "toPositiveFloatOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toPositiveFloatOrNull.invoke("1")
+        result shouldBe 1f
+    }
+
+    "toPositiveFloatOrNull() should be able to parse '3.4028235E38'" {
+        val result = ValueTransformers.toPositiveFloatOrNull.invoke("3.4028235E38")
+        result shouldBe 3.4028235E38f
+    }
+
+    "toPositiveFloatOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toPositiveFloatOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toPositiveFloatOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toPositiveFloatOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toPositiveFloatOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toPositiveFloatOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toPositiveFloatOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toPositiveFloatOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toPositiveFloatOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toPositiveFloatOrNull.invoke(" ")
+        result shouldBe null
     }
 
     "toPositiveDouble() should be able to parse '0'" {
@@ -835,6 +1816,46 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toPositiveDoubleOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toPositiveDoubleOrNull.invoke("0")
+        result shouldBe 0.0
+    }
+
+    "toPositiveDoubleOrNull() should be able to parse '1'" {
+        val result = ValueTransformers.toPositiveDoubleOrNull.invoke("1")
+        result shouldBe 1.0
+    }
+
+    "toPositiveDoubleOrNull() should be able to parse '1.7976931348623157E308'" {
+        val result = ValueTransformers.toPositiveDoubleOrNull.invoke("1.7976931348623157E308")
+        result shouldBe 1.7976931348623157E308
+    }
+
+    "toPositiveDoubleOrNull() should not be able to parse '-1'" {
+        val result = ValueTransformers.toPositiveDoubleOrNull.invoke("-1")
+        result shouldBe null
+    }
+
+    "toPositiveDoubleOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toPositiveDoubleOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toPositiveDoubleOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toPositiveDoubleOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toPositiveDoubleOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toPositiveDoubleOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toPositiveDoubleOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toPositiveDoubleOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toNegativeByte() should be able to parse '0'" {
         val result = ValueTransformers.toNegativeByte.invoke("0")
         result shouldBe 0
@@ -880,6 +1901,53 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toNegativeByte() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toNegativeByte.invoke("")
+        }
+    }
+
+    "toNegativeByte() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toNegativeByte.invoke(" ")
+        }
+    }
+
+    "toNegativeByteOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toNegativeByteOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toNegativeByteOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toNegativeByteOrNull.invoke("-1")
+        result shouldBe -1
+    }
+
+    "toNegativeByteOrNull() should be able to parse '-128'" {
+        val result = ValueTransformers.toNegativeByteOrNull.invoke("-128")
+        result shouldBe -128
+    }
+
+    "toNegativeByteOrNull() should not be able to parse '1'" {
+        val result = ValueTransformers.toNegativeByteOrNull.invoke("1")
+        result shouldBe null
+    }
+
+    "toNegativeByteOrNull() should not be able to parse '127'" {
+        val result = ValueTransformers.toNegativeByteOrNull.invoke("127")
+        result shouldBe null
+    }
+
+    "toNegativeByteOrNull() should not be able to parse '128'" {
+        val result = ValueTransformers.toNegativeByteOrNull.invoke("128")
+        result shouldBe null
+    }
+
+    "toNegativeByteOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toNegativeByteOrNull.invoke("abc")
+        result shouldBe null
+    }
+
     "toNegativeShort() should be able to parse '0'" {
         val result = ValueTransformers.toNegativeShort.invoke("0")
         result shouldBe 0
@@ -907,7 +1975,7 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
-"toNegativeShort() should not be able to parse '32768'" {
+    "toNegativeShort() should not be able to parse '32768'" {
         shouldThrow<ValueException> {
             ValueTransformers.toNegativeShort.invoke("32768")
         }
@@ -923,6 +1991,68 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toNegativeShort.invoke(null)
         }
+    }
+
+    "toNegativeShort() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toNegativeShort.invoke("")
+        }
+    }
+
+    "toNegativeShort() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toNegativeShort.invoke(" ")
+        }
+    }
+
+    "toNegativeShortOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toNegativeShortOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke("-1")
+        result shouldBe -1
+    }
+
+    "toNegativeShortOrNull() should be able to parse '-32768'" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke("-32768")
+        result shouldBe -32768
+    }
+
+    "toNegativeShortOrNull() should not be able to parse '1'" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke("1")
+        result shouldBe null
+    }
+
+    "toNegativeShortOrNull() should not be able to parse '32767'" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke("32767")
+        result shouldBe null
+    }
+
+    "toNegativeShortOrNull() should not be able to parse '32768'" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke("32768")
+        result shouldBe null
+    }
+
+    "toNegativeShortOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toNegativeShortOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toNegativeShortOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toNegativeShortOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toNegativeShortOrNull.invoke(" ")
+        result shouldBe null
     }
 
     "toNegativeInt() should be able to parse '0'" {
@@ -968,6 +2098,68 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toNegativeInt.invoke(null)
         }
+    }
+
+    "toNegativeInt() should not be able to parse ''" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toNegativeInt.invoke("")
+        }
+    }
+
+    "toNegativeInt() should not be able to parse ' '" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toNegativeInt.invoke(" ")
+        }
+    }
+
+    "toNegativeIntOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toNegativeIntOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke("-1")
+        result shouldBe -1
+    }
+
+    "toNegativeIntOrNull() should be able to parse '-2147483648'" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke("-2147483648")
+        result shouldBe -2147483648
+    }
+
+    "toNegativeIntOrNull() should not be able to parse '1'" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke("1")
+        result shouldBe null
+    }
+
+    "toNegativeIntOrNull() should not be able to parse '2147483647'" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke("2147483647")
+        result shouldBe null
+    }
+
+    "toNegativeIntOrNull() should not be able to parse '2147483648'" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke("2147483648")
+        result shouldBe null
+    }
+
+    "toNegativeIntOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toNegativeIntOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toNegativeIntOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toNegativeIntOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toNegativeIntOrNull.invoke(" ")
+        result shouldBe null
     }
 
     "toNegativeLong() should be able to parse '0'" {
@@ -1027,6 +2219,56 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toNegativeLongOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke("0")
+        result shouldBe 0
+    }
+
+    "toNegativeLongOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke("-1")
+        result shouldBe -1
+    }
+
+    "toNegativeLongOrNull() should be able to parse '-9223372036854775808'" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke("-9223372036854775808")
+        result shouldBe Long.MIN_VALUE
+    }
+
+    "toNegativeLongOrNull() should not be able to parse '1'" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke("1")
+        result shouldBe null
+    }
+
+    "toNegativeLongOrNull() should not be able to parse '9223372036854775807'" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke("9223372036854775807")
+        result shouldBe null
+    }
+
+    "toNegativeLongOrNull() should not be able to parse '9223372036854775808'" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke("9223372036854775808")
+        result shouldBe null
+    }
+
+    "toNegativeLongOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toNegativeLongOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toNegativeLongOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toNegativeLongOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toNegativeLongOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toNegativeFloat() should be able to parse '0'" {
         val result = ValueTransformers.toNegativeFloat.invoke("0")
         result shouldBe 0f
@@ -1076,6 +2318,51 @@ class ValueTransformerLambdaTests : FreeSpec({
         shouldThrow<ValueException> {
             ValueTransformers.toNegativeFloat.invoke(" ")
         }
+    }
+
+    "toNegativeFloatOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toNegativeFloatOrNull.invoke("0")
+        result shouldBe 0f
+    }
+
+    "toNegativeFloatOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toNegativeFloatOrNull.invoke("-1")
+        result shouldBe -1f
+    }
+
+    "toNegativeFloatOrNull() should be able to parse '-3.4028235E38'" {
+        val result = ValueTransformers.toNegativeFloatOrNull.invoke("-3.4028235E38")
+        result shouldBe -3.4028235E38f
+    }
+
+    "toNegativeFloatOrNull() should not be able to parse '1'" {
+        val result = ValueTransformers.toNegativeFloatOrNull.invoke("1")
+        result shouldBe null
+    }
+
+    "toNegativeFloatOrNull() should not be able to parse '3.4028236E38'" {
+        val result = ValueTransformers.toNegativeFloatOrNull.invoke("3.4028236E38")
+        result shouldBe null
+    }
+
+    "toNegativeFloatOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toNegativeFloatOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toNegativeFloatOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toNegativeFloatOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toNegativeFloatOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toNegativeFloatOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toNegativeFloatOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toNegativeFloatOrNull.invoke(" ")
+        result shouldBe null
     }
 
     "toNegativeDouble() should be able to parse '0'" {
@@ -1129,6 +2416,51 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toNegativeDoubleOrNull() should be able to parse '0'" {
+        val result = ValueTransformers.toNegativeDoubleOrNull.invoke("0")
+        result shouldBe 0.0
+    }
+
+    "toNegativeDoubleOrNull() should be able to parse '-1'" {
+        val result = ValueTransformers.toNegativeDoubleOrNull.invoke("-1")
+        result shouldBe -1.0
+    }
+
+    "toNegativeDoubleOrNull() should be able to parse '-1.7976931348623157E308'" {
+        val result = ValueTransformers.toNegativeDoubleOrNull.invoke("-1.7976931348623157E308")
+        result shouldBe -1.7976931348623157E308
+    }
+
+    "toNegativeDoubleOrNull() should not be able to parse '1'" {
+        val result = ValueTransformers.toNegativeDoubleOrNull.invoke("1")
+        result shouldBe null
+    }
+
+    "toNegativeDoubleOrNull() should not be able to parse '1.7976931348623159E308'" {
+        val result = ValueTransformers.toNegativeDoubleOrNull.invoke("1.7976931348623159E308")
+        result shouldBe null
+    }
+
+    "toNegativeDoubleOrNull() should not be able to parse 'abc'" {
+        val result = ValueTransformers.toNegativeDoubleOrNull.invoke("abc")
+        result shouldBe null
+    }
+
+    "toNegativeDoubleOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toNegativeDoubleOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toNegativeDoubleOrNull() should not be able to parse ''" {
+        val result = ValueTransformers.toNegativeDoubleOrNull.invoke("")
+        result shouldBe null
+    }
+
+    "toNegativeDoubleOrNull() should not be able to parse ' '" {
+        val result = ValueTransformers.toNegativeDoubleOrNull.invoke(" ")
+        result shouldBe null
+    }
+
     "toString() should be able to parse 'abc'" {
         val result = ValueTransformers.toString.invoke("abc")
         result shouldBe "abc"
@@ -1155,4 +2487,44 @@ class ValueTransformerLambdaTests : FreeSpec({
         }
     }
 
+    "toString() should be able to parse ''" {
+        ValueTransformers.toString.invoke("") shouldBe ""
+    }
+
+    "toString() should be able to parse ' '" {
+        ValueTransformers.toString.invoke(" ") shouldBe " "
+    }
+
+    "toStringOrNull() should be able to parse 'abc'" {
+        val result = ValueTransformers.toStringOrNull.invoke("abc")
+        result shouldBe "abc"
+    }
+
+    "toStringOrNull() should be able to parse '123'" {
+        val result = ValueTransformers.toStringOrNull.invoke("123")
+        result shouldBe "123"
+    }
+
+    "toStringOrNull() should be able to parse 'true'" {
+        val result = ValueTransformers.toStringOrNull.invoke("true")
+        result shouldBe "true"
+    }
+
+    "toStringOrNull() should be able to parse 'false'" {
+        val result = ValueTransformers.toStringOrNull.invoke("false")
+        result shouldBe "false"
+    }
+
+    "toStringOrNull() should not be able to parse null" {
+        val result = ValueTransformers.toStringOrNull.invoke(null)
+        result shouldBe null
+    }
+
+    "toStringOrNull() should be able to parse ''" {
+        ValueTransformers.toStringOrNull.invoke("") shouldBe ""
+    }
+
+    "toStringOrNull() should be able to parse ' '" {
+        ValueTransformers.toStringOrNull.invoke(" ") shouldBe " "
+    }
 })
