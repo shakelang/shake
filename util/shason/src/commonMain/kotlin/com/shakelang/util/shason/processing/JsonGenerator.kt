@@ -65,7 +65,7 @@ object JsonGenerator {
             val key = next.key.toString()
             val value = next.value
             if (indent != null) ret += LINE_SEPARATOR + indent.repeat(indentAmount + 1)
-            ret += "\"${Characters.escapeString(key)}\"" + ":"
+            ret += "\"${Characters.escapeStringForString(key)}\"" + ":"
             if (indent != null) ret += " "
             ret += generate(
                 value,
@@ -83,7 +83,7 @@ object JsonGenerator {
      * @since 0.1.0
      * @version 0.1.0
      */
-    private fun generate(s: String) = "\"${Characters.escapeString(s)}\""
+    private fun generate(s: String) = "\"${Characters.escapeStringForString(s)}\""
 
     /**
      * Generate something

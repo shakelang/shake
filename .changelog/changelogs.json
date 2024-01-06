@@ -161,6 +161,13 @@
             "Generated markdown should have two line-separators between elements",
             "Update com.shakelang.util:markdown to 0.2.1"
           ]
+        },
+        {
+          "version": "0.7.2",
+          "changes": [
+            "Update com.shakelang.util:parseutils to 0.4.0",
+            "Update com.shakelang.util:shason to 0.4.1"
+          ]
         }
       ]
     },
@@ -292,6 +299,13 @@
             "Update com.shakelang.util:primitives to 0.5.0",
             "Update com.shakelang.util:shason to 0.4.0"
           ]
+        },
+        {
+          "version": "0.2.1-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.util:parseutils to 0.4.0",
+            "Update com.shakelang.util:shason to 0.4.1"
+          ]
         }
       ]
     },
@@ -412,6 +426,13 @@
             "Update com.shakelang.util:environment to 0.3.0",
             "Update com.shakelang.util:primitives to 0.5.0"
           ]
+        },
+        {
+          "version": "0.4.0",
+          "changes": [
+            "Introduce Characters#escapeStringForString + Characters#escapeCharacterForString",
+            "Introduce Characters#escapeStringForCharacter + Characters#escapeCharacterForCharacter"
+          ]
         }
       ]
     },
@@ -514,6 +535,14 @@
             "Update com.shakelang.util:parseutils to 0.3.0",
             "Update com.shakelang.util:primitives to 0.5.0"
           ]
+        },
+        {
+          "version": "0.4.1",
+          "changes": [
+            "Fix: Don\'t escape `\'` character in json strings",
+            "Make com.shakelang.util.shason.json from typealias to val",
+            "Update com.shakelang.util:parseutils to 0.4.0"
+          ]
         }
       ]
     },
@@ -589,6 +618,12 @@
             "Update com.shakelang.util:parseutils to 0.3.0",
             "Update com.shakelang.util:primitives to 0.5.0"
           ]
+        },
+        {
+          "version": "0.1.5-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.util:parseutils to 0.4.0"
+          ]
         }
       ]
     },
@@ -639,6 +674,14 @@
             "Update com.shakelang.util:primitives to 0.5.0",
             "Update com.shakelang.util:shason to 0.4.0",
             "Update com.shakelang.shake.compiler:lexer to 0.1.4-SNAPSHOT"
+          ]
+        },
+        {
+          "version": "0.1.6-SNAPSHOT",
+          "changes": [
+            "Update com.shakelang.util:parseutils to 0.4.0",
+            "Update com.shakelang.util:shason to 0.4.1",
+            "Update com.shakelang.shake.compiler:lexer to 0.1.5-SNAPSHOT"
           ]
         }
       ]
@@ -742,6 +785,13 @@
             "Update com.shakelang.util:parseutils to 0.3.0",
             "Update com.shakelang.util:primitives to 0.5.0",
             "Update com.shakelang.util:shason to 0.4.0"
+          ]
+        },
+        {
+          "version": "0.2.1",
+          "changes": [
+            "Update com.shakelang.util:parseutils to 0.4.0",
+            "Update com.shakelang.util:shason to 0.4.1"
           ]
         }
       ]
