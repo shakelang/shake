@@ -7,9 +7,6 @@ import io.kotest.matchers.shouldBe
 
 class MethodTests : FreeSpec({
 
-    // Output all logs
-    GlobalDebugConfiguration.paths.add("*")
-
     "method declaration (no params, void)" {
 
         val processor = createBaseProcessor()
