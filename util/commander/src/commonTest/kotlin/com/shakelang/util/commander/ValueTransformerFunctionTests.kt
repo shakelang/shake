@@ -1129,4 +1129,30 @@ class ValueTransformerFunctionTests : FreeSpec({
         }
     }
 
+    "toString() should be able to parse 'abc'" {
+        val result = ValueTransformers.toString("abc")
+        result shouldBe "abc"
+    }
+
+    "toString() should be able to parse '123'" {
+        val result = ValueTransformers.toString("123")
+        result shouldBe "123"
+    }
+
+    "toString() should be able to parse 'true'" {
+        val result = ValueTransformers.toString("true")
+        result shouldBe "true"
+    }
+
+    "toString() should be able to parse 'false'" {
+        val result = ValueTransformers.toString("false")
+        result shouldBe "false"
+    }
+
+    "toString() should not be able to parse null" {
+        shouldThrow<ValueException> {
+            ValueTransformers.toString(null)
+        }
+    }
+
 })
