@@ -181,7 +181,7 @@ class CliCommand(
                     }
 
                     val values = entry.options[name] ?: arrayOf()
-                    entry.options[name] = arrayOf(*values, Value(name, value))
+                    entry.options[name] = arrayOf(*values, Value(value))
                 }
 
                 arg.startsWith("-") -> {
@@ -209,7 +209,7 @@ class CliCommand(
                     }
 
                     val values = argEntry.options[name] ?: arrayOf()
-                    argEntry.options[name] = arrayOf(*values, Value(name, value))
+                    argEntry.options[name] = arrayOf(*values, Value(value))
                 }
 
                 else -> {
@@ -229,7 +229,7 @@ class CliCommand(
                             throw ValueValidationException("Invalid value for argument: $name")
                         }
 
-                        argEntry.arguments[name] = Value(name, arg)
+                        argEntry.arguments[name] = Value(arg)
                     } else {
                         // Find subcommand
                         val command = commands.find { it.name == arg || it.aliases.contains(arg) }

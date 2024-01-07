@@ -13,11 +13,12 @@ fun ValueValidator.accepts(value: String?): Boolean {
     }
 }
 
+fun valueValidator(validator: ValueValidator): ValueValidator = validator
+
 /**
  * A wrapper for a string-encoded value
  */
 data class Value(
-    val name: String,
     val value: String?
 ) {
     fun <T> to(valueTransformer: ValueTransformer<T>) = valueTransformer(value ?: throw NullPointerException("Value is null"))
@@ -40,7 +41,7 @@ data class Value(
     fun toBooleanOrNull(): Boolean? = value?.toBoolean()
     fun toStringOrNull(): String? = value
 
-    fun validate(valueValidator: ValueValidator) = valueValidator(value)
+    fun validate(valueValidator: ValueValidator) = valueValidator.accepts(value)
     fun validate(valueValidator: NullableValueTransformer<Any>) = valueValidator(value) != null
     fun validateByte(): Boolean = value?.toByteOrNull() != null
     fun validateShort(): Boolean = value?.toShortOrNull() != null
