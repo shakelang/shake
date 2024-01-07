@@ -5,7 +5,6 @@ name: Format using ktlint
 on:
   push:
     branches:
-      - main
       - development
   schedule:
     - cron: "45 15 * * 4"
@@ -21,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        java-version: [ 16 ]
+        java-version: [16]
 
     steps:
       - name: Checkout 🛎️
