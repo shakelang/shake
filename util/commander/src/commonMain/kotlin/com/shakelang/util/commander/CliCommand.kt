@@ -1,6 +1,5 @@
 package com.shakelang.util.commander
 
-
 typealias CommandAction = CliCommand.(ParseResult) -> Unit
 
 class CliCommand(
@@ -11,7 +10,7 @@ class CliCommand(
     val arguments: MutableList<CliArgument> = mutableListOf(),
     val options: MutableList<CliOption> = mutableListOf(),
     val commands: MutableList<CliCommand> = mutableListOf(),
-    var action: CommandAction? = null,
+    var action: CommandAction? = null
 ) {
     fun getUsage(): String {
         val builder = StringBuilder()
@@ -87,7 +86,7 @@ class CliCommand(
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null,
+        valueValidator: ValueValidator? = null
     ): CliCommand {
         options.add(
             CliOption(
@@ -115,7 +114,7 @@ class CliCommand(
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null,
+        valueValidator: ValueValidator? = null
     ): CliCommand {
         arguments.add(
             CliArgument(
@@ -138,7 +137,7 @@ class CliCommand(
         aliases: Array<String> = arrayOf(),
         description: String? = null,
         action: CommandAction? = null,
-        init: (CliCommand.() -> Unit)? = null,
+        init: (CliCommand.() -> Unit)? = null
     ): CliCommand {
         val command =
             CliCommand(this, name, aliases, description, mutableListOf(), mutableListOf(), mutableListOf(), action)
@@ -148,7 +147,6 @@ class CliCommand(
     }
 
     fun parse(args: Array<String>, stack: Array<CommandStackEntry>): ParseResult {
-
         val entry = CommandStackEntry(name, this)
 
         val newStack = arrayOf(*stack, entry)
@@ -156,7 +154,6 @@ class CliCommand(
         var i = 0
         var argumentIndex = 0
         while (i < args.size) {
-
             val arg = args[i]
             when {
                 arg.startsWith("--") -> {
@@ -175,7 +172,9 @@ class CliCommand(
                     val value = if (option.hasValue) {
                         if (i + 1 >= args.size) throw IllegalArgumentException("Missing value for option: $name")
                         args[++i]
-                    } else "true"
+                    } else {
+                        "true"
+                    }
 
                     if (option.valueValidator != null) {
                         if (!option.valueValidator.accepts(value)) throw ValueValidationException("Invalid value for option: $name")
@@ -201,7 +200,9 @@ class CliCommand(
                     val value = if (option.hasValue) {
                         if (i + 1 >= args.size) throw IllegalArgumentException("Missing value for option: $name")
                         args[++i]
-                    } else "true"
+                    } else {
+                        "true"
+                    }
 
                     if (option.valueValidator != null) {
                         if (!option.valueValidator.accepts(value)) throw ValueValidationException("Invalid value for option: $name")
@@ -224,12 +225,12 @@ class CliCommand(
 
                         if (argEntry.arguments.containsKey(name)) throw IllegalArgumentException("Argument: $name already exists")
 
-                        if (argument.valueValidator != null && !argument.valueValidator.accepts(arg))
+                        if (argument.valueValidator != null && !argument.valueValidator.accepts(arg)) {
                             throw ValueValidationException("Invalid value for argument: $name")
+                        }
 
                         argEntry.arguments[name] = Value(name, arg)
                     } else {
-
                         // Find subcommand
                         val command = commands.find { it.name == arg || it.aliases.contains(arg) }
                             ?: throw IllegalArgumentException("Unknown command: $arg")
@@ -239,7 +240,7 @@ class CliCommand(
                 }
             }
 
-            i++;
+            i++
         }
 
         return ParseResult(newStack.toMutableList())
@@ -254,8 +255,6 @@ class CliCommand(
         result.stack.last().command.action?.invoke(result.stack.last().command, result)
         return result
     }
-
-
 }
 
 class CliCommandCreationContext {
@@ -298,7 +297,7 @@ class CliCommandCreationContext {
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null,
+        valueValidator: ValueValidator? = null
     ) {
         arguments.add {
             CliArgument(
@@ -335,7 +334,7 @@ class CliCommandCreationContext {
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null,
+        valueValidator: ValueValidator? = null
     ) {
         options.add {
             CliOption(
@@ -369,7 +368,7 @@ class CliCommandCreationContext {
         aliases: Array<String> = arrayOf(),
         description: String? = null,
         action: CommandAction? = null,
-        init: (CliCommandCreationContext.() -> Unit)? = null,
+        init: (CliCommandCreationContext.() -> Unit)? = null
     ) {
         val context = CliCommandCreationContext()
         context.name = name
@@ -381,7 +380,6 @@ class CliCommandCreationContext {
     }
 
     fun generate(parent: CliCommand?): CliCommand {
-
         if (!::name.isInitialized) throw IllegalStateException("Name is not initialized")
 
         val cmd = CliCommand(

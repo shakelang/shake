@@ -1,6 +1,5 @@
 package com.shakelang.shake.processor
 
-import com.shakelang.util.logger.GlobalDebugConfiguration
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 

@@ -18,7 +18,7 @@ fun ValueValidator.accepts(value: String?): Boolean {
  */
 data class Value(
     val name: String,
-    val value: String?,
+    val value: String?
 ) {
     fun <T> to(valueTransformer: ValueTransformer<T>) = valueTransformer(value ?: throw NullPointerException("Value is null"))
     fun toByte(): Byte = value?.toByte() ?: throw NumberFormatException("Value is null")

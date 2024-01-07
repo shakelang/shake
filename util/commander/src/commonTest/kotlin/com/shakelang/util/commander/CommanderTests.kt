@@ -4,7 +4,7 @@ import com.shakelang.util.testlib.CallCounter
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class CommanderTests : FreeSpec ({
+class CommanderTests : FreeSpec({
 
     "command generation" {
         val command = command {
