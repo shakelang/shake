@@ -84,23 +84,24 @@ jobs:
         if: steps.commit_changes.outputs.changes == 'true'
         run: |
           result=$(gh pr list --state open --base development --label ktlint --json number --json headRefName)
-          pr_id=$(echo $result | jq length)
+          pr_count=$(echo $result | jq length)
           pr_ref=$(echo $result | jq '.[0].headRefName')
           pr_number=$(echo $result | jq '.[0].number')
-          echo Found $pr_id pull_requests matching the specified filter
+          echo Found $pr_count pull_requests matching the specified filter
           echo Branch $pr_ref will be updated
-          echo "pr_id=$pr_id" >> $GITHUB_OUTPUT
+          echo "pr_count=$pr_count" >> $GITHUB_OUTPUT
           echo "pr_ref=$pr_ref" >> $GITHUB_OUTPUT
+          echo "pr_number=$pr_number" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
 
       - name: Create or update PR
         if: steps.commit_changes.outputs.changes == 'true'
         run: |
-          if [[ "${{ steps.check_pr.outputs.pr_id }}" -gt 0 ]]; then
+          if [[ "${{ steps.check_pr.outputs.pr_count }}" -gt 0 ]]; then
 
             # Old pr already existing. Commenting on old pr
-            gh pr comment ${{ steps.check_pr.outputs.pr_id }} \
+            gh pr comment ${{ steps.check_pr.outputs.pr_number }} \
               -b "Updated because of updates to development branch (${{github.ref}})"
 
           else
@@ -112,4 +113,4 @@ jobs:
               --label ktlint --label automated --label style --label kotlin
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
