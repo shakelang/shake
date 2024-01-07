@@ -55,37 +55,56 @@ jobs:
           git_commit_gpgsign: true
 
       - name: Commit changes
+        id: commit_changes
         run: |
+          # Git Configuration
           git config --local user.email "bot@shakelang.com"
           git config --local user.name "shakebot[bot]"
-          git add .
-          git commit -m "[Automated] Format using ktlint"
+          git checkout -b @shakelang-bot/ktlint-format
+
+          changes=$(git status --porcelain && echo true || echo false)
+
+          if [ "$changes" = "true" ]; then
+            git add .
+            git commit -m "[Automated] Format using ktlint"
+            git push --force @shakelang-bot/ktlint-format
+          else
+            echo "No changes detected. Skipping commit."
+            exit 0
+          fi
+
+          echo "changes=$changes" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check if PR exists
         id: check_pr
+        if: steps.commit_changes.outputs.changes == 'true'
         run: |
           result=$(gh pr list --state open --base development --label ktlint --json number --json headRefName)
-          pr_count=$(echo $result | jq length)
+          pr_id=$(echo $result | jq length)
           pr_ref=$(echo $result | jq '.[0].headRefName')
-          echo Found $pr_count pull_requests matching the specified filter
+          pr_number=$(echo $result | jq '.[0].number')
+          echo Found $pr_id pull_requests matching the specified filter
           echo Branch $pr_ref will be updated
-          echo "pr_count=$pr_count" >> $GITHUB_OUTPUT
+          echo "pr_id=$pr_id" >> $GITHUB_OUTPUT
           echo "pr_ref=$pr_ref" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create or update PR
+        if: steps.commit_changes.outputs.changes == 'true'
         run: |
-          if [[ "${{ steps.check_pr.outputs.pr_count }}" -gt 0 ]]; then
-            # Force push if PR exists
-            echo "Updating old PR"
-            git push --force origin development:$pr_ref
+          if [[ "${{ steps.check_pr.outputs.pr_id }}" -gt 0 ]]; then
+
+            # Old pr already existing. Commenting on old pr
+            gh pr comment ${{ steps.check_pr.outputs.pr_id }} \
+              -b "Updated because of updates to development branch (${{github.ref}})"
+
           else
             # Create new PR if no PR exists
             echo "Creating new PR"
-            gh pr create --base development --head "${{ github.sha }}" \
+            gh pr create --base development --head "refs/heads/@shakelang-bot/ktlint-format" \
               --title "[Automated] Format using ktlint" \
               --body "This is an automated pull request to format the code using ktlint." \
               --label ktlint --label automated --label style --label kotlin
