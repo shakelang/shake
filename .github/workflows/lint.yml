@@ -43,13 +43,13 @@ jobs:
           ./gradlew lint sarifmerge
 
       - name: Upload Artifact ⬆️
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: reports
           path: ./build/reports/sarifmerge
 
       - name: Upload SARIF file for GitHub Advanced Security 📂
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           # Path to SARIF file relative to the root of the repository
           sarif_file: ./build/reports/sarifmerge

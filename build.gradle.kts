@@ -1,4 +1,3 @@
-// import com.shakelang.shake.sarifmerge.SarifMerge
 import com.shakelang.util.changelog.Changelog
 import com.shakelang.util.changelog.tasks.VersionTask
 import com.shakelang.util.sarifmerge.SarifMerge
@@ -28,6 +27,7 @@ dependencies {
 //    kover(project(":util:changelog"))
     kover(project(":util:colorlib"))
     kover(project(":util:common-io"))
+    kover(project(":util:commander"))
     kover(project(":util:environment"))
     kover(project(":util:jvmlib"))
     kover(project(":util:logger"))

@@ -1,11 +1,8 @@
 name: Format using ktlint
 
-# Run workflow each time code is pushed to your repository and on a schedule.
-# The scheduled workflow runs every Thursday at 15:45 UTC.
 on:
   push:
     branches:
-      - main
       - development
   schedule:
     - cron: "45 15 * * 4"
@@ -18,10 +15,6 @@ jobs:
   lint:
     name: Format using ktlint
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        java-version: [ 16 ]
 
     steps:
       - name: Checkout 🛎️
@@ -57,16 +50,67 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GH_BOT_TOKEN }}
-          commit-message: "[Automated] Format using ktlint"
-          title: "[Automated] Format using ktlint"
-          body: "This is an automated pull request to format the code using ktlint."
-          branch: "@shakebot/ktlint-format/ktlint-format-${{ github.sha }}"
-          branch-suffix: timestamp
-          delete-branch: true
-          author: shakebot[bot] <bot@shakelang.com>
-          signoff: false
-          labels: automated, style, kotlin
+      - name: Commit changes
+        id: commit_changes
+        run: |
+          # Use the github token for git push
+          git remote set-url origin https://shakelang-bot:$GITHUB_TOKEN@github.com/shakelang/shake.git
+
+          # Git Configuration
+          git config --local user.email "bot@shakelang.com"
+          git config --local user.name "shakebot[bot]"
+          git checkout -b @shakelang-bot/ktlint-format
+
+          changes=$(git status --porcelain && echo true || echo false)
+
+          if [[ `git status --porcelain` ]]; then
+            changes=true
+            echo "Changes detected! Commiting..."
+            git add .
+            git commit -m "[Automated] Format using ktlint"
+            git push --force origin @shakelang-bot/ktlint-format
+          else
+            changes=false
+            echo "No changes detected. Skipping commit."
+            exit 0
+          fi
+
+          echo "changes=$changes" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if PR exists
+        id: check_pr
+        if: steps.commit_changes.outputs.changes == 'true'
+        run: |
+          result=$(gh pr list --state open --base development --label ktlint --json number --json headRefName)
+          pr_count=$(echo $result | jq length)
+          pr_ref=$(echo $result | jq '.[0].headRefName')
+          pr_number=$(echo $result | jq '.[0].number')
+          echo Found $pr_count pull_requests matching the specified filter
+          echo Branch $pr_ref will be updated
+          echo "pr_count=$pr_count" >> $GITHUB_OUTPUT
+          echo "pr_ref=$pr_ref" >> $GITHUB_OUTPUT
+          echo "pr_number=$pr_number" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
+
+      - name: Create or update PR
+        if: steps.commit_changes.outputs.changes == 'true'
+        run: |
+          if [[ "${{ steps.check_pr.outputs.pr_count }}" -gt 0 ]]; then
+
+            # Old pr already existing. Commenting on old pr
+            gh pr comment ${{ steps.check_pr.outputs.pr_number }} \
+              -b "Updated because of updates to development branch ([${{github.ref}}](https://github.com/shakelang/shake/tree/development)) (${{github.sha}})"
+
+          else
+            # Create new PR if no PR exists
+            echo "Creating new PR"
+            gh pr create --base development --head "refs/heads/@shakelang-bot/ktlint-format" \
+              --title "[Automated] Format using ktlint" \
+              --body "This is an automated pull request to format the code using ktlint." \
+              --label ktlint --label automated --label style --label kotlin
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}

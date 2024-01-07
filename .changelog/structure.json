@@ -1,6 +1,15 @@
 {
   "projects": [
     {
+      "path": ":bin",
+      "name": "shake:bin",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "",
+      "author": "shake",
+      "license": "",
+      "dependencies": []
+    },
+    {
       "path": ":shake",
       "name": "shake:shake",
       "version": "0.1.0-SNAPSHOT",
@@ -17,6 +26,27 @@
       "author": "shake",
       "license": "",
       "dependencies": []
+    },
+    {
+      "path": ":bin:cli",
+      "name": "shake.bin:cli",
+      "version": "0.1.0",
+      "description": "interpreter",
+      "author": "shake.bin",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1",
+        ":util:parseutils:parseutils:0.4.0",
+        ":util:shason:shason:0.4.1",
+        ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.6-SNAPSHOT",
+        ":shake:compiler:processor:processor:0.1.0",
+        ":shake:compiler:jsgenerator:jsgenerator:0.1.0",
+        ":shake:compiler:shakelib:shakelib:0.1.0",
+        ":shake:bytecode:interpreter:interpreter:0.1.0-SNAPSHOT",
+        ":shake:bytecode:generator:generator:0.1.0-SNAPSHOT",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC"
+      ]
     },
     {
       "path": ":shake:bytecode",
@@ -48,14 +78,14 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.util.changelog:changelog",
-      "version": "0.7.1",
+      "version": "0.7.2",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.util.changelog",
       "license": "",
       "dependencies": [
         "unspecified:unspecified:unspecified",
         ":util:colorlib:colorlib:0.3.0",
-        ":util:shason:shason:0.4.0",
+        ":util:shason:shason:0.4.1",
         ":util:markdown:markdown:0.2.1"
       ]
     },
@@ -64,6 +94,17 @@
       "name": "com.shakelang.util:colorlib",
       "version": "0.3.0",
       "description": "Utility for working with colors in console applications (Kotlin Multiplatform)",
+      "author": "com.shakelang.util",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1"
+      ]
+    },
+    {
+      "path": ":util:commander",
+      "name": "com.shakelang.util:commander",
+      "version": "0.1.0",
+      "description": "Utilities for parsing command line arguments and building console applications",
       "author": "com.shakelang.util",
       "license": "",
       "dependencies": [
@@ -96,14 +137,14 @@
     {
       "path": ":util:jvmlib",
       "name": "com.shakelang.util:jvmlib",
-      "version": "0.2.0",
+      "version": "0.2.1-SNAPSHOT",
       "description": "A library for jvm stuff in java",
       "author": "com.shakelang.util",
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.3.0",
-        ":util:shason:shason:0.4.0",
+        ":util:parseutils:parseutils:0.4.0",
+        ":util:shason:shason:0.4.1",
         ":util:common-io:common-io:0.4.0",
         ":util:primitives:primitives:0.5.0"
       ]
@@ -111,7 +152,7 @@
     {
       "path": ":util:logger",
       "name": "com.shakelang.util:logger",
-      "version": "0.5.1",
+      "version": "0.5.2",
       "description": "Logger utility for Kotlin Multiplatform.",
       "author": "com.shakelang.util",
       "license": "",
@@ -137,7 +178,7 @@
     {
       "path": ":util:parseutils",
       "name": "com.shakelang.util:parseutils",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.util",
       "license": "",
@@ -173,25 +214,25 @@
     {
       "path": ":util:sarifmerge",
       "name": "com.shakelang.util:sarifmerge",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Utility package to merged sarif files for ktlint github report",
       "author": "com.shakelang.util",
       "license": "",
       "dependencies": [
         "unspecified:unspecified:unspecified",
-        ":util:shason:shason:0.4.0"
+        ":util:shason:shason:0.4.1"
       ]
     },
     {
       "path": ":util:shason",
       "name": "com.shakelang.util:shason",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "description": "A json parser implemented in kotlin (mpp)",
       "author": "com.shakelang.util",
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.3.0"
+        ":util:parseutils:parseutils:0.4.0"
       ]
     },
     {
@@ -206,6 +247,17 @@
         "io.kotest:kotest-framework-engine:5.8.0",
         "io.kotest:kotest-assertions-core:5.8.0",
         "io.kotest:kotest-property:5.8.0"
+      ]
+    },
+    {
+      "path": ":bin:cli:jvm",
+      "name": "shake.bin.cli:jvm",
+      "version": "0.1.0",
+      "description": "Java distribution commands for Shasambly",
+      "author": "shake.bin.cli",
+      "license": "",
+      "dependencies": [
+        ":bin:cli:cli:0.1.0"
       ]
     },
     {
@@ -278,37 +330,37 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.3.0",
-        ":util:shason:shason:0.4.0",
-        ":shake:compiler:lexer:lexer:0.1.4-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.5-SNAPSHOT",
+        ":util:parseutils:parseutils:0.4.0",
+        ":util:shason:shason:0.4.1",
+        ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.6-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0"
       ]
     },
     {
       "path": ":shake:compiler:lexer",
       "name": "com.shakelang.shake.compiler:lexer",
-      "version": "0.1.4-SNAPSHOT",
-      "description": "Utilities for parsing stuff with kotlin",
-      "author": "com.shakelang.shake.compiler",
-      "license": "",
-      "dependencies": [
-        "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.3.0"
-      ]
-    },
-    {
-      "path": ":shake:compiler:parser",
-      "name": "com.shakelang.shake.compiler:parser",
       "version": "0.1.5-SNAPSHOT",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.compiler",
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.3.0",
-        ":util:shason:shason:0.4.0",
-        ":shake:compiler:lexer:lexer:0.1.4-SNAPSHOT"
+        ":util:parseutils:parseutils:0.4.0"
+      ]
+    },
+    {
+      "path": ":shake:compiler:parser",
+      "name": "com.shakelang.shake.compiler:parser",
+      "version": "0.1.6-SNAPSHOT",
+      "description": "Utilities for parsing stuff with kotlin",
+      "author": "com.shakelang.shake.compiler",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1",
+        ":util:parseutils:parseutils:0.4.0",
+        ":util:shason:shason:0.4.1",
+        ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT"
       ]
     },
     {
@@ -321,13 +373,13 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.2.0",
-        ":util:parseutils:parseutils:0.3.0",
-        ":util:shason:shason:0.4.0",
+        ":util:parseutils:parseutils:0.4.0",
+        ":util:shason:shason:0.4.1",
         ":util:common-io:common-io:0.4.0",
         ":util:primitives:primitives:0.5.0",
-        ":util:logger:logger:0.5.1",
-        ":shake:compiler:lexer:lexer:0.1.4-SNAPSHOT",
-        ":shake:compiler:parser:parser:0.1.5-SNAPSHOT"
+        ":util:logger:logger:0.5.2",
+        ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
+        ":shake:compiler:parser:parser:0.1.6-SNAPSHOT"
       ]
     },
     {
@@ -352,7 +404,7 @@
       "dependencies": [
         ":util:primitives:primitives:0.5.0",
         ":util:common-io:common-io:0.4.0",
-        ":util:parseutils:parseutils:0.3.0",
+        ":util:parseutils:parseutils:0.4.0",
         ":shake:shasambly:shasambly:shasambly:0.1.0",
         ":shake:shasambly:shastools:shastools:0.1.0",
         ":shake:shasambly:shasp:shasp:0.1.0"
@@ -367,7 +419,7 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.3.0",
+        ":util:parseutils:parseutils:0.4.0",
         ":util:common-io:common-io:0.4.0",
         ":util:primitives:primitives:0.5.0"
       ]
@@ -381,8 +433,8 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        ":util:parseutils:parseutils:0.3.0",
-        ":util:shason:shason:0.4.0",
+        ":util:parseutils:parseutils:0.4.0",
+        ":util:shason:shason:0.4.1",
         ":shake:shasambly:shasambly:shasambly:0.1.0",
         ":shake:shasambly:shastools:shastools:0.1.0"
       ]
@@ -398,10 +450,10 @@
         "unspecified:path-browserify:1.0.1",
         ":util:common-io:common-io:0.4.0",
         ":util:primitives:primitives:0.5.0",
-        ":util:parseutils:parseutils:0.3.0",
+        ":util:parseutils:parseutils:0.4.0",
         ":shake:shasambly:shasambly:shasambly:0.1.0"
       ]
     }
   ],
-  "lastUpdate": 1703882486465
+  "lastUpdate": 1704578621242
 }

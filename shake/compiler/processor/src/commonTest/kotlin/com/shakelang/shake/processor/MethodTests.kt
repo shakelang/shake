@@ -1,14 +1,10 @@
 package com.shakelang.shake.processor
 
 import com.shakelang.shake.processor.program.creation.CreationShakeType
-import com.shakelang.util.logger.GlobalDebugConfiguration
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
 class MethodTests : FreeSpec({
-
-    // Output all logs
-    GlobalDebugConfiguration.paths.add("*")
 
     "method declaration (no params, void)" {
 

@@ -12,7 +12,13 @@ object GlobalDebugConfiguration {
      * @version 0.3.0
      */
     val paths = mutableListOf<String>()
+
+    init {
+        initGlobalDebugConfiguration()
+    }
 }
+
+expect fun initGlobalDebugConfiguration()
 
 /**
  * Check if a path matches a template

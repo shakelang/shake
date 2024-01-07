@@ -170,6 +170,54 @@ object Characters {
     }
 
     /**
+     * Escape a string for a string
+     * (does not escape the "'" character.)
+     */
+    fun escapeStringForString(str: String): String =
+        str.toCharArray().joinToString("") { escapeCharacterForString(it) }
+
+    /**
+     * Escape a character for a string
+     * (does not escape the "'" character.)
+     */
+    fun escapeCharacterForString(c: Char): String {
+        return when {
+            c == '\\' -> "\\\\"
+            c == '\t' -> "\\t"
+            c == '\b' -> "\\b"
+            c == '\n' -> "\\n"
+            c == '\r' -> "\\r"
+            c == '\"' -> "\\\""
+            c.code < 0x20 || c.code > 0x7e -> toUnicode(c)
+            else -> c.toString()
+        }
+    }
+
+    /**
+     * Escape a string for a character
+     * (does not escape the '"' character.)
+     */
+    fun escapeStringForCharacter(str: String): String =
+        str.toCharArray().joinToString("") { escapeCharacterForCharacter(it) }
+
+    /**
+     * Escape a character for a character
+     * (does not escape the '"' character.)
+     */
+    fun escapeCharacterForCharacter(c: Char): String {
+        return when {
+            c == '\\' -> "\\\\"
+            c == '\t' -> "\\t"
+            c == '\b' -> "\\b"
+            c == '\n' -> "\\n"
+            c == '\r' -> "\\r"
+            c == '\'' -> "\\\'"
+            c.code < 0x20 || c.code > 0x7e -> toUnicode(c)
+            else -> c.toString()
+        }
+    }
+
+    /**
      * Escape a character to a unicode
      *
      * @since 0.2.1
