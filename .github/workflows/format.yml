@@ -53,6 +53,9 @@ jobs:
       - name: Commit changes
         id: commit_changes
         run: |
+          # Use the github token for git push
+          git remote set-url origin https://$GITHUB_TOKEN@github.com/shakelang/shake.git
+
           # Git Configuration
           git config --local user.email "bot@shakelang.com"
           git config --local user.name "shakebot[bot]"
