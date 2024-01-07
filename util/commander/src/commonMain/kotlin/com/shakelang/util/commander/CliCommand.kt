@@ -2,6 +2,7 @@ package com.shakelang.util.commander
 
 
 typealias CommandAction = CliCommand.(ParseResult) -> Unit
+
 class CliCommand(
     val parent: CliCommand? = null,
     val name: String,
@@ -148,12 +149,12 @@ class CliCommand(
 
     fun parse(args: Array<String>, stack: Array<CommandStackEntry>): ParseResult {
 
-        val argsList = args.toMutableList()
         val entry = CommandStackEntry(name, this)
 
         val newStack = arrayOf(*stack, entry)
 
         var i = 0
+        var argumentIndex = 0
         while (i < args.size) {
 
             val arg = args[i]
@@ -169,7 +170,7 @@ class CliCommand(
                     val entry = newStack.find { it.command == option.command }
                         ?: throw IllegalArgumentException("Unknown command for option: $name")
 
-                    if(entry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
+                    if (entry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
 
                     val value = if (option.hasValue) {
                         if (i + 1 >= args.size) throw IllegalArgumentException("Missing value for option: $name")
@@ -195,7 +196,7 @@ class CliCommand(
                     val argEntry = newStack.find { it.command == option.command }
                         ?: throw IllegalArgumentException("Unknown command for option: $name")
 
-                    if(argEntry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
+                    if (argEntry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
 
                     val value = if (option.hasValue) {
                         if (i + 1 >= args.size) throw IllegalArgumentException("Missing value for option: $name")
@@ -210,7 +211,32 @@ class CliCommand(
                     argEntry.options[name] = arrayOf(*values, Value(name, value))
                 }
 
-                // TODO
+                else -> {
+                    // First all the arguments of this command, then we will check for subcommands
+                    if (argumentIndex < arguments.size) {
+                        val argument = arguments[argumentIndex++]
+                        val name = argument.name
+
+                        // Find entry for argument
+
+                        val argEntry = newStack.find { it.command == argument.command }
+                            ?: throw IllegalArgumentException("Unknown command for argument: $name")
+
+                        if (argEntry.arguments.containsKey(name)) throw IllegalArgumentException("Argument: $name already exists")
+
+                        if (argument.valueValidator != null && !argument.valueValidator.accepts(arg))
+                            throw ValueValidationException("Invalid value for argument: $name")
+
+                        argEntry.arguments[name] = Value(name, arg)
+                    } else {
+
+                        // Find subcommand
+                        val command = commands.find { it.name == arg || it.aliases.contains(arg) }
+                            ?: throw IllegalArgumentException("Unknown command: $arg")
+
+                        return command.parse(args.sliceArray((i + 1) until args.size), newStack)
+                    }
+                }
             }
 
             i++;
@@ -221,6 +247,12 @@ class CliCommand(
 
     fun parse(args: Array<String>): ParseResult {
         return parse(args, arrayOf())
+    }
+
+    fun execute(args: Array<String>): ParseResult {
+        val result = parse(args)
+        result.stack.last().command.action?.invoke(result.stack.last().command, result)
+        return result
     }
 
 
@@ -344,13 +376,13 @@ class CliCommandCreationContext {
         context.aliases.addAll(aliases)
         context.description = description
         context.action = action
-        if(init != null) context.init()
+        if (init != null) context.init()
         commands.add { context.generate(it) }
     }
 
     fun generate(parent: CliCommand?): CliCommand {
 
-        if(!::name.isInitialized) throw IllegalStateException("Name is not initialized")
+        if (!::name.isInitialized) throw IllegalStateException("Name is not initialized")
 
         val cmd = CliCommand(
             parent,

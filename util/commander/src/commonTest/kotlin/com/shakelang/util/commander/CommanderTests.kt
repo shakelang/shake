@@ -108,6 +108,109 @@ class CommanderTests : FreeSpec ({
         counter shouldBeCalled 1
     }
 
+    "parse (empty)" {
+        val counter = CallCounter()
+        val command = command {
+            name = "test"
+            description = "test description"
+            action {
+                counter.call()
+            }
+        }
+        val result = command.parse(arrayOf())
 
+        result.stack.size shouldBe 1
+    }
 
+    "parse (with subcommand)" {
+        val counter = CallCounter()
+        val command = command {
+            name = "test"
+            description = "test description"
+
+            subcommand {
+                name = "test2"
+                description = "test2 description"
+                action {
+                    counter.call()
+                }
+            }
+        }
+        val result = command.execute(arrayOf("test2"))
+
+        result.stack.size shouldBe 2
+        result.stack[1].name shouldBe "test2"
+        counter shouldBeCalled 1
+    }
+
+    "parse (with subcommand using alias)" {
+        val counter = CallCounter()
+        val command = command {
+            name = "test"
+            description = "test description"
+
+            subcommand {
+                name = "test2"
+                description = "test2 description"
+                alias("testalias")
+                action {
+                    counter.call()
+                }
+            }
+        }
+        val result = command.execute(arrayOf("testalias"))
+
+        result.stack.size shouldBe 2
+        result.stack[1].name shouldBe "test2"
+        counter shouldBeCalled 1
+    }
+
+    "parse (with argument)" {
+        val command = command {
+            name = "test"
+            description = "test description"
+
+            argument {
+                name = "test2"
+                description = "test2 description"
+            }
+        }
+        val result = command.execute(arrayOf("Hello World"))
+
+        result.stack.size shouldBe 1
+        result.getValueByName("test2")!!.first().value shouldBe "Hello World"
+    }
+
+    "parse (with valued option)" {
+        val command = command {
+            name = "test"
+            description = "test description"
+
+            option {
+                name = "test2"
+                description = "test2 description"
+                hasValue = true
+            }
+        }
+        val result = command.execute(arrayOf("--test2", "Hello World"))
+
+        result.stack.size shouldBe 1
+        result.getValueByName("test2")!!.first().value shouldBe "Hello World"
+    }
+
+    "parse (with option)" {
+        val command = command {
+            name = "test"
+            description = "test description"
+
+            option {
+                name = "test2"
+                description = "test2 description"
+            }
+        }
+        val result = command.execute(arrayOf("--test2"))
+
+        result.stack.size shouldBe 1
+        result.getValueByName("test2")!!.first().toBoolean() shouldBe true
+    }
 })
