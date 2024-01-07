@@ -9,7 +9,7 @@ class CliArgument(
     val defaultValue: String? = null,
     val valueName: String? = null,
     val valueDescription: String? = null,
-    val valueValidator: ValueValidator? = null,
+    val valueValidator: ValueValidator? = null
 ) {
     fun getUsage(): String {
         val builder = StringBuilder()
@@ -39,8 +39,7 @@ class CliArgumentCreationContext {
     }
 
     fun generate(command: CliCommand): CliArgument {
-
-        if(!::name.isInitialized) throw IllegalStateException("Name is not initialized")
+        if (!::name.isInitialized) throw IllegalStateException("Name is not initialized")
 
         return CliArgument(
             command,
@@ -55,4 +54,3 @@ class CliArgumentCreationContext {
         )
     }
 }
-

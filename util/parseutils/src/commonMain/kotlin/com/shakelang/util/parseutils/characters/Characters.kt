@@ -217,11 +217,6 @@ object Characters {
         }
     }
 
-
-
-
-
-
     /**
      * Escape a character to a unicode
      *

@@ -3,53 +3,53 @@ package com.shakelang.util.commander
 object Validators {
 
     fun isByte(value: String?) {
-        if(value == null) throw ValueValidationException("Value is null")
-        if(value.toByteOrNull() == null) throw ValueValidationException("Value \"$value\" is not a byte")
+        if (value == null) throw ValueValidationException("Value is null")
+        if (value.toByteOrNull() == null) throw ValueValidationException("Value \"$value\" is not a byte")
     }
 
     fun isShort(value: String?) {
-        if(value == null) throw ValueValidationException("Value is null")
-        if(value.toShortOrNull() == null) throw ValueValidationException("Value \"$value\" is not a short")
+        if (value == null) throw ValueValidationException("Value is null")
+        if (value.toShortOrNull() == null) throw ValueValidationException("Value \"$value\" is not a short")
     }
 
     fun isInt(value: String?) {
-        if(value == null) throw ValueValidationException("Value is null")
-        if(value.toIntOrNull() == null) throw ValueValidationException("Value \"$value\" is not a int")
+        if (value == null) throw ValueValidationException("Value is null")
+        if (value.toIntOrNull() == null) throw ValueValidationException("Value \"$value\" is not a int")
     }
 
     fun isLong(value: String?) {
-        if(value == null) throw ValueValidationException("Value is null")
-        if(value.toLongOrNull() == null) throw ValueValidationException("Value \"$value\" is not a long")
+        if (value == null) throw ValueValidationException("Value is null")
+        if (value.toLongOrNull() == null) throw ValueValidationException("Value \"$value\" is not a long")
     }
 
     fun isFloat(value: String?) {
-        if(value == null) throw ValueValidationException("Value is null")
-        if(value.toFloatOrNull() == null) throw ValueValidationException("Value \"$value\" is not a float")
+        if (value == null) throw ValueValidationException("Value is null")
+        if (value.toFloatOrNull() == null) throw ValueValidationException("Value \"$value\" is not a float")
     }
 
     fun isDouble(value: String?) {
-        if(value == null) throw ValueValidationException("Value is null")
-        if(value.toDoubleOrNull() == null) throw ValueValidationException("Value \"$value\" is not a double")
+        if (value == null) throw ValueValidationException("Value is null")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("Value \"$value\" is not a double")
     }
 
     fun isBoolean(value: String?) {
-        if(value == null) throw ValueValidationException("Value is null")
-        when(value) {
-            "true", "false", "1", "0", "yes", "no", "y", "n" -> {return}
+        if (value == null) throw ValueValidationException("Value is null")
+        when (value) {
+            "true", "false", "1", "0", "yes", "no", "y", "n" -> { return }
             else -> throw ValueValidationException("Value \"$value\" is not a boolean")
         }
     }
 
     fun isString(value: String?) {
-        if(value == null) throw ValueValidationException("Value is null")
+        if (value == null) throw ValueValidationException("Value is null")
     }
 
     fun isNull(value: String?) {
-        if(value != null) throw ValueValidationException("Value is not null")
+        if (value != null) throw ValueValidationException("Value is not null")
     }
 
     fun isNotNull(value: String?) {
-        if(value == null) throw ValueValidationException("Value is null")
+        if (value == null) throw ValueValidationException("Value is null")
     }
 
     fun isUnsignedByte(value: String?) {
@@ -184,5 +184,4 @@ object Validators {
     val isNegativeFloat: ValueValidator = ::isNegativeFloat
     val isNegativeDouble: ValueValidator = ::isNegativeDouble
     val isNegative: ValueValidator = ::isNegative
-
 }
