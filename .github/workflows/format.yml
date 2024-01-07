@@ -56,16 +56,31 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GH_BOT_TOKEN }}
-          commit-message: "[Automated] Format using ktlint"
-          title: "[Automated] Format using ktlint"
-          body: "This is an automated pull request to format the code using ktlint."
-          branch: "@shakebot/ktlint-format/ktlint-format-${{ github.sha }}"
-          branch-suffix: timestamp
-          delete-branch: true
-          author: shakebot[bot] <bot@shakelang.com>
-          signoff: false
-          labels: automated, style, kotlin
+      - name: Commit changes
+        run: |
+          git config --local user.email "bot@shakelang.com"
+          git config --local user.name "shakebot[bot]"
+          git add .
+          git commit -m "[Automated] Format using ktlint"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if PR exists
+        id: check_pr
+        run: |
+          pr_count=$(gh pr list --state open --base development --json number | jq length)
+          echo "::set-output name=pr_count::$pr_count"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create or update PR
+        run: |
+          if [[ "${{ steps.check_pr.outputs.pr_count }}" -gt 0 ]]; then
+            # Force push if PR exists
+            git push --force origin "${{ github.ref }}"
+          else
+            # Create new PR with the old code
+            gh pr create --base development --head "${{ github.sha }}" --title "[Automated] Format using ktlint" --body "This is an automated pull request to format the code using ktlint."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
