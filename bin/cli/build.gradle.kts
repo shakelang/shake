@@ -21,7 +21,7 @@ kotlin {
             implementation(project(":shake:compiler:processor"))
             implementation(project(":shake:bytecode:interpreter"))
             implementation(project(":shake:bytecode:generator"))
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
             testImplementation(kotlin("test"))
         }
     }
