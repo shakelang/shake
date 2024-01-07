@@ -16,10 +16,6 @@ jobs:
     name: Format using ktlint
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        java-version: [16]
-
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
@@ -64,12 +60,14 @@ jobs:
 
           changes=$(git status --porcelain && echo true || echo false)
 
-          if [ "$changes" = "true" ]; then
+          if [[ `git status --porcelain` ]]; then
+            changes=true
             echo "Changes detected! Commiting..."
             git add .
             git commit -m "[Automated] Format using ktlint"
             git push --force @shakelang-bot/ktlint-format
           else
+            changes=false
             echo "No changes detected. Skipping commit."
             exit 0
           fi
