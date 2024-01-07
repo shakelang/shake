@@ -3,6 +3,7 @@ rootProject.name = "shake"
 // include("jvm")
 include(":util:colorlib")
 include(":util:common-io")
+include(":util:commander")
 include(":util:changelog")
 include(":util:environment")
 include(":util:jvmlib")

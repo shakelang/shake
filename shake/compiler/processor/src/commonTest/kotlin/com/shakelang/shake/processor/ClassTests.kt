@@ -6,9 +6,6 @@ import io.kotest.matchers.shouldBe
 
 class ClassTests : FreeSpec({
 
-    // Output all logs
-    GlobalDebugConfiguration.paths.add("*")
-
     // Superclass tests
 
     "default supertype" {

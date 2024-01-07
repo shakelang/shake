@@ -56,4 +56,4 @@ object JSON {
  * @since 0.1.0
  * @version 0.1.0
  */
-typealias json = JSON
+val json = JSON

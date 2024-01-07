@@ -50,7 +50,7 @@ class CallCounter {
 
     /**
      * Check if the counter was called [times] times
-     * @param times the amount of calls
+     * @param times the number of calls
      * @throws AssertionError if the counter was not called [times] times
      *
      * @since 0.1.0
