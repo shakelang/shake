@@ -66,9 +66,13 @@ jobs:
       - name: Check if PR exists
         id: check_pr
         run: |
-          pr_count=$(gh pr list --state open --base development --json number | jq length)
+          result=$(gh pr list --state open --base development --label ktlint --json number --json headRefName)
+          pr_count=$(echo $result | jq length)
+          pr_ref=$(echo $result | jq '.[0].headRefName')
           echo Found $pr_count pull_requests matching the specified filter
+          echo Branch $pr_ref will be updated
           echo "pr_count=$pr_count" >> $GITHUB_OUTPUT
+          echo "pr_ref=$pr_ref" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -79,7 +83,7 @@ jobs:
           if [[ "${{ steps.check_pr.outputs.pr_count }}" -gt 0 ]]; then
             # Force push if PR exists
             echo "Updating old PR"
-            git push --force origin "${{ github.ref }}"
+            git push --force origin development:$pr_ref
           else
             # Create new PR if no PR exists
             echo "Creating new PR"
