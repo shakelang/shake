@@ -78,8 +78,6 @@ jobs:
 
       - name: Create or update PR
         run: |
-          # Use the github token for git push
-          git remote set-url origin https://$GH_TOKEN@github.com/shakelang/shake.git
           if [[ "${{ steps.check_pr.outputs.pr_count }}" -gt 0 ]]; then
             # Force push if PR exists
             echo "Updating old PR"
