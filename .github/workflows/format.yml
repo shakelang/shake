@@ -92,7 +92,7 @@ jobs:
           echo "pr_id=$pr_id" >> $GITHUB_OUTPUT
           echo "pr_ref=$pr_ref" >> $GITHUB_OUTPUT
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
 
       - name: Create or update PR
         if: steps.commit_changes.outputs.changes == 'true'
@@ -112,4 +112,4 @@ jobs:
               --label ktlint --label automated --label style --label kotlin
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
