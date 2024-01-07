@@ -102,7 +102,7 @@ jobs:
 
             # Old pr already existing. Commenting on old pr
             gh pr comment ${{ steps.check_pr.outputs.pr_number }} \
-              -b "Updated because of updates to development branch (${{github.ref}}) (${{github.sha}})"
+              -b "Updated because of updates to development branch ([${{github.ref}}](https://github.com/shakelang/shake/tree/development)) (${{github.sha}})"
 
           else
             # Create new PR if no PR exists
