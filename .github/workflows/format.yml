@@ -65,7 +65,7 @@ jobs:
             echo "Changes detected! Commiting..."
             git add .
             git commit -m "[Automated] Format using ktlint"
-            git push --force @shakelang-bot/ktlint-format
+            git push --force origin @shakelang-bot/ktlint-format
           else
             changes=false
             echo "No changes detected. Skipping commit."
