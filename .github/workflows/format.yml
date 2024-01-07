@@ -65,6 +65,7 @@ jobs:
           changes=$(git status --porcelain && echo true || echo false)
 
           if [ "$changes" = "true" ]; then
+            echo "Changes detected! Commiting..."
             git add .
             git commit -m "[Automated] Format using ktlint"
             git push --force @shakelang-bot/ktlint-format
