@@ -11,7 +11,7 @@ class CliOption(
     val defaultValue: String? = null,
     val valueName: String? = null,
     val valueDescription: String? = null,
-    val valueValidator: ValueValidator? = null,
+    val valueValidator: ValueValidator? = null
 ) {
     fun getUsage(): String {
         val builder = StringBuilder()
@@ -58,8 +58,7 @@ class CliOptionCreationContext {
     }
 
     fun generate(command: CliCommand): CliOption {
-
-        if(!::name.isInitialized) throw IllegalStateException("Name is not initialized")
+        if (!::name.isInitialized) throw IllegalStateException("Name is not initialized")
 
         return CliOption(
             command,

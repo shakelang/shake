@@ -21,7 +21,6 @@ class ValidatorLambdaTests : FreeSpec({
         Validators.isByte.invoke("1")
     }
 
-
     "isShort() should throw an exception if the value is null" {
         shouldThrow<ValueValidationException> {
             Validators.isShort.invoke(null)
@@ -54,7 +53,6 @@ class ValidatorLambdaTests : FreeSpec({
         Validators.isInt.invoke("1")
     }
 
-
     "isLong() should throw an exception if the value is null" {
         shouldThrow<ValueValidationException> {
             Validators.isLong.invoke(null)
@@ -70,7 +68,6 @@ class ValidatorLambdaTests : FreeSpec({
     "isLong() should not throw an exception if the value is a long" {
         Validators.isLong.invoke("1")
     }
-
 
     "isFloat() should throw an exception if the value is null" {
         shouldThrow<ValueValidationException> {
@@ -469,5 +466,4 @@ class ValidatorLambdaTests : FreeSpec({
     "isNegative() should not throw an exception if the value is a negative number" {
         Validators.isNegative.invoke("-1")
     }
-    
 })
