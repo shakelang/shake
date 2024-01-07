@@ -67,7 +67,8 @@ jobs:
         id: check_pr
         run: |
           pr_count=$(gh pr list --state open --base development --json number | jq length)
-          echo "::set-output name=pr_count::$pr_count"
+          echo Found $pr_count pull_requests matching the specified filter
+          echo "pr_count=$pr_count" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
