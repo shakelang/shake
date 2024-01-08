@@ -16,7 +16,7 @@ enum class Formatting(
      */
     override val code: Int,
 
-    ) : FormattingType {
+) : FormattingType {
 
     /**
      * Format a string to show it in the console.
@@ -132,7 +132,7 @@ enum class Formatting(
          */
         override val code: Int,
 
-        ) : FormattingType {
+    ) : FormattingType {
 
         /**
          * Format a string's color to show it in the console.
@@ -322,7 +322,7 @@ enum class Formatting(
          */
         override val code: Int,
 
-        ) : FormattingType {
+    ) : FormattingType {
 
         /**
          * Format a string's background color to show it in the console.

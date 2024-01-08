@@ -18,7 +18,7 @@ class ClassTests : FreeSpec(
                 package test;
                 
                 class Test {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -40,7 +40,7 @@ class ClassTests : FreeSpec(
                 
                 class TestSuper {}
                 class Test extends TestSuper {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -61,7 +61,7 @@ class ClassTests : FreeSpec(
                     package test;
                     
                     class TestSuper {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.loadSynthetic(
@@ -70,7 +70,7 @@ class ClassTests : FreeSpec(
                     package test;
                     
                     class Test extends TestSuper {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -91,7 +91,7 @@ class ClassTests : FreeSpec(
                 package abc;
                 
                 class TestSuper {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.loadSynthetic(
@@ -102,7 +102,7 @@ class ClassTests : FreeSpec(
                 import abc.TestSuper;
                 
                 class Test extends TestSuper {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -123,7 +123,7 @@ class ClassTests : FreeSpec(
                 package abc;
                 
                 class TestSuper {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.loadSynthetic(
@@ -134,7 +134,7 @@ class ClassTests : FreeSpec(
                 import abc.*;
                 
                 class Test extends TestSuper {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -157,7 +157,7 @@ class ClassTests : FreeSpec(
                 
                 class TestSuper {}
                 class Test extends test.TestSuper {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -180,7 +180,7 @@ class ClassTests : FreeSpec(
                 package test;
                 
                 class Test {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -202,7 +202,7 @@ class ClassTests : FreeSpec(
                 
                 interface TestInterface {}
                 class Test implements TestInterface {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -226,7 +226,7 @@ class ClassTests : FreeSpec(
                 interface TestInterface1 {}
                 interface TestInterface2 {}
                 class Test implements TestInterface1, TestInterface2 {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -249,7 +249,7 @@ class ClassTests : FreeSpec(
                 package test;
                 
                 interface TestInterface {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.loadSynthetic(
@@ -258,7 +258,7 @@ class ClassTests : FreeSpec(
                 package test;
                 
                 class Test implements TestInterface {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -280,7 +280,7 @@ class ClassTests : FreeSpec(
                 package abc;
                 
                 interface TestInterface {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.loadSynthetic(
@@ -291,7 +291,7 @@ class ClassTests : FreeSpec(
                 import abc.TestInterface;
                 
                 class Test implements TestInterface {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -313,7 +313,7 @@ class ClassTests : FreeSpec(
                 package abc;
                 
                 interface TestInterface {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.loadSynthetic(
@@ -324,7 +324,7 @@ class ClassTests : FreeSpec(
                 import abc.*;
                 
                 class Test implements TestInterface {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()
@@ -349,7 +349,7 @@ class ClassTests : FreeSpec(
                 
                 interface TestInterface {}
                 class Test implements test.TestInterface {}
-            """.trimIndent(),
+                """.trimIndent(),
             )
 
             processor.finish()

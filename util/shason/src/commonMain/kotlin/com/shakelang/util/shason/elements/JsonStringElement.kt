@@ -16,7 +16,7 @@ class JsonStringElement(
      */
     override val value: String,
 
-    ) : JsonPrimitive {
+) : JsonPrimitive {
 
     /**
      * Override toString to generate via [JSON.stringify]

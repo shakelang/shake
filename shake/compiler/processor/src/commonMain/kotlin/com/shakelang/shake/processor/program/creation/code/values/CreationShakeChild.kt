@@ -13,7 +13,7 @@ class CreationShakeChild(
     override val parent: CreationShakeValue,
     override val name: String,
 
-    ) : CreationShakeAssignable, ShakeChild {
+) : CreationShakeAssignable, ShakeChild {
 
     override val type: ShakeType = parent.type.childType(name, scope)!!
     override val actualValue: CreationShakeChildUsage get() = CreationShakeChildUsage(project, this)
@@ -65,7 +65,7 @@ class CreationShakeChildUsage(
     override val project: CreationShakeProject,
     override val used: CreationShakeChild,
 
-    ) : CreationShakeUsage(), ShakeChildUsage {
+) : CreationShakeUsage(), ShakeChildUsage {
 
     override val scope: CreationShakeScope
         get() = used.scope

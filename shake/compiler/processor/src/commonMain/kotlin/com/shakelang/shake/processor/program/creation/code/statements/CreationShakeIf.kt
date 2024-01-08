@@ -10,7 +10,7 @@ class CreationShakeIf(
     override val body: CreationShakeCode,
     override val elseBody: CreationShakeCode? = null,
 
-    ) : CreationShakeStatement, ShakeIf {
+) : CreationShakeStatement, ShakeIf {
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(

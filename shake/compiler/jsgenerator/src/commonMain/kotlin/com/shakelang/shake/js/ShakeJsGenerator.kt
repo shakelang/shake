@@ -438,7 +438,7 @@ class JsProject {
                     ),
                 ).generate(),
 
-            )
+        )
         return files
     }
 }

@@ -21,7 +21,7 @@ class JsonParser(
      */
     val tokens: JsonTokenInputStream,
 
-    ) {
+) {
 
     fun parse(): JsonElement {
         val ret = parseValue()

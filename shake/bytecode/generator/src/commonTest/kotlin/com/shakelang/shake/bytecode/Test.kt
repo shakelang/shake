@@ -19,20 +19,20 @@ class Test : FreeSpec(
             processor.loadSynthetic(
                 "test.shake",
                 """
-            package test
-            
-            import test2.test
-            
-            class Test {
-                static int main() {
-                    int a = 1
-                    int b = 2
-                    int c = a + b
-                    // println(f)
-                    return c
+                package test
+                
+                import test2.test
+                
+                class Test {
+                    static int main() {
+                        int a = 1
+                        int b = 2
+                        int c = a + b
+                        // println(f)
+                        return c
+                    }
                 }
-            }
-            """.trimIndent(),
+                """.trimIndent(),
             )
             processor.finish()
 

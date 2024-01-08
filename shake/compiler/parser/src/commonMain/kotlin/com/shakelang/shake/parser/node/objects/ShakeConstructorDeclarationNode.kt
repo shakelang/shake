@@ -19,7 +19,7 @@ class ShakeConstructorDeclarationNode
     val isNative: Boolean,
     val isSynchronized: Boolean,
 
-    ) : ShakeValuedNodeImpl(map) {
+) : ShakeValuedNodeImpl(map) {
 
     @JvmOverloads
     constructor(

@@ -8,18 +8,18 @@ class ValueTests : FreeSpec(
 
         "ValueValidator.accepts() should return true if no error is thrown" {
             (
-                    valueValidator {
-                        // Silence is golden
-                    }
-                    ).accepts(null) shouldBe true
+                valueValidator {
+                    // Silence is golden
+                }
+                ).accepts(null) shouldBe true
         }
 
         "ValueValidator.accepts() should return false if an error is thrown" {
             (
-                    valueValidator {
-                        throw ValueValidationException("Test")
-                    }
-                    ).accepts(null) shouldBe false
+                valueValidator {
+                    throw ValueValidationException("Test")
+                }
+                ).accepts(null) shouldBe false
         }
 
         "#value should return the value" {
