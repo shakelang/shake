@@ -27,13 +27,11 @@ class TagStash(
 
     companion object {
         fun fromObject(obj: JsonObject): TagStash {
-            if (!obj.containsKey("name")) throw IllegalArgumentException("TagStash object has no name")
+            require(obj.containsKey("name")) { "TagStash object has no name" }
             val name = obj["name"]!!
-            if (!name.isJsonPrimitive() || !name.toJsonPrimitive()
-                .isString()
-            ) {
-                throw IllegalArgumentException("TagStash name is not a string")
-            }
+
+            require(name.isJsonPrimitive()) { "TagStash name is not a primitive" }
+            require(name.toJsonPrimitive().isString()) { "TagStash name is not a string" }
             return TagStash(name.toJsonPrimitive().toStringElement().value)
         }
     }
@@ -87,9 +85,9 @@ class TagStashList(
 
     companion object {
         fun fromObject(obj: JsonObject): TagStashList {
-            if (!obj.containsKey("tags")) throw IllegalArgumentException("TagStashList object has no tags")
+            require(obj.containsKey("tags")) { "TagStashList object has no tags" }
             val tags = obj["tags"]!!
-            if (!tags.isJsonArray()) throw IllegalArgumentException("TagStashList tags is not an array")
+            require(tags.isJsonArray()) { "TagStashList tags is not an array" }
             return TagStashList(
                 tags.toJsonArray().map {
                     if (!it.isJsonObject()) throw IllegalArgumentException("TagStashList tags array contains non object")
@@ -99,7 +97,7 @@ class TagStashList(
         }
 
         fun fromObject(obj: JsonElement): TagStashList {
-            if (!obj.isJsonObject()) throw IllegalArgumentException("TagStashList object is not an object")
+            require(obj.isJsonObject()) { "TagStashList object is not an object" }
             return fromObject(obj.toJsonObject())
         }
 
@@ -159,7 +157,7 @@ fun Changelog.getTimestampForTag(tag: ParsedGitTag): Date {
     val process =
         rt.exec(arrayOf("git", "log", "-n", "1", "--pretty=format:\"%ci\"", tag.name), null, this.project.file("."))
     val lines = parseGit(getOutputLines(process))
-    if (lines.size != 1) throw IllegalArgumentException("Invalid git log output")
+    require(lines.size == 1) { "Invalid git log output" }
 
     return dateFormat.parse(lines[0].name.replace("\"", ""))
 }
@@ -182,10 +180,7 @@ data class ParsedGitTag(
         fun parse(line: String): ParsedGitTag {
             val parts = line.split("\\s+".toRegex(), 2)
 
-            if (parts.size < 2) {
-                throw IllegalArgumentException("Invalid git tag line: $line")
-            }
-
+            require(parts.size == 2) { "Invalid git tag line: $line" }
             return ParsedGitTag(parts[1], parts[0])
         }
     }
