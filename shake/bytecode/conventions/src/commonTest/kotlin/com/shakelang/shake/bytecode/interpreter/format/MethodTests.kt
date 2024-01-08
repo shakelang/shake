@@ -172,10 +172,14 @@ class MethodTests : FreeSpec(
             method.dump(DataOutputStream(stream))
 
             stream.toByteArray() shouldBe byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *0.toShort().toBytes(), // attributes size
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *0.toShort().toBytes(),
             )
         }
 
@@ -184,10 +188,14 @@ class MethodTests : FreeSpec(
             val pool = MutableConstantPool()
             val method = Method(pool, 0, 1, 0b00000000_00010000, emptyList())
             method.dump() shouldBe byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *0.toShort().toBytes(), // attributes size
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *0.toShort().toBytes(),
             )
         }
 
@@ -205,13 +213,20 @@ class MethodTests : FreeSpec(
             method.dump(DataOutputStream(stream))
 
             stream.toByteArray() shouldBe byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *1.toShort().toBytes(), // attributes size
-                *0.toBytes(), // attribute name constant
-                *3.toBytes(), // attribute data size
-                1, 2, 3, // attribute data
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *1.toShort().toBytes(),
+                // attribute name constant
+                *0.toBytes(),
+                // attribute data size
+                *3.toBytes(),
+                // attribute data
+                1, 2, 3,
             )
         }
 
@@ -226,13 +241,20 @@ class MethodTests : FreeSpec(
                 listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))),
             )
             method.dump() shouldBe byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *1.toShort().toBytes(), // attributes size
-                *0.toBytes(), // attribute name constant
-                *3.toBytes(), // attribute data size
-                1, 2, 3, // attribute data
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *1.toShort().toBytes(),
+                // attribute name constant
+                *0.toBytes(),
+                // attribute data size
+                *3.toBytes(),
+                // attribute data
+                1, 2, 3,
             )
         }
 
@@ -240,10 +262,14 @@ class MethodTests : FreeSpec(
 
             val pool = MutableConstantPool()
             val stream = byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *0.toShort().toBytes(), // attributes size
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *0.toShort().toBytes(),
             ).dataStream()
 
             val method = Method.fromStream(pool, stream)
@@ -258,13 +284,20 @@ class MethodTests : FreeSpec(
             val pool = MutableConstantPool()
             pool.resolveUtf8("SomeUnknownAttributeType")
             val stream = byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *1.toShort().toBytes(), // attributes size
-                *0.toBytes(), // attribute name constant
-                *3.toBytes(), // attribute data size
-                1, 2, 3, // attribute data
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *1.toShort().toBytes(),
+                // attribute name constant
+                *0.toBytes(),
+                // attribute data size
+                *3.toBytes(),
+                // attribute data
+                1, 2, 3,
             ).dataStream()
 
             val method = Method.fromStream(pool, stream)
@@ -592,10 +625,14 @@ class MutableMethodTests : FreeSpec(
             method.dump(DataOutputStream(stream))
 
             stream.toByteArray() shouldBe byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *0.toShort().toBytes(), // attributes size
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *0.toShort().toBytes(),
             )
         }
 
@@ -604,10 +641,14 @@ class MutableMethodTests : FreeSpec(
             val pool = MutableConstantPool()
             val method = MutableMethod(pool, 0, 1, 0b00000000_00010000, mutableListOf())
             method.dump() shouldBe byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *0.toShort().toBytes(), // attributes size
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *0.toShort().toBytes(),
             )
         }
 
@@ -625,13 +666,20 @@ class MutableMethodTests : FreeSpec(
             method.dump(DataOutputStream(stream))
 
             stream.toByteArray() shouldBe byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *1.toShort().toBytes(), // attributes size
-                *0.toBytes(), // attribute name constant
-                *3.toBytes(), // attribute data size
-                1, 2, 3, // attribute data
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *1.toShort().toBytes(),
+                // attribute name constant
+                *0.toBytes(),
+                // attribute data size
+                *3.toBytes(),
+                // attribute data
+                1, 2, 3,
             )
         }
 
@@ -646,13 +694,20 @@ class MutableMethodTests : FreeSpec(
                 mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))),
             )
             method.dump() shouldBe byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *1.toShort().toBytes(), // attributes size
-                *0.toBytes(), // attribute name constant
-                *3.toBytes(), // attribute data size
-                1, 2, 3, // attribute data
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *1.toShort().toBytes(),
+                // attribute name constant
+                *0.toBytes(),
+                // attribute data size
+                *3.toBytes(),
+                // attribute data
+                1, 2, 3,
             )
         }
 
@@ -660,10 +715,14 @@ class MutableMethodTests : FreeSpec(
 
             val pool = MutableConstantPool()
             val stream = byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *0.toShort().toBytes(), // attributes size
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *0.toShort().toBytes(),
             ).dataStream()
 
             val method = MutableMethod.fromStream(pool, stream)
@@ -678,13 +737,20 @@ class MutableMethodTests : FreeSpec(
             val pool = MutableConstantPool()
             pool.resolveUtf8("SomeUnknownAttributeType")
             val stream = byteArrayOf(
-                *0.toBytes(), // name constant
-                *1.toBytes(), // qualified name constant
-                *0x10.toShort().toBytes(), // flags
-                *1.toShort().toBytes(), // attributes size
-                *0.toBytes(), // attribute name constant
-                *3.toBytes(), // attribute data size
-                1, 2, 3, // attribute data
+                // name constant
+                *0.toBytes(),
+                // qualified name constant
+                *1.toBytes(),
+                // flags
+                *0x10.toShort().toBytes(),
+                // attributes size
+                *1.toShort().toBytes(),
+                // attribute name constant
+                *0.toBytes(),
+                // attribute data size
+                *3.toBytes(),
+                // attribute data
+                1, 2, 3,
             ).dataStream()
 
             val method = MutableMethod.fromStream(pool, stream)
