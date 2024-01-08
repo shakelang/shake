@@ -8,7 +8,7 @@ class ShakeFunctionParameterNode @JvmOverloads constructor(
     map: PositionMap,
     val name: String,
     val type: ShakeVariableType = ShakeVariableType.DYNAMIC,
-    val defaultValue: ShakeValuedNode? = null
+    val defaultValue: ShakeValuedNode? = null,
 ) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =
@@ -60,7 +60,7 @@ class ShakeFunctionDeclarationNode(
     val isSynchronized: Boolean,
     val isNative: Boolean,
     val isOperator: Boolean,
-    val isInline: Boolean
+    val isInline: Boolean,
 ) : ShakeFileChildNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =
@@ -72,7 +72,7 @@ class ShakeFunctionDeclarationNode(
             "type" to type.toString(),
             "access" to access.toString(),
             "is_static" to isStatic,
-            "is_final" to isFinal
+            "is_final" to isFinal,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

@@ -133,8 +133,8 @@ class ShakeJsGenerator {
         return variable.assign(
             JsFunctionCall(
                 JsField("pow", parent = JsField("Math")),
-                args = listOf(visitValue(n.value).toValue(), visitValue(n.value).toValue())
-            )
+                args = listOf(visitValue(n.value).toValue(), visitValue(n.value).toValue()),
+            ),
         )
     }
 
@@ -166,8 +166,8 @@ class ShakeJsGenerator {
                 return JsField(
                     n.name,
                     parent = JsField(
-                        n.declaration.clazz?.name ?: throw IllegalStateException("Static field must have a class")
-                    )
+                        n.declaration.clazz?.name ?: throw IllegalStateException("Static field must have a class"),
+                    ),
                 )
             }
             return JsField(n.name, parent = JsField("this"))
@@ -227,7 +227,7 @@ class ShakeJsGenerator {
             functions = n.methods.filter { !it.isNative }.map { visitMethodDeclaration(it) },
             staticFunctions = n.staticMethods.filter { !it.isNative }.map { visitMethodDeclaration(it) },
             fields = n.fields.filter { !it.isNative }.map { visitFieldDeclaration(it) },
-            staticFields = n.staticFields.filter { !it.isNative }.map { visitFieldDeclaration(it) }
+            staticFields = n.staticFields.filter { !it.isNative }.map { visitFieldDeclaration(it) },
         )
     }
 
@@ -248,21 +248,21 @@ class ShakeJsGenerator {
                 if (callable.clazz == null) {
                     return JsFunctionCall(
                         JsField(callable.name),
-                        n.arguments.map { visitValue(it) }
+                        n.arguments.map { visitValue(it) },
                     )
                 }
 
                 if (callable.isStatic) {
                     return JsFunctionCall(
                         JsField(callable.name, JsField(callable.clazz!!.name)),
-                        n.arguments.map { visitValue(it) }
+                        n.arguments.map { visitValue(it) },
                     )
                 }
 
                 if (n.parent != null) {
                     return JsFunctionCall(
                         JsField(callable.name, visitValue(n.parent!!)),
-                        n.arguments.map { visitValue(it) }
+                        n.arguments.map { visitValue(it) },
                     )
                 }
 
@@ -287,21 +287,21 @@ class ShakeJsGenerator {
                 if (callable.clazz == null) {
                     return JsFunctionCall(
                         JsField(callable.name),
-                        n.arguments.map { visitValue(it) }
+                        n.arguments.map { visitValue(it) },
                     )
                 }
 
                 if (callable.isStatic) {
                     return JsFunctionCall(
                         JsField(callable.name, JsField(callable.clazz!!.name)),
-                        n.arguments.map { visitValue(it) }
+                        n.arguments.map { visitValue(it) },
                     )
                 }
 
                 if (n.parent != null) {
                     return JsFunctionCall(
                         JsField(callable.name, visitValue(n.parent!!)),
-                        n.arguments.map { visitValue(it) }
+                        n.arguments.map { visitValue(it) },
                     )
                 }
 
@@ -330,7 +330,7 @@ class ShakeJsGenerator {
             n.subpackages.toTypedArray(),
             n.classes.filter { !it.isNative }.toTypedArray(),
             n.functions.filter { !it.isNative }.toTypedArray(),
-            n.fields.filter { !it.isNative }.toTypedArray()
+            n.fields.filter { !it.isNative }.toTypedArray(),
         )
     }
 
@@ -340,7 +340,7 @@ class ShakeJsGenerator {
             n.subpackages.toTypedArray(),
             emptyArray(),
             emptyArray(),
-            emptyArray()
+            emptyArray(),
         )
     }
 }
@@ -368,7 +368,7 @@ class JsProject {
         subpackages: List<JsPackage>,
         classes: List<JsClassDeclaration>,
         functions: List<JsFunctionDeclaration>,
-        fields: List<JsDeclaration>
+        fields: List<JsDeclaration>,
     ) {
         this.gen = generator
         this.subpackages = subpackages
@@ -382,7 +382,7 @@ class JsProject {
         subpackages: Array<ShakePackage>,
         classes: Array<ShakeClass>,
         functions: Array<ShakeMethod>,
-        fields: Array<ShakeField>
+        fields: Array<ShakeField>,
     ) {
         this.gen = generator
         this.subpackages = subpackages.map { generator.visitPackage(this, null, it) }
@@ -396,7 +396,7 @@ class JsProject {
             "packages" to subpackages.map { it.toMap() },
             "classes" to classes.map { it.generate() },
             "functions" to functions.map { it.generate() },
-            "fields" to fields.map { it.generate() }
+            "fields" to fields.map { it.generate() },
         )
     }
 
@@ -427,15 +427,15 @@ class JsProject {
                                     packages.map {
                                         JsStringLiteral(it) to JsFunctionCall(
                                             JsField("require"),
-                                            listOf(JsStringLiteral("$it.js"))
+                                            listOf(JsStringLiteral("$it.js")),
                                         )
-                                    }.toTypedArray().toMap()
-                                )
-                            )
+                                    }.toTypedArray().toMap(),
+                                ),
+                            ),
                         ),
-                        export(listOf("import"))
-                    )
-                ).generate()
+                        export(listOf("import")),
+                    ),
+                ).generate(),
 
         )
         return files
@@ -462,7 +462,7 @@ class JsPackage {
         subpackages: List<JsPackage>,
         classes: List<JsClassDeclaration>,
         functions: List<JsFunctionDeclaration>,
-        fields: List<JsDeclaration>
+        fields: List<JsDeclaration>,
     ) {
         this.prj = prj
         this.parent = parent
@@ -480,7 +480,7 @@ class JsPackage {
         subpackages: Array<ShakePackage>,
         classes: Array<ShakeClass>,
         functions: Array<ShakeMethod>,
-        fields: Array<ShakeField>
+        fields: Array<ShakeField>,
     ) {
         this.prj = prj
         this.parent = parent
@@ -497,7 +497,7 @@ class JsPackage {
             "subpackages" to subpackages.map { it.toMap() },
             "classes" to classes.map { it.generate() },
             "functions" to functions.map { it.generate() },
-            "fields" to fields.map { it.generate() }
+            "fields" to fields.map { it.generate() },
         )
     }
 

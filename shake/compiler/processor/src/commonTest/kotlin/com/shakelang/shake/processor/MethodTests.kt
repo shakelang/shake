@@ -15,7 +15,7 @@ class MethodTests : FreeSpec({
             package test
             
             void main() {}
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -50,7 +50,7 @@ class MethodTests : FreeSpec({
             package test
             
             final void main() {}
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -89,7 +89,7 @@ class MethodTests : FreeSpec({
             package test
             
             native void main();
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -128,7 +128,7 @@ class MethodTests : FreeSpec({
             package test
             
             public void main() {}
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -163,7 +163,7 @@ class MethodTests : FreeSpec({
             package test
             
             protected void main() {}
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -198,7 +198,7 @@ class MethodTests : FreeSpec({
             package test
             
             private void main() {}
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -233,7 +233,7 @@ class MethodTests : FreeSpec({
             package test
             
             int main() { return 0; }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -268,7 +268,7 @@ class MethodTests : FreeSpec({
             package test
             
             int main(int a) { return 0; }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -308,7 +308,7 @@ class MethodTests : FreeSpec({
             package test
             
             int main(int a, int b) { return 0; }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -356,7 +356,7 @@ class MethodTests : FreeSpec({
             class Test {
                 void main() {}
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -393,7 +393,7 @@ class MethodTests : FreeSpec({
             class Test {
                 final void main() {}
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -430,7 +430,7 @@ class MethodTests : FreeSpec({
             class Test {
                 static void main() {}
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -469,7 +469,7 @@ class MethodTests : FreeSpec({
             class Test {
                 native void main();
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -508,7 +508,7 @@ class MethodTests : FreeSpec({
                     return i;
                 }
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -544,7 +544,7 @@ class MethodTests : FreeSpec({
             class Test {
                 public void main() {}
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -581,7 +581,7 @@ class MethodTests : FreeSpec({
             class Test {
                 protected void main() {}
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -618,7 +618,7 @@ class MethodTests : FreeSpec({
             class Test {
                 private void main() {}
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -655,7 +655,7 @@ class MethodTests : FreeSpec({
             class Test {
                 int main() { return 0; }
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -692,7 +692,7 @@ class MethodTests : FreeSpec({
             class Test {
                 void main(int a) {}
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()
@@ -734,7 +734,7 @@ class MethodTests : FreeSpec({
             class Test {
                 void main(int a, int b) {}
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         processor.finish()

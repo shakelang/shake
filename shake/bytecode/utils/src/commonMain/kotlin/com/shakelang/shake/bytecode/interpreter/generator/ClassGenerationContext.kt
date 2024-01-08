@@ -8,7 +8,7 @@ import kotlin.experimental.and
 import kotlin.experimental.or
 
 class ClassGenerationContext(
-    val constantPool: MutableConstantPool
+    val constantPool: MutableConstantPool,
 ) {
 
     var name: String = GenerationContext.UNDEFINED
@@ -111,7 +111,7 @@ class ClassGenerationContext(
     }
 
     fun toClass(
-        pool: MutableConstantPool
+        pool: MutableConstantPool,
     ): Class {
         val nameConstant = pool.resolveUtf8(name)
         val superConstant = pool.resolveUtf8(superName)
@@ -124,12 +124,12 @@ class ClassGenerationContext(
             subClasses.map { it.toClass(pool) },
             methods.map { it.toMethod(pool) },
             fields.map { it.toField(pool) },
-            attributes.map { it.toAttribute(pool) }
+            attributes.map { it.toAttribute(pool) },
         )
     }
 
     fun toMutableClass(
-        pool: MutableConstantPool
+        pool: MutableConstantPool,
     ): MutableClass {
         val nameConstant = pool.resolveUtf8(name)
         val superConstant = pool.resolveUtf8(superName)
@@ -142,7 +142,7 @@ class ClassGenerationContext(
             fields.map { it.toMutableField(pool) }.toMutableList(),
             methods.map { it.toMutableMethod(pool) }.toMutableList(),
             subClasses.map { it.toMutableClass(pool) }.toMutableList(),
-            attributes.map { it.toMutableAttribute(pool) }.toMutableList()
+            attributes.map { it.toMutableAttribute(pool) }.toMutableList(),
         )
     }
 }

@@ -19,7 +19,7 @@ interface ShakeInterpreterField {
             classpath: ShakeClasspath,
             parentPath: String,
             constantPool: ConstantPool,
-            pkg: ShakeInterpreterPackage
+            pkg: ShakeInterpreterPackage,
         ): ShakeInterpreterField {
             return object : ShakeInterpreterField {
 

@@ -20,12 +20,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextType()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.nextType() shouldBe ShakeTokenType.KEYWORD_INT
@@ -48,12 +48,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextValue()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.nextValue() shouldBe null
@@ -71,12 +71,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testNextToken()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         var token = tis.next()
@@ -122,12 +122,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 9, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetType()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.getType(0) shouldBe ShakeTokenType.KEYWORD_INT
@@ -145,12 +145,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetEnd()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.getEnd(0) shouldBe 2
@@ -168,12 +168,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetStart()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.getStart(0) shouldBe 0
@@ -191,12 +191,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetValue()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.getValue(0) shouldBe null
@@ -214,12 +214,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testGetHasValue()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.getHasValue(0) shouldBe false
@@ -237,12 +237,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSkip()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.position shouldBe -1
@@ -265,12 +265,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testSetPosition()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.position shouldBe -1
@@ -308,12 +308,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHas()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.has(1) shouldBe true
@@ -337,12 +337,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testHasNext()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.hasNext() shouldBe true
@@ -358,8 +358,8 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
             arrayOf(),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("", "TokenBasedTokenInputStreamTests#testHasNextWithEmpty()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.hasNext() shouldBe false
@@ -371,8 +371,8 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
             arrayOf(),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("", "TokenBasedTokenInputStreamTests#testHasNextWithEmptyAndPosition()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.hasNext() shouldBe false
@@ -387,12 +387,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualEnd()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.skip()
@@ -415,12 +415,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualStart()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.skip()
@@ -443,12 +443,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualType()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.skip()
@@ -471,12 +471,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActualValue()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.skip()
@@ -499,12 +499,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testActual()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.skip()
@@ -547,12 +547,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 9, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.peekType() shouldBe ShakeTokenType.KEYWORD_INT
@@ -574,12 +574,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.peekEnd() shouldBe 2
@@ -601,12 +601,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.peekStart() shouldBe 0
@@ -628,12 +628,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.peekValue() shouldBe null
@@ -655,12 +655,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         var token = tis.peek()
@@ -702,12 +702,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekType2()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.peekType(1) shouldBe ShakeTokenType.KEYWORD_INT
@@ -749,12 +749,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekEnd2()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.peekEnd(1) shouldBe 2
@@ -796,12 +796,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekStart2()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.peekStart(1) shouldBe 0
@@ -849,12 +849,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeekValue2()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         tis.peekValue(1) shouldBe null
@@ -902,12 +902,12 @@ class TokenBasedTokenInputStreamTests : FreeSpec({
                 ShakeToken(ShakeTokenType.IDENTIFIER, "i", 4, 4),
                 ShakeToken(ShakeTokenType.ASSIGN, 6, 6),
                 ShakeToken(ShakeTokenType.INTEGER, "10", 8, 9),
-                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10)
+                ShakeToken(ShakeTokenType.SEMICOLON, 10, 10),
             ),
             PositionMap.PositionMapImplementation(
                 CharacterSource.from("int i = 10;", "TokenBasedTokenInputStreamTests#testPeek2()"),
-                intArrayOf()
-            )
+                intArrayOf(),
+            ),
         )
 
         var token = tis.peek(1)

@@ -16,7 +16,7 @@ class ShakeNotEqualNode(
     map: PositionMap,
     left: ShakeValuedNode,
     right: ShakeValuedNode,
-    operatorPosition: Int
+    operatorPosition: Int,
 ) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
@@ -30,7 +30,7 @@ class ShakeGreaterThanOrEqualNode(
     map: PositionMap,
     left: ShakeValuedNode,
     right: ShakeValuedNode,
-    operatorPosition: Int
+    operatorPosition: Int,
 ) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
@@ -47,7 +47,7 @@ class ShakeLessThanOrEqualNode(
     map: PositionMap,
     left: ShakeValuedNode,
     right: ShakeValuedNode,
-    operatorPosition: Int
+    operatorPosition: Int,
 ) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String

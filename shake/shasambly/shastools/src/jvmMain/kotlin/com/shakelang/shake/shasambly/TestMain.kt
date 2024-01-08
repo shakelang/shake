@@ -56,7 +56,7 @@ fun main() {
         natives.printShort()
         natives.printLineEnding()
         arr.free()
-        */
+         */
 
         /*
         natives.declareGlobal(8)
@@ -82,7 +82,7 @@ fun main() {
         natives.declareGlobal(4)
         natives.printInt()
         natives.printLineEnding()
-        */
+         */
 
         /*
         ipush(0x00000000)
@@ -115,7 +115,7 @@ fun main() {
         }
 
         natives.printLineEnding()
-        */
+         */
     }
 
     val file = File("test.shasx")
@@ -137,7 +137,7 @@ fun main() {
     val interpreter = ShasamblyInterpreter(
         1024 * 8,
         code,
-        0
+        0,
     )
 
     try {

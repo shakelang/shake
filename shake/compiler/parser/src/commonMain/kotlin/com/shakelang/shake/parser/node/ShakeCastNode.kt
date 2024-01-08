@@ -13,7 +13,16 @@ class ShakeCastNode(map: PositionMap, val value: ShakeValuedNode, val castTarget
         constructor(type: ShakeNamespaceNode?) : this(CastTargetType.OBJECT, type)
 
         enum class CastTargetType {
-            BYTE, SHORT, INT, LONG, FLOAT, DOUBLE, BOOLEAN, CHAR, STRING, OBJECT
+            BYTE,
+            SHORT,
+            INT,
+            LONG,
+            FLOAT,
+            DOUBLE,
+            BOOLEAN,
+            CHAR,
+            STRING,
+            OBJECT,
         }
 
         override fun toString(): String {
@@ -54,7 +63,7 @@ class ShakeCastNode(map: PositionMap, val value: ShakeValuedNode, val castTarget
         mapOf(
             "name" to nodeName,
             "value" to value.json,
-            "cast_target" to castTarget.toString()
+            "cast_target" to castTarget.toString(),
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

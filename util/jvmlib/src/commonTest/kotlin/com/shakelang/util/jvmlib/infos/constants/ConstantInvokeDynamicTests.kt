@@ -10,7 +10,7 @@ class ConstantInvokeDynamicTests {
         get() = arrayOf(
             ConstantNameAndTypeInfo(3u, 4u),
             ConstantUtf8Info("foo"),
-            ConstantUtf8Info("I")
+            ConstantUtf8Info("I"),
         )
 
     @Test

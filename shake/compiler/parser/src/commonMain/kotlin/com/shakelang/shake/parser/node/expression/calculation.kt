@@ -44,7 +44,7 @@ class ShakePowNode(map: PositionMap, left: ShakeValuedNode, right: ShakeValuedNo
 class ShakeUnaryPlusNode(
     map: PositionMap,
     contents: ShakeValuedNode,
-    operatorPosition: Int
+    operatorPosition: Int,
 ) : ShakeUnaryNode(map, contents, operatorPosition) {
     override val operator: String get() = "+"
 }
@@ -52,7 +52,7 @@ class ShakeUnaryPlusNode(
 class ShakeUnaryMinusNode(
     map: PositionMap,
     contents: ShakeValuedNode,
-    operatorPosition: Int
+    operatorPosition: Int,
 ) : ShakeUnaryNode(map, contents, operatorPosition) {
     override val operator: String get() = "-"
 }

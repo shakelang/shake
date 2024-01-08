@@ -76,7 +76,7 @@ class GenerationContext {
             constantPool,
             classes.map { it.toClass(constantPool) },
             methods.map { it.toMethod(constantPool) },
-            fields.map { it.toField(constantPool) }
+            fields.map { it.toField(constantPool) },
         )
     }
 
@@ -88,7 +88,7 @@ class GenerationContext {
             constantPool,
             classes.map { it.toMutableClass(constantPool) }.toMutableList(),
             methods.map { it.toMutableMethod(constantPool) }.toMutableList(),
-            fields.map { it.toMutableField(constantPool) }.toMutableList()
+            fields.map { it.toMutableField(constantPool) }.toMutableList(),
         )
     }
 

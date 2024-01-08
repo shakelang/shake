@@ -31,7 +31,7 @@ class CharactersTests {
         assertEquals(
             "\\\t\b\r\n\'\"",
             Characters.parseString("\\\\\\t\\b\\r\\n\\'\\\""),
-            "Escape string parsing failed"
+            "Escape string parsing failed",
         )
         assertEquals("\u0015", Characters.parseString("\\u0015"), "Escape string parsing failed")
         assertFailsWith(IllegalArgumentException::class, "Invalid unicode escape sequence") {
@@ -125,17 +125,17 @@ class CharactersTests {
 fun testCharacterRange(
     fn: (Char) -> Boolean,
     vararg allowedCharacters: Any,
-    range: CharRange = 0.toChar()..255.toChar()
+    range: CharRange = 0.toChar()..255.toChar(),
 ) {
     for (i in range) {
         // Test character is allowed
         if (allowedCharacters.find {
-            when (it) {
-                is CharRange -> i in it
-                is Char -> i == it
-                else -> throw Error()
-            }
-        } != null
+                when (it) {
+                    is CharRange -> i in it
+                    is Char -> i == it
+                    else -> throw Error()
+                }
+            } != null
         ) {
             assertTrue("Function ${fn::class} should return true for input '$i'") { fn(i) }
         } else {

@@ -12,13 +12,13 @@ class ShakeToken : Token<ShakeTokenType> {
         type: ShakeTokenType,
         value: String?,
         start: Int,
-        end: Int
+        end: Int,
     ) : super(type, value, start, end)
 
     constructor(
         type: ShakeTokenType,
         start: Int,
-        end: Int
+        end: Int,
     ) : super(type, start, end)
 
     override fun toString(): String {

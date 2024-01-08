@@ -96,7 +96,11 @@ class ShasCompiler(private val input: CharacterInputStream) {
         if (neg) input.skip()
         return if (isHex()) {
             if (neg) "-${expectHexNumber()}".toByte() else expectHexNumber().toUByte(16).toByte()
-        } else if (neg) "-${expectNumber()}".toByte() else expectNumber().toUByte().toByte()
+        } else if (neg) {
+            "-${expectNumber()}".toByte()
+        } else {
+            expectNumber().toUByte().toByte()
+        }
     }
 
     private fun expectShort(): Short {
@@ -105,7 +109,11 @@ class ShasCompiler(private val input: CharacterInputStream) {
         if (neg) input.skip()
         return if (isHex()) {
             if (neg) "-${expectHexNumber()}".toShort() else expectHexNumber().toUShort(16).toShort()
-        } else if (neg) "-${expectNumber()}".toShort() else expectNumber().toUShort().toShort()
+        } else if (neg) {
+            "-${expectNumber()}".toShort()
+        } else {
+            expectNumber().toUShort().toShort()
+        }
     }
 
     private fun expectInt(): Int {
@@ -114,7 +122,11 @@ class ShasCompiler(private val input: CharacterInputStream) {
         if (neg) input.skip()
         return if (isHex()) {
             if (neg) "-${expectHexNumber()}".toInt() else expectHexNumber().toUInt(16).toInt()
-        } else if (neg) "-${expectNumber()}".toInt() else expectNumber().toUInt().toInt()
+        } else if (neg) {
+            "-${expectNumber()}".toInt()
+        } else {
+            expectNumber().toUInt().toInt()
+        }
     }
 
     private fun expectLong(): Long {
@@ -123,7 +135,11 @@ class ShasCompiler(private val input: CharacterInputStream) {
         if (neg) input.skip()
         return if (isHex()) {
             if (neg) "-${expectHexNumber()}".toLong() else expectHexNumber().toULong(16).toLong()
-        } else if (neg) "-${expectNumber()}".toLong() else expectNumber().toULong().toLong()
+        } else if (neg) {
+            "-${expectNumber()}".toLong()
+        } else {
+            expectNumber().toULong().toLong()
+        }
     }
 
     private fun expectUByte(): UByte {

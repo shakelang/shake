@@ -28,12 +28,12 @@ class CreationShakeMethod(
     override val isOperator: Boolean,
     returnType: CreationShakeType,
     parameters: List<CreationShakeParameter>,
-    override val expanding: ShakeType?
+    override val expanding: ShakeType?,
 
 ) : CreationShakeInvokable(
     body,
     parameters,
-    returnType
+    returnType,
 ),
     ShakeMethod {
 
@@ -104,7 +104,7 @@ class CreationShakeMethod(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage?,
             parentScope: CreationShakeScope,
-            node: ShakeFunctionDeclarationNode
+            node: ShakeFunctionDeclarationNode,
         ): CreationShakeMethod {
             return CreationShakeMethod(
                 baseProject,
@@ -128,17 +128,17 @@ class CreationShakeMethod(
                     CreationShakeParameter(
                         baseProject,
                         it.name,
-                        parentScope.getType(it.type)
+                        parentScope.getType(it.type),
                     )
                 },
-                node.expandedType?.let { parentScope.getType(it) }
+                node.expandedType?.let { parentScope.getType(it) },
             )
         }
 
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,
-            node: ShakeFunctionDeclarationNode
+            node: ShakeFunctionDeclarationNode,
         ): CreationShakeMethod {
             return CreationShakeMethod(
                 clazz.prj,
@@ -162,10 +162,10 @@ class CreationShakeMethod(
                     CreationShakeParameter(
                         clazz.prj,
                         it.name,
-                        parentScope.getType(it.type)
+                        parentScope.getType(it.type),
                     )
                 },
-                node.expandedType?.let { parentScope.getType(it) }
+                node.expandedType?.let { parentScope.getType(it) },
             )
         }
     }

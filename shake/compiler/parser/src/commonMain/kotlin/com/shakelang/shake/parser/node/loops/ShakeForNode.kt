@@ -11,7 +11,7 @@ class ShakeForNode(
     val body: ShakeBlockNode,
     val declaration: ShakeStatementNode,
     val condition: ShakeValuedNode,
-    val round: ShakeStatementNode
+    val round: ShakeStatementNode,
 ) :
     ShakeStatementNodeImpl(map) {
 
@@ -21,7 +21,7 @@ class ShakeForNode(
             "body" to body.json,
             "declaration" to declaration.json,
             "condition" to condition.json,
-            "round" to round.json
+            "round" to round.json,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

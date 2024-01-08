@@ -4,12 +4,12 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
 
 class ShakeNamespaceNode(
     map: PositionMap,
-    val parts: Array<String>
+    val parts: Array<String>,
 ) : ShakeNodeImpl(map) {
     override fun toJson(): Map<String, *> {
         return mapOf(
             "type" to nodeName,
-            "parts" to parts
+            "parts" to parts,
         )
     }
 

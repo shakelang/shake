@@ -13,7 +13,7 @@ import com.shakelang.util.primitives.bytes.toUnsignedShort
 class AttributeConstantValueInfo(
 
     attributeName: ConstantUtf8Info,
-    val value: ConstantInfo
+    val value: ConstantInfo,
 
 ) : AttributeInfo(attributeName) {
 
@@ -26,7 +26,7 @@ class AttributeConstantValueInfo(
     override fun toJson() = mapOf(
         "tag" to TAG,
         "attribute_name_index" to nameIndex,
-        "constant_value_index" to valueIndex
+        "constant_value_index" to valueIndex,
     )
 
     companion object {
@@ -34,7 +34,7 @@ class AttributeConstantValueInfo(
         fun contentsFromBytes(
             pool: ConstantPool,
             bytes: ByteArray,
-            name: ConstantUtf8Info
+            name: ConstantUtf8Info,
         ): AttributeConstantValueInfo {
             val valueIndex = bytes.toUnsignedShort()
             val value = pool[valueIndex]
@@ -45,7 +45,7 @@ class AttributeConstantValueInfo(
             pool: ConstantPool,
             bytes: ByteArray,
             name: ConstantUtf8Info,
-            offset: Int
+            offset: Int,
         ): AttributeConstantValueInfo {
             val valueIndex = bytes.getUnsignedShort(offset)
             val value = pool[valueIndex]
@@ -65,7 +65,7 @@ class AttributeConstantValueInfo(
         fun contentsFromStream(
             pool: ConstantPool,
             stream: DataInputStream,
-            name: ConstantUtf8Info
+            name: ConstantUtf8Info,
         ): AttributeConstantValueInfo {
             val constantValueIndex = stream.readUnsignedShort()
             val constantValue = pool[constantValueIndex]
@@ -75,7 +75,7 @@ class AttributeConstantValueInfo(
         fun contentsFromStream(
             pool: ConstantPool,
             stream: InputStream,
-            name: ConstantUtf8Info
+            name: ConstantUtf8Info,
         ): AttributeConstantValueInfo {
             return contentsFromStream(pool, stream.dataStream, name)
         }

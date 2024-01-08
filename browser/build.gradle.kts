@@ -28,7 +28,7 @@ kotlin {
                     packageJson {
                         customField(
                             "browser",
-                            mapOf("fs" to false, "path" to false, "os" to false, "readline" to false)
+                            mapOf("fs" to false, "path" to false, "os" to false, "readline" to false),
                         )
                     }
                 }

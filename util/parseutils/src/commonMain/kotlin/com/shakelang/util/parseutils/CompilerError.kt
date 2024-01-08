@@ -82,7 +82,7 @@ open class CompilerError : Error {
         details: String,
         start: Position,
         end: Position,
-        cause: Throwable? = null
+        cause: Throwable? = null,
     ) : super("$message: $details\n\n$marker\n", cause) {
         this.exceptionName = exceptionName
         this.details = details
@@ -109,19 +109,19 @@ open class CompilerError : Error {
         details: String,
         start: Position,
         end: Position,
-        cause: Throwable? = null
+        cause: Throwable? = null,
     ) : this(
         message,
         createPositionMarker(
             MAX_LENGTH,
             start,
-            end
+            end,
         ),
         exceptionName,
         details,
         start,
         end,
-        cause
+        cause,
     )
 
     /**
@@ -144,14 +144,14 @@ open class CompilerError : Error {
         map: PositionMap,
         start: Int,
         end: Int,
-        cause: Throwable? = null
+        cause: Throwable? = null,
     ) : this(
         message,
         exceptionName,
         details,
         map.resolve(start),
         map.resolve(end),
-        cause
+        cause,
     )
 
     /**
@@ -204,7 +204,7 @@ open class CompilerError : Error {
          * @version 0.2.1
          */
         @JsName("marker")
-        val marker: String
+        val marker: String,
 
     ) {
 
@@ -254,7 +254,7 @@ open class CompilerError : Error {
         private fun createPositionMarker(
             maxLength: Int = MAX_LENGTH,
             p1: Position,
-            p2: Position
+            p2: Position,
         ): ErrorMarker {
             var pos1 = p1
             var pos2 = p2
@@ -345,12 +345,12 @@ open class CompilerError : Error {
                             red(
                                 pos1.source.source[pos1.index, pos2.index + 1].concatToString()
                                     .replace("\t".toRegex(), " ")
-                                    .replace("\n".toRegex(), " ")
-                            )
-                        ) + end
+                                    .replace("\n".toRegex(), " "),
+                            ),
+                        ) + end,
                     ),
                     join(start, pos1.source.source[pos1.index, pos2.index + 1].concatToString(), end),
-                    join(' '.repeat(start.length), '^'.repeat(highlighted))
+                    join(' '.repeat(start.length), '^'.repeat(highlighted)),
                 )
             } catch (e: Throwable) {
                 println("Error while creating position marker:")
@@ -359,7 +359,7 @@ open class CompilerError : Error {
                     "${pos1.source.location}:${pos1.line}:${pos1.column}",
                     red("Error while creating position marker: ${e.message}"),
                     "Error while creating position marker: ${e.message}",
-                    ""
+                    "",
                 )
             }
         }

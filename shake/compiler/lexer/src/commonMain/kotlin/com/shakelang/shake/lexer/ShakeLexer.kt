@@ -6,7 +6,7 @@ import com.shakelang.shake.lexer.token.stream.ShakeTokenBasedTokenInputStream
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 
 class ShakeLexer(
-    input: CharacterInputStream
+    input: CharacterInputStream,
 ) : ShakeLexingBase(input) {
 
     fun makeTokens(): ShakeTokenBasedTokenInputStream {

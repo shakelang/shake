@@ -13,7 +13,7 @@ private constructor(
     override val project: ShakeProject,
     override val callable: ShakeInvokable,
     override val arguments: List<CreationShakeValue>,
-    override val parent: CreationShakeValue? = null
+    override val parent: CreationShakeValue? = null,
 ) : CreationShakeValue, CreationShakeStatement, ShakeInvocation {
 
     override val type: ShakeType
@@ -27,7 +27,7 @@ private constructor(
             "type" to "invocation",
             "callable" to callable.qualifiedName,
             "arguments" to arguments.map { it.toJson() },
-            "parent" to parent?.toJson()
+            "parent" to parent?.toJson(),
         )
     }
 
@@ -36,7 +36,7 @@ private constructor(
             project: ShakeProject,
             callable: ShakeInvokable,
             arguments: List<CreationShakeValue>,
-            parent: CreationShakeValue? = null
+            parent: CreationShakeValue? = null,
         ): CreationShakeInvocation {
             // If the callable is an extension function, the parent will be the first argument
             if (callable is CreationShakeMethod && callable.expanding != null && parent != null) {

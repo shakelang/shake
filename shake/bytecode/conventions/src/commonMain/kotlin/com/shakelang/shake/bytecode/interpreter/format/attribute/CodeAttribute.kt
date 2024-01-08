@@ -14,7 +14,7 @@ open class CodeAttribute(
     open val maxLocals: Int,
     open val code: ByteArray,
     open val exceptionTable: Array<ExceptionTableEntry>,
-    open val attributes: Array<Attribute>
+    open val attributes: Array<Attribute>,
 ) : Attribute {
 
     override fun equals(other: Any?): Boolean = compareHelper(other)
@@ -39,7 +39,7 @@ open class CodeAttribute(
         val startPc: Int,
         val endPc: Int,
         val handlerPc: Int,
-        val catchType: Int
+        val catchType: Int,
     ) {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -95,7 +95,7 @@ open class CodeAttribute(
                     stream.readUnsignedShort().toInt(),
                     stream.readUnsignedShort().toInt(),
                     stream.readUnsignedShort().toInt(),
-                    stream.readUnsignedShort().toInt()
+                    stream.readUnsignedShort().toInt(),
                 )
             }
             val attributesSize = stream.readUnsignedShort().toInt()
@@ -109,7 +109,7 @@ open class CodeAttribute(
                 maxLocals,
                 code,
                 exceptionTable,
-                attributes
+                attributes,
             )
         }
 
@@ -122,7 +122,7 @@ open class CodeAttribute(
             attribute.maxLocals,
             attribute.code,
             attribute.exceptionTable,
-            attribute.attributes
+            attribute.attributes,
         )
     }
 }
@@ -134,7 +134,7 @@ class MutableCodeAttribute(
     override var maxLocals: Int,
     override var code: ByteArray,
     override var exceptionTable: Array<ExceptionTableEntry>,
-    override var attributes: Array<Attribute>
+    override var attributes: Array<Attribute>,
 ) : CodeAttribute(
     pool,
     nameConstant,
@@ -142,7 +142,7 @@ class MutableCodeAttribute(
     maxLocals,
     ByteArray(0),
     arrayOf(),
-    arrayOf()
+    arrayOf(),
 ),
     MutableAttribute {
 
@@ -159,7 +159,7 @@ class MutableCodeAttribute(
                 attribute.maxLocals,
                 attribute.code,
                 attribute.exceptionTable,
-                attribute.attributes
+                attribute.attributes,
             )
         }
 
@@ -182,7 +182,7 @@ class MutableCodeAttribute(
                     stream.readUnsignedShort().toInt(),
                     stream.readUnsignedShort().toInt(),
                     stream.readUnsignedShort().toInt(),
-                    stream.readUnsignedShort().toInt()
+                    stream.readUnsignedShort().toInt(),
                 )
             }
             val attributesSize = stream.readUnsignedShort().toInt()
@@ -196,7 +196,7 @@ class MutableCodeAttribute(
                 maxLocals,
                 code,
                 exceptionTable,
-                attributes
+                attributes,
             )
         }
 

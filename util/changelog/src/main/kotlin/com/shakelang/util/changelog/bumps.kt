@@ -6,7 +6,9 @@ import org.gradle.api.Project
 import kotlin.math.max
 
 enum class BumpType {
-    MAJOR, MINOR, PATCH
+    MAJOR,
+    MINOR,
+    PATCH,
     ;
 
     val type: String get() = name.toLowerCase()
@@ -37,13 +39,13 @@ enum class BumpType {
 class Bump(
     val type: BumpType,
     val message: String,
-    val paths: List<String>
+    val paths: List<String>,
 ) {
     fun toObject(): Map<String, Any> {
         return mapOf(
             "type" to type.type,
             "message" to message,
-            "paths" to paths
+            "paths" to paths,
         )
     }
 
@@ -58,13 +60,13 @@ class Bump(
             val pathsElement = obj["paths"]!!
 
             if (!typeElement.isJsonPrimitive() || !typeElement.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Bump type is not a string")
             }
 
             if (!messageElement.isJsonPrimitive() || !messageElement.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Bump message is not a string")
             }
@@ -85,11 +87,11 @@ class Bump(
 }
 
 class BumpFile(
-    val bumps: MutableList<Bump>
+    val bumps: MutableList<Bump>,
 ) {
     fun toObject(): Map<String, Any> {
         return mapOf(
-            "bumps" to bumps.map { it.toObject() }
+            "bumps" to bumps.map { it.toObject() },
         )
     }
 

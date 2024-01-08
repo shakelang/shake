@@ -174,7 +174,7 @@ class MethodTests : FreeSpec({
             *0.toBytes(), // name constant
             *1.toBytes(), // qualified name constant
             *0x10.toShort().toBytes(), // flags
-            *0.toShort().toBytes() // attributes size
+            *0.toShort().toBytes(), // attributes size
         )
     }
 
@@ -186,7 +186,7 @@ class MethodTests : FreeSpec({
             *0.toBytes(), // name constant
             *1.toBytes(), // qualified name constant
             *0x10.toShort().toBytes(), // flags
-            *0.toShort().toBytes() // attributes size
+            *0.toShort().toBytes(), // attributes size
         )
     }
 
@@ -199,7 +199,7 @@ class MethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+            listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))),
         )
         method.dump(DataOutputStream(stream))
 
@@ -210,7 +210,7 @@ class MethodTests : FreeSpec({
             *1.toShort().toBytes(), // attributes size
             *0.toBytes(), // attribute name constant
             *3.toBytes(), // attribute data size
-            1, 2, 3 // attribute data
+            1, 2, 3, // attribute data
         )
     }
 
@@ -222,7 +222,7 @@ class MethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+            listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))),
         )
         method.dump() shouldBe byteArrayOf(
             *0.toBytes(), // name constant
@@ -231,7 +231,7 @@ class MethodTests : FreeSpec({
             *1.toShort().toBytes(), // attributes size
             *0.toBytes(), // attribute name constant
             *3.toBytes(), // attribute data size
-            1, 2, 3 // attribute data
+            1, 2, 3, // attribute data
         )
     }
 
@@ -242,7 +242,7 @@ class MethodTests : FreeSpec({
             *0.toBytes(), // name constant
             *1.toBytes(), // qualified name constant
             *0x10.toShort().toBytes(), // flags
-            *0.toShort().toBytes() // attributes size
+            *0.toShort().toBytes(), // attributes size
         ).dataStream()
 
         val method = Method.fromStream(pool, stream)
@@ -263,7 +263,7 @@ class MethodTests : FreeSpec({
             *1.toShort().toBytes(), // attributes size
             *0.toBytes(), // attribute name constant
             *3.toBytes(), // attribute data size
-            1, 2, 3 // attribute data
+            1, 2, 3, // attribute data
         ).dataStream()
 
         val method = Method.fromStream(pool, stream)
@@ -529,14 +529,14 @@ class MutableMethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))),
         )
         val method4 = MutableMethod(
             pool,
             0,
             1,
             0b00000000_00010000,
-            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3, 4)))
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3, 4))),
         )
         val method5 = MutableMethod(pool, 1, 0, 0b00000000_00010000, mutableListOf())
         val method6 = MutableMethod(pool, 1, 0, 0b00000000_00001000, mutableListOf())
@@ -560,14 +560,14 @@ class MutableMethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))),
         )
         val method4 = MutableMethod(
             pool,
             0,
             1,
             0b00000000_00010000,
-            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3, 4)))
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3, 4))),
         )
         val method5 = MutableMethod(pool, 1, 0, 0b00000000_00010000, mutableListOf())
         val method6 = MutableMethod(pool, 1, 0, 0b00000000_00001000, mutableListOf())
@@ -592,7 +592,7 @@ class MutableMethodTests : FreeSpec({
             *0.toBytes(), // name constant
             *1.toBytes(), // qualified name constant
             *0x10.toShort().toBytes(), // flags
-            *0.toShort().toBytes() // attributes size
+            *0.toShort().toBytes(), // attributes size
         )
     }
 
@@ -604,7 +604,7 @@ class MutableMethodTests : FreeSpec({
             *0.toBytes(), // name constant
             *1.toBytes(), // qualified name constant
             *0x10.toShort().toBytes(), // flags
-            *0.toShort().toBytes() // attributes size
+            *0.toShort().toBytes(), // attributes size
         )
     }
 
@@ -617,7 +617,7 @@ class MutableMethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))),
         )
         method.dump(DataOutputStream(stream))
 
@@ -628,7 +628,7 @@ class MutableMethodTests : FreeSpec({
             *1.toShort().toBytes(), // attributes size
             *0.toBytes(), // attribute name constant
             *3.toBytes(), // attribute data size
-            1, 2, 3 // attribute data
+            1, 2, 3, // attribute data
         )
     }
 
@@ -640,7 +640,7 @@ class MutableMethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))),
         )
         method.dump() shouldBe byteArrayOf(
             *0.toBytes(), // name constant
@@ -649,7 +649,7 @@ class MutableMethodTests : FreeSpec({
             *1.toShort().toBytes(), // attributes size
             *0.toBytes(), // attribute name constant
             *3.toBytes(), // attribute data size
-            1, 2, 3 // attribute data
+            1, 2, 3, // attribute data
         )
     }
 
@@ -660,7 +660,7 @@ class MutableMethodTests : FreeSpec({
             *0.toBytes(), // name constant
             *1.toBytes(), // qualified name constant
             *0x10.toShort().toBytes(), // flags
-            *0.toShort().toBytes() // attributes size
+            *0.toShort().toBytes(), // attributes size
         ).dataStream()
 
         val method = MutableMethod.fromStream(pool, stream)
@@ -681,7 +681,7 @@ class MutableMethodTests : FreeSpec({
             *1.toShort().toBytes(), // attributes size
             *0.toBytes(), // attribute name constant
             *3.toBytes(), // attribute data size
-            1, 2, 3 // attribute data
+            1, 2, 3, // attribute data
         ).dataStream()
 
         val method = MutableMethod.fromStream(pool, stream)
@@ -701,7 +701,7 @@ class MutableMethodTests : FreeSpec({
             0,
             1,
             0b00000000_00010000,
-            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3)))
+            mutableListOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(1, 2, 3))),
         )
         val method2 = MutableMethod.fromMethod(pool, method)
         method2.nameConstant shouldBe 0

@@ -200,21 +200,36 @@ class ConstantPoolTests {
 
     private fun findPool(): ConstantPool {
         val cp = ConstantPool()
-        /*01*/cp.add(Constant.utf8("Hello"))
-        /*02*/cp.add(Constant.utf8("I"))
-        /*03*/cp.add(Constant.nameAndType(1u, 2u))
-        /*04*/cp.add(Constant.classRef(1u))
-        /*05*/cp.add(Constant.utf8("java/lang/Object"))
-        /*06*/cp.add(Constant.classRef(5u))
-        /*07*/cp.add(Constant.fieldRef(4u, 3u))
-        /*08*/cp.add(Constant.methodRef(4u, 3u))
-        /*09*/cp.add(Constant.interfaceMethodRef(4u, 3u))
-        /*10*/cp.add(Constant.string(1u))
-        /*11*/cp.add(Constant.integer(1))
-        /*12*/cp.add(Constant.float(1.0f))
-        /*13*/cp.add(Constant.long(1L))
-        /*14*/cp.add(Constant.double(1.0))
-        /*15*/cp.add(Constant.invokeDynamic(2u, 3u))
+        /*01*/
+            cp.add(Constant.utf8("Hello"))
+        /*02*/
+            cp.add(Constant.utf8("I"))
+        /*03*/
+            cp.add(Constant.nameAndType(1u, 2u))
+        /*04*/
+            cp.add(Constant.classRef(1u))
+        /*05*/
+            cp.add(Constant.utf8("java/lang/Object"))
+        /*06*/
+            cp.add(Constant.classRef(5u))
+        /*07*/
+            cp.add(Constant.fieldRef(4u, 3u))
+        /*08*/
+            cp.add(Constant.methodRef(4u, 3u))
+        /*09*/
+            cp.add(Constant.interfaceMethodRef(4u, 3u))
+        /*10*/
+            cp.add(Constant.string(1u))
+        /*11*/
+            cp.add(Constant.integer(1))
+        /*12*/
+            cp.add(Constant.float(1.0f))
+        /*13*/
+            cp.add(Constant.long(1L))
+        /*14*/
+            cp.add(Constant.double(1.0))
+        /*15*/
+            cp.add(Constant.invokeDynamic(2u, 3u))
 
         return cp
     }

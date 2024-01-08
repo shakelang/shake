@@ -8,7 +8,7 @@ abstract class Environment(
     /**
      * The type of the Environment
      */
-    val type: EnvironmentType
+    val type: EnvironmentType,
 
 ) {
 
@@ -108,5 +108,5 @@ enum class EnvironmentType {
      *
      * @see JavaScriptEnvironment
      */
-    JAVASCRIPT
+    JAVASCRIPT,
 }

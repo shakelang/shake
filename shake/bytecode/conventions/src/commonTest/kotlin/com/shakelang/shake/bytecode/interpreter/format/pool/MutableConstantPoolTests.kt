@@ -15,8 +15,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ByteConstant(0)
-            )
+                ConstantPoolEntry.ByteConstant(0),
+            ),
         )
         pool.isUtf8(0) shouldBe true
         pool.isUtf8(1) shouldBe false
@@ -26,8 +26,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ByteConstant(0)
-            )
+                ConstantPoolEntry.ByteConstant(0),
+            ),
         )
         pool.isByte(0) shouldBe false
         pool.isByte(1) shouldBe true
@@ -37,8 +37,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ShortConstant(0)
-            )
+                ConstantPoolEntry.ShortConstant(0),
+            ),
         )
         pool.isShort(0) shouldBe false
         pool.isShort(1) shouldBe true
@@ -48,8 +48,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.IntConstant(0)
-            )
+                ConstantPoolEntry.IntConstant(0),
+            ),
         )
         pool.isInt(0) shouldBe false
         pool.isInt(1) shouldBe true
@@ -59,8 +59,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.LongConstant(0)
-            )
+                ConstantPoolEntry.LongConstant(0),
+            ),
         )
         pool.isLong(0) shouldBe false
         pool.isLong(1) shouldBe true
@@ -70,8 +70,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.FloatConstant(0f)
-            )
+                ConstantPoolEntry.FloatConstant(0f),
+            ),
         )
         pool.isFloat(0) shouldBe false
         pool.isFloat(1) shouldBe true
@@ -81,8 +81,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.DoubleConstant(0.0)
-            )
+                ConstantPoolEntry.DoubleConstant(0.0),
+            ),
         )
         pool.isDouble(0) shouldBe false
         pool.isDouble(1) shouldBe true
@@ -92,8 +92,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ClassConstant(0)
-            )
+                ConstantPoolEntry.ClassConstant(0),
+            ),
         )
 
         pool.isClass(0) shouldBe false
@@ -104,8 +104,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ByteConstant(0)
-            )
+                ConstantPoolEntry.ByteConstant(0),
+            ),
         )
         pool.getUtf8(0) shouldBe ConstantPoolEntry.Utf8Constant("test")
 
@@ -118,8 +118,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ByteConstant(0)
-            )
+                ConstantPoolEntry.ByteConstant(0),
+            ),
         )
         pool.getByte(1) shouldBe ConstantPoolEntry.ByteConstant(0)
 
@@ -132,8 +132,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ShortConstant(0)
-            )
+                ConstantPoolEntry.ShortConstant(0),
+            ),
         )
         pool.getShort(1) shouldBe ConstantPoolEntry.ShortConstant(0)
 
@@ -146,8 +146,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.IntConstant(0)
-            )
+                ConstantPoolEntry.IntConstant(0),
+            ),
         )
         pool.getInt(1) shouldBe ConstantPoolEntry.IntConstant(0)
 
@@ -160,8 +160,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.LongConstant(0)
-            )
+                ConstantPoolEntry.LongConstant(0),
+            ),
         )
         pool.getLong(1) shouldBe ConstantPoolEntry.LongConstant(0)
 
@@ -174,8 +174,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.FloatConstant(0f)
-            )
+                ConstantPoolEntry.FloatConstant(0f),
+            ),
         )
         pool.getFloat(1) shouldBe ConstantPoolEntry.FloatConstant(0f)
 
@@ -188,8 +188,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.DoubleConstant(0.0)
-            )
+                ConstantPoolEntry.DoubleConstant(0.0),
+            ),
         )
         pool.getDouble(1) shouldBe ConstantPoolEntry.DoubleConstant(0.0)
 
@@ -202,8 +202,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ClassConstant(0)
-            )
+                ConstantPoolEntry.ClassConstant(0),
+            ),
         )
         pool.getClass(1) shouldBe ConstantPoolEntry.ClassConstant(0)
 
@@ -216,8 +216,8 @@ class MutableConstantPoolTests : FreeSpec({
         val pool = MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ByteConstant(0)
-            )
+                ConstantPoolEntry.ByteConstant(0),
+            ),
         )
         pool.findUtf8("test") shouldBe 0
         pool.findUtf8("test2") shouldBe null
@@ -228,8 +228,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ByteConstant(0),
-                ConstantPoolEntry.ByteConstant(1)
-            )
+                ConstantPoolEntry.ByteConstant(1),
+            ),
         )
         pool.findByte(0) shouldBe 1
         pool.findByte(1) shouldBe 2
@@ -241,8 +241,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ShortConstant(0),
-                ConstantPoolEntry.ShortConstant(1)
-            )
+                ConstantPoolEntry.ShortConstant(1),
+            ),
         )
         pool.findShort(0) shouldBe 1
         pool.findShort(1) shouldBe 2
@@ -254,8 +254,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.IntConstant(0),
-                ConstantPoolEntry.IntConstant(1)
-            )
+                ConstantPoolEntry.IntConstant(1),
+            ),
         )
         pool.findInt(0) shouldBe 1
         pool.findInt(1) shouldBe 2
@@ -267,8 +267,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.LongConstant(0),
-                ConstantPoolEntry.LongConstant(1)
-            )
+                ConstantPoolEntry.LongConstant(1),
+            ),
         )
         pool.findLong(0) shouldBe 1
         pool.findLong(1) shouldBe 2
@@ -280,8 +280,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.FloatConstant(0f),
-                ConstantPoolEntry.FloatConstant(1f)
-            )
+                ConstantPoolEntry.FloatConstant(1f),
+            ),
         )
         pool.findFloat(0f) shouldBe 1
         pool.findFloat(1f) shouldBe 2
@@ -293,8 +293,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.DoubleConstant(0.0),
-                ConstantPoolEntry.DoubleConstant(1.0)
-            )
+                ConstantPoolEntry.DoubleConstant(1.0),
+            ),
         )
         pool.findDouble(0.0) shouldBe 1
         pool.findDouble(1.0) shouldBe 2
@@ -306,8 +306,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ClassConstant(0),
-                ConstantPoolEntry.ClassConstant(1)
-            )
+                ConstantPoolEntry.ClassConstant(1),
+            ),
         )
 
         pool.findClass(0) shouldBe 1
@@ -322,8 +322,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ClassConstant(0),
-                ConstantPoolEntry.ClassConstant(1)
-            )
+                ConstantPoolEntry.ClassConstant(1),
+            ),
         )
 
         pool.dump(dataStream)
@@ -336,7 +336,7 @@ class MutableConstantPoolTests : FreeSpec({
             8.toByte(), // constant type (class)
             *0.toBytes(), // identifier of class
             8.toByte(), // constant type (class)
-            *1.toBytes() // identifier of class
+            *1.toBytes(), // identifier of class
         ) shouldBe true
     }
 
@@ -345,8 +345,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ClassConstant(0),
-                ConstantPoolEntry.ClassConstant(1)
-            )
+                ConstantPoolEntry.ClassConstant(1),
+            ),
         )
 
         val arr = pool.dump()
@@ -359,7 +359,7 @@ class MutableConstantPoolTests : FreeSpec({
             8.toByte(), // constant type (class)
             *0.toBytes(), // identifier of class
             8.toByte(), // constant type (class)
-            *1.toBytes() // identifier of class
+            *1.toBytes(), // identifier of class
         ) shouldBe true
     }
 
@@ -368,8 +368,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ClassConstant(0),
-                ConstantPoolEntry.ClassConstant(1)
-            )
+                ConstantPoolEntry.ClassConstant(1),
+            ),
         )
 
         pool shouldBe pool
@@ -377,22 +377,22 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ClassConstant(0),
-                ConstantPoolEntry.ClassConstant(1)
-            )
+                ConstantPoolEntry.ClassConstant(1),
+            ),
         )
         pool shouldNotBe MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ClassConstant(1),
-                ConstantPoolEntry.ClassConstant(0)
-            )
+                ConstantPoolEntry.ClassConstant(0),
+            ),
         )
         pool shouldNotBe MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ClassConstant(0),
-                ConstantPoolEntry.ClassConstant(2)
-            )
+                ConstantPoolEntry.ClassConstant(2),
+            ),
         )
     }
 
@@ -405,7 +405,7 @@ class MutableConstantPoolTests : FreeSpec({
             8.toByte(), // constant type (class)
             *0.toBytes(), // identifier of class
             8.toByte(), // constant type (class)
-            *1.toBytes() // identifier of class
+            *1.toBytes(), // identifier of class
         ).dataStream()
 
         val pool = MutableConstantPool.fromStream(stream)
@@ -414,8 +414,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ClassConstant(0),
-                ConstantPoolEntry.ClassConstant(1)
-            )
+                ConstantPoolEntry.ClassConstant(1),
+            ),
         )
     }
 
@@ -429,8 +429,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.Utf8Constant("test2")
-            )
+                ConstantPoolEntry.Utf8Constant("test2"),
+            ),
         )
     }
 
@@ -444,8 +444,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.ByteConstant(0),
                 ConstantPoolEntry.ByteConstant(0),
-                ConstantPoolEntry.ByteConstant(1)
-            )
+                ConstantPoolEntry.ByteConstant(1),
+            ),
         )
     }
 
@@ -459,8 +459,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.ShortConstant(0),
                 ConstantPoolEntry.ShortConstant(0),
-                ConstantPoolEntry.ShortConstant(1)
-            )
+                ConstantPoolEntry.ShortConstant(1),
+            ),
         )
     }
 
@@ -474,8 +474,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.IntConstant(0),
                 ConstantPoolEntry.IntConstant(0),
-                ConstantPoolEntry.IntConstant(1)
-            )
+                ConstantPoolEntry.IntConstant(1),
+            ),
         )
     }
 
@@ -489,8 +489,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.LongConstant(0),
                 ConstantPoolEntry.LongConstant(0),
-                ConstantPoolEntry.LongConstant(1)
-            )
+                ConstantPoolEntry.LongConstant(1),
+            ),
         )
     }
 
@@ -504,8 +504,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.FloatConstant(0f),
                 ConstantPoolEntry.FloatConstant(0f),
-                ConstantPoolEntry.FloatConstant(1f)
-            )
+                ConstantPoolEntry.FloatConstant(1f),
+            ),
         )
     }
 
@@ -519,8 +519,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.DoubleConstant(0.0),
                 ConstantPoolEntry.DoubleConstant(0.0),
-                ConstantPoolEntry.DoubleConstant(1.0)
-            )
+                ConstantPoolEntry.DoubleConstant(1.0),
+            ),
         )
     }
 
@@ -535,8 +535,8 @@ class MutableConstantPoolTests : FreeSpec({
                 ConstantPoolEntry.ClassConstant(0),
                 ConstantPoolEntry.Utf8Constant("test"),
                 ConstantPoolEntry.ClassConstant(1),
-                ConstantPoolEntry.ClassConstant(1)
-            )
+                ConstantPoolEntry.ClassConstant(1),
+            ),
         )
     }
 
@@ -550,8 +550,8 @@ class MutableConstantPoolTests : FreeSpec({
         pool shouldBe MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.Utf8Constant("test2")
-            )
+                ConstantPoolEntry.Utf8Constant("test2"),
+            ),
         )
     }
 
@@ -565,8 +565,8 @@ class MutableConstantPoolTests : FreeSpec({
         pool shouldBe MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.ByteConstant(0),
-                ConstantPoolEntry.ByteConstant(1)
-            )
+                ConstantPoolEntry.ByteConstant(1),
+            ),
         )
     }
 
@@ -580,8 +580,8 @@ class MutableConstantPoolTests : FreeSpec({
         pool shouldBe MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.ShortConstant(0),
-                ConstantPoolEntry.ShortConstant(1)
-            )
+                ConstantPoolEntry.ShortConstant(1),
+            ),
         )
     }
 
@@ -595,8 +595,8 @@ class MutableConstantPoolTests : FreeSpec({
         pool shouldBe MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.IntConstant(0),
-                ConstantPoolEntry.IntConstant(1)
-            )
+                ConstantPoolEntry.IntConstant(1),
+            ),
         )
     }
 
@@ -610,8 +610,8 @@ class MutableConstantPoolTests : FreeSpec({
         pool shouldBe MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.LongConstant(0),
-                ConstantPoolEntry.LongConstant(1)
-            )
+                ConstantPoolEntry.LongConstant(1),
+            ),
         )
     }
 
@@ -625,8 +625,8 @@ class MutableConstantPoolTests : FreeSpec({
         pool shouldBe MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.FloatConstant(0f),
-                ConstantPoolEntry.FloatConstant(1f)
-            )
+                ConstantPoolEntry.FloatConstant(1f),
+            ),
         )
     }
 
@@ -640,8 +640,8 @@ class MutableConstantPoolTests : FreeSpec({
         pool shouldBe MutableConstantPool(
             mutableListOf(
                 ConstantPoolEntry.DoubleConstant(0.0),
-                ConstantPoolEntry.DoubleConstant(1.0)
-            )
+                ConstantPoolEntry.DoubleConstant(1.0),
+            ),
         )
     }
 
@@ -657,8 +657,8 @@ class MutableConstantPoolTests : FreeSpec({
             mutableListOf(
                 ConstantPoolEntry.ClassConstant(0),
                 ConstantPoolEntry.Utf8Constant("test"),
-                ConstantPoolEntry.ClassConstant(1)
-            )
+                ConstantPoolEntry.ClassConstant(1),
+            ),
         )
     }
 })

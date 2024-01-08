@@ -6,7 +6,7 @@ class ShakeIfNode(
     map: PositionMap,
     val body: ShakeBlockNode,
     val elseBody: ShakeBlockNode?,
-    val condition: ShakeValuedNode
+    val condition: ShakeValuedNode,
 ) : ShakeValuedStatementNodeImpl(map) {
 
     constructor(map: PositionMap, body: ShakeBlockNode, condition: ShakeValuedNode) : this(map, body, null, condition)
@@ -15,7 +15,7 @@ class ShakeIfNode(
         mapOf(
             "name" to nodeName,
             "condition" to condition.json,
-            "body" to body.json
+            "body" to body.json,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

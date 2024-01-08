@@ -8,7 +8,7 @@ class CreationShakeIf(
 
     override val condition: CreationShakeValue,
     override val body: CreationShakeCode,
-    override val elseBody: CreationShakeCode? = null
+    override val elseBody: CreationShakeCode? = null,
 
 ) : CreationShakeStatement, ShakeIf {
 
@@ -17,7 +17,7 @@ class CreationShakeIf(
             "type" to "if",
             "condition" to condition.toJson(),
             "body" to body.toJson(),
-            "else" to elseBody?.toJson()
+            "else" to elseBody?.toJson(),
         )
     }
 }

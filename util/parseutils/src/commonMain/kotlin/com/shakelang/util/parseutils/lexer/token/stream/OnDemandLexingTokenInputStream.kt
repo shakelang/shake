@@ -19,7 +19,7 @@ open class OnDemandLexingTokenInputStream<TT : TokenType, T : Token<TT>>(
      * @since 0.1.0
      * @version 0.2.1
      */
-    private val lexingBase: LexingBase<TT, T>
+    private val lexingBase: LexingBase<TT, T>,
 ) : LexingBase<TT, T>(lexingBase.input), TokenInputStream<TT, T> {
 
     /**

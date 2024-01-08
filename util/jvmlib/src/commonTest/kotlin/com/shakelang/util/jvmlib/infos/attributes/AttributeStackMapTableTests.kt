@@ -653,7 +653,7 @@ class AttributeStackMapTableTests {
         val bytes = byteArrayOf(
             0, 2,
             255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2,
-            0
+            0,
         )
         val stream = bytes.dataStream()
         val list = AttributeStackMapTableInfo.StackMapFrameList.fromStream(stream)
@@ -666,7 +666,7 @@ class AttributeStackMapTableTests {
         val bytes = byteArrayOf(
             0, 2,
             255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2,
-            0
+            0,
         )
         val list = AttributeStackMapTableInfo.StackMapFrameList.fromBytes(bytes)
         assertEquals(2, list.size)
@@ -679,7 +679,7 @@ class AttributeStackMapTableTests {
             *(1..10).map { (it % 255).toUByte().toByte() }.toByteArray(),
             0, 2,
             255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2,
-            0
+            0,
         )
         val list = AttributeStackMapTableInfo.StackMapFrameList.fromBytes(bytes, 10)
         assertEquals(2, list.size)
@@ -717,7 +717,7 @@ class AttributeStackMapTableTests {
 
         val bytes = byteArrayOf(
             *(1..10).map { (it % 255).toUByte().toByte() }.toByteArray(),
-            0, 2, 255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2, 0
+            0, 2, 255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2, 0,
         )
         val info = AttributeStackMapTableInfo.contentsFromBytes(bytes, const, 10)
         assertEquals(2, info.entries.size)
@@ -756,7 +756,7 @@ class AttributeStackMapTableTests {
         val pool = ConstantPool(arrayOf(const))
         val bytes = byteArrayOf(
             *(1..10).map { (it % 255).toUByte().toByte() }.toByteArray(),
-            0, 1, 0, 0, 0, 12, 0, 2, 255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2, 0
+            0, 1, 0, 0, 0, 12, 0, 2, 255u.toByte(), 0x0f, 0x0a, 0, 1, 0, 0, 1, 2, 0,
         )
         val info = AttributeStackMapTableInfo.fromBytes(pool, bytes, 10)
         assertEquals(2, info.entries.size)

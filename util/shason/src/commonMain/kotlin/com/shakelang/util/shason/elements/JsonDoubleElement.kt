@@ -14,7 +14,7 @@ class JsonDoubleElement(
      * @since 0.1.0
      * @version 0.1.0
      */
-    override val value: Double
+    override val value: Double,
 
 ) : JsonPrimitive {
 

@@ -14,7 +14,7 @@ enum class JsonBooleanElement(
      * @since 0.1.0
      * @version 0.1.0
      */
-    override val value: Boolean
+    override val value: Boolean,
 
 ) : JsonPrimitive {
 
@@ -30,7 +30,8 @@ enum class JsonBooleanElement(
      * @since 0.1.0
      * @version 0.1.0
      */
-    FALSE(false);
+    FALSE(false),
+    ;
 
     /**
      * Override toString to generate via [JSON.stringify]

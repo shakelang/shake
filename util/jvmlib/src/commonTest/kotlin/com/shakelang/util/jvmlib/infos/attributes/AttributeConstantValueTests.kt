@@ -12,8 +12,8 @@ class AttributeConstantValueTests {
         get() = ConstantPool(
             mutableListOf(
                 Constant.utf8("ConstantValue"),
-                Constant.utf8("Hello, World!")
-            )
+                Constant.utf8("Hello, World!"),
+            ),
         )
 
     @Test

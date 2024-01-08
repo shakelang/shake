@@ -9,7 +9,7 @@ import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
 abstract class LexingBase<TT : TokenType, T : Token<TT>>(
-    val input: CharacterInputStream
+    val input: CharacterInputStream,
 ) {
 
     abstract fun makeToken(): T
@@ -19,20 +19,20 @@ abstract class LexingBase<TT : TokenType, T : Token<TT>>(
         name: String,
         details: String,
         start: Position,
-        end: Position
+        end: Position,
     ) = LexerError(message, name, details, start, end)
 
     open fun createError(
         name: String,
         details: String,
         start: Position = input.positionMaker.createPositionAtLocation(),
-        end: Position = start
+        end: Position = start,
     ) = LexerError(name, details, start, end)
 
     open fun createError(
         details: String,
         start: Position = input.positionMaker.createPositionAtLocation(),
-        end: Position = start
+        end: Position = start,
     ) = LexerError(details, start, end)
 
     open class LexerError(
@@ -40,7 +40,7 @@ abstract class LexingBase<TT : TokenType, T : Token<TT>>(
         name: String,
         details: String,
         start: Position,
-        end: Position
+        end: Position,
     ) :
         CompilerError(message, name, details, start, end) {
 
@@ -50,13 +50,13 @@ abstract class LexingBase<TT : TokenType, T : Token<TT>>(
             name: String,
             details: String,
             start: Position = base.input.positionMaker.createPositionAtLocation(),
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             name,
             details,
             start,
-            end
+            end,
         )
 
         @JvmOverloads
@@ -64,13 +64,13 @@ abstract class LexingBase<TT : TokenType, T : Token<TT>>(
             base: LexingBase<*, *>,
             details: String,
             start: Position = base.input.positionMaker.createPositionAtLocation(),
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             "LexerError",
             details,
             start,
-            end
+            end,
         )
 
         @JvmOverloads
@@ -78,26 +78,26 @@ abstract class LexingBase<TT : TokenType, T : Token<TT>>(
             name: String,
             details: String,
             start: Position,
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             name,
             details,
             start,
-            end
+            end,
         )
 
         @JvmOverloads
         constructor(
             details: String,
             start: Position,
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             "LexerError",
             details,
             start,
-            end
+            end,
         )
     }
 }

@@ -20,7 +20,7 @@ class VariableTests : FreeSpec({
     class AssignmentTestDescriptor(
         val name: String,
         val operator: String,
-        val nodeClass: KClass<out ShakeCommonVariableAssignmentNode>
+        val nodeClass: KClass<out ShakeCommonVariableAssignmentNode>,
     )
 
     listOf(
@@ -30,7 +30,7 @@ class VariableTests : FreeSpec({
         AssignmentTestDescriptor("variable mul assignment", "*=", ShakeVariableMulAssignmentNode::class),
         AssignmentTestDescriptor("variable div assignment", "/=", ShakeVariableDivAssignmentNode::class),
         AssignmentTestDescriptor("variable mod assignment", "%=", ShakeVariableModAssignmentNode::class),
-        AssignmentTestDescriptor("variable pow assignment", "**=", ShakeVariablePowAssignmentNode::class)
+        AssignmentTestDescriptor("variable pow assignment", "**=", ShakeVariablePowAssignmentNode::class),
     ).forEach {
         it.name {
             val node = ParserTestUtil.parseStatement("<${it.name}>", "i ${it.operator} 0", it.nodeClass)
@@ -75,7 +75,7 @@ class VariableTests : FreeSpec({
 
     class VariableDeclarationDescriptor(
         val declarationType: String,
-        val typeClass: ShakeVariableType
+        val typeClass: ShakeVariableType,
     ) {
         val name get() = "$declarationType declaration"
     }
@@ -93,7 +93,7 @@ class VariableTests : FreeSpec({
         VariableDeclarationDescriptor("float", ShakeVariableType.FLOAT),
         VariableDeclarationDescriptor("double", ShakeVariableType.DOUBLE),
         VariableDeclarationDescriptor("char", ShakeVariableType.CHAR),
-        VariableDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN)
+        VariableDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN),
     ).forEach {
 
         ShakeAccessDescriber.entries.forEach { access ->
@@ -105,7 +105,7 @@ class VariableTests : FreeSpec({
                 val node = ParserTestUtil.parseSingle(
                     "<${it.name}>",
                     "$accessPrefix${it.declarationType} i",
-                    ShakeVariableDeclarationNode::class
+                    ShakeVariableDeclarationNode::class,
                 )
                 node.name shouldBe "i"
                 node.type shouldBe it.typeClass
@@ -119,7 +119,7 @@ class VariableTests : FreeSpec({
                 val node = ParserTestUtil.parseSingle(
                     "<${it.name} with value>",
                     "$accessPrefix${it.declarationType} i = 0",
-                    ShakeVariableDeclarationNode::class
+                    ShakeVariableDeclarationNode::class,
                 )
                 node.name shouldBe "i"
                 node.type shouldBe it.typeClass
@@ -141,7 +141,7 @@ class VariableTests : FreeSpec({
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name}>",
                         "${creationParams.joinToString(" ")} ${it.declarationType} i",
-                        ShakeVariableDeclarationNode::class
+                        ShakeVariableDeclarationNode::class,
                     )
 
                     node.name shouldBe "i"
@@ -163,7 +163,7 @@ class VariableTests : FreeSpec({
                     val node = ParserTestUtil.parseSingle(
                         "<${it.name} with value>",
                         "${creationParams.joinToString(" ")} ${it.declarationType} i = 0",
-                        ShakeVariableDeclarationNode::class
+                        ShakeVariableDeclarationNode::class,
                     )
 
                     node.name shouldBe "i"

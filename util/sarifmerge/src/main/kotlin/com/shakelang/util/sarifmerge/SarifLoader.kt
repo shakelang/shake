@@ -10,21 +10,21 @@ class SarifEntry(
     val level: String,
     val locations: JsonElement,
     val message: JsonElement,
-    val ruleId: String
+    val ruleId: String,
 ) {
     fun toJsonObject(): Any {
         val obj = mapOf(
             "level" to level,
             "locations" to locations,
             "message" to message,
-            "ruleId" to ruleId
+            "ruleId" to ruleId,
         )
         return obj
     }
 }
 
 class SarifLoaderWithSRCRoot(
-    val srcRoot: String?
+    val srcRoot: String?,
 ) {
 
     val entries = mutableListOf<SarifEntry>()
@@ -69,7 +69,7 @@ class SarifLoaderWithSRCRoot(
     }
 
     fun acceptsRun(
-        run: JsonObject
+        run: JsonObject,
     ): Boolean {
         if (!run.containsKey("results")) throw IllegalArgumentException("Sarif run does not contain 'results' key")
         if (!run.containsKey("tool") || !run["tool"]!!.isJsonObject()) throw IllegalArgumentException("Sarif run does not contain 'tool' key or 'tool' key is not a JsonObject")
@@ -87,7 +87,7 @@ class SarifLoaderWithSRCRoot(
     }
 
     fun addRun(
-        run: JsonObject
+        run: JsonObject,
     ) {
         if (!acceptsRun(run)) throw IllegalArgumentException("Sarif run does not match SRCROOT")
         val results = run["results"]!!.toJsonArray()
@@ -96,14 +96,14 @@ class SarifLoaderWithSRCRoot(
     }
 
     fun addRun(
-        run: JsonElement
+        run: JsonElement,
     ) {
         if (!run.isJsonObject()) throw IllegalArgumentException("Sarif run is not a JsonObject")
         addRun(run.toJsonObject())
     }
 
     fun addRuns(
-        runs: JsonArray
+        runs: JsonArray,
     ) {
         for (element in runs) {
             if (!element.isJsonObject()) throw IllegalArgumentException("Sarif run is not a JsonObject")
@@ -112,7 +112,7 @@ class SarifLoaderWithSRCRoot(
     }
 
     fun addRuns(
-        runs: JsonElement
+        runs: JsonElement,
     ) {
         if (!runs.isJsonArray()) throw IllegalArgumentException("Sarif run is not a JsonArray")
         addRuns(runs.toJsonArray())
@@ -136,12 +136,12 @@ class SarifLoaderWithSRCRoot(
                 mapOf(
                     "originalUriBaseIds" to mapOf(
                         "%SRCROOT%" to mapOf(
-                            "uri" to (srcRoot ?: "")
-                        )
+                            "uri" to (srcRoot ?: ""),
+                        ),
                     ),
                     "results" to results,
-                    "tool" to tool!!
-                )
+                    "tool" to tool!!,
+                ),
             )
         }
 
@@ -156,7 +156,7 @@ class SarifLoader {
     val schema = "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json"
 
     fun addRun(
-        run: JsonObject
+        run: JsonObject,
     ) {
         if (!run.containsKey("results")) throw IllegalArgumentException("Sarif run does not contain 'results' key")
 
@@ -180,14 +180,14 @@ class SarifLoader {
     }
 
     fun addRun(
-        run: JsonElement
+        run: JsonElement,
     ) {
         if (!run.isJsonObject()) throw IllegalArgumentException("Sarif run is not a JsonObject")
         addRun(run.toJsonObject())
     }
 
     fun addRuns(
-        runs: JsonArray
+        runs: JsonArray,
     ) {
         for (element in runs) {
             if (!element.isJsonObject()) throw IllegalArgumentException("Sarif run is not a JsonObject")
@@ -196,14 +196,14 @@ class SarifLoader {
     }
 
     fun addRuns(
-        runs: JsonElement
+        runs: JsonElement,
     ) {
         if (!runs.isJsonArray()) throw IllegalArgumentException("Sarif run is not a JsonArray")
         addRuns(runs.toJsonArray())
     }
 
     fun addFile(
-        file: JsonObject
+        file: JsonObject,
     ) {
         if (!file.containsKey("version")) throw IllegalArgumentException("Sarif file does not contain 'version' key")
         if (!file.containsKey("\$schema")) throw IllegalArgumentException("Sarif file does not contain '\$schema' key")
@@ -232,14 +232,14 @@ class SarifLoader {
     }
 
     fun addFile(
-        file: JsonElement
+        file: JsonElement,
     ) {
         if (!file.isJsonObject()) throw IllegalArgumentException("Sarif file is not a JsonObject")
         addFile(file.toJsonObject())
     }
 
     fun addFile(
-        file: File
+        file: File,
     ) {
         val reader = file.reader()
         val contents = reader.readText()
@@ -252,7 +252,7 @@ class SarifLoader {
     }
 
     fun addFiles(
-        files: Set<File>
+        files: Set<File>,
     ) {
         for (file in files) {
             addFile(file)
@@ -277,7 +277,7 @@ class SarifLoader {
 
     fun generateFiles(
         limitRunsPerFile: Int = -1,
-        limitEntriesPerRun: Int = -1
+        limitEntriesPerRun: Int = -1,
     ): List<Any> {
         val runs = getRuns(limitEntriesPerRun)
         val numberOfFiles = if (limitRunsPerFile == -1) 1 else (runs.size / limitRunsPerFile) + 1
@@ -297,8 +297,8 @@ class SarifLoader {
                 mapOf(
                     "version" to version,
                     "\$schema" to schema,
-                    "runs" to runsInFile
-                )
+                    "runs" to runsInFile,
+                ),
             )
         }
 
@@ -308,11 +308,11 @@ class SarifLoader {
 
 fun parseSourceRootElement(element: JsonElement): String {
     return if (element.isJsonPrimitive() && element.toJsonPrimitive()
-        .isString()
+            .isString()
     ) {
         element.toJsonPrimitive().toStringElement().value
     } else if (element.isJsonObject() && element.toJsonObject()
-        .containsKey("uri") && element.toJsonObject()["uri"]!!.isJsonPrimitive() &&
+            .containsKey("uri") && element.toJsonObject()["uri"]!!.isJsonPrimitive() &&
         element.toJsonObject()["uri"]!!.toJsonPrimitive().isString()
     ) {
         element.toJsonObject()["uri"]!!.toJsonPrimitive().toStringElement().value

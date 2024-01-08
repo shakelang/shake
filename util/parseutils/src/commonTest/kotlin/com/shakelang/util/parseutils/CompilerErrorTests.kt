@@ -20,7 +20,7 @@ class CompilerErrorTests {
             "TestingError",
             "Some details",
             map.resolve(10),
-            map.resolve(10)
+            map.resolve(10),
         )
 
         assertEquals(10, error.start.index)
@@ -32,7 +32,7 @@ class CompilerErrorTests {
         assertEquals("             ^", error.marker.marker)
         assertEquals(
             "1  0123456789" + invert(red("0")) + "1234567890123456789",
-            error.marker.colorPreview
+            error.marker.colorPreview,
         )
     }
 
@@ -47,7 +47,7 @@ class CompilerErrorTests {
             "Some details",
             map.resolve(10),
             map.resolve(10),
-            error
+            error,
         )
 
         assertEquals(10, caused.start.index)
@@ -59,7 +59,7 @@ class CompilerErrorTests {
         assertEquals("             ^", caused.marker.marker)
         assertEquals(
             "1  0123456789" + invert(red("0")) + "1234567890123456789",
-            caused.marker.colorPreview
+            caused.marker.colorPreview,
         )
 
         assertEquals(error, caused.cause)
@@ -75,7 +75,7 @@ class CompilerErrorTests {
             "Some details",
             map,
             10,
-            10
+            10,
         )
 
         assertEquals(10, error.start.index)
@@ -87,7 +87,7 @@ class CompilerErrorTests {
         assertEquals("             ^", error.marker.marker)
         assertEquals(
             "1  0123456789" + invert(red("0")) + "1234567890123456789",
-            error.marker.colorPreview
+            error.marker.colorPreview,
         )
     }
 
@@ -103,7 +103,7 @@ class CompilerErrorTests {
             map,
             10,
             10,
-            error
+            error,
         )
 
         assertEquals(10, caused.start.index)
@@ -115,7 +115,7 @@ class CompilerErrorTests {
         assertEquals("             ^", caused.marker.marker)
         assertEquals(
             "1  0123456789" + invert(red("0")) + "1234567890123456789",
-            caused.marker.colorPreview
+            caused.marker.colorPreview,
         )
 
         assertEquals(error, caused.cause)
@@ -130,7 +130,7 @@ class CompilerErrorTests {
             "TestingError",
             "Some details",
             Position(map, 10, 11, 1),
-            Position(map, 10, 11, 1)
+            Position(map, 10, 11, 1),
         )
 
         assertEquals("<source>:1:11", error.marker.source)
@@ -138,7 +138,7 @@ class CompilerErrorTests {
         assertEquals("             ^", error.marker.marker)
         assertEquals(
             "1  0123456789" + invert(red("0")) + "12345678901234567890...+28",
-            error.marker.colorPreview
+            error.marker.colorPreview,
         )
     }
 
@@ -151,7 +151,7 @@ class CompilerErrorTests {
             "TestingError",
             "Some details",
             map.resolve(39),
-            map.resolve(39)
+            map.resolve(39),
         )
 
         assertEquals("<source>:1:40", error.marker.source)
@@ -159,7 +159,7 @@ class CompilerErrorTests {
         assertEquals("                              ^", error.marker.marker)
         assertEquals(
             "1  +18...890123456789012345678" + invert(red("9")) + "01234567890123456789",
-            error.marker.colorPreview
+            error.marker.colorPreview,
         )
     }
 
@@ -172,7 +172,7 @@ class CompilerErrorTests {
             "TestingError",
             "Some details",
             map.resolve(49),
-            map.resolve(49)
+            map.resolve(49),
         )
 
         assertEquals("<source>:1:50", error.marker.source)
@@ -181,7 +181,7 @@ class CompilerErrorTests {
         assertEquals(
             "1  +28...890123456789012345678" + invert(red("9")) +
                 "01234567890123456789...+29",
-            error.marker.colorPreview
+            error.marker.colorPreview,
         )
     }
 
@@ -194,7 +194,7 @@ class CompilerErrorTests {
             "TestingError",
             "Some details",
             map.resolve(9),
-            map.resolve(14)
+            map.resolve(14),
         )
 
         assertEquals(9, error.start.index)
@@ -206,7 +206,7 @@ class CompilerErrorTests {
         assertEquals("            ^^^^^^", error.marker.marker)
         assertEquals(
             "1  012345678" + invert(red("901234")) + "567890123456789012345678",
-            error.marker.colorPreview
+            error.marker.colorPreview,
         )
     }
 
@@ -230,7 +230,7 @@ class CompilerErrorTests {
             "TestingError",
             "Some details",
             pos,
-            pos
+            pos,
         )
 
         assertEquals("<source>:3:11", error.marker.source)
@@ -238,7 +238,7 @@ class CompilerErrorTests {
         assertEquals("             ^", error.marker.marker)
         assertEquals(
             "3  0123456789" + invert(red("0")) + "1234567890123456789012...+7",
-            error.marker.colorPreview
+            error.marker.colorPreview,
         )
     }
 

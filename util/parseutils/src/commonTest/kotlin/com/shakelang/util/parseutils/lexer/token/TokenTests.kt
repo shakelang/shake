@@ -7,7 +7,9 @@ import kotlin.test.assertNotEquals
 class TokenTests {
 
     enum class TokenType : com.shakelang.util.parseutils.lexer.token.TokenType {
-        IDENTIFIER, NUMBER;
+        IDENTIFIER,
+        NUMBER,
+        ;
 
         override val hasValue: Boolean
             get() = this == IDENTIFIER

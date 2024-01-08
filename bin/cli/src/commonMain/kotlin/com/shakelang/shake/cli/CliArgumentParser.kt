@@ -4,7 +4,7 @@ import kotlin.jvm.JvmOverloads
 
 @Suppress("unused")
 class CliArgumentParser(
-    private val options: MutableList<CliOption> = mutableListOf()
+    private val options: MutableList<CliOption> = mutableListOf(),
 ) {
     constructor(options: Array<CliOption>) : this(mutableListOf(*options))
 
@@ -94,7 +94,7 @@ class CliArgumentParser(
         options: MutableList<ValuedCliOption>,
         i: Int,
         optionName: String,
-        option: CliOption
+        option: CliOption,
     ): Int {
         var i1 = i
         val optionArguments = arrayOfNulls<String>(option.argumentAmount)
@@ -122,8 +122,8 @@ class CliArgumentParser(
                 name,
                 shortName,
                 argumentAmount,
-                defaults
-            )
+                defaults,
+            ),
         )
     }
 
@@ -139,7 +139,7 @@ class CliArgumentParser(
         val name: String,
         val shortName: String,
         val argumentAmount: Int = 0,
-        private val default_value: Array<String?>? = null
+        private val default_value: Array<String?>? = null,
     ) {
         fun valued(value: Array<String?>?): ValuedCliOption {
             return ValuedCliOption(this, value ?: default_value)
@@ -161,7 +161,7 @@ class CliArgumentParser(
             option.name,
             option.shortName,
             option.argumentAmount,
-            values
+            values,
         ) {
         }
 

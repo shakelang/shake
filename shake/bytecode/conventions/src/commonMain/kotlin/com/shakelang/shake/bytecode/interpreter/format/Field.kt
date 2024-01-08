@@ -14,7 +14,7 @@ open class Field(
     open val nameConstant: Int,
     open val typeConstant: Int,
     open val flags: Short,
-    open val attributes: List<Attribute>
+    open val attributes: List<Attribute>,
 ) {
     open val isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
@@ -62,7 +62,7 @@ class MutableField(
     override var nameConstant: Int,
     override var typeConstant: Int,
     override var flags: Short,
-    attributes: MutableList<Attribute>
+    attributes: MutableList<Attribute>,
 ) : Field(pool, nameConstant, typeConstant, flags, attributes) {
 
     override var name: String
@@ -148,7 +148,7 @@ class MutableField(
                 field.nameConstant,
                 field.typeConstant,
                 field.flags,
-                field.attributes.toMutableList()
+                field.attributes.toMutableList(),
             )
         }
 

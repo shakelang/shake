@@ -42,7 +42,7 @@ abstract class MapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMapType<K
      * @since 0.1.0
      * @version 0.1.0
      */
-    val map: Map<K, V>
+    val map: Map<K, V>,
 
 ) : MapType<K, V, MT, MMT> {
 
@@ -116,7 +116,7 @@ abstract class MutableMapBase<K, V, MT : MapType<K, V, MT, MMT>, MMT : MutableMa
      * @since 0.1.0
      * @version 0.1.0
      */
-    val map: MutableMap<K, V>
+    val map: MutableMap<K, V>,
 
 ) : MutableMapType<K, V, MT, MMT> {
 

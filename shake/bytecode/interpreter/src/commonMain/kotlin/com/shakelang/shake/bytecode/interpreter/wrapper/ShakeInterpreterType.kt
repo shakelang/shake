@@ -18,7 +18,7 @@ interface ShakeInterpreterType {
         BOOLEAN,
         VOID,
         OBJECT,
-        ARRAY
+        ARRAY,
     }
 
     class ArrayType(val arrayType: ShakeInterpreterType) : ShakeInterpreterType {

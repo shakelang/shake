@@ -8,7 +8,7 @@ import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.bytecode.interpreter.generator.GenerationContext
 
 open class AttributeGenerationContext(
-    val constantPool: MutableConstantPool
+    val constantPool: MutableConstantPool,
 ) {
 
     var name: String = GenerationContext.UNDEFINED
@@ -20,24 +20,24 @@ open class AttributeGenerationContext(
     open var data: ByteArray = byteArrayOf()
 
     open fun toAttribute(
-        pool: MutableConstantPool
+        pool: MutableConstantPool,
     ): Attribute {
         val nameConstant = pool.resolveUtf8(name)
         return AnonymousAttributeImpl(
             pool,
             nameConstant,
-            data
+            data,
         )
     }
 
     open fun toMutableAttribute(
-        pool: MutableConstantPool
+        pool: MutableConstantPool,
     ): MutableAttribute {
         val nameConstant = pool.resolveUtf8(name)
         return MutableAnonymousAttributeImpl(
             pool,
             nameConstant,
-            data
+            data,
         )
     }
 }

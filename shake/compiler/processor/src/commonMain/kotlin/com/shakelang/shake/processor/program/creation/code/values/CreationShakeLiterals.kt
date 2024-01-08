@@ -6,7 +6,7 @@ import com.shakelang.shake.processor.program.types.code.values.*
 
 class CreationShakeDoubleLiteral(
     override val project: CreationShakeProject,
-    override val value: Double
+    override val value: Double,
 ) : CreationShakeValue, ShakeDoubleLiteral {
 
     override val type: CreationShakeType
@@ -17,14 +17,14 @@ class CreationShakeDoubleLiteral(
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "double",
-            "value" to value
+            "value" to value,
         )
     }
 }
 
 class CreationShakeIntegerLiteral(
     override val project: CreationShakeProject,
-    override val value: Int
+    override val value: Int,
 ) : CreationShakeValue, ShakeIntLiteral {
 
     override val type: CreationShakeType
@@ -35,14 +35,14 @@ class CreationShakeIntegerLiteral(
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "int",
-            "value" to value
+            "value" to value,
         )
     }
 }
 
 class CreationShakeBooleanLiteral(
     override val project: CreationShakeProject,
-    override val value: Boolean
+    override val value: Boolean,
 ) : CreationShakeValue, ShakeBooleanLiteral {
 
     override val type: CreationShakeType
@@ -53,13 +53,13 @@ class CreationShakeBooleanLiteral(
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "boolean",
-            "value" to value
+            "value" to value,
         )
     }
 }
 
 class CreationShakeNullLiteral(
-    override val project: CreationShakeProject
+    override val project: CreationShakeProject,
 ) : CreationShakeValue, ShakeNullLiteral {
 
     override val type: CreationShakeType
@@ -69,14 +69,14 @@ class CreationShakeNullLiteral(
 
     override fun toJson(): Map<String, Any?> {
         return mapOf(
-            "type" to "null"
+            "type" to "null",
         )
     }
 }
 
 class CreationShakeCharacterLiteral(
     override val project: CreationShakeProject,
-    override val value: Char
+    override val value: Char,
 ) : CreationShakeValue, ShakeCharacterLiteral {
 
     override val type: CreationShakeType
@@ -87,14 +87,14 @@ class CreationShakeCharacterLiteral(
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "char",
-            "value" to value
+            "value" to value,
         )
     }
 }
 
 class CreationShakeStringLiteral(
     override val project: CreationShakeProject,
-    override val value: String
+    override val value: String,
 ) : CreationShakeValue, ShakeStringLiteral {
 
     override val type: CreationShakeType get() = project.cores.String
@@ -104,7 +104,7 @@ class CreationShakeStringLiteral(
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "type" to "string",
-            "value" to value
+            "value" to value,
         )
     }
 }

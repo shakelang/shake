@@ -78,7 +78,7 @@ fun assertCompare(expected: Float, actual: Float) {
     val delta = max(abs(expected / 1000), 0.001f)
     assertTrue(
         compare(expected, actual, delta),
-        "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)"
+        "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)",
     )
 }
 
@@ -86,7 +86,7 @@ fun assertCompare(expected: Double, actual: Double) {
     val delta = max(abs(expected / 1000000), 0.000001)
     assertTrue(
         compare(expected, actual, delta),
-        "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)"
+        "Comparison failed, expected $expected, but got $actual (comparison delta: $delta)",
     )
 }
 

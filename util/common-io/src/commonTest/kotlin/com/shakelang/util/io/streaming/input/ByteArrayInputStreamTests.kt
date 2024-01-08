@@ -180,7 +180,7 @@ class ByteArrayInputStreamTests {
 
         assertEquals(
             "ByteArrayInputStream(pos=0, mark=0, count=5)",
-            stream.toString()
+            stream.toString(),
         )
 
         stream.read()
@@ -191,7 +191,7 @@ class ByteArrayInputStreamTests {
 
         assertEquals(
             "ByteArrayInputStream(pos=5, mark=0, count=5)",
-            stream.toString()
+            stream.toString(),
         )
     }
 }

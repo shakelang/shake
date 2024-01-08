@@ -216,7 +216,7 @@ class ShasGenerator(input: InputStream) {
             Opcodes.D_ABS -> oprintln("dabs")
             else -> throw Error(
                 "Wrong opcode 0x${opcode.toBytes().toHexString()} at position " +
-                    "0x${(counter.count - 1).toUInt().toBytes().toHexString()}"
+                    "0x${(counter.count - 1).toUInt().toBytes().toHexString()}",
             )
         }
     }

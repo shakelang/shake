@@ -79,7 +79,7 @@ class ByteArrayTests : FreeSpec({
             0x00u,
             0x00u,
             0x00u,
-            0x00u
+            0x00u,
         ).toLong() shouldBe 0x0000000000000000uL.toLong()
         byteArrayOf(
             0x00u,
@@ -89,7 +89,7 @@ class ByteArrayTests : FreeSpec({
             0x00u,
             0x00u,
             0x00u,
-            0x10u
+            0x10u,
         ).toLong() shouldBe 0x0000000000000010uL.toLong()
         byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu).toLong() shouldBe -1L
         byteArrayOf(0x80u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toLong() shouldBe Long.MIN_VALUE
@@ -107,7 +107,7 @@ class ByteArrayTests : FreeSpec({
                 0x00u,
                 0x00u,
                 0x00u,
-                0x01u
+                0x01u,
             ).toLong()
         }
     }
@@ -125,8 +125,8 @@ class ByteArrayTests : FreeSpec({
                 0xFFu,
                 0x80u,
                 0x00u,
-                0x00u
-            ).toFloat()
+                0x00u,
+            ).toFloat(),
         )
         assertCompare(
             Float.POSITIVE_INFINITY,
@@ -134,8 +134,8 @@ class ByteArrayTests : FreeSpec({
                 0x7Fu,
                 0x80u,
                 0x00u,
-                0x00u
-            ).toFloat()
+                0x00u,
+            ).toFloat(),
         )
         shouldThrow<IllegalArgumentException> {
             byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x01u).toFloat()
@@ -156,8 +156,8 @@ class ByteArrayTests : FreeSpec({
                 0x00u,
                 0x00u,
                 0x00u,
-                0x00u
-            ).toDouble()
+                0x00u,
+            ).toDouble(),
         )
         assertCompare(
             1.0,
@@ -169,8 +169,8 @@ class ByteArrayTests : FreeSpec({
                 0x00u,
                 0x00u,
                 0x00u,
-                0x00u
-            ).toDouble()
+                0x00u,
+            ).toDouble(),
         )
         assertCompare(
             -1.0,
@@ -182,8 +182,8 @@ class ByteArrayTests : FreeSpec({
                 0x00u,
                 0x00u,
                 0x00u,
-                0x00u
-            ).toDouble()
+                0x00u,
+            ).toDouble(),
         )
         assertCompare(
             Double.MIN_VALUE,
@@ -195,8 +195,8 @@ class ByteArrayTests : FreeSpec({
                 0x00u,
                 0x00u,
                 0x00u,
-                0x01u
-            ).toDouble()
+                0x01u,
+            ).toDouble(),
         )
         assertCompare(
             Double.MAX_VALUE,
@@ -208,8 +208,8 @@ class ByteArrayTests : FreeSpec({
                 0xFFu,
                 0xFFu,
                 0xFFu,
-                0xFFu
-            ).toDouble()
+                0xFFu,
+            ).toDouble(),
         )
         assertCompare(
             Double.NaN,
@@ -221,16 +221,16 @@ class ByteArrayTests : FreeSpec({
                 0xFFu,
                 0xFFu,
                 0xFFu,
-                0xFFu
-            ).toDouble()
+                0xFFu,
+            ).toDouble(),
         )
         assertCompare(
             Double.NEGATIVE_INFINITY,
-            byteArrayOf(0xffu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
+            byteArrayOf(0xffu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble(),
         )
         assertCompare(
             Double.POSITIVE_INFINITY,
-            byteArrayOf(0x7fu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble()
+            byteArrayOf(0x7fu, 0xf0u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u).toDouble(),
         )
         shouldThrow<IllegalArgumentException> {
             byteArrayOf(
@@ -242,7 +242,7 @@ class ByteArrayTests : FreeSpec({
                 0x00u,
                 0x00u,
                 0x00u,
-                0x01u
+                0x01u,
             ).toDouble()
         }
 
@@ -296,7 +296,7 @@ class ByteArrayTests : FreeSpec({
             0x00u,
             0x00u,
             0x00u,
-            0x00u
+            0x00u,
         ).toUnsignedLong() shouldBe 0x0000000000000000uL
         byteArrayOf(
             0x00u,
@@ -306,7 +306,7 @@ class ByteArrayTests : FreeSpec({
             0x00u,
             0x00u,
             0x00u,
-            0x01u
+            0x01u,
         ).toUnsignedLong() shouldBe 0x0000000000000001uL
         byteArrayOf(
             0xFFu,
@@ -316,7 +316,7 @@ class ByteArrayTests : FreeSpec({
             0xFFu,
             0xFFu,
             0xFFu,
-            0xFFu
+            0xFFu,
         ).toUnsignedLong() shouldBe 0xFFFFFFFFFFFFFFFFuL
         shouldThrow<IllegalArgumentException> {
             byteArrayOf(
@@ -328,7 +328,7 @@ class ByteArrayTests : FreeSpec({
                 0x00u,
                 0x00u,
                 0x00u,
-                0x01u
+                0x01u,
             ).toUnsignedLong()
         }
         shouldThrow<IllegalArgumentException> {
@@ -340,13 +340,13 @@ class ByteArrayTests : FreeSpec({
         var bytes = ByteArray(8)
         bytes.setBytes(
             0,
-            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u)
+            byteArrayOf(0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u),
         )
         (0..7).forEach { bytes[it] shouldBe 0x00u.toByte() }
         bytes = ByteArray(12)
         bytes.setBytes(
             2,
-            byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu)
+            byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu),
         )
         bytes[0] shouldBe 0x00u.toByte()
         bytes[1] shouldBe 0x00u.toByte()
@@ -360,7 +360,7 @@ class ByteArrayTests : FreeSpec({
         shouldThrow<IllegalArgumentException> {
             bytes.setBytes(
                 -1,
-                byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu)
+                byteArrayOf(0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu, 0xFFu),
             )
         }
 
@@ -890,7 +890,7 @@ class ByteArrayTests : FreeSpec({
         bytes[15] = 0xFFu.toByte()
         bytes.getBytes(0, 16).toList() shouldBe byteArrayOf(
             0x00u, 0x11u, 0x22u, 0x33u, 0x44u, 0x55u, 0x66u, 0x77u, 0x88u, 0x99u,
-            0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu
+            0xAAu, 0xBBu, 0xCCu, 0xDDu, 0xEEu, 0xFFu,
         ).toList()
         bytes.getBytes(1, 2).toList() shouldBe byteArrayOf(0x11u, 0x22u).toList()
     }

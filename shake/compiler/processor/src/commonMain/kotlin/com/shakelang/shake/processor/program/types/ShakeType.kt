@@ -1602,7 +1602,7 @@ interface ShakeType {
         PRIMITIVE,
         OBJECT,
         ARRAY,
-        LAMBDA
+        LAMBDA,
     }
 
     enum class PrimitiveType {
@@ -1620,7 +1620,7 @@ interface ShakeType {
         UNSIGNED_INT,
         UNSIGNED_LONG,
         VOID,
-        DYNAMIC
+        DYNAMIC,
     }
 
     interface Primitive : ShakeType {
@@ -1711,7 +1711,7 @@ interface ShakeType {
 
         override fun greaterThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod> =
             clazz.methods.filter { it.name == "greaterThanOrEqual" && it.isOperator } + super.greaterThanOrEqualOverloads(
-                scope
+                scope,
             )
 
         override fun lessThanOverloads(scope: ShakeScope): List<ShakeMethod> =
@@ -1719,7 +1719,7 @@ interface ShakeType {
 
         override fun lessThanOrEqualOverloads(scope: ShakeScope): List<ShakeMethod> =
             clazz.methods.filter { it.name == "lessThanOrEqual" && it.isOperator } + super.lessThanOrEqualOverloads(
-                scope
+                scope,
             )
 
         override fun logicalAndOverloads(scope: ShakeScope): List<ShakeMethod> =
@@ -1807,7 +1807,7 @@ interface ShakeType {
             return mapOf(
                 "type" to "lambda",
                 "parameters" to parameters.map { it.toJson() },
-                "returnType" to returnType.toJson()
+                "returnType" to returnType.toJson(),
             )
         }
     }
@@ -1815,5 +1815,5 @@ interface ShakeType {
 
 class ShakeOperatorRequestResult(
     val returnType: ShakeType?,
-    val overload: ShakeMethod?
+    val overload: ShakeMethod?,
 )

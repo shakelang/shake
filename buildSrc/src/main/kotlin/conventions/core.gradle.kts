@@ -19,11 +19,11 @@ repositories {
     mavenCentral()
 }
 
-//java {
+// java {
 //    sourceCompatibility = JVM_TARGET
 //    targetCompatibility = JVM_TARGET
 //    version = JVM_TARGET
-//}
+// }
 
 kotlin {
     withSourcesJar(publish = true)
@@ -39,12 +39,14 @@ kotlin {
     jvm {}
     js(IR) {
         browser {
-            testTask(Action {
-                useKarma {
-                    useChromeHeadless()
+            testTask(
+                Action {
+                    useKarma {
+                        useChromeHeadless()
 //                    useFirefoxHeadless()
-                }
-            })
+                    }
+                },
+            )
         }
     }
 }
@@ -87,12 +89,12 @@ node {
     // nodeProxySettings.set(ProxySettings.SMART)
 }
 
-//multiplatformResources {
+// multiplatformResources {
 //    multiplatformResourcesPackage = "com.shakelang.shake.$packageName.resources"
 //    multiplatformResourcesClassName = "${packageCapitalized}Resources"
 //    iosBaseLocalizationRegion = "en" // optional, default "en"
 //    multiplatformResourcesSourceSet = "commonMain"  // optional, default "commonMain"
-//}
+// }
 
 kotlin {
 //    dependencies {
@@ -123,7 +125,7 @@ kotlin {
                     packageJson {
                         customField(
                             "browser",
-                            mapOf("fs" to false, "path" to false, "os" to false, "readline" to false)
+                            mapOf("fs" to false, "path" to false, "os" to false, "readline" to false),
                         )
                     }
                     kotlinOptions {
@@ -131,7 +133,6 @@ kotlin {
                         sourceMap = true
                         sourceMapEmbedSources = "always"
                     }
-
                 }
             }
         }
@@ -145,36 +146,36 @@ kotlin {
         isMingwX64 -> mingwX64("native")
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
-    */
+     */
 }
 //
-//tasks.named("compileKotlinJs").configure {
+// tasks.named("compileKotlinJs").configure {
 //    dependsOn("generateMRcommonMain")
-//}
+// }
 //
-//tasks.named("compileKotlinJvm").configure {
+// tasks.named("compileKotlinJvm").configure {
 //    dependsOn("generateMRcommonMain")
-//}
+// }
 //
-//tasks.named("compileKotlinMetadata").configure {
+// tasks.named("compileKotlinMetadata").configure {
 //    dependsOn("generateMRcommonMain")
-//}
+// }
 //
-//tasks.named("compileTestKotlinJs").configure {
+// tasks.named("compileTestKotlinJs").configure {
 //    dependsOn("generateMRcommonMain")
-//}
+// }
 //
-//tasks.named("compileTestKotlinJvm").configure {
+// tasks.named("compileTestKotlinJvm").configure {
 //    dependsOn("generateMRcommonMain")
-//}
+// }
 //
-//tasks.named("jsProcessResources").configure {
+// tasks.named("jsProcessResources").configure {
 //    dependsOn("generateMRcommonMain")
-//}
+// }
 //
-//tasks.named("jvmProcessResources").configure {
+// tasks.named("jvmProcessResources").configure {
 //    dependsOn("generateMRcommonMain")
-//}
+// }
 
 tasks.named("jvmTest") {
 //    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
@@ -194,9 +195,9 @@ tasks.named<Jar>("jsJar") {
     archiveBaseName.set("shake-$projectName")
 }
 
-//tasks.named<Jar>("metadataJar") {
+// tasks.named<Jar>("metadataJar") {
 //    archiveBaseName.set("shake-$projectName")
-//}
+// }
 
 tasks.named<KotlinJvmTest>("jvmTest") {
     ignoreFailures = true

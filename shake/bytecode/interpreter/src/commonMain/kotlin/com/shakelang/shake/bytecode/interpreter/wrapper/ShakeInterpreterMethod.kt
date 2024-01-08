@@ -25,7 +25,7 @@ interface ShakeInterpreterMethod {
             classpath: ShakeClasspath,
             parentPath: String,
             constantPool: ConstantPool,
-            pkg: ShakeInterpreterPackage
+            pkg: ShakeInterpreterPackage,
         ): ShakeInterpreterMethod {
             val attributes = storage.attributes
             val code = attributes.find { it.name == "Code" }
@@ -43,7 +43,7 @@ interface ShakeInterpreterMethod {
                 override val parameters: List<ShakeInterpreterType> = parsed.parameters.map {
                     ShakeInterpreterType.of(
                         it,
-                        classpath
+                        classpath,
                     )
                 }
                 override val constantPool: ConstantPool = constantPool

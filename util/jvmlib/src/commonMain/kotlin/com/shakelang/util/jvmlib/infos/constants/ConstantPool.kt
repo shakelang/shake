@@ -180,7 +180,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
 
     fun findInterfaceMethodRef(
         classRef: ConstantClassInfo,
-        nameTypeRef: ConstantNameAndTypeInfo
+        nameTypeRef: ConstantNameAndTypeInfo,
     ): ConstantInterfaceMethodrefInfo? {
         for (constant in constants) {
             if (constant is ConstantInterfaceMethodrefInfo) {
@@ -195,7 +195,7 @@ class ConstantPool(val constants: MutableList<ConstantInfo>) : MutableList<Const
     fun findInterfaceMethodRef(
         classRef: ConstantClassInfo,
         name: String,
-        descriptor: String
+        descriptor: String,
     ): ConstantInterfaceMethodrefInfo? {
         for (constant in constants) {
             if (constant is ConstantInterfaceMethodrefInfo) {

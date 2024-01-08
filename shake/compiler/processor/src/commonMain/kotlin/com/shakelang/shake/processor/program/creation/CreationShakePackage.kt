@@ -16,7 +16,7 @@ open class CreationShakePackage(
     override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
     override val classes: MutableList<CreationShakeClass> = mutableListOf(),
     override val functions: MutableList<CreationShakeMethod> = mutableListOf(),
-    override val fields: MutableList<CreationShakeField> = mutableListOf()
+    override val fields: MutableList<CreationShakeField> = mutableListOf(),
 ) : ShakePackage {
 
     override val scope: CreationShakeScope = Scope()
@@ -135,7 +135,7 @@ open class CreationShakePackage(
 
     private inner class FileEntry(
         val name: String,
-        contents: ShakeFileNode
+        contents: ShakeFileNode,
     ) {
         val imports: List<ShakeImportNode> = contents.children.filterIsInstance<ShakeImportNode>()
         val scope = FileScope(name, imports)
@@ -198,7 +198,7 @@ open class CreationShakePackage(
 
     private inner class FileScope(
         val name: String,
-        val imports: List<ShakeImportNode>
+        val imports: List<ShakeImportNode>,
     ) : CreationShakeScope() {
 
         override val uniqueName: String

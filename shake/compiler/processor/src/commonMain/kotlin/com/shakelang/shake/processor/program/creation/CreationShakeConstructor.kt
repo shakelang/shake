@@ -18,7 +18,7 @@ open class CreationShakeConstructor(
     override val isPublic: Boolean,
     override val isNative: Boolean,
     override val name: String? = null,
-    override var parameters: List<CreationShakeParameter>
+    override var parameters: List<CreationShakeParameter>,
 ) : ShakeConstructor {
 
     override val scope: CreationShakeScope = ShakeConstructorScope()
@@ -40,7 +40,7 @@ open class CreationShakeConstructor(
         debug("phases", "Phase 4 of constructor $qualifiedSignature")
         if (body is CreationShakeCode.ShakeLateProcessCode) {
             (body as CreationShakeCode.ShakeLateProcessCode).process(
-                scope
+                scope,
             )
         }
     }
@@ -98,7 +98,7 @@ open class CreationShakeConstructor(
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,
-            node: ShakeConstructorDeclarationNode
+            node: ShakeConstructorDeclarationNode,
         ): CreationShakeConstructor {
             return CreationShakeConstructor(
                 clazz,
@@ -109,7 +109,7 @@ open class CreationShakeConstructor(
                 node.access == ShakeAccessDescriber.PUBLIC,
                 node.isNative,
                 node.name,
-                node.args.map { parentScope.getType(it.type) }.map { CreationShakeParameter(clazz.prj, it.name, it) }
+                node.args.map { parentScope.getType(it.type) }.map { CreationShakeParameter(clazz.prj, it.name, it) },
             )
         }
     }

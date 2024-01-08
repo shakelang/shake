@@ -6,7 +6,7 @@ import com.shakelang.shake.shasambly.shasp.lexer.token.ShasPTokenBasedInputStrea
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 
 class ShasPLexer(
-    input: CharacterInputStream
+    input: CharacterInputStream,
 ) : ShasPLexingBase(input) {
 
     fun makeTokens(): ShasPTokenBasedInputStream {

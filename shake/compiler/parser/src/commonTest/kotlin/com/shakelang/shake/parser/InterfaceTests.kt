@@ -54,7 +54,7 @@ class InterfaceTests : FreeSpec({
                 val tree =
                     ParserTestUtil.parse(
                         "<${accessPrefix}interface test>",
-                        "${accessPrefix}interface test { ${accessPrefix2}int i = 0; }"
+                        "${accessPrefix}interface test { ${accessPrefix2}int i = 0; }",
                     )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
@@ -83,7 +83,7 @@ class InterfaceTests : FreeSpec({
                 val tree =
                     ParserTestUtil.parse(
                         "<${accessPrefix}interface test>",
-                        "${accessPrefix}interface test { ${accessPrefix2}void f() {} }"
+                        "${accessPrefix}interface test { ${accessPrefix2}void f() {} }",
                     )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
@@ -110,7 +110,7 @@ class InterfaceTests : FreeSpec({
                 val tree =
                     ParserTestUtil.parse(
                         "<${accessPrefix}interface test>",
-                        "${accessPrefix}interface test { ${accessPrefix2}class Test {} }"
+                        "${accessPrefix}interface test { ${accessPrefix2}class Test {} }",
                     )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class

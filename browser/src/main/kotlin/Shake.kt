@@ -9,7 +9,6 @@ import com.shakelang.util.characterinput.characterinputstream.SourceCharacterInp
 import com.shakelang.util.characterinput.charactersource.CharacterSource
 import com.shakelang.util.parseutils.characters.position.PositionMap
 
-
 /**
  * The core api files for the shake code execution
  */
@@ -41,7 +40,6 @@ fun addInterpreterFileFromUrl(filename: String, url: String): Promise<Unit> {
 @JsName("execute")
 @Suppress("unused")
 fun execute(source: String, code: String) {
-
     val interpreter = Interpreter()
 
     // add code files
@@ -52,7 +50,6 @@ fun execute(source: String, code: String) {
 
     val result = parse(source, code)
     interpreter.visit(result.tree)
-
 }
 
 /**
@@ -61,7 +58,6 @@ fun execute(source: String, code: String) {
 private fun parse(source: String, input: String) =
     parse(SourceCharacterInputStream(CharacterSource.Companion.from(input, source)))
 
-
 /**
  * This function parses a [CharacterInputStream] into a Tree
  *
@@ -69,7 +65,6 @@ private fun parse(source: String, input: String) =
  * @return the parsed [Tree]
  */
 private fun parse(input: CharacterInputStream): ParseResult {
-
     // Create a new Lexer from the CharacterInputStream
     val lexer = Lexer(input)
 
@@ -90,16 +85,13 @@ private fun parse(input: CharacterInputStream): ParseResult {
 
     // return the Tree
     return ParseResult(tree, tokens.map)
-
 }
-
 
 /**
  * The result of a parsing operation.
  */
 @Suppress("unused")
 private class ParseResult(val tree: Tree, val map: PositionMap)
-
 
 /**
  * Log a message to console.debug

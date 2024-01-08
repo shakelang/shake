@@ -35,7 +35,7 @@ fun matchesPattern(pattern: String, input: String): Boolean {
     return Regex(
         pattern
             .replace(Regex("[.^$|()\\[\\]{}?+\\\\]")) { "\\${it.value}" } // Escape special characters
-            .replace("*", ".*")
+            .replace("*", ".*"),
     ) // Replace * with .*
         .matches(input)
 }
@@ -62,7 +62,7 @@ class DebuggerDumpConfiguration(
      * @since 0.3.0
      * @version 0.3.0
      */
-    val paths: List<String> = GlobalDebugConfiguration.paths
+    val paths: List<String> = GlobalDebugConfiguration.paths,
 ) {
 
     /**
@@ -267,7 +267,7 @@ private class DebugImpl(
      * @since 0.3.0
      * @version 0.3.0
      */
-    override val path: String?
+    override val path: String?,
 
 ) : Debug {
 
@@ -344,7 +344,7 @@ private class DebugSubImpl(
      * @since 0.3.0
      * @version 0.3.0
      */
-    override val path: String?
+    override val path: String?,
 ) : Debug {
 
     /**
@@ -409,7 +409,7 @@ private class DebugSubImpl(
  */
 fun debug(
     name: String? = null,
-    logger: Logger = com.shakelang.util.logger.logger
+    logger: Logger = com.shakelang.util.logger.logger,
 ): Debug {
     return DebugImpl(mutableListOf(DebuggerDumpConfiguration(logger)), name)
 }

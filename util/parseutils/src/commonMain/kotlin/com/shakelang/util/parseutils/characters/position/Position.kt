@@ -43,7 +43,7 @@ class Position(
      * @since 0.1.0
      * @version 0.2.1
      */
-    override val line: Int
+    override val line: Int,
 
 ) : PositionMarker {
 

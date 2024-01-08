@@ -18,7 +18,7 @@ object ShakeSelect {
      */
     fun <I : ShakeInvokable, T : ShakeType> selectFunction(
         functions: List<I>,
-        parameters: List<T>
+        parameters: List<T>,
     ): I? = functions.filter {
         it.parameters.size == parameters.size && // TODO default parameters
             it.parameters.zip(parameters).all { (parameter, argument) ->
@@ -39,7 +39,7 @@ object ShakeSelect {
      */
     fun <C : ShakeConstructor, T : ShakeType> selectConstructor(
         constructors: List<C>,
-        parameters: List<T>
+        parameters: List<T>,
     ): C? = constructors.filter {
         it.parameters.size == parameters.size && // TODO default parameters
             it.parameters.zip(parameters).all { (parameter, argument) ->

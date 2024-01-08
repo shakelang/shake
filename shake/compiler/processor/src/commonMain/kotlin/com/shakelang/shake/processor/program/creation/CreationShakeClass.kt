@@ -22,7 +22,7 @@ private constructor(
     override val pkg: CreationShakePackage,
     override val parentScope: CreationShakeScope,
     override val clazz: ShakeClass?,
-    val clz: ShakeClassDeclarationNode
+    val clz: ShakeClassDeclarationNode,
 ) : ShakeClass {
     override val staticScope: StaticScope
     override val instanceScope: InstanceScope
@@ -263,7 +263,7 @@ private constructor(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage,
             parentScope: CreationShakeScope,
-            clz: ShakeClassDeclarationNode
+            clz: ShakeClassDeclarationNode,
         ): CreationShakeClass {
             return CreationShakeClass(baseProject, pkg, parentScope, null, clz)
         }
@@ -271,7 +271,7 @@ private constructor(
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,
-            clz: ShakeClassDeclarationNode
+            clz: ShakeClassDeclarationNode,
         ): CreationShakeClass {
             return CreationShakeClass(clazz.prj, clazz.pkg, parentScope, clazz, clz)
         }

@@ -57,7 +57,7 @@ class ClassTests : FreeSpec({
                 val tree =
                     ParserTestUtil.parse(
                         "<${accessPrefix}class test>",
-                        "${accessPrefix}class test { ${accessPrefix2}int i = 0; }"
+                        "${accessPrefix}class test { ${accessPrefix2}int i = 0; }",
                     )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
@@ -86,7 +86,7 @@ class ClassTests : FreeSpec({
                 val tree =
                     ParserTestUtil.parse(
                         "<${accessPrefix}class test>",
-                        "${accessPrefix}class test { ${accessPrefix2}void f() {} }"
+                        "${accessPrefix}class test { ${accessPrefix2}void f() {} }",
                     )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
@@ -113,7 +113,7 @@ class ClassTests : FreeSpec({
                 val tree =
                     ParserTestUtil.parse(
                         "<${accessPrefix}class test>",
-                        "${accessPrefix}class test { ${accessPrefix2}class Test {} }"
+                        "${accessPrefix}class test { ${accessPrefix2}class Test {} }",
                     )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
@@ -141,7 +141,7 @@ class ClassTests : FreeSpec({
                 val tree =
                     ParserTestUtil.parse(
                         "<${accessPrefix}class test>",
-                        "${accessPrefix}class test { ${accessPrefix2}constructor() {} }"
+                        "${accessPrefix}class test { ${accessPrefix2}constructor() {} }",
                     )
                 tree.children.size shouldBe 1
                 tree.children[0] shouldBeOfType ShakeClassDeclarationNode::class
