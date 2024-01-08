@@ -12,10 +12,6 @@ jobs:
     name: Lint using ktlint
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        java-version: [ 16 ]
-
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
