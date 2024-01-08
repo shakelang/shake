@@ -3,360 +3,362 @@ package com.shakelang.shake.processor
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class ClassTests : FreeSpec({
+class ClassTests : FreeSpec(
+    {
 
-    // Superclass tests
+        // Superclass tests
 
-    "default supertype" {
+        "default supertype" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 class Test {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.superClass.qualifiedName shouldBe "shake/lang/Object"
-    }
+            testClass.superClass.qualifiedName shouldBe "shake/lang/Object"
+        }
 
-    "custom supertype" {
+        "custom supertype" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 class TestSuper {}
                 class Test extends TestSuper {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.superClass.qualifiedName shouldBe "test/TestSuper"
-    }
+            testClass.superClass.qualifiedName shouldBe "test/TestSuper"
+        }
 
-    "custom supertype from other file within same package" {
+        "custom supertype from other file within same package" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                     package test;
                     
                     class TestSuper {}
             """.trimIndent(),
-        )
+            )
 
-        processor.loadSynthetic(
-            "test2.shake",
-            """
+            processor.loadSynthetic(
+                "test2.shake",
+                """
                     package test;
                     
                     class Test extends TestSuper {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.superClass.qualifiedName shouldBe "test/TestSuper"
-    }
+            testClass.superClass.qualifiedName shouldBe "test/TestSuper"
+        }
 
-    "custom supertype from imported package" {
+        "custom supertype from imported package" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package abc;
                 
                 class TestSuper {}
             """.trimIndent(),
-        )
+            )
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 import abc.TestSuper;
                 
                 class Test extends TestSuper {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.superClass.qualifiedName shouldBe "abc/TestSuper"
-    }
+            testClass.superClass.qualifiedName shouldBe "abc/TestSuper"
+        }
 
-    "custom supertype from imported package (wildcard)" {
+        "custom supertype from imported package (wildcard)" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package abc;
                 
                 class TestSuper {}
             """.trimIndent(),
-        )
+            )
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 import abc.*;
                 
                 class Test extends TestSuper {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.superClass.qualifiedName shouldBe "abc/TestSuper"
-    }
+            testClass.superClass.qualifiedName shouldBe "abc/TestSuper"
+        }
 
-    // TODO Not implemented in parser
-    "custom supertype with inline package".config(enabled = false) {
+        // TODO Not implemented in parser
+        "custom supertype with inline package".config(enabled = false) {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 class TestSuper {}
                 class Test extends test.TestSuper {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.superClass.qualifiedName shouldBe "test/TestSuper"
-    }
+            testClass.superClass.qualifiedName shouldBe "test/TestSuper"
+        }
 
-    // Interface tests
+        // Interface tests
 
-    "no interfaces" {
+        "no interfaces" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 class Test {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.interfaces.size shouldBe 0
-    }
+            testClass.interfaces.size shouldBe 0
+        }
 
-    "one interface" {
+        "one interface" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 interface TestInterface {}
                 class Test implements TestInterface {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.interfaces.size shouldBe 1
-        testClass.interfaces[0].qualifiedName shouldBe "test/TestInterface"
-    }
+            testClass.interfaces.size shouldBe 1
+            testClass.interfaces[0].qualifiedName shouldBe "test/TestInterface"
+        }
 
-    "multiple interfaces" {
+        "multiple interfaces" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 interface TestInterface1 {}
                 interface TestInterface2 {}
                 class Test implements TestInterface1, TestInterface2 {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.interfaces.size shouldBe 2
-        testClass.interfaces[0].qualifiedName shouldBe "test/TestInterface1"
-        testClass.interfaces[1].qualifiedName shouldBe "test/TestInterface2"
-    }
+            testClass.interfaces.size shouldBe 2
+            testClass.interfaces[0].qualifiedName shouldBe "test/TestInterface1"
+            testClass.interfaces[1].qualifiedName shouldBe "test/TestInterface2"
+        }
 
-    "interface from other file within same package" {
+        "interface from other file within same package" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 interface TestInterface {}
             """.trimIndent(),
-        )
+            )
 
-        processor.loadSynthetic(
-            "test2.shake",
-            """
+            processor.loadSynthetic(
+                "test2.shake",
+                """
                 package test;
                 
                 class Test implements TestInterface {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.interfaces.size shouldBe 1
-        testClass.interfaces[0].qualifiedName shouldBe "test/TestInterface"
-    }
+            testClass.interfaces.size shouldBe 1
+            testClass.interfaces[0].qualifiedName shouldBe "test/TestInterface"
+        }
 
-    "interface from imported package" {
+        "interface from imported package" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package abc;
                 
                 interface TestInterface {}
             """.trimIndent(),
-        )
+            )
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 import abc.TestInterface;
                 
                 class Test implements TestInterface {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.interfaces.size shouldBe 1
-        testClass.interfaces[0].qualifiedName shouldBe "abc/TestInterface"
-    }
+            testClass.interfaces.size shouldBe 1
+            testClass.interfaces[0].qualifiedName shouldBe "abc/TestInterface"
+        }
 
-    "interface from imported package (wildcard)" {
+        "interface from imported package (wildcard)" {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package abc;
                 
                 interface TestInterface {}
             """.trimIndent(),
-        )
+            )
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 import abc.*;
                 
                 class Test implements TestInterface {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.interfaces.size shouldBe 1
-        testClass.interfaces[0].qualifiedName shouldBe "abc/TestInterface"
-    }
+            testClass.interfaces.size shouldBe 1
+            testClass.interfaces[0].qualifiedName shouldBe "abc/TestInterface"
+        }
 
-    // TODO Not implemented in parser
+        // TODO Not implemented in parser
 
-    "interface with inline package".config(enabled = false) {
+        "interface with inline package".config(enabled = false) {
 
-        val processor = createBaseProcessor()
+            val processor = createBaseProcessor()
 
-        processor.loadSynthetic(
-            "test.shake",
-            """
+            processor.loadSynthetic(
+                "test.shake",
+                """
                 package test;
                 
                 interface TestInterface {}
                 class Test implements test.TestInterface {}
             """.trimIndent(),
-        )
+            )
 
-        processor.finish()
+            processor.finish()
 
-        val project = processor.project
-        val testClass = project.getClass("test.Test")!!
+            val project = processor.project
+            val testClass = project.getClass("test.Test")!!
 
-        testClass.interfaces.size shouldBe 1
-        testClass.interfaces[0].qualifiedName shouldBe "test/TestInterface"
-    }
-})
+            testClass.interfaces.size shouldBe 1
+            testClass.interfaces[0].qualifiedName shouldBe "test/TestInterface"
+        }
+    },
+)

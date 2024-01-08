@@ -23,7 +23,7 @@ class SourceCharacterInputStream(
      */
     override val source: CharacterSource,
 
-) : CharacterInputStream {
+    ) : CharacterInputStream {
 
     /**
      * The actual position of the [SourceCharacterInputStream]

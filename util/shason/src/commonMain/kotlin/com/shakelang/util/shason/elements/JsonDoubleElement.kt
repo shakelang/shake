@@ -16,7 +16,7 @@ class JsonDoubleElement(
      */
     override val value: Double,
 
-) : JsonPrimitive {
+    ) : JsonPrimitive {
 
     /**
      * Override toString to generate via [JSON.stringify]

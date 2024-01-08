@@ -7,7 +7,7 @@ class ShakeTypeArgumentsNode(
     map: PositionMap,
     val typeArguments: List<ShakeTypeArgumentNode>,
 
-) : ShakeNodeImpl(map) {
+    ) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> {
         return mapOf(
@@ -40,7 +40,7 @@ class ShakeTypeArgumentNode(
     map: PositionMap,
     val type: ShakeVariableType,
 
-) : ShakeNodeImpl(map) {
+    ) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> {
         return mapOf(

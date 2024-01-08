@@ -73,6 +73,7 @@ open class CreationShakeField(
         debug("phases", "Phase 3 of field $qualifiedName")
         // Nothing to do here
     }
+
     override fun phase4() {
         debug("phases", "Phase 4 of field $qualifiedName")
         // TODO: Visit initial value

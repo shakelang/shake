@@ -160,7 +160,7 @@ inline fun longOf(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6
     b0.toUByte().toLong() shl 8 or b1.toUByte().toLong() shl 8 or b2.toUByte().toLong() shl 8 or b3.toUByte()
         .toLong() shl
         8 or b4.toUByte().toLong() shl 8 or b5.toUByte().toLong() shl 8 or b6.toUByte()
-            .toLong() shl 8 or b7.toUByte().toLong()
+        .toLong() shl 8 or b7.toUByte().toLong()
 
 /**
  * Float of four bytes

@@ -31,7 +31,7 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>(
      */
     override val map: PositionMap,
 
-) : TokenInputStream<TT, T> {
+    ) : TokenInputStream<TT, T> {
 
     /**
      * The source of the [TokenBasedTokenInputStream]

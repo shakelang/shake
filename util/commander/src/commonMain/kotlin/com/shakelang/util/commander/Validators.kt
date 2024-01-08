@@ -38,6 +38,7 @@ object Validators {
             "true", "false", "1", "0", "yes", "no", "y", "n" -> {
                 return
             }
+
             else -> throw ValueValidationException("Value \"$value\" is not a boolean")
         }
     }

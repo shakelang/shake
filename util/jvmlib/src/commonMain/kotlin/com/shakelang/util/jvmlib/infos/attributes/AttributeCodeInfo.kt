@@ -17,7 +17,7 @@ class AttributeCodeInfo(
     val exception_table: Array<ExceptionTableEntry>,
     val attributes: Array<AttributeInfo>,
 
-) : AttributeInfo(name) {
+    ) : AttributeInfo(name) {
 
     override val uses: Array<ConstantInfo>
         get() = arrayOf(

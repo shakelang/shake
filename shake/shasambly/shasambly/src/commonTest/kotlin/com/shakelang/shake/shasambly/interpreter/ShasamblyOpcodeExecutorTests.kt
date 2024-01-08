@@ -39,7 +39,7 @@ class ShasamblyOpcodeExecutorTests {
                 0, 21, -1, -1, -1, -1, 0, 0, 0, 20,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
-            ).toList(),
+                ).toList(),
             it.memory.toList(),
         )
     }

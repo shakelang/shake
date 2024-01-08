@@ -32,7 +32,7 @@ abstract class ListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListType<T, C
      */
     val list: List<T>,
 
-) : ListType<T, CT, MCT>, List<T> by list
+    ) : ListType<T, CT, MCT>, List<T> by list
 
 /**
  * A base API class for an implementation of [MutableListType]
@@ -44,4 +44,4 @@ abstract class MutableListBase<T, CT : ListType<T, CT, MCT>, MCT : MutableListTy
      */
     val list: MutableList<T>,
 
-) : MutableListType<T, CT, MCT>, MutableList<T> by list
+    ) : MutableListType<T, CT, MCT>, MutableList<T> by list

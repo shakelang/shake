@@ -10,7 +10,7 @@ abstract class Environment(
      */
     val type: EnvironmentType,
 
-) {
+    ) {
 
     /**
      * Is the Environment a JavaScript Environment

@@ -30,7 +30,7 @@ class CreationShakeMethod(
     parameters: List<CreationShakeParameter>,
     override val expanding: ShakeType?,
 
-) : CreationShakeInvokable(
+    ) : CreationShakeInvokable(
     body,
     parameters,
     returnType,

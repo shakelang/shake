@@ -19,4 +19,4 @@ class ShakeTokenBasedTokenInputStream(
     tokens: Array<ShakeToken>,
     map: PositionMap,
 
-) : ShakeTokenInputStream, TokenBasedTokenInputStream<ShakeTokenType, ShakeToken>(tokens, map)
+    ) : ShakeTokenInputStream, TokenBasedTokenInputStream<ShakeTokenType, ShakeToken>(tokens, map)

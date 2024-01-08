@@ -30,7 +30,7 @@ class ShakeMap(
     val project_methods: Array<Int>,
     val project_fields: Array<Int>,
 
-) {
+    ) {
 
     val magic = 0x3082d75f
     val version = 0x00000001
@@ -986,18 +986,21 @@ class MapAssembledProject(
     val fieldPointers: PointerList<ShakeField>,
     override val projectScope: ShakeScope,
 
-) : ShakeProject {
+    ) : ShakeProject {
 
     override val subpackages: List<ShakePackage> = packagePointers.values()
     override fun phase1() {
         subpackages.forEach { it.phase1() }
     }
+
     override fun phase2() {
         subpackages.forEach { it.phase2() }
     }
+
     override fun phase3() {
         subpackages.forEach { it.phase3() }
     }
+
     override fun phase4() {
         subpackages.forEach { it.phase4() }
     }
@@ -1148,6 +1151,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
         override val parent = null
         override val uniqueName: String
             get() = "scopeUnit"
+
         override fun get(name: String): ShakeAssignable = error("Should not be called")
         override fun getFunctions(name: String) = error("Should not be called")
         override fun getClass(name: String) = error("Should not be called")

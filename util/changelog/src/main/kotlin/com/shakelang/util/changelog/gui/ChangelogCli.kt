@@ -31,9 +31,11 @@ class ChangelogCli(
         setLocationRelativeTo(null)
         defaultCloseOperation = DO_NOTHING_ON_CLOSE
         isVisible = true
-        addWindowListener(object : java.awt.event.WindowAdapter() {
-            override fun windowClosing(e: java.awt.event.WindowEvent?) = this@ChangelogCli.close()
-        })
+        addWindowListener(
+            object : java.awt.event.WindowAdapter() {
+                override fun windowClosing(e: java.awt.event.WindowEvent?) = this@ChangelogCli.close()
+            },
+        )
         this.layout = FlowLayout()
 
         this.showHomePage()

@@ -4,7 +4,7 @@ name: Dokka
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
 
 jobs:
   generate-dokka-docs:
@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        java-version: [16]
+        java-version: [ 16 ]
 
     steps:
       - name: Checkout 🛎️

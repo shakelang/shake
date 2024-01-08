@@ -22,7 +22,7 @@ class CountingInputStream(
      */
     private val data: InputStream,
 
-) : InputStream() {
+    ) : InputStream() {
 
     /**
      * The count of read bytes from the input stream

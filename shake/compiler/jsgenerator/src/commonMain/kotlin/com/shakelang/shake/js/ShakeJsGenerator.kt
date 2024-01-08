@@ -177,6 +177,7 @@ class ShakeJsGenerator {
         }
         throw IllegalStateException("Unknown usage: $n")
     }
+
     fun visitWhile(n: ShakeWhile): JsWhile {
         return JsWhile(visitValue(n.condition), visitCode(n.body))
     }
@@ -437,7 +438,7 @@ class JsProject {
                     ),
                 ).generate(),
 
-        )
+            )
         return files
     }
 }

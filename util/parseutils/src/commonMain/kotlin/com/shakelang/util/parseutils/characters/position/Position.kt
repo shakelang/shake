@@ -45,7 +45,7 @@ class Position(
      */
     override val line: Int,
 
-) : PositionMarker {
+    ) : PositionMarker {
 
     /**
      * Copies the position

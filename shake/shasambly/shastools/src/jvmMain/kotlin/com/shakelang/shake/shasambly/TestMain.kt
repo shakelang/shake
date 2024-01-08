@@ -22,18 +22,22 @@ fun main() {
 
         printIntLn.create()
 
-        forLoop({
-            ipush(0)
-            i_store_local(0)
-        }, {
-            i_get_local(0)
-            ipush(100)
-            ismaller()
-        }, {
-            i_get_local(0)
-            iadd(1)
-            i_store_local(0)
-        }) {
+        forLoop(
+            {
+                ipush(0)
+                i_store_local(0)
+            },
+            {
+                i_get_local(0)
+                ipush(100)
+                ismaller()
+            },
+            {
+                i_get_local(0)
+                iadd(1)
+                i_store_local(0)
+            },
+        ) {
             i_get_local(0)
             printIntLn.call()
         }

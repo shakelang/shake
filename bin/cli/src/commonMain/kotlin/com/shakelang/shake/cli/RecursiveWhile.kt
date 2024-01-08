@@ -52,7 +52,7 @@ private class RecursiveWhile(
      */
     val body: RecursiveWhileBody,
 
-) {
+    ) {
 
     var continueCalled = false
     var breakCalled = false

@@ -190,7 +190,7 @@ class FormattedString(
      */
     val backgroundColor: Formatting.BGColor? = null,
 
-) : FormattedStringObject {
+    ) : FormattedStringObject {
 
     override val formatsItself: Boolean
         get() = true

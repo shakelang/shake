@@ -16,7 +16,7 @@ enum class JsonBooleanElement(
      */
     override val value: Boolean,
 
-) : JsonPrimitive {
+    ) : JsonPrimitive {
 
     /**
      * Boolean true value

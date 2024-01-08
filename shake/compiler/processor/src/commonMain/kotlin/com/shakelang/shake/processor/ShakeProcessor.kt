@@ -86,12 +86,15 @@ open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
     override fun phase1() {
         project.phase1()
     }
+
     override fun phase2() {
         project.phase2()
     }
+
     override fun phase3() {
         project.phase3()
     }
+
     override fun phase4() {
         project.phase4()
     }

@@ -32,7 +32,7 @@ open class ConstantPool(
      */
     open val entries: List<ConstantPoolEntry>,
 
-) : List<ConstantPoolEntry> by entries {
+    ) : List<ConstantPoolEntry> by entries {
 
     /**
      * Check if the constant at the given [index] is a [ConstantPoolEntry.Utf8Constant]
@@ -605,7 +605,7 @@ class MutableConstantPool(
      */
     override val entries: MutableList<ConstantPoolEntry> = mutableListOf(),
 
-) : ConstantPool(entries), MutableList<ConstantPoolEntry> by entries {
+    ) : ConstantPool(entries), MutableList<ConstantPoolEntry> by entries {
 
     /**
      * Create a [ConstantPoolEntry.Utf8Constant] with the given [value]

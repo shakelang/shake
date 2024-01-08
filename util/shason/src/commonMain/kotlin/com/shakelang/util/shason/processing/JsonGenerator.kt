@@ -42,7 +42,7 @@ object JsonGenerator {
                         ","
                     },
 
-                ) {
+                    ) {
                     generate(
                         it!!,
                         indent,

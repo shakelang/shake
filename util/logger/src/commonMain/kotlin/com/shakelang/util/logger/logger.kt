@@ -332,7 +332,7 @@ class Logger(
          */
         val transformers: List<LogTransformer>,
 
-    ) {
+        ) {
 
         /**
          * Pipes the logs to the given [pipe]

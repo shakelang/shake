@@ -11,9 +11,9 @@ expect class File
  * @param path the path of the file
  */(
 
-    path: String
+    path: String,
 
-) {
+    ) {
 
     /**
      * The path of the [File]
