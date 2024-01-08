@@ -101,18 +101,18 @@ afterEvaluate {
                     name = "GitHub"
                     url = uri("https://maven.pkg.github.com/shakelang/shake")
 
-                    val _username =
+                    val usernameLocal =
                         System.getenv("GRADLE_GITHUB_USERNAME") ?: project.properties["github.username"] as String?
-                    val _token = System.getenv("GRADLE_GITHUB_TOKEN") ?: project.properties["github.token"] as String?
+                    val tokenLocal = System.getenv("GRADLE_GITHUB_TOKEN") ?: project.properties["github.token"] as String?
 
-                    if (_username == null || _token == null) {
+                    if (usernameLocal == null || tokenLocal == null) {
                         logger.log(LogLevel.WARN, "No GitHub credentials found, skipping GitHub publishing configuration")
                         return@maven
                     }
 
                     credentials {
-                        username = _username
-                        password = _token
+                        username = usernameLocal
+                        password = tokenLocal
                     }
                 }
             }
@@ -132,11 +132,11 @@ afterEvaluate {
             pom {
                 name.set(project.name)
                 description.set(project.description)
-                url.set("https://github.com/${Meta.githubRepo}")
+                url.set("https://github.com/${Meta.GITHUB_REPO}")
                 licenses {
                     license {
-                        name.set(Meta.license)
-                        url.set("https://github.com/${Meta.githubRepo}/blob/master/LICENSE")
+                        name.set(Meta.LICENSE)
+                        url.set("https://github.com/${Meta.GITHUB_REPO}/blob/master/LICENSE")
                     }
                 }
                 developers {
@@ -157,17 +157,17 @@ afterEvaluate {
                 }
                 scm {
                     url.set(
-                        "https://github.com/${Meta.githubRepo}.git",
+                        "https://github.com/${Meta.GITHUB_REPO}.git",
                     )
                     connection.set(
-                        "scm:git:git://github.com/${Meta.githubRepo}.git",
+                        "scm:git:git://github.com/${Meta.GITHUB_REPO}.git",
                     )
                     developerConnection.set(
-                        "scm:git:git://github.com/${Meta.githubRepo}.git",
+                        "scm:git:git://github.com/${Meta.GITHUB_REPO}.git",
                     )
                 }
                 issueManagement {
-                    url.set("https://github.com/${Meta.githubRepo}/issues")
+                    url.set("https://github.com/${Meta.GITHUB_REPO}/issues")
                 }
             }
         }

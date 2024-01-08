@@ -76,15 +76,15 @@ nexusPublishing {
         sonatype {
 
 //            stagingProfileId.set("com.shakelang")
-            val _username =
+            val usernameLocal =
                 System.getenv("GRADLE_SONATYPE_USERNAME") ?: project.properties["sonatype.username"] as String?
-            val _password =
+            val passwordLocal =
                 System.getenv("GRADLE_SONATYPE_PASSWORD") ?: project.properties["sonatype.password"] as String?
 
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-            username.set(_username)
-            password.set(_password)
+            username.set(usernameLocal)
+            password.set(passwordLocal)
         }
     }
 }
