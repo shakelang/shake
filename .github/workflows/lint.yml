@@ -1,20 +1,17 @@
-name: Lint using ktlint
+name: Lint using detekt
 
 # Run workflow each time code is pushed to your repository and on a schedule.
 # The scheduled workflow runs every Thursday at 15:45 UTC.
 on:
   push:
+  pull_request:
   schedule:
     - cron: "45 15 * * 4"
 
 jobs:
   lint:
-    name: Lint using ktlint
+    name: Lint using detekt 🔬
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        java-version: [ 16 ]
 
     steps:
       - name: Checkout 🛎️
@@ -42,10 +39,16 @@ jobs:
         run: |
           ./gradlew lint sarifmerge
 
-      - name: Upload Artifact ⬆️
+      - name: Upload Report Artifact ⬆️
         uses: actions/upload-artifact@v4
         with:
           name: reports
+          path: ./build/reports/detekt/all
+
+      - name: Upload Merged Sarif Artifact ⬆️
+        uses: actions/upload-artifact@v4
+        with:
+          name: sarifmerge
           path: ./build/reports/sarifmerge
 
       - name: Upload SARIF file for GitHub Advanced Security 📂
