@@ -4,6 +4,7 @@ name: Lint using ktlint
 # The scheduled workflow runs every Thursday at 15:45 UTC.
 on:
   push:
+  pull_request:
   schedule:
     - cron: "45 15 * * 4"
 
