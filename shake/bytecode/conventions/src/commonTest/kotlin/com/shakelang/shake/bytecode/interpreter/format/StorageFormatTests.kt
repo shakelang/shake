@@ -1281,11 +1281,16 @@ class MutableStorageFormatTests : FreeSpec(
                 *0x4a16a478.toBytes(),
                 *0.toShort().toBytes(),
                 *1.toShort().toBytes(),
-                *0.toBytes(), // packageNameConstant
-                *0.toBytes(), // constantPool
-                *0.toShort().toBytes(), // classes
-                *0.toShort().toBytes(), // fields
-                *0.toShort().toBytes(), // methods
+                // packageNameConstant
+                *0.toBytes(),
+                // constantPool
+                *0.toBytes(),
+                // classes
+                *0.toShort().toBytes(),
+                // fields
+                *0.toShort().toBytes(),
+                // methods
+                *0.toShort().toBytes(),
             )
         }
 
