@@ -330,14 +330,22 @@ class MutableConstantPoolTests : FreeSpec(
             pool.dump(dataStream)
 
             stream.toByteArray() contentEquals byteArrayOf(
-                *3.toBytes(), // size
-                1.toByte(), // constant type (utf8)
-                *4.toShort().toBytes(), // length of utf8
-                *"test".toBytes(), // value of utf8
-                8.toByte(), // constant type (class)
-                *0.toBytes(), // identifier of class
-                8.toByte(), // constant type (class)
-                *1.toBytes(), // identifier of class
+                // size
+                *3.toBytes(),
+                // constant type (utf8)
+                1.toByte(),
+                // length of utf8
+                *4.toShort().toBytes(),
+                // value of utf8
+                *"test".toBytes(),
+                // constant type (class)
+                8.toByte(),
+                // identifier of class
+                *0.toBytes(),
+                // constant type (class)
+                8.toByte(),
+                // identifier of class
+                *1.toBytes(),
             ) shouldBe true
         }
 
@@ -353,14 +361,22 @@ class MutableConstantPoolTests : FreeSpec(
             val arr = pool.dump()
 
             arr contentEquals byteArrayOf(
-                *3.toBytes(), // size
-                1.toByte(), // constant type (utf8)
-                *4.toShort().toBytes(), // length of utf8
-                *"test".toBytes(), // value of utf8
-                8.toByte(), // constant type (class)
-                *0.toBytes(), // identifier of class
-                8.toByte(), // constant type (class)
-                *1.toBytes(), // identifier of class
+                // size
+                *3.toBytes(),
+                // constant type (utf8)
+                1.toByte(),
+                // length of utf8
+                *4.toShort().toBytes(),
+                // value of utf8
+                *"test".toBytes(),
+                // constant type (class)
+                8.toByte(),
+                // identifier of class
+                *0.toBytes(),
+                // constant type (class)
+                8.toByte(),
+                // identifier of class
+                *1.toBytes(),
             ) shouldBe true
         }
 
@@ -399,14 +415,22 @@ class MutableConstantPoolTests : FreeSpec(
 
         "from stream" {
             val stream = byteArrayOf(
-                *3.toBytes(), // size
-                1.toByte(), // constant type (utf8)
-                *4.toShort().toBytes(), // length of utf8
-                *"test".toBytes(), // value of utf8
-                8.toByte(), // constant type (class)
-                *0.toBytes(), // identifier of class
-                8.toByte(), // constant type (class)
-                *1.toBytes(), // identifier of class
+                // size
+                *3.toBytes(),
+                // constant type (utf8)
+                1.toByte(),
+                // length of utf8
+                *4.toShort().toBytes(),
+                // value of utf8
+                *"test".toBytes(),
+                // constant type (class)
+                8.toByte(),
+                // identifier of class
+                *0.toBytes(),
+                // constant type (class)
+                8.toByte(),
+                // identifier of class
+                *1.toBytes(),
             ).dataStream()
 
             val pool = MutableConstantPool.fromStream(stream)
