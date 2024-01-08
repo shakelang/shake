@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - development
-  schedule:
-    - cron: "45 15 * * 4"
 
 permissions:
   contents: write
