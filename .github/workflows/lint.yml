@@ -73,6 +73,7 @@ jobs:
 
       - name: Lint with KtLint 🔬
         run: ktlint --reporter=sarif,,output=report.sarif
+        continue-on-error: true
 
       - name: Upload Report Artifact ⬆️
         uses: actions/upload-artifact@v4

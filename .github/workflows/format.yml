@@ -27,9 +27,9 @@ jobs:
 
       - name: Format using ktlint
         run: ktlint --format
+        continue-on-error: true
 
       - name: Import GPG key
-        if: always()
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.ACTIONS_GPG_KEY }}
