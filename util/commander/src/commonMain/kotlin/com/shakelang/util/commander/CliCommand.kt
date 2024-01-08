@@ -158,7 +158,7 @@ class CliCommand(
             when {
                 arg.startsWith("--") -> {
                     val option = getOptionByName(arg.substring(2))
-                        ?: throw IllegalArgumentException("Unknown option: $name for (sub)command: ${entry.name}")
+                        ?: throw CliUnknownOptionException("Unknown option: $name for (sub)command: ${entry.name}")
 
                     val name = option.name
 
@@ -170,7 +170,7 @@ class CliCommand(
                     if (entry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
 
                     val value = if (option.hasValue) {
-                        if (i + 1 >= args.size) throw IllegalArgumentException("Missing value for option: $name")
+                        if (i + 1 >= args.size) throw CliMissingOptionValueException("Missing value for option: $name")
                         args[++i]
                     } else {
                         "true"
@@ -233,7 +233,7 @@ class CliCommand(
                     } else {
                         // Find subcommand
                         val command = commands.find { it.name == arg || it.aliases.contains(arg) }
-                            ?: throw IllegalArgumentException("Unknown command: $arg")
+                            ?: throw CliUnknownSubCommandException("Unknown command: $arg")
 
                         return command.parse(args.sliceArray((i + 1) until args.size), newStack)
                     }
