@@ -215,7 +215,7 @@
       "path": ":util:sarifmerge",
       "name": "com.shakelang.util:sarifmerge",
       "version": "0.2.1",
-      "description": "Utility package to merged sarif files for ktlint github report",
+      "description": "Utility package to merged sarif files for github report",
       "author": "com.shakelang.util",
       "license": "",
       "dependencies": [
