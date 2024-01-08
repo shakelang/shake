@@ -9,7 +9,7 @@ on:
     - cron: "45 15 * * 4"
 
 jobs:
-  lint:
+  lint-detekt:
     name: Lint using detekt 🔬
     runs-on: ubuntu-latest
 
@@ -35,7 +35,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Lint with KtLint 🔬
+      - name: Lint with Detekt 🔬
         run: |
           ./gradlew lint sarifmerge
 
@@ -56,4 +56,33 @@ jobs:
         with:
           # Path to SARIF file relative to the root of the repository
           sarif_file: ./build/reports/sarifmerge
+          category: Detekt
+
+  lint-ktlint:
+    name: Lint using detekt 🔬
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup KTlint
+        run: curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.1.0/ktlint && chmod a+x ktlint && sudo mv ktlint /usr/local/bin/
+
+      - name: Lint with KtLint 🔬
+        run: ktlint --reporter=sarif,,output=report.sarif
+
+      - name: Upload Report Artifact ⬆️
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: ./report.sarif
+
+      - name: Upload SARIF file for GitHub Advanced Security 📂
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: ./report.sarif
           category: KtLint
