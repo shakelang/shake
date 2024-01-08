@@ -8,7 +8,7 @@ import kotlin.experimental.and
 import kotlin.experimental.or
 
 class FieldGenerationContext(
-    val constantPool: MutableConstantPool
+    val constantPool: MutableConstantPool,
 ) {
 
     var name: String = GenerationContext.UNDEFINED
@@ -70,7 +70,7 @@ class FieldGenerationContext(
     }
 
     fun toField(
-        pool: MutableConstantPool
+        pool: MutableConstantPool,
     ): Field {
         val nameConstant = pool.resolveUtf8(name)
         val typeConstant = pool.resolveUtf8(type)
@@ -79,12 +79,12 @@ class FieldGenerationContext(
             nameConstant,
             typeConstant,
             flags,
-            attributes.map { it.toAttribute(pool) }
+            attributes.map { it.toAttribute(pool) },
         )
     }
 
     fun toMutableField(
-        pool: MutableConstantPool
+        pool: MutableConstantPool,
     ): MutableField {
         val nameConstant = pool.resolveUtf8(name)
         val typeConstant = pool.resolveUtf8(type)
@@ -93,7 +93,7 @@ class FieldGenerationContext(
             nameConstant,
             typeConstant,
             flags,
-            attributes.map { it.toMutableAttribute(pool) }.toMutableList()
+            attributes.map { it.toMutableAttribute(pool) }.toMutableList(),
         )
     }
 }

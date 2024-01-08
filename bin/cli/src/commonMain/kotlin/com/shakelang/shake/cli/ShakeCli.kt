@@ -40,15 +40,16 @@ var DEBUG = false
  */
 const val VERSION = "0.1.0"
 
-val baseProcessor: ShakePackageBasedProcessor get() {
-    val processor = ShakePackageBasedProcessor()
+val baseProcessor: ShakePackageBasedProcessor
+    get() {
+        val processor = ShakePackageBasedProcessor()
 
-    processor.loadSynthetic("shake/lang/Object.shake", CoreFiles.OBJECT_SHAKE)
-    processor.loadSynthetic("shake/lang/String.shake", CoreFiles.STRING_SHAKE)
-    processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
+        processor.loadSynthetic("shake/lang/Object.shake", CoreFiles.OBJECT_SHAKE)
+        processor.loadSynthetic("shake/lang/String.shake", CoreFiles.STRING_SHAKE)
+        processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
 
-    return processor
-}
+        return processor
+    }
 
 /**
  * The Main-Method for the ShakeCli
@@ -81,7 +82,7 @@ fun main(args: Array<String>) {
             println(
                 "# Shake version $VERSION ${if (DEBUG) "in debug mode " else ""}\n" +
                     "# Enter Shake code below to execute!\n" +
-                    "# Using $generator to execute code"
+                    "# Using $generator to execute code",
             )
 
             // Create an infinite loop for reading from the console
@@ -106,7 +107,7 @@ fun main(args: Array<String>) {
             // Create a new StringCharacterInputStream from the file's contents
             val chars: CharacterInputStream = SourceCharacterInputStream(
                 "<File: " + arguments.arguments[0] + ">",
-                file
+                file,
             )
 
             // Parse the CharacterInputStream
@@ -165,6 +166,7 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
             val processor = baseProcessor
             processor.loadSynthetic("stdin.ConsoleInput", pr.tree)
         }
+
         "json" ->
             if (src == null) {
                 println(">> ${pr.tree}")

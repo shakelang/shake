@@ -19,7 +19,7 @@ class JsonParser(
      * @since 0.1.0
      * @version 0.1.0
      */
-    val tokens: JsonTokenInputStream
+    val tokens: JsonTokenInputStream,
 
 ) {
 
@@ -120,13 +120,13 @@ class JsonParser(
             name: String,
             details: String,
             start: Position,
-            end: Position
+            end: Position,
         ) : this(
             "Error occurred in parser: $name, $details in ${start.source}:${start.line}:${start.column}",
             name,
             details,
             start,
-            end
+            end,
         )
 
         /**
@@ -152,7 +152,7 @@ class JsonParser(
             "ParserError",
             details,
             tokens.map.resolve(start),
-            tokens.map.resolve(end)
+            tokens.map.resolve(end),
         )
 
         /**
@@ -164,7 +164,7 @@ class JsonParser(
         constructor(error: String) : this(
             error,
             tokens.map.resolve(tokens.peek().start),
-            tokens.map.resolve(tokens.peek().end)
+            tokens.map.resolve(tokens.peek().end),
         )
     }
 }

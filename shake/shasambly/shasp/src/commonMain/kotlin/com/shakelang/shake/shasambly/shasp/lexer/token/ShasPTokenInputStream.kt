@@ -18,11 +18,11 @@ interface ShasPTokenInputStream : TokenInputStream<ShasPTokenType, ShasPToken>
 
 class ShasPTokenBasedInputStream(
     tokens: Array<ShasPToken>,
-    map: PositionMap
+    map: PositionMap,
 ) : ShasPTokenInputStream, TokenBasedTokenInputStream<ShasPTokenType, ShasPToken>(tokens, map)
 
 class OnDemandLexingShasPTokenInputStream(
-    input: CharacterInputStream
+    input: CharacterInputStream,
 ) : ShasPTokenInputStream, ShasPLexingBase(input) {
 
     override val size get() = throw UnsupportedOperationException()

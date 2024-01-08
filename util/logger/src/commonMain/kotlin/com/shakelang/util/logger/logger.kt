@@ -32,7 +32,7 @@ class Logger(
      * @since 0.3.0
      * @version 0.3.0
      */
-    val bufferSize: Int = 8192
+    val bufferSize: Int = 8192,
 ) {
 
     /**
@@ -330,7 +330,7 @@ class Logger(
          * @since 0.3.0
          * @version 0.3.0
          */
-        val transformers: List<LogTransformer>
+        val transformers: List<LogTransformer>,
 
     ) {
 
@@ -381,7 +381,7 @@ class LogEntry(
      * @since 0.1.0
      * @version 0.1.0
      */
-    val message: String
+    val message: String,
 )
 
 /**
@@ -431,7 +431,7 @@ enum class LogLevel {
      * @since 0.1.0
      * @version 0.1.0
      */
-    SUCCESS;
+    SUCCESS,
 }
 
 /**

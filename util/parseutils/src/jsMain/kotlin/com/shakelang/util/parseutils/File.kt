@@ -13,7 +13,7 @@ val node_path = if (nodeJsAvailable) require("path") else null
 
 @Suppress("unused")
 actual class File actual constructor(
-    actual val path: String
+    actual val path: String,
 ) {
 
     actual val name: String
@@ -52,7 +52,7 @@ actual class File actual constructor(
     init {
         if (node_fs == null || node_path == null) {
             throw Error(
-                "Can't use file API because node seems to be not available (you are probably in browser)"
+                "Can't use file API because node seems to be not available (you are probably in browser)",
             )
         }
     }

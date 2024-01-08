@@ -17,7 +17,7 @@ class FieldInfo(
     val accessFlags: UShort,
     val name: ConstantUtf8Info,
     val descriptor: ConstantUtf8Info,
-    val attributes: AttributeMap
+    val attributes: AttributeMap,
 ) : ConstantUser {
 
     val isPublic: Boolean
@@ -64,7 +64,7 @@ class FieldInfo(
         "name_index" to nameIndex,
         "descriptor" to descriptor.toJson(),
         "descriptor_index" to descriptorIndex,
-        "attributes" to attributes.toJson()
+        "attributes" to attributes.toJson(),
     )
 
     fun init(clazz: com.shakelang.util.jvmlib.infos.ClassInfo) {

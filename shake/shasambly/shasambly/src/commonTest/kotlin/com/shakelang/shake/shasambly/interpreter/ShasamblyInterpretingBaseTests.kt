@@ -28,9 +28,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(18) { 0 } // two unused bytes
+                *Array(18) { 0 }, // two unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 
@@ -52,9 +52,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(24) { 0 } // eight unused bytes
+                *Array(24) { 0 }, // eight unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 
@@ -77,9 +77,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(24) { 0 } // eight unused bytes
+                *Array(24) { 0 }, // eight unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 
@@ -100,9 +100,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(24) { 0 } // unused bytes
+                *Array(24) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
         it.freeTable.create(10)
 
@@ -126,9 +126,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(4) { 0 } // unused bytes
+                *Array(4) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 
@@ -149,9 +149,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(56) { 0 } // unused bytes
+                *Array(56) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(10)
@@ -175,10 +175,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(36) { 0 } // unused bytes
+                *Array(36) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(12)
@@ -208,10 +208,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(40).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(16) { 0 } // unused bytes
+                *Array(16) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 
@@ -232,9 +232,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(56) { 0 } // unused bytes
+                *Array(56) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(10)
@@ -258,9 +258,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(36) { 0 } // unused bytes
+                *Array(36) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(8)
@@ -291,10 +291,10 @@ class ShasamblyInterpretingBaseTests {
                 *(40).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(16) { 0 } // unused bytes
+                *Array(16) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 
@@ -315,9 +315,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(88) { 0 } // unused bytes
+                *Array(88) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(10)
@@ -341,9 +341,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(68) { 0 } // unused bytes
+                *Array(68) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(8)
@@ -373,10 +373,10 @@ class ShasamblyInterpretingBaseTests {
                 *(40).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(48) { 0 } // unused bytes
+                *Array(48) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(12)
@@ -412,10 +412,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(40).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(28) { 0 } // unused bytes
+                *Array(28) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 
@@ -436,9 +436,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(56) { 0 } // unused bytes
+                *Array(56) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
         it.freeTable.create(10)
 
@@ -462,9 +462,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(36) { 0 } // unused bytes
+                *Array(36) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.findWithSize(10))
@@ -487,9 +487,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(56) { 0 } // unused bytes
+                *Array(56) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(10)
@@ -513,10 +513,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(36) { 0 } // unused bytes
+                *Array(36) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(12)
@@ -546,10 +546,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(40).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(16) { 0 } // unused bytes
+                *Array(16) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.findWithSize(10))
@@ -573,9 +573,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(56) { 0 } // unused bytes
+                *Array(56) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(10)
@@ -599,9 +599,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(36) { 0 } // unused bytes
+                *Array(36) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(8)
@@ -631,10 +631,10 @@ class ShasamblyInterpretingBaseTests {
                 *(40).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(16) { 0 } // unused bytes
+                *Array(16) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.findWithSize(10))
@@ -658,9 +658,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(88) { 0 } // unused bytes
+                *Array(88) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(10)
@@ -684,9 +684,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(68) { 0 } // unused bytes
+                *Array(68) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(8)
@@ -716,10 +716,10 @@ class ShasamblyInterpretingBaseTests {
                 *(40).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(48) { 0 } // unused bytes
+                *Array(48) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         it.freeTable.create(12)
@@ -755,10 +755,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(40).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(28) { 0 } // unused bytes
+                *Array(28) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.findWithSize(10))
@@ -820,9 +820,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(24) { 0 } // unused bytes
+                *Array(24) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
         assertEquals(40, it.freeTable.getWithSize(10))
 
@@ -846,9 +846,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(4) { 0 } // unused bytes
+                *Array(4) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
         assertEquals(40, it.freeTable.getWithSize(10))
 
@@ -872,9 +872,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(4) { 0 } // unused bytes
+                *Array(4) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 
@@ -895,9 +895,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(56) { 0 } // unused bytes
+                *Array(56) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -921,10 +921,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(36) { 0 } // unused bytes
+                *Array(36) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -956,10 +956,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(40).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(16) { 0 } // unused bytes
+                *Array(16) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -991,10 +991,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(40).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(16) { 0 } // unused bytes
+                *Array(16) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 
@@ -1015,9 +1015,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(56) { 0 } // unused bytes
+                *Array(56) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -1042,9 +1042,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(36) { 0 } // unused bytes
+                *Array(36) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -1076,10 +1076,10 @@ class ShasamblyInterpretingBaseTests {
                 *(40).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(16) { 0 } // unused bytes
+                *Array(16) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -1103,9 +1103,9 @@ class ShasamblyInterpretingBaseTests {
                 Opcodes.I_PUSH, *(0).toBytes().toTypedArray(), // Push 0 to stack (the return code of the program)
                 Opcodes.INVOKE_NATIVE, *Natives.exit.toBytes().toTypedArray(), // Invoke native exit
 
-                *Array(88) { 0 } // unused bytes
+                *Array(88) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -1130,9 +1130,9 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(68) { 0 } // unused bytes
+                *Array(68) { 0 }, // unused bytes
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -1164,10 +1164,10 @@ class ShasamblyInterpretingBaseTests {
                 *(40).toBytes().toTypedArray(), // The next free table entry
                 *(-1).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(48) { 0 } // unused bytes
+                *Array(48) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -1206,10 +1206,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(40).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(28) { 0 } // unused bytes
+                *Array(28) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
 
         assertEquals(40, it.freeTable.getWithSize(10))
@@ -1248,10 +1248,10 @@ class ShasamblyInterpretingBaseTests {
                 *(-1).toBytes().toTypedArray(), // The next free table entry
                 *(40).toBytes().toTypedArray(), // The previous free table entry
 
-                *Array(28) { 0 } // unused bytes
+                *Array(28) { 0 }, // unused bytes
 
             ),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 }

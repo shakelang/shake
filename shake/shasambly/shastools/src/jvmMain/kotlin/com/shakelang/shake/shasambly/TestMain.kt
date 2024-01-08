@@ -22,18 +22,22 @@ fun main() {
 
         printIntLn.create()
 
-        forLoop({
-            ipush(0)
-            i_store_local(0)
-        }, {
-            i_get_local(0)
-            ipush(100)
-            ismaller()
-        }, {
-            i_get_local(0)
-            iadd(1)
-            i_store_local(0)
-        }) {
+        forLoop(
+            {
+                ipush(0)
+                i_store_local(0)
+            },
+            {
+                i_get_local(0)
+                ipush(100)
+                ismaller()
+            },
+            {
+                i_get_local(0)
+                iadd(1)
+                i_store_local(0)
+            },
+        ) {
             i_get_local(0)
             printIntLn.call()
         }
@@ -56,7 +60,7 @@ fun main() {
         natives.printShort()
         natives.printLineEnding()
         arr.free()
-        */
+         */
 
         /*
         natives.declareGlobal(8)
@@ -82,7 +86,7 @@ fun main() {
         natives.declareGlobal(4)
         natives.printInt()
         natives.printLineEnding()
-        */
+         */
 
         /*
         ipush(0x00000000)
@@ -115,7 +119,7 @@ fun main() {
         }
 
         natives.printLineEnding()
-        */
+         */
     }
 
     val file = File("test.shasx")
@@ -137,7 +141,7 @@ fun main() {
     val interpreter = ShasamblyInterpreter(
         1024 * 8,
         code,
-        0
+        0,
     )
 
     try {

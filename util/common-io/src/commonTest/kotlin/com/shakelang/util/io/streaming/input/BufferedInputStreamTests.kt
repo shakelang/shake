@@ -358,7 +358,7 @@ class BufferedInputStreamTests {
         assertEquals(
             "BufferedInputStream(input=CountingInputStream(data=ByteArrayInputStream(pos=0, " +
                 "mark=0, count=5), byteCount=0, operationCount=0), bufferSize=0, bufferPos=0)",
-            stream.toString()
+            stream.toString(),
         )
 
         stream.read()
@@ -370,7 +370,7 @@ class BufferedInputStreamTests {
         assertEquals(
             "BufferedInputStream(input=CountingInputStream(data=ByteArrayInputStream(pos=5, " +
                 "mark=0, count=5), byteCount=5, operationCount=1), bufferSize=5, bufferPos=5)",
-            stream.toString()
+            stream.toString(),
         )
     }
 

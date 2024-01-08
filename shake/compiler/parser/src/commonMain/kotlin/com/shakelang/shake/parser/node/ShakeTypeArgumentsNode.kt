@@ -5,14 +5,14 @@ import com.shakelang.util.parseutils.characters.position.PositionMap
 class ShakeTypeArgumentsNode(
 
     map: PositionMap,
-    val typeArguments: List<ShakeTypeArgumentNode>
+    val typeArguments: List<ShakeTypeArgumentNode>,
 
 ) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> {
         return mapOf(
             "type" to nodeName,
-            "typeArguments" to typeArguments.map { it.toJson() }
+            "typeArguments" to typeArguments.map { it.toJson() },
         )
     }
 
@@ -38,14 +38,14 @@ class ShakeTypeArgumentsNode(
 class ShakeTypeArgumentNode(
 
     map: PositionMap,
-    val type: ShakeVariableType
+    val type: ShakeVariableType,
 
 ) : ShakeNodeImpl(map) {
 
     override fun toJson(): Map<String, *> {
         return mapOf(
             "type" to "TypeArgument",
-            "type" to type.toJson()
+            "type" to type.toJson(),
         )
     }
 

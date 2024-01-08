@@ -57,7 +57,7 @@ class CodeAttributeGenerationContext(constantPool: MutableConstantPool) : Attrib
             maxLocals,
             code,
             exceptionTable.toTypedArray(),
-            attributes.map { it.toAttribute(pool) }.toTypedArray()
+            attributes.map { it.toAttribute(pool) }.toTypedArray(),
         )
     }
 
@@ -69,7 +69,7 @@ class CodeAttributeGenerationContext(constantPool: MutableConstantPool) : Attrib
             maxLocals,
             code,
             exceptionTable.toTypedArray(),
-            attributes.map { it.toMutableAttribute(pool) }.toTypedArray()
+            attributes.map { it.toMutableAttribute(pool) }.toTypedArray(),
         )
     }
 

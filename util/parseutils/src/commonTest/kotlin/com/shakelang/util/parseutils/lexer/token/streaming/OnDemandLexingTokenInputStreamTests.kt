@@ -10,7 +10,10 @@ import kotlin.test.*
 
 class OnDemandLexingTokenInputStreamTests {
     enum class TokenType : com.shakelang.util.parseutils.lexer.token.TokenType {
-        IDENTIFIER, NUMBER, STRING;
+        IDENTIFIER,
+        NUMBER,
+        STRING,
+        ;
 
         override val hasValue: Boolean
             get() = this == IDENTIFIER
@@ -21,14 +24,14 @@ class OnDemandLexingTokenInputStreamTests {
     }
 
     class TestLexer(
-        tokens: List<Token<TokenType>>
+        tokens: List<Token<TokenType>>,
     ) : LexingBase<TokenType, Token<TokenType>>(
         SourceCharacterInputStream(
             CharacterSource.from(
                 "qwgg".toCharArray(),
-                "a"
-            )
-        )
+                "a",
+            ),
+        ),
     ) {
 
         val tokens = tokens.toMutableList()
@@ -100,7 +103,7 @@ class OnDemandLexingTokenInputStreamTests {
 
         assertEquals(tokens[2], stream.peek(1))
 
-        assertFailsWith<Error>() { stream.peek(2) }
+        assertFailsWith<Error> { stream.peek(2) }
     }
 
     @Test

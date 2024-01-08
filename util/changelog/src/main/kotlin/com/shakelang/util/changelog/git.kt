@@ -13,11 +13,11 @@ fun tagRef(name: String): String {
 }
 
 class TagStash(
-    val name: String
+    val name: String,
 ) {
     fun toObject(): Any {
         return mapOf(
-            "name" to name
+            "name" to name,
         )
     }
 
@@ -27,20 +27,18 @@ class TagStash(
 
     companion object {
         fun fromObject(obj: JsonObject): TagStash {
-            if (!obj.containsKey("name")) throw IllegalArgumentException("TagStash object has no name")
+            require(obj.containsKey("name")) { "TagStash object has no name" }
             val name = obj["name"]!!
-            if (!name.isJsonPrimitive() || !name.toJsonPrimitive()
-                .isString()
-            ) {
-                throw IllegalArgumentException("TagStash name is not a string")
-            }
+
+            require(name.isJsonPrimitive()) { "TagStash name is not a primitive" }
+            require(name.toJsonPrimitive().isString()) { "TagStash name is not a string" }
             return TagStash(name.toJsonPrimitive().toStringElement().value)
         }
     }
 }
 
 class TagStashList(
-    val tags: MutableList<TagStash>
+    val tags: MutableList<TagStash>,
 ) {
 
     fun add(tag: TagStash) {
@@ -77,7 +75,7 @@ class TagStashList(
 
     fun toObject(): Any {
         return mapOf(
-            "tags" to tags.map { it.toObject() }
+            "tags" to tags.map { it.toObject() },
         )
     }
 
@@ -87,19 +85,19 @@ class TagStashList(
 
     companion object {
         fun fromObject(obj: JsonObject): TagStashList {
-            if (!obj.containsKey("tags")) throw IllegalArgumentException("TagStashList object has no tags")
+            require(obj.containsKey("tags")) { "TagStashList object has no tags" }
             val tags = obj["tags"]!!
-            if (!tags.isJsonArray()) throw IllegalArgumentException("TagStashList tags is not an array")
+            require(tags.isJsonArray()) { "TagStashList tags is not an array" }
             return TagStashList(
                 tags.toJsonArray().map {
                     if (!it.isJsonObject()) throw IllegalArgumentException("TagStashList tags array contains non object")
                     TagStash.fromObject(it.toJsonObject())
-                }.toMutableList()
+                }.toMutableList(),
             )
         }
 
         fun fromObject(obj: JsonElement): TagStashList {
-            if (!obj.isJsonObject()) throw IllegalArgumentException("TagStashList object is not an object")
+            require(obj.isJsonObject()) { "TagStashList object is not an object" }
             return fromObject(obj.toJsonObject())
         }
 
@@ -125,7 +123,7 @@ class ReleaseTag(
     val sha: String,
     val version: Version,
     val project: ProjectStructure,
-    val timestamp: Date
+    val timestamp: Date,
 ) {
     override fun toString(): String {
         return json.stringify(
@@ -134,8 +132,8 @@ class ReleaseTag(
                 "sha" to sha,
                 "version" to version.toString(),
                 "project" to project.path,
-                "timestamp" to timestamp.time
-            )
+                "timestamp" to timestamp.time,
+            ),
         )
     }
 }
@@ -159,14 +157,14 @@ fun Changelog.getTimestampForTag(tag: ParsedGitTag): Date {
     val process =
         rt.exec(arrayOf("git", "log", "-n", "1", "--pretty=format:\"%ci\"", tag.name), null, this.project.file("."))
     val lines = parseGit(getOutputLines(process))
-    if (lines.size != 1) throw IllegalArgumentException("Invalid git log output")
+    require(lines.size == 1) { "Invalid git log output" }
 
     return dateFormat.parse(lines[0].name.replace("\"", ""))
 }
 
 data class ParsedGitTag(
     val name: String,
-    val sha: String
+    val sha: String,
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -182,10 +180,7 @@ data class ParsedGitTag(
         fun parse(line: String): ParsedGitTag {
             val parts = line.split("\\s+".toRegex(), 2)
 
-            if (parts.size < 2) {
-                throw IllegalArgumentException("Invalid git tag line: $line")
-            }
-
+            require(parts.size == 2) { "Invalid git tag line: $line" }
             return ParsedGitTag(parts[1], parts[0])
         }
     }
@@ -222,7 +217,7 @@ fun Changelog.getAllTags(): List<ReleaseTag> {
             structure.find { struct ->
                 struct.path == prjPath
             } ?: throw IllegalArgumentException("Invalid path in tag-name: \"$name\" (Extracted Path: \"$prjPath\")"),
-            getTimestampForTag(it)
+            getTimestampForTag(it),
         )
     }
 }

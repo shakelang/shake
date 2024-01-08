@@ -16,7 +16,7 @@ repositories {
 
 group = projectGroup("util")
 version = resolveVersion()
-description = "Utility package to merged sarif files for ktlint github report"
+description = "Utility package to merged sarif files for github report"
 public = true
 
 val projectName = name

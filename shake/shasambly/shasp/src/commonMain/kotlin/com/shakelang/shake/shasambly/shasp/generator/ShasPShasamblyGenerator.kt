@@ -35,7 +35,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         name: String,
         args: List<ShasPType>,
         localStackSize: Int,
-        body: SimpleRoutineShasamblyGenerator
+        body: SimpleRoutineShasamblyGenerator,
     ): ShasamblyNativeFunctionGenerator {
         if (functions.any { it.name == name }) {
             throw IllegalStateException("Function $name already exists")
@@ -192,14 +192,14 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
         override val name: String,
         override val routine: CallableRoutine,
         override val argTypes: List<ShasPType>,
-        private val create: SimpleRoutineShasamblyGenerator
+        private val create: SimpleRoutineShasamblyGenerator,
     ) : ShasamblyFunctionGenerator() {
         override fun doCreate() = routine.create(create)
     }
 
     private open inner class ShasPShasamblyFunctionGenerator(
         val function: ShasPFunctionDeclaration,
-        override val routine: CallableRoutine
+        override val routine: CallableRoutine,
     ) : ShasamblyFunctionGenerator() {
 
         override val name: String = function.name
@@ -952,7 +952,7 @@ class ShasPShasamblyGenerator(val tree: ShasPProgram) {
             } else {
                 ifElse(
                     { generateValued(it.condition, BOOLEAN) },
-                    orElse = { generate(it.orElse) }
+                    orElse = { generate(it.orElse) },
                 ) { generate(it.then) }
             }
         }

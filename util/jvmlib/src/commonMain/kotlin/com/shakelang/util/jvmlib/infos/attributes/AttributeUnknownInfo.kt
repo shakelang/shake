@@ -15,7 +15,7 @@ class AttributeUnknownInfo(name: ConstantUtf8Info, override val bytes: ByteArray
 
     override fun toJson(): Map<String, Any> = mapOf(
         "name" to name,
-        "bytes" to bytes.toHexString()
+        "bytes" to bytes.toHexString(),
     )
 
     companion object {
@@ -30,7 +30,7 @@ class AttributeUnknownInfo(name: ConstantUtf8Info, override val bytes: ByteArray
             pool: ConstantPool,
             bytes: ByteArray,
             name: ConstantUtf8Info,
-            length: Int
+            length: Int,
         ): AttributeUnknownInfo {
             return AttributeUnknownInfo(name, bytes.getBytes(0, length))
         }
@@ -46,7 +46,7 @@ class AttributeUnknownInfo(name: ConstantUtf8Info, override val bytes: ByteArray
             pool: ConstantPool,
             stream: DataInputStream,
             name: ConstantUtf8Info,
-            length: Int
+            length: Int,
         ): AttributeUnknownInfo {
             return AttributeUnknownInfo(name, stream.readNBytes(length))
         }

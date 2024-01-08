@@ -51,14 +51,14 @@ interface PositionMap {
                         this,
                         index,
                         index + 1,
-                        1
+                        1,
                     )
                 } else {
                     Position(
                         this,
                         index,
                         index - lineSeparators[i - 1],
-                        i + 1
+                        i + 1,
                     )
                 }
             }
@@ -67,7 +67,7 @@ interface PositionMap {
             this,
             index,
             index - (if (lineSeparators.isNotEmpty()) lineSeparators[lineSeparators.size - 1] + 1 else 0) + 1,
-            lineSeparators.size + 1
+            lineSeparators.size + 1,
         )
     }
 
@@ -106,7 +106,7 @@ interface PositionMap {
      */
     open class PositionMapImplementation(
         override val source: CharacterSource,
-        override val lineSeparators: IntArray
+        override val lineSeparators: IntArray,
     ) : PositionMap {
 
         /**

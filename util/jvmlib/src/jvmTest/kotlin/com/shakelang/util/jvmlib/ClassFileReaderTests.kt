@@ -22,7 +22,7 @@ class ClassFileReaderTests {
                         it.name to it
                     }
                     ).toTypedArray()
-                )
+                ),
         )
     }
 

@@ -5,6 +5,6 @@ interface ShakeParameter : ShakeAssignable {
     override val type: ShakeType
     fun toJson(): Map<String, Any?> = mapOf(
         "name" to name,
-        "type" to type.toJson()
+        "type" to type.toJson(),
     )
 }

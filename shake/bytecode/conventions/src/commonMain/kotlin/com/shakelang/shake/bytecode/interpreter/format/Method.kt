@@ -15,7 +15,7 @@ open class Method(
     open val nameConstant: Int,
     open val qualifiedNameConstant: Int,
     open val flags: Short,
-    open val attributes: List<Attribute>
+    open val attributes: List<Attribute>,
 ) {
     open val isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
@@ -98,7 +98,7 @@ class MutableMethod(
     override var nameConstant: Int,
     override var qualifiedNameConstant: Int,
     override var flags: Short,
-    attributes: MutableList<Attribute>
+    attributes: MutableList<Attribute>,
 ) : Method(pool, nameConstant, qualifiedNameConstant, flags, attributes) {
 
     override var name: String
@@ -173,7 +173,7 @@ class MutableMethod(
                 method.nameConstant,
                 method.qualifiedNameConstant,
                 method.flags,
-                method.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
+                method.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList(),
             )
         }
 

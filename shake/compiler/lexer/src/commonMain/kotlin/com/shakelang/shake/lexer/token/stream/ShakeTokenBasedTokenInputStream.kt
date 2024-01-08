@@ -17,6 +17,6 @@ class ShakeTokenBasedTokenInputStream(
      * The tokenTypes that are contained in the [ShakeTokenBasedTokenInputStream]
      */
     tokens: Array<ShakeToken>,
-    map: PositionMap
+    map: PositionMap,
 
 ) : ShakeTokenInputStream, TokenBasedTokenInputStream<ShakeTokenType, ShakeToken>(tokens, map)

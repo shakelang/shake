@@ -27,7 +27,7 @@ class ProjectDependency(
     override val name: String,
     override val version: String,
     override val dependencies: List<Dependency>,
-    val subproject: Project
+    val subproject: Project,
 ) : Dependency {
     override fun toString(): String {
         return "$group:$name:$version (project)"
@@ -52,7 +52,7 @@ class ExternalDependency(
     override val group: String,
     override val name: String,
     override val version: String,
-    override val dependencies: List<Dependency>
+    override val dependencies: List<Dependency>,
 ) : Dependency {
     override fun toString(): String {
         return "$group:$name:$version (external)"
@@ -88,7 +88,7 @@ open class DependencyResolveTreeTask : DefaultTask() {
             project.resolveDirectDependencies("linuxMainImplementation"),
             project.resolveDirectDependencies("macosMainImplementation"),
             project.resolveDirectDependencies("mingwMainImplementation"),
-            project.resolveDirectDependencies("nativeMainImplementation")
+            project.resolveDirectDependencies("nativeMainImplementation"),
         ).filter { it.isProjectDependency() }.forEach {
             dependsOn("${it.asProjectDependency().subproject.path}:resolveDependencies")
         }
@@ -106,13 +106,13 @@ open class DependencyResolveTreeTask : DefaultTask() {
             project.resolveDependencies("linuxMainImplementation"),
             project.resolveDependencies("macosMainImplementation"),
             project.resolveDependencies("mingwMainImplementation"),
-            project.resolveDependencies("nativeMainImplementation")
+            project.resolveDependencies("nativeMainImplementation"),
         )
         project.extensions.extraProperties.set("dependencies", dependencies)
     }
 
     private fun concatDependencies(
-        vararg dependencies: List<Dependency>
+        vararg dependencies: List<Dependency>,
     ): List<Dependency> {
         val result = mutableListOf<Dependency>()
         dependencies.forEach { list ->
@@ -141,8 +141,8 @@ open class DependencyResolveTreeTask : DefaultTask() {
                         dep.dependencyProject.name,
                         dep.dependencyProject.version.toString(),
                         emptyList(),
-                        dep.dependencyProject
-                    )
+                        dep.dependencyProject,
+                    ),
                 )
             } else {
                 deps.add(
@@ -150,8 +150,8 @@ open class DependencyResolveTreeTask : DefaultTask() {
                         dep.group ?: "unspecified",
                         dep.name,
                         dep.version ?: "unspecified",
-                        emptyList()
-                    )
+                        emptyList(),
+                    ),
                 )
             }
         }
@@ -176,8 +176,8 @@ open class DependencyResolveTreeTask : DefaultTask() {
                         dep.dependencyProject.name,
                         dep.dependencyProject.version.toString(),
                         dep.dependencyProject.extensions.extraProperties.get("dependencies") as List<Dependency>,
-                        dep.dependencyProject
-                    )
+                        dep.dependencyProject,
+                    ),
                 )
             } else {
                 deps.add(
@@ -185,8 +185,8 @@ open class DependencyResolveTreeTask : DefaultTask() {
                         dep.group ?: "unspecified",
                         dep.name,
                         dep.version ?: "unspecified",
-                        emptyList()
-                    )
+                        emptyList(),
+                    ),
                 )
             }
         }

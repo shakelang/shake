@@ -19,7 +19,7 @@ open class SimpleRoutineShasambly(
     val routine: CallableRoutine,
     base: SimpleShasamblyGenerator,
     parent: SimpleShasambly,
-    generator: SimpleRoutineShasamblyGenerator
+    generator: SimpleRoutineShasamblyGenerator,
 ) : RelativeShasamblyGeneratorPart(base, parent, {}) {
 
     init {
@@ -65,7 +65,7 @@ open class CallableRoutine(
     val shasambly: SimpleShasambly,
     val argumentCount: Int,
     val stackSize: Int,
-    var exec: SimpleRoutineShasamblyGenerator? = null
+    var exec: SimpleRoutineShasamblyGenerator? = null,
 ) {
     val toInitCalls = mutableListOf<(ShasamblyOpcode) -> Unit>()
     val realStackSize: Int = stackSize + argumentCount + 4
@@ -168,7 +168,7 @@ open class CallableRoutine(
 fun SimpleShasambly.declareRoutine(
     argumentCount: Int,
     stackSize: Int = 100,
-    exec: SimpleRoutineShasamblyGenerator
+    exec: SimpleRoutineShasamblyGenerator,
 ): CallableRoutine {
     return CallableRoutine(this, argumentCount = argumentCount, stackSize = stackSize, exec = exec)
 }
@@ -180,7 +180,7 @@ fun SimpleShasambly.declareRoutine(argumentCount: Int, stackSize: Int = 100): Ca
 fun SimpleShasambly.createRoutine(
     argumentCount: Int,
     stackSize: Int = 100,
-    exec: SimpleRoutineShasamblyGenerator
+    exec: SimpleRoutineShasamblyGenerator,
 ): CallableRoutine {
     val ret = CallableRoutine(this, argumentCount = argumentCount, stackSize = stackSize, exec = exec)
     ret.create()

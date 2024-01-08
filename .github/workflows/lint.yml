@@ -1,20 +1,17 @@
-name: Lint using ktlint
+name: Lint
 
 # Run workflow each time code is pushed to your repository and on a schedule.
 # The scheduled workflow runs every Thursday at 15:45 UTC.
 on:
   push:
+  pull_request:
   schedule:
     - cron: "45 15 * * 4"
 
 jobs:
-  lint:
-    name: Lint using ktlint
+  lint-detekt:
+    name: Lint using detekt 🔬
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        java-version: [ 16 ]
 
     steps:
       - name: Checkout 🛎️
@@ -38,14 +35,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Lint with KtLint 🔬
+      - name: Lint with Detekt 🔬
         run: |
           ./gradlew lint sarifmerge
 
-      - name: Upload Artifact ⬆️
+      - name: Upload Report Artifact ⬆️
         uses: actions/upload-artifact@v4
         with:
           name: reports
+          path: ./build/reports/detekt/all
+
+      - name: Upload Merged Sarif Artifact ⬆️
+        uses: actions/upload-artifact@v4
+        with:
+          name: sarifmerge
           path: ./build/reports/sarifmerge
 
       - name: Upload SARIF file for GitHub Advanced Security 📂
@@ -53,4 +56,34 @@ jobs:
         with:
           # Path to SARIF file relative to the root of the repository
           sarif_file: ./build/reports/sarifmerge
+          category: Detekt
+
+  lint-ktlint:
+    name: Lint using KtLint 🔬
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup KTlint
+        run: curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.1.0/ktlint && chmod a+x ktlint && sudo mv ktlint /usr/local/bin/
+
+      - name: Lint with KtLint 🔬
+        run: ktlint --reporter=sarif,,output=report.sarif
+        continue-on-error: true
+
+      - name: Upload Report Artifact ⬆️
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: ./report.sarif
+
+      - name: Upload SARIF file for GitHub Advanced Security 📂
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: ./report.sarif
           category: KtLint

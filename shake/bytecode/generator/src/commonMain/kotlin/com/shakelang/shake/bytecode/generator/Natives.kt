@@ -22,17 +22,17 @@ object Natives {
                 override fun handle(
                     ctx: ShakeBytecodeGenerator.BytecodeGenerationContext,
                     v: ShakeInvocation,
-                    keepResultOnStack: Boolean
+                    keepResultOnStack: Boolean,
                 ) {
                     ctx.bytecodeInstructionGenerator.handler(
                         HandleContext(
                             ctx,
                             v,
-                            keepResultOnStack
-                        )
+                            keepResultOnStack,
+                        ),
                     )
                 }
-            }
+            },
         )
     }
 
@@ -48,7 +48,7 @@ object Natives {
             "b" to PCast.BYTE,
             "s" to PCast.SHORT,
             "i" to PCast.INT,
-            "j" to PCast.LONG
+            "j" to PCast.LONG,
         )
 
         fun biggerType(a: String, b: String): String {
@@ -138,13 +138,13 @@ object Natives {
         fun handle(
             ctx: ShakeBytecodeGenerator.BytecodeGenerationContext,
             v: ShakeInvocation,
-            keepResultOnStack: Boolean
+            keepResultOnStack: Boolean,
         )
     }
 
     data class HandleContext(
         val ctx: ShakeBytecodeGenerator.BytecodeGenerationContext,
         val v: ShakeInvocation,
-        val keepResultOnStack: Boolean
+        val keepResultOnStack: Boolean,
     )
 }

@@ -29,7 +29,7 @@ open class TokenBasedTokenInputStream<TT : TokenType, T : Token<TT>>(
      * * @since 0.1.0
      * @version 0.2.1
      */
-    override val map: PositionMap
+    override val map: PositionMap,
 
 ) : TokenInputStream<TT, T> {
 

@@ -3,168 +3,172 @@ package com.shakelang.util.shason.elements
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class JsonArrayTests : FreeSpec({
+class JsonArrayTests : FreeSpec(
+    {
 
-    "size" {
+        "size" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.size shouldBe 5
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.size shouldBe 5
+        }
 
-    "get" {
+        "get" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array[0].toJsonDouble().value shouldBe 1.0
-        array[1].toJsonDouble().value shouldBe 2.0
-        array[2].toJsonDouble().value shouldBe 3.0
-        array[3].toJsonDouble().value shouldBe 4.0
-        array[4].toJsonDouble().value shouldBe 5.0
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array[0].toJsonDouble().value shouldBe 1.0
+            array[1].toJsonDouble().value shouldBe 2.0
+            array[2].toJsonDouble().value shouldBe 3.0
+            array[3].toJsonDouble().value shouldBe 4.0
+            array[4].toJsonDouble().value shouldBe 5.0
+        }
 
-    "isEmpty (not empty)" {
+        "isEmpty (not empty)" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.isEmpty() shouldBe false
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.isEmpty() shouldBe false
+        }
 
-    "isEmpty (empty)" {
+        "isEmpty (empty)" {
 
-        val array = JsonArray.of()
-        array.isEmpty() shouldBe true
-    }
+            val array = JsonArray.of()
+            array.isEmpty() shouldBe true
+        }
 
-    "isJsonNull" {
+        "isJsonNull" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonNull() shouldBe false
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonNull() shouldBe false
+        }
 
-    "isJsonBoolean" {
+        "isJsonBoolean" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonBoolean() shouldBe false
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonBoolean() shouldBe false
+        }
 
-    "isJsonInteger" {
+        "isJsonInteger" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonInteger() shouldBe false
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonInteger() shouldBe false
+        }
 
-    "isJsonDouble" {
+        "isJsonDouble" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonDouble() shouldBe false
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonDouble() shouldBe false
+        }
 
-    "isJsonString" {
+        "isJsonString" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonString() shouldBe false
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonString() shouldBe false
+        }
 
-    "isJsonArray" {
+        "isJsonArray" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonArray() shouldBe true
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonArray() shouldBe true
+        }
 
-    "isJsonObject" {
+        "isJsonObject" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonObject() shouldBe false
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonObject() shouldBe false
+        }
 
-    "isJsonPrimitive" {
+        "isJsonPrimitive" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonPrimitive() shouldBe false
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonPrimitive() shouldBe false
+        }
 
-    "toCollection" {
+        "toCollection" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.toCollection() shouldBe array
-    }
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.toCollection() shouldBe array
+        }
 
-    "toString" {
+        "toString" {
 
-        val array = JsonArray.of(1, 2, 3, 4, 5)
-        array.toString() shouldBe "[1,2,3,4,5]"
-    }
-})
+            val array = JsonArray.of(1, 2, 3, 4, 5)
+            array.toString() shouldBe "[1,2,3,4,5]"
+        }
+    },
+)
 
-class MutableJsonArrayTests : FreeSpec({
+class MutableJsonArrayTests : FreeSpec(
+    {
 
-    "isEmpty (not empty)" {
+        "isEmpty (not empty)" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.isEmpty() shouldBe false
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.isEmpty() shouldBe false
+        }
 
-    "isEmpty (empty)" {
+        "isEmpty (empty)" {
 
-        val array = MutableJsonArray.of()
-        array.isEmpty() shouldBe true
-    }
+            val array = MutableJsonArray.of()
+            array.isEmpty() shouldBe true
+        }
 
-    "isJsonNull" {
+        "isJsonNull" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonNull() shouldBe false
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonNull() shouldBe false
+        }
 
-    "isJsonBoolean" {
+        "isJsonBoolean" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonBoolean() shouldBe false
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonBoolean() shouldBe false
+        }
 
-    "isJsonInteger" {
+        "isJsonInteger" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonInteger() shouldBe false
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonInteger() shouldBe false
+        }
 
-    "isJsonDouble" {
+        "isJsonDouble" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonDouble() shouldBe false
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonDouble() shouldBe false
+        }
 
-    "isJsonString" {
+        "isJsonString" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonString() shouldBe false
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonString() shouldBe false
+        }
 
-    "isJsonArray" {
+        "isJsonArray" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonArray() shouldBe true
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonArray() shouldBe true
+        }
 
-    "isJsonObject" {
+        "isJsonObject" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonObject() shouldBe false
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonObject() shouldBe false
+        }
 
-    "isJsonPrimitive" {
+        "isJsonPrimitive" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.isJsonPrimitive() shouldBe false
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.isJsonPrimitive() shouldBe false
+        }
 
-    "toCollection" {
+        "toCollection" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.toCollection() shouldBe array
-    }
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.toCollection() shouldBe array
+        }
 
-    "toString" {
+        "toString" {
 
-        val array = MutableJsonArray.of(1, 2, 3, 4, 5)
-        array.toString() shouldBe "[1,2,3,4,5]"
-    }
-})
+            val array = MutableJsonArray.of(1, 2, 3, 4, 5)
+            array.toString() shouldBe "[1,2,3,4,5]"
+        }
+    },
+)

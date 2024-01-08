@@ -97,7 +97,7 @@ interface ShakeInterpreterPackage {
                         classpath,
                         parentPath,
                         c.second.constantPool,
-                        this
+                        this,
                     )
                     classList[index] = cls
                     return cls
@@ -110,7 +110,7 @@ interface ShakeInterpreterPackage {
                         classpath,
                         parentPath,
                         m.second.constantPool,
-                        this
+                        this,
                     )
                     methodList[index] = method
                     return method
@@ -123,7 +123,7 @@ interface ShakeInterpreterPackage {
                         classpath,
                         parentPath,
                         f.second.constantPool,
-                        this
+                        this,
                     )
                     fieldList[index] = field
                     return field

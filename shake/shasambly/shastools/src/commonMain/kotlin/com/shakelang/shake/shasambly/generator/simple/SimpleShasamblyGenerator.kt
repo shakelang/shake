@@ -653,7 +653,7 @@ interface SimpleShasambly {
         decl: SimpleShasamblyGeneratorFunction,
         cond: SimpleShasamblyGeneratorFunction,
         round: SimpleShasamblyGeneratorFunction,
-        it: SimpleShasamblyGeneratorFunction
+        it: SimpleShasamblyGeneratorFunction,
     ) {
         decl(this)
         whileLoop(cond) {
@@ -665,7 +665,7 @@ interface SimpleShasambly {
     fun ifElse(
         cond: SimpleShasamblyGeneratorFunction,
         orElse: SimpleShasamblyGeneratorFunction? = null,
-        it: SimpleShasamblyGeneratorFunction
+        it: SimpleShasamblyGeneratorFunction,
     ) {
         relative {
             cond(this)
@@ -694,7 +694,7 @@ interface SimpleShasambly {
 open class RelativeShasamblyGeneratorPart(
     override val base: SimpleShasamblyGenerator,
     val parent: SimpleShasambly,
-    generator: SimpleShasamblyGeneratorFunction
+    generator: SimpleShasamblyGeneratorFunction,
 ) : SimpleShasambly by parent {
 
     override val natives = NativeFunctions(this)

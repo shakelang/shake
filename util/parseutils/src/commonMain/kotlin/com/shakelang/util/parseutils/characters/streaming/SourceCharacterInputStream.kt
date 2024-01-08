@@ -21,7 +21,7 @@ class SourceCharacterInputStream(
      * @since 0.1.0
      * @version 0.2.1
      */
-    override val source: CharacterSource
+    override val source: CharacterSource,
 
 ) : CharacterInputStream {
 

@@ -35,7 +35,10 @@ object Validators {
     fun isBoolean(value: String?) {
         if (value == null) throw ValueValidationException("Value is null")
         when (value) {
-            "true", "false", "1", "0", "yes", "no", "y", "n" -> { return }
+            "true", "false", "1", "0", "yes", "no", "y", "n" -> {
+                return
+            }
+
             else -> throw ValueValidationException("Value \"$value\" is not a boolean")
         }
     }

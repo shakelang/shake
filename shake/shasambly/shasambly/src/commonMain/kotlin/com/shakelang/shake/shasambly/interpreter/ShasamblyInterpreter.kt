@@ -8,7 +8,7 @@ import com.shakelang.util.primitives.bytes.toHexString
 class ShasamblyInterpreter(
     memorySize: Int,
     bytes: ByteArray,
-    position: Int
+    position: Int,
 ) : ShasamblyOpcodeExecutor(memorySize, bytes, position) {
 
     val byteMap = createByteMap()
@@ -25,7 +25,7 @@ class ShasamblyInterpreter(
             throw Error(
                 "Could not execute byte 0x${next.toBytes().toHexString()} " +
                     "at position 0x${(pos - 16).toBytes().toHexString()} (${pos - 16})",
-                e
+                e,
             )
         }
     }

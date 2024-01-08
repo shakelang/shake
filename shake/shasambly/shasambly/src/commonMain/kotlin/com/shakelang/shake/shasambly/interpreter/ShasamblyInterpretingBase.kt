@@ -16,7 +16,7 @@ import kotlin.experimental.and
 abstract class ShasamblyInterpretingBase(
     memorySize: Int,
     bytes: ByteArray,
-    position: Int = 0
+    position: Int = 0,
 ) {
 
     val freeTable = FreeTableControllerObject()
@@ -134,8 +134,8 @@ abstract class ShasamblyInterpretingBase(
                 Opcodes.I_PUSH,
                 *0.toBytes(),
                 Opcodes.INVOKE_NATIVE,
-                *Natives.exit.toBytes()
-            )
+                *Natives.exit.toBytes(),
+            ),
         )
 
         // memory[bytes.size + 4] = Opcodes.JUMP_STATIC
@@ -319,7 +319,7 @@ abstract class ShasamblyInterpretingBase(
                 this.pop(),
                 this.pop(),
                 this.pop(),
-                this.pop()
+                this.pop(),
             )
         }
 
@@ -658,7 +658,7 @@ abstract class ShasamblyInterpretingBase(
          * @see FreeTableControllerObject for more information
          */
         open inner class FreeTableEntry(
-            val address: Int
+            val address: Int,
         ) {
 
             /**
@@ -977,7 +977,7 @@ abstract class ShasamblyInterpretingBase(
             val address: Int,
             val size: Int,
             val before: Int,
-            val table: Int
+            val table: Int,
         ) {
             var next: Int
                 get() = memory.getInt(address)

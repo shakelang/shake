@@ -9,7 +9,7 @@ class ShakeBlockNode(map: PositionMap, val children: Array<ShakeStatementNode>) 
     override fun toJson(): Map<String, *> =
         mapOf(
             "name" to nodeName,
-            "children" to children.map { it.json }
+            "children" to children.map { it.json },
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

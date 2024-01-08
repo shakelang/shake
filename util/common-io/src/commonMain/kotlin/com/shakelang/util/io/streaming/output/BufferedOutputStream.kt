@@ -25,7 +25,7 @@ open class BufferedOutputStream(
      * @version 0.1.1
      */
     val out: OutputStream,
-    bufferSize: Int = 8192
+    bufferSize: Int = 8192,
 ) : OutputStream() {
     /**
      * The internal buffer where data is stored.

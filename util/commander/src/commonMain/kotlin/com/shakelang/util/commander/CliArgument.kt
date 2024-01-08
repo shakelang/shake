@@ -9,7 +9,7 @@ class CliArgument(
     val defaultValue: String? = null,
     val valueName: String? = null,
     val valueDescription: String? = null,
-    val valueValidator: ValueValidator? = null
+    val valueValidator: ValueValidator? = null,
 ) {
     fun getUsage(): String {
         val builder = StringBuilder()
@@ -50,7 +50,7 @@ class CliArgumentCreationContext {
             defaultValue,
             valueName,
             valueDescription,
-            valueValidator
+            valueValidator,
         )
     }
 }

@@ -10,7 +10,6 @@ import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.dokka.versioning.VersioningConfiguration
 import org.jetbrains.dokka.versioning.VersioningPlugin
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import java.net.URL
 
 group = "com.shakelang.shake"
@@ -64,7 +63,6 @@ repositories {
 plugins {
     id("org.jetbrains.dokka")
     id("org.jetbrains.kotlinx.kover")
-    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
     id("io.gitlab.arturbosch.detekt") version "1.23.4"
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
@@ -107,7 +105,8 @@ tasks.withType<VersionTask>().configureEach {
 }
 
 val currentVersion = "1.0"
-val previousVersionsDirectory = project.rootProject.projectDir.resolve("build/previousDocVersions").invariantSeparatorsPath
+val previousVersionsDirectory =
+    project.rootProject.projectDir.resolve("build/previousDocVersions").invariantSeparatorsPath
 
 val styleSheet = file("./assets/dokka-style.css").absoluteFile
 
@@ -179,47 +178,15 @@ tasks.dokkaHtmlMultiModule {
     }
 }
 
-// apply(plugin = "com.shakelang.util.changelog.Changelog")
-detekt {
-    toolVersion = "1.23.3"
-    config.setFrom(rootProject.file("config/detekt/detekt.yml"))
-    buildUponDefaultConfig = true
-    ignoreFailures = true
-}
+allprojects {
 
-// Kotlin DSL
-tasks.withType<Detekt>().configureEach {
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
-        txt.required.set(true)
-        sarif.required.set(true)
-        md.required.set(true)
-    }
-}
-
-subprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint") // Version should be inherited from parent
-    apply(plugin = "io.gitlab.arturbosch.detekt") // Version should be inherited from parent
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-
-    ktlint {
-        ignoreFailures.set(true)
-        reporters {
-            reporter(ReporterType.PLAIN)
-            reporter(ReporterType.HTML)
-            reporter(ReporterType.SARIF)
-        }
-    }
-
+    apply(plugin = "io.gitlab.arturbosch.detekt")
     detekt {
         toolVersion = "1.23.3"
         config.setFrom(rootProject.file("config/detekt/detekt.yml"))
         buildUponDefaultConfig = true
         ignoreFailures = true
+        source.from((file("src").list() ?: emptyArray()).map { "src/$it/kotlin" })
     }
 
     // Kotlin DSL
@@ -231,6 +198,13 @@ subprojects {
             sarif.required.set(true)
             md.required.set(true)
         }
+    }
+}
+
+subprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
     }
 
     afterEvaluate {
@@ -255,8 +229,8 @@ subprojects {
                 documentedVisibilities.set(
                     setOf(
                         Visibility.PUBLIC,
-                        Visibility.PROTECTED
-                    )
+                        Visibility.PROTECTED,
+                    ),
                 )
 
                 // Read docs for more details: https://kotlinlang.org/docs/dokka-gradle.html#source-link-configuration
@@ -273,26 +247,33 @@ subprojects {
     }
 }
 
-ktlint {
-    ignoreFailures.set(true)
-    reporters {
-        reporter(ReporterType.PLAIN)
-        reporter(ReporterType.HTML)
-        reporter(ReporterType.SARIF)
-    }
-}
-
 tasks.create("lint") {
     group = "verification"
-    description = "Runs ktlintCheck on all subprojects and copies the reports to build directory"
-    dependsOn("ktlintCheck")
-    subprojects.forEach {
-        dependsOn("${it.path}:ktlintCheck")
+    description = "Runs detekt on all subprojects and copies the reports to build directory"
+    allprojects.forEach {
+        dependsOn("${it.path}:detekt")
+
+        copy {
+            from(it.file("build/reports/detekt"))
+            into("${rootProject.buildDir}/reports/detekt/all/${it.group}.${it.name}")
+        }
+
+        copy {
+            from(it.file("build/reports/detekt/detekt.sarif"))
+            into("${rootProject.buildDir}/reports/sarifmerge-input/")
+            rename { _ ->
+                "${it.group}.${it.name}.sarif"
+            }
+        }
     }
 
     doLast {
-        println("Ktlint reports copied to ${rootProject.buildDir}/reports/ktlint/ktlintKotlinScriptCheck/")
+        println("Detekt reports copied to ${rootProject.buildDir}/reports/detekt/allDetektChecks/")
     }
+}
+
+tasks.named("sarifmerge") {
+    dependsOn("lint")
 }
 
 repositories {

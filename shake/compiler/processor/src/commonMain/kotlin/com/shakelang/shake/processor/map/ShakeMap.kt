@@ -28,7 +28,7 @@ class ShakeMap(
     val project_packages: Array<Int>,
     val project_classes: Array<Int>,
     val project_methods: Array<Int>,
-    val project_fields: Array<Int>
+    val project_fields: Array<Int>,
 
 ) {
 
@@ -78,7 +78,7 @@ class ShakeMap(
         "project_packages" to project_packages.map { it },
         "project_classes" to project_classes.map { it },
         "project_methods" to project_methods.map { it },
-        "project_fields" to project_fields.map { it }
+        "project_fields" to project_fields.map { it },
     )
 
     fun toJsonString(): String = json.stringify(toJson())
@@ -132,7 +132,7 @@ class ShakeMap(
                 project_packages_,
                 project_classes_,
                 project_methods_,
-                project_fields_
+                project_fields_,
             )
         }
 
@@ -232,7 +232,7 @@ class ShakeMap(
                 project_packages.toTypedArray(),
                 project_classes.toTypedArray(),
                 project_methods.toTypedArray(),
-                project_fields.toTypedArray()
+                project_fields.toTypedArray(),
             )
         }
     }
@@ -246,8 +246,7 @@ interface ShakeMapConstant {
     fun toJson(): Map<String, *>
 
     enum class ShakeClassConstantTag(val TAG: Byte) {
-        UTF8(0x01)
-        ;
+        UTF8(0x01),
     }
 
     class ShakeUtf8Constant(val value: String) : ShakeMapConstant {
@@ -266,7 +265,7 @@ interface ShakeMapConstant {
 
         override fun toJson(): Map<String, *> = mapOf(
             "type" to type.TAG,
-            "value" to value
+            "value" to value,
         )
 
         companion object {
@@ -311,7 +310,7 @@ class ShakeMapPackage(
     val package_references: Array<Int>,
     val class_references: Array<Int>,
     val method_references: Array<Int>,
-    val field_references: Array<Int>
+    val field_references: Array<Int>,
 ) {
     fun getBytes(): ByteArray {
         val stream = ByteArrayOutputStream()
@@ -336,7 +335,7 @@ class ShakeMapPackage(
         "package_references" to package_references.map { it },
         "class_references" to class_references.map { it },
         "method_references" to method_references.map { it },
-        "field_references" to field_references.map { it }
+        "field_references" to field_references.map { it },
     )
 
     companion object {
@@ -355,7 +354,7 @@ class ShakeMapPackage(
                 package_references_,
                 class_references_,
                 method_references_,
-                field_references_
+                field_references_,
             )
         }
 
@@ -389,7 +388,7 @@ class ShakeMapPackage(
                 package_references_,
                 class_references_,
                 method_references_,
-                field_references_
+                field_references_,
             )
         }
     }
@@ -403,7 +402,7 @@ class ShakeMapClass(
     val subclass_references: Array<Int>,
     val method_references: Array<Int>,
     val constructor_references: Array<Int>,
-    val field_references: Array<Int>
+    val field_references: Array<Int>,
 ) {
     val isNative get() = attributes.bit8
     val isStatic get() = attributes.bit7
@@ -443,7 +442,7 @@ class ShakeMapClass(
         "subclass_references" to subclass_references.map { it },
         "method_references" to method_references.map { it },
         "constructor_references" to constructor_references.map { it },
-        "field_references" to field_references.map { it }
+        "field_references" to field_references.map { it },
     )
 
     companion object {
@@ -469,7 +468,7 @@ class ShakeMapClass(
                 subclass_references_,
                 method_references_,
                 constructor_references_,
-                field_references_
+                field_references_,
             )
         }
 
@@ -515,7 +514,7 @@ class ShakeMapClass(
                 subclass_references_,
                 method_references_,
                 constructor_references_,
-                field_references_
+                field_references_,
             )
         }
     }
@@ -527,7 +526,7 @@ class ShakeMapMethod(
     val return_type: Int,
     val parameter_names: Array<Int>,
     val parameter_types: Array<Int>,
-    val expanding: Int
+    val expanding: Int,
 ) {
     val isOperator get() = attributes.bit9
     val isNative get() = attributes.bit8
@@ -563,7 +562,7 @@ class ShakeMapMethod(
         "return_type" to return_type,
         "parameter_names" to parameter_names.map { it },
         "parameter_types" to parameter_types.map { it },
-        "expanding" to expanding
+        "expanding" to expanding,
     )
 
     companion object {
@@ -582,7 +581,7 @@ class ShakeMapMethod(
                 return_type,
                 parameter_names_,
                 parameter_types_,
-                expanding
+                expanding,
             )
         }
 
@@ -617,7 +616,7 @@ class ShakeMapMethod(
                 return_type,
                 parameter_names_,
                 parameter_types_,
-                expanding
+                expanding,
             )
         }
     }
@@ -627,7 +626,7 @@ class ShakeMapConstructor(
     val name: Int,
     val attributes: Short,
     val parameter_names: Array<Int>,
-    val parameter_types: Array<Int>
+    val parameter_types: Array<Int>,
 ) {
     val isNative get() = attributes.bit8
     val isStrict: Boolean get() = attributes.bit5
@@ -654,7 +653,7 @@ class ShakeMapConstructor(
         "name" to name,
         "attributes" to attributes,
         "parameter_names" to parameter_names.map { it },
-        "parameter_types" to parameter_types.map { it }
+        "parameter_types" to parameter_types.map { it },
     )
 
     companion object {
@@ -669,7 +668,7 @@ class ShakeMapConstructor(
                 name,
                 attributes,
                 parameter_names_,
-                parameter_types_
+                parameter_types_,
             )
         }
 
@@ -696,7 +695,7 @@ class ShakeMapConstructor(
                 name,
                 attributes,
                 parameter_names_,
-                parameter_types_
+                parameter_types_,
             )
         }
     }
@@ -706,7 +705,7 @@ class ShakeMapField(
     val name: Int,
     val attributes: Short,
     val type: Int,
-    val expanding: Int
+    val expanding: Int,
 ) {
     val isNative get() = attributes.bit8
     val isStatic get() = attributes.bit7
@@ -734,7 +733,7 @@ class ShakeMapField(
         "name" to name,
         "attributes" to attributes,
         "type" to type,
-        "expanding" to expanding
+        "expanding" to expanding,
     )
 
     companion object {
@@ -746,7 +745,7 @@ class ShakeMapField(
                 name,
                 attributes,
                 type,
-                input.readInt()
+                input.readInt(),
             )
         }
 
@@ -771,7 +770,7 @@ class ShakeMapField(
                 name,
                 attributes,
                 type,
-                expanding
+                expanding,
             )
         }
     }
@@ -813,8 +812,8 @@ class ShakeMapCreator {
                 packages.toTypedArray(),
                 classes.toTypedArray(),
                 methods.toTypedArray(),
-                fields.toTypedArray()
-            )
+                fields.toTypedArray(),
+            ),
         )
 
         return this.packages.size - 1
@@ -845,8 +844,8 @@ class ShakeMapCreator {
                 classes.toTypedArray(),
                 methods.toTypedArray(),
                 constructors.toTypedArray(),
-                fields.toTypedArray()
-            )
+                fields.toTypedArray(),
+            ),
         )
 
         return this.classes.size - 1
@@ -867,8 +866,8 @@ class ShakeMapCreator {
                 return_type,
                 parameter_names,
                 parameter_types,
-                expanding
-            )
+                expanding,
+            ),
         )
 
         return this.methods.size - 1
@@ -885,8 +884,8 @@ class ShakeMapCreator {
                 name,
                 attributes,
                 parameter_names,
-                parameter_types
-            )
+                parameter_types,
+            ),
         )
 
         return this.constructors.size - 1
@@ -903,8 +902,8 @@ class ShakeMapCreator {
                 name,
                 attributes,
                 type,
-                expanding
-            )
+                expanding,
+            ),
         )
 
         return this.fields.size - 1
@@ -975,7 +974,7 @@ class ShakeMapCreator {
             this.project_packages.toTypedArray(),
             this.project_classes.toTypedArray(),
             this.project_methods.toTypedArray(),
-            this.project_fields.toTypedArray()
+            this.project_fields.toTypedArray(),
         )
     }
 }
@@ -985,7 +984,7 @@ class MapAssembledProject(
     val classPointers: PointerList<ShakeClass>,
     val methodPointers: PointerList<ShakeMethod>,
     val fieldPointers: PointerList<ShakeField>,
-    override val projectScope: ShakeScope
+    override val projectScope: ShakeScope,
 
 ) : ShakeProject {
 
@@ -993,12 +992,15 @@ class MapAssembledProject(
     override fun phase1() {
         subpackages.forEach { it.phase1() }
     }
+
     override fun phase2() {
         subpackages.forEach { it.phase2() }
     }
+
     override fun phase3() {
         subpackages.forEach { it.phase3() }
     }
+
     override fun phase4() {
         subpackages.forEach { it.phase4() }
     }
@@ -1012,7 +1014,7 @@ class MapAssembledPackage(
     val subpackagePointers: PointerList<ShakePackage>,
     val classPointers: PointerList<ShakeClass>,
     val methodPointers: PointerList<ShakeMethod>,
-    val fieldPointers: PointerList<ShakeField>
+    val fieldPointers: PointerList<ShakeField>,
 ) : ShakePackage {
     override val subpackages: List<ShakePackage> get() = subpackagePointers.values()
     override val classes: List<ShakeClass> get() = classPointers.values()
@@ -1043,7 +1045,7 @@ class MapAssembledClass(
     override val isPublic: Boolean,
     override val isProtected: Boolean,
     override val isPrivate: Boolean,
-    override val isNative: Boolean
+    override val isNative: Boolean,
 ) : ShakeClass {
     override val classes: List<ShakeClass> = classPointers.values()
     override val methods: List<ShakeMethod> = methodPointers.values()
@@ -1079,7 +1081,7 @@ class MapAssembledMethod(
     override val body: ShakeCode? = null,
     override val isNative: Boolean,
     override val isOperator: Boolean,
-    override val expanding: ShakeType?
+    override val expanding: ShakeType?,
 ) : ShakeMethod {
     override fun phase3() {}
     override fun phase4() {}
@@ -1095,7 +1097,7 @@ class MapAssembledConstructor(
     override val isPrivate: Boolean,
     override val body: ShakeCode? = null,
     override val isStrict: Boolean,
-    override val isNative: Boolean
+    override val isNative: Boolean,
 ) : ShakeConstructor {
     override var clazz: ShakeClass
         get() = clazz_!!
@@ -1125,20 +1127,20 @@ class MapAssembledField(
     override val actualType: ShakeType = type,
     override val qualifiedName: String,
     override val initialValue: ShakeValue?,
-    override val expanding: ShakeType?
+    override val expanding: ShakeType?,
 ) : ShakeField {
     override fun phase3() {}
     override fun phase4() {}
 }
 
 class ShakeAssembledObjectType(
-    override var clazz: ShakeClass
+    override var clazz: ShakeClass,
 ) : ShakeType.Object {
     override val name: String get() = clazz.name
 }
 
 class ShakeAssembledArrayType(
-    override val elementType: ShakeType
+    override val elementType: ShakeType,
 ) : ShakeType.Array {
     override val name: String get() = elementType.name
 }
@@ -1149,6 +1151,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
         override val parent = null
         override val uniqueName: String
             get() = "scopeUnit"
+
         override fun get(name: String): ShakeAssignable = error("Should not be called")
         override fun getFunctions(name: String) = error("Should not be called")
         override fun getClass(name: String) = error("Should not be called")
@@ -1188,7 +1191,7 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
             shakeMap.project_classes.map { classPointers[it] },
             shakeMap.project_methods.map { methodPointers[it] },
             shakeMap.project_fields.map { fieldPointers[it] },
-            scopeUnit
+            scopeUnit,
         )
 
         packagePointers.forEachIndexed { index, point ->
@@ -1202,8 +1205,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.package_references.map { packagePointers[it] },
                     info.class_references.map { classPointers[it] },
                     info.method_references.map { methodPointers[it] },
-                    info.field_references.map { fieldPointers[it] }
-                )
+                    info.field_references.map { fieldPointers[it] },
+                ),
             )
         }
 
@@ -1235,8 +1238,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isPublic,
                     info.isProtected,
                     info.isPrivate,
-                    info.isNative
-                )
+                    info.isNative,
+                ),
             )
         }
 
@@ -1299,8 +1302,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     null,
                     info.isNative,
                     info.isOperator,
-                    if (info.expanding != -1) findType(info.expanding) else null
-                )
+                    if (info.expanding != -1) findType(info.expanding) else null,
+                ),
             )
         }
 
@@ -1340,8 +1343,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     info.isPrivate,
                     null,
                     info.isStrict,
-                    info.isNative
-                )
+                    info.isNative,
+                ),
             )
         }
 
@@ -1373,8 +1376,8 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
                     findType(info.type),
                     getUtf(info.name),
                     null,
-                    if (info.expanding != -1) findType(info.expanding) else null
-                )
+                    if (info.expanding != -1) findType(info.expanding) else null,
+                ),
             )
         }
 

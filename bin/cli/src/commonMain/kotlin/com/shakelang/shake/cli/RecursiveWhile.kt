@@ -50,7 +50,7 @@ private class RecursiveWhile(
     /**
      * The body of the [RecursiveWhile] loop
      */
-    val body: RecursiveWhileBody
+    val body: RecursiveWhileBody,
 
 ) {
 
@@ -59,7 +59,7 @@ private class RecursiveWhile(
 
     val loopControls = LoopControls(
         this::wContinue,
-        this::wBreak
+        this::wBreak,
     )
 
     fun wContinue() {

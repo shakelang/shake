@@ -7,7 +7,7 @@ import java.io.FileWriter
 
 @Suppress("unused")
 actual class File actual constructor(
-    actual val path: String
+    actual val path: String,
 ) {
 
     private val file: java.io.File = java.io.File(path)

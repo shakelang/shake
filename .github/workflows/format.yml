@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - development
-  schedule:
-    - cron: "45 15 * * 4"
 
 permissions:
   contents: write
@@ -22,25 +20,12 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+      - name: Setup KTlint
+        run: curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.1.0/ktlint && chmod a+x ktlint && sudo mv ktlint /usr/local/bin/
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Format with KtLint
-        run: |
-          ./gradlew ktlintFormat
+      - name: Format using ktlint
+        run: ktlint --format
+        continue-on-error: true
 
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v6

@@ -27,7 +27,7 @@ open class BumpTask : DefaultTask() {
         logger: Logger,
         typeValue: String?,
         messageValue: String?,
-        projectArray: List<String>?
+        projectArray: List<String>?,
     ) {
         if (typeValue != "major" && typeValue != "minor" && typeValue != "patch") {
             logger.error("Please provide a type with -Ptype=\"major|minor|patch\"")
@@ -52,7 +52,7 @@ open class BumpTask : DefaultTask() {
     fun performBump(
         type: BumpType,
         message: String,
-        projectArray: List<String>
+        projectArray: List<String>,
     ) {
         val allProjects = Changelog.instance.readStructureFile().projects
 

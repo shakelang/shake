@@ -8,7 +8,7 @@ import kotlin.String
 
 object Number {
     class Plus(
-        override val signature: String
+        override val signature: String,
     ) : NativeFunction {
         override fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue {
             val left = generator.visitValue(invokation.parent!!)
@@ -18,7 +18,7 @@ object Number {
     }
 
     class Minus(
-        override val signature: String
+        override val signature: String,
     ) : NativeFunction {
         override fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue {
             val left = generator.visitValue(invokation.parent!!)
@@ -28,7 +28,7 @@ object Number {
     }
 
     class Times(
-        override val signature: String
+        override val signature: String,
     ) : NativeFunction {
         override fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue {
             val left = generator.visitValue(invokation.parent!!)
@@ -38,7 +38,7 @@ object Number {
     }
 
     class Div(
-        override val signature: String
+        override val signature: String,
     ) : NativeFunction {
         override fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue {
             val left = generator.visitValue(invokation.parent!!)
@@ -48,7 +48,7 @@ object Number {
     }
 
     class Mod(
-        override val signature: String
+        override val signature: String,
     ) : NativeFunction {
         override fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue {
             val left = generator.visitValue(invokation.parent!!)
@@ -58,14 +58,14 @@ object Number {
     }
 
     class Pow(
-        override val signature: String
+        override val signature: String,
     ) : NativeFunction {
         override fun handleValue(generator: ShakeJsGenerator, invokation: ShakeInvocation): JsValue {
             val left = generator.visitValue(invokation.parent!!)
             val right = generator.visitValue(invokation.arguments[0])
             return JsFunctionCall(
                 JsField("pow", parent = JsField("Math")),
-                args = listOf(left, right)
+                args = listOf(left, right),
             )
         }
     }

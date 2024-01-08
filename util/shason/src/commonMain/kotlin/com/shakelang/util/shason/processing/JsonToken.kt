@@ -23,7 +23,7 @@ class JsonToken : Token<JsonTokenType> {
         type: JsonTokenType,
         start: Int,
         end: Int = start,
-        value: String? = null
+        value: String? = null,
     ) : super(type, value, start, end)
 
     /**
@@ -47,7 +47,7 @@ class JsonToken : Token<JsonTokenType> {
  * @version 0.1.0
  */
 enum class JsonTokenType(
-    private val length: Int
+    private val length: Int,
 ) : TokenType {
 
     /**
@@ -125,7 +125,7 @@ enum class JsonTokenType(
      * @since 0.1.0
      * @version 0.1.0
      */
-    INT(-1)
+    INT(-1),
     ;
 
     /**
@@ -158,5 +158,5 @@ interface JsonTokenInputStream : TokenInputStream<JsonTokenType, JsonToken>
  */
 class JsonTokenInputStreamImpl(
     tokens: Array<JsonToken>,
-    map: PositionMap
+    map: PositionMap,
 ) : JsonTokenInputStream, TokenBasedTokenInputStream<JsonTokenType, JsonToken>(tokens, map)

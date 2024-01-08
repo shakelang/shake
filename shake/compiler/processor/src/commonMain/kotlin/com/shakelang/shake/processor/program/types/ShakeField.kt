@@ -59,7 +59,7 @@ interface ShakeField : ShakeDeclaration, ShakeAssignable {
             "isPrivate" to isPrivate,
             "isProtected" to isProtected,
             "isPublic" to isPublic,
-            "type" to type.toJson()
+            "type" to type.toJson(),
         )
     }
 

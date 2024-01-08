@@ -19,13 +19,13 @@ fun valueValidator(validator: ValueValidator): ValueValidator = validator
  * A wrapper for a string-encoded value
  */
 data class Value(
-    val value: String?
+    val value: String?,
 ) {
     fun <T> to(valueTransformer: ValueTransformer<T>) = valueTransformer(value ?: throw NullPointerException("Value is null"))
     fun toByte(): Byte = value?.toByteOrNull() ?: throw NumberFormatException("Value is null")
     fun toShort(): Short = value?.toShortOrNull() ?: throw NumberFormatException("Value is null")
     fun toInt(): Int = value?.toIntOrNull() ?: throw NumberFormatException("Value is null")
-    fun toLong(): Long = value ?.toLongOrNull() ?: throw NumberFormatException("Value is null")
+    fun toLong(): Long = value?.toLongOrNull() ?: throw NumberFormatException("Value is null")
     fun toFloat(): Float = value?.toFloatOrNull() ?: throw NumberFormatException("Value is null")
     fun toDouble(): Double = value?.toDoubleOrNull() ?: throw NumberFormatException("Value is null")
     fun toBoolean(): Boolean = value?.toBooleanStrictOrNull() ?: throw NumberFormatException("Value is null")

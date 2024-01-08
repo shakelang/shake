@@ -13,7 +13,7 @@ class BumpPanel(
     private val changed: List<PackageEntry>,
     private val unchanged: List<PackageEntry>,
     private val onCanceled: () -> Unit,
-    private val onBumped: () -> Unit
+    private val onBumped: () -> Unit,
 ) : JPanel() {
     private val changedBoxes: Array<JCheckBox>
     private val unchangedBoxes: Array<JCheckBox>
@@ -122,7 +122,7 @@ class BumpPanel(
             bumpTask.performBump(
                 bumpType,
                 message,
-                combined
+                combined,
             )
 
             JOptionPane.showMessageDialog(this, "Bumped successfully")

@@ -30,7 +30,7 @@ internal class CharArraySource(
      * @since 0.1.0
      * @version 0.2.1
      */
-    override val location: String
+    override val location: String,
 
 ) : CharacterSource {
 

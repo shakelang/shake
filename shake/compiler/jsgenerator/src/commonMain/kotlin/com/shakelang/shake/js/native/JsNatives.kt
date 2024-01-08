@@ -8,7 +8,7 @@ import com.shakelang.shake.processor.program.types.ShakeMethod
 object JsNatives {
 
     val nativeClasses = listOf<NativeClass>(
-        com.shakelang.shake.js.native.shake.lang.String()
+        com.shakelang.shake.js.native.shake.lang.String(),
         // com.shakelang.shake.js.native.shake.lang.Object(),
     )
 
@@ -229,7 +229,7 @@ object JsNatives {
         Number.Times("shake.lang\$D\$times(D)D"),
         Number.Div("shake.lang\$D\$div(D)D"),
         Number.Mod("shake.lang\$D\$mod(D)D"),
-        Number.Pow("shake.lang\$D\$pow(D)D")
+        Number.Pow("shake.lang\$D\$pow(D)D"),
     )
     val nativeFields = listOf<NativeField>()
 

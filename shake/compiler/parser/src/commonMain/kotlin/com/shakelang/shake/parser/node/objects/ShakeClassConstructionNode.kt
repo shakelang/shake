@@ -8,7 +8,7 @@ class ShakeClassConstructionNode(
     map: PositionMap,
     val type: ShakeValuedNode,
     val args: Array<ShakeValuedNode>,
-    val newKeywordPosition: Int
+    val newKeywordPosition: Int,
 ) : ShakeValuedStatementNodeImpl(map) {
 
     override fun toJson(): Map<String, *> =

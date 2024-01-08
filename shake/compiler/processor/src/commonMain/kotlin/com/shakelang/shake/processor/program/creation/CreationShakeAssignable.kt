@@ -186,7 +186,7 @@ interface CreationShakeAssignable : ShakeAssignable {
                 override fun toJson(): Map<String, Any?> {
                     return mapOf(
                         "type" to "anonymous-assignable",
-                        "value" to v.toJson()
+                        "value" to v.toJson(),
                     )
                 }
             }

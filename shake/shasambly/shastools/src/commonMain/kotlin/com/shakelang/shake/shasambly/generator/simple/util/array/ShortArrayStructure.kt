@@ -123,7 +123,7 @@ class StaticallySizedLocalShortArrayStructure(val shasambly: SimpleShasambly, va
  */
 fun SimpleShasambly.createStaticallySizedLocalShortArray(
     addr: Int,
-    size: Int
+    size: Int,
 ): StaticallySizedLocalShortArrayStructure {
     if (size < 2) throw IllegalArgumentException("Size must be at least 2 for this type of array")
     natives.declareGlobal(size * 2)

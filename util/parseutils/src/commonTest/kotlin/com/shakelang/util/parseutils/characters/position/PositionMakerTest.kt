@@ -15,7 +15,7 @@ class PositionMakerTest {
     fun testConstructors() {
         val src = CharacterSource.from(
             "he\nllo",
-            "PositionMakerTest#testPositionMakerNext()"
+            "PositionMakerTest#testPositionMakerNext()",
         )
 
         run {
@@ -50,7 +50,7 @@ class PositionMakerTest {
     fun testPositionMakerNext() {
         val src = CharacterSource.from(
             "he\nllo",
-            "PositionMakerTest#testPositionMakerNext()"
+            "PositionMakerTest#testPositionMakerNext()",
         )
 
         val maker = PositionMaker(src)
@@ -96,7 +96,7 @@ class PositionMakerTest {
     fun testPositionMakerLineSeparators() {
         val src = CharacterSource.from(
             "he\nllo",
-            "PositionMakerTest#testPositionMakerNext()"
+            "PositionMakerTest#testPositionMakerNext()",
         )
 
         val maker = PositionMaker(src)
@@ -179,7 +179,7 @@ class PositionMakerTest {
     fun testCreatePositionAtLocation() {
         val src = CharacterSource.from(
             "he\nllo",
-            "PositionMakerTest#testCreatePositionAtLocation()"
+            "PositionMakerTest#testCreatePositionAtLocation()",
         )
 
         val maker = PositionMaker(src)
@@ -238,7 +238,7 @@ class PositionMakerTest {
         run {
             val src = CharacterSource.from(
                 "he\nllo",
-                "PositionMakerTest#getAfterInLine()"
+                "PositionMakerTest#getAfterInLine()",
             )
 
             val maker = PositionMaker(src)

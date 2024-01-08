@@ -9,7 +9,7 @@ class ShasamblyOpcodeExecutorTests {
     class Instance(
         memorySize: Int,
         bytes: ByteArray,
-        position: Int = 0
+        position: Int = 0,
     ) : ShasamblyOpcodeExecutor(memorySize, bytes, position)
 
     @Test
@@ -37,10 +37,10 @@ class ShasamblyOpcodeExecutorTests {
                 0, 20, // Short 20
                 16, 0, 0, 0, 0, 4, // Default generated instruction to end the program
                 0, 21, -1, -1, -1, -1, 0, 0, 0, 20,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
             ).toList(),
-            it.memory.toList()
+            it.memory.toList(),
         )
     }
 }

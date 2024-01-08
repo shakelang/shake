@@ -12,7 +12,7 @@ import kotlin.math.abs
 abstract class ShasamblyOpcodeExecutor(
     memorySize: Int,
     bytes: ByteArray,
-    position: Int
+    position: Int,
 ) : ShasamblyInterpretingBase(memorySize, bytes, position) {
 
     fun incr_variable_stack() {
@@ -31,8 +31,8 @@ abstract class ShasamblyOpcodeExecutor(
         if (address < 0 || address > memory.size) {
             throw Error(
                 "Address 0x${
-                address.toBytes().toHexString()
-                } out of range"
+                    address.toBytes().toHexString()
+                } out of range",
             )
         }
         position = address
@@ -57,8 +57,8 @@ abstract class ShasamblyOpcodeExecutor(
             nativeFunctions[native]
                 ?: throw Error(
                     "Unknown native function 0x${
-                    native.toBytes().toHexString()
-                    } at position 0x${position.toBytes().toHexString()}"
+                        native.toBytes().toHexString()
+                    } at position 0x${position.toBytes().toHexString()}",
                 )
             )
             .execute.invoke(this)

@@ -21,7 +21,7 @@ class ClassInfo(
     val interfaces: InterfaceList,
     val fieldInfos: FieldList,
     val methodInfos: MethodList,
-    val attributeInfos: AttributeMap
+    val attributeInfos: AttributeMap,
 ) {
 
     val isPublic: Boolean
@@ -56,7 +56,7 @@ class ClassInfo(
             interfaces,
             *fieldInfos.users,
             *methodInfos.users,
-            *attributeInfos.users
+            *attributeInfos.users,
         )
 
     val uses: Array<ConstantInfo>
@@ -69,7 +69,7 @@ class ClassInfo(
             *interfaces.uses,
             *fieldInfos.uses,
             *methodInfos.uses,
-            *attributeInfos.uses
+            *attributeInfos.uses,
         )
 
     init {
@@ -90,7 +90,7 @@ class ClassInfo(
         "interfaces" to interfaces.toJson(),
         "fieldInfos" to fieldInfos.toJson(),
         "methodInfos" to methodInfos.toJson(),
-        "attributeInfos" to attributeInfos.toJson()
+        "attributeInfos" to attributeInfos.toJson(),
     )
 
     override fun toString() = json.stringify(toJson())
@@ -140,7 +140,7 @@ class ClassInfo(
                 interfaces,
                 fieldInfos,
                 methodInfos,
-                attributeInfos
+                attributeInfos,
             )
         }
     }

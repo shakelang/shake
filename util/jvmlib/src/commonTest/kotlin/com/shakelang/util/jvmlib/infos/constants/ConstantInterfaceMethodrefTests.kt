@@ -12,7 +12,7 @@ class ConstantInterfaceMethodrefTests {
             ConstantUtf8Info("java/lang/Object"),
             ConstantNameAndTypeInfo(6u, 5u),
             ConstantUtf8Info("foo"),
-            ConstantUtf8Info("I")
+            ConstantUtf8Info("I"),
         )
 
     @Test

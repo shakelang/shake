@@ -30,7 +30,6 @@ fun KotlinMultiplatformExtension.dependencies(configure: KotlinMultiplatformExte
 val KotlinMultiplatformExtension.dependencies: KotlinMultiplatformExtensionDependencies
     get() = KotlinMultiplatformExtensionDependencies(this)
 
-
 class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExtension) {
     val commonMain: KotlinSourceSet by extension.sourceSets.getting
     val commonTest: KotlinSourceSet by extension.sourceSets.getting
@@ -46,8 +45,8 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
     val jsTest: KotlinSourceSet by extension.sourceSets.getting {
         dependsOn(commonTest)
     }
-    //val nativeMain: KotlinSourceSet by extension.sourceSets.getting
-    //val nativeTest: KotlinSourceSet by extension.sourceSets.getting
+    // val nativeMain: KotlinSourceSet by extension.sourceSets.getting
+    // val nativeTest: KotlinSourceSet by extension.sourceSets.getting
 
     val javascriptMain get() = jsMain
     val javascriptTest get() = jsTest
@@ -65,7 +64,7 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
             implementation("io.kotest:kotest-runner-junit5-jvm:5.8.0")
         }
     }
-    //val native = KotlinSourceType(nativeMain, nativeTest)
+    // val native = KotlinSourceType(nativeMain, nativeTest)
 
     fun commonMain(configure: KotlinDependencyHandler.() -> Unit) {
         commonMain.dependencies {
@@ -102,8 +101,8 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
             configure(this)
         }
     }
-    //fun nativeMain(configure: KotlinSourceSet.() -> Unit) = nativeMain.configure()
-    //fun nativeTest(configure: KotlinSourceSet.() -> Unit) = nativeTest.configure()
+    // fun nativeMain(configure: KotlinSourceSet.() -> Unit) = nativeMain.configure()
+    // fun nativeTest(configure: KotlinSourceSet.() -> Unit) = nativeTest.configure()
 
     fun common(configure: KotlinSourceType.() -> Unit) = common.configure()
     fun jvm(configure: KotlinSourceType.() -> Unit) = jvm.configure()
@@ -120,7 +119,7 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
 
     fun implementation(
         dependencyNotation: String,
-        configure: ExternalModuleDependency.() -> Unit
+        configure: ExternalModuleDependency.() -> Unit,
     ): ExternalModuleDependency = common.implementation(dependencyNotation, configure)
 
     fun <T : Dependency> implementation(dependency: T, configure: T.() -> Unit): T =
@@ -133,7 +132,7 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
 
     fun testImplementation(
         dependencyNotation: String,
-        configure: ExternalModuleDependency.() -> Unit
+        configure: ExternalModuleDependency.() -> Unit,
     ): ExternalModuleDependency = common.testImplementation(dependencyNotation, configure)
 
     fun <T : Dependency> testImplementation(dependency: T, configure: T.() -> Unit): T =
@@ -159,84 +158,84 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
 
     @Deprecated(
         "Declaring NPM dependency without version is forbidden",
-        ReplaceWith("npm(name, version)")
+        ReplaceWith("npm(name, version)"),
     )
     @Suppress("deprecation")
     fun npm(name: String): Dependency = common.npm(name)
 
     fun npm(
         name: String,
-        version: String
+        version: String,
     ): Dependency = common.npm(name, version)
 
     fun npm(
         name: String,
         directory: File,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = common.npm(name, directory, generateExternals)
 
     fun npm(
         name: String,
-        directory: File
+        directory: File,
     ): Dependency = common.npm(name, directory)
 
     fun npm(
         directory: File,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = common.npm(directory, generateExternals)
 
     fun npm(
-        directory: File
+        directory: File,
     ): Dependency = common.npm(directory)
 
     fun devNpm(
         name: String,
-        version: String
+        version: String,
     ): Dependency = common.devNpm(name, version)
 
     fun devNpm(
         name: String,
-        directory: File
+        directory: File,
     ): Dependency = common.devNpm(name, directory)
 
     fun devNpm(
-        directory: File
+        directory: File,
     ): Dependency = common.devNpm(directory)
 
     fun optionalNpm(
         name: String,
         version: String,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = common.optionalNpm(name, version, generateExternals)
 
     fun optionalNpm(
         name: String,
-        version: String
+        version: String,
     ): Dependency = common.optionalNpm(name, version)
 
     fun optionalNpm(
         name: String,
         directory: File,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = common.optionalNpm(name, directory, generateExternals)
 
     fun optionalNpm(
         name: String,
-        directory: File
+        directory: File,
     ): Dependency = common.optionalNpm(name, directory)
 
     fun optionalNpm(
         directory: File,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = common.optionalNpm(directory, generateExternals)
 
     fun optionalNpm(
-        directory: File
+        directory: File,
     ): Dependency = common.optionalNpm(directory)
 
     fun peerNpm(
         name: String,
-        version: String
+        version: String,
     ): Dependency = common.peerNpm(name, version)
 }
 
@@ -257,7 +256,7 @@ class KotlinSourceType(
 
     fun implementation(
         dependencyNotation: String,
-        configure: ExternalModuleDependency.() -> Unit
+        configure: ExternalModuleDependency.() -> Unit,
     ): ExternalModuleDependency = ret { main.dependencies { it(implementation(dependencyNotation, configure)) } }
 
     fun <T : Dependency> implementation(dependency: T, configure: T.() -> Unit): T =
@@ -271,7 +270,7 @@ class KotlinSourceType(
 
     fun testImplementation(
         dependencyNotation: String,
-        configure: ExternalModuleDependency.() -> Unit
+        configure: ExternalModuleDependency.() -> Unit,
     ): ExternalModuleDependency = ret { test.dependencies { it(implementation(dependencyNotation, configure)) } }
 
     fun <T : Dependency> testImplementation(dependency: T, configure: T.() -> Unit): T =
@@ -296,84 +295,84 @@ class KotlinSourceType(
 
     @Deprecated(
         "Declaring NPM dependency without version is forbidden",
-        ReplaceWith("npm(name, version)")
+        ReplaceWith("npm(name, version)"),
     )
     @Suppress("deprecation")
     fun npm(name: String): Dependency = ret { main.dependencies { it(npm(name)) } }
 
     fun npm(
         name: String,
-        version: String
+        version: String,
     ): Dependency = ret { main.dependencies { it(npm(name, version)) } }
 
     fun npm(
         name: String,
         directory: File,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = ret { main.dependencies { it(npm(name, directory, generateExternals)) } }
 
     fun npm(
         name: String,
-        directory: File
+        directory: File,
     ): Dependency = ret { main.dependencies { it(npm(name, directory)) } }
 
     fun npm(
         directory: File,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = ret { main.dependencies { it(npm(directory, generateExternals)) } }
 
     fun npm(
-        directory: File
+        directory: File,
     ): Dependency = ret { main.dependencies { it(npm(directory)) } }
 
     fun devNpm(
         name: String,
-        version: String
+        version: String,
     ): Dependency = ret { main.dependencies { it(devNpm(name, version)) } }
 
     fun devNpm(
         name: String,
-        directory: File
+        directory: File,
     ): Dependency = ret { main.dependencies { it(devNpm(name, directory)) } }
 
     fun devNpm(
-        directory: File
+        directory: File,
     ): Dependency = ret { main.dependencies { it(devNpm(directory)) } }
 
     fun optionalNpm(
         name: String,
         version: String,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = ret { main.dependencies { it(optionalNpm(name, version, generateExternals)) } }
 
     fun optionalNpm(
         name: String,
-        version: String
+        version: String,
     ): Dependency = ret { main.dependencies { it(optionalNpm(name, version)) } }
 
     fun optionalNpm(
         name: String,
         directory: File,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = ret { main.dependencies { it(optionalNpm(name, directory, generateExternals)) } }
 
     fun optionalNpm(
         name: String,
-        directory: File
+        directory: File,
     ): Dependency = ret { main.dependencies { it(optionalNpm(name, directory)) } }
 
     fun optionalNpm(
         directory: File,
-        generateExternals: Boolean
+        generateExternals: Boolean,
     ): Dependency = ret { main.dependencies { it(optionalNpm(directory, generateExternals)) } }
 
     fun optionalNpm(
-        directory: File
+        directory: File,
     ): Dependency = ret { main.dependencies { it(optionalNpm(directory)) } }
 
     fun peerNpm(
         name: String,
-        version: String
+        version: String,
     ): Dependency = ret { main.dependencies { it(peerNpm(name, version)) } }
 }
 

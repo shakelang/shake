@@ -7,7 +7,7 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
 
 class ConstantInvokeDynamicInfo(
     val bootstrapMethodAttributeIndex: UShort,
-    val nati: UShort
+    val nati: UShort,
 ) : ConstantInfo() {
 
     lateinit var nameAndType: ConstantNameAndTypeInfo
@@ -34,7 +34,7 @@ class ConstantInvokeDynamicInfo(
         fun contentsFromStream(stream: DataInputStream): ConstantInvokeDynamicInfo {
             return ConstantInvokeDynamicInfo(
                 stream.readUnsignedShort(),
-                stream.readUnsignedShort()
+                stream.readUnsignedShort(),
             )
         }
 

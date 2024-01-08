@@ -13,7 +13,7 @@ class ProjectStructure(
     val author: String,
     val license: String,
     val dependencies: List<String>,
-    val project: Project
+    val project: Project,
 ) {
     val toJsonObject
         get() = mapOf(
@@ -23,7 +23,7 @@ class ProjectStructure(
             "description" to description,
             "author" to author,
             "license" to license,
-            "dependencies" to dependencies
+            "dependencies" to dependencies,
         )
 
     override fun toString(): String {
@@ -55,27 +55,27 @@ class ProjectStructure(
             val dependencies = structure["dependencies"]!!
 
             if (!(path.isJsonPrimitive()) || !path.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'path' is not a string")
             }
             if (!(version.isJsonPrimitive()) || !version.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'version' is not a string")
             }
             if (!(description.isJsonPrimitive()) || !description.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'description' is not a string")
             }
             if (!(author.isJsonPrimitive()) || !author.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'author' is not a string")
             }
             if (!(license.isJsonPrimitive()) || !license.toJsonPrimitive()
-                .isString()
+                    .isString()
             ) {
                 throw IllegalArgumentException("Structure key 'license' is not a string")
             }
@@ -92,13 +92,13 @@ class ProjectStructure(
                 license.toJsonPrimitive().toStringElement().value,
                 dependencies.toJsonArray().map {
                     if (!(it.isJsonPrimitive()) || !it.toJsonPrimitive()
-                        .isString()
+                            .isString()
                     ) {
                         throw IllegalArgumentException("Structure key 'dependencies' is not a string")
                     }
                     it.toJsonPrimitive().toStringElement().value
                 },
-                baseProject.project(pathString)
+                baseProject.project(pathString),
             )
         }
     }
@@ -106,14 +106,14 @@ class ProjectStructure(
 
 class ChangelogStructure(
     val lastUpdate: Date,
-    val projects: List<ProjectStructure>
+    val projects: List<ProjectStructure>,
 ) {
     fun toJsonObject(): Map<String, Any?> {
         return mapOf(
             "projects" to projects.map {
                 it.toJsonObject
             },
-            "lastUpdate" to lastUpdate.time
+            "lastUpdate" to lastUpdate.time,
         )
     }
 
@@ -132,7 +132,7 @@ class ChangelogStructure(
 
             if (!(projects.isJsonArray())) throw IllegalArgumentException("Structure key 'projects' is not a array")
             if (!(lastUpdate.isJsonPrimitive()) || !lastUpdate.toJsonPrimitive()
-                .isInt()
+                    .isInt()
             ) {
                 throw IllegalArgumentException("Structure key 'lastUpdate' is not a number")
             }
@@ -142,7 +142,7 @@ class ChangelogStructure(
                 projects.toJsonArray().map {
                     if (!(it.isJsonObject())) throw IllegalArgumentException("Structure key 'projects' is not a object")
                     ProjectStructure.fromJsonObject(it.toJsonObject(), baseProject)
-                }
+                },
             )
         }
 
@@ -170,14 +170,14 @@ fun Changelog.readStructure() = project.subprojects.map {
         it.dependencyList.map { dependency ->
             dependency.group + ":" + dependency.name + ":" + dependency.version
         },
-        this.project
+        this.project,
     )
 }
 
 fun Changelog.newStructure() {
     val structure = ChangelogStructure(
         Date(),
-        readStructure()
+        readStructure(),
     )
     project.file(".changelog/structure.json").writeText(structure.toString())
 }
@@ -190,15 +190,15 @@ fun Changelog.updateStructure() {
     project.file(".changelog/structure.json").writeText(
         ChangelogStructure(
             Date(),
-            readStructure()
-        ).toString()
+            readStructure(),
+        ).toString(),
     )
 }
 
 fun Changelog.readStructureFile(): ChangelogStructure {
     return ChangelogStructure.fromString(
         project.file(".changelog/structure.json").readText(),
-        project
+        project,
     )
 }
 

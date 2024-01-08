@@ -12,7 +12,7 @@ class CreationShakeParameter(
     override val name: String,
     override val type: ShakeType,
     override var actualValue: CreationShakeValue? = null,
-    override var actualType: ShakeType = type
+    override var actualType: ShakeType = type,
 ) : ShakeParameter, CreationShakeDeclaration {
 
     // TODO: THESE MAY NOT BE UNIQUE
@@ -131,7 +131,7 @@ class CreationShakeParameter(
     override fun toJson(): Map<String, Any?> {
         return mapOf(
             "name" to name,
-            "type" to type.toJson()
+            "type" to type.toJson(),
         )
     }
 }

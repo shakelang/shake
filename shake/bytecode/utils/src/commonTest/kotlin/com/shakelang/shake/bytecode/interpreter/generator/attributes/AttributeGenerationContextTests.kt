@@ -6,42 +6,44 @@ import com.shakelang.util.testlib.shouldContainExactly
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class AttributeGenerationContextTests : FreeSpec({
+class AttributeGenerationContextTests : FreeSpec(
+    {
 
-    "attribute generation" {
+        "attribute generation" {
 
-        val ctx = AttributeGenerationContext(MutableConstantPool())
-        ctx.name shouldBe GenerationContext.UNDEFINED
-        ctx.data shouldBe byteArrayOf()
+            val ctx = AttributeGenerationContext(MutableConstantPool())
+            ctx.name shouldBe GenerationContext.UNDEFINED
+            ctx.data shouldBe byteArrayOf()
 
-        ctx.name = "test"
-        ctx.data = byteArrayOf(1, 2, 3, 4, 5)
+            ctx.name = "test"
+            ctx.data = byteArrayOf(1, 2, 3, 4, 5)
 
-        ctx.name shouldBe "test"
-        ctx.data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-    }
+            ctx.name shouldBe "test"
+            ctx.data shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+        }
 
-    "to attribute" {
+        "to attribute" {
 
-        val ctx = AttributeGenerationContext(MutableConstantPool())
-        ctx.name = "test"
-        ctx.data = byteArrayOf(1, 2, 3, 4, 5)
+            val ctx = AttributeGenerationContext(MutableConstantPool())
+            ctx.name = "test"
+            ctx.data = byteArrayOf(1, 2, 3, 4, 5)
 
-        val pool = MutableConstantPool()
-        val attribute = ctx.toAttribute(pool)
-        attribute.name shouldBe "test"
-        attribute.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-    }
+            val pool = MutableConstantPool()
+            val attribute = ctx.toAttribute(pool)
+            attribute.name shouldBe "test"
+            attribute.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+        }
 
-    "to mutable attribute" {
+        "to mutable attribute" {
 
-        val ctx = AttributeGenerationContext(MutableConstantPool())
-        ctx.name = "test"
-        ctx.data = byteArrayOf(1, 2, 3, 4, 5)
+            val ctx = AttributeGenerationContext(MutableConstantPool())
+            ctx.name = "test"
+            ctx.data = byteArrayOf(1, 2, 3, 4, 5)
 
-        val pool = MutableConstantPool()
-        val attribute = ctx.toMutableAttribute(pool)
-        attribute.name shouldBe "test"
-        attribute.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
-    }
-})
+            val pool = MutableConstantPool()
+            val attribute = ctx.toMutableAttribute(pool)
+            attribute.name shouldBe "test"
+            attribute.value shouldContainExactly byteArrayOf(1, 2, 3, 4, 5)
+        }
+    },
+)

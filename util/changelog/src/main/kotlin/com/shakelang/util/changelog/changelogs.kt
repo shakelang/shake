@@ -7,7 +7,7 @@ import com.shakelang.util.shason.json
 
 class ChangelogVersion(
     val version: Version,
-    val changes: List<String>
+    val changes: List<String>,
 ) {
     fun toObject(): Map<String, Any> {
         val map = mutableMapOf<String, Any>()
@@ -43,7 +43,7 @@ class PackageChangelog(
     val path: String,
     val name: String,
     val description: String,
-    val versions: MutableList<ChangelogVersion> = mutableListOf()
+    val versions: MutableList<ChangelogVersion> = mutableListOf(),
 ) {
 
     val folderPath: String
@@ -60,7 +60,7 @@ class PackageChangelog(
             val latestRelease = latestRelease ?: return true
             return Changelog.instance.dirChangedSinceTag(
                 tagRef("release/$folderPath/v${latestRelease.version}"),
-                folderPath
+                folderPath,
             )
         }
 
@@ -123,7 +123,7 @@ class PackageChangelog(
 }
 
 class ChangelogMap(
-    val packages: MutableList<PackageChangelog>
+    val packages: MutableList<PackageChangelog>,
 ) {
 
     fun toObject(): Map<String, Any> {
@@ -165,9 +165,9 @@ fun Changelog.readMap(): ChangelogMap {
                 PackageChangelog(
                     it.path,
                     it.name,
-                    it.description
+                    it.description,
                 )
-            }.toMutableList()
+            }.toMutableList(),
 //        mutableListOf()
         )
     }

@@ -86,7 +86,7 @@ interface PointingList<T> : List<T> {
         /**
          * The list of pointers
          */
-        override val pointers: List<Pointer<T>>
+        override val pointers: List<Pointer<T>>,
 
     ) : PointingList<T> {
 
@@ -225,7 +225,7 @@ interface MutablePointingList<T> : PointingList<T>, MutableList<T> {
         /**
          * The list of pointers
          */
-        override val pointers: MutablePointerList<T>
+        override val pointers: MutablePointerList<T>,
     ) : MutablePointingList<T> {
         override val size: Int
             get() = pointers.size

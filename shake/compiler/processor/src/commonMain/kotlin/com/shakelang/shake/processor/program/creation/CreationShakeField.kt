@@ -25,7 +25,7 @@ open class CreationShakeField(
     override val isNative: Boolean,
     override val initialValue: CreationShakeValue?,
     override val type: CreationShakeType,
-    override val expanding: CreationShakeType?
+    override val expanding: CreationShakeType?,
 ) : CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
 
     override val qualifiedName: String
@@ -73,6 +73,7 @@ open class CreationShakeField(
         debug("phases", "Phase 3 of field $qualifiedName")
         // Nothing to do here
     }
+
     override fun phase4() {
         debug("phases", "Phase 4 of field $qualifiedName")
         // TODO: Visit initial value
@@ -87,7 +88,7 @@ open class CreationShakeField(
             "isPrivate" to isPrivate,
             "isProtected" to isProtected,
             "isPublic" to isPublic,
-            "type" to type.toJson()
+            "type" to type.toJson(),
         )
     }
 
@@ -99,7 +100,7 @@ open class CreationShakeField(
             baseProject: CreationShakeProject,
             pkg: CreationShakePackage?,
             parentScope: CreationShakeScope,
-            node: ShakeVariableDeclarationNode
+            node: ShakeVariableDeclarationNode,
         ): CreationShakeField {
             return CreationShakeField(
                 baseProject,
@@ -116,14 +117,14 @@ open class CreationShakeField(
                 node.isNative,
                 null,
                 parentScope.getType(node.type),
-                node.expandedType?.let { parentScope.getType(it) }
+                node.expandedType?.let { parentScope.getType(it) },
             )
         }
 
         fun from(
             clazz: CreationShakeClass,
             parentScope: CreationShakeScope,
-            node: ShakeVariableDeclarationNode
+            node: ShakeVariableDeclarationNode,
         ): CreationShakeField {
             return CreationShakeField(
                 clazz.prj,
@@ -140,7 +141,7 @@ open class CreationShakeField(
                 node.isNative,
                 null,
                 parentScope.getType(node.type),
-                node.expandedType?.let { parentScope.getType(it) }
+                node.expandedType?.let { parentScope.getType(it) },
             )
         }
     }

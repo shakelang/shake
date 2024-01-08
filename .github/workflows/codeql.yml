@@ -13,10 +13,10 @@ name: "CodeQL"
 
 on:
   push:
-    branches: ["master", "development"]
+    branches: [ "master", "development" ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: ["master", "development"]
+    branches: [ "master", "development" ]
   schedule:
     - cron: "41 9 * * 6"
 
@@ -38,7 +38,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["java-kotlin", "javascript-typescript"]
+        language: [ "java-kotlin", "javascript-typescript" ]
         # CodeQL supports [ 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift' ]
         # Use only 'java-kotlin' to analyze code written in Java, Kotlin or both
         # Use only 'javascript-typescript' to analyze code written in JavaScript, TypeScript or both

@@ -86,12 +86,15 @@ open class ShakePackageBasedProcessor : ShakeProcessor<CreationShakeProject>() {
     override fun phase1() {
         project.phase1()
     }
+
     override fun phase2() {
         project.phase2()
     }
+
     override fun phase3() {
         project.phase3()
     }
+
     override fun phase4() {
         project.phase4()
     }
@@ -172,7 +175,7 @@ open class ShakeASTProcessor {
         return CreationShakeCode(
             t.children.map {
                 visitStatement(scope, it)
-            }
+            },
         )
     }
 
@@ -270,7 +273,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableDeclarationNode(
         scope: CreationShakeScope,
-        n: ShakeVariableDeclarationNode
+        n: ShakeVariableDeclarationNode,
     ): CreationShakeVariableDeclaration {
         val value = if (n.value != null) visitValue(scope, n.value!!) else null
         val type = visitType(scope, n.type) ?: value?.type ?: throw Exception("Cannot infer type of variable ${n.name}")
@@ -295,7 +298,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableAssignmentNode(
         scope: CreationShakeScope,
-        n: ShakeVariableAssignmentNode
+        n: ShakeVariableAssignmentNode,
     ): CreationShakeAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
@@ -305,7 +308,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableAddAssignmentNode(
         scope: CreationShakeScope,
-        n: ShakeVariableAddAssignmentNode
+        n: ShakeVariableAddAssignmentNode,
     ): CreationShakeAddAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
@@ -315,7 +318,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableSubAssignmentNode(
         scope: CreationShakeScope,
-        n: ShakeVariableSubAssignmentNode
+        n: ShakeVariableSubAssignmentNode,
     ): CreationShakeSubAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
@@ -325,7 +328,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableMulAssignmentNode(
         scope: CreationShakeScope,
-        n: ShakeVariableMulAssignmentNode
+        n: ShakeVariableMulAssignmentNode,
     ): CreationShakeMulAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
@@ -335,7 +338,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableDivAssignmentNode(
         scope: CreationShakeScope,
-        n: ShakeVariableDivAssignmentNode
+        n: ShakeVariableDivAssignmentNode,
     ): CreationShakeDivAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
@@ -345,7 +348,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableModAssignmentNode(
         scope: CreationShakeScope,
-        n: ShakeVariableModAssignmentNode
+        n: ShakeVariableModAssignmentNode,
     ): CreationShakeModAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
@@ -355,7 +358,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariablePowAssignmentNode(
         scope: CreationShakeScope,
-        n: ShakeVariablePowAssignmentNode
+        n: ShakeVariablePowAssignmentNode,
     ): CreationShakePowerAssignment {
         val value = visitValue(scope, n.value)
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
@@ -365,7 +368,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableIncrementNode(
         scope: CreationShakeScope,
-        n: ShakeVariableIncreaseNode
+        n: ShakeVariableIncreaseNode,
     ): CreationShakeIncrementBefore {
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         return variable.createIncrementBeforeAssignment(scope)
@@ -373,7 +376,7 @@ open class ShakeASTProcessor {
 
     private fun visitVariableDecrementNode(
         scope: CreationShakeScope,
-        n: ShakeVariableDecreaseNode
+        n: ShakeVariableDecreaseNode,
     ): CreationShakeDecrementBefore {
         val variable = getAssignable(scope, n.variable) ?: throw Exception("Cannot assign to ${n.variable}")
         return variable.createDecrementBeforeAssignment(scope)
@@ -404,7 +407,7 @@ open class ShakeASTProcessor {
 
     private fun visitBiggerEqualsNode(
         scope: CreationShakeScope,
-        n: ShakeGreaterThanOrEqualNode
+        n: ShakeGreaterThanOrEqualNode,
     ): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)
@@ -418,7 +421,7 @@ open class ShakeASTProcessor {
 
     private fun visitSmallerEqualsNode(
         scope: CreationShakeScope,
-        n: ShakeLessThanOrEqualNode
+        n: ShakeLessThanOrEqualNode,
     ): CreationShakeValue {
         val left = visitValue(scope, n.left)
         val right = visitValue(scope, n.right)

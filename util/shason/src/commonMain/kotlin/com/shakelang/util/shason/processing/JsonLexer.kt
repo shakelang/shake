@@ -22,7 +22,7 @@ class JsonLexer(
      * @since 0.1.0
      * @version 0.1.0
      */
-    private val chars: CharacterInputStream
+    private val chars: CharacterInputStream,
 
 ) {
 
@@ -88,7 +88,7 @@ class JsonLexer(
         // Create a new JsonTokenInputStream out of the tokens
         return JsonTokenInputStreamImpl(
             tokens.toTypedArray(),
-            chars.positionMaker.createPositionMap()
+            chars.positionMaker.createPositionMap(),
         )
     }
 
@@ -220,7 +220,7 @@ class JsonLexer(
             },
             start,
             this.chars.position,
-            number.toString()
+            number.toString(),
         )
     }
 
@@ -234,7 +234,7 @@ class JsonLexer(
         name: String,
         details: String,
         start: Position,
-        end: Position
+        end: Position,
     ) : CompilerError(message, name, details, start, end) {
 
         /**
@@ -252,13 +252,13 @@ class JsonLexer(
             name: String,
             details: String,
             start: Position = chars.positionMaker.createPositionAtLocation(),
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: $details in ${start.source}:${start.line}:${start.column}",
             name,
             details,
             start,
-            end
+            end,
         )
 
         /**
@@ -274,13 +274,13 @@ class JsonLexer(
         constructor(
             details: String,
             start: Position = chars.positionMaker.createPositionAtLocation(),
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: $details in ${start.source}:${start.line}:${start.column}",
             "LexerError",
             details,
             start,
-            end
+            end,
         )
     }
 }

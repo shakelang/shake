@@ -58,7 +58,7 @@ open class VersionTask : DefaultTask() {
             val bump = Bump(
                 BumpType.PATCH,
                 "Update ${project.group}:${project.name} to $newVersion",
-                dependents.map { it.path }
+                dependents.map { it.path },
             )
             bumpFile.add(bump)
             dependents.forEach { dependent ->
@@ -94,7 +94,7 @@ open class VersionTask : DefaultTask() {
             println("Bumping ${project.path} to $version")
             val entry = ChangelogVersion(
                 version,
-                messages
+                messages,
             )
 
             var it = mapFile.packages.find { it.path == project.path }
@@ -102,7 +102,7 @@ open class VersionTask : DefaultTask() {
                 it = PackageChangelog(
                     project.path,
                     project.name,
-                    description ?: ""
+                    description ?: "",
                 )
                 mapFile.add(it)
             }

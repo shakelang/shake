@@ -8,7 +8,7 @@ import com.shakelang.util.parseutils.characters.Characters
 import com.shakelang.util.parseutils.characters.position.Position
 
 class ShasPParser(
-    private val input: ShasPTokenInputStream
+    private val input: ShasPTokenInputStream,
 ) {
 
     fun parse(): ShasPProgram {
@@ -62,7 +62,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected identifier after type",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
         val name = input.actual.value!!
@@ -92,7 +92,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected identifier after type",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -116,7 +116,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected assignment operator",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -130,7 +130,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected if keyword",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -138,7 +138,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected left parenthesis",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -148,7 +148,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected right parenthesis",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -168,7 +168,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected while keyword",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -176,7 +176,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected left parenthesis",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -186,7 +186,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected right parenthesis",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -200,7 +200,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected return keyword",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -217,7 +217,7 @@ class ShasPParser(
         throw ParserError(
             "Expected semicolon",
             input.peekStart(),
-            input.peekEnd()
+            input.peekEnd(),
         )
     }
 
@@ -226,7 +226,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected for keyword",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -234,7 +234,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected left parenthesis",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -244,7 +244,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected semicolon",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -254,7 +254,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected semicolon",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -264,7 +264,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected right parenthesis",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -278,7 +278,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected do keyword",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -288,7 +288,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected while keyword",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -296,7 +296,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected left parenthesis",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -306,7 +306,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected right parenthesis",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -314,7 +314,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected semicolon",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -396,7 +396,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected '{' after function name",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -420,7 +420,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected identifier",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
 
@@ -537,10 +537,10 @@ class ShasPParser(
     private fun term(): ShasPValuedNode {
         var result = cast()
         while (input.hasNext() && input.peekType().let {
-            it == ShasPTokenType.MUL ||
-                it == ShasPTokenType.DIV ||
-                it == ShasPTokenType.MOD
-        }
+                it == ShasPTokenType.MUL ||
+                    it == ShasPTokenType.DIV ||
+                    it == ShasPTokenType.MOD
+            }
         ) {
             input.skip()
             val type = input.actualType
@@ -586,13 +586,13 @@ class ShasPParser(
     private fun compare(): ShasPValuedNode {
         var result = expr()
         while (input.hasNext() && input.peekType().let {
-            it == ShasPTokenType.EQ_EQUALS ||
-                it == ShasPTokenType.NOT_EQUALS ||
-                it == ShasPTokenType.BIGGER ||
-                it == ShasPTokenType.BIGGER_EQUALS ||
-                it == ShasPTokenType.SMALLER ||
-                it == ShasPTokenType.SMALLER_EQUALS
-        }
+                it == ShasPTokenType.EQ_EQUALS ||
+                    it == ShasPTokenType.NOT_EQUALS ||
+                    it == ShasPTokenType.BIGGER ||
+                    it == ShasPTokenType.BIGGER_EQUALS ||
+                    it == ShasPTokenType.SMALLER ||
+                    it == ShasPTokenType.SMALLER_EQUALS
+            }
         ) {
             input.skip()
             val type = input.actualType
@@ -616,7 +616,7 @@ class ShasPParser(
             throw ParserError(
                 "Expected identifier after type",
                 input.peekStart(),
-                input.peekEnd()
+                input.peekEnd(),
             )
         }
         val name = input.actual.value!!
@@ -632,19 +632,19 @@ class ShasPParser(
             name!!,
             details!!,
             start!!,
-            end!!
+            end!!,
         ) {
         constructor(
             name: String,
             details: String,
             start: Position,
-            end: Position?
+            end: Position?,
         ) : this(
             "Error occurred in parser: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             name,
             details,
             start,
-            end
+            end,
         )
 
         constructor(details: String, start: Position, end: Position?) : this("ParserError", details, start, end)
@@ -652,13 +652,13 @@ class ShasPParser(
             "ParserError",
             details,
             input.map.resolve(start),
-            input.map.resolve(end)
+            input.map.resolve(end),
         )
 
         constructor(error: String) : this(
             error,
             input.map.resolve(input.actualStart),
-            input.map.resolve(input.actualEnd)
+            input.map.resolve(input.actualEnd),
         )
     }
 }
