@@ -158,7 +158,7 @@ class CliCommand(
             when {
                 arg.startsWith("--") -> {
                     val option = getOptionByName(arg.substring(2))
-                        ?: throw IllegalArgumentException("Unknown option: $name for (sub)command: ${entry.name}")
+                        ?: throw CliUnknownOptionException("Unknown option: $name for (sub)command: ${entry.name}")
 
                     val name = option.name
 
@@ -170,7 +170,7 @@ class CliCommand(
                     if (entry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
 
                     val value = if (option.hasValue) {
-                        if (i + 1 >= args.size) throw IllegalArgumentException("Missing value for option: $name")
+                        if (i + 1 >= args.size) throw CliMissingOptionValueException("Missing value for option: $name")
                         args[++i]
                     } else {
                         "true"
@@ -181,7 +181,7 @@ class CliCommand(
                     }
 
                     val values = entry.options[name] ?: arrayOf()
-                    entry.options[name] = arrayOf(*values, Value(name, value))
+                    entry.options[name] = arrayOf(*values, Value(value))
                 }
 
                 arg.startsWith("-") -> {
@@ -209,7 +209,7 @@ class CliCommand(
                     }
 
                     val values = argEntry.options[name] ?: arrayOf()
-                    argEntry.options[name] = arrayOf(*values, Value(name, value))
+                    argEntry.options[name] = arrayOf(*values, Value(value))
                 }
 
                 else -> {
@@ -229,11 +229,11 @@ class CliCommand(
                             throw ValueValidationException("Invalid value for argument: $name")
                         }
 
-                        argEntry.arguments[name] = Value(name, arg)
+                        argEntry.arguments[name] = Value(arg)
                     } else {
                         // Find subcommand
                         val command = commands.find { it.name == arg || it.aliases.contains(arg) }
-                            ?: throw IllegalArgumentException("Unknown command: $arg")
+                            ?: throw CliUnknownSubCommandException("Unknown command: $arg")
 
                         return command.parse(args.sliceArray((i + 1) until args.size), newStack)
                     }
