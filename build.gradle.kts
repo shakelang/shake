@@ -64,7 +64,7 @@ repositories {
 plugins {
     id("org.jetbrains.dokka")
     id("org.jetbrains.kotlinx.kover")
-    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
+    id("org.jlleitschuh.gradle.ktlint") version "12.0.3"
     id("io.gitlab.arturbosch.detekt") version "1.23.4"
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
