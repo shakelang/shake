@@ -39,10 +39,16 @@ jobs:
         run: |
           ./gradlew lint sarifmerge
 
-      - name: Upload Artifact ⬆️
+      - name: Upload Report Artifact ⬆️
         uses: actions/upload-artifact@v4
         with:
           name: reports
+          path: ./build/reports/detekt/all
+
+      - name: Upload Merged Sarif Artifact ⬆️
+        uses: actions/upload-artifact@v4
+        with:
+          name: sarifmerge
           path: ./build/reports/sarifmerge
 
       - name: Upload SARIF file for GitHub Advanced Security 📂
