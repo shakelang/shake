@@ -1,4 +1,4 @@
-name: Lint using detekt
+name: Lint
 
 # Run workflow each time code is pushed to your repository and on a schedule.
 # The scheduled workflow runs every Thursday at 15:45 UTC.
@@ -59,7 +59,7 @@ jobs:
           category: Detekt
 
   lint-ktlint:
-    name: Lint using detekt 🔬
+    name: Lint using KtLint 🔬
     runs-on: ubuntu-latest
 
     steps:
