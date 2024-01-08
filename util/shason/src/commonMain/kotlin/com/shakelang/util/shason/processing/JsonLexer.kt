@@ -24,7 +24,7 @@ class JsonLexer(
      */
     private val chars: CharacterInputStream,
 
-    ) {
+) {
 
     /**
      * Make a [JsonTokenInputStream] from the [chars] of the [JsonLexer]

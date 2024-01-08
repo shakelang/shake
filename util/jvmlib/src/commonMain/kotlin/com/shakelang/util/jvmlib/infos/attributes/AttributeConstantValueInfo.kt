@@ -15,7 +15,7 @@ class AttributeConstantValueInfo(
     attributeName: ConstantUtf8Info,
     val value: ConstantInfo,
 
-    ) : AttributeInfo(attributeName) {
+) : AttributeInfo(attributeName) {
 
     override val uses: Array<ConstantInfo> get() = arrayOf(name, value)
     val valueIndex: UShort get() = value.index

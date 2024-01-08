@@ -32,7 +32,7 @@ class Test : FreeSpec(
                     return c
                 }
             }
-            """.trimIndent(),
+                """.trimIndent(),
             )
             processor.finish()
 

@@ -238,7 +238,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                 },
                 method,
 
-                )
+            )
 
             code.tick(3)
 
@@ -257,7 +257,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                 },
                 method,
 
-                )
+            )
 
             code.tick(3)
 

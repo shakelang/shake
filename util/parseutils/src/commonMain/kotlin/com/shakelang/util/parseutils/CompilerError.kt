@@ -206,7 +206,7 @@ open class CompilerError : Error {
         @JsName("marker")
         val marker: String,
 
-        ) {
+    ) {
 
         /**
          * Generate the [ErrorMarker] as a string

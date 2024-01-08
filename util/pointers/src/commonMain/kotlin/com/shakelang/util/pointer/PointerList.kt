@@ -88,7 +88,7 @@ interface PointingList<T> : List<T> {
          */
         override val pointers: List<Pointer<T>>,
 
-        ) : PointingList<T> {
+    ) : PointingList<T> {
 
         /**
          * Returns the element at the specified index in the list.

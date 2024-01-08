@@ -30,7 +30,7 @@ class ShakeMap(
     val project_methods: Array<Int>,
     val project_fields: Array<Int>,
 
-    ) {
+) {
 
     val magic = 0x3082d75f
     val version = 0x00000001
@@ -986,7 +986,7 @@ class MapAssembledProject(
     val fieldPointers: PointerList<ShakeField>,
     override val projectScope: ShakeScope,
 
-    ) : ShakeProject {
+) : ShakeProject {
 
     override val subpackages: List<ShakePackage> = packagePointers.values()
     override fun phase1() {

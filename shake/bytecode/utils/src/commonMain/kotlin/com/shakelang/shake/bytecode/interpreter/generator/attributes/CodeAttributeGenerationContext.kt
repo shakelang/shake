@@ -21,6 +21,7 @@ class CodeAttributeGenerationContext(constantPool: MutableConstantPool) : Attrib
          * @deprecated Modify the data of the attribute directly
          */
         get() = toAttribute(MutableConstantPool()).value
+
         /**
          * @deprecated Modify the data of the attribute directly
          */

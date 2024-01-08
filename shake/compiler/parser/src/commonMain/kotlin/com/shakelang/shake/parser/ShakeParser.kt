@@ -82,7 +82,7 @@ class ShakeParserImpl(
      */
     override val input: ShakeTokenInputStream,
 
-    ) : ShakeParser() {
+) : ShakeParser() {
 
     /**
      * The [PositionMap] of the [input]. It is directly taken from the [input], because [ShakeTokenInputStream]

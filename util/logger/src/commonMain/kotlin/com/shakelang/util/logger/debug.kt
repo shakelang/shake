@@ -269,7 +269,7 @@ private class DebugImpl(
      */
     override val path: String?,
 
-    ) : Debug {
+) : Debug {
 
     /**
      * The path prefix of the debug output

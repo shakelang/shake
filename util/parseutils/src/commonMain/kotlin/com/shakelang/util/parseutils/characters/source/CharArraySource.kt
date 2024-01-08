@@ -32,7 +32,7 @@ internal class CharArraySource(
      */
     override val location: String,
 
-    ) : CharacterSource {
+) : CharacterSource {
 
     /**
      * The length of the [CharacterSource] (implementation of [CharacterSource.length])
