@@ -6,15 +6,19 @@ import io.kotest.matchers.shouldBe
 class ValueTests : FreeSpec({
 
     "ValueValidator.accepts() should return true if no error is thrown" {
-        (valueValidator {
-            // Silence is golden
-        }).accepts(null) shouldBe true
+        (
+            valueValidator {
+                // Silence is golden
+            }
+            ).accepts(null) shouldBe true
     }
 
     "ValueValidator.accepts() should return false if an error is thrown" {
-        (valueValidator {
-            throw ValueValidationException("Test")
-        }).accepts(null) shouldBe false
+        (
+            valueValidator {
+                throw ValueValidationException("Test")
+            }
+            ).accepts(null) shouldBe false
     }
 
     "#value should return the value" {
@@ -24,199 +28,199 @@ class ValueTests : FreeSpec({
     "#to() should return the value transformed" {
         Value("Test").to { "$it!" } shouldBe "Test!"
     }
-    
+
     "#toByte() should return the value transformed to a byte" {
         Value("1").toByte() shouldBe 1.toByte()
     }
-    
+
     "#toByte() should throw a NumberFormatException if the value is null" {
         runCatching { Value(null).toByte() }.isFailure shouldBe true
     }
-    
+
     "#toByte() should throw a NumberFormatException if the value is is not parsable" {
         runCatching { Value("Test").toByte() }.isFailure shouldBe true
     }
-    
+
     "#toShort() should return the value transformed to a short" {
         Value("1").toShort() shouldBe 1.toShort()
     }
-    
+
     "#toShort() should throw a NumberFormatException if the value is null" {
         runCatching { Value(null).toShort() }.isFailure shouldBe true
     }
-    
+
     "#toShort() should throw a NumberFormatException if the value is is not parsable" {
         runCatching { Value("Test").toShort() }.isFailure shouldBe true
     }
-    
+
     "#toInt() should return the value transformed to an int" {
         Value("1").toInt() shouldBe 1
     }
-    
+
     "#toInt() should throw a NumberFormatException if the value is null" {
         runCatching { Value(null).toInt() }.isFailure shouldBe true
     }
-    
+
     "#toInt() should throw a NumberFormatException if the value is is not parsable" {
         runCatching { Value("Test").toInt() }.isFailure shouldBe true
     }
-    
+
     "#toLong() should return the value transformed to a long" {
         Value("1").toLong() shouldBe 1L
     }
-    
+
     "#toLong() should throw a NumberFormatException if the value is null" {
         runCatching { Value(null).toLong() }.isFailure shouldBe true
     }
-    
+
     "#toLong() should throw a NumberFormatException if the value is is not parsable" {
         runCatching { Value("Test").toLong() }.isFailure shouldBe true
     }
-    
+
     "#toFloat() should return the value transformed to a float" {
         Value("1").toFloat() shouldBe 1.0f
     }
-    
+
     "#toFloat() should throw a NumberFormatException if the value is null" {
         runCatching { Value(null).toFloat() }.isFailure shouldBe true
     }
-    
+
     "#toFloat() should throw a NumberFormatException if the value is is not parsable" {
         runCatching { Value("Test").toFloat() }.isFailure shouldBe true
     }
-    
+
     "#toDouble() should return the value transformed to a double" {
         Value("1").toDouble() shouldBe 1.0
     }
-    
+
     "#toDouble() should throw a NumberFormatException if the value is null" {
         runCatching { Value(null).toDouble() }.isFailure shouldBe true
     }
-    
+
     "#toDouble() should throw a NumberFormatException if the value is is not parsable" {
         runCatching { Value("Test").toDouble() }.isFailure shouldBe true
     }
-    
+
     "#toBoolean() should return the value transformed to a boolean" {
         Value("true").toBoolean() shouldBe true
     }
-    
+
     "#toBoolean() should throw a NumberFormatException if the value is null" {
         runCatching { Value(null).toBoolean() }.isFailure shouldBe true
     }
-    
+
     "#toBoolean() should throw a NumberFormatException if the value is is not parsable" {
         runCatching { Value("Test").toBoolean() }.isFailure shouldBe true
     }
-    
+
     "#toString() should return the value transformed to a string" {
         Value("Test").toString() shouldBe "Test"
     }
-    
+
     "#toString() should throw a NullPointerException if the value is null" {
         runCatching { Value(null).toString() }.isFailure shouldBe true
     }
-    
+
     "#toOrNull() should return the value transformed" {
         Value("Test").toOrNull { "$it!" } shouldBe "Test!"
     }
-    
+
     "#toByteOrNull() should return the value transformed to a byte" {
         Value("1").toByteOrNull() shouldBe 1.toByte()
     }
-    
+
     "#toByteOrNull() should return null if the value is null" {
         Value(null).toByteOrNull() shouldBe null
     }
-    
+
     "#toByteOrNull() should return null if the value is is not parsable" {
         Value("Test").toByteOrNull() shouldBe null
     }
-    
+
     "#toShortOrNull() should return the value transformed to a short" {
         Value("1").toShortOrNull() shouldBe 1.toShort()
     }
-    
+
     "#toShortOrNull() should return null if the value is null" {
         Value(null).toShortOrNull() shouldBe null
     }
-    
+
     "#toShortOrNull() should return null if the value is is not parsable" {
         Value("Test").toShortOrNull() shouldBe null
     }
-    
+
     "#toIntOrNull() should return the value transformed to an int" {
         Value("1").toIntOrNull() shouldBe 1
     }
-    
+
     "#toIntOrNull() should return null if the value is null" {
         Value(null).toIntOrNull() shouldBe null
     }
-    
+
     "#toIntOrNull() should return null if the value is is not parsable" {
         Value("Test").toIntOrNull() shouldBe null
     }
-    
+
     "#toLongOrNull() should return the value transformed to a long" {
         Value("1").toLongOrNull() shouldBe 1L
     }
-    
+
     "#toLongOrNull() should return null if the value is null" {
         Value(null).toLongOrNull() shouldBe null
     }
-    
+
     "#toLongOrNull() should return null if the value is is not parsable" {
         Value("Test").toLongOrNull() shouldBe null
     }
-    
+
     "#toFloatOrNull() should return the value transformed to a float" {
         Value("1").toFloatOrNull() shouldBe 1.0f
     }
-    
+
     "#toFloatOrNull() should return null if the value is null" {
         Value(null).toFloatOrNull() shouldBe null
     }
-    
+
     "#toFloatOrNull() should return null if the value is is not parsable" {
         Value("Test").toFloatOrNull() shouldBe null
     }
-    
+
     "#toDoubleOrNull() should return the value transformed to a double" {
         Value("1").toDoubleOrNull() shouldBe 1.0
     }
-    
+
     "#toDoubleOrNull() should return null if the value is null" {
         Value(null).toDoubleOrNull() shouldBe null
     }
-    
+
     "#toDoubleOrNull() should return null if the value is is not parsable" {
         Value("Test").toDoubleOrNull() shouldBe null
     }
-    
+
     "#toBooleanOrNull() should return the value transformed to a boolean" {
         Value("true").toBooleanOrNull() shouldBe true
     }
-    
+
     "#toBooleanOrNull() should return null if the value is null" {
         Value(null).toBooleanOrNull() shouldBe null
     }
-    
+
     "#toBooleanOrNull() should return null if the value is is not parsable" {
         Value("Test").toBooleanOrNull() shouldBe null
     }
-    
+
     "#toStringOrNull() should return the value transformed to a string" {
         Value("Test").toStringOrNull() shouldBe "Test"
     }
-    
+
     "#toStringOrNull() should return null if the value is null" {
         Value(null).toStringOrNull() shouldBe null
     }
-    
+
     "#validate() should validate the value" {
         Value("Test").validate { } shouldBe true
     }
-    
+
     "#validate() should throw a ValueValidationException if the value is not valid" {
         Value("Test").validate { throw ValueValidationException("Test") } shouldBe false
     }
