@@ -120,7 +120,7 @@ class TypeDescriptorTests : FreeSpec({
     "ObjectType#descriptor with with two generic types" {
         TypeDescriptor.ObjectType(
             "test",
-            listOf(TypeDescriptor.ByteType.INSTANCE, TypeDescriptor.IntType.INSTANCE)
+            listOf(TypeDescriptor.ByteType.INSTANCE, TypeDescriptor.IntType.INSTANCE),
         ).descriptor shouldBe "Ltest@B+I;"
     }
 
@@ -140,7 +140,7 @@ class TypeDescriptorTests : FreeSpec({
         (
             TypeDescriptor.ObjectType("test") == TypeDescriptor.ObjectType(
                 "test",
-                listOf(TypeDescriptor.ByteType.INSTANCE)
+                listOf(TypeDescriptor.ByteType.INSTANCE),
             )
             ) shouldBe false
     }
@@ -149,7 +149,7 @@ class TypeDescriptorTests : FreeSpec({
         (
             TypeDescriptor.ObjectType(
                 "test",
-                listOf(TypeDescriptor.ByteType.INSTANCE)
+                listOf(TypeDescriptor.ByteType.INSTANCE),
             ) == TypeDescriptor.ObjectType("test", listOf(TypeDescriptor.ByteType.INSTANCE))
             ) shouldBe true
     }
@@ -221,14 +221,14 @@ class TypeDescriptorTests : FreeSpec({
     "Parsing of ObjectType with one generic type should return ObjectType" {
         TypeDescriptor.parse("Ltest@B;") shouldBe TypeDescriptor.ObjectType(
             "test",
-            listOf(TypeDescriptor.ByteType.INSTANCE)
+            listOf(TypeDescriptor.ByteType.INSTANCE),
         )
     }
 
     "Parsing of ObjectType with two generic types should return ObjectType" {
         TypeDescriptor.parse("Ltest@B+I;") shouldBe TypeDescriptor.ObjectType(
             "test",
-            listOf(TypeDescriptor.ByteType.INSTANCE, TypeDescriptor.IntType.INSTANCE)
+            listOf(TypeDescriptor.ByteType.INSTANCE, TypeDescriptor.IntType.INSTANCE),
         )
     }
 
@@ -244,8 +244,8 @@ class TypeDescriptorTests : FreeSpec({
         TypeDescriptor.parse("[Ltest@B;") shouldBe TypeDescriptor.ArrayType(
             TypeDescriptor.ObjectType(
                 "test",
-                listOf(TypeDescriptor.ByteType.INSTANCE)
-            )
+                listOf(TypeDescriptor.ByteType.INSTANCE),
+            ),
         )
     }
 
@@ -253,8 +253,8 @@ class TypeDescriptorTests : FreeSpec({
         TypeDescriptor.parse("[Ltest@B+I;") shouldBe TypeDescriptor.ArrayType(
             TypeDescriptor.ObjectType(
                 "test",
-                listOf(TypeDescriptor.ByteType.INSTANCE, TypeDescriptor.IntType.INSTANCE)
-            )
+                listOf(TypeDescriptor.ByteType.INSTANCE, TypeDescriptor.IntType.INSTANCE),
+            ),
         )
     }
 
@@ -266,16 +266,16 @@ class TypeDescriptorTests : FreeSpec({
         TypeDescriptor.parse("[[Ltest;") shouldBe TypeDescriptor.ArrayType(
             TypeDescriptor.ArrayType(
                 TypeDescriptor.ObjectType(
-                    "test"
-                )
-            )
+                    "test",
+                ),
+            ),
         )
     }
 
     "Parsing of ObjectType with generic object type" {
         TypeDescriptor.parse("Ltest@Ltest2;;") shouldBe TypeDescriptor.ObjectType(
             "test",
-            listOf(TypeDescriptor.ObjectType("test2"))
+            listOf(TypeDescriptor.ObjectType("test2")),
         )
     }
 })

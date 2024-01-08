@@ -8,7 +8,7 @@ import com.shakelang.util.primitives.calc.shl
 import kotlin.jvm.JvmName
 
 open class ShakeBytecodeInstructionGenerator(
-    val bytes: MutableList<Byte> = mutableListOf()
+    val bytes: MutableList<Byte> = mutableListOf(),
 ) {
 
     fun pointer() = bytes.size
@@ -617,9 +617,9 @@ open class ShakeBytecodeInstructionGenerator(
 
 open class PooledShakeBytecodeInstructionGenerator(
     val constantPool: MutableConstantPool,
-    bytes: MutableList<Byte> = mutableListOf<Byte>()
+    bytes: MutableList<Byte> = mutableListOf<Byte>(),
 ) : ShakeBytecodeInstructionGenerator(
-    bytes
+    bytes,
 ) {
 
     fun utf8Ref(value: String) = addBytes(*constantPool.resolveUtf8(value).toBytes())
@@ -645,7 +645,7 @@ fun bytecode(init: ShakeBytecodeInstructionGenerator.() -> Unit): ByteArray {
 
 fun bytecode(
     constantPool: MutableConstantPool,
-    init: PooledShakeBytecodeInstructionGenerator.() -> Unit
+    init: PooledShakeBytecodeInstructionGenerator.() -> Unit,
 ): ByteArray {
     val generator = PooledShakeBytecodeInstructionGenerator(constantPool)
     generator.init()

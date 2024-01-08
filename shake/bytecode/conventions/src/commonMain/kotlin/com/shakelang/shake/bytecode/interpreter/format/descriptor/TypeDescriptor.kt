@@ -37,7 +37,8 @@ interface TypeDescriptor {
          * The [INSTANCE] of the [ByteType]
          * @since 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -71,7 +72,8 @@ interface TypeDescriptor {
          * The [INSTANCE] of the [ShortType]
          * @since 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -106,7 +108,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -144,7 +147,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -182,7 +186,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -220,7 +225,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -258,7 +264,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -296,7 +303,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -334,7 +342,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -372,7 +381,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -410,7 +420,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -448,7 +459,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**
@@ -486,7 +498,8 @@ interface TypeDescriptor {
          * @since 0.1.0
          * @version 0.1.0
          */
-        INSTANCE
+        INSTANCE,
+
         ;
 
         /**

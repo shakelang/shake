@@ -7,7 +7,7 @@ class ShakePackageNode(map: PositionMap, val pkg: Array<String>) : ShakeFileChil
     override fun toJson(): Map<String, *> =
         mapOf(
             "name" to nodeName,
-            "package" to pkg
+            "package" to pkg,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

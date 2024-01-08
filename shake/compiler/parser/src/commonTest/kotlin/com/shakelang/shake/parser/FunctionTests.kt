@@ -15,7 +15,7 @@ class FunctionTests : FreeSpec({
 
     class FunctionDeclarationDescriptor(
         val declarationType: String,
-        val typeClass: ShakeVariableType
+        val typeClass: ShakeVariableType,
     ) {
         val name get() = "$declarationType declaration"
     }
@@ -33,7 +33,7 @@ class FunctionTests : FreeSpec({
         FunctionDeclarationDescriptor("float", ShakeVariableType.FLOAT),
         FunctionDeclarationDescriptor("double", ShakeVariableType.DOUBLE),
         FunctionDeclarationDescriptor("char", ShakeVariableType.CHAR),
-        FunctionDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN)
+        FunctionDeclarationDescriptor("boolean", ShakeVariableType.BOOLEAN),
     ).forEach {
         ShakeAccessDescriber.entries.forEach { access ->
 
@@ -45,7 +45,7 @@ class FunctionTests : FreeSpec({
                 val fn = ParserTestUtil.parseSingle(
                     "<FunctionTest>",
                     "$accessPrefix${it.declarationType} test() { return 10; }",
-                    ShakeFunctionDeclarationNode::class
+                    ShakeFunctionDeclarationNode::class,
                 )
                 fn.access shouldBe access
                 fn.name shouldBe "test"
@@ -65,7 +65,7 @@ class FunctionTests : FreeSpec({
                     val fn = ParserTestUtil.parseSingle(
                         "<FunctionTest>",
                         "${creationParams.joinToString(" ")} ${it.declarationType} test() { return 10; }",
-                        ShakeFunctionDeclarationNode::class
+                        ShakeFunctionDeclarationNode::class,
                     )
                     fn.access shouldBe access
                     fn.name shouldBe "test"

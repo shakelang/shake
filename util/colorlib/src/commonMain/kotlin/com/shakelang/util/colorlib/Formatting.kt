@@ -14,7 +14,7 @@ enum class Formatting(
      * @since 0.1.0
      * @version 0.1.1
      */
-    override val code: Int
+    override val code: Int,
 
 ) : FormattingType {
 
@@ -106,7 +106,8 @@ enum class Formatting(
      * @since 0.1.0
      * @version 0.1.1
      */
-    INVERT(7);
+    INVERT(7),
+    ;
 
     /**
      * Stringify the formatting code
@@ -129,7 +130,7 @@ enum class Formatting(
         /**
          * The formatting-code
          */
-        override val code: Int
+        override val code: Int,
 
     ) : FormattingType {
 
@@ -291,7 +292,8 @@ enum class Formatting(
          * @since 0.1.0
          * @version 0.1.1
          */
-        BRIGHT_WHITE(97);
+        BRIGHT_WHITE(97),
+        ;
 
         /**
          * Stringify the formatting code
@@ -318,7 +320,7 @@ enum class Formatting(
          * @since 0.1.0
          * @version 0.1.1
          */
-        override val code: Int
+        override val code: Int,
 
     ) : FormattingType {
 
@@ -480,7 +482,8 @@ enum class Formatting(
          * @since 0.1.0
          * @version 0.1.1
          */
-        BRIGHT_WHITE(107);
+        BRIGHT_WHITE(107),
+        ;
 
         /**
          * Stringify the formatting code

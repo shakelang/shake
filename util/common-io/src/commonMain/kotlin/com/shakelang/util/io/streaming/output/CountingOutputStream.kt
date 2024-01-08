@@ -16,7 +16,7 @@ class CountingOutputStream(
      * @since 0.1.0
      * @version 0.1.1
      */
-    val out: OutputStream
+    val out: OutputStream,
 
 ) : OutputStream() {
 

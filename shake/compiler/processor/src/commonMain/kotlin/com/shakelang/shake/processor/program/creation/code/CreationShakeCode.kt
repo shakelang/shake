@@ -9,11 +9,11 @@ import com.shakelang.shake.processor.program.creation.code.statements.CreationSh
 import com.shakelang.shake.processor.program.types.code.ShakeCode
 
 open class CreationShakeCode(
-    override val statements: List<CreationShakeStatement>
+    override val statements: List<CreationShakeStatement>,
 ) : ShakeCode {
 
     open class ShakeLateProcessCode(
-        open val tree: ShakeBlockNode
+        open val tree: ShakeBlockNode,
     ) : CreationShakeCode(emptyList()) {
 
         override lateinit var statements: List<CreationShakeStatement>
@@ -29,12 +29,12 @@ open class CreationShakeCode(
 
     override fun toJson(): Map<String, Any> {
         return mapOf(
-            "statements" to statements.map { it.toJson() }
+            "statements" to statements.map { it.toJson() },
         )
     }
 
     class LocalScope(
-        override val parent: CreationShakeScope
+        override val parent: CreationShakeScope,
     ) : CreationShakeScope() {
 
         val locals = mutableListOf<CreationShakeVariableDeclaration>()

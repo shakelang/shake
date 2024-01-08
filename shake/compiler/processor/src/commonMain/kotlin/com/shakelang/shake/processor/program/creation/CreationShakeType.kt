@@ -4,7 +4,7 @@ import com.shakelang.shake.processor.program.types.ShakeType
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 
 abstract class CreationShakeType(
-    override val name: String
+    override val name: String,
 ) : ShakeType {
 
     abstract override val kind: ShakeType.Kind
@@ -32,7 +32,7 @@ abstract class CreationShakeType(
 
     abstract class Primitive(
         name: String,
-        override val type: ShakeType.PrimitiveType
+        override val type: ShakeType.PrimitiveType,
     ) : CreationShakeType(name), ShakeType.Primitive {
         override val kind: ShakeType.Kind
             get() = ShakeType.Kind.PRIMITIVE
@@ -438,7 +438,7 @@ abstract class CreationShakeType(
     }
 
     class Object(
-        override val clazz: CreationShakeClass
+        override val clazz: CreationShakeClass,
     ) : CreationShakeType(clazz.qualifiedName), ShakeType.Object {
 
         override val kind: ShakeType.Kind
@@ -466,7 +466,7 @@ abstract class CreationShakeType(
 
     class Array(
         name: String,
-        val elementType: CreationShakeType
+        val elementType: CreationShakeType,
     ) : CreationShakeType(name) {
 
         override val kind: ShakeType.Kind
@@ -495,7 +495,7 @@ abstract class CreationShakeType(
     class Lambda(
         name: String,
         val parameters: List<CreationShakeParameter>,
-        val returnType: CreationShakeType
+        val returnType: CreationShakeType,
     ) : CreationShakeType(name) {
 
         override val kind: ShakeType.Kind
@@ -520,7 +520,7 @@ abstract class CreationShakeType(
             return mapOf(
                 "type" to "lambda",
                 "parameters" to parameters.map { it.toJson() },
-                "returnType" to returnType.toJson()
+                "returnType" to returnType.toJson(),
             )
         }
 

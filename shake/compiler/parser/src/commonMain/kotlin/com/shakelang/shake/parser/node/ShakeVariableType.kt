@@ -23,7 +23,7 @@ open class ShakeVariableType : ShakeNode {
     override fun toJson(): Map<String, *> =
         mapOf(
             "name" to nodeName,
-            "type" to type.name.lowercase()
+            "type" to type.name.lowercase(),
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {
@@ -65,7 +65,8 @@ open class ShakeVariableType : ShakeNode {
         CHAR,
         ARRAY,
         OBJECT,
-        VOID;
+        VOID,
+        ;
 
         override fun toString(): String {
             return name.lowercase()

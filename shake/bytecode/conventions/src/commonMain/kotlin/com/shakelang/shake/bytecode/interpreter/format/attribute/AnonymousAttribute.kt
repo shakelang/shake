@@ -9,7 +9,7 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
 open class AnonymousAttributeImpl(
     override val pool: ConstantPool,
     override val nameConstant: Int,
-    override val value: ByteArray
+    override val value: ByteArray,
 ) : Attribute {
 
     override val name: String get() = pool.getUtf8(nameConstant).value
@@ -68,7 +68,7 @@ open class AnonymousAttributeImpl(
 class MutableAnonymousAttributeImpl(
     pool: MutableConstantPool,
     override var nameConstant: Int,
-    override var value: ByteArray
+    override var value: ByteArray,
 ) : AnonymousAttributeImpl(pool, nameConstant, value), MutableAttribute {
 
     override val pool: MutableConstantPool
@@ -85,7 +85,7 @@ class MutableAnonymousAttributeImpl(
             return MutableAnonymousAttributeImpl(
                 attribute.pool as MutableConstantPool,
                 attribute.nameConstant,
-                attribute.value
+                attribute.value,
             )
         }
 
@@ -101,7 +101,7 @@ class MutableAnonymousAttributeImpl(
         fun fromStream(
             pool: MutableConstantPool,
             stream: DataInputStream,
-            nameConstant: Int
+            nameConstant: Int,
         ): MutableAnonymousAttributeImpl {
             val size = stream.readInt()
             val value = ByteArray(size) {

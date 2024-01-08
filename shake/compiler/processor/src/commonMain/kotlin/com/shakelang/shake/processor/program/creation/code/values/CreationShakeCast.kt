@@ -7,7 +7,7 @@ import com.shakelang.shake.processor.program.types.code.values.ShakeValue
 class CreationShakeCast(
     override val project: ShakeProject,
     val value: CreationShakeValue,
-    val castTarget: CreationShakeType
+    val castTarget: CreationShakeType,
 ) : CreationShakeValue, ShakeValue {
     override val type: CreationShakeType
         get() = castTarget
@@ -16,7 +16,7 @@ class CreationShakeCast(
         return mapOf(
             "type" to "cast",
             "value" to value.toJson(),
-            "castTarget" to castTarget.toJson()
+            "castTarget" to castTarget.toJson(),
         )
     }
 }

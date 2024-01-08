@@ -19,7 +19,7 @@ fun valueValidator(validator: ValueValidator): ValueValidator = validator
  * A wrapper for a string-encoded value
  */
 data class Value(
-    val value: String?
+    val value: String?,
 ) {
     fun <T> to(valueTransformer: ValueTransformer<T>) = valueTransformer(value ?: throw NullPointerException("Value is null"))
     fun toByte(): Byte = value?.toByteOrNull() ?: throw NumberFormatException("Value is null")

@@ -13,7 +13,7 @@ class SourceCharacterInputStreamTests {
     fun testSourceCharacterInputStreamContent() {
         val stream = createSourceCharacterInputStream(
             "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamContent()"
+            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamContent()",
         )
 
         assertEquals("hello", stream.content.concatToString())
@@ -23,7 +23,7 @@ class SourceCharacterInputStreamTests {
     fun testSourceCharacterInputStreamNext() {
         val stream = createSourceCharacterInputStream(
             "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamNext()"
+            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamNext()",
         )
 
         assertEquals('h', stream.next())
@@ -41,7 +41,7 @@ class SourceCharacterInputStreamTests {
     fun testSourceCharacterInputStreamPeek() {
         val stream = createSourceCharacterInputStream(
             "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamPeek()"
+            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamPeek()",
         )
 
         assertEquals('h', stream.peek())
@@ -64,7 +64,7 @@ class SourceCharacterInputStreamTests {
     fun testSourceCharacterInputStreamSkip() {
         val stream = createSourceCharacterInputStream(
             "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamSkip()"
+            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamSkip()",
         )
 
         stream.skip()
@@ -82,7 +82,7 @@ class SourceCharacterInputStreamTests {
     fun testSourceCharacterInputStreamActual() {
         val stream = createSourceCharacterInputStream(
             "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamActual()"
+            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamActual()",
         )
 
         stream.skip()
@@ -93,7 +93,7 @@ class SourceCharacterInputStreamTests {
     fun testSourceCharacterInputStreamPosition() {
         val stream = createSourceCharacterInputStream(
             "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamPosition()"
+            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamPosition()",
         )
 
         assertSame(-1, stream.position)
@@ -107,7 +107,7 @@ class SourceCharacterInputStreamTests {
     fun testSourceCharacterInputStreamHas() {
         val stream = createSourceCharacterInputStream(
             "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamHas()"
+            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamHas()",
         )
 
         assertFailsWith<Error>("The given number must be 1 or bigger") {
@@ -129,7 +129,7 @@ class SourceCharacterInputStreamTests {
     fun testSourceCharacterInputStreamHasNext() {
         val stream = createSourceCharacterInputStream(
             "hello",
-            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamHasNext()"
+            "SourceCharacterInputStreamTests#testSourceCharacterInputStreamHasNext()",
         )
 
         assertTrue(stream.hasNext())

@@ -11,7 +11,7 @@ class CliOption(
     val defaultValue: String? = null,
     val valueName: String? = null,
     val valueDescription: String? = null,
-    val valueValidator: ValueValidator? = null
+    val valueValidator: ValueValidator? = null,
 ) {
     fun getUsage(): String {
         val builder = StringBuilder()
@@ -19,7 +19,7 @@ class CliOption(
         if (shortAlias.isNotEmpty() || aliases.isNotEmpty()) {
             val aliases = arrayOf(
                 *shortAlias.map { "-$it" }.toTypedArray(),
-                *aliases.map { "--$it" }.toTypedArray()
+                *aliases.map { "--$it" }.toTypedArray(),
             )
             builder.append(" (", aliases.joinToString(", "), ")")
         }
@@ -71,7 +71,7 @@ class CliOptionCreationContext {
             defaultValue,
             valueName,
             valueDescription,
-            valueValidator
+            valueValidator,
         )
     }
 }

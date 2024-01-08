@@ -46,7 +46,7 @@ object JSON {
                 is Int -> " ".repeat(indent)
                 is Boolean -> if (indent) "  " else null
                 else -> throw Error("Wrong indent input: \"$indent\"")
-            }
+            },
         )
     }
 }

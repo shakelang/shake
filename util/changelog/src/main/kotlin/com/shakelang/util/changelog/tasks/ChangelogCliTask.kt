@@ -57,7 +57,7 @@ open class ChangelogCliTask : DefaultTask() {
             project,
             logger,
             changedEntries,
-            unchangedEntries
+            unchangedEntries,
         )
 
         frame.requestFocus()

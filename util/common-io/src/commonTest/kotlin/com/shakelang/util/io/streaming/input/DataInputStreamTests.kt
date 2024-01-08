@@ -26,8 +26,8 @@ class DataInputStreamTests {
                 0x0Cu,
                 0x0Du,
                 0x0Eu,
-                0x0Fu
-            )
+                0x0Fu,
+            ),
         )
         val stream = DataInputStream(bytes)
         assertEquals(0x00, stream.read())
@@ -67,8 +67,8 @@ class DataInputStreamTests {
                 0x0Cu,
                 0x0Du,
                 0x0Eu,
-                0x0Fu
-            )
+                0x0Fu,
+            ),
         )
         val stream = DataInputStream(bytes)
         val buffer = ByteArray(16)
@@ -110,8 +110,8 @@ class DataInputStreamTests {
                 0x0Cu,
                 0x0Du,
                 0x0Eu,
-                0x0Fu
-            )
+                0x0Fu,
+            ),
         )
         val stream = DataInputStream(bytes)
         assertEquals(0x00, stream.read())
@@ -138,8 +138,8 @@ class DataInputStreamTests {
         val bytes = ByteArrayInputStream(
             byteArrayOf(
                 0x00u, 0x01u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
-                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu
-            )
+                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
+            ),
         )
         val stream = DataInputStream(bytes)
         assertEquals(0x0001u.toShort(), stream.readShort())
@@ -157,8 +157,8 @@ class DataInputStreamTests {
         val bytes = ByteArrayInputStream(
             byteArrayOf(
                 0x00u, 0x01u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
-                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu
-            )
+                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
+            ),
         )
         val stream = DataInputStream(bytes)
         assertEquals(0x00017FFFu.toInt(), stream.readInt())
@@ -172,8 +172,8 @@ class DataInputStreamTests {
         val bytes = ByteArrayInputStream(
             byteArrayOf(
                 0x00u, 0x01u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
-                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu
-            )
+                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu,
+            ),
         )
         val stream = DataInputStream(bytes)
         assertEquals(0x00017FFF007FFF00uL.toLong(), stream.readLong())
@@ -194,8 +194,8 @@ class DataInputStreamTests {
         val bytes = ByteArrayInputStream(
             byteArrayOf(
                 0x00u, 0x01u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
-                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu
-            )
+                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
+            ),
         )
         val stream = DataInputStream(bytes)
         assertEquals(Double.fromBits(0x00017FFF007FFF00uL.toLong()), stream.readDouble())
@@ -217,8 +217,8 @@ class DataInputStreamTests {
         val bytes = ByteArrayInputStream(
             byteArrayOf(
                 0x00u, 0x01u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
-                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu
-            )
+                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
+            ),
         )
         val stream = DataInputStream(bytes)
         assertEquals(0x0001u, stream.readUnsignedShort())
@@ -236,8 +236,8 @@ class DataInputStreamTests {
         val bytes = ByteArrayInputStream(
             byteArrayOf(
                 0x00u, 0x01u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
-                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu
-            )
+                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
+            ),
         )
         val stream = DataInputStream(bytes)
         assertEquals(0x00017FFFu, stream.readUnsignedInt())
@@ -251,8 +251,8 @@ class DataInputStreamTests {
         val bytes = ByteArrayInputStream(
             byteArrayOf(
                 0x00u, 0x01u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu,
-                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu
-            )
+                0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu, 0xFFu, 0x00u, 0x7Fu,
+            ),
         )
         val stream = DataInputStream(bytes)
         assertEquals(0x00017FFF007FFF00uL, stream.readUnsignedLong())
@@ -266,8 +266,8 @@ class DataInputStreamTests {
             listOf(
                 listOf<Byte>(0, 11),
                 "hello world".toCharArray().map { it.code.toByte() },
-                "hello 2".toCharArray().map { it.code.toByte() }
-            ).flatten().toByteArray()
+                "hello 2".toCharArray().map { it.code.toByte() },
+            ).flatten().toByteArray(),
         )
         val stream = DataInputStream(bytes)
         assertEquals("hello world", stream.readUTF())

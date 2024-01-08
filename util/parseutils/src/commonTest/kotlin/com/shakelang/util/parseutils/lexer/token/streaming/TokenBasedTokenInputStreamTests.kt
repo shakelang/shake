@@ -8,7 +8,10 @@ import kotlin.test.*
 class TokenBasedTokenInputStreamTests {
 
     enum class TokenType : com.shakelang.util.parseutils.lexer.token.TokenType {
-        IDENTIFIER, NUMBER, STRING;
+        IDENTIFIER,
+        NUMBER,
+        STRING,
+        ;
 
         override val hasValue: Boolean
             get() = this == IDENTIFIER
@@ -20,7 +23,7 @@ class TokenBasedTokenInputStreamTests {
 
     class PositionMap(
         override val source: CharacterSource,
-        override val lineSeparators: IntArray
+        override val lineSeparators: IntArray,
     ) : com.shakelang.util.parseutils.characters.position.PositionMap
 
     @Test
@@ -28,12 +31,12 @@ class TokenBasedTokenInputStreamTests {
         val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -44,12 +47,12 @@ class TokenBasedTokenInputStreamTests {
         val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -68,12 +71,12 @@ class TokenBasedTokenInputStreamTests {
         val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -103,12 +106,12 @@ class TokenBasedTokenInputStreamTests {
         val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -149,12 +152,12 @@ class TokenBasedTokenInputStreamTests {
         val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -173,12 +176,12 @@ class TokenBasedTokenInputStreamTests {
         val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -191,12 +194,12 @@ class TokenBasedTokenInputStreamTests {
         val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -209,12 +212,12 @@ class TokenBasedTokenInputStreamTests {
         val tokens = arrayOf(
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -237,12 +240,12 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
             Token(TokenType.STRING, "\"test\"", 7, 12),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -266,12 +269,12 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
             Token(TokenType.STRING, "\"test\"", 7, 12),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -295,12 +298,12 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
             Token(TokenType.STRING, "\"test\"", 7, 12),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -323,12 +326,12 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
             Token(TokenType.STRING, "\"test\"", 7, 12),
-            Token(TokenType.STRING, "\"test\"", 7, 12)
+            Token(TokenType.STRING, "\"test\"", 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -351,12 +354,12 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.IDENTIFIER, "test", 0, 3),
             Token(TokenType.NUMBER, "123", 4, 6),
             Token(TokenType.STRING, "\"test\"", 7, 12),
-            Token(TokenType.STRING, null, 7, 12)
+            Token(TokenType.STRING, null, 7, 12),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -383,12 +386,12 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.STRING, null, 13, 18),
             Token(TokenType.STRING, null, 19, 24),
             Token(TokenType.STRING, null, 25, 30),
-            Token(TokenType.STRING, null, 31, 36)
+            Token(TokenType.STRING, null, 31, 36),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -418,12 +421,12 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.STRING, null, 13, 18),
             Token(TokenType.STRING, null, 19, 24),
             Token(TokenType.STRING, null, 25, 30),
-            Token(TokenType.STRING, null, 31, 36)
+            Token(TokenType.STRING, null, 31, 36),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -468,12 +471,12 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.STRING, null, 13, 18),
             Token(TokenType.STRING, null, 19, 24),
             Token(TokenType.STRING, null, 25, 30),
-            Token(TokenType.STRING, null, 31, 36)
+            Token(TokenType.STRING, null, 31, 36),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
@@ -493,19 +496,19 @@ class TokenBasedTokenInputStreamTests {
             Token(TokenType.STRING, null, 13, 18),
             Token(TokenType.STRING, null, 19, 24),
             Token(TokenType.STRING, null, 25, 30),
-            Token(TokenType.STRING, null, 31, 36)
+            Token(TokenType.STRING, null, 31, 36),
         )
 
         val map = PositionMap(
             CharacterSource.from("test 123 \"test\" \"test\"", "test"),
-            intArrayOf()
+            intArrayOf(),
         )
 
         val stream = TokenBasedTokenInputStream(tokens, map)
 
         assertEquals(
             "TokenBasedTokenInputStream(source='test', tokens=7, position=-1)",
-            stream.toString()
+            stream.toString(),
         )
     }
 }

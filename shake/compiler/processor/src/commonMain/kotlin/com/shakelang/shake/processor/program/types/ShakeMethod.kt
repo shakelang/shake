@@ -50,7 +50,7 @@ interface ShakeMethod : ShakeInvokable {
             "isPublic" to isPublic,
             "returnType" to returnType.toJson(),
             "parameters" to parameters.map { it.toJson() },
-            "body" to body?.toJson()
+            "body" to body?.toJson(),
         )
     }
 

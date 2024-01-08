@@ -20,7 +20,7 @@ class ByteArrayInputStream(
      * @since 0.1.0
      * @version 0.1.1
      */
-    private var buf: ByteArray
+    private var buf: ByteArray,
 ) : InputStream() {
 
     /**

@@ -80,7 +80,7 @@ class FormattedStringObjectString(
      * @since 0.1.1
      * @version 0.1.1
      */
-    val value: String
+    val value: String,
 ) : FormattedStringObject {
 
     /**
@@ -188,7 +188,7 @@ class FormattedString(
      * @since 0.1.1
      * @version 0.1.1
      */
-    val backgroundColor: Formatting.BGColor? = null
+    val backgroundColor: Formatting.BGColor? = null,
 
 ) : FormattedStringObject {
 
@@ -299,7 +299,7 @@ class FormattedString(
         isStrikethrough: Boolean? = contents.isStrikethrough,
         isInverted: Boolean? = contents.isInverted,
         color: Formatting.FGColor? = contents.color,
-        backgroundColor: Formatting.BGColor? = contents.backgroundColor
+        backgroundColor: Formatting.BGColor? = contents.backgroundColor,
     ) : this(strings, isBold, isItalic, isUnderlined, isStrikethrough, isInverted, color, backgroundColor)
 
     /**
@@ -368,7 +368,7 @@ class FormattedString(
         isStrikethrough = false,
         isInverted = false,
         color = null,
-        backgroundColor = null
+        backgroundColor = null,
     )
 
     /**
@@ -1014,7 +1014,7 @@ class FormattedString(
         isStrikethrough = _isStrikethrough ?: format._isStrikethrough,
         isInverted = _isInverted ?: format._isInverted,
         color = color ?: format.color,
-        backgroundColor = backgroundColor ?: format.backgroundColor
+        backgroundColor = backgroundColor ?: format.backgroundColor,
     )
 
     operator fun plus(other: String) = wrap(this, FormattedStringObject.wrap(other))
@@ -1090,7 +1090,7 @@ fun String.format(
     isStrikethrough: Boolean? = null,
     isInverted: Boolean? = null,
     color: Formatting.FGColor? = null,
-    backgroundColor: Formatting.BGColor? = null
+    backgroundColor: Formatting.BGColor? = null,
 ) = FormattedString(
     listOf(FormattedStringObject.wrap(this)),
     isBold,
@@ -1099,7 +1099,7 @@ fun String.format(
     isStrikethrough,
     isInverted,
     color,
-    backgroundColor
+    backgroundColor,
 )
 
 /**

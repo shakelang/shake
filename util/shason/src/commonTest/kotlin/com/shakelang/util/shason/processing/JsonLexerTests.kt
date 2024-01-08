@@ -16,7 +16,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testLCURL()",
             "{",
-            JsonToken(JsonTokenType.LCURL, 0)
+            JsonToken(JsonTokenType.LCURL, 0),
         )
     }
 
@@ -24,7 +24,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testRCURL()",
             "}",
-            JsonToken(JsonTokenType.RCURL, 0)
+            JsonToken(JsonTokenType.RCURL, 0),
         )
     }
 
@@ -32,7 +32,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testLQUARE()",
             "[",
-            JsonToken(JsonTokenType.LSQUARE, 0)
+            JsonToken(JsonTokenType.LSQUARE, 0),
         )
     }
 
@@ -40,7 +40,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testRSQUARE()",
             "]",
-            JsonToken(JsonTokenType.RSQUARE, 0)
+            JsonToken(JsonTokenType.RSQUARE, 0),
         )
     }
 
@@ -48,7 +48,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testCOMMA()",
             ",",
-            JsonToken(JsonTokenType.COMMA, 0)
+            JsonToken(JsonTokenType.COMMA, 0),
         )
     }
 
@@ -56,7 +56,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testCOLON()",
             ":",
-            JsonToken(JsonTokenType.COLON, 0)
+            JsonToken(JsonTokenType.COLON, 0),
         )
     }
 
@@ -64,7 +64,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRING()",
             "\"\"",
-            JsonToken(JsonTokenType.STRING, 0, 1, "")
+            JsonToken(JsonTokenType.STRING, 0, 1, ""),
         )
     }
 
@@ -72,7 +72,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContent()",
             "\"a\"",
-            JsonToken(JsonTokenType.STRING, 0, 2, "a")
+            JsonToken(JsonTokenType.STRING, 0, 2, "a"),
         )
     }
 
@@ -80,7 +80,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContents()",
             "\"abc\"",
-            JsonToken(JsonTokenType.STRING, 0, 4, "abc")
+            JsonToken(JsonTokenType.STRING, 0, 4, "abc"),
         )
     }
 
@@ -88,7 +88,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeN()",
             "\"\\n\"",
-            JsonToken(JsonTokenType.STRING, 0, 3, "\n")
+            JsonToken(JsonTokenType.STRING, 0, 3, "\n"),
         )
     }
 
@@ -96,7 +96,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeT()",
             "\"\\t\"",
-            JsonToken(JsonTokenType.STRING, 0, 3, "\t")
+            JsonToken(JsonTokenType.STRING, 0, 3, "\t"),
         )
     }
 
@@ -104,7 +104,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeB()",
             "\"\\b\"",
-            JsonToken(JsonTokenType.STRING, 0, 3, "\b")
+            JsonToken(JsonTokenType.STRING, 0, 3, "\b"),
         )
     }
 
@@ -112,7 +112,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeB()",
             "\"\\r\"",
-            JsonToken(JsonTokenType.STRING, 0, 3, "\r")
+            JsonToken(JsonTokenType.STRING, 0, 3, "\r"),
         )
     }
 
@@ -120,7 +120,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeBS()",
             "\"\\\\\"",
-            JsonToken(JsonTokenType.STRING, 0, 3, "\\")
+            JsonToken(JsonTokenType.STRING, 0, 3, "\\"),
         )
     }
 
@@ -128,7 +128,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeSQ()",
             "\"\\'\"",
-            JsonToken(JsonTokenType.STRING, 0, 3, "'")
+            JsonToken(JsonTokenType.STRING, 0, 3, "'"),
         )
     }
 
@@ -136,7 +136,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContentEscapeDQ()",
             "\"\\\"\"",
-            JsonToken(JsonTokenType.STRING, 0, 3, "\"")
+            JsonToken(JsonTokenType.STRING, 0, 3, "\""),
         )
     }
 
@@ -144,7 +144,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testSTRINGContentUnicode()",
             "\"\\ue0af\"",
-            JsonToken(JsonTokenType.STRING, 0, 7, "e0af".toInt(radix = 16).toChar().toString())
+            JsonToken(JsonTokenType.STRING, 0, 7, "e0af".toInt(radix = 16).toChar().toString()),
         )
     }
 
@@ -152,7 +152,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testDOUBLE()",
             "1.2",
-            JsonToken(JsonTokenType.DOUBLE, 0, 2, "1.2")
+            JsonToken(JsonTokenType.DOUBLE, 0, 2, "1.2"),
         )
     }
 
@@ -160,7 +160,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testDOUBLENoPrefix()",
             ".2",
-            JsonToken(JsonTokenType.DOUBLE, 0, 1, ".2")
+            JsonToken(JsonTokenType.DOUBLE, 0, 1, ".2"),
         )
     }
 
@@ -168,7 +168,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testDOUBLENoPrefix()",
             "2.",
-            JsonToken(JsonTokenType.DOUBLE, 0, 1, "2.")
+            JsonToken(JsonTokenType.DOUBLE, 0, 1, "2."),
         )
     }
 
@@ -176,7 +176,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testINT()",
             "42",
-            JsonToken(JsonTokenType.INT, 0, 1, "42")
+            JsonToken(JsonTokenType.INT, 0, 1, "42"),
         )
     }
 
@@ -184,7 +184,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testTRUE()",
             "true",
-            JsonToken(JsonTokenType.TRUE, 0, 3)
+            JsonToken(JsonTokenType.TRUE, 0, 3),
         )
     }
 
@@ -192,7 +192,7 @@ class JsonLexerTests : FreeSpec({
         testTokens(
             "JsonLexerTests#testFALSE()",
             "false",
-            JsonToken(JsonTokenType.FALSE, 0, 4)
+            JsonToken(JsonTokenType.FALSE, 0, 4),
         )
     }
 })

@@ -8,7 +8,7 @@ import com.shakelang.shake.processor.program.types.ShakeProject
 
 class CreationShakeProject(
     processor: ShakeASTProcessor,
-    override val subpackages: MutableList<CreationShakePackage> = mutableListOf()
+    override val subpackages: MutableList<CreationShakePackage> = mutableListOf(),
 ) : ShakeProject {
     private val scopes = mutableListOf<CreationShakeScope>()
 
@@ -28,7 +28,7 @@ class CreationShakeProject(
             if (this::imported.isInitialized) return
             imported = arrayOf(
                 getPackage("shake/lang"),
-                getPackage("shake/js")
+                getPackage("shake/js"),
             ).filterNotNull().toTypedArray()
         }
 
@@ -89,7 +89,7 @@ class CreationShakeProject(
         if (name.contains(".") || name.contains("/")) {
             return getPackage(
                 name.split(".", "/")
-                    .toTypedArray()
+                    .toTypedArray(),
             )
         }
         return subpackages.find { it.name == name }

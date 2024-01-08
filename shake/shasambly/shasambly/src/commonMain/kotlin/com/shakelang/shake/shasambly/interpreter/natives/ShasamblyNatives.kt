@@ -19,7 +19,7 @@ private fun nativeFunction(
     name: String,
     id: Int,
     byteArgumentAmount: Int,
-    execute: ShasamblyOpcodeExecutor.() -> Unit
+    execute: ShasamblyOpcodeExecutor.() -> Unit,
 ): Short {
     nativeFunctions[id] = ShasamblyNative(name, byteArgumentAmount, execute)
     return id.toShort()
@@ -28,7 +28,7 @@ private fun nativeFunction(
 class ShasamblyNative(
     val name: String,
     val byteArgumentAmount: Int = 0,
-    val execute: ShasamblyOpcodeExecutor.() -> Unit
+    val execute: ShasamblyOpcodeExecutor.() -> Unit,
 )
 
 object Natives {

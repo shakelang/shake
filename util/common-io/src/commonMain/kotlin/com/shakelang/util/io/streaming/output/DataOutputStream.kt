@@ -22,7 +22,7 @@ class DataOutputStream(
      * @since 0.1.0
      * @version 0.1.1
      */
-    val output: OutputStream
+    val output: OutputStream,
 ) : OutputStream() {
 
     /**

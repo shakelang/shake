@@ -1,7 +1,6 @@
 import com.shakelang.util.changelog.Changelog
 import com.shakelang.util.changelog.tasks.VersionTask
 import com.shakelang.util.sarifmerge.SarifMerge
-import com.shakelang.util.sarifmerge.tasks.SarifMergeTask
 import io.codearte.gradle.nexus.NexusStagingExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.dokka.DokkaConfiguration.Visibility
@@ -230,8 +229,8 @@ subprojects {
                 documentedVisibilities.set(
                     setOf(
                         Visibility.PUBLIC,
-                        Visibility.PROTECTED
-                    )
+                        Visibility.PROTECTED,
+                    ),
                 )
 
                 // Read docs for more details: https://kotlinlang.org/docs/dokka-gradle.html#source-link-configuration

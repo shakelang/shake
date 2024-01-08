@@ -10,7 +10,7 @@ import com.shakelang.util.parseutils.lexer.LexingBase
 import kotlin.jvm.JvmOverloads
 
 abstract class ShakeLexingBase(
-    input: CharacterInputStream
+    input: CharacterInputStream,
 ) : LexingBase<ShakeTokenType, ShakeToken>(input) {
 
     override fun makeToken(): ShakeToken {
@@ -258,7 +258,7 @@ abstract class ShakeLexingBase(
                 else -> return ShakeToken(ShakeTokenType.IDENTIFIER, identifier.toString(), start, end)
             },
             start,
-            end
+            end,
         )
     }
 
@@ -390,26 +390,26 @@ abstract class ShakeLexingBase(
             name: String,
             details: String,
             start: Position = input.positionMaker.createPositionAtLocation(),
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             name,
             details,
             start,
-            end
+            end,
         )
 
         @JvmOverloads
         constructor(
             details: String,
             start: Position = input.positionMaker.createPositionAtLocation(),
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             "LexerError",
             details,
             start,
-            end
+            end,
         )
     }
 }

@@ -18,7 +18,7 @@ class ClassTests : FreeSpec({
                     superName = "com/shakelang/Object"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testClass = classpath.getClass("com/shakelang/shake/test/Test")
@@ -44,7 +44,7 @@ class ClassTests : FreeSpec({
                         isPublic = true
                     }
                 }
-            }
+            },
         )
 
         val testClass = classpath.getClass("com/shakelang/shake/test/Test:Test2")
@@ -76,7 +76,7 @@ class ClassTests : FreeSpec({
                         }
                     }
                 }
-            }
+            },
         )
 
         val testClass = classpath.getClass("com/shakelang/shake/test/Test:Test2:Test3")
@@ -90,7 +90,7 @@ class ClassTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testClass = classpath.getClass("com/shakelang/shake/test/Test")
@@ -108,7 +108,7 @@ class ClassTests : FreeSpec({
                     superName = "com/shakelang/Object"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testClass = classpath.getClass("com/shakelang/shake/test/Test:Test2")
@@ -120,7 +120,7 @@ class ClassTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testClass = classpath.getClass("com/shakelang/shake/test/Test:Test2")
@@ -132,7 +132,7 @@ class ClassTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testClass = classpath.getClass("com/shakelang/shake/test2/Test")
@@ -144,7 +144,7 @@ class ClassTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testClass = classpath.getClass("com/shakelang/shake/test2/Test:Test2")

@@ -38,7 +38,7 @@ class MethodDescriptor(
      * @since 0.1.0
      * @version 0.1.0
      */
-    val returnType: TypeDescriptor
+    val returnType: TypeDescriptor,
 ) {
     init {
         if (name.isEmpty()) throw IllegalArgumentException("Method name cannot be empty")

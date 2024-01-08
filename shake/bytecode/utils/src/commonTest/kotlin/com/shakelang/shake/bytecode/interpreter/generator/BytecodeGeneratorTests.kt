@@ -836,7 +836,7 @@ class BytecodeGeneratorTests : FreeSpec({
             Opcodes.UBCMP,
             Opcodes.USCMP,
             Opcodes.UICMP,
-            Opcodes.ULCMP
+            Opcodes.ULCMP,
         )
     }
 

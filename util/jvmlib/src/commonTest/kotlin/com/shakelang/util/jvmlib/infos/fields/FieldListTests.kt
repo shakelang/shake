@@ -19,13 +19,13 @@ class FieldListTests {
                 Constant.utf8("hello"),
                 Constant.utf8("world"),
                 Constant.utf8("I"),
-                Constant.utf8("D")
-            )
+                Constant.utf8("D"),
+            ),
         )
         val stream = byteArrayOf(
             0x00, 0x02,
             0x00, 0x01, 0x00, 0x01, 0x00, 0x03, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x00
+            0x00, 0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x00,
         ).dataStream()
 
         val list = FieldList.fromStream(pool, stream)
@@ -47,13 +47,13 @@ class FieldListTests {
                 Constant.utf8("hello"),
                 Constant.utf8("world"),
                 Constant.utf8("I"),
-                Constant.utf8("D")
-            )
+                Constant.utf8("D"),
+            ),
         )
         val bytes = byteArrayOf(
             0x00, 0x02,
             0x00, 0x01, 0x00, 0x01, 0x00, 0x03, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x00
+            0x00, 0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x00,
         )
 
         val list = FieldList.fromBytes(pool, bytes)
@@ -75,19 +75,19 @@ class FieldListTests {
                 Constant.utf8("hello"),
                 Constant.utf8("world"),
                 Constant.utf8("I"),
-                Constant.utf8("D")
-            )
+                Constant.utf8("D"),
+            ),
         )
         val list = FieldList(
             listOf(
                 FieldInfo(0x0001u, pool.getUtf8(1), pool.getUtf8(3), AttributeMap(emptyMap())),
-                FieldInfo(0x0000u, pool.getUtf8(2), pool.getUtf8(4), AttributeMap(emptyMap()))
-            )
+                FieldInfo(0x0000u, pool.getUtf8(2), pool.getUtf8(4), AttributeMap(emptyMap())),
+            ),
         )
         val bytes = listOf<Byte>(
             0x00, 0x02,
             0x00, 0x01, 0x00, 0x01, 0x00, 0x03, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x00
+            0x00, 0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x00,
         )
 
         assertEquals(2, list.size)
@@ -111,19 +111,19 @@ class FieldListTests {
                 Constant.utf8("hello"),
                 Constant.utf8("world"),
                 Constant.utf8("I"),
-                Constant.utf8("D")
-            )
+                Constant.utf8("D"),
+            ),
         )
         val list = FieldList(
             listOf(
                 FieldInfo(0x0001u, pool.getUtf8(1), pool.getUtf8(3), AttributeMap(emptyMap())),
-                FieldInfo(0x0000u, pool.getUtf8(2), pool.getUtf8(4), AttributeMap(emptyMap()))
-            )
+                FieldInfo(0x0000u, pool.getUtf8(2), pool.getUtf8(4), AttributeMap(emptyMap())),
+            ),
         )
         val bytes = listOf<Byte>(
             0x00, 0x02,
             0x00, 0x01, 0x00, 0x01, 0x00, 0x03, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x00
+            0x00, 0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x00,
         )
 
         assertEquals(2, list.size)

@@ -23,7 +23,7 @@ class ShakeIdentifierNode : ShakeNodeImpl {
         mapOf(
             "name" to nodeName,
             "parent" to (parent?.json),
-            "name" to name
+            "name" to name,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

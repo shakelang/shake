@@ -9,7 +9,7 @@ import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import kotlin.jvm.JvmOverloads
 
 abstract class ShasPLexingBase(
-    protected val input: CharacterInputStream
+    protected val input: CharacterInputStream,
 ) {
 
     open fun makeToken(): ShasPToken {
@@ -131,14 +131,14 @@ abstract class ShasPLexingBase(
                 ShasPTokenType.DOUBLE,
                 numStr.toString(),
                 input.position,
-                input.position
+                input.position,
             )
         } else {
             ShasPToken(
                 ShasPTokenType.INTEGER,
                 numStr.toString(),
                 input.position,
-                input.position
+                input.position,
             )
         }
     }
@@ -176,7 +176,7 @@ abstract class ShasPLexingBase(
                 else -> return ShasPToken(ShasPTokenType.IDENTIFIER, identifier.toString(), end, end)
             },
             end,
-            end
+            end,
         )
     }
 
@@ -269,26 +269,26 @@ abstract class ShasPLexingBase(
             name: String,
             details: String,
             start: Position = input.positionMaker.createPositionAtLocation(),
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             name,
             details,
             start,
-            end
+            end,
         )
 
         @JvmOverloads
         constructor(
             details: String,
             start: Position = input.positionMaker.createPositionAtLocation(),
-            end: Position = start
+            end: Position = start,
         ) : this(
             "Error occurred in lexer: " + details + " in " + start.source + ":" + start.line + ":" + start.column,
             "LexerError",
             details,
             start,
-            end
+            end,
         )
     }
 }

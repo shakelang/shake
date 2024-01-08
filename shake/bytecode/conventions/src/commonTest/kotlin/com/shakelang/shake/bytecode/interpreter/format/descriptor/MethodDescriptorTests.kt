@@ -36,7 +36,7 @@ class MethodDescriptorTests : FreeSpec({
         val descriptor4 = MethodDescriptor(
             "test",
             arrayOf(TypeDescriptor.INT, TypeDescriptor.INT, TypeDescriptor.INT),
-            TypeDescriptor.INT
+            TypeDescriptor.INT,
         )
         val descriptor5 = MethodDescriptor("test2", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
 
@@ -53,7 +53,7 @@ class MethodDescriptorTests : FreeSpec({
         val descriptor4 = MethodDescriptor(
             "test",
             arrayOf(TypeDescriptor.INT, TypeDescriptor.INT, TypeDescriptor.INT),
-            TypeDescriptor.INT
+            TypeDescriptor.INT,
         )
         val descriptor5 = MethodDescriptor("test2", arrayOf(TypeDescriptor.INT, TypeDescriptor.INT), TypeDescriptor.INT)
 

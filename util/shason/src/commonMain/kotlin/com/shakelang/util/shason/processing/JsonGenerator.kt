@@ -40,13 +40,13 @@ object JsonGenerator {
                         "," + LINE_SEPARATOR + indent.repeat(indentAmount + 1)
                     } else {
                         ","
-                    }
+                    },
 
                 ) {
                     generate(
                         it!!,
                         indent,
-                        indentAmount + 1
+                        indentAmount + 1,
                     )
                 }
                 ) + (if (o.isNotEmpty() && indent != null) LINE_SEPARATOR + indent.repeat(indentAmount) else "") + "]"
@@ -70,7 +70,7 @@ object JsonGenerator {
             ret += generate(
                 value,
                 indent,
-                indentAmount + 1
+                indentAmount + 1,
             )
             if (iterator.hasNext()) ret += ','
         }

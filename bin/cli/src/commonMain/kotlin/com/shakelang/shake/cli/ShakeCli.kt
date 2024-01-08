@@ -81,7 +81,7 @@ fun main(args: Array<String>) {
             println(
                 "# Shake version $VERSION ${if (DEBUG) "in debug mode " else ""}\n" +
                     "# Enter Shake code below to execute!\n" +
-                    "# Using $generator to execute code"
+                    "# Using $generator to execute code",
             )
 
             // Create an infinite loop for reading from the console
@@ -106,7 +106,7 @@ fun main(args: Array<String>) {
             // Create a new StringCharacterInputStream from the file's contents
             val chars: CharacterInputStream = SourceCharacterInputStream(
                 "<File: " + arguments.arguments[0] + ">",
-                file
+                file,
             )
 
             // Parse the CharacterInputStream

@@ -27,7 +27,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.nameConstant shouldBe nameConstant
@@ -45,7 +45,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.superNameConstant shouldBe superNameConstant
@@ -62,7 +62,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isPublic shouldBe true
@@ -84,7 +84,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.interfacesConstants shouldContainExactly listOf(interfaceConstant)
@@ -97,7 +97,7 @@ class ClassTests : FreeSpec({
             0,
             0,
             0,
-            emptyList()
+            emptyList(),
         )
 
         val clazz = Class(
@@ -109,7 +109,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             listOf(field),
-            emptyList()
+            emptyList(),
         )
 
         clazz.fields shouldContainExactly listOf(field)
@@ -122,7 +122,7 @@ class ClassTests : FreeSpec({
             0,
             0,
             0,
-            emptyList()
+            emptyList(),
         )
 
         val clazz = Class(
@@ -134,7 +134,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             listOf(method),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.methods shouldContainExactly listOf(method)
@@ -151,7 +151,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val clazz = Class(
@@ -163,7 +163,7 @@ class ClassTests : FreeSpec({
             listOf(subClass),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.subClasses shouldContainExactly listOf(subClass)
@@ -174,7 +174,7 @@ class ClassTests : FreeSpec({
         val attribute = AnonymousAttributeImpl(
             pool,
             0,
-            byteArrayOf(0)
+            byteArrayOf(0),
         )
 
         val clazz = Class(
@@ -186,7 +186,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            listOf(attribute)
+            listOf(attribute),
         )
 
         clazz.attributes shouldContainExactly listOf(attribute)
@@ -203,7 +203,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val clazz2 = Class(
@@ -215,7 +215,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val clazz3 = Class(
@@ -227,7 +227,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val clazz4 = Class(
@@ -239,7 +239,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val clazz5 = Class(
@@ -251,7 +251,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val clazz6 = Class(
@@ -263,7 +263,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val clazz7 = Class(
@@ -275,7 +275,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             listOf(Field(pool, 0, 0, 0, emptyList())),
-            emptyList()
+            emptyList(),
         )
 
         val clazz8 = Class(
@@ -287,7 +287,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             listOf(Method(pool, 0, 0, 0, emptyList())),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val clazz9 = Class(
@@ -299,7 +299,7 @@ class ClassTests : FreeSpec({
             listOf(Class(pool, 0, 0, 0, emptyList(), emptyList(), emptyList(), emptyList(), emptyList())),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val clazz10 = Class(
@@ -311,7 +311,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(0)))
+            listOf(AnonymousAttributeImpl(pool, 0, byteArrayOf(0))),
         )
 
         clazz shouldBe clazz
@@ -337,7 +337,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isPublic shouldBe true
@@ -354,7 +354,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isPublic shouldBe false
@@ -371,7 +371,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isPrivate shouldBe true
@@ -388,7 +388,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isPrivate shouldBe false
@@ -405,7 +405,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isProtected shouldBe true
@@ -422,7 +422,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isProtected shouldBe false
@@ -439,7 +439,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isStatic shouldBe true
@@ -456,7 +456,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isStatic shouldBe false
@@ -473,7 +473,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isFinal shouldBe true
@@ -490,7 +490,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isFinal shouldBe false
@@ -507,7 +507,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         val stream = ByteArrayOutputStream()
@@ -521,7 +521,7 @@ class ClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes()
+            *0.toShort().toBytes(),
         )
     }
 
@@ -536,7 +536,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.dump() shouldContainExactly byteArrayOf(
@@ -547,7 +547,7 @@ class ClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes()
+            *0.toShort().toBytes(),
         )
     }
 
@@ -561,7 +561,7 @@ class ClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes()
+            *0.toShort().toBytes(),
         ).dataStream()
 
         val clazz = Class.fromStream(pool, stream)
@@ -575,7 +575,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
     }
 
@@ -590,7 +590,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isPublic shouldBe true
@@ -607,7 +607,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isPublic shouldBe false
@@ -624,7 +624,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isPrivate shouldBe true
@@ -641,7 +641,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isPrivate shouldBe false
@@ -658,7 +658,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isProtected shouldBe true
@@ -675,7 +675,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isProtected shouldBe false
@@ -692,7 +692,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isStatic shouldBe true
@@ -709,7 +709,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isStatic shouldBe false
@@ -726,7 +726,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isFinal shouldBe true
@@ -743,7 +743,7 @@ class ClassTests : FreeSpec({
             emptyList(),
             emptyList(),
             emptyList(),
-            emptyList()
+            emptyList(),
         )
 
         clazz.isFinal shouldBe false
@@ -764,7 +764,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.nameConstant shouldBe nameConstant
@@ -782,7 +782,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.nameConstant = nameConstant
@@ -801,7 +801,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.superNameConstant shouldBe superNameConstant
@@ -819,7 +819,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.superNameConstant = superNameConstant
@@ -837,7 +837,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPublic shouldBe true
@@ -858,7 +858,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPublic = true
@@ -886,7 +886,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.interfacesConstants shouldContainExactly mutableListOf(interfaceConstant)
@@ -904,7 +904,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.interfacesConstants = mutableListOf(interfaceConstant)
@@ -918,7 +918,7 @@ class MutableClassTests : FreeSpec({
             0,
             0,
             0,
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz = MutableClass(
@@ -930,7 +930,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(field),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.fields shouldContainExactly mutableListOf(field)
@@ -943,7 +943,7 @@ class MutableClassTests : FreeSpec({
             0,
             0,
             0,
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz = MutableClass(
@@ -955,7 +955,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.fields.add(field)
@@ -969,7 +969,7 @@ class MutableClassTests : FreeSpec({
             0,
             0,
             0,
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz = MutableClass(
@@ -981,7 +981,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(method),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.methods shouldContainExactly mutableListOf(method)
@@ -994,7 +994,7 @@ class MutableClassTests : FreeSpec({
             0,
             0,
             0,
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz = MutableClass(
@@ -1006,7 +1006,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.methods.add(method)
@@ -1024,7 +1024,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz = MutableClass(
@@ -1036,7 +1036,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(subClass),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.subClasses shouldContainExactly mutableListOf(subClass)
@@ -1053,7 +1053,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz = MutableClass(
@@ -1065,7 +1065,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.subClasses.add(subClass)
@@ -1077,7 +1077,7 @@ class MutableClassTests : FreeSpec({
         val attribute = MutableAnonymousAttributeImpl(
             pool,
             0,
-            byteArrayOf(0)
+            byteArrayOf(0),
         )
 
         val clazz = MutableClass(
@@ -1089,7 +1089,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf(attribute)
+            mutableListOf(attribute),
         )
 
         clazz.attributes shouldContainExactly mutableListOf(attribute)
@@ -1100,7 +1100,7 @@ class MutableClassTests : FreeSpec({
         val attribute = MutableAnonymousAttributeImpl(
             pool,
             0,
-            byteArrayOf(0)
+            byteArrayOf(0),
         )
 
         val clazz = MutableClass(
@@ -1112,7 +1112,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.attributes.add(attribute)
@@ -1130,7 +1130,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz2 = MutableClass(
@@ -1142,7 +1142,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz3 = MutableClass(
@@ -1154,7 +1154,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz4 = MutableClass(
@@ -1166,7 +1166,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz5 = MutableClass(
@@ -1178,7 +1178,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz6 = MutableClass(
@@ -1190,7 +1190,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz7 = MutableClass(
@@ -1202,7 +1202,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(MutableField(pool, 0, 0, 0, mutableListOf())),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz8 = MutableClass(
@@ -1214,7 +1214,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(MutableMethod(pool, 0, 0, 0, mutableListOf())),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz9 = MutableClass(
@@ -1235,10 +1235,10 @@ class MutableClassTests : FreeSpec({
                     mutableListOf(),
                     mutableListOf(),
                     mutableListOf(),
-                    mutableListOf()
-                )
+                    mutableListOf(),
+                ),
             ),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val clazz10 = MutableClass(
@@ -1250,7 +1250,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf(MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(0)))
+            mutableListOf(MutableAnonymousAttributeImpl(pool, 0, byteArrayOf(0))),
         )
 
         clazz shouldBe clazz
@@ -1276,7 +1276,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPublic shouldBe true
@@ -1293,7 +1293,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPublic shouldBe false
@@ -1310,7 +1310,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPrivate shouldBe true
@@ -1327,7 +1327,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPrivate shouldBe false
@@ -1344,7 +1344,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isProtected shouldBe true
@@ -1361,7 +1361,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isProtected shouldBe false
@@ -1378,7 +1378,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isStatic shouldBe true
@@ -1395,7 +1395,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isStatic shouldBe false
@@ -1412,7 +1412,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isFinal shouldBe true
@@ -1429,7 +1429,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isFinal shouldBe false
@@ -1446,7 +1446,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         val stream = ByteArrayOutputStream()
@@ -1460,7 +1460,7 @@ class MutableClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes()
+            *0.toShort().toBytes(),
         )
     }
 
@@ -1475,7 +1475,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.dump() shouldContainExactly byteArrayOf(
@@ -1486,7 +1486,7 @@ class MutableClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes()
+            *0.toShort().toBytes(),
         )
     }
 
@@ -1500,7 +1500,7 @@ class MutableClassTests : FreeSpec({
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
             *0.toShort().toBytes(),
-            *0.toShort().toBytes()
+            *0.toShort().toBytes(),
         ).dataStream()
 
         val clazz = MutableClass.fromStream(pool, stream)
@@ -1514,7 +1514,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
     }
 
@@ -1529,7 +1529,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPublic shouldBe true
@@ -1546,7 +1546,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPublic shouldBe false
@@ -1563,7 +1563,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPublic = true
@@ -1581,7 +1581,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPublic = false
@@ -1599,7 +1599,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPrivate shouldBe true
@@ -1616,7 +1616,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPrivate shouldBe false
@@ -1633,7 +1633,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPrivate = true
@@ -1651,7 +1651,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isPrivate = false
@@ -1669,7 +1669,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isProtected shouldBe true
@@ -1686,7 +1686,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isProtected shouldBe false
@@ -1703,7 +1703,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isProtected = true
@@ -1721,7 +1721,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isProtected = false
@@ -1739,7 +1739,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isStatic shouldBe true
@@ -1756,7 +1756,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isStatic shouldBe false
@@ -1773,7 +1773,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isStatic = true
@@ -1791,7 +1791,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isStatic = false
@@ -1809,7 +1809,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isFinal shouldBe true
@@ -1826,7 +1826,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isFinal shouldBe false
@@ -1843,7 +1843,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isFinal = true
@@ -1861,7 +1861,7 @@ class MutableClassTests : FreeSpec({
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            mutableListOf()
+            mutableListOf(),
         )
 
         clazz.isFinal = false

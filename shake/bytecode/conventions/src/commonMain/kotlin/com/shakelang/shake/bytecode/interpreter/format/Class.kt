@@ -19,7 +19,7 @@ open class Class(
     open val subClasses: List<Class>,
     open val methods: List<Method>,
     open val fields: List<Field>,
-    open val attributes: List<Attribute>
+    open val attributes: List<Attribute>,
 ) {
 
     open val name: String get() = pool.getUtf8(nameConstant).value
@@ -165,7 +165,7 @@ open class Class(
                 subClasses,
                 methods,
                 fields,
-                attributes
+                attributes,
             )
         }
     }
@@ -180,7 +180,7 @@ class MutableClass(
     fields: MutableList<MutableField>,
     methods: MutableList<MutableMethod>,
     subClasses: MutableList<MutableClass>,
-    attributes: MutableList<MutableAttribute>
+    attributes: MutableList<MutableAttribute>,
 ) : Class(pool, nameConstant, superNameConstant, flags, interfacesConstants, subClasses, methods, fields, attributes) {
 
     @Suppress("UNCHECKED_CAST")
@@ -258,7 +258,7 @@ class MutableClass(
                 clazz.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
                 clazz.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
                 clazz.subClasses.map { fromClass(pool, it) }.toMutableList(),
-                clazz.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList()
+                clazz.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList(),
             )
         }
 
@@ -285,7 +285,7 @@ class MutableClass(
                 fields,
                 methods,
                 subClasses,
-                attributes
+                attributes,
             )
         }
     }

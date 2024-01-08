@@ -10,7 +10,7 @@ class CliCommand(
     val arguments: MutableList<CliArgument> = mutableListOf(),
     val options: MutableList<CliOption> = mutableListOf(),
     val commands: MutableList<CliCommand> = mutableListOf(),
-    var action: CommandAction? = null
+    var action: CommandAction? = null,
 ) {
     fun getUsage(): String {
         val builder = StringBuilder()
@@ -86,7 +86,7 @@ class CliCommand(
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null
+        valueValidator: ValueValidator? = null,
     ): CliCommand {
         options.add(
             CliOption(
@@ -100,8 +100,8 @@ class CliCommand(
                 defaultValue,
                 valueName,
                 valueDescription,
-                valueValidator
-            )
+                valueValidator,
+            ),
         )
         return this
     }
@@ -114,7 +114,7 @@ class CliCommand(
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null
+        valueValidator: ValueValidator? = null,
     ): CliCommand {
         arguments.add(
             CliArgument(
@@ -126,8 +126,8 @@ class CliCommand(
                 defaultValue,
                 valueName,
                 valueDescription,
-                valueValidator
-            )
+                valueValidator,
+            ),
         )
         return this
     }
@@ -137,7 +137,7 @@ class CliCommand(
         aliases: Array<String> = arrayOf(),
         description: String? = null,
         action: CommandAction? = null,
-        init: (CliCommand.() -> Unit)? = null
+        init: (CliCommand.() -> Unit)? = null,
     ): CliCommand {
         val command =
             CliCommand(this, name, aliases, description, mutableListOf(), mutableListOf(), mutableListOf(), action)
@@ -297,7 +297,7 @@ class CliCommandCreationContext {
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null
+        valueValidator: ValueValidator? = null,
     ) {
         arguments.add {
             CliArgument(
@@ -309,7 +309,7 @@ class CliCommandCreationContext {
                 defaultValue,
                 valueName,
                 valueDescription,
-                valueValidator
+                valueValidator,
             )
         }
     }
@@ -334,7 +334,7 @@ class CliCommandCreationContext {
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null
+        valueValidator: ValueValidator? = null,
     ) {
         options.add {
             CliOption(
@@ -348,7 +348,7 @@ class CliCommandCreationContext {
                 defaultValue,
                 valueName,
                 valueDescription,
-                valueValidator
+                valueValidator,
             )
         }
     }
@@ -368,7 +368,7 @@ class CliCommandCreationContext {
         aliases: Array<String> = arrayOf(),
         description: String? = null,
         action: CommandAction? = null,
-        init: (CliCommandCreationContext.() -> Unit)? = null
+        init: (CliCommandCreationContext.() -> Unit)? = null,
     ) {
         val context = CliCommandCreationContext()
         context.name = name
@@ -390,7 +390,7 @@ class CliCommandCreationContext {
             mutableListOf(),
             mutableListOf(),
             mutableListOf(),
-            action
+            action,
         )
 
         for (argument in arguments) {

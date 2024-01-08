@@ -8,11 +8,11 @@ class StackUnderflowException : Exception("Stack underflow")
 
 class ByteStackElement(
     val value: Byte,
-    val below: ByteStackElement?
+    val below: ByteStackElement?,
 )
 
 class ByteStack(
-    val maxSize: Int = 1000
+    val maxSize: Int = 1000,
 ) {
 
     var size = 0

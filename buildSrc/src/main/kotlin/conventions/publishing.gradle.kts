@@ -32,15 +32,15 @@ tasks.register("listDependencies") {
     }
 }
 
-//kotlin {
+// kotlin {
 //    val publicationsFromMainHost =
 //        listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
-//}
+// }
 
-//tasks.withType(PublishToMavenRepository::class.java) {
+// tasks.withType(PublishToMavenRepository::class.java) {
 //    println(this.name)
 //
-//}
+// }
 signing {
     val signingKey = System.getenv("GRADLE_SIGNING_KEY")
     val signingPassword: String? = System.getenv("GRADLE_SIGNING_PASSWORD")
@@ -96,22 +96,24 @@ afterEvaluate {
 //                }
 //            }
 
-            if (githubPackages) maven("GitHub") {
-                name = "GitHub"
-                url = uri("https://maven.pkg.github.com/shakelang/shake")
+            if (githubPackages) {
+                maven("GitHub") {
+                    name = "GitHub"
+                    url = uri("https://maven.pkg.github.com/shakelang/shake")
 
-                val _username =
-                    System.getenv("GRADLE_GITHUB_USERNAME") ?: project.properties["github.username"] as String?
-                val _token = System.getenv("GRADLE_GITHUB_TOKEN") ?: project.properties["github.token"] as String?
+                    val _username =
+                        System.getenv("GRADLE_GITHUB_USERNAME") ?: project.properties["github.username"] as String?
+                    val _token = System.getenv("GRADLE_GITHUB_TOKEN") ?: project.properties["github.token"] as String?
 
-                if (_username == null || _token == null) {
-                    logger.log(LogLevel.WARN, "No GitHub credentials found, skipping GitHub publishing configuration")
-                    return@maven
-                }
+                    if (_username == null || _token == null) {
+                        logger.log(LogLevel.WARN, "No GitHub credentials found, skipping GitHub publishing configuration")
+                        return@maven
+                    }
 
-                credentials {
-                    username = _username
-                    password = _token
+                    credentials {
+                        username = _username
+                        password = _token
+                    }
                 }
             }
 
@@ -120,8 +122,9 @@ afterEvaluate {
 
         publications.withType<MavenPublication> {
 
-            if (!project.ext.has("isMultiplatform") || project.ext["isMultiplatform"] == false)
+            if (!project.ext.has("isMultiplatform") || project.ext["isMultiplatform"] == false) {
                 artifact(tasks["sourcesJar"])
+            }
 
             artifact(tasks["dokkaJavadocJar"])
             artifact(tasks["dokkaHtmlJar"])
@@ -154,13 +157,13 @@ afterEvaluate {
                 }
                 scm {
                     url.set(
-                        "https://github.com/${Meta.githubRepo}.git"
+                        "https://github.com/${Meta.githubRepo}.git",
                     )
                     connection.set(
-                        "scm:git:git://github.com/${Meta.githubRepo}.git"
+                        "scm:git:git://github.com/${Meta.githubRepo}.git",
                     )
                     developerConnection.set(
-                        "scm:git:git://github.com/${Meta.githubRepo}.git"
+                        "scm:git:git://github.com/${Meta.githubRepo}.git",
                     )
                 }
                 issueManagement {
@@ -170,7 +173,7 @@ afterEvaluate {
         }
     }
 
-    tasks.withType<Sign>() {
+    tasks.withType<Sign> {
         group = "signing"
     }
 

@@ -18,7 +18,7 @@ class MethodTests : FreeSpec({
                     name = "test(I)I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test(I)I")
@@ -43,7 +43,7 @@ class MethodTests : FreeSpec({
                         isPublic = true
                     }
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/Test:test(I)I")
@@ -74,7 +74,7 @@ class MethodTests : FreeSpec({
                         }
                     }
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/Test:Test2:test(I)I")
@@ -88,7 +88,7 @@ class MethodTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test(I)I")
@@ -105,7 +105,7 @@ class MethodTests : FreeSpec({
                     name = "test(I)I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test2(I)I")
@@ -117,7 +117,7 @@ class MethodTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test:test(I)I")
@@ -129,7 +129,7 @@ class MethodTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test2/test(I)I")
@@ -141,7 +141,7 @@ class MethodTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test2/Test:test(I)I")
@@ -158,7 +158,7 @@ class MethodTests : FreeSpec({
                     name = "test(I)I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test(I)I")
@@ -176,7 +176,7 @@ class MethodTests : FreeSpec({
                     name = "test()Lcom/shakelang/Object;"
                     isPublic = true
                 }
-            }
+            },
         )
 
         classpath.load(
@@ -188,7 +188,7 @@ class MethodTests : FreeSpec({
                     superName = "java/lang/Object"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test()Lcom/shakelang/Object;")
@@ -211,7 +211,7 @@ class MethodTests : FreeSpec({
                     name = "test()[I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test()[I")
@@ -232,7 +232,7 @@ class MethodTests : FreeSpec({
                     name = "test()[Lcom/shakelang/Object;"
                     isPublic = true
                 }
-            }
+            },
         )
 
         classpath.load(
@@ -244,7 +244,7 @@ class MethodTests : FreeSpec({
                     superName = "java/lang/Object"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test()[Lcom/shakelang/Object;")
@@ -270,7 +270,7 @@ class MethodTests : FreeSpec({
                     name = "test(I)I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test(I)I")
@@ -289,7 +289,7 @@ class MethodTests : FreeSpec({
                     name = "test(Lcom/shakelang/Object;)I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         classpath.load(
@@ -301,7 +301,7 @@ class MethodTests : FreeSpec({
                     superName = "java/lang/Object"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test(Lcom/shakelang/Object;)I")
@@ -325,7 +325,7 @@ class MethodTests : FreeSpec({
                     name = "test([I)I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test([I)I")
@@ -347,7 +347,7 @@ class MethodTests : FreeSpec({
                     name = "test([Lcom/shakelang/Object;)I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         classpath.load(
@@ -359,7 +359,7 @@ class MethodTests : FreeSpec({
                     superName = "java/lang/Object"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test([Lcom/shakelang/Object;)I")
@@ -395,7 +395,7 @@ class MethodTests : FreeSpec({
                         this.maxLocals = 100
                     }
                 }
-            }
+            },
         )
 
         val testMethod = classpath.getMethod("com/shakelang/shake/test/test()I")

@@ -10,7 +10,7 @@ import com.shakelang.util.primitives.bytes.*
 
 class AttributeStackMapTableInfo(
     name: ConstantUtf8Info,
-    val entries: StackMapFrameList
+    val entries: StackMapFrameList,
 ) : AttributeInfo(name) {
 
     override val bytes: ByteArray
@@ -22,7 +22,7 @@ class AttributeStackMapTableInfo(
     override fun toJson(): Map<String, Any> {
         return mapOf(
             "tag" to ATTRIBUTE_STACK_MAP_TABLE_TAG,
-            "entries" to entries.toJson()
+            "entries" to entries.toJson(),
         )
     }
 
@@ -66,7 +66,7 @@ class AttributeStackMapTableInfo(
     }
 
     class StackMapFrameList(
-        val frames: MutableList<StackMapFrameInfo>
+        val frames: MutableList<StackMapFrameInfo>,
     ) : MutableList<StackMapFrameInfo> by frames {
 
         val bytes: ByteArray
@@ -154,13 +154,13 @@ class AttributeStackMapTableInfo(
         }
 
         class SameFrameInfo(
-            override val frameType: UByte
+            override val frameType: UByte,
         ) : StackMapFrameInfo() {
             override val offsetDelta: UShort get() = frameType.toUShort()
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte())
 
             override fun toJson() = mapOf(
-                "frameType" to frameType.toInt()
+                "frameType" to frameType.toInt(),
             )
 
             companion object {
@@ -206,7 +206,7 @@ class AttributeStackMapTableInfo(
 
         class SameLocals1StackItemFrameInfo(
             override val frameType: UByte,
-            val stack: VerificationTypeList
+            val stack: VerificationTypeList,
         ) : StackMapFrameInfo() {
 
             override val offsetDelta: UShort get() = (frameType - 64u).toUShort()
@@ -215,7 +215,7 @@ class AttributeStackMapTableInfo(
             override fun toJson(): Map<String, Any> {
                 return mapOf(
                     "frameType" to frameType.toInt(),
-                    "stack" to stack.toJson()
+                    "stack" to stack.toJson(),
                 )
             }
 
@@ -264,14 +264,14 @@ class AttributeStackMapTableInfo(
 
         class SameLocals1StackItemFrameExtendedInfo(
             override val offsetDelta: UShort,
-            val stack: VerificationTypeList
+            val stack: VerificationTypeList,
         ) : StackMapFrameInfo() {
             override val frameType: UByte get() = 247u
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte(), *offsetDelta.toBytes(), *stack.bytes)
 
             override fun toJson(): Map<String, Any> = mapOf(
                 "offsetDelta" to offsetDelta.toInt(),
-                "stack" to stack.toJson()
+                "stack" to stack.toJson(),
             )
 
             companion object {
@@ -279,7 +279,7 @@ class AttributeStackMapTableInfo(
                     if (frameType != 247u.toUByte()) throw IllegalArgumentException("frameType must be 247")
                     return SameLocals1StackItemFrameExtendedInfo(
                         stream.readUnsignedShort(),
-                        VerificationTypeList.fromStream(stream, 1)
+                        VerificationTypeList.fromStream(stream, 1),
                     )
                 }
 
@@ -320,14 +320,14 @@ class AttributeStackMapTableInfo(
 
         class ChopFrameInfo(
             override val frameType: UByte,
-            override val offsetDelta: UShort
+            override val offsetDelta: UShort,
         ) : StackMapFrameInfo() {
             val k get() = 251 - frameType.toInt()
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte(), *offsetDelta.toBytes())
 
             override fun toJson(): Map<String, Any> = mapOf(
                 "frameType" to frameType.toInt(),
-                "offsetDelta" to offsetDelta.toInt()
+                "offsetDelta" to offsetDelta.toInt(),
             )
 
             companion object {
@@ -371,13 +371,13 @@ class AttributeStackMapTableInfo(
         }
 
         class SameFrameExtendedInfo(
-            override val offsetDelta: UShort
+            override val offsetDelta: UShort,
         ) : StackMapFrameInfo() {
             override val frameType: UByte get() = 251u
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte(), *offsetDelta.toBytes())
 
             override fun toJson(): Map<String, Any> = mapOf(
-                "offsetDelta" to offsetDelta.toInt()
+                "offsetDelta" to offsetDelta.toInt(),
             )
 
             companion object {
@@ -422,14 +422,14 @@ class AttributeStackMapTableInfo(
         class AppendFrameInfo(
             override val frameType: UByte,
             override val offsetDelta: UShort,
-            val locals: VerificationTypeList
+            val locals: VerificationTypeList,
         ) : StackMapFrameInfo() {
             override val bytes: ByteArray get() = byteArrayOf(frameType.toByte(), *offsetDelta.toBytes()) + locals.bytes
 
             override fun toJson(): Map<String, Any> = mapOf(
                 "frameType" to frameType.toInt(),
                 "offsetDelta" to offsetDelta.toInt(),
-                "locals" to locals.toJson()
+                "locals" to locals.toJson(),
             )
 
             companion object {
@@ -479,7 +479,7 @@ class AttributeStackMapTableInfo(
             val numberOfLocals: UShort,
             val numberOfStackItems: UShort,
             val locals: VerificationTypeList,
-            val stack: VerificationTypeList
+            val stack: VerificationTypeList,
         ) : StackMapFrameInfo() {
             override val frameType: UByte get() = 255u
             override val bytes: ByteArray
@@ -489,7 +489,7 @@ class AttributeStackMapTableInfo(
                     *numberOfLocals.toBytes(),
                     *locals.bytes,
                     *numberOfStackItems.toBytes(),
-                    *stack.bytes
+                    *stack.bytes,
                 )
 
             override fun toJson(): Map<String, Any> = mapOf(
@@ -497,7 +497,7 @@ class AttributeStackMapTableInfo(
                 "numberOfLocals" to numberOfLocals.toInt(),
                 "numberOfStackItems" to numberOfStackItems.toInt(),
                 "locals" to locals.toJson(),
-                "stack" to stack.toJson()
+                "stack" to stack.toJson(),
             )
 
             companion object {
@@ -524,7 +524,7 @@ class AttributeStackMapTableInfo(
                     val stack = VerificationTypeList.fromBytes(
                         bytes,
                         offset + 4 + locals.bytes.size + 2,
-                        numberOfStackItems.toInt()
+                        numberOfStackItems.toInt(),
                     )
                     return FullFrameInfo(offsetDelta, numberOfLocals, numberOfStackItems, locals, stack)
                 }
@@ -555,7 +555,7 @@ class AttributeStackMapTableInfo(
     }
 
     class VerificationTypeList(
-        val entries: MutableList<UByte>
+        val entries: MutableList<UByte>,
     ) : MutableList<UByte> by entries {
 
         val bytes: ByteArray get() = entries.map { it.toByte() }.toByteArray()

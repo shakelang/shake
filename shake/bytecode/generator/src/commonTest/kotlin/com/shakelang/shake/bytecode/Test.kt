@@ -31,7 +31,7 @@ class Test : FreeSpec({
                     return c
                 }
             }
-            """.trimIndent()
+            """.trimIndent(),
         )
         processor.finish()
 
@@ -49,7 +49,7 @@ class Test : FreeSpec({
         val interpreter = ShakeInterpreter(classPath)
         interpreter.putFunctionOnStack(
             "test/Test:main()I",
-            byteArrayOf()
+            byteArrayOf(),
         )
         val ticks = interpreter.tick(1000)
 

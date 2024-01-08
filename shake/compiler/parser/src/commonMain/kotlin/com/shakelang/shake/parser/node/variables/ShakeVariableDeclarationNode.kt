@@ -16,7 +16,7 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
     val isNative: Boolean,
     val isConst: Boolean,
     val isOverride: Boolean,
-    val isInline: Boolean
+    val isInline: Boolean,
 ) : ShakeValuedStatementNodeImpl(map), ShakeFileChildNode {
 
     override fun toJson(): Map<String, *> =
@@ -27,7 +27,7 @@ class ShakeVariableDeclarationNode @JvmOverloads constructor(
             "access" to access.name.lowercase(),
             "assignment" to this.value?.json,
             "is_static" to isStatic,
-            "is_final" to isFinal
+            "is_final" to isFinal,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

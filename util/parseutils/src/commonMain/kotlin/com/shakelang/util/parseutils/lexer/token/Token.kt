@@ -46,7 +46,7 @@ open class Token<T : TokenType>(
      * @since 0.1.0
      * @version 0.2.1
      */
-    open val end: Int
+    open val end: Int,
 ) {
 
     /**
@@ -66,7 +66,7 @@ open class Token<T : TokenType>(
     constructor(
         type: T,
         start: Int,
-        end: Int
+        end: Int,
     ) : this(type, null, start, end)
 
     /**

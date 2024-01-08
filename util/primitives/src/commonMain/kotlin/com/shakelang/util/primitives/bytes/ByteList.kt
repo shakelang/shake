@@ -447,7 +447,7 @@ fun List<Byte>.getLong(index: Int): Long {
         this[index + 4],
         this[index + 5],
         this[index + 6],
-        this[index + 7]
+        this[index + 7],
     )
 }
 
@@ -524,7 +524,7 @@ fun List<Byte>.getUnsignedLong(index: Int): ULong = unsignedLongOf(
     this[index + 4],
     this[index + 5],
     this[index + 6],
-    this[index + 7]
+    this[index + 7],
 )
 
 /**

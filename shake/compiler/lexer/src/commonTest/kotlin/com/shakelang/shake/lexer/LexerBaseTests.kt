@@ -24,14 +24,14 @@ class LexerBaseTests : FreeSpec({
         generateToken("\"afvne9214 ro\"", ShakeTokenType.STRING).value shouldBe "afvne9214 ro"
         generateToken(
             "\"\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000\"",
-            ShakeTokenType.STRING
+            ShakeTokenType.STRING,
         ).value shouldBe "\\t\\b\\n\\r\\f\\'\\\"\\\\a\\u0000"
     }
 
     "character" {
 
         listOf(
-            " ", "a", "\\r", "\\n", "\\b", "\\t", "\\f", "\\'", "\\u0000"
+            " ", "a", "\\r", "\\n", "\\b", "\\t", "\\f", "\\'", "\\u0000",
         ).forEach {
             generateToken("'$it'", ShakeTokenType.CHARACTER).value shouldBe it
         }
@@ -174,7 +174,8 @@ class LexerBaseTests : FreeSpec({
         VOID("void", ShakeTokenType.KEYWORD_VOID),
         VAR("var", ShakeTokenType.KEYWORD_VAR),
         CONSTRUCTOR("constructor", ShakeTokenType.KEYWORD_CONSTRUCTOR),
-        AS("as", ShakeTokenType.KEYWORD_AS);
+        AS("as", ShakeTokenType.KEYWORD_AS),
+        ;
 
         override fun toString(): String {
             return "Keyword '$input'"

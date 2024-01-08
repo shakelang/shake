@@ -83,8 +83,8 @@ class String : NativeClass {
             return JsFunctionCall(
                 JsField("fromCharCode", JsField("String")),
                 listOf(
-                    JsFunctionCall(JsField("slice", arg0), listOf(arg1, JsSubtract(arg2, arg1)))
-                )
+                    JsFunctionCall(JsField("slice", arg0), listOf(arg1, JsSubtract(arg2, arg1))),
+                ),
             )
         }
     }
@@ -114,9 +114,9 @@ class String : NativeClass {
             return JsFunctionCall(
                 JsField(
                     "join",
-                    JsFunctionCall(JsField("slice", arg0), listOf(arg1, JsSubtract(arg2, arg1)))
+                    JsFunctionCall(JsField("slice", arg0), listOf(arg1, JsSubtract(arg2, arg1))),
                 ),
-                listOf()
+                listOf(),
             )
         }
     }
@@ -442,10 +442,10 @@ class String : NativeClass {
         MethodSplit2(),
         MethodConcat(),
         MethodToString(),
-        MethodPlus()
+        MethodPlus(),
     )
 
     override val fields: List<NativeField> = listOf(
-        FieldLength()
+        FieldLength(),
     )
 }

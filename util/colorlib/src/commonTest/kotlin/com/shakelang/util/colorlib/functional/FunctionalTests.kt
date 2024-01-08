@@ -41,7 +41,7 @@ class FunctionalTests {
     fun testFgBrightBlack() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_BLACK}hello world${Formatting.RESET}",
-            fgBrightBlack("hello world")
+            fgBrightBlack("hello world"),
         )
 
     @Test
@@ -52,49 +52,49 @@ class FunctionalTests {
     fun testFgBrightRed() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_RED}hello world${Formatting.RESET}",
-            fgBrightRed("hello world")
+            fgBrightRed("hello world"),
         )
 
     @Test
     fun testFgBrightGreen() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_GREEN}hello world${Formatting.RESET}",
-            fgBrightGreen("hello world")
+            fgBrightGreen("hello world"),
         )
 
     @Test
     fun testFgBrightYellow() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_YELLOW}hello world${Formatting.RESET}",
-            fgBrightYellow("hello world")
+            fgBrightYellow("hello world"),
         )
 
     @Test
     fun testFgBrightBlue() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_BLUE}hello world${Formatting.RESET}",
-            fgBrightBlue("hello world")
+            fgBrightBlue("hello world"),
         )
 
     @Test
     fun testFgBrightPurple() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_PURPLE}hello world${Formatting.RESET}",
-            fgBrightPurple("hello world")
+            fgBrightPurple("hello world"),
         )
 
     @Test
     fun testFgBrightCyan() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_CYAN}hello world${Formatting.RESET}",
-            fgBrightCyan("hello world")
+            fgBrightCyan("hello world"),
         )
 
     @Test
     fun testFgBrightWhite() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_WHITE}hello world${Formatting.RESET}",
-            fgBrightWhite("hello world")
+            fgBrightWhite("hello world"),
         )
 
     @Test
@@ -137,49 +137,49 @@ class FunctionalTests {
     fun testBrightRed() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_RED}hello world${Formatting.RESET}",
-            brightRed("hello world")
+            brightRed("hello world"),
         )
 
     @Test
     fun testBrightGreen() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_GREEN}hello world${Formatting.RESET}",
-            brightGreen("hello world")
+            brightGreen("hello world"),
         )
 
     @Test
     fun testBrightYellow() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_YELLOW}hello world${Formatting.RESET}",
-            brightYellow("hello world")
+            brightYellow("hello world"),
         )
 
     @Test
     fun testBrightBlue() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_BLUE}hello world${Formatting.RESET}",
-            brightBlue("hello world")
+            brightBlue("hello world"),
         )
 
     @Test
     fun testBrightPurple() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_PURPLE}hello world${Formatting.RESET}",
-            brightPurple("hello world")
+            brightPurple("hello world"),
         )
 
     @Test
     fun testBrightCyan() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_CYAN}hello world${Formatting.RESET}",
-            brightCyan("hello world")
+            brightCyan("hello world"),
         )
 
     @Test
     fun testBrightWhite() =
         assertEquals(
             "${Formatting.FGColor.BRIGHT_WHITE}hello world${Formatting.RESET}",
-            brightWhite("hello world")
+            brightWhite("hello world"),
         )
 
     @Test
@@ -218,49 +218,49 @@ class FunctionalTests {
     fun testBgBrightRed() =
         assertEquals(
             "${Formatting.BGColor.BRIGHT_RED}hello world${Formatting.RESET}",
-            bgBrightRed("hello world")
+            bgBrightRed("hello world"),
         )
 
     @Test
     fun testBgBrightGreen() =
         assertEquals(
             "${Formatting.BGColor.BRIGHT_GREEN}hello world${Formatting.RESET}",
-            bgBrightGreen("hello world")
+            bgBrightGreen("hello world"),
         )
 
     @Test
     fun testBgBrightYellow() =
         assertEquals(
             "${Formatting.BGColor.BRIGHT_YELLOW}hello world${Formatting.RESET}",
-            bgBrightYellow("hello world")
+            bgBrightYellow("hello world"),
         )
 
     @Test
     fun testBgBrightBlue() =
         assertEquals(
             "${Formatting.BGColor.BRIGHT_BLUE}hello world${Formatting.RESET}",
-            bgBrightBlue("hello world")
+            bgBrightBlue("hello world"),
         )
 
     @Test
     fun testBgBrightPurple() =
         assertEquals(
             "${Formatting.BGColor.BRIGHT_PURPLE}hello world${Formatting.RESET}",
-            bgBrightPurple("hello world")
+            bgBrightPurple("hello world"),
         )
 
     @Test
     fun testBgBrightCyan() =
         assertEquals(
             "${Formatting.BGColor.BRIGHT_CYAN}hello world${Formatting.RESET}",
-            bgBrightCyan("hello world")
+            bgBrightCyan("hello world"),
         )
 
     @Test
     fun testBgBrightWhite() =
         assertEquals(
             "${Formatting.BGColor.BRIGHT_WHITE}hello world${Formatting.RESET}",
-            bgBrightWhite("hello world")
+            bgBrightWhite("hello world"),
         )
 
     @Test

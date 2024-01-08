@@ -287,8 +287,7 @@ enum class ShasPTokenType(private val size: Int, override val hasValue: Boolean 
     /**
      * New keyword
      */
-    KEYWORD_NEW(3)
-
+    KEYWORD_NEW(3),
     ;
 
     fun length(): Int {

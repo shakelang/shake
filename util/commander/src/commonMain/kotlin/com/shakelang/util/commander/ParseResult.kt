@@ -1,7 +1,7 @@
 package com.shakelang.util.commander
 
 class ParseResult(
-    val stack: MutableList<CommandStackEntry>
+    val stack: MutableList<CommandStackEntry>,
 ) {
     fun getOptionValueByName(alias: String): Array<Value>? {
         for (entry in stack) {
@@ -30,7 +30,7 @@ class ParseResult(
 
 class CommandStackEntry(
     val alias: String,
-    val command: CliCommand
+    val command: CliCommand,
 ) {
     val name: String = command.name
     val arguments: MutableMap<String, Value> = mutableMapOf()

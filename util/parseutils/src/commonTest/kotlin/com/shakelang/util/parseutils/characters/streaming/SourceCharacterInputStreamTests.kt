@@ -28,7 +28,7 @@ class SourceCharacterInputStreamTests {
         run {
             val stream = SourceCharacterInputStream(
                 "SourceCharacterInputStreamTests#testConstructors",
-                "Hello World!".toCharArray()
+                "Hello World!".toCharArray(),
             )
 
             assertEquals(-1, stream.position)

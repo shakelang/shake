@@ -43,7 +43,7 @@ interface ShakeProject {
 
     fun toJson(): Map<String, Any?> {
         return mapOf(
-            "subpackages" to subpackages.map { it.toJson() }
+            "subpackages" to subpackages.map { it.toJson() },
         )
     }
 

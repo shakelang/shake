@@ -65,11 +65,11 @@ class JsonGeneratorTests : FreeSpec({
         JsonGenerator.generate(arrayOf("hello", "world")) shouldBe "[\"hello\",\"world\"]"
         JsonGenerator.generate(
             arrayOf("hello", "world"),
-            indent = " ".repeat(2)
+            indent = " ".repeat(2),
         ) shouldBe "[\n  \"hello\",\n  \"world\"\n]"
         JsonGenerator.generate(
             arrayOf("hello", "world"),
-            indent = " ".repeat(4)
+            indent = " ".repeat(4),
         ) shouldBe "[\n    \"hello\",\n    \"world\"\n]"
     }
 
@@ -77,11 +77,11 @@ class JsonGeneratorTests : FreeSpec({
         JsonGenerator.generate(arrayOf(arrayOf("hello"))) shouldBe "[[\"hello\"]]"
         JsonGenerator.generate(
             arrayOf(arrayOf("hello")),
-            indent = " ".repeat(2)
+            indent = " ".repeat(2),
         ) shouldBe "[\n  [\n    \"hello\"\n  ]\n]"
         JsonGenerator.generate(
             arrayOf(arrayOf("hello")),
-            indent = " ".repeat(4)
+            indent = " ".repeat(4),
         ) shouldBe "[\n    [\n        \"hello\"\n    ]\n]"
     }
 
@@ -101,11 +101,11 @@ class JsonGeneratorTests : FreeSpec({
         JsonGenerator.generate(listOf("hello", "world")) shouldBe "[\"hello\",\"world\"]"
         JsonGenerator.generate(
             listOf("hello", "world"),
-            indent = " ".repeat(2)
+            indent = " ".repeat(2),
         ) shouldBe "[\n  \"hello\",\n  \"world\"\n]"
         JsonGenerator.generate(
             listOf("hello", "world"),
-            indent = " ".repeat(4)
+            indent = " ".repeat(4),
         ) shouldBe "[\n    \"hello\",\n    \"world\"\n]"
     }
 
@@ -114,7 +114,7 @@ class JsonGeneratorTests : FreeSpec({
         JsonGenerator.generate(listOf(listOf("hello")), indent = " ".repeat(2)) shouldBe "[\n  [\n    \"hello\"\n  ]\n]"
         JsonGenerator.generate(
             listOf(listOf("hello")),
-            indent = " ".repeat(4)
+            indent = " ".repeat(4),
         ) shouldBe "[\n    [\n        \"hello\"\n    ]\n]"
     }
 
@@ -134,11 +134,11 @@ class JsonGeneratorTests : FreeSpec({
         JsonGenerator.generate(mapOf("hello" to 1, "world" to 2)) shouldBe "{\"hello\":1,\"world\":2}"
         JsonGenerator.generate(
             mapOf("hello" to 1, "world" to 2),
-            indent = " ".repeat(2)
+            indent = " ".repeat(2),
         ) shouldBe "{\n  \"hello\": 1,\n  \"world\": 2\n}"
         JsonGenerator.generate(
             mapOf("hello" to 1, "world" to 2),
-            indent = " ".repeat(4)
+            indent = " ".repeat(4),
         ) shouldBe "{\n    \"hello\": 1,\n    \"world\": 2\n}"
     }
 
@@ -146,11 +146,11 @@ class JsonGeneratorTests : FreeSpec({
         JsonGenerator.generate(mapOf("hello" to mapOf("world" to 1))) shouldBe "{\"hello\":{\"world\":1}}"
         JsonGenerator.generate(
             mapOf("hello" to mapOf("world" to 1)),
-            indent = " ".repeat(2)
+            indent = " ".repeat(2),
         ) shouldBe "{\n  \"hello\": {\n    \"world\": 1\n  }\n}"
         JsonGenerator.generate(
             mapOf("hello" to mapOf("world" to 1)),
-            indent = " ".repeat(4)
+            indent = " ".repeat(4),
         ) shouldBe "{\n    \"hello\": {\n        \"world\": 1\n    }\n}"
     }
 

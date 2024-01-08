@@ -14,7 +14,9 @@ enum class JsonNullElement : JsonPrimitive {
      * @since 0.1.0
      * @version 0.1.0
      */
-    INSTANCE;
+    INSTANCE,
+
+    ;
 
     /**
      * The value of null is null, so as value we just return null.

@@ -155,7 +155,7 @@ class ConstantInfoTests {
             ConstantUtf8Info("java/lang/Object"),
             ConstantNameAndTypeInfo(6u, 5u),
             ConstantUtf8Info("foo"),
-            ConstantUtf8Info("I")
+            ConstantUtf8Info("I"),
         )
         val pool = ConstantPool(testConstants)
         val clz = com.shakelang.util.jvmlib.infos.ClassInfo(
@@ -168,7 +168,7 @@ class ConstantInfoTests {
             InterfaceList(emptyArray()),
             FieldList(listOf()),
             MethodList(listOf()),
-            AttributeMap(mapOf())
+            AttributeMap(mapOf()),
         )
         val constant = ConstantFieldrefInfo(2u, 4u)
         val constant2 = pool[4]

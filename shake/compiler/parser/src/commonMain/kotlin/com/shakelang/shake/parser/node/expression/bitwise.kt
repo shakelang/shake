@@ -48,7 +48,7 @@ class ShakeBitwiseShiftLeftNode(
     map: PositionMap,
     left: ShakeValuedNode,
     right: ShakeValuedNode,
-    operatorPosition: Int
+    operatorPosition: Int,
 ) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String
@@ -59,7 +59,7 @@ class ShakeBitwiseShiftRightNode(
     map: PositionMap,
     left: ShakeValuedNode,
     right: ShakeValuedNode,
-    operatorPosition: Int
+    operatorPosition: Int,
 ) :
     ShakeExpressionNode(map, left, right, operatorPosition) {
     override val operator: String

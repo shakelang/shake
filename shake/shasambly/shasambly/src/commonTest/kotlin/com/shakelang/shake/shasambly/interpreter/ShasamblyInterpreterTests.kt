@@ -13,9 +13,9 @@ class ShasamblyInterpreterTests {
             byteArrayOf(
                 Opcodes.INCR_STACK,
                 0,
-                0x64
+                0x64,
             ),
-            0
+            0,
         )
 
         interpreter.finish()
@@ -30,9 +30,9 @@ class ShasamblyInterpreterTests {
                 Opcodes.INCR_STACK,
                 0,
                 0x64,
-                Opcodes.DECR_STACK
+                Opcodes.DECR_STACK,
             ),
-            0
+            0,
         )
 
         interpreter.finish()

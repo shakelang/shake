@@ -12,7 +12,7 @@ ShakeImportNode(map: PositionMap, val import: Array<String>) : ShakeFileChildNod
     override fun toJson(): Map<String, *> =
         mapOf(
             "name" to nodeName,
-            "import" to import
+            "import" to import,
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

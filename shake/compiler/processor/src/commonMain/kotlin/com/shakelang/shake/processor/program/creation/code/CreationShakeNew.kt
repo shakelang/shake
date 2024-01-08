@@ -11,7 +11,7 @@ class CreationShakeNew(
     override val project: CreationShakeProject,
     override val reference: CreationShakeConstructor,
     override val arguments: List<CreationShakeValue>,
-    override val parent: CreationShakeValue? = null
+    override val parent: CreationShakeValue? = null,
 ) : CreationShakeValue, CreationShakeStatement, ShakeNew {
 
     override val type: CreationShakeType
@@ -22,7 +22,7 @@ class CreationShakeNew(
         return mapOf(
             "type" to "new",
             "name" to name,
-            "arguments" to arguments.map { it.toJson() }
+            "arguments" to arguments.map { it.toJson() },
         )
     }
 }

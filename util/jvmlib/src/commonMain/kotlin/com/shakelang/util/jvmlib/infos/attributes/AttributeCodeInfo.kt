@@ -15,14 +15,14 @@ class AttributeCodeInfo(
     val max_locals: UShort,
     val code: ByteArray,
     val exception_table: Array<ExceptionTableEntry>,
-    val attributes: Array<AttributeInfo>
+    val attributes: Array<AttributeInfo>,
 
 ) : AttributeInfo(name) {
 
     override val uses: Array<ConstantInfo>
         get() = arrayOf(
             name,
-            *attributes.flatMap { it.uses.toList() }.toTypedArray()
+            *attributes.flatMap { it.uses.toList() }.toTypedArray(),
         )
 
     override val bytes: ByteArray
@@ -49,7 +49,7 @@ class AttributeCodeInfo(
         "code" to code.toHexString(),
         "name_index" to nameIndex,
         "exception_table" to exception_table.map { it.toJson() },
-        "attributes" to attributes.map { it.toJson() }
+        "attributes" to attributes.map { it.toJson() },
     )
 
     companion object {
@@ -73,7 +73,7 @@ class AttributeCodeInfo(
                 max_locals,
                 code,
                 exception_table,
-                attributes
+                attributes,
             )
         }
 
@@ -103,7 +103,7 @@ class AttributeCodeInfo(
         val start_pc: UShort,
         val end_pc: UShort,
         val handler_pc: UShort,
-        val catch_type: UShort
+        val catch_type: UShort,
     ) {
         val bytes: ByteArray
             get() {
@@ -120,7 +120,7 @@ class AttributeCodeInfo(
             "start_pc" to start_pc,
             "end_pc" to end_pc,
             "handler_pc" to handler_pc,
-            "catch_type" to catch_type
+            "catch_type" to catch_type,
         )
 
         companion object {
@@ -129,7 +129,7 @@ class AttributeCodeInfo(
                     b.getUnsignedShort(0),
                     b.getUnsignedShort(2),
                     b.getUnsignedShort(4),
-                    b.getUnsignedShort(6)
+                    b.getUnsignedShort(6),
                 )
             }
 

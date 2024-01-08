@@ -17,7 +17,7 @@ class FieldTests : FreeSpec({
                     type = "I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test/test")
@@ -43,7 +43,7 @@ class FieldTests : FreeSpec({
                         isPublic = true
                     }
                 }
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test/Test:test")
@@ -75,7 +75,7 @@ class FieldTests : FreeSpec({
                         }
                     }
                 }
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test/Test:Test2:test")
@@ -89,7 +89,7 @@ class FieldTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test/test")
@@ -107,7 +107,7 @@ class FieldTests : FreeSpec({
                     type = "I"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test/test2")
@@ -119,7 +119,7 @@ class FieldTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test/test:test:test")
@@ -131,7 +131,7 @@ class FieldTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test/test:test")
@@ -143,7 +143,7 @@ class FieldTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang/shake/test"
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test2/test")
@@ -155,7 +155,7 @@ class FieldTests : FreeSpec({
         classpath.load(
             generatePackage {
                 name = "com/shakelang"
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test/test")
@@ -173,7 +173,7 @@ class FieldTests : FreeSpec({
                     type = "Lcom/shakelang/Object;"
                     isPublic = true
                 }
-            }
+            },
         )
 
         classpath.load(
@@ -185,7 +185,7 @@ class FieldTests : FreeSpec({
                     superName = "com/shakelang/Object"
                     isPublic = true
                 }
-            }
+            },
         )
 
         val testField = classpath.getField("com/shakelang/shake/test/test")

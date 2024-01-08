@@ -16,7 +16,7 @@ abstract class CreationShakeUsage : CreationShakeValue, ShakeUsage {
 open class CreationShakeClassFieldUsage(
     override val scope: CreationShakeScope,
     final override val declaration: CreationShakeField,
-    override val receiver: CreationShakeValue? = null
+    override val receiver: CreationShakeValue? = null,
 ) : CreationShakeUsage(), ShakeClassFieldUsage {
 
     override val project: ShakeProject
@@ -30,14 +30,14 @@ open class CreationShakeClassFieldUsage(
             "type" to "classField",
             "name" to name,
             "receiver" to receiver?.toJson(),
-            "type" to type.toJson()
+            "type" to type.toJson(),
         )
     }
 }
 
 open class CreationShakeStaticClassFieldUsage(
     override val scope: CreationShakeScope,
-    final override val declaration: CreationShakeField
+    final override val declaration: CreationShakeField,
 ) : CreationShakeUsage(), ShakeStaticClassFieldUsage {
 
     override val project: ShakeProject
@@ -50,7 +50,7 @@ open class CreationShakeStaticClassFieldUsage(
         return mapOf(
             "type" to "staticClassField",
             "name" to name,
-            "type" to type.toJson()
+            "type" to type.toJson(),
         )
     }
 }
@@ -58,7 +58,7 @@ open class CreationShakeStaticClassFieldUsage(
 class CreationShakeFieldUsage(
     override val scope: CreationShakeScope,
     override val declaration: CreationShakeField,
-    override val receiver: CreationShakeValue? = null
+    override val receiver: CreationShakeValue? = null,
 ) : CreationShakeUsage(), ShakeFieldUsage {
 
     override val project: ShakeProject
@@ -77,7 +77,7 @@ class CreationShakeFieldUsage(
             "type" to "field",
             "name" to name,
             "receiver" to receiver?.toJson(),
-            "type" to type.toJson()
+            "type" to type.toJson(),
         )
     }
 
@@ -86,7 +86,7 @@ class CreationShakeFieldUsage(
         fun from(
             scope: CreationShakeScope,
             declaration: CreationShakeField,
-            receiver: CreationShakeValue? = null
+            receiver: CreationShakeValue? = null,
         ): CreationShakeUsage {
             return if (declaration.clazz != null) {
                 if (declaration.isStatic) {
@@ -106,7 +106,7 @@ class CreationShakeFieldUsage(
 
 open class CreationShakeVariableUsage(
     override val scope: CreationShakeScope,
-    override val declaration: CreationShakeDeclaration
+    override val declaration: CreationShakeDeclaration,
 ) : CreationShakeUsage(), ShakeVariableUsage {
 
     override val project: ShakeProject
@@ -119,7 +119,7 @@ open class CreationShakeVariableUsage(
         return mapOf(
             "type" to "variable",
             "name" to name,
-            "type" to type.toJson()
+            "type" to type.toJson(),
         )
     }
 }

@@ -91,7 +91,7 @@ class ShakeBytecodeGenerator {
     private fun visitInvocation(
         ctx: BytecodeGenerationContext,
         v: ShakeInvocation,
-        keepResultOnStack: Boolean
+        keepResultOnStack: Boolean,
     ) {
         val invokable = v.callable
         when (invokable) {
@@ -112,7 +112,7 @@ class ShakeBytecodeGenerator {
 
     fun visitCode(
         ctx: BytecodeGenerationContext,
-        code: ShakeCode
+        code: ShakeCode,
     ) {
         code.statements.forEach {
             visitStatement(ctx, it)
@@ -121,7 +121,7 @@ class ShakeBytecodeGenerator {
 
     fun visitStatement(
         ctx: BytecodeGenerationContext,
-        s: ShakeStatement
+        s: ShakeStatement,
     ) {
         return when (s) {
             is ShakeVariableDeclaration -> visitVariableDeclaration(ctx, s)
@@ -353,9 +353,9 @@ class ShakeBytecodeGenerator {
                                 this@ShakeBytecodeGenerator,
                                 this,
                                 ctx,
-                                localTable
+                                localTable,
                             ),
-                            body
+                            body,
                         )
 
                         // Return at the end of the method
@@ -443,7 +443,7 @@ class ShakeBytecodeGenerator {
 
     class LocalTable(
         val locals: MutableMap<String, Int> = mutableMapOf(),
-        var size: Int = 0
+        var size: Int = 0,
     ) {
 
         fun containsLocal(name: String): Boolean {
@@ -465,6 +465,6 @@ class ShakeBytecodeGenerator {
         val gen: ShakeBytecodeGenerator,
         val bytecodeInstructionGenerator: PooledShakeBytecodeInstructionGenerator,
         val method: MethodGenerationContext,
-        val localTable: LocalTable
+        val localTable: LocalTable,
     )
 }

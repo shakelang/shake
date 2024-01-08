@@ -30,7 +30,7 @@ open class ConstantPool(
      * @since 0.1.0
      * @version 0.1.0
      */
-    open val entries: List<ConstantPoolEntry>
+    open val entries: List<ConstantPoolEntry>,
 
 ) : List<ConstantPoolEntry> by entries {
 
@@ -603,7 +603,7 @@ class MutableConstantPool(
      * @since 0.1.0
      * @version 0.1.0
      */
-    override val entries: MutableList<ConstantPoolEntry> = mutableListOf()
+    override val entries: MutableList<ConstantPoolEntry> = mutableListOf(),
 
 ) : ConstantPool(entries), MutableList<ConstantPoolEntry> by entries {
 

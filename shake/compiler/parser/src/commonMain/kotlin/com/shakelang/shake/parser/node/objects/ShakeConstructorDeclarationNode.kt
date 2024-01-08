@@ -17,7 +17,7 @@ class ShakeConstructorDeclarationNode
     val args: Array<ShakeFunctionParameterNode>,
     val access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE,
     val isNative: Boolean,
-    val isSynchronized: Boolean
+    val isSynchronized: Boolean,
 
 ) : ShakeValuedNodeImpl(map) {
 
@@ -28,7 +28,7 @@ class ShakeConstructorDeclarationNode
         args: Array<ShakeFunctionParameterNode>,
         access: ShakeAccessDescriber? = ShakeAccessDescriber.PACKAGE,
         isNative: Boolean,
-        isSynchronized: Boolean
+        isSynchronized: Boolean,
     ) : this(map, null, body, args, access, isNative, isSynchronized)
 
     override fun toJson(): Map<String, *> =
@@ -37,7 +37,7 @@ class ShakeConstructorDeclarationNode
             "function_name" to name,
             "args" to args.map { it.json },
             "body" to body.json,
-            "access" to access.toString()
+            "access" to access.toString(),
         )
 
     override fun equalsIgnorePosition(other: Any?): Boolean {

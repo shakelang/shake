@@ -13,11 +13,11 @@ fun tagRef(name: String): String {
 }
 
 class TagStash(
-    val name: String
+    val name: String,
 ) {
     fun toObject(): Any {
         return mapOf(
-            "name" to name
+            "name" to name,
         )
     }
 
@@ -38,7 +38,7 @@ class TagStash(
 }
 
 class TagStashList(
-    val tags: MutableList<TagStash>
+    val tags: MutableList<TagStash>,
 ) {
 
     fun add(tag: TagStash) {
@@ -75,7 +75,7 @@ class TagStashList(
 
     fun toObject(): Any {
         return mapOf(
-            "tags" to tags.map { it.toObject() }
+            "tags" to tags.map { it.toObject() },
         )
     }
 
@@ -92,7 +92,7 @@ class TagStashList(
                 tags.toJsonArray().map {
                     if (!it.isJsonObject()) throw IllegalArgumentException("TagStashList tags array contains non object")
                     TagStash.fromObject(it.toJsonObject())
-                }.toMutableList()
+                }.toMutableList(),
             )
         }
 
@@ -123,7 +123,7 @@ class ReleaseTag(
     val sha: String,
     val version: Version,
     val project: ProjectStructure,
-    val timestamp: Date
+    val timestamp: Date,
 ) {
     override fun toString(): String {
         return json.stringify(
@@ -132,8 +132,8 @@ class ReleaseTag(
                 "sha" to sha,
                 "version" to version.toString(),
                 "project" to project.path,
-                "timestamp" to timestamp.time
-            )
+                "timestamp" to timestamp.time,
+            ),
         )
     }
 }
@@ -164,7 +164,7 @@ fun Changelog.getTimestampForTag(tag: ParsedGitTag): Date {
 
 data class ParsedGitTag(
     val name: String,
-    val sha: String
+    val sha: String,
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -217,7 +217,7 @@ fun Changelog.getAllTags(): List<ReleaseTag> {
             structure.find { struct ->
                 struct.path == prjPath
             } ?: throw IllegalArgumentException("Invalid path in tag-name: \"$name\" (Extracted Path: \"$prjPath\")"),
-            getTimestampForTag(it)
+            getTimestampForTag(it),
         )
     }
 }

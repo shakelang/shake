@@ -78,7 +78,7 @@ class ParserTests : FreeSpec({
         var node = ParserTestUtil.parseStatement(
             "<ForTest>",
             "for(var i = 0; i < 100; i++) { println(); }",
-            ShakeForNode::class
+            ShakeForNode::class,
         )
         node.declaration shouldNotBe null
         node.condition shouldNotBe null
@@ -134,7 +134,7 @@ class ParserTests : FreeSpec({
         node = ParserTestUtil.parseStatement(
             "<IfTest>",
             "if (true) println(i); else if (true) println(i); else println(i);",
-            ShakeIfNode::class
+            ShakeIfNode::class,
         )
         node.condition shouldNotBe null
         node.body shouldNotBe null

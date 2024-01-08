@@ -12,7 +12,7 @@ import javax.swing.JScrollPane
 
 data class PackageEntry(
     val name: String,
-    val version: Version
+    val version: Version,
 )
 
 @Suppress("unused")
@@ -20,7 +20,7 @@ class ChangelogCli(
     private val project: Project,
     private val logger: Logger,
     private val changed: List<PackageEntry>,
-    private val unchanged: List<PackageEntry>
+    private val unchanged: List<PackageEntry>,
 ) : JFrame("Changelog") {
 
     var closed: Boolean = false
@@ -52,7 +52,7 @@ class ChangelogCli(
             },
             onCreateTags = {
                 performCreateTags()
-            }
+            },
         )
     }
 
@@ -64,7 +64,7 @@ class ChangelogCli(
             changed,
             unchanged,
             onCanceled = { showHomePage() },
-            onBumped = { showHomePage() }
+            onBumped = { showHomePage() },
         )
         val scrollPane = JScrollPane(bumpPanel)
         scrollPane.verticalScrollBarPolicy = JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
@@ -81,7 +81,7 @@ class ChangelogCli(
             this,
             "You are about to release version. Do you want to release it as a snapshot?",
             "Release",
-            JOptionPane.YES_NO_OPTION
+            JOptionPane.YES_NO_OPTION,
         )
 
         val type = if (snapshot == JOptionPane.YES_OPTION) "SNAPSHOT" else ""
@@ -90,7 +90,7 @@ class ChangelogCli(
             this,
             "You are about to release all bumped changes as a $type. Are you sure?",
             "Release",
-            JOptionPane.YES_NO_OPTION
+            JOptionPane.YES_NO_OPTION,
         )
 
         if (res != JOptionPane.YES_OPTION) return
@@ -106,7 +106,7 @@ class ChangelogCli(
             this,
             "You are about to create tags for all newly released packages. Are you sure?",
             "Create Tags",
-            JOptionPane.YES_NO_OPTION
+            JOptionPane.YES_NO_OPTION,
         )
 
         if (res != JOptionPane.YES_OPTION) return

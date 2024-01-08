@@ -13,7 +13,7 @@ class HomePage(
     onCanceled: () -> Unit,
     onBump: () -> Unit,
     onRelease: () -> Unit,
-    onCreateTags: () -> Unit
+    onCreateTags: () -> Unit,
 ) : JPanel() {
 
     private val label: JLabel = JLabel("What do you want to do?")

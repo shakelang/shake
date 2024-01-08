@@ -9,7 +9,7 @@ class PathDescriptorTests : FreeSpec({
         val descriptor = PathDescriptor(
             arrayOf("shake", "lang"),
             arrayOf("String", "Builder"),
-            "build"
+            "build",
         )
         descriptor.descriptor shouldBe "shake/lang/String:Builder:build"
     }
@@ -18,7 +18,7 @@ class PathDescriptorTests : FreeSpec({
         val descriptor = PathDescriptor(
             arrayOf("shake", "lang"),
             arrayOf("String", "Builder"),
-            "build"
+            "build",
         )
         descriptor.packagePath shouldBe "shake/lang"
     }
@@ -27,7 +27,7 @@ class PathDescriptorTests : FreeSpec({
         val descriptor = PathDescriptor(
             arrayOf("shake", "lang"),
             arrayOf("String", "Builder"),
-            "build"
+            "build",
         )
         descriptor.classPath shouldBe "String:Builder"
     }

@@ -9,7 +9,7 @@ import kotlin.experimental.and
 import kotlin.experimental.or
 
 class MethodGenerationContext(
-    val constantPool: MutableConstantPool
+    val constantPool: MutableConstantPool,
 ) {
 
     var name: String = GenerationContext.UNDEFINED
@@ -68,7 +68,7 @@ class MethodGenerationContext(
     }
 
     fun code(
-        generator: CodeAttributeGenerationContext.() -> Unit
+        generator: CodeAttributeGenerationContext.() -> Unit,
     ) {
         val ctx = CodeAttributeGenerationContext(constantPool)
         ctx.generator()
@@ -76,7 +76,7 @@ class MethodGenerationContext(
     }
 
     fun Code(
-        generator: CodeAttributeGenerationContext.() -> Unit
+        generator: CodeAttributeGenerationContext.() -> Unit,
     ) {
         val ctx = CodeAttributeGenerationContext(constantPool)
         ctx.generator()
@@ -84,7 +84,7 @@ class MethodGenerationContext(
     }
 
     fun toMethod(
-        pool: MutableConstantPool
+        pool: MutableConstantPool,
     ): Method {
         val nameConstant = pool.resolveUtf8(name)
         return Method(
@@ -92,12 +92,12 @@ class MethodGenerationContext(
             nameConstant,
             nameConstant,
             flags,
-            attributes.map { it.toAttribute(pool) }
+            attributes.map { it.toAttribute(pool) },
         )
     }
 
     fun toMutableMethod(
-        pool: MutableConstantPool
+        pool: MutableConstantPool,
     ): MutableMethod {
         val nameConstant = pool.resolveUtf8(name)
         return MutableMethod(
@@ -105,7 +105,7 @@ class MethodGenerationContext(
             nameConstant,
             nameConstant,
             flags,
-            attributes.map { it.toMutableAttribute(pool) }.toMutableList()
+            attributes.map { it.toMutableAttribute(pool) }.toMutableList(),
         )
     }
 }

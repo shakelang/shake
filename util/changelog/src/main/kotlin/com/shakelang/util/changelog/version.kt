@@ -4,7 +4,7 @@ class Version(
     var major: Int,
     var minor: Int,
     var patch: Int,
-    var suffix: String
+    var suffix: String,
 ) {
 
     override fun toString(): String {

@@ -92,7 +92,7 @@ open class StorageFormat(
      * @since 0.1.0
      * @version 0.1.0
      */
-    open val fields: List<Field>
+    open val fields: List<Field>,
 ) : DumpAble {
 
     /**
@@ -302,7 +302,7 @@ class MutableStorageFormat(
      * @since 0.1.0
      * @version 0.1.0
      */
-    override var fields: MutableList<MutableField>
+    override var fields: MutableList<MutableField>,
 ) : StorageFormat(
     major,
     minor,
@@ -310,7 +310,7 @@ class MutableStorageFormat(
     constantPool,
     classes,
     methods,
-    fields
+    fields,
 ) {
 
     /**
@@ -344,7 +344,7 @@ class MutableStorageFormat(
                 pool,
                 storageFormat.classes.map { MutableClass.fromClass(pool, it) }.toMutableList(),
                 storageFormat.methods.map { MutableMethod.fromMethod(pool, it) }.toMutableList(),
-                storageFormat.fields.map { MutableField.fromField(pool, it) }.toMutableList()
+                storageFormat.fields.map { MutableField.fromField(pool, it) }.toMutableList(),
             )
         }
 
@@ -384,7 +384,7 @@ class MutableStorageFormat(
                 pool,
                 classes,
                 methods,
-                fields
+                fields,
             )
         }
     }
