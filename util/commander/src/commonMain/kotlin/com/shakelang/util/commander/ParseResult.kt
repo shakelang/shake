@@ -42,8 +42,9 @@ open class CommandStackEntry(
 ) {
     val name: String = command.name
 
-    internal fun verify() {
-        command.verify(this)
+    internal open fun verify() {
+        if (this !is MutableCommandStackEntry) throw IllegalStateException("CommandStackEntry is not mutable")
+        this.verify()
     }
 }
 
@@ -53,4 +54,8 @@ class MutableCommandStackEntry(
 ): CommandStackEntry(alias, command, mutableMapOf(), mutableMapOf()) {
     override val arguments: MutableMap<String, Value> get() = super.arguments as MutableMap<String, Value>
     override val options: MutableMap<String, Array<Value>> = super.options as MutableMap<String, Array<Value>>
+
+    override fun verify() {
+        command.verify(this)
+    }
 }

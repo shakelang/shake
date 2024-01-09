@@ -5,7 +5,6 @@ class CliArgument(
     val name: String,
     val description: String? = null,
     val required: Boolean = false,
-    val hasValue: Boolean = false,
     val defaultValue: String? = null,
     val valueName: String? = null,
     val valueDescription: String? = null,
@@ -24,7 +23,6 @@ class CliArgumentCreationContext {
     lateinit var name: String
     var description: String? = null
     var required: Boolean = false
-    var hasValue: Boolean = false
     var defaultValue: String? = null
     var valueName: String? = null
     var valueDescription: String? = null
@@ -46,7 +44,6 @@ class CliArgumentCreationContext {
             name,
             description,
             required,
-            hasValue,
             defaultValue,
             valueName,
             valueDescription,

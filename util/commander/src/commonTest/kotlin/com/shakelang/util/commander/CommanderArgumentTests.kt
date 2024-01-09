@@ -76,5 +76,57 @@ class CommanderArgumentTests : FreeSpec(
                 command.execute(arrayOf())
             }
         }
+
+        "argument default value" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                argument {
+                    name = "test2"
+                    description = "test2 description"
+                    defaultValue = "Hello World"
+                }
+            }
+            val result = command.execute(arrayOf())
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().value shouldBe "Hello World"
+        }
+
+        "argument default value (with value given)" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                argument {
+                    name = "test2"
+                    description = "test2 description"
+                    defaultValue = "Hello World"
+                }
+            }
+            val result = command.execute(arrayOf("Hello World"))
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().value shouldBe "Hello World"
+        }
+
+        "required argument default value" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                argument {
+                    name = "test2"
+                    description = "test2 description"
+                    defaultValue = "Hello World"
+                    required = true
+                }
+            }
+            val result = command.execute(arrayOf())
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().value shouldBe "Hello World"
+        }
     },
 )

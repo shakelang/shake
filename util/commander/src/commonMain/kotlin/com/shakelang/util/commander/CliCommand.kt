@@ -110,7 +110,6 @@ class CliCommand(
         name: String,
         description: String? = null,
         required: Boolean = false,
-        hasValue: Boolean = false,
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
@@ -122,7 +121,6 @@ class CliCommand(
                 name,
                 description,
                 required,
-                hasValue,
                 defaultValue,
                 valueName,
                 valueDescription,
@@ -256,12 +254,18 @@ class CliCommand(
         return result
     }
 
-    internal fun verify(commandStackEntry: CommandStackEntry) {
+    internal fun verify(commandStackEntry: MutableCommandStackEntry) {
         for (it in this.options) {
+            if(it.hasValue && it.defaultValue != null && !commandStackEntry.options.containsKey(it.name)) {
+                commandStackEntry.options[it.name] = arrayOf(Value(it.defaultValue))
+            }
             if(it.required && !commandStackEntry.options.containsKey(it.name)) throw CliMissingOptionException("Missing required option: ${it.name}")
         }
 
         for (it in this.arguments) {
+            if(it.defaultValue != null && !commandStackEntry.arguments.containsKey(it.name)) {
+                commandStackEntry.arguments[it.name] = Value(it.defaultValue)
+            }
             if(it.required && !commandStackEntry.arguments.containsKey(it.name)) throw CliMissingArgumentException("Missing required argument: ${it.name}")
         }
     }
@@ -303,7 +307,6 @@ class CliCommandCreationContext {
         name: String,
         description: String? = null,
         required: Boolean = false,
-        hasValue: Boolean = false,
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
@@ -315,7 +318,6 @@ class CliCommandCreationContext {
                 name,
                 description,
                 required,
-                hasValue,
                 defaultValue,
                 valueName,
                 valueDescription,

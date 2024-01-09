@@ -131,7 +131,7 @@ class CommanderOptionTests : FreeSpec(
             result.getValueByName("test2")!!.first().value shouldBe "Hello World"
         }
 
-        "parse (two values for an option)" {
+        "two values for an option" {
             val command = command {
                 name = "test"
                 description = "test description"
@@ -150,7 +150,7 @@ class CommanderOptionTests : FreeSpec(
             result.getValueByName("test2")!![1].value shouldBe "World"
         }
 
-        "parse (two values for an option using alias)" {
+        "two values for an option using alias" {
             val command = command {
                 name = "test"
                 description = "test description"
@@ -170,7 +170,7 @@ class CommanderOptionTests : FreeSpec(
             result.getValueByName("test2")!![1].value shouldBe "World"
         }
 
-        "parse (required option)" {
+        "required option" {
             val command = command {
                 name = "test"
                 description = "test description"
@@ -188,7 +188,7 @@ class CommanderOptionTests : FreeSpec(
             result.getValueByName("test2")!!.first().value shouldBe "Hello World"
         }
 
-        "parse (required option not given)" {
+        "required option not given" {
             val command = command {
                 name = "test"
                 description = "test description"
@@ -204,6 +204,83 @@ class CommanderOptionTests : FreeSpec(
             shouldThrow<CliMissingOptionException> {
                 command.execute(arrayOf())
             }
+        }
+
+        "default value for option" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    required = true
+                    description = "test2 description"
+                    hasValue = true
+                    defaultValue = "Hello World"
+                }
+            }
+            val result = command.execute(arrayOf())
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().value shouldBe "Hello World"
+        }
+
+        "default value for option (with value given)" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    required = true
+                    description = "test2 description"
+                    hasValue = true
+                    defaultValue = "Hello World"
+                }
+            }
+            val result = command.execute(arrayOf("--test2", "Hello World 2"))
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().value shouldBe "Hello World 2"
+        }
+
+        "default value for option (with value given using alias)" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    required = true
+                    description = "test2 description"
+                    hasValue = true
+                    defaultValue = "Hello World"
+                    alias("testalias")
+                }
+            }
+            val result = command.execute(arrayOf("--testalias", "Hello World 2"))
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().value shouldBe "Hello World 2"
+        }
+
+        "default value for required option" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    required = true
+                    description = "test2 description"
+                    hasValue = true
+                    defaultValue = "Hello World"
+                }
+            }
+            val result = command.execute(arrayOf())
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().value shouldBe "Hello World"
         }
     },
 )
