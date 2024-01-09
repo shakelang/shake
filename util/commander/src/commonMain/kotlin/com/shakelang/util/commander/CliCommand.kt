@@ -1,17 +1,89 @@
 package com.shakelang.util.commander
 
+/**
+ * A typealias that represents a cli command action
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 typealias CommandAction = CliCommand.(ParseResult) -> Unit
 
+/**
+ * A class that represents a command line interface command
+ * @param parent The parent command
+ * @param name The name of the command
+ * @param aliases The aliases of the command
+ * @param description The description of the command
+ * @param arguments The arguments of the command
+ * @param options The options of the command
+ * @param commands The subcommands of the command
+ * @param action The action of the command
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 class CliCommand(
+
+    /**
+     * The parent command (or null if this is the root command)
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val parent: CliCommand? = null,
+
+    /**
+     * The name of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val name: String,
+
+    /**
+     * The aliases of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val aliases: Array<String> = arrayOf(),
+
+    /**
+     * The description of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val description: String? = null,
+
+    /**
+     * The arguments of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val arguments: MutableList<CliArgument> = mutableListOf(),
+
+    /**
+     * The options of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val options: MutableList<CliOption> = mutableListOf(),
+
+    /**
+     * The subcommands of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val commands: MutableList<CliCommand> = mutableListOf(),
+
+    /**
+     * The action of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     var action: CommandAction? = null,
 ) {
+
+    /**
+     * Get the usage of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun getUsage(): String {
         val builder = StringBuilder()
         builder.append(name)
@@ -33,6 +105,11 @@ class CliCommand(
         return builder.toString()
     }
 
+    /**
+     * Get the full usage of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun getFullUsage(): String {
         val builder = StringBuilder()
         builder.append(getUsage())
@@ -61,6 +138,11 @@ class CliCommand(
         return builder.toString()
     }
 
+    /**
+     * Get an option by its name (or alias)
+     * @param name The name of the option
+     * @return The option or null if the option does not exist
+     */
     fun getOptionByName(name: String): CliOption? {
         for (option in options) {
             if (option.name == name) return option
@@ -69,6 +151,13 @@ class CliCommand(
         return parent?.getOptionByName(name)
     }
 
+    /**
+     * Get an option by its short alias
+     * @param name The short alias of the option
+     * @return The option or null if the option does not exist
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun getOptionByShortName(name: String): CliOption? {
         for (option in options) {
             if (option.shortAlias.contains(name)) return option
@@ -76,6 +165,13 @@ class CliCommand(
         return parent?.getOptionByShortName(name)
     }
 
+    /**
+     * Get an argument by its name
+     * @param name The name of the argument
+     * @return The argument or null if the argument does not exist
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun option(
         name: String,
         aliases: Array<String> = arrayOf(),
@@ -106,6 +202,20 @@ class CliCommand(
         return this
     }
 
+    /**
+     * Create a new argument
+     * @param name The name of the argument
+     * @param description The description of the argument
+     * @param required If the argument is required
+     * @param defaultValue The default value of the argument
+     * @param valueName The value name of the argument
+     * @param valueDescription The value description of the argument
+     * @param valueValidator The value validator of the argument
+     * @return The created argument
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun argument(
         name: String,
         description: String? = null,
@@ -130,7 +240,19 @@ class CliCommand(
         return this
     }
 
-    fun command(
+    /**
+     * Create a new subcommand
+     * @param name The name of the subcommand
+     * @param aliases The aliases of the subcommand
+     * @param description The description of the subcommand
+     * @param action The action of the subcommand
+     * @param init The init function of the subcommand
+     * @return The created subcommand
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun subcommand(
         name: String,
         aliases: Array<String> = arrayOf(),
         description: String? = null,
@@ -144,7 +266,17 @@ class CliCommand(
         return this
     }
 
-    internal fun parse(args: Array<String>, stack: Array<MutableCommandStackEntry>): ParseResult {
+    /**
+     * Parse an array of arguments
+     *
+     * @param args The arguments to parse
+     * @param stack The stack of commands (already containing the parent commands)
+     * @return The result of the parsing
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    private fun parse(args: Array<String>, stack: Array<MutableCommandStackEntry>): ParseResult {
         val entry = MutableCommandStackEntry(name, this)
 
         val newStack = arrayOf(*stack, entry)
@@ -242,18 +374,44 @@ class CliCommand(
         return ParseResult(newStack.toMutableList())
     }
 
+    /**
+     * Parse an array of arguments
+     *
+     * @param args The arguments to parse
+     * @return The result of the parsing
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun parse(args: Array<String>): ParseResult {
         val result = parse(args, arrayOf())
         result.verify()
         return result
     }
 
+    /**
+     * Execute the command
+     *
+     * @param args The arguments to parse
+     * @return The result of the parsing
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun execute(args: Array<String>): ParseResult {
         val result = parse(args)
         result.stack.last().command.action?.invoke(result.stack.last().command, result)
         return result
     }
 
+    /**
+     * Verify a given command stack entry
+     * (Checks if all required arguments and options are given, applies default values)
+     *
+     * @param commandStackEntry The command stack entry to verify
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     internal fun verify(commandStackEntry: MutableCommandStackEntry) {
         for (it in this.options) {
             if (it.hasValue && it.defaultValue != null && !commandStackEntry.options.containsKey(it.name)) {
@@ -271,38 +429,126 @@ class CliCommand(
     }
 }
 
+/**
+ * Context for creating a command
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 class CliCommandCreationContext {
 
+    /**
+     * The name of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     lateinit var name: String
+
+    /**
+     * The aliases of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val aliases: MutableList<String> = mutableListOf()
+
+    /**
+     * The description of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     var description: String? = null
+
+    /**
+     * The action of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     var action: CommandAction? = null
+
+    /**
+     * The arguments of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val arguments: MutableList<(CliCommand) -> CliArgument> = mutableListOf()
+
+    /**
+     * The options of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val options: MutableList<(CliCommand) -> CliOption> = mutableListOf()
+
+    /**
+     * The subcommands of the command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     val commands: MutableList<(CliCommand) -> CliCommand> = mutableListOf()
 
+    /**
+     * Add an alias to the command
+     * @param aliases The aliases to add
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun alias(vararg aliases: String) {
         this.aliases.addAll(aliases)
     }
 
+    /**
+     * Add description to the command
+     * @param description The description to add
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun description(description: String) {
         this.description = (this.description?.plus("\n") ?: "") + description
     }
 
+    /**
+     * Add an action to the command
+     * @param action The action to add
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun action(action: CommandAction) {
         this.action = action
     }
 
+    /**
+     * Add an argument to the command
+     * @param cliArgument The argument to add
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun argument(cliArgument: CliArgument) {
         arguments.add { cliArgument }
     }
 
-    fun argument(init: CliArgumentCreationContext.() -> Unit) {
+    /**
+     * Add an argument to the command
+     * @param init The init function to create the argument
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun argument(init: CliArgumentInit) {
         val context = CliArgumentCreationContext()
         context.init()
         arguments.add { context.generate(it) }
     }
 
+    /**
+     * Add an argument to the command
+     * @param name The name of the argument
+     * @param description The description of the argument
+     * @param required If the argument is required
+     * @param defaultValue The default value of the argument
+     * @param valueName The value name of the argument
+     * @param valueDescription The value description of the argument
+     * @param valueValidator The value validator of the argument
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun argument(
         name: String,
         description: String? = null,
@@ -326,16 +572,43 @@ class CliCommandCreationContext {
         }
     }
 
+    /**
+     * Add an option to the command
+     * @param cliOption The option to add
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun option(cliOption: CliOption) {
         options.add { cliOption }
     }
 
+    /**
+     * Add an option to the command
+     * @param init The init function to create the option
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun option(init: CliOptionCreationContext.() -> Unit) {
         val context = CliOptionCreationContext()
         context.init()
         options.add { context.generate(it) }
     }
 
+    /**
+     * Add an option to the command
+     * @param name The name of the option
+     * @param aliases The aliases of the option
+     * @param shortAliases The short aliases of the option
+     * @param description The description of the option
+     * @param required If the option is required
+     * @param hasValue If the option has a value
+     * @param defaultValue The default value of the option
+     * @param valueName The value name of the option
+     * @param valueDescription The value description of the option
+     * @param valueValidator The value validator of the option
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun option(
         name: String,
         aliases: Array<String> = arrayOf(),
@@ -365,22 +638,44 @@ class CliCommandCreationContext {
         }
     }
 
+    /**
+     * Add a subcommand to the command
+     * @param cliCommand The subcommand to add
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun subcommand(cliCommand: CliCommand) {
         commands.add { cliCommand }
     }
 
-    fun subcommand(init: CliCommandCreationContext.() -> Unit) {
+    /**
+     * Add a subcommand to the command
+     * @param init The init function to create the subcommand
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun subcommand(init: CliCommandInit) {
         val context = CliCommandCreationContext()
         context.init()
         commands.add { context.generate(it) }
     }
 
+    /**
+     * Add a subcommand to the command
+     * @param name The name of the subcommand
+     * @param aliases The aliases of the subcommand
+     * @param description The description of the subcommand
+     * @param action The action of the subcommand
+     * @param init The init function of the subcommand
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun subcommand(
         name: String,
         aliases: Array<String> = arrayOf(),
         description: String? = null,
         action: CommandAction? = null,
-        init: (CliCommandCreationContext.() -> Unit)? = null,
+        init: (CliCommandInit)? = null,
     ) {
         val context = CliCommandCreationContext()
         context.name = name
@@ -391,6 +686,13 @@ class CliCommandCreationContext {
         commands.add { context.generate(it) }
     }
 
+    /**
+     * Generate the command
+     * @param parent The parent command
+     * @return The generated command
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun generate(parent: CliCommand?): CliCommand {
         if (!::name.isInitialized) throw IllegalStateException("Name is not initialized")
 
@@ -421,8 +723,22 @@ class CliCommandCreationContext {
     }
 }
 
-fun command(init: CliCommandCreationContext.() -> Unit): CliCommand {
+/**
+ * Create a new command
+ * @param init The init function to create the command
+ * @return The created command
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+fun command(init: CliCommandInit): CliCommand {
     val context = CliCommandCreationContext()
     context.init()
     return context.generate(null)
 }
+
+/**
+ * Init function for creating a command
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+typealias CliCommandInit = CliCommandCreationContext.() -> Unit

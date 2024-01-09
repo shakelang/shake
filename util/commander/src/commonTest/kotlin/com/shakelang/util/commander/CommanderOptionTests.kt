@@ -1,6 +1,5 @@
 package com.shakelang.util.commander
 
-import com.shakelang.util.testlib.CallCounter
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe

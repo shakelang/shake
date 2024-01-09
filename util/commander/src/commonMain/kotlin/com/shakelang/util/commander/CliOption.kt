@@ -1,5 +1,22 @@
 package com.shakelang.util.commander
 
+/**
+ * A class representing a command line option
+ * @param command The command this option belongs to
+ * @param name The name of the option
+ * @param aliases The aliases of the option
+ * @param shortAlias The short aliases of the option
+ * @param description The description of the option
+ * @param required If the option is required
+ * @param hasValue If the option has a value
+ * @param defaultValue The default value of the option
+ * @param valueName The name of the value
+ * @param valueDescription The description of the value
+ * @param valueValidator The validator of the value
+ * @constructor Creates a new [CliOption]
+ * @see CliCommand
+ * @see CliArgument
+ */
 class CliOption(
     val command: CliCommand,
     val name: String,
