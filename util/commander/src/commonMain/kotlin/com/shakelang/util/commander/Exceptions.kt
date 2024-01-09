@@ -8,14 +8,9 @@ abstract class ValueException(message: String) : CliException(message)
 class ValueValidationException(message: String) : ValueException(message)
 
 /**
- * Error thrown when a required argument is missing
- */
-class MissingArgumentException(message: String) : ValueException(message)
-
-/**
  * Error thrown when unknown arguments are passed
  */
-class UnknownArgumentException(message: String) : ValueException(message)
+class CliUnexpectedArgumentException(message: String) : ValueException(message)
 
 open class CliException(message: String) : RuntimeException(message)
 

@@ -146,8 +146,8 @@ class CliCommand(
         return this
     }
 
-    fun parse(args: Array<String>, stack: Array<CommandStackEntry>): ParseResult {
-        val entry = CommandStackEntry(name, this)
+    internal fun parse(args: Array<String>, stack: Array<MutableCommandStackEntry>): ParseResult {
+        val entry = MutableCommandStackEntry(name, this)
 
         val newStack = arrayOf(*stack, entry)
 
@@ -167,12 +167,11 @@ class CliCommand(
                     val entry = newStack.find { it.command == option.command }
                         ?: throw IllegalArgumentException("Unknown command for option: $name")
 
-                    if (entry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
-
                     val value = if (option.hasValue) {
                         if (i + 1 >= args.size) throw CliMissingOptionValueException("Missing value for option: $name")
                         args[++i]
                     } else {
+                        if (entry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
                         "true"
                     }
 
@@ -195,12 +194,11 @@ class CliCommand(
                     val argEntry = newStack.find { it.command == option.command }
                         ?: throw IllegalArgumentException("Unknown command for option: $name")
 
-                    if (argEntry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
-
                     val value = if (option.hasValue) {
                         if (i + 1 >= args.size) throw IllegalArgumentException("Missing value for option: $name")
                         args[++i]
                     } else {
+                        if (argEntry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
                         "true"
                     }
 
@@ -247,13 +245,25 @@ class CliCommand(
     }
 
     fun parse(args: Array<String>): ParseResult {
-        return parse(args, arrayOf())
+        val result = parse(args, arrayOf())
+        result.verify()
+        return result
     }
 
     fun execute(args: Array<String>): ParseResult {
         val result = parse(args)
         result.stack.last().command.action?.invoke(result.stack.last().command, result)
         return result
+    }
+
+    internal fun verify(commandStackEntry: CommandStackEntry) {
+        for (it in this.options) {
+            if(it.required && !commandStackEntry.options.containsKey(it.name)) throw CliMissingOptionException("Missing required option: ${it.name}")
+        }
+
+        for (it in this.arguments) {
+            if(it.required && !commandStackEntry.arguments.containsKey(it.name)) throw CliMissingArgumentException("Missing required argument: ${it.name}")
+        }
     }
 }
 
