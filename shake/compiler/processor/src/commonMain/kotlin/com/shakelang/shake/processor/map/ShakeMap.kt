@@ -103,36 +103,36 @@ class ShakeMap(
             val magic = input.readInt()
             val version = input.readInt()
             val constants = input.readInt()
-            val constants_ = Array(constants) { ShakeMapConstant.from(input) }
+            val constants1 = Array(constants) { ShakeMapConstant.from(input) }
             val packages = input.readInt()
-            val packages_ = Array(packages) { ShakeMapPackage.from(input) }
+            val packages1 = Array(packages) { ShakeMapPackage.from(input) }
             val classes = input.readInt()
-            val classes_ = Array(classes) { ShakeMapClass.from(input) }
+            val classes1 = Array(classes) { ShakeMapClass.from(input) }
             val methods = input.readInt()
-            val methods_ = Array(methods) { ShakeMapMethod.from(input) }
+            val methods1 = Array(methods) { ShakeMapMethod.from(input) }
             val constructors = input.readInt()
-            val constructors_ = Array(constructors) { ShakeMapConstructor.from(input) }
+            val constructors1 = Array(constructors) { ShakeMapConstructor.from(input) }
             val fields = input.readInt()
-            val fields_ = Array(fields) { ShakeMapField.from(input) }
-            val project_packages = input.readInt()
-            val project_packages_ = Array(project_packages) { input.readInt() }
-            val project_classes = input.readInt()
-            val project_classes_ = Array(project_classes) { input.readInt() }
-            val project_methods = input.readInt()
-            val project_methods_ = Array(project_methods) { input.readInt() }
-            val project_fields = input.readInt()
-            val project_fields_ = Array(project_fields) { input.readInt() }
+            val fields1 = Array(fields) { ShakeMapField.from(input) }
+            val projectPackages = input.readInt()
+            val projectPackages1 = Array(projectPackages) { input.readInt() }
+            val projectClasses = input.readInt()
+            val projectClasses1 = Array(projectClasses) { input.readInt() }
+            val projectMethods = input.readInt()
+            val projectMethods1 = Array(projectMethods) { input.readInt() }
+            val projectFields = input.readInt()
+            val projectFields1 = Array(projectFields) { input.readInt() }
             return ShakeMap(
-                constants_,
-                packages_,
-                classes_,
-                methods_,
-                constructors_,
-                fields_,
-                project_packages_,
-                project_classes_,
-                project_methods_,
-                project_fields_,
+                constants1,
+                packages1,
+                classes1,
+                methods1,
+                constructors1,
+                fields1,
+                projectPackages1,
+                projectClasses1,
+                projectMethods1,
+                projectFields1,
             )
         }
 
@@ -171,54 +171,54 @@ class ShakeMap(
             if (map["project_methods"] !is List<*>) throw IllegalArgumentException("Invalid project_methods")
             if (map["project_fields"] !is List<*>) throw IllegalArgumentException("Invalid project_fields")
 
-            val constants_ = map["constants"] as List<*>
-            val packages_ = map["packages"] as List<*>
-            val classes_ = map["classes"] as List<*>
-            val methods_ = map["methods"] as List<*>
-            val constructors_ = map["constructors"] as List<*>
-            val fields_ = map["fields"] as List<*>
-            val project_packages_ = map["project_packages"] as List<*>
-            val project_classes_ = map["project_classes"] as List<*>
-            val project_methods_ = map["project_methods"] as List<*>
-            val project_fields_ = map["project_fields"] as List<*>
+            val constants1 = map["constants"] as List<*>
+            val packages1 = map["packages"] as List<*>
+            val classes1 = map["classes"] as List<*>
+            val methods1 = map["methods"] as List<*>
+            val constructors1 = map["constructors"] as List<*>
+            val fields1 = map["fields"] as List<*>
+            val projectPackages1 = map["project_packages"] as List<*>
+            val projectClasses1 = map["project_classes"] as List<*>
+            val projectMethods1 = map["project_methods"] as List<*>
+            val projectFields1 = map["project_fields"] as List<*>
 
-            val constants = constants_.map {
+            val constants = constants1.map {
                 if (it !is Map<*, *>) throw IllegalArgumentException("Invalid constant")
                 ShakeMapConstant.fromJson(it)
             }
-            val packages = packages_.map {
+            val packages = packages1.map {
                 if (it !is Map<*, *>) throw IllegalArgumentException("Invalid package")
                 ShakeMapPackage.fromJson(it)
             }
-            val classes = classes_.map {
+            val classes = classes1.map {
                 if (it !is Map<*, *>) throw IllegalArgumentException("Invalid class")
                 ShakeMapClass.fromJson(it)
             }
-            val methods = methods_.map {
+            val methods = methods1.map {
                 if (it !is Map<*, *>) throw IllegalArgumentException("Invalid method")
                 ShakeMapMethod.fromJson(it)
             }
-            val constructors = constructors_.map {
+            val constructors = constructors1.map {
                 if (it !is Map<*, *>) throw IllegalArgumentException("Invalid constructor")
                 ShakeMapConstructor.fromJson(it)
             }
-            val fields = fields_.map {
+            val fields = fields1.map {
                 if (it !is Map<*, *>) throw IllegalArgumentException("Invalid field")
                 ShakeMapField.fromJson(it)
             }
-            val project_packages = project_packages_.map {
+            val projectPackages = projectPackages1.map {
                 if (it !is Int) throw IllegalArgumentException("Invalid project_package")
                 it
             }
-            val project_classes = project_classes_.map {
+            val projectClasses = projectClasses1.map {
                 if (it !is Int) throw IllegalArgumentException("Invalid project_class")
                 it
             }
-            val project_methods = project_methods_.map {
+            val projectMethods = projectMethods1.map {
                 if (it !is Int) throw IllegalArgumentException("Invalid project_method")
                 it
             }
-            val project_fields = project_fields_.map {
+            val projectFields = projectFields1.map {
                 if (it !is Int) throw IllegalArgumentException("Invalid project_field")
                 it
             }
@@ -229,10 +229,10 @@ class ShakeMap(
                 methods.toTypedArray(),
                 constructors.toTypedArray(),
                 fields.toTypedArray(),
-                project_packages.toTypedArray(),
-                project_classes.toTypedArray(),
-                project_methods.toTypedArray(),
-                project_fields.toTypedArray(),
+                projectPackages.toTypedArray(),
+                projectClasses.toTypedArray(),
+                projectMethods.toTypedArray(),
+                projectFields.toTypedArray(),
             )
         }
     }
@@ -341,20 +341,20 @@ class ShakeMapPackage(
     companion object {
         fun from(input: DataInputStream): ShakeMapPackage {
             val name = input.readInt()
-            val package_references = input.readInt()
-            val package_references_ = Array(package_references) { input.readInt() }
-            val class_references = input.readInt()
-            val class_references_ = Array(class_references) { input.readInt() }
-            val method_references = input.readInt()
-            val method_references_ = Array(method_references) { input.readInt() }
-            val field_references = input.readInt()
-            val field_references_ = Array(field_references) { input.readInt() }
+            val packageReferences = input.readInt()
+            val packageReferences1 = Array(packageReferences) { input.readInt() }
+            val classReferences = input.readInt()
+            val classReferences1 = Array(classReferences) { input.readInt() }
+            val methodReferences = input.readInt()
+            val methodReferences1 = Array(methodReferences) { input.readInt() }
+            val fieldReferences = input.readInt()
+            val fieldReferences1 = Array(fieldReferences) { input.readInt() }
             return ShakeMapPackage(
                 name,
-                package_references_,
-                class_references_,
-                method_references_,
-                field_references_,
+                packageReferences1,
+                classReferences1,
+                methodReferences1,
+                fieldReferences1,
             )
         }
 
@@ -373,22 +373,22 @@ class ShakeMapPackage(
             if (it["field_references"] !is List<*>) throw IllegalArgumentException("Invalid field_references")
 
             val name = it["name"] as Int
-            val package_references = it["package_references"] as List<*>
-            val class_references = it["class_references"] as List<*>
-            val method_references = it["method_references"] as List<*>
-            val field_references = it["field_references"] as List<*>
+            val packageReferences = it["package_references"] as List<*>
+            val classReferences = it["class_references"] as List<*>
+            val methodReferences = it["method_references"] as List<*>
+            val fieldReferences = it["field_references"] as List<*>
 
-            val package_references_ = package_references.filterIsInstance<Int>().toTypedArray()
-            val class_references_ = class_references.filterIsInstance<Int>().toTypedArray()
-            val method_references_ = method_references.filterIsInstance<Int>().toTypedArray()
-            val field_references_ = field_references.filterIsInstance<Int>().toTypedArray()
+            val packageReferences1 = packageReferences.filterIsInstance<Int>().toTypedArray()
+            val classReferences1 = classReferences.filterIsInstance<Int>().toTypedArray()
+            val methodReferences1 = methodReferences.filterIsInstance<Int>().toTypedArray()
+            val fieldReferences1 = fieldReferences.filterIsInstance<Int>().toTypedArray()
 
             return ShakeMapPackage(
                 name,
-                package_references_,
-                class_references_,
-                method_references_,
-                field_references_,
+                packageReferences1,
+                classReferences1,
+                methodReferences1,
+                fieldReferences1,
             )
         }
     }
@@ -449,26 +449,26 @@ class ShakeMapClass(
         fun from(input: DataInputStream): ShakeMapClass {
             val name = input.readInt()
             val attributes = input.readShort()
-            val super_class = input.readInt()
-            val interface_references = input.readInt()
-            val interface_references_ = Array(interface_references) { input.readInt() }
-            val subclass_references = input.readInt()
-            val subclass_references_ = Array(subclass_references) { input.readInt() }
-            val method_references = input.readInt()
-            val method_references_ = Array(method_references) { input.readInt() }
-            val constructor_references = input.readInt()
-            val constructor_references_ = Array(constructor_references) { input.readInt() }
-            val field_references = input.readInt()
-            val field_references_ = Array(field_references) { input.readInt() }
+            val superClass = input.readInt()
+            val interfaceReferences = input.readInt()
+            val interfaceReferences1 = Array(interfaceReferences) { input.readInt() }
+            val subclassReferences = input.readInt()
+            val subclassReferences1 = Array(subclassReferences) { input.readInt() }
+            val methodReferences = input.readInt()
+            val methodReferences1 = Array(methodReferences) { input.readInt() }
+            val constructorReferences = input.readInt()
+            val constructorReferences1 = Array(constructorReferences) { input.readInt() }
+            val fieldReferences = input.readInt()
+            val fieldReferences1 = Array(fieldReferences) { input.readInt() }
             return ShakeMapClass(
                 name,
                 attributes,
-                super_class,
-                interface_references_,
-                subclass_references_,
-                method_references_,
-                constructor_references_,
-                field_references_,
+                superClass,
+                interfaceReferences1,
+                subclassReferences1,
+                methodReferences1,
+                constructorReferences1,
+                fieldReferences1,
             )
         }
 
@@ -493,28 +493,28 @@ class ShakeMapClass(
 
             val name = it["name"] as Int
             val attributes = it["attributes"] as Short
-            val super_class = it["super_class"] as Int
-            val interface_references = it["interface_references"] as List<*>
-            val subclass_references = it["subclass_references"] as List<*>
-            val method_references = it["method_references"] as List<*>
-            val constructor_references = it["constructor_references"] as List<*>
-            val field_references = it["field_references"] as List<*>
+            val superClass = it["super_class"] as Int
+            val interfaceReferences = it["interface_references"] as List<*>
+            val subclassReferences = it["subclass_references"] as List<*>
+            val methodReferences = it["method_references"] as List<*>
+            val constructorReferences = it["constructor_references"] as List<*>
+            val fieldReferences = it["field_references"] as List<*>
 
-            val interface_references_ = interface_references.filterIsInstance<Int>().toTypedArray()
-            val subclass_references_ = subclass_references.filterIsInstance<Int>().toTypedArray()
-            val method_references_ = method_references.filterIsInstance<Int>().toTypedArray()
-            val constructor_references_ = constructor_references.filterIsInstance<Int>().toTypedArray()
-            val field_references_ = field_references.filterIsInstance<Int>().toTypedArray()
+            val interfaceReferences1 = interfaceReferences.filterIsInstance<Int>().toTypedArray()
+            val subclassReferences1 = subclassReferences.filterIsInstance<Int>().toTypedArray()
+            val methodReferences1 = methodReferences.filterIsInstance<Int>().toTypedArray()
+            val constructorReferences1 = constructorReferences.filterIsInstance<Int>().toTypedArray()
+            val fieldReferences1 = fieldReferences.filterIsInstance<Int>().toTypedArray()
 
             return ShakeMapClass(
                 name,
                 attributes,
-                super_class,
-                interface_references_,
-                subclass_references_,
-                method_references_,
-                constructor_references_,
-                field_references_,
+                superClass,
+                interfaceReferences1,
+                subclassReferences1,
+                methodReferences1,
+                constructorReferences1,
+                fieldReferences1,
             )
         }
     }
@@ -569,18 +569,18 @@ class ShakeMapMethod(
         fun from(input: DataInputStream): ShakeMapMethod {
             val name = input.readInt()
             val attributes = input.readShort()
-            val return_type = input.readInt()
-            val parameter_names = input.readInt()
-            val parameter_names_ = Array(parameter_names) { input.readInt() }
-            val parameter_types = input.readInt()
-            val parameter_types_ = Array(parameter_types) { input.readInt() }
+            val returnType = input.readInt()
+            val parameterNames = input.readInt()
+            val parameterNames1 = Array(parameterNames) { input.readInt() }
+            val parameterTypes = input.readInt()
+            val parameterTypes1 = Array(parameterTypes) { input.readInt() }
             val expanding = input.readInt()
             return ShakeMapMethod(
                 name,
                 attributes,
-                return_type,
-                parameter_names_,
-                parameter_types_,
+                returnType,
+                parameterNames1,
+                parameterTypes1,
                 expanding,
             )
         }
@@ -604,18 +604,18 @@ class ShakeMapMethod(
 
             val name = it["name"] as Int
             val attributes = it["attributes"] as Short
-            val return_type = it["return_type"] as Int
-            val parameter_names = it["parameter_names"] as List<*>
-            val parameter_names_ = parameter_names.filterIsInstance<Int>().toTypedArray()
-            val parameter_types = it["parameter_types"] as List<*>
-            val parameter_types_ = parameter_types.filterIsInstance<Int>().toTypedArray()
+            val returnType = it["return_type"] as Int
+            val parameterNames = it["parameter_names"] as List<*>
+            val parameterNames1 = parameterNames.filterIsInstance<Int>().toTypedArray()
+            val parameterTypes = it["parameter_types"] as List<*>
+            val parameterTypes1 = parameterTypes.filterIsInstance<Int>().toTypedArray()
             val expanding = it["expanding"] as Int
             return ShakeMapMethod(
                 name,
                 attributes,
-                return_type,
-                parameter_names_,
-                parameter_types_,
+                returnType,
+                parameterNames1,
+                parameterTypes1,
                 expanding,
             )
         }
@@ -660,15 +660,15 @@ class ShakeMapConstructor(
         fun from(input: DataInputStream): ShakeMapConstructor {
             val name = input.readInt()
             val attributes = input.readShort()
-            val parameter_names = input.readInt()
-            val parameter_names_ = Array(parameter_names) { input.readInt() }
-            val parameter_types = input.readInt()
-            val parameter_types_ = Array(parameter_types) { input.readInt() }
+            val parameterNames = input.readInt()
+            val parameterNames1 = Array(parameterNames) { input.readInt() }
+            val parameterTypes = input.readInt()
+            val parameterTypes1 = Array(parameterTypes) { input.readInt() }
             return ShakeMapConstructor(
                 name,
                 attributes,
-                parameter_names_,
-                parameter_types_,
+                parameterNames1,
+                parameterTypes1,
             )
         }
 
@@ -687,15 +687,15 @@ class ShakeMapConstructor(
 
             val name = it["name"] as Int
             val attributes = it["attributes"] as Short
-            val parameter_names = it["parameter_names"] as List<*>
-            val parameter_names_ = parameter_names.filterIsInstance<Int>().toTypedArray()
-            val parameter_types = it["parameter_types"] as List<*>
-            val parameter_types_ = parameter_types.filterIsInstance<Int>().toTypedArray()
+            val parameterNames = it["parameter_names"] as List<*>
+            val parameterNames1 = parameterNames.filterIsInstance<Int>().toTypedArray()
+            val parameterTypes = it["parameter_types"] as List<*>
+            val parameterTypes1 = parameterTypes.filterIsInstance<Int>().toTypedArray()
             return ShakeMapConstructor(
                 name,
                 attributes,
-                parameter_names_,
-                parameter_types_,
+                parameterNames1,
+                parameterTypes1,
             )
         }
     }
@@ -784,13 +784,13 @@ class ShakeMapCreator {
     val methods = mutableListOf<ShakeMapMethod>()
     val constructors = mutableListOf<ShakeMapConstructor>()
     val fields = mutableListOf<ShakeMapField>()
-    val project_packages = mutableListOf<Int>()
-    val project_classes = mutableListOf<Int>()
-    val project_methods = mutableListOf<Int>()
-    val project_fields = mutableListOf<Int>()
+    val projectPackages = mutableListOf<Int>()
+    val projectClasses = mutableListOf<Int>()
+    val projectMethods = mutableListOf<Int>()
+    val projectFields = mutableListOf<Int>()
 
     fun visit(project: ShakeProject) {
-        project.subpackages.forEach { this.project_packages.add(visit(it)) }
+        project.subpackages.forEach { this.projectPackages.add(visit(it)) }
     }
 
     fun visit(package_: ShakePackage): Int {
@@ -854,18 +854,18 @@ class ShakeMapCreator {
     fun visit(method: ShakeMethod): Int {
         val name = utf8(method.name)
         val attributes = composeAttributes(method)
-        val return_type = utf8(method.returnType.qualifiedName)
-        val parameter_names = method.parameters.map { utf8(it.name) }.toTypedArray()
-        val parameter_types = method.parameters.map { utf8(it.type.qualifiedName) }.toTypedArray()
+        val returnType = utf8(method.returnType.qualifiedName)
+        val parameterNames = method.parameters.map { utf8(it.name) }.toTypedArray()
+        val parameterTypes = method.parameters.map { utf8(it.type.qualifiedName) }.toTypedArray()
         val expanding = method.expanding?.qualifiedName?.let { utf8(it) } ?: -1
 
         this.methods.add(
             ShakeMapMethod(
                 name,
                 attributes,
-                return_type,
-                parameter_names,
-                parameter_types,
+                returnType,
+                parameterNames,
+                parameterTypes,
                 expanding,
             ),
         )
@@ -876,15 +876,15 @@ class ShakeMapCreator {
     fun visit(constructor: ShakeConstructor): Int {
         val name = constructor.name?.let { utf8(it) } ?: -1
         val attributes = composeAttributes(constructor)
-        val parameter_names = constructor.parameters.map { utf8(it.name) }.toTypedArray()
-        val parameter_types = constructor.parameters.map { utf8(it.type.qualifiedName) }.toTypedArray()
+        val parameterNames = constructor.parameters.map { utf8(it.name) }.toTypedArray()
+        val parameterTypes = constructor.parameters.map { utf8(it.type.qualifiedName) }.toTypedArray()
 
         this.constructors.add(
             ShakeMapConstructor(
                 name,
                 attributes,
-                parameter_names,
-                parameter_types,
+                parameterNames,
+                parameterTypes,
             ),
         )
 
@@ -971,10 +971,10 @@ class ShakeMapCreator {
             this.methods.toTypedArray(),
             this.constructors.toTypedArray(),
             this.fields.toTypedArray(),
-            this.project_packages.toTypedArray(),
-            this.project_classes.toTypedArray(),
-            this.project_methods.toTypedArray(),
-            this.project_fields.toTypedArray(),
+            this.projectPackages.toTypedArray(),
+            this.projectClasses.toTypedArray(),
+            this.projectMethods.toTypedArray(),
+            this.projectFields.toTypedArray(),
         )
     }
 }
