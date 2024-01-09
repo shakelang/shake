@@ -33,37 +33,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toByte() should fail to parse '128'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toByte("128")
             }
         }
 
         "toByte() should fail to parse '-129'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toByte("-129")
             }
         }
 
         "toByte() should fail to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toByte("abc")
             }
         }
 
         "toByte() should fail to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toByte(null)
             }
         }
 
         "toByte() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toByte("")
             }
         }
 
         "toByte() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toByte(" ")
             }
         }
@@ -149,37 +149,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toShort() should fail to parse '32768'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toShort("32768")
             }
         }
 
         "toShort() should fail to parse '-32769'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toShort("-32769")
             }
         }
 
         "toShort() should fail to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toShort("abc")
             }
         }
 
         "toShort() should fail to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toShort(null)
             }
         }
 
         "toShort() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toShort("")
             }
         }
 
         "toShort() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toShort(" ")
             }
         }
@@ -265,37 +265,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toInt() should fail to parse '2147483648'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toInt("2147483648")
             }
         }
 
         "toInt() should fail to parse '-2147483649'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toInt("-2147483649")
             }
         }
 
         "toInt() should fail to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toInt("abc")
             }
         }
 
         "toInt() should fail to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toInt(null)
             }
         }
 
         "toInt() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toInt("")
             }
         }
 
         "toInt() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toInt(" ")
             }
         }
@@ -381,37 +381,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toLong() should fail to parse '9223372036854775808'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toLong("9223372036854775808")
             }
         }
 
         "toLong() should fail to parse '-9223372036854775809'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toLong("-9223372036854775809")
             }
         }
 
         "toLong() should fail to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toLong("abc")
             }
         }
 
         "toLong() should fail to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toLong(null)
             }
         }
 
         "toLong() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toLong("")
             }
         }
 
         "toLong() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toLong(" ")
             }
         }
@@ -497,25 +497,25 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toFloat() should fail to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toFloat("abc")
             }
         }
 
         "toFloat() should fail to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toFloat(null)
             }
         }
 
         "toFloat() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toFloat("")
             }
         }
 
         "toFloat() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toFloat(" ")
             }
         }
@@ -591,25 +591,25 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toDouble() should fail to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toDouble("abc")
             }
         }
 
         "toDouble() should fail to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toDouble(null)
             }
         }
 
         "toDouble() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toDouble("")
             }
         }
 
         "toDouble() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toDouble(" ")
             }
         }
@@ -680,13 +680,13 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toBoolean() should fail to parse '2'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toBoolean("2")
             }
         }
 
         "toBoolean() should fail to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toBoolean("-1")
             }
         }
@@ -712,25 +712,25 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toBoolean() should fail to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toBoolean("abc")
             }
         }
 
         "toBoolean() should fail to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toBoolean(null)
             }
         }
 
         "toBoolean() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toBoolean("")
             }
         }
 
         "toBoolean() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toBoolean(" ")
             }
         }
@@ -826,25 +826,25 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toChar() should not be able to parse 'ab'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toChar("ab")
             }
         }
 
         "toChar() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toChar(null)
             }
         }
 
         "toChar() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toChar("")
             }
         }
 
         "toChar() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toChar("abc")
             }
         }
@@ -915,37 +915,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toUnsignedByte() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedByte("-1")
             }
         }
 
         "toUnsignedByte() should not be able to parse '256'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedByte("256")
             }
         }
 
         "toUnsignedByte() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedByte("abc")
             }
         }
 
         "toUnsignedByte() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedByte(null)
             }
         }
 
         "toUnsignedByte() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedByte("")
             }
         }
 
         "toUnsignedByte() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedByte(" ")
             }
         }
@@ -1026,37 +1026,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toUnsignedShort() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedShort("-1")
             }
         }
 
         "toUnsignedShort() should not be able to parse '65536'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedShort("65536")
             }
         }
 
         "toUnsignedShort() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedShort("abc")
             }
         }
 
         "toUnsignedShort() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedShort(null)
             }
         }
 
         "toUnsignedShort() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedShort("")
             }
         }
 
         "toUnsignedShort() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedShort(" ")
             }
         }
@@ -1132,37 +1132,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toUnsignedInt() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedInt("-1")
             }
         }
 
         "toUnsignedInt() should not be able to parse '4294967296'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedInt("4294967296")
             }
         }
 
         "toUnsignedInt() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedInt("abc")
             }
         }
 
         "toUnsignedInt() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedInt(null)
             }
         }
 
         "toUnsignedInt() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedInt("")
             }
         }
 
         "toUnsignedInt() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedInt(" ")
             }
         }
@@ -1238,37 +1238,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toUnsignedLong() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedLong("-1")
             }
         }
 
         "toUnsignedLong() should not be able to parse '18446744073709551616'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedLong("18446744073709551616")
             }
         }
 
         "toUnsignedLong() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedLong("abc")
             }
         }
 
         "toUnsignedLong() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedLong(null)
             }
         }
 
         "toUnsignedLong() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedLong("")
             }
         }
 
         "toUnsignedLong() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toUnsignedLong(" ")
             }
         }
@@ -1334,37 +1334,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toPositiveByte() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveByte("-1")
             }
         }
 
         "toPositiveByte() should not be able to parse '128'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveByte("128")
             }
         }
 
         "toPositiveByte() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveByte("abc")
             }
         }
 
         "toPositiveByte() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveByte(null)
             }
         }
 
         "toPositiveByte() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveByte("")
             }
         }
 
         "toPositiveByte() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveByte(" ")
             }
         }
@@ -1415,37 +1415,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toPositiveShort() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveShort("-1")
             }
         }
 
         "toPositiveShort() should not be able to parse '32768'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveShort("32768")
             }
         }
 
         "toPositiveShort() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveShort("abc")
             }
         }
 
         "toPositiveShort() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveShort(null)
             }
         }
 
         "toPositiveShort() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveShort("")
             }
         }
 
         "toPositiveShort() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveShort(" ")
             }
         }
@@ -1511,37 +1511,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toPositiveInt() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveInt("-1")
             }
         }
 
         "toPositiveInt() should not be able to parse '2147483648'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveInt("2147483648")
             }
         }
 
         "toPositiveInt() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveInt("abc")
             }
         }
 
         "toPositiveInt() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveInt(null)
             }
         }
 
         "toPositiveInt() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveInt("")
             }
         }
 
         "toPositiveInt() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveInt(" ")
             }
         }
@@ -1607,37 +1607,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toPositiveLong() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveLong("-1")
             }
         }
 
         "toPositiveLong() should not be able to parse '9223372036854775808'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveLong("9223372036854775808")
             }
         }
 
         "toPositiveLong() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveLong("abc")
             }
         }
 
         "toPositiveLong() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveLong(null)
             }
         }
 
         "toPositiveLong() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveLong("")
             }
         }
 
         "toPositiveLong() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveLong(" ")
             }
         }
@@ -1703,31 +1703,31 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toPositiveFloat() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveFloat("-1")
             }
         }
 
         "toPositiveFloat() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveFloat("abc")
             }
         }
 
         "toPositiveFloat() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveFloat(null)
             }
         }
 
         "toPositiveFloat() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveFloat("")
             }
         }
 
         "toPositiveFloat() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveFloat(" ")
             }
         }
@@ -1788,31 +1788,31 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toPositiveDouble() should not be able to parse '-1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveDouble("-1")
             }
         }
 
         "toPositiveDouble() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveDouble("abc")
             }
         }
 
         "toPositiveDouble() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveDouble(null)
             }
         }
 
         "toPositiveDouble() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveDouble("")
             }
         }
 
         "toPositiveDouble() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toPositiveDouble(" ")
             }
         }
@@ -1873,43 +1873,43 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toNegativeByte() should not be able to parse '1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeByte("1")
             }
         }
 
         "toNegativeByte() should not be able to parse '127'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeByte("127")
             }
         }
 
         "toNegativeByte() should not be able to parse '128'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeByte("128")
             }
         }
 
         "toNegativeByte() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeByte("abc")
             }
         }
 
         "toNegativeByte() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeByte(null)
             }
         }
 
         "toNegativeByte() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeByte("")
             }
         }
 
         "toNegativeByte() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeByte(" ")
             }
         }
@@ -1965,43 +1965,43 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toNegativeShort() should not be able to parse '1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeShort("1")
             }
         }
 
         "toNegativeShort() should not be able to parse '32767'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeShort("32767")
             }
         }
 
         "toNegativeShort() should not be able to parse '32768'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeShort("32768")
             }
         }
 
         "toNegativeShort() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeShort("abc")
             }
         }
 
         "toNegativeShort() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeShort(null)
             }
         }
 
         "toNegativeShort() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeShort("")
             }
         }
 
         "toNegativeShort() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeShort(" ")
             }
         }
@@ -2072,43 +2072,43 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toNegativeInt() should not be able to parse '1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeInt("1")
             }
         }
 
         "toNegativeInt() should not be able to parse '2147483647'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeInt("2147483647")
             }
         }
 
         "toNegativeInt() should not be able to parse '2147483648'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeInt("2147483648")
             }
         }
 
         "toNegativeInt() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeInt("abc")
             }
         }
 
         "toNegativeInt() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeInt(null)
             }
         }
 
         "toNegativeInt() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeInt("")
             }
         }
 
         "toNegativeInt() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeInt(" ")
             }
         }
@@ -2179,43 +2179,43 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toNegativeLong() should not be able to parse '1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeLong("1")
             }
         }
 
         "toNegativeLong() should not be able to parse '9223372036854775807'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeLong("9223372036854775807")
             }
         }
 
         "toNegativeLong() should not be able to parse '9223372036854775808'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeLong("9223372036854775808")
             }
         }
 
         "toNegativeLong() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeLong("abc")
             }
         }
 
         "toNegativeLong() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeLong(null)
             }
         }
 
         "toNegativeLong() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeLong("")
             }
         }
 
         "toNegativeLong() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeLong(" ")
             }
         }
@@ -2286,37 +2286,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toNegativeFloat() should not be able to parse '1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeFloat("1")
             }
         }
 
         "toNegativeFloat() should not be able to parse '3.4028236E38'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeFloat("3.4028236E38")
             }
         }
 
         "toNegativeFloat() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeFloat("abc")
             }
         }
 
         "toNegativeFloat() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeFloat(null)
             }
         }
 
         "toNegativeFloat() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeFloat("")
             }
         }
 
         "toNegativeFloat() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeFloat(" ")
             }
         }
@@ -2382,37 +2382,37 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toNegativeDouble() should not be able to parse '1'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeDouble("1")
             }
         }
 
         "toNegativeDouble() should not be able to parse '1.7976931348623159E308'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeDouble("1.7976931348623159E308")
             }
         }
 
         "toNegativeDouble() should not be able to parse 'abc'" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeDouble("abc")
             }
         }
 
         "toNegativeDouble() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeDouble(null)
             }
         }
 
         "toNegativeDouble() should not be able to parse ''" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeDouble("")
             }
         }
 
         "toNegativeDouble() should not be able to parse ' '" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toNegativeDouble(" ")
             }
         }
@@ -2483,7 +2483,7 @@ class ValueTransformerFunctionTests : FreeSpec(
         }
 
         "toString() should not be able to parse null" {
-            shouldThrow<ValueException> {
+            shouldThrow<CommanderValueException> {
                 ValueTransformers.toString(null)
             }
         }

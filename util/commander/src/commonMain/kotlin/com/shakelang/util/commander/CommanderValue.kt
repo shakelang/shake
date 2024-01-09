@@ -1,37 +1,37 @@
 package com.shakelang.util.commander
 
-typealias ValueTransformer<T> = (String) -> T
-typealias NullableValueTransformer<T> = (String?) -> T
-typealias ValueValidator = (String?) -> Unit
+typealias CommanderValueTransformer<T> = (String) -> T
+typealias CommanderNullableValueTransformer<T> = (String?) -> T
+typealias CommanderValueValidator = (String?) -> Unit
 
-fun ValueValidator.accepts(value: String?): Boolean {
+fun CommanderValueValidator.accepts(value: String?): Boolean {
     return try {
         this(value)
         true
-    } catch (e: ValueException) {
+    } catch (e: CommanderValueException) {
         false
     }
 }
 
-fun valueValidator(validator: ValueValidator): ValueValidator = validator
+fun valueValidator(validator: CommanderValueValidator): CommanderValueValidator = validator
 
 /**
  * A wrapper for a string-encoded value
  */
-data class Value(
+data class CommanderValue(
     val value: String?,
 ) {
-    fun <T> to(valueTransformer: ValueTransformer<T>) = valueTransformer(value ?: throw NullPointerException("Value is null"))
-    fun toByte(): Byte = value?.toByteOrNull() ?: throw NumberFormatException("Value is null")
-    fun toShort(): Short = value?.toShortOrNull() ?: throw NumberFormatException("Value is null")
-    fun toInt(): Int = value?.toIntOrNull() ?: throw NumberFormatException("Value is null")
-    fun toLong(): Long = value?.toLongOrNull() ?: throw NumberFormatException("Value is null")
-    fun toFloat(): Float = value?.toFloatOrNull() ?: throw NumberFormatException("Value is null")
-    fun toDouble(): Double = value?.toDoubleOrNull() ?: throw NumberFormatException("Value is null")
-    fun toBoolean(): Boolean = value?.toBooleanStrictOrNull() ?: throw NumberFormatException("Value is null")
-    override fun toString(): String = value ?: throw NullPointerException("Value is null")
+    fun <T> to(valueTransformer: CommanderValueTransformer<T>) = valueTransformer(value ?: throw NullPointerException("CommanderValue is null"))
+    fun toByte(): Byte = value?.toByteOrNull() ?: throw NumberFormatException("CommanderValue is null")
+    fun toShort(): Short = value?.toShortOrNull() ?: throw NumberFormatException("CommanderValue is null")
+    fun toInt(): Int = value?.toIntOrNull() ?: throw NumberFormatException("CommanderValue is null")
+    fun toLong(): Long = value?.toLongOrNull() ?: throw NumberFormatException("CommanderValue is null")
+    fun toFloat(): Float = value?.toFloatOrNull() ?: throw NumberFormatException("CommanderValue is null")
+    fun toDouble(): Double = value?.toDoubleOrNull() ?: throw NumberFormatException("CommanderValue is null")
+    fun toBoolean(): Boolean = value?.toBooleanStrictOrNull() ?: throw NumberFormatException("CommanderValue is null")
+    override fun toString(): String = value ?: throw NullPointerException("CommanderValue is null")
 
-    fun <T> toOrNull(valueTransformer: NullableValueTransformer<T>) = valueTransformer(value)
+    fun <T> toOrNull(valueTransformer: CommanderNullableValueTransformer<T>) = valueTransformer(value)
     fun toByteOrNull(): Byte? = value?.toByteOrNull()
     fun toShortOrNull(): Short? = value?.toShortOrNull()
     fun toIntOrNull(): Int? = value?.toIntOrNull()
@@ -41,7 +41,7 @@ data class Value(
     fun toBooleanOrNull(): Boolean? = value?.toBooleanStrictOrNull()
     fun toStringOrNull(): String? = value
 
-    fun validate(valueValidator: ValueValidator) = valueValidator.accepts(value)
+    fun validate(valueValidator: CommanderValueValidator) = valueValidator.accepts(value)
     fun validateByte(): Boolean = value?.toByteOrNull() != null
     fun validateShort(): Boolean = value?.toShortOrNull() != null
     fun validateInt(): Boolean = value?.toIntOrNull() != null

@@ -1,29 +1,29 @@
 package com.shakelang.util.commander
 
 /**
- * A class representing an argument of a [CliCommand]
- * @param command The [CliCommand] this argument belongs to
+ * A class representing an argument of a [CommanderCommand]
+ * @param command The [CommanderCommand] this argument belongs to
  * @param name The name of the argument
  * @param description The description of the argument
  * @param required If the argument is required
  * @param defaultValue The default value of the argument
  * @param valueName The name of the argument's value
  * @param valueDescription The description of the argument's value
- * @param valueValidator The [ValueValidator] of the value of the argument
- * @see CliCommand
- * @see ValueValidator
+ * @param valueValidator The [CommanderValueValidator] of the value of the argument
+ * @see CommanderCommand
+ * @see CommanderValueValidator
  *
  * @since 0.1.0
  * @version 0.1.0
  */
-class CliArgument(
+class CommanderArgument(
 
     /**
-     * The [CliCommand] this argument belongs to
+     * The [CommanderCommand] this argument belongs to
      * @since 0.1.0
      * @version 0.1.0
      */
-    val command: CliCommand,
+    val command: CommanderCommand,
 
     /**
      * The name of the argument
@@ -68,11 +68,11 @@ class CliArgument(
     val valueDescription: String? = null,
 
     /**
-     * The [ValueValidator] of the value of the argument
+     * The [CommanderValueValidator] of the value of the argument
      * @since 0.1.0
      * @version 0.1.0
      */
-    val valueValidator: ValueValidator? = null,
+    val valueValidator: CommanderValueValidator? = null,
 ) {
 
     /**
@@ -90,11 +90,11 @@ class CliArgument(
 }
 
 /**
- * A class representing a context for creating a [CliArgument]
+ * A class representing a context for creating a [CommanderArgument]
  * @since 0.1.0
  * @version 0.1.0
  */
-class CliArgumentCreationContext {
+class CommanderArgumentCreationContext {
 
     /**
      * The name of the argument
@@ -139,11 +139,11 @@ class CliArgumentCreationContext {
     var valueDescription: String? = null
 
     /**
-     * The [ValueValidator] of the value of the argument
+     * The [CommanderValueValidator] of the value of the argument
      * @since 0.1.0
      * @version 0.1.0
      */
-    var valueValidator: ValueValidator? = null
+    var valueValidator: CommanderValueValidator? = null
 
     /**
      * Add description to the argument
@@ -166,16 +166,16 @@ class CliArgumentCreationContext {
     }
 
     /**
-     * Generate the [CliArgument] from the context
-     * @param command The [CliCommand] this argument belongs to
-     * @return The generated [CliArgument]
+     * Generate the [CommanderArgument] from the context
+     * @param command The [CommanderCommand] this argument belongs to
+     * @return The generated [CommanderArgument]
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun generate(command: CliCommand): CliArgument {
+    fun generate(command: CommanderCommand): CommanderArgument {
         if (!::name.isInitialized) throw IllegalStateException("Name is not initialized")
 
-        return CliArgument(
+        return CommanderArgument(
             command,
             name,
             description,
@@ -189,8 +189,8 @@ class CliArgumentCreationContext {
 }
 
 /**
- * Init function for [CliArgument]
+ * Init function for [CommanderArgument]
  * @since 0.1.0
  * @version 0.1.0
  */
-typealias CliArgumentInit = CliArgumentCreationContext.() -> Unit
+typealias CliArgumentInit = CommanderArgumentCreationContext.() -> Unit

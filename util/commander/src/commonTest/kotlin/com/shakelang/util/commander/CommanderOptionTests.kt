@@ -200,7 +200,7 @@ class CommanderOptionTests : FreeSpec(
                 }
             }
 
-            shouldThrow<CliMissingOptionException> {
+            shouldThrow<CommanderMissingOptionException> {
                 command.execute(arrayOf())
             }
         }

@@ -13,12 +13,12 @@ package com.shakelang.util.commander
  * @param valueName The name of the value
  * @param valueDescription The description of the value
  * @param valueValidator The validator of the value
- * @constructor Creates a new [CliOption]
- * @see CliCommand
- * @see CliArgument
+ * @constructor Creates a new [CommanderOption]
+ * @see CommanderCommand
+ * @see CommanderArgument
  */
-class CliOption(
-    val command: CliCommand,
+class CommanderOption(
+    val command: CommanderCommand,
     val name: String,
     val aliases: Array<String> = arrayOf(),
     val shortAlias: Array<String> = arrayOf(),
@@ -28,7 +28,7 @@ class CliOption(
     val defaultValue: String? = null,
     val valueName: String? = null,
     val valueDescription: String? = null,
-    val valueValidator: ValueValidator? = null,
+    val valueValidator: CommanderValueValidator? = null,
 ) {
     fun getUsage(): String {
         val builder = StringBuilder()
@@ -45,7 +45,7 @@ class CliOption(
     }
 }
 
-class CliOptionCreationContext {
+class CommanderOptionCreationContext {
 
     lateinit var name: String
     val aliases: MutableList<String> = mutableListOf()
@@ -56,7 +56,7 @@ class CliOptionCreationContext {
     var defaultValue: String? = null
     var valueName: String? = null
     var valueDescription: String? = null
-    var valueValidator: ValueValidator? = null
+    var valueValidator: CommanderValueValidator? = null
 
     fun alias(vararg aliases: String) {
         this.aliases.addAll(aliases)
@@ -74,10 +74,10 @@ class CliOptionCreationContext {
         this.required = required
     }
 
-    fun generate(command: CliCommand): CliOption {
+    fun generate(command: CommanderCommand): CommanderOption {
         if (!::name.isInitialized) throw IllegalStateException("Name is not initialized")
 
-        return CliOption(
+        return CommanderOption(
             command,
             name,
             aliases.toTypedArray(),

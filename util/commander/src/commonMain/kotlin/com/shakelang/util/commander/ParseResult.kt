@@ -3,7 +3,7 @@ package com.shakelang.util.commander
 class ParseResult(
     val stack: List<CommandStackEntry>,
 ) {
-    fun getOptionValueByName(alias: String): Array<Value>? {
+    fun getOptionValueByName(alias: String): Array<CommanderValue>? {
         for (entry in stack) {
             val value = entry.options[alias]
             if (value != null) return value
@@ -11,7 +11,7 @@ class ParseResult(
         return null
     }
 
-    fun getArgumentValueByName(alias: String): Value? {
+    fun getArgumentValueByName(alias: String): CommanderValue? {
         for (entry in stack) {
             val value = entry.arguments[alias]
             if (value != null) return value
@@ -19,7 +19,7 @@ class ParseResult(
         return null
     }
 
-    fun getValueByName(alias: String): List<Value>? {
+    fun getValueByName(alias: String): List<CommanderValue>? {
         for (entry in stack) {
             if (entry.options.containsKey(alias)) return entry.options[alias]?.toList()
             if (entry.arguments.containsKey(alias)) return listOf(entry.arguments[alias]!!)
@@ -36,9 +36,9 @@ class ParseResult(
 
 open class CommandStackEntry(
     val alias: String,
-    val command: CliCommand,
-    open val arguments: Map<String, Value>,
-    open val options: Map<String, Array<Value>>,
+    val command: CommanderCommand,
+    open val arguments: Map<String, CommanderValue>,
+    open val options: Map<String, Array<CommanderValue>>,
 ) {
     val name: String = command.name
 
@@ -50,10 +50,10 @@ open class CommandStackEntry(
 
 class MutableCommandStackEntry(
     alias: String,
-    command: CliCommand,
+    command: CommanderCommand,
 ) : CommandStackEntry(alias, command, mutableMapOf(), mutableMapOf()) {
-    override val arguments: MutableMap<String, Value> get() = super.arguments as MutableMap<String, Value>
-    override val options: MutableMap<String, Array<Value>> = super.options as MutableMap<String, Array<Value>>
+    override val arguments: MutableMap<String, CommanderValue> get() = super.arguments as MutableMap<String, CommanderValue>
+    override val options: MutableMap<String, Array<CommanderValue>> = super.options as MutableMap<String, Array<CommanderValue>>
 
     override fun verify() {
         command.verify(this)

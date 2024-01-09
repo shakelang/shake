@@ -4,8 +4,8 @@ import kotlin.js.JsName
 
 object ValueTransformers {
     fun toByte(value: String?): Byte {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toByteOrNull() ?: throw ValueValidationException("Value \"$value\" is not a byte")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toByteOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a byte")
     }
 
     fun toByteOrNull(value: String?): Byte? {
@@ -14,8 +14,8 @@ object ValueTransformers {
     }
 
     fun toShort(value: String?): Short {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toShortOrNull() ?: throw ValueValidationException("Value \"$value\" is not a short")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toShortOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a short")
     }
 
     fun toShortOrNull(value: String?): Short? {
@@ -24,8 +24,8 @@ object ValueTransformers {
     }
 
     fun toInt(value: String?): Int {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toIntOrNull() ?: throw ValueValidationException("Value \"$value\" is not a int")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toIntOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a int")
     }
 
     fun toIntOrNull(value: String?): Int? {
@@ -34,8 +34,8 @@ object ValueTransformers {
     }
 
     fun toLong(value: String?): Long {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toLongOrNull() ?: throw ValueValidationException("Value \"$value\" is not a long")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toLongOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a long")
     }
 
     fun toLongOrNull(value: String?): Long? {
@@ -44,8 +44,8 @@ object ValueTransformers {
     }
 
     fun toFloat(value: String?): Float {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toFloatOrNull() ?: throw ValueValidationException("Value \"$value\" is not a float")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toFloatOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a float")
     }
 
     fun toFloatOrNull(value: String?): Float? {
@@ -54,8 +54,8 @@ object ValueTransformers {
     }
 
     fun toDouble(value: String?): Double {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toDoubleOrNull() ?: throw ValueValidationException("Value \"$value\" is not a double")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toDoubleOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a double")
     }
 
     fun toDoubleOrNull(value: String?): Double? {
@@ -64,8 +64,8 @@ object ValueTransformers {
     }
 
     fun toNumber(value: String?): Number {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toDoubleOrNull() ?: throw ValueValidationException("Value \"$value\" is not a number")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toDoubleOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a number")
     }
 
     fun toNumberOrNull(value: String?): Number? {
@@ -74,9 +74,9 @@ object ValueTransformers {
     }
 
     fun toPositiveByte(value: String?): Byte {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toByteOrNull() == null) throw ValueValidationException("Value \"$value\" is not a positive byte")
-        if (value.toByte() < 0) throw ValueValidationException("Value \"$value\" is not a positive byte")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toByteOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive byte")
+        if (value.toByte() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive byte")
         return value.toByte()
     }
 
@@ -88,9 +88,9 @@ object ValueTransformers {
     }
 
     fun toPositiveShort(value: String?): Short {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toShortOrNull() == null) throw ValueValidationException("Value \"$value\" is not a positive short")
-        if (value.toShort() < 0) throw ValueValidationException("Value \"$value\" is not a positive short")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive short")
+        if (value.toShort() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive short")
         return value.toShort()
     }
 
@@ -102,9 +102,9 @@ object ValueTransformers {
     }
 
     fun toPositiveInt(value: String?): Int {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toIntOrNull() == null) throw ValueValidationException("Value \"$value\" is not a positive int")
-        if (value.toInt() < 0) throw ValueValidationException("Value \"$value\" is not a positive int")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toIntOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive int")
+        if (value.toInt() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive int")
         return value.toInt()
     }
 
@@ -116,9 +116,9 @@ object ValueTransformers {
     }
 
     fun toPositiveLong(value: String?): Long {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toLongOrNull() == null) throw ValueValidationException("Value \"$value\" is not a positive long")
-        if (value.toLong() < 0) throw ValueValidationException("Value \"$value\" is not a positive long")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toLongOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive long")
+        if (value.toLong() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive long")
         return value.toLong()
     }
 
@@ -130,9 +130,9 @@ object ValueTransformers {
     }
 
     fun toPositiveFloat(value: String?): Float {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toFloatOrNull() == null) throw ValueValidationException("Value \"$value\" is not a positive float")
-        if (value.toFloat() < 0) throw ValueValidationException("Value \"$value\" is not a positive float")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toFloatOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive float")
+        if (value.toFloat() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive float")
         return value.toFloat()
     }
 
@@ -144,9 +144,9 @@ object ValueTransformers {
     }
 
     fun toPositiveDouble(value: String?): Double {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("Value \"$value\" is not a positive double")
-        if (value.toDouble() < 0) throw ValueValidationException("Value \"$value\" is not a positive double")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
+        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive double")
         return value.toDouble()
     }
 
@@ -158,9 +158,9 @@ object ValueTransformers {
     }
 
     fun toPositive(value: String?): Number {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("Value \"$value\" is not a positive number")
-        if (value.toDouble() < 0) throw ValueValidationException("Value \"$value\" is not a positive number")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a positive number")
+        if (value.toDouble() < 0) throw ValueValidationException("CommanderValue \"$value\" is not a positive number")
         return value.toDouble()
     }
 
@@ -172,9 +172,9 @@ object ValueTransformers {
     }
 
     fun toNegativeByte(value: String?): Byte {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toByteOrNull() == null) throw ValueValidationException("Value \"$value\" is not a negative byte")
-        if (value.toByte() > 0) throw ValueValidationException("Value \"$value\" is not a negative byte")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toByteOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative byte")
+        if (value.toByte() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative byte")
         return value.toByte()
     }
 
@@ -186,9 +186,9 @@ object ValueTransformers {
     }
 
     fun toNegativeShort(value: String?): Short {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toShortOrNull() == null) throw ValueValidationException("Value \"$value\" is not a negative short")
-        if (value.toShort() > 0) throw ValueValidationException("Value \"$value\" is not a negative short")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toShortOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative short")
+        if (value.toShort() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative short")
         return value.toShort()
     }
 
@@ -200,9 +200,9 @@ object ValueTransformers {
     }
 
     fun toNegativeInt(value: String?): Int {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toIntOrNull() == null) throw ValueValidationException("Value \"$value\" is not a negative int")
-        if (value.toInt() > 0) throw ValueValidationException("Value \"$value\" is not a negative int")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toIntOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative int")
+        if (value.toInt() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative int")
         return value.toInt()
     }
 
@@ -214,9 +214,9 @@ object ValueTransformers {
     }
 
     fun toNegativeLong(value: String?): Long {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toLongOrNull() == null) throw ValueValidationException("Value \"$value\" is not a negative long")
-        if (value.toLong() > 0) throw ValueValidationException("Value \"$value\" is not a negative long")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toLongOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative long")
+        if (value.toLong() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative long")
         return value.toLong()
     }
 
@@ -228,9 +228,9 @@ object ValueTransformers {
     }
 
     fun toNegativeFloat(value: String?): Float {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toFloatOrNull() == null) throw ValueValidationException("Value \"$value\" is not a negative float")
-        if (value.toFloat() > 0) throw ValueValidationException("Value \"$value\" is not a negative float")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toFloatOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative float")
+        if (value.toFloat() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative float")
         return value.toFloat()
     }
 
@@ -242,9 +242,9 @@ object ValueTransformers {
     }
 
     fun toNegativeDouble(value: String?): Double {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("Value \"$value\" is not a negative double")
-        if (value.toDouble() > 0) throw ValueValidationException("Value \"$value\" is not a negative double")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
+        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative double")
         return value.toDouble()
     }
 
@@ -256,9 +256,9 @@ object ValueTransformers {
     }
 
     fun toNegative(value: String?): Number {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.toDoubleOrNull() == null) throw ValueValidationException("Value \"$value\" is not a negative number")
-        if (value.toDouble() > 0) throw ValueValidationException("Value \"$value\" is not a negative number")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.toDoubleOrNull() == null) throw ValueValidationException("CommanderValue \"$value\" is not a negative number")
+        if (value.toDouble() > 0) throw ValueValidationException("CommanderValue \"$value\" is not a negative number")
         return value.toDouble()
     }
 
@@ -270,11 +270,11 @@ object ValueTransformers {
     }
 
     fun toBoolean(value: String?): Boolean {
-        if (value == null) throw ValueValidationException("Value is null")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
         return when (value) {
             "true", "yes", "y", "1" -> true
             "false", "no", "n", "0" -> false
-            else -> throw ValueValidationException("Value \"$value\" is not a boolean")
+            else -> throw ValueValidationException("CommanderValue \"$value\" is not a boolean")
         }
     }
 
@@ -288,8 +288,8 @@ object ValueTransformers {
     }
 
     fun toChar(value: String?): Char {
-        if (value == null) throw ValueValidationException("Value is null")
-        if (value.length != 1) throw ValueValidationException("Value \"$value\" is not a char")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.length != 1) throw ValueValidationException("CommanderValue \"$value\" is not a char")
         return value[0]
     }
 
@@ -300,7 +300,7 @@ object ValueTransformers {
     }
 
     fun toString(value: String?): String {
-        if (value == null) throw ValueValidationException("Value is null")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
         return value
     }
 
@@ -310,18 +310,18 @@ object ValueTransformers {
     }
 
     fun toNull(value: String?): String? {
-        if (value != null) throw ValueValidationException("Value is not null")
+        if (value != null) throw ValueValidationException("CommanderValue is not null")
         return null
     }
 
     fun toNotNull(value: String?): String {
-        if (value == null) throw ValueValidationException("Value is null")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
         return value
     }
 
     fun toUnsignedByte(value: String?): UByte {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toUByteOrNull() ?: throw ValueValidationException("Value \"$value\" is not a unsigned byte")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toUByteOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a unsigned byte")
     }
 
     fun toUnsignedByteOrNull(value: String?): UByte? {
@@ -330,8 +330,8 @@ object ValueTransformers {
     }
 
     fun toUnsignedShort(value: String?): UShort {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toUShortOrNull() ?: throw ValueValidationException("Value \"$value\" is not a unsigned short")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toUShortOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a unsigned short")
     }
 
     fun toUnsignedShortOrNull(value: String?): UShort? {
@@ -340,8 +340,8 @@ object ValueTransformers {
     }
 
     fun toUnsignedInt(value: String?): UInt {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toUIntOrNull() ?: throw ValueValidationException("Value \"$value\" is not a unsigned int")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toUIntOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a unsigned int")
     }
 
     fun toUnsignedIntOrNull(value: String?): UInt? {
@@ -350,8 +350,8 @@ object ValueTransformers {
     }
 
     fun toUnsignedLong(value: String?): ULong {
-        if (value == null) throw ValueValidationException("Value is null")
-        return value.toULongOrNull() ?: throw ValueValidationException("Value \"$value\" is not a unsigned long")
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        return value.toULongOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a unsigned long")
     }
 
     fun toUnsignedLongOrNull(value: String?): ULong? {
@@ -359,64 +359,64 @@ object ValueTransformers {
         return value.toULongOrNull()
     }
 
-    val toByte: NullableValueTransformer<Byte> = ::toByte
-    val toByteOrNull: NullableValueTransformer<Byte?> = ::toByteOrNull
-    val toShort: NullableValueTransformer<Short> = ::toShort
-    val toShortOrNull: NullableValueTransformer<Short?> = ::toShortOrNull
-    val toInt: NullableValueTransformer<Int> = ::toInt
-    val toIntOrNull: NullableValueTransformer<Int?> = ::toIntOrNull
-    val toLong: NullableValueTransformer<Long> = ::toLong
-    val toLongOrNull: NullableValueTransformer<Long?> = ::toLongOrNull
-    val toFloat: NullableValueTransformer<Float> = ::toFloat
-    val toFloatOrNull: NullableValueTransformer<Float?> = ::toFloatOrNull
-    val toDouble: NullableValueTransformer<Double> = ::toDouble
-    val toDoubleOrNull: NullableValueTransformer<Double?> = ::toDoubleOrNull
-    val toNumber: NullableValueTransformer<Number> = ::toNumber
-    val toNumberOrNull: NullableValueTransformer<Number?> = ::toNumberOrNull
-    val toPositiveByte: NullableValueTransformer<Byte> = ::toPositiveByte
-    val toPositiveByteOrNull: NullableValueTransformer<Byte?> = ::toPositiveByteOrNull
-    val toPositiveShort: NullableValueTransformer<Short> = ::toPositiveShort
-    val toPositiveShortOrNull: NullableValueTransformer<Short?> = ::toPositiveShortOrNull
-    val toPositiveInt: NullableValueTransformer<Int> = ::toPositiveInt
-    val toPositiveIntOrNull: NullableValueTransformer<Int?> = ::toPositiveIntOrNull
-    val toPositiveLong: NullableValueTransformer<Long> = ::toPositiveLong
-    val toPositiveLongOrNull: NullableValueTransformer<Long?> = ::toPositiveLongOrNull
-    val toPositiveFloat: NullableValueTransformer<Float> = ::toPositiveFloat
-    val toPositiveFloatOrNull: NullableValueTransformer<Float?> = ::toPositiveFloatOrNull
-    val toPositiveDouble: NullableValueTransformer<Double> = ::toPositiveDouble
-    val toPositiveDoubleOrNull: NullableValueTransformer<Double?> = ::toPositiveDoubleOrNull
-    val toPositive: NullableValueTransformer<Number> = ::toPositive
-    val toPositiveOrNull: NullableValueTransformer<Number?> = ::toPositiveOrNull
-    val toNegativeByte: NullableValueTransformer<Byte> = ::toNegativeByte
-    val toNegativeByteOrNull: NullableValueTransformer<Byte?> = ::toNegativeByteOrNull
-    val toNegativeShort: NullableValueTransformer<Short> = ::toNegativeShort
-    val toNegativeShortOrNull: NullableValueTransformer<Short?> = ::toNegativeShortOrNull
-    val toNegativeInt: NullableValueTransformer<Int> = ::toNegativeInt
-    val toNegativeIntOrNull: NullableValueTransformer<Int?> = ::toNegativeIntOrNull
-    val toNegativeLong: NullableValueTransformer<Long> = ::toNegativeLong
-    val toNegativeLongOrNull: NullableValueTransformer<Long?> = ::toNegativeLongOrNull
-    val toNegativeFloat: NullableValueTransformer<Float> = ::toNegativeFloat
-    val toNegativeFloatOrNull: NullableValueTransformer<Float?> = ::toNegativeFloatOrNull
-    val toNegativeDouble: NullableValueTransformer<Double> = ::toNegativeDouble
-    val toNegativeDoubleOrNull: NullableValueTransformer<Double?> = ::toNegativeDoubleOrNull
-    val toNegative: NullableValueTransformer<Number> = ::toNegative
-    val toNegativeOrNull: NullableValueTransformer<Number?> = ::toNegativeOrNull
-    val toBoolean: NullableValueTransformer<Boolean> = ::toBoolean
-    val toBooleanOrNull: NullableValueTransformer<Boolean?> = ::toBooleanOrNull
-    val toChar: NullableValueTransformer<Char> = ::toChar
-    val toCharOrNull: NullableValueTransformer<Char?> = ::toCharOrNull
+    val toByte: CommanderNullableValueTransformer<Byte> = ::toByte
+    val toByteOrNull: CommanderNullableValueTransformer<Byte?> = ::toByteOrNull
+    val toShort: CommanderNullableValueTransformer<Short> = ::toShort
+    val toShortOrNull: CommanderNullableValueTransformer<Short?> = ::toShortOrNull
+    val toInt: CommanderNullableValueTransformer<Int> = ::toInt
+    val toIntOrNull: CommanderNullableValueTransformer<Int?> = ::toIntOrNull
+    val toLong: CommanderNullableValueTransformer<Long> = ::toLong
+    val toLongOrNull: CommanderNullableValueTransformer<Long?> = ::toLongOrNull
+    val toFloat: CommanderNullableValueTransformer<Float> = ::toFloat
+    val toFloatOrNull: CommanderNullableValueTransformer<Float?> = ::toFloatOrNull
+    val toDouble: CommanderNullableValueTransformer<Double> = ::toDouble
+    val toDoubleOrNull: CommanderNullableValueTransformer<Double?> = ::toDoubleOrNull
+    val toNumber: CommanderNullableValueTransformer<Number> = ::toNumber
+    val toNumberOrNull: CommanderNullableValueTransformer<Number?> = ::toNumberOrNull
+    val toPositiveByte: CommanderNullableValueTransformer<Byte> = ::toPositiveByte
+    val toPositiveByteOrNull: CommanderNullableValueTransformer<Byte?> = ::toPositiveByteOrNull
+    val toPositiveShort: CommanderNullableValueTransformer<Short> = ::toPositiveShort
+    val toPositiveShortOrNull: CommanderNullableValueTransformer<Short?> = ::toPositiveShortOrNull
+    val toPositiveInt: CommanderNullableValueTransformer<Int> = ::toPositiveInt
+    val toPositiveIntOrNull: CommanderNullableValueTransformer<Int?> = ::toPositiveIntOrNull
+    val toPositiveLong: CommanderNullableValueTransformer<Long> = ::toPositiveLong
+    val toPositiveLongOrNull: CommanderNullableValueTransformer<Long?> = ::toPositiveLongOrNull
+    val toPositiveFloat: CommanderNullableValueTransformer<Float> = ::toPositiveFloat
+    val toPositiveFloatOrNull: CommanderNullableValueTransformer<Float?> = ::toPositiveFloatOrNull
+    val toPositiveDouble: CommanderNullableValueTransformer<Double> = ::toPositiveDouble
+    val toPositiveDoubleOrNull: CommanderNullableValueTransformer<Double?> = ::toPositiveDoubleOrNull
+    val toPositive: CommanderNullableValueTransformer<Number> = ::toPositive
+    val toPositiveOrNull: CommanderNullableValueTransformer<Number?> = ::toPositiveOrNull
+    val toNegativeByte: CommanderNullableValueTransformer<Byte> = ::toNegativeByte
+    val toNegativeByteOrNull: CommanderNullableValueTransformer<Byte?> = ::toNegativeByteOrNull
+    val toNegativeShort: CommanderNullableValueTransformer<Short> = ::toNegativeShort
+    val toNegativeShortOrNull: CommanderNullableValueTransformer<Short?> = ::toNegativeShortOrNull
+    val toNegativeInt: CommanderNullableValueTransformer<Int> = ::toNegativeInt
+    val toNegativeIntOrNull: CommanderNullableValueTransformer<Int?> = ::toNegativeIntOrNull
+    val toNegativeLong: CommanderNullableValueTransformer<Long> = ::toNegativeLong
+    val toNegativeLongOrNull: CommanderNullableValueTransformer<Long?> = ::toNegativeLongOrNull
+    val toNegativeFloat: CommanderNullableValueTransformer<Float> = ::toNegativeFloat
+    val toNegativeFloatOrNull: CommanderNullableValueTransformer<Float?> = ::toNegativeFloatOrNull
+    val toNegativeDouble: CommanderNullableValueTransformer<Double> = ::toNegativeDouble
+    val toNegativeDoubleOrNull: CommanderNullableValueTransformer<Double?> = ::toNegativeDoubleOrNull
+    val toNegative: CommanderNullableValueTransformer<Number> = ::toNegative
+    val toNegativeOrNull: CommanderNullableValueTransformer<Number?> = ::toNegativeOrNull
+    val toBoolean: CommanderNullableValueTransformer<Boolean> = ::toBoolean
+    val toBooleanOrNull: CommanderNullableValueTransformer<Boolean?> = ::toBooleanOrNull
+    val toChar: CommanderNullableValueTransformer<Char> = ::toChar
+    val toCharOrNull: CommanderNullableValueTransformer<Char?> = ::toCharOrNull
 
     @JsName("toStringLambda")
-    val toString: NullableValueTransformer<String> = ::toString
-    val toStringOrNull: NullableValueTransformer<String?> = ::toStringOrNull
-    val toNull: NullableValueTransformer<String?> = ::toNull
-    val toNotNull: NullableValueTransformer<String> = ::toNotNull
-    val toUnsignedByte: NullableValueTransformer<UByte> = ::toUnsignedByte
-    val toUnsignedByteOrNull: NullableValueTransformer<UByte?> = ::toUnsignedByteOrNull
-    val toUnsignedShort: NullableValueTransformer<UShort> = ::toUnsignedShort
-    val toUnsignedShortOrNull: NullableValueTransformer<UShort?> = ::toUnsignedShortOrNull
-    val toUnsignedInt: NullableValueTransformer<UInt> = ::toUnsignedInt
-    val toUnsignedIntOrNull: NullableValueTransformer<UInt?> = ::toUnsignedIntOrNull
-    val toUnsignedLong: NullableValueTransformer<ULong> = ::toUnsignedLong
-    val toUnsignedLongOrNull: NullableValueTransformer<ULong?> = ::toUnsignedLongOrNull
+    val toString: CommanderNullableValueTransformer<String> = ::toString
+    val toStringOrNull: CommanderNullableValueTransformer<String?> = ::toStringOrNull
+    val toNull: CommanderNullableValueTransformer<String?> = ::toNull
+    val toNotNull: CommanderNullableValueTransformer<String> = ::toNotNull
+    val toUnsignedByte: CommanderNullableValueTransformer<UByte> = ::toUnsignedByte
+    val toUnsignedByteOrNull: CommanderNullableValueTransformer<UByte?> = ::toUnsignedByteOrNull
+    val toUnsignedShort: CommanderNullableValueTransformer<UShort> = ::toUnsignedShort
+    val toUnsignedShortOrNull: CommanderNullableValueTransformer<UShort?> = ::toUnsignedShortOrNull
+    val toUnsignedInt: CommanderNullableValueTransformer<UInt> = ::toUnsignedInt
+    val toUnsignedIntOrNull: CommanderNullableValueTransformer<UInt?> = ::toUnsignedIntOrNull
+    val toUnsignedLong: CommanderNullableValueTransformer<ULong> = ::toUnsignedLong
+    val toUnsignedLongOrNull: CommanderNullableValueTransformer<ULong?> = ::toUnsignedLongOrNull
 }

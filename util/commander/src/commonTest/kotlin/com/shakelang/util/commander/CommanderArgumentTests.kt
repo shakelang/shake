@@ -72,7 +72,7 @@ class CommanderArgumentTests : FreeSpec(
                 }
             }
 
-            shouldThrow<CliMissingArgumentException> {
+            shouldThrow<CommanderMissingArgumentException> {
                 command.execute(arrayOf())
             }
         }

@@ -5,7 +5,7 @@ package com.shakelang.util.commander
  * @since 0.1.0
  * @version 0.1.0
  */
-typealias CommandAction = CliCommand.(ParseResult) -> Unit
+typealias CommanderCommandAction = CommanderCommand.(ParseResult) -> Unit
 
 /**
  * A class that represents a command line interface command
@@ -20,14 +20,14 @@ typealias CommandAction = CliCommand.(ParseResult) -> Unit
  * @since 0.1.0
  * @version 0.1.0
  */
-class CliCommand(
+class CommanderCommand(
 
     /**
      * The parent command (or null if this is the root command)
      * @since 0.1.0
      * @version 0.1.0
      */
-    val parent: CliCommand? = null,
+    val parent: CommanderCommand? = null,
 
     /**
      * The name of the command
@@ -55,28 +55,28 @@ class CliCommand(
      * @since 0.1.0
      * @version 0.1.0
      */
-    val arguments: MutableList<CliArgument> = mutableListOf(),
+    val arguments: MutableList<CommanderArgument> = mutableListOf(),
 
     /**
      * The options of the command
      * @since 0.1.0
      * @version 0.1.0
      */
-    val options: MutableList<CliOption> = mutableListOf(),
+    val options: MutableList<CommanderOption> = mutableListOf(),
 
     /**
      * The subcommands of the command
      * @since 0.1.0
      * @version 0.1.0
      */
-    val commands: MutableList<CliCommand> = mutableListOf(),
+    val commands: MutableList<CommanderCommand> = mutableListOf(),
 
     /**
      * The action of the command
      * @since 0.1.0
      * @version 0.1.0
      */
-    var action: CommandAction? = null,
+    var action: CommanderCommandAction? = null,
 ) {
 
     /**
@@ -143,7 +143,7 @@ class CliCommand(
      * @param name The name of the option
      * @return The option or null if the option does not exist
      */
-    fun getOptionByName(name: String): CliOption? {
+    fun getOptionByName(name: String): CommanderOption? {
         for (option in options) {
             if (option.name == name) return option
             if (option.aliases.contains(name)) return option
@@ -158,7 +158,7 @@ class CliCommand(
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getOptionByShortName(name: String): CliOption? {
+    fun getOptionByShortName(name: String): CommanderOption? {
         for (option in options) {
             if (option.shortAlias.contains(name)) return option
         }
@@ -182,10 +182,10 @@ class CliCommand(
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null,
-    ): CliCommand {
+        valueValidator: CommanderValueValidator? = null,
+    ): CommanderCommand {
         options.add(
-            CliOption(
+            CommanderOption(
                 this,
                 name,
                 aliases,
@@ -223,10 +223,10 @@ class CliCommand(
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null,
-    ): CliCommand {
+        valueValidator: CommanderValueValidator? = null,
+    ): CommanderCommand {
         arguments.add(
-            CliArgument(
+            CommanderArgument(
                 this,
                 name,
                 description,
@@ -256,11 +256,11 @@ class CliCommand(
         name: String,
         aliases: Array<String> = arrayOf(),
         description: String? = null,
-        action: CommandAction? = null,
-        init: (CliCommand.() -> Unit)? = null,
-    ): CliCommand {
+        action: CommanderCommandAction? = null,
+        init: (CommanderCommand.() -> Unit)? = null,
+    ): CommanderCommand {
         val command =
-            CliCommand(this, name, aliases, description, mutableListOf(), mutableListOf(), mutableListOf(), action)
+            CommanderCommand(this, name, aliases, description, mutableListOf(), mutableListOf(), mutableListOf(), action)
         commands.add(command)
         if (init != null) command.init()
         return this
@@ -288,7 +288,7 @@ class CliCommand(
             when {
                 arg.startsWith("--") -> {
                     val option = getOptionByName(arg.substring(2))
-                        ?: throw CliUnknownOptionException("Unknown option: $name for (sub)command: ${entry.name}")
+                        ?: throw CommanderUnknownOptionException("Unknown option: $name for (sub)command: ${entry.name}")
 
                     val name = option.name
 
@@ -298,7 +298,7 @@ class CliCommand(
                         ?: throw IllegalArgumentException("Unknown command for option: $name")
 
                     val value = if (option.hasValue) {
-                        if (i + 1 >= args.size) throw CliMissingOptionValueException("Missing value for option: $name")
+                        if (i + 1 >= args.size) throw CommanderMissingOptionValueException("Missing value for option: $name")
                         args[++i]
                     } else {
                         if (entry.options.containsKey(name)) throw IllegalArgumentException("Option: $name already exists")
@@ -310,7 +310,7 @@ class CliCommand(
                     }
 
                     val values = entry.options[name] ?: arrayOf()
-                    entry.options[name] = arrayOf(*values, Value(value))
+                    entry.options[name] = arrayOf(*values, CommanderValue(value))
                 }
 
                 arg.startsWith("-") -> {
@@ -337,7 +337,7 @@ class CliCommand(
                     }
 
                     val values = argEntry.options[name] ?: arrayOf()
-                    argEntry.options[name] = arrayOf(*values, Value(value))
+                    argEntry.options[name] = arrayOf(*values, CommanderValue(value))
                 }
 
                 else -> {
@@ -357,11 +357,11 @@ class CliCommand(
                             throw ValueValidationException("Invalid value for argument: $name")
                         }
 
-                        argEntry.arguments[name] = Value(arg)
+                        argEntry.arguments[name] = CommanderValue(arg)
                     } else {
                         // Find subcommand
                         val command = commands.find { it.name == arg || it.aliases.contains(arg) }
-                            ?: throw CliUnknownSubCommandException("Unknown command: $arg")
+                            ?: throw CommanderUnknownSubCommandException("Unknown command: $arg")
 
                         return command.parse(args.sliceArray((i + 1) until args.size), newStack)
                     }
@@ -415,16 +415,16 @@ class CliCommand(
     internal fun verify(commandStackEntry: MutableCommandStackEntry) {
         for (it in this.options) {
             if (it.hasValue && it.defaultValue != null && !commandStackEntry.options.containsKey(it.name)) {
-                commandStackEntry.options[it.name] = arrayOf(Value(it.defaultValue))
+                commandStackEntry.options[it.name] = arrayOf(CommanderValue(it.defaultValue))
             }
-            if (it.required && !commandStackEntry.options.containsKey(it.name)) throw CliMissingOptionException("Missing required option: ${it.name}")
+            if (it.required && !commandStackEntry.options.containsKey(it.name)) throw CommanderMissingOptionException("Missing required option: ${it.name}")
         }
 
         for (it in this.arguments) {
             if (it.defaultValue != null && !commandStackEntry.arguments.containsKey(it.name)) {
-                commandStackEntry.arguments[it.name] = Value(it.defaultValue)
+                commandStackEntry.arguments[it.name] = CommanderValue(it.defaultValue)
             }
-            if (it.required && !commandStackEntry.arguments.containsKey(it.name)) throw CliMissingArgumentException("Missing required argument: ${it.name}")
+            if (it.required && !commandStackEntry.arguments.containsKey(it.name)) throw CommanderMissingArgumentException("Missing required argument: ${it.name}")
         }
     }
 }
@@ -434,7 +434,7 @@ class CliCommand(
  * @since 0.1.0
  * @version 0.1.0
  */
-class CliCommandCreationContext {
+class CommanderCommandCreationContext {
 
     /**
      * The name of the command
@@ -462,28 +462,28 @@ class CliCommandCreationContext {
      * @since 0.1.0
      * @version 0.1.0
      */
-    var action: CommandAction? = null
+    var action: CommanderCommandAction? = null
 
     /**
      * The arguments of the command
      * @since 0.1.0
      * @version 0.1.0
      */
-    val arguments: MutableList<(CliCommand) -> CliArgument> = mutableListOf()
+    val arguments: MutableList<(CommanderCommand) -> CommanderArgument> = mutableListOf()
 
     /**
      * The options of the command
      * @since 0.1.0
      * @version 0.1.0
      */
-    val options: MutableList<(CliCommand) -> CliOption> = mutableListOf()
+    val options: MutableList<(CommanderCommand) -> CommanderOption> = mutableListOf()
 
     /**
      * The subcommands of the command
      * @since 0.1.0
      * @version 0.1.0
      */
-    val commands: MutableList<(CliCommand) -> CliCommand> = mutableListOf()
+    val commands: MutableList<(CommanderCommand) -> CommanderCommand> = mutableListOf()
 
     /**
      * Add an alias to the command
@@ -511,7 +511,7 @@ class CliCommandCreationContext {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun action(action: CommandAction) {
+    fun action(action: CommanderCommandAction) {
         this.action = action
     }
 
@@ -521,7 +521,7 @@ class CliCommandCreationContext {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun argument(cliArgument: CliArgument) {
+    fun argument(cliArgument: CommanderArgument) {
         arguments.add { cliArgument }
     }
 
@@ -532,7 +532,7 @@ class CliCommandCreationContext {
      * @version 0.1.0
      */
     fun argument(init: CliArgumentInit) {
-        val context = CliArgumentCreationContext()
+        val context = CommanderArgumentCreationContext()
         context.init()
         arguments.add { context.generate(it) }
     }
@@ -556,10 +556,10 @@ class CliCommandCreationContext {
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null,
+        valueValidator: CommanderValueValidator? = null,
     ) {
         arguments.add {
-            CliArgument(
+            CommanderArgument(
                 it,
                 name,
                 description,
@@ -578,7 +578,7 @@ class CliCommandCreationContext {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun option(cliOption: CliOption) {
+    fun option(cliOption: CommanderOption) {
         options.add { cliOption }
     }
 
@@ -588,8 +588,8 @@ class CliCommandCreationContext {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun option(init: CliOptionCreationContext.() -> Unit) {
-        val context = CliOptionCreationContext()
+    fun option(init: CommanderOptionCreationContext.() -> Unit) {
+        val context = CommanderOptionCreationContext()
         context.init()
         options.add { context.generate(it) }
     }
@@ -619,10 +619,10 @@ class CliCommandCreationContext {
         defaultValue: String? = null,
         valueName: String? = null,
         valueDescription: String? = null,
-        valueValidator: ValueValidator? = null,
+        valueValidator: CommanderValueValidator? = null,
     ) {
         options.add {
-            CliOption(
+            CommanderOption(
                 it,
                 name,
                 aliases,
@@ -644,7 +644,7 @@ class CliCommandCreationContext {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun subcommand(cliCommand: CliCommand) {
+    fun subcommand(cliCommand: CommanderCommand) {
         commands.add { cliCommand }
     }
 
@@ -654,8 +654,8 @@ class CliCommandCreationContext {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun subcommand(init: CliCommandInit) {
-        val context = CliCommandCreationContext()
+    fun subcommand(init: CommanderCommandInit) {
+        val context = CommanderCommandCreationContext()
         context.init()
         commands.add { context.generate(it) }
     }
@@ -674,10 +674,10 @@ class CliCommandCreationContext {
         name: String,
         aliases: Array<String> = arrayOf(),
         description: String? = null,
-        action: CommandAction? = null,
-        init: (CliCommandInit)? = null,
+        action: CommanderCommandAction? = null,
+        init: (CommanderCommandInit)? = null,
     ) {
-        val context = CliCommandCreationContext()
+        val context = CommanderCommandCreationContext()
         context.name = name
         context.aliases.addAll(aliases)
         context.description = description
@@ -693,10 +693,10 @@ class CliCommandCreationContext {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun generate(parent: CliCommand?): CliCommand {
+    fun generate(parent: CommanderCommand?): CommanderCommand {
         if (!::name.isInitialized) throw IllegalStateException("Name is not initialized")
 
-        val cmd = CliCommand(
+        val cmd = CommanderCommand(
             parent,
             name,
             aliases.toTypedArray(),
@@ -730,8 +730,8 @@ class CliCommandCreationContext {
  * @since 0.1.0
  * @version 0.1.0
  */
-fun command(init: CliCommandInit): CliCommand {
-    val context = CliCommandCreationContext()
+fun command(init: CommanderCommandInit): CommanderCommand {
+    val context = CommanderCommandCreationContext()
     context.init()
     return context.generate(null)
 }
@@ -741,4 +741,4 @@ fun command(init: CliCommandInit): CliCommand {
  * @since 0.1.0
  * @version 0.1.0
  */
-typealias CliCommandInit = CliCommandCreationContext.() -> Unit
+typealias CommanderCommandInit = CommanderCommandCreationContext.() -> Unit
