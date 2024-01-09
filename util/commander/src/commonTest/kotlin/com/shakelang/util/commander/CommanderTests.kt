@@ -214,5 +214,114 @@ class CommanderTests : FreeSpec(
             result.stack.size shouldBe 1
             result.getValueByName("test2")!!.first().toBoolean() shouldBe true
         }
+
+        "parse (with option using alias)" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    description = "test2 description"
+                    alias("testalias")
+                }
+            }
+            val result = command.execute(arrayOf("--testalias"))
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().toBoolean() shouldBe true
+        }
+
+        "parse (with option using alias and value)" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    description = "test2 description"
+                    alias("testalias")
+                    hasValue = true
+                }
+            }
+            val result = command.execute(arrayOf("--testalias", "Hello World"))
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().value shouldBe "Hello World"
+        }
+
+        "parse (with option using short alias)" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    description = "test2 description"
+                    shortAlias("t")
+                }
+            }
+            val result = command.execute(arrayOf("-t"))
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().toBoolean() shouldBe true
+        }
+
+        "parse (with option using short alias and value)" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    description = "test2 description"
+                    shortAlias("t")
+                    hasValue = true
+                }
+            }
+            val result = command.execute(arrayOf("-t", "Hello World"))
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.first().value shouldBe "Hello World"
+        }
+
+        "parse (two values for an option)" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    description = "test2 description"
+                    hasValue = true
+                }
+            }
+            val result = command.execute(arrayOf("--test2", "Hello", "--test2", "World"))
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.size shouldBe 2
+            result.getValueByName("test2")!![0].value shouldBe "Hello"
+            result.getValueByName("test2")!![1].value shouldBe "World"
+        }
+
+        "parse (two values for an option using alias)" {
+            val command = command {
+                name = "test"
+                description = "test description"
+
+                option {
+                    name = "test2"
+                    description = "test2 description"
+                    alias("testalias")
+                    hasValue = true
+                }
+            }
+            val result = command.execute(arrayOf("--testalias", "Hello", "--testalias", "World"))
+
+            result.stack.size shouldBe 1
+            result.getValueByName("test2")!!.size shouldBe 2
+            result.getValueByName("test2")!![0].value shouldBe "Hello"
+            result.getValueByName("test2")!![1].value shouldBe "World"
+        }
     },
 )
