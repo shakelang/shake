@@ -125,3 +125,7 @@ Changelog generation plugin for Shake
 * Update com.shakelang.util:parseutils to 0.4.0
 
 * Update com.shakelang.util:shason to 0.4.1
+
+### 0.7.3
+
+* Fix wrong release confirm dialog message

@@ -45,7 +45,7 @@
         ":shake:compiler:shakelib:shakelib:0.1.0",
         ":shake:bytecode:interpreter:interpreter:0.1.0-SNAPSHOT",
         ":shake:bytecode:generator:generator:0.1.0-SNAPSHOT",
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC"
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2"
       ]
     },
     {
@@ -78,7 +78,7 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.util.changelog:changelog",
-      "version": "0.7.2",
+      "version": "0.7.3",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.util.changelog",
       "license": "",
@@ -414,7 +414,7 @@
       "path": ":shake:shasambly:shasambly",
       "name": "com.shakelang.shake.shasambly:shasambly",
       "version": "0.1.0",
-      "description": "Shake\'s own bytecode format interpreter",
+      "description": "Shake's own bytecode format interpreter",
       "author": "com.shakelang.shake.shasambly",
       "license": "",
       "dependencies": [
@@ -443,7 +443,7 @@
       "path": ":shake:shasambly:shastools",
       "name": "com.shakelang.shake.shasambly:shastools",
       "version": "0.1.0",
-      "description": "Shake\'s own bytecode format interpreter",
+      "description": "Shake's own bytecode format interpreter",
       "author": "com.shakelang.shake.shasambly",
       "license": "",
       "dependencies": [
@@ -455,5 +455,5 @@
       ]
     }
   ],
-  "lastUpdate": 1704578621242
+  "lastUpdate": 1704805908063
 }
