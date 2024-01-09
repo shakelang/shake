@@ -38,7 +38,7 @@ open class CommandStackEntry(
     val alias: String,
     val command: CliCommand,
     open val arguments: Map<String, Value>,
-    open val options: Map<String, Array<Value>>
+    open val options: Map<String, Array<Value>>,
 ) {
     val name: String = command.name
 
@@ -51,7 +51,7 @@ open class CommandStackEntry(
 class MutableCommandStackEntry(
     alias: String,
     command: CliCommand,
-): CommandStackEntry(alias, command, mutableMapOf(), mutableMapOf()) {
+) : CommandStackEntry(alias, command, mutableMapOf(), mutableMapOf()) {
     override val arguments: MutableMap<String, Value> get() = super.arguments as MutableMap<String, Value>
     override val options: MutableMap<String, Array<Value>> = super.options as MutableMap<String, Array<Value>>
 

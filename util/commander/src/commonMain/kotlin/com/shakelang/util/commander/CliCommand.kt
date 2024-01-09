@@ -256,17 +256,17 @@ class CliCommand(
 
     internal fun verify(commandStackEntry: MutableCommandStackEntry) {
         for (it in this.options) {
-            if(it.hasValue && it.defaultValue != null && !commandStackEntry.options.containsKey(it.name)) {
+            if (it.hasValue && it.defaultValue != null && !commandStackEntry.options.containsKey(it.name)) {
                 commandStackEntry.options[it.name] = arrayOf(Value(it.defaultValue))
             }
-            if(it.required && !commandStackEntry.options.containsKey(it.name)) throw CliMissingOptionException("Missing required option: ${it.name}")
+            if (it.required && !commandStackEntry.options.containsKey(it.name)) throw CliMissingOptionException("Missing required option: ${it.name}")
         }
 
         for (it in this.arguments) {
-            if(it.defaultValue != null && !commandStackEntry.arguments.containsKey(it.name)) {
+            if (it.defaultValue != null && !commandStackEntry.arguments.containsKey(it.name)) {
                 commandStackEntry.arguments[it.name] = Value(it.defaultValue)
             }
-            if(it.required && !commandStackEntry.arguments.containsKey(it.name)) throw CliMissingArgumentException("Missing required argument: ${it.name}")
+            if (it.required && !commandStackEntry.arguments.containsKey(it.name)) throw CliMissingArgumentException("Missing required argument: ${it.name}")
         }
     }
 }
