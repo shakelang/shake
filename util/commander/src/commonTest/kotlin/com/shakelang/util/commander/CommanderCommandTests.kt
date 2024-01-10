@@ -63,7 +63,7 @@ class CommanderCommandTests : FreeSpec(
 
             command.name shouldBe "test"
             command.description shouldBe "test description"
-            command.action!!.invoke(command, ParseResult(mutableListOf()))
+            command.action!!.invoke(command, CommanderParseResult(mutableListOf()))
             counter shouldBeCalled 1
         }
 

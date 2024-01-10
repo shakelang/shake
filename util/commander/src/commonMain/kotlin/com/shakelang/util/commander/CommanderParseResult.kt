@@ -3,18 +3,18 @@ package com.shakelang.util.commander
 /**
  * The result of a parse operation
  * @property stack The stack of commands
- * @constructor Creates a [ParseResult]
+ * @constructor Creates a [CommanderParseResult]
  * @since 0.1.0
  * @version 0.1.0
  */
-class ParseResult(
+class CommanderParseResult(
 
     /**
      * The stack of commands
      * @since 0.1.0
      * @version 0.1.0
      */
-    val stack: List<CommandStackEntry>,
+    val stack: List<CommanderCommandStackEntry>,
 
 ) {
 
@@ -25,7 +25,7 @@ class ParseResult(
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun getCommandResult(command: CommanderCommand): CommandStackEntry? {
+    fun getCommandResult(command: CommanderCommand): CommanderCommandStackEntry? {
         for (entry in stack) {
             if (entry.command == command) return entry
         }
@@ -156,7 +156,7 @@ class ParseResult(
     /**
      * Verify the result by checking if all required arguments and options are set
      * (also applies default values)
-     * Only works with mutable [CommandStackEntry]s
+     * Only works with mutable [CommanderCommandStackEntry]s
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -173,11 +173,11 @@ class ParseResult(
  * @property command The command
  * @property arguments The arguments
  * @property options The options
- * @constructor Creates a [CommandStackEntry]
+ * @constructor Creates a [CommanderCommandStackEntry]
  * @since 0.1.0
  * @version 0.1.0
  */
-open class CommandStackEntry(
+open class CommanderCommandStackEntry(
 
     /**
      * The alias of the command
@@ -219,13 +219,13 @@ open class CommandStackEntry(
     /**
      * Verify the result by checking if all required arguments and options are set
      * (also applies default values)
-     * Only works with mutable [CommandStackEntry]s
-     * @throws IllegalStateException If the [CommandStackEntry] is not mutable
+     * Only works with mutable [CommanderCommandStackEntry]s
+     * @throws IllegalStateException If the [CommanderCommandStackEntry] is not mutable
      * @since 0.1.0
      * @version 0.1.0
      */
     internal open fun verify() {
-        if (this !is MutableCommandStackEntry) throw IllegalStateException("CommandStackEntry is not mutable")
+        if (this !is CommanderMutableCommandStackEntry) throw IllegalStateException("CommanderCommandStackEntry is not mutable")
         this.verify()
     }
 }
@@ -236,11 +236,11 @@ open class CommandStackEntry(
  * @property command The command
  * @property arguments The arguments
  * @property options The options
- * @constructor Creates a [MutableCommandStackEntry]
+ * @constructor Creates a [CommanderMutableCommandStackEntry]
  * @since 0.1.0
  * @version 0.1.0
  */
-class MutableCommandStackEntry(
+class CommanderMutableCommandStackEntry(
 
     /**
      * The alias of the command
@@ -256,7 +256,7 @@ class MutableCommandStackEntry(
      */
     command: CommanderCommand,
 
-) : CommandStackEntry(alias, command, mutableMapOf(), mutableMapOf()) {
+) : CommanderCommandStackEntry(alias, command, mutableMapOf(), mutableMapOf()) {
 
     /**
      * The arguments

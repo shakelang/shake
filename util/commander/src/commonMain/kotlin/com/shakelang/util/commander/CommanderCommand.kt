@@ -5,7 +5,7 @@ package com.shakelang.util.commander
  * @since 0.1.0
  * @version 0.1.0
  */
-typealias CommanderCommandAction = CommanderCommand.(ParseResult) -> Unit
+typealias CommanderCommandAction = CommanderCommand.(CommanderParseResult) -> Unit
 
 /**
  * A class that represents a command line interface command
@@ -290,8 +290,8 @@ class CommanderCommand(
      * @since 0.1.0
      * @version 0.1.0
      */
-    private fun parse(args: Array<String>, stack: Array<MutableCommandStackEntry>): ParseResult {
-        val entry = MutableCommandStackEntry(name, this)
+    private fun parse(args: Array<String>, stack: Array<CommanderMutableCommandStackEntry>): CommanderParseResult {
+        val entry = CommanderMutableCommandStackEntry(name, this)
 
         val newStack = arrayOf(*stack, entry)
 
@@ -385,7 +385,7 @@ class CommanderCommand(
             i++
         }
 
-        return ParseResult(newStack.toMutableList())
+        return CommanderParseResult(newStack.toMutableList())
     }
 
     /**
@@ -397,7 +397,7 @@ class CommanderCommand(
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun parse(args: Array<String>): ParseResult {
+    fun parse(args: Array<String>): CommanderParseResult {
         val result = parse(args, arrayOf())
         result.verify()
         return result
@@ -412,7 +412,7 @@ class CommanderCommand(
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun execute(args: Array<String>): ParseResult {
+    fun execute(args: Array<String>): CommanderParseResult {
         val result = parse(args)
         result.stack.last().command.action?.invoke(result.stack.last().command, result)
         return result
@@ -426,7 +426,7 @@ class CommanderCommand(
      * @since 0.1.0
      * @version 0.1.0
      */
-    internal fun verify(commandStackEntry: MutableCommandStackEntry) {
+    internal fun verify(commandStackEntry: CommanderMutableCommandStackEntry) {
         for (it in this.options) {
             if (it.hasValue && it.defaultValue != null && !commandStackEntry.options.containsKey(it.name)) {
                 commandStackEntry.options[it.name] = arrayOf(CommanderValue(it.defaultValue))
