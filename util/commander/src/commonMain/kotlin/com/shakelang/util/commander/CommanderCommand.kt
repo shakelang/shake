@@ -588,7 +588,7 @@ class CommanderCommandCreationContext {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun option(init: CommanderOptionCreationContext.() -> Unit) {
+    fun option(init: CommanderOptionInit) {
         val context = CommanderOptionCreationContext()
         context.init()
         options.add { context.generate(it) }
