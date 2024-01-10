@@ -11,8 +11,10 @@ plugins {
 kotlin {
     dependencies {
         common {
+            implementation(project(":util:commander"))
             implementation(project(":util:parseutils"))
             implementation(project(":util:shason"))
+            implementation(project(":util:logger"))
             implementation(project(":shake:compiler:lexer"))
             implementation(project(":shake:compiler:parser"))
             implementation(project(":shake:compiler:processor"))
