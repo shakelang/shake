@@ -172,6 +172,20 @@ class CommanderCommand(
      * @since 0.1.0
      * @version 0.1.0
      */
+    fun getArgumentByName(name: String): CommanderArgument? {
+        for (argument in arguments) {
+            if (argument.name == name) return argument
+        }
+        return parent?.getArgumentByName(name)
+    }
+
+    /**
+     * Get an argument by its name
+     * @param name The name of the argument
+     * @return The argument or null if the argument does not exist
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun option(
         name: String,
         aliases: Array<String> = arrayOf(),
