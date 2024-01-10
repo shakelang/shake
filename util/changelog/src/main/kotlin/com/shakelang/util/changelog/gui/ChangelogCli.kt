@@ -90,7 +90,7 @@ class ChangelogCli(
 
         val res = JOptionPane.showConfirmDialog(
             this,
-            "You are about to release all bumped changes as a ${type?:"release"}. Are you sure?",
+            "You are about to release all bumped changes as a ${type ?: "release"}. Are you sure?",
             "Release",
             JOptionPane.YES_NO_OPTION,
         )
