@@ -140,6 +140,22 @@ object CommanderValueValidators {
     }
 
     /**
+     * Check if the given [value] is a char
+     *
+     * Accepts:
+     * - All chars (every string with a length of 1)
+     *
+     * @param value The value to check
+     * @throws ValueValidationException If the value is not a boolean
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun isChar(value: String?) {
+        if (value == null) throw ValueValidationException("CommanderValue is null")
+        if (value.length != 1) throw ValueValidationException("CommanderValue \"$value\" is not a char")
+    }
+
+    /**
      * Check if the given [value] is a string
      *
      * Accepts:
@@ -504,7 +520,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isByte
      */
-    val isByte: CommanderValueValidator = ::isByte
+    val isByte: CommanderValueValidator = CommanderValueValidator.of(::isByte)
 
     /**
      * Check if the given value is a short
@@ -517,7 +533,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isShort
      */
-    val isShort: CommanderValueValidator = ::isShort
+    val isShort: CommanderValueValidator = CommanderValueValidator.of(::isShort)
 
     /**
      * Check if the given value is an int
@@ -530,7 +546,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isInt
      */
-    val isInt: CommanderValueValidator = ::isInt
+    val isInt: CommanderValueValidator = CommanderValueValidator.of(::isInt)
 
     /**
      * Check if the given value is a long
@@ -543,7 +559,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isLong
      */
-    val isLong: CommanderValueValidator = ::isLong
+    val isLong: CommanderValueValidator = CommanderValueValidator.of(::isLong)
 
     /**
      * Check if the given value is a float
@@ -559,7 +575,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isFloat
      */
-    val isFloat: CommanderValueValidator = ::isFloat
+    val isFloat: CommanderValueValidator = CommanderValueValidator.of(::isFloat)
 
     /**
      * Check if the given value is a double
@@ -575,7 +591,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isDouble
      */
-    val isDouble: CommanderValueValidator = ::isDouble
+    val isDouble: CommanderValueValidator = CommanderValueValidator.of(::isDouble)
 
     /**
      * Check if the given value is a boolean
@@ -595,7 +611,20 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isBoolean
      */
-    val isBoolean: CommanderValueValidator = ::isBoolean
+    val isBoolean: CommanderValueValidator = CommanderValueValidator.of(::isBoolean)
+
+    /**
+     * Check if the given value is a char
+     *
+     * Accepts:
+     * - All chars (every string with a length of 1)
+     *
+     * @throws ValueValidationException If the value is not a boolean
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see isChar
+     */
+    val isChar: CommanderValueValidator = CommanderValueValidator.of(::isChar)
 
     /**
      * Check if the given value is a string
@@ -609,7 +638,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isString
      */
-    val isString: CommanderValueValidator = ::isString
+    val isString: CommanderValueValidator = CommanderValueValidator.of(::isString)
 
     /**
      * Check if the given value is null
@@ -622,7 +651,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isNull
      */
-    val isNull: CommanderValueValidator = ::isNull
+    val isNull: CommanderValueValidator = CommanderValueValidator.of(::isNull)
 
     /**
      * Check if the given value is not null
@@ -635,7 +664,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isNotNull
      */
-    val isNotNull: CommanderValueValidator = ::isNotNull
+    val isNotNull: CommanderValueValidator = CommanderValueValidator.of(::isNotNull)
 
     /**
      * Check if the given value is an unsigned byte
@@ -648,7 +677,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isUnsignedByte
      */
-    val isUnsignedByte: CommanderValueValidator = ::isUnsignedByte
+    val isUnsignedByte: CommanderValueValidator = CommanderValueValidator.of(::isUnsignedByte)
 
     /**
      * Check if the given value is an unsigned short
@@ -661,7 +690,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isUnsignedShort
      */
-    val isUnsignedShort: CommanderValueValidator = ::isUnsignedShort
+    val isUnsignedShort: CommanderValueValidator = CommanderValueValidator.of(::isUnsignedShort)
 
     /**
      * Check if the given value is an unsigned int
@@ -674,7 +703,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isUnsignedInt
      */
-    val isUnsignedInt: CommanderValueValidator = ::isUnsignedInt
+    val isUnsignedInt: CommanderValueValidator = CommanderValueValidator.of(::isUnsignedInt)
 
     /**
      * Check if the given value is an unsigned long
@@ -687,7 +716,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isUnsignedLong
      */
-    val isUnsignedLong: CommanderValueValidator = ::isUnsignedLong
+    val isUnsignedLong: CommanderValueValidator = CommanderValueValidator.of(::isUnsignedLong)
 
     /**
      * Check if the given value is a positive byte
@@ -700,7 +729,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isPositiveByte
      */
-    val isPositiveByte: CommanderValueValidator = ::isPositiveByte
+    val isPositiveByte: CommanderValueValidator = CommanderValueValidator.of(::isPositiveByte)
 
     /**
      * Check if the given value is a positive short
@@ -713,7 +742,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isPositiveShort
      */
-    val isPositiveShort: CommanderValueValidator = ::isPositiveShort
+    val isPositiveShort: CommanderValueValidator = CommanderValueValidator.of(::isPositiveShort)
 
     /**
      * Check if the given value is a positive int
@@ -726,7 +755,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isPositiveInt
      */
-    val isPositiveInt: CommanderValueValidator = ::isPositiveInt
+    val isPositiveInt: CommanderValueValidator = CommanderValueValidator.of(::isPositiveInt)
 
     /**
      * Check if the given value is a positive long
@@ -739,7 +768,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isPositiveLong
      */
-    val isPositiveLong: CommanderValueValidator = ::isPositiveLong
+    val isPositiveLong: CommanderValueValidator = CommanderValueValidator.of(::isPositiveLong)
 
     /**
      * Check if the given value is a positive float
@@ -753,7 +782,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isPositiveFloat
      */
-    val isPositiveFloat: CommanderValueValidator = ::isPositiveFloat
+    val isPositiveFloat: CommanderValueValidator = CommanderValueValidator.of(::isPositiveFloat)
 
     /**
      * Check if the given value is a positive double
@@ -767,7 +796,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isPositiveDouble
      */
-    val isPositiveDouble: CommanderValueValidator = ::isPositiveDouble
+    val isPositiveDouble: CommanderValueValidator = CommanderValueValidator.of(::isPositiveDouble)
 
     /**
      * Check if the given value is a positive number
@@ -781,7 +810,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isPositive
      */
-    val isPositive: CommanderValueValidator = ::isPositive
+    val isPositive: CommanderValueValidator = CommanderValueValidator.of(::isPositive)
 
     /**
      * Check if the given value is a negative byte
@@ -794,7 +823,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isNegativeByte
      */
-    val isNegativeByte: CommanderValueValidator = ::isNegativeByte
+    val isNegativeByte: CommanderValueValidator = CommanderValueValidator.of(::isNegativeByte)
 
     /**
      * Check if the given value is a negative short
@@ -807,7 +836,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isNegativeShort
      */
-    val isNegativeShort: CommanderValueValidator = ::isNegativeShort
+    val isNegativeShort: CommanderValueValidator = CommanderValueValidator.of(::isNegativeShort)
 
     /**
      * Check if the given value is a negative int
@@ -820,7 +849,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isNegativeInt
      */
-    val isNegativeInt: CommanderValueValidator = ::isNegativeInt
+    val isNegativeInt: CommanderValueValidator = CommanderValueValidator.of(::isNegativeInt)
 
     /**
      * Check if the given value is a negative long
@@ -833,7 +862,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isNegativeLong
      */
-    val isNegativeLong: CommanderValueValidator = ::isNegativeLong
+    val isNegativeLong: CommanderValueValidator = CommanderValueValidator.of(::isNegativeLong)
 
     /**
      * Check if the given value is a negative float
@@ -847,7 +876,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isNegativeFloat
      */
-    val isNegativeFloat: CommanderValueValidator = ::isNegativeFloat
+    val isNegativeFloat: CommanderValueValidator = CommanderValueValidator.of(::isNegativeFloat)
 
     /**
      * Check if the given value is a negative double
@@ -861,7 +890,7 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isNegativeDouble
      */
-    val isNegativeDouble: CommanderValueValidator = ::isNegativeDouble
+    val isNegativeDouble: CommanderValueValidator = CommanderValueValidator.of(::isNegativeDouble)
 
     /**
      * Check if the given value is a negative number
@@ -875,5 +904,5 @@ object CommanderValueValidators {
      * @version 0.1.0
      * @see isNegative
      */
-    val isNegative: CommanderValueValidator = ::isNegative
+    val isNegative: CommanderValueValidator = CommanderValueValidator.of(::isNegative)
 }

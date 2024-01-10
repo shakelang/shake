@@ -806,7 +806,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toByte: CommanderNullableValueTransformer<Byte> = ::toByte
+    val toByte: CommanderValueTransformer<Byte> = CommanderValueTransformer.of(::toByte)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -814,7 +814,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toByteOrNull: CommanderNullableValueTransformer<Byte?> = ::toByteOrNull
+    val toByteOrNull: CommanderValueTransformer<Byte?> = CommanderValueTransformer.of(::toByteOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -823,7 +823,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toShort: CommanderNullableValueTransformer<Short> = ::toShort
+    val toShort: CommanderValueTransformer<Short> = CommanderValueTransformer.of(::toShort)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -831,7 +831,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toShortOrNull: CommanderNullableValueTransformer<Short?> = ::toShortOrNull
+    val toShortOrNull: CommanderValueTransformer<Short?> = CommanderValueTransformer.of(::toShortOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -840,7 +840,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toInt: CommanderNullableValueTransformer<Int> = ::toInt
+    val toInt: CommanderValueTransformer<Int> = CommanderValueTransformer.of(::toInt)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -848,7 +848,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toIntOrNull: CommanderNullableValueTransformer<Int?> = ::toIntOrNull
+    val toIntOrNull: CommanderValueTransformer<Int?> = CommanderValueTransformer.of(::toIntOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -857,7 +857,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toLong: CommanderNullableValueTransformer<Long> = ::toLong
+    val toLong: CommanderValueTransformer<Long> = CommanderValueTransformer.of(::toLong)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -865,7 +865,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toLongOrNull: CommanderNullableValueTransformer<Long?> = ::toLongOrNull
+    val toLongOrNull: CommanderValueTransformer<Long?> = CommanderValueTransformer.of(::toLongOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -874,7 +874,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toFloat: CommanderNullableValueTransformer<Float> = ::toFloat
+    val toFloat: CommanderValueTransformer<Float> = CommanderValueTransformer.of(::toFloat)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -882,7 +882,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toFloatOrNull: CommanderNullableValueTransformer<Float?> = ::toFloatOrNull
+    val toFloatOrNull: CommanderValueTransformer<Float?> = CommanderValueTransformer.of(::toFloatOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -891,7 +891,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toDouble: CommanderNullableValueTransformer<Double> = ::toDouble
+    val toDouble: CommanderValueTransformer<Double> = CommanderValueTransformer.of(::toDouble)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -899,7 +899,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toDoubleOrNull: CommanderNullableValueTransformer<Double?> = ::toDoubleOrNull
+    val toDoubleOrNull: CommanderValueTransformer<Double?> = CommanderValueTransformer.of(::toDoubleOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -908,7 +908,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNumber: CommanderNullableValueTransformer<Number> = ::toNumber
+    val toNumber: CommanderValueTransformer<Number> = CommanderValueTransformer.of(::toNumber)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -916,7 +916,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNumberOrNull: CommanderNullableValueTransformer<Number?> = ::toNumberOrNull
+    val toNumberOrNull: CommanderValueTransformer<Number?> = CommanderValueTransformer.of(::toNumberOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -925,7 +925,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveByte: CommanderNullableValueTransformer<Byte> = ::toPositiveByte
+    val toPositiveByte: CommanderValueTransformer<Byte> = CommanderValueTransformer.of(::toPositiveByte)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -934,7 +934,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveByteOrNull: CommanderNullableValueTransformer<Byte?> = ::toPositiveByteOrNull
+    val toPositiveByteOrNull: CommanderValueTransformer<Byte?> = CommanderValueTransformer.of(::toPositiveByteOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -943,7 +943,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveShort: CommanderNullableValueTransformer<Short> = ::toPositiveShort
+    val toPositiveShort: CommanderValueTransformer<Short> = CommanderValueTransformer.of(::toPositiveShort)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -952,7 +952,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveShortOrNull: CommanderNullableValueTransformer<Short?> = ::toPositiveShortOrNull
+    val toPositiveShortOrNull: CommanderValueTransformer<Short?> = CommanderValueTransformer.of(::toPositiveShortOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -961,7 +961,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveInt: CommanderNullableValueTransformer<Int> = ::toPositiveInt
+    val toPositiveInt: CommanderValueTransformer<Int> = CommanderValueTransformer.of(::toPositiveInt)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -970,7 +970,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveIntOrNull: CommanderNullableValueTransformer<Int?> = ::toPositiveIntOrNull
+    val toPositiveIntOrNull: CommanderValueTransformer<Int?> = CommanderValueTransformer.of(::toPositiveIntOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -979,7 +979,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveLong: CommanderNullableValueTransformer<Long> = ::toPositiveLong
+    val toPositiveLong: CommanderValueTransformer<Long> = CommanderValueTransformer.of(::toPositiveLong)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -988,7 +988,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveLongOrNull: CommanderNullableValueTransformer<Long?> = ::toPositiveLongOrNull
+    val toPositiveLongOrNull: CommanderValueTransformer<Long?> = CommanderValueTransformer.of(::toPositiveLongOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -997,7 +997,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveFloat: CommanderNullableValueTransformer<Float> = ::toPositiveFloat
+    val toPositiveFloat: CommanderValueTransformer<Float> = CommanderValueTransformer.of(::toPositiveFloat)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1006,7 +1006,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveFloatOrNull: CommanderNullableValueTransformer<Float?> = ::toPositiveFloatOrNull
+    val toPositiveFloatOrNull: CommanderValueTransformer<Float?> = CommanderValueTransformer.of(::toPositiveFloatOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1015,7 +1015,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveDouble: CommanderNullableValueTransformer<Double> = ::toPositiveDouble
+    val toPositiveDouble: CommanderValueTransformer<Double> = CommanderValueTransformer.of(::toPositiveDouble)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1024,7 +1024,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveDoubleOrNull: CommanderNullableValueTransformer<Double?> = ::toPositiveDoubleOrNull
+    val toPositiveDoubleOrNull: CommanderValueTransformer<Double?> = CommanderValueTransformer.of(::toPositiveDoubleOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1033,7 +1033,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositive: CommanderNullableValueTransformer<Number> = ::toPositive
+    val toPositive: CommanderValueTransformer<Number> = CommanderValueTransformer.of(::toPositive)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1042,7 +1042,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toPositiveOrNull: CommanderNullableValueTransformer<Number?> = ::toPositiveOrNull
+    val toPositiveOrNull: CommanderValueTransformer<Number?> = CommanderValueTransformer.of(::toPositiveOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1051,7 +1051,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeByte: CommanderNullableValueTransformer<Byte> = ::toNegativeByte
+    val toNegativeByte: CommanderValueTransformer<Byte> = CommanderValueTransformer.of(::toNegativeByte)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1060,7 +1060,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeByteOrNull: CommanderNullableValueTransformer<Byte?> = ::toNegativeByteOrNull
+    val toNegativeByteOrNull: CommanderValueTransformer<Byte?> = CommanderValueTransformer.of(::toNegativeByteOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1069,7 +1069,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeShort: CommanderNullableValueTransformer<Short> = ::toNegativeShort
+    val toNegativeShort: CommanderValueTransformer<Short> = CommanderValueTransformer.of(::toNegativeShort)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1078,7 +1078,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeShortOrNull: CommanderNullableValueTransformer<Short?> = ::toNegativeShortOrNull
+    val toNegativeShortOrNull: CommanderValueTransformer<Short?> = CommanderValueTransformer.of(::toNegativeShortOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1087,7 +1087,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeInt: CommanderNullableValueTransformer<Int> = ::toNegativeInt
+    val toNegativeInt: CommanderValueTransformer<Int> = CommanderValueTransformer.of(::toNegativeInt)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1096,7 +1096,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeIntOrNull: CommanderNullableValueTransformer<Int?> = ::toNegativeIntOrNull
+    val toNegativeIntOrNull: CommanderValueTransformer<Int?> = CommanderValueTransformer.of(::toNegativeIntOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1105,7 +1105,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeLong: CommanderNullableValueTransformer<Long> = ::toNegativeLong
+    val toNegativeLong: CommanderValueTransformer<Long> = CommanderValueTransformer.of(::toNegativeLong)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1114,7 +1114,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeLongOrNull: CommanderNullableValueTransformer<Long?> = ::toNegativeLongOrNull
+    val toNegativeLongOrNull: CommanderValueTransformer<Long?> = CommanderValueTransformer.of(::toNegativeLongOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1123,7 +1123,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeFloat: CommanderNullableValueTransformer<Float> = ::toNegativeFloat
+    val toNegativeFloat: CommanderValueTransformer<Float> = CommanderValueTransformer.of(::toNegativeFloat)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1132,7 +1132,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeFloatOrNull: CommanderNullableValueTransformer<Float?> = ::toNegativeFloatOrNull
+    val toNegativeFloatOrNull: CommanderValueTransformer<Float?> = CommanderValueTransformer.of(::toNegativeFloatOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1141,7 +1141,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeDouble: CommanderNullableValueTransformer<Double> = ::toNegativeDouble
+    val toNegativeDouble: CommanderValueTransformer<Double> = CommanderValueTransformer.of(::toNegativeDouble)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1150,7 +1150,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeDoubleOrNull: CommanderNullableValueTransformer<Double?> = ::toNegativeDoubleOrNull
+    val toNegativeDoubleOrNull: CommanderValueTransformer<Double?> = CommanderValueTransformer.of(::toNegativeDoubleOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1159,7 +1159,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegative: CommanderNullableValueTransformer<Number> = ::toNegative
+    val toNegative: CommanderValueTransformer<Number> = CommanderValueTransformer.of(::toNegative)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1168,7 +1168,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNegativeOrNull: CommanderNullableValueTransformer<Number?> = ::toNegativeOrNull
+    val toNegativeOrNull: CommanderValueTransformer<Number?> = CommanderValueTransformer.of(::toNegativeOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1176,7 +1176,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toBoolean: CommanderNullableValueTransformer<Boolean> = ::toBoolean
+    val toBoolean: CommanderValueTransformer<Boolean> = CommanderValueTransformer.of(::toBoolean)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1184,7 +1184,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toBooleanOrNull: CommanderNullableValueTransformer<Boolean?> = ::toBooleanOrNull
+    val toBooleanOrNull: CommanderValueTransformer<Boolean?> = CommanderValueTransformer.of(::toBooleanOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1193,7 +1193,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toChar: CommanderNullableValueTransformer<Char> = ::toChar
+    val toChar: CommanderValueTransformer<Char> = CommanderValueTransformer.of(::toChar)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1202,7 +1202,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toCharOrNull: CommanderNullableValueTransformer<Char?> = ::toCharOrNull
+    val toCharOrNull: CommanderValueTransformer<Char?> = CommanderValueTransformer.of(::toCharOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1212,7 +1212,7 @@ object CommanderValueTransformers {
      * @version 0.1.0
      */
     @JsName("toStringLambda")
-    val toString: CommanderNullableValueTransformer<String> = ::toString
+    val toString: CommanderValueTransformer<String> = CommanderValueTransformer.of(::toString)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1221,7 +1221,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toStringOrNull: CommanderNullableValueTransformer<String?> = ::toStringOrNull
+    val toStringOrNull: CommanderValueTransformer<String?> = CommanderValueTransformer.of(::toStringOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1230,7 +1230,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNull: CommanderNullableValueTransformer<String?> = ::toNull
+    val toNull: CommanderValueTransformer<String?> = CommanderValueTransformer.of(::toNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1239,7 +1239,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toNotNull: CommanderNullableValueTransformer<String> = ::toNotNull
+    val toNotNull: CommanderValueTransformer<String> = CommanderValueTransformer.of(::toNotNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1248,7 +1248,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toUnsignedByte: CommanderNullableValueTransformer<UByte> = ::toUnsignedByte
+    val toUnsignedByte: CommanderValueTransformer<UByte> = CommanderValueTransformer.of(::toUnsignedByte)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1257,7 +1257,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toUnsignedByteOrNull: CommanderNullableValueTransformer<UByte?> = ::toUnsignedByteOrNull
+    val toUnsignedByteOrNull: CommanderValueTransformer<UByte?> = CommanderValueTransformer.of(::toUnsignedByteOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1266,7 +1266,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toUnsignedShort: CommanderNullableValueTransformer<UShort> = ::toUnsignedShort
+    val toUnsignedShort: CommanderValueTransformer<UShort> = CommanderValueTransformer.of(::toUnsignedShort)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1275,7 +1275,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toUnsignedShortOrNull: CommanderNullableValueTransformer<UShort?> = ::toUnsignedShortOrNull
+    val toUnsignedShortOrNull: CommanderValueTransformer<UShort?> = CommanderValueTransformer.of(::toUnsignedShortOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1284,7 +1284,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toUnsignedInt: CommanderNullableValueTransformer<UInt> = ::toUnsignedInt
+    val toUnsignedInt: CommanderValueTransformer<UInt> = CommanderValueTransformer.of(::toUnsignedInt)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1293,7 +1293,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toUnsignedIntOrNull: CommanderNullableValueTransformer<UInt?> = ::toUnsignedIntOrNull
+    val toUnsignedIntOrNull: CommanderValueTransformer<UInt?> = CommanderValueTransformer.of(::toUnsignedIntOrNull)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1302,7 +1302,7 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toUnsignedLong: CommanderNullableValueTransformer<ULong> = ::toUnsignedLong
+    val toUnsignedLong: CommanderValueTransformer<ULong> = CommanderValueTransformer.of(::toUnsignedLong)
 
     /**
      * Transform a given value to a [String] or return null if the value is null
@@ -1311,5 +1311,5 @@ object CommanderValueTransformers {
      * @since 0.1.0
      * @version 0.1.0
      */
-    val toUnsignedLongOrNull: CommanderNullableValueTransformer<ULong?> = ::toUnsignedLongOrNull
+    val toUnsignedLongOrNull: CommanderValueTransformer<ULong?> = CommanderValueTransformer.of(::toUnsignedLongOrNull)
 }

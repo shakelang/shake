@@ -219,103 +219,103 @@ class CommanderValueTests : FreeSpec(
         }
 
         "#validate() should validate the value" {
-            CommanderValue("Test").validate { } shouldBe true
+            CommanderValue("Test").isValid { } shouldBe true
         }
 
         "#validate() should throw a ValueValidationException if the value is not valid" {
-            CommanderValue("Test").validate { throw ValueValidationException("Test") } shouldBe false
+            CommanderValue("Test").isValid { throw ValueValidationException("Test") } shouldBe false
         }
 
         "#validateByte() should validate the value" {
-            CommanderValue("1").validateByte() shouldBe true
+            CommanderValue("1").isByte() shouldBe true
         }
 
         "#validateByte() should return false if the value is null" {
-            CommanderValue(null).validateByte() shouldBe false
+            CommanderValue(null).isByte() shouldBe false
         }
 
         "#validateByte() should return false if the value is is not parsable" {
-            CommanderValue("Test").validateByte() shouldBe false
+            CommanderValue("Test").isByte() shouldBe false
         }
 
         "#validateShort() should validate the value" {
-            CommanderValue("1").validateShort() shouldBe true
+            CommanderValue("1").isShort() shouldBe true
         }
 
         "#validateShort() should return false if the value is null" {
-            CommanderValue(null).validateShort() shouldBe false
+            CommanderValue(null).isShort() shouldBe false
         }
 
         "#validateShort() should return false if the value is is not parsable" {
-            CommanderValue("Test").validateShort() shouldBe false
+            CommanderValue("Test").isShort() shouldBe false
         }
 
         "#validateInt() should validate the value" {
-            CommanderValue("1").validateInt() shouldBe true
+            CommanderValue("1").isInt() shouldBe true
         }
 
         "#validateInt() should return false if the value is null" {
-            CommanderValue(null).validateInt() shouldBe false
+            CommanderValue(null).isInt() shouldBe false
         }
 
         "#validateInt() should return false if the value is is not parsable" {
-            CommanderValue("Test").validateInt() shouldBe false
+            CommanderValue("Test").isInt() shouldBe false
         }
 
         "#validateLong() should validate the value" {
-            CommanderValue("1").validateLong() shouldBe true
+            CommanderValue("1").isLong() shouldBe true
         }
 
         "#validateLong() should return false if the value is null" {
-            CommanderValue(null).validateLong() shouldBe false
+            CommanderValue(null).isLong() shouldBe false
         }
 
         "#validateLong() should return false if the value is is not parsable" {
-            CommanderValue("Test").validateLong() shouldBe false
+            CommanderValue("Test").isLong() shouldBe false
         }
 
         "#validateFloat() should validate the value" {
-            CommanderValue("1").validateFloat() shouldBe true
+            CommanderValue("1").isFloat() shouldBe true
         }
 
         "#validateFloat() should return false if the value is null" {
-            CommanderValue(null).validateFloat() shouldBe false
+            CommanderValue(null).isFloat() shouldBe false
         }
 
         "#validateFloat() should return false if the value is is not parsable" {
-            CommanderValue("Test").validateFloat() shouldBe false
+            CommanderValue("Test").isFloat() shouldBe false
         }
 
         "#validateDouble() should validate the value" {
-            CommanderValue("1").validateDouble() shouldBe true
+            CommanderValue("1").isDouble() shouldBe true
         }
 
         "#validateDouble() should return false if the value is null" {
-            CommanderValue(null).validateDouble() shouldBe false
+            CommanderValue(null).isDouble() shouldBe false
         }
 
         "#validateDouble() should return false if the value is is not parsable" {
-            CommanderValue("Test").validateDouble() shouldBe false
+            CommanderValue("Test").isDouble() shouldBe false
         }
 
         "#validateBoolean() should validate the value" {
-            CommanderValue("true").validateBoolean() shouldBe true
+            CommanderValue("true").isBoolean() shouldBe true
         }
 
         "#validateBoolean() should return false if the value is null" {
-            CommanderValue(null).validateBoolean() shouldBe false
+            CommanderValue(null).isBoolean() shouldBe false
         }
 
         "#validateBoolean() should return false if the value is is not parsable" {
-            CommanderValue("Test").validateBoolean() shouldBe false
+            CommanderValue("Test").isBoolean() shouldBe false
         }
 
         "#validateString() should validate the value" {
-            CommanderValue("Test").validateString() shouldBe true
+            CommanderValue("Test").isString() shouldBe true
         }
 
         "#validateString() should return false if the value is null" {
-            CommanderValue(null).validateString() shouldBe false
+            CommanderValue(null).isString() shouldBe false
         }
 
         "#isNull() should return true if the value is null" {

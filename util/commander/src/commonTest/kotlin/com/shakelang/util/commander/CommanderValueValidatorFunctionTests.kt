@@ -150,6 +150,22 @@ class CommanderValueValidatorFunctionTests : FreeSpec(
             CommanderValueValidators.isBoolean("false")
         }
 
+        "isChar() should accept a single character" {
+            CommanderValueValidators.isChar("a")
+        }
+
+        "isChar() should throw an exception if the value is null" {
+            shouldThrow<ValueValidationException> {
+                CommanderValueValidators.isChar(null)
+            }
+        }
+
+        "isChar() should throw an exception if the value is not a char" {
+            shouldThrow<ValueValidationException> {
+                CommanderValueValidators.isChar("abc")
+            }
+        }
+
         "isString() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
                 CommanderValueValidators.isString(null)

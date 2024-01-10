@@ -150,6 +150,22 @@ class CommanderValueValidatorLambdaTests : FreeSpec(
             CommanderValueValidators.isBoolean.invoke("false")
         }
 
+        "isChar() should accept a single character" {
+            CommanderValueValidators.isChar.invoke("a")
+        }
+
+        "isChar() should throw an exception if the value is null" {
+            shouldThrow<ValueValidationException> {
+                CommanderValueValidators.isChar.invoke(null)
+            }
+        }
+
+        "isChar() should throw an exception if the value is not a char" {
+            shouldThrow<ValueValidationException> {
+                CommanderValueValidators.isChar.invoke("abc")
+            }
+        }
+
         "isString() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
                 CommanderValueValidators.isString.invoke(null)
