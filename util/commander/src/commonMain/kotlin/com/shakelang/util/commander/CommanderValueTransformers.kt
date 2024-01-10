@@ -2,7 +2,7 @@ package com.shakelang.util.commander
 
 import kotlin.js.JsName
 
-object ValueTransformers {
+object CommanderValueTransformers {
     fun toByte(value: String?): Byte {
         if (value == null) throw ValueValidationException("CommanderValue is null")
         return value.toByteOrNull() ?: throw ValueValidationException("CommanderValue \"$value\" is not a byte")

@@ -6,7 +6,7 @@ package com.shakelang.util.commander
  * @since 0.1.0
  * @version 0.1.0
  */
-object CommanderValidators {
+object CommanderValueValidators {
 
     /**
      * Check if the given [value] is a byte

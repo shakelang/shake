@@ -3,7 +3,7 @@ package com.shakelang.util.commander
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class ValueTests : FreeSpec(
+class CommanderValueTests : FreeSpec(
     {
 
         "CommanderValueValidator.accepts() should return true if no error is thrown" {
