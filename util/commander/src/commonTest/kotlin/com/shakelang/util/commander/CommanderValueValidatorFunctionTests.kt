@@ -3,469 +3,485 @@ package com.shakelang.util.commander
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 
-class ValidatorFunctionTests : FreeSpec(
+class CommanderValueValidatorFunctionTests : FreeSpec(
     {
 
         "isByte() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isByte(null)
+                CommanderValueValidators.isByte(null)
             }
         }
 
         "isByte() should throw an exception if the value is not a byte" {
             shouldThrow<ValueValidationException> {
-                Validators.isByte("abc")
+                CommanderValueValidators.isByte("abc")
             }
         }
 
         "isByte() should not throw an exception if the value is a byte" {
-            Validators.isByte("1")
+            CommanderValueValidators.isByte("1")
         }
 
         "isShort() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isShort(null)
+                CommanderValueValidators.isShort(null)
             }
         }
 
         "isShort() should throw an exception if the value is not a short" {
             shouldThrow<ValueValidationException> {
-                Validators.isShort("abc")
+                CommanderValueValidators.isShort("abc")
             }
         }
 
         "isShort() should not throw an exception if the value is a short" {
-            Validators.isShort("1")
+            CommanderValueValidators.isShort("1")
         }
 
         "isInt() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isInt(null)
+                CommanderValueValidators.isInt(null)
             }
         }
 
         "isInt() should throw an exception if the value is not a int" {
             shouldThrow<ValueValidationException> {
-                Validators.isInt("abc")
+                CommanderValueValidators.isInt("abc")
             }
         }
 
         "isInt() should not throw an exception if the value is a int" {
-            Validators.isInt("1")
+            CommanderValueValidators.isInt("1")
         }
 
         "isLong() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isLong(null)
+                CommanderValueValidators.isLong(null)
             }
         }
 
         "isLong() should throw an exception if the value is not a long" {
             shouldThrow<ValueValidationException> {
-                Validators.isLong("abc")
+                CommanderValueValidators.isLong("abc")
             }
         }
 
         "isLong() should not throw an exception if the value is a long" {
-            Validators.isLong("1")
+            CommanderValueValidators.isLong("1")
         }
 
         "isFloat() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isFloat(null)
+                CommanderValueValidators.isFloat(null)
             }
         }
 
         "isFloat() should throw an exception if the value is not a float" {
             shouldThrow<ValueValidationException> {
-                Validators.isFloat("abc")
+                CommanderValueValidators.isFloat("abc")
             }
         }
 
         "isFloat() should not throw an exception if the value is a float" {
-            Validators.isFloat("1")
+            CommanderValueValidators.isFloat("1")
         }
 
         "isDouble() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isDouble(null)
+                CommanderValueValidators.isDouble(null)
             }
         }
 
         "isDouble() should throw an exception if the value is not a double" {
             shouldThrow<ValueValidationException> {
-                Validators.isDouble("abc")
+                CommanderValueValidators.isDouble("abc")
             }
         }
 
         "isDouble() should not throw an exception if the value is a double" {
-            Validators.isDouble("1")
+            CommanderValueValidators.isDouble("1")
         }
 
         "isBoolean() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isBoolean(null)
+                CommanderValueValidators.isBoolean(null)
             }
         }
 
         "isBoolean() should throw an exception if the value is not a boolean" {
             shouldThrow<ValueValidationException> {
-                Validators.isBoolean("abc")
+                CommanderValueValidators.isBoolean("abc")
             }
         }
 
         "isBoolean() should not throw an exception if the value is a boolean" {
-            Validators.isBoolean("true")
+            CommanderValueValidators.isBoolean("true")
         }
 
         "isBoolean() should interpret 1 as true" {
-            Validators.isBoolean("1")
+            CommanderValueValidators.isBoolean("1")
         }
 
         "isBoolean() should interpret 0 as false" {
-            Validators.isBoolean("0")
+            CommanderValueValidators.isBoolean("0")
         }
 
         "isBoolean() should interpret yes as true" {
-            Validators.isBoolean("yes")
+            CommanderValueValidators.isBoolean("yes")
         }
 
         "isBoolean() should interpret no as false" {
-            Validators.isBoolean("no")
+            CommanderValueValidators.isBoolean("no")
         }
 
         "isBoolean() should interpret y as true" {
-            Validators.isBoolean("y")
+            CommanderValueValidators.isBoolean("y")
         }
 
         "isBoolean() should interpret n as false" {
-            Validators.isBoolean("n")
+            CommanderValueValidators.isBoolean("n")
         }
 
         "isBoolean() should interpret true as true" {
-            Validators.isBoolean("true")
+            CommanderValueValidators.isBoolean("true")
         }
 
         "isBoolean() should interpret false as false" {
-            Validators.isBoolean("false")
+            CommanderValueValidators.isBoolean("false")
+        }
+
+        "isChar() should accept a single character" {
+            CommanderValueValidators.isChar("a")
+        }
+
+        "isChar() should throw an exception if the value is null" {
+            shouldThrow<ValueValidationException> {
+                CommanderValueValidators.isChar(null)
+            }
+        }
+
+        "isChar() should throw an exception if the value is not a char" {
+            shouldThrow<ValueValidationException> {
+                CommanderValueValidators.isChar("abc")
+            }
         }
 
         "isString() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isString(null)
+                CommanderValueValidators.isString(null)
             }
         }
 
         "isString() should not throw an exception if the value is a string" {
-            Validators.isString("abc")
+            CommanderValueValidators.isString("abc")
         }
 
         "isNull() should throw an exception if the value is not null" {
             shouldThrow<ValueValidationException> {
-                Validators.isNull("abc")
+                CommanderValueValidators.isNull("abc")
             }
         }
 
         "isNull() should not throw an exception if the value is null" {
-            Validators.isNull(null)
+            CommanderValueValidators.isNull(null)
         }
 
         "isNotNull() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isNotNull(null)
+                CommanderValueValidators.isNotNull(null)
             }
         }
 
         "isNotNull() should not throw an exception if the value is not null" {
-            Validators.isNotNull("abc")
+            CommanderValueValidators.isNotNull("abc")
         }
 
         "isUnsignedByte() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isUnsignedByte(null)
+                CommanderValueValidators.isUnsignedByte(null)
             }
         }
 
         "isUnsignedByte() should throw an exception if the value is not a unsigned byte" {
             shouldThrow<ValueValidationException> {
-                Validators.isUnsignedByte("abc")
+                CommanderValueValidators.isUnsignedByte("abc")
             }
         }
 
         "isUnsignedByte() should not throw an exception if the value is a unsigned byte" {
-            Validators.isUnsignedByte("1")
+            CommanderValueValidators.isUnsignedByte("1")
         }
 
         "isUnsignedShort() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isUnsignedShort(null)
+                CommanderValueValidators.isUnsignedShort(null)
             }
         }
 
         "isUnsignedShort() should throw an exception if the value is not a unsigned short" {
             shouldThrow<ValueValidationException> {
-                Validators.isUnsignedShort("abc")
+                CommanderValueValidators.isUnsignedShort("abc")
             }
         }
 
         "isUnsignedShort() should not throw an exception if the value is a unsigned short" {
-            Validators.isUnsignedShort("1")
+            CommanderValueValidators.isUnsignedShort("1")
         }
 
         "isUnsignedInt() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isUnsignedInt(null)
+                CommanderValueValidators.isUnsignedInt(null)
             }
         }
 
         "isUnsignedInt() should throw an exception if the value is not a unsigned int" {
             shouldThrow<ValueValidationException> {
-                Validators.isUnsignedInt("abc")
+                CommanderValueValidators.isUnsignedInt("abc")
             }
         }
 
         "isUnsignedInt() should not throw an exception if the value is a unsigned int" {
-            Validators.isUnsignedInt("1")
+            CommanderValueValidators.isUnsignedInt("1")
         }
 
         "isUnsignedLong() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isUnsignedLong(null)
+                CommanderValueValidators.isUnsignedLong(null)
             }
         }
 
         "isUnsignedLong() should throw an exception if the value is not a unsigned long" {
             shouldThrow<ValueValidationException> {
-                Validators.isUnsignedLong("abc")
+                CommanderValueValidators.isUnsignedLong("abc")
             }
         }
 
         "isUnsignedLong() should not throw an exception if the value is a unsigned long" {
-            Validators.isUnsignedLong("1")
+            CommanderValueValidators.isUnsignedLong("1")
         }
 
         "isPositiveByte() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveByte(null)
+                CommanderValueValidators.isPositiveByte(null)
             }
         }
 
         "isPositiveByte() should throw an exception if the value is not a positive byte" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveByte("-1")
+                CommanderValueValidators.isPositiveByte("-1")
             }
         }
 
         "isPositiveByte() should not throw an exception if the value is a positive byte" {
-            Validators.isPositiveByte("1")
+            CommanderValueValidators.isPositiveByte("1")
         }
 
         "isPositiveShort() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveShort(null)
+                CommanderValueValidators.isPositiveShort(null)
             }
         }
 
         "isPositiveShort() should throw an exception if the value is not a positive short" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveShort("-1")
+                CommanderValueValidators.isPositiveShort("-1")
             }
         }
 
         "isPositiveShort() should not throw an exception if the value is a positive short" {
-            Validators.isPositiveShort("1")
+            CommanderValueValidators.isPositiveShort("1")
         }
 
         "isPositiveInt() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveInt(null)
+                CommanderValueValidators.isPositiveInt(null)
             }
         }
 
         "isPositiveInt() should throw an exception if the value is not a positive int" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveInt("-1")
+                CommanderValueValidators.isPositiveInt("-1")
             }
         }
 
         "isPositiveInt() should not throw an exception if the value is a positive int" {
-            Validators.isPositiveInt("1")
+            CommanderValueValidators.isPositiveInt("1")
         }
 
         "isPositiveLong() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveLong(null)
+                CommanderValueValidators.isPositiveLong(null)
             }
         }
 
         "isPositiveLong() should throw an exception if the value is not a positive long" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveLong("-1")
+                CommanderValueValidators.isPositiveLong("-1")
             }
         }
 
         "isPositiveLong() should not throw an exception if the value is a positive long" {
-            Validators.isPositiveLong("1")
+            CommanderValueValidators.isPositiveLong("1")
         }
 
         "isPositiveFloat() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveFloat(null)
+                CommanderValueValidators.isPositiveFloat(null)
             }
         }
 
         "isPositiveFloat() should throw an exception if the value is not a positive float" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveFloat("-1")
+                CommanderValueValidators.isPositiveFloat("-1")
             }
         }
 
         "isPositiveFloat() should not throw an exception if the value is a positive float" {
-            Validators.isPositiveFloat("1")
+            CommanderValueValidators.isPositiveFloat("1")
         }
 
         "isPositiveDouble() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveDouble(null)
+                CommanderValueValidators.isPositiveDouble(null)
             }
         }
 
         "isPositiveDouble() should throw an exception if the value is not a positive double" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositiveDouble("-1")
+                CommanderValueValidators.isPositiveDouble("-1")
             }
         }
 
         "isPositiveDouble() should not throw an exception if the value is a positive double" {
-            Validators.isPositiveDouble("1")
+            CommanderValueValidators.isPositiveDouble("1")
         }
 
         "isPositive() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositive(null)
+                CommanderValueValidators.isPositive(null)
             }
         }
 
         "isPositive() should throw an exception if the value is not a positive number" {
             shouldThrow<ValueValidationException> {
-                Validators.isPositive("-1")
+                CommanderValueValidators.isPositive("-1")
             }
         }
 
         "isPositive() should not throw an exception if the value is a positive number" {
-            Validators.isPositive("1")
+            CommanderValueValidators.isPositive("1")
         }
 
         "isNegativeByte() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeByte(null)
+                CommanderValueValidators.isNegativeByte(null)
             }
         }
 
         "isNegativeByte() should throw an exception if the value is not a negative byte" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeByte("1")
+                CommanderValueValidators.isNegativeByte("1")
             }
         }
 
         "isNegativeByte() should not throw an exception if the value is a negative byte" {
-            Validators.isNegativeByte("-1")
+            CommanderValueValidators.isNegativeByte("-1")
         }
 
         "isNegativeShort() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeShort(null)
+                CommanderValueValidators.isNegativeShort(null)
             }
         }
 
         "isNegativeShort() should throw an exception if the value is not a negative short" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeShort("1")
+                CommanderValueValidators.isNegativeShort("1")
             }
         }
 
         "isNegativeShort() should not throw an exception if the value is a negative short" {
-            Validators.isNegativeShort("-1")
+            CommanderValueValidators.isNegativeShort("-1")
         }
 
         "isNegativeInt() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeInt(null)
+                CommanderValueValidators.isNegativeInt(null)
             }
         }
 
         "isNegativeInt() should throw an exception if the value is not a negative int" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeInt("1")
+                CommanderValueValidators.isNegativeInt("1")
             }
         }
 
         "isNegativeInt() should not throw an exception if the value is a negative int" {
-            Validators.isNegativeInt("-1")
+            CommanderValueValidators.isNegativeInt("-1")
         }
 
         "isNegativeLong() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeLong(null)
+                CommanderValueValidators.isNegativeLong(null)
             }
         }
 
         "isNegativeLong() should throw an exception if the value is not a negative long" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeLong("1")
+                CommanderValueValidators.isNegativeLong("1")
             }
         }
 
         "isNegativeLong() should not throw an exception if the value is a negative long" {
-            Validators.isNegativeLong("-1")
+            CommanderValueValidators.isNegativeLong("-1")
         }
 
         "isNegativeFloat() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeFloat(null)
+                CommanderValueValidators.isNegativeFloat(null)
             }
         }
 
         "isNegativeFloat() should throw an exception if the value is not a negative float" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeFloat("1")
+                CommanderValueValidators.isNegativeFloat("1")
             }
         }
 
         "isNegativeFloat() should not throw an exception if the value is a negative float" {
-            Validators.isNegativeFloat("-1")
+            CommanderValueValidators.isNegativeFloat("-1")
         }
 
         "isNegativeDouble() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeDouble(null)
+                CommanderValueValidators.isNegativeDouble(null)
             }
         }
 
         "isNegativeDouble() should throw an exception if the value is not a negative double" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegativeDouble("1")
+                CommanderValueValidators.isNegativeDouble("1")
             }
         }
 
         "isNegativeDouble() should not throw an exception if the value is a negative double" {
-            Validators.isNegativeDouble("-1")
+            CommanderValueValidators.isNegativeDouble("-1")
         }
 
         "isNegative() should throw an exception if the value is null" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegative(null)
+                CommanderValueValidators.isNegative(null)
             }
         }
 
         "isNegative() should throw an exception if the value is not a negative number" {
             shouldThrow<ValueValidationException> {
-                Validators.isNegative("1")
+                CommanderValueValidators.isNegative("1")
             }
         }
 
         "isNegative() should not throw an exception if the value is a negative number" {
-            Validators.isNegative("-1")
+            CommanderValueValidators.isNegative("-1")
         }
     },
 )

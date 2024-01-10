@@ -107,7 +107,7 @@
           "changes": [
             "Add shortcuts for getting version information for a package-changelog",
             "Improve changelog generation (Specify updated dependencies)",
-            "Don\'t generate release for auto-updates when previous version was a snapshot"
+            "Don't generate release for auto-updates when previous version was a snapshot"
           ]
         },
         {
@@ -167,6 +167,12 @@
           "changes": [
             "Update com.shakelang.util:parseutils to 0.4.0",
             "Update com.shakelang.util:shason to 0.4.1"
+          ]
+        },
+        {
+          "version": "0.7.3",
+          "changes": [
+            "Fix wrong release confirm dialog message"
           ]
         }
       ]
@@ -545,7 +551,7 @@
         {
           "version": "0.4.1",
           "changes": [
-            "Fix: Don\'t escape `\'` character in json strings",
+            "Fix: Don't escape `'` character in json strings",
             "Make com.shakelang.util.shason.json from typealias to val",
             "Update com.shakelang.util:parseutils to 0.4.0"
           ]
@@ -713,7 +719,7 @@
     {
       "path": ":shake:shasambly:shasambly",
       "name": "com.shakelang.shake.shasambly:shasambly",
-      "description": "Shake\'s own bytecode format interpreter",
+      "description": "Shake's own bytecode format interpreter",
       "versions": []
     },
     {
@@ -725,7 +731,7 @@
     {
       "path": ":shake:shasambly:shastools",
       "name": "com.shakelang.shake.shasambly.shastools:shastools",
-      "description": "Shake\'s own bytecode format interpreter",
+      "description": "Shake's own bytecode format interpreter",
       "versions": []
     },
     {
