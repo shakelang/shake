@@ -4,7 +4,7 @@ import com.shakelang.util.testlib.CallCounter
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class CommanderTests : FreeSpec(
+class CommanderCommandTests : FreeSpec(
     {
 
         "command generation" {
@@ -38,48 +38,6 @@ class CommanderTests : FreeSpec(
             command.commands[0].description shouldBe "test2 description"
         }
 
-        "argument generation" {
-            val command = command {
-                name = "test"
-                description = "test description"
-
-                argument {
-                    name = "test2"
-                    description = "test2 description"
-                    action {
-                        println("test")
-                    }
-                }
-            }
-
-            command.name shouldBe "test"
-            command.description shouldBe "test description"
-            command.arguments.size shouldBe 1
-            command.arguments[0].name shouldBe "test2"
-            command.arguments[0].description shouldBe "test2 description"
-        }
-
-        "option generation" {
-            val command = command {
-                name = "test"
-                description = "test description"
-
-                option {
-                    name = "test2"
-                    description = "test2 description"
-                    action {
-                        println("test")
-                    }
-                }
-            }
-
-            command.name shouldBe "test"
-            command.description shouldBe "test description"
-            command.options.size shouldBe 1
-            command.options[0].name shouldBe "test2"
-            command.options[0].description shouldBe "test2 description"
-        }
-
         "command alias" {
             val command = command {
                 name = "test"
@@ -105,7 +63,7 @@ class CommanderTests : FreeSpec(
 
             command.name shouldBe "test"
             command.description shouldBe "test description"
-            command.action!!.invoke(command, ParseResult(mutableListOf()))
+            command.action!!.invoke(command, CommanderParseResult(mutableListOf()))
             counter shouldBeCalled 1
         }
 
@@ -164,55 +122,6 @@ class CommanderTests : FreeSpec(
             result.stack.size shouldBe 2
             result.stack[1].name shouldBe "test2"
             counter shouldBeCalled 1
-        }
-
-        "parse (with argument)" {
-            val command = command {
-                name = "test"
-                description = "test description"
-
-                argument {
-                    name = "test2"
-                    description = "test2 description"
-                }
-            }
-            val result = command.execute(arrayOf("Hello World"))
-
-            result.stack.size shouldBe 1
-            result.getValueByName("test2")!!.first().value shouldBe "Hello World"
-        }
-
-        "parse (with valued option)" {
-            val command = command {
-                name = "test"
-                description = "test description"
-
-                option {
-                    name = "test2"
-                    description = "test2 description"
-                    hasValue = true
-                }
-            }
-            val result = command.execute(arrayOf("--test2", "Hello World"))
-
-            result.stack.size shouldBe 1
-            result.getValueByName("test2")!!.first().value shouldBe "Hello World"
-        }
-
-        "parse (with option)" {
-            val command = command {
-                name = "test"
-                description = "test description"
-
-                option {
-                    name = "test2"
-                    description = "test2 description"
-                }
-            }
-            val result = command.execute(arrayOf("--test2"))
-
-            result.stack.size shouldBe 1
-            result.getValueByName("test2")!!.first().toBoolean() shouldBe true
         }
     },
 )
