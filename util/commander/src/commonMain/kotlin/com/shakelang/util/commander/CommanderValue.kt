@@ -170,7 +170,7 @@ data class CommanderValue(
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun <T> to(valueTransformer: CommanderValueTransformer<T>): T = valueTransformer(value ?: throw NullPointerException("CommanderValue is null"))
+    fun <T> to(valueTransformer: CommanderValueTransformer<T>): T = valueTransformer(value ?: throw CommanderValueException("CommanderValue is null"))
 
     /**
      * Convert the value to a specific type (using a [CommanderValueTransformerLambda])
