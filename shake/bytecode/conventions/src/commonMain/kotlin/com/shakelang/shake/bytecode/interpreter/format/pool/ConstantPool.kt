@@ -40,6 +40,9 @@ open class ConstantPoolTypeException(message: String? = null, cause: Throwable? 
  * A ConstantPool is a list of [ConstantPoolEntry]s
  * We store data inside the [ConstantPool]. This has the advantage that we can reference to the data
  * by an index. Double-used data will only be stored once, and we can reference to it by the index.
+ *
+ * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+ *
  * @param entries The entries of the [ConstantPool]
  *
  * @since 0.1.0

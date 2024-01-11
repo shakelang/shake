@@ -989,7 +989,7 @@ sealed class ConstantPoolEntry {
          */
         fun fromStream(stream: DataInputStream): ConstantPoolEntry {
             // Switch for identifier byte
-            // See https://spec.shakelang.com/bytecode/storage-format#tag
+            // See https://spec.shakelang.com/bytecode/storage-format/#constant-tag
 
             val type = stream.readByte()
             return when (type) {
