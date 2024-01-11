@@ -12,12 +12,21 @@ import kotlin.experimental.inv
 import kotlin.experimental.or
 import kotlin.experimental.xor
 
+interface ShakeCallStackElement {
+    val returnData: ByteArray
+    val finished: Boolean
+    val stack: ByteStack
+    val locals: ByteArray
+    fun tick(times: Int): Int
+    fun tick()
+}
+
 class ShakeInterpreter(
     val classPath: ShakeClasspath = ShakeClasspath.create(),
 ) {
 
-    val callStack: List<ShakeCodeInterpreter> get() = _callStack
-    private val _callStack = mutableListOf<ShakeCodeInterpreter>()
+    val callStack: List<ShakeCallStackElement> get() = _callStack
+    private val _callStack = mutableListOf<ShakeCallStackElement>()
 
     var latestReturnData: ByteArray = ByteArray(0)
         private set
@@ -91,14 +100,15 @@ class ShakeInterpreter(
     inner class ShakeCodeInterpreter(
         val code: ByteArray,
         val method: ShakeInterpreterMethod,
-    ) {
+    ) : ShakeCallStackElement {
 
-        val locals = ByteArray(method.maxLocals)
-        val returnData = ByteArray(method.returnType.byteSize)
-        val stack = ByteStack(method.maxStack)
+        override val locals = ByteArray(method.maxLocals)
+        override val returnData = ByteArray(method.returnType.byteSize)
+        override val stack = ByteStack(method.maxStack)
 
-        var finished = false
+        override var finished = false
             private set
+
         var pc = 0
 
         private fun readByte(): Byte {
@@ -149,11 +159,16 @@ class ShakeInterpreter(
             return v
         }
 
-        fun tick(times: Int) {
-            for (i in 0 until times) tick()
+        override fun tick(times: Int): Int {
+            for (i in 0 until times) {
+                if (finished) return i
+                tick()
+            }
+            return times
         }
 
-        fun tick() {
+        override fun tick() {
+            if (finished) return
             val opcode = readByte()
             when (opcode) {
                 Opcodes.NOP -> {
