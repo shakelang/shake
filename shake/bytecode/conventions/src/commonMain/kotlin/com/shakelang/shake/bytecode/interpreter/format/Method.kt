@@ -27,6 +27,14 @@ open class Method(
         get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
     open val isFinal: Boolean
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
+    open val isSynchronized: Boolean
+        get() = flags and 0b00000000_00100000.toShort() != 0.toShort()
+    open val isNative: Boolean
+        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
+    open val isAbstract: Boolean
+        get() = flags and 0b00000000_10000000.toShort() != 0.toShort()
+    open val isStrict: Boolean
+        get() = flags and 0b00000001_00000000.toShort() != 0.toShort()
 
     open val name: String get() = pool.getUtf8(nameConstant).value
     open val qualifiedName: String get() = pool.getUtf8(qualifiedNameConstant).value
@@ -163,6 +171,46 @@ class MutableMethod(
                 flags or 0b00000000_00010000.toShort()
             } else {
                 flags and 0b11111111_11101111.toShort()
+            }
+        }
+
+    override var isSynchronized: Boolean
+        get() = flags and 0b00000000_00100000.toShort() != 0.toShort()
+        set(value) {
+            flags = if (value) {
+                flags or 0b00000000_00100000.toShort()
+            } else {
+                flags and 0b11111111_11011111.toShort()
+            }
+        }
+
+    override var isNative: Boolean
+        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
+        set(value) {
+            flags = if (value) {
+                flags or 0b00000000_01000000.toShort()
+            } else {
+                flags and 0b11111111_10111111.toShort()
+            }
+        }
+
+    override var isAbstract: Boolean
+        get() = flags and 0b00000000_10000000.toShort() != 0.toShort()
+        set(value) {
+            flags = if (value) {
+                flags or 0b00000000_10000000.toShort()
+            } else {
+                flags and 0b11111111_01111111.toShort()
+            }
+        }
+
+    override var isStrict: Boolean
+        get() = flags and 0b00000001_00000000.toShort() != 0.toShort()
+        set(value) {
+            flags = if (value) {
+                flags or 0b00000001_00000000.toShort()
+            } else {
+                flags and 0b11111110_11111111.toShort()
             }
         }
 

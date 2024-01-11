@@ -26,6 +26,8 @@ open class Field(
         get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
     open val isFinal: Boolean
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
+    open val isAbstract: Boolean
+        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
 
     open val name: String get() = pool.getUtf8(nameConstant).value
     open val type: String get() = pool.getUtf8(typeConstant).value
@@ -108,6 +110,12 @@ class MutableField(
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
         set(value) {
             flags = if (value) flags or 0b00000000_00010000.toShort() else flags and 0b11111111_11101111.toShort()
+        }
+
+    override var isAbstract: Boolean
+        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
+        set(value) {
+            flags = if (value) flags or 0b00000000_01000000.toShort() else flags and 0b11111111_10111111.toShort()
         }
 
     override fun equals(other: Any?): Boolean {

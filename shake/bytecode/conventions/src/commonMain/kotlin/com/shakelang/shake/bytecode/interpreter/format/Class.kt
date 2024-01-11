@@ -41,6 +41,24 @@ open class Class(
     open val isFinal: Boolean
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
 
+    open val isInterface: Boolean
+        get() = flags and 0b00000000_00100000.toShort() != 0.toShort()
+
+    open val isAbstract: Boolean
+        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
+
+    open val isSynthetic: Boolean
+        get() = flags and 0b00000000_10000000.toShort() != 0.toShort()
+
+    open val isAnnotation: Boolean
+        get() = flags and 0b00000001_00000000.toShort() != 0.toShort()
+
+    open val isEnum: Boolean
+        get() = flags and 0b00000010_00000000.toShort() != 0.toShort()
+
+    open val isObject: Boolean
+        get() = flags and 0b00000100_00000000.toShort() != 0.toShort()
+
     fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
         stream.writeInt(superNameConstant)
@@ -227,6 +245,42 @@ class MutableClass(
         get() = super.isFinal
         set(value) {
             flags = if (value) flags or 0b00000000_00010000.toShort() else flags and 0b11111111_11101111.toShort()
+        }
+
+    override var isInterface: Boolean
+        get() = super.isInterface
+        set(value) {
+            flags = if (value) flags or 0b00000000_00100000.toShort() else flags and 0b11111111_11011111.toShort()
+        }
+
+    override var isAbstract: Boolean
+        get() = super.isAbstract
+        set(value) {
+            flags = if (value) flags or 0b00000000_01000000.toShort() else flags and 0b11111111_10111111.toShort()
+        }
+
+    override var isSynthetic: Boolean
+        get() = super.isSynthetic
+        set(value) {
+            flags = if (value) flags or 0b00000000_10000000.toShort() else flags and 0b11111111_01111111.toShort()
+        }
+
+    override var isAnnotation: Boolean
+        get() = super.isAnnotation
+        set(value) {
+            flags = if (value) flags or 0b00000001_00000000.toShort() else flags and 0b11111110_11111111.toShort()
+        }
+
+    override var isEnum: Boolean
+        get() = super.isEnum
+        set(value) {
+            flags = if (value) flags or 0b00000010_00000000.toShort() else flags and 0b11111101_11111111.toShort()
+        }
+
+    override var isObject: Boolean
+        get() = super.isObject
+        set(value) {
+            flags = if (value) flags or 0b00000100_00000000.toShort() else flags and 0b11111011_11111111.toShort()
         }
 
     override var name: String
