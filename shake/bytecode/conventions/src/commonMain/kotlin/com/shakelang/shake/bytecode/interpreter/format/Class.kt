@@ -3,6 +3,7 @@ package com.shakelang.shake.bytecode.interpreter.format
 import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAttribute
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
+import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPoolEntry
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.util.io.streaming.input.DataInputStream
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
@@ -10,34 +11,212 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
 import kotlin.experimental.and
 import kotlin.experimental.or
 
+/**
+ * A class that represents a class in the bytecode
+ *
+ * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#classes)
+ *
+ * @property pool The [ConstantPool] of the class
+ * @property nameConstant The constant of the name of the class
+ * @property superNameConstant The constant of the super name of the class
+ * @property flags The flags of the class
+ * @property interfacesConstants The constants of the interfaces of the class
+ * @property subClasses The subclasses of the class
+ * @property methods The methods of the class
+ * @property fields The fields of the class
+ * @property attributes The attributes of the class
+ *
+ * @constructor Creates a [Class] with the given [pool], [nameConstant], [superNameConstant], [flags], [interfacesConstants], [subClasses], [methods], [fields] and [attributes]
+ * @param pool The [ConstantPool] of the class
+ * @param nameConstant The constant of the name of the class
+ * @param superNameConstant The constant of the super name of the class
+ * @param flags The flags of the class
+ * @param interfacesConstants The constants of the interfaces of the class
+ * @param subClasses The subclasses of the class
+ * @param methods The methods of the class
+ * @param fields The fields of the class
+ * @param attributes The attributes of the class
+ *
+ * @see MutableClass
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 open class Class(
+
+    /**
+     * The [ConstantPool] of the class
+     *
+     * See [ConstantPool Specification](https://spec.shakelang.com/bytecode/storage-format#constant-pool)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val pool: ConstantPool,
+
+    /**
+     * The index of a [ConstantPoolEntry.Utf8Constant] constant in the [ConstantPool]
+     * that represents the name of the class
+     * @see name
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val nameConstant: Int,
+
+    /**
+     * The index of a [ConstantPoolEntry.Utf8Constant] constant in the [ConstantPool]
+     * that represents the super name of the class
+     * @see superName
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val superNameConstant: Int,
+
+    /**
+     * The flags of the class
+     *
+     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#classes)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val flags: Short,
+
+    /**
+     * The constants of the interfaces of the class
+     *
+     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#classes)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val interfacesConstants: List<Int>,
+
+    /**
+     * The subclasses of the class
+     *
+     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format#classes)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val subClasses: List<Class>,
+
+    /**
+     * The methods of the class
+     *
+     * See [Method Specification](https://spec.shakelang.com/bytecode/storage-format#methods)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val methods: List<Method>,
+
+    /**
+     * The fields of the class
+     *
+     * See [Field Specification](https://spec.shakelang.com/bytecode/storage-format#fields)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val fields: List<Field>,
+
+    /**
+     * The attributes of the class
+     *
+     * See [Attribute Specification](https://spec.shakelang.com/bytecode/storage-format#attributes)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val attributes: List<Attribute>,
 ) {
 
+    /**
+     * The name of the class
+     *
+     * @see nameConstant
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val name: String get() = pool.getUtf8(nameConstant).value
+
+    /**
+     * The super name of the class
+     *
+     * @see superNameConstant
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val superName: String get() = pool.getUtf8(superNameConstant).value
+
+    /**
+     * The interfaces of the class
+     *
+     * @see interfacesConstants
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val interfaces: List<String> get() = interfacesConstants.map { pool.getUtf8(it).value }
 
+    /**
+     * Returns if the class is public
+     *
+     * (Checks if the first bit of the [flags] is set)
+     *
+     * @see flags
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val isPublic: Boolean
         get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
 
+    /**
+     * Returns if the class is private
+     *
+     * (Checks if the second bit of the [flags] is set)
+     *
+     * @see flags
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val isPrivate: Boolean
         get() = flags and 0b00000000_00000010.toShort() != 0.toShort()
 
+    /**
+     * Returns if the class is protected
+     *
+     * (Checks if the third bit of the [flags] is set)
+     *
+     * @see flags
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val isProtected: Boolean
         get() = flags and 0b00000000_00000100.toShort() != 0.toShort()
 
+    /**
+     * Returns if the class is static
+     *
+     * (Checks if the fourth bit of the [flags] is set)
+     *
+     * @see flags
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val isStatic: Boolean
         get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
 
+    /**
+     * Returns if the class is final
+     *
+     * (Checks if the fifth bit of the [flags] is set)
+     *
+     * @see flags
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     open val isFinal: Boolean
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
 
