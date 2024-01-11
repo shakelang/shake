@@ -46,6 +46,15 @@ class ShakeInterpreter(
         return times
     }
 
+    fun run(limit: Int = -1): Int {
+        var i = 0
+        while (tick()) {
+            i++
+            if (limit != -1 && i >= limit) return i
+        }
+        return i
+    }
+
     fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
 
     fun putFunctionOnStack(

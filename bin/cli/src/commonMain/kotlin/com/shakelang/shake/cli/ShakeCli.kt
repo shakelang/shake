@@ -6,6 +6,9 @@
 
 package com.shakelang.shake.cli
 
+import com.shakelang.shake.bytecode.generator.ShakeBytecodeGenerator
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
+import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.ShakeParser
@@ -17,6 +20,7 @@ import com.shakelang.util.commander.CommanderValueValidators
 import com.shakelang.util.commander.ValueValidationException
 import com.shakelang.util.commander.command
 import com.shakelang.util.commander.valueValidator
+import com.shakelang.util.logger.logger
 import com.shakelang.util.parseutils.File
 import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
@@ -103,6 +107,18 @@ fun main(args: Array<String>) {
             valueValidator(CommanderValueValidators::isString)
         }
 
+        option {
+            name = "main"
+            shortAlias("m")
+            description = "The main method to execute"
+            hasValue = true
+            valueDescription = "The main method to execute"
+            defaultValue = null
+            required = false
+
+            valueValidator(CommanderValueValidators::isString)
+        }
+
         argument {
             name = "sourceFile"
             description = "The file to execute"
@@ -131,20 +147,27 @@ fun main(args: Array<String>) {
             if (targetValue.size > 1) throw Error("There is only one target file allowed!")
             val target = targetValue.getOrNull(0)?.toString()
 
+            // Get the main method
+            val mainValue = it.getOptionValueByName("main") ?: arrayOf()
+            if (mainValue.size > 1) throw Error("There is only one main method allowed!")
+            val main = mainValue.getOrNull(0)?.toString()
+
             // read the contents of the file
-            val file = File(sourceFile).contents
+            val file = File(sourceFile)
+            logger.info("Executing file \"${file.absolutePath}\"...")
+            val fileContents = file.contents
 
             // Create a new StringCharacterInputStream from the file's contents
             val chars: CharacterInputStream = SourceCharacterInputStream(
                 "<File: $sourceFile>",
-                file,
+                fileContents,
             )
 
             // Parse the CharacterInputStream
             val pr = parse(chars)
 
             // Execute the Tree using the specified generator
-            execute(pr, generator, sourceFile, target)
+            execute(pr, generator, sourceFile, target, main)
         }
     }.execute(args)
 }
@@ -163,7 +186,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val tokens = lexer.makeTokens()
 
     // if debug is enabled, we print out the lexer-tokens
-    if (DEBUG) println("[DEBUG] Lexer-Tokens: $tokens")
+    logger.debug("[DEBUG] Lexer-Tokens: $tokens")
 
     // Create a new Parser from the tokens
     val parser = ShakeParser.from(tokens)
@@ -172,7 +195,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val tree = parser.parse()
 
     // If debug is enabled, we print out the tree
-    if (DEBUG) println("[DEBUG] Parsed Tree: $tree")
+    logger.debug { "[DEBUG] Parsed Tree: $tree" }
 
     // return the Tree
     return ParseResult(tree, tokens.map)
@@ -185,26 +208,35 @@ private fun parse(input: CharacterInputStream): ParseResult {
  * @param generator the generator to use (just give the name of it)
  * @param src the source file of the program
  */
-private fun execute(pr: ParseResult, generator: String?, src: String?, target: String?) {
+private fun execute(pr: ParseResult, generator: String?, src: String?, target: String?, main: String? = null) {
     if (src != null && !src.endsWith(".shake")) throw Error("Shake file names have to end with extension \".shake\"")
     val targetFile = src?.substring(0, src.length - 6)
     // val baseName = if (src != null) targetFile!!.split("[\\\\/](?=[^\\\\/]+$)").toTypedArray()[1] else null
     when (generator) {
         "interpreter" -> {
             val processor = baseProcessor
-            processor.loadSynthetic("stdin.ConsoleInput", pr.tree)
+            processor.loadSynthetic(src ?: "stdin.ConsoleInput", pr.tree)
+            processor.finish()
+            val storageFormats = ShakeBytecodeGenerator().generateProject(processor.project)
+            val classpath = ShakeClasspath.create()
+            storageFormats.forEach { classpath.load(it) }
+            val interpreter = ShakeInterpreter(classpath)
+            if (main == null) return logger.warn("No main method specified, cannot execute program!")
+            interpreter.putFunctionOnStack(main, byteArrayOf()) // TODO: Add arguments
+            val tickAmount = interpreter.run()
+            logger.debug("Program finished after $tickAmount ticks")
         }
 
         "json" ->
             if (src == null) {
-                println(">> ${pr.tree}")
+                logger.info { ">> ${pr.tree}" }
             } else {
                 writeFile(File(target ?: "$targetFile.json"), pr.tree.toString())
             }
 
         "beauty-json", "bjson" ->
             if (src == null) {
-                println(">> ${json.stringify(pr.tree, indent = 2)}")
+                logger.info { ">> ${json.stringify(pr.tree, indent = 2)}" }
             } else {
                 writeFile(File(target ?: "$targetFile.json"), json.stringify(pr.tree, indent = 2))
             }
@@ -223,7 +255,7 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
 }
 
 private fun writeFile(f: File, content: String) {
-    println("Generating file \"${f.absolutePath}\"...")
+    logger.info("Generating file \"${f.absolutePath}\"...")
     f.parent.mkdirs()
     f.write(content)
 }
