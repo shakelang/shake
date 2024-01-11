@@ -11,19 +11,19 @@ import kotlin.experimental.and
 import kotlin.experimental.or
 
 /**
- * A class representing a field in a class file
+ * A class representing a field in the shake [StorageFormat]
  *
  * [Specification](https://spec.shakelang.com/bytecode/storage-format/#fields)
  *
  * @constructor Creates a [Field] with the given [pool], [nameConstant], [typeConstant], [flags] and [attributes]
  *
- * @property pool The [ConstantPool] of the class file
+ * @property pool The [ConstantPool]
  * @property nameConstant The constant pool index of the name of the field
  * @property typeConstant The constant pool index of the type of the field
  * @property flags The flags of the field
  * @property attributes The attributes of the field
  *
- * @param pool The [ConstantPool] of the class file
+ * @param pool The [ConstantPool]
  * @param nameConstant The constant pool index of the name of the field
  * @param typeConstant The constant pool index of the type of the field
  * @param flags The flags of the field
@@ -38,7 +38,7 @@ import kotlin.experimental.or
 open class Field(
 
     /**
-     * The [ConstantPool] of the class file
+     * The [ConstantPool]
      *
      * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
      *
@@ -228,7 +228,7 @@ open class Field(
          *
          * [Specification](https://spec.shakelang.com/bytecode/storage-format/#fields)
          *
-         * @param pool The [ConstantPool] of the class file
+         * @param pool The [ConstantPool]
          * @param stream The [DataInputStream] to read the [Field] from
          * @see [fromStream]
          * @since 0.1.0
@@ -256,7 +256,7 @@ open class Field(
  * @property typeConstant The constant pool index of the type of the field
  * @property flags The flags of the field
  *
- * @param pool The [MutableConstantPool] of the class file
+ * @param pool The [MutableConstantPool]
  * @param nameConstant The constant pool index of the name of the field
  * @param typeConstant The constant pool index of the type of the field
  * @param flags The flags of the field
@@ -308,7 +308,7 @@ class MutableField(
 ) : Field(pool, nameConstant, typeConstant, flags, attributes) {
 
     /**
-     * The [MutableConstantPool] of the class file
+     * The [MutableConstantPool]
      *
      * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
      *
@@ -477,7 +477,7 @@ class MutableField(
         /**
          * Creates a [MutableField] from the given [pool] and [field]
          *
-         * @param pool The [MutableConstantPool] of the class file
+         * @param pool The [MutableConstantPool]
          * @param field The [Field] to copy
          * @return The [MutableField] created from the given [pool] and [field]
          *
@@ -499,7 +499,7 @@ class MutableField(
          *
          * [Specification](https://spec.shakelang.com/bytecode/storage-format/#fields)
          *
-         * @param pool The [MutableConstantPool] of the class file
+         * @param pool The [MutableConstantPool]
          * @param stream The [DataInputStream] to read the [MutableField] from
          * @see [fromStream]
          * @since 0.1.0
