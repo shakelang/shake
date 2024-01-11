@@ -1,5 +1,9 @@
 package com.shakelang.shake.bytecode.interpreter
 
+import com.shakelang.util.primitives.calc.shl
+import kotlin.experimental.or
+import kotlin.jvm.JvmName
+
 /**
  * Constants for casting operations.
  * We cast constants on top of the stack.
@@ -28,7 +32,7 @@ object PCast {
      *
      * To cast from a byte:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or [to]
+     * val castByte = (PCast.BYTE shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -39,7 +43,7 @@ object PCast {
      *
      * To cast from a byte:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.BYTE
+     * val castByte = ([from] shl 4) or PCast.BYTE
      * ```
      *
      * You can also use the cast constants:
@@ -61,7 +65,7 @@ object PCast {
      *
      * To cast from a short:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or [to]
+     * val castByte = (PCast.SHORT shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -72,7 +76,7 @@ object PCast {
      *
      * To cast from a short:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.SHORT
+     * val castByte = ([from] shl 4) or PCast.SHORT
      * ```
      *
      * You can also use the cast constants:
@@ -94,7 +98,7 @@ object PCast {
      *
      * To cast from an int:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or [to]
+     * val castByte = (PCast.INT shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -105,7 +109,7 @@ object PCast {
      *
      * To cast from an int:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.INT
+     * val castByte = ([from] shl 4) or PCast.INT
      * ```
      *
      * You can also use the cast constants:
@@ -127,7 +131,7 @@ object PCast {
      *
      * To cast from a long:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or [to]
+     * val castByte = (PCast.LONG shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -138,7 +142,7 @@ object PCast {
      *
      * To cast from a long:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.LONG
+     * val castByte = ([from] shl 4) or PCast.LONG
      * ```
      *
      * You can also use the cast constants:
@@ -160,7 +164,7 @@ object PCast {
      *
      * To cast from an unsigned byte:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or [to]
+     * val castByte = (PCast.UBYTE shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -171,7 +175,7 @@ object PCast {
      *
      * To cast from an unsigned byte:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.UBYTE
+     * val castByte = ([from] shl 4) or PCast.UBYTE
      * ```
      *
      * You can also use the cast constants:
@@ -193,7 +197,7 @@ object PCast {
      *
      * To cast from an unsigned short:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or [to]
+     * val castByte = (PCast.USHORT shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -204,7 +208,7 @@ object PCast {
      *
      * To cast from an unsigned short:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.USHORT
+     * val castByte = ([from] shl 4) or PCast.USHORT
      * ```
      *
      * You can also use the cast constants:
@@ -226,7 +230,7 @@ object PCast {
      *
      * To cast from an unsigned int:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or [to]
+     * val castByte = (PCast.UINT shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -237,7 +241,7 @@ object PCast {
      *
      * To cast from an unsigned int:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.UINT
+     * val castByte = ([from] shl 4) or PCast.UINT
      * ```
      *
      * You can also use the cast constants:
@@ -259,7 +263,7 @@ object PCast {
      *
      * To cast from an unsigned long:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or [to]
+     * val castByte = (PCast.ULONG shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -270,7 +274,7 @@ object PCast {
      *
      * To cast from an unsigned long:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.ULONG
+     * val castByte = ([from] shl 4) or PCast.ULONG
      * ```
      *
      * You can also use the cast constants:
@@ -292,7 +296,7 @@ object PCast {
      *
      * To cast from a float:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or [to]
+     * val castByte = (PCast.FLOAT shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -303,7 +307,7 @@ object PCast {
      *
      * To cast from a float:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.FLOAT
+     * val castByte = ([from] shl 4) or PCast.FLOAT
      * ```
      *
      * You can also use the cast constants:
@@ -325,7 +329,7 @@ object PCast {
      *
      * To cast from a double:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or [to]
+     * val castByte = (PCast.DOUBLE shl 4) or [to]
      * ```
      *
      * You can also use the cast constants:
@@ -336,7 +340,7 @@ object PCast {
      *
      * To cast from a double:
      * ```kotlin
-     * val castByte = ([from] shl 8) or PCast.DOUBLE
+     * val castByte = ([from] shl 4) or PCast.DOUBLE
      * ```
      *
      * You can also use the cast constants:
@@ -358,7 +362,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.BYTE
+     * val castByte = (PCast.BYTE shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -376,7 +380,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.SHORT
+     * val castByte = (PCast.BYTE shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -392,7 +396,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.INT
+     * val castByte = (PCast.BYTE shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -408,7 +412,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.LONG
+     * val castByte = (PCast.BYTE shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -424,7 +428,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.UBYTE
+     * val castByte = (PCast.BYTE shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -443,7 +447,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.USHORT
+     * val castByte = (PCast.BYTE shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -459,7 +463,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.UINT
+     * val castByte = (PCast.BYTE shl 4) or PCast.UINT
      * ```
      *
      * Get more information about the cast byte in the
@@ -475,7 +479,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.ULONG
+     * val castByte = (PCast.BYTE shl 4) or PCast.ULONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -491,7 +495,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.FLOAT
+     * val castByte = (PCast.BYTE shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -507,7 +511,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.BYTE shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.BYTE shl 4) or PCast.DOUBLE
      * ```
      *
      * @since 0.1.0
@@ -520,7 +524,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.BYTE
+     * val castByte = (PCast.SHORT shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -536,7 +540,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.SHORT
+     * val castByte = (PCast.SHORT shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -554,7 +558,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.INT
+     * val castByte = (PCast.SHORT shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -570,7 +574,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.LONG
+     * val castByte = (PCast.SHORT shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -586,7 +590,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.UBYTE
+     * val castByte = (PCast.SHORT shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -602,7 +606,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.USHORT
+     * val castByte = (PCast.SHORT shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -621,7 +625,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.UINT
+     * val castByte = (PCast.SHORT shl 4) or PCast.UINT
      * ```
      *
      * @since 0.1.0
@@ -634,7 +638,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.ULONG
+     * val castByte = (PCast.SHORT shl 4) or PCast.ULONG
      * ```
      *
      * @since 0.1.0
@@ -647,7 +651,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.FLOAT
+     * val castByte = (PCast.SHORT shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -663,7 +667,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.SHORT shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.SHORT shl 4) or PCast.DOUBLE
      * ```
      *
      * Get more information about the cast byte in the
@@ -679,7 +683,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.BYTE
+     * val castByte = (PCast.INT shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -695,7 +699,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.SHORT
+     * val castByte = (PCast.INT shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -711,7 +715,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.INT
+     * val castByte = (PCast.INT shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -729,7 +733,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.LONG
+     * val castByte = (PCast.INT shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -745,7 +749,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.UBYTE
+     * val castByte = (PCast.INT shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -761,7 +765,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.USHORT
+     * val castByte = (PCast.INT shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -777,7 +781,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.UINT
+     * val castByte = (PCast.INT shl 4) or PCast.UINT
      * ```
      *
      * Get more information about the cast byte in the
@@ -796,7 +800,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.ULONG
+     * val castByte = (PCast.INT shl 4) or PCast.ULONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -812,7 +816,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.FLOAT
+     * val castByte = (PCast.INT shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -828,7 +832,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.INT shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.INT shl 4) or PCast.DOUBLE
      * ```
      *
      * Get more information about the cast byte in the
@@ -844,7 +848,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.BYTE
+     * val castByte = (PCast.LONG shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -860,7 +864,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.SHORT
+     * val castByte = (PCast.LONG shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -876,7 +880,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.INT
+     * val castByte = (PCast.LONG shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -892,7 +896,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.LONG
+     * val castByte = (PCast.LONG shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -910,7 +914,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.UBYTE
+     * val castByte = (PCast.LONG shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -926,7 +930,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.USHORT
+     * val castByte = (PCast.LONG shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -942,7 +946,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.UINT
+     * val castByte = (PCast.LONG shl 4) or PCast.UINT
      * ```
      *
      * Get more information about the cast byte in the
@@ -958,7 +962,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.ULONG
+     * val castByte = (PCast.LONG shl 4) or PCast.ULONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -977,7 +981,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.FLOAT
+     * val castByte = (PCast.LONG shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -993,7 +997,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.LONG shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.LONG shl 4) or PCast.DOUBLE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1009,7 +1013,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.BYTE
+     * val castByte = (PCast.UBYTE shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1028,7 +1032,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.SHORT
+     * val castByte = (PCast.UBYTE shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1044,7 +1048,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.INT
+     * val castByte = (PCast.UBYTE shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1060,7 +1064,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.LONG
+     * val castByte = (PCast.UBYTE shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1076,7 +1080,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.UBYTE
+     * val castByte = (PCast.UBYTE shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1094,7 +1098,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.USHORT
+     * val castByte = (PCast.UBYTE shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1110,7 +1114,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.UINT
+     * val castByte = (PCast.UBYTE shl 4) or PCast.UINT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1126,7 +1130,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.ULONG
+     * val castByte = (PCast.UBYTE shl 4) or PCast.ULONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1142,7 +1146,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.FLOAT
+     * val castByte = (PCast.UBYTE shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1158,7 +1162,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UBYTE shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.UBYTE shl 4) or PCast.DOUBLE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1174,7 +1178,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.BYTE
+     * val castByte = (PCast.USHORT shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1190,7 +1194,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.SHORT
+     * val castByte = (PCast.USHORT shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1209,7 +1213,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.INT
+     * val castByte = (PCast.USHORT shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1225,7 +1229,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.LONG
+     * val castByte = (PCast.USHORT shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1241,7 +1245,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.UBYTE
+     * val castByte = (PCast.USHORT shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1257,7 +1261,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.USHORT
+     * val castByte = (PCast.USHORT shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1275,7 +1279,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.UINT
+     * val castByte = (PCast.USHORT shl 4) or PCast.UINT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1291,7 +1295,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.ULONG
+     * val castByte = (PCast.USHORT shl 4) or PCast.ULONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1307,7 +1311,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.FLOAT
+     * val castByte = (PCast.USHORT shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1323,7 +1327,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.USHORT shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.USHORT shl 4) or PCast.DOUBLE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1339,7 +1343,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.BYTE
+     * val castByte = (PCast.UINT shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1355,7 +1359,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.SHORT
+     * val castByte = (PCast.UINT shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1371,7 +1375,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.INT
+     * val castByte = (PCast.UINT shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1390,7 +1394,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.LONG
+     * val castByte = (PCast.UINT shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1406,7 +1410,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.UBYTE
+     * val castByte = (PCast.UINT shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1422,7 +1426,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.USHORT
+     * val castByte = (PCast.UINT shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1438,7 +1442,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.UINT
+     * val castByte = (PCast.UINT shl 4) or PCast.UINT
      * ```
      *
      * @deprecated No use in casting from unsigned int to unsigned int. This operation will do nothing.
@@ -1453,7 +1457,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.ULONG
+     * val castByte = (PCast.UINT shl 4) or PCast.ULONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1469,7 +1473,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.FLOAT
+     * val castByte = (PCast.UINT shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1485,7 +1489,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.UINT shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.UINT shl 4) or PCast.DOUBLE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1501,7 +1505,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.BYTE
+     * val castByte = (PCast.ULONG shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1517,7 +1521,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.SHORT
+     * val castByte = (PCast.ULONG shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1533,7 +1537,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.INT
+     * val castByte = (PCast.ULONG shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1549,7 +1553,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.LONG
+     * val castByte = (PCast.ULONG shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1568,7 +1572,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.UBYTE
+     * val castByte = (PCast.ULONG shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1584,7 +1588,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.USHORT
+     * val castByte = (PCast.ULONG shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1600,7 +1604,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.UINT
+     * val castByte = (PCast.ULONG shl 4) or PCast.UINT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1616,7 +1620,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.ULONG
+     * val castByte = (PCast.ULONG shl 4) or PCast.ULONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1634,7 +1638,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.FLOAT
+     * val castByte = (PCast.ULONG shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1650,7 +1654,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.ULONG shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.ULONG shl 4) or PCast.DOUBLE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1666,7 +1670,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.BYTE
+     * val castByte = (PCast.FLOAT shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1682,7 +1686,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.SHORT
+     * val castByte = (PCast.FLOAT shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1698,7 +1702,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.INT
+     * val castByte = (PCast.FLOAT shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1714,7 +1718,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.LONG
+     * val castByte = (PCast.FLOAT shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1730,7 +1734,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.UBYTE
+     * val castByte = (PCast.FLOAT shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1746,7 +1750,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.USHORT
+     * val castByte = (PCast.FLOAT shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1762,7 +1766,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.UINT
+     * val castByte = (PCast.FLOAT shl 4) or PCast.UINT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1778,7 +1782,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.ULONG
+     * val castByte = (PCast.FLOAT shl 4) or PCast.ULONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1794,7 +1798,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.FLOAT
+     * val castByte = (PCast.FLOAT shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1812,7 +1816,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.FLOAT shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.FLOAT shl 4) or PCast.DOUBLE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1828,7 +1832,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.BYTE
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.BYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1844,7 +1848,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.SHORT
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.SHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1860,7 +1864,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.INT
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.INT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1876,7 +1880,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.LONG
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.LONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1892,7 +1896,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.UBYTE
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.UBYTE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1908,7 +1912,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.USHORT
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.USHORT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1924,7 +1928,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.UINT
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.UINT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1940,7 +1944,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.ULONG
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.ULONG
      * ```
      *
      * Get more information about the cast byte in the
@@ -1956,7 +1960,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.FLOAT
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.FLOAT
      * ```
      *
      * Get more information about the cast byte in the
@@ -1972,7 +1976,7 @@ object PCast {
      *
      * Shortcut for:
      * ```kotlin
-     * val castByte = (PCast.DOUBLE shl 8) or PCast.DOUBLE
+     * val castByte = (PCast.DOUBLE shl 4) or PCast.DOUBLE
      * ```
      *
      * Get more information about the cast byte in the
@@ -1984,4 +1988,74 @@ object PCast {
      * @version 0.1.0
      */
     const val DOUBLE_TO_DOUBLE: UByte = 0x99u
+
+    /**
+     * Invoke is a shortcut for:
+     *
+     * ```kotlin
+     * val castByte = ([from] shl 4) or [to]
+     * ```
+     *
+     * Get more information about the cast byte in the
+     * [PCast Bytecode Specification](https://spec.shakelang.com/bytcode/instruction84-pcast-0xa0)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    operator fun invoke(from: UByte, to: UByte): UByte {
+        return (from shl 4) or to
+    }
+
+    /**
+     * Invoke is a shortcut for:
+     *
+     * ```kotlin
+     * val castByte = ([from] shl 4) or [to]
+     * ```
+     *
+     * Get more information about the cast byte in the
+     * [PCast Bytecode Specification](https://spec.shakelang.com/bytcode/instruction84-pcast-0xa0)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    @JvmName("invokeByte")
+    operator fun invoke(from: Byte, to: Byte): UByte {
+        return ((from shl 4) or to).toUByte()
+    }
+
+    /**
+     * Create shortcut for:
+     *
+     * ```kotlin
+     * val castByte = ([from] shl 4) or [to]
+     * ```
+     *
+     * Get more information about the cast byte in the
+     * [PCast Bytecode Specification](https://spec.shakelang.com/bytcode/instruction84-pcast-0xa0)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun create(from: UByte, to: UByte): UByte {
+        return (from shl 4) or to
+    }
+
+    /**
+     * Create shortcut for:
+     *
+     * ```kotlin
+     * val castByte = ([from] shl 4) or [to]
+     * ```
+     *
+     * Get more information about the cast byte in the
+     * [PCast Bytecode Specification](https://spec.shakelang.com/bytcode/instruction84-pcast-0xa0)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    @JvmName("createByte")
+    fun create(from: Byte, to: Byte): UByte {
+        return ((from shl 4) or to).toUByte()
+    }
 }
