@@ -10,6 +10,9 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
  * The magic number of the storage format is used to identify the storage format. It is always the same.
  * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#magic)
  * for more information
+ *
+ * The magic number is `0x4a16a478`.
+ *
  * @since 0.1.0
  * @version 0.1.0
  */
@@ -17,7 +20,7 @@ const val MAGIC = 0x4a16a478 // SHAKE MAGIC
 
 /**
  * Implementation of the storage format.
- * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format) for more information
+ * See the [storage format specification](https://spec.shakelang.com/bytecode/file-format) for more information
  *
  * @param major The major version of the storage format
  * @param minor The minor version of the storage format
@@ -314,8 +317,9 @@ class MutableStorageFormat(
 ) {
 
     /**
-     * The magic number of the storage format is used to identify the storage format. It is always the same.
-     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#magic)
+     * The package name
+     * This is a shortcut for `constantPool.getUtf8(packageNameConstant).value`
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#package-name)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
