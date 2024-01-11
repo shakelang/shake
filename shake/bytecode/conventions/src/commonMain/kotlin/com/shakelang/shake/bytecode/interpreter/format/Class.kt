@@ -81,7 +81,7 @@ open class Class(
     /**
      * The flags of the class
      *
-     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -176,7 +176,7 @@ open class Class(
      * Returns if the class is public
      * (Checks if the first bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -189,7 +189,7 @@ open class Class(
      * Returns if the class is private
      * (Checks if the second bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -202,7 +202,7 @@ open class Class(
      * Returns if the class is protected
      * (Checks if the third bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -215,7 +215,7 @@ open class Class(
      * Returns if the class is static
      * (Checks if the fourth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -228,7 +228,7 @@ open class Class(
      * Returns if the class is final
      * (Checks if the fifth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -241,7 +241,7 @@ open class Class(
      * Returns if the class is an interface
      * (Checks if the sixth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -254,7 +254,7 @@ open class Class(
      * Returns if the class is abstract
      * (Checks if the seventh bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -267,7 +267,7 @@ open class Class(
      * Returns if the class is synthetic
      * (Checks if the eighth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -280,7 +280,7 @@ open class Class(
      * Returns if the class is an annotation
      * (Checks if the ninth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -293,7 +293,7 @@ open class Class(
      * Returns if the class is an enum
      * (Checks if the tenth bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -306,7 +306,7 @@ open class Class(
      * Returns if the class is an object
      * (Checks if the eleventh bit of the [flags] is set)
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -542,7 +542,7 @@ class MutableClass(
     /**
      * The flags of the class
      *
-     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * See [Class Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @since 0.1.0
      * @version 0.1.0
@@ -648,7 +648,7 @@ class MutableClass(
      * Is the class public?
      * (Checks if the first bit of the [flags] is set / sets the first bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -664,7 +664,7 @@ class MutableClass(
      * Is the class private?
      * (Checks if the second bit of the [flags] is set / sets the second bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -680,7 +680,7 @@ class MutableClass(
      * Is the class protected?
      * (Checks if the third bit of the [flags] is set / sets the third bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -696,7 +696,7 @@ class MutableClass(
      * Is the class static?
      * (Checks if the fourth bit of the [flags] is set / sets the fourth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -711,7 +711,7 @@ class MutableClass(
      * Is the class final?
      * (Checks if the fifth bit of the [flags] is set / sets the fifth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -727,7 +727,7 @@ class MutableClass(
      * Is the class an interface?
      * (Checks if the sixth bit of the [flags] is set / sets the sixth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -743,7 +743,7 @@ class MutableClass(
      * Is the class abstract?
      * (Checks if the seventh bit of the [flags] is set / sets the seventh bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -759,7 +759,7 @@ class MutableClass(
      * Is the class synthetic?
      * (Checks if the eighth bit of the [flags] is set / sets the eighth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -775,7 +775,7 @@ class MutableClass(
      * Is the class an annotation?
      * (Checks if the ninth bit of the [flags] is set / sets the ninth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -791,7 +791,7 @@ class MutableClass(
      * Is the class an enum?
      * (Checks if the tenth bit of the [flags] is set / sets the tenth bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
@@ -807,7 +807,7 @@ class MutableClass(
      * Is the class an object?
      * (Checks if the eleventh bit of the [flags] is set / sets the eleventh bit of the [flags])
      *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-access-flags)
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
      *
      * @see flags
      * @since 0.1.0
