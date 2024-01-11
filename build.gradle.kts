@@ -255,6 +255,7 @@ tasks.create("lint") {
 
         copy {
             from(it.file("build/reports/detekt"))
+            exclude("all")
             into("${rootProject.buildDir}/reports/detekt/all/${it.group}.${it.name}")
         }
 
