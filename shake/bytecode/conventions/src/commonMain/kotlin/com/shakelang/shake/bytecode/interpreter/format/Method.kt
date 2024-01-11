@@ -15,16 +15,14 @@ import kotlin.experimental.or
  *
  * [Method Specification](https://spec.shakelang.com/bytecode/storage-format/#methods)
  *
- * @constructor Creates a [Method] with the given [pool], [nameConstant], [qualifiedNameConstant], [flags] and [attributes]
+ * @constructor Creates a [Method] with the given [pool], [qualifiedNameConstant], [flags] and [attributes]
  *
  * @property pool The [ConstantPool] of the method
- * @property nameConstant The constant of the name of the method
  * @property qualifiedNameConstant The constant of the qualified name of the method
  * @property flags The flags of the method
  * @property attributes The attributes of the method
  *
  * @param pool The [ConstantPool] of the method
- * @param nameConstant The constant of the name of the method
  * @param qualifiedNameConstant The constant of the qualified name of the method
  * @param flags The flags of the method
  * @param attributes The attributes of the method
@@ -299,7 +297,6 @@ open class Method(
          * @version 0.1.0
          */
         fun fromStream(pool: ConstantPool, stream: DataInputStream): Method {
-            val name = stream.readInt()
             val qualifiedName = stream.readInt()
             val flags = stream.readShort()
             val attributeCount = stream.readShort().toInt()
@@ -314,16 +311,14 @@ open class Method(
  *
  * @see [Method]
  *
- * @constructor Creates a [MutableMethod] with the given [pool], [nameConstant], [qualifiedNameConstant], [flags] and [attributes]
+ * @constructor Creates a [MutableMethod] with the given [pool], [qualifiedNameConstant], [flags] and [attributes]
  *
  * @property pool The [MutableConstantPool] of the method
- * @property nameConstant The constant of the name of the method
  * @property qualifiedNameConstant The constant of the qualified name of the method
  * @property flags The flags of the method
  * @property attributes The attributes of the method
  *
  * @param pool The [MutableConstantPool] of the method
- * @param nameConstant The constant of the name of the method
  * @param qualifiedNameConstant The constant of the qualified name of the method
  * @param flags The flags of the method
  * @param attributes The attributes of the method
@@ -615,7 +610,6 @@ class MutableMethod(
          * @version 0.1.0
          */
         fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableMethod {
-            val name = stream.readInt()
             val qualifiedName = stream.readInt()
             val flags = stream.readShort()
             val attributeCount = stream.readShort().toInt()
