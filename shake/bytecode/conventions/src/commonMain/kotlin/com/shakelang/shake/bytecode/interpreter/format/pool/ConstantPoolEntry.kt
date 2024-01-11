@@ -5,6 +5,14 @@ import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.util.io.streaming.output.DataOutputStream
 
 /**
+ * An exception that is thrown when the tag of a constant pool entry is invalid
+ * @param message the message of the exception
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+class ConstantPoolEntryTagException(message: String) : Exception(message)
+
+/**
  * A ConstantPoolEntry is an entry in the constant pool of a class file
  *
  * [Specification](https://spec.shakelang.com/bytecode/storage-format#constant-pool)
@@ -165,7 +173,7 @@ sealed class ConstantPoolEntry {
              */
             fun fromStream(stream: DataInputStream): Utf8Constant {
                 val identifier = stream.readByte()
-                if (identifier != 0x01.toByte()) throw Exception("Invalid identifier for Utf8Constant: $identifier")
+                if (identifier != 0x01.toByte()) throw ConstantPoolEntryTagException("Invalid identifier tag for Utf8Constant: $identifier, expected 0x01")
                 return Utf8Constant(stream.readUTF())
             }
         }
@@ -265,7 +273,7 @@ sealed class ConstantPoolEntry {
              */
             fun fromStream(stream: DataInputStream): ByteConstant {
                 val identifier = stream.readByte()
-                if (identifier != 0x02.toByte()) throw Exception("Invalid identifier for ByteConstant: $identifier")
+                if (identifier != 0x02.toByte()) throw ConstantPoolEntryTagException("Invalid identifier for ByteConstant: $identifier")
                 return ByteConstant(stream.readByte())
             }
         }
@@ -364,7 +372,7 @@ sealed class ConstantPoolEntry {
              */
             fun fromStream(stream: DataInputStream): ShortConstant {
                 val identifier = stream.readByte()
-                if (identifier != 0x03.toByte()) throw Exception("Invalid identifier for ShortConstant: $identifier")
+                if (identifier != 0x03.toByte()) throw ConstantPoolEntryTagException("Invalid identifier for ShortConstant: $identifier")
                 return ShortConstant(stream.readShort())
             }
         }
@@ -464,7 +472,7 @@ sealed class ConstantPoolEntry {
              */
             fun fromStream(stream: DataInputStream): IntConstant {
                 val identifier = stream.readByte()
-                if (identifier != 0x04.toByte()) throw Exception("Invalid identifier for IntConstant: $identifier")
+                if (identifier != 0x04.toByte()) throw ConstantPoolEntryTagException("Invalid identifier for IntConstant: $identifier")
                 return IntConstant(stream.readInt())
             }
         }
@@ -564,7 +572,7 @@ sealed class ConstantPoolEntry {
              */
             fun fromStream(stream: DataInputStream): LongConstant {
                 val identifier = stream.readByte()
-                if (identifier != 0x05.toByte()) throw Exception("Invalid identifier for LongConstant: $identifier")
+                if (identifier != 0x05.toByte()) throw ConstantPoolEntryTagException("Invalid identifier tag for LongConstant: $identifier, expected 0x05")
                 return LongConstant(stream.readLong())
             }
         }
@@ -664,7 +672,7 @@ sealed class ConstantPoolEntry {
              */
             fun fromStream(stream: DataInputStream): FloatConstant {
                 val identifier = stream.readByte()
-                if (identifier != 0x06.toByte()) throw Exception("Invalid identifier for FloatConstant: $identifier")
+                if (identifier != 0x06.toByte()) throw ConstantPoolEntryTagException("Invalid identifier for FloatConstant: $identifier")
                 return FloatConstant(stream.readFloat())
             }
         }
@@ -764,7 +772,7 @@ sealed class ConstantPoolEntry {
              */
             fun fromStream(stream: DataInputStream): DoubleConstant {
                 val identifier = stream.readByte()
-                if (identifier != 0x07.toByte()) throw Exception("Invalid identifier for DoubleConstant: $identifier")
+                if (identifier != 0x07.toByte()) throw ConstantPoolEntryTagException("Invalid identifier for DoubleConstant: $identifier")
                 return DoubleConstant(stream.readDouble())
             }
         }
@@ -864,7 +872,7 @@ sealed class ConstantPoolEntry {
              */
             fun fromStream(stream: DataInputStream): ClassConstant {
                 val identifier = stream.readByte()
-                if (identifier != 0x08.toByte()) throw Exception("Invalid identifier for ClassConstant: $identifier")
+                if (identifier != 0x08.toByte()) throw ConstantPoolEntryTagException("Invalid identifier for ClassConstant: $identifier")
                 return ClassConstant(stream.readInt())
             }
         }
@@ -964,7 +972,7 @@ sealed class ConstantPoolEntry {
              */
             fun fromStream(stream: DataInputStream): StringConstant {
                 val identifier = stream.readByte()
-                if (identifier != 0x09.toByte()) throw Exception("Invalid identifier for StringConstant: $identifier")
+                if (identifier != 0x09.toByte()) throw ConstantPoolEntryTagException("Invalid identifier for StringConstant: $identifier")
                 return StringConstant(stream.readInt())
             }
         }
@@ -980,6 +988,9 @@ sealed class ConstantPoolEntry {
          * @version 0.1.0
          */
         fun fromStream(stream: DataInputStream): ConstantPoolEntry {
+            // Switch for identifier byte
+            // See https://spec.shakelang.com/bytecode/storage-format#tag
+
             val type = stream.readByte()
             return when (type) {
                 0x01.toByte() -> Utf8Constant.fromStreamIgnoreIdentifier(stream)
@@ -991,7 +1002,7 @@ sealed class ConstantPoolEntry {
                 0x07.toByte() -> DoubleConstant.fromStreamIgnoreIdentifier(stream)
                 0x08.toByte() -> ClassConstant.fromStreamIgnoreIdentifier(stream)
                 0x09.toByte() -> StringConstant.fromStreamIgnoreIdentifier(stream)
-                else -> throw Exception("Unknown constant pool entry type: $type")
+                else -> throw ConstantPoolEntryTagException("Unknown constant pool entry type: $type")
             }
         }
     }
