@@ -10,7 +10,7 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
  * @since 0.1.0
  * @version 0.1.0
  */
-class ConstantPoolEntryTagException(message: String) : Exception(message)
+class ConstantPoolEntryTagException(message: String) : ConstantPoolException(message)
 
 /**
  * A ConstantPoolEntry is an entry in the constant pool of a class file
