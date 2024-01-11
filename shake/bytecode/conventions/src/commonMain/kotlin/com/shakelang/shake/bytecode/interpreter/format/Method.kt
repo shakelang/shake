@@ -48,16 +48,6 @@ open class Method(
     open val pool: ConstantPool,
 
     /**
-     * The index of an utf8 constant in the [ConstantPool] that represents the name of the method
-     *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-name-index)
-     *
-     * @since 0.1.0
-     * @version 0.1.0
-     */
-    open val nameConstant: Int,
-
-    /**
      * The index of an utf8 constant in the [ConstantPool] that represents the qualified name of the method
      *
      * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
@@ -197,18 +187,6 @@ open class Method(
         get() = flags and 0b00000001_00000000.toShort() != 0.toShort()
 
     /**
-     * Returns the name of the method
-     *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-name-index)
-     *
-     * @see [nameConstant]
-     * @see [pool]
-     * @since 0.1.0
-     * @version 0.1.0
-     */
-    open val name: String get() = pool.getUtf8(nameConstant).value
-
-    /**
      * Returns the qualified name of the method
      *
      * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
@@ -233,7 +211,6 @@ open class Method(
      * @version 0.1.0
      */
     fun dump(stream: DataOutputStream) {
-        stream.writeInt(nameConstant)
         stream.writeInt(qualifiedNameConstant)
         stream.writeShort(flags)
         stream.writeShort(attributes.size.toShort())
@@ -274,7 +251,6 @@ open class Method(
         if (other !is Method) return false
 
         if (pool != other.pool) return false
-        if (nameConstant != other.nameConstant) return false
         if (qualifiedNameConstant != other.qualifiedNameConstant) return false
         if (flags != other.flags) return false
 
@@ -303,7 +279,6 @@ open class Method(
      */
     override fun hashCode(): Int {
         var result = pool.hashCode()
-        result = 31 * result + nameConstant
         result = 31 * result + qualifiedNameConstant
         result = 31 * result + flags
         result = 31 * result + attributes.hashCode()
@@ -329,7 +304,7 @@ open class Method(
             val flags = stream.readShort()
             val attributeCount = stream.readShort().toInt()
             val attributes = (0 until attributeCount).map { Attribute.fromStream(pool, stream) }
-            return Method(pool, name, qualifiedName, flags, attributes)
+            return Method(pool, qualifiedName, flags, attributes)
         }
     }
 }
@@ -360,16 +335,6 @@ class MutableMethod(
     pool: MutableConstantPool,
 
     /**
-     * The index of an utf8 constant in the [ConstantPool] that represents the name of the method
-     *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-name-index)
-     *
-     * @since 0.1.0
-     * @version 0.1.0
-     */
-    override var nameConstant: Int,
-
-    /**
      * The index of an utf8 constant in the [ConstantPool] that represents the qualified name of the method
      *
      * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
@@ -389,7 +354,7 @@ class MutableMethod(
      */
     override var flags: Short,
     attributes: MutableList<Attribute>,
-) : Method(pool, nameConstant, qualifiedNameConstant, flags, attributes) {
+) : Method(pool, qualifiedNameConstant, flags, attributes) {
 
     /**
      * The [MutableConstantPool] of the bytecode
@@ -408,22 +373,6 @@ class MutableMethod(
      */
     override val pool: MutableConstantPool
         get() = super.pool as MutableConstantPool
-
-    /**
-     * The name of the method
-     *
-     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-name-index)
-     *
-     * @see [nameConstant]
-     * @see [pool]
-     * @since 0.1.0
-     * @version 0.1.0
-     */
-    override var name: String
-        get() = pool.getUtf8(nameConstant).value
-        set(value) {
-            nameConstant = pool.resolveUtf8(value)
-        }
 
     /**
      * The qualified name of the method
@@ -646,7 +595,6 @@ class MutableMethod(
         fun fromMethod(pool: MutableConstantPool, method: Method): MutableMethod {
             return MutableMethod(
                 pool,
-                method.nameConstant,
                 method.qualifiedNameConstant,
                 method.flags,
                 method.attributes.map { MutableAttribute.fromAttribute(it) }.toMutableList(),
@@ -672,7 +620,7 @@ class MutableMethod(
             val flags = stream.readShort()
             val attributeCount = stream.readShort().toInt()
             val attributes = (0 until attributeCount).map { MutableAttribute.fromStream(pool, stream) }
-            return MutableMethod(pool, name, qualifiedName, flags, attributes.toMutableList())
+            return MutableMethod(pool, qualifiedName, flags, attributes.toMutableList())
         }
     }
 }
