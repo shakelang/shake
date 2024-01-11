@@ -73,6 +73,8 @@ sealed class ConstantPoolEntry {
     /**
      * A Utf8Constant is a constant pool entry that contains a string
      *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#utf8-constant)
+     *
      * @param value the string value of the entry
      * @see ConstantPoolEntry
      * @since 0.1.0
@@ -172,6 +174,8 @@ sealed class ConstantPoolEntry {
     /**
      * A ByteConstant is a constant pool entry that contains a byte
      *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#byte-constant)
+     *
      * @param value the byte value of the entry
      * @see ConstantPoolEntry
      * @since 0.1.0
@@ -270,6 +274,8 @@ sealed class ConstantPoolEntry {
     /**
      * A ShortConstant is a constant pool entry that contains a short
      *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#short-constant)
+     *
      * @param value the short value of the entry
      * @see ConstantPoolEntry
      * @since 0.1.0
@@ -366,6 +372,8 @@ sealed class ConstantPoolEntry {
 
     /**
      * An IntConstant is a constant pool entry that contains an int
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#int-constant)
      *
      * @param value the int value of the entry
      * @see ConstantPoolEntry
@@ -465,6 +473,8 @@ sealed class ConstantPoolEntry {
     /**
      * A LongConstant is a constant pool entry that contains a long
      *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#long-constant)
+     *
      * @param value the long value of the entry
      * @see ConstantPoolEntry
      * @since 0.1.0
@@ -562,6 +572,8 @@ sealed class ConstantPoolEntry {
 
     /**
      * A FloatConstant is a constant pool entry that contains a float
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#float-constant)
      *
      * @param value the float value of the entry
      * @see ConstantPoolEntry
@@ -661,6 +673,8 @@ sealed class ConstantPoolEntry {
     /**
      * A DoubleConstant is a constant pool entry that contains a double
      *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#double-constant)
+     *
      * @param value the double value of the entry
      * @see ConstantPoolEntry
      * @since 0.1.0
@@ -759,6 +773,8 @@ sealed class ConstantPoolEntry {
     /**
      * A ClassConstant is a constant pool entry that contains a class identifier
      *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#class-constant)
+     *
      * @param identifier the class identifier of the entry
      * @see ConstantPoolEntry
      * @since 0.1.0
@@ -856,6 +872,8 @@ sealed class ConstantPoolEntry {
 
     /**
      * A StringConstant is a constant pool entry that contains a string identifier
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#string-constant)
      *
      * @param identifier the string identifier of the entry
      * @see ConstantPoolEntry
