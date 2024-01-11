@@ -5,6 +5,9 @@ import com.shakelang.util.io.streaming.input.byteStream
 
 /**
  * A type (of a field, method, parameter, variable, etc.)
+ *
+ * [Specification](https://spec.shakelang.com/bytecode/storage-format#type-descriptors)
+ *
  * @since 0.1.0
  * @version 0.1.0
  */
@@ -12,7 +15,10 @@ import com.shakelang.util.io.streaming.input.byteStream
 interface TypeDescriptor {
 
     /**
-     * Get the name of the type
+     * Get the string representation of the [TypeDescriptor]
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#type-descriptors)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -20,6 +26,9 @@ interface TypeDescriptor {
 
     /**
      * Get the size for a primitive storage of this type
+     * Objects and arrays are stored as pointers and therefore always
+     * have a size of 8
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -27,35 +36,34 @@ interface TypeDescriptor {
 
     /**
      * A [ByteType] represents the primitive type `byte` in shake
+     *
      * It has the descriptor `B` and a size of 1
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#byte)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class ByteType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [ByteType]
-         * @since 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object ByteType : TypeDescriptor {
 
         /**
          * The descriptor of the [ByteType]
          * @since 0.1.0
+         * @version 0.1.0
          */
         override val descriptor: String get() = "B"
 
         /**
          * The size of the [ByteType]
          * @since 0.1.0
+         * @version 0.1.0
          */
         override val byteSize: Int get() = 1
 
         /**
          * Get the [String] representation of the [ByteType]
          * @since 0.1.0
+         * @version 0.1.0
          */
         override fun toString(): String = descriptor
     }
@@ -63,18 +71,13 @@ interface TypeDescriptor {
     /**
      * A [ShortType] represents the primitive type `short` in shake
      * It has the descriptor `S` and a size of 2
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#short)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class ShortType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [ShortType]
-         * @since 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object ShortType : TypeDescriptor {
 
         /**
          * The descriptor of the [ShortType]
@@ -98,19 +101,13 @@ interface TypeDescriptor {
     /**
      * A [IntType] represents the primitive type `int` in shake
      * It has the descriptor `I` and a size of 4
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#int)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class IntType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [IntType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object IntType : TypeDescriptor {
 
         /**
          * The descriptor of the [IntType]
@@ -137,19 +134,13 @@ interface TypeDescriptor {
     /**
      * A [LongType] represents the primitive type `long` in shake
      * It has the descriptor `J` and a size of 8
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#long)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class LongType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [LongType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object LongType : TypeDescriptor {
 
         /**
          * The descriptor of the [LongType]
@@ -176,19 +167,13 @@ interface TypeDescriptor {
     /**
      * A [UnsignedByteType] represents the primitive type `ubyte` in shake
      * It has the descriptor `b` and a size of 1
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#ubyte)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class UnsignedByteType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [UnsignedByteType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object UnsignedByteType : TypeDescriptor {
 
         /**
          * The descriptor of the [UnsignedByteType]
@@ -215,19 +200,13 @@ interface TypeDescriptor {
     /**
      * A [UnsignedShortType] represents the primitive type `ushort` in shake
      * It has the descriptor `s` and a size of 2
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#ushort)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class UnsignedShortType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [UnsignedShortType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object UnsignedShortType : TypeDescriptor {
 
         /**
          * The descriptor of the [UnsignedShortType]
@@ -254,19 +233,13 @@ interface TypeDescriptor {
     /**
      * A [UnsignedIntType] represents the primitive type `uint` in shake
      * It has the descriptor `i` and a size of 4
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#uint)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class UnsignedIntType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [UnsignedIntType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object UnsignedIntType : TypeDescriptor {
 
         /**
          * The descriptor of the [UnsignedIntType]
@@ -292,27 +265,21 @@ interface TypeDescriptor {
 
     /**
      * A [UnsignedLongType] represents the primitive type `ulong` in shake
-     * It has the descriptor `l` and a size of 8
+     * It has the descriptor `j` and a size of 8
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#ulong)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class UnsignedLongType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [UnsignedLongType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object UnsignedLongType : TypeDescriptor {
 
         /**
          * The descriptor of the [UnsignedLongType]
          * @since 0.1.0
          * @version 0.1.0
          */
-        override val descriptor: String get() = "l"
+        override val descriptor: String get() = "j"
 
         /**
          * The size of the [UnsignedLongType]
@@ -332,19 +299,13 @@ interface TypeDescriptor {
     /**
      * A [FloatType] represents the primitive type `float` in shake
      * It has the descriptor `F` and a size of 4
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#float)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class FloatType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [FloatType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object FloatType : TypeDescriptor {
 
         /**
          * The descriptor of the [FloatType]
@@ -371,19 +332,13 @@ interface TypeDescriptor {
     /**
      * A [DoubleType] represents the primitive type `double` in shake
      * It has the descriptor `D` and a size of 8
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#double)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class DoubleType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [DoubleType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object DoubleType : TypeDescriptor {
 
         /**
          * The descriptor of the [DoubleType]
@@ -410,19 +365,13 @@ interface TypeDescriptor {
     /**
      * A [CharType] represents the primitive type `char` in shake
      * It has the descriptor `C` and a size of 2
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#char)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class CharType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [CharType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object CharType : TypeDescriptor {
 
         /**
          * The descriptor of the [CharType]
@@ -449,19 +398,13 @@ interface TypeDescriptor {
     /**
      * A [BooleanType] represents the primitive type `boolean` in shake
      * It has the descriptor `Z` and a size of 1
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#boolean)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class BooleanType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [BooleanType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object BooleanType : TypeDescriptor {
 
         /**
          * The descriptor of the [BooleanType]
@@ -488,19 +431,13 @@ interface TypeDescriptor {
     /**
      * A [VoidType] represents the primitive type `void` in shake
      * It has the descriptor `V` and a size of 0
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#void)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
-    enum class VoidType : TypeDescriptor {
-
-        /**
-         * The [INSTANCE] of the [VoidType]
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        INSTANCE,
-
-        ;
+    object VoidType : TypeDescriptor {
 
         /**
          * The descriptor of the [VoidType]
@@ -525,8 +462,13 @@ interface TypeDescriptor {
     }
 
     /**
-     * A [ObjectType] represents a object type in shake
-     * It has the descriptor `L` and a size of 8
+     * A [ObjectType] represents an object type in shake
+     * It has the descriptor `L<class>[:genericTypes (joined using +)];` and a size of 8
+     *
+     * Objects can be generic, so they can have generic types
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#Objects)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -595,8 +537,11 @@ interface TypeDescriptor {
     }
 
     /**
-     * A [ArrayType] represents an array type in shake
-     * It has the descriptor `[` and a size of 8
+     * An [ArrayType] represents an array type in shake
+     * It has the descriptor `[<type>;` and a size of 8
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format#Arrays)
+     *
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -648,144 +593,144 @@ interface TypeDescriptor {
          * A [ByteType] represents the primitive type `byte` in shake
          * It has the descriptor `B` and a size of 1
          *
-         * This is a shortcut for [TypeDescriptor.ByteType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.ByteType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val BYTE = ByteType.INSTANCE
+        val BYTE = ByteType
 
         /**
          * A [ShortType] represents the primitive type `short` in shake
          * It has the descriptor `S` and a size of 2
          *
-         * This is a shortcut for [TypeDescriptor.ShortType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.ShortType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val SHORT = ShortType.INSTANCE
+        val SHORT = ShortType
 
         /**
          * A [IntType] represents the primitive type `int` in shake
          * It has the descriptor `I` and a size of 4
          *
-         * This is a shortcut for [TypeDescriptor.IntType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.IntType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val INT = IntType.INSTANCE
+        val INT = IntType
 
         /**
          * A [LongType] represents the primitive type `long` in shake
          * It has the descriptor `J` and a size of 8
          *
-         * This is a shortcut for [TypeDescriptor.LongType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.LongType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val LONG = LongType.INSTANCE
+        val LONG = LongType
 
         /**
          * A [UnsignedByteType] represents the primitive type `ubyte` in shake
          * It has the descriptor `b` and a size of 1
          *
-         * This is a shortcut for [TypeDescriptor.UnsignedByteType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.UnsignedByteType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val UNSIGNED_BYTE = UnsignedByteType.INSTANCE
+        val UNSIGNED_BYTE = UnsignedByteType
 
         /**
          * A [UnsignedShortType] represents the primitive type `ushort` in shake
          * It has the descriptor `s` and a size of 2
          *
-         * This is a shortcut for [TypeDescriptor.UnsignedShortType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.UnsignedShortType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val UNSIGNED_SHORT = UnsignedShortType.INSTANCE
+        val UNSIGNED_SHORT = UnsignedShortType
 
         /**
          * A [UnsignedIntType] represents the primitive type `uint` in shake
          * It has the descriptor `i` and a size of 4
          *
-         * This is a shortcut for [TypeDescriptor.UnsignedIntType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.UnsignedIntType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val UNSIGNED_INT = UnsignedIntType.INSTANCE
+        val UNSIGNED_INT = UnsignedIntType
 
         /**
          * A [UnsignedLongType] represents the primitive type `ulong` in shake
          * It has the descriptor `l` and a size of 8
          *
-         * This is a shortcut for [TypeDescriptor.UnsignedLongType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.UnsignedLongType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val UNSIGNED_LONG = UnsignedLongType.INSTANCE
+        val UNSIGNED_LONG = UnsignedLongType
 
         /**
          * A [FloatType] represents the primitive type `float` in shake
          * It has the descriptor `F` and a size of 4
          *
-         * This is a shortcut for [TypeDescriptor.FloatType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.FloatType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val FLOAT = FloatType.INSTANCE
+        val FLOAT = FloatType
 
         /**
          * A [DoubleType] represents the primitive type `double` in shake
          * It has the descriptor `D` and a size of 8
          *
-         * This is a shortcut for [TypeDescriptor.DoubleType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.DoubleType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val DOUBLE = DoubleType.INSTANCE
+        val DOUBLE = DoubleType
 
         /**
          * A [CharType] represents the primitive type `char` in shake
          * It has the descriptor `C` and a size of 2
          *
-         * This is a shortcut for [TypeDescriptor.CharType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.CharType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val CHAR = CharType.INSTANCE
+        val CHAR = CharType
 
         /**
          * A [BooleanType] represents the primitive type `boolean` in shake
          * It has the descriptor `Z` and a size of 1
          *
-         * This is a shortcut for [TypeDescriptor.BooleanType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.BooleanType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val BOOLEAN = BooleanType.INSTANCE
+        val BOOLEAN = BooleanType
 
         /**
          * A [VoidType] represents the primitive type `void` in shake
          * It has the descriptor `V` and a size of 0
          *
-         * This is a shortcut for [TypeDescriptor.VoidType.INSTANCE]
+         * This is a shortcut for [TypeDescriptor.VoidType]
          *
          * @since 0.1.0
          * @version 0.1.0
          */
-        val VOID = VoidType.INSTANCE
+        val VOID = VoidType
 
         /**
          * Parse a [TypeDescriptor] from an [InputStream]
@@ -796,19 +741,19 @@ interface TypeDescriptor {
             val next = name.read().toChar()
 
             when (next) {
-                'B' -> return ByteType.INSTANCE
-                'S' -> return ShortType.INSTANCE
-                'I' -> return IntType.INSTANCE
-                'J' -> return LongType.INSTANCE
-                'b' -> return UnsignedByteType.INSTANCE
-                's' -> return UnsignedShortType.INSTANCE
-                'i' -> return UnsignedIntType.INSTANCE
-                'l' -> return UnsignedLongType.INSTANCE
-                'F' -> return FloatType.INSTANCE
-                'D' -> return DoubleType.INSTANCE
-                'C' -> return CharType.INSTANCE
-                'Z' -> return BooleanType.INSTANCE
-                'V' -> return VoidType.INSTANCE
+                'B' -> return BYTE
+                'S' -> return SHORT
+                'I' -> return INT
+                'J' -> return LONG
+                'b' -> return UNSIGNED_BYTE
+                's' -> return UNSIGNED_SHORT
+                'i' -> return UNSIGNED_INT
+                'l' -> return UNSIGNED_LONG
+                'F' -> return FLOAT
+                'D' -> return DOUBLE
+                'C' -> return CHAR
+                'Z' -> return BOOLEAN
+                'V' -> return VOID
                 '[' -> return ArrayType(parse(name))
                 'L' -> {
                     val className = StringBuilder()
