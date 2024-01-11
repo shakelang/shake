@@ -2,6 +2,7 @@ package com.shakelang.shake.bytecode.interpreter.format
 
 import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
 import com.shakelang.shake.bytecode.interpreter.format.attribute.MutableAttribute
+import com.shakelang.shake.bytecode.interpreter.format.descriptor.MethodDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.util.io.streaming.input.DataInputStream
@@ -75,6 +76,18 @@ open class Method(
      */
     open val attributes: List<Attribute>,
 ) {
+
+    /**
+     * Returns the name of the method
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
+     *
+     * @see [qualifiedName]
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    open val name: String
+        get() = MethodDescriptor.parse(qualifiedName).name
 
     /**
      * Returns if the method is public
