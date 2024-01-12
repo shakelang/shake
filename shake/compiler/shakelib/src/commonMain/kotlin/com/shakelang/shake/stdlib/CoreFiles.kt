@@ -1243,6 +1243,7 @@ object CoreFiles {
         native void println(float f)
         native void println(double d)
         native void println(boolean b)
-        native void println(Object obj) 
+        native void println(Object obj)
+        
     """.trimIndent()
 }

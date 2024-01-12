@@ -50,10 +50,7 @@ class Test : FreeSpec(
             val out = generator.generateProject(processor.project)
 
             // Execute test code
-            val classPath = ShakeClasspath.create()
-            out.forEach {
-                classPath.load(it)
-            }
+            val classPath = ShakeClasspath.create(out)
 
             val interpreter = ShakeInterpreter(classPath)
             interpreter.putFunctionOnStack(

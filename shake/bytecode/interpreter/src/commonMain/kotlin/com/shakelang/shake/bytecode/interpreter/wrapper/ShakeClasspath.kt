@@ -7,7 +7,7 @@ interface ShakeClasspath {
     val packages: List<ShakeInterpreterPackage>
 
     fun getPackage(descriptor: PathDescriptor): ShakeInterpreterPackage?
-    fun getPackage(descriptor: String): ShakeInterpreterPackage? = getPackage(PathDescriptor.parse(descriptor))
+    fun getPackage(descriptor: String): ShakeInterpreterPackage? = getPackage(PathDescriptor(descriptor.split("/", "").toTypedArray(), emptyArray(), ""))
 
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass? = getPackage(descriptor)?.getClass(descriptor)
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
@@ -42,6 +42,21 @@ interface ShakeClasspath {
                     }
                 }
             }
+        }
+        fun create(storages: List<StorageFormat>): ShakeClasspath {
+            val classpath = create()
+            storages.forEach {
+                classpath.load(it)
+            }
+            return classpath
+        }
+
+        fun create(vararg storages: StorageFormat): ShakeClasspath {
+            val classpath = create()
+            storages.forEach {
+                classpath.load(it)
+            }
+            return classpath
         }
     }
 }

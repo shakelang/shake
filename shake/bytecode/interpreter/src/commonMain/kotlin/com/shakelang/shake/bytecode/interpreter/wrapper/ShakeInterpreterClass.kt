@@ -12,6 +12,10 @@ interface ShakeInterpreterClass {
     val pkg: ShakeInterpreterPackage
     val constantPool: ConstantPool
 
+    val methods: List<ShakeInterpreterMethod>
+    val fields: List<ShakeInterpreterField>
+    val subclasses: List<ShakeInterpreterClass>
+
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
     fun getMethod(descriptor: PathDescriptor): ShakeInterpreterMethod?
@@ -60,7 +64,7 @@ interface ShakeInterpreterClass {
                 // we can't declare a class/method/field twice.
                 // We have private methods to load classes/methods/fields (loadClass, loadMethod,
                 // loadField).
-                // These methods load the class/method/field from the storage save it into
+                // These methods load the class/method/field from the storage, save it into
                 // our cache list and return it.
                 // And we have private methods to get them (getClass, getMethod, getField).
                 // These methods check if the class/method/field is already loaded, and if not, they call
@@ -78,6 +82,15 @@ interface ShakeInterpreterClass {
                 val subclassList: MutableList<ShakeInterpreterClass?> = mutableListOf()
                 val methodList: MutableList<ShakeInterpreterMethod?> = mutableListOf()
                 val fieldList: MutableList<ShakeInterpreterField?> = mutableListOf()
+
+                override val subclasses: List<ShakeInterpreterClass>
+                    get() = subclassList.indices.map { getClass(it) }
+
+                override val methods: List<ShakeInterpreterMethod>
+                    get() = methodList.indices.map { getMethod(it) }
+
+                override val fields: List<ShakeInterpreterField>
+                    get() = fieldList.indices.map { getField(it) }
 
                 init {
                     for (c in storage.subClasses) subclassList.add(null)
@@ -139,7 +152,7 @@ interface ShakeInterpreterClass {
 
                 fun resolveMethodIndex(name: String): Int {
                     for (i in storage.methods.indices) {
-                        if (storage.methods[i].name == name) return i
+                        if (storage.methods[i].qualifiedName == name) return i
                     }
                     return -1
                 }
