@@ -97,10 +97,40 @@ class ShakeBytecodeGenerator {
         when (invokable) {
             is ShakeMethod -> {
                 if (invokable.isNative) {
+                    // There are two types to handle native methods:
+                    // 1. Native methods that are registered in the generator and will
+                    //    be inlined into the bytecode (e.g. int.plus(int))
+                    // 2. Native methods that are not registered in the generator and
+                    //    will generate a call to the native method (e.g. int.toString())
+
+                    // Let's first check if the native method is registered in the generator
+                    // and we can inline it
                     val native = Natives.get(invokable.qualifiedSignature)
-                        ?: throw IllegalStateException("Native method ${invokable.qualifiedSignature} is not registered")
-                    native.handle(ctx, v, keepResultOnStack)
+                    if (native != null) {
+                        native.handle(ctx, v, keepResultOnStack)
+                        return
+                    }
+
+                    // If the native method is not registered in the generator, we will
+                    // just generate a normal call to the native method
                 }
+
+                // If the method is not handled by the native generator, we will just
+                // generate a normal call to the method
+
+                // Load all arguments
+                v.arguments.forEach {
+                    visitValue(ctx, it)
+                }
+
+                if (v.parent != null) {
+                    visitValue(ctx, v.parent!!)
+                }
+
+                // Call the method
+                ctx.bytecodeInstructionGenerator.call(
+                    invokable.qualifiedSignature,
+                )
             }
 
             else -> TODO()
@@ -338,6 +368,10 @@ class ShakeBytecodeGenerator {
             isFinal = method.isFinal
             isStatic = method.isStatic
             isFinal = method.isFinal
+            isNative = method.isNative
+            isAbstract = method.isAbstract
+            isSynchronized = method.isSynchronized
+            isStrict = method.isStrict
 
             if (method.body != null) {
                 val body = method.body!!

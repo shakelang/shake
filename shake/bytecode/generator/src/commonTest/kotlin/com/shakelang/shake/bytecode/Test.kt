@@ -11,11 +11,19 @@ import io.kotest.core.spec.style.FreeSpec
 class Test : FreeSpec(
     {
 
-        "test" {
+        fun createBaseProcessor(): ShakePackageBasedProcessor {
             val processor = ShakePackageBasedProcessor()
             processor.loadSynthetic("shake/lang/Object.shake", CoreFiles.OBJECT_SHAKE)
             processor.loadSynthetic("shake/lang/String.shake", CoreFiles.STRING_SHAKE)
             processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
+            processor.loadSynthetic("shake/lang/Print.shake", CoreFiles.PRINT_SHAKE)
+
+            return processor
+        }
+
+        "test" {
+            val processor = createBaseProcessor()
+
             processor.loadSynthetic(
                 "test.shake",
                 """
