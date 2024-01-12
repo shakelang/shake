@@ -39,6 +39,10 @@ class MethodGenerationContext(
         get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
         set(value) = if (value) flags = flags or 0b00000000_00010000 else flags = flags and 0b1111111_11101111
 
+    var isNative: Boolean
+        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
+        set(value) = if (value) flags = flags or 0b00000000_01000000 else flags = flags and 0b1111111_10111111
+
     val attributes: MutableList<AttributeGenerationContext> = mutableListOf()
 
     fun attribute(generator: AttributeGenerationContext.() -> Unit) {
@@ -54,12 +58,14 @@ class MethodGenerationContext(
         attributes.add(ctx)
     }
 
+    @Suppress("ktlint:standard:function-naming")
     fun Attribute(generator: AttributeGenerationContext.() -> Unit) {
         val ctx = AttributeGenerationContext(constantPool)
         ctx.generator()
         attributes.add(ctx)
     }
 
+    @Suppress("ktlint:standard:function-naming")
     fun Attribute(name: String, data: ByteArray) {
         val ctx = AttributeGenerationContext(constantPool)
         ctx.name = name
@@ -75,6 +81,7 @@ class MethodGenerationContext(
         attributes.add(ctx)
     }
 
+    @Suppress("ktlint:standard:function-naming")
     fun Code(
         generator: CodeAttributeGenerationContext.() -> Unit,
     ) {
@@ -90,7 +97,6 @@ class MethodGenerationContext(
         return Method(
             pool,
             nameConstant,
-            nameConstant,
             flags,
             attributes.map { it.toAttribute(pool) },
         )
@@ -102,7 +108,6 @@ class MethodGenerationContext(
         val nameConstant = pool.resolveUtf8(name)
         return MutableMethod(
             pool,
-            nameConstant,
             nameConstant,
             flags,
             attributes.map { it.toMutableAttribute(pool) }.toMutableList(),

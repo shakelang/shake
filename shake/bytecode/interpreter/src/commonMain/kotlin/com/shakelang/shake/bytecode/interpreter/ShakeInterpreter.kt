@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter
 
+import com.shakelang.shake.bytecode.interpreter.natives.natives
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClass
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterMethod
@@ -65,6 +66,15 @@ class ShakeInterpreter(
     }
 
     fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
+    fun createCodeInterpreter(method: ShakeInterpreterMethod): ShakeCallStackElement {
+        if (method.isNative) {
+            return natives.find {
+                it.descriptor == method.qualifiedName
+            } ?: throw NullPointerException("Native ${method.qualifiedName} not found")
+        }
+
+        return createCodeInterpreter(method.code, method)
+    }
 
     fun putFunctionOnStack(
         code: ByteArray,

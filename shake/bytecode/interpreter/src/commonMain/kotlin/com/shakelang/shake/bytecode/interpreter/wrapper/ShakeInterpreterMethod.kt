@@ -9,7 +9,14 @@ interface ShakeInterpreterMethod {
     val storage: Method
     val qualifiedName: String
     val simpleName: String
+    val fullName: String
+    val isPublic: Boolean
+    val isPrivate: Boolean
+    val isProtected: Boolean
+    val isFinal: Boolean
+    val isSynchronized: Boolean
     val isStatic: Boolean
+    val isNative: Boolean
     val returnType: ShakeInterpreterType
     val parameters: List<ShakeInterpreterType>
     val code: ByteArray
@@ -37,8 +44,15 @@ interface ShakeInterpreterMethod {
 
                 override val storage: Method = storage
                 override val simpleName: String = storage.name
-                override val qualifiedName: String = "$parentPath$simpleName"
+                override val qualifiedName: String = storage.qualifiedName
+                override val fullName: String = "$parentPath:$qualifiedName"
+                override val isPublic: Boolean = storage.isPublic
+                override val isPrivate: Boolean = storage.isPrivate
+                override val isProtected: Boolean = storage.isProtected
+                override val isFinal: Boolean = storage.isFinal
+                override val isSynchronized: Boolean = storage.isSynchronized
                 override val isStatic: Boolean = storage.isStatic
+                override val isNative: Boolean = storage.isNative
                 override val returnType: ShakeInterpreterType = ShakeInterpreterType.of(parsed.returnType, classpath)
                 override val parameters: List<ShakeInterpreterType> = parsed.parameters.map {
                     ShakeInterpreterType.of(

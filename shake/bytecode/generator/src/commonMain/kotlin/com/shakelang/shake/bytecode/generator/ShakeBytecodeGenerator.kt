@@ -328,7 +328,6 @@ class ShakeBytecodeGenerator {
     }
 
     fun generateMethod(method: ShakeMethod, ctx: MethodGenerationContext) {
-        if (method.isNative) return
         ctx.run {
             val returnType = generateTypeDescriptor(method.returnType)
             val parameters = method.parameters.map { generateTypeDescriptor(it.type) }

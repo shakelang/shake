@@ -9,6 +9,7 @@ import com.shakelang.util.io.streaming.input.DataInputStream
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.util.io.streaming.output.DataOutputStream
 import kotlin.experimental.and
+import kotlin.experimental.inv
 import kotlin.experimental.or
 
 /**
@@ -42,6 +43,7 @@ import kotlin.experimental.or
  * @since 0.1.0
  * @version 0.1.0
  */
+@Suppress("MemberVisibilityCanBePrivate")
 open class Class(
 
     /**
@@ -183,7 +185,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isPublic: Boolean
-        get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
+        get() = Flags.isPublic(flags)
 
     /**
      * Returns if the class is private
@@ -196,7 +198,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isPrivate: Boolean
-        get() = flags and 0b00000000_00000010.toShort() != 0.toShort()
+        get() = Flags.isPrivate(flags)
 
     /**
      * Returns if the class is protected
@@ -209,7 +211,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isProtected: Boolean
-        get() = flags and 0b00000000_00000100.toShort() != 0.toShort()
+        get() = Flags.isProtected(flags)
 
     /**
      * Returns if the class is static
@@ -222,7 +224,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isStatic: Boolean
-        get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
+        get() = Flags.isStatic(flags)
 
     /**
      * Returns if the class is final
@@ -235,7 +237,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isFinal: Boolean
-        get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
+        get() = Flags.isFinal(flags)
 
     /**
      * Returns if the class is an interface
@@ -248,7 +250,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isInterface: Boolean
-        get() = flags and 0b00000000_00100000.toShort() != 0.toShort()
+        get() = Flags.isInterface(flags)
 
     /**
      * Returns if the class is abstract
@@ -261,7 +263,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isAbstract: Boolean
-        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
+        get() = Flags.isAbstract(flags)
 
     /**
      * Returns if the class is synthetic
@@ -274,7 +276,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isSynthetic: Boolean
-        get() = flags and 0b00000000_10000000.toShort() != 0.toShort()
+        get() = Flags.isSynthetic(flags)
 
     /**
      * Returns if the class is an annotation
@@ -287,7 +289,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isAnnotation: Boolean
-        get() = flags and 0b00000001_00000000.toShort() != 0.toShort()
+        get() = Flags.isAnnotation(flags)
 
     /**
      * Returns if the class is an enum
@@ -300,7 +302,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isEnum: Boolean
-        get() = flags and 0b00000010_00000000.toShort() != 0.toShort()
+        get() = Flags.isEnum(flags)
 
     /**
      * Returns if the class is an object
@@ -313,7 +315,7 @@ open class Class(
      * @version 0.1.0
      */
     open val isObject: Boolean
-        get() = flags and 0b00000100_00000000.toShort() != 0.toShort()
+        get() = Flags.isObject(flags)
 
     /**
      * Dumps the class to the given [stream]
@@ -445,6 +447,514 @@ open class Class(
     }
 
     companion object {
+
+        object Flags {
+            /**
+             * The flag that represents a public class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_PUBLIC: Short = 0b00000000_00000001
+
+            /**
+             * Inverted [FLAG_IS_PUBLIC]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_PUBLIC_INVERTED: Short = FLAG_IS_PUBLIC.inv()
+
+            /**
+             * The flag that represents a private class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_PRIVATE: Short = 0b00000000_00000010
+
+            /**
+             * Inverted [FLAG_IS_PRIVATE]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_PRIVATE_INVERTED: Short = FLAG_IS_PRIVATE.inv()
+
+            /**
+             * The flag that represents a protected class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_PROTECTED: Short = 0b00000000_00000100
+
+            /**
+             * Inverted [FLAG_IS_PROTECTED]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_PROTECTED_INVERTED: Short = FLAG_IS_PROTECTED.inv()
+
+            /**
+             * The flag that represents a static class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_STATIC: Short = 0b00000000_00001000
+
+            /**
+             * Inverted [FLAG_IS_STATIC]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_STATIC_INVERTED: Short = FLAG_IS_STATIC.inv()
+
+            /**
+             * The flag that represents a final class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_FINAL: Short = 0b00000000_00010000
+
+            /**
+             * Inverted [FLAG_IS_FINAL]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_FINAL_INVERTED: Short = FLAG_IS_FINAL.inv()
+
+            /**
+             * The flag that represents an interface class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_INTERFACE: Short = 0b00000000_00100000
+
+            /**
+             * Inverted [FLAG_IS_INTERFACE]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_INTERFACE_INVERTED: Short = FLAG_IS_INTERFACE.inv()
+
+            /**
+             * The flag that represents an abstract class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_ABSTRACT: Short = 0b00000000_01000000
+
+            /**
+             * Inverted [FLAG_IS_ABSTRACT]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_ABSTRACT_INVERTED: Short = FLAG_IS_ABSTRACT.inv()
+
+            /**
+             * The flag that represents a synthetic class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_SYNTHETIC: Short = 0b00000000_10000000
+
+            /**
+             * Inverted [FLAG_IS_SYNTHETIC]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_SYNTHETIC_INVERTED: Short = FLAG_IS_SYNTHETIC.inv()
+
+            /**
+             * The flag that represents an annotation class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_ANNOTATION: Short = 0b00000001_00000000
+
+            /**
+             * Inverted [FLAG_IS_ANNOTATION]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_ANNOTATION_INVERTED: Short = FLAG_IS_ANNOTATION.inv()
+
+            /**
+             * The flag that represents an enum class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_ENUM: Short = 0b00000010_00000000
+
+            /**
+             * Inverted [FLAG_IS_ENUM]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_ENUM_INVERTED: Short = FLAG_IS_ENUM.inv()
+
+            /**
+             * The flag that represents an object class
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_OBJECT: Short = 0b00000100_00000000
+
+            /**
+             * Inverted [FLAG_IS_OBJECT]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_OBJECT_INVERTED: Short = FLAG_IS_OBJECT.inv()
+
+            /**
+             * Get isPublic from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isPublic from
+             * @return If the flags contain the isPublic flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isPublic(flags: Short): Boolean = flags and FLAG_IS_PUBLIC != 0.toShort()
+
+            /**
+             * Set isPublic in the given [flags]
+             * (Sets the first bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isPublic in
+             * @return The flags with the isPublic flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setPublic(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_PUBLIC else flags and FLAG_IS_PUBLIC_INVERTED
+
+            /**
+             * Get isPrivate from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isPrivate from
+             * @return If the flags contain the isPrivate flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isPrivate(flags: Short): Boolean = flags and FLAG_IS_PRIVATE != 0.toShort()
+
+            /**
+             * Set isPrivate in the given [flags]
+             * (Sets the second bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isPrivate in
+             * @return The flags with the isPrivate flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setPrivate(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_PRIVATE else flags and FLAG_IS_PRIVATE_INVERTED
+
+            /**
+             * Get isProtected from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isProtected from
+             * @return If the flags contain the isProtected flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isProtected(flags: Short): Boolean = flags and FLAG_IS_PROTECTED != 0.toShort()
+
+            /**
+             * Set isProtected in the given [flags]
+             * (Sets the third bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isProtected in
+             * @return The flags with the isProtected flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setProtected(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_PROTECTED else flags and FLAG_IS_PROTECTED_INVERTED
+
+            /**
+             * Get isStatic from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isStatic from
+             * @return If the flags contain the isStatic flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isStatic(flags: Short): Boolean = flags and FLAG_IS_STATIC != 0.toShort()
+
+            /**
+             * Set isStatic in the given [flags]
+             * (Sets the fourth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isStatic in
+             * @return The flags with the isStatic flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setStatic(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_STATIC else flags and FLAG_IS_STATIC_INVERTED
+
+            /**
+             * Get isFinal from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isFinal from
+             * @return If the flags contain the isFinal flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isFinal(flags: Short): Boolean = flags and FLAG_IS_FINAL != 0.toShort()
+
+            /**
+             * Set isFinal in the given [flags]
+             * (Sets the fifth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isFinal in
+             * @return The flags with the isFinal flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setFinal(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_FINAL else flags and FLAG_IS_FINAL_INVERTED
+
+            /**
+             * Get isInterface from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isInterface from
+             * @return If the flags contain the isInterface flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isInterface(flags: Short): Boolean = flags and FLAG_IS_INTERFACE != 0.toShort()
+
+            /**
+             * Set isInterface in the given [flags]
+             * (Sets the sixth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isInterface in
+             * @return The flags with the isInterface flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setInterface(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_INTERFACE else flags and FLAG_IS_INTERFACE_INVERTED
+
+            /**
+             * Get isAbstract from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isAbstract from
+             * @return If the flags contain the isAbstract flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isAbstract(flags: Short): Boolean = flags and FLAG_IS_ABSTRACT != 0.toShort()
+
+            /**
+             * Set isAbstract in the given [flags]
+             * (Sets the seventh bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isAbstract in
+             * @return The flags with the isAbstract flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setAbstract(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_ABSTRACT else flags and FLAG_IS_ABSTRACT_INVERTED
+
+            /**
+             * Get isSynthetic from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isSynthetic from
+             * @return If the flags contain the isSynthetic flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isSynthetic(flags: Short): Boolean = flags and FLAG_IS_SYNTHETIC != 0.toShort()
+
+            /**
+             * Set isSynthetic in the given [flags]
+             * (Sets the eighth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isSynthetic in
+             * @return The flags with the isSynthetic flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setSynthetic(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_SYNTHETIC else flags and FLAG_IS_SYNTHETIC_INVERTED
+
+            /**
+             * Get isAnnotation from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isAnnotation from
+             * @return If the flags contain the isAnnotation flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isAnnotation(flags: Short): Boolean = flags and FLAG_IS_ANNOTATION != 0.toShort()
+
+            /**
+             * Set isAnnotation in the given [flags]
+             * (Sets the ninth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isAnnotation in
+             * @return The flags with the isAnnotation flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setAnnotation(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_ANNOTATION else flags and FLAG_IS_ANNOTATION_INVERTED
+
+            /**
+             * Get isEnum from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isEnum from
+             * @return If the flags contain the isEnum flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isEnum(flags: Short): Boolean = flags and FLAG_IS_ENUM != 0.toShort()
+
+            /**
+             * Set isEnum in the given [flags]
+             * (Sets the tenth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isEnum in
+             * @return The flags with the isEnum flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setEnum(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_ENUM else flags and FLAG_IS_ENUM_INVERTED
+
+            /**
+             * Get isObject from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to get the isObject from
+             * @return If the flags contain the isObject flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isObject(flags: Short): Boolean = flags and FLAG_IS_OBJECT != 0.toShort()
+
+            /**
+             * Set isObject in the given [flags]
+             * (Sets the eleventh bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#class-flags)
+             *
+             * @param flags The flags to set the isObject in
+             * @return The flags with the isObject flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setObject(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_OBJECT else flags and FLAG_IS_OBJECT_INVERTED
+        }
 
         /**
          * Reads a [Class] from the given [stream]
@@ -655,9 +1165,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isPublic: Boolean
-        get() = super.isPublic
+        get() = Flags.isPublic(flags)
         set(value) {
-            flags = if (value) flags or 0b00000000_00000001.toShort() else flags and 0b11111111_11111110.toShort()
+            flags = Flags.setPublic(flags, value)
         }
 
     /**
@@ -671,9 +1181,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isPrivate: Boolean
-        get() = super.isPrivate
+        get() = Flags.isPrivate(flags)
         set(value) {
-            flags = if (value) flags or 0b00000000_00000010.toShort() else flags and 0b11111111_11111101.toShort()
+            flags = Flags.setPrivate(flags, value)
         }
 
     /**
@@ -687,9 +1197,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isProtected: Boolean
-        get() = super.isProtected
+        get() = Flags.isProtected(flags)
         set(value) {
-            flags = if (value) flags or 0b00000000_00000100.toShort() else flags and 0b11111111_11111011.toShort()
+            flags = Flags.setProtected(flags, value)
         }
 
     /**
@@ -702,9 +1212,9 @@ class MutableClass(
      * @since 0.1.0
      */
     override var isStatic: Boolean
-        get() = super.isStatic
+        get() = Flags.isStatic(flags)
         set(value) {
-            flags = if (value) flags or 0b00000000_00001000.toShort() else flags and 0b11111111_11110111.toShort()
+            flags = Flags.setStatic(flags, value)
         }
 
     /**
@@ -718,9 +1228,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isFinal: Boolean
-        get() = super.isFinal
+        get() = Flags.isFinal(flags)
         set(value) {
-            flags = if (value) flags or 0b00000000_00010000.toShort() else flags and 0b11111111_11101111.toShort()
+            flags = Flags.setFinal(flags, value)
         }
 
     /**
@@ -734,9 +1244,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isInterface: Boolean
-        get() = super.isInterface
+        get() = Flags.isInterface(flags)
         set(value) {
-            flags = if (value) flags or 0b00000000_00100000.toShort() else flags and 0b11111111_11011111.toShort()
+            flags = Flags.setInterface(flags, value)
         }
 
     /**
@@ -750,9 +1260,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isAbstract: Boolean
-        get() = super.isAbstract
+        get() = Flags.isAbstract(flags)
         set(value) {
-            flags = if (value) flags or 0b00000000_01000000.toShort() else flags and 0b11111111_10111111.toShort()
+            flags = Flags.setAbstract(flags, value)
         }
 
     /**
@@ -766,9 +1276,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isSynthetic: Boolean
-        get() = super.isSynthetic
+        get() = Flags.isSynthetic(flags)
         set(value) {
-            flags = if (value) flags or 0b00000000_10000000.toShort() else flags and 0b11111111_01111111.toShort()
+            flags = Flags.setSynthetic(flags, value)
         }
 
     /**
@@ -782,9 +1292,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isAnnotation: Boolean
-        get() = super.isAnnotation
+        get() = Flags.isAnnotation(flags)
         set(value) {
-            flags = if (value) flags or 0b00000001_00000000.toShort() else flags and 0b11111110_11111111.toShort()
+            flags = Flags.setAnnotation(flags, value)
         }
 
     /**
@@ -798,9 +1308,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isEnum: Boolean
-        get() = super.isEnum
+        get() = Flags.isEnum(flags)
         set(value) {
-            flags = if (value) flags or 0b00000010_00000000.toShort() else flags and 0b11111101_11111111.toShort()
+            flags = Flags.setEnum(flags, value)
         }
 
     /**
@@ -814,9 +1324,9 @@ class MutableClass(
      * @version 0.1.0
      */
     override var isObject: Boolean
-        get() = super.isObject
+        get() = Flags.isObject(flags)
         set(value) {
-            flags = if (value) flags or 0b00000100_00000000.toShort() else flags and 0b11111011_11111111.toShort()
+            flags = Flags.setObject(flags, value)
         }
 
     /**
@@ -865,6 +1375,8 @@ class MutableClass(
         }
 
     companion object {
+
+        val Flags = Class.Companion.Flags
 
         /**
          * Creates a [MutableClass] from the given [pool] and [clazz]
