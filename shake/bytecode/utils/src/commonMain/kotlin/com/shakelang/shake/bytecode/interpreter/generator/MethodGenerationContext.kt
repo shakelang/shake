@@ -5,9 +5,8 @@ import com.shakelang.shake.bytecode.interpreter.format.MutableMethod
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.shake.bytecode.interpreter.generator.attributes.AttributeGenerationContext
 import com.shakelang.shake.bytecode.interpreter.generator.attributes.CodeAttributeGenerationContext
-import kotlin.experimental.and
-import kotlin.experimental.or
 
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class MethodGenerationContext(
     val constantPool: MutableConstantPool,
 ) {
@@ -21,27 +20,57 @@ class MethodGenerationContext(
     var flags: Short = 0x00
 
     var isPublic: Boolean
-        get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
-        set(value) = if (value) flags = flags or 0b00000000_00000001 else flags = flags and 0b1111111_11111110
+        get() = Flags.isPublic(flags)
+        set(value) {
+            flags = Flags.setPublic(flags, value)
+        }
     var isPrivate: Boolean
-        get() = flags and 0b00000000_00000010.toShort() != 0.toShort()
-        set(value) = if (value) flags = flags or 0b00000000_00000010 else flags = flags and 0b1111111_11111101
+        get() = Flags.isPrivate(flags)
+        set(value) {
+            flags = Flags.setPrivate(flags, value)
+        }
 
     var isProtected: Boolean
-        get() = flags and 0b00000000_00000100.toShort() != 0.toShort()
-        set(value) = if (value) flags = flags or 0b00000000_00000100 else flags = flags and 0b1111111_11111011
+        get() = Flags.isProtected(flags)
+        set(value) {
+            flags = Flags.setProtected(flags, value)
+        }
 
     var isStatic: Boolean
-        get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
-        set(value) = if (value) flags = flags or 0b00000000_00001000 else flags = flags and 0b1111111_11110111
+        get() = Flags.isStatic(flags)
+        set(value) {
+            flags = Flags.setStatic(flags, value)
+        }
 
     var isFinal: Boolean
-        get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
-        set(value) = if (value) flags = flags or 0b00000000_00010000 else flags = flags and 0b1111111_11101111
+        get() = Flags.isFinal(flags)
+        set(value) {
+            flags = Flags.setFinal(flags, value)
+        }
 
     var isNative: Boolean
-        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
-        set(value) = if (value) flags = flags or 0b00000000_01000000 else flags = flags and 0b1111111_10111111
+        get() = Flags.isNative(flags)
+        set(value) {
+            flags = Flags.setNative(flags, value)
+        }
+
+    var isAbstract: Boolean
+        get() = Flags.isAbstract(flags)
+        set(value) {
+            flags = Flags.setAbstract(flags, value)
+        }
+
+    var isSynchronized: Boolean
+        get() = Flags.isSynchronized(flags)
+        set(value) {
+            flags = Flags.setSynchronized(flags, value)
+        }
+
+    var isStrict: Boolean
+        get() = Flags.isStrict(flags)
+        set(value) {
+            flags = Flags.setStrict(flags, value)
+        }
 
     val attributes: MutableList<AttributeGenerationContext> = mutableListOf()
 
@@ -58,14 +87,14 @@ class MethodGenerationContext(
         attributes.add(ctx)
     }
 
-    @Suppress("ktlint:standard:function-naming")
+    @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Attribute(generator: AttributeGenerationContext.() -> Unit) {
         val ctx = AttributeGenerationContext(constantPool)
         ctx.generator()
         attributes.add(ctx)
     }
 
-    @Suppress("ktlint:standard:function-naming")
+    @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Attribute(name: String, data: ByteArray) {
         val ctx = AttributeGenerationContext(constantPool)
         ctx.name = name
@@ -81,7 +110,7 @@ class MethodGenerationContext(
         attributes.add(ctx)
     }
 
-    @Suppress("ktlint:standard:function-naming")
+    @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Code(
         generator: CodeAttributeGenerationContext.() -> Unit,
     ) {
@@ -112,5 +141,9 @@ class MethodGenerationContext(
             flags,
             attributes.map { it.toMutableAttribute(pool) }.toMutableList(),
         )
+    }
+
+    companion object {
+        val Flags = Method.Companion.Flags
     }
 }
