@@ -115,6 +115,9 @@ class MethodDescriptor(
                 while (char != '(') {
                     append(char)
                     char = stream.read().toChar()
+                    if (stream.available() == 0) {
+                        throw IllegalStateException("Unexpected end of stream, failed to parse method descriptor '${toString()}$char'")
+                    }
                 }
             }
 
@@ -148,6 +151,6 @@ class MethodDescriptor(
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun parse(descriptor: String): MethodDescriptor = parse(BufferedInputStream(descriptor.byteStream()))
+        fun parse(descriptor: String): MethodDescriptor = parse(descriptor.byteStream())
     }
 }

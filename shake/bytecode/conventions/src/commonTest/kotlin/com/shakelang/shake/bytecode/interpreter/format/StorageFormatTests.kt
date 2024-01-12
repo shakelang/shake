@@ -170,7 +170,6 @@ class StorageFormatTests : FreeSpec(
             val method = Method(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 listOf(),
             )
@@ -214,7 +213,6 @@ class StorageFormatTests : FreeSpec(
             val method = Method(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 listOf(),
             )
@@ -324,7 +322,6 @@ class StorageFormatTests : FreeSpec(
             val method = Method(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 listOf(),
             )
@@ -461,7 +458,6 @@ class StorageFormatTests : FreeSpec(
             val method = Method(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 listOf(),
             )
@@ -548,7 +544,6 @@ class StorageFormatTests : FreeSpec(
             val method = Method(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 listOf(),
             )
@@ -635,7 +630,6 @@ class StorageFormatTests : FreeSpec(
             val method = Method(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 listOf(),
             )
@@ -913,7 +907,6 @@ class MutableStorageFormatTests : FreeSpec(
             val method = MutableMethod(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 mutableListOf(),
             )
@@ -937,7 +930,6 @@ class MutableStorageFormatTests : FreeSpec(
             val method = MutableMethod(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 mutableListOf(),
             )
@@ -981,7 +973,6 @@ class MutableStorageFormatTests : FreeSpec(
             val method = MutableMethod(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 mutableListOf(),
             )
@@ -1091,7 +1082,6 @@ class MutableStorageFormatTests : FreeSpec(
             val method = MutableMethod(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 mutableListOf(),
             )
@@ -1228,7 +1218,6 @@ class MutableStorageFormatTests : FreeSpec(
             val method = MutableMethod(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 mutableListOf(),
             )
@@ -1320,7 +1309,6 @@ class MutableStorageFormatTests : FreeSpec(
             val method = MutableMethod(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 mutableListOf(),
             )
@@ -1405,7 +1393,6 @@ class MutableStorageFormatTests : FreeSpec(
             val method = Method(
                 pool,
                 pool.resolveUtf8("test"),
-                pool.resolveUtf8("test2"),
                 10.toShort(),
                 mutableListOf(),
             )

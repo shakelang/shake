@@ -22,6 +22,8 @@ class MethodTests : FreeSpec(
                 },
             )
 
+            println(classpath.packages.map { it.name })
+
             val testMethod = classpath.getMethod("com/shakelang/shake/test/test(I)I")
             testMethod shouldNotBe null
             testMethod!!.simpleName shouldBe "test(I)I"
@@ -49,7 +51,7 @@ class MethodTests : FreeSpec(
 
             val testMethod = classpath.getMethod("com/shakelang/shake/test/Test:test(I)I")
             testMethod shouldNotBe null
-            testMethod!!.simpleName shouldBe "test(I)I"
+            testMethod!!.simpleName shouldBe "test"
             testMethod.qualifiedName shouldBe "com/shakelang/shake/test/Test:test(I)I"
         }
 

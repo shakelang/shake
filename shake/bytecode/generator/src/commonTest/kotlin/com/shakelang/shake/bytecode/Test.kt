@@ -21,6 +21,9 @@ class Test : FreeSpec(
             return processor
         }
 
+        "execute a method" {
+        }
+
         "test" {
             val processor = createBaseProcessor()
 
@@ -57,7 +60,7 @@ class Test : FreeSpec(
                 "test/Test:main()I",
                 byteArrayOf(),
             )
-            val ticks = interpreter.tick(1000)
+            val ticks = interpreter.run()
 
             println("Finished in $ticks ticks")
             println("Result: ${interpreter.latestReturnData.toInt()}")

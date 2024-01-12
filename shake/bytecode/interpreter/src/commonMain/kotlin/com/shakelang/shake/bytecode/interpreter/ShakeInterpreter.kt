@@ -1,6 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter
 
-import com.shakelang.shake.bytecode.interpreter.natives.natives
+import com.shakelang.shake.bytecode.interpreter.natives.ShakeInterpreterProcess
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClass
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterMethod
@@ -25,6 +25,8 @@ interface ShakeCallStackElement {
 class ShakeInterpreter(
     val classPath: ShakeClasspath = ShakeClasspath.create(),
 ) {
+
+    val process = ShakeInterpreterProcess()
 
     val callStack: List<ShakeCallStackElement> get() = _callStack
     private val _callStack = mutableListOf<ShakeCallStackElement>()
@@ -68,11 +70,8 @@ class ShakeInterpreter(
     fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
     fun createCodeInterpreter(method: ShakeInterpreterMethod): ShakeCallStackElement {
         if (method.isNative) {
-            return natives.find {
-                it.descriptor == method.qualifiedName
-            } ?: throw NullPointerException("Native ${method.qualifiedName} not found")
+            return process.natives[method.qualifiedName] ?: throw NullPointerException("Native ${method.qualifiedName} not found")
         }
-
         return createCodeInterpreter(method.code, method)
     }
 
@@ -80,26 +79,25 @@ class ShakeInterpreter(
         code: ByteArray,
         method: ShakeInterpreterMethod,
         args: ByteArray = kotlin.byteArrayOf(),
-    ): ShakeCodeInterpreter {
-        val interpreter = createCodeInterpreter(method.code, method)
+    ): ShakeCallStackElement {
+        val interpreter = createCodeInterpreter(method)
         // Put the arguments on the stack
         interpreter.stack.push(args)
         _callStack.add(interpreter)
-
         return interpreter
     }
 
     fun putFunctionOnStack(
         method: ShakeInterpreterMethod,
         args: ByteArray = kotlin.byteArrayOf(),
-    ): ShakeCodeInterpreter {
+    ): ShakeCallStackElement {
         return putFunctionOnStack(method.code, method, args)
     }
 
     fun putFunctionOnStack(
         method: String,
         args: ByteArray,
-    ): ShakeCodeInterpreter {
+    ): ShakeCallStackElement {
         return putFunctionOnStack(
             classPath.getMethod(method)
                 ?: throw NullPointerException("Method $method not found"),

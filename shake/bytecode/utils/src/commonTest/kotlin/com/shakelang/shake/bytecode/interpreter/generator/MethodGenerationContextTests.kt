@@ -131,7 +131,7 @@ class MethodGenerationContextTests : FreeSpec(
         "to method" {
 
             val ctx = MethodGenerationContext(MutableConstantPool())
-            ctx.name = "test"
+            ctx.name = "test(I)V"
             ctx.flags = 0b0000000_00010000.toShort()
             ctx.attribute {
                 name = "test"
@@ -141,6 +141,7 @@ class MethodGenerationContextTests : FreeSpec(
             val pool = MutableConstantPool()
             val method = ctx.toMethod(pool)
             method.name shouldBe "test"
+            method.qualifiedName shouldBe "test(I)V"
             method.flags shouldBe 0b0000000_00010000.toShort()
             method.attributes.size shouldBe 1
         }
@@ -148,7 +149,7 @@ class MethodGenerationContextTests : FreeSpec(
         "to mutable method" {
 
             val ctx = MethodGenerationContext(MutableConstantPool())
-            ctx.name = "test"
+            ctx.name = "test(I)V"
             ctx.flags = 0b0000000_00010000.toShort()
             ctx.attribute {
                 name = "test"

@@ -41,5 +41,5 @@ class ShakeBytecodeNative(
     }
 }
 
-fun native(descriptor: String, function: ShakeBytecodeNative.() -> Unit) =
+fun createNative(descriptor: String, function: ShakeBytecodeNative.() -> Unit) =
     ShakeBytecodeNative(descriptor, function)

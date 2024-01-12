@@ -122,7 +122,6 @@ class ClassTests : FreeSpec(
                 pool,
                 0,
                 0,
-                0,
                 emptyList(),
             )
 
@@ -286,7 +285,7 @@ class ClassTests : FreeSpec(
                 0,
                 emptyList(),
                 emptyList(),
-                listOf(Method(pool, 0, 0, 0, emptyList())),
+                listOf(Method(pool, 0, 0, emptyList())),
                 emptyList(),
                 emptyList(),
             )
@@ -971,7 +970,6 @@ class MutableClassTests : FreeSpec(
                 pool,
                 0,
                 0,
-                0,
                 mutableListOf(),
             )
 
@@ -994,7 +992,6 @@ class MutableClassTests : FreeSpec(
             val pool = MutableConstantPool()
             val method = MutableMethod(
                 pool,
-                0,
                 0,
                 0,
                 mutableListOf(),
@@ -1215,7 +1212,7 @@ class MutableClassTests : FreeSpec(
                 0,
                 mutableListOf(),
                 mutableListOf(),
-                mutableListOf(MutableMethod(pool, 0, 0, 0, mutableListOf())),
+                mutableListOf(MutableMethod(pool, 0, 0, mutableListOf())),
                 mutableListOf(),
                 mutableListOf(),
             )
