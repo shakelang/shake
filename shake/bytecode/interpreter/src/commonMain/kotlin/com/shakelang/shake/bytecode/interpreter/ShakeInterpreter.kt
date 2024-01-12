@@ -70,13 +70,12 @@ class ShakeInterpreter(
     fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
     fun createCodeInterpreter(method: ShakeInterpreterMethod): ShakeCallStackElement {
         if (method.isNative) {
-            return process.natives[method.qualifiedName] ?: throw NullPointerException("Native ${method.qualifiedName} not found")
+            return process.natives[method.fullName] ?: throw NullPointerException("Native ${method.qualifiedName} not found")
         }
         return createCodeInterpreter(method.code, method)
     }
 
     fun putFunctionOnStack(
-        code: ByteArray,
         method: ShakeInterpreterMethod,
         args: ByteArray = kotlin.byteArrayOf(),
     ): ShakeCallStackElement {
@@ -85,13 +84,6 @@ class ShakeInterpreter(
         interpreter.stack.push(args)
         _callStack.add(interpreter)
         return interpreter
-    }
-
-    fun putFunctionOnStack(
-        method: ShakeInterpreterMethod,
-        args: ByteArray = kotlin.byteArrayOf(),
-    ): ShakeCallStackElement {
-        return putFunctionOnStack(method.code, method, args)
     }
 
     fun putFunctionOnStack(

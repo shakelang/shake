@@ -265,9 +265,16 @@ class ShakeBytecodeGenerator {
         ctx.bytecodeInstructionGenerator.load(type, local)
     }
 
+    private fun loadVariable(ctx: BytecodeGenerationContext, v: ShakeParameter) {
+        val local = ctx.localTable.getLocal(v.uniqueName)
+        val type = generateTypeDescriptor(v.type)
+        ctx.bytecodeInstructionGenerator.load(type, local)
+    }
+
     private fun loadVariable(ctx: BytecodeGenerationContext, v: ShakeAssignable) {
         when (v) {
             is ShakeVariableDeclaration -> loadVariable(ctx, v)
+            is ShakeParameter -> loadVariable(ctx, v)
             else -> TODO()
         }
     }
@@ -382,6 +389,13 @@ class ShakeBytecodeGenerator {
 
                     bytecode {
                         val localTable = LocalTable()
+
+                        // Load all parameters
+                        method.parameters.forEach {
+                            val local = localTable.createLocal(it.uniqueName, getTypeSize(it.type))
+                            load(generateTypeDescriptor(it.type), local)
+                        }
+
                         visitCode(
                             BytecodeGenerationContext(
                                 this@ShakeBytecodeGenerator,
