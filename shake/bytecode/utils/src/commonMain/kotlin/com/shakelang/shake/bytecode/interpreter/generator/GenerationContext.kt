@@ -4,6 +4,7 @@ import com.shakelang.shake.bytecode.interpreter.format.MutableStorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class GenerationContext {
 
     val constantPool = MutableConstantPool()
@@ -18,18 +19,21 @@ class GenerationContext {
     val methods: MutableList<MethodGenerationContext> = mutableListOf()
     val fields: MutableList<FieldGenerationContext> = mutableListOf()
 
+    @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Class(generator: ClassGenerationContext.() -> Unit) {
         val ctx = ClassGenerationContext(constantPool)
         ctx.generator()
         classes.add(ctx)
     }
 
+    @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Method(generator: MethodGenerationContext.() -> Unit) {
         val ctx = MethodGenerationContext(constantPool)
         ctx.generator()
         methods.add(ctx)
     }
 
+    @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Field(generator: FieldGenerationContext.() -> Unit) {
         val ctx = FieldGenerationContext(constantPool)
         ctx.generator()
