@@ -22,12 +22,11 @@ class MethodTests : FreeSpec(
                 },
             )
 
-            println(classpath.packages.map { it.name })
-
             val testMethod = classpath.getMethod("com/shakelang/shake/test/test(I)I")
             testMethod shouldNotBe null
-            testMethod!!.simpleName shouldBe "test(I)I"
-            testMethod.qualifiedName shouldBe "com/shakelang/shake/test/test(I)I"
+            testMethod!!.simpleName shouldBe "test"
+            testMethod.qualifiedName shouldBe "test(I)I"
+            testMethod.fullName shouldBe "com/shakelang/shake/test/test(I)I"
         }
 
         "getMethod class child" {
@@ -52,7 +51,8 @@ class MethodTests : FreeSpec(
             val testMethod = classpath.getMethod("com/shakelang/shake/test/Test:test(I)I")
             testMethod shouldNotBe null
             testMethod!!.simpleName shouldBe "test"
-            testMethod.qualifiedName shouldBe "com/shakelang/shake/test/Test:test(I)I"
+            testMethod.qualifiedName shouldBe "test(I)I"
+            testMethod.fullName shouldBe "com/shakelang/shake/test/Test:test(I)I"
         }
 
         "getMethod class child child" {
@@ -82,8 +82,9 @@ class MethodTests : FreeSpec(
 
             val testMethod = classpath.getMethod("com/shakelang/shake/test/Test:Test2:test(I)I")
             testMethod shouldNotBe null
-            testMethod!!.simpleName shouldBe "test(I)I"
-            testMethod.qualifiedName shouldBe "com/shakelang/shake/test/Test:Test2:test(I)I"
+            testMethod!!.simpleName shouldBe "test"
+            testMethod.qualifiedName shouldBe "test(I)I"
+            testMethod.fullName shouldBe "com/shakelang/shake/test/Test:Test2:test(I)I"
         }
 
         "getMethod when method does not exist" {

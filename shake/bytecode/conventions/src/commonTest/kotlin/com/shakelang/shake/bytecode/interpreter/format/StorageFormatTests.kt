@@ -643,9 +643,9 @@ class StorageFormatTests : FreeSpec(
                 *1.toShort().toBytes(),
                 *clazz.dump(),
                 *1.toShort().toBytes(),
-                *field.dump(),
-                *1.toShort().toBytes(),
                 *method.dump(),
+                *1.toShort().toBytes(),
+                *field.dump(),
             ).dataStream()
 
             val format = StorageFormat.fromStream(stream)

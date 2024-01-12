@@ -45,7 +45,7 @@ interface ShakeInterpreterMethod {
                 override val storage: Method = storage
                 override val simpleName: String = storage.name
                 override val qualifiedName: String = storage.qualifiedName
-                override val fullName: String = "$parentPath:$qualifiedName"
+                override val fullName: String = "$parentPath$qualifiedName"
                 override val isPublic: Boolean = storage.isPublic
                 override val isPrivate: Boolean = storage.isPrivate
                 override val isProtected: Boolean = storage.isProtected

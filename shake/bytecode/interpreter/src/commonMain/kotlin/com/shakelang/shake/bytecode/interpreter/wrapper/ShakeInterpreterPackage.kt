@@ -162,7 +162,7 @@ interface ShakeInterpreterPackage {
 
                 fun resolveMethodIndex(name: String): Int {
                     for (i in methodFormatList.indices) {
-                        if (methodFormatList[i].first.name == name) return i
+                        if (methodFormatList[i].first.qualifiedName == name) return i
                     }
                     return -1
                 }
