@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.shakelang.shake.bytecode.interpreter.format
 
 import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
@@ -9,6 +11,7 @@ import com.shakelang.util.io.streaming.input.DataInputStream
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.util.io.streaming.output.DataOutputStream
 import kotlin.experimental.and
+import kotlin.experimental.inv
 import kotlin.experimental.or
 
 /**
@@ -99,7 +102,7 @@ open class Method(
      * @version 0.1.0
      */
     open val isPublic: Boolean
-        get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
+        get() = Flags.isPublic(flags)
 
     /**
      * Returns if the method is private
@@ -111,7 +114,7 @@ open class Method(
      * @version 0.1.0
      */
     open val isPrivate: Boolean
-        get() = flags and 0b00000000_00000010.toShort() != 0.toShort()
+        get() = Flags.isPrivate(flags)
 
     /**
      * Returns if the method is protected
@@ -123,7 +126,7 @@ open class Method(
      * @version 0.1.0
      */
     open val isProtected: Boolean
-        get() = flags and 0b00000000_00000100.toShort() != 0.toShort()
+        get() = Flags.isProtected(flags)
 
     /**
      * Returns if the method is static
@@ -135,7 +138,7 @@ open class Method(
      * @version 0.1.0
      */
     open val isStatic: Boolean
-        get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
+        get() = Flags.isStatic(flags)
 
     /**
      * Returns if the method is final
@@ -147,7 +150,7 @@ open class Method(
      * @version 0.1.0
      */
     open val isFinal: Boolean
-        get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
+        get() = Flags.isFinal(flags)
 
     /**
      * Returns if the method is synchronized
@@ -159,7 +162,7 @@ open class Method(
      * @version 0.1.0
      */
     open val isSynchronized: Boolean
-        get() = flags and 0b00000000_00100000.toShort() != 0.toShort()
+        get() = Flags.isSynchronized(flags)
 
     /**
      * Returns if the method is native
@@ -171,7 +174,7 @@ open class Method(
      * @version 0.1.0
      */
     open val isNative: Boolean
-        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
+        get() = Flags.isNative(flags)
 
     /**
      * Returns if the method is abstract
@@ -183,7 +186,7 @@ open class Method(
      * @version 0.1.0
      */
     open val isAbstract: Boolean
-        get() = flags and 0b00000000_10000000.toShort() != 0.toShort()
+        get() = Flags.isAbstract(flags)
 
     /**
      * Returns if the method is strict
@@ -195,7 +198,7 @@ open class Method(
      * @version 0.1.0
      */
     open val isStrict: Boolean
-        get() = flags and 0b00000001_00000000.toShort() != 0.toShort()
+        get() = Flags.isStrict(flags)
 
     /**
      * Returns the qualified name of the method
@@ -297,6 +300,423 @@ open class Method(
     }
 
     companion object {
+
+        object Flags {
+
+            /**
+             * The flag that represents a public method
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_PUBLIC: Short = 0b00000000_00000001
+
+            /**
+             * Inverted [FLAG_IS_PUBLIC]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_PUBLIC_INVERTED: Short = FLAG_IS_PUBLIC.inv()
+
+            /**
+             * The flag that represents a private method
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_PRIVATE: Short = 0b00000000_00000010
+
+            /**
+             * Inverted [FLAG_IS_PRIVATE]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_PRIVATE_INVERTED: Short = FLAG_IS_PRIVATE.inv()
+
+            /**
+             * The flag that represents a protected method
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_PROTECTED: Short = 0b00000000_00000100
+
+            /**
+             * Inverted [FLAG_IS_PROTECTED]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_PROTECTED_INVERTED: Short = FLAG_IS_PROTECTED.inv()
+
+            /**
+             * The flag that represents a static method
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_STATIC: Short = 0b00000000_00001000
+
+            /**
+             * Inverted [FLAG_IS_STATIC]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_STATIC_INVERTED: Short = FLAG_IS_STATIC.inv()
+
+            /**
+             * The flag that represents a final method
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_FINAL: Short = 0b00000000_00010000
+
+            /**
+             * Inverted [FLAG_IS_FINAL]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_FINAL_INVERTED: Short = FLAG_IS_FINAL.inv()
+
+            /**
+             * The flag that represents a synchronized method
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_SYNCHRONIZED: Short = 0b00000000_00100000
+
+            /**
+             * Inverted [FLAG_IS_SYNCHRONIZED]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_SYNCHRONIZED_INVERTED: Short = FLAG_IS_SYNCHRONIZED.inv()
+
+            /**
+             * The flag that represents a native method
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_NATIVE: Short = 0b00000000_01000000
+
+            /**
+             * Inverted [FLAG_IS_NATIVE]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_NATIVE_INVERTED: Short = FLAG_IS_NATIVE.inv()
+
+            /**
+             * The flag that represents an abstract method
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_ABSTRACT: Short = 0b00000000_10000000
+
+            /**
+             * Inverted [FLAG_IS_ABSTRACT]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_ABSTRACT_INVERTED: Short = FLAG_IS_ABSTRACT.inv()
+
+            /**
+             * The flag that represents a strict method
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_STRICT: Short = 0b00000001_00000000
+
+            /**
+             * Inverted [FLAG_IS_STRICT]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_STRICT_INVERTED: Short = FLAG_IS_STRICT.inv()
+
+            /**
+             * Get isPublic from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isPublic from
+             * @return If the flags contain the isPublic flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isPublic(flags: Short): Boolean = flags and FLAG_IS_PUBLIC != 0.toShort()
+
+            /**
+             * Set isPublic in the given [flags]
+             * (Sets the first bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isPublic in
+             * @return The flags with the isPublic flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setPublic(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_PUBLIC else flags and FLAG_IS_PUBLIC_INVERTED
+
+            /**
+             * Get isPrivate from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isPrivate from
+             * @return If the flags contain the isPrivate flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isPrivate(flags: Short): Boolean = flags and FLAG_IS_PRIVATE != 0.toShort()
+
+            /**
+             * Set isPrivate in the given [flags]
+             * (Sets the second bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isPrivate in
+             * @return The flags with the isPrivate flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setPrivate(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_PRIVATE else flags and FLAG_IS_PRIVATE_INVERTED
+
+            /**
+             * Get isProtected from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isProtected from
+             * @return If the flags contain the isProtected flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isProtected(flags: Short): Boolean = flags and FLAG_IS_PROTECTED != 0.toShort()
+
+            /**
+             * Set isProtected in the given [flags]
+             * (Sets the third bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isProtected in
+             * @return The flags with the isProtected flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setProtected(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_PROTECTED else flags and FLAG_IS_PROTECTED_INVERTED
+
+            /**
+             * Get isStatic from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isStatic from
+             * @return If the flags contain the isStatic flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isStatic(flags: Short): Boolean = flags and FLAG_IS_STATIC != 0.toShort()
+
+            /**
+             * Set isStatic in the given [flags]
+             * (Sets the fourth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isStatic in
+             * @return The flags with the isStatic flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setStatic(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_STATIC else flags and FLAG_IS_STATIC_INVERTED
+
+            /**
+             * Get isFinal from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isFinal from
+             * @return If the flags contain the isFinal flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isFinal(flags: Short): Boolean = flags and FLAG_IS_FINAL != 0.toShort()
+
+            /**
+             * Set isFinal in the given [flags]
+             * (Sets the fifth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isFinal in
+             * @return The flags with the isFinal flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setFinal(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_FINAL else flags and FLAG_IS_FINAL_INVERTED
+
+            /**
+             * Get isSynchronized from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isSynchronized from
+             * @return If the flags contain the isSynchronized flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isSynchronized(flags: Short): Boolean = flags and FLAG_IS_SYNCHRONIZED != 0.toShort()
+
+            /**
+             * Set isSynchronized in the given [flags]
+             * (Sets the sixth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isSynchronized in
+             * @return The flags with the isSynchronized flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setSynchronized(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_SYNCHRONIZED else flags and FLAG_IS_SYNCHRONIZED_INVERTED
+
+            /**
+             * Get isNative from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isNative from
+             * @return If the flags contain the isNative flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isNative(flags: Short): Boolean = flags and FLAG_IS_NATIVE != 0.toShort()
+
+            /**
+             * Set isNative in the given [flags]
+             * (Sets the seventh bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isNative in
+             * @return The flags with the isNative flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setNative(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_NATIVE else flags and FLAG_IS_NATIVE_INVERTED
+
+            /**
+             * Get isAbstract from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isAbstract from
+             * @return If the flags contain the isAbstract flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isAbstract(flags: Short): Boolean = flags and FLAG_IS_ABSTRACT != 0.toShort()
+
+            /**
+             * Set isAbstract in the given [flags]
+             * (Sets the eighth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isAbstract in
+             * @return The flags with the isAbstract flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setAbstract(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_ABSTRACT else flags and FLAG_IS_ABSTRACT_INVERTED
+
+            /**
+             * Get isStrict from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isStrict from
+             * @return If the flags contain the isStrict flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isStrict(flags: Short): Boolean = flags and FLAG_IS_STRICT != 0.toShort()
+
+            /**
+             * Set isStrict in the given [flags]
+             * (Sets the ninth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isStrict in
+             * @return The flags with the isStrict flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setStrict(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_STRICT else flags and FLAG_IS_STRICT_INVERTED
+        }
 
         /**
          * Reads a [Method] from the given [stream]
@@ -424,13 +844,9 @@ class MutableMethod(
      * @version 0.1.0
      */
     override var isPublic: Boolean
-        get() = flags and 0b00000000_00000001.toShort() != 0.toShort()
+        get() = Flags.isPublic(flags)
         set(value) {
-            flags = if (value) {
-                flags or 0b00000000_00000001.toShort()
-            } else {
-                flags and 0b11111111_11111110.toShort()
-            }
+            flags = Flags.setPublic(flags, value)
         }
 
     /**
@@ -443,13 +859,9 @@ class MutableMethod(
      * @version 0.1.0
      */
     override var isPrivate: Boolean
-        get() = flags and 0b00000000_00000010.toShort() != 0.toShort()
+        get() = Flags.isPrivate(flags)
         set(value) {
-            flags = if (value) {
-                flags or 0b00000000_00000010.toShort()
-            } else {
-                flags and 0b11111111_11111101.toShort()
-            }
+            flags = Flags.setPrivate(flags, value)
         }
 
     /**
@@ -462,13 +874,9 @@ class MutableMethod(
      * @version 0.1.0
      */
     override var isProtected: Boolean
-        get() = flags and 0b00000000_00000100.toShort() != 0.toShort()
+        get() = Flags.isProtected(flags)
         set(value) {
-            flags = if (value) {
-                flags or 0b00000000_00000100.toShort()
-            } else {
-                flags and 0b11111111_11111011.toShort()
-            }
+            flags = Flags.setProtected(flags, value)
         }
 
     /**
@@ -481,13 +889,9 @@ class MutableMethod(
      * @version 0.1.0
      */
     override var isStatic: Boolean
-        get() = flags and 0b00000000_00001000.toShort() != 0.toShort()
+        get() = Flags.isStatic(flags)
         set(value) {
-            flags = if (value) {
-                flags or 0b00000000_00001000.toShort()
-            } else {
-                flags and 0b11111111_11110111.toShort()
-            }
+            flags = Flags.setStatic(flags, value)
         }
 
     /**
@@ -500,13 +904,9 @@ class MutableMethod(
      * @version 0.1.0
      */
     override var isFinal: Boolean
-        get() = flags and 0b00000000_00010000.toShort() != 0.toShort()
+        get() = Flags.isFinal(flags)
         set(value) {
-            flags = if (value) {
-                flags or 0b00000000_00010000.toShort()
-            } else {
-                flags and 0b11111111_11101111.toShort()
-            }
+            flags = Flags.setFinal(flags, value)
         }
 
     /**
@@ -519,13 +919,9 @@ class MutableMethod(
      * @version 0.1.0
      */
     override var isSynchronized: Boolean
-        get() = flags and 0b00000000_00100000.toShort() != 0.toShort()
+        get() = Flags.isSynchronized(flags)
         set(value) {
-            flags = if (value) {
-                flags or 0b00000000_00100000.toShort()
-            } else {
-                flags and 0b11111111_11011111.toShort()
-            }
+            flags = Flags.setSynchronized(flags, value)
         }
 
     /**
@@ -538,13 +934,9 @@ class MutableMethod(
      * @version 0.1.0
      */
     override var isNative: Boolean
-        get() = flags and 0b00000000_01000000.toShort() != 0.toShort()
+        get() = Flags.isNative(flags)
         set(value) {
-            flags = if (value) {
-                flags or 0b00000000_01000000.toShort()
-            } else {
-                flags and 0b11111111_10111111.toShort()
-            }
+            flags = Flags.setNative(flags, value)
         }
 
     /**
@@ -558,13 +950,9 @@ class MutableMethod(
      * @version 0.1.0
      */
     override var isAbstract: Boolean
-        get() = flags and 0b00000000_10000000.toShort() != 0.toShort()
+        get() = Flags.isAbstract(flags)
         set(value) {
-            flags = if (value) {
-                flags or 0b00000000_10000000.toShort()
-            } else {
-                flags and 0b11111111_01111111.toShort()
-            }
+            flags = Flags.setAbstract(flags, value)
         }
 
     /**
@@ -578,16 +966,14 @@ class MutableMethod(
      * @version 0.1.0
      */
     override var isStrict: Boolean
-        get() = flags and 0b00000001_00000000.toShort() != 0.toShort()
+        get() = Flags.isStrict(flags)
         set(value) {
-            flags = if (value) {
-                flags or 0b00000001_00000000.toShort()
-            } else {
-                flags and 0b11111110_11111111.toShort()
-            }
+            flags = Flags.setStrict(flags, value)
         }
 
     companion object {
+
+        val Flags = Method.Companion.Flags
 
         /**
          * Creates a [MutableMethod] from the given [pool] and [method]
