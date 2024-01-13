@@ -19,7 +19,7 @@ kotlin {
         implementation(project(":util:primitives"))
         implementation(project(":util:common-io"))
         implementation(project(":shake:bytecode:conventions"))
-        implementation(project(":shake:bytecode:tools"))
+        implementation(project(":shake:bytecode:utils"))
         testImplementation(project(":util:testlib"))
     }
 }

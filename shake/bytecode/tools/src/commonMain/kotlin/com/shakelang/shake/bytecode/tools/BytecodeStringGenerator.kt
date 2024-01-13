@@ -8,6 +8,7 @@ import com.shakelang.shake.bytecode.interpreter.format.attribute.Attribute
 import com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute
 import com.shakelang.util.io.streaming.input.inputStream
 import com.shakelang.util.primitives.bytes.toHexString
+import kotlin.jvm.JvmName
 
 object BytecodeStringGenerator {
 
@@ -17,11 +18,14 @@ object BytecodeStringGenerator {
         addAll(buildList(generator).indent(indent))
     }
 
+    @JvmName("generateAttribute")
     fun generate(attribute: Attribute): List<String> = buildList {
         return buildList {
             add("+Attribute(${attribute.name}): ${attribute.value.toHexString()}")
         }
     }
+
+    @JvmName("generateCodeAttribute")
     fun generate(bytecode: CodeAttribute, indent: String = "  "): List<String> {
         return buildList {
             add("@Code")
@@ -47,6 +51,7 @@ object BytecodeStringGenerator {
         }
     }
 
+    @JvmName("generateMethod")
     fun generate(method: Method, indent: String = "  "): List<String> {
         return buildList {
             add("@Method(${method.qualifiedName})")
@@ -77,10 +82,12 @@ object BytecodeStringGenerator {
         }
     }
 
+    @JvmName("generateMethods")
     fun generate(methods: List<Method>, indent: String = "  "): List<String> = buildList {
         methods.forEach { addAll(generate(it, indent)) }
     }
 
+    @JvmName("generateField")
     fun generate(field: Field, indent: String = "  "): List<String> {
         return buildList {
             add("@Field(${field.name})")
@@ -99,10 +106,12 @@ object BytecodeStringGenerator {
         }
     }
 
+    @JvmName("generateFields")
     fun generate(fields: List<Field>, indent: String = "  "): List<String> = buildList {
         fields.forEach { addAll(generate(it, indent)) }
     }
 
+    @JvmName("generateClass")
     fun generate(clazz: Class, indent: String = "  "): List<String> {
         val builder = StringBuilder()
 
@@ -144,6 +153,7 @@ object BytecodeStringGenerator {
         }
     }
 
+    @JvmName("generateClasses")
     fun generate(classes: List<Class>, indent: String = "  "): List<String> = buildList {
         classes.forEach { addAll(generate(it, indent)) }
     }
