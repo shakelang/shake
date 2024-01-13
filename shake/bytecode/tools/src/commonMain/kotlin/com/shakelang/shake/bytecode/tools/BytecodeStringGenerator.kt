@@ -12,7 +12,7 @@ import kotlin.jvm.JvmName
 
 object BytecodeStringGenerator {
 
-    private fun List<String>.indent(indent: String = "  "): List<String> = this.map { "$indent$it" }
+    private fun List<String>.indent(indent: String = "  "): List<String> = this.map { if (it != "") "$indent$it" else it }
 
     fun MutableList<String>.indent(indent: String, generator: MutableList<String>.() -> Unit) {
         addAll(buildList(generator).indent(indent))
@@ -135,17 +135,29 @@ object BytecodeStringGenerator {
                     if (clazz.isObject) add("+Object")
                     clazz.attributes.forEach { addAll(generate(it)) }
 
-                    add("@Fields")
-                    addAll(generate(clazz.fields, indent).indent(indent))
-                    add("@EndFields")
+                    indent(indent) {
+                        add("")
+                        if (clazz.fields.isNotEmpty()) {
+                            add("@Fields")
+                            addAll(generate(clazz.fields, indent).indent(indent))
+                            add("@EndFields")
+                            add("")
+                        }
 
-                    add("@Methods")
-                    addAll(generate(clazz.methods, indent).indent(indent))
-                    add("@EndMethods")
+                        if (clazz.methods.isNotEmpty()) {
+                            add("@Methods")
+                            addAll(generate(clazz.methods, indent).indent(indent))
+                            add("@EndMethods")
+                            add("")
+                        }
 
-                    add("@Classes")
-                    addAll(generate(clazz.subClasses, indent).indent(indent))
-                    add("@EndClasses")
+                        if (clazz.subClasses.isNotEmpty()) {
+                            add("@Classes")
+                            addAll(generate(clazz.subClasses, indent).indent(indent))
+                            add("@EndClasses")
+                            add("")
+                        }
+                    }
                 }.indent(indent),
             )
 
@@ -162,7 +174,29 @@ object BytecodeStringGenerator {
         return buildList {
             add("@Package(${format.packageName})")
 
-            addAll(generate(format.classes, indent).indent(indent))
+            indent(indent) {
+                add("")
+                if (format.fields.isNotEmpty()) {
+                    add("@Fields")
+                    addAll(generate(format.fields, indent).indent(indent))
+                    add("@EndFields")
+                    add("")
+                }
+
+                if (format.methods.isNotEmpty()) {
+                    add("@Methods")
+                    addAll(generate(format.methods, indent).indent(indent))
+                    add("@EndMethods")
+                    add("")
+                }
+
+                if (format.classes.isNotEmpty()) {
+                    add("@Classes")
+                    addAll(generate(format.classes, indent).indent(indent))
+                    add("@EndClasses")
+                    add("")
+                }
+            }
 
             add("@EndPackage")
         }

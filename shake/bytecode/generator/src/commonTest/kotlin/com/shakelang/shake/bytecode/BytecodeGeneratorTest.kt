@@ -82,7 +82,7 @@ class BytecodeGeneratorTest : FreeSpec(
             val classPath = ShakeClasspath.create(out)
 
             // Get test package
-            val testPackage = classPath.getPackage("test")?.storages?.get(0)!!
+            val testPackage = classPath.packages.find { it.name == "test" }!!.storages[0]
             println(BytecodeStringGenerator.generate(testPackage).joinToString("\n"))
 
             val interpreter = ShakeInterpreter(classPath)
