@@ -1,6 +1,7 @@
 package com.shakelang.shake.bytecode.tools
 
 import com.shakelang.shake.bytecode.interpreter.Opcodes
+import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.util.io.streaming.input.InputStream
 import com.shakelang.util.io.streaming.input.countingStream
 import com.shakelang.util.io.streaming.input.dataStream
@@ -9,6 +10,7 @@ import com.shakelang.util.primitives.bytes.toHexString
 
 class InstructionStringGenerator(
     bytes: InputStream,
+    val storage: StorageFormat,
 ) {
 
     val counter = bytes.countingStream
@@ -179,7 +181,10 @@ class InstructionStringGenerator(
             Opcodes.LDUP -> return "ldup"
 
             Opcodes.PCAST -> return "pcast 0x${bytes.readUnsignedByte().toBytes().toHexString()}"
-            Opcodes.CALL -> return "call 0x${bytes.readUnsignedInt().toBytes().toHexString()}"
+            Opcodes.CALL -> {
+                val addr = bytes.readUnsignedInt()
+                return "call `${storage.constantPool.getUtf8(addr.toInt()).value}`"
+            }
 
             else -> throw IllegalStateException("Unknown opcode: 0x${opcode.toBytes().toHexString()}")
         }

@@ -83,7 +83,7 @@ class BytecodeGeneratorTest : FreeSpec(
 
             // Get test package
             val testPackage = classPath.packages.find { it.name == "test" }!!.storages[0]
-            println(BytecodeStringGenerator.generate(testPackage).joinToString("\n"))
+            println(BytecodeStringGenerator(testPackage).generate(testPackage).joinToString("\n"))
 
             val interpreter = ShakeInterpreter(classPath)
             interpreter.process.setOut(stdout)
@@ -94,7 +94,7 @@ class BytecodeGeneratorTest : FreeSpec(
             )
             val ticks = interpreter.run()
 
-            val output = stdout.toByteArray().joinToString { it.toInt().toChar().toString() }
+            val output = stdout.toByteArray().joinToString("") { it.toInt().toChar().toString() }
             output shouldBe "3"
             ticks shouldBe 8
         }

@@ -10,7 +10,9 @@ import com.shakelang.util.io.streaming.input.inputStream
 import com.shakelang.util.primitives.bytes.toHexString
 import kotlin.jvm.JvmName
 
-object BytecodeStringGenerator {
+class BytecodeStringGenerator(
+    val format: StorageFormat,
+) {
 
     private fun List<String>.indent(indent: String = "  "): List<String> = this.map { if (it != "") "$indent$it" else it }
 
@@ -42,6 +44,7 @@ object BytecodeStringGenerator {
                 addAll(
                     InstructionStringGenerator(
                         bytecode.code.inputStream(),
+                        format,
                     ).generate().indent(indent),
                 )
                 add("@EndBytecode")
@@ -201,4 +204,6 @@ object BytecodeStringGenerator {
             add("@EndPackage")
         }
     }
+
+    fun generate() = generate(format)
 }

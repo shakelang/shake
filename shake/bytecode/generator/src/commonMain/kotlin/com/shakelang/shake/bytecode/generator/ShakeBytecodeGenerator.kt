@@ -393,7 +393,7 @@ class ShakeBytecodeGenerator {
                         // Load all parameters
                         method.parameters.forEach {
                             val local = localTable.createLocal(it.uniqueName, getTypeSize(it.type))
-                            load(generateTypeDescriptor(it.type), local)
+                            store(generateTypeDescriptor(it.type), local)
                         }
 
                         visitCode(
