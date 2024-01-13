@@ -384,12 +384,9 @@ class ShakeBytecodeGenerator {
                 val body = method.body!!
 
                 code {
-                    maxStack = 100
-                    maxLocals = 100
+                    val localTable = LocalTable()
 
                     bytecode {
-                        val localTable = LocalTable()
-
                         // Load all parameters
                         method.parameters.forEach {
                             val local = localTable.createLocal(it.uniqueName, getTypeSize(it.type))
@@ -409,6 +406,9 @@ class ShakeBytecodeGenerator {
                         // Return at the end of the method
                         ret()
                     }
+
+                    maxStack = 1024
+                    maxLocals = localTable.size
                 }
             }
         }
@@ -468,17 +468,17 @@ class ShakeBytecodeGenerator {
             ShakeType.Kind.PRIMITIVE -> {
                 when ((type as ShakeType.Primitive).type) {
                     ShakeType.PrimitiveType.BYTE -> 1
-                    ShakeType.PrimitiveType.SHORT -> 1
-                    ShakeType.PrimitiveType.INT -> 1
-                    ShakeType.PrimitiveType.LONG -> 2
+                    ShakeType.PrimitiveType.SHORT -> 2
+                    ShakeType.PrimitiveType.INT -> 4
+                    ShakeType.PrimitiveType.LONG -> 8
                     ShakeType.PrimitiveType.UNSIGNED_BYTE -> 1
-                    ShakeType.PrimitiveType.UNSIGNED_SHORT -> 1
-                    ShakeType.PrimitiveType.UNSIGNED_INT -> 1
-                    ShakeType.PrimitiveType.UNSIGNED_LONG -> 2
-                    ShakeType.PrimitiveType.FLOAT -> 1
-                    ShakeType.PrimitiveType.DOUBLE -> 2
+                    ShakeType.PrimitiveType.UNSIGNED_SHORT -> 2
+                    ShakeType.PrimitiveType.UNSIGNED_INT -> 4
+                    ShakeType.PrimitiveType.UNSIGNED_LONG -> 8
+                    ShakeType.PrimitiveType.FLOAT -> 4
+                    ShakeType.PrimitiveType.DOUBLE -> 8
                     ShakeType.PrimitiveType.BOOLEAN -> 1
-                    ShakeType.PrimitiveType.CHAR -> 1
+                    ShakeType.PrimitiveType.CHAR -> 2
                     ShakeType.PrimitiveType.NULL -> 1
                     ShakeType.PrimitiveType.VOID -> 0
                     ShakeType.PrimitiveType.DYNAMIC -> 8

@@ -96,7 +96,7 @@ class BytecodeGeneratorTest : FreeSpec(
 
             val output = stdout.toByteArray().joinToString("") { it.toInt().toChar().toString() }
             output shouldBe "3"
-            ticks shouldBe 8
+            ticks shouldBe 13
         }
     },
 )

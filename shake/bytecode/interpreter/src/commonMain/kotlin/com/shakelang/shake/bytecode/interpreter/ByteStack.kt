@@ -24,6 +24,7 @@ class ByteStack(
         if (size >= maxSize) throw StackOverflowException()
         top = ByteStackElement(value, top)
         size++
+//        println("push ${value.toBytes().toHexString()} (${toByteArray().toHexString()})")
     }
 
     fun pop(): Byte {
@@ -31,6 +32,7 @@ class ByteStack(
         val value = top!!.value
         top = top!!.below
         size--
+//        println("pop ${value.toBytes().toHexString()} (${toByteArray().toHexString()})")
         return value
     }
 

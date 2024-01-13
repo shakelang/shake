@@ -802,6 +802,7 @@ class ShakeInterpreter(
                     val args = ByteArray(argsSize) {
                         stack.pop()
                     }
+
                     putFunctionOnStack(method, args)
                 }
             }
