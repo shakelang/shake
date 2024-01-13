@@ -985,14 +985,14 @@ class BytecodeGeneratorTests : FreeSpec(
             val bytes = bytecode {
                 pop()
             }
-            bytes shouldBe arrayOf(Opcodes.POP)
+            bytes shouldBe arrayOf(Opcodes.BPOP)
         }
 
         "bpop" {
             val bytes = bytecode {
                 bpop()
             }
-            bytes shouldBe arrayOf(Opcodes.POP)
+            bytes shouldBe arrayOf(Opcodes.BPOP)
         }
 
         "spop" {
@@ -1020,14 +1020,14 @@ class BytecodeGeneratorTests : FreeSpec(
             val bytes = bytecode {
                 dup()
             }
-            bytes shouldBe arrayOf(Opcodes.DUP)
+            bytes shouldBe arrayOf(Opcodes.BDUP)
         }
 
         "bdup" {
             val bytes = bytecode {
                 bdup()
             }
-            bytes shouldBe arrayOf(Opcodes.DUP)
+            bytes shouldBe arrayOf(Opcodes.BDUP)
         }
 
         "sdup" {

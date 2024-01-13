@@ -754,12 +754,12 @@ class ShakeInterpreter(
                     for (i in 0 until 8) returnData[i] = stack.pop()
                 }
 
-                Opcodes.POP -> stack.pop()
+                Opcodes.BPOP -> stack.pop()
                 Opcodes.SPOP -> stack.pop(2)
                 Opcodes.IPOP -> stack.pop(4)
                 Opcodes.LPOP -> stack.pop(8)
 
-                Opcodes.DUP -> stack.push(stack.peek())
+                Opcodes.BDUP -> stack.push(stack.peek())
                 Opcodes.SDUP -> {
                     val arr = ByteArray(2) {
                         stack.pop()

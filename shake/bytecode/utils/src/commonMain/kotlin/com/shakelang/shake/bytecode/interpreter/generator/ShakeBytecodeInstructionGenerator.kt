@@ -482,8 +482,8 @@ open class ShakeBytecodeInstructionGenerator(
         }
     }
 
-    fun pop() = addByte(Opcodes.POP)
-    fun bpop() = addByte(Opcodes.POP)
+    fun pop() = addByte(Opcodes.BPOP)
+    fun bpop() = addByte(Opcodes.BPOP)
     fun spop() = addByte(Opcodes.SPOP)
     fun ipop() = addByte(Opcodes.IPOP)
     fun lpop() = addByte(Opcodes.LPOP)
@@ -503,8 +503,8 @@ open class ShakeBytecodeInstructionGenerator(
         }
     }
 
-    fun dup() = addByte(Opcodes.DUP)
-    fun bdup() = addByte(Opcodes.DUP)
+    fun dup() = addByte(Opcodes.BDUP)
+    fun bdup() = addByte(Opcodes.BDUP)
     fun sdup() = addByte(Opcodes.SDUP)
     fun idup() = addByte(Opcodes.IDUP)
     fun ldup() = addByte(Opcodes.LDUP)

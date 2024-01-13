@@ -1457,7 +1457,7 @@ object Opcodes {
      * @example Syntax: `POP`
      * @see - https://shakelang.com/specification/bytecode/instructions#-541-pop
      */
-    const val POP: Byte = -95
+    const val BPOP: Byte = -95
 
     /**
      * Pop the top 2 elements of the stack
@@ -1497,7 +1497,7 @@ object Opcodes {
      * @example Syntax: `DUP`
      * @see - https://shakelang.com/specification/bytecode/instructions#-551-dup
      */
-    const val DUP: Byte = -91
+    const val BDUP: Byte = -91
 
     /**
      * Duplicate the top 2 elements of the stack
