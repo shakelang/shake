@@ -101,5 +101,70 @@ class BytecodeGeneratorTest : FreeSpec(
                 consoleOut shouldBe "3"
             }
         }
+
+        "call a static method" {
+
+            codeSpec(
+                """
+                package test
+                
+                class Test {
+                    void main() {
+                        print(1 + 2)
+                    }
+                }
+                                
+                """.trimIndent(),
+            ) {
+                execute("test/Test:main()V")
+                consoleOut shouldBe "3"
+            }
+        }
+
+        "call a static method (with parameters)" {
+
+            codeSpec(
+                """
+                package test
+                
+                class Test {
+                    void main() {
+                        print(add(1, 2))
+                    }
+                    
+                    static int add(int a, int b) {
+                        return a + b
+                    }
+                }
+                                
+                """.trimIndent(),
+            ) {
+                execute("test/Test:main()V")
+                consoleOut shouldBe "3"
+            }
+        }
+
+        "call a static method (with parameters and return value)" {
+
+            codeSpec(
+                """
+                package test
+                
+                class Test {
+                    void main() {
+                        print(add(1, 2))
+                    }
+                    
+                    static int add(int a, int b) {
+                        return a + b
+                    }
+                }
+                                
+                """.trimIndent(),
+            ) {
+                execute("test/Test:main()V")
+                consoleOut shouldBe "3"
+            }
+        }
     },
 )
