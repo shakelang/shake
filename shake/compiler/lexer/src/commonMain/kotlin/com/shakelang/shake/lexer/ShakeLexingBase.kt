@@ -14,10 +14,20 @@ abstract class ShakeLexingBase(
 ) : LexingBase<ShakeTokenType, ShakeToken>(input) {
 
     override fun makeToken(): ShakeToken {
+        if (!input.hasNext()) {
+            return ShakeToken(ShakeTokenType.EOF, input.position, input.position)
+        }
+
         var next = input.next()
 
         // Whitespace
-        while (Characters.isWhitespaceCharacter(next)) next = input.next()
+        while (Characters.isWhitespaceCharacter(next)) {
+            if (!input.hasNext()) {
+                return ShakeToken(ShakeTokenType.EOF, input.position, input.position)
+            }
+
+            next = input.next()
+        }
 
         val peek: Char = if (input.hasNext()) input.peek() else (0).toChar()
         val start = input.position
