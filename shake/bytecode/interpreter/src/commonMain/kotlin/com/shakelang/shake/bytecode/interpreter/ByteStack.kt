@@ -36,6 +36,10 @@ class ByteStack(
         return value
     }
 
+    fun popByte(): Byte {
+        return pop()
+    }
+
     fun peek(): Byte = top!!.value
 
     fun push(values: ByteArray) {

@@ -5,7 +5,11 @@ import io.kotest.matchers.shouldBe
 
 class OperationTests : FreeSpec(
     {
-        val types = listOf("byte", "short", "int", "long", "float", "double")
+        val types = listOf(
+            "byte", "short", "int", "long", "float", "double",
+            "unsigned byte", "unsigned short", "unsigned int", "unsigned long",
+        )
+
         for (type1 in types) {
             for (type2 in types) {
                 "add $type1 and $type2" {
@@ -95,6 +99,24 @@ class OperationTests : FreeSpec(
                     ) {
                         execute("test/main()V")
                         consoleOut shouldBe "1"
+                    }
+                }
+
+                "power $type1 and $type2" {
+                    codeSpec(
+                        """
+                        package test
+                        
+                        void main() {
+                            $type1 a = 7
+                            $type2 b = 2
+                            print(a ** b)
+                        }
+                    
+                        """.trimIndent(),
+                    ) {
+                        execute("test/main()V")
+                        consoleOut shouldBe "49"
                     }
                 }
             }

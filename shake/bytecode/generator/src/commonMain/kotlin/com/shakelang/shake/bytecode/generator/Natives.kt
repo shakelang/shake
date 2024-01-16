@@ -14,7 +14,7 @@ object Natives {
 
     fun get(signature: String): NativeHandler? = natives[signature]
 
-    fun registerNoArgs(signature: String, handler: PooledShakeBytecodeInstructionGenerator.(HandleContext) -> Unit) {
+    fun register(signature: String, handler: PooledShakeBytecodeInstructionGenerator.(HandleContext) -> Unit) {
         register(
             signature,
             object : NativeHandler {
@@ -85,8 +85,8 @@ object Natives {
                     }
                 }
 
-                registerNoArgs("shake/lang/plus(${type0.first},${type1.first})$biggerType") {
-                    this.castBeforeCalc(it)
+                register("shake/lang/plus(${type0.first},${type1.first})$biggerType") {
+                    castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
@@ -94,7 +94,7 @@ object Natives {
                     add(biggerType)
                 }
 
-                registerNoArgs("shake/lang/minus(${type0.first},${type1.first})$biggerType") {
+                register("shake/lang/minus(${type0.first},${type1.first})$biggerType") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
@@ -103,7 +103,7 @@ object Natives {
                     sub(biggerType)
                 }
 
-                registerNoArgs("shake/lang/multiply(${type0.first},${type1.first})$biggerType}") {
+                register("shake/lang/multiply(${type0.first},${type1.first})$biggerType}") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
@@ -112,7 +112,7 @@ object Natives {
                     mul(biggerType)
                 }
 
-                registerNoArgs("shake/lang/divide(${type0.first},${type1.first})$biggerType}") {
+                register("shake/lang/divide(${type0.first},${type1.first})$biggerType}") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
@@ -121,7 +121,7 @@ object Natives {
                     div(biggerType)
                 }
 
-                registerNoArgs("shake/lang/modulo(${type0.first},${type1.first})$biggerType}") {
+                register("shake/lang/modulo(${type0.first},${type1.first})$biggerType}") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
