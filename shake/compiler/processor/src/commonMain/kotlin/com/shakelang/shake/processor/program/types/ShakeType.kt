@@ -840,7 +840,7 @@ interface ShakeType {
      * @version 0.1.0
      */
     fun modulusOverloads(scope: ShakeScope): List<ShakeMethod> =
-        scope.getFunctions("mod").filter { it.expanding == this && it.isOperator }
+        scope.getFunctions("rem").filter { it.expanding == this && it.isOperator }
 
     /**
      * Get a list of all overloads for the pow operator of this type

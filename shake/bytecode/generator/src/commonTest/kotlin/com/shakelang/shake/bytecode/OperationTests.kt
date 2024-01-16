@@ -5,8 +5,9 @@ import io.kotest.matchers.shouldBe
 
 class OperationTests : FreeSpec(
     {
-        for (type1 in listOf("byte", "short", "int", "long", "unsigned byte", "unsigned short", "unsigned int", "unsigned long")) {
-            for (type2 in listOf("byte", "short", "int", "long", "unsigned byte", "unsigned short", "unsigned int", "unsigned long")) {
+        val types = listOf("byte", "short", "int", "long", "float", "double")
+        for (type1 in types) {
+            for (type2 in types) {
                 "add $type1 and $type2" {
                     codeSpec(
                         """
