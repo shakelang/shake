@@ -134,4 +134,41 @@ class MallocTests : FreeSpec({
         malloc.startPointer shouldBe 116L
         malloc.tailPointer shouldBe 0L
     }
+
+    "malloc + free with different sizes" {
+
+        val globalMemory = GlobalMemory()
+        val malloc = Malloc(globalMemory)
+        globalMemory.grow(1)
+
+        val pointer = malloc.malloc(100L)
+        val pointer2 = malloc.malloc(200L)
+        val pointer3 = malloc.malloc(30L)
+
+        pointer shouldBe 16L
+        pointer2 shouldBe 132L
+        pointer3 shouldBe 348L
+
+        globalMemory.getLong(0) shouldBe 100L
+        globalMemory.getLong(8) shouldBe -1L
+        globalMemory.getLong(116) shouldBe 200L
+        globalMemory.getLong(124) shouldBe -1L
+        globalMemory.getLong(332) shouldBe 30L
+        globalMemory.getLong(340) shouldBe -1L
+
+        malloc.free(pointer)
+        malloc.free(pointer2)
+        malloc.free(pointer3)
+
+        malloc.malloc(29L) shouldBe 348L
+        malloc.malloc(200L) shouldBe 132L
+        malloc.malloc(99L) shouldBe 16L
+
+        globalMemory.getLong(0) shouldBe 99L
+        globalMemory.getLong(8) shouldBe -1L
+        globalMemory.getLong(116) shouldBe 200L
+        globalMemory.getLong(124) shouldBe -1L
+        globalMemory.getLong(332) shouldBe 29L
+        globalMemory.getLong(340) shouldBe -1L
+    }
 })
