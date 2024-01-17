@@ -1,64 +1,89 @@
 package com.shakelang.shake.bytecode.interpreter.maloc
 
-import com.shakelang.util.primitives.bytes.*
+import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toInt
+import com.shakelang.util.primitives.bytes.toLong
+import com.shakelang.util.primitives.bytes.toShort
 
 class GlobalMemory {
 
-    val innerSize = 256 * 256
-
-    var memory = arrayOfNulls<ByteArray>(1024)
+    var contents: Array<ByteArray> = arrayOf()
         private set
+
+    var outerSize: Long = 0
+        private set
+
+    val innerSize: Long = 1024 * 16
 
     var size: Long = 0
         private set
 
-    fun increaseSize(size: Long) {
-        val newSize = this.size + size
-
-        // Space available in the current array
-
-        val spaceAvailable = memory.size.toLong() * innerSize - this.size
-        this.size = newSize
-
-        if (spaceAvailable >= size) return
+    operator fun get(outer: Int, inner: Int): Byte {
+        return contents[outer][inner]
     }
 
-    operator fun set(index: Int, value: ByteArray) {
-        value.copyInto(memory, index)
+    operator fun set(outer: Int, inner: Int, value: Byte) {
+        contents[outer][inner] = value
     }
 
-    operator fun get(index: Int): Byte = memory[index]
-
-    operator fun get(index: Int, size: Int): ByteArray {
-        val array = ByteArray(size)
-        memory.copyInto(array, 0, index, index + size)
-        return array
+    operator fun get(index: Long): Byte {
+        return contents[(index / innerSize).toInt()][(index % innerSize).toInt()]
     }
 
-    fun setByte(index: Int, value: Byte) = memory.setByte(index, value)
-    fun getByte(index: Int): Byte = memory.getByte(index)
-    fun setUnsignedByte(index: Int, value: UByte) = memory.setUnsignedByte(index, value)
-    fun getUnsignedByte(index: Int): UByte = memory.getUnsignedByte(index)
-    fun setShort(index: Int, value: Short) = memory.setShort(index, value)
-    fun setUnsignedShort(index: Int, value: UShort) = memory.setUnsignedShort(index, value)
-    fun getUnsignedShort(index: Int): UShort = memory.getUnsignedShort(index)
-    fun getShort(index: Int): Short = memory.getShort(index)
-    fun setUShort(index: Int, value: UShort) = memory.setUnsignedShort(index, value)
-    fun getUShort(index: Int): UShort = memory.getUnsignedShort(index)
-    fun setInt(index: Int, value: Int) = memory.setInt(index, value)
-    fun getInt(index: Int): Int = memory.getInt(index)
-    fun setUnsignedInt(index: Int, value: UInt) = memory.setUnsignedInt(index, value)
-    fun getUnsignedInt(index: Int): UInt = memory.getUnsignedInt(index)
-    fun setUInt(index: Int, value: UInt) = memory.setUnsignedInt(index, value)
-    fun getUInt(index: Int): UInt = memory.getUnsignedInt(index)
-    fun setLong(index: Int, value: Long) = memory.setLong(index, value)
-    fun getLong(index: Int): Long = memory.getLong(index)
-    fun setUnsignedLong(index: Int, value: ULong) = memory.setUnsignedLong(index, value)
-    fun getUnsignedLong(index: Int): ULong = memory.getUnsignedLong(index)
-    fun setULong(index: Int, value: ULong) = memory.setUnsignedLong(index, value)
-    fun getULong(index: Int): ULong = memory.getUnsignedLong(index)
-    fun setFloat(index: Int, value: Float) = memory.setFloat(index, value)
-    fun getFloat(index: Int): Float = memory.getFloat(index)
-    fun setDouble(index: Int, value: Double) = memory.setDouble(index, value)
-    fun getDouble(index: Int): Double = memory.getDouble(index)
+    operator fun set(index: Long, value: Byte) {
+        contents[(index / innerSize).toInt()][(index % innerSize).toInt()] = value
+    }
+
+    fun grow(blocks: Int) {
+        contents = Array(contents.size + blocks) {
+            if (it < contents.size) {
+                contents[it]
+            } else {
+                ByteArray(innerSize.toInt())
+            }
+        }
+    }
+
+    fun getBytes(index: Long, length: Long): ByteArray {
+        val bytes = ByteArray(length.toInt())
+        for (i in 0 until length) bytes[i.toInt()] = this[index + i]
+        return bytes
+    }
+
+    fun setBytes(index: Long, bytes: ByteArray) {
+    }
+
+    fun getByte(index: Long): Byte = this[index]
+
+    fun setByte(index: Long, value: Byte) {
+        this[index] = value
+    }
+
+    fun getShort(index: Long): Short = getBytes(index, 2).toShort()
+    fun setShort(index: Long, value: Short) = setBytes(index, value.toBytes())
+    fun getInt(index: Long): Int = getBytes(index, 4).toInt()
+    fun setInt(index: Long, value: Int) = setBytes(index, value.toBytes())
+    fun getLong(index: Long): Long = getBytes(index, 8).toLong()
+    fun setLong(index: Long, value: Long) = setBytes(index, value.toBytes())
+
+    fun getUByte(index: Long): UByte = getByte(index).toUByte()
+    fun setUByte(index: Long, value: UByte) = setByte(index, value.toByte())
+    fun getUShort(index: Long): UShort = getShort(index).toUShort()
+    fun setUShort(index: Long, value: UShort) = setShort(index, value.toShort())
+    fun getUInt(index: Long): UInt = getInt(index).toUInt()
+    fun setUInt(index: Long, value: UInt) = setInt(index, value.toInt())
+    fun getULong(index: Long): ULong = getLong(index).toULong()
+    fun setULong(index: Long, value: ULong) = setLong(index, value.toLong())
+
+    fun getBoolean(index: Long): Boolean = getByte(index) != 0.toByte()
+    fun setBoolean(index: Long, value: Boolean) = setByte(index, if (value) 1 else 0)
+
+    fun getChar(index: Long): Char = getShort(index).toInt().toChar()
+    fun setChar(index: Long, value: Char) = setShort(index, value.code.toShort())
+
+    fun getFloat(index: Long): Float = getInt(index).toFloat()
+    fun setFloat(index: Long, value: Float) = setInt(index, value.toInt())
+
+    fun getDouble(index: Long): Double = getLong(index).toDouble()
+    fun setDouble(index: Long, value: Double) = setLong(index, value.toLong())
 }
