@@ -32,6 +32,18 @@ class GlobalMemoryTests : FreeSpec({
         }
     }
 
+    "set / get (2 args)" {
+        val memory = GlobalMemory()
+        memory.grow(10)
+
+        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 1), Arb.long()) { i, value ->
+            val outer = (i / memory.innerSize).toInt()
+            val inner = (i % memory.innerSize).toInt()
+            memory[outer, inner] = value.toByte()
+            memory[outer, inner] shouldBe value.toByte()
+        }
+    }
+
     "setBytes / getBytes" {
         val memory = GlobalMemory()
         memory.grow(10)
