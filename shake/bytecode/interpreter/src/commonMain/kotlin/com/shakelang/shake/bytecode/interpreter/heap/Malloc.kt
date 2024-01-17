@@ -1,4 +1,4 @@
-package com.shakelang.shake.bytecode.interpreter.maloc
+package com.shakelang.shake.bytecode.interpreter.heap
 
 import com.shakelang.util.primitives.bytes.toBytes
 import com.shakelang.util.primitives.bytes.toLong

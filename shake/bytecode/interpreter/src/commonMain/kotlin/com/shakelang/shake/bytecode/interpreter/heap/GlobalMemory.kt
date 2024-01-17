@@ -1,4 +1,4 @@
-package com.shakelang.shake.bytecode.interpreter.maloc
+package com.shakelang.shake.bytecode.interpreter.heap
 
 import com.shakelang.util.primitives.bytes.toBytes
 import com.shakelang.util.primitives.bytes.toInt
@@ -35,6 +35,8 @@ class GlobalMemory {
     }
 
     fun grow(blocks: Int) {
+        outerSize += blocks
+        size += blocks * innerSize
         contents = Array(contents.size + blocks) {
             if (it < contents.size) {
                 contents[it]
@@ -51,6 +53,7 @@ class GlobalMemory {
     }
 
     fun setBytes(index: Long, bytes: ByteArray) {
+        for (i in bytes.indices) this[index + i] = bytes[i]
     }
 
     fun getByte(index: Long): Byte = this[index]
