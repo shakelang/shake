@@ -85,16 +85,19 @@ class Malloc(
             val newPointer = this.size
             this.size += size + headerSize
 
-            return newPointer
+            this.writeHeader(newPointer, MallocHeader(size, -1))
+
+            return newPointer + headerSize
         }
 
         // We found a free chunk.
         // TODO: Split the chunk if it is too big.
 
         // Update the previous chunk to point to the next chunk.
-        val beforeHeader = readHeader(result.previousPointer)
-        writeHeader(result.previousPointer, MallocHeader(beforeHeader.size, result.header.next))
-
+        if (result.previousPointer != -1L) {
+            val beforeHeader = readHeader(result.previousPointer)
+            writeHeader(result.previousPointer, MallocHeader(beforeHeader.size, result.header.next))
+        }
         // Update the header of the chunk to be allocated.
         writeHeader(result.pointer, MallocHeader(size, -1))
 
@@ -108,17 +111,20 @@ class Malloc(
     }
 
     fun free(pointer: Long) {
+        if (tailPointer == -1L) {
+            // There are no free chunks.
+            // This chunk will be the first free chunk.
+            tailPointer = pointer - headerSize
+            startPointer = tailPointer
+            return
+        }
+
         // Append the chunk to the end of free chunks.
         val header = readHeader(tailPointer)
         writeHeader(tailPointer, MallocHeader(header.size, pointer - headerSize))
 
         // Update the tail pointer.
         tailPointer = pointer - headerSize
-
-        // If the start pointer is not set, set it.
-        if (startPointer == -1L) {
-            startPointer = pointer - headerSize
-        }
     }
 }
 
