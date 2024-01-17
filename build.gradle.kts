@@ -24,6 +24,7 @@ buildscript {
 
 dependencies {
 //    kover(project(":util:changelog"))
+    kover(project(":util:algo"))
     kover(project(":util:colorlib"))
     kover(project(":util:common-io"))
     kover(project(":util:commander"))
