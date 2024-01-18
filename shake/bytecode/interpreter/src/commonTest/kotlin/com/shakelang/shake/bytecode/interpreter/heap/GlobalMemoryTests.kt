@@ -26,7 +26,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 1), Arb.long()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 1), Arb.long()) { i, value ->
             memory[i] = value.toByte()
             memory[i] shouldBe value.toByte()
         }
@@ -36,7 +36,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 1), Arb.long()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 1), Arb.long()) { i, value ->
             val outer = (i / memory.innerSize).toInt()
             val inner = (i % memory.innerSize).toInt()
             memory[outer, inner] = value.toByte()
@@ -50,7 +50,7 @@ class GlobalMemoryTests : FreeSpec({
 
         checkAll(
             1000,
-            Arb.long(0, 1024 * 16 * 10 - 10 - 1),
+            Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 10 - 1),
             Arb.byteArray(Arb.of(10), Arb.byte()),
         ) { i, arr ->
             memory.setBytes(i, arr)
@@ -62,7 +62,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 1), Arb.byte()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 1), Arb.byte()) { i, value ->
             memory.setByte(i, value)
             memory.getByte(i) shouldBe value
         }
@@ -72,7 +72,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 2 - 1), Arb.uByte()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 2 - 1), Arb.uByte()) { i, value ->
             memory.setUByte(i, value)
             memory.getUByte(i) shouldBe value
         }
@@ -82,7 +82,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 2 - 1), Arb.short()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 2 - 1), Arb.short()) { i, value ->
             memory.setShort(i, value)
             memory.getShort(i) shouldBe value
         }
@@ -92,7 +92,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 2 - 1), Arb.uShort()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 2 - 1), Arb.uShort()) { i, value ->
             memory.setUShort(i, value)
             memory.getUShort(i) shouldBe value
         }
@@ -102,7 +102,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 4 - 1), Arb.int()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 4 - 1), Arb.int()) { i, value ->
             memory.setInt(i, value)
             memory.getInt(i) shouldBe value
         }
@@ -112,7 +112,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 4 - 1), Arb.uInt()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 4 - 1), Arb.uInt()) { i, value ->
             memory.setUInt(i, value)
             memory.getUInt(i) shouldBe value
         }
@@ -122,7 +122,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 8 - 1), Arb.long()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 8 - 1), Arb.long()) { i, value ->
             memory.setLong(i, value)
             memory.getLong(i) shouldBe value
         }
@@ -132,7 +132,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 8 - 1), Arb.uLong()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 8 - 1), Arb.uLong()) { i, value ->
             memory.setULong(i, value)
             memory.getULong(i) shouldBe value
         }
@@ -153,7 +153,7 @@ class GlobalMemoryTests : FreeSpec({
             1000000.0f,
         )
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 4 - 1), Arb.of(*floats)) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 4 - 1), Arb.of(*floats)) { i, value ->
             memory.setFloat(i, value)
             memory.getFloat(i) shouldBe Float.fromBits(value.toBits())
         }
@@ -173,7 +173,7 @@ class GlobalMemoryTests : FreeSpec({
             100000.0,
             1000000.0,
         )
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 8 - 1), Arb.of(*doubles)) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 8 - 1), Arb.of(*doubles)) { i, value ->
             memory.setDouble(i, value)
             memory.getDouble(i) shouldBe Double.fromBits(value.toBits())
         }
@@ -183,7 +183,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 1), Arb.boolean()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 1), Arb.boolean()) { i, value ->
             memory.setBoolean(i, value)
             memory.getBoolean(i) shouldBe value
         }
@@ -193,7 +193,7 @@ class GlobalMemoryTests : FreeSpec({
         val memory = GlobalMemory()
         memory.grow(10)
 
-        checkAll(1000, Arb.long(0, 1024 * 16 * 10 - 2 - 1), Arb.char()) { i, value ->
+        checkAll(1000, Arb.long(GlobalMemory.POINTER_BASE, GlobalMemory.POINTER_BASE + 1024 * 16 * 10 - 2 - 1), Arb.char()) { i, value ->
             memory.setChar(i, value)
             memory.getChar(i) shouldBe value
         }

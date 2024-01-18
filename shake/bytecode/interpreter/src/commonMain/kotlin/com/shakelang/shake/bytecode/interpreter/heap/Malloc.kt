@@ -62,6 +62,8 @@ class Malloc(
                     resultPointer = pointer
                     resultPreviousPointer = previousPointer
                     resultHeader = header
+
+                    println("Found a chunk that is smaller than the previous best fit for $size: ${header.size}")
                 }
             }
 
@@ -73,30 +75,61 @@ class Malloc(
             // No free chunk was found.
             return null
         }
+        println("Selected chunk with size ${resultHeader.size} for $size")
 
         return FreeHeaderSearchResult(resultPointer, resultPreviousPointer, resultHeader)
     }
 
-    fun appendToUsed(pointer: Long) {
+    private fun appendToUsed(pointer: Long, size: Long = -1L) {
+        val realSize = if (size == -1L) readHeader(pointer).size else size
+        writeHeader(pointer, MallocHeader(realSize, -1))
+
         if (usedTailPointer == -1L) {
             usedTailPointer = pointer
             usedStartPointer = pointer
             return
         }
+
         val header = readHeader(usedTailPointer)
         writeHeader(usedTailPointer, MallocHeader(header.size, pointer))
         usedTailPointer = pointer
+    }
+
+    private fun appendToFree(pointer: Long, size: Long = -1L) {
+        val realSize = if (size == -1L) readHeader(pointer).size else size
+        writeHeader(pointer, MallocHeader(realSize, -1))
+
+        if (freeTailPointer == -1L) {
+            freeTailPointer = pointer
+            freeStartPointer = pointer
+            return
+        }
+
+        val header = readHeader(freeTailPointer)
+        writeHeader(freeTailPointer, MallocHeader(header.size, pointer))
+        freeTailPointer = pointer
+    }
+
+    private fun grow(size: Long): Long {
+        this.size += size
+        val overflow = this.size - this.globalMemory.size
+        if (overflow > 0) globalMemory.grow(size.divCeil(globalMemory.innerSize).toInt())
+        return this.size
     }
 
     fun malloc(size: Long): Long {
         // We need to allocate a new chunk of memory.
         // We need to find a free chunk that is big enough.
         val result = searchForFreeSpace(size)
+        result?.let {
+            println("Found a chunk with size ${it.header.size} for $size at ${it.pointer}")
+        }
+
         if (result == null) {
             // No free chunk was found.
             // We need to allocate a new chunk.
-            val newPointer = this.size
-            this.size += size + headerSize
+            val newPointer = this.size + GlobalMemory.POINTER_BASE
+            grow(size + headerSize)
             this.writeHeader(newPointer, MallocHeader(size, -1))
 
             // Append the chunk to the end of used chunks.
@@ -113,6 +146,7 @@ class Malloc(
             val beforeHeader = readHeader(result.previousPointer)
             writeHeader(result.previousPointer, MallocHeader(beforeHeader.size, result.header.next))
         }
+
         // Update the header of the chunk to be allocated.
         writeHeader(result.pointer, MallocHeader(size, -1))
 
@@ -135,6 +169,7 @@ class Malloc(
             if (header.next == pointer) {
                 return currentPointer
             }
+            currentPointer = header.next
         }
         return -1L
     }
@@ -156,20 +191,12 @@ class Malloc(
             usedStartPointer = header.next
         }
 
-        // Add the chunk to the free chunks list.
-
-        if (freeTailPointer == -1L) {
-            // There are no free chunks.
-            // This chunk will be the first free chunk.
-            freeTailPointer = headerPointer
-            freeStartPointer = headerPointer
-            return
-        }
-
-        // There are already free chunks. Append this chunk to the end and update the tail pointer.
-        writeHeader(freeTailPointer, MallocHeader(header.size, pointer - headerSize))
-        freeTailPointer = headerPointer
+        appendToFree(headerPointer, header.size)
     }
+}
+
+private fun Long.divCeil(other: Int): Long {
+    return (this + other - 1) / other
 }
 
 data class MallocHeader(

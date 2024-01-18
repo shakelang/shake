@@ -10,10 +10,10 @@ class GlobalMemory {
     var contents: Array<ByteArray> = arrayOf()
         private set
 
-    var outerSize: Long = 0
+    var outerSize: Int = 0
         private set
 
-    val innerSize: Long = 1024 * 16
+    val innerSize: Int = 1024 * 16
 
     var size: Long = 0
         private set
@@ -26,12 +26,15 @@ class GlobalMemory {
         contents[outer][inner] = value
     }
 
-    operator fun get(index: Long): Byte {
-        return contents[(index / innerSize).toInt()][(index % innerSize).toInt()]
+    operator fun get(pointer: Long): Byte {
+        val index = pointer - POINTER_BASE
+        return get((index / innerSize).toInt(), (index % innerSize).toInt())
     }
 
-    operator fun set(index: Long, value: Byte) {
-        contents[(index / innerSize).toInt()][(index % innerSize).toInt()] = value
+    operator fun set(pointer: Long, value: Byte) {
+        val index = pointer - POINTER_BASE
+        println("index: $index")
+        set((index / innerSize).toInt(), (index % innerSize).toInt(), value)
     }
 
     fun grow(blocks: Int) {
@@ -41,52 +44,57 @@ class GlobalMemory {
             if (it < contents.size) {
                 contents[it]
             } else {
-                ByteArray(innerSize.toInt())
+                ByteArray(innerSize)
             }
         }
     }
 
-    fun getBytes(index: Long, length: Long): ByteArray {
+    fun getBytes(pointer: Long, length: Long): ByteArray {
         val bytes = ByteArray(length.toInt())
-        for (i in 0 until length) bytes[i.toInt()] = this[index + i]
+        for (i in 0 until length) bytes[i.toInt()] = this[pointer + i]
         return bytes
     }
 
-    fun setBytes(index: Long, bytes: ByteArray) {
-        for (i in bytes.indices) this[index + i] = bytes[i]
+    fun setBytes(pointer: Long, bytes: ByteArray) {
+        for (i in bytes.indices) this[pointer + i] = bytes[i]
     }
 
-    fun getByte(index: Long): Byte = this[index]
+    fun getByte(pointer: Long): Byte = this[pointer]
 
-    fun setByte(index: Long, value: Byte) {
-        this[index] = value
+    fun setByte(pointer: Long, value: Byte) {
+        this[pointer] = value
     }
 
-    fun getShort(index: Long): Short = getBytes(index, 2).toShort()
-    fun setShort(index: Long, value: Short) = setBytes(index, value.toBytes())
-    fun getInt(index: Long): Int = getBytes(index, 4).toInt()
-    fun setInt(index: Long, value: Int) = setBytes(index, value.toBytes())
-    fun getLong(index: Long): Long = getBytes(index, 8).toLong()
-    fun setLong(index: Long, value: Long) = setBytes(index, value.toBytes())
+    fun getShort(pointer: Long): Short = getBytes(pointer, 2).toShort()
+    fun setShort(pointer: Long, value: Short) = setBytes(pointer, value.toBytes())
+    fun getInt(pointer: Long): Int = getBytes(pointer, 4).toInt()
+    fun setInt(pointer: Long, value: Int) = setBytes(pointer, value.toBytes())
+    fun getLong(pointer: Long): Long = getBytes(pointer, 8).toLong()
+    fun setLong(pointer: Long, value: Long) = setBytes(pointer, value.toBytes())
 
-    fun getUByte(index: Long): UByte = getByte(index).toUByte()
-    fun setUByte(index: Long, value: UByte) = setByte(index, value.toByte())
-    fun getUShort(index: Long): UShort = getShort(index).toUShort()
-    fun setUShort(index: Long, value: UShort) = setShort(index, value.toShort())
-    fun getUInt(index: Long): UInt = getInt(index).toUInt()
-    fun setUInt(index: Long, value: UInt) = setInt(index, value.toInt())
-    fun getULong(index: Long): ULong = getLong(index).toULong()
-    fun setULong(index: Long, value: ULong) = setLong(index, value.toLong())
+    fun getUByte(pointer: Long): UByte = getByte(pointer).toUByte()
+    fun setUByte(pointer: Long, value: UByte) = setByte(pointer, value.toByte())
+    fun getUShort(pointer: Long): UShort = getShort(pointer).toUShort()
+    fun setUShort(pointer: Long, value: UShort) = setShort(pointer, value.toShort())
+    fun getUInt(pointer: Long): UInt = getInt(pointer).toUInt()
+    fun setUInt(pointer: Long, value: UInt) = setInt(pointer, value.toInt())
+    fun getULong(pointer: Long): ULong = getLong(pointer).toULong()
+    fun setULong(pointer: Long, value: ULong) = setLong(pointer, value.toLong())
 
-    fun getBoolean(index: Long): Boolean = getByte(index) != 0.toByte()
-    fun setBoolean(index: Long, value: Boolean) = setByte(index, if (value) 1 else 0)
+    fun getBoolean(pointer: Long): Boolean = getByte(pointer) != 0.toByte()
+    fun setBoolean(pointer: Long, value: Boolean) = setByte(pointer, if (value) 1 else 0)
 
-    fun getChar(index: Long): Char = getShort(index).toInt().toChar()
-    fun setChar(index: Long, value: Char) = setShort(index, value.code.toShort())
+    fun getChar(pointer: Long): Char = getShort(pointer).toInt().toChar()
+    fun setChar(pointer: Long, value: Char) = setShort(pointer, value.code.toShort())
 
-    fun getFloat(index: Long): Float = getInt(index).toFloat()
-    fun setFloat(index: Long, value: Float) = setInt(index, value.toInt())
+    fun getFloat(pointer: Long): Float = getInt(pointer).toFloat()
+    fun setFloat(pointer: Long, value: Float) = setInt(pointer, value.toInt())
 
-    fun getDouble(index: Long): Double = getLong(index).toDouble()
-    fun setDouble(index: Long, value: Double) = setLong(index, value.toLong())
+    fun getDouble(pointer: Long): Double = getLong(pointer).toDouble()
+    fun setDouble(pointer: Long, value: Double) = setLong(pointer, value.toLong())
+
+    companion object {
+        // 0x78 BE are the first two bytes of a pointer
+        const val POINTER_BASE: Long = 0x78BE0000_00000000L
+    }
 }
