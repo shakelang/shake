@@ -1,7 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.heap
 
 import com.shakelang.util.primitives.bytes.toBytes
-import com.shakelang.util.primitives.bytes.toLong
 
 class Malloc(
     val globalMemory: GlobalMemory,
@@ -28,15 +27,33 @@ class Malloc(
         private set
 
     fun readHeader(pointer: Long): MallocHeader {
+        if (!globalMemory.contains(pointer) || !globalMemory.contains(pointer + 15)) {
+            throw OutOfRangeException("Cannot read header at $pointer")
+        }
+
+        val sizeInfo = globalMemory.getLong(pointer)
+        val next = globalMemory.getLong(pointer + 8)
+
+        val size = sizeInfo and 0x0000FFFFFFFFFFFF // 48 bits
+        val additionalInfo = ((sizeInfo and 0xFFFF000000000000uL.toLong()) shr 48).toInt() // 16 bits
+
         return MallocHeader(
-            globalMemory.getBytes(pointer, 8).toLong(),
-            globalMemory.getBytes(pointer + 8, 8).toLong(),
+            size,
+            next,
+            additionalInfo,
         )
     }
 
     fun writeHeader(pointer: Long, header: MallocHeader) {
-        globalMemory.setBytes(pointer, header.size.toBytes())
-        globalMemory.setBytes(pointer + 8, header.next.toBytes())
+        if (!globalMemory.contains(pointer) || !globalMemory.contains(pointer + 15)) {
+            throw OutOfRangeException("Cannot read header at $pointer")
+        }
+
+        val sizeInfo = header.size or (header.additionalInfo.toLong() shl 48)
+        val next = header.next
+
+        globalMemory.setBytes(pointer, sizeInfo.toBytes())
+        globalMemory.setBytes(pointer + 8, next.toBytes())
     }
 
     private fun searchForFreeSpace(size: Long): FreeHeaderSearchResult? {
@@ -200,9 +217,59 @@ private fun Long.divCeil(other: Int): Long {
 }
 
 data class MallocHeader(
-    val size: Long,
-    val next: Long,
-)
+    var size: Long,
+    var next: Long,
+
+    // The additional info is stored in the last 16 bits of the first 8 header bytes.
+    // The second of these two bytes is used to store the number of times this
+    // chunk survived a garbage collection.
+    // The first byte stores a list of boolean values.
+    // 0x01: Is marked (as used)
+    // 0x02: Is pinned (cannot be collected)
+    // 0x04: Is scanned (has been scanned by the garbage collector in the current cycle)
+    // 0x08: Reserved for future use
+    // 0x10: Reserved for future use
+    // 0x20: Reserved for future use
+    // 0x40: Reserved for future use
+    // 0x80: Reserved for future use
+
+    var additionalInfo: Int = 0,
+) {
+    val nextIndex: Long get() = GlobalMemory.pointerToIndex(next)
+    var isMarked: Boolean
+        get() = additionalInfo and 0x1 == 0x1
+        set(value) = if (value) mark() else unmark()
+
+    var isPinned: Boolean
+        get() = additionalInfo and 0x2 == 0x2
+        set(value) {
+            additionalInfo = additionalInfo and 0xfd or (if (value) 0x2 else 0x0)
+        }
+
+    var isScanned: Boolean
+        get() = additionalInfo and 0x4 == 0x4
+        set(value) {
+            additionalInfo = additionalInfo and 0xfb or (if (value) 0x4 else 0x0)
+        }
+
+    var survived: Short
+        get() = (additionalInfo and 0xf).toShort()
+        set(value) {
+            additionalInfo = additionalInfo and 0xf0 or (value.toInt() and 0xf)
+        }
+
+    fun check(): Boolean {
+        return GlobalMemory.isPointer(next)
+    }
+
+    fun mark() {
+        additionalInfo = additionalInfo or 0x10
+    }
+
+    fun unmark() {
+        additionalInfo = additionalInfo and 0x10.inv()
+    }
+}
 
 private data class FreeHeaderSearchResult(
     val pointer: Long,

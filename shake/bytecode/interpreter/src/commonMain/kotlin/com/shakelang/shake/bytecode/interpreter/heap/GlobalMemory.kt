@@ -1,9 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter.heap
 
-import com.shakelang.util.primitives.bytes.toBytes
-import com.shakelang.util.primitives.bytes.toInt
-import com.shakelang.util.primitives.bytes.toLong
-import com.shakelang.util.primitives.bytes.toShort
+import com.shakelang.util.primitives.bytes.*
+
+class OutOfRangeException(message: String) : RuntimeException(message)
 
 class GlobalMemory {
 
@@ -27,13 +26,14 @@ class GlobalMemory {
     }
 
     operator fun get(pointer: Long): Byte {
-        val index = pointer - POINTER_BASE
+        if (!contains(pointer)) throw OutOfRangeException("Cannot read byte at $pointer")
+        val index = pointerToIndex(pointer)
         return get((index / innerSize).toInt(), (index % innerSize).toInt())
     }
 
     operator fun set(pointer: Long, value: Byte) {
-        val index = pointer - POINTER_BASE
-        println("index: $index")
+        if (!contains(pointer)) throw OutOfRangeException("Cannot write byte at ${pointer.toBytes().toHexString()}")
+        val index = pointerToIndex(pointer)
         set((index / innerSize).toInt(), (index % innerSize).toInt(), value)
     }
 
@@ -92,9 +92,30 @@ class GlobalMemory {
 
     fun getDouble(pointer: Long): Double = getLong(pointer).toDouble()
     fun setDouble(pointer: Long, value: Double) = setLong(pointer, value.toLong())
+    fun isPointer(pointer: Long): Boolean = Companion.isPointer(getLong(pointer))
+
+    fun getPointer(pointer: Long): Long = getLong(pointer)
+    fun setPointer(pointer: Long, value: Long) = setLong(pointer, value)
+
+    fun contains(pointer: Long): Boolean {
+        val index = pointerToIndex(pointer)
+        println("index: $index (from ${pointer.toBytes().toHexString()})")
+        return index in 0..<size
+    }
 
     companion object {
-        // 0x78 BE are the first two bytes of a pointer
-        const val POINTER_BASE: Long = 0x78BE0000_00000000L
+        // Let's define how our pointers will look like:
+        // A pointer should start with 011110001011 (0x78B)
+        // Then we have 4 bits (16 values) for storing additional
+        // information about the pointer
+        // Then we have 56 bits (2^52 values) for storing the actual
+        // pointer.
+        // This is enough to address 4 PiB of memory, which is a lot,
+        // so we should be fine for a while
+        const val POINTER_BASE: Long = 0x78B00000_00000000L
+
+        fun pointerToIndex(pointer: Long): Long = pointer and 0x0000_FFFF_FFFF_FFFFL
+        fun indexToPointer(index: Long): Long = POINTER_BASE or index
+        fun isPointer(pointer: Long): Boolean = pointer == -1L || (pointer and 0xFFF0_0000_0000_0000uL.toLong() == POINTER_BASE)
     }
 }
