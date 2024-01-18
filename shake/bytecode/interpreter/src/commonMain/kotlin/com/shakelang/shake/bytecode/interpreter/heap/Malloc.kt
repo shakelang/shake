@@ -1,6 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter.heap
 
 import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toHexString
 
 class Malloc(
     val globalMemory: GlobalMemory,
@@ -28,7 +29,7 @@ class Malloc(
 
     fun readHeader(pointer: Long): MallocHeader {
         if (!globalMemory.contains(pointer) || !globalMemory.contains(pointer + 15)) {
-            throw OutOfRangeException("Cannot read header at $pointer")
+            throw OutOfRangeException("Cannot read header at ${pointer.toBytes().toHexString()}")
         }
 
         val sizeInfo = globalMemory.getLong(pointer)
@@ -54,6 +55,15 @@ class Malloc(
 
         globalMemory.setBytes(pointer, sizeInfo.toBytes())
         globalMemory.setBytes(pointer + 8, next.toBytes())
+    }
+
+    fun readHeaderFor(pointer: Long): MallocHeader {
+        if (pointer == -1L) throw OutOfRangeException("Cannot read header for -1")
+        return readHeader(pointer - headerSize)
+    }
+
+    fun writeHeaderFor(pointer: Long, header: MallocHeader) {
+        writeHeader(pointer - headerSize, header)
     }
 
     private fun searchForFreeSpace(size: Long): FreeHeaderSearchResult? {
@@ -237,7 +247,7 @@ data class MallocHeader(
 ) {
     val nextIndex: Long get() = GlobalMemory.pointerToIndex(next)
     var isMarked: Boolean
-        get() = additionalInfo and 0x1 == 0x1
+        get() = additionalInfo and 0x10 == 0x10
         set(value) = if (value) mark() else unmark()
 
     var isPinned: Boolean

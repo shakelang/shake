@@ -13,7 +13,7 @@ class GarbageCollector(
     fun scan(localMemory: ByteArray) {
         var sp = 0
         while (sp < localMemory.size - 8) {
-            val pointer = localMemory.getLong(sp)
+            val pointer = localMemory.getLong(sp) - 16
             sp++
             if (!GlobalMemory.isPointer(pointer)) continue
 
@@ -50,7 +50,7 @@ class GarbageCollector(
             val p = sp
             sp += 8
             if (globalMemory.isPointer(p)) {
-                val pointer = globalMemory.getPointer(p)
+                val pointer = globalMemory.getPointer(p) - malloc.headerSize
 
                 val header = try {
                     malloc.readHeader(pointer)
@@ -66,17 +66,21 @@ class GarbageCollector(
 
                 header.mark()
                 malloc.writeHeader(pointer, header)
+
                 changed = true
             }
         }
+
+        if (changed) println("changed")
 
         return changed
     }
 
     fun scanBlock(header: MallocHeader, blockPointer: Long): Boolean {
-        if (!header.isScanned) return false
         val start = blockPointer + malloc.headerSize
         val end = start + header.size
+        header.isScanned = true
+        malloc.writeHeader(blockPointer, header)
         return scanRegion(start, end)
     }
 
@@ -91,7 +95,16 @@ class GarbageCollector(
         while (pointer != -1L) {
             // For performance reasons, we give the header directly to the scanBlock function
             // instead of reading it again
+
+            println("Scanning block at $pointer")
             val header = malloc.readHeader(pointer)
+
+            // skip if block is already scanned or not marked
+            if (header.isScanned || !header.isMarked) {
+                pointer = header.next
+                continue
+            }
+
             if (scanBlock(header, pointer) && !changed) changed = true
             pointer = header.next
         }
@@ -102,6 +115,7 @@ class GarbageCollector(
         var changed = true
         while (changed) {
             changed = scanBlocks(startPointer)
+            println("Changed: $changed")
         }
     }
 

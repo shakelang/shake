@@ -34,6 +34,10 @@ class ShakeInterpreter(
     var latestReturnData: ByteArray = ByteArray(0)
         private set
 
+    internal fun pushStack(element: ShakeCallStackElement) {
+        _callStack.add(element)
+    }
+
     fun tick(): Boolean {
         if (callStack.isEmpty()) return false
         callStack.last().tick()

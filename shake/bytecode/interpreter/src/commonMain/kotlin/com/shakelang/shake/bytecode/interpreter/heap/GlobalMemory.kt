@@ -99,7 +99,6 @@ class GlobalMemory {
 
     fun contains(pointer: Long): Boolean {
         val index = pointerToIndex(pointer)
-        println("index: $index (from ${pointer.toBytes().toHexString()})")
         return index in 0..<size
     }
 
