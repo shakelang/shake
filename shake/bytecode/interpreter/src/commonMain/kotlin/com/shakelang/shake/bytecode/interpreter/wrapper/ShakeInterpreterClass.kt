@@ -2,6 +2,7 @@ package com.shakelang.shake.bytecode.interpreter.wrapper
 
 import com.shakelang.shake.bytecode.interpreter.format.Class
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
+import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
 interface ShakeInterpreterClass {
@@ -16,6 +17,8 @@ interface ShakeInterpreterClass {
     val fields: List<ShakeInterpreterField>
     val subclasses: List<ShakeInterpreterClass>
 
+    val sizeInMemory: Long
+
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
     fun getMethod(descriptor: PathDescriptor): ShakeInterpreterMethod?
@@ -26,6 +29,8 @@ interface ShakeInterpreterClass {
     fun getDirectChildClass(name: String): ShakeInterpreterClass?
     fun getDirectChildMethod(name: String): ShakeInterpreterMethod?
     fun getDirectChildField(name: String): ShakeInterpreterField?
+
+    fun getStorageOfField(name: String): Long
 
     companion object {
         fun of(
@@ -48,6 +53,19 @@ interface ShakeInterpreterClass {
                 override val isStatic: Boolean = storage.isStatic
                 override val constantPool: ConstantPool = constantPool
                 override val pkg: ShakeInterpreterPackage = pkg
+
+                val fieldStorages: ByteArray
+                override val sizeInMemory: Long
+
+                init {
+                    var size = 4L // 4 bytes for class header
+                    fieldStorages = storage.fields.map {
+                        val sizeByte = size.toByte()
+                        size += TypeDescriptor.parse(it.type).byteSize.toByte()
+                        sizeByte
+                    }.toByteArray()
+                    sizeInMemory = size
+                }
 
                 // Specification of the dynamic loading system:
                 // Please read this before you try to understand the code below!
@@ -204,6 +222,11 @@ interface ShakeInterpreterClass {
                 override fun getDirectChildField(name: String): ShakeInterpreterField? {
                     val index = resolveFieldIndex(name)
                     return if (index == -1) null else getField(index)
+                }
+
+                override fun getStorageOfField(name: String): Long {
+                    val index = resolveFieldIndex(name)
+                    return if (index == -1) -1 else fieldStorages[index].toLong()
                 }
             }
         }
