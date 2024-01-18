@@ -75,9 +75,9 @@ class MallocTests : FreeSpec({
         malloc.free(pointer)
 
         globalMemory.getLong(0) shouldBe 100L
-        globalMemory.getLong(8) shouldBe -1L
-        malloc.startPointer shouldBe 0L
-        malloc.tailPointer shouldBe 0L
+        globalMemory.getLong(8) shouldBe 116L
+        malloc.freeStartPointer shouldBe 0L
+        malloc.freeTailPointer shouldBe 0L
 
         malloc.free(pointer3)
 
@@ -85,8 +85,8 @@ class MallocTests : FreeSpec({
         globalMemory.getLong(240) shouldBe -1L
         globalMemory.getLong(0) shouldBe 100L
         globalMemory.getLong(8) shouldBe 232L
-        malloc.startPointer shouldBe 0L
-        malloc.tailPointer shouldBe 232L
+        malloc.freeStartPointer shouldBe 0L
+        malloc.freeTailPointer shouldBe 232L
 
         malloc.free(pointer2)
 
@@ -96,8 +96,8 @@ class MallocTests : FreeSpec({
         globalMemory.getLong(8) shouldBe 232L
         globalMemory.getLong(232) shouldBe 100L
         globalMemory.getLong(240) shouldBe 116L
-        malloc.startPointer shouldBe 0L
-        malloc.tailPointer shouldBe 116L
+        malloc.freeStartPointer shouldBe 0L
+        malloc.freeTailPointer shouldBe 116L
 
         val pointer4 = malloc.malloc(100L)
 
@@ -108,8 +108,8 @@ class MallocTests : FreeSpec({
         globalMemory.getLong(124) shouldBe -1L
         globalMemory.getLong(232) shouldBe 100L
         globalMemory.getLong(240) shouldBe 116L
-        malloc.startPointer shouldBe 232L
-        malloc.tailPointer shouldBe 116L
+        malloc.freeStartPointer shouldBe 232L
+        malloc.freeTailPointer shouldBe 116L
 
         val pointer5 = malloc.malloc(100L)
 
@@ -120,8 +120,8 @@ class MallocTests : FreeSpec({
         globalMemory.getLong(124) shouldBe -1L
         globalMemory.getLong(232) shouldBe 100L
         globalMemory.getLong(240) shouldBe -1L
-        malloc.startPointer shouldBe 116L
-        malloc.tailPointer shouldBe 116L
+        malloc.freeStartPointer shouldBe 116L
+        malloc.freeTailPointer shouldBe 116L
 
         malloc.free(pointer4)
 
@@ -131,8 +131,8 @@ class MallocTests : FreeSpec({
         globalMemory.getLong(124) shouldBe 0L
         globalMemory.getLong(232) shouldBe 100L
         globalMemory.getLong(240) shouldBe -1L
-        malloc.startPointer shouldBe 116L
-        malloc.tailPointer shouldBe 0L
+        malloc.freeStartPointer shouldBe 116L
+        malloc.freeTailPointer shouldBe 0L
     }
 
     "malloc + free with different sizes" {
@@ -150,7 +150,7 @@ class MallocTests : FreeSpec({
         pointer3 shouldBe 348L
 
         globalMemory.getLong(0) shouldBe 100L
-        globalMemory.getLong(8) shouldBe -1L
+        globalMemory.getLong(8) shouldBe 116L
         globalMemory.getLong(116) shouldBe 200L
         globalMemory.getLong(124) shouldBe -1L
         globalMemory.getLong(332) shouldBe 30L

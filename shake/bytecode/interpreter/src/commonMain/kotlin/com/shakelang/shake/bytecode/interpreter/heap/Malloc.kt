@@ -6,8 +6,10 @@ import com.shakelang.util.primitives.bytes.toLong
 class Malloc(
     val globalMemory: GlobalMemory,
 ) {
-    var startPointer: Long = -1
-    var tailPointer: Long = -1
+    var freeStartPointer: Long = -1
+    var freeTailPointer: Long = -1
+    var usedStartPointer: Long = -1
+    var usedTailPointer: Long = -1
 
     // Let's define some stuff
     // All our malloc objects have the following header:
@@ -38,7 +40,7 @@ class Malloc(
     }
 
     private fun searchForFreeSpace(size: Long): FreeHeaderSearchResult? {
-        var pointer = startPointer
+        var pointer = freeStartPointer
         var resultPreviousPointer = -1L
         var resultPointer = -1L
         var resultHeader = MallocHeader(0, 0)
@@ -75,6 +77,17 @@ class Malloc(
         return FreeHeaderSearchResult(resultPointer, resultPreviousPointer, resultHeader)
     }
 
+    fun appendToUsed(pointer: Long) {
+        if (usedTailPointer == -1L) {
+            usedTailPointer = pointer
+            usedStartPointer = pointer
+            return
+        }
+        val header = readHeader(usedTailPointer)
+        writeHeader(usedTailPointer, MallocHeader(header.size, pointer))
+        usedTailPointer = pointer
+    }
+
     fun malloc(size: Long): Long {
         // We need to allocate a new chunk of memory.
         // We need to find a free chunk that is big enough.
@@ -84,8 +97,10 @@ class Malloc(
             // We need to allocate a new chunk.
             val newPointer = this.size
             this.size += size + headerSize
-
             this.writeHeader(newPointer, MallocHeader(size, -1))
+
+            // Append the chunk to the end of used chunks.
+            appendToUsed(newPointer)
 
             return newPointer + headerSize
         }
@@ -101,30 +116,59 @@ class Malloc(
         // Update the header of the chunk to be allocated.
         writeHeader(result.pointer, MallocHeader(size, -1))
 
+        // Append the chunk to the end of used chunks.
+        appendToUsed(result.pointer)
+
         // If this is the first chunk, update the start pointer.
-        if (result.pointer == startPointer) {
-            startPointer = result.header.next
+        if (result.pointer == freeStartPointer) {
+            freeStartPointer = result.header.next
         }
 
         // Return the pointer to the chunk.
         return result.pointer + headerSize
     }
 
+    private fun findBefore(pointer: Long): Long {
+        var currentPointer = freeStartPointer
+        while (currentPointer != -1L) {
+            val header = readHeader(currentPointer)
+            if (header.next == pointer) {
+                return currentPointer
+            }
+        }
+        return -1L
+    }
+
     fun free(pointer: Long) {
-        if (tailPointer == -1L) {
+        val headerPointer = pointer - headerSize
+        val header = readHeader(headerPointer)
+
+        // Remove the chunk from the used chunks list.
+        val beforePointer = findBefore(headerPointer)
+        if (beforePointer != -1L) {
+            val beforeHeader = readHeader(beforePointer)
+            writeHeader(beforePointer, MallocHeader(beforeHeader.size, header.next))
+        }
+        if (headerPointer == usedTailPointer) {
+            usedTailPointer = beforePointer
+        }
+        if (headerPointer == usedStartPointer) {
+            usedStartPointer = header.next
+        }
+
+        // Add the chunk to the free chunks list.
+
+        if (freeTailPointer == -1L) {
             // There are no free chunks.
             // This chunk will be the first free chunk.
-            tailPointer = pointer - headerSize
-            startPointer = tailPointer
+            freeTailPointer = headerPointer
+            freeStartPointer = headerPointer
             return
         }
 
-        // Append the chunk to the end of free chunks.
-        val header = readHeader(tailPointer)
-        writeHeader(tailPointer, MallocHeader(header.size, pointer - headerSize))
-
-        // Update the tail pointer.
-        tailPointer = pointer - headerSize
+        // There are already free chunks. Append this chunk to the end and update the tail pointer.
+        writeHeader(freeTailPointer, MallocHeader(header.size, pointer - headerSize))
+        freeTailPointer = headerPointer
     }
 }
 
