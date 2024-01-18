@@ -33,7 +33,7 @@ class Malloc(
         }
 
         val sizeInfo = globalMemory.getLong(pointer)
-        val next = globalMemory.getLong(pointer + 8)
+        val next = globalMemory.getLong(pointer + BASE)
 
         val size = sizeInfo and 0x0000FFFFFFFFFFFF // 48 bits
         val additionalInfo = ((sizeInfo and 0xFFFF000000000000uL.toLong()) shr 48).toInt() // 16 bits
@@ -145,19 +145,21 @@ class Malloc(
     }
 
     fun malloc(size: Long): Long {
+        val rsize = size.ceilToBase(8)
+
         // We need to allocate a new chunk of memory.
         // We need to find a free chunk that is big enough.
-        val result = searchForFreeSpace(size)
+        val result = searchForFreeSpace(rsize)
         result?.let {
-            println("Found a chunk with size ${it.header.size} for $size at ${it.pointer}")
+            println("Found a chunk with size ${it.header.size} for $rsize at ${it.pointer}")
         }
 
         if (result == null) {
             // No free chunk was found.
             // We need to allocate a new chunk.
             val newPointer = this.size + GlobalMemory.POINTER_BASE
-            grow(size + headerSize)
-            this.writeHeader(newPointer, MallocHeader(size, -1))
+            grow(rsize + headerSize)
+            this.writeHeader(newPointer, MallocHeader(rsize, -1))
 
             // Append the chunk to the end of used chunks.
             appendToUsed(newPointer)
@@ -175,7 +177,7 @@ class Malloc(
         }
 
         // Update the header of the chunk to be allocated.
-        writeHeader(result.pointer, MallocHeader(size, -1))
+        writeHeader(result.pointer, MallocHeader(rsize, -1))
 
         // Append the chunk to the end of used chunks.
         appendToUsed(result.pointer)
@@ -223,10 +225,21 @@ class Malloc(
 
         appendToFree(headerPointer, header.size)
     }
+
+    companion object {
+        const val BASE = 8
+    }
 }
 
 private fun Long.divCeil(other: Int): Long {
     return (this + other - 1) / other
+}
+
+private fun Long.ceilToBase(base: Long): Long {
+    // If we ceil 7 to base 4, we get 8.
+    // So we basically make sure that the returned value is
+    // a multiple of base and is bigger or equal to the original
+    return ((this - 1) / base + 1) * base
 }
 
 data class MallocHeader(
