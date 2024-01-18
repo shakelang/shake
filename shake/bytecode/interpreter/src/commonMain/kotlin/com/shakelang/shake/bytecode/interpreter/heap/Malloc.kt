@@ -201,8 +201,11 @@ class Malloc(
         return -1L
     }
 
-    fun free(pointer: Long) {
-        val headerPointer = pointer - headerSize
+    fun freePointer(pointer: Long) {
+        free(pointer - headerSize)
+    }
+
+    fun free(headerPointer: Long) {
         val header = readHeader(headerPointer)
 
         // Remove the chunk from the used chunks list.

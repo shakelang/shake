@@ -72,14 +72,14 @@ class MallocTests : FreeSpec({
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 232) shouldBe 100L
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 240) shouldBe -1L
 
-        malloc.free(pointer)
+        malloc.freePointer(pointer)
 
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 0) shouldBe 100L
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 8) shouldBe -1L
         malloc.freeStartPointer shouldBe 0L + GlobalMemory.POINTER_BASE
         malloc.freeTailPointer shouldBe 0L + GlobalMemory.POINTER_BASE
 
-        malloc.free(pointer3)
+        malloc.freePointer(pointer3)
 
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 232) shouldBe 100L
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 240) shouldBe -1L
@@ -88,7 +88,7 @@ class MallocTests : FreeSpec({
         malloc.freeStartPointer shouldBe 0L + GlobalMemory.POINTER_BASE
         malloc.freeTailPointer shouldBe 232L + GlobalMemory.POINTER_BASE
 
-        malloc.free(pointer2)
+        malloc.freePointer(pointer2)
 
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 116) shouldBe 100L
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 124) shouldBe -1L
@@ -123,7 +123,7 @@ class MallocTests : FreeSpec({
         malloc.freeStartPointer shouldBe 116L + GlobalMemory.POINTER_BASE
         malloc.freeTailPointer shouldBe 116L + GlobalMemory.POINTER_BASE
 
-        malloc.free(pointer4)
+        malloc.freePointer(pointer4)
 
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 0) shouldBe 100L
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 8) shouldBe -1L
@@ -156,9 +156,9 @@ class MallocTests : FreeSpec({
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 332) shouldBe 30L
         globalMemory.getLong(GlobalMemory.POINTER_BASE + 340) shouldBe -1L
 
-        malloc.free(pointer)
-        malloc.free(pointer2)
-        malloc.free(pointer3)
+        malloc.freePointer(pointer)
+        malloc.freePointer(pointer2)
+        malloc.freePointer(pointer3)
 
         malloc.malloc(29L) shouldBe 348L + GlobalMemory.POINTER_BASE
         malloc.malloc(200L) shouldBe 132L + GlobalMemory.POINTER_BASE

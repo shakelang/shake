@@ -143,7 +143,8 @@ class GarbageCollector(
 
         while (pointer != -1L) {
             val header = malloc.readHeader(pointer)
-            if (header.isMarked) {
+            if (!header.isMarked) {
+                println("Freeing $pointer")
                 malloc.free(pointer)
             } else {
                 header.survived++
