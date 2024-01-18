@@ -12,7 +12,7 @@ class GarbageCollector(
 
     fun scan(localMemory: ByteArray) {
         var sp = 0
-        while (sp < localMemory.size - 8) {
+        while (sp < localMemory.size - 7) {
             val pointer = localMemory.getLong(sp) - 16
             sp++
             if (!GlobalMemory.isPointer(pointer)) continue
@@ -71,8 +71,6 @@ class GarbageCollector(
             }
         }
 
-        if (changed) println("changed")
-
         return changed
     }
 
@@ -96,7 +94,6 @@ class GarbageCollector(
             // For performance reasons, we give the header directly to the scanBlock function
             // instead of reading it again
 
-            println("Scanning block at $pointer")
             val header = malloc.readHeader(pointer)
 
             // skip if block is already scanned or not marked
@@ -115,7 +112,6 @@ class GarbageCollector(
         var changed = true
         while (changed) {
             changed = scanBlocks(startPointer)
-            println("Changed: $changed")
         }
     }
 

@@ -1,7 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.heap
 
 import com.shakelang.shake.bytecode.interpreter.ByteStack
-import com.shakelang.shake.bytecode.interpreter.ShakeCallStackElement
 import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.util.primitives.bytes.toBytes
 import io.kotest.core.spec.style.FreeSpec
@@ -131,6 +130,35 @@ class GarbageCollectorTests : FreeSpec({
 
             val locals = pointer1.toBytes()
             val stack = byteArrayOf()
+
+            interpreter.pushStack(
+                ShakeCallStackElement(
+                    stack,
+                    locals,
+                ),
+            )
+
+            garbageCollector.scanLocalReferences()
+
+            val header1 = malloc.readHeaderFor(pointer1)
+            val header2 = malloc.readHeaderFor(pointer2)
+
+            header1.isMarked shouldBe true
+            header2.isMarked shouldBe false
+            header1.isScanned shouldBe false
+            header2.isScanned shouldBe false
+        }
+    }
+
+    "marking references on stack" {
+        test {
+            val pointer2 = malloc.malloc(8)
+            val pointer1 = malloc.malloc(8)
+
+            globalMemory.setLong(pointer1, pointer2)
+
+            val locals = byteArrayOf()
+            val stack = pointer1.toBytes()
 
             interpreter.pushStack(
                 ShakeCallStackElement(

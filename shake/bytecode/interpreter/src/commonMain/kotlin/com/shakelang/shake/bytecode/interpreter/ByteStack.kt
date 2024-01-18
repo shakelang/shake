@@ -87,6 +87,6 @@ class ByteStack(
             bytes[i] = element!!.value
             element = element.below
         }
-        return bytes
+        return bytes.reversedArray()
     }
 }
