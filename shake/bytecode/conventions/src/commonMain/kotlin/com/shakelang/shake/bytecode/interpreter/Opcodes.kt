@@ -1548,4 +1548,84 @@ object Opcodes {
      * @see - https://shakelang.com/specification/bytecode/instructions#-561-call
      */
     const val CALL: Byte = -87
+
+    /**
+     * Get a global byte
+     *
+     * Value: `0xB0`
+     *
+     * @example Syntax: `bloadg`
+     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-1-bloadg
+     */
+    const val BLOADG: Byte = -80
+
+    /**
+     * Get a global short
+     *
+     * Value: `0xB1`
+     *
+     * @example Syntax: `sloadg`
+     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-2-sloadg
+     */
+    const val SLOADG: Byte = -79
+
+    /**
+     * Get a global int
+     *
+     * Value: `0xB2`
+     *
+     * @example Syntax: `iloadg`
+     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-3-iloadg
+     */
+    const val ILOADG: Byte = -78
+
+    /**
+     * Get a global long
+     *
+     * Value: `0xB3`
+     *
+     * @example Syntax: `lloadg`
+     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-4-lloadg
+     */
+    const val LLOADG: Byte = -77
+
+    /**
+     * Store a global byte
+     *
+     * Value: `0xB4`
+     *
+     * @example Syntax: `bstoreg`
+     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-5-bstoreg
+     */
+    const val BSTOREG: Byte = -76
+
+    /**
+     * Store a global short
+     *
+     * Value: `0xB5`
+     *
+     * @example Syntax: `sstoreg`
+     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-6-sstoreg
+     */
+    const val SSTOREG: Byte = -75
+
+    /**
+     * Store a global int
+     *
+     * Value: `0xB6`
+     *
+     * @example Syntax: `istoreg`
+     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-7-istoreg
+     */
+    const val ISTOREG: Byte = -74
+
+    /**
+     * Store a global long
+     *
+     * Value: `0xB7`
+     *
+     * @example Syntax: `lstoreg`
+     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-8-lstoreg
+     */
+    const val LSTOREG: Byte = -73
 }
