@@ -1,5 +1,8 @@
 package com.shakelang.shake.bytecode.interpreter
 
+import com.shakelang.shake.bytecode.interpreter.heap.GarbageCollector
+import com.shakelang.shake.bytecode.interpreter.heap.GlobalMemory
+import com.shakelang.shake.bytecode.interpreter.heap.Malloc
 import com.shakelang.shake.bytecode.interpreter.natives.ShakeInterpreterProcess
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClass
@@ -22,14 +25,17 @@ interface ShakeCallStackElement {
     fun tick()
 }
 
-class ShakeInterpreter(
-    val classPath: ShakeClasspath = ShakeClasspath.create(),
-) {
+class ShakeInterpreter {
+
+    val classPath = ShakeClasspath.create(this)
 
     val process = ShakeInterpreterProcess()
 
     val callStack: List<ShakeCallStackElement> get() = _callStack
     private val _callStack = mutableListOf<ShakeCallStackElement>()
+    val globalMemory = GlobalMemory()
+    val malloc = Malloc(globalMemory)
+    val garbageCollector = GarbageCollector(malloc, this)
 
     var latestReturnData: ByteArray = ByteArray(0)
         private set

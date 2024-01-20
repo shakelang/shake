@@ -8,7 +8,6 @@ package com.shakelang.shake.cli
 
 import com.shakelang.shake.bytecode.generator.ShakeBytecodeGenerator
 import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
-import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.ShakeParser
@@ -218,9 +217,8 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
             processor.loadSynthetic(src ?: "stdin.ConsoleInput", pr.tree)
             processor.finish()
             val storageFormats = ShakeBytecodeGenerator().generateProject(processor.project)
-            val classpath = ShakeClasspath.create()
-            storageFormats.forEach { classpath.load(it) }
-            val interpreter = ShakeInterpreter(classpath)
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(storageFormats)
             if (main == null) return logger.warn("No main method specified, cannot execute program!")
             interpreter.putFunctionOnStack(main, byteArrayOf()) // TODO: Add arguments
             val tickAmount = interpreter.run()

@@ -54,12 +54,12 @@ interface ShakeInterpreterClass {
                 override val constantPool: ConstantPool = constantPool
                 override val pkg: ShakeInterpreterPackage = pkg
 
-                val fieldStorages: ByteArray
+                val memoryMap: ByteArray
                 override val sizeInMemory: Long
 
                 init {
                     var size = 4L // 4 bytes for class header
-                    fieldStorages = storage.fields.map {
+                    memoryMap = storage.fields.map {
                         val sizeByte = size.toByte()
                         size += TypeDescriptor.parse(it.type).byteSize.toByte()
                         sizeByte
@@ -226,7 +226,7 @@ interface ShakeInterpreterClass {
 
                 override fun getStorageOfField(name: String): Long {
                     val index = resolveFieldIndex(name)
-                    return if (index == -1) -1 else fieldStorages[index].toLong()
+                    return if (index == -1) -1 else memoryMap[index].toLong()
                 }
             }
         }

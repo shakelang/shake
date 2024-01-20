@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.Class
 import com.shakelang.shake.bytecode.interpreter.format.Field
 import com.shakelang.shake.bytecode.interpreter.format.Method
@@ -11,7 +12,7 @@ interface ShakeInterpreterPackage {
     // This is a list of storages, because we could potentially have two libraries that add classes to
     // the same package.
     val storages: List<StorageFormat>
-
+    val interpreter: ShakeInterpreter
     val name: String
 
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
@@ -30,6 +31,8 @@ interface ShakeInterpreterPackage {
     companion object {
         fun of(storages: List<StorageFormat>, classpath: ShakeClasspath): ShakeInterpreterPackage {
             return object : ShakeInterpreterPackage {
+                override val interpreter: ShakeInterpreter
+                    get() = classpath.interpreter
 
                 override val name: String = storages[0].packageName
                 val parentPath = "$name/"

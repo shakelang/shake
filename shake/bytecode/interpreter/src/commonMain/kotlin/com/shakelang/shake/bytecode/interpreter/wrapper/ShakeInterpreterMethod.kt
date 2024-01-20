@@ -1,11 +1,13 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.Method
 import com.shakelang.shake.bytecode.interpreter.format.attribute.CodeAttribute
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.MethodDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
 interface ShakeInterpreterMethod {
+    val interpreter: ShakeInterpreter
     val storage: Method
     val qualifiedName: String
     val simpleName: String
@@ -41,7 +43,8 @@ interface ShakeInterpreterMethod {
             val parsed = MethodDescriptor.parse(qualifiedName)
 
             return object : ShakeInterpreterMethod {
-
+                override val interpreter: ShakeInterpreter
+                    get() = classpath.interpreter
                 override val storage: Method = storage
                 override val simpleName: String = storage.name
                 override val qualifiedName: String = storage.qualifiedName

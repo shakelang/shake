@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.generator.generatePackage
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -9,7 +10,8 @@ class ClassTests : FreeSpec(
     {
 
         "getClass" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -29,7 +31,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass class child" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -55,7 +58,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass class child child" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -87,7 +91,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass of child when class does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -99,7 +104,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass of child when child does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -117,7 +123,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass of child when parent class of child does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -129,7 +136,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass when package does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -141,7 +149,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass of child when package does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"

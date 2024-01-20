@@ -52,10 +52,8 @@ fun codeSpec(code: String, then: CodeSpec.() -> Unit) {
 
     val stdout = ByteArrayOutputStream()
 
-    // Execute test code
-    val classPath = ShakeClasspath.create(out)
-
-    val interpreter = ShakeInterpreter(classPath)
+    val interpreter = ShakeInterpreter()
+    interpreter.classPath.load(out)
     interpreter.process.setOut(stdout)
 
     (
@@ -70,7 +68,7 @@ fun codeSpec(code: String, then: CodeSpec.() -> Unit) {
             override val stdout: ByteArrayOutputStream
                 get() = stdout
             override val classpath: ShakeClasspath
-                get() = classPath
+                get() = interpreter.classPath
             override val interpreter: ShakeInterpreter
                 get() = interpreter
 

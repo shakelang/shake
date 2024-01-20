@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.generator.bytecode
 import com.shakelang.shake.bytecode.interpreter.generator.generatePackage
 import io.kotest.core.spec.style.FreeSpec
@@ -10,7 +11,8 @@ class MethodTests : FreeSpec(
     {
 
         "getMethod" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -30,7 +32,8 @@ class MethodTests : FreeSpec(
         }
 
         "getMethod class child" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -56,7 +59,8 @@ class MethodTests : FreeSpec(
         }
 
         "getMethod class child child" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -88,7 +92,8 @@ class MethodTests : FreeSpec(
         }
 
         "getMethod when method does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -100,7 +105,8 @@ class MethodTests : FreeSpec(
         }
 
         "getMethod when method child does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -117,7 +123,8 @@ class MethodTests : FreeSpec(
         }
 
         "getMethod when class of child does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -129,7 +136,8 @@ class MethodTests : FreeSpec(
         }
 
         "getMethod when package does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -141,7 +149,8 @@ class MethodTests : FreeSpec(
         }
 
         "getMethod with child when package does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -153,7 +162,8 @@ class MethodTests : FreeSpec(
         }
 
         "resolve return type" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -171,7 +181,8 @@ class MethodTests : FreeSpec(
         }
 
         "resolve return type with object" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -206,7 +217,8 @@ class MethodTests : FreeSpec(
         }
 
         "resolve return type with array" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -227,7 +239,8 @@ class MethodTests : FreeSpec(
         }
 
         "resolve return type with array of object" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -265,7 +278,8 @@ class MethodTests : FreeSpec(
         }
 
         "resolve parameter types" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -284,7 +298,8 @@ class MethodTests : FreeSpec(
         }
 
         "resolve parameter types with object" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -320,7 +335,8 @@ class MethodTests : FreeSpec(
         }
 
         "resolve parameter types with array" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -342,7 +358,8 @@ class MethodTests : FreeSpec(
         }
 
         "resolve parameter types with array of object" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -381,7 +398,8 @@ class MethodTests : FreeSpec(
         }
 
         "get method code" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"

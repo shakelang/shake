@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.Field
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
@@ -12,6 +13,7 @@ interface ShakeInterpreterField {
     val type: ShakeInterpreterType
     val pkg: ShakeInterpreterPackage
     val constantPool: ConstantPool
+    val interpreter: ShakeInterpreter
 
     companion object {
         fun of(
@@ -22,7 +24,8 @@ interface ShakeInterpreterField {
             pkg: ShakeInterpreterPackage,
         ): ShakeInterpreterField {
             return object : ShakeInterpreterField {
-
+                override val interpreter: ShakeInterpreter
+                    get() = classpath.interpreter
                 override val storage: Field = storage
                 override val simpleName: String = storage.name
                 override val qualifiedName: String = "$parentPath$simpleName"

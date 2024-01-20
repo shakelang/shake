@@ -4,14 +4,14 @@ package com.shakelang.shake.bytecode.interpreter
 
 import com.shakelang.shake.bytecode.interpreter.generator.bytecode
 import com.shakelang.shake.bytecode.interpreter.generator.generatePackage
-import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
 class ShakeCodeInterpreterTests : FreeSpec(
     {
 
-        val classpath = ShakeClasspath.create()
+        val dummyInterpreter = ShakeInterpreter()
+        val classpath = dummyInterpreter.classPath
         classpath.load(
             generatePackage {
                 name = "test"
