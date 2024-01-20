@@ -815,6 +815,54 @@ class ShakeInterpreter {
 
                     putFunctionOnStack(method, args)
                 }
+
+                Opcodes.BLOADG -> {
+                    val address = stack.popLong()
+                    val it = globalMemory.getByte(address)
+                    stack.push(it)
+                }
+
+                Opcodes.SLOADG -> {
+                    val address = stack.popLong()
+                    val it = globalMemory.getShort(address)
+                    stack.push(it)
+                }
+
+                Opcodes.ILOADG -> {
+                    val address = stack.popLong()
+                    val it = globalMemory.getInt(address)
+                    stack.push(it)
+                }
+
+                Opcodes.LLOADG -> {
+                    val address = stack.popLong()
+                    val it = globalMemory.getLong(address)
+                    stack.push(it)
+                }
+
+                Opcodes.BSTOREG -> {
+                    val address = stack.popLong()
+                    val value = stack.popByte()
+                    globalMemory.setByte(address, value)
+                }
+
+                Opcodes.SSTOREG -> {
+                    val address = stack.popLong()
+                    val value = stack.popShort()
+                    globalMemory.setShort(address, value)
+                }
+
+                Opcodes.ISTOREG -> {
+                    val address = stack.popLong()
+                    val value = stack.popInt()
+                    globalMemory.setInt(address, value)
+                }
+
+                Opcodes.LSTOREG -> {
+                    val address = stack.popLong()
+                    val value = stack.popLong()
+                    globalMemory.setLong(address, value)
+                }
             }
         }
     }
