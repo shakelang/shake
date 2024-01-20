@@ -6,6 +6,7 @@ import com.shakelang.shake.bytecode.interpreter.format.Field
 import com.shakelang.shake.bytecode.interpreter.format.Method
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
+import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 
 interface ShakeInterpreterPackage {
 
@@ -14,6 +15,9 @@ interface ShakeInterpreterPackage {
     val storages: List<StorageFormat>
     val interpreter: ShakeInterpreter
     val name: String
+
+    val fieldsSizeInMemory: Long
+    val fieldsLocation: Long
 
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
@@ -31,6 +35,11 @@ interface ShakeInterpreterPackage {
     companion object {
         fun of(storages: List<StorageFormat>, classpath: ShakeInterpreterClasspath): ShakeInterpreterPackage {
             return object : ShakeInterpreterPackage {
+
+                val fieldMemoryMap: LongArray
+                override val fieldsSizeInMemory: Long
+                override val fieldsLocation: Long
+
                 override val interpreter: ShakeInterpreter
                     get() = classpath.interpreter
 
@@ -88,6 +97,19 @@ interface ShakeInterpreterPackage {
                 val classFormatList: MutableList<Pair<Class, StorageFormat>> = mutableListOf()
                 val methodFormatList: MutableList<Pair<Method, StorageFormat>> = mutableListOf()
                 val fieldFormatList: MutableList<Pair<Field, StorageFormat>> = mutableListOf()
+
+                init {
+                    var size = 4L // 4 bytes for header
+                    fieldMemoryMap = fieldFormatList.map {
+                        val start = size
+                        size += TypeDescriptor.parse(it.first.type).byteSize
+                        start
+                    }.toLongArray()
+                    fieldsSizeInMemory = size
+
+                    // Let's create our static location
+                    this.fieldsLocation = interpreter.malloc.malloc(size)
+                }
 
                 init {
                     for (s in storages) addStorageFormat(s)

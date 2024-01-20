@@ -1,11 +1,13 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.Class
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
 interface ShakeInterpreterClass {
+    val interpreter: ShakeInterpreter
     val storage: Class
     val qualifiedName: String
     val simpleName: String
@@ -18,6 +20,8 @@ interface ShakeInterpreterClass {
     val subclasses: List<ShakeInterpreterClass>
 
     val sizeInMemory: Long
+    val staticSizeInMemory: Long
+    val staticLocation: Long
 
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
@@ -47,6 +51,8 @@ interface ShakeInterpreterClass {
                 // These fields can be directly used from the storage; they involve no
                 // expensive logic to load them, so they are not loaded lazily.
 
+                override val interpreter: ShakeInterpreter
+                    get() = classpath.interpreter
                 override val storage: Class = storage
                 override val simpleName: String = storage.name
                 override val qualifiedName: String = "$parentPath$simpleName"
@@ -54,17 +60,37 @@ interface ShakeInterpreterClass {
                 override val constantPool: ConstantPool = constantPool
                 override val pkg: ShakeInterpreterPackage = pkg
 
-                val memoryMap: ByteArray
+                val memoryMap: LongArray
                 override val sizeInMemory: Long
 
+                val staticMemoryMap: LongArray
+                override val staticSizeInMemory: Long
+
+                override val staticLocation: Long
+
                 init {
-                    var size = 4L // 4 bytes for class header
-                    memoryMap = storage.fields.map {
-                        val sizeByte = size.toByte()
-                        size += TypeDescriptor.parse(it.type).byteSize.toByte()
-                        sizeByte
-                    }.toByteArray()
+                    var size = 4L // 4 bytes for header
+                    memoryMap = storage.fields.filter {
+                        it.isStatic
+                    }.map {
+                        val start = size
+                        size += TypeDescriptor.parse(it.type).byteSize
+                        start
+                    }.toLongArray()
                     sizeInMemory = size
+
+                    size = 4
+                    staticMemoryMap = storage.fields.filter {
+                        !it.isStatic
+                    }.map {
+                        val start = size
+                        size += TypeDescriptor.parse(it.type).byteSize
+                        start
+                    }.toLongArray()
+                    staticSizeInMemory = size
+
+                    // Let's create our static location
+                    this.staticLocation = interpreter.malloc.malloc(staticSizeInMemory)
                 }
 
                 // Specification of the dynamic loading system:
