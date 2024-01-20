@@ -4,7 +4,7 @@ import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
 
-interface ShakeClasspath {
+interface ShakeInterpreterClasspath {
     val interpreter: ShakeInterpreter
     val packages: List<ShakeInterpreterPackage>
 
@@ -30,8 +30,8 @@ interface ShakeClasspath {
     }
 
     companion object {
-        fun create(interpreter: ShakeInterpreter): ShakeClasspath {
-            return object : ShakeClasspath {
+        fun create(interpreter: ShakeInterpreter): ShakeInterpreterClasspath {
+            return object : ShakeInterpreterClasspath {
                 override val interpreter = interpreter
 
                 override val packages: MutableList<ShakeInterpreterPackage> = mutableListOf()
@@ -53,7 +53,7 @@ interface ShakeClasspath {
                 }
             }
         }
-        fun create(interpreter: ShakeInterpreter, storages: List<StorageFormat>): ShakeClasspath {
+        fun create(interpreter: ShakeInterpreter, storages: List<StorageFormat>): ShakeInterpreterClasspath {
             val classpath = create(interpreter)
             storages.forEach {
                 classpath.load(it)
@@ -61,7 +61,7 @@ interface ShakeClasspath {
             return classpath
         }
 
-        fun create(interpreter: ShakeInterpreter, vararg storages: StorageFormat): ShakeClasspath {
+        fun create(interpreter: ShakeInterpreter, vararg storages: StorageFormat): ShakeInterpreterClasspath {
             val classpath = create(interpreter)
             storages.forEach {
                 classpath.load(it)

@@ -2,7 +2,7 @@ package com.shakelang.shake.bytecode
 
 import com.shakelang.shake.bytecode.generator.ShakeBytecodeGenerator
 import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
-import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
+import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClasspath
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.stdlib.CoreFiles
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
@@ -20,7 +20,7 @@ fun createBaseProcessor(): ShakePackageBasedProcessor {
 interface CodeSpec {
     val processor: ShakePackageBasedProcessor
     val stdout: ByteArrayOutputStream
-    val classpath: ShakeClasspath
+    val classpath: ShakeInterpreterClasspath
     val interpreter: ShakeInterpreter
     val ticks: Int
 
@@ -67,7 +67,7 @@ fun codeSpec(code: String, then: CodeSpec.() -> Unit) {
                 get() = processor
             override val stdout: ByteArrayOutputStream
                 get() = stdout
-            override val classpath: ShakeClasspath
+            override val classpath: ShakeInterpreterClasspath
                 get() = interpreter.classPath
             override val interpreter: ShakeInterpreter
                 get() = interpreter

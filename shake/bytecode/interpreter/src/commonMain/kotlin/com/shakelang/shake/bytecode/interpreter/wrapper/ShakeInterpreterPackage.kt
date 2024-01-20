@@ -29,7 +29,7 @@ interface ShakeInterpreterPackage {
     fun load(storage: StorageFormat)
 
     companion object {
-        fun of(storages: List<StorageFormat>, classpath: ShakeClasspath): ShakeInterpreterPackage {
+        fun of(storages: List<StorageFormat>, classpath: ShakeInterpreterClasspath): ShakeInterpreterPackage {
             return object : ShakeInterpreterPackage {
                 override val interpreter: ShakeInterpreter
                     get() = classpath.interpreter

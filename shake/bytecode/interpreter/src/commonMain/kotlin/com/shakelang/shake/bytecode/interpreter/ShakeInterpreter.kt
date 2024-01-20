@@ -4,8 +4,8 @@ import com.shakelang.shake.bytecode.interpreter.heap.GarbageCollector
 import com.shakelang.shake.bytecode.interpreter.heap.GlobalMemory
 import com.shakelang.shake.bytecode.interpreter.heap.Malloc
 import com.shakelang.shake.bytecode.interpreter.natives.ShakeInterpreterProcess
-import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClass
+import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClasspath
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterMethod
 import com.shakelang.util.primitives.bytes.*
 import com.shakelang.util.primitives.calc.shl
@@ -27,7 +27,7 @@ interface ShakeCallStackElement {
 
 class ShakeInterpreter {
 
-    val classPath = ShakeClasspath.create(this)
+    val classPath = ShakeInterpreterClasspath.create(this)
 
     val process = ShakeInterpreterProcess()
 

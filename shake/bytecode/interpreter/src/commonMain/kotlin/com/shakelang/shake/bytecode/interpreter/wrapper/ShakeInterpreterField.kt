@@ -18,7 +18,7 @@ interface ShakeInterpreterField {
     companion object {
         fun of(
             storage: Field,
-            classpath: ShakeClasspath,
+            classpath: ShakeInterpreterClasspath,
             parentPath: String,
             constantPool: ConstantPool,
             pkg: ShakeInterpreterPackage,

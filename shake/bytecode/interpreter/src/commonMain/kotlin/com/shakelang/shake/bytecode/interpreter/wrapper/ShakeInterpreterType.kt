@@ -100,7 +100,7 @@ interface ShakeInterpreterType {
             override val byteSize: Int = 0
         }
 
-        fun of(storage: TypeDescriptor, classpath: ShakeClasspath): ShakeInterpreterType {
+        fun of(storage: TypeDescriptor, classpath: ShakeInterpreterClasspath): ShakeInterpreterType {
             return when (storage) {
                 is TypeDescriptor.ByteType -> BYTE
                 is TypeDescriptor.ShortType -> SHORT
