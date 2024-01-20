@@ -532,6 +532,16 @@ open class ShakeBytecodeInstructionGenerator(
         return iPlaceholder()
     }
 
+    fun bloadg() = addByte(Opcodes.BLOADG)
+    fun sloadg() = addByte(Opcodes.SLOADG)
+    fun iloadg() = addByte(Opcodes.ILOADG)
+    fun lloadg() = addByte(Opcodes.LLOADG)
+
+    fun bstoreg() = addByte(Opcodes.BSTOREG)
+    fun sstoreg() = addByte(Opcodes.SSTOREG)
+    fun istoreg() = addByte(Opcodes.ISTOREG)
+    fun lstoreg() = addByte(Opcodes.LSTOREG)
+
     fun toByteArray() = bytes.toByteArray()
 
     fun bPlaceholder(): BytePlaceholder {

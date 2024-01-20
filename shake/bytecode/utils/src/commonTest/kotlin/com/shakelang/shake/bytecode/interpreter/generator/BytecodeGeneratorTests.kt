@@ -1069,6 +1069,54 @@ class BytecodeGeneratorTests : FreeSpec(
             bytes shouldBe arrayOf(Opcodes.CALL, 0x01, 0x02, 0x03, 0x04)
         }
 
+        "bloadg" {
+            bytecode {
+                bloadg()
+            } shouldBe arrayOf(Opcodes.BLOADG)
+        }
+
+        "sloadg" {
+            bytecode {
+                sloadg()
+            } shouldBe arrayOf(Opcodes.SLOADG)
+        }
+
+        "iloadg" {
+            bytecode {
+                iloadg()
+            } shouldBe arrayOf(Opcodes.ILOADG)
+        }
+
+        "lloadg" {
+            bytecode {
+                lloadg()
+            } shouldBe arrayOf(Opcodes.LLOADG)
+        }
+
+        "bstoreg" {
+            bytecode {
+                bstoreg()
+            } shouldBe arrayOf(Opcodes.BSTOREG)
+        }
+
+        "sstoreg" {
+            bytecode {
+                sstoreg()
+            } shouldBe arrayOf(Opcodes.SSTOREG)
+        }
+
+        "istoreg" {
+            bytecode {
+                istoreg()
+            } shouldBe arrayOf(Opcodes.ISTOREG)
+        }
+
+        "lstoreg" {
+            bytecode {
+                lstoreg()
+            } shouldBe arrayOf(Opcodes.LSTOREG)
+        }
+
         "toByteArray" {
             val bytes = bytecode {
                 bshru()
