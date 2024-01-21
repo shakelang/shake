@@ -525,22 +525,12 @@ open class ShakeBytecodeInstructionGenerator(
 
     fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
 
-    fun call(address: Int) = addBytes(listOf(Opcodes.CALL, *address.toBytes().toTypedArray()))
+    fun call(address: Int) = addBytes(listOf(Opcodes.INVOKE_STATIC, *address.toBytes().toTypedArray()))
 
     fun call(): IntPlaceholder {
-        addByte(Opcodes.CALL)
+        addByte(Opcodes.INVOKE_STATIC)
         return iPlaceholder()
     }
-
-    fun bloadg() = addByte(Opcodes.BLOADG)
-    fun sloadg() = addByte(Opcodes.SLOADG)
-    fun iloadg() = addByte(Opcodes.ILOADG)
-    fun lloadg() = addByte(Opcodes.LLOADG)
-
-    fun bstoreg() = addByte(Opcodes.BSTOREG)
-    fun sstoreg() = addByte(Opcodes.SSTOREG)
-    fun istoreg() = addByte(Opcodes.ISTOREG)
-    fun lstoreg() = addByte(Opcodes.LSTOREG)
 
     fun toByteArray() = bytes.toByteArray()
 
@@ -642,7 +632,7 @@ open class PooledShakeBytecodeInstructionGenerator(
     fun classRef(value: String) = addBytes(*constantPool.resolveClass(value).toBytes())
 
     fun call(descriptor: String) {
-        addByte(Opcodes.CALL)
+        addByte(Opcodes.INVOKE_STATIC)
         utf8Ref(descriptor)
     }
 }

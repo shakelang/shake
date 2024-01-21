@@ -1066,7 +1066,7 @@ class BytecodeGeneratorTests : FreeSpec(
             val bytes = bytecode {
                 call(0x01020304)
             }
-            bytes shouldBe arrayOf(Opcodes.CALL, 0x01, 0x02, 0x03, 0x04)
+            bytes shouldBe arrayOf(Opcodes.INVOKE_STATIC, 0x01, 0x02, 0x03, 0x04)
         }
 
         "bloadg" {

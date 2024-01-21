@@ -181,7 +181,7 @@ class InstructionStringGenerator(
             Opcodes.LDUP -> return "ldup"
 
             Opcodes.PCAST -> return "pcast 0x${bytes.readUnsignedByte().toBytes().toHexString()}"
-            Opcodes.CALL -> {
+            Opcodes.INVOKE_STATIC -> {
                 val addr = bytes.readUnsignedInt()
                 return "call `${storage.constantPool.getUtf8(addr.toInt()).value}`"
             }

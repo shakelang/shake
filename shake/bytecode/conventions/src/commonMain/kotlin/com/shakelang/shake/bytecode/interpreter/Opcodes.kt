@@ -18,8 +18,9 @@ object Opcodes {
      *
      * Value: `0x01`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bpush)
+     *
      * @example Syntax: `BPUSH` <u1 byte>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-111-bpush
      */
     const val BPUSH: Byte = 0x01
 
@@ -28,8 +29,9 @@ object Opcodes {
      *
      * Value: `0x02`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-spush)
+     *
      * @example Syntax: `SPUSH` <u2 short>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-112-spush
      */
     const val SPUSH: Byte = 0x02
 
@@ -38,8 +40,9 @@ object Opcodes {
      *
      * Value: `0x03`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ipush)
+     *
      * @example Syntax: `IPUSH` <u4 int>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-113-ipush
      */
     const val IPUSH: Byte = 0x03
 
@@ -48,8 +51,9 @@ object Opcodes {
      *
      * Value: `0x04`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lpush)
+     *
      * @example Syntax: `LPUSH` <u8 long>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-114-lpush
      */
     const val LPUSH: Byte = 0x04
 
@@ -61,8 +65,9 @@ object Opcodes {
      *
      * Value: `0x05`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bload)
+     *
      * @example Syntax: `BLOAD` <u2 variable>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-121-bload
      */
     const val BLOAD: Byte = 0x05
 
@@ -71,8 +76,9 @@ object Opcodes {
      *
      * Value: `0x06`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sload)
+     *
      * @example Syntax: `SLOAD` <u2 variable>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-122-sload
      */
     const val SLOAD: Byte = 0x06
 
@@ -81,8 +87,9 @@ object Opcodes {
      *
      * Value: `0x07`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-iload)
+     *
      * @example Syntax: `ILOAD` <u2 variable>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-123-iload
      */
     const val ILOAD: Byte = 0x07
 
@@ -91,8 +98,9 @@ object Opcodes {
      *
      * Value: `0x08`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lload)
+     *
      * @example Syntax: `LLOAD` <u2 variable>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-124-lload
      */
     const val LLOAD: Byte = 0x08
 
@@ -104,8 +112,9 @@ object Opcodes {
      *
      * Value: `0x09`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bstore)
+     *
      * @example Syntax: `BSTORE` <u2 variable>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-131-bstore
      */
     const val BSTORE: Byte = 0x09
 
@@ -114,8 +123,9 @@ object Opcodes {
      *
      * Value: `0x0A`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sstore)
+     *
      * @example Syntax: `SSTORE` <u2 variable>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-132-sstore
      */
     const val SSTORE: Byte = 0x0A
 
@@ -124,8 +134,9 @@ object Opcodes {
      *
      * Value: `0x0B`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-istore)
+     *
      * @example Syntax: `ISTORE` <u2 variable>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-133-istore
      */
     const val ISTORE: Byte = 0x0B
 
@@ -134,8 +145,9 @@ object Opcodes {
      *
      * Value: `0x0C`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lstore)
+     *
      * @example Syntax: `LSTORE` <u2 variable>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-134-lstore
      */
     const val LSTORE: Byte = 0x0C
 
@@ -147,8 +159,9 @@ object Opcodes {
      *
      * Value: `0x10`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-badd)
+     *
      * @example Syntax: `BADD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-211-badd
      */
     const val BADD: Byte = 0x10
 
@@ -157,8 +170,9 @@ object Opcodes {
      *
      * Value: `0x11`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sadd)
+     *
      * @example Syntax: `SADD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-212-sadd
      */
     const val SADD: Byte = 0x11
 
@@ -167,8 +181,9 @@ object Opcodes {
      *
      * Value: `0x12`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-iadd)
+     *
      * @example Syntax: `IADD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-213-iadd
      */
     const val IADD: Byte = 0x12
 
@@ -177,8 +192,9 @@ object Opcodes {
      *
      * Value: `0x13`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ladd)
+     *
      * @example Syntax: `LADD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-214-ladd
      */
     const val LADD: Byte = 0x13
 
@@ -187,8 +203,9 @@ object Opcodes {
      *
      * Value: `0x14`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-fadd)
+     *
      * @example Syntax: `FADD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-215-fadd
      */
     const val FADD: Byte = 0x14
 
@@ -197,21 +214,20 @@ object Opcodes {
      *
      * Value: `0x15`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dadd)
+     *
      * @example Syntax: `DADD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-216-dadd
      */
     const val DADD: Byte = 0x15
-
-    // Subtract instructions
-    // Unsigned subtracting is not needed as it is the same as signed subtracting
 
     /**
      * Subtract two bytes on top of the stack (the first 2 bytes)
      *
      * Value: `0x16`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bsub)
+     *
      * @example Syntax: `BSUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-221-bsub
      */
     const val BSUB: Byte = 0x16
 
@@ -220,8 +236,9 @@ object Opcodes {
      *
      * Value: `0x17`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ssub)
+     *
      * @example Syntax: `SSUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-222-ssub
      */
     const val SSUB: Byte = 0x17
 
@@ -230,8 +247,9 @@ object Opcodes {
      *
      * Value: `0x18`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-isub)
+     *
      * @example Syntax: `ISUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-223-isub
      */
     const val ISUB: Byte = 0x18
 
@@ -240,8 +258,9 @@ object Opcodes {
      *
      * Value: `0x19`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lsub)
+     *
      * @example Syntax: `LSUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-224-lsub
      */
     const val LSUB: Byte = 0x19
 
@@ -250,8 +269,9 @@ object Opcodes {
      *
      * Value: `0x1A`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ubsub)
+     *
      * @example Syntax: `UBSUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-227-ubsub
      */
     const val UBSUB: Byte = 0x1A
 
@@ -260,8 +280,9 @@ object Opcodes {
      *
      * Value: `0x1B`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ussub)
+     *
      * @example Syntax: `USSUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-228-ussub
      */
     const val USSUB: Byte = 0x1B
 
@@ -270,8 +291,9 @@ object Opcodes {
      *
      * Value: `0x1C`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-uisub)
+     *
      * @example Syntax: `UISUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-229-uisub
      */
     const val UISUB: Byte = 0x1C
 
@@ -280,8 +302,9 @@ object Opcodes {
      *
      * Value: `0x1D`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ulsub)
+     *
      * @example Syntax: `ULSUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-2210-ulsub
      */
     const val ULSUB: Byte = 0x1D
 
@@ -290,8 +313,9 @@ object Opcodes {
      *
      * Value: `0x1E`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-fsub)
+     *
      * @example Syntax: `FSUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-225-fsub
      */
     const val FSUB: Byte = 0x1E
 
@@ -300,8 +324,9 @@ object Opcodes {
      *
      * Value: `0x1F`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dsub)
+     *
      * @example Syntax: `DSUB`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-226-dsub
      */
     const val DSUB: Byte = 0x1F
 
@@ -312,8 +337,9 @@ object Opcodes {
      *
      * Value: `0x20`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bmul)
+     *
      * @example Syntax: `BMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-231-bmul
      */
     const val BMUL: Byte = 0x20
 
@@ -322,8 +348,9 @@ object Opcodes {
      *
      * Value: `0x21`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-smul)
+     *
      * @example Syntax: `SMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-232-smul
      */
     const val SMUL: Byte = 0x21
 
@@ -332,8 +359,9 @@ object Opcodes {
      *
      * Value: `0x22`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-imul)
+     *
      * @example Syntax: `IMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-233-imul
      */
     const val IMUL: Byte = 0x22
 
@@ -342,8 +370,9 @@ object Opcodes {
      *
      * Value: `0x23`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lmul)
+     *
      * @example Syntax: `LMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-234-lmul
      */
     const val LMUL: Byte = 0x23
 
@@ -352,8 +381,9 @@ object Opcodes {
      *
      * Value: `0x24`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ubmul)
+     *
      * @example Syntax: `UBMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-237-ubmul
      */
     const val UBMUL: Byte = 0x24
 
@@ -362,8 +392,9 @@ object Opcodes {
      *
      * Value: `0x25`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-usmul)
+     *
      * @example Syntax: `USMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-238-usmul
      */
     const val USMUL: Byte = 0x25
 
@@ -372,8 +403,9 @@ object Opcodes {
      *
      * Value: `0x26`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-uimul)
+     *
      * @example Syntax: `UIMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-239-uimul
      */
     const val UIMUL: Byte = 0x26
 
@@ -382,8 +414,9 @@ object Opcodes {
      *
      * Value: `0x27`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ulumul)
+     *
      * @example Syntax: `ULMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-2310-ulmul
      */
     const val ULMUL: Byte = 0x27
 
@@ -392,8 +425,9 @@ object Opcodes {
      *
      * Value: `0x28`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-fmul)
+     *
      * @example Syntax: `FMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-235-fmul
      */
     const val FMUL: Byte = 0x28
 
@@ -402,8 +436,9 @@ object Opcodes {
      *
      * Value: `0x29`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dmul)
+     *
      * @example Syntax: `DMUL`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-236-dmul
      */
     const val DMUL: Byte = 0x29
 
@@ -414,8 +449,9 @@ object Opcodes {
      *
      * Value: `0x2A`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bdiv)
+     *
      * @example Syntax: `BDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-241-bdiv
      */
     const val BDIV: Byte = 0x2A
 
@@ -424,8 +460,9 @@ object Opcodes {
      *
      * Value: `0x2B`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sdiv)
+     *
      * @example Syntax: `SDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-242-sdiv
      */
     const val SDIV: Byte = 0x2B
 
@@ -434,8 +471,9 @@ object Opcodes {
      *
      * Value: `0x2C`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-idiv)
+     *
      * @example Syntax: `IDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-243-idiv
      */
     const val IDIV: Byte = 0x2C
 
@@ -444,8 +482,9 @@ object Opcodes {
      *
      * Value: `0x2D`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ldiv)
+     *
      * @example Syntax: `LDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-244-ldiv
      */
     const val LDIV: Byte = 0x2D
 
@@ -454,8 +493,9 @@ object Opcodes {
      *
      * Value: `0x2E`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ubdiv)
+     *
      * @example Syntax: `UBDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-247-ubdiv
      */
     const val UBDIV: Byte = 0x2E
 
@@ -464,8 +504,9 @@ object Opcodes {
      *
      * Value: `0x2F`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-usdiv)
+     *
      * @example Syntax: `USDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-248-usdiv
      */
     const val USDIV: Byte = 0x2F
 
@@ -474,8 +515,9 @@ object Opcodes {
      *
      * Value: `0x30`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-uidiv)
+     *
      * @example Syntax: `UIDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-249-uidiv
      */
     const val UIDIV: Byte = 0x30
 
@@ -484,8 +526,9 @@ object Opcodes {
      *
      * Value: `0x31`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-uldiv)
+     *
      * @example Syntax: `ULDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-2410-uldiv
      */
     const val ULDIV: Byte = 0x31
 
@@ -494,8 +537,9 @@ object Opcodes {
      *
      * Value: `0x32`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-fdiv)
+     *
      * @example Syntax: `FDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-245-fdiv
      */
     const val FDIV: Byte = 0x32
 
@@ -504,8 +548,9 @@ object Opcodes {
      *
      * Value: `0x33`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ddiv)
+     *
      * @example Syntax: `DDIV`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-246-ddiv
      */
     const val DDIV: Byte = 0x33
 
@@ -516,8 +561,9 @@ object Opcodes {
      *
      * Value: `0x34`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bmod)
+     *
      * @example Syntax: `BMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-251-bmod
      */
     const val BMOD: Byte = 0x34
 
@@ -526,8 +572,9 @@ object Opcodes {
      *
      * Value: `0x35`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-smod)
+     *
      * @example Syntax: `SMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-252-smod
      */
     const val SMOD: Byte = 0x35
 
@@ -536,8 +583,9 @@ object Opcodes {
      *
      * Value: `0x36`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-imod)
+     *
      * @example Syntax: `IMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-253-imod
      */
     const val IMOD: Byte = 0x36
 
@@ -546,8 +594,9 @@ object Opcodes {
      *
      * Value: `0x37`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lmod)
+     *
      * @example Syntax: `LMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-254-lmod
      */
     const val LMOD: Byte = 0x37
 
@@ -556,8 +605,9 @@ object Opcodes {
      *
      * Value: `0x38`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ubmod)
+     *
      * @example Syntax: `UBMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-257-ubmod
      */
     const val UBMOD: Byte = 0x38
 
@@ -566,8 +616,9 @@ object Opcodes {
      *
      * Value: `0x39`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-usmod)
+     *
      * @example Syntax: `USMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-258-usmod
      */
     const val USMOD: Byte = 0x39
 
@@ -576,8 +627,9 @@ object Opcodes {
      *
      * Value: `0x3A`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-uimod)
+     *
      * @example Syntax: `UIMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-259-uimod
      */
     const val UIMOD: Byte = 0x3A
 
@@ -586,8 +638,9 @@ object Opcodes {
      *
      * Value: `0x3B`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ulmod)
+     *
      * @example Syntax: `ULMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-2510-ulmod
      */
     const val ULMOD: Byte = 0x3B
 
@@ -596,8 +649,9 @@ object Opcodes {
      *
      * Value: `0x3C`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-fmod)
+     *
      * @example Syntax: `FMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-255-fmod
      */
     const val FMOD: Byte = 0x3C
 
@@ -606,8 +660,9 @@ object Opcodes {
      *
      * Value: `0x3D`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dmod)
+     *
      * @example Syntax: `DMOD`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-256-dmod
      */
     const val DMOD: Byte = 0x3D
 
@@ -618,8 +673,9 @@ object Opcodes {
      *
      * Value: `0x3E`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bneg)
+     *
      * @example Syntax: `BNEG`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-261-bneg
      */
     const val BNEG: Byte = 0x3E
 
@@ -628,8 +684,9 @@ object Opcodes {
      *
      * Value: `0x3F`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sneg)
+     *
      * @example Syntax: `SNEG`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-262-sneg
      */
     const val SNEG: Byte = 0x3F
 
@@ -638,8 +695,9 @@ object Opcodes {
      *
      * Value: `0x40`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ineg)
+     *
      * @example Syntax: `INEG`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-263-ineg
      */
     const val INEG: Byte = 0x40
 
@@ -648,8 +706,9 @@ object Opcodes {
      *
      * Value: `0x41`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ineg)
+     *
      * @example Syntax: `LNEG`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-264-ineg
      */
     const val LNEG: Byte = 0x41
 
@@ -658,8 +717,9 @@ object Opcodes {
      *
      * Value: `0x42`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-fneg)
+     *
      * @example Syntax: `FNEG`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-265-fneg
      */
     const val FNEG: Byte = 0x42
 
@@ -668,8 +728,9 @@ object Opcodes {
      *
      * Value: `0x43`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dneg)
+     *
      * @example Syntax: `DNEG`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-266-dneg
      */
     const val DNEG: Byte = 0x43
 
@@ -680,8 +741,9 @@ object Opcodes {
      *
      * Value: `0x44`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-binc)
+     *
      * @example Syntax: `BINC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-271-binc
      */
     const val BINC: Byte = 0x44
 
@@ -690,8 +752,9 @@ object Opcodes {
      *
      * Value: `0x45`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sinc)
+     *
      * @example Syntax: `SINC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-272-sinc
      */
     const val SINC: Byte = 0x45
 
@@ -700,8 +763,9 @@ object Opcodes {
      *
      * Value: `0x46`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-iinc)
+     *
      * @example Syntax: `IINC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-273-iinc
      */
     const val IINC: Byte = 0x46
 
@@ -710,8 +774,9 @@ object Opcodes {
      *
      * Value: `0x47`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-linc)
+     *
      * @example Syntax: `LINC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-274-linc
      */
     const val LINC: Byte = 0x47
 
@@ -720,8 +785,9 @@ object Opcodes {
      *
      * Value: `0x48`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-finc)
+     *
      * @example Syntax: `FINC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-275-finc
      */
     const val FINC: Byte = 0x48
 
@@ -730,8 +796,9 @@ object Opcodes {
      *
      * Value: `0x49`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dinc)
+     *
      * @example Syntax: `DINC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-276-dinc
      */
     const val DINC: Byte = 0x49
 
@@ -742,8 +809,9 @@ object Opcodes {
      *
      * Value: `0x4A`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bdec)
+     *
      * @example Syntax: `BDEC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-281-bdec
      */
     const val BDEC: Byte = 0x4A
 
@@ -752,8 +820,9 @@ object Opcodes {
      *
      * Value: `0x4B`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sdec)
+     *
      * @example Syntax: `SDEC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-282-sdec
      */
     const val SDEC: Byte = 0x4B
 
@@ -762,8 +831,9 @@ object Opcodes {
      *
      * Value: `0x4C`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-idec)
+     *
      * @example Syntax: `IDEC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-283-idec
      */
     const val IDEC: Byte = 0x4C
 
@@ -772,8 +842,9 @@ object Opcodes {
      *
      * Value: `0x4D`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ldec)
+     *
      * @example Syntax: `LDEC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-284-ldec
      */
     const val LDEC: Byte = 0x4D
 
@@ -782,8 +853,9 @@ object Opcodes {
      *
      * Value: `0x4E`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-fdec)
+     *
      * @example Syntax: `FDEC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-285-fdec
      */
     const val FDEC: Byte = 0x4E
 
@@ -792,8 +864,9 @@ object Opcodes {
      *
      * Value: `0x4F`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ddec)
+     *
      * @example Syntax: `DDEC`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-286-ddec
      */
     const val DDEC: Byte = 0x4F
 
@@ -804,8 +877,9 @@ object Opcodes {
      *
      * Value: `0x50`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-band)
+     *
      * @example Syntax: `BAND`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-311-band
      */
     const val BAND: Byte = 0x50
 
@@ -814,8 +888,9 @@ object Opcodes {
      *
      * Value: `0x51`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sand)
+     *
      * @example Syntax: `SAND`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-312-sand
      */
     const val SAND: Byte = 0x51
 
@@ -824,8 +899,9 @@ object Opcodes {
      *
      * Value: `0x52`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-iand)
+     *
      * @example Syntax: `IAND`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-313-iand
      */
     const val IAND: Byte = 0x52
 
@@ -834,8 +910,9 @@ object Opcodes {
      *
      * Value: `0x53`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-land)
+     *
      * @example Syntax: `LAND`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-314-land
      */
     const val LAND: Byte = 0x53
 
@@ -846,8 +923,9 @@ object Opcodes {
      *
      * Value: `0x54`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bor)
+     *
      * @example Syntax: `BOR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-321-bor
      */
     const val BOR: Byte = 0x54
 
@@ -856,8 +934,9 @@ object Opcodes {
      *
      * Value: `0x55`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sor)
+     *
      * @example Syntax: `SOR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-322-sor
      */
     const val SOR: Byte = 0x55
 
@@ -866,8 +945,9 @@ object Opcodes {
      *
      * Value: `0x56`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ior)
+     *
      * @example Syntax: `IOR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-323-ior
      */
     const val IOR: Byte = 0x56
 
@@ -876,8 +956,9 @@ object Opcodes {
      *
      * Value: `0x57`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lor)
+     *
      * @example Syntax: `LOR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-324-lor
      */
     const val LOR: Byte = 0x57
 
@@ -888,8 +969,9 @@ object Opcodes {
      *
      * Value: `0x58`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bxor)
+     *
      * @example Syntax: `BXOR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-331-bxor
      */
     const val BXOR: Byte = 0x58
 
@@ -898,8 +980,9 @@ object Opcodes {
      *
      * Value: `0x59`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sxor)
+     *
      * @example Syntax: `SXOR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-332-sxor
      */
     const val SXOR: Byte = 0x59
 
@@ -908,8 +991,9 @@ object Opcodes {
      *
      * Value: `0x5A`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ixor)
+     *
      * @example Syntax: `IXOR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-333-ixor
      */
     const val IXOR: Byte = 0x5A
 
@@ -918,8 +1002,9 @@ object Opcodes {
      *
      * Value: `0x5B`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lxor)
+     *
      * @example Syntax: `LXOR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-334-lxor
      */
     const val LXOR: Byte = 0x5B
 
@@ -930,8 +1015,9 @@ object Opcodes {
      *
      * Value: `0x5C`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bnot)
+     *
      * @example Syntax `BNOT`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-341-bnot
      */
     const val BNOT: Byte = 0x5C
 
@@ -940,8 +1026,9 @@ object Opcodes {
      *
      * Value: `0x5D`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-snot)
+     *
      * @example Syntax `SNOT`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-342-snot
      */
     const val SNOT: Byte = 0x5D
 
@@ -950,8 +1037,9 @@ object Opcodes {
      *
      * Value: `0x5E`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-inot)
+     *
      * @example Syntax `INOT`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-343-inot
      */
     const val INOT: Byte = 0x5E
 
@@ -960,8 +1048,9 @@ object Opcodes {
      *
      * Value: `0x5F`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lnot)
+     *
      * @example Syntax `LNOT`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-344-inot
      */
     const val LNOT: Byte = 0x5F
 
@@ -972,8 +1061,9 @@ object Opcodes {
      *
      * Value: `0x60`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bshl)
+     *
      * @example Syntax: `BSHL`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-351-bshl
      */
     const val BSHL: Byte = 0x60
 
@@ -982,8 +1072,9 @@ object Opcodes {
      *
      * Value: `0x61`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sshl)
+     *
      * @example Syntax: `SSHL`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-352-sshl
      */
     const val SSHL: Byte = 0x61
 
@@ -992,8 +1083,9 @@ object Opcodes {
      *
      * Value: `0x62`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ishl)
+     *
      * @example Syntax: `ISHL`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-353-ishl
      */
     const val ISHL: Byte = 0x62
 
@@ -1002,8 +1094,9 @@ object Opcodes {
      *
      * Value: `0x63`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lshl)
+     *
      * @example Syntax: `LSHL`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-354-lshl
      */
     const val LSHL: Byte = 0x63
 
@@ -1014,8 +1107,9 @@ object Opcodes {
      *
      * Value: `0x64`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bshr)
+     *
      * @example Syntax: `BSHR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-361-bshr
      */
     const val BSHR: Byte = 0x64
 
@@ -1024,8 +1118,9 @@ object Opcodes {
      *
      * Value: `0x65`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sshr)
+     *
      * @example Syntax: `SSHR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-362-sshr
      */
     const val SSHR: Byte = 0x65
 
@@ -1034,8 +1129,9 @@ object Opcodes {
      *
      * Value: `0x66`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ishr)
+     *
      * @example Syntax: `ISHR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-363-ishr
      */
     const val ISHR: Byte = 0x66
 
@@ -1044,8 +1140,9 @@ object Opcodes {
      *
      * Value: `0x67`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lshr)
+     *
      * @example Syntax: `LSHR`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-364-lshr
      */
     const val LSHR: Byte = 0x67
 
@@ -1056,8 +1153,9 @@ object Opcodes {
      *
      * Value: `0x68`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bshru)
+     *
      * @example Syntax: `BSHRU`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-371-bshru
      */
     const val BSHRU: Byte = 0x68
 
@@ -1066,8 +1164,9 @@ object Opcodes {
      *
      * Value: `0x69`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sshr)
+     *
      * @example Syntax: `SSHRU`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-372-sshr
      */
     const val SSHRU: Byte = 0x69
 
@@ -1076,8 +1175,9 @@ object Opcodes {
      *
      * Value: `0x6A`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ishru)
+     *
      * @example Syntax: `ISHRU`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-373-ishr
      */
     const val ISHRU: Byte = 0x6A
 
@@ -1086,8 +1186,9 @@ object Opcodes {
      *
      * Value: `0x6B`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lshru)
+     *
      * @example Syntax: `LSHRU`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-374-lshr
      */
     const val LSHRU: Byte = 0x6B
 
@@ -1103,8 +1204,9 @@ object Opcodes {
      *
      * Value: `0x70`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bcmp)
+     *
      * @example Syntax: `BCMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-411-bcmp
      */
     const val BCMP: Byte = 0x70
 
@@ -1118,8 +1220,9 @@ object Opcodes {
      *
      * Value: `0x71`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-scmp)
+     *
      * @example Syntax: `SCMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-412-scmp
      */
     const val SCMP: Byte = 0x71
 
@@ -1133,8 +1236,9 @@ object Opcodes {
      *
      * Value: `0x72`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-icmp)
+     *
      * @example Syntax: `ICMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-413-icmp
      */
     const val ICMP: Byte = 0x72
 
@@ -1148,8 +1252,9 @@ object Opcodes {
      *
      * Value: `0x73`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lcmp)
+     *
      * @example Syntax: `LCMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-414-lcmp
      */
     const val LCMP: Byte = 0x73
 
@@ -1163,8 +1268,9 @@ object Opcodes {
      *
      * Value: `0x74`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-fcmp)
+     *
      * @example Syntax: `FCMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-415-fcmp
      */
     const val FCMP: Byte = 0x74
 
@@ -1178,8 +1284,9 @@ object Opcodes {
      *
      * Value: `0x75`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-dcmp)
+     *
      * @example Syntax: `DCMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-416-dcmp
      */
     const val DCMP: Byte = 0x75
 
@@ -1193,8 +1300,9 @@ object Opcodes {
      *
      * Value: `0x76`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ubcmp)
+     *
      * @example Syntax: `UBCMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-417-ubcmp
      */
     const val UBCMP: Byte = 0x76
 
@@ -1208,8 +1316,9 @@ object Opcodes {
      *
      * Value: `0x77`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-uscmp)
+     *
      * @example Syntax: `USCMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-418-uscmp
      */
     const val USCMP: Byte = 0x77
 
@@ -1223,8 +1332,9 @@ object Opcodes {
      *
      * Value: `0x78`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-uicmp)
+     *
      * @example Syntax: `UICMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-419-uicmp
      */
     const val UICMP: Byte = 0x78
 
@@ -1238,8 +1348,9 @@ object Opcodes {
      *
      * Value: `0x79`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ulcmp)
+     *
      * @example Syntax: `ULCMP`
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-4110-ulcmp
      */
     const val ULCMP: Byte = 0x79
 
@@ -1247,6 +1358,8 @@ object Opcodes {
      * Compare result is less than
      *
      * Value: `0x7A`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-clt)
      *
      * @example Syntax: `CLT`
      */
@@ -1257,6 +1370,8 @@ object Opcodes {
      *
      * Value: `0x7B`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-cle)
+     *
      * @example Syntax: `CLE`
      */
     const val CLE: Byte = 0x7B
@@ -1265,6 +1380,8 @@ object Opcodes {
      * Compare result is equal
      *
      * Value: `0x7C`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ceq)
      *
      * @example Syntax: `CEQ`
      */
@@ -1275,6 +1392,8 @@ object Opcodes {
      *
      * Value: `0x7D`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-cne)
+     *
      * @example Syntax: `CNE`
      */
     const val CNE: Byte = 0x7D
@@ -1284,6 +1403,8 @@ object Opcodes {
      *
      * Value: `0x7E`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-cge)
+     *
      * @example Syntax: `CGE`
      */
     const val CGE: Byte = 0x7E
@@ -1292,6 +1413,8 @@ object Opcodes {
      * Compare result is greater than
      *
      * Value: `0x7F`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-cgt)
      *
      * @example Syntax: `CGT`
      */
@@ -1304,8 +1427,9 @@ object Opcodes {
      *
      * Value: `0x80`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-jmp)
+     *
      * @example Syntax: `JMP` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-511-jmp
      */
     const val JMP: Byte = -128
 
@@ -1315,8 +1439,9 @@ object Opcodes {
      *
      * Value: `0x81`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-jz)
+     *
      * @example Syntax: `JZ` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-512-jz
      */
     const val JZ: Byte = -127
 
@@ -1326,8 +1451,9 @@ object Opcodes {
      *
      * Value: `0x82`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-jnz)
+     *
      * @example Syntax: `JNZ` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-513-jnz
      */
     const val JNZ: Byte = -126
 
@@ -1337,8 +1463,9 @@ object Opcodes {
      *
      * Value: `0x83`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-je)
+     *
      * @example Syntax: `JE` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-514-je
      */
     const val JE: Byte = -125
 
@@ -1348,8 +1475,9 @@ object Opcodes {
      *
      * Value: `0x84`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-jne)
+     *
      * @example Syntax: `JNE` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions/#-515-jne
      */
     const val JNE: Byte = -124
 
@@ -1359,10 +1487,11 @@ object Opcodes {
      *
      * Value: `0x81`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-jg)
+     *
      * @deprecated Use [JNZ] instead, it does the same thing
      *
      * @example Syntax: `JG` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-516-jg
      */
     const val JG: Byte = -127
 
@@ -1372,8 +1501,9 @@ object Opcodes {
      *
      * Value: `0x85`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-jge)
+     *
      * @example Syntax: `JGE` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-517-jge
      */
     const val JGE: Byte = -123
 
@@ -1383,8 +1513,9 @@ object Opcodes {
      *
      * Value: `0x86`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-jl)
+     *
      * @example Syntax: `JL` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-518-jl
      */
     const val JL: Byte = -122
 
@@ -1394,8 +1525,9 @@ object Opcodes {
      *
      * Value: `0x87`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-jle)
+     *
      * @example Syntax: `JLE` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-519-jle
      */
     const val JLE: Byte = -121
 
@@ -1404,8 +1536,9 @@ object Opcodes {
      *
      * Value: `0x90`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ret)
+     *
      * @example Syntax: `RET`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-521-ret
      */
     const val RET: Byte = -112
 
@@ -1414,8 +1547,9 @@ object Opcodes {
      *
      * Value: `0x91`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bret)
+     *
      * @example Syntax: `BRET`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-531-bret
      */
     const val BRET: Byte = -111
 
@@ -1424,8 +1558,9 @@ object Opcodes {
      *
      * Value: `0x92`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sret)
+     *
      * @example Syntax: `SRET`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-532-sret
      */
     const val SRET: Byte = -110
 
@@ -1434,8 +1569,9 @@ object Opcodes {
      *
      * Value: `0x93`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-iret)
+     *
      * @example Syntax: `IRET`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-533-iret
      */
     const val IRET: Byte = -109
 
@@ -1444,8 +1580,9 @@ object Opcodes {
      *
      * Value: `0x94`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lret)
+     *
      * @example Syntax: `LRET`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-534-lret
      */
     const val LRET: Byte = -108
 
@@ -1454,8 +1591,9 @@ object Opcodes {
      *
      * Value: `0xA1`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bpop)
+     *
      * @example Syntax: `POP`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-541-pop
      */
     const val BPOP: Byte = -95
 
@@ -1464,8 +1602,9 @@ object Opcodes {
      *
      * Value: `0xA2`
      *
-     * @example Syntax: `POP2`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-542-pop2
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-spop)
+     *
+     * @example Syntax: `SPOP`
      */
     const val SPOP: Byte = -94
 
@@ -1474,8 +1613,9 @@ object Opcodes {
      *
      * Value: `0xA3`
      *
-     * @example Syntax: `POP4`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-543-pop4
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ipop)
+     *
+     * @example Syntax: `IPOP`
      */
     const val IPOP: Byte = -93
 
@@ -1484,8 +1624,9 @@ object Opcodes {
      *
      * Value: `0xA4`
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lpop)
+     *
      * @example Syntax: `POP8`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-544-pop8
      */
     const val LPOP: Byte = -92
 
@@ -1494,8 +1635,9 @@ object Opcodes {
      *
      * Value: `0xA5`
      *
-     * @example Syntax: `DUP`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-551-dup
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bdup)
+     *
+     * @example Syntax: `BDUP`
      */
     const val BDUP: Byte = -91
 
@@ -1504,8 +1646,9 @@ object Opcodes {
      *
      * Value: `0xA6`
      *
-     * @example Syntax: `DUP2`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-552-dup2
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sdup)
+     *
+     * @example Syntax: `SDUP`
      */
     const val SDUP: Byte = -90
 
@@ -1514,8 +1657,9 @@ object Opcodes {
      *
      * Value: `0xA7`
      *
-     * @example Syntax: `DUP4`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-553-dup4
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-idup)
+     *
+     * @example Syntax: `IDUP`
      */
     const val IDUP: Byte = -89
 
@@ -1524,108 +1668,42 @@ object Opcodes {
      *
      * Value: `0xA8`
      *
-     * @example Syntax: `DUP8`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-554-dup8
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ldup)
+     *
+     * @example Syntax: `LDUP`
      */
     const val LDUP: Byte = -88
 
     /**
      * Primitive cast operation. The top element of the stack will be cast.
      *
-     * Value: `0xA0`
-     *
-     * @example Syntax `PCAST` <u1 cast-type>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-531-pcast
-     */
-    const val PCAST: Byte = -96
-
-    /**
-     * Call instruction
-     *
      * Value: `0xA9`
      *
-     * @example Syntax: `CALL` <u4 address>
-     * @see - https://shakelang.com/specification/bytecode/instructions#-561-call
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-pcast)
+     *
+     * @example Syntax `PCAST` <u1 cast-type>
      */
-    const val CALL: Byte = -87
+    const val PCAST: Byte = -87
 
     /**
-     * Get a global byte
+     * Invoke-Static instruction
      *
      * Value: `0xB0`
      *
-     * @example Syntax: `bloadg`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-1-bloadg
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-static)
+     *
+     * @example Syntax: `INVOKE_STATIC` <u4 address>
      */
-    const val BLOADG: Byte = -80
+    const val INVOKE_STATIC: Byte = -80
 
     /**
-     * Get a global short
+     * Invoke-Instance instruction
      *
      * Value: `0xB1`
      *
-     * @example Syntax: `sloadg`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-2-sloadg
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-instance)
+     *
+     * @example Syntax: `INVOKE_INSTANCE` <u4 address>
      */
-    const val SLOADG: Byte = -79
-
-    /**
-     * Get a global int
-     *
-     * Value: `0xB2`
-     *
-     * @example Syntax: `iloadg`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-3-iloadg
-     */
-    const val ILOADG: Byte = -78
-
-    /**
-     * Get a global long
-     *
-     * Value: `0xB3`
-     *
-     * @example Syntax: `lloadg`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-4-lloadg
-     */
-    const val LLOADG: Byte = -77
-
-    /**
-     * Store a global byte
-     *
-     * Value: `0xB4`
-     *
-     * @example Syntax: `bstoreg`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-5-bstoreg
-     */
-    const val BSTOREG: Byte = -76
-
-    /**
-     * Store a global short
-     *
-     * Value: `0xB5`
-     *
-     * @example Syntax: `sstoreg`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-6-sstoreg
-     */
-    const val SSTOREG: Byte = -75
-
-    /**
-     * Store a global int
-     *
-     * Value: `0xB6`
-     *
-     * @example Syntax: `istoreg`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-7-istoreg
-     */
-    const val ISTOREG: Byte = -74
-
-    /**
-     * Store a global long
-     *
-     * Value: `0xB7`
-     *
-     * @example Syntax: `lstoreg`
-     * @see - https://shakelang.com/specification/bytecode/instructions#-9-1-8-lstoreg
-     */
-    const val LSTOREG: Byte = -73
+    const val INVOKE_INSTANCE: Byte = -79
 }
