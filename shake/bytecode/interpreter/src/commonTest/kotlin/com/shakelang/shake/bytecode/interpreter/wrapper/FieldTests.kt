@@ -19,6 +19,7 @@ class FieldTests : FreeSpec(
                         name = "test"
                         type = "I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -40,11 +41,13 @@ class FieldTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Field {
                             name = "test"
                             type = "I"
                             isPublic = true
+                            isStatic = true
                         }
                     }
                 },
@@ -67,16 +70,19 @@ class FieldTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Class {
                             name = "Test2"
                             superName = "com/shakelang/Object"
                             isPublic = true
+                            isStatic = true
 
                             Field {
                                 name = "test"
                                 type = "I"
                                 isPublic = true
+                                isStatic = true
                             }
                         }
                     }
@@ -113,6 +119,7 @@ class FieldTests : FreeSpec(
                         name = "test"
                         type = "I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -184,6 +191,7 @@ class FieldTests : FreeSpec(
                         name = "test"
                         type = "Lcom/shakelang/Object;"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -196,6 +204,7 @@ class FieldTests : FreeSpec(
                         name = "Object"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )

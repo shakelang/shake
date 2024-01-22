@@ -2978,7 +2978,7 @@ open class ShakeBytecodeInstructionGenerator(
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun load_static(address: Int) = addBytes(listOf(Opcodes.SLOAD, *address.toBytes().toTypedArray()))
+    fun load_static(address: Int) = addBytes(listOf(Opcodes.LOAD_STATIC, *address.toBytes().toTypedArray()))
 
     /**
      * Load a static variable
@@ -3035,7 +3035,7 @@ open class ShakeBytecodeInstructionGenerator(
      * @version 0.1.0
      * @see Opcodes.SSTORE
      */
-    fun store_static(address: Int) = addBytes(listOf(Opcodes.SSTORE, *address.toBytes().toTypedArray()))
+    fun store_static(address: Int) = addBytes(listOf(Opcodes.STORE_STATIC, *address.toBytes().toTypedArray()))
 
     /**
      * Store a static variable
@@ -3195,6 +3195,34 @@ open class ShakeBytecodeInstructionGenerator(
      * @see Opcodes.LASTORE
      */
     fun lastore() = addByte(Opcodes.LASTORE)
+
+    /**
+     * Create a new array
+     * The type is stored in an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-new-arr)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.NEW_ARR
+     */
+    fun new_array(type: Int) = addBytes(Opcodes.NEW_ARR, *type.toBytes())
+
+    /**
+     * Create a new array
+     * The type is stored in an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-new-arr)
+     *
+     * @return A placeholder for the type of the array
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.NEW_ARR
+     */
+    fun new_array(): IntPlaceholder {
+        addByte(Opcodes.NEW_ARR)
+        return iPlaceholder()
+    }
 
     /**
      * Output a [ByteArray] of the bytecode
@@ -3646,6 +3674,22 @@ open class PooledShakeBytecodeInstructionGenerator(
      */
     fun store_virtual(descriptor: String) {
         addByte(Opcodes.STORE_VIRTUAL)
+        utf8Ref(descriptor)
+    }
+
+    /**
+     * Create a new array
+     * The type is stored in an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-new-arr)
+     *
+     * @param descriptor The descriptor of the array type
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.NEW_ARR
+     */
+    fun new_array(descriptor: String) {
+        addByte(Opcodes.NEW_ARR)
         utf8Ref(descriptor)
     }
 }

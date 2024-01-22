@@ -1146,6 +1146,13 @@ class BytecodeGeneratorTests : FreeSpec(
             bytes shouldBe arrayOf(Opcodes.LASTORE)
         }
 
+        "new_array" {
+            val bytes = bytecode {
+                new_array(0x01)
+            }
+            bytes shouldBe arrayOf(Opcodes.NEW_ARR, 0x00, 0x00, 0x00, 0x01)
+        }
+
         "toByteArray" {
             val bytes = bytecode {
                 bshru()

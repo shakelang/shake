@@ -20,6 +20,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test(I)I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -42,10 +43,12 @@ class MethodTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Method {
                             name = "test(I)I"
                             isPublic = true
+                            isStatic = true
                         }
                     }
                 },
@@ -69,15 +72,18 @@ class MethodTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Class {
                             name = "Test2"
                             superName = "com/shakelang/Object"
                             isPublic = true
+                            isStatic = true
 
                             Method {
                                 name = "test(I)I"
                                 isPublic = true
+                                isStatic = true
                             }
                         }
                     }
@@ -114,6 +120,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test(I)I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -171,6 +178,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test(I)I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -190,6 +198,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test()Lcom/shakelang/Object;"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -202,6 +211,7 @@ class MethodTests : FreeSpec(
                         name = "Object"
                         superName = "java/lang/Object"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -226,6 +236,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test()[I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -248,6 +259,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test()[Lcom/shakelang/Object;"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -260,6 +272,7 @@ class MethodTests : FreeSpec(
                         name = "Object"
                         superName = "java/lang/Object"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -287,6 +300,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test(I)I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -307,6 +321,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test(Lcom/shakelang/Object;)I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -319,6 +334,7 @@ class MethodTests : FreeSpec(
                         name = "Object"
                         superName = "java/lang/Object"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -344,6 +360,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test([I)I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -367,6 +384,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test([Lcom/shakelang/Object;)I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -379,6 +397,7 @@ class MethodTests : FreeSpec(
                         name = "Object"
                         superName = "java/lang/Object"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -407,6 +426,7 @@ class MethodTests : FreeSpec(
                     Method {
                         name = "test()I"
                         isPublic = true
+                        isStatic = true
                         code {
                             this.bytecode {
                                 ipush(4)

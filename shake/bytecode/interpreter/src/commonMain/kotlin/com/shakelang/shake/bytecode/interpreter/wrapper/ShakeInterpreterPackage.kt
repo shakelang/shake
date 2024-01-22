@@ -99,9 +99,14 @@ interface ShakeInterpreterPackage {
                 val fieldFormatList: MutableList<Pair<Field, StorageFormat>> = mutableListOf()
 
                 init {
+                    for (s in storages) addStorageFormat(s)
+
+                    println("Initializing package $name")
+
                     var size = 4L // 4 bytes for header
                     fieldMemoryMap = fieldFormatList.map {
                         val start = size
+                        println("Field ${it.first.name} starts at $start")
                         size += TypeDescriptor.parse(it.first.type).byteSize
                         start
                     }.toLongArray()
@@ -109,10 +114,6 @@ interface ShakeInterpreterPackage {
 
                     // Let's create our static location
                     this.fieldsLocation = interpreter.malloc.malloc(size)
-                }
-
-                init {
-                    for (s in storages) addStorageFormat(s)
                 }
 
                 fun loadClass(index: Int): ShakeInterpreterClass {
@@ -204,14 +205,23 @@ interface ShakeInterpreterPackage {
                 fun addStorageFormat(storage: StorageFormat) {
                     this.storages.add(storage)
                     for (c in storage.classes) {
+                        if (!c.isStatic) {
+                            throw Exception("Only static classes are allowed in packages")
+                        }
                         classFormatList.add(c to storage)
                         classList.add(null)
                     }
                     for (m in storage.methods) {
+                        if (!m.isStatic) {
+                            throw Exception("Only static methods are allowed in packages")
+                        }
                         methodFormatList.add(m to storage)
                         methodList.add(null)
                     }
                     for (f in storage.fields) {
+                        if (!f.isStatic) {
+                            throw Exception("Only static fields are allowed in packages")
+                        }
                         fieldFormatList.add(f to storage)
                         fieldList.add(null)
                     }

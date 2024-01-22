@@ -322,26 +322,24 @@ class ShakeBytecodeGenerator {
             name = pkg.qualifiedName
 
             pkg.classes.forEach {
-                Class { generateClass(it, this) }
+                Class { generateClass(it, this, false) }
             }
 
             pkg.functions.forEach {
-                Method { generateMethod(it, this) }
+                Method { generateMethod(it, this, false) }
             }
 
             pkg.fields.forEach {
-                Field { generateField(it, this) }
+                Field { generateField(it, this, false) }
             }
         }
     }
 
-    fun generateClass(clazz: ShakeClass, ctx: ClassGenerationContext) {
+    fun generateClass(clazz: ShakeClass, ctx: ClassGenerationContext, isInClass: Boolean = false) {
         ctx.run {
             name = clazz.name
             isPublic = clazz.isPublic
-            isStatic = clazz.isStatic
-            isFinal = clazz.isFinal
-            isStatic = clazz.isStatic
+            isStatic = if (isInClass) clazz.isStatic else true
             isFinal = clazz.isFinal
 
             superName = clazz.superClass.qualifiedName
@@ -355,25 +353,24 @@ class ShakeBytecodeGenerator {
             }
 
             clazz.methods.forEach {
-                Method { generateMethod(it, this) }
+                Method { generateMethod(it, this, true) }
             }
 
             clazz.fields.forEach {
-                Field { generateField(it, this) }
+                Field { generateField(it, this, true) }
             }
         }
     }
 
-    fun generateMethod(method: ShakeMethod, ctx: MethodGenerationContext) {
+    fun generateMethod(method: ShakeMethod, ctx: MethodGenerationContext, isInClass: Boolean) {
         ctx.run {
             val returnType = generateTypeDescriptor(method.returnType)
             val parameters = method.parameters.map { generateTypeDescriptor(it.type) }
 
             name = "${method.name}(${parameters.joinToString(",")})$returnType"
             isPublic = method.isPublic
-            isStatic = method.isStatic
             isFinal = method.isFinal
-            isStatic = method.isStatic
+            isStatic = if (isInClass) method.isStatic else true
             isFinal = method.isFinal
             isNative = method.isNative
             isAbstract = method.isAbstract
@@ -414,13 +411,11 @@ class ShakeBytecodeGenerator {
         }
     }
 
-    fun generateField(field: ShakeField, ctx: FieldGenerationContext) {
+    fun generateField(field: ShakeField, ctx: FieldGenerationContext, isInClass: Boolean) {
         ctx.run {
             name = field.name
             isPublic = field.isPublic
-            isStatic = field.isStatic
-            isFinal = field.isFinal
-            isStatic = field.isStatic
+            isStatic = if (isInClass) field.isStatic else true
             isFinal = field.isFinal
             type = generateTypeDescriptor(field.type)
         }

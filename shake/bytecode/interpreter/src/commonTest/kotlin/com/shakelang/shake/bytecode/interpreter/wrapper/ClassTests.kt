@@ -17,6 +17,7 @@ class ClassTests : FreeSpec(
                     name = "com/shakelang/shake/test"
 
                     Class {
+                        isStatic = true
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
@@ -41,11 +42,13 @@ class ClassTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Class {
                             name = "Test2"
                             superName = "com/shakelang/Object"
                             isPublic = true
+                            isStatic = true
                         }
                     }
                 },
@@ -68,16 +71,19 @@ class ClassTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Class {
                             name = "Test2"
                             superName = "com/shakelang/Object"
                             isPublic = true
+                            isStatic = true
 
                             Class {
                                 name = "Test3"
                                 superName = "com/shakelang/Object"
                                 isPublic = true
+                                isStatic = true
                             }
                         }
                     }
@@ -114,6 +120,7 @@ class ClassTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
