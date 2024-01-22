@@ -920,7 +920,7 @@ class BytecodeGeneratorTests : FreeSpec(
 
         "jl" {
             val bytes = bytecode {
-                jl(0x01020304)
+                jlt(0x01020304)
             }
             bytes shouldBe arrayOf(Opcodes.JL, 0x01, 0x02, 0x03, 0x04)
         }
@@ -934,7 +934,7 @@ class BytecodeGeneratorTests : FreeSpec(
 
         "jg" {
             val bytes = bytecode {
-                jg(0x01020304)
+                jgt(0x01020304)
             }
             bytes shouldBe arrayOf(Opcodes.JG, 0x01, 0x02, 0x03, 0x04)
         }
@@ -1064,7 +1064,7 @@ class BytecodeGeneratorTests : FreeSpec(
 
         "call" {
             val bytes = bytecode {
-                call(0x01020304)
+                invoke_static(0x01020304)
             }
             bytes shouldBe arrayOf(Opcodes.INVOKE_STATIC, 0x01, 0x02, 0x03, 0x04)
         }

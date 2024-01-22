@@ -2376,7 +2376,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(0)
                     bpush(1)
                     bcmp()
-                    jl(0)
+                    jlt(0)
                 },
                 method,
             )
@@ -2395,7 +2395,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     bpush(0)
                     bcmp()
-                    jl(0)
+                    jlt(0)
                 },
                 method,
             )
@@ -2471,7 +2471,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     bpush(0)
                     bcmp()
-                    jg(0)
+                    jgt(0)
                 },
                 method,
             )
@@ -2490,7 +2490,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(0)
                     bpush(1)
                     bcmp()
-                    jg(0)
+                    jgt(0)
                 },
                 method,
             )
@@ -2702,7 +2702,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                             this.bytecode {
                                 bpush(1)
                                 bpush(1)
-                                call("test/and(B,B)B")
+                                invoke_static("test/and(B,B)B")
                                 ret()
                             }
                         }

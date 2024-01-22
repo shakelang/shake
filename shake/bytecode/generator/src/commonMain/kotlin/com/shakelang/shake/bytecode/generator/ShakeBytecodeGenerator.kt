@@ -128,7 +128,7 @@ class ShakeBytecodeGenerator {
                 }
 
                 // Call the method
-                ctx.bytecodeInstructionGenerator.call(
+                ctx.bytecodeInstructionGenerator.invoke_static(
                     invokable.qualifiedSignature,
                 )
             }
