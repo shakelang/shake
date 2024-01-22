@@ -1062,11 +1062,88 @@ class BytecodeGeneratorTests : FreeSpec(
             }
         }
 
-        "call" {
+        "invoke_static" {
             val bytes = bytecode {
                 invoke_static(0x01020304)
             }
             bytes shouldBe arrayOf(Opcodes.INVOKE_STATIC, 0x01, 0x02, 0x03, 0x04)
+        }
+
+        "invoke_virtual" {
+            val bytes = bytecode {
+                invoke_virtual(0x01020304)
+            }
+            bytes shouldBe arrayOf(Opcodes.INVOKE_VIRTUAL, 0x01, 0x02, 0x03, 0x04)
+        }
+
+        "load_static" {
+            val bytes = bytecode {
+                load_static(0x01020304)
+            }
+            bytes shouldBe arrayOf(Opcodes.LOAD_STATIC, 0x01, 0x02, 0x03, 0x04)
+        }
+
+        "store_static" {
+            val bytes = bytecode {
+                store_static(0x01020304)
+            }
+            bytes shouldBe arrayOf(Opcodes.STORE_STATIC, 0x01, 0x02, 0x03, 0x04)
+        }
+
+        "baload" {
+            val bytes = bytecode {
+                baload()
+            }
+            bytes shouldBe arrayOf(Opcodes.BALOAD)
+        }
+
+        "saload" {
+            val bytes = bytecode {
+                saload()
+            }
+            bytes shouldBe arrayOf(Opcodes.SALOAD)
+        }
+
+        "iaload" {
+            val bytes = bytecode {
+                iaload()
+            }
+            bytes shouldBe arrayOf(Opcodes.IALOAD)
+        }
+
+        "laload" {
+            val bytes = bytecode {
+                laload()
+            }
+            bytes shouldBe arrayOf(Opcodes.LALOAD)
+        }
+
+        "bastore" {
+            val bytes = bytecode {
+                bastore()
+            }
+            bytes shouldBe arrayOf(Opcodes.BASTORE)
+        }
+
+        "sastore" {
+            val bytes = bytecode {
+                sastore()
+            }
+            bytes shouldBe arrayOf(Opcodes.SASTORE)
+        }
+
+        "iastore" {
+            val bytes = bytecode {
+                iastore()
+            }
+            bytes shouldBe arrayOf(Opcodes.IASTORE)
+        }
+
+        "lastore" {
+            val bytes = bytecode {
+                lastore()
+            }
+            bytes shouldBe arrayOf(Opcodes.LASTORE)
         }
 
         "toByteArray" {

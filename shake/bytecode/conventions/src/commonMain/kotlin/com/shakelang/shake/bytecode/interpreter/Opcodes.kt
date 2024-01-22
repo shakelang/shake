@@ -1697,13 +1697,178 @@ object Opcodes {
     const val INVOKE_STATIC: Byte = -80
 
     /**
-     * Invoke-Instance instruction
+     * Invoke instance instruction
      *
      * Value: `0xB1`
      *
-     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-instance)
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-virtual)
      *
-     * @example Syntax: `INVOKE_INSTANCE` <u4 address>
+     * @example Syntax: `INVOKE_VIRTUAL` <u4 address>
      */
-    const val INVOKE_INSTANCE: Byte = -79
+    const val INVOKE_VIRTUAL: Byte = -79
+
+    /**
+     * Load static field instruction
+     *
+     * Value: `0xB2`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-load-static)
+     *
+     * @example Syntax: `LOAD_STATIC` <u4 address>
+     */
+    const val LOAD_STATIC: Byte = -78
+
+    /**
+     * Load instance field instruction
+     *
+     * Value: `0xB3`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-load-virtual)
+     *
+     * @example Syntax: `LOAD_VIRTUAL` <u4 address>
+     */
+    const val LOAD_VIRTUAL: Byte = -77
+
+    /**
+     * Load a byte from an array
+     *
+     * Value: `0xB4`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-baload)
+     *
+     * @example Syntax: `BALOAD`
+     */
+    const val BALOAD: Byte = -76
+
+    /**
+     * Load a short from an array
+     *
+     * Value: `0xB5`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-saload)
+     *
+     * @example Syntax: `SALOAD`
+     */
+    const val SALOAD: Byte = -75
+
+    /**
+     * Load an int from an array
+     *
+     * Value: `0xB6`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-iaload)
+     *
+     * @example Syntax: `IALOAD`
+     */
+    const val IALOAD: Byte = -74
+
+    /**
+     * Load a long from an array
+     *
+     * Value: `0xB7`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-laload)
+     *
+     * @example Syntax: `LALOAD`
+     */
+    const val LALOAD: Byte = -73
+
+    /**
+     * Store a field in a class
+     *
+     * Value: `0xB8`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-store-static)
+     *
+     * @example Syntax: `STORE_STATIC` <u4 address>
+     */
+    const val STORE_STATIC: Byte = -72
+
+    /**
+     * Store a field in an instance
+     *
+     * Value: `0xB9`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-store-virtual)
+     *
+     * @example Syntax: `STORE_VIRTUAL` <u4 address>
+     */
+    const val STORE_VIRTUAL: Byte = -71
+
+    /**
+     * Store a byte in an array
+     *
+     * Value: `0xBA`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bastore)
+     *
+     * @example Syntax: `BASTORE`
+     */
+    const val BASTORE: Byte = -70
+
+    /**
+     * Store a short in an array
+     *
+     * Value: `0xBB`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sastore)
+     *
+     * @example Syntax: `SASTORE`
+     */
+    const val SASTORE: Byte = -69
+
+    /**
+     * Store an int in an array
+     *
+     * Value: `0xBC`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-iastore)
+     *
+     * @example Syntax: `IASTORE`
+     */
+    const val IASTORE: Byte = -68
+
+    /**
+     * Store a long in an array
+     *
+     * Value: `0xBD`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lastore)
+     *
+     * @example Syntax: `LASTORE`
+     */
+    const val LASTORE: Byte = -67
+
+    /**
+     * Construct a new object from a class
+     *
+     * Value: `0xC0`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-new-obj)
+     *
+     * @example Syntax: `NEW_OBJ` <u4 address>
+     */
+    const val NEW_OBJ: Byte = -64
+
+    /**
+     * Construct a new array
+     *
+     * Value: `0xC1`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-new-arr)
+     *
+     * @example Syntax: `NEW_ARR` <u1 type>
+     */
+    const val NEW_ARR: Byte = -63
+
+    /**
+     * Throw an exception
+     *
+     * Value: `0xC2`
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-throw)
+     *
+     * @example Syntax: `THROW`
+     */
+    const val THROW: Byte = -62
 }

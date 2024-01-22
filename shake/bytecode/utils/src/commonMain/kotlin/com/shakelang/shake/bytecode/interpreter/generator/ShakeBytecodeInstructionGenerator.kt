@@ -2902,13 +2902,13 @@ open class ShakeBytecodeInstructionGenerator(
     fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
 
     /**
-     * Call a function
+     * Invoke a function
      * The address int should point to an utf8 constant pool entry
      * in the constant pool
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-static)
      *
-     * @param address The address of the function to call
+     * @param address The address of the function to invoke
      * @since 0.1.0
      * @version 0.1.0
      * @see Opcodes.INVOKE_STATIC
@@ -2916,13 +2916,14 @@ open class ShakeBytecodeInstructionGenerator(
     fun invoke_static(address: Int) = addBytes(listOf(Opcodes.INVOKE_STATIC, *address.toBytes().toTypedArray()))
 
     /**
-     * Call a function
+     * Invoke a function
      * The address int should point to an utf8 constant pool entry
      * in the constant pool
+     * Parameters should be on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-static)
      *
-     * @return A placeholder for the address of the function to call
+     * @return A placeholder for the address of the function to invoke
      * @since 0.1.0
      * @version 0.1.0
      * @see Opcodes.INVOKE_STATIC
@@ -2931,6 +2932,269 @@ open class ShakeBytecodeInstructionGenerator(
         addByte(Opcodes.INVOKE_STATIC)
         return iPlaceholder()
     }
+
+    /**
+     * Invoke a function on an object
+     * The address int should point to an utf8 constant pool entry
+     * in the constant pool
+     * Parameters, and the object should be on the stack
+     * The object should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-virtual)
+     *
+     * @param address The address of the function to invoke
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.INVOKE_VIRTUAL
+     */
+    fun invoke_virtual(address: Int) = addBytes(listOf(Opcodes.INVOKE_VIRTUAL, *address.toBytes().toTypedArray()))
+
+    /**
+     * Invoke a function on an object
+     * The address int should point to an utf8 constant pool entry
+     * in the constant pool
+     * Parameters, and the object should be on the stack
+     * The object should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-virtual)
+     *
+     * @return A placeholder for the address of the function to invoke
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.INVOKE_VIRTUAL
+     */
+    fun invoke_virtual(): IntPlaceholder {
+        addByte(Opcodes.INVOKE_VIRTUAL)
+        return iPlaceholder()
+    }
+
+    /**
+     * Load a static variable
+     * The address int should point to an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sload)
+     *
+     * @param address The address of the variable to load
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun load_static(address: Int) = addBytes(listOf(Opcodes.SLOAD, *address.toBytes().toTypedArray()))
+
+    /**
+     * Load a static variable
+     * The address int should point to an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sload)
+     *
+     * @return A placeholder for the address of the variable to load
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun load_static(): IntPlaceholder {
+        addByte(Opcodes.SLOAD)
+        return iPlaceholder()
+    }
+
+    /**
+     * Load a virtual variable
+     * The address int should point to an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-load)
+     *
+     * @param address The address of the variable to load
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun load_virtual(address: Int) = addBytes(listOf(Opcodes.LOAD_VIRTUAL, *address.toBytes().toTypedArray()))
+
+    /**
+     * Load a virtual variable
+     * The address int should point to an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-load)
+     *
+     * @return A placeholder for the address of the variable to load
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun load_virtual(): IntPlaceholder {
+        addByte(Opcodes.LOAD_VIRTUAL)
+        return iPlaceholder()
+    }
+
+    /**
+     * Store a static variable
+     * The address int should point to an utf8 constant pool entry
+     * The value should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sstore)
+     *
+     * @param address The address of the variable to store
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.SSTORE
+     */
+    fun store_static(address: Int) = addBytes(listOf(Opcodes.SSTORE, *address.toBytes().toTypedArray()))
+
+    /**
+     * Store a static variable
+     * The address int should point to an utf8 constant pool entry
+     * The value should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sstore)
+     *
+     * @return A placeholder for the address of the variable to store
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.SSTORE
+     */
+    fun store_static(): IntPlaceholder {
+        addByte(Opcodes.SSTORE)
+        return iPlaceholder()
+    }
+
+    /**
+     * Store a virtual variable
+     * The address int should point to an utf8 constant pool entry
+     * The value should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-store)
+     *
+     * @param address The address of the variable to store
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.STORE
+     */
+    fun store_virtual(address: Int) = addBytes(listOf(Opcodes.STORE_VIRTUAL, *address.toBytes().toTypedArray()))
+
+    /**
+     * Store a virtual variable
+     * The address int should point to an utf8 constant pool entry
+     * The value should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-store)
+     *
+     * @return A placeholder for the address of the variable to store
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.STORE
+     */
+    fun store_virtual(): IntPlaceholder {
+        addByte(Opcodes.STORE_VIRTUAL)
+        return iPlaceholder()
+    }
+
+    /**
+     * Load a byte from an array
+     * The index (int) should be on the stack
+     * The array address (int) should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-baload)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.BALOAD
+     */
+    fun baload() = addByte(Opcodes.BALOAD)
+
+    /**
+     * Load a short from an array
+     * The index (int) should be on the stack
+     * The array address (int) should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-saload)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.SALOAD
+     */
+    fun saload() = addByte(Opcodes.SALOAD)
+
+    /**
+     * Load an int from an array
+     * The index (int) should be on the stack
+     * The array address (int) should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-iaload)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.IALOAD
+     */
+    fun iaload() = addByte(Opcodes.IALOAD)
+
+    /**
+     * Load a long from an array
+     * The index (int) should be on the stack
+     * The array address (int) should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-laload)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.LALOAD
+     */
+    fun laload() = addByte(Opcodes.LALOAD)
+
+    /**
+     * Store a byte in an array
+     * The value (byte) should be on the stack
+     * The index (int) should be on the stack
+     * The array address (int) should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bastore)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.BASTORE
+     */
+    fun bastore() = addByte(Opcodes.BASTORE)
+
+    /**
+     * Store a short in an array
+     * The value (short) should be on the stack
+     * The index (int) should be on the stack
+     * The array address (int) should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-sastore)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.SASTORE
+     */
+    fun sastore() = addByte(Opcodes.SASTORE)
+
+    /**
+     * Store an int in an array
+     * The value (int) should be on the stack
+     * The index (int) should be on the stack
+     * The array address (int) should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-iastore)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.IASTORE
+     */
+    fun iastore() = addByte(Opcodes.IASTORE)
+
+    /**
+     * Store a long in an array
+     * The value (long) should be on the stack
+     * The index (int) should be on the stack
+     * The array address (int) should be on the stack
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lastore)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.LASTORE
+     */
+    fun lastore() = addByte(Opcodes.LASTORE)
 
     /**
      * Output a [ByteArray] of the bytecode
@@ -3313,8 +3577,75 @@ open class PooledShakeBytecodeInstructionGenerator(
      */
     fun classRef(value: String) = addBytes(*constantPool.resolveClass(value).toBytes())
 
+    /**
+     * Invoke a function
+     *
+     * @param descriptor The descriptor of the function to invoke
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     fun invoke_static(descriptor: String) {
         addByte(Opcodes.INVOKE_STATIC)
+        utf8Ref(descriptor)
+    }
+
+    /**
+     * Invoke a function on an object
+     *
+     * @param descriptor The descriptor of the function to invoke
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun invoke_virtual(descriptor: String) {
+        addByte(Opcodes.INVOKE_VIRTUAL)
+        utf8Ref(descriptor)
+    }
+
+    /**
+     * Load a static variable
+     *
+     * @param descriptor The descriptor of the variable to load
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun load_static(descriptor: String) {
+        addByte(Opcodes.SLOAD)
+        utf8Ref(descriptor)
+    }
+
+    /**
+     * Load a virtual variable
+     *
+     * @param descriptor The descriptor of the variable to load
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun load_virtual(descriptor: String) {
+        addByte(Opcodes.LOAD_VIRTUAL)
+        utf8Ref(descriptor)
+    }
+
+    /**
+     * Store a static variable
+     *
+     * @param descriptor The descriptor of the variable to store
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun store_static(descriptor: String) {
+        addByte(Opcodes.SSTORE)
+        utf8Ref(descriptor)
+    }
+
+    /**
+     * Store a virtual variable
+     *
+     * @param descriptor The descriptor of the variable to store
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun store_virtual(descriptor: String) {
+        addByte(Opcodes.STORE_VIRTUAL)
         utf8Ref(descriptor)
     }
 }
