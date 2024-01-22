@@ -89,8 +89,6 @@ class Malloc(
                     resultPointer = pointer
                     resultPreviousPointer = previousPointer
                     resultHeader = header
-
-                    println("Found a chunk that is smaller than the previous best fit for $size: ${header.size}")
                 }
             }
 
@@ -102,7 +100,6 @@ class Malloc(
             // No free chunk was found.
             return null
         }
-        println("Selected chunk with size ${resultHeader.size} for $size")
 
         return FreeHeaderSearchResult(resultPointer, resultPreviousPointer, resultHeader)
     }
@@ -150,9 +147,6 @@ class Malloc(
         // We need to allocate a new chunk of memory.
         // We need to find a free chunk that is big enough.
         val result = searchForFreeSpace(rsize)
-        result?.let {
-            println("Found a chunk with size ${it.header.size} for $rsize at ${it.pointer}")
-        }
 
         if (result == null) {
             // No free chunk was found.

@@ -923,11 +923,8 @@ class ShakeInterpreter {
 
                 Opcodes.BASTORE -> {
                     val value = stack.pop()
-                    println("value: ${value.toBytes().toHexString()}")
                     val index = stack.popInt()
-                    println("index: $index")
                     val array = stack.popLong()
-                    println("array: $array")
                     val size = globalMemory.getInt(array)
                     if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
                     // TODO: Throw ShakeException

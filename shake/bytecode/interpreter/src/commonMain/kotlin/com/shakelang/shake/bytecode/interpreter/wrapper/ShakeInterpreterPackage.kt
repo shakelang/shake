@@ -101,12 +101,9 @@ interface ShakeInterpreterPackage {
                 init {
                     for (s in storages) addStorageFormat(s)
 
-                    println("Initializing package $name")
-
                     var size = 4L // 4 bytes for header
                     fieldMemoryMap = fieldFormatList.map {
                         val start = size
-                        println("Field ${it.first.name} starts at $start")
                         size += TypeDescriptor.parse(it.first.type).byteSize
                         start
                     }.toLongArray()
