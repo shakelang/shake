@@ -3117,5 +3117,157 @@ class ShakeCodeInterpreterTests : FreeSpec(
 
             interpreter.globalMemory.getLong(array + 4) shouldBe 0x4243444546474849
         }
+
+        "store / load static field with byte" {
+
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Field {
+                        name = "field"
+                        type = "B"
+                        isPublic = true
+                        isStatic = true
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                bpush(0x42)
+                                store_static("test/field")
+                                load_static("test/field")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(3)
+
+            val stack = code.stack
+            stack.size shouldBe 1
+            stack.pop() shouldBe 0x42
+        }
+
+        "store / load static field with short" {
+
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Field {
+                        name = "field"
+                        type = "S"
+                        isPublic = true
+                        isStatic = true
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                spush(0x4243)
+                                store_static("test/field")
+                                load_static("test/field")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(3)
+
+            val stack = code.stack
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 0x4243
+        }
+
+        "store / load static field with int" {
+
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Field {
+                        name = "field"
+                        type = "I"
+                        isPublic = true
+                        isStatic = true
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                ipush(0x42434445)
+                                store_static("test/field")
+                                load_static("test/field")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(3)
+
+            val stack = code.stack
+            stack.size shouldBe 4
+            stack.popInt() shouldBe 0x42434445
+        }
+
+        "store / load static field with long" {
+
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Field {
+                        name = "field"
+                        type = "J"
+                        isPublic = true
+                        isStatic = true
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                lpush(0x4243444546474849)
+                                store_static("test/field")
+                                load_static("test/field")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(3)
+
+            val stack = code.stack
+            stack.size shouldBe 8
+            stack.popLong() shouldBe 0x4243444546474849
+        }
     },
 )

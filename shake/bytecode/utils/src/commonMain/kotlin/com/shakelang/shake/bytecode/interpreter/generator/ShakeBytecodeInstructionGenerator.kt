@@ -2991,7 +2991,7 @@ open class ShakeBytecodeInstructionGenerator(
      * @version 0.1.0
      */
     fun load_static(): IntPlaceholder {
-        addByte(Opcodes.SLOAD)
+        addByte(Opcodes.LOAD_STATIC)
         return iPlaceholder()
     }
 
@@ -3051,7 +3051,7 @@ open class ShakeBytecodeInstructionGenerator(
      * @see Opcodes.SSTORE
      */
     fun store_static(): IntPlaceholder {
-        addByte(Opcodes.SSTORE)
+        addByte(Opcodes.STORE_STATIC)
         return iPlaceholder()
     }
 
@@ -3637,7 +3637,7 @@ open class PooledShakeBytecodeInstructionGenerator(
      * @version 0.1.0
      */
     fun load_static(descriptor: String) {
-        addByte(Opcodes.SLOAD)
+        addByte(Opcodes.LOAD_STATIC)
         utf8Ref(descriptor)
     }
 
@@ -3661,7 +3661,7 @@ open class PooledShakeBytecodeInstructionGenerator(
      * @version 0.1.0
      */
     fun store_static(descriptor: String) {
-        addByte(Opcodes.SSTORE)
+        addByte(Opcodes.STORE_STATIC)
         utf8Ref(descriptor)
     }
 
