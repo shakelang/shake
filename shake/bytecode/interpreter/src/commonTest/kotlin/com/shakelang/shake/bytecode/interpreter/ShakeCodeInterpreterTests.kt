@@ -2967,5 +2967,155 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.size shouldBe 8
             stack.popLong() shouldBe 0x4243444546474849
         }
+
+        "array store byte" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+
+                            this.bytecode {
+                                ipush(5)
+                                new_array("B")
+                                ipush(0)
+                                bpush(0x42)
+                                bastore()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+
+            code.tick(2)
+
+            val array = code.stack.popLong()
+            code.stack.push(array)
+
+            code.tick(3)
+
+            interpreter.globalMemory.getByte(array + 4) shouldBe 0x42
+        }
+
+        "array store short" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+
+                            this.bytecode {
+                                ipush(5)
+                                new_array("S")
+                                ipush(0)
+                                spush(0x4243)
+                                sastore()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+
+            code.tick(2)
+
+            val array = code.stack.popLong()
+            code.stack.push(array)
+
+            code.tick(3)
+
+            interpreter.globalMemory.getShort(array + 4) shouldBe 0x4243
+        }
+
+        "array store int" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                ipush(5)
+                                new_array("I")
+                                ipush(0)
+                                ipush(0x42434445)
+                                iastore()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(2)
+
+            val array = code.stack.popLong()
+            code.stack.push(array)
+
+            code.tick(3)
+
+            interpreter.globalMemory.getInt(array + 4) shouldBe 0x42434445
+        }
+
+        "array store long" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                ipush(5)
+                                new_array("J")
+                                ipush(0)
+                                lpush(0x4243444546474849)
+                                lastore()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(2)
+
+            val array = code.stack.popLong()
+            code.stack.push(array)
+
+            code.tick(3)
+
+            interpreter.globalMemory.getLong(array + 4) shouldBe 0x4243444546474849
+        }
     },
 )
