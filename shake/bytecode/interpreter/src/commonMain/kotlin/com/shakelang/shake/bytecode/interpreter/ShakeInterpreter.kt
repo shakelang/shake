@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter
 
+import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 import com.shakelang.shake.bytecode.interpreter.heap.GarbageCollector
 import com.shakelang.shake.bytecode.interpreter.heap.GlobalMemory
 import com.shakelang.shake.bytecode.interpreter.heap.Malloc
@@ -865,6 +866,99 @@ class ShakeInterpreter {
                     val obj = stack.popLong()
                     val value = stack.pop(field.type.byteSize)
                     field.setVirtualValue(obj, value)
+                }
+
+                Opcodes.NEW_ARR -> {
+                    val utf8 = this.method.constantPool.getUtf8(readInt()).value
+                    val type = TypeDescriptor.parse(utf8)
+                    val size = stack.popInt()
+
+                    val array = malloc.malloc(size.toLong() * type.byteSize + 4)
+                    globalMemory.setInt(array, size)
+                    for (i in 0 until size * type.byteSize)
+                        globalMemory.setByte(array + 4 + i, 0)
+
+                    stack.push(array)
+                }
+
+                Opcodes.BALOAD -> {
+                    val index = stack.popInt()
+                    val array = stack.popLong()
+                    val size = globalMemory.getInt(array)
+                    if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
+                    // TODO: Throw ShakeException
+                    val value = globalMemory.getByte(array + 4 + index)
+                    stack.push(value)
+                }
+
+                Opcodes.SALOAD -> {
+                    val index = stack.popInt()
+                    val array = stack.popLong()
+                    val size = globalMemory.getInt(array)
+                    if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
+                    // TODO: Throw ShakeException
+                    val value = globalMemory.getShort(array + 4 + index * 2)
+                    stack.push(value)
+                }
+
+                Opcodes.IALOAD -> {
+                    val index = stack.popInt()
+                    val array = stack.popLong()
+                    val size = globalMemory.getInt(array)
+                    if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
+                    // TODO: Throw ShakeException
+                    val value = globalMemory.getInt(array + 4 + index * 4)
+                    stack.push(value)
+                }
+
+                Opcodes.LALOAD -> {
+                    val index = stack.popInt()
+                    val array = stack.popLong()
+                    val size = globalMemory.getInt(array)
+                    if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
+                    // TODO: Throw ShakeException
+                    val value = globalMemory.getLong(array + 4 + index * 8)
+                    stack.push(value)
+                }
+
+                Opcodes.BASTORE -> {
+                    val value = stack.pop()
+                    val index = stack.popInt()
+                    val array = stack.popLong()
+                    val size = globalMemory.getInt(array)
+                    if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
+                    // TODO: Throw ShakeException
+                    globalMemory.setByte(array + 4 + index, value)
+                }
+
+                Opcodes.SASTORE -> {
+                    val value = stack.popShort()
+                    val index = stack.popInt()
+                    val array = stack.popLong()
+                    val size = globalMemory.getInt(array)
+                    if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
+                    // TODO: Throw ShakeException
+                    globalMemory.setShort(array + 4 + index * 2, value)
+                }
+
+                Opcodes.IASTORE -> {
+                    val value = stack.popInt()
+                    val index = stack.popInt()
+                    val array = stack.popLong()
+                    val size = globalMemory.getInt(array)
+                    if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
+                    // TODO: Throw ShakeException
+                    globalMemory.setInt(array + 4 + index * 4, value)
+                }
+
+                Opcodes.LASTORE -> {
+                    val value = stack.popLong()
+                    val index = stack.popInt()
+                    val array = stack.popLong()
+                    val size = globalMemory.getInt(array)
+                    if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
+                    // TODO: Throw ShakeException
+                    globalMemory.setLong(array + 4 + index * 8, value)
                 }
             }
         }
