@@ -67,7 +67,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             },
         )
 
-        val method = classpath.getMethod("test/main()V")!!
+        val main = classpath.getMethod("test/main()V")!!
         val bmethod = classpath.getMethod("test/btest()B")!!
         val smethod = classpath.getMethod("test/stest()S")!!
         val imethod = classpath.getMethod("test/itest()I")!!
@@ -81,7 +81,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(2)
                     bpush(3)
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -101,7 +101,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(2)
                     spush(3)
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -121,7 +121,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2)
                     ipush(3)
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -141,7 +141,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2)
                     lpush(3)
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -162,7 +162,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bload(0u)
                     bload(0u)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -182,7 +182,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     sload(0u)
                     sload(0u)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -202,7 +202,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     iload(0u)
                     iload(0u)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -222,7 +222,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lload(0u)
                     lload(0u)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -241,7 +241,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(2)
                     badd()
                 },
-                method,
+                main,
 
             )
 
@@ -260,7 +260,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(2)
                     sadd()
                 },
-                method,
+                main,
 
             )
 
@@ -279,7 +279,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2)
                     iadd()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -297,7 +297,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2)
                     ladd()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -315,7 +315,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2f.toBits())
                     fadd()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -333,7 +333,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2.0.toBits())
                     dadd()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -351,7 +351,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(2)
                     bsub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -369,7 +369,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(2)
                     ssub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -387,7 +387,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2)
                     isub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -405,7 +405,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2)
                     lsub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -423,7 +423,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2f.toBits())
                     fsub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -441,7 +441,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2.0.toBits())
                     dsub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -459,7 +459,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bmul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -477,7 +477,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     smul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -495,7 +495,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     imul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -513,7 +513,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lmul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -531,7 +531,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3f.toBits())
                     fmul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -549,7 +549,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3.0.toBits())
                     dmul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -567,7 +567,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bdiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -585,7 +585,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sdiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -603,7 +603,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     idiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -621,7 +621,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     ldiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -639,7 +639,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3f.toBits())
                     fdiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -657,7 +657,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3.0.toBits())
                     ddiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -675,7 +675,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bmod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -693,7 +693,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     smod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -711,7 +711,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     imod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -729,7 +729,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lmod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -747,7 +747,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3f.toBits())
                     fmod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -765,7 +765,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3.0.toBits())
                     dmod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -783,7 +783,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     band()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -801,7 +801,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sand()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -819,7 +819,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     iand()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -837,7 +837,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     land()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -855,7 +855,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -873,7 +873,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -891,7 +891,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ior()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -909,7 +909,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -927,7 +927,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bxor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -945,7 +945,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sxor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -963,7 +963,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ixor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -981,7 +981,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lxor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -999,7 +999,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bshl()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1017,7 +1017,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sshl()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1035,7 +1035,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ishl()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1053,7 +1053,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lshl()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1071,7 +1071,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bshr()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1089,7 +1089,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sshr()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1107,7 +1107,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ishr()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1125,7 +1125,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lshr()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1143,7 +1143,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bshru()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1161,7 +1161,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sshru()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1179,7 +1179,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ishru()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1197,7 +1197,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lshru()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1214,7 +1214,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(5)
                     bnot()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1231,7 +1231,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(5)
                     snot()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1248,7 +1248,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(5)
                     inot()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1265,7 +1265,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(5)
                     lnot()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1282,7 +1282,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(5)
                     binc()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1299,7 +1299,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(5)
                     sinc()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1316,7 +1316,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(5)
                     iinc()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1333,7 +1333,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(5)
                     linc()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1350,7 +1350,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(5)
                     bdec()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1367,7 +1367,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(5)
                     sdec()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1384,7 +1384,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(5)
                     idec()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1401,7 +1401,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(5)
                     ldec()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1418,7 +1418,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     bcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1435,7 +1435,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     bcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1452,7 +1452,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(0)
                     bcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1470,7 +1470,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(1)
                     scmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1487,7 +1487,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(1)
                     scmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1504,7 +1504,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(0)
                     scmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1522,7 +1522,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1)
                     icmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1539,7 +1539,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1)
                     icmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1556,7 +1556,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(0)
                     icmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1574,7 +1574,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1)
                     lcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1591,7 +1591,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1)
                     lcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1608,7 +1608,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(0)
                     lcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1626,7 +1626,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1f.toBits())
                     fcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1643,7 +1643,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1f.toBits())
                     fcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1660,7 +1660,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(0f.toBits())
                     fcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1678,7 +1678,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1.0.toBits())
                     dcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1695,7 +1695,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1.0.toBits())
                     dcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1712,7 +1712,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(0.0.toBits())
                     dcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1730,7 +1730,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     ubcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1748,7 +1748,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     ubcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1766,7 +1766,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(0)
                     ubcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1784,7 +1784,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(1)
                     uscmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1802,7 +1802,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(1)
                     uscmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1820,7 +1820,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(0)
                     uscmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1838,7 +1838,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1)
                     uicmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1856,7 +1856,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1)
                     uicmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1874,7 +1874,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(0)
                     uicmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1892,7 +1892,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1)
                     ulcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1910,7 +1910,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1)
                     ulcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1928,7 +1928,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(0)
                     ulcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1947,7 +1947,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cgt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -1966,7 +1966,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cgt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -1985,7 +1985,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cgt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2004,7 +2004,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cge()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2023,7 +2023,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cge()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2042,7 +2042,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cge()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2061,7 +2061,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     clt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2080,7 +2080,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     clt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2099,7 +2099,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     clt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2118,7 +2118,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cle()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2137,7 +2137,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cle()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2156,7 +2156,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cle()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2175,7 +2175,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     ceq()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2194,7 +2194,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     ceq()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2213,7 +2213,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     ceq()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2232,7 +2232,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cne()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2251,7 +2251,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cne()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2270,7 +2270,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cne()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2288,7 +2288,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(2)
                     jmp(0)
                 },
-                method,
+                main,
             )
 
             code.tick(6)
@@ -2307,7 +2307,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jz(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2326,7 +2326,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jz(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2345,7 +2345,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jnz(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2364,7 +2364,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jnz(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2383,7 +2383,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jlt(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2402,7 +2402,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jlt(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2421,7 +2421,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jle(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2440,7 +2440,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jle(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2459,7 +2459,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jle(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2478,7 +2478,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jgt(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2497,7 +2497,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jgt(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2516,7 +2516,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jge(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2535,7 +2535,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jge(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2554,7 +2554,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jge(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2571,7 +2571,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     ret()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -2666,7 +2666,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     pcast(PCast.BYTE, PCast.INT)
                 },
-                method,
+                main,
             )
 
             code.tick(2)
