@@ -182,17 +182,48 @@ class ShakeInterpreter {
             if (finished) return
             val opcode = readByte()
             when (opcode) {
+                //
+                // Tick Header
+                //
+                // This is the main logic of the interpreter, the bytecode
+                // interpreter.
+                //
+                // This method is called once per tick and executes the
+                // opcode at the current position of the program counter.
+                // For this reason this method needs to be as fast as possible
+                // and should not contain any unnecessary code.
+                // We use a when statement to execute the opcode.
+                // The main reason is that when statements create a jump table
+                // which is very fast in comparison to if statements.
+                // This when block can up to 256 cases (0x00 to 0xFF) and
+                // an if statement would be need 256 checks in the worst case.
+                //
+
+                // The NOP opcode does nothing
+                // It will just be skipped
+                // https://spec.shakelang.com/bytecode/instructions#instr-nop
                 Opcodes.NOP -> {
                     /* do nothing */
                 }
 
-                // Pushing values to the stack
+                // ///////////////////////////////////////
+                // The next 4 opcodes are used to push constants to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-bpush
+                // https://spec.shakelang.com/bytecode/instructions#instr-spush
+                // https://spec.shakelang.com/bytecode/instructions#instr-ipush
+                // https://spec.shakelang.com/bytecode/instructions#instr-lpush
                 Opcodes.BPUSH -> stack.push(readByte())
                 Opcodes.SPUSH -> stack.push(readShort())
                 Opcodes.IPUSH -> stack.push(readInt())
                 Opcodes.LPUSH -> stack.push(readLong())
 
-                // Load a value from local variables to the stack
+                // ///////////////////////////////////////
+                // The next 4 opcodes are used to load values from local variables
+                // https://spec.shakelang.com/bytecode/instructions#instr-bload
+                // https://spec.shakelang.com/bytecode/instructions#instr-sload
+                // https://spec.shakelang.com/bytecode/instructions#instr-iload
+                // https://spec.shakelang.com/bytecode/instructions#instr-lload
+
                 Opcodes.BLOAD -> stack.push(locals[readUShort().toInt()])
                 Opcodes.SLOAD -> {
                     val pos = readUShort().toInt()
@@ -211,6 +242,11 @@ class ShakeInterpreter {
                 }
 
                 // Store a value from the stack to local variables
+                // https://spec.shakelang.com/bytecode/instructions#instr-bstore
+                // https://spec.shakelang.com/bytecode/instructions#instr-sstore
+                // https://spec.shakelang.com/bytecode/instructions#instr-istore
+                // https://spec.shakelang.com/bytecode/instructions#instr-lstore
+
                 Opcodes.BSTORE -> locals[readUShort().toInt()] = stack.pop()
                 Opcodes.SSTORE -> {
                     val pos = readUShort().toInt()
@@ -228,7 +264,16 @@ class ShakeInterpreter {
                     for (i in 7 downTo 0) locals[pos + i] = stack.pop()
                 }
 
-                // Arithmetic operations
+                // ///////////////////////////////////////
+                // The Next section contains all the arithmetic add operations
+
+                // Add two values from the stack and push the result to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-badd
+                // https://spec.shakelang.com/bytecode/instructions#instr-sadd
+                // https://spec.shakelang.com/bytecode/instructions#instr-iadd
+                // https://spec.shakelang.com/bytecode/instructions#instr-ladd
+                // https://spec.shakelang.com/bytecode/instructions#instr-fadd
+                // https://spec.shakelang.com/bytecode/instructions#instr-dadd
                 Opcodes.BADD -> stack.push(stack.pop() + stack.pop())
                 Opcodes.SADD -> stack.push(stack.popShort() + stack.popShort())
                 Opcodes.IADD -> stack.push(stack.popInt() + stack.popInt())
@@ -236,6 +281,17 @@ class ShakeInterpreter {
                 Opcodes.FADD -> stack.push(stack.popFloat() + stack.popFloat())
                 Opcodes.DADD -> stack.push(stack.popDouble() + stack.popDouble())
 
+                // Subtract two values from the stack and push the result to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-bsub
+                // https://spec.shakelang.com/bytecode/instructions#instr-ssub
+                // https://spec.shakelang.com/bytecode/instructions#instr-isub
+                // https://spec.shakelang.com/bytecode/instructions#instr-lsub
+                // https://spec.shakelang.com/bytecode/instructions#instr-fsub
+                // https://spec.shakelang.com/bytecode/instructions#instr-dsub
+                // https://spec.shakelang.com/bytecode/instructions#instr-ubsub
+                // https://spec.shakelang.com/bytecode/instructions#instr-ussub
+                // https://spec.shakelang.com/bytecode/instructions#instr-uisub
+                // https://spec.shakelang.com/bytecode/instructions#instr-ulsub
                 Opcodes.BSUB -> {
                     val a = stack.pop()
                     val b = stack.pop()
@@ -296,6 +352,17 @@ class ShakeInterpreter {
                     stack.push(b - a)
                 }
 
+                // Multiply two values from the stack and push the result to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-bmul
+                // https://spec.shakelang.com/bytecode/instructions#instr-smul
+                // https://spec.shakelang.com/bytecode/instructions#instr-imul
+                // https://spec.shakelang.com/bytecode/instructions#instr-lmul
+                // https://spec.shakelang.com/bytecode/instructions#instr-fmul
+                // https://spec.shakelang.com/bytecode/instructions#instr-dmul
+                // https://spec.shakelang.com/bytecode/instructions#instr-ubmul
+                // https://spec.shakelang.com/bytecode/instructions#instr-usmul
+                // https://spec.shakelang.com/bytecode/instructions#instr-uimul
+                // https://spec.shakelang.com/bytecode/instructions#instr-ulmul
                 Opcodes.BMUL -> stack.push(stack.pop() * stack.pop())
                 Opcodes.SMUL -> stack.push(stack.popShort() * stack.popShort())
                 Opcodes.IMUL -> stack.push(stack.popInt() * stack.popInt())
@@ -307,6 +374,17 @@ class ShakeInterpreter {
                 Opcodes.UIMUL -> stack.push((stack.popUInt() * stack.popUInt()).toInt())
                 Opcodes.ULMUL -> stack.push((stack.popULong() * stack.popULong()).toLong())
 
+                // Divide two values from the stack and push the result to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-bdiv
+                // https://spec.shakelang.com/bytecode/instructions#instr-sdiv
+                // https://spec.shakelang.com/bytecode/instructions#instr-idiv
+                // https://spec.shakelang.com/bytecode/instructions#instr-ldiv
+                // https://spec.shakelang.com/bytecode/instructions#instr-fdiv
+                // https://spec.shakelang.com/bytecode/instructions#instr-ddiv
+                // https://spec.shakelang.com/bytecode/instructions#instr-ubdiv
+                // https://spec.shakelang.com/bytecode/instructions#instr-usdiv
+                // https://spec.shakelang.com/bytecode/instructions#instr-uidiv
+                // https://spec.shakelang.com/bytecode/instructions#instr-uldiv
                 Opcodes.BDIV -> {
                     val a = stack.pop()
                     val b = stack.pop()
@@ -367,6 +445,17 @@ class ShakeInterpreter {
                     stack.push((b / a).toLong())
                 }
 
+                // Modulo two values from the stack and push the result to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-bmod
+                // https://spec.shakelang.com/bytecode/instructions#instr-smod
+                // https://spec.shakelang.com/bytecode/instructions#instr-imod
+                // https://spec.shakelang.com/bytecode/instructions#instr-lmod
+                // https://spec.shakelang.com/bytecode/instructions#instr-fmod
+                // https://spec.shakelang.com/bytecode/instructions#instr-dmod
+                // https://spec.shakelang.com/bytecode/instructions#instr-ubmod
+                // https://spec.shakelang.com/bytecode/instructions#instr-usmod
+                // https://spec.shakelang.com/bytecode/instructions#instr-uimod
+                // https://spec.shakelang.com/bytecode/instructions#instr-ulmod
                 Opcodes.BMOD -> {
                     val a = stack.pop()
                     val b = stack.pop()
@@ -427,31 +516,81 @@ class ShakeInterpreter {
                     stack.push(b % a)
                 }
 
-                Opcodes.BNEG -> stack.push(stack.pop().inv())
-                Opcodes.SNEG -> stack.push(stack.popShort().inv())
-                Opcodes.INEG -> stack.push(stack.popInt().inv())
-                Opcodes.LNEG -> stack.push(stack.popLong().inv())
+                // Negate a value from the stack and push the result to the stack
+                // These only exist for signed values as unsigned values can't be negative
+                // https://spec.shakelang.com/bytecode/instructions#instr-bneg
+                // https://spec.shakelang.com/bytecode/instructions#instr-sneg
+                // https://spec.shakelang.com/bytecode/instructions#instr-ineg
+                // https://spec.shakelang.com/bytecode/instructions#instr-lneg
+                // https://spec.shakelang.com/bytecode/instructions#instr-fneg
+                // https://spec.shakelang.com/bytecode/instructions#instr-dneg
+                Opcodes.BNEG -> stack.push(-stack.pop())
+                Opcodes.SNEG -> stack.push(-stack.popShort())
+                Opcodes.INEG -> stack.push(-stack.popInt())
+                Opcodes.LNEG -> stack.push(-stack.popLong())
+                Opcodes.FNEG -> stack.push(-stack.popFloat())
+                Opcodes.DNEG -> stack.push(-stack.popDouble())
 
+                // Bitwise AND two values from the stack and push the result to the stack
+                // We refer to byte, short, int and long, but the same applies to unsigned
+                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // value
+                // https://spec.shakelang.com/bytecode/instructions#instr-band
+                // https://spec.shakelang.com/bytecode/instructions#instr-sand
+                // https://spec.shakelang.com/bytecode/instructions#instr-iand
+                // https://spec.shakelang.com/bytecode/instructions#instr-land
                 Opcodes.BAND -> stack.push(stack.pop() and stack.pop())
                 Opcodes.SAND -> stack.push(stack.popShort() and stack.popShort())
                 Opcodes.IAND -> stack.push(stack.popInt() and stack.popInt())
                 Opcodes.LAND -> stack.push(stack.popLong() and stack.popLong())
 
+                // Bitwise OR two values from the stack and push the result to the stack
+                // We refer to byte, short, int and long, but the same applies to unsigned
+                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // value
+                // https://spec.shakelang.com/bytecode/instructions#instr-bor
+                // https://spec.shakelang.com/bytecode/instructions#instr-sor
+                // https://spec.shakelang.com/bytecode/instructions#instr-ior
+                // https://spec.shakelang.com/bytecode/instructions#instr-lor
                 Opcodes.BOR -> stack.push(stack.pop() or stack.pop())
                 Opcodes.SOR -> stack.push(stack.popShort() or stack.popShort())
                 Opcodes.IOR -> stack.push(stack.popInt() or stack.popInt())
                 Opcodes.LOR -> stack.push(stack.popLong() or stack.popLong())
 
+                // Bitwise XOR two values from the stack and push the result to the stack
+                // We refer to byte, short, int and long, but the same applies to unsigned
+                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // value
+                // https://spec.shakelang.com/bytecode/instructions#instr-bxor
+                // https://spec.shakelang.com/bytecode/instructions#instr-sxor
+                // https://spec.shakelang.com/bytecode/instructions#instr-ixor
+                // https://spec.shakelang.com/bytecode/instructions#instr-lxor
                 Opcodes.BXOR -> stack.push(stack.pop() xor stack.pop())
                 Opcodes.SXOR -> stack.push(stack.popShort() xor stack.popShort())
                 Opcodes.IXOR -> stack.push(stack.popInt() xor stack.popInt())
                 Opcodes.LXOR -> stack.push(stack.popLong() xor stack.popLong())
 
+                // Bitwise NOT a value from the stack and push the result to the stack
+                // We refer to byte, short, int and long, but the same applies to unsigned
+                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // value
+                // https://spec.shakelang.com/bytecode/instructions#instr-bnot
+                // https://spec.shakelang.com/bytecode/instructions#instr-snot
+                // https://spec.shakelang.com/bytecode/instructions#instr-inot
+                // https://spec.shakelang.com/bytecode/instructions#instr-lnot
                 Opcodes.BNOT -> stack.push(stack.pop().inv())
                 Opcodes.SNOT -> stack.push(stack.popShort().inv())
                 Opcodes.INOT -> stack.push(stack.popInt().inv())
                 Opcodes.LNOT -> stack.push(stack.popLong().inv())
 
+                // Shift a value from the stack and push the result to the stack
+                // We refer to byte, short, int and long, but the same applies to unsigned
+                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // value
+                // https://spec.shakelang.com/bytecode/instructions#instr-bshl
+                // https://spec.shakelang.com/bytecode/instructions#instr-sshl
+                // https://spec.shakelang.com/bytecode/instructions#instr-ishl
+                // https://spec.shakelang.com/bytecode/instructions#instr-lshl
                 Opcodes.BSHL -> {
                     val a = stack.pop()
                     val b = stack.pop()
@@ -476,6 +615,14 @@ class ShakeInterpreter {
                     stack.push(b shl a)
                 }
 
+                // Shift a value from the stack and push the result to the stack
+                // We refer to byte, short, int and long, but the same applies to unsigned
+                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // value
+                // https://spec.shakelang.com/bytecode/instructions#instr-bshr
+                // https://spec.shakelang.com/bytecode/instructions#instr-sshr
+                // https://spec.shakelang.com/bytecode/instructions#instr-ishr
+                // https://spec.shakelang.com/bytecode/instructions#instr-lshr
                 Opcodes.BSHR -> {
                     val a = stack.pop()
                     val b = stack.pop()
@@ -500,6 +647,14 @@ class ShakeInterpreter {
                     stack.push(b shr a)
                 }
 
+                // Shift a value from the stack and push the result to the stack
+                // We refer to byte, short, int and long, but the same applies to unsigned
+                // values, booleans, chars, floats and doubles, so a byte means any 8-bit
+                // value
+                // https://spec.shakelang.com/bytecode/instructions#instr-bushr
+                // https://spec.shakelang.com/bytecode/instructions#instr-sushr
+                // https://spec.shakelang.com/bytecode/instructions#instr-iushr
+                // https://spec.shakelang.com/bytecode/instructions#instr-lushr
                 Opcodes.BSHRU -> {
                     val a = stack.pop()
                     val b = stack.pop()
@@ -524,6 +679,13 @@ class ShakeInterpreter {
                     stack.push(b ushr a)
                 }
 
+                // Increment a value from the stack and push the result to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-binc
+                // https://spec.shakelang.com/bytecode/instructions#instr-sinc
+                // https://spec.shakelang.com/bytecode/instructions#instr-iinc
+                // https://spec.shakelang.com/bytecode/instructions#instr-linc
+                // https://spec.shakelang.com/bytecode/instructions#instr-finc
+                // https://spec.shakelang.com/bytecode/instructions#instr-dinc
                 Opcodes.BINC -> stack.push((stack.pop() + 1).toByte())
                 Opcodes.SINC -> stack.push((stack.popShort() + 1).toShort())
                 Opcodes.IINC -> stack.push(stack.popInt() + 1)
@@ -531,6 +693,13 @@ class ShakeInterpreter {
                 Opcodes.FINC -> stack.push(stack.popFloat() + 1)
                 Opcodes.DINC -> stack.push(stack.popDouble() + 1)
 
+                // Decrement a value from the stack and push the result to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-bdec
+                // https://spec.shakelang.com/bytecode/instructions#instr-sdec
+                // https://spec.shakelang.com/bytecode/instructions#instr-idec
+                // https://spec.shakelang.com/bytecode/instructions#instr-ldec
+                // https://spec.shakelang.com/bytecode/instructions#instr-fdec
+                // https://spec.shakelang.com/bytecode/instructions#instr-ddec
                 Opcodes.BDEC -> stack.push((stack.pop() - 1).toByte())
                 Opcodes.SDEC -> stack.push((stack.popShort() - 1).toShort())
                 Opcodes.IDEC -> stack.push(stack.popInt() - 1)
@@ -538,6 +707,16 @@ class ShakeInterpreter {
                 Opcodes.FDEC -> stack.push(stack.popFloat() - 1)
                 Opcodes.DDEC -> stack.push(stack.popDouble() - 1)
 
+                // Compare two values from the stack and push the result to the stack
+                // Comparison results:
+                // 0: a > b
+                // 1: a == b
+                // 2: a < b
+                // b is the top value on the stack, a is the value below b
+                // https://spec.shakelang.com/bytecode/instructions#instr-bcmp
+                // https://spec.shakelang.com/bytecode/instructions#instr-scmp
+                // https://spec.shakelang.com/bytecode/instructions#instr-icmp
+                // https://spec.shakelang.com/bytecode/instructions#instr-lcmp
                 Opcodes.BCMP -> {
                     val b = stack.popUByte()
                     val a = stack.popUByte()
@@ -678,6 +857,15 @@ class ShakeInterpreter {
                     )
                 }
 
+                // Convert the comparison result to a boolean
+                // Comparison results:
+                // 0: a < b
+                // 1: a >= b
+                // b is the top value on the stack, a is the value below b
+                // https://spec.shakelang.com/bytecode/instructions#instr-bclt
+                // https://spec.shakelang.com/bytecode/instructions#instr-sclt
+                // https://spec.shakelang.com/bytecode/instructions#instr-iclt
+                // https://spec.shakelang.com/bytecode/instructions#instr-lclt
                 Opcodes.CLT -> {
                     val b = stack.popUByte()
                     if (b == 2u.toUByte()) stack.push(1.toByte()) else stack.push(0.toByte())
@@ -708,46 +896,71 @@ class ShakeInterpreter {
                     if (b != 1u.toUByte()) stack.push(1.toByte()) else stack.push(0.toByte())
                 }
 
+                // Jump (unconditionally) to a position in the code
+                // https://spec.shakelang.com/bytecode/instructions#instr-jmp
                 Opcodes.JMP -> pc = readInt()
+
+                // Jump to a position in the code if the top value on the stack is 0
+                // https://spec.shakelang.com/bytecode/instructions#instr-jz
                 Opcodes.JZ -> {
                     val pos = readInt()
                     if (stack.pop() == 0.toByte()) pc = pos
                 }
 
+                // Jump to a position in the code if the top value on the stack is not 0
+                // https://spec.shakelang.com/bytecode/instructions#instr-jnz
                 Opcodes.JNZ -> {
                     val pos = readInt()
                     if (stack.pop() != 0.toByte()) pc = pos
                 }
 
+                // Jump to a position in the code if the top value on the stack is 1
+                // https://spec.shakelang.com/bytecode/instructions#instr-je
                 Opcodes.JE -> {
                     val pos = readInt()
                     if (stack.pop() == 1.toByte()) pc = pos
                 }
 
+                // Jump to a position in the code if the top value on the stack is not 1
+                // https://spec.shakelang.com/bytecode/instructions#instr-jne
                 Opcodes.JNE -> {
                     val pos = readInt()
                     if (stack.pop() != 1.toByte()) pc = pos
                 }
 
+                // Jump to a position in the code if the top value on the stack is 2
+                // https://spec.shakelang.com/bytecode/instructions#instr-jl
                 Opcodes.JGE -> {
                     val pos = readInt()
                     if (stack.pop() <= 1.toByte()) pc = pos
                 }
 
+                // Jump to a position in the code if the top value on the stack is not 2
+                // https://spec.shakelang.com/bytecode/instructions#instr-jl
                 Opcodes.JL -> {
                     val pos = readInt()
                     if (stack.pop() == 2.toByte()) pc = pos
                 }
 
+                // Jump to a position in the code if the top value on the stack is not 2
+                // https://spec.shakelang.com/bytecode/instructions#instr-jnl
                 Opcodes.JLE -> {
                     val pos = readInt()
                     if (stack.pop() >= 1.toByte()) pc = pos
                 }
 
+                // Return from a function
+                // https://spec.shakelang.com/bytecode/instructions#instr-ret
                 Opcodes.RET -> {
                     finished = true
                 }
 
+                // Set the return value of a function.
+                // Does NOT return from the function
+                // https://spec.shakelang.com/bytecode/instructions#instr-bret
+                // https://spec.shakelang.com/bytecode/instructions#instr-sret
+                // https://spec.shakelang.com/bytecode/instructions#instr-iret
+                // https://spec.shakelang.com/bytecode/instructions#instr-lret
                 Opcodes.BRET -> {
                     returnData[0] = stack.pop()
                 }
@@ -765,11 +978,21 @@ class ShakeInterpreter {
                     for (i in 0 until 8) returnData[i] = stack.pop()
                 }
 
+                // Pop a value from the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-bpop
+                // https://spec.shakelang.com/bytecode/instructions#instr-spop
+                // https://spec.shakelang.com/bytecode/instructions#instr-ipop
+                // https://spec.shakelang.com/bytecode/instructions#instr-lpop
                 Opcodes.BPOP -> stack.pop()
                 Opcodes.SPOP -> stack.pop(2)
                 Opcodes.IPOP -> stack.pop(4)
                 Opcodes.LPOP -> stack.pop(8)
 
+                // Duplicate a value on the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-bdup
+                // https://spec.shakelang.com/bytecode/instructions#instr-sdup
+                // https://spec.shakelang.com/bytecode/instructions#instr-idup
+                // https://spec.shakelang.com/bytecode/instructions#instr-ldup
                 Opcodes.BDUP -> stack.push(stack.peek())
                 Opcodes.SDUP -> {
                     val arr = ByteArray(2) {
@@ -798,6 +1021,8 @@ class ShakeInterpreter {
                     stack.push(arr)
                 }
 
+                // Cast a value on the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-pcast
                 Opcodes.PCAST -> {
                     // The First 4 bits are the "from" type, the last 4 bits are the "to" type
                     // See CastUtil.kt
@@ -805,6 +1030,8 @@ class ShakeInterpreter {
                     CastUtil.performCast(stack, type)
                 }
 
+                // Invoke a static function
+                // https://spec.shakelang.com/bytecode/instructions#instr-invoke-static
                 Opcodes.INVOKE_STATIC -> {
                     val methodName = this.method.constantPool.getUtf8(readInt()).value
                     val method =
@@ -818,6 +1045,8 @@ class ShakeInterpreter {
                     putFunctionOnStack(method, args)
                 }
 
+                // Invoke a virtual (instance) function
+                // https://spec.shakelang.com/bytecode/instructions#instr-invoke-virtual
                 Opcodes.INVOKE_VIRTUAL -> {
                     val methodName = this.method.constantPool.getUtf8(readInt()).value
                     val method =
@@ -830,6 +1059,8 @@ class ShakeInterpreter {
                     putFunctionOnStack(method, args)
                 }
 
+                // Load a static field
+                // https://spec.shakelang.com/bytecode/instructions#instr-load-static
                 Opcodes.LOAD_STATIC -> {
                     val fieldName = this.method.constantPool.getUtf8(readInt()).value
                     val field = classPath.getField(fieldName)
@@ -839,6 +1070,8 @@ class ShakeInterpreter {
                     stack.push(value)
                 }
 
+                // Load a virtual (instance) field
+                // https://spec.shakelang.com/bytecode/instructions#instr-load-virtual
                 Opcodes.LOAD_VIRTUAL -> {
                     val fieldName = this.method.constantPool.getUtf8(readInt()).value
                     val field = classPath.getField(fieldName)
@@ -849,6 +1082,8 @@ class ShakeInterpreter {
                     stack.push(value)
                 }
 
+                // Store a value in a static field
+                // https://spec.shakelang.com/bytecode/instructions#instr-store-static
                 Opcodes.STORE_STATIC -> {
                     val fieldName = this.method.constantPool.getUtf8(readInt()).value
                     val field = classPath.getField(fieldName)
@@ -858,6 +1093,8 @@ class ShakeInterpreter {
                     field.setStaticValue(value)
                 }
 
+                // Store a value in a virtual (instance) field
+                // https://spec.shakelang.com/bytecode/instructions#instr-store-virtual
                 Opcodes.STORE_VIRTUAL -> {
                     val fieldName = this.method.constantPool.getUtf8(readInt()).value
                     val field = classPath.getField(fieldName)
@@ -868,6 +1105,8 @@ class ShakeInterpreter {
                     field.setVirtualValue(obj, value)
                 }
 
+                // Instantiate a new array and push its address to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-new-arr
                 Opcodes.NEW_ARR -> {
                     val utf8 = this.method.constantPool.getUtf8(readInt()).value
                     val type = TypeDescriptor.parse(utf8)
@@ -881,6 +1120,11 @@ class ShakeInterpreter {
                     stack.push(array)
                 }
 
+                // Load a value from an array and push it to the stack
+                // https://spec.shakelang.com/bytecode/instructions#instr-baload
+                // https://spec.shakelang.com/bytecode/instructions#instr-saload
+                // https://spec.shakelang.com/bytecode/instructions#instr-iaload
+                // https://spec.shakelang.com/bytecode/instructions#instr-laload
                 Opcodes.BALOAD -> {
                     val index = stack.popInt()
                     val array = stack.popLong()
@@ -921,6 +1165,11 @@ class ShakeInterpreter {
                     stack.push(value)
                 }
 
+                // Store a value in an array
+                // https://spec.shakelang.com/bytecode/instructions#instr-bastore
+                // https://spec.shakelang.com/bytecode/instructions#instr-sastore
+                // https://spec.shakelang.com/bytecode/instructions#instr-iastore
+                // https://spec.shakelang.com/bytecode/instructions#instr-lastore
                 Opcodes.BASTORE -> {
                     val value = stack.pop()
                     val index = stack.popInt()
