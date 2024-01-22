@@ -149,6 +149,8 @@ interface ShakeInterpreterPackage {
                         parentPath,
                         f.second.constantPool,
                         this,
+                        fieldMemoryMap[index],
+                        fieldsLocation,
                     )
                     fieldList[index] = field
                     return field

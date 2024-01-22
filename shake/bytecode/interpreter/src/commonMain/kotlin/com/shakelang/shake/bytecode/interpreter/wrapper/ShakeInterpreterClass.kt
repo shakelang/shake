@@ -158,7 +158,15 @@ interface ShakeInterpreterClass {
 
                 fun loadField(index: Int): ShakeInterpreterField {
                     val f = storage.fields[index]
-                    val field = ShakeInterpreterField.of(f, classpath, thisParentPath, constantPool, pkg)
+                    val field = ShakeInterpreterField.of(
+                        f,
+                        classpath,
+                        thisParentPath,
+                        constantPool,
+                        pkg,
+                        memoryMap[index],
+                        staticLocation,
+                    )
                     fieldList[index] = field
                     return field
                 }

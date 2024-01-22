@@ -808,12 +808,63 @@ class ShakeInterpreter {
                     val methodName = this.method.constantPool.getUtf8(readInt()).value
                     val method =
                         classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
+                    if (!method.isStatic) throw IllegalStateException("Method $methodName is not static")
                     val argsSize = method.parameters.sumOf { it.byteSize }
                     val args = ByteArray(argsSize) {
                         stack.pop()
                     }
 
                     putFunctionOnStack(method, args)
+                }
+
+                Opcodes.INVOKE_VIRTUAL -> {
+                    val methodName = this.method.constantPool.getUtf8(readInt()).value
+                    val method =
+                        classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
+                    if (method.isStatic) throw IllegalStateException("Method $methodName is static")
+                    val argsSize = method.parameters.sumOf { it.byteSize }
+                    val args = ByteArray(argsSize + 8) {
+                        stack.pop()
+                    }
+                    putFunctionOnStack(method, args)
+                }
+
+                Opcodes.LOAD_STATIC -> {
+                    val fieldName = this.method.constantPool.getUtf8(readInt()).value
+                    val field = classPath.getField(fieldName)
+                        ?: throw NullPointerException("Field $fieldName not found")
+                    if (!field.isStatic) throw IllegalStateException("Field $fieldName is not static")
+                    val value = field.getStaticValue(field.type.byteSize)
+                    stack.push(value)
+                }
+
+                Opcodes.LOAD_VIRTUAL -> {
+                    val fieldName = this.method.constantPool.getUtf8(readInt()).value
+                    val field = classPath.getField(fieldName)
+                        ?: throw NullPointerException("Field $fieldName not found")
+                    if (field.isStatic) throw IllegalStateException("Field $fieldName is static")
+                    val obj = stack.popLong()
+                    val value = field.getVirtualValue(obj, field.type.byteSize)
+                    stack.push(value)
+                }
+
+                Opcodes.STORE_STATIC -> {
+                    val fieldName = this.method.constantPool.getUtf8(readInt()).value
+                    val field = classPath.getField(fieldName)
+                        ?: throw NullPointerException("Field $fieldName not found")
+                    if (!field.isStatic) throw IllegalStateException("Field $fieldName is not static")
+                    val value = stack.pop(field.type.byteSize)
+                    field.setStaticValue(value)
+                }
+
+                Opcodes.STORE_VIRTUAL -> {
+                    val fieldName = this.method.constantPool.getUtf8(readInt()).value
+                    val field = classPath.getField(fieldName)
+                        ?: throw NullPointerException("Field $fieldName not found")
+                    if (field.isStatic) throw IllegalStateException("Field $fieldName is static")
+                    val obj = stack.popLong()
+                    val value = stack.pop(field.type.byteSize)
+                    field.setVirtualValue(obj, value)
                 }
             }
         }
