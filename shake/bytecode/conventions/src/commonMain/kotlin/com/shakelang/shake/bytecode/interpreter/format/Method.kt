@@ -201,6 +201,19 @@ open class Method(
         get() = Flags.isStrict(flags)
 
     /**
+     * Returns if the method is a constructor
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     *
+     * @see [flags]
+     * @see [Flags.FLAG_IS_CONSTRUCTOR]
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    open val isConstructor: Boolean
+        get() = Flags.isConstructor(flags)
+
+    /**
      * Returns the qualified name of the method
      *
      * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-qualified-name-index)
@@ -484,6 +497,26 @@ open class Method(
             val FLAG_IS_STRICT_INVERTED: Short = FLAG_IS_STRICT.inv()
 
             /**
+             * Flag for marking a constructor
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            const val FLAG_IS_CONSTRUCTOR: Short = 0b000100000_00000000
+
+            /**
+             * Inverted [FLAG_IS_CONSTRUCTOR]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            val FLAG_IS_CONSTRUCTOR_INVERTED: Short = FLAG_IS_CONSTRUCTOR.inv()
+
+            /**
              * Get isPublic from the given [flags]
              *
              * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
@@ -716,6 +749,32 @@ open class Method(
              */
             fun setStrict(flags: Short, value: Boolean = true): Short =
                 if (value) flags or FLAG_IS_STRICT else flags and FLAG_IS_STRICT_INVERTED
+
+            /**
+             * Get isConstructor from the given [flags]
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to get the isConstructor from
+             * @return If the flags contain the isConstructor flag
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun isConstructor(flags: Short): Boolean = flags and FLAG_IS_CONSTRUCTOR != 0.toShort()
+
+            /**
+             * Set isConstructor in the given [flags]
+             * (Sets the tenth bit of the [flags])
+             *
+             * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+             *
+             * @param flags The flags to set the isConstructor in
+             * @return The flags with the isConstructor flag set
+             * @since 0.1.0
+             * @version 0.1.0
+             */
+            fun setConstructor(flags: Short, value: Boolean = true): Short =
+                if (value) flags or FLAG_IS_CONSTRUCTOR else flags and FLAG_IS_CONSTRUCTOR_INVERTED
         }
 
         /**
@@ -969,6 +1028,22 @@ class MutableMethod(
         get() = Flags.isStrict(flags)
         set(value) {
             flags = Flags.setStrict(flags, value)
+        }
+
+    /**
+     * Is this method a constructor?
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#method-flags)
+     *
+     * @see [flags]
+     * @see [isConstructor]
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    override var isConstructor: Boolean
+        get() = Flags.isConstructor(flags)
+        set(value) {
+            flags = Flags.setConstructor(flags, value)
         }
 
     companion object {
