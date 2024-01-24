@@ -134,6 +134,7 @@ interface ShakeInterpreterPackage {
                         parentPath,
                         m.second.constantPool,
                         this,
+                        null,
                     )
                     methodList[index] = method
                     return method

@@ -170,6 +170,10 @@ class ShakeInterpreter {
             return v
         }
 
+        private fun readUtf8() = method.constantPool.getUtf8(readUShort().toInt())
+
+        private fun readUtf8Value() = readUtf8().value
+
         override fun tick(times: Int): Int {
             for (i in 0 until times) {
                 if (finished) return i
@@ -1033,7 +1037,7 @@ class ShakeInterpreter {
                 // Invoke a static function
                 // https://spec.shakelang.com/bytecode/instructions#instr-invoke-static
                 Opcodes.INVOKE_STATIC -> {
-                    val methodName = this.method.constantPool.getUtf8(readInt()).value
+                    val methodName = this.readUtf8Value()
                     val method =
                         classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
                     if (!method.isStatic) throw IllegalStateException("Method $methodName is not static")
@@ -1048,7 +1052,7 @@ class ShakeInterpreter {
                 // Invoke a virtual (instance) function
                 // https://spec.shakelang.com/bytecode/instructions#instr-invoke-virtual
                 Opcodes.INVOKE_VIRTUAL -> {
-                    val methodName = this.method.constantPool.getUtf8(readInt()).value
+                    val methodName = this.readUtf8Value()
                     val method =
                         classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
                     if (method.isStatic) throw IllegalStateException("Method $methodName is static")
@@ -1062,7 +1066,7 @@ class ShakeInterpreter {
                 // Load a static field
                 // https://spec.shakelang.com/bytecode/instructions#instr-load-static
                 Opcodes.LOAD_STATIC -> {
-                    val fieldName = this.method.constantPool.getUtf8(readInt()).value
+                    val fieldName = this.readUtf8Value()
                     val field = classPath.getField(fieldName)
                         ?: throw NullPointerException("Field $fieldName not found")
                     if (!field.isStatic) throw IllegalStateException("Field $fieldName is not static")
@@ -1073,7 +1077,7 @@ class ShakeInterpreter {
                 // Load a virtual (instance) field
                 // https://spec.shakelang.com/bytecode/instructions#instr-load-virtual
                 Opcodes.LOAD_VIRTUAL -> {
-                    val fieldName = this.method.constantPool.getUtf8(readInt()).value
+                    val fieldName = this.readUtf8Value()
                     val field = classPath.getField(fieldName)
                         ?: throw NullPointerException("Field $fieldName not found")
                     if (field.isStatic) throw IllegalStateException("Field $fieldName is static")
@@ -1085,7 +1089,7 @@ class ShakeInterpreter {
                 // Store a value in a static field
                 // https://spec.shakelang.com/bytecode/instructions#instr-store-static
                 Opcodes.STORE_STATIC -> {
-                    val fieldName = this.method.constantPool.getUtf8(readInt()).value
+                    val fieldName = this.readUtf8Value()
                     val field = classPath.getField(fieldName)
                         ?: throw NullPointerException("Field $fieldName not found")
                     if (!field.isStatic) throw IllegalStateException("Field $fieldName is not static")
@@ -1096,7 +1100,7 @@ class ShakeInterpreter {
                 // Store a value in a virtual (instance) field
                 // https://spec.shakelang.com/bytecode/instructions#instr-store-virtual
                 Opcodes.STORE_VIRTUAL -> {
-                    val fieldName = this.method.constantPool.getUtf8(readInt()).value
+                    val fieldName = this.readUtf8Value()
                     val field = classPath.getField(fieldName)
                         ?: throw NullPointerException("Field $fieldName not found")
                     if (field.isStatic) throw IllegalStateException("Field $fieldName is static")
@@ -1108,7 +1112,7 @@ class ShakeInterpreter {
                 // Instantiate a new array and push its address to the stack
                 // https://spec.shakelang.com/bytecode/instructions#instr-new-arr
                 Opcodes.NEW_ARR -> {
-                    val utf8 = this.method.constantPool.getUtf8(readInt()).value
+                    val utf8 = this.readUtf8Value()
                     val type = TypeDescriptor.parse(utf8)
                     val size = stack.popInt()
 
@@ -1208,6 +1212,31 @@ class ShakeInterpreter {
                     if (index < 0 || index >= size) throw IndexOutOfBoundsException("Index $index out of bounds")
                     // TODO: Throw ShakeException
                     globalMemory.setLong(array + 4 + index * 8, value)
+                }
+
+                // Create a new Object
+                // https://spec.shakelang.com/bytecode/instructions#instr-new-obj
+                Opcodes.NEW_OBJ -> {
+                    // Read the constructor
+                    val constructorName = this.readUtf8Value()
+                    val constructor =
+                        classPath.getMethod(constructorName) ?: throw NullPointerException("Constructor $constructorName not found")
+                    if (!constructor.isConstructor) throw IllegalStateException("Method $constructorName is not a constructor")
+
+                    val clazz = constructor.clazz ?: throw NullPointerException("Class not found")
+
+                    // Create the object in the heap
+                    val obj = clazz.createInstanceInMemory()
+
+                    // push the object to the stack
+                    stack.push(obj)
+
+                    // Read the arguments
+                    val argsSize = constructor.parameters.sumOf { it.byteSize }
+                    val args = ByteArray(argsSize + 8) {
+                        stack.pop()
+                    }
+                    putFunctionOnStack(constructor, args + obj.toBytes())
                 }
             }
         }

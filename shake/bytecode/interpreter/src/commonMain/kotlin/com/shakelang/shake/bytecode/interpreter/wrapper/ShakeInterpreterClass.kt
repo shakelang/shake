@@ -6,6 +6,8 @@ import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
+val classRegistry = mutableListOf<ShakeInterpreterClass>()
+
 interface ShakeInterpreterClass {
     val interpreter: ShakeInterpreter
     val storage: Class
@@ -23,6 +25,8 @@ interface ShakeInterpreterClass {
     val staticSizeInMemory: Long
     val staticLocation: Long
 
+    val classRegistryIndex: Int
+
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
     fun getMethod(descriptor: PathDescriptor): ShakeInterpreterMethod?
@@ -35,6 +39,15 @@ interface ShakeInterpreterClass {
     fun getDirectChildField(name: String): ShakeInterpreterField?
 
     fun getStorageOfField(name: String): Long
+
+    fun createInstanceInMemory(): Long {
+        val pointer = interpreter.malloc.malloc(sizeInMemory)
+
+        // put in header
+        interpreter.globalMemory.setInt(pointer, classRegistryIndex)
+
+        return pointer
+    }
 
     companion object {
         fun of(
@@ -59,6 +72,7 @@ interface ShakeInterpreterClass {
                 override val isStatic: Boolean = storage.isStatic
                 override val constantPool: ConstantPool = constantPool
                 override val pkg: ShakeInterpreterPackage = pkg
+                override val classRegistryIndex: Int
 
                 val memoryMap: LongArray
                 override val sizeInMemory: Long
@@ -69,7 +83,11 @@ interface ShakeInterpreterClass {
                 override val staticLocation: Long
 
                 init {
-                    var size = 4L // 4 bytes for header
+                    val cri = classRegistry.size
+                    classRegistry.add(this)
+                    classRegistryIndex = cri
+
+                    var size = 8L // 8 bytes for header
                     memoryMap = storage.fields.filter {
                         it.isStatic
                     }.map {
@@ -151,7 +169,7 @@ interface ShakeInterpreterClass {
 
                 fun loadMethod(index: Int): ShakeInterpreterMethod {
                     val m = storage.methods[index]
-                    val method = ShakeInterpreterMethod.of(m, classpath, thisParentPath, constantPool, pkg)
+                    val method = ShakeInterpreterMethod.of(m, classpath, thisParentPath, constantPool, pkg, this)
                     methodList[index] = method
                     return method
                 }

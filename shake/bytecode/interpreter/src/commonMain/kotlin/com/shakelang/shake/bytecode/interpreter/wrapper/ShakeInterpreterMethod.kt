@@ -19,6 +19,7 @@ interface ShakeInterpreterMethod {
     val isSynchronized: Boolean
     val isStatic: Boolean
     val isNative: Boolean
+    val isConstructor: Boolean
     val returnType: ShakeInterpreterType
     val parameters: List<ShakeInterpreterType>
     val code: ByteArray
@@ -26,15 +27,18 @@ interface ShakeInterpreterMethod {
     val maxStack: Int
     val maxLocals: Int
     val pkg: ShakeInterpreterPackage
+    val clazz: ShakeInterpreterClass?
     val constantPool: ConstantPool
 
     companion object {
+
         fun of(
             storage: Method,
             classpath: ShakeInterpreterClasspath,
             parentPath: String,
             constantPool: ConstantPool,
             pkg: ShakeInterpreterPackage,
+            clazz: ShakeInterpreterClass?,
         ): ShakeInterpreterMethod {
             val attributes = storage.attributes
             val code = attributes.find { it.name == "Code" }
@@ -56,6 +60,7 @@ interface ShakeInterpreterMethod {
                 override val isSynchronized: Boolean = storage.isSynchronized
                 override val isStatic: Boolean = storage.isStatic
                 override val isNative: Boolean = storage.isNative
+                override val isConstructor: Boolean = storage.isConstructor
                 override val returnType: ShakeInterpreterType = ShakeInterpreterType.of(parsed.returnType, classpath)
                 override val parameters: List<ShakeInterpreterType> = parsed.parameters.map {
                     ShakeInterpreterType.of(
@@ -65,6 +70,7 @@ interface ShakeInterpreterMethod {
                 }
                 override val constantPool: ConstantPool = constantPool
                 override val pkg: ShakeInterpreterPackage = pkg
+                override val clazz: ShakeInterpreterClass? = clazz
 
                 override val code: ByteArray
                     get() = code?.code ?: throw NullPointerException("Method ${this.qualifiedName} has no code!")
