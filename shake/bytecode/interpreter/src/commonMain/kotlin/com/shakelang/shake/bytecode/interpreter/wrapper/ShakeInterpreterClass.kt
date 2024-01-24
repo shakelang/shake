@@ -6,7 +6,17 @@ import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
-val classRegistry = mutableListOf<ShakeInterpreterClass>()
+object ClassRegister {
+
+    private val classes = mutableMapOf<String, ShakeInterpreterClass>()
+
+    fun registerClass(clazz: ShakeInterpreterClass): Int {
+        classes[clazz.qualifiedName] = clazz
+        return classes.size - 1
+    }
+
+    fun getClass(name: String): ShakeInterpreterClass? = classes[name]
+}
 
 interface ShakeInterpreterClass {
     val interpreter: ShakeInterpreter
@@ -83,14 +93,16 @@ interface ShakeInterpreterClass {
                 override val staticLocation: Long
 
                 init {
-                    val cri = classRegistry.size
-                    classRegistry.add(this)
-                    classRegistryIndex = cri
+                    classRegistryIndex = ClassRegister.registerClass(this)
+
+                    println("Loading class $qualifiedName")
+                    println("fields: ${storage.fields.size}")
 
                     var size = 8L // 8 bytes for header
                     memoryMap = storage.fields.filter {
-                        it.isStatic
+                        !it.isStatic
                     }.map {
+                        println(it.name)
                         val start = size
                         size += TypeDescriptor.parse(it.type).byteSize
                         start
@@ -99,7 +111,7 @@ interface ShakeInterpreterClass {
 
                     size = 4
                     staticMemoryMap = storage.fields.filter {
-                        !it.isStatic
+                        it.isStatic
                     }.map {
                         val start = size
                         size += TypeDescriptor.parse(it.type).byteSize
@@ -176,13 +188,14 @@ interface ShakeInterpreterClass {
 
                 fun loadField(index: Int): ShakeInterpreterField {
                     val f = storage.fields[index]
+                    val mapValue = if (f.isStatic) staticMemoryMap[index] else memoryMap[index]
                     val field = ShakeInterpreterField.of(
                         f,
                         classpath,
                         thisParentPath,
                         constantPool,
                         pkg,
-                        memoryMap[index],
+                        mapValue,
                         staticLocation,
                     )
                     fieldList[index] = field

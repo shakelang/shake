@@ -5,7 +5,6 @@ import com.shakelang.shake.bytecode.interpreter.heap.GarbageCollector
 import com.shakelang.shake.bytecode.interpreter.heap.GlobalMemory
 import com.shakelang.shake.bytecode.interpreter.heap.Malloc
 import com.shakelang.shake.bytecode.interpreter.natives.ShakeInterpreterProcess
-import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClass
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClasspath
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterMethod
 import com.shakelang.util.primitives.bytes.*
@@ -170,7 +169,7 @@ class ShakeInterpreter {
             return v
         }
 
-        private fun readUtf8() = method.constantPool.getUtf8(readUShort().toInt())
+        private fun readUtf8() = method.constantPool.getUtf8(readInt())
 
         private fun readUtf8Value() = readUtf8().value
 
@@ -1220,7 +1219,7 @@ class ShakeInterpreter {
                     // Read the constructor
                     val constructorName = this.readUtf8Value()
                     val constructor =
-                        classPath.getMethod(constructorName) ?: throw NullPointerException("Constructor $constructorName not found")
+                        classPath.getMethod(constructorName) ?: throw NullPointerException("Constructor \"$constructorName\" not found")
                     if (!constructor.isConstructor) throw IllegalStateException("Method $constructorName is not a constructor")
 
                     val clazz = constructor.clazz ?: throw NullPointerException("Class not found")
@@ -1228,28 +1227,17 @@ class ShakeInterpreter {
                     // Create the object in the heap
                     val obj = clazz.createInstanceInMemory()
 
-                    // push the object to the stack
-                    stack.push(obj)
-
                     // Read the arguments
                     val argsSize = constructor.parameters.sumOf { it.byteSize }
-                    val args = ByteArray(argsSize + 8) {
+                    val args = ByteArray(argsSize) {
                         stack.pop()
                     }
                     putFunctionOnStack(constructor, args + obj.toBytes())
+
+                    // push the object to the stack
+                    stack.push(obj)
                 }
             }
         }
     }
-}
-
-object ClassRegister {
-
-    private val classes = mutableMapOf<String, ShakeInterpreterClass>()
-
-    fun registerClass(name: String, clazz: ShakeInterpreterClass) {
-        classes[name] = clazz
-    }
-
-    fun getClass(name: String): ShakeInterpreterClass? = classes[name]
 }

@@ -7,8 +7,12 @@ import com.shakelang.shake.bytecode.interpreter.generator.attributes.AttributeGe
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class ClassGenerationContext(
+    val parentPathBase: String,
     val constantPool: MutableConstantPool,
 ) {
+
+    val pathBase get() = "$parentPathBase$name:"
+    val path get() = "$parentPathBase$name"
 
     var name: String = GenerationContext.UNDEFINED
         set(value) {
@@ -142,21 +146,30 @@ class ClassGenerationContext(
 
     @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Field(generator: FieldGenerationContext.() -> Unit) {
-        val ctx = FieldGenerationContext(constantPool)
+        val ctx = FieldGenerationContext(
+            pathBase,
+            constantPool,
+        )
         ctx.generator()
         fields.add(ctx)
     }
 
     @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Method(generator: MethodGenerationContext.() -> Unit) {
-        val ctx = MethodGenerationContext(constantPool)
+        val ctx = MethodGenerationContext(
+            pathBase,
+            constantPool,
+        )
         ctx.generator()
         methods.add(ctx)
     }
 
     @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Class(generator: ClassGenerationContext.() -> Unit) {
-        val ctx = ClassGenerationContext(constantPool)
+        val ctx = ClassGenerationContext(
+            pathBase,
+            constantPool,
+        )
         ctx.generator()
         subClasses.add(ctx)
     }

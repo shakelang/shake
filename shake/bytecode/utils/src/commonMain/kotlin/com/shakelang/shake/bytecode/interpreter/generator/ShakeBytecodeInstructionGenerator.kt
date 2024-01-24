@@ -19,7 +19,7 @@ import kotlin.jvm.JvmName
  * @version 0.1.0
  */
 
-@Suppress("ktlint:standard:function-naming")
+@Suppress("ktlint:standard:function-naming", "unused", "FunctionName", "MemberVisibilityCanBePrivate", "MemberVisibilityCanBePrivate")
 open class ShakeBytecodeInstructionGenerator(
 
     /**
@@ -1414,7 +1414,7 @@ open class ShakeBytecodeInstructionGenerator(
 
     /**
      * Bitwise or the top two variables on the stack
-     * Takes the type of the variables as a string
+     * Take the type of the variables as a string
      *
      * | Identifier  | Type   | Byte Size |
      * |------------|--------|-----------|
@@ -1747,7 +1747,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.BSHLU
+     * @see Opcodes.BSHR
      */
     fun bshr() = addByte(Opcodes.BSHR)
 
@@ -1925,7 +1925,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.BADD
+     * @see Opcodes.BINC
      */
     fun binc() = addByte(Opcodes.BINC)
 
@@ -1936,7 +1936,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.SADD
+     * @see Opcodes.SINC
      */
     fun sinc() = addByte(Opcodes.SINC)
 
@@ -1947,7 +1947,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.IADD
+     * @see Opcodes.IINC
      */
     fun iinc() = addByte(Opcodes.IINC)
 
@@ -1958,7 +1958,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.LADD
+     * @see Opcodes.LINC
      */
     fun linc() = addByte(Opcodes.LINC)
 
@@ -1969,7 +1969,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.FADD
+     * @see Opcodes.FINC
      */
     fun finc() = addByte(Opcodes.FINC)
 
@@ -1980,7 +1980,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.DADD
+     * @see Opcodes.DINC
      */
     fun dinc() = addByte(Opcodes.DINC)
 
@@ -2720,16 +2720,27 @@ open class ShakeBytecodeInstructionGenerator(
     /**
      * Pop the top short on the stack
      *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-bpop)
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.BPOP
+     */
+    fun bpop() = addByte(Opcodes.BPOP)
+
+    /**
+     * Pop the top int on the stack
+     *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-spop)
      *
      * @since 0.1.0
      * @version 0.1.0
      * @see Opcodes.SPOP
      */
-    fun bpop() = addByte(Opcodes.BPOP)
+    fun spop() = addByte(Opcodes.SPOP)
 
     /**
-     * Pop the top int on the stack
+     * Pop the top long on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ipop)
      *
@@ -2737,27 +2748,16 @@ open class ShakeBytecodeInstructionGenerator(
      * @version 0.1.0
      * @see Opcodes.IPOP
      */
-    fun spop() = addByte(Opcodes.SPOP)
+    fun ipop() = addByte(Opcodes.IPOP)
 
     /**
-     * Pop the top long on the stack
+     * Pop the top float on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-lpop)
      *
      * @since 0.1.0
      * @version 0.1.0
      * @see Opcodes.LPOP
-     */
-    fun ipop() = addByte(Opcodes.IPOP)
-
-    /**
-     * Pop the top float on the stack
-     *
-     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-fpop)
-     *
-     * @since 0.1.0
-     * @version 0.1.0
-     * @see Opcodes.FPOP
      */
     fun lpop() = addByte(Opcodes.LPOP)
 
@@ -2826,18 +2826,18 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.IDUP
+     * @see Opcodes.SDUP
      */
     fun sdup() = addByte(Opcodes.SDUP)
 
     /**
      * Duplicate the top long on the stack
      *
-     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-ldup)
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-idup)
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.LDUP
+     * @see Opcodes.IDUP
      */
     fun idup() = addByte(Opcodes.IDUP)
 
@@ -2848,7 +2848,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.FDUP
+     * @see Opcodes.LDUP
      */
     fun ldup() = addByte(Opcodes.LDUP)
 
@@ -2937,7 +2937,7 @@ open class ShakeBytecodeInstructionGenerator(
      * Invoke a function on an object
      * The address int should point to an utf8 constant pool entry
      * in the constant pool
-     * Parameters, and the object should be on the stack
+     * Parameters, and the object should be on the stack.
      * The object should be on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-virtual)
@@ -2953,7 +2953,7 @@ open class ShakeBytecodeInstructionGenerator(
      * Invoke a function on an object
      * The address int should point to an utf8 constant pool entry
      * in the constant pool
-     * Parameters, and the object should be on the stack
+     * Parameters, and the object should be on the stack.
      * The object should be on the stack
      *
      * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-invoke-virtual)
@@ -3066,7 +3066,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.STORE
+     * @see Opcodes.STORE_VIRTUAL
      */
     fun store_virtual(address: Int) = addBytes(listOf(Opcodes.STORE_VIRTUAL, *address.toBytes().toTypedArray()))
 
@@ -3081,7 +3081,7 @@ open class ShakeBytecodeInstructionGenerator(
      *
      * @since 0.1.0
      * @version 0.1.0
-     * @see Opcodes.STORE
+     * @see Opcodes.STORE_VIRTUAL
      */
     fun store_virtual(): IntPlaceholder {
         addByte(Opcodes.STORE_VIRTUAL)
@@ -3225,6 +3225,35 @@ open class ShakeBytecodeInstructionGenerator(
     }
 
     /**
+     * Create a new object
+     * The type is stored in an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-new-obj)
+     *
+     * @param type The type of the object to create
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.NEW_OBJ
+     */
+    fun new_obj(type: Int) = addBytes(Opcodes.NEW_OBJ, *type.toBytes())
+
+    /**
+     * Create a new object
+     * The type is stored in an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-new-obj)
+     *
+     * @return A placeholder for the type of the object
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.NEW_OBJ
+     */
+    fun new_obj(): IntPlaceholder {
+        addByte(Opcodes.NEW_OBJ)
+        return iPlaceholder()
+    }
+
+    /**
      * Output a [ByteArray] of the bytecode
      *
      * @return The bytecode as a [ByteArray]
@@ -3325,7 +3354,7 @@ open class ShakeBytecodeInstructionGenerator(
         /**
          * Set the byte at the index
          *
-         * @param unsignedByte The unsigned byte to set
+         * @param boolean The unsigned byte to set
          *
          * @since 0.1.0
          * @version 0.1.0
@@ -3525,7 +3554,7 @@ open class ShakeBytecodeInstructionGenerator(
  * @since 0.1.0
  * @version 0.1.0
  */
-@Suppress("ktlint:standard:function-naming")
+@Suppress("ktlint:standard:function-naming", "FunctionName", "unused", "MemberVisibilityCanBePrivate")
 open class PooledShakeBytecodeInstructionGenerator(
     val constantPool: MutableConstantPool,
     bytes: MutableList<Byte> = mutableListOf<Byte>(),
@@ -3690,6 +3719,22 @@ open class PooledShakeBytecodeInstructionGenerator(
      */
     fun new_array(descriptor: String) {
         addByte(Opcodes.NEW_ARR)
+        utf8Ref(descriptor)
+    }
+
+    /**
+     * Create a new object
+     * The type is stored in an utf8 constant pool entry
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/instructions#instr-new-obj)
+     *
+     * @param descriptor The descriptor of the object type
+     * @since 0.1.0
+     * @version 0.1.0
+     * @see Opcodes.NEW_OBJ
+     */
+    fun new_obj(descriptor: String) {
+        addByte(Opcodes.NEW_OBJ)
         utf8Ref(descriptor)
     }
 }

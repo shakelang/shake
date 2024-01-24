@@ -3269,5 +3269,62 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.size shouldBe 8
             stack.popLong() shouldBe 0x4243444546474849
         }
+
+        "create new object" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Class {
+                        name = "TestClass"
+                        isPublic = true
+                        isStatic = true
+
+                        Field {
+                            name = "field"
+                            type = "J"
+                            isPublic = true
+                        }
+
+                        Method {
+                            name = "constructor()V"
+                            isPublic = true
+                            isConstructor = true
+
+                            code {
+                                maxStack = 100
+                                maxLocals = 100
+                                this.bytecode {
+                                    ret()
+                                }
+                            }
+                        }
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                new_obj("test/TestClass:constructor()V")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            interpreter.tick(2)
+
+            val stack = code.stack
+            stack.size shouldBe 8
+            val obj = stack.popLong()
+
+            val header = interpreter.malloc.readHeaderFor(obj)
+            header.size shouldBe 16
+        }
     },
 )

@@ -7,8 +7,11 @@ import com.shakelang.shake.bytecode.interpreter.generator.attributes.AttributeGe
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class FieldGenerationContext(
+    val parentPathBase: String,
     val constantPool: MutableConstantPool,
 ) {
+
+    val path get() = "$parentPathBase$name"
 
     var name: String = GenerationContext.UNDEFINED
         set(value) {

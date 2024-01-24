@@ -8,6 +8,8 @@ import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 class GenerationContext {
 
     val constantPool = MutableConstantPool()
+    val pathBase get() = "$name/"
+    val path get() = name
 
     var name: String = UNDEFINED
         set(value) {
@@ -21,21 +23,30 @@ class GenerationContext {
 
     @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Class(generator: ClassGenerationContext.() -> Unit) {
-        val ctx = ClassGenerationContext(constantPool)
+        val ctx = ClassGenerationContext(
+            pathBase,
+            constantPool,
+        )
         ctx.generator()
         classes.add(ctx)
     }
 
     @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Method(generator: MethodGenerationContext.() -> Unit) {
-        val ctx = MethodGenerationContext(constantPool)
+        val ctx = MethodGenerationContext(
+            pathBase,
+            constantPool,
+        )
         ctx.generator()
         methods.add(ctx)
     }
 
     @Suppress("ktlint:standard:function-naming", "FunctionName")
     fun Field(generator: FieldGenerationContext.() -> Unit) {
-        val ctx = FieldGenerationContext(constantPool)
+        val ctx = FieldGenerationContext(
+            pathBase,
+            constantPool,
+        )
         ctx.generator()
         fields.add(ctx)
     }

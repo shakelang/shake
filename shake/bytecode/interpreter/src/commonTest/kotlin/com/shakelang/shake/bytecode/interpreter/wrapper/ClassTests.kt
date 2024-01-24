@@ -167,5 +167,53 @@ class ClassTests : FreeSpec(
             val testClass = classpath.getClass("com/shakelang/shake/test2/Test:Test2")
             testClass shouldBe null
         }
+
+        "get memory size (no fields)" {
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
+            classpath.load(
+                generatePackage {
+                    name = "com/shakelang/shake/test"
+
+                    Class {
+                        name = "Test"
+                        superName = "com/shakelang/Object"
+                        isPublic = true
+                        isStatic = true
+                    }
+                },
+            )
+
+            val testClass = classpath.getClass("com/shakelang/shake/test/Test")
+            testClass shouldNotBe null
+            testClass!!.sizeInMemory shouldBe 8
+        }
+
+        "get memory size (with fields)" {
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
+            classpath.load(
+                generatePackage {
+                    name = "com/shakelang/shake/test"
+
+                    Class {
+                        name = "Test"
+                        superName = "com/shakelang/Object"
+                        isPublic = true
+                        isStatic = true
+
+                        Field {
+                            name = "test"
+                            type = "Lcom/shakelang/Object;"
+                            isPublic = true
+                        }
+                    }
+                },
+            )
+
+            val testClass = classpath.getClass("com/shakelang/shake/test/Test")
+            testClass shouldNotBe null
+            testClass!!.sizeInMemory shouldBe 16
+        }
     },
 )

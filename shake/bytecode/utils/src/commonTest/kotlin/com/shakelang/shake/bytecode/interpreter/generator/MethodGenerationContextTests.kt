@@ -9,8 +9,7 @@ class MethodGenerationContextTests : FreeSpec(
     {
 
         "method generation" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.name shouldBe GenerationContext.UNDEFINED
             ctx.flags shouldBe 0
             ctx.isFinal shouldBe false
@@ -21,16 +20,14 @@ class MethodGenerationContextTests : FreeSpec(
         }
 
         "name" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.name shouldBe GenerationContext.UNDEFINED
             ctx.name = "test"
             ctx.name shouldBe "test"
         }
 
         "flags" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.flags shouldBe 0
             ctx.flags = 1
             ctx.flags shouldBe 1
@@ -38,7 +35,7 @@ class MethodGenerationContextTests : FreeSpec(
 
         "isPublic" {
 
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.isPublic shouldBe false
             ctx.flags shouldBe 0
             ctx.isPublic = true
@@ -47,8 +44,7 @@ class MethodGenerationContextTests : FreeSpec(
         }
 
         "isPrivate" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.isPrivate shouldBe false
             ctx.flags shouldBe 0
             ctx.isPrivate = true
@@ -57,8 +53,7 @@ class MethodGenerationContextTests : FreeSpec(
         }
 
         "isProtected" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.isProtected shouldBe false
             ctx.flags shouldBe 0
             ctx.isProtected = true
@@ -67,8 +62,7 @@ class MethodGenerationContextTests : FreeSpec(
         }
 
         "isStatic" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.isStatic shouldBe false
             ctx.flags shouldBe 0
             ctx.isStatic = true
@@ -77,8 +71,7 @@ class MethodGenerationContextTests : FreeSpec(
         }
 
         "isFinal" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.isFinal shouldBe false
             ctx.flags shouldBe 0
             ctx.isFinal = true
@@ -87,8 +80,7 @@ class MethodGenerationContextTests : FreeSpec(
         }
 
         "attribute generation" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.name shouldBe GenerationContext.UNDEFINED
 
             ctx.attribute {
@@ -129,8 +121,7 @@ class MethodGenerationContextTests : FreeSpec(
         }
 
         "to method" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.name = "test(I)V"
             ctx.flags = 0b0000000_00010000.toShort()
             ctx.attribute {
@@ -147,8 +138,7 @@ class MethodGenerationContextTests : FreeSpec(
         }
 
         "to mutable method" {
-
-            val ctx = MethodGenerationContext(MutableConstantPool())
+            val ctx = MethodGenerationContext("", MutableConstantPool())
             ctx.name = "test(I)V"
             ctx.flags = 0b0000000_00010000.toShort()
             ctx.attribute {

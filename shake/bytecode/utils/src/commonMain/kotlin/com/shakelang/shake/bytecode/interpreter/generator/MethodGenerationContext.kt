@@ -8,8 +8,10 @@ import com.shakelang.shake.bytecode.interpreter.generator.attributes.CodeAttribu
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class MethodGenerationContext(
+    val parentPathBase: String,
     val constantPool: MutableConstantPool,
 ) {
+    val path get() = "$parentPathBase$name"
 
     var name: String = GenerationContext.UNDEFINED
         set(value) {
@@ -70,6 +72,12 @@ class MethodGenerationContext(
         get() = Flags.isStrict(flags)
         set(value) {
             flags = Flags.setStrict(flags, value)
+        }
+
+    var isConstructor: Boolean
+        get() = Flags.isConstructor(flags)
+        set(value) {
+            flags = Flags.setConstructor(flags, value)
         }
 
     val attributes: MutableList<AttributeGenerationContext> = mutableListOf()
