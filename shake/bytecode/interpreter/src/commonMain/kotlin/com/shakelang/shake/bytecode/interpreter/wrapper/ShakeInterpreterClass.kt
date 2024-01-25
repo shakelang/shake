@@ -94,15 +94,10 @@ interface ShakeInterpreterClass {
 
                 init {
                     classRegistryIndex = ClassRegister.registerClass(this)
-
-                    println("Loading class $qualifiedName")
-                    println("fields: ${storage.fields.size}")
-
                     var size = 8L // 8 bytes for header
                     memoryMap = storage.fields.filter {
                         !it.isStatic
                     }.map {
-                        println(it.name)
                         val start = size
                         size += TypeDescriptor.parse(it.type).byteSize
                         start
