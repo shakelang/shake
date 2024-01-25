@@ -32,6 +32,39 @@ interface ShakeInterpreterPackage {
 
     fun load(storage: StorageFormat)
 
+    /**
+     * Load all classes from the package
+     * @deprecated This method loads all classes from the package, which is not needed in most cases.
+     *             It will impact performance, especially if you have a big library.
+     */
+    @Deprecated(
+        "This method loads all classes from the package, which is not needed in most cases. " +
+            "It will impact performance, especially if you have a big library.",
+    )
+    fun getAllClasses(): List<ShakeInterpreterClass>
+
+    /**
+     * Load all methods from the package
+     * @deprecated This method loads all methods from the package, which is not needed in most cases.
+     *             It will impact performance, especially if you have a big library.
+     */
+    @Deprecated(
+        "This method loads all methods from the package, which is not needed in most cases. " +
+            "It will impact performance, especially if you have a big library.",
+    )
+    fun getAllMethods(): List<ShakeInterpreterMethod>
+
+    /**
+     * Load all fields from the package
+     * @deprecated This method loads all fields from the package, which is not needed in most cases.
+     *             It will impact performance, especially if you have a big library.
+     */
+    @Deprecated(
+        "This method loads all fields from the package, which is not needed in most cases. " +
+            "It will impact performance, especially if you have a big library.",
+    )
+    fun getAllFields(): List<ShakeInterpreterField>
+
     companion object {
         fun of(storages: List<StorageFormat>, classpath: ShakeInterpreterClasspath): ShakeInterpreterPackage {
             return object : ShakeInterpreterPackage {
@@ -177,6 +210,21 @@ interface ShakeInterpreterPackage {
 
                 fun loadAllFields() {
                     for (i in storages.indices) loadField(i)
+                }
+
+                override fun getAllClasses(): List<ShakeInterpreterClass> {
+                    loadAllClasses()
+                    return classList.filterNotNull()
+                }
+
+                override fun getAllMethods(): List<ShakeInterpreterMethod> {
+                    loadAllMethods()
+                    return methodList.filterNotNull()
+                }
+
+                override fun getAllFields(): List<ShakeInterpreterField> {
+                    loadAllFields()
+                    return fieldList.filterNotNull()
                 }
 
                 fun resolveClassIndex(name: String): Int {

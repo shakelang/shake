@@ -462,6 +462,34 @@ interface TypeDescriptor {
     }
 
     /**
+     * A [NewType] is a symbolic type. It is used to represent an anonymous pointer
+     * to a new object created by a constructor call.
+     */
+    object NewType : TypeDescriptor {
+
+        /**
+         * The descriptor of the [NewType]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        override val descriptor: String get() = "N"
+
+        /**
+         * The size of the [NewType]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        override val byteSize: Int get() = 8
+
+        /**
+         * Get the [String] representation of the [NewType]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
+        override fun toString() = descriptor
+    }
+
+    /**
      * A [ObjectType] represents an object type in shake
      * It has the descriptor `L<class>[:genericTypes (joined using +)];` and a size of 8
      *
@@ -733,6 +761,15 @@ interface TypeDescriptor {
         val VOID = VoidType
 
         /**
+         * A [NewType] is a symbolic type.
+         * It is used to represent an anonymous pointer
+         * to a new object created by a constructor call.
+         *
+         * This is a shortcut for [TypeDescriptor.NewType]
+         */
+        val NEW_TYPE = NewType
+
+        /**
          * Parse a [TypeDescriptor] from an [InputStream]
          * @since 0.1.0
          * @version 0.1.0
@@ -754,6 +791,7 @@ interface TypeDescriptor {
                 'C' -> return CHAR
                 'Z' -> return BOOLEAN
                 'V' -> return VOID
+                'N' -> return NEW_TYPE
                 '[' -> return ArrayType(parse(name))
                 'L' -> {
                     val className = StringBuilder()

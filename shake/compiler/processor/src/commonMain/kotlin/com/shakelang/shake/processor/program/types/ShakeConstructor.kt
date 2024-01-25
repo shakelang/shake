@@ -20,7 +20,7 @@ interface ShakeConstructor {
 
     val parameterTypes: List<ShakeType> get() = parameters.map { it.type }
     val signature: String
-        get() = "${name ?: "default"}(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
+        get() = "+${name ?: "default"}(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
     val qualifiedSignature: String
         get() = "$qualifiedName(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
 

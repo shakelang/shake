@@ -470,6 +470,7 @@ class ShakeBytecodeGenerator {
             isNative = false
             isAbstract = false
             isSynchronized = false
+            isConstructor = true
 
             if (constructor.body != null) {
                 val body = constructor.body!!

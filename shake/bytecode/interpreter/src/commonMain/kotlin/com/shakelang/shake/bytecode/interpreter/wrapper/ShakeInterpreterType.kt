@@ -99,6 +99,11 @@ interface ShakeInterpreterType {
             override val type: Type = Type.VOID
             override val byteSize: Int = 0
         }
+        val NEW = object : ShakeInterpreterType {
+            override val name: String = "N"
+            override val type: Type = Type.OBJECT
+            override val byteSize: Int = 8
+        }
 
         fun of(storage: TypeDescriptor, classpath: ShakeInterpreterClasspath): ShakeInterpreterType {
             return when (storage) {
@@ -115,6 +120,7 @@ interface ShakeInterpreterType {
                 is TypeDescriptor.CharType -> CHAR
                 is TypeDescriptor.BooleanType -> BOOLEAN
                 is TypeDescriptor.VoidType -> VOID
+                is TypeDescriptor.NewType -> NEW
                 is TypeDescriptor.ArrayType -> ArrayType(of(storage.type, classpath))
                 is TypeDescriptor.ObjectType -> ObjectType(classpath.getClass(storage.className)!!)
                 else -> throw IllegalArgumentException("Unknown type: ${storage::class.simpleName}")

@@ -27,9 +27,38 @@ interface ShakeInterpreterClass {
     val pkg: ShakeInterpreterPackage
     val constantPool: ConstantPool
 
-    val methods: List<ShakeInterpreterMethod>
-    val fields: List<ShakeInterpreterField>
-    val subclasses: List<ShakeInterpreterClass>
+    /**
+     * The methods, fields and subclasses of this class
+     * @deprecated This method loads all classes from the package, which is not needed in most cases.
+     *             It will impact performance, especially if you have a big library.
+     */
+    @Deprecated(
+        "This method loads all classes from the package, which is not needed in most cases. " +
+            "It will impact performance, especially if you have a big library.",
+    )
+    fun getAllMethods(): List<ShakeInterpreterMethod>
+
+    /**
+     * The methods, fields and subclasses of this class
+     * @deprecated This method loads all classes from the package, which is not needed in most cases.
+     *             It will impact performance, especially if you have a big library.
+     */
+    @Deprecated(
+        "This method loads all classes from the package, which is not needed in most cases. " +
+            "It will impact performance, especially if you have a big library.",
+    )
+    fun getAllFields(): List<ShakeInterpreterField>
+
+    /**
+     * The methods, fields and subclasses of this class
+     * @deprecated This method loads all classes from the package, which is not needed in most cases.
+     *             It will impact performance, especially if you have a big library.
+     */
+    @Deprecated(
+        "This method loads all classes from the package, which is not needed in most cases. " +
+            "It will impact performance, especially if you have a big library.",
+    )
+    fun getAllSubclasses(): List<ShakeInterpreterClass>
 
     val sizeInMemory: Long
     val staticSizeInMemory: Long
@@ -59,6 +88,7 @@ interface ShakeInterpreterClass {
         return pointer
     }
 
+    @Suppress("DeprecatedCallableAddReplaceWith")
     companion object {
         fun of(
             storage: Class,
@@ -152,14 +182,20 @@ interface ShakeInterpreterClass {
                 val methodList: MutableList<ShakeInterpreterMethod?> = mutableListOf()
                 val fieldList: MutableList<ShakeInterpreterField?> = mutableListOf()
 
-                override val subclasses: List<ShakeInterpreterClass>
-                    get() = subclassList.indices.map { getClass(it) }
+                @Deprecated(
+                    "This method loads all classes from the package, which is not needed in most cases. It will impact performance, especially if you have a big library.",
+                )
+                override fun getAllMethods() = methodList.indices.map { getMethod(it) }
 
-                override val methods: List<ShakeInterpreterMethod>
-                    get() = methodList.indices.map { getMethod(it) }
+                @Deprecated(
+                    "This method loads all classes from the package, which is not needed in most cases. It will impact performance, especially if you have a big library.",
+                )
+                override fun getAllFields() = fieldList.indices.map { getField(it) }
 
-                override val fields: List<ShakeInterpreterField>
-                    get() = fieldList.indices.map { getField(it) }
+                @Deprecated(
+                    "This method loads all classes from the package, which is not needed in most cases. It will impact performance, especially if you have a big library.",
+                )
+                override fun getAllSubclasses() = subclassList.indices.map { getClass(it) }
 
                 init {
                     for (c in storage.subClasses) subclassList.add(null)
