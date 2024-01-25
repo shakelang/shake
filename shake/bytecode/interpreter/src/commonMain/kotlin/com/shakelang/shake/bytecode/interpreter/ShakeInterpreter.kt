@@ -277,8 +277,8 @@ class ShakeInterpreter {
                 // https://spec.shakelang.com/bytecode/instructions#instr-ladd
                 // https://spec.shakelang.com/bytecode/instructions#instr-fadd
                 // https://spec.shakelang.com/bytecode/instructions#instr-dadd
-                Opcodes.BADD -> stack.push(stack.pop() + stack.pop())
-                Opcodes.SADD -> stack.push(stack.popShort() + stack.popShort())
+                Opcodes.BADD -> stack.push((stack.pop() + stack.pop()).toByte())
+                Opcodes.SADD -> stack.push((stack.popShort() + stack.popShort()).toShort())
                 Opcodes.IADD -> stack.push(stack.popInt() + stack.popInt())
                 Opcodes.LADD -> stack.push(stack.popLong() + stack.popLong())
                 Opcodes.FADD -> stack.push(stack.popFloat() + stack.popFloat())
@@ -298,13 +298,13 @@ class ShakeInterpreter {
                 Opcodes.BSUB -> {
                     val a = stack.pop()
                     val b = stack.pop()
-                    stack.push(b - a)
+                    stack.push((b - a).toByte())
                 }
 
                 Opcodes.SSUB -> {
                     val a = stack.popShort()
                     val b = stack.popShort()
-                    stack.push(b - a)
+                    stack.push((b - a).toShort())
                 }
 
                 Opcodes.ISUB -> {
@@ -322,25 +322,25 @@ class ShakeInterpreter {
                 Opcodes.UBSUB -> {
                     val a = stack.popUByte()
                     val b = stack.popUByte()
-                    stack.push((b - a).toByte())
+                    stack.push((b - a).toUByte())
                 }
 
                 Opcodes.USSUB -> {
                     val a = stack.popUShort()
                     val b = stack.popUShort()
-                    stack.push((b - a).toShort())
+                    stack.push((b - a).toUShort())
                 }
 
                 Opcodes.UISUB -> {
                     val a = stack.popUInt()
                     val b = stack.popUInt()
-                    stack.push((b - a).toInt())
+                    stack.push((b - a).toUInt())
                 }
 
                 Opcodes.ULSUB -> {
                     val a = stack.popULong()
                     val b = stack.popULong()
-                    stack.push((b - a).toLong())
+                    stack.push((b - a).toULong())
                 }
 
                 Opcodes.FSUB -> {
@@ -366,16 +366,16 @@ class ShakeInterpreter {
                 // https://spec.shakelang.com/bytecode/instructions#instr-usmul
                 // https://spec.shakelang.com/bytecode/instructions#instr-uimul
                 // https://spec.shakelang.com/bytecode/instructions#instr-ulmul
-                Opcodes.BMUL -> stack.push(stack.pop() * stack.pop())
-                Opcodes.SMUL -> stack.push(stack.popShort() * stack.popShort())
+                Opcodes.BMUL -> stack.push((stack.pop() * stack.pop()).toByte())
+                Opcodes.SMUL -> stack.push((stack.popShort() * stack.popShort()).toShort())
                 Opcodes.IMUL -> stack.push(stack.popInt() * stack.popInt())
                 Opcodes.LMUL -> stack.push(stack.popLong() * stack.popLong())
                 Opcodes.FMUL -> stack.push(stack.popFloat() * stack.popFloat())
                 Opcodes.DMUL -> stack.push(stack.popDouble() * stack.popDouble())
-                Opcodes.UBMUL -> stack.push((stack.popUByte() * stack.popUByte()).toByte())
-                Opcodes.USMUL -> stack.push((stack.popUShort() * stack.popUShort()).toShort())
-                Opcodes.UIMUL -> stack.push((stack.popUInt() * stack.popUInt()).toInt())
-                Opcodes.ULMUL -> stack.push((stack.popULong() * stack.popULong()).toLong())
+                Opcodes.UBMUL -> stack.push((stack.popUByte() * stack.popUByte()).toUByte())
+                Opcodes.USMUL -> stack.push((stack.popUShort() * stack.popUShort()).toUShort())
+                Opcodes.UIMUL -> stack.push((stack.popUInt() * stack.popUInt()))
+                Opcodes.ULMUL -> stack.push((stack.popULong() * stack.popULong()))
 
                 // Divide two values from the stack and push the result to the stack
                 // https://spec.shakelang.com/bytecode/instructions#instr-bdiv
@@ -391,13 +391,13 @@ class ShakeInterpreter {
                 Opcodes.BDIV -> {
                     val a = stack.pop()
                     val b = stack.pop()
-                    stack.push(b / a)
+                    stack.push((b / a).toByte())
                 }
 
                 Opcodes.SDIV -> {
                     val a = stack.popShort()
                     val b = stack.popShort()
-                    stack.push(b / a)
+                    stack.push((b / a).toShort())
                 }
 
                 Opcodes.IDIV -> {
@@ -427,25 +427,25 @@ class ShakeInterpreter {
                 Opcodes.UBDIV -> {
                     val a = stack.popUByte()
                     val b = stack.popUByte()
-                    stack.push((b / a).toByte())
+                    stack.push((b / a).toUByte())
                 }
 
                 Opcodes.USDIV -> {
                     val a = stack.popUShort()
                     val b = stack.popUShort()
-                    stack.push((b / a).toShort())
+                    stack.push((b / a).toUShort())
                 }
 
                 Opcodes.UIDIV -> {
                     val a = stack.popUInt()
                     val b = stack.popUInt()
-                    stack.push((b / a).toInt())
+                    stack.push(b / a)
                 }
 
                 Opcodes.ULDIV -> {
                     val a = stack.popULong()
                     val b = stack.popULong()
-                    stack.push((b / a).toLong())
+                    stack.push(b / a)
                 }
 
                 // Modulo two values from the stack and push the result to the stack
@@ -462,13 +462,13 @@ class ShakeInterpreter {
                 Opcodes.BMOD -> {
                     val a = stack.pop()
                     val b = stack.pop()
-                    stack.push(b % a)
+                    stack.push((b % a).toByte())
                 }
 
                 Opcodes.SMOD -> {
                     val a = stack.popShort()
                     val b = stack.popShort()
-                    stack.push(b % a)
+                    stack.push((b % a).toShort())
                 }
 
                 Opcodes.IMOD -> {
@@ -486,25 +486,25 @@ class ShakeInterpreter {
                 Opcodes.UBMOD -> {
                     val a = stack.popUByte()
                     val b = stack.popUByte()
-                    stack.push((b % a).toByte())
+                    stack.push((b % a).toUByte())
                 }
 
                 Opcodes.USMOD -> {
                     val a = stack.popUShort()
                     val b = stack.popUShort()
-                    stack.push((b % a).toShort())
+                    stack.push((b % a).toUShort())
                 }
 
                 Opcodes.UIMOD -> {
                     val a = stack.popUInt()
                     val b = stack.popUInt()
-                    stack.push((b % a).toInt())
+                    stack.push(b % a)
                 }
 
                 Opcodes.ULMOD -> {
                     val a = stack.popULong()
                     val b = stack.popULong()
-                    stack.push((b % a).toLong())
+                    stack.push(b % a)
                 }
 
                 Opcodes.FMOD -> {
@@ -527,8 +527,8 @@ class ShakeInterpreter {
                 // https://spec.shakelang.com/bytecode/instructions#instr-lneg
                 // https://spec.shakelang.com/bytecode/instructions#instr-fneg
                 // https://spec.shakelang.com/bytecode/instructions#instr-dneg
-                Opcodes.BNEG -> stack.push(-stack.pop())
-                Opcodes.SNEG -> stack.push(-stack.popShort())
+                Opcodes.BNEG -> stack.push((-stack.pop()).toUByte())
+                Opcodes.SNEG -> stack.push((-stack.popShort()).toUShort())
                 Opcodes.INEG -> stack.push(-stack.popInt())
                 Opcodes.LNEG -> stack.push(-stack.popLong())
                 Opcodes.FNEG -> stack.push(-stack.popFloat())

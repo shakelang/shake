@@ -75,7 +75,12 @@ object Natives {
                     if (it.v.arguments.size != 2) throw IllegalArgumentException("Native function must have 2 arguments")
                     // Calculate left and right
                     it.ctx.gen.visitValue(it.ctx, it.v.arguments[0], type0)
+
+                    if (type0 != biggerType) it.ctx.bytecodeInstructionGenerator.pcast(sType0, sBiggerType)
+
                     it.ctx.gen.visitValue(it.ctx, it.v.arguments[1], type1)
+
+                    if (type1 != biggerType) it.ctx.bytecodeInstructionGenerator.pcast(sType1, sBiggerType)
                 }
 
                 register("shake/lang/plus($sType0,$sType1)$sBiggerType") {

@@ -27,7 +27,24 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         println(BytecodeStringGenerator(format).generate().joinToString("\n"))
+
                         execute("test/main()V")
+//                        interpreter.putFunctionOnStack(interpreter.classPath.getMethod("test/main()V")!!)
+//                        interpreter.tick(2)
+//                        interpreter.callStack[0].stack.size shouldBe 1
+//
+//                        interpreter.tick(4)
+//                        interpreter.callStack[0].stack.size shouldBe 0
+//
+//                        interpreter.tick(2)
+//                        interpreter.callStack[0].stack.size shouldBe 2
+//
+//                        println(interpreter.callStack[0].stack.toByteArray().toHexString())
+//
+//                        interpreter.tick()
+//
+//                        println(interpreter.callStack[0].stack.toByteArray().toHexString())
+
                         consoleOut shouldBe "3"
                     }
                 }
