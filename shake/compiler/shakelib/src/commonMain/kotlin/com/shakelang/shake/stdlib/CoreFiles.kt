@@ -397,14 +397,14 @@ object CoreFiles {
         // --------------------------------------------------------------------------------------------------------------------
         // Int extension functions (All native)
     
-        native operator byte int.plus(byte b)
-        native operator short int.plus(short b)
+        native operator int int.plus(byte b)
+        native operator int int.plus(short b)
         native operator int int.plus(int b)
         native operator long int.plus(long b)
         native operator float int.plus(float b)
         native operator double int.plus(double b)
-        native operator byte int.plus(unsigned byte b)
-        native operator short int.plus(unsigned short b)
+        native operator int int.plus(unsigned byte b)
+        native operator int int.plus(unsigned short b)
         native operator int int.plus(unsigned int b)
         native operator long int.plus(unsigned long b)
     
