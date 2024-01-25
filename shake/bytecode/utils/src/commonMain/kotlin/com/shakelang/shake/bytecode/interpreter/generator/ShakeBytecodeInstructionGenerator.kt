@@ -1,6 +1,7 @@
 package com.shakelang.shake.bytecode.interpreter.generator
 
 import com.shakelang.shake.bytecode.interpreter.Opcodes
+import com.shakelang.shake.bytecode.interpreter.PCast
 import com.shakelang.shake.bytecode.interpreter.format.pool.MutableConstantPool
 import com.shakelang.util.primitives.bytes.setBytes
 import com.shakelang.util.primitives.bytes.toBytes
@@ -2900,6 +2901,172 @@ open class ShakeBytecodeInstructionGenerator(
      * @see Opcodes.PCAST
      */
     fun pcast(from: UByte, to: UByte) = addBytes(Opcodes.PCAST, ((from shl 4) or to).toByte())
+
+    fun pcast(from: String, to: String) {
+        when (from) {
+            "B" -> {
+                when (to) {
+                    "B" -> return
+                    "S" -> pcast(PCast.BYTE, PCast.SHORT)
+                    "I" -> pcast(PCast.BYTE, PCast.INT)
+                    "J" -> pcast(PCast.BYTE, PCast.LONG)
+                    "F" -> pcast(PCast.BYTE, PCast.FLOAT)
+                    "D" -> pcast(PCast.BYTE, PCast.DOUBLE)
+                    "b" -> return
+                    "s" -> pcast(PCast.BYTE, PCast.USHORT)
+                    "i" -> pcast(PCast.BYTE, PCast.UINT)
+                    "j" -> pcast(PCast.BYTE, PCast.ULONG)
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            "S" -> {
+                when (to) {
+                    "B" -> pcast(PCast.SHORT, PCast.BYTE)
+                    "S" -> return
+                    "I" -> pcast(PCast.SHORT, PCast.INT)
+                    "J" -> pcast(PCast.SHORT, PCast.LONG)
+                    "F" -> pcast(PCast.SHORT, PCast.FLOAT)
+                    "D" -> pcast(PCast.SHORT, PCast.DOUBLE)
+                    "b" -> pcast(PCast.SHORT, PCast.UBYTE)
+                    "s" -> return
+                    "i" -> pcast(PCast.SHORT, PCast.UINT)
+                    "j" -> pcast(PCast.SHORT, PCast.ULONG)
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            "I" -> {
+                when (to) {
+                    "B" -> pcast(PCast.INT, PCast.BYTE)
+                    "S" -> pcast(PCast.INT, PCast.SHORT)
+                    "I" -> return
+                    "J" -> pcast(PCast.INT, PCast.LONG)
+                    "F" -> pcast(PCast.INT, PCast.FLOAT)
+                    "D" -> pcast(PCast.INT, PCast.DOUBLE)
+                    "b" -> pcast(PCast.INT, PCast.UBYTE)
+                    "s" -> pcast(PCast.INT, PCast.USHORT)
+                    "i" -> return
+                    "j" -> pcast(PCast.INT, PCast.ULONG)
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            "J" -> {
+                when (to) {
+                    "B" -> pcast(PCast.LONG, PCast.BYTE)
+                    "S" -> pcast(PCast.LONG, PCast.SHORT)
+                    "I" -> pcast(PCast.LONG, PCast.INT)
+                    "J" -> return
+                    "F" -> pcast(PCast.LONG, PCast.FLOAT)
+                    "D" -> pcast(PCast.LONG, PCast.DOUBLE)
+                    "b" -> pcast(PCast.LONG, PCast.UBYTE)
+                    "s" -> pcast(PCast.LONG, PCast.USHORT)
+                    "i" -> pcast(PCast.LONG, PCast.UINT)
+                    "j" -> return
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            "F" -> {
+                when (to) {
+                    "B" -> pcast(PCast.FLOAT, PCast.BYTE)
+                    "S" -> pcast(PCast.FLOAT, PCast.SHORT)
+                    "I" -> pcast(PCast.FLOAT, PCast.INT)
+                    "J" -> pcast(PCast.FLOAT, PCast.LONG)
+                    "F" -> return
+                    "D" -> pcast(PCast.FLOAT, PCast.DOUBLE)
+                    "b" -> pcast(PCast.FLOAT, PCast.UBYTE)
+                    "s" -> pcast(PCast.FLOAT, PCast.USHORT)
+                    "i" -> pcast(PCast.FLOAT, PCast.UINT)
+                    "j" -> pcast(PCast.FLOAT, PCast.ULONG)
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            "D" -> {
+                when (to) {
+                    "B" -> pcast(PCast.DOUBLE, PCast.BYTE)
+                    "S" -> pcast(PCast.DOUBLE, PCast.SHORT)
+                    "I" -> pcast(PCast.DOUBLE, PCast.INT)
+                    "J" -> pcast(PCast.DOUBLE, PCast.LONG)
+                    "F" -> pcast(PCast.DOUBLE, PCast.FLOAT)
+                    "D" -> return
+                    "b" -> pcast(PCast.DOUBLE, PCast.UBYTE)
+                    "s" -> pcast(PCast.DOUBLE, PCast.USHORT)
+                    "i" -> pcast(PCast.DOUBLE, PCast.UINT)
+                    "j" -> pcast(PCast.DOUBLE, PCast.ULONG)
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            "b" -> {
+                when (to) {
+                    "B" -> return
+                    "S" -> pcast(PCast.UBYTE, PCast.SHORT)
+                    "I" -> pcast(PCast.UBYTE, PCast.INT)
+                    "J" -> pcast(PCast.UBYTE, PCast.LONG)
+                    "F" -> pcast(PCast.UBYTE, PCast.FLOAT)
+                    "D" -> pcast(PCast.UBYTE, PCast.DOUBLE)
+                    "b" -> return
+                    "s" -> pcast(PCast.UBYTE, PCast.USHORT)
+                    "i" -> pcast(PCast.UBYTE, PCast.UINT)
+                    "j" -> pcast(PCast.UBYTE, PCast.ULONG)
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            "s" -> {
+                when (to) {
+                    "B" -> pcast(PCast.USHORT, PCast.BYTE)
+                    "S" -> return
+                    "I" -> pcast(PCast.USHORT, PCast.INT)
+                    "J" -> pcast(PCast.USHORT, PCast.LONG)
+                    "F" -> pcast(PCast.USHORT, PCast.FLOAT)
+                    "D" -> pcast(PCast.USHORT, PCast.DOUBLE)
+                    "b" -> pcast(PCast.USHORT, PCast.UBYTE)
+                    "s" -> return
+                    "i" -> pcast(PCast.USHORT, PCast.UINT)
+                    "j" -> pcast(PCast.USHORT, PCast.ULONG)
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            "i" -> {
+                when (to) {
+                    "B" -> pcast(PCast.UINT, PCast.BYTE)
+                    "S" -> pcast(PCast.UINT, PCast.SHORT)
+                    "I" -> return
+                    "J" -> pcast(PCast.UINT, PCast.LONG)
+                    "F" -> pcast(PCast.UINT, PCast.FLOAT)
+                    "D" -> pcast(PCast.UINT, PCast.DOUBLE)
+                    "b" -> pcast(PCast.UINT, PCast.UBYTE)
+                    "s" -> pcast(PCast.UINT, PCast.USHORT)
+                    "i" -> return
+                    "j" -> pcast(PCast.UINT, PCast.ULONG)
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            "j" -> {
+                when (to) {
+                    "B" -> pcast(PCast.ULONG, PCast.BYTE)
+                    "S" -> pcast(PCast.ULONG, PCast.SHORT)
+                    "I" -> pcast(PCast.ULONG, PCast.INT)
+                    "J" -> return
+                    "F" -> pcast(PCast.ULONG, PCast.FLOAT)
+                    "D" -> pcast(PCast.ULONG, PCast.DOUBLE)
+                    "b" -> pcast(PCast.ULONG, PCast.UBYTE)
+                    "s" -> pcast(PCast.ULONG, PCast.USHORT)
+                    "i" -> pcast(PCast.ULONG, PCast.UINT)
+                    "j" -> return
+                    else -> throw IllegalArgumentException("Invalid type: $to")
+                }
+            }
+
+            else -> throw IllegalArgumentException("Invalid from-type: $from")
+        }
+    }
 
     /**
      * Invoke a function

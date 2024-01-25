@@ -109,7 +109,7 @@ class BytecodeGeneratorTest : FreeSpec(
                 package test
                 
                 class Test {
-                    void main() {
+                    static void main() {
                         print(1 + 2)
                     }
                 }
@@ -128,7 +128,7 @@ class BytecodeGeneratorTest : FreeSpec(
                 package test
                 
                 class Test {
-                    void main() {
+                    static void main() {
                         print(add(1, 2))
                     }
                     
@@ -151,7 +151,7 @@ class BytecodeGeneratorTest : FreeSpec(
                 package test
                 
                 class Test {
-                    void main() {
+                    static void main() {
                         print(add(1, 2))
                     }
                     
@@ -164,6 +164,31 @@ class BytecodeGeneratorTest : FreeSpec(
             ) {
                 execute("test/Test:main()V")
                 consoleOut shouldBe "3"
+            }
+        }
+
+        "create a new object" {
+
+            codeSpec(
+                """
+                package test
+                
+                class Test {
+                    
+                    constructor() {
+                        print(10)
+                    }
+                
+                    static void main() {
+                        Test test = new Test()
+                        print(test)
+                    }
+                }
+                                
+                """.trimIndent(),
+            ) {
+                execute("test/Test:main()V")
+                consoleOut shouldBe "test/Test@0"
             }
         }
     },

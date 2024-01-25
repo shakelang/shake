@@ -15,6 +15,15 @@ interface ShakeConstructor {
     val parameters: List<ShakeParameter>
     val scope: ShakeScope
 
+    val qualifiedName: String
+        get() = "${clazz.qualifierPrefix}+${name ?: "default"}"
+
+    val parameterTypes: List<ShakeType> get() = parameters.map { it.type }
+    val signature: String
+        get() = "${name ?: "default"}(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
+    val qualifiedSignature: String
+        get() = "$qualifiedName(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
+
     fun toJson(): Map<String, Any?> {
         return mapOf(
             "class" to clazz.toJson(),

@@ -1,7 +1,7 @@
 package com.shakelang.shake.bytecode.generator
 
-import com.shakelang.shake.bytecode.interpreter.PCast
 import com.shakelang.shake.bytecode.interpreter.generator.PooledShakeBytecodeInstructionGenerator
+import com.shakelang.shake.processor.program.creation.CreationShakeType
 import com.shakelang.shake.processor.program.types.code.ShakeInvocation
 
 object Natives {
@@ -37,99 +37,96 @@ object Natives {
     }
 
     init {
-        val sizes = arrayOf("b", "B", "s", "S", "i", "I", "j", "J", "F", "D")
-        val types = listOf(
-            "B" to PCast.BYTE,
-            "S" to PCast.SHORT,
-            "I" to PCast.INT,
-            "J" to PCast.LONG,
-            "F" to PCast.FLOAT,
-            "D" to PCast.DOUBLE,
-            "b" to PCast.BYTE,
-            "s" to PCast.SHORT,
-            "i" to PCast.INT,
-            "j" to PCast.LONG,
+        val types = arrayOf(
+            CreationShakeType.Primitives.UBYTE,
+            CreationShakeType.Primitives.BYTE,
+            CreationShakeType.Primitives.USHORT,
+            CreationShakeType.Primitives.SHORT,
+            CreationShakeType.Primitives.UINT,
+            CreationShakeType.Primitives.INT,
+            CreationShakeType.Primitives.ULONG,
+            CreationShakeType.Primitives.LONG,
+            CreationShakeType.Primitives.FLOAT,
+            CreationShakeType.Primitives.DOUBLE,
         )
 
-        fun biggerType(a: String, b: String): String {
-            val aIndex = sizes.indexOf(a)
-            val bIndex = sizes.indexOf(b)
+        fun biggerType(a: CreationShakeType.Primitive, b: CreationShakeType.Primitive): CreationShakeType.Primitive {
+            val aIndex = types.indexOf(a)
+            val bIndex = types.indexOf(b)
             return if (aIndex > bIndex) a else b
         }
 
         for (type0 in types) {
+
+            val sType0 = ShakeBytecodeGenerator.generateTypeDescriptor(type0)
+
             for (type1 in types) {
+
+                val sType1 = ShakeBytecodeGenerator.generateTypeDescriptor(type1)
 
                 // Type0 is the first type and type1 is the second type
                 // So for example plus(B, S) would be type0 = B and type1 = S
                 // The short is on top of the stack and the byte is below the short
 
-                val biggerType = biggerType(type0.first, type1.first)
+                val biggerType = biggerType(type0, type1)
+                val sBiggerType = ShakeBytecodeGenerator.generateTypeDescriptor(biggerType)
 
-                fun PooledShakeBytecodeInstructionGenerator.castBeforeCalc(it: HandleContext) {
+                fun castBeforeCalc(it: HandleContext) {
                     if (it.v.arguments.size != 2) throw IllegalArgumentException("Native function must have 2 arguments")
-
                     // Calculate left and right
-                    it.ctx.gen.visitValue(it.ctx, it.v.arguments[0])
-
-                    if (type0.first != biggerType) {
-                        // If type1 is bigger than type0, we need to cast type0 to type1
-                        pcast(type0.second, type1.second)
-                    }
-
-                    it.ctx.gen.visitValue(it.ctx, it.v.arguments[1])
-
-                    if (type1.first != biggerType) {
-                        // If type0 is bigger than type1, we need to cast type1 to type0
-                        pcast(type1.second, type0.second)
-                    }
+                    it.ctx.gen.visitValue(it.ctx, it.v.arguments[0], type0)
+                    it.ctx.gen.visitValue(it.ctx, it.v.arguments[1], type1)
                 }
 
-                register("shake/lang/plus(${type0.first},${type1.first})$biggerType") {
+                register("shake/lang/plus($sType0,$sType1)$sBiggerType") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
                     // smaller types to the bigger type)
-                    add(biggerType)
+                    add(sBiggerType)
                 }
 
-                register("shake/lang/minus(${type0.first},${type1.first})$biggerType") {
+                register("shake/lang/minus($sType0,$sType1)$sBiggerType") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
                     // smaller types to the bigger type)
-                    sub(biggerType)
+                    sub(sBiggerType)
                 }
 
-                register("shake/lang/multiply(${type0.first},${type1.first})$biggerType}") {
+                register("shake/lang/times($sType0,$sType1)$sBiggerType") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
                     // smaller types to the bigger type)
-                    mul(biggerType)
+                    mul(sBiggerType)
                 }
 
-                register("shake/lang/divide(${type0.first},${type1.first})$biggerType}") {
+                register("shake/lang/div($sType0,$sType1)$sBiggerType") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
                     // smaller types to the bigger type)
-                    div(biggerType)
+                    div(sBiggerType)
                 }
 
-                register("shake/lang/modulo(${type0.first},${type1.first})$biggerType}") {
+                register("shake/lang/rem($sType0,$sType1)$sBiggerType") {
                     castBeforeCalc(it)
 
                     // Now we can add the two values on the stack
                     // We use the bigger type (because we just casted the
                     // smaller types to the bigger type)
-                    mod(biggerType)
+                    mod(sBiggerType)
                 }
             }
+        }
+
+        natives.forEach {
+            println("Registered native: ${it.key}")
         }
     }
 

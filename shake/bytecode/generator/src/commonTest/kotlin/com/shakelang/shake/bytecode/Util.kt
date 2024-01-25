@@ -2,6 +2,7 @@ package com.shakelang.shake.bytecode
 
 import com.shakelang.shake.bytecode.generator.ShakeBytecodeGenerator
 import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
+import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClasspath
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.stdlib.CoreFiles
@@ -23,13 +24,14 @@ interface CodeSpec {
     val classpath: ShakeInterpreterClasspath
     val interpreter: ShakeInterpreter
     val ticks: Int
+    val format: StorageFormat
 
     val consoleOut: String
         get() = stdout.toByteArray().joinToString("") { it.toInt().toChar().toString() }
 
     fun putFunctionOnStack(name: String) =
         interpreter.putFunctionOnStack(
-            "test/main()V",
+            name,
             byteArrayOf(),
         )
 
@@ -56,7 +58,7 @@ fun codeSpec(code: String, then: CodeSpec.() -> Unit) {
     interpreter.classPath.load(out)
     interpreter.process.setOut(stdout)
 
-    (
+    val codeSpec = (
         object : CodeSpec {
 
             override var ticks: Int = -99
@@ -71,10 +73,14 @@ fun codeSpec(code: String, then: CodeSpec.() -> Unit) {
                 get() = interpreter.classPath
             override val interpreter: ShakeInterpreter
                 get() = interpreter
+            override val format: StorageFormat
+                get() = out.find { it.packageName == "test" } ?: throw IllegalStateException("No test package found")
 
             override fun run(limit: Int) {
                 this.ticks = interpreter.run(limit)
             }
         }
         )
+
+    then(codeSpec)
 }

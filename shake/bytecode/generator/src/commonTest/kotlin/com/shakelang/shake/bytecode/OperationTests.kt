@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode
 
+import com.shakelang.shake.bytecode.tools.BytecodeStringGenerator
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -25,6 +26,7 @@ class OperationTests : FreeSpec(
                     
                         """.trimIndent(),
                     ) {
+                        println(BytecodeStringGenerator(format).generate().joinToString("\n"))
                         execute("test/main()V")
                         consoleOut shouldBe "3"
                     }

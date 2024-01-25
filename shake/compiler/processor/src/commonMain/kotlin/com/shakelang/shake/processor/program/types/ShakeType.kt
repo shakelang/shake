@@ -1743,6 +1743,7 @@ interface ShakeType {
         }
 
         override fun compatibleTo(other: ShakeType): Boolean {
+            println("Checking compatibility of $this and $other")
             return other is Object && clazz.compatibleTo(other.clazz)
         }
 
