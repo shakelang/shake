@@ -54,6 +54,17 @@ class ShakeBytecodeGenerator {
             if (v.type == CreationShakeType.Primitives.VOID) {
                 ctx.bytecodeInstructionGenerator.pop(generateTypeDescriptor(v.type))
             }
+
+            // Guard clause for non-primitive types
+            // TODO: Non-primitive type casting
+            if (v.type.kind != ShakeType.Kind.PRIMITIVE) {
+                return
+            }
+
+            if (castTarget.kind != ShakeType.Kind.PRIMITIVE) {
+                return
+            }
+
             ctx.bytecodeInstructionGenerator.pcast(
                 generateTypeDescriptor(v.type),
                 generateTypeDescriptor(castTarget),
