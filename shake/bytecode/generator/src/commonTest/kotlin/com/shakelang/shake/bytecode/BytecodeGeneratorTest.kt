@@ -191,7 +191,7 @@ class BytecodeGeneratorTest : FreeSpec(
                     println(it.qualifiedName)
                 }
                 execute("test/Test:main()V")
-                consoleOut shouldBe "test/Test@0"
+                consoleOut shouldBe "10test/Test@0000000000000000"
             }
         }
     },

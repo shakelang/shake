@@ -1,11 +1,16 @@
 package com.shakelang.shake.bytecode.interpreter.natives
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
+import com.shakelang.shake.bytecode.interpreter.wrapper.ClassRegister
 import com.shakelang.util.io.streaming.input.InputStream
 import com.shakelang.util.io.streaming.output.OutputStream
 import com.shakelang.util.primitives.bytes.toBytes
+import com.shakelang.util.primitives.bytes.toHexString
 import kotlin.math.pow
 
-class ShakeInterpreterProcess {
+class ShakeInterpreterProcess(
+    val interpreter: ShakeInterpreter,
+) {
 
     var stdin = defaultStdin
         private set
@@ -89,6 +94,14 @@ class ShakeInterpreterProcess {
             stdout.write(value.toString().toBytes())
         }
 
+        native("shake/lang/print(Lshake/lang/Object;)V") {
+            val addr = stack.popLong()
+            val obj = interpreter.globalMemory.getInt(addr)
+            val clazz = ClassRegister.getClass(obj)
+            // TODO: toString
+            stdout.write(("${clazz.qualifiedName}@${addr.toBytes().toHexString()}").toBytes())
+        }
+
         native("shake/lang/println()V") {
             stdout.write("\n".toBytes())
         }
@@ -151,6 +164,14 @@ class ShakeInterpreterProcess {
         native("shake/lang/println(C)V") {
             val value = stack.popShort().toInt().toChar()
             stdout.write(value.toString().toBytes() + "\n".toBytes())
+        }
+
+        native("shake/lang/println(Lshake/lang/Object;)V") {
+            val addr = stack.popLong()
+            val obj = interpreter.globalMemory.getInt(addr)
+            val clazz = ClassRegister.getClass(obj)
+            // TODO: toString
+            stdout.write(("${clazz.qualifiedName}@${addr.toBytes().toHexString()}\n").toBytes())
         }
 
         // power

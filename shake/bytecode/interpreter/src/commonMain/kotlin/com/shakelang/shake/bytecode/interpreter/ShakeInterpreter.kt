@@ -29,7 +29,7 @@ class ShakeInterpreter {
 
     val classPath = ShakeInterpreterClasspath.create(this)
 
-    val process = ShakeInterpreterProcess()
+    val process = ShakeInterpreterProcess(this)
 
     val callStack: List<ShakeCallStackElement> get() = _callStack
     private val _callStack = mutableListOf<ShakeCallStackElement>()

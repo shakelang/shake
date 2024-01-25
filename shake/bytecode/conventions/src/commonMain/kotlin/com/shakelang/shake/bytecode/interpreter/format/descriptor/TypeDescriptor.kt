@@ -775,9 +775,7 @@ interface TypeDescriptor {
          * @version 0.1.0
          */
         fun parse(name: InputStream): TypeDescriptor {
-            val next = name.read().toChar()
-
-            when (next) {
+            when (val next = name.read().toChar()) {
                 'B' -> return BYTE
                 'S' -> return SHORT
                 'I' -> return INT
@@ -798,6 +796,7 @@ interface TypeDescriptor {
                     var next2 = name.read().toChar()
                     while (next2 != '@' && next2 != ';') {
                         className.append(next2)
+                        if (name.available() == 0) throw Exception("Unexpected end of type descriptor: L$className...")
                         next2 = name.read().toChar()
                     }
                     if (next2 == ';') return ObjectType(className.toString(), emptyList())
@@ -805,6 +804,7 @@ interface TypeDescriptor {
                     val genericTypes = mutableListOf<TypeDescriptor>()
                     while (next2 != ';') {
                         genericTypes.add(parse(name))
+                        if (name.available() == 0) throw Exception("Unexpected end of type descriptor: L$className@${genericTypes.joinToString("+") { it.descriptor }}...")
                         next2 = name.read().toChar()
                     }
                     return ObjectType(className.toString(), genericTypes)

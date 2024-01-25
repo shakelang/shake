@@ -8,14 +8,14 @@ import com.shakelang.shake.bytecode.interpreter.format.pool.ConstantPool
 
 object ClassRegister {
 
-    private val classes = mutableMapOf<String, ShakeInterpreterClass>()
+    private val classes = mutableListOf<ShakeInterpreterClass>()
 
     fun registerClass(clazz: ShakeInterpreterClass): Int {
-        classes[clazz.qualifiedName] = clazz
+        classes.add(clazz)
         return classes.size - 1
     }
 
-    fun getClass(name: String): ShakeInterpreterClass? = classes[name]
+    fun getClass(id: Int): ShakeInterpreterClass = classes[id]
 }
 
 interface ShakeInterpreterClass {

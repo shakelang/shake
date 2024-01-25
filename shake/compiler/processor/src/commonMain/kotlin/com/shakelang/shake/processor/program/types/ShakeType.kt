@@ -1756,7 +1756,7 @@ interface ShakeType {
         }
 
         override val qualifiedName: String
-            get() = "L${clazz.qualifiedName}"
+            get() = "L${clazz.qualifiedName};"
     }
 
     interface Array : ShakeType {
