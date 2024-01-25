@@ -187,9 +187,6 @@ class BytecodeGeneratorTest : FreeSpec(
                                 
                 """.trimIndent(),
             ) {
-                classpath.getClass("test/Test")!!.getAllMethods().forEach {
-                    println(it.qualifiedName)
-                }
                 execute("test/Test:main()V")
                 consoleOut shouldBe "10test/Test@0000000000000000"
             }

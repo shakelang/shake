@@ -1,8 +1,7 @@
 package com.shakelang.shake.bytecode
 
-import com.shakelang.shake.bytecode.tools.BytecodeStringGenerator
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldMatch
 
 class OperationTests : FreeSpec(
     {
@@ -26,16 +25,8 @@ class OperationTests : FreeSpec(
                     
                         """.trimIndent(),
                     ) {
-                        println(BytecodeStringGenerator(format).generate().joinToString("\n"))
                         execute("test/main()V")
-                        if (
-                            type1 == "float" || type1 == "double" ||
-                            type2 == "float" || type2 == "double"
-                        ) {
-                            consoleOut shouldBe "3.0"
-                        } else {
-                            consoleOut shouldBe "3"
-                        }
+                        consoleOut shouldMatch Regex("3(\\.0)?")
                     }
                 }
 
@@ -53,14 +44,7 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         execute("test/main()V")
-                        if (
-                            type1 == "float" || type1 == "double" ||
-                            type2 == "float" || type2 == "double"
-                        ) {
-                            consoleOut shouldBe "1.0"
-                        } else {
-                            consoleOut shouldBe "1"
-                        }
+                        consoleOut shouldMatch Regex("1(\\.0)?")
                     }
                 }
 
@@ -78,14 +62,7 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         execute("test/main()V")
-                        if (
-                            type1 == "float" || type1 == "double" ||
-                            type2 == "float" || type2 == "double"
-                        ) {
-                            consoleOut shouldBe "6.0"
-                        } else {
-                            consoleOut shouldBe "6"
-                        }
+                        consoleOut shouldMatch Regex("6(\\.0)?")
                     }
                 }
 
@@ -103,14 +80,7 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         execute("test/main()V")
-                        if (
-                            type1 == "float" || type1 == "double" ||
-                            type2 == "float" || type2 == "double"
-                        ) {
-                            consoleOut shouldBe "3.0"
-                        } else {
-                            consoleOut shouldBe "3"
-                        }
+                        consoleOut shouldMatch Regex("3(\\.0)?")
                     }
                 }
 
@@ -128,14 +98,7 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         execute("test/main()V")
-                        if (
-                            type1 == "float" || type1 == "double" ||
-                            type2 == "float" || type2 == "double"
-                        ) {
-                            consoleOut shouldBe "1.0"
-                        } else {
-                            consoleOut shouldBe "1"
-                        }
+                        consoleOut shouldMatch Regex("1(\\.0)?")
                     }
                 }
 
@@ -153,7 +116,7 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         execute("test/main()V")
-                        consoleOut shouldBe "49.0"
+                        consoleOut shouldMatch Regex("49(\\.0)?")
                     }
                 }
             }

@@ -129,10 +129,6 @@ object Natives {
                 }
             }
         }
-
-        natives.forEach {
-            println("Registered native: ${it.key}")
-        }
     }
 
     interface NativeHandler {
