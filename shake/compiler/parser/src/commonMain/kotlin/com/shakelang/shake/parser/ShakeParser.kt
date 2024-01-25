@@ -186,6 +186,7 @@ class ShakeParserImpl(
             ShakeTokenType.KEYWORD_LONG,
             ShakeTokenType.KEYWORD_FLOAT,
             ShakeTokenType.KEYWORD_DOUBLE,
+            ShakeTokenType.KEYWORD_UNSIGNED,
             -> expectLocalDeclaration()
 
             ShakeTokenType.IDENTIFIER -> expectIdentifierStatement()

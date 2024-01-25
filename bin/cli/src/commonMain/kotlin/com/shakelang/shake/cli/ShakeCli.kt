@@ -6,6 +6,8 @@
 
 package com.shakelang.shake.cli
 
+import com.shakelang.shake.bytecode.generator.ShakeBytecodeGenerator
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.js.ShakeJsGenerator
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.ShakeParser
@@ -13,6 +15,11 @@ import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeFileNode
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
 import com.shakelang.shake.stdlib.CoreFiles
+import com.shakelang.util.commander.CommanderValueValidators
+import com.shakelang.util.commander.ValueValidationException
+import com.shakelang.util.commander.command
+import com.shakelang.util.commander.valueValidator
+import com.shakelang.util.logger.logger
 import com.shakelang.util.parseutils.File
 import com.shakelang.util.parseutils.characters.position.PositionMap
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
@@ -33,6 +40,7 @@ val jsGenerator = ShakeJsGenerator()
 /**
  * Is the program in debug mode?
  */
+@Suppress("ktlint:standard:property-naming")
 var DEBUG = false
 
 /**
@@ -58,67 +66,109 @@ val baseProcessor: ShakePackageBasedProcessor
  */
 fun main(args: Array<String>) {
     // Create a parser for the arguments
-    val argumentParser = CliArgumentParser()
+    command {
+        name = "shake"
+        description = "The Shake programming language CLI"
+        option {
+            name = "generator"
+            shortAlias("g")
+            description = "The generator to use"
+            hasValue = true
+            valueDescription = "Name of the generator"
 
-    // Define the options for the argumentParser
-    argumentParser
-        .option("generator", "g", 1, arrayOf("interpreter"))
-        .option("debug", "d")
-        .option("target", "t", 1, arrayOf(null))
-
-    // Parse the arguments given to the main-method
-    val arguments = argumentParser.parse(args)
-
-    // Detect debug mode (check if debug option is set ("--debug"))
-    DEBUG = arguments.getOption("debug")!!.isGiven
-
-    // Get the generator ("--generator")
-    val generator = arguments.getOption("generator")!!.values!![0]
-
-    // If no normal argument is given, then we will open a prompt for entering code
-    when (arguments.arguments.size) {
-        0 -> {
-            // Info message for Shake console
-            println(
-                "# Shake version $VERSION ${if (DEBUG) "in debug mode " else ""}\n" +
-                    "# Enter Shake code below to execute!\n" +
-                    "# Using $generator to execute code",
-            )
-
-            // Create an infinite loop for reading from the console
-            mainLoop {
-                // request the input from the console and create a StringCharacterInputStream from it
-                val chars: CharacterInputStream = SourceCharacterInputStream("<Console>", it)
-
-                // parse the CharacterInputStream into a Tree
-                val pr = parse(chars)
-
-                // execute the tree using the specified generator
-                execute(pr, generator, null, arguments.getOption("target")!!.values!![0])
+            valueValidator {
+                when (it) {
+                    "interpreter", "json", "beauty-json", "bjson", "java", "js", "javascript" -> Unit
+                    else -> throw ValueValidationException("Unknown generator \"$it\"")
+                }
             }
+
+            defaultValue = "interpreter"
+            required = true
         }
 
-        1 -> {
-            val src = arguments.arguments[0]
+        option {
+            name = "debug"
+            shortAlias("d")
+            description = "Enable debug mode"
+            hasValue = false
+        }
+
+        option {
+            name = "target"
+            shortAlias("t")
+            description = "The target file"
+            hasValue = true
+            valueDescription = "The target file"
+            defaultValue = null
+            required = false
+
+            valueValidator(CommanderValueValidators::isString)
+        }
+
+        option {
+            name = "main"
+            shortAlias("m")
+            description = "The main method to execute"
+            hasValue = true
+            valueDescription = "The main method to execute"
+            defaultValue = null
+            required = false
+
+            valueValidator(CommanderValueValidators::isString)
+        }
+
+        argument {
+            name = "sourceFile"
+            description = "The file to execute"
+            valueDescription = "The file to execute"
+            defaultValue = null
+            required = true
+
+            valueValidator(CommanderValueValidators::isString)
+        }
+
+        action {
+            // Detect debug mode (check if debug option is set ("--debug"))
+            DEBUG = it.getOptionValueByName("debug") != null
+
+            // Get the generator ("--generator")
+            val gen = it.getOptionValueByName("generator")!!
+
+            if (gen.size != 1) throw Error("There is only one generator allowed!")
+            val generator = gen[0].toString()
+
+            // Get the arguments
+            val sourceFile = it.getArgumentValueByName("sourceFile").toString()
+
+            // Get the target file
+            val targetValue = it.getOptionValueByName("target") ?: arrayOf()
+            if (targetValue.size > 1) throw Error("There is only one target file allowed!")
+            val target = targetValue.getOrNull(0)?.toString()
+
+            // Get the main method
+            val mainValue = it.getOptionValueByName("main") ?: arrayOf()
+            if (mainValue.size > 1) throw Error("There is only one main method allowed!")
+            val main = mainValue.getOrNull(0)?.toString()
 
             // read the contents of the file
-            val file = File(src).contents
+            val file = File(sourceFile)
+            logger.info("Executing file \"${file.absolutePath}\"...")
+            val fileContents = file.contents
 
             // Create a new StringCharacterInputStream from the file's contents
             val chars: CharacterInputStream = SourceCharacterInputStream(
-                "<File: " + arguments.arguments[0] + ">",
-                file,
+                "<File: $sourceFile>",
+                fileContents,
             )
 
             // Parse the CharacterInputStream
             val pr = parse(chars)
 
             // Execute the Tree using the specified generator
-            execute(pr, generator, src, arguments.getOption("target")!!.values!![0])
+            execute(pr, generator, sourceFile, target, main)
         }
-
-        else -> throw Error("There are only 0-1 arguments allowed")
-    }
+    }.execute(args)
 }
 
 /**
@@ -135,7 +185,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val tokens = lexer.makeTokens()
 
     // if debug is enabled, we print out the lexer-tokens
-    if (DEBUG) println("[DEBUG] Lexer-Tokens: $tokens")
+    logger.debug("[DEBUG] Lexer-Tokens: $tokens")
 
     // Create a new Parser from the tokens
     val parser = ShakeParser.from(tokens)
@@ -144,7 +194,7 @@ private fun parse(input: CharacterInputStream): ParseResult {
     val tree = parser.parse()
 
     // If debug is enabled, we print out the tree
-    if (DEBUG) println("[DEBUG] Parsed Tree: $tree")
+    logger.debug { "[DEBUG] Parsed Tree: $tree" }
 
     // return the Tree
     return ParseResult(tree, tokens.map)
@@ -157,26 +207,34 @@ private fun parse(input: CharacterInputStream): ParseResult {
  * @param generator the generator to use (just give the name of it)
  * @param src the source file of the program
  */
-private fun execute(pr: ParseResult, generator: String?, src: String?, target: String?) {
+private fun execute(pr: ParseResult, generator: String?, src: String?, target: String?, main: String? = null) {
     if (src != null && !src.endsWith(".shake")) throw Error("Shake file names have to end with extension \".shake\"")
     val targetFile = src?.substring(0, src.length - 6)
     // val baseName = if (src != null) targetFile!!.split("[\\\\/](?=[^\\\\/]+$)").toTypedArray()[1] else null
     when (generator) {
         "interpreter" -> {
             val processor = baseProcessor
-            processor.loadSynthetic("stdin.ConsoleInput", pr.tree)
+            processor.loadSynthetic(src ?: "stdin.ConsoleInput", pr.tree)
+            processor.finish()
+            val storageFormats = ShakeBytecodeGenerator().generateProject(processor.project)
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(storageFormats)
+            if (main == null) return logger.warn("No main method specified, cannot execute program!")
+            interpreter.putFunctionOnStack(main, byteArrayOf()) // TODO: Add arguments
+            val tickAmount = interpreter.run()
+            logger.debug("Program finished after $tickAmount ticks")
         }
 
         "json" ->
             if (src == null) {
-                println(">> ${pr.tree}")
+                logger.info { ">> ${pr.tree}" }
             } else {
                 writeFile(File(target ?: "$targetFile.json"), pr.tree.toString())
             }
 
         "beauty-json", "bjson" ->
             if (src == null) {
-                println(">> ${json.stringify(pr.tree, indent = 2)}")
+                logger.info { ">> ${json.stringify(pr.tree, indent = 2)}" }
             } else {
                 writeFile(File(target ?: "$targetFile.json"), json.stringify(pr.tree, indent = 2))
             }
@@ -195,7 +253,7 @@ private fun execute(pr: ParseResult, generator: String?, src: String?, target: S
 }
 
 private fun writeFile(f: File, content: String) {
-    println("Generating file \"${f.absolutePath}\"...")
+    logger.info("Generating file \"${f.absolutePath}\"...")
     f.parent.mkdirs()
     f.write(content)
 }

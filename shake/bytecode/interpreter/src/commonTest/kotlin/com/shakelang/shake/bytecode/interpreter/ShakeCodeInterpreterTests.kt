@@ -4,19 +4,20 @@ package com.shakelang.shake.bytecode.interpreter
 
 import com.shakelang.shake.bytecode.interpreter.generator.bytecode
 import com.shakelang.shake.bytecode.interpreter.generator.generatePackage
-import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeClasspath
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
 class ShakeCodeInterpreterTests : FreeSpec(
     {
 
-        val classpath = ShakeClasspath.create()
+        val dummyInterpreter = ShakeInterpreter()
+        val classpath = dummyInterpreter.classPath
         classpath.load(
             generatePackage {
                 name = "test"
                 Method {
                     name = "main()V"
+                    isStatic = true
                     code {
                         maxLocals = 100
                         maxStack = 100
@@ -26,6 +27,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
 
                 Method {
                     name = "btest()B"
+                    isStatic = true
                     code {
                         maxLocals = 100
                         maxStack = 100
@@ -35,6 +37,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
 
                 Method {
                     name = "stest()S"
+                    isStatic = true
                     code {
                         maxLocals = 100
                         maxStack = 100
@@ -44,6 +47,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
 
                 Method {
                     name = "itest()I"
+                    isStatic = true
                     code {
                         maxLocals = 100
                         maxStack = 100
@@ -53,6 +57,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
 
                 Method {
                     name = "ltest()J"
+                    isStatic = true
                     code {
                         maxLocals = 100
                         maxStack = 100
@@ -62,7 +67,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             },
         )
 
-        val method = classpath.getMethod("test/main()V")!!
+        val main = classpath.getMethod("test/main()V")!!
         val bmethod = classpath.getMethod("test/btest()B")!!
         val smethod = classpath.getMethod("test/stest()S")!!
         val imethod = classpath.getMethod("test/itest()I")!!
@@ -76,7 +81,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(2)
                     bpush(3)
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -96,7 +101,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(2)
                     spush(3)
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -116,7 +121,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2)
                     ipush(3)
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -136,7 +141,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2)
                     lpush(3)
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -157,7 +162,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bload(0u)
                     bload(0u)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -177,7 +182,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     sload(0u)
                     sload(0u)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -197,7 +202,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     iload(0u)
                     iload(0u)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -217,7 +222,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lload(0u)
                     lload(0u)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -236,15 +241,15 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(2)
                     badd()
                 },
-                method,
+                main,
 
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 3
+            stack.size shouldBe 1
+            stack.pop() shouldBe 3.toByte()
         }
 
         "sadd" {
@@ -255,15 +260,15 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(2)
                     sadd()
                 },
-                method,
+                main,
 
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 3
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 3
         }
 
         "iadd" {
@@ -274,7 +279,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2)
                     iadd()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -292,7 +297,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2)
                     ladd()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -310,7 +315,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2f.toBits())
                     fadd()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -328,7 +333,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2.0.toBits())
                     dadd()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -346,14 +351,14 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(2)
                     bsub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe -1
+            stack.size shouldBe 1
+            stack.pop() shouldBe -1
         }
 
         "ssub" {
@@ -364,14 +369,14 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(2)
                     ssub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe -1
+            stack.size shouldBe 2
+            stack.popShort() shouldBe -1
         }
 
         "isub" {
@@ -382,7 +387,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2)
                     isub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -400,7 +405,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2)
                     lsub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -418,7 +423,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(2f.toBits())
                     fsub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -436,7 +441,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(2.0.toBits())
                     dsub()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -454,14 +459,14 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bmul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 6
+            stack.size shouldBe 1
+            stack.pop() shouldBe 6
         }
 
         "smul" {
@@ -472,14 +477,14 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     smul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 6
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 6
         }
 
         "imul" {
@@ -490,7 +495,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     imul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -508,7 +513,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lmul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -526,7 +531,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3f.toBits())
                     fmul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -544,7 +549,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3.0.toBits())
                     dmul()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -562,14 +567,14 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bdiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 2
+            stack.size shouldBe 1
+            stack.pop() shouldBe 2
         }
 
         "sdiv" {
@@ -580,14 +585,14 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sdiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 2
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 2
         }
 
         "idiv" {
@@ -598,7 +603,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     idiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -616,7 +621,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     ldiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -634,7 +639,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3f.toBits())
                     fdiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -652,7 +657,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3.0.toBits())
                     ddiv()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -670,14 +675,14 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bmod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 0
+            stack.size shouldBe 1
+            stack.pop() shouldBe 0
         }
 
         "smod" {
@@ -688,14 +693,14 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     smod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 0
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 0
         }
 
         "imod" {
@@ -706,7 +711,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     imod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -724,7 +729,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lmod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -742,7 +747,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3f.toBits())
                     fmod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -760,7 +765,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3.0.toBits())
                     dmod()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -778,7 +783,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     band()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -796,7 +801,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sand()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -814,7 +819,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     iand()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -832,7 +837,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     land()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -850,7 +855,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -868,7 +873,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -886,7 +891,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ior()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -904,7 +909,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -922,7 +927,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bxor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -940,7 +945,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sxor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -958,7 +963,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ixor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -976,7 +981,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lxor()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -994,7 +999,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bshl()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1012,7 +1017,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sshl()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1030,7 +1035,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ishl()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1048,7 +1053,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lshl()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1066,7 +1071,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bshr()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1084,7 +1089,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sshr()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1102,7 +1107,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ishr()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1120,7 +1125,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lshr()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1138,7 +1143,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(3)
                     bshru()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1156,7 +1161,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(3)
                     sshru()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1174,7 +1179,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(3)
                     ishru()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1192,7 +1197,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(3)
                     lshru()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1209,7 +1214,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(5)
                     bnot()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1226,7 +1231,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(5)
                     snot()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1243,7 +1248,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(5)
                     inot()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1260,7 +1265,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(5)
                     lnot()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1277,7 +1282,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(5)
                     binc()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1294,7 +1299,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(5)
                     sinc()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1311,7 +1316,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(5)
                     iinc()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1328,7 +1333,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(5)
                     linc()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1345,7 +1350,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(5)
                     bdec()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1362,7 +1367,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(5)
                     sdec()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1379,7 +1384,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(5)
                     idec()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1396,7 +1401,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(5)
                     ldec()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -1413,7 +1418,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     bcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1430,7 +1435,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     bcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1447,7 +1452,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(0)
                     bcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1465,7 +1470,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(1)
                     scmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1482,7 +1487,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(1)
                     scmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1499,7 +1504,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(0)
                     scmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1517,7 +1522,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1)
                     icmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1534,7 +1539,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1)
                     icmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1551,7 +1556,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(0)
                     icmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1569,7 +1574,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1)
                     lcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1586,7 +1591,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1)
                     lcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1603,7 +1608,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(0)
                     lcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1621,7 +1626,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1f.toBits())
                     fcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1638,7 +1643,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1f.toBits())
                     fcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1655,7 +1660,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(0f.toBits())
                     fcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1673,7 +1678,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1.0.toBits())
                     dcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1690,7 +1695,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1.0.toBits())
                     dcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1707,7 +1712,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(0.0.toBits())
                     dcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1725,7 +1730,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     ubcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1743,7 +1748,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     ubcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1761,7 +1766,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(0)
                     ubcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1779,7 +1784,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(1)
                     uscmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1797,7 +1802,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(1)
                     uscmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1815,7 +1820,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     spush(0)
                     uscmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1833,7 +1838,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1)
                     uicmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1851,7 +1856,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(1)
                     uicmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1869,7 +1874,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     ipush(0)
                     uicmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1887,7 +1892,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1)
                     ulcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1905,7 +1910,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(1)
                     ulcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1923,7 +1928,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     lpush(0)
                     ulcmp()
                 },
-                method,
+                main,
             )
 
             code.tick(3)
@@ -1942,7 +1947,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cgt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -1961,7 +1966,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cgt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -1980,7 +1985,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cgt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -1999,7 +2004,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cge()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2018,7 +2023,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cge()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2037,7 +2042,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cge()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2056,7 +2061,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     clt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2075,7 +2080,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     clt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2094,7 +2099,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     clt()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2113,7 +2118,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cle()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2132,7 +2137,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cle()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2151,7 +2156,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cle()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2170,7 +2175,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     ceq()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2189,7 +2194,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     ceq()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2208,7 +2213,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     ceq()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2227,7 +2232,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cne()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2246,7 +2251,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cne()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2265,7 +2270,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     icmp()
                     cne()
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2283,7 +2288,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(2)
                     jmp(0)
                 },
-                method,
+                main,
             )
 
             code.tick(6)
@@ -2302,7 +2307,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jz(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2321,7 +2326,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jz(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2340,7 +2345,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jnz(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2359,7 +2364,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jnz(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2376,9 +2381,9 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(0)
                     bpush(1)
                     bcmp()
-                    jl(0)
+                    jlt(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2395,9 +2400,9 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     bpush(0)
                     bcmp()
-                    jl(0)
+                    jlt(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2416,7 +2421,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jle(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2435,7 +2440,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jle(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2454,7 +2459,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jle(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2471,9 +2476,9 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     bpush(0)
                     bcmp()
-                    jg(0)
+                    jgt(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2490,9 +2495,9 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(0)
                     bpush(1)
                     bcmp()
-                    jg(0)
+                    jgt(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2511,7 +2516,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jge(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2530,7 +2535,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jge(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2549,7 +2554,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bcmp()
                     jge(0)
                 },
-                method,
+                main,
             )
 
             code.tick(4)
@@ -2566,7 +2571,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     ret()
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -2661,7 +2666,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     bpush(1)
                     pcast(PCast.BYTE, PCast.INT)
                 },
-                method,
+                main,
             )
 
             code.tick(2)
@@ -2671,7 +2676,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
             stack.popInt() shouldBe 1
         }
 
-        "call" {
+        "invoke_static" {
             val interpreter = ShakeInterpreter()
             interpreter.classPath.load(
                 generatePackage {
@@ -2679,6 +2684,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     Method {
                         name = "and(B,B)B"
                         isPublic = true
+                        isStatic = true
 
                         code {
                             maxStack = 100
@@ -2694,6 +2700,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                     Method {
                         name = "main()V"
                         isPublic = true
+                        isStatic = true
 
                         code {
                             maxStack = 100
@@ -2702,7 +2709,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
                             this.bytecode {
                                 bpush(1)
                                 bpush(1)
-                                call("test/and(B,B)B")
+                                invoke_static("test/and(B,B)B")
                                 ret()
                             }
                         }
@@ -2712,7 +2719,7 @@ class ShakeCodeInterpreterTests : FreeSpec(
 
             val method = interpreter.classPath.getMethod("test/main()V")!!
 
-            val code = interpreter.putFunctionOnStack(method)
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
             interpreter.tick(2)
 
             val stack = code.stack
@@ -2734,6 +2741,590 @@ class ShakeCodeInterpreterTests : FreeSpec(
             interpreter.callStack.size shouldBe 1
 
             interpreter.tick()
+        }
+
+        "array creation" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+
+                            this.bytecode {
+                                ipush(5)
+                                new_array("B")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+
+            code.tick(2)
+
+            val stack = code.stack
+
+            stack.size shouldBe 8
+            val array = stack.popLong()
+
+            val size = interpreter.globalMemory.getInt(array)
+            size shouldBe 5
+        }
+
+        "array load byte" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+
+                            this.bytecode {
+                                ipush(5)
+                                new_array("B")
+                                ipush(0)
+                                baload()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+
+            code.tick(2)
+
+            val stack = code.stack
+
+            stack.size shouldBe 8
+            val array = stack.popLong()
+            stack.push(array)
+
+            val size = interpreter.globalMemory.getInt(array)
+            size shouldBe 5
+
+            interpreter.globalMemory.setByte(array + 4, 0x42)
+
+            code.tick(2)
+
+            stack.size shouldBe 1
+            stack.pop() shouldBe 0x42
+        }
+
+        "array load short" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+
+                            this.bytecode {
+                                ipush(5)
+                                new_array("S")
+                                ipush(0)
+                                saload()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+
+            code.tick(2)
+
+            val stack = code.stack
+
+            stack.size shouldBe 8
+            val array = stack.popLong()
+            stack.push(array)
+
+            val size = interpreter.globalMemory.getInt(array)
+            size shouldBe 5
+
+            interpreter.globalMemory.setShort(array + 4, 0x4243)
+
+            code.tick(2)
+
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 0x4243
+        }
+
+        "array load int" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+
+                            this.bytecode {
+                                ipush(5)
+                                new_array("I")
+                                ipush(0)
+                                iaload()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+
+            code.tick(2)
+
+            val stack = code.stack
+
+            stack.size shouldBe 8
+            val array = stack.popLong()
+            stack.push(array)
+
+            val size = interpreter.globalMemory.getInt(array)
+            size shouldBe 5
+
+            interpreter.globalMemory.setInt(array + 4, 0x42434445)
+
+            code.tick(2)
+
+            stack.size shouldBe 4
+            stack.popInt() shouldBe 0x42434445
+        }
+
+        "array load long" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+
+                            this.bytecode {
+                                ipush(5)
+                                new_array("J")
+                                ipush(0)
+                                laload()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+
+            code.tick(2)
+
+            val stack = code.stack
+
+            stack.size shouldBe 8
+            val array = stack.popLong()
+            stack.push(array)
+
+            val size = interpreter.globalMemory.getInt(array)
+            size shouldBe 5
+
+            interpreter.globalMemory.setLong(array + 4, 0x4243444546474849)
+
+            code.tick(2)
+
+            stack.size shouldBe 8
+            stack.popLong() shouldBe 0x4243444546474849
+        }
+
+        "array store byte" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+
+                            this.bytecode {
+                                ipush(5)
+                                new_array("B")
+                                ipush(0)
+                                bpush(0x42)
+                                bastore()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+
+            code.tick(2)
+
+            val array = code.stack.popLong()
+            code.stack.push(array)
+
+            code.tick(3)
+
+            interpreter.globalMemory.getByte(array + 4) shouldBe 0x42
+        }
+
+        "array store short" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+
+                            this.bytecode {
+                                ipush(5)
+                                new_array("S")
+                                ipush(0)
+                                spush(0x4243)
+                                sastore()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+
+            code.tick(2)
+
+            val array = code.stack.popLong()
+            code.stack.push(array)
+
+            code.tick(3)
+
+            interpreter.globalMemory.getShort(array + 4) shouldBe 0x4243
+        }
+
+        "array store int" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                ipush(5)
+                                new_array("I")
+                                ipush(0)
+                                ipush(0x42434445)
+                                iastore()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(2)
+
+            val array = code.stack.popLong()
+            code.stack.push(array)
+
+            code.tick(3)
+
+            interpreter.globalMemory.getInt(array + 4) shouldBe 0x42434445
+        }
+
+        "array store long" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                ipush(5)
+                                new_array("J")
+                                ipush(0)
+                                lpush(0x4243444546474849)
+                                lastore()
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(2)
+
+            val array = code.stack.popLong()
+            code.stack.push(array)
+
+            code.tick(3)
+
+            interpreter.globalMemory.getLong(array + 4) shouldBe 0x4243444546474849
+        }
+
+        "store / load static field with byte" {
+
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Field {
+                        name = "field"
+                        type = "B"
+                        isPublic = true
+                        isStatic = true
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                bpush(0x42)
+                                store_static("test/field")
+                                load_static("test/field")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(3)
+
+            val stack = code.stack
+            stack.size shouldBe 1
+            stack.pop() shouldBe 0x42
+        }
+
+        "store / load static field with short" {
+
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Field {
+                        name = "field"
+                        type = "S"
+                        isPublic = true
+                        isStatic = true
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                spush(0x4243)
+                                store_static("test/field")
+                                load_static("test/field")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(3)
+
+            val stack = code.stack
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 0x4243
+        }
+
+        "store / load static field with int" {
+
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Field {
+                        name = "field"
+                        type = "I"
+                        isPublic = true
+                        isStatic = true
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                ipush(0x42434445)
+                                store_static("test/field")
+                                load_static("test/field")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(3)
+
+            val stack = code.stack
+            stack.size shouldBe 4
+            stack.popInt() shouldBe 0x42434445
+        }
+
+        "store / load static field with long" {
+
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Field {
+                        name = "field"
+                        type = "J"
+                        isPublic = true
+                        isStatic = true
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                lpush(0x4243444546474849)
+                                store_static("test/field")
+                                load_static("test/field")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            code.tick(3)
+
+            val stack = code.stack
+            stack.size shouldBe 8
+            stack.popLong() shouldBe 0x4243444546474849
+        }
+
+        "create new object" {
+            val interpreter = ShakeInterpreter()
+            interpreter.classPath.load(
+                generatePackage {
+                    name = "test"
+                    Class {
+                        name = "TestClass"
+                        isPublic = true
+                        isStatic = true
+
+                        Field {
+                            name = "field"
+                            type = "J"
+                            isPublic = true
+                        }
+
+                        Method {
+                            name = "constructor()V"
+                            isPublic = true
+                            isConstructor = true
+
+                            code {
+                                maxStack = 100
+                                maxLocals = 100
+                                this.bytecode {
+                                    ret()
+                                }
+                            }
+                        }
+                    }
+                    Method {
+                        name = "main()V"
+                        isPublic = true
+                        isStatic = true
+                        code {
+                            maxStack = 100
+                            maxLocals = 100
+                            this.bytecode {
+                                new_obj("test/TestClass:constructor()V")
+                            }
+                        }
+                    }
+                },
+            )
+
+            val method = interpreter.classPath.getMethod("test/main()V")!!
+            val code = interpreter.putFunctionOnStack(method) as ShakeInterpreter.ShakeCodeInterpreter
+            interpreter.tick(2)
+
+            val stack = code.stack
+            stack.size shouldBe 8
+            val obj = stack.popLong()
+
+            val header = interpreter.malloc.readHeaderFor(obj)
+            header.size shouldBe 16
         }
     },
 )

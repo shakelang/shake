@@ -24,6 +24,7 @@ buildscript {
 
 dependencies {
 //    kover(project(":util:changelog"))
+    kover(project(":util:algo"))
     kover(project(":util:colorlib"))
     kover(project(":util:common-io"))
     kover(project(":util:commander"))
@@ -45,6 +46,7 @@ dependencies {
     kover(project(":shake:bytecode:utils"))
     kover(project(":shake:bytecode:interpreter"))
     kover(project(":shake:bytecode:generator"))
+    kover(project(":shake:bytecode:tools"))
 
     kover(project(":shake:compiler:jsgenerator"))
     kover(project(":shake:compiler:processor"))
@@ -255,6 +257,7 @@ tasks.create("lint") {
 
         copy {
             from(it.file("build/reports/detekt"))
+            exclude("all")
             into("${rootProject.buildDir}/reports/detekt/all/${it.group}.${it.name}")
         }
 

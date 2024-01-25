@@ -1,13 +1,15 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
 
-interface ShakeClasspath {
+interface ShakeInterpreterClasspath {
+    val interpreter: ShakeInterpreter
     val packages: List<ShakeInterpreterPackage>
 
     fun getPackage(descriptor: PathDescriptor): ShakeInterpreterPackage?
-    fun getPackage(descriptor: String): ShakeInterpreterPackage? = getPackage(PathDescriptor.parse(descriptor))
+    fun getPackage(descriptor: String): ShakeInterpreterPackage? = getPackage(PathDescriptor(descriptor.split("/", "").toTypedArray(), emptyArray(), ""))
 
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass? = getPackage(descriptor)?.getClass(descriptor)
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
@@ -19,10 +21,18 @@ interface ShakeClasspath {
     fun getField(descriptor: String): ShakeInterpreterField? = getField(PathDescriptor.parse(descriptor))
 
     fun load(storage: StorageFormat)
+    fun load(vararg storages: StorageFormat) {
+        for (it in storages) load(it)
+    }
+
+    fun load(storages: List<StorageFormat>) {
+        for (it in storages) load(it)
+    }
 
     companion object {
-        fun create(): ShakeClasspath {
-            return object : ShakeClasspath {
+        fun create(interpreter: ShakeInterpreter): ShakeInterpreterClasspath {
+            return object : ShakeInterpreterClasspath {
+                override val interpreter = interpreter
 
                 override val packages: MutableList<ShakeInterpreterPackage> = mutableListOf()
 
@@ -42,6 +52,21 @@ interface ShakeClasspath {
                     }
                 }
             }
+        }
+        fun create(interpreter: ShakeInterpreter, storages: List<StorageFormat>): ShakeInterpreterClasspath {
+            val classpath = create(interpreter)
+            storages.forEach {
+                classpath.load(it)
+            }
+            return classpath
+        }
+
+        fun create(interpreter: ShakeInterpreter, vararg storages: StorageFormat): ShakeInterpreterClasspath {
+            val classpath = create(interpreter)
+            storages.forEach {
+                classpath.load(it)
+            }
+            return classpath
         }
     }
 }

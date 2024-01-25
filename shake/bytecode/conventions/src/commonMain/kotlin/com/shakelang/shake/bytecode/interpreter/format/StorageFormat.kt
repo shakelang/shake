@@ -8,8 +8,11 @@ import com.shakelang.util.io.streaming.output.DataOutputStream
 
 /**
  * The magic number of the storage format is used to identify the storage format. It is always the same.
- * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#magic)
+ * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#magic)
  * for more information
+ *
+ * The magic number is `0x4a16a478`.
+ *
  * @since 0.1.0
  * @version 0.1.0
  */
@@ -17,7 +20,7 @@ const val MAGIC = 0x4a16a478 // SHAKE MAGIC
 
 /**
  * Implementation of the storage format.
- * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format) for more information
+ * See the [storage format specification](https://spec.shakelang.com/bytecode/file-format) for more information
  *
  * @param major The major version of the storage format
  * @param minor The minor version of the storage format
@@ -34,7 +37,7 @@ open class StorageFormat(
 
     /**
      * The major version of the storage format
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#major-and-minor)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#major-and-minor)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -43,7 +46,7 @@ open class StorageFormat(
 
     /**
      * The minor version of the storage format
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#major-and-minor)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#major-and-minor)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -52,7 +55,7 @@ open class StorageFormat(
 
     /**
      * The constant of the package name
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#package-name)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#package-name)
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -60,7 +63,7 @@ open class StorageFormat(
 
     /**
      * The constant pool
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#constant-pool-count--constant-pool)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#constant-pool-count--constant-pool)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -69,7 +72,7 @@ open class StorageFormat(
 
     /**
      * The classes
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#class-count--classes)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#class-count--classes)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -78,7 +81,7 @@ open class StorageFormat(
 
     /**
      * The methods
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#method-count--methods)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#method-count--methods)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -87,7 +90,7 @@ open class StorageFormat(
 
     /**
      * The fields
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#field-count--fields)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#field-count--fields)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -97,7 +100,7 @@ open class StorageFormat(
 
     /**
      * The magic number of the storage format is used to identify the storage format. It is always the same.
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#magic)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#magic)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -107,7 +110,7 @@ open class StorageFormat(
     /**
      * The package name
      * This is a shortcut for `constantPool.getUtf8(packageNameConstant).value`
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#package-name)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#package-name)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -235,7 +238,7 @@ open class StorageFormat(
 
 /**
  * Mutable implementation of the [StorageFormat]
- * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format) for more information
+ * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format) for more information
  * @see StorageFormat
  * @since 0.1.0
  * @version 0.1.0
@@ -244,7 +247,7 @@ class MutableStorageFormat(
 
     /**
      * The major version of the storage format
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#major-and-minor)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#major-and-minor)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -253,7 +256,7 @@ class MutableStorageFormat(
 
     /**
      * The minor version of the storage format
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#major-and-minor)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#major-and-minor)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -262,7 +265,7 @@ class MutableStorageFormat(
 
     /**
      * The constant of the package name
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#package-name)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#package-name)
      * @since 0.1.0
      * @version 0.1.0
      */
@@ -270,7 +273,7 @@ class MutableStorageFormat(
 
     /**
      * The constant pool
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#constant-pool-count--constant-pool)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#constant-pool-count--constant-pool)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -279,7 +282,7 @@ class MutableStorageFormat(
 
     /**
      * The classes
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#class-count--classes)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#class-count--classes)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -288,7 +291,7 @@ class MutableStorageFormat(
 
     /**
      * The methods
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#method-count--methods)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#method-count--methods)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -297,7 +300,7 @@ class MutableStorageFormat(
 
     /**
      * The fields
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#field-count--fields)
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#field-count--fields)
      * for more information
      * @since 0.1.0
      * @version 0.1.0
@@ -314,8 +317,9 @@ class MutableStorageFormat(
 ) {
 
     /**
-     * The magic number of the storage format is used to identify the storage format. It is always the same.
-     * See the [storage format specification](https://specification.shakelang.com/bytecode/storage-format#magic)
+     * The package name
+     * This is a shortcut for `constantPool.getUtf8(packageNameConstant).value`
+     * See the [storage format specification](https://spec.shakelang.com/bytecode/storage-format#package-name)
      * for more information
      * @since 0.1.0
      * @version 0.1.0

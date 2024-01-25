@@ -840,7 +840,7 @@ interface ShakeType {
      * @version 0.1.0
      */
     fun modulusOverloads(scope: ShakeScope): List<ShakeMethod> =
-        scope.getFunctions("mod").filter { it.expanding == this && it.isOperator }
+        scope.getFunctions("rem").filter { it.expanding == this && it.isOperator }
 
     /**
      * Get a list of all overloads for the pow operator of this type
@@ -1743,6 +1743,7 @@ interface ShakeType {
         }
 
         override fun compatibleTo(other: ShakeType): Boolean {
+            println("Checking compatibility of $this and $other")
             return other is Object && clazz.compatibleTo(other.clazz)
         }
 
@@ -1755,7 +1756,7 @@ interface ShakeType {
         }
 
         override val qualifiedName: String
-            get() = "L${clazz.qualifiedName}"
+            get() = "L${clazz.qualifiedName};"
     }
 
     interface Array : ShakeType {

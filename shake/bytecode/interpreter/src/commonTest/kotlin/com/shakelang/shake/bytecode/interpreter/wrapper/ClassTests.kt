@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.generator.generatePackage
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -9,12 +10,14 @@ class ClassTests : FreeSpec(
     {
 
         "getClass" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
 
                     Class {
+                        isStatic = true
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
@@ -29,7 +32,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass class child" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -38,11 +42,13 @@ class ClassTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Class {
                             name = "Test2"
                             superName = "com/shakelang/Object"
                             isPublic = true
+                            isStatic = true
                         }
                     }
                 },
@@ -55,7 +61,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass class child child" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -64,16 +71,19 @@ class ClassTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Class {
                             name = "Test2"
                             superName = "com/shakelang/Object"
                             isPublic = true
+                            isStatic = true
 
                             Class {
                                 name = "Test3"
                                 superName = "com/shakelang/Object"
                                 isPublic = true
+                                isStatic = true
                             }
                         }
                     }
@@ -87,7 +97,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass of child when class does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -99,7 +110,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass of child when child does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -108,6 +120,7 @@ class ClassTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -117,7 +130,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass of child when parent class of child does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -129,7 +143,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass when package does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -141,7 +156,8 @@ class ClassTests : FreeSpec(
         }
 
         "getClass of child when package does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -150,6 +166,54 @@ class ClassTests : FreeSpec(
 
             val testClass = classpath.getClass("com/shakelang/shake/test2/Test:Test2")
             testClass shouldBe null
+        }
+
+        "get memory size (no fields)" {
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
+            classpath.load(
+                generatePackage {
+                    name = "com/shakelang/shake/test"
+
+                    Class {
+                        name = "Test"
+                        superName = "com/shakelang/Object"
+                        isPublic = true
+                        isStatic = true
+                    }
+                },
+            )
+
+            val testClass = classpath.getClass("com/shakelang/shake/test/Test")
+            testClass shouldNotBe null
+            testClass!!.sizeInMemory shouldBe 8
+        }
+
+        "get memory size (with fields)" {
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
+            classpath.load(
+                generatePackage {
+                    name = "com/shakelang/shake/test"
+
+                    Class {
+                        name = "Test"
+                        superName = "com/shakelang/Object"
+                        isPublic = true
+                        isStatic = true
+
+                        Field {
+                            name = "test"
+                            type = "Lcom/shakelang/Object;"
+                            isPublic = true
+                        }
+                    }
+                },
+            )
+
+            val testClass = classpath.getClass("com/shakelang/shake/test/Test")
+            testClass shouldNotBe null
+            testClass!!.sizeInMemory shouldBe 16
         }
     },
 )

@@ -325,7 +325,7 @@ class ByteStackTests : FreeSpec(
             stack.push(1.toByte())
             stack.push(2.toByte())
             stack.push(3.toByte())
-            stack.toByteArray() shouldContainExactly byteArrayOf(3, 2, 1)
+            stack.toByteArray() shouldContainExactly byteArrayOf(1, 2, 3)
         }
 
         "test peek" {

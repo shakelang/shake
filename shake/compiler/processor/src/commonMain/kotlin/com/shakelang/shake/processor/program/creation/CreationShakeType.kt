@@ -461,7 +461,7 @@ abstract class CreationShakeType(
         }
 
         override val qualifiedName: String
-            get() = "L${clazz.qualifiedName}"
+            get() = "L${clazz.qualifiedName};"
     }
 
     class Array(

@@ -10,7 +10,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "field generation" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.name shouldBe GenerationContext.UNDEFINED
             ctx.flags shouldBe 0
             ctx.isFinal shouldBe false
@@ -22,7 +22,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "name" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.name shouldBe GenerationContext.UNDEFINED
             ctx.name = "test"
             ctx.name shouldBe "test"
@@ -30,7 +30,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "flags" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.flags shouldBe 0
             ctx.flags = 1
             ctx.flags shouldBe 1
@@ -38,7 +38,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "isPublic" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.isPublic shouldBe false
             ctx.flags shouldBe 0
             ctx.isPublic = true
@@ -48,7 +48,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "isPrivate" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.isPrivate shouldBe false
             ctx.flags shouldBe 0
             ctx.isPrivate = true
@@ -58,7 +58,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "isProtected" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.isProtected shouldBe false
             ctx.flags shouldBe 0
             ctx.isProtected = true
@@ -68,7 +68,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "isStatic" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.isStatic shouldBe false
             ctx.flags shouldBe 0
             ctx.isStatic = true
@@ -78,7 +78,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "isFinal" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.isFinal shouldBe false
             ctx.flags shouldBe 0
             ctx.isFinal = true
@@ -88,7 +88,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "attribute generation" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.name shouldBe GenerationContext.UNDEFINED
 
             ctx.attribute {
@@ -130,7 +130,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "to field" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.name = "test"
             ctx.flags = 0b0000000_00010000.toShort()
             ctx.attribute {
@@ -147,7 +147,7 @@ class FieldGenerationContextTests : FreeSpec(
 
         "to mutable field" {
 
-            val ctx = FieldGenerationContext(MutableConstantPool())
+            val ctx = FieldGenerationContext("", MutableConstantPool())
             ctx.name = "test"
             ctx.flags = 0b0000000_00010000.toShort()
             ctx.attribute {

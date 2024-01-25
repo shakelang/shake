@@ -920,7 +920,7 @@ class BytecodeGeneratorTests : FreeSpec(
 
         "jl" {
             val bytes = bytecode {
-                jl(0x01020304)
+                jlt(0x01020304)
             }
             bytes shouldBe arrayOf(Opcodes.JL, 0x01, 0x02, 0x03, 0x04)
         }
@@ -934,7 +934,7 @@ class BytecodeGeneratorTests : FreeSpec(
 
         "jg" {
             val bytes = bytecode {
-                jg(0x01020304)
+                jgt(0x01020304)
             }
             bytes shouldBe arrayOf(Opcodes.JG, 0x01, 0x02, 0x03, 0x04)
         }
@@ -985,14 +985,14 @@ class BytecodeGeneratorTests : FreeSpec(
             val bytes = bytecode {
                 pop()
             }
-            bytes shouldBe arrayOf(Opcodes.POP)
+            bytes shouldBe arrayOf(Opcodes.BPOP)
         }
 
         "bpop" {
             val bytes = bytecode {
                 bpop()
             }
-            bytes shouldBe arrayOf(Opcodes.POP)
+            bytes shouldBe arrayOf(Opcodes.BPOP)
         }
 
         "spop" {
@@ -1020,14 +1020,14 @@ class BytecodeGeneratorTests : FreeSpec(
             val bytes = bytecode {
                 dup()
             }
-            bytes shouldBe arrayOf(Opcodes.DUP)
+            bytes shouldBe arrayOf(Opcodes.BDUP)
         }
 
         "bdup" {
             val bytes = bytecode {
                 bdup()
             }
-            bytes shouldBe arrayOf(Opcodes.DUP)
+            bytes shouldBe arrayOf(Opcodes.BDUP)
         }
 
         "sdup" {
@@ -1062,11 +1062,95 @@ class BytecodeGeneratorTests : FreeSpec(
             }
         }
 
-        "call" {
+        "invoke_static" {
             val bytes = bytecode {
-                call(0x01020304)
+                invoke_static(0x01020304)
             }
-            bytes shouldBe arrayOf(Opcodes.CALL, 0x01, 0x02, 0x03, 0x04)
+            bytes shouldBe arrayOf(Opcodes.INVOKE_STATIC, 0x01, 0x02, 0x03, 0x04)
+        }
+
+        "invoke_virtual" {
+            val bytes = bytecode {
+                invoke_virtual(0x01020304)
+            }
+            bytes shouldBe arrayOf(Opcodes.INVOKE_VIRTUAL, 0x01, 0x02, 0x03, 0x04)
+        }
+
+        "load_static" {
+            val bytes = bytecode {
+                load_static(0x01020304)
+            }
+            bytes shouldBe arrayOf(Opcodes.LOAD_STATIC, 0x01, 0x02, 0x03, 0x04)
+        }
+
+        "store_static" {
+            val bytes = bytecode {
+                store_static(0x01020304)
+            }
+            bytes shouldBe arrayOf(Opcodes.STORE_STATIC, 0x01, 0x02, 0x03, 0x04)
+        }
+
+        "baload" {
+            val bytes = bytecode {
+                baload()
+            }
+            bytes shouldBe arrayOf(Opcodes.BALOAD)
+        }
+
+        "saload" {
+            val bytes = bytecode {
+                saload()
+            }
+            bytes shouldBe arrayOf(Opcodes.SALOAD)
+        }
+
+        "iaload" {
+            val bytes = bytecode {
+                iaload()
+            }
+            bytes shouldBe arrayOf(Opcodes.IALOAD)
+        }
+
+        "laload" {
+            val bytes = bytecode {
+                laload()
+            }
+            bytes shouldBe arrayOf(Opcodes.LALOAD)
+        }
+
+        "bastore" {
+            val bytes = bytecode {
+                bastore()
+            }
+            bytes shouldBe arrayOf(Opcodes.BASTORE)
+        }
+
+        "sastore" {
+            val bytes = bytecode {
+                sastore()
+            }
+            bytes shouldBe arrayOf(Opcodes.SASTORE)
+        }
+
+        "iastore" {
+            val bytes = bytecode {
+                iastore()
+            }
+            bytes shouldBe arrayOf(Opcodes.IASTORE)
+        }
+
+        "lastore" {
+            val bytes = bytecode {
+                lastore()
+            }
+            bytes shouldBe arrayOf(Opcodes.LASTORE)
+        }
+
+        "new_array" {
+            val bytes = bytecode {
+                new_array(0x01)
+            }
+            bytes shouldBe arrayOf(Opcodes.NEW_ARR, 0x00, 0x00, 0x00, 0x01)
         }
 
         "toByteArray" {

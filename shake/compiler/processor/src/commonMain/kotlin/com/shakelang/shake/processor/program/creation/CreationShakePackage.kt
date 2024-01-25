@@ -63,7 +63,7 @@ open class CreationShakePackage(
 
     /**
      * Phase 1: Register all classes
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-1)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-1)
      */
     override fun phase1() {
         debug("phases", "Phase 1 of package $qualifiedName")
@@ -85,7 +85,7 @@ open class CreationShakePackage(
 
     /**
      * Phase 2: Link Superclasses and Interfaces
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-2)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-2)
      */
     override fun phase2() {
         debug("phases", "Phase 2 of package $qualifiedName")
@@ -95,7 +95,7 @@ open class CreationShakePackage(
 
     /**
      * Phase 3: Process all methods and fields (without code)
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-3)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-3)
      */
     override fun phase3() {
         debug("phases", "Phase 3 of package $qualifiedName")
@@ -123,7 +123,7 @@ open class CreationShakePackage(
 
     /**
      * Phase 4: Process all code
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-4)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-4)
      */
     override fun phase4() {
         debug("phases", "Phase 4 of package $qualifiedName")
