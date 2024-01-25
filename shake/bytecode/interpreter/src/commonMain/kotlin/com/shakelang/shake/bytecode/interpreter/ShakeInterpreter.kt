@@ -1041,6 +1041,8 @@ class ShakeInterpreter {
                         classPath.getMethod(methodName) ?: throw NullPointerException("Method $methodName not found")
                     if (!method.isStatic) throw IllegalStateException("Method $methodName is not static")
                     val argsSize = method.parameters.sumOf { it.byteSize }
+                    println("Stack size: ${stack.size}")
+                    println("Args size: $argsSize")
                     val args = ByteArray(argsSize) {
                         stack.pop()
                     }

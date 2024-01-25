@@ -34,6 +34,13 @@ interface ShakeInterpreterPackage {
 
     companion object {
         fun of(storages: List<StorageFormat>, classpath: ShakeInterpreterClasspath): ShakeInterpreterPackage {
+            storages.forEach { storageFormat ->
+
+                storageFormat.methods.forEach { method ->
+                    println("Method: ${method.qualifiedName}")
+                }
+            }
+
             return object : ShakeInterpreterPackage {
 
                 val fieldMemoryMap: LongArray

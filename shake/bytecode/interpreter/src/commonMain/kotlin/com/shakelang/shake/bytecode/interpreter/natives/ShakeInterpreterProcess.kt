@@ -70,12 +70,12 @@ class ShakeInterpreterProcess {
         }
 
         native("shake/lang/print(F)V") {
-            val value = stack.popByte()
+            val value = stack.popFloat()
             stdout.write(value.toString().toBytes())
         }
 
         native("shake/lang/print(D)V") {
-            val value = stack.popByte()
+            val value = stack.popDouble()
             stdout.write(value.toString().toBytes())
         }
 
@@ -155,604 +155,605 @@ class ShakeInterpreterProcess {
 
         // power
 
-        native("shake/lang/power(BB)D") {
+        native("shake/lang/pow(B,B)D") {
+            print("pow(B,B)")
             val right = stack.popByte()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Bb)D") {
+        native("shake/lang/pow(B,b)D") {
             val right = stack.popUByte()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(BS)D") {
+        native("shake/lang/pow(B,S)D") {
             val right = stack.popShort()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Bs)D") {
+        native("shake/lang/pow(B,s)D") {
             val right = stack.popUShort()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(BI)D") {
+        native("shake/lang/pow(B,I)D") {
             val right = stack.popInt()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Bi)D") {
+        native("shake/lang/pow(B,i)D") {
             val right = stack.popUInt()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(BJ)D") {
+        native("shake/lang/pow(B,J)D") {
             val right = stack.popLong()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Bj)D") {
+        native("shake/lang/pow(B,j)D") {
             val right = stack.popULong()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(BF)D") {
+        native("shake/lang/pow(B,F)D") {
             val right = stack.popFloat()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(BD)D") {
+        native("shake/lang/pow(B,D)D") {
             val right = stack.popDouble()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bB)D") {
+        native("shake/lang/pow(b,B)D") {
             val right = stack.popByte()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bb)D") {
+        native("shake/lang/pow(b,b)D") {
             val right = stack.popUByte()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bS)D") {
+        native("shake/lang/pow(b,S)D") {
             val right = stack.popShort()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bs)D") {
+        native("shake/lang/pow(b,s)D") {
             val right = stack.popUShort()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bI)D") {
+        native("shake/lang/pow(b,I)D") {
             val right = stack.popInt()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bi)D") {
+        native("shake/lang/pow(b,i)D") {
             val right = stack.popUInt()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bJ)D") {
+        native("shake/lang/pow(b,J)D") {
             val right = stack.popLong()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bj)D") {
+        native("shake/lang/pow(b,j)D") {
             val right = stack.popULong()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bF)D") {
+        native("shake/lang/pow(b,F)D") {
             val right = stack.popFloat()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(bD)D") {
+        native("shake/lang/pow(b,D)D") {
             val right = stack.popDouble()
             val left = stack.popByte()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(SB)D") {
+        native("shake/lang/pow(S,B)D") {
             val right = stack.popByte()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Sb)D") {
+        native("shake/lang/pow(S,b)D") {
             val right = stack.popUByte()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(SS)D") {
+        native("shake/lang/pow(S,S)D") {
             val right = stack.popShort()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Ss)D") {
+        native("shake/lang/pow(S,s)D") {
             val right = stack.popUShort()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(SI)D") {
+        native("shake/lang/pow(S,I)D") {
             val right = stack.popInt()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Si)D") {
+        native("shake/lang/pow(S,i)D") {
             val right = stack.popUInt()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(SJ)D") {
+        native("shake/lang/pow(S,J)D") {
             val right = stack.popLong()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Sj)D") {
+        native("shake/lang/pow(S,j)D") {
             val right = stack.popULong()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(SF)D") {
+        native("shake/lang/pow(S,F)D") {
             val right = stack.popFloat()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(SD)D") {
+        native("shake/lang/pow(S,D)D") {
             val right = stack.popDouble()
             val left = stack.popShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(sB)D") {
+        native("shake/lang/pow(s,B)D") {
             val right = stack.popByte()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(sb)D") {
+        native("shake/lang/pow(s,b)D") {
             val right = stack.popUByte()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(sS)D") {
+        native("shake/lang/pow(s,S)D") {
             val right = stack.popShort()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(ss)D") {
+        native("shake/lang/pow(s,s)D") {
             val right = stack.popUShort()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(sI)D") {
+        native("shake/lang/pow(s,I)D") {
             val right = stack.popInt()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(si)D") {
+        native("shake/lang/pow(s,i)D") {
             val right = stack.popUInt()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(sJ)D") {
+        native("shake/lang/pow(s,J)D") {
             val right = stack.popLong()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(sj)D") {
+        native("shake/lang/pow(s,j)D") {
             val right = stack.popULong()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(sF)D") {
+        native("shake/lang/pow(s,F)D") {
             val right = stack.popFloat()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(sD)D") {
+        native("shake/lang/pow(s,D)D") {
             val right = stack.popDouble()
             val left = stack.popUShort()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(IB)D") {
+        native("shake/lang/pow(I,B)D") {
             val right = stack.popByte()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Ib)D") {
+        native("shake/lang/pow(I,b)D") {
             val right = stack.popUByte()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(IS)D") {
+        native("shake/lang/pow(I,S)D") {
             val right = stack.popShort()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Is)D") {
+        native("shake/lang/pow(I,s)D") {
             val right = stack.popUShort()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(II)D") {
+        native("shake/lang/pow(I,I)D") {
             val right = stack.popInt()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Ii)D") {
+        native("shake/lang/pow(I,i)D") {
             val right = stack.popUInt()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(IJ)D") {
+        native("shake/lang/pow(I,J)D") {
             val right = stack.popLong()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Ij)D") {
+        native("shake/lang/pow(I,j)D") {
             val right = stack.popULong()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(IF)D") {
+        native("shake/lang/pow(I,F)D") {
             val right = stack.popFloat()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(ID)D") {
+        native("shake/lang/pow(I,D)D") {
             val right = stack.popDouble()
             val left = stack.popInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(iB)D") {
+        native("shake/lang/pow(i,B)D") {
             val right = stack.popByte()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(ib)D") {
+        native("shake/lang/pow(i,b)D") {
             val right = stack.popUByte()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(iS)D") {
+        native("shake/lang/pow(i,S)D") {
             val right = stack.popShort()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(is)D") {
+        native("shake/lang/pow(i,s)D") {
             val right = stack.popUShort()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(iI)D") {
+        native("shake/lang/pow(i,I)D") {
             val right = stack.popInt()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(ii)D") {
+        native("shake/lang/pow(i,i)D") {
             val right = stack.popUInt()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(iJ)D") {
+        native("shake/lang/pow(i,J)D") {
             val right = stack.popLong()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(ij)D") {
+        native("shake/lang/pow(i,j)D") {
             val right = stack.popULong()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(iF)D") {
+        native("shake/lang/pow(i,F)D") {
             val right = stack.popFloat()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(iD)D") {
+        native("shake/lang/pow(i,D)D") {
             val right = stack.popDouble()
             val left = stack.popUInt()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(JB)D") {
+        native("shake/lang/pow(J,B)D") {
             val right = stack.popByte()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Jb)D") {
+        native("shake/lang/pow(J,b)D") {
             val right = stack.popUByte()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(JS)D") {
+        native("shake/lang/pow(J,S)D") {
             val right = stack.popShort()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Js)D") {
+        native("shake/lang/pow(J,s)D") {
             val right = stack.popUShort()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(JI)D") {
+        native("shake/lang/pow(J,I)D") {
             val right = stack.popInt()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Ji)D") {
+        native("shake/lang/pow(J,i)D") {
             val right = stack.popUInt()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(JJ)D") {
+        native("shake/lang/pow(J,J)D") {
             val right = stack.popLong()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Jj)D") {
+        native("shake/lang/pow(J,j)D") {
             val right = stack.popULong()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(JF)D") {
+        native("shake/lang/pow(J,F)D") {
             val right = stack.popFloat()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(JD)D") {
+        native("shake/lang/pow(J,D)D") {
             val right = stack.popDouble()
             val left = stack.popLong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(jB)D") {
+        native("shake/lang/pow(j,B)D") {
             val right = stack.popByte()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(jb)D") {
+        native("shake/lang/pow(j,b)D") {
             val right = stack.popUByte()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(jS)D") {
+        native("shake/lang/pow(j,S)D") {
             val right = stack.popShort()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(js)D") {
+        native("shake/lang/pow(j,s)D") {
             val right = stack.popUShort()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(jI)D") {
+        native("shake/lang/pow(j,I)D") {
             val right = stack.popInt()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(ji)D") {
+        native("shake/lang/pow(j,i)D") {
             val right = stack.popUInt()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(jJ)D") {
+        native("shake/lang/pow(j,J)D") {
             val right = stack.popLong()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(jj)D") {
+        native("shake/lang/pow(j,j)D") {
             val right = stack.popULong()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(jF)D") {
+        native("shake/lang/pow(j,F)D") {
             val right = stack.popFloat()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(jD)D") {
+        native("shake/lang/pow(j,D)D") {
             val right = stack.popDouble()
             val left = stack.popULong()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(FB)D") {
+        native("shake/lang/pow(F,B)D") {
             val right = stack.popByte()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Fb)D") {
+        native("shake/lang/pow(F,b)D") {
             val right = stack.popUByte()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(FS)D") {
+        native("shake/lang/pow(F,S)D") {
             val right = stack.popShort()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Fs)D") {
+        native("shake/lang/pow(F,s)D") {
             val right = stack.popUShort()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(FI)D") {
+        native("shake/lang/pow(F,I)D") {
             val right = stack.popInt()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Fi)D") {
+        native("shake/lang/pow(F,i)D") {
             val right = stack.popUInt()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(FJ)D") {
+        native("shake/lang/pow(F,J)D") {
             val right = stack.popLong()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Fj)D") {
+        native("shake/lang/pow(F,j)D") {
             val right = stack.popULong()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(FF)D") {
+        native("shake/lang/pow(F,F)D") {
             val right = stack.popFloat()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(FD)D") {
+        native("shake/lang/pow(F,D)D") {
             val right = stack.popDouble()
             val left = stack.popFloat()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(DB)D") {
+        native("shake/lang/pow(D,B)D") {
             val right = stack.popByte()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Db)D") {
+        native("shake/lang/pow(D,b)D") {
             val right = stack.popUByte()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(DS)D") {
+        native("shake/lang/pow(D,S)D") {
             val right = stack.popShort()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Ds)D") {
+        native("shake/lang/pow(D,s)D") {
             val right = stack.popUShort()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(DI)D") {
+        native("shake/lang/pow(D,I)D") {
             val right = stack.popInt()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Di)D") {
+        native("shake/lang/pow(D,i)D") {
             val right = stack.popUInt()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(DJ)D") {
+        native("shake/lang/pow(D,J)D") {
             val right = stack.popLong()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(Dj)D") {
+        native("shake/lang/pow(D,j)D") {
             val right = stack.popULong()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(DF)D") {
+        native("shake/lang/pow(D,F)D") {
             val right = stack.popFloat()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.pow(right.toDouble()).toBytes())
         }
 
-        native("shake/lang/power(DD)D") {
+        native("shake/lang/pow(D,D)D") {
             val right = stack.popDouble()
             val left = stack.popDouble()
-            stack.push(left.toDouble().pow(right.toDouble()))
+            returnData(left.toDouble().pow(right.toDouble()).toBytes())
         }
     }
 }

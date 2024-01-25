@@ -27,25 +27,15 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         println(BytecodeStringGenerator(format).generate().joinToString("\n"))
-
                         execute("test/main()V")
-//                        interpreter.putFunctionOnStack(interpreter.classPath.getMethod("test/main()V")!!)
-//                        interpreter.tick(2)
-//                        interpreter.callStack[0].stack.size shouldBe 1
-//
-//                        interpreter.tick(4)
-//                        interpreter.callStack[0].stack.size shouldBe 0
-//
-//                        interpreter.tick(2)
-//                        interpreter.callStack[0].stack.size shouldBe 2
-//
-//                        println(interpreter.callStack[0].stack.toByteArray().toHexString())
-//
-//                        interpreter.tick()
-//
-//                        println(interpreter.callStack[0].stack.toByteArray().toHexString())
-
-                        consoleOut shouldBe "3"
+                        if (
+                            type1 == "float" || type1 == "double" ||
+                            type2 == "float" || type2 == "double"
+                        ) {
+                            consoleOut shouldBe "3.0"
+                        } else {
+                            consoleOut shouldBe "3"
+                        }
                     }
                 }
 
@@ -63,7 +53,14 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         execute("test/main()V")
-                        consoleOut shouldBe "1"
+                        if (
+                            type1 == "float" || type1 == "double" ||
+                            type2 == "float" || type2 == "double"
+                        ) {
+                            consoleOut shouldBe "1.0"
+                        } else {
+                            consoleOut shouldBe "1"
+                        }
                     }
                 }
 
@@ -81,7 +78,14 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         execute("test/main()V")
-                        consoleOut shouldBe "6"
+                        if (
+                            type1 == "float" || type1 == "double" ||
+                            type2 == "float" || type2 == "double"
+                        ) {
+                            consoleOut shouldBe "6.0"
+                        } else {
+                            consoleOut shouldBe "6"
+                        }
                     }
                 }
 
@@ -99,7 +103,14 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         execute("test/main()V")
-                        consoleOut shouldBe "3"
+                        if (
+                            type1 == "float" || type1 == "double" ||
+                            type2 == "float" || type2 == "double"
+                        ) {
+                            consoleOut shouldBe "3.0"
+                        } else {
+                            consoleOut shouldBe "3"
+                        }
                     }
                 }
 
@@ -117,7 +128,14 @@ class OperationTests : FreeSpec(
                         """.trimIndent(),
                     ) {
                         execute("test/main()V")
-                        consoleOut shouldBe "1"
+                        if (
+                            type1 == "float" || type1 == "double" ||
+                            type2 == "float" || type2 == "double"
+                        ) {
+                            consoleOut shouldBe "1.0"
+                        } else {
+                            consoleOut shouldBe "1"
+                        }
                     }
                 }
 
@@ -134,8 +152,17 @@ class OperationTests : FreeSpec(
                     
                         """.trimIndent(),
                     ) {
+                        println(BytecodeStringGenerator(format).generate().joinToString("\n"))
                         execute("test/main()V")
-                        consoleOut shouldBe "49"
+
+                        if (
+                            type1 == "float" || type1 == "double" ||
+                            type2 == "float" || type2 == "double"
+                        ) {
+                            consoleOut shouldBe "49.0"
+                        } else {
+                            consoleOut shouldBe "49"
+                        }
                     }
                 }
             }

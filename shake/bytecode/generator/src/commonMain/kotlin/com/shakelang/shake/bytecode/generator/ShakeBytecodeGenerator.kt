@@ -402,7 +402,7 @@ class ShakeBytecodeGenerator {
             val returnType = generateTypeDescriptor(method.returnType)
             val parameters = method.parameters.map { generateTypeDescriptor(it.type) }
 
-            name = "${method.name}(${parameters.joinToString(",")})$returnType"
+            name = method.signature
             isPublic = method.isPublic
             isFinal = method.isFinal
             isStatic = if (isInClass) method.isStatic else true
