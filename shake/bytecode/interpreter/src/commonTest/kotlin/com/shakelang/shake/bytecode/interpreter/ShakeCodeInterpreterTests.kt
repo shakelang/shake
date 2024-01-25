@@ -248,8 +248,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 3
+            stack.size shouldBe 1
+            stack.pop() shouldBe 3.toByte()
         }
 
         "sadd" {
@@ -267,8 +267,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 3
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 3
         }
 
         "iadd" {
@@ -357,8 +357,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe -1
+            stack.size shouldBe 1
+            stack.pop() shouldBe -1
         }
 
         "ssub" {
@@ -375,8 +375,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe -1
+            stack.size shouldBe 2
+            stack.popShort() shouldBe -1
         }
 
         "isub" {
@@ -465,8 +465,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 6
+            stack.size shouldBe 1
+            stack.pop() shouldBe 6
         }
 
         "smul" {
@@ -483,8 +483,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 6
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 6
         }
 
         "imul" {
@@ -573,8 +573,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 2
+            stack.size shouldBe 1
+            stack.pop() shouldBe 2
         }
 
         "sdiv" {
@@ -591,8 +591,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 2
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 2
         }
 
         "idiv" {
@@ -681,8 +681,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 0
+            stack.size shouldBe 1
+            stack.pop() shouldBe 0
         }
 
         "smod" {
@@ -699,8 +699,8 @@ class ShakeCodeInterpreterTests : FreeSpec(
             code.tick(3)
 
             val stack = code.stack
-            stack.size shouldBe 4
-            stack.popInt() shouldBe 0
+            stack.size shouldBe 2
+            stack.popShort() shouldBe 0
         }
 
         "imod" {
