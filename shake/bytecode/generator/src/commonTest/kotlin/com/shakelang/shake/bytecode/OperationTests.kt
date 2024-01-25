@@ -152,17 +152,8 @@ class OperationTests : FreeSpec(
                     
                         """.trimIndent(),
                     ) {
-                        println(BytecodeStringGenerator(format).generate().joinToString("\n"))
                         execute("test/main()V")
-
-                        if (
-                            type1 == "float" || type1 == "double" ||
-                            type2 == "float" || type2 == "double"
-                        ) {
-                            consoleOut shouldBe "49.0"
-                        } else {
-                            consoleOut shouldBe "49"
-                        }
+                        consoleOut shouldBe "49.0"
                     }
                 }
             }
