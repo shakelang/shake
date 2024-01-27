@@ -64,7 +64,7 @@ interface Attribute {
      */
     val name: String get() = pool.getUtf8(nameConstant).value
 
-/**
+    /**
      * Dump the attribute to a [DataOutputStream]
      *
      * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)

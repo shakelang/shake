@@ -581,6 +581,7 @@ class ShakeBytecodeGenerator {
             }
         }
     }
+
     class LocalTable(
         val locals: MutableMap<String, Int> = mutableMapOf(),
         var size: Int = 0,

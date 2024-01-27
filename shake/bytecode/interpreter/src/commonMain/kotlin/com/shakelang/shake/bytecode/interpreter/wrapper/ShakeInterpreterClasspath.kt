@@ -53,6 +53,7 @@ interface ShakeInterpreterClasspath {
                 }
             }
         }
+
         fun create(interpreter: ShakeInterpreter, storages: List<StorageFormat>): ShakeInterpreterClasspath {
             val classpath = create(interpreter)
             storages.forEach {
