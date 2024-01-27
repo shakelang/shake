@@ -1,7 +1,8 @@
+
 package shake.lang;
-
+    
 native class String {
-
+    
     native static String valueOf(byte[] bytes)
     native static String valueOf(byte[] bytes, int offset, int length)
     native static String valueOf(char[] chars)
@@ -14,7 +15,7 @@ native class String {
     native static String valueOf(double d)
     native static String valueOf(boolean b)
     native static String valueOf(Object obj)
-
+    
     native int length
     native char charAt(int index)
     native int indexOf(String s)
@@ -36,7 +37,7 @@ native class String {
     native char[] toCharArray()
     native override boolean equals(Object obj)
     native override int hashCode()
-
+    
     native operator String plus(String str)
     native operator String plus(char c)
     native operator String plus(byte b)

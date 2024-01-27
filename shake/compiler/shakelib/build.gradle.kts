@@ -6,7 +6,12 @@ import dev.icerock.gradle.MRVisibility
 plugins {
     id("conventions.all")
     id("conventions.publishing")
-    id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
+    id("dev.icerock.mobile.multiplatform-resources")
+}
+
+repositories {
+    mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
 group = projectGroup("shake.compiler")
@@ -27,6 +32,8 @@ multiplatformResources {
 kotlin {
     dependencies {
         implementation("dev.icerock.moko:resources:0.23.0")
+        implementation("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
+        testImplementation("dev.icerock.moko:resources-test:0.23.0")
     }
 }
 listOf(
