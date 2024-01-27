@@ -32,8 +32,7 @@ kotlin {
         testImplementation(project(":util:testlib"))
         testImplementation(project(":shake:compiler:shakelib"))
 
-        implementation("dev.icerock.moko:resources:0.23.0")
-        implementation("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
+        testImplementation("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
         testImplementation("dev.icerock.moko:resources-test:0.23.0")
     }
 }
@@ -43,7 +42,7 @@ multiplatformResources {
     multiplatformResourcesClassName = "SharedRes" // optional, default MR
     multiplatformResourcesVisibility = MRVisibility.Internal // optional, default Public
     iosBaseLocalizationRegion = "en" // optional, default "en"
-    multiplatformResourcesSourceSet = "commonMain" // optional, default "commonMain"
+    multiplatformResourcesSourceSet = "commonTest" // optional, default "commonMain"
 }
 
 useKotest()
