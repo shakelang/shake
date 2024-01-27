@@ -44,6 +44,43 @@ interface ShakeClass {
 
     val interfaces: List<ShakeClass>
 
+    val allMethods: List<ShakeMethod>
+        get() {
+            val methods = this.methods.filter { !it.isStatic }
+            val superMethods = superClass.allMethods.filter {
+                methods.none { m -> m.name == it.name && m.signature == it.signature }
+            }
+            val interfaceMethods = interfaces.flatMap { it.allMethods }.filter {
+                methods.none { m -> m.name == it.name && m.signature == it.signature } &&
+                    // Super methods have priority over interface methods
+                    superMethods.none { m -> m.name == it.name && m.signature == it.signature }
+            }
+            // TODO: Check for duplicate methods (caused by multiple interfaces)
+            // This will only be a problem if there are multiple default implementations
+            return methods + superMethods + interfaceMethods
+        }
+
+    val allFields: List<ShakeField>
+        get() {
+            val fields = this.fields.filter { !it.isStatic }
+            val superFields = if (isObject) {
+                emptyList()
+            } else {
+                superClass.allFields.filter {
+                    fields.none { f -> f.name == it.name }
+                }
+            }
+            val interfaceFields = interfaces.flatMap { it.allFields }.filter {
+                fields.none { f -> f.name == it.name } &&
+                    // Super fields have priority over interface fields
+                    superFields.none { f -> f.name == it.name }
+            }
+
+            // TODO: Check for duplicate fields (caused by multiple interfaces)
+            // This will only be a problem if there are multiple default implementations
+            return fields + superFields + interfaceFields
+        }
+
     private val isObject get() = qualifiedName == "shake/lang/Object"
 
     fun compatibleTo(other: ShakeClass): Boolean {

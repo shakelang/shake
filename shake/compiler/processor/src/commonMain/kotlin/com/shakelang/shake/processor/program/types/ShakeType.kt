@@ -1669,7 +1669,7 @@ interface ShakeType {
         override val kind: Kind get() = Kind.OBJECT
 
         override fun childField(name: String, scope: ShakeScope): ShakeField? {
-            val field = clazz.fields.find { it.name == name }
+            val field = clazz.allFields.find { it.name == name }
             if (field != null) return field
             return super.childField(name, scope)
         }
@@ -1760,7 +1760,7 @@ interface ShakeType {
             clazz.fields.find { it.name == name }?.type
 
         override fun childFunctions(name: String, scope: ShakeScope): List<ShakeMethod> {
-            return clazz.methods.filter { it.name == name } + scope.getFunctions(name).filter { it.expanding == this }
+            return clazz.allMethods.filter { it.name == name } + scope.getFunctions(name).filter { it.expanding == this }
         }
 
         override fun castableTo(other: ShakeType): Boolean {
