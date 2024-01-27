@@ -278,7 +278,7 @@ open class ShakeASTProcessor {
         val value = if (n.value != null) visitValue(scope, n.value!!) else null
         val type = visitType(scope, n.type) ?: value?.type ?: throw Exception("Cannot infer type of variable ${n.name}")
         val decl = CreationShakeVariableDeclaration(scope, n.name, type, value, n.isFinal)
-        scope.set(decl)
+        scope.setField(decl)
         return decl
     }
 
@@ -289,9 +289,15 @@ open class ShakeASTProcessor {
                 val parent = visitValue(scope, identifier.parent!!)
                 val type = parent.type.childType(identifier.name, scope)
                     ?: throw Exception("Cannot access ${identifier.name} in ${parent.type}")
-                return CreationShakeChild(scope.project, scope, parent, identifier.name)
+                return CreationShakeChild(
+                    scope.project,
+                    scope,
+                    parent,
+                    parent.type.childField(identifier.name, scope)
+                        ?: throw Exception("No field named ${identifier.name} in ${parent.type}"),
+                )
             }
-            return scope.get(identifier.name)
+            return scope.getField(identifier.name)
         }
         return CreationShakeAssignable.wrap(scope.project, visitValue(scope, n))
     }
@@ -388,9 +394,15 @@ open class ShakeASTProcessor {
             val parent = visitValue(scope, identifier.parent!!)
             val type = parent.type.childType(identifier.name, scope)
                 ?: throw Exception("Cannot access ${identifier.name} in ${parent.type}")
-            return CreationShakeChild(scope.project, scope, parent, identifier.name).access(scope)
+            return CreationShakeChild(
+                scope.project,
+                scope,
+                parent,
+                parent.type.childField(identifier.name, scope)
+                    ?: throw Exception("No field named ${identifier.name} in ${parent.type}"),
+            ).access(scope)
         }
-        val variable = scope.get(identifier.name) ?: throw Exception("Variable ${identifier.name} not declared")
+        val variable = scope.getField(identifier.name) ?: throw Exception("Variable ${identifier.name} not declared")
         return variable.access(scope) // TODO null value
     }
 

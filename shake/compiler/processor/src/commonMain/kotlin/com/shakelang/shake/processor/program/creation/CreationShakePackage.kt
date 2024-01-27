@@ -150,17 +150,27 @@ open class CreationShakePackage(
         override val parent: CreationShakeScope get() = baseProject.projectScope
         override val project get() = baseProject
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             val field = fields.find { it.name == name }
             if (field != null) {
                 debug("scope", "Searching for field $name in $uniqueName successful")
             } else {
                 debug("scope", "Searching for field $name in $uniqueName had no result")
             }
-            return field ?: parent.get(name)
+            return field ?: parent.getField(name)
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            val fields = fields.filter { it.name == name }
+            if (fields.isNotEmpty()) {
+                debug("scope", "Searching for field $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for field $name in $uniqueName had no result")
+            }
+            return fields + parent.getFields(name)
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             throw IllegalStateException("Cannot set a value in a package scope")
         }
 
@@ -186,6 +196,16 @@ open class CreationShakePackage(
                 debug("scope", "Searching for class $name in $uniqueName had no result")
             }
             return clazz ?: parent.getClass(name)
+        }
+
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            val classes = classes.filter { it.name == name }
+            if (classes.isNotEmpty()) {
+                debug("scope", "Searching for class $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for class $name in $uniqueName had no result")
+            }
+            return classes + parent.getClasses(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {
@@ -288,7 +308,7 @@ open class CreationShakePackage(
             importedFields = imports
         }
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             lazyLoadImportedFields()
             val field = importedFields.find { it.name == name }
             if (field != null) {
@@ -296,10 +316,21 @@ open class CreationShakePackage(
             } else {
                 debug("scope", "Searching for field $name in $uniqueName had no result")
             }
-            return field ?: parent.get(name)
+            return field ?: parent.getField(name)
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            lazyLoadImportedFields()
+            val fields = importedFields.filter { it.name == name }
+            if (fields.isNotEmpty()) {
+                debug("scope", "Searching for field $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for field $name in $uniqueName had no result")
+            }
+            return fields + parent.getFields(name)
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             throw IllegalStateException("Cannot set a value in a package scope")
         }
 
@@ -327,6 +358,17 @@ open class CreationShakePackage(
                 debug("scope", "Searching for class $name in $uniqueName had no result")
             }
             return clazz ?: parent.getClass(name)
+        }
+
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            lazyLoadImportedClasses()
+            val classes = importedClasses.filter { it.name == name }
+            if (classes.isNotEmpty()) {
+                debug("scope", "Searching for class $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for class $name in $uniqueName had no result")
+            }
+            return classes + parent.getClasses(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {

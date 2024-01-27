@@ -1152,9 +1152,11 @@ class ShakeMapAssembler(val shakeMap: ShakeMap) {
         override val uniqueName: String
             get() = "scopeUnit"
 
-        override fun get(name: String): ShakeAssignable = error("Should not be called")
+        override fun getField(name: String): ShakeAssignable = error("Should not be called")
+        override fun getFields(name: String): List<ShakeAssignable> = error("Should not be called")
         override fun getFunctions(name: String) = error("Should not be called")
         override fun getClass(name: String) = error("Should not be called")
+        override fun getClasses(name: String) = error("Should not be called")
         override fun getInvokable(name: String) = error("Should not be called")
         override fun use(name: String) = error("Should not be called")
     }
