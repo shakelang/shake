@@ -40,6 +40,10 @@ private constructor(
     override val isPrivate: Boolean
     override val isProtected: Boolean
     override val isNative: Boolean
+    override val isAnnotation: Boolean
+    override val isEnum: Boolean
+    override val isInterface: Boolean
+    override val isObject: Boolean
 
     override val instanceClasses: List<ShakeClass> get() = classes.filter { !it.isStatic }
     override val instanceMethods: List<CreationShakeMethod> get() = methods.filter { !it.isStatic }
@@ -145,6 +149,10 @@ private constructor(
         this.isPrivate = clz.access == ShakeAccessDescriber.PRIVATE
         this.isProtected = clz.access == ShakeAccessDescriber.PROTECTED
         this.isNative = clz.isNative
+        this.isAnnotation = false // TODO implement
+        this.isEnum = false // TODO implement
+        this.isInterface = false // TODO implement
+        this.isObject = false // TODO implement
     }
 
     fun asType(): CreationShakeType {
