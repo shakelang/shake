@@ -5,6 +5,7 @@ import conventions.projectGroup
 plugins {
     id("conventions.publishing")
     id("conventions.dokka")
+    `java-gradle-plugin`
     `kotlin-dsl`
 }
 
@@ -23,8 +24,9 @@ val projectName = name
 
 kotlin {
     dependencies {
+        implementation(project(":util:embed:api"))
         implementation(gradleApi())
-        runtimeOnly("com.squareup:kotlinpoet:1.16.0")
+        implementation("com.squareup:kotlinpoet:1.16.0")
     }
 }
 
@@ -34,6 +36,18 @@ sourceSets {
     }
     test {
         java.srcDirs("src/test/kotlin", "src/test/java")
+    }
+}
+
+val desc = description
+
+gradlePlugin {
+    plugins {
+        create("com.shakelang.util.embed.plugin") {
+            id = "com.shakelang.util.embed.plugin"
+            implementationClass = "com.shakelang.util.embed.plugin.Embed"
+            description = desc
+        }
     }
 }
 

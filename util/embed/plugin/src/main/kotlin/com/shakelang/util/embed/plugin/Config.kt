@@ -1,4 +1,4 @@
-package com.shakelang.util.embed
+package com.shakelang.util.embed.plugin
 
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
@@ -36,6 +36,8 @@ class EmbedConfigurationOuter(val project: Project) {
     fun embedConfiguration(fn: EmbedConfiguration.() -> Unit) {
         val configuration = EmbedConfiguration(project, this)
         fn(configuration)
+        configurations.add(configuration)
+        println("Added configuration: $configurations")
     }
 }
 

@@ -1,7 +1,5 @@
 package com.shakelang.util.embed.api
 
-class EmbedFileTree
-
 interface EmbedFileEntity {
     val name: String
     val path: String
@@ -14,9 +12,9 @@ interface EmbedFileEntity {
     fun toFolder(): EmbedFolder = this as EmbedFolder
 }
 
-class EmbedFolder(
-    override val name: String,
-    override val parent: EmbedFolder?,
+open class EmbedFolder(
+    final override val name: String,
+    final override val parent: EmbedFolder?,
     files: Map<String, EmbedFileEntity>,
 ) : EmbedFileEntity {
     val children: MutableMap<String, EmbedFileEntity> = files.toMutableMap()
@@ -43,9 +41,9 @@ class EmbedFolder(
     fun insert(path: String, contents: String) = insert(path, contents.encodeToByteArray())
 }
 
-class EmbedFile(
-    override val name: String,
-    override val parent: EmbedFolder,
+open class EmbedFile(
+    final override val name: String,
+    final override val parent: EmbedFolder,
     val contents: ByteArray,
 ) : EmbedFileEntity {
     override val path: String = "${parent.path}/$name"

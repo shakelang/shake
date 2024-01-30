@@ -1,4 +1,4 @@
-package com.shakelang.util.embed
+package com.shakelang.util.embed.plugin
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

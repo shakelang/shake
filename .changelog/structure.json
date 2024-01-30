@@ -36,13 +36,16 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
+        ":util:commander:commander:0.1.0",
         ":util:parseutils:parseutils:0.4.0",
         ":util:shason:shason:0.4.1",
+        ":util:logger:logger:0.5.2",
         ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
         ":shake:compiler:parser:parser:0.1.6-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0",
         ":shake:compiler:jsgenerator:jsgenerator:0.1.0",
         ":shake:compiler:shakelib:shakelib:0.1.0",
+        ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT",
         ":shake:bytecode:interpreter:interpreter:0.1.0-SNAPSHOT",
         ":shake:bytecode:generator:generator:0.1.0-SNAPSHOT",
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2"
@@ -74,6 +77,17 @@
       "author": "shake.shake",
       "license": "",
       "dependencies": []
+    },
+    {
+      "path": ":util:algo",
+      "name": "com.shakelang.util:algo",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Implementation of default algorithms and data structures",
+      "author": "com.shakelang.util",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1"
+      ]
     },
     {
       "path": ":util:changelog",
@@ -124,6 +138,15 @@
       ]
     },
     {
+      "path": ":util:embed",
+      "name": "shake.util:embed",
+      "version": "0.1.0",
+      "description": "",
+      "author": "shake.util",
+      "license": "",
+      "dependencies": []
+    },
+    {
       "path": ":util:environment",
       "name": "com.shakelang.util:environment",
       "version": "0.3.0",
@@ -161,7 +184,7 @@
         ":util:environment:environment:0.3.0",
         ":util:colorlib:colorlib:0.3.0",
         "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0",
-        "org.jetbrains.kotlinx:kotlinx-html-js:0.10.1"
+        "org.jetbrains.kotlinx:kotlinx-html-js:0.11.0"
       ]
     },
     {
@@ -307,6 +330,22 @@
       ]
     },
     {
+      "path": ":shake:bytecode:tools",
+      "name": "com.shakelang.shake.bytecode:tools",
+      "version": "0.1.0-SNAPSHOT",
+      "description": "Tools for working with bytecode",
+      "author": "com.shakelang.shake.bytecode",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1",
+        ":util:pointers:pointers:0.2.0",
+        ":util:primitives:primitives:0.5.0",
+        ":util:common-io:common-io:0.4.0",
+        ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT",
+        ":shake:bytecode:utils:utils:0.1.0-SNAPSHOT"
+      ]
+    },
+    {
       "path": ":shake:bytecode:utils",
       "name": "com.shakelang.shake.bytecode:utils",
       "version": "0.1.0-SNAPSHOT",
@@ -391,7 +430,8 @@
       "license": "",
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
-        "dev.icerock.moko:resources:0.23.0"
+        "dev.icerock.moko:resources:0.23.0",
+        "dev.icerock.moko:resources-compose:0.23.0"
       ]
     },
     {
@@ -453,7 +493,30 @@
         ":util:parseutils:parseutils:0.4.0",
         ":shake:shasambly:shasambly:shasambly:0.1.0"
       ]
+    },
+    {
+      "path": ":util:embed:api",
+      "name": "com.shakelang.util.embed:api",
+      "version": "0.1.0",
+      "description": "Gradle plugin for embeding resources into kotlin source (api)",
+      "author": "com.shakelang.util.embed",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1"
+      ]
+    },
+    {
+      "path": ":util:embed:plugin",
+      "name": "com.shakelang.util.embed:plugin",
+      "version": "0.1.0",
+      "description": "Gradle plugin for embeding resources into kotlin source",
+      "author": "com.shakelang.util.embed",
+      "license": "",
+      "dependencies": [
+        "unspecified:unspecified:unspecified",
+        "com.squareup:kotlinpoet:1.16.0"
+      ]
     }
   ],
-  "lastUpdate": 1704806063080
+  "lastUpdate": 1706570661554
 }
