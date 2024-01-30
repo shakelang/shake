@@ -12,7 +12,7 @@ Utilities for parsing stuff with kotlin
 
 ### 0.2.1
 
-* Remove dependency in testlib (as it is not used or needed)
+* Remove  dependency in testlib (as it is not used or needed) 
 
 ### 0.2.2
 

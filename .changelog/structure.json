@@ -140,7 +140,7 @@
     {
       "path": ":util:embed",
       "name": "shake.util:embed",
-      "version": "0.1.0",
+      "version": "0.1.0-SNAPSHOT",
       "description": "",
       "author": "shake.util",
       "license": "",
@@ -431,6 +431,7 @@
       "dependencies": [
         "unspecified:path-browserify:1.0.1",
         "dev.icerock.moko:resources:0.23.0",
+        "com.shakelang.util.embed:api:0.1.0",
         "dev.icerock.moko:resources-compose:0.23.0"
       ]
     },
@@ -508,15 +509,16 @@
     {
       "path": ":util:embed:plugin",
       "name": "com.shakelang.util.embed:plugin",
-      "version": "0.1.0",
-      "description": "Gradle plugin for embeding resources into kotlin source",
+      "version": "0.1.1",
+      "description": "Gradle plugin for embedding resources into kotlin source",
       "author": "com.shakelang.util.embed",
       "license": "",
       "dependencies": [
+        ":util:embed:api:api:0.1.0",
         "unspecified:unspecified:unspecified",
         "com.squareup:kotlinpoet:1.16.0"
       ]
     }
   ],
-  "lastUpdate": 1706570661554
+  "lastUpdate": 1706633344318
 }

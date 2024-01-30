@@ -3,7 +3,6 @@ package com.shakelang.util.embed.plugin
 import com.shakelang.util.embed.api.EmbedFolder
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeSpec
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
@@ -43,12 +42,11 @@ open class FileBuilder : DefaultTask() {
             // Generate the output file using kotlin poet
             val file = FileSpec.builder(distPackage, distName)
 
-            // Import embed api
-            file.addImport("com.shakelang.util.embed.api", "folder")
-
-            val folder = TypeSpec.objectBuilder("folder")
-            folder.addSuperinterface(EmbedFolder::class.parameterizedBy(String::class))
-
+            val folder = TypeSpec.objectBuilder(distName)
+            folder.superclass(EmbedFolder::class)
+            folder.addSuperclassConstructorParameter("%S", distName)
+            folder.addSuperclassConstructorParameter("null")
+            folder.addSuperclassConstructorParameter("emptyMap()")
             // init block
 
             val initBlock = CodeBlock.builder()
@@ -56,7 +54,7 @@ open class FileBuilder : DefaultTask() {
             for ((path, bytes) in files) {
                 println("Adding file $path")
                 // Let's add the file
-                initBlock.addStatement("folder.insert(%S, %S)", path, bytes.decodeToString())
+                initBlock.addStatement("this.insert(%S, %S)", path, bytes.decodeToString())
             }
 
             folder.addInitializerBlock(initBlock.build())

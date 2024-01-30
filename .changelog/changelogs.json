@@ -820,6 +820,19 @@
           ]
         }
       ]
+    },
+    {
+      "path": ":util:embed:plugin",
+      "name": "plugin",
+      "description": "Prints the current version",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "changes": [
+            "Fix generated code"
+          ]
+        }
+      ]
     }
   ]
 }

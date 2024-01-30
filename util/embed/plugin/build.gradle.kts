@@ -5,7 +5,6 @@ import conventions.projectGroup
 plugins {
     id("conventions.publishing")
     id("conventions.dokka")
-    `java-gradle-plugin`
     `kotlin-dsl`
 }
 
@@ -17,7 +16,7 @@ repositories {
 
 group = projectGroup("util.embed")
 version = resolveVersion()
-description = "Gradle plugin for embeding resources into kotlin source"
+description = "Gradle plugin for embedding resources into kotlin source"
 public = true
 
 val projectName = name
@@ -36,18 +35,6 @@ sourceSets {
     }
     test {
         java.srcDirs("src/test/kotlin", "src/test/java")
-    }
-}
-
-val desc = description
-
-gradlePlugin {
-    plugins {
-        create("com.shakelang.util.embed.plugin") {
-            id = "com.shakelang.util.embed.plugin"
-            implementationClass = "com.shakelang.util.embed.plugin.Embed"
-            description = desc
-        }
     }
 }
 
