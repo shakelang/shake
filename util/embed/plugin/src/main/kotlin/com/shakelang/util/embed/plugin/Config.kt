@@ -2,6 +2,7 @@ package com.shakelang.util.embed.plugin
 
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
+import java.io.File
 
 /**
  * Map containing configurations for each project (for multi-project builds)
@@ -29,6 +30,8 @@ class EmbedConfiguration(val project: Project, val outer: EmbedConfigurationOute
     val baseDir: Property<String> = project.objects.property(String::class.java)
     val distPackage: Property<String> = project.objects.property(String::class.java)
     val distName: Property<String> = project.objects.property(String::class.java)
+    var dist: File? = null
+        private set
 
     fun embed(vararg sources: String) = source.addAll(sources)
 
@@ -36,6 +39,12 @@ class EmbedConfiguration(val project: Project, val outer: EmbedConfigurationOute
         sourceSetLocation.convention("src")
         sourceSet.convention("main")
         baseDir.convention("resources")
+    }
+
+    companion object {
+        fun initDist(config: EmbedConfiguration, dist: File) {
+            config.dist = dist
+        }
     }
 }
 

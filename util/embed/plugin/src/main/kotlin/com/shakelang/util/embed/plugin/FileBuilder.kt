@@ -16,6 +16,8 @@ open class FileBuilder : DefaultTask() {
     val outputDir = project.objects.directoryProperty()
 
     init {
+        description = "Builds the embedded files"
+        group = "build"
         outputDir.convention(project.layout.buildDirectory.dir("generated/embed"))
     }
 
@@ -69,7 +71,7 @@ open class FileBuilder : DefaultTask() {
 
             // Generate the file
             val fileName = "$distName.kt"
-            val filePath = Paths.get(outputDir.get().asFile.absolutePath, sourceSet, fileName)
+            val filePath = Paths.get((configuration.dist ?: throw Error("Dist not initialized")).absolutePath, fileName)
             Files.createDirectories(filePath.parent)
             Files.write(filePath, file.build().toString().encodeToByteArray())
         }

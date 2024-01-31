@@ -26,6 +26,9 @@ kotlin {
         implementation(project(":util:embed:api"))
         implementation(gradleApi())
         implementation("com.squareup:kotlinpoet:1.16.0")
+
+        // compileOnly kotlin gradle plugins
+        compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
     }
 }
 
