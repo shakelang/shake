@@ -37,7 +37,7 @@ open class FileBuilder : DefaultTask() {
             val distName = configuration.distName.get()
             val sourceSet = configuration.sourceSet.get()
 
-            val paths = PatternMatcher(project.file(baseDir).toPath()).match(configuration.source)
+            val paths = PatternMatcher(Paths.get(baseDir)).match(configuration.source)
 
             // Let's read all the files into byte arrays
             val files = mutableMapOf<String, ByteArray>()
