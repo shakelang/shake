@@ -24,7 +24,13 @@ open class FileBuilder : DefaultTask() {
         val config = embedConfigurationFor(project)
 
         for (configuration in config.configurations) {
-            val baseDir = configuration.baseDir.get()
+            val baseDir = Paths.get(
+                project.projectDir.absolutePath,
+                configuration.sourceSetLocation.get(),
+                configuration.sourceSet.get(),
+                configuration.baseDir.get(),
+            ).toFile().absolutePath
+
             val distPackage = configuration.distPackage.get()
             val distName = configuration.distName.get()
 
@@ -52,7 +58,6 @@ open class FileBuilder : DefaultTask() {
             val initBlock = CodeBlock.builder()
 
             for ((path, bytes) in files) {
-                println("Adding file $path")
                 // Let's add the file
                 initBlock.addStatement("this.insert(%S, %S)", path, bytes.decodeToString())
             }

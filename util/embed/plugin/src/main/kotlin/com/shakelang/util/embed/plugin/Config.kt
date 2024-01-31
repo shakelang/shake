@@ -24,10 +24,19 @@ fun embedConfigurationFor(project: Project): EmbedConfigurationOuter {
 
 class EmbedConfiguration(val project: Project, val outer: EmbedConfigurationOuter) {
     val source = mutableListOf<String>()
+    val sourceSetLocation: Property<String> = project.objects.property(String::class.java)
+    val sourceSet: Property<String> = project.objects.property(String::class.java)
     val baseDir: Property<String> = project.objects.property(String::class.java)
     val distPackage: Property<String> = project.objects.property(String::class.java)
     val distName: Property<String> = project.objects.property(String::class.java)
+
     fun embed(vararg sources: String) = source.addAll(sources)
+
+    init {
+        sourceSetLocation.convention("src")
+        sourceSet.convention("main")
+        baseDir.convention("resources")
+    }
 }
 
 class EmbedConfigurationOuter(val project: Project) {
@@ -37,7 +46,6 @@ class EmbedConfigurationOuter(val project: Project) {
         val configuration = EmbedConfiguration(project, this)
         fn(configuration)
         configurations.add(configuration)
-        println("Added configuration: $configurations")
     }
 }
 
