@@ -33,6 +33,7 @@ open class FileBuilder : DefaultTask() {
 
             val distPackage = configuration.distPackage.get()
             val distName = configuration.distName.get()
+            val sourceSet = configuration.sourceSet.get()
 
             val paths = PatternMatcher(project.file(baseDir).toPath()).match(configuration.source)
 
@@ -68,7 +69,7 @@ open class FileBuilder : DefaultTask() {
 
             // Generate the file
             val fileName = "$distName.kt"
-            val filePath = Paths.get(outputDir.get().asFile.absolutePath, fileName)
+            val filePath = Paths.get(outputDir.get().asFile.absolutePath, sourceSet, fileName)
             Files.createDirectories(filePath.parent)
             Files.write(filePath, file.build().toString().encodeToByteArray())
         }
