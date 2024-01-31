@@ -495,7 +495,7 @@
     {
       "path": ":util:embed:api",
       "name": "com.shakelang.util.embed:api",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Gradle plugin for embedding resources into kotlin source (api)",
       "author": "com.shakelang.util.embed",
       "license": "",
@@ -506,7 +506,7 @@
     {
       "path": ":util:embed:plugin",
       "name": "com.shakelang.util.embed:plugin",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "description": "Gradle plugin for embedding resources into kotlin source",
       "author": "com.shakelang.util.embed",
       "license": "",
@@ -517,5 +517,5 @@
       ]
     }
   ],
-  "lastUpdate": 1706705113715
+  "lastUpdate": 1706705279865
 }

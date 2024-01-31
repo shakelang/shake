@@ -1,18 +1,3 @@
 {
-  "bumps": [
-    {
-      "type": "minor",
-      "message": "automatically add sourceSets for generated code",
-      "paths": [
-        ":util:embed:plugin"
-      ]
-    },
-    {
-      "type": "patch",
-      "message": "Add utility functions to files & folders. Move modification to companion",
-      "paths": [
-        ":util:embed:api"
-      ]
-    }
-  ]
+  "bumps": []
 }
