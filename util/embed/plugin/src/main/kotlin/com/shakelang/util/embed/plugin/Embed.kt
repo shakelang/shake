@@ -55,8 +55,16 @@ open class Embed : Plugin<Project> {
 
                         val generatedSourceSet = sourceSets.create(generatedSourceSetName)
                         generatedSourceSet.kotlin.srcDir(outFolder)
+                        project.repositories.mavenCentral()
                         generatedSourceSet.dependencies {
-                            implementation("com.shakelang.util.embed:api:0.1.0")
+                            if (project.rootProject.subprojects.any { prj ->
+                                    prj.path == ":util:embed:api"
+                                }
+                            ) {
+                                implementation(project(":util:embed:api"))
+                            } else {
+                                implementation("com.shakelang.util.embed:api:0.1.0")
+                            }
                         }
 
                         sourceSet.dependsOn(generatedSourceSet)
