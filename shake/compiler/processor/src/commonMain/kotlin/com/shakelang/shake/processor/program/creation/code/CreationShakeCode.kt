@@ -42,17 +42,22 @@ open class CreationShakeCode(
         override val project: CreationShakeProject
             get() = parent.project
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             val local = locals.find { it.name == name }
             if (local != null) {
                 debug("scope", "Found local $name in $this")
             } else {
                 debug("scope", "Did not find local $name in $this")
             }
-            return locals.find { it.name == name } ?: parent.get(name)
+            return locals.find { it.name == name } ?: parent.getField(name)
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            debug("scope", "Searching for fields $name in $this")
+            return locals.filter { it.name == name } + parent.getFields(name)
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             debug("scope", "Setting local ${value.name} in $this")
             if (value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
             if (locals.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
@@ -71,6 +76,11 @@ open class CreationShakeCode(
         override fun getClass(name: String): CreationShakeClass? {
             debug("scope", "Searching for class $name in $this (just redirecting to parent)")
             return parent.getClass(name)
+        }
+
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            debug("scope", "Searching for class $name in $this (just redirecting to parent)")
+            return parent.getClasses(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {

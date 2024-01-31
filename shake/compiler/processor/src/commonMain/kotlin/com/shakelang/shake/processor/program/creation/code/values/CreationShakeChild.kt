@@ -1,6 +1,7 @@
 package com.shakelang.shake.processor.program.creation.code.values
 
 import com.shakelang.shake.processor.program.creation.*
+import com.shakelang.shake.processor.program.types.ShakeField
 import com.shakelang.shake.processor.program.types.ShakeType
 import com.shakelang.shake.processor.program.types.code.ShakeScope
 import com.shakelang.shake.processor.program.types.code.values.ShakeChild
@@ -11,11 +12,15 @@ class CreationShakeChild(
     override val project: CreationShakeProject,
     override val scope: CreationShakeScope,
     override val parent: CreationShakeValue,
-    override val name: String,
+    override val field: ShakeField,
 
 ) : CreationShakeAssignable, ShakeChild {
 
+    override val name: String
+        get() = this.field.name
+
     override val type: ShakeType = parent.type.childType(name, scope)!!
+
     override val actualValue: CreationShakeChildUsage get() = CreationShakeChildUsage(project, this)
     override val actualType: ShakeType
         get() = actualValue.type

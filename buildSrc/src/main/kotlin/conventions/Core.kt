@@ -128,6 +128,17 @@ class KotlinMultiplatformExtensionDependencies(extension: KotlinMultiplatformExt
     fun implementation(dependencyNotation: String, configure: Closure<*>): ExternalModuleDependency =
         common.implementation(dependencyNotation, configure)
 
+    fun compileOnly(dependencyNotation: Any): Dependency? =
+        common.compileOnly(dependencyNotation)
+
+    fun compileOnly(
+        dependencyNotation: String,
+        configure: ExternalModuleDependency.() -> Unit,
+    ): ExternalModuleDependency = common.compileOnly(dependencyNotation, configure)
+
+    fun <T : Dependency> compileOnly(dependency: T, configure: T.() -> Unit): T =
+        common.compileOnly(dependency, configure)
+
     fun testImplementation(dependencyNotation: Any): Dependency? = common.testImplementation(dependencyNotation)
 
     fun testImplementation(
@@ -264,6 +275,17 @@ class KotlinSourceType(
 
     fun implementation(dependencyNotation: String, configure: Closure<*>): ExternalModuleDependency =
         ret { main.dependencies { it(implementation(dependencyNotation, configure)) } }
+
+    fun compileOnly(dependencyNotation: Any): Dependency? =
+        ret { main.dependencies { it(compileOnly(dependencyNotation)) } }
+
+    fun compileOnly(
+        dependencyNotation: String,
+        configure: ExternalModuleDependency.() -> Unit,
+    ): ExternalModuleDependency = ret { main.dependencies { it(compileOnly(dependencyNotation, configure)) } }
+
+    fun <T : Dependency> compileOnly(dependency: T, configure: T.() -> Unit): T =
+        ret { main.dependencies { it(compileOnly(dependency, configure)) } }
 
     fun testImplementation(dependencyNotation: Any): Dependency? =
         ret { test.dependencies { it(implementation(dependencyNotation)) } }

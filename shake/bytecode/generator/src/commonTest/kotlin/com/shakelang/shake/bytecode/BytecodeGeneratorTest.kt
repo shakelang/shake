@@ -191,5 +191,33 @@ class BytecodeGeneratorTest : FreeSpec(
                 consoleOut shouldBe "10test/Test@0000000000000000"
             }
         }
+
+        "set / get field of object" {
+
+            codeSpec(
+                """
+                package test
+                
+                class Test {
+                
+                    int i
+                    
+                    constructor() {
+                        print(10)
+                    }
+                
+                    static void main() {
+                        Test test = new Test()
+                        test.i = 42
+                        print(test.i)
+                    }
+                }
+                                
+                """.trimIndent(),
+            ) {
+                execute("test/Test:main()V")
+                consoleOut shouldBe "1042"
+            }
+        }
     },
 )

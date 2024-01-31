@@ -32,7 +32,7 @@ class CreationShakeProject(
             ).filterNotNull().toTypedArray()
         }
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             debug("scope", "Searching for field $name in project scope")
 
             lazyLoadImportedPackages()
@@ -43,7 +43,18 @@ class CreationShakeProject(
             return getField(name)
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            debug("scope", "Searching for fields $name in project scope")
+
+            lazyLoadImportedPackages()
+            val fields = mutableListOf<CreationShakeAssignable>()
+            for (import in imported) {
+                fields += import.fields.filter { it.name == name }
+            }
+            return fields
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             throw IllegalStateException("Cannot set a value in the project scope")
         }
 
@@ -71,6 +82,17 @@ class CreationShakeProject(
                 if (clazz != null) return clazz
             }
             return this@CreationShakeProject.getClass(name)
+        }
+
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            debug("scope", "Searching for classes $name in project scope")
+
+            lazyLoadImportedPackages()
+            val classes = mutableListOf<CreationShakeClass>()
+            for (import in imported) {
+                classes += import.classes.filter { it.name == name }
+            }
+            return classes
         }
 
         override fun setClass(klass: CreationShakeClass) {

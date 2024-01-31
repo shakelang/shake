@@ -1,12 +1,17 @@
 import com.shakelang.util.changelog.resolveVersion
-import conventions.dependencies
+import com.shakelang.util.embed.plugin.Embed
+import com.shakelang.util.embed.plugin.embedConfiguration
 import conventions.projectGroup
-import dev.icerock.gradle.MRVisibility
 
 plugins {
     id("conventions.all")
     id("conventions.publishing")
-    id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
+//    id("com.shakelang.util.embed.plugin") version "0.1.0"
+}
+
+repositories {
+    mavenLocal()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
 group = projectGroup("shake.compiler")
@@ -15,27 +20,11 @@ description = "Utilities for parsing stuff with kotlin"
 
 val projectName = name
 
-multiplatformResources {
-    multiplatformResourcesPackage = "com.shakelang.shake.shakelib"
-    multiplatformResourcesClassName = "ShakeLib"
-    iosBaseLocalizationRegion = "en"
-    multiplatformResourcesSourceSet = "commonMain"
-    multiplatformResourcesVisibility = MRVisibility.Public
-    disableStaticFrameworkWarning = true
-}
+apply<Embed>()
 
-kotlin {
-    dependencies {
-        implementation("dev.icerock.moko:resources:0.23.0")
-    }
-}
-listOf(
-    "compileKotlinJs",
-    "compileKotlinJvm",
-    "jsProcessResources",
-    "jvmProcessResources",
-).forEach {
-    tasks.named(it) {
-        dependsOn("generateMRcommonMain")
-    }
+embedConfiguration {
+    sourceSet.set("commonMain")
+    distPackage.set("com.shakelang.shake.shakelib")
+    distName.set("ShakeLib")
+    embed("**/*.shake")
 }

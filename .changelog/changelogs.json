@@ -820,6 +820,39 @@
           ]
         }
       ]
+    },
+    {
+      "path": ":util:embed:plugin",
+      "name": "plugin",
+      "description": "Prints the current version",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "changes": [
+            "Fix generated code"
+          ]
+        },
+        {
+          "version": "0.2.0",
+          "changes": [
+            "Automatically add sourceSets for generated code",
+            "Update com.shakelang.util.embed:api to 0.1.1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": ":util:embed:api",
+      "name": "api",
+      "description": "Prints the current version",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "changes": [
+            "Add utility functions to files & folders. Move modification to companion"
+          ]
+        }
+      ]
     }
   ]
 }

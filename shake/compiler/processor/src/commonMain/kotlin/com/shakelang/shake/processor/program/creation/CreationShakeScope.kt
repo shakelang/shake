@@ -12,15 +12,17 @@ abstract class CreationShakeScope : ShakeScope {
     abstract val project: CreationShakeProject
 
     abstract override val parent: CreationShakeScope?
-    abstract override fun get(name: String): CreationShakeAssignable?
-    abstract fun set(value: CreationShakeDeclaration)
+    abstract override fun getField(name: String): CreationShakeAssignable?
+    abstract override fun getFields(name: String): List<CreationShakeAssignable>
+    abstract fun setField(value: CreationShakeDeclaration)
     abstract override fun getFunctions(name: String): List<CreationShakeMethod>
     abstract fun setFunctions(function: CreationShakeMethod)
     abstract override fun getClass(name: String): CreationShakeClass?
+    abstract override fun getClasses(name: String): List<CreationShakeClass>
     abstract fun setClass(klass: CreationShakeClass)
     override fun getInvokable(name: String): List<CreationShakeInvokable> {
         val functions = getFunctions(name)
-        val variable = get(name)
+        val variable = getField(name)
         if (variable != null && variable is CreationShakeInvokable) {
             return listOf(variable, *functions.toTypedArray())
         }
@@ -28,7 +30,7 @@ abstract class CreationShakeScope : ShakeScope {
     }
 
     override fun use(name: String) {
-        val declaration = get(name)
+        val declaration = getField(name)
     }
 
     fun getClass(name: String, then: (CreationShakeClass) -> Unit) {

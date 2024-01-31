@@ -1,3 +1,0 @@
-void println(String s) {
-    js("console.log(s)");
-}

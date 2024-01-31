@@ -327,10 +327,21 @@ class ShakeBytecodeGenerator {
         ctx.bytecodeInstructionGenerator.store(type, local)
     }
 
+    private fun storeVariable(ctx: BytecodeGenerationContext, v: ShakeField) {
+        if (!v.isStatic) throw IllegalStateException("Store variable for non-static field is not allowed")
+        ctx.bytecodeInstructionGenerator.store_static(v.qualifiedName)
+    }
+
+    private fun storeVariable(ctx: BytecodeGenerationContext, v: ShakeChild) {
+        val parent = v.parent
+    }
+
     private fun storeVariable(ctx: BytecodeGenerationContext, v: ShakeAssignable) {
         when (v) {
             is ShakeVariableDeclaration -> storeVariable(ctx, v)
-            else -> TODO()
+            is ShakeField -> storeVariable(ctx, v)
+            is ShakeChild -> storeVariable(ctx, v)
+            else -> TODO("Store variable for ${v::class.simpleName} is not implemented")
         }
     }
 
