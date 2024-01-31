@@ -17,6 +17,7 @@ val projectName = name
 
 kotlin {
     dependencies {
+        compileOnly(project(":util:common-io"))
         testImplementation(kotlin("test"))
     }
 }

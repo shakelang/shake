@@ -429,10 +429,7 @@
       "author": "com.shakelang.shake.compiler",
       "license": "",
       "dependencies": [
-        "unspecified:path-browserify:1.0.1",
-        "dev.icerock.moko:resources:0.23.0",
-        "com.shakelang.util.embed:api:0.1.0",
-        "dev.icerock.moko:resources-compose:0.23.0"
+        "unspecified:path-browserify:1.0.1"
       ]
     },
     {
@@ -499,7 +496,7 @@
       "path": ":util:embed:api",
       "name": "com.shakelang.util.embed:api",
       "version": "0.1.0",
-      "description": "Gradle plugin for embeding resources into kotlin source (api)",
+      "description": "Gradle plugin for embedding resources into kotlin source (api)",
       "author": "com.shakelang.util.embed",
       "license": "",
       "dependencies": [
@@ -520,5 +517,5 @@
       ]
     }
   ],
-  "lastUpdate": 1706634295622
+  "lastUpdate": 1706705113715
 }
