@@ -6,7 +6,6 @@ import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import com.shakelang.shake.parser.node.functions.ShakeFunctionDeclarationNode
 import com.shakelang.shake.parser.node.objects.ShakeClassDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
-import com.shakelang.shake.shouldBeOfType
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe

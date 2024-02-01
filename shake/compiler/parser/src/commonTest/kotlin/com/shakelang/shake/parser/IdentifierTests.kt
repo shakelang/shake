@@ -2,7 +2,6 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.parser.node.functions.ShakeInvocationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableUsageNode
-import com.shakelang.shake.shouldBeOfType
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

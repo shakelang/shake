@@ -1,4 +1,4 @@
-package com.shakelang.shake
+package com.shakelang.shake.parser
 
 import kotlin.reflect.KClass
 
