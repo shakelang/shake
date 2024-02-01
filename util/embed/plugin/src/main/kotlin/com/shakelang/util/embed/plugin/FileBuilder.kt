@@ -5,27 +5,38 @@ import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.TypeSpec
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import java.nio.file.*
+import javax.inject.Inject
 
-open class FileBuilder : DefaultTask() {
+open class FileBuilder
+@Inject
+constructor(
+    @Input
+    val sourceSet: String,
+) : DefaultTask() {
 
     @OutputDirectory
     val outputDir = project.objects.directoryProperty()
 
     init {
-        description = "Builds the embedded files"
+        description = "Builds the embedded files for the $sourceSet source set"
         group = "build"
         outputDir.convention(project.layout.buildDirectory.dir("generated/embed"))
     }
 
     @TaskAction
     open fun build() {
-        val config = embedConfigurationFor(project)
+        val config = getEmbedExtension(project)
 
         for (configuration in config.configurations) {
+            if (configuration.sourceSet.get() != sourceSet) continue
+
+            logger.info("Building files for ${configuration.sourceSet.get()}")
+
             val baseDir = Paths.get(
                 project.projectDir.absolutePath,
                 configuration.sourceSetLocation.get(),
@@ -62,7 +73,7 @@ open class FileBuilder : DefaultTask() {
 
             for ((path, bytes) in files) {
                 // Let's add the file
-                initBlock.addStatement("this.insert(%S, %S)", path, bytes.decodeToString())
+                initBlock.addStatement("EmbedFolder.insert(this, %S, %S)", path, bytes.decodeToString())
             }
 
             folder.addInitializerBlock(initBlock.build())

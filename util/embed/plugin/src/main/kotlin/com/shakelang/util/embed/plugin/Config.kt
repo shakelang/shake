@@ -7,23 +7,23 @@ import java.io.File
 /**
  * Map containing configurations for each project (for multi-project builds)
  */
-private val embedConfigurationMap = mutableMapOf<Project, EmbedConfigurationOuter>()
+private val embedExtensionMap = mutableMapOf<Project, EmbedExtension>()
 
 /**
- * Get the [EmbedConfigurationOuter] for the given [project]
+ * Get the [EmbedExtension] for the given [project]
  *
  * @param project The project to get the configuration for
- * @return The [EmbedConfigurationOuter] for the given [project]
+ * @return The [EmbedExtension] for the given [project]
  */
-fun embedConfigurationFor(project: Project): EmbedConfigurationOuter {
-    val config = embedConfigurationMap[project]
+fun getEmbedExtension(project: Project): EmbedExtension {
+    val config = embedExtensionMap[project]
     if (config != null) return config
-    val newConfig = EmbedConfigurationOuter(project)
-    embedConfigurationMap[project] = newConfig
+    val newConfig = EmbedExtension(project)
+    embedExtensionMap[project] = newConfig
     return newConfig
 }
 
-class EmbedConfiguration(val project: Project, val outer: EmbedConfigurationOuter) {
+class EmbedConfiguration(val project: Project, val outer: EmbedExtension) {
     val source = mutableListOf<String>()
     val sourceSetLocation: Property<String> = project.objects.property(String::class.java)
     val sourceSet: Property<String> = project.objects.property(String::class.java)
@@ -48,14 +48,14 @@ class EmbedConfiguration(val project: Project, val outer: EmbedConfigurationOute
     }
 }
 
-class EmbedConfigurationOuter(val project: Project) {
+class EmbedExtension(val project: Project) {
 
     val configurations = mutableListOf<EmbedConfiguration>()
-    fun embedConfiguration(fn: EmbedConfiguration.() -> Unit) {
+    fun configuration(fn: EmbedConfiguration.() -> Unit) {
         val configuration = EmbedConfiguration(project, this)
         fn(configuration)
         configurations.add(configuration)
     }
 }
 
-fun Project.embedConfiguration(fn: EmbedConfiguration.() -> Unit) = embedConfigurationFor(this).embedConfiguration(fn)
+fun Project.configuration(fn: EmbedConfiguration.() -> Unit) = getEmbedExtension(this).configuration(fn)

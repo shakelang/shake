@@ -7,10 +7,11 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 @Suppress("unused")
 open class Embed : Plugin<Project> {
     override fun apply(project: Project) {
-        val fileBuilder = project.tasks.register("embedGenerateSources", FileBuilder::class.java)
+        val extension = getEmbedExtension(project)
+        project.extensions.add("embed", extension)
 
         project.afterEvaluate {
-            val config = embedConfigurationFor(project)
+            val config = getEmbedExtension(project)
 
             // Check which kotlin plugin is applied
             if (
@@ -36,10 +37,11 @@ open class Embed : Plugin<Project> {
                     }
                 }
 
-                sourceSetMap.forEach {
+                sourceSetMap.forEach { sourceSetEntry ->
                     // We need to create a sourceSet for each configuration
-                    val sourceSet = it.key
-                    val configurations = it.value
+                    val sourceSet = sourceSetEntry.key
+                    val configurations = sourceSetEntry.value
+
                     configurations.forEachIndexed { index, embedConfiguration ->
 
                         val generatedSourceSetBaseName = "embed${sourceSet.name.capitalize()}"
@@ -51,10 +53,14 @@ open class Embed : Plugin<Project> {
 
                         val outFolder = project.buildDir.resolve("generated/embed/$generatedSourceSetName")
 
+                        // Create a task for generating the files
+                        val taskName = "generate${generatedSourceSetName.capitalize()}Files"
+                        val task = project.tasks.register(taskName, FileBuilder::class.java, sourceSet.name)
+
                         EmbedConfiguration.initDist(embedConfiguration, outFolder)
 
                         val generatedSourceSet = sourceSets.create(generatedSourceSetName)
-                        generatedSourceSet.kotlin.srcDir(outFolder)
+                        generatedSourceSet.kotlin.srcDir(task.get().outputs)
                         project.repositories.mavenCentral()
                         generatedSourceSet.dependencies {
                             if (project.rootProject.subprojects.any { prj ->
@@ -68,6 +74,8 @@ open class Embed : Plugin<Project> {
                         }
 
                         sourceSet.dependsOn(generatedSourceSet)
+
+                        // Execute the configureTask before the compileKotlin task
                     }
                 }
             }
@@ -77,6 +85,7 @@ open class Embed : Plugin<Project> {
             ) {
                 val kotlinJvm = project.pluginManager.findPlugin("org.jetbrains.kotlin.jvm")
                 println("Kotlin JVM plugin found: $kotlinJvm")
+                TODO("Embed does not support the JVM plugin yet")
             }
 
             if (
@@ -84,6 +93,7 @@ open class Embed : Plugin<Project> {
             ) {
                 val kotlinJs = project.pluginManager.findPlugin("org.jetbrains.kotlin.js")
                 println("Kotlin JS plugin found: $kotlinJs")
+                TODO("Embed does not support the JS plugin yet")
             }
 
             if (
@@ -91,6 +101,7 @@ open class Embed : Plugin<Project> {
             ) {
                 val kotlinNative = project.pluginManager.findPlugin("org.jetbrains.kotlin.native")
                 println("Kotlin Native plugin found: $kotlinNative")
+                TODO("Embed does not support the Native plugin yet")
             }
 
             if (
@@ -98,6 +109,7 @@ open class Embed : Plugin<Project> {
             ) {
                 val kotlinAndroid = project.pluginManager.findPlugin("org.jetbrains.kotlin.android")
                 println("Kotlin Android plugin found: $kotlinAndroid")
+                TODO("Embed does not support the Android plugin yet")
             }
         }
     }

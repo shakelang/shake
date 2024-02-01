@@ -838,6 +838,12 @@
             "Automatically add sourceSets for generated code",
             "Update com.shakelang.util.embed:api to 0.1.1"
           ]
+        },
+        {
+          "version": "0.2.1",
+          "changes": [
+            "Automatically make compile tasks depend on embedGenerateSources"
+          ]
         }
       ]
     },
