@@ -2,12 +2,10 @@ import com.shakelang.util.changelog.resolveVersion
 import conventions.dependencies
 import conventions.projectGroup
 import conventions.useKotest
-import dev.icerock.gradle.MRVisibility
 
 plugins {
     id("conventions.all")
     id("conventions.publishing")
-    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 repositories {
@@ -30,19 +28,9 @@ kotlin {
         implementation(project(":shake:compiler:lexer"))
         implementation(project(":shake:compiler:parser"))
         testImplementation(project(":util:testlib"))
+        testImplementation(project(":util:embed:api"))
         testImplementation(project(":shake:compiler:shakelib"))
-
-        testImplementation("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
-        testImplementation("dev.icerock.moko:resources-test:0.23.0")
     }
-}
-
-multiplatformResources {
-    multiplatformResourcesPackage = "com.shakelang.shake.processor.testsrc" // required
-    multiplatformResourcesClassName = "SharedRes" // optional, default MR
-    multiplatformResourcesVisibility = MRVisibility.Internal // optional, default Public
-    iosBaseLocalizationRegion = "en" // optional, default "en"
-    multiplatformResourcesSourceSet = "commonTest" // optional, default "commonMain"
 }
 
 useKotest()

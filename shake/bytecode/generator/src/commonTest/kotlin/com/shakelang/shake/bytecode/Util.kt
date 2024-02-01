@@ -5,15 +5,14 @@ import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.wrapper.ShakeInterpreterClasspath
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
-import com.shakelang.shake.stdlib.CoreFiles
+import com.shakelang.shake.shakelib.ShakeLib
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 
 fun createBaseProcessor(): ShakePackageBasedProcessor {
     val processor = ShakePackageBasedProcessor()
-    processor.loadSynthetic("shake/lang/Object.shake", CoreFiles.OBJECT_SHAKE)
-    processor.loadSynthetic("shake/lang/String.shake", CoreFiles.STRING_SHAKE)
-    processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
-    processor.loadSynthetic("shake/lang/Print.shake", CoreFiles.PRINT_SHAKE)
+    ShakeLib.forEachFile {
+        processor.loadSynthetic(it.path, it.contentsAsString())
+    }
 
     return processor
 }

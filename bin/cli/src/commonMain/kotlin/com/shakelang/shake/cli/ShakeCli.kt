@@ -14,7 +14,7 @@ import com.shakelang.shake.parser.ShakeParser
 import com.shakelang.shake.parser.node.ShakeBlockNode
 import com.shakelang.shake.parser.node.ShakeFileNode
 import com.shakelang.shake.processor.ShakePackageBasedProcessor
-import com.shakelang.shake.stdlib.CoreFiles
+import com.shakelang.shake.shakelib.ShakeLib
 import com.shakelang.util.commander.CommanderValueValidators
 import com.shakelang.util.commander.ValueValidationException
 import com.shakelang.util.commander.command
@@ -52,9 +52,9 @@ val baseProcessor: ShakePackageBasedProcessor
     get() {
         val processor = ShakePackageBasedProcessor()
 
-        processor.loadSynthetic("shake/lang/Object.shake", CoreFiles.OBJECT_SHAKE)
-        processor.loadSynthetic("shake/lang/String.shake", CoreFiles.STRING_SHAKE)
-        processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
+        ShakeLib.forEachFile {
+            processor.loadSynthetic(it.path, it.contentsAsString())
+        }
 
         return processor
     }

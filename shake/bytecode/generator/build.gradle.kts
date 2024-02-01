@@ -23,6 +23,7 @@ kotlin {
         implementation(project(":shake:compiler:processor"))
         testImplementation(project(":util:testlib"))
         testImplementation(project(":util:shason"))
+        testImplementation(project(":util:embed:api"))
         testImplementation(project(":shake:compiler:shakelib"))
         testImplementation(project(":shake:bytecode:interpreter"))
         testImplementation(project(":shake:bytecode:tools"))
