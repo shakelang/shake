@@ -1,0 +1,52 @@
+// This file tests object creation, field access and method invocation
+// with a simple class hierarchy.
+// See objects.out for the expected output of this program.
+
+class Number {
+
+    final int value;
+
+    constructor(int v) {
+        this.value = v;
+    }
+
+    int getValue() {
+        return this.value;
+    }
+
+    Number add(Number other) {
+        return new Number(this.value + other.value);
+    }
+
+    Number sub(Number other) {
+        return new Number(this.value - other.value);
+    }
+
+    Number mul(Number other) {
+        return new Number(this.value * other.value);
+    }
+
+    Number div(Number other) {
+        return new Number(this.value / other.value);
+    }
+
+    void print() {
+        println(this.value);
+    }
+
+}
+
+void main() {
+
+    Number n1 = new Number(3);
+    Number n2 = new Number(2);
+
+    n1.add(n2).print();
+    n1.sub(n2).print();
+    n1.mul(n2).print();
+    n1.div(n2).print();
+
+}
+
+
+

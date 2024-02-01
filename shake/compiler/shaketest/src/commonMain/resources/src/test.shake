@@ -1,5 +1,0 @@
-package test;
-
-void main() {
-    print(10);
-}
