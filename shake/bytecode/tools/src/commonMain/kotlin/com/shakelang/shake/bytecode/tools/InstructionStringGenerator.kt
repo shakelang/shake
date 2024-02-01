@@ -183,7 +183,42 @@ class InstructionStringGenerator(
             Opcodes.PCAST -> return "pcast 0x${bytes.readUnsignedByte().toBytes().toHexString()}"
             Opcodes.INVOKE_STATIC -> {
                 val addr = bytes.readUnsignedInt()
-                return "call `${storage.constantPool.getUtf8(addr.toInt()).value}`"
+                return "invoke_static `${storage.constantPool.getUtf8(addr.toInt()).value}`"
+            }
+
+            Opcodes.INVOKE_VIRTUAL -> {
+                val addr = bytes.readUnsignedInt()
+                return "invoke_virtual `${storage.constantPool.getUtf8(addr.toInt()).value}`"
+            }
+
+            Opcodes.LOAD_STATIC -> {
+                val addr = bytes.readUnsignedInt()
+                return "load_static `${storage.constantPool.getUtf8(addr.toInt()).value}`"
+            }
+
+            Opcodes.LOAD_VIRTUAL -> {
+                val addr = bytes.readUnsignedInt()
+                return "load_virtual `${storage.constantPool.getUtf8(addr.toInt()).value}`"
+            }
+
+            Opcodes.STORE_STATIC -> {
+                val addr = bytes.readUnsignedInt()
+                return "store_static `${storage.constantPool.getUtf8(addr.toInt()).value}`"
+            }
+
+            Opcodes.STORE_VIRTUAL -> {
+                val addr = bytes.readUnsignedInt()
+                return "store_virtual `${storage.constantPool.getUtf8(addr.toInt()).value}`"
+            }
+
+            Opcodes.NEW_OBJ -> {
+                val addr = bytes.readUnsignedInt()
+                return "new_obj `${storage.constantPool.getUtf8(addr.toInt()).value}`"
+            }
+
+            Opcodes.NEW_ARR -> {
+                val addr = bytes.readUnsignedInt()
+                return "new_arr `${storage.constantPool.getUtf8(addr.toInt()).value}`"
             }
 
             else -> throw IllegalStateException("Unknown opcode: 0x${opcode.toBytes().toHexString()}")

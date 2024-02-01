@@ -80,7 +80,7 @@ class ShakeInterpreter {
     fun createCodeInterpreter(code: ByteArray, method: ShakeInterpreterMethod) = ShakeCodeInterpreter(code, method)
     fun createCodeInterpreter(method: ShakeInterpreterMethod): ShakeCallStackElement {
         if (method.isNative) {
-            return process.natives[method.fullName] ?: throw NullPointerException("Native ${method.qualifiedName} not found")
+            return process.natives[method.fullName]?.reset() ?: throw NullPointerException("Native ${method.qualifiedName} not found")
         }
         return createCodeInterpreter(method.code, method)
     }

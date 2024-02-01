@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode
 
+import com.shakelang.shake.bytecode.tools.BytecodeStringGenerator
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -215,6 +216,8 @@ class BytecodeGeneratorTest : FreeSpec(
                                 
                 """.trimIndent(),
             ) {
+                println(BytecodeStringGenerator(format).generate().joinToString("\n"))
+
                 execute("test/Test:main()V")
                 consoleOut shouldBe "1042"
             }

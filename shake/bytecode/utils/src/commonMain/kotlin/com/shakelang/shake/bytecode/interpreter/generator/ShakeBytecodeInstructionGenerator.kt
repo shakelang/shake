@@ -321,6 +321,12 @@ open class ShakeBytecodeInstructionGenerator(
             "s" -> sload(variable)
             "i" -> iload(variable)
             "j" -> lload(variable)
+            else ->
+                if (type.startsWith("L") && type.endsWith(";")) {
+                    lload(variable)
+                } else {
+                    throw IllegalArgumentException("Unknown type: $type")
+                }
         }
     }
 
@@ -415,6 +421,12 @@ open class ShakeBytecodeInstructionGenerator(
             "s" -> sstore(variable)
             "i" -> istore(variable)
             "j" -> lstore(variable)
+            else ->
+                if (type.startsWith("L") && type.endsWith(";")) {
+                    lstore(variable)
+                } else {
+                    throw IllegalArgumentException("Unknown type: $type")
+                }
         }
     }
 
