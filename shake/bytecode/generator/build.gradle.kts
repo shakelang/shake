@@ -17,6 +17,7 @@ kotlin {
     dependencies {
         implementation(project(":util:pointers"))
         implementation(project(":util:primitives"))
+        implementation(project(":util:logger"))
         implementation(project(":util:common-io"))
         implementation(project(":shake:bytecode:conventions"))
         implementation(project(":shake:bytecode:utils"))
@@ -25,6 +26,7 @@ kotlin {
         testImplementation(project(":util:shason"))
         testImplementation(project(":util:embed:api"))
         testImplementation(project(":shake:compiler:shakelib"))
+        testImplementation(project(":shake:compiler:shaketest"))
         testImplementation(project(":shake:bytecode:interpreter"))
         testImplementation(project(":shake:bytecode:tools"))
     }
