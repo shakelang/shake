@@ -15,3 +15,7 @@ Prints the current version
 * Automatically add sourceSets for generated code
 
 * Update com.shakelang.util.embed:api to 0.1.1
+
+### 0.2.1
+
+* Automatically make compile tasks depend on embedGenerateSources

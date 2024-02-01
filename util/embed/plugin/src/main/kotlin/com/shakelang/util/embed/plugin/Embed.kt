@@ -36,10 +36,10 @@ open class Embed : Plugin<Project> {
                     }
                 }
 
-                sourceSetMap.forEach {
+                sourceSetMap.forEach { sourceSetEntry ->
                     // We need to create a sourceSet for each configuration
-                    val sourceSet = it.key
-                    val configurations = it.value
+                    val sourceSet = sourceSetEntry.key
+                    val configurations = sourceSetEntry.value
                     configurations.forEachIndexed { index, embedConfiguration ->
 
                         val generatedSourceSetBaseName = "embed${sourceSet.name.capitalize()}"
@@ -68,6 +68,13 @@ open class Embed : Plugin<Project> {
                         }
 
                         sourceSet.dependsOn(generatedSourceSet)
+
+                        // make all tasks depend on the fileBuilder task
+                        project.tasks.forEach {
+                            if (it.name.toLowerCase().contains(sourceSet.name.toLowerCase())) {
+                                it.dependsOn(fileBuilder)
+                            }
+                        }
                     }
                 }
             }
