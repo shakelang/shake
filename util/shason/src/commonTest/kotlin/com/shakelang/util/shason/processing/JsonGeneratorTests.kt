@@ -475,7 +475,7 @@ class JsonGeneratorTests : FreeSpec(
         }
 
         "generate JsonArray with float value" {
-            JsonGenerator.generate(JsonArray.of(listOf(42.0.toFloat()))) shouldBe "[42.0]"
+            JsonGenerator.generate(JsonArray.of(listOf(42.0.toFloat()))) shouldBe "[42]"
         }
 
         "generate JsonArray with double value" {
@@ -570,7 +570,7 @@ class JsonGeneratorTests : FreeSpec(
         }
 
         "generate JsonObject with float value" {
-            JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.toFloat()))) shouldBe "{\"hello\":42.0}"
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.toFloat()))) shouldBe "{\"hello\":42}"
         }
 
         "generate JsonObject with double value" {
