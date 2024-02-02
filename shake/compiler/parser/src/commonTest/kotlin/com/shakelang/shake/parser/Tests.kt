@@ -21,13 +21,13 @@ class Tests : FreeSpec({
                     .replace(".shake", ".json")
                     .split("/", limit = 2).last(),
             ]
-                ?: error("Outfile for ${it.path} not found")
-            ).toFile()
+            )?.toFile()
 
-        debugger("Generating test for ${json.stringify(inputFile.path)} with output ${json.stringify(outputFile.path)}")
+        debugger("Generating test for ${json.stringify(inputFile.path)} with output ${json.stringify(outputFile?.path)}")
 
         // execute the test
         inputFile.path {
+            if (outputFile == null) error("No output file found for ${inputFile.path}")
             val ast = json.stringify(ParserTestUtil.parse(inputFile.path, inputFile.contentsAsString()).json)
             val expected = json.stringify(json.parse(outputFile.contentsAsString()).toJsonObject().toMap())
             ast shouldBe expected
