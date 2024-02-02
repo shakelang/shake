@@ -44,7 +44,7 @@ object JsonGenerator {
 
                 ) {
                     generate(
-                        it!!,
+                        it,
                         indent,
                         indentAmount + 1,
                     )
@@ -98,7 +98,6 @@ object JsonGenerator {
             is Array<*> -> generate(o, indent = indent, indentAmount = indentAmount)
             is Set<*> -> generate(o.toTypedArray(), indent = indent, indentAmount = indentAmount)
             is List<*> -> generate(o.toTypedArray(), indent = indent, indentAmount = indentAmount)
-            is JsonNullElement -> "null"
             is JsonPrimitive -> generate(o.value)
             is JsonObject -> generate(o.value, indent = indent, indentAmount = indentAmount)
             is JsonArray -> generate(o.value, indent = indent, indentAmount = indentAmount)
