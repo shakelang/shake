@@ -744,7 +744,7 @@ class ShakeParserImpl(
             input.skip()
             if (input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
             list.add(expectNotNull(input.actualValue))
-        } while (input.hasNext() && input.skipIgnorable().peekType() == ShakeTokenType.DOT)
+        } while (input.hasNext() && input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT)
         return ShakePackageNode(map, list.toTypedArray())
     }
 
