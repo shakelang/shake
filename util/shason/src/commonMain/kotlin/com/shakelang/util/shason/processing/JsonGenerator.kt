@@ -93,7 +93,9 @@ object JsonGenerator {
     fun generate(o: Any?, indent: String? = null, indentAmount: Int = 0): String {
         return when (o) {
             null -> return "null"
-            is Boolean, is Byte, is Short, is Int, is Long, is Float, is Double -> o.toString()
+            is Boolean, is Byte, is Short, is Int, is Long -> o.toString()
+            is Float -> generate(o)
+            is Double -> generate(o)
             is Map<*, *> -> generate(o, indent = indent, indentAmount = indentAmount)
             is Array<*> -> generate(o, indent = indent, indentAmount = indentAmount)
             is Set<*> -> generate(o.toTypedArray(), indent = indent, indentAmount = indentAmount)
@@ -103,5 +105,19 @@ object JsonGenerator {
             is JsonArray -> generate(o.value, indent = indent, indentAmount = indentAmount)
             else -> generate(o.toString())
         }
+    }
+
+    fun generate(d: Double): String {
+        if (d.isInfinite() || d.isNaN()) return "null"
+        // don't generate 10.0, but 10
+        if (d == d.toLong().toDouble()) return d.toLong().toString()
+        return d.toString()
+    }
+
+    fun generate(f: Float): String {
+        if (f.isInfinite() || f.isNaN()) return "null"
+        // don't generate 10.0, but 10
+        if (f == f.toLong().toFloat()) return f.toLong().toString()
+        return f.toString()
     }
 }

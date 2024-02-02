@@ -268,7 +268,7 @@ class JsonGeneratorTests : FreeSpec(
                     "list" to listOf("42"),
                     "map" to mapOf("42" to 42),
                     "json" to JsonStringElement("42"),
-                )
+                ),
             ) shouldBe "{\"hello\":42,\"world\":\"42\",\"array\":[\"42\"],\"list\":[\"42\"],\"map\":{\"42\":42},\"json\":\"42\"}"
         }
 
@@ -345,7 +345,7 @@ class JsonGeneratorTests : FreeSpec(
                     listOf("42"),
                     mapOf("42" to 42),
                     JsonStringElement("42"),
-                )
+                ),
             ) shouldBe "[42,\"42\",[\"42\"],[\"42\"],{\"42\":42},\"42\"]"
         }
 
@@ -359,7 +359,7 @@ class JsonGeneratorTests : FreeSpec(
                     mapOf("42" to 42),
                     JsonStringElement("42"),
                     null,
-                )
+                ),
             ) shouldBe "[42,\"42\",[\"42\"],[\"42\"],{\"42\":42},\"42\",null]"
         }
 
@@ -436,7 +436,7 @@ class JsonGeneratorTests : FreeSpec(
                     listOf("42"),
                     mapOf("42" to 42),
                     JsonStringElement("42"),
-                )
+                ),
             ) shouldBe "[42,\"42\",[\"42\"],[\"42\"],{\"42\":42},\"42\"]"
         }
 
@@ -450,7 +450,7 @@ class JsonGeneratorTests : FreeSpec(
                     mapOf("42" to 42),
                     JsonStringElement("42"),
                     null,
-                )
+                ),
             ) shouldBe "[42,\"42\",[\"42\"],[\"42\"],{\"42\":42},\"42\",null]"
         }
 
@@ -528,8 +528,8 @@ class JsonGeneratorTests : FreeSpec(
                         listOf("42"),
                         mapOf("42" to 42),
                         JsonStringElement("42"),
-                    )
-                )
+                    ),
+                ),
             ) shouldBe "[42,\"42\",[\"42\"],[\"42\"],{\"42\":42},\"42\"]"
         }
 
@@ -544,13 +544,104 @@ class JsonGeneratorTests : FreeSpec(
                         mapOf("42" to 42),
                         JsonStringElement("42"),
                         null,
-                    )
-                )
+                    ),
+                ),
             ) shouldBe "[42,\"42\",[\"42\"],[\"42\"],{\"42\":42},\"42\",null]"
         }
 
+        "generate JsonObject with null value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to null))) shouldBe "{\"hello\":null}"
+        }
 
+        "generate JsonObject with byte value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.toByte()))) shouldBe "{\"hello\":42}"
+        }
 
+        "generate JsonObject with short value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.toShort()))) shouldBe "{\"hello\":42}"
+        }
 
+        "generate JsonObject with int value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42))) shouldBe "{\"hello\":42}"
+        }
+
+        "generate JsonObject with long value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42L))) shouldBe "{\"hello\":42}"
+        }
+
+        "generate JsonObject with float value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.toFloat()))) shouldBe "{\"hello\":42.0}"
+        }
+
+        "generate JsonObject with double value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to 42.1))) shouldBe "{\"hello\":42.1}"
+        }
+
+        "generate JsonObject with boolean value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to true))) shouldBe "{\"hello\":true}"
+        }
+
+        "generate JsonObject with array value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to arrayOf("world")))) shouldBe "{\"hello\":[\"world\"]}"
+        }
+
+        "generate JsonObject with list value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to listOf("world")))) shouldBe "{\"hello\":[\"world\"]}"
+        }
+
+        "generate JsonObject with map value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to mapOf("world" to 42)))) shouldBe "{\"hello\":{\"world\":42}}"
+        }
+
+        "generate JsonObject with JsonStringElement value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to JsonStringElement("world")))) shouldBe "{\"hello\":\"world\"}"
+        }
+
+        "generate JsonObject with JsonNullElement value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to JsonNullElement.INSTANCE))) shouldBe "{\"hello\":null}"
+        }
+
+        "generate JsonObject with JsonBooleanElement value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to JsonBooleanElement.TRUE))) shouldBe "{\"hello\":true}"
+        }
+
+        "generate JsonObject with JsonArray value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to JsonArray.of(listOf(JsonStringElement("world")))))) shouldBe "{\"hello\":[\"world\"]}"
+        }
+
+        "generate JsonObject with JsonObject value" {
+            JsonGenerator.generate(JsonObject.of(mapOf("hello" to JsonObject.of(mapOf("world" to JsonStringElement("42")))))) shouldBe "{\"hello\":{\"world\":\"42\"}}"
+        }
+
+        "generate JsonObject with mixed values" {
+            JsonGenerator.generate(
+                JsonObject.of(
+                    mapOf(
+                        "hello" to 42,
+                        "world" to "42",
+                        "array" to arrayOf("42"),
+                        "list" to listOf("42"),
+                        "map" to mapOf("42" to 42),
+                        "json" to JsonStringElement("42"),
+                    ),
+                ),
+            ) shouldBe "{\"hello\":42,\"world\":\"42\",\"array\":[\"42\"],\"list\":[\"42\"],\"map\":{\"42\":42},\"json\":\"42\"}"
+        }
+
+        "generate JsonObject with mixed values and null" {
+            JsonGenerator.generate(
+                JsonObject.of(
+                    mapOf(
+                        "hello" to 42,
+                        "world" to "42",
+                        "array" to arrayOf("42"),
+                        "list" to listOf("42"),
+                        "map" to mapOf("42" to 42),
+                        "json" to JsonStringElement("42"),
+                        "null" to null,
+                    ),
+                ),
+            ) shouldBe "{\"hello\":42,\"world\":\"42\",\"array\":[\"42\"],\"list\":[\"42\"],\"map\":{\"42\":42},\"json\":\"42\",\"null\":null}"
+        }
     },
 )
