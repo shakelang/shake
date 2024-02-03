@@ -1,25 +1,3 @@
 {
-  "bumps": [
-    {
-      "type": "patch",
-      "message": "Fix NullPointerException in some cases on stringify of null",
-      "paths": [
-        ":util:shason"
-      ]
-    },
-    {
-      "type": "patch",
-      "message": "Generate of float/double 10 should be generated to 10 instead of 10.0",
-      "paths": [
-        ":util:shason"
-      ]
-    },
-    {
-      "type": "patch",
-      "message": "Bugfix: Parsed \"null\" as string. Now it is parsed into a JsonNullElement",
-      "paths": [
-        ":util:shason"
-      ]
-    }
-  ]
+  "bumps": []
 }

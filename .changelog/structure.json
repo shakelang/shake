@@ -93,7 +93,7 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.util.changelog:changelog",
-      "version": "0.7.3",
+      "version": "0.7.4",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.util.changelog",
       "license": "",
@@ -161,7 +161,7 @@
     {
       "path": ":util:jvmlib",
       "name": "com.shakelang.util:jvmlib",
-      "version": "0.2.1-SNAPSHOT",
+      "version": "0.2.2-SNAPSHOT",
       "description": "A library for jvm stuff in java",
       "author": "com.shakelang.util",
       "license": "",
@@ -238,7 +238,7 @@
     {
       "path": ":util:sarifmerge",
       "name": "com.shakelang.util:sarifmerge",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "description": "Utility package to merged sarif files for github report",
       "author": "com.shakelang.util",
       "license": "",
@@ -250,7 +250,7 @@
     {
       "path": ":util:shason",
       "name": "com.shakelang.util:shason",
-      "version": "0.4.1",
+      "version": "0.4.2",
       "description": "A json parser implemented in kotlin (mpp)",
       "author": "com.shakelang.util",
       "license": "",
@@ -393,7 +393,7 @@
     {
       "path": ":shake:compiler:parser",
       "name": "com.shakelang.shake.compiler:parser",
-      "version": "0.1.6-SNAPSHOT",
+      "version": "0.1.7-SNAPSHOT",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.compiler",
       "license": "",
@@ -531,5 +531,5 @@
       ]
     }
   ],
-  "lastUpdate": 1706918507521
+  "lastUpdate": 1706918610860
 }
