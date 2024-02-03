@@ -43,6 +43,7 @@ class JsonParser(
             DOUBLE -> JsonElement.from(tokens.actual.value!!.toDouble())
             TRUE -> JsonBooleanElement.TRUE
             FALSE -> JsonBooleanElement.FALSE
+            NULL -> JsonNullElement.INSTANCE
 
             else -> throw ParserError("Could not parse token $next")
         }

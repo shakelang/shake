@@ -13,6 +13,13 @@
       "paths": [
         ":util:shason"
       ]
+    },
+    {
+      "type": "patch",
+      "message": "Bugfix: Parsed \"null\" as string. Now it is parsed into a JsonNullElement",
+      "paths": [
+        ":util:shason"
+      ]
     }
   ]
 }
