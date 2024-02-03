@@ -1,3 +1,6 @@
+// This file contains the basic api for generating our test cases
+// It does not include any actions, but just defines basic utilities
+
 const fs = require("fs").promises;
 const path = require("path");
 

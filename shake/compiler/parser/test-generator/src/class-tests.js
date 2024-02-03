@@ -1,3 +1,6 @@
+// This file automatically generates tests for classes.
+// Its output is stored into the commonTest/resources/tests/classes directory.
+
 const path = require("path");
 const fs = require("fs-extra").promises;
 const { forFileName, Template, fromBaseDir, relativize } = require("./api");

@@ -1,3 +1,6 @@
+// This file automatically generates tests for fields.
+// Its output is stored into the commonTest/resources/tests/fields directory.
+
 const fs = require("fs-extra").promises;
 const { forFileName, Template, fromBaseDir, relativize } = require("./api");
 const path = require("path");

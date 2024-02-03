@@ -1,0 +1,5 @@
+This is a basic project of javascript files used for generating unit tests for our shake parser.
+We want to test as many weird edge cases as possible, so we can be sure that our parser is robust.
+For that reason we've decided to automatically generate the tests.
+You don't need to generate these tests yourself, they are committed to the repository.
+This is the generator code, which is not part of the project, but is used to generate the tests.
