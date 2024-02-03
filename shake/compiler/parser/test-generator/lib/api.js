@@ -31,9 +31,23 @@ module.exports.baseDir = path.resolve(__dirname, "..", "..");
 module.exports.fromBaseDir = function fromBaseDir(...args) {
   return path.resolve(module.exports.baseDir, ...args);
 };
-module.exports.relativize = function relativize(...args) {
+function relativize(...args) {
   return path.relative(module.exports.baseDir, path.resolve(...args));
-};
+}
+
+module.exports.relativize = relativize;
+
+/**
+ * Apply a replace-template to a string
+ * @param {string} string
+ * @param {[RegExp, string][]} template
+ */
+function applyReplaceTemplate(string, template) {
+  for (const [from, to] of template) {
+    string = string.replace(from, to);
+  }
+  return string;
+}
 
 module.exports.primitiveTypes = [
   ["byte", "byte"],
@@ -49,3 +63,71 @@ module.exports.primitiveTypes = [
   ["unsigned int", "unsigned_integer"],
   ["unsigned long", "unsigned_long"],
 ];
+
+/**
+ * Generate a test case
+ *
+ * @param {string} test The test file (without extension)
+ * @param {string} input the input contents
+ * @param {string} output the output contents (or null if no output is expected)
+ * @param {string} error the error contents (or null if no error is expected)
+ * @param {[RegExp, string][]} template the template to use
+ * @param {boolean} newlineTest whether to generate a second test with an appended newline
+ */
+async function generateTest(
+  test,
+  input,
+  output,
+  error,
+  template,
+  newlineTest = true
+) {
+  if (newlineTest) {
+    await generateTest(
+      `${test}_no_newline`,
+      input,
+      output,
+      error,
+      template,
+      false
+    );
+    await generateTest(
+      `${test}_newline`,
+      `${input}\n`,
+      output,
+      error,
+      template,
+      false
+    );
+    return;
+  }
+
+  await fs.mkdir(path.dirname(test), { recursive: true });
+
+  const testFile = `${test}.shake`;
+  const outputFile = `${test}.json`;
+  const errorFile = `${test}.error`;
+
+  console.log(`Generating ${relativize(testFile)}...`);
+  await fs.writeFile(testFile, applyReplaceTemplate(input, template), "utf8");
+
+  if (output !== null) {
+    console.log(`Generating ${relativize(outputFile)}...`);
+    await fs.writeFile(
+      outputFile,
+      applyReplaceTemplate(output, template),
+      "utf8"
+    );
+  }
+
+  if (error !== null) {
+    console.log(`Generating ${relativize(errorFile)}...`);
+    await fs.writeFile(
+      errorFile,
+      applyReplaceTemplate(error, template),
+      "utf8"
+    );
+  }
+}
+
+module.exports.generateTest = generateTest;

@@ -6,8 +6,8 @@ const {
   forFileName,
   Template,
   fromBaseDir,
-  relativize,
   primitiveTypes,
+  generateTest,
 } = require("./api");
 const path = require("path");
 
@@ -29,39 +29,20 @@ const path = require("path");
       finalVal,
       attributes
     ) {
-      const file = path.resolve(fieldsDirectory, `${nameBase}.shake`);
-      fs.mkdir(path.dirname(file), { recursive: true });
-
-      console.log(`Generating ${relativize(file)}...`);
-
-      await fs.writeFile(
-        file,
-        (await template.shake)
-          .replace("%type%", type[0])
-          .replace("%type_name%", type[1])
-          .replace("%name%", "field")
-          .replace("%access%", access)
-          .replace("%static%", staticVal)
-          .replace("%final%", finalVal)
-          .replace("%attributes%", attributes),
-        "utf8"
-      );
-
-      const jsonFile = path.resolve(fieldsDirectory, `${nameBase}.json`);
-
-      console.log(`Generating ${relativize(jsonFile)}...`);
-
-      await fs.writeFile(
-        jsonFile,
-        (await template.json)
-          .replace("%type%", type[0])
-          .replace("%type_name%", type[1])
-          .replace("%name%", "field")
-          .replace("%access%", access)
-          .replace("%static%", staticVal)
-          .replace("%final%", finalVal)
-          .replace("%attributes%", attributes),
-        "utf8"
+      await generateTest(
+        path.resolve(fieldsDirectory, nameBase),
+        await template.shake,
+        await template.json,
+        null,
+        [
+          [/%type%/g, type[0]],
+          [/%type_name%/g, type[1]],
+          [/%name%/g, "field"],
+          [/%access%/g, access],
+          [/%static%/g, staticVal],
+          [/%final%/g, finalVal],
+          [/%attributes%/g, attributes],
+        ]
       );
     }
 
