@@ -1,0 +1,2 @@
+// Field of type boolean
+static public boolean field = 10

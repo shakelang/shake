@@ -1,0 +1,2 @@
+// Field of type unsigned_integer
+final private unsigned int field = 42

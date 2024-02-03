@@ -1,0 +1,2 @@
+// Field of type unsigned_short
+static final public unsigned short field = 10

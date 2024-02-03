@@ -1,0 +1,1 @@
+Error occurred in parser: ParserError, Static keyword is only for objects in classes, interfaces or enums in <ShakeParserTestInput/tests/fields/short/static_field8_no_newline.shake>:2:1

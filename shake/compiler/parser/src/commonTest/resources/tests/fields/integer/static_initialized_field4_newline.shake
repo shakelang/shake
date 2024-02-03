@@ -1,0 +1,2 @@
+// Field of type integer
+static final int field = 10

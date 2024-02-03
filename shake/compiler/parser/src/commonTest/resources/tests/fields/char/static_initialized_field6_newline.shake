@@ -1,0 +1,2 @@
+// Field of type char
+static protected final char field = 10
