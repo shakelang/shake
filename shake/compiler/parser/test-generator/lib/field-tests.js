@@ -2,27 +2,20 @@
 // Its output is stored into the commonTest/resources/tests/fields directory.
 
 const fs = require("fs-extra").promises;
-const { forFileName, Template, fromBaseDir, relativize } = require("./api");
+const {
+  forFileName,
+  Template,
+  fromBaseDir,
+  relativize,
+  primitiveTypes,
+} = require("./api");
 const path = require("path");
 
 (async () => {
   const fieldsDirectory = fromBaseDir("src/commonTest/resources/tests/fields");
   await fs.mkdir(fieldsDirectory, { recursive: true });
 
-  const types = [
-    ["byte", "byte"],
-    ["short", "short"],
-    ["int", "integer"],
-    ["long", "long"],
-    ["float", "float"],
-    ["double", "double"],
-    ["char", "char"],
-    ["boolean", "boolean"],
-    ["unsigned byte", "unsigned_byte"],
-    ["unsigned short", "unsigned_short"],
-    ["unsigned int", "unsigned_integer"],
-    ["unsigned long", "unsigned_long"],
-  ];
+  const types = primitiveTypes;
 
   const template0 = new Template("field");
   const template1 = new Template("initialized-field");

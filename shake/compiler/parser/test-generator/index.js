@@ -1,2 +1,2 @@
-const commander = require('commander');
-const fs = require('fs-extra');
+require("./lib/class-tests.js");
+require("./lib/field-tests.js");

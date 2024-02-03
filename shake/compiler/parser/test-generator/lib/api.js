@@ -34,3 +34,18 @@ module.exports.fromBaseDir = function fromBaseDir(...args) {
 module.exports.relativize = function relativize(...args) {
   return path.relative(module.exports.baseDir, path.resolve(...args));
 };
+
+module.exports.primitiveTypes = [
+  ["byte", "byte"],
+  ["short", "short"],
+  ["int", "integer"],
+  ["long", "long"],
+  ["float", "float"],
+  ["double", "double"],
+  ["char", "char"],
+  ["boolean", "boolean"],
+  ["unsigned byte", "unsigned_byte"],
+  ["unsigned short", "unsigned_short"],
+  ["unsigned int", "unsigned_integer"],
+  ["unsigned long", "unsigned_long"],
+];
