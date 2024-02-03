@@ -17,8 +17,8 @@ const path = require("path");
 
   const types = primitiveTypes;
 
-  const template0 = new Template("field");
-  const template1 = new Template("initialized-field");
+  const template0 = new Template("fields/field");
+  const template1 = new Template("fields/initialized-field");
 
   for (const type of types) {
     async function generateTemplates(

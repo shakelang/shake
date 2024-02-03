@@ -29,7 +29,7 @@ const {
 
     const types = primitiveTypes;
 
-    const template = new Template("class-field");
+    const template = new Template("classes/class-field");
 
     for (const type of types) {
       generateTest(
