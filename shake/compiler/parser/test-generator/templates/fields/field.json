@@ -10,7 +10,7 @@
       },
       "access": "%access%",
       "assignment": null,
-      "is_static": %static%,
+      "is_static": false,
       "is_final": %final%
     }
   ]

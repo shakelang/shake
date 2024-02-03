@@ -20,14 +20,13 @@ const path = require("path");
   const template0 = new Template("fields/field");
   const template1 = new Template("fields/initialized-field");
   const template2 = new Template("fields/static-field");
+  const template3 = new Template("fields/initialized-static-field");
 
   for (const type of types) {
     /**
-     *
      * @param {Template} template
      * @param {string} nameBase
      * @param {string} access
-     * @param {string} staticVal
      * @param {string} finalVal
      * @param {string} attributes
      */
@@ -35,7 +34,6 @@ const path = require("path");
       template,
       nameBase,
       access,
-      staticVal,
       finalVal,
       attributes
     ) {
@@ -43,153 +41,116 @@ const path = require("path");
         path.resolve(fieldsDirectory, nameBase),
         await template.shake,
         await template.json,
-        null,
+        await template.error,
         [
           [/%type%/g, type[0]],
           [/%type_name%/g, type[1]],
           [/%name%/g, "field"],
           [/%access%/g, access],
-          [/%static%/g, staticVal],
           [/%final%/g, finalVal],
           [/%attributes%/g, attributes],
         ]
       );
     }
 
-    await generateTemplates(
-      template0,
-      `${forFileName(type[1])}/field0`,
-      "package",
-      "false",
-      "false",
-      ""
-    );
-    await generateTemplates(
-      template0,
-      `${forFileName(type[1])}/field1`,
-      "public",
-      "false",
-      "false",
-      "public "
-    );
-    await generateTemplates(
-      template0,
-      `${forFileName(type[1])}/field2`,
-      "protected",
-      "false",
-      "false",
-      "protected "
-    );
-    await generateTemplates(
-      template0,
-      `${forFileName(type[1])}/field3`,
-      "private",
-      "false",
-      "false",
-      "private "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field0`,
-      "package",
-      "false",
-      "false",
-      ""
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field1`,
-      "public",
-      "false",
-      "false",
-      "public "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field2`,
-      "protected",
-      "false",
-      "false",
-      "protected "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field3`,
-      "private",
-      "false",
-      "false",
-      "private "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field4`,
-      "package",
-      "false",
-      "true",
-      "final "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field5`,
-      "public",
-      "false",
-      "true",
-      "public final "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field6`,
-      "protected",
-      "false",
-      "true",
-      "protected final "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field7`,
-      "private",
-      "false",
-      "true",
-      "private final "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field8`,
-      "public",
-      "false",
-      "true",
-      "final public "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field8`,
-      "protected",
-      "false",
-      "true",
-      "final protected "
-    );
-    await generateTemplates(
-      template1,
-      `${forFileName(type[1])}/initialized_field9`,
-      "private",
-      "false",
-      "true",
-      "final private "
-    );
+    /**
+     * @param {Function} generator
+     * @param {Template} template
+     * @param {string} nameBase
+     */
+    async function generate(generator, template, nameBase) {
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}0`,
+        "package",
+        "false",
+        ""
+      );
 
-    await generateTest(
-      path.resolve(fieldsDirectory, `${forFileName(type[1])}/static_field0`),
-      await template2.shake,
-      null,
-      await template2.error,
-      [
-        [/%type%/g, type[0]],
-        [/%type_name%/g, type[1]],
-        [/%name%/g, "field"],
-        [/%access%/g, "package"],
-        [/%final%/g, "true"],
-        [/%attributes%/g, ""],
-      ]
-    );
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}1`,
+        "public",
+        "false",
+        "public "
+      );
+
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}2`,
+        "protected",
+        "false",
+        "protected "
+      );
+
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}3`,
+        "private",
+        "false",
+        "private "
+      );
+
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}4`,
+        "package",
+        "true",
+        "final "
+      );
+
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}5`,
+        "public",
+        "true",
+        "public final "
+      );
+
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}6`,
+        "protected",
+        "true",
+        "protected final "
+      );
+
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}7`,
+        "private",
+        "true",
+        "private final "
+      );
+
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}8`,
+        "public",
+        "true",
+        "final public "
+      );
+
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}9`,
+        "protected",
+        "true",
+        "final protected "
+      );
+
+      await generateTemplates(
+        template,
+        `${forFileName(type[1])}/${nameBase}10`,
+        "private",
+        "true",
+        "final private "
+      );
+    }
+
+    await generate(generateTemplates, template0, "field");
+    await generate(generateTemplates, template1, "initialized_field");
+    await generate(generateTemplates, template2, "static_field");
+    await generate(generateTemplates, template3, "static_initialized_field");
   }
 })();

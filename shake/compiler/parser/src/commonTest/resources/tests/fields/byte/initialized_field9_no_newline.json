@@ -8,7 +8,7 @@
         "name": "ShakeVariableType",
         "type": "byte"
       },
-      "access": "private",
+      "access": "protected",
       "assignment": {
         "name": "ShakeIntegerNode",
         "value": 42

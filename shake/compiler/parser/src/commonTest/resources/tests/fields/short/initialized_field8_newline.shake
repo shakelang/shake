@@ -1,2 +1,2 @@
 // Field of type short
-final protected short field = 42
+final public short field = 42
