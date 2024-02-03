@@ -1,0 +1,2 @@
+// Field of type unsigned_byte
+final private unsigned byte field = 42

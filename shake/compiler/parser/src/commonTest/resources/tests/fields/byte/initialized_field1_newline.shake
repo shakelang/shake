@@ -1,0 +1,2 @@
+// Field of type byte
+public byte field = 42
