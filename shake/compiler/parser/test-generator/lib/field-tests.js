@@ -12,15 +12,25 @@ const {
 const path = require("path");
 
 (async () => {
-  const fieldsDirectory = fromBaseDir("src/commonTest/resources/tests/fields");
+  const fieldsDirectory = fromBaseDir("fields");
   await fs.mkdir(fieldsDirectory, { recursive: true });
 
   const types = primitiveTypes;
 
   const template0 = new Template("fields/field");
   const template1 = new Template("fields/initialized-field");
+  const template2 = new Template("fields/static-field");
 
   for (const type of types) {
+    /**
+     *
+     * @param {Template} template
+     * @param {string} nameBase
+     * @param {string} access
+     * @param {string} staticVal
+     * @param {string} finalVal
+     * @param {string} attributes
+     */
     async function generateTemplates(
       template,
       nameBase,
@@ -165,6 +175,21 @@ const path = require("path");
       "false",
       "true",
       "final private "
+    );
+
+    await generateTest(
+      path.resolve(fieldsDirectory, `${forFileName(type[1])}/static_field0`),
+      await template2.shake,
+      null,
+      await template2.error,
+      [
+        [/%type%/g, type[0]],
+        [/%type_name%/g, type[1]],
+        [/%name%/g, "field"],
+        [/%access%/g, "package"],
+        [/%final%/g, "true"],
+        [/%attributes%/g, ""],
+      ]
     );
   }
 })();

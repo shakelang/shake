@@ -48,5 +48,5 @@ getEmbedExtension(project).configuration {
     sourceSet.set("commonTest")
     distPackage.set("com.shakelang.shake.parser.test")
     distName.set("ShakeParserTestOutput")
-    embed("**/*.json")
+    embed("**/*.json", "**/*.error")
 }

@@ -83,7 +83,7 @@ open class CompilerError : Error {
         start: Position,
         end: Position,
         cause: Throwable? = null,
-    ) : super("$message: $details\n\n$marker\n", cause) {
+    ) : super(message, cause) {
         this.exceptionName = exceptionName
         this.details = details
         this.start = start

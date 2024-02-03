@@ -14,9 +14,7 @@ const {
 
 (async () => {
   // Class Tests
-  const classTestDirectory = fromBaseDir(
-    "src/commonTest/resources/tests/classes"
-  );
+  const classTestDirectory = fromBaseDir("classes");
   await fs.mkdir(classTestDirectory, { recursive: true });
 
   // The following code will generate tests for a single field in a class

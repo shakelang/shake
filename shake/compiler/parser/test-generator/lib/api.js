@@ -27,7 +27,10 @@ module.exports.Template = class Template {
   }
 };
 
-module.exports.baseDir = path.resolve(__dirname, "..", "..");
+module.exports.baseDir = path.resolve(
+  __dirname,
+  "../../src/commonTest/resources/tests/"
+);
 module.exports.fromBaseDir = function fromBaseDir(...args) {
   return path.resolve(module.exports.baseDir, ...args);
 };
@@ -108,14 +111,16 @@ async function generateTest(
   const outputFile = `${test}.json`;
   const errorFile = `${test}.error`;
 
+  const Template = [...template, [/%file%/g, relativize(test)]];
+
   console.log(`Generating ${relativize(testFile)}...`);
-  await fs.writeFile(testFile, applyReplaceTemplate(input, template), "utf8");
+  await fs.writeFile(testFile, applyReplaceTemplate(input, Template), "utf8");
 
   if (output !== null) {
     console.log(`Generating ${relativize(outputFile)}...`);
     await fs.writeFile(
       outputFile,
-      applyReplaceTemplate(output, template),
+      applyReplaceTemplate(output, Template),
       "utf8"
     );
   }
@@ -124,7 +129,7 @@ async function generateTest(
     console.log(`Generating ${relativize(errorFile)}...`);
     await fs.writeFile(
       errorFile,
-      applyReplaceTemplate(error, template),
+      applyReplaceTemplate(error, Template),
       "utf8"
     );
   }

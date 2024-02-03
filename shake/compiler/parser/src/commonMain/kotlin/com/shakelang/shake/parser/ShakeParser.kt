@@ -1688,7 +1688,7 @@ class ShakeParserImpl(
             start: Position,
             end: Position?,
         ) : this(
-            "Error occurred in parser: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
+            "Error occurred in parser: $name, $details in <${start.source.location}>:${start.line}:${start.column}",
             name,
             details,
             start,
