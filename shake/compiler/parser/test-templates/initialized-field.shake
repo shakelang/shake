@@ -1,2 +1,2 @@
 // Field of type %type_name%
-%type% %name% = 42
+%attributes%%type% %name% = 42

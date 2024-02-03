@@ -8,13 +8,13 @@
         "name": "ShakeVariableType",
         "type": "%type_name%"
       },
-      "access": "package",
+      "access": "%access%",
       "assignment": {
         "name": "ShakeIntegerNode",
         "value": 42
       },
-      "is_static": false,
-      "is_final": false
+      "is_static": %static%,
+      "is_final": %final%
     }
   ]
 }

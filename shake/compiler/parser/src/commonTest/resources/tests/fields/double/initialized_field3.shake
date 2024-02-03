@@ -1,0 +1,2 @@
+// Field of type double
+private double field = 42

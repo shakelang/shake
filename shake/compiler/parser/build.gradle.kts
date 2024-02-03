@@ -137,28 +137,175 @@ tasks.register("generateTests") {
 
             types.forEach { type ->
 
-                fun generateTemplates(template: Template, nameBase: String) {
+                fun generateTemplates(
+                    template: Template,
+                    nameBase: String,
+                    access: String,
+                    static: String,
+                    final: String,
+                    attributes: String,
+                ) {
                     val file = fieldsDirectory.resolve("$nameBase.shake")
+                    file.parentFile.mkdirs()
                     file.writeText(
                         template.shake
                             .replace("%type%", type.first)
                             .replace("%type_name%", type.second)
-                            .replace("%name%", "field"),
-
-                        )
+                            .replace("%name%", "field")
+                            .replace("%access%", access)
+                            .replace("%static%", static)
+                            .replace("%final%", final)
+                            .replace("%attributes%", attributes),
+                    )
 
                     val jsonFile = fieldsDirectory.resolve("$nameBase.json")
                     jsonFile.writeText(
                         template.json
                             .replace("%type%", type.first)
                             .replace("%type_name%", type.second)
-                            .replace("%name%", "field"),
+                            .replace("%name%", "field")
+                            .replace("%access%", access)
+                            .replace("%static%", static)
+                            .replace("%final%", final)
+                            .replace("%attributes%", attributes),
                     )
                 }
 
-                generateTemplates(template0, "field_${type.second.forFileName()}")
-                generateTemplates(template1, "initialized_field_${type.second.forFileName()}")
+                generateTemplates(
+                    template0,
+                    "${type.second.forFileName()}/field0",
+                    "package",
+                    "false",
+                    "false",
+                    "",
+                )
 
+                generateTemplates(
+                    template0,
+                    "${type.second.forFileName()}/field1",
+                    "public",
+                    "false",
+                    "false",
+                    "public ",
+                )
+
+                generateTemplates(
+                    template0,
+                    "${type.second.forFileName()}/field2",
+                    "protected",
+                    "false",
+                    "false",
+                    "protected ",
+                )
+
+
+                generateTemplates(
+                    template0,
+                    "${type.second.forFileName()}/field3",
+                    "private",
+                    "false",
+                    "false",
+                    "private ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field0",
+                    "package",
+                    "false",
+                    "false",
+                    "",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field1",
+                    "public",
+                    "false",
+                    "false",
+                    "public ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field2",
+                    "protected",
+                    "false",
+                    "false",
+                    "protected ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field3",
+                    "private",
+                    "false",
+                    "false",
+                    "private ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field4",
+                    "package",
+                    "false",
+                    "true",
+                    "final ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field5",
+                    "public",
+                    "false",
+                    "true",
+                    "public final ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field6",
+                    "protected",
+                    "false",
+                    "true",
+                    "protected final ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field7",
+                    "private",
+                    "false",
+                    "true",
+                    "private final ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field8",
+                    "public",
+                    "false",
+                    "true",
+                    "final public ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field8",
+                    "protected",
+                    "false",
+                    "true",
+                    "final protected ",
+                )
+
+                generateTemplates(
+                    template1,
+                    "${type.second.forFileName()}/initialized_field9",
+                    "private",
+                    "false",
+                    "true",
+                    "final private ",
+                )
             }
         }
     }
