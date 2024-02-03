@@ -1,4 +1,4 @@
-// Class with a field of type $type
+// Class with a field of type char
 class Test {
     char field
 }

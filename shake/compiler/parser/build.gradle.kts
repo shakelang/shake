@@ -97,18 +97,68 @@ tasks.register("generateTests") {
                         template.shake
                             .replace("%type%", type.first)
                             .replace("%type_name%", type.second)
-                            .replace("%name%", "field")
+                            .replace("%name%", "field"),
 
-                    )
+                        )
 
                     val jsonFile = classFieldsDirectory.resolve("class_field_${type.second.forFileName()}.json")
                     jsonFile.writeText(
                         template.json
                             .replace("%type%", type.first)
                             .replace("%type_name%", type.second)
-                            .replace("%name%", "field")
+                            .replace("%name%", "field"),
                     )
                 }
+            }
+        }
+
+        run {
+            // Class Tests
+            val fieldsDirectory = project.file("src/commonTest/resources/tests/fields")
+            fieldsDirectory.mkdirs()
+
+            val types = listOf(
+                "byte" to "byte",
+                "short" to "short",
+                "int" to "integer",
+                "long" to "long",
+                "float" to "float",
+                "double" to "double",
+                "char" to "char",
+                "boolean" to "boolean",
+                "unsigned byte" to "unsigned_byte",
+                "unsigned short" to "unsigned_short",
+                "unsigned int" to "unsigned_integer",
+                "unsigned long" to "unsigned_long",
+            )
+
+            val template0 = Template("field")
+            val template1 = Template("initialized-field")
+
+            types.forEach { type ->
+
+                fun generateTemplates(template: Template, nameBase: String) {
+                    val file = fieldsDirectory.resolve("$nameBase.shake")
+                    file.writeText(
+                        template.shake
+                            .replace("%type%", type.first)
+                            .replace("%type_name%", type.second)
+                            .replace("%name%", "field"),
+
+                        )
+
+                    val jsonFile = fieldsDirectory.resolve("$nameBase.json")
+                    jsonFile.writeText(
+                        template.json
+                            .replace("%type%", type.first)
+                            .replace("%type_name%", type.second)
+                            .replace("%name%", "field"),
+                    )
+                }
+
+                generateTemplates(template0, "field_${type.second.forFileName()}")
+                generateTemplates(template1, "initialized_field_${type.second.forFileName()}")
+
             }
         }
     }

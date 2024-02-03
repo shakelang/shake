@@ -7,13 +7,14 @@ import com.shakelang.util.shason.json
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-class Tests : FreeSpec({
+class TestFiles : FreeSpec({
 
     val debugger = debug("shake").child("parser", "tests")
 
     ShakeParserTestInput.forEachFile {
 
         val inputFile = it
+
         // get the output file
         val outputFile = (
             ShakeParserTestOutput[
