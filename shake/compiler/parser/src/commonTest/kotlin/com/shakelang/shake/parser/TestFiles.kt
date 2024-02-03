@@ -19,12 +19,12 @@ class TestFiles : FreeSpec(
 
             // get the output file
             val outputFile = (
-                    ShakeParserTestOutput[
-                        it.path
-                            .replace(".shake", ".json")
-                            .split("/", limit = 2).last(),
-                    ]
-                    )?.toFile() ?: ShakeParserTestOutput[
+                ShakeParserTestOutput[
+                    it.path
+                        .replace(".shake", ".json")
+                        .split("/", limit = 2).last(),
+                ]
+                )?.toFile() ?: ShakeParserTestOutput[
                 it.path
                     .replace(".shake", ".error")
                     .split("/", limit = 2).last(),
@@ -49,6 +49,5 @@ class TestFiles : FreeSpec(
                 }
             }
         }
-
     },
 )
