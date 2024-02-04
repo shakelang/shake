@@ -4,6 +4,68 @@
 const fs = require("fs").promises;
 const path = require("path");
 
+class TaskRunner {
+  constructor(parallelism = 1) {
+    /** @type {number} */
+    this.parallelism = parallelism;
+
+    /** @type {() => Promise<void>} */
+    this.tasks = [];
+
+    /** @type {number} */
+    this.runners = [];
+  }
+
+  /**
+   * @param {() => Promise<void>} task
+   * @returns {Promise<void>}
+   */
+  add(task) {
+    let resolve, reject;
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    this.tasks.push({ task, resolve, reject, promise });
+    this.run();
+    return promise;
+  }
+
+  async runner() {
+    this.runners.push(this);
+
+    while (this.tasks.length > 0) {
+      const task = this.tasks.shift();
+      try {
+        await task.task();
+        task.resolve();
+      } catch (e) {
+        task.reject(e);
+      }
+    }
+
+    this.runners.splice(this.runners.indexOf(this), 1);
+  }
+
+  async run() {
+    while (this.runners.length < this.parallelism && this.tasks.length > 0) {
+      this.runner();
+      console.log(`Starting runner ${this.runners.length + 1}...`);
+    }
+
+    await Promise.all(this.runners);
+  }
+}
+
+module.exports.TaskRunner = TaskRunner;
+const taskRunner = new TaskRunner(4);
+
+function run(task) {
+  return taskRunner.add(task);
+}
+
+module.exports.run = run;
+
 module.exports = {};
 
 module.exports.forFileName = function forFileName(input) {
@@ -105,7 +167,7 @@ async function generateTest(
     return;
   }
 
-  await fs.mkdir(path.dirname(test), { recursive: true });
+  await run(() => fs.mkdir(path.dirname(test), { recursive: true }));
 
   const testFile = `${test}.shake`;
   const outputFile = `${test}.json`;
@@ -113,25 +175,31 @@ async function generateTest(
 
   const Template = [...template, [/%file%/g, relativize(test)]];
 
-  console.log(`Generating ${relativize(testFile)}...`);
-  await fs.writeFile(testFile, applyReplaceTemplate(input, Template), "utf8");
+  run(async () => {
+    await fs.writeFile(testFile, applyReplaceTemplate(input, Template), "utf8");
+    console.log(`Generated ${relativize(testFile)}...`);
+  });
 
   if (output !== null) {
-    console.log(`Generating ${relativize(outputFile)}...`);
-    await fs.writeFile(
-      outputFile,
-      applyReplaceTemplate(output, Template),
-      "utf8"
-    );
+    run(async () => {
+      await fs.writeFile(
+        outputFile,
+        applyReplaceTemplate(output, Template),
+        "utf8"
+      );
+      console.log(`Generated ${relativize(outputFile)}...`);
+    });
   }
 
   if (error !== null) {
-    console.log(`Generating ${relativize(errorFile)}...`);
-    await fs.writeFile(
-      errorFile,
-      applyReplaceTemplate(error, Template),
-      "utf8"
-    );
+    run(async () => {
+      await fs.writeFile(
+        errorFile,
+        applyReplaceTemplate(error, Template),
+        "utf8"
+      );
+      console.log(`Generated ${relativize(errorFile)}...`);
+    });
   }
 }
 

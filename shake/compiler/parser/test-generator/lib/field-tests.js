@@ -59,7 +59,7 @@ const path = require("path");
      * @param {string} nameBase
      */
     async function generate(generator, template, nameBase) {
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}0`,
         "package",
@@ -67,7 +67,7 @@ const path = require("path");
         ""
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}1`,
         "public",
@@ -75,7 +75,7 @@ const path = require("path");
         "public "
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}2`,
         "protected",
@@ -83,7 +83,7 @@ const path = require("path");
         "protected "
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}3`,
         "private",
@@ -91,7 +91,7 @@ const path = require("path");
         "private "
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}4`,
         "package",
@@ -99,7 +99,7 @@ const path = require("path");
         "final "
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}5`,
         "public",
@@ -107,7 +107,7 @@ const path = require("path");
         "public final "
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}6`,
         "protected",
@@ -115,7 +115,7 @@ const path = require("path");
         "protected final "
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}7`,
         "private",
@@ -123,7 +123,7 @@ const path = require("path");
         "private final "
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}8`,
         "public",
@@ -131,7 +131,7 @@ const path = require("path");
         "final public "
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}9`,
         "protected",
@@ -139,7 +139,7 @@ const path = require("path");
         "final protected "
       );
 
-      await generateTemplates(
+      generateTemplates(
         template,
         `${forFileName(type[1])}/${nameBase}10`,
         "private",
@@ -148,9 +148,9 @@ const path = require("path");
       );
     }
 
-    await generate(generateTemplates, template0, "field");
-    await generate(generateTemplates, template1, "initialized_field");
-    await generate(generateTemplates, template2, "static_field");
-    await generate(generateTemplates, template3, "static_initialized_field");
+    generate(generateTemplates, template0, "field");
+    generate(generateTemplates, template1, "initialized_field");
+    generate(generateTemplates, template2, "static_field");
+    generate(generateTemplates, template3, "static_initialized_field");
   }
 })();
