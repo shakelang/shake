@@ -40,6 +40,10 @@ private constructor(
     override val isPrivate: Boolean
     override val isProtected: Boolean
     override val isNative: Boolean
+    override val isAnnotation: Boolean
+    override val isEnum: Boolean
+    override val isInterface: Boolean
+    override val isObject: Boolean
 
     override val instanceClasses: List<ShakeClass> get() = classes.filter { !it.isStatic }
     override val instanceMethods: List<CreationShakeMethod> get() = methods.filter { !it.isStatic }
@@ -59,7 +63,7 @@ private constructor(
 
     /**
      * Phase 1: Register all classes
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-1)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-1)
      */
     override fun phase1() {
         debug("phases", "Phase 1 of class $qualifiedName")
@@ -80,7 +84,7 @@ private constructor(
 
     /**
      * Phase 2: Link Superclasses and Interfaces
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-2)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-2)
      */
     override fun phase2() {
         debug("phases", "Phase 2 of class $qualifiedName")
@@ -95,7 +99,7 @@ private constructor(
 
     /**
      * Phase 3: Process all methods and fields (without code)
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-3)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-3)
      */
     override fun phase3() {
         debug("phases", "Phase 3 of class $qualifiedName")
@@ -122,7 +126,7 @@ private constructor(
 
     /**
      * Phase 4: Process all code
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-4)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-4)
      */
     override fun phase4() {
         debug("phases", "Phase 4 of class $qualifiedName")
@@ -145,6 +149,10 @@ private constructor(
         this.isPrivate = clz.access == ShakeAccessDescriber.PRIVATE
         this.isProtected = clz.access == ShakeAccessDescriber.PROTECTED
         this.isNative = clz.isNative
+        this.isAnnotation = false // TODO implement
+        this.isEnum = false // TODO implement
+        this.isInterface = false // TODO implement
+        this.isObject = false // TODO implement
     }
 
     fun asType(): CreationShakeType {
@@ -160,17 +168,27 @@ private constructor(
         override val parent: CreationShakeScope get() = parentScope
         override val project get() = prj
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             val field = staticFields.find { it.name == name }
             if (field != null) {
                 debug("scope", "Searching for field $name in $uniqueName successful")
             } else {
                 debug("scope", "Searching for field $name in $uniqueName had no result")
             }
-            return field ?: parent.get(name)
+            return field ?: parent.getField(name)
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            val fields = staticFields.filter { it.name == name }
+            if (fields.isNotEmpty()) {
+                debug("scope", "Searching for fields $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for fields $name in $uniqueName had no result")
+            }
+            return fields + parent.getFields(name)
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             throw IllegalStateException("Cannot set in this scope")
         }
 
@@ -198,6 +216,16 @@ private constructor(
             return clazz ?: parent.getClass(name)
         }
 
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            val classes = staticClasses.filter { it.name == name }
+            if (classes.isNotEmpty()) {
+                debug("scope", "Searching for classes $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for classes $name in $uniqueName had no result")
+            }
+            return classes + parent.getClasses(name)
+        }
+
         override fun setClass(klass: CreationShakeClass) {
             throw IllegalStateException("Cannot set in this scope")
         }
@@ -212,17 +240,27 @@ private constructor(
         override val parent: CreationShakeScope get() = parentScope
         override val project get() = parent.project
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             val field = fields.find { it.name == name }
             if (field != null) {
                 debug("scope", "Searching for field $name in $uniqueName successful")
             } else {
                 debug("scope", "Searching for field $name in $uniqueName had no result")
             }
-            return field ?: parent.get(name)
+            return field ?: parent.getField(name)
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            val fields = fields.filter { it.name == name }
+            if (fields.isNotEmpty()) {
+                debug("scope", "Searching for fields $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for fields $name in $uniqueName had no result")
+            }
+            return fields + parent.getFields(name)
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             throw IllegalStateException("Cannot set in this scope")
         }
 
@@ -248,6 +286,16 @@ private constructor(
                 debug("scope", "Searching for class $name in $uniqueName had no result")
             }
             return clazz ?: parent.getClass(name)
+        }
+
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            val classes = classes.filter { it.name == name }
+            if (classes.isNotEmpty()) {
+                debug("scope", "Searching for classes $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for classes $name in $uniqueName had no result")
+            }
+            return classes + parent.getClasses(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {

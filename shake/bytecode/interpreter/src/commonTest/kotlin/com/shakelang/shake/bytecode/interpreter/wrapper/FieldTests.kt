@@ -1,5 +1,6 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.generator.generatePackage
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -8,7 +9,8 @@ import io.kotest.matchers.shouldNotBe
 class FieldTests : FreeSpec(
     {
         "getField" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -17,6 +19,7 @@ class FieldTests : FreeSpec(
                         name = "test"
                         type = "I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -28,7 +31,8 @@ class FieldTests : FreeSpec(
         }
 
         "getField class child" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -37,11 +41,13 @@ class FieldTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Field {
                             name = "test"
                             type = "I"
                             isPublic = true
+                            isStatic = true
                         }
                     }
                 },
@@ -54,7 +60,8 @@ class FieldTests : FreeSpec(
         }
 
         "getField class child child" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -63,16 +70,19 @@ class FieldTests : FreeSpec(
                         name = "Test"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
 
                         Class {
                             name = "Test2"
                             superName = "com/shakelang/Object"
                             isPublic = true
+                            isStatic = true
 
                             Field {
                                 name = "test"
                                 type = "I"
                                 isPublic = true
+                                isStatic = true
                             }
                         }
                     }
@@ -86,7 +96,8 @@ class FieldTests : FreeSpec(
         }
 
         "getField when field does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -98,7 +109,8 @@ class FieldTests : FreeSpec(
         }
 
         "getField when field child does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -107,6 +119,7 @@ class FieldTests : FreeSpec(
                         name = "test"
                         type = "I"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -116,7 +129,8 @@ class FieldTests : FreeSpec(
         }
 
         "getField when field of child child does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -128,7 +142,8 @@ class FieldTests : FreeSpec(
         }
 
         "getField when class of child does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -140,7 +155,8 @@ class FieldTests : FreeSpec(
         }
 
         "getField when package does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -152,7 +168,8 @@ class FieldTests : FreeSpec(
         }
 
         "getField with child when package does not exist" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang"
@@ -164,7 +181,8 @@ class FieldTests : FreeSpec(
         }
 
         "resolve type of field with type object" {
-            val classpath = ShakeClasspath.create()
+            val interpreter = ShakeInterpreter()
+            val classpath = interpreter.classPath
             classpath.load(
                 generatePackage {
                     name = "com/shakelang/shake/test"
@@ -173,6 +191,7 @@ class FieldTests : FreeSpec(
                         name = "test"
                         type = "Lcom/shakelang/Object;"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )
@@ -185,6 +204,7 @@ class FieldTests : FreeSpec(
                         name = "Object"
                         superName = "com/shakelang/Object"
                         isPublic = true
+                        isStatic = true
                     }
                 },
             )

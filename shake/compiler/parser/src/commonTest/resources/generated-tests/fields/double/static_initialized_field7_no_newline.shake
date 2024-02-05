@@ -1,0 +1,2 @@
+// Field of type double
+static private final double field = 10

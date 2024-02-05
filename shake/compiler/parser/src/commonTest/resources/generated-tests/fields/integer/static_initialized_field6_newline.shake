@@ -1,0 +1,2 @@
+// Field of type integer
+static protected final int field = 10

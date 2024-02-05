@@ -1,18 +1,23 @@
 package com.shakelang.shake.bytecode.interpreter.wrapper
 
+import com.shakelang.shake.bytecode.interpreter.ShakeInterpreter
 import com.shakelang.shake.bytecode.interpreter.format.Class
 import com.shakelang.shake.bytecode.interpreter.format.Field
 import com.shakelang.shake.bytecode.interpreter.format.Method
 import com.shakelang.shake.bytecode.interpreter.format.StorageFormat
 import com.shakelang.shake.bytecode.interpreter.format.descriptor.PathDescriptor
+import com.shakelang.shake.bytecode.interpreter.format.descriptor.TypeDescriptor
 
 interface ShakeInterpreterPackage {
 
     // This is a list of storages, because we could potentially have two libraries that add classes to
     // the same package.
     val storages: List<StorageFormat>
-
+    val interpreter: ShakeInterpreter
     val name: String
+
+    val fieldsSizeInMemory: Long
+    val fieldsLocation: Long
 
     fun getClass(descriptor: PathDescriptor): ShakeInterpreterClass?
     fun getClass(descriptor: String): ShakeInterpreterClass? = getClass(PathDescriptor.parse(descriptor))
@@ -27,9 +32,49 @@ interface ShakeInterpreterPackage {
 
     fun load(storage: StorageFormat)
 
+    /**
+     * Load all classes from the package
+     * @deprecated This method loads all classes from the package, which is not needed in most cases.
+     *             It will impact performance, especially if you have a big library.
+     */
+    @Deprecated(
+        "This method loads all classes from the package, which is not needed in most cases. " +
+            "It will impact performance, especially if you have a big library.",
+    )
+    fun getAllClasses(): List<ShakeInterpreterClass>
+
+    /**
+     * Load all methods from the package
+     * @deprecated This method loads all methods from the package, which is not needed in most cases.
+     *             It will impact performance, especially if you have a big library.
+     */
+    @Deprecated(
+        "This method loads all methods from the package, which is not needed in most cases. " +
+            "It will impact performance, especially if you have a big library.",
+    )
+    fun getAllMethods(): List<ShakeInterpreterMethod>
+
+    /**
+     * Load all fields from the package
+     * @deprecated This method loads all fields from the package, which is not needed in most cases.
+     *             It will impact performance, especially if you have a big library.
+     */
+    @Deprecated(
+        "This method loads all fields from the package, which is not needed in most cases. " +
+            "It will impact performance, especially if you have a big library.",
+    )
+    fun getAllFields(): List<ShakeInterpreterField>
+
     companion object {
-        fun of(storages: List<StorageFormat>, classpath: ShakeClasspath): ShakeInterpreterPackage {
+        fun of(storages: List<StorageFormat>, classpath: ShakeInterpreterClasspath): ShakeInterpreterPackage {
             return object : ShakeInterpreterPackage {
+
+                val fieldMemoryMap: LongArray
+                override val fieldsSizeInMemory: Long
+                override val fieldsLocation: Long
+
+                override val interpreter: ShakeInterpreter
+                    get() = classpath.interpreter
 
                 override val name: String = storages[0].packageName
                 val parentPath = "$name/"
@@ -88,6 +133,17 @@ interface ShakeInterpreterPackage {
 
                 init {
                     for (s in storages) addStorageFormat(s)
+
+                    var size = 4L // 4 bytes for header
+                    fieldMemoryMap = fieldFormatList.map {
+                        val start = size
+                        size += TypeDescriptor.parse(it.first.type).byteSize
+                        start
+                    }.toLongArray()
+                    fieldsSizeInMemory = size
+
+                    // Let's create our static location
+                    this.fieldsLocation = interpreter.malloc.malloc(size)
                 }
 
                 fun loadClass(index: Int): ShakeInterpreterClass {
@@ -111,6 +167,7 @@ interface ShakeInterpreterPackage {
                         parentPath,
                         m.second.constantPool,
                         this,
+                        null,
                     )
                     methodList[index] = method
                     return method
@@ -124,6 +181,8 @@ interface ShakeInterpreterPackage {
                         parentPath,
                         f.second.constantPool,
                         this,
+                        fieldMemoryMap[index],
+                        fieldsLocation,
                     )
                     fieldList[index] = field
                     return field
@@ -153,6 +212,21 @@ interface ShakeInterpreterPackage {
                     for (i in storages.indices) loadField(i)
                 }
 
+                override fun getAllClasses(): List<ShakeInterpreterClass> {
+                    loadAllClasses()
+                    return classList.filterNotNull()
+                }
+
+                override fun getAllMethods(): List<ShakeInterpreterMethod> {
+                    loadAllMethods()
+                    return methodList.filterNotNull()
+                }
+
+                override fun getAllFields(): List<ShakeInterpreterField> {
+                    loadAllFields()
+                    return fieldList.filterNotNull()
+                }
+
                 fun resolveClassIndex(name: String): Int {
                     for (i in classFormatList.indices) {
                         if (classFormatList[i].first.name == name) return i
@@ -162,7 +236,7 @@ interface ShakeInterpreterPackage {
 
                 fun resolveMethodIndex(name: String): Int {
                     for (i in methodFormatList.indices) {
-                        if (methodFormatList[i].first.name == name) return i
+                        if (methodFormatList[i].first.qualifiedName == name) return i
                     }
                     return -1
                 }
@@ -177,14 +251,23 @@ interface ShakeInterpreterPackage {
                 fun addStorageFormat(storage: StorageFormat) {
                     this.storages.add(storage)
                     for (c in storage.classes) {
+                        if (!c.isStatic) {
+                            throw Exception("Only static classes are allowed in packages")
+                        }
                         classFormatList.add(c to storage)
                         classList.add(null)
                     }
                     for (m in storage.methods) {
+                        if (!m.isStatic) {
+                            throw Exception("Only static methods are allowed in packages")
+                        }
                         methodFormatList.add(m to storage)
                         methodList.add(null)
                     }
                     for (f in storage.fields) {
+                        if (!f.isStatic) {
+                            throw Exception("Only static fields are allowed in packages")
+                        }
                         fieldFormatList.add(f to storage)
                         fieldList.add(null)
                     }

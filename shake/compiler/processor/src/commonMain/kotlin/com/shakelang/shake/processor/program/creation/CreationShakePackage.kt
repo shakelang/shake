@@ -63,7 +63,7 @@ open class CreationShakePackage(
 
     /**
      * Phase 1: Register all classes
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-1)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-1)
      */
     override fun phase1() {
         debug("phases", "Phase 1 of package $qualifiedName")
@@ -85,7 +85,7 @@ open class CreationShakePackage(
 
     /**
      * Phase 2: Link Superclasses and Interfaces
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-2)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-2)
      */
     override fun phase2() {
         debug("phases", "Phase 2 of package $qualifiedName")
@@ -95,7 +95,7 @@ open class CreationShakePackage(
 
     /**
      * Phase 3: Process all methods and fields (without code)
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-3)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-3)
      */
     override fun phase3() {
         debug("phases", "Phase 3 of package $qualifiedName")
@@ -123,7 +123,7 @@ open class CreationShakePackage(
 
     /**
      * Phase 4: Process all code
-     * [See in the Specification](https://specification.shakelang.com/compiler/processor/#phase-4)
+     * [See in the Specification](https://spec.shakelang.com/compiler/processor/#phase-4)
      */
     override fun phase4() {
         debug("phases", "Phase 4 of package $qualifiedName")
@@ -150,17 +150,27 @@ open class CreationShakePackage(
         override val parent: CreationShakeScope get() = baseProject.projectScope
         override val project get() = baseProject
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             val field = fields.find { it.name == name }
             if (field != null) {
                 debug("scope", "Searching for field $name in $uniqueName successful")
             } else {
                 debug("scope", "Searching for field $name in $uniqueName had no result")
             }
-            return field ?: parent.get(name)
+            return field ?: parent.getField(name)
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            val fields = fields.filter { it.name == name }
+            if (fields.isNotEmpty()) {
+                debug("scope", "Searching for field $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for field $name in $uniqueName had no result")
+            }
+            return fields + parent.getFields(name)
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             throw IllegalStateException("Cannot set a value in a package scope")
         }
 
@@ -186,6 +196,16 @@ open class CreationShakePackage(
                 debug("scope", "Searching for class $name in $uniqueName had no result")
             }
             return clazz ?: parent.getClass(name)
+        }
+
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            val classes = classes.filter { it.name == name }
+            if (classes.isNotEmpty()) {
+                debug("scope", "Searching for class $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for class $name in $uniqueName had no result")
+            }
+            return classes + parent.getClasses(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {
@@ -288,7 +308,7 @@ open class CreationShakePackage(
             importedFields = imports
         }
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             lazyLoadImportedFields()
             val field = importedFields.find { it.name == name }
             if (field != null) {
@@ -296,10 +316,21 @@ open class CreationShakePackage(
             } else {
                 debug("scope", "Searching for field $name in $uniqueName had no result")
             }
-            return field ?: parent.get(name)
+            return field ?: parent.getField(name)
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            lazyLoadImportedFields()
+            val fields = importedFields.filter { it.name == name }
+            if (fields.isNotEmpty()) {
+                debug("scope", "Searching for field $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for field $name in $uniqueName had no result")
+            }
+            return fields + parent.getFields(name)
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             throw IllegalStateException("Cannot set a value in a package scope")
         }
 
@@ -327,6 +358,17 @@ open class CreationShakePackage(
                 debug("scope", "Searching for class $name in $uniqueName had no result")
             }
             return clazz ?: parent.getClass(name)
+        }
+
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            lazyLoadImportedClasses()
+            val classes = importedClasses.filter { it.name == name }
+            if (classes.isNotEmpty()) {
+                debug("scope", "Searching for class $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for class $name in $uniqueName had no result")
+            }
+            return classes + parent.getClasses(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {

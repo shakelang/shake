@@ -459,9 +459,6 @@ abstract class CreationShakeType(
         override fun toJson(): Map<String, Any?> {
             return mapOf("type" to "object", "class" to clazz.qualifiedName)
         }
-
-        override val qualifiedName: String
-            get() = "L${clazz.qualifiedName}"
     }
 
     class Array(

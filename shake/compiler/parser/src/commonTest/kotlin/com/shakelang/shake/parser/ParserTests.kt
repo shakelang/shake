@@ -11,8 +11,6 @@ import com.shakelang.shake.parser.node.loops.ShakeForNode
 import com.shakelang.shake.parser.node.loops.ShakeWhileNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableDeclarationNode
 import com.shakelang.shake.parser.node.variables.ShakeVariableIncreaseNode
-import com.shakelang.shake.shouldBeOfType
-import com.shakelang.shake.shouldHaveSameContents
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

@@ -24,7 +24,7 @@ kotlin {
         testImplementation(kotlin("test"))
 
         this.js {
-            implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.10.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.11.0")
         }
     }
 }

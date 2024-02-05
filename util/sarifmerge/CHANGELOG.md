@@ -67,3 +67,7 @@ Prints the current version
 * Update com.shakelang.util:parseutils to 0.4.0
 
 * Update com.shakelang.util:shason to 0.4.1
+
+### 0.2.2
+
+* Update com.shakelang.util:shason to 0.4.2

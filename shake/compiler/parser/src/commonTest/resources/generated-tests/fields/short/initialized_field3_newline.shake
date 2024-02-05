@@ -1,0 +1,2 @@
+// Field of type short
+private short field = 42

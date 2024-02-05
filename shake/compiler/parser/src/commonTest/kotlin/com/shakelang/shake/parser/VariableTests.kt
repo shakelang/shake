@@ -1,12 +1,10 @@
 package com.shakelang.shake.parser
 
-import com.shakelang.shake.allCombinations
 import com.shakelang.shake.parser.node.ShakeAccessDescriber
 import com.shakelang.shake.parser.node.ShakeVariableType
 import com.shakelang.shake.parser.node.expression.ShakeAddNode
 import com.shakelang.shake.parser.node.factor.ShakeIntegerNode
 import com.shakelang.shake.parser.node.variables.*
-import com.shakelang.shake.shouldBeOfType
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

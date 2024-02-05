@@ -9,8 +9,7 @@ class ClassGenerationContextTests : FreeSpec(
     {
 
         "class generation" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.name shouldBe GenerationContext.UNDEFINED
             ctx.superName shouldBe GenerationContext.UNDEFINED
             ctx.flags shouldBe 0
@@ -22,32 +21,28 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "name" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.name shouldBe GenerationContext.UNDEFINED
             ctx.name = "test"
             ctx.name shouldBe "test"
         }
 
         "superName" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.superName shouldBe GenerationContext.UNDEFINED
             ctx.superName = "test"
             ctx.superName shouldBe "test"
         }
 
         "flags" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.flags shouldBe 0
             ctx.flags = 1
             ctx.flags shouldBe 1
         }
 
         "isPublic" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.isPublic shouldBe false
             ctx.flags shouldBe 0
             ctx.isPublic = true
@@ -56,8 +51,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "isPrivate" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.isPrivate shouldBe false
             ctx.flags shouldBe 0
             ctx.isPrivate = true
@@ -66,8 +60,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "isProtected" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.isProtected shouldBe false
             ctx.flags shouldBe 0
             ctx.isProtected = true
@@ -76,8 +69,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "isStatic" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.isStatic shouldBe false
             ctx.flags shouldBe 0
             ctx.isStatic = true
@@ -86,8 +78,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "isFinal" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.isFinal shouldBe false
             ctx.flags shouldBe 0
             ctx.isFinal = true
@@ -96,8 +87,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "attribute generation" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.name shouldBe GenerationContext.UNDEFINED
 
             ctx.attribute {
@@ -138,8 +128,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "field generation" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.Field {
                 name = "test"
                 flags = 0b0000000_00010000.toShort()
@@ -149,8 +138,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "method generation" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.Method {
                 name = "test"
                 flags = 0b0000000_00010000.toShort()
@@ -160,8 +148,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "subclass generation" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.Class {
                 name = "test"
                 superName = "super"
@@ -172,16 +159,14 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "extends" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.superName shouldBe GenerationContext.UNDEFINED
             ctx.extends("test")
             ctx.superName shouldBe "test"
         }
 
         "implements" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.interfaces.size shouldBe 0
             ctx.implements("test")
             ctx.interfaces.size shouldBe 1
@@ -189,8 +174,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "to class" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.name = "test"
             ctx.superName = "super"
             ctx.flags = 0b0000000_00010000.toShort()
@@ -224,8 +208,7 @@ class ClassGenerationContextTests : FreeSpec(
         }
 
         "to mutable class" {
-
-            val ctx = ClassGenerationContext(MutableConstantPool())
+            val ctx = ClassGenerationContext("", MutableConstantPool())
             ctx.name = "test"
             ctx.superName = "super"
             ctx.flags = 0b0000000_00010000.toShort()

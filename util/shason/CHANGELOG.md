@@ -69,3 +69,11 @@ A json parser implemented in kotlin (mpp)
 * Make com.shakelang.util.shason.json from typealias to val
 
 * Update com.shakelang.util:parseutils to 0.4.0
+
+### 0.4.2
+
+* Fix NullPointerException in some cases on stringify of null
+
+* Generate of float/double 10 should be generated to 10 instead of 10.0
+
+* Bugfix: Parsed "null" as string. Now it is parsed into a JsonNullElement

@@ -15,8 +15,13 @@ class ConstantPoolEntryTests : FreeSpec(
             bytes shouldBe byteArrayOf(1, 0, 4, *"test".toBytes())
         }
 
+        "utf8 constant from bytes ignore identifier" {
+            val constant = ConstantPoolEntry.Utf8Constant.fromStreamIgnoreIdentifier(byteArrayOf(0, 4, *"test".toBytes()).dataStream())
+            constant.value shouldBe "test"
+        }
+
         "utf8 constant from bytes" {
-            val constant = ConstantPoolEntry.Utf8Constant.fromStream(byteArrayOf(0, 4, *"test".toBytes()).dataStream())
+            val constant = ConstantPoolEntry.Utf8Constant.fromStream(byteArrayOf(1, 0, 4, *"test".toBytes()).dataStream())
             constant.value shouldBe "test"
         }
 
@@ -46,8 +51,13 @@ class ConstantPoolEntryTests : FreeSpec(
             bytes shouldBe byteArrayOf(2, 1)
         }
 
+        "byte constant from bytes ignore identifier" {
+            val constant = ConstantPoolEntry.ByteConstant.fromStreamIgnoreIdentifier(byteArrayOf(1).dataStream())
+            constant.value shouldBe 1
+        }
+
         "byte constant from bytes" {
-            val constant = ConstantPoolEntry.ByteConstant.fromStream(byteArrayOf(1).dataStream())
+            val constant = ConstantPoolEntry.ByteConstant.fromStream(byteArrayOf(2, 1).dataStream())
             constant.value shouldBe 1
         }
 
@@ -77,8 +87,13 @@ class ConstantPoolEntryTests : FreeSpec(
             bytes shouldBe byteArrayOf(3, 0, 1)
         }
 
+        "short constant from bytes ignore identifier" {
+            val constant = ConstantPoolEntry.ShortConstant.fromStreamIgnoreIdentifier(byteArrayOf(0, 1).dataStream())
+            constant.value shouldBe 1
+        }
+
         "short constant from bytes" {
-            val constant = ConstantPoolEntry.ShortConstant.fromStream(byteArrayOf(0, 1).dataStream())
+            val constant = ConstantPoolEntry.ShortConstant.fromStream(byteArrayOf(3, 0, 1).dataStream())
             constant.value shouldBe 1
         }
 
@@ -108,8 +123,13 @@ class ConstantPoolEntryTests : FreeSpec(
             bytes shouldBe byteArrayOf(4, 0, 0, 0, 1)
         }
 
+        "int constant from bytes ignore identifier" {
+            val constant = ConstantPoolEntry.IntConstant.fromStreamIgnoreIdentifier(byteArrayOf(0, 0, 0, 1).dataStream())
+            constant.value shouldBe 1
+        }
+
         "int constant from bytes" {
-            val constant = ConstantPoolEntry.IntConstant.fromStream(byteArrayOf(0, 0, 0, 1).dataStream())
+            val constant = ConstantPoolEntry.IntConstant.fromStream(byteArrayOf(4, 0, 0, 0, 1).dataStream())
             constant.value shouldBe 1
         }
 
@@ -139,8 +159,13 @@ class ConstantPoolEntryTests : FreeSpec(
             bytes shouldBe byteArrayOf(5, 0, 0, 0, 0, 0, 0, 0, 1)
         }
 
+        "long constant from bytes ignore identifier" {
+            val constant = ConstantPoolEntry.LongConstant.fromStreamIgnoreIdentifier(byteArrayOf(0, 0, 0, 0, 0, 0, 0, 1).dataStream())
+            constant.value shouldBe 1
+        }
+
         "long constant from bytes" {
-            val constant = ConstantPoolEntry.LongConstant.fromStream(byteArrayOf(0, 0, 0, 0, 0, 0, 0, 1).dataStream())
+            val constant = ConstantPoolEntry.LongConstant.fromStream(byteArrayOf(5, 0, 0, 0, 0, 0, 0, 0, 1).dataStream())
             constant.value shouldBe 1
         }
 
@@ -170,8 +195,13 @@ class ConstantPoolEntryTests : FreeSpec(
             bytes shouldBe byteArrayOf(6, *(1f.toBits().toBytes()))
         }
 
+        "float constant from bytes ignore identifier" {
+            val constant = ConstantPoolEntry.FloatConstant.fromStreamIgnoreIdentifier(byteArrayOf(*(1f.toBytes())).dataStream())
+            constant.value shouldBe 1f
+        }
+
         "float constant from bytes" {
-            val constant = ConstantPoolEntry.FloatConstant.fromStream(byteArrayOf(*(1f.toBytes())).dataStream())
+            val constant = ConstantPoolEntry.FloatConstant.fromStream(byteArrayOf(6, *(1f.toBytes())).dataStream())
             constant.value shouldBe 1f
         }
 
@@ -201,8 +231,13 @@ class ConstantPoolEntryTests : FreeSpec(
             bytes shouldBe byteArrayOf(7, *(1.0.toBits().toBytes()))
         }
 
+        "double constant from bytes ignore identifier" {
+            val constant = ConstantPoolEntry.DoubleConstant.fromStreamIgnoreIdentifier(byteArrayOf(*(1.0.toBytes())).dataStream())
+            constant.value shouldBe 1.0
+        }
+
         "double constant from bytes" {
-            val constant = ConstantPoolEntry.DoubleConstant.fromStream(byteArrayOf(*(1.0.toBytes())).dataStream())
+            val constant = ConstantPoolEntry.DoubleConstant.fromStream(byteArrayOf(7, *(1.0.toBytes())).dataStream())
             constant.value shouldBe 1.0
         }
 
@@ -232,8 +267,13 @@ class ConstantPoolEntryTests : FreeSpec(
             bytes shouldBe byteArrayOf(8, 0, 0, 0, 1)
         }
 
+        "class constant from bytes ignore identifier" {
+            val constant = ConstantPoolEntry.ClassConstant.fromStreamIgnoreIdentifier(byteArrayOf(0, 0, 0, 1).dataStream())
+            constant.identifier shouldBe 1
+        }
+
         "class constant from bytes" {
-            val constant = ConstantPoolEntry.ClassConstant.fromStream(byteArrayOf(0, 0, 0, 1).dataStream())
+            val constant = ConstantPoolEntry.ClassConstant.fromStream(byteArrayOf(8, 0, 0, 0, 1).dataStream())
             constant.identifier shouldBe 1
         }
 
@@ -263,8 +303,13 @@ class ConstantPoolEntryTests : FreeSpec(
             bytes shouldBe byteArrayOf(9, 0, 0, 0, 1)
         }
 
+        "string constant from bytes ignore identifier" {
+            val constant = ConstantPoolEntry.StringConstant.fromStreamIgnoreIdentifier(byteArrayOf(0, 0, 0, 1).dataStream())
+            constant.identifier shouldBe 1
+        }
+
         "string constant from bytes" {
-            val constant = ConstantPoolEntry.StringConstant.fromStream(byteArrayOf(0, 0, 0, 1).dataStream())
+            val constant = ConstantPoolEntry.StringConstant.fromStream(byteArrayOf(9, 0, 0, 0, 1).dataStream())
             constant.identifier shouldBe 1
         }
 

@@ -107,6 +107,13 @@ enum class JsonTokenType(
     FALSE(5),
 
     /**
+     * A [NULL] [JsonTokenType] represents a 'null' in the source
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    NULL(4),
+
+    /**
      * A [STRING] [JsonTokenType] represents a string (e.g. "hello world") in the source
      * @since 0.1.0
      * @version 0.1.0

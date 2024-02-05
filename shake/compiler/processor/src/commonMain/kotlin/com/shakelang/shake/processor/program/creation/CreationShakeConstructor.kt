@@ -7,7 +7,6 @@ import com.shakelang.shake.processor.ShakeProcessor
 import com.shakelang.shake.processor.program.creation.code.CreationShakeCode
 import com.shakelang.shake.processor.program.creation.code.statements.CreationShakeVariableDeclaration
 import com.shakelang.shake.processor.program.types.ShakeConstructor
-import com.shakelang.shake.processor.program.types.ShakeType
 
 open class CreationShakeConstructor(
     override val clazz: CreationShakeClass,
@@ -22,15 +21,6 @@ open class CreationShakeConstructor(
 ) : ShakeConstructor {
 
     override val scope: CreationShakeScope = ShakeConstructorScope()
-
-    val qualifiedName: String
-        get() = "${clazz.qualifierPrefix}+${name ?: "default"}"
-
-    val parameterTypes: List<ShakeType> get() = parameters.map { it.type }
-    val signature: String
-        get() = "${name ?: "default"}(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
-    val qualifiedSignature: String
-        get() = "$qualifiedName(${parameterTypes.joinToString(",") { it.qualifiedName }})N"
 
     override fun phase3() {
         debug("phases", "Phase 4 of constructor $qualifiedSignature")
@@ -52,7 +42,7 @@ open class CreationShakeConstructor(
         override val project get() = clazz.prj
         val variables = mutableListOf<CreationShakeVariableDeclaration>()
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             val variable = variables.find { it.name == name }
             if (variable != null) {
                 debug("scope", "Searching for field $name in $uniqueName successful")
@@ -62,7 +52,17 @@ open class CreationShakeConstructor(
             return variable
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            val variable = variables.filter { it.name == name }
+            if (variable.isNotEmpty()) {
+                debug("scope", "Searching for field $name in $uniqueName successful")
+            } else {
+                debug("scope", "Searching for field $name in $uniqueName had no result")
+            }
+            return variable
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             debug("scope", "Setting variable ${value.name} in $uniqueName")
             if (value !is CreationShakeVariableDeclaration) throw IllegalArgumentException("Only variable declarations can be set in a method scope")
             if (variables.any { it.name == value.name }) throw IllegalArgumentException("Variable ${value.name} already exists in this scope")
@@ -81,6 +81,11 @@ open class CreationShakeConstructor(
         override fun getClass(name: String): CreationShakeClass? {
             debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
             return parent.getClass(name)
+        }
+
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
+            return parent.getClasses(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {

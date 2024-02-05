@@ -1,0 +1,9 @@
+// This is just a very simple test to make sure that the compiler is working
+// It should print 10 to the console
+// See environment.out for the output of this program
+
+package test;
+
+void main() {
+    print(10);
+}

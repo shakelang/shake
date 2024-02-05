@@ -639,7 +639,26 @@ interface ShakeType {
      * @since 0.1.0
      * @version 0.1.0
      */
-    fun childType(name: String, scope: ShakeScope): ShakeType? = null // TODO : Extension fields?
+    fun childType(name: String, scope: ShakeScope): ShakeType? {
+        val field = childField(name, scope)
+        return field?.type
+    }
+
+    /**
+     * Returns the field of the expression `this."name"`
+     * If the field is not found, this method should return null.
+     *
+     * @param name The name of the child
+     * @param scope The scope in which the child is accessed
+     * @return The field of the child expression
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    fun childField(name: String, scope: ShakeScope): ShakeField? {
+        val fields = scope.getFields(name).filter { it is ShakeField && it.expanding == this }
+        return fields.firstOrNull() as? ShakeField
+    }
 
     /**
      * Returns the type of the expression `this."name"()`
@@ -840,7 +859,7 @@ interface ShakeType {
      * @version 0.1.0
      */
     fun modulusOverloads(scope: ShakeScope): List<ShakeMethod> =
-        scope.getFunctions("mod").filter { it.expanding == this && it.isOperator }
+        scope.getFunctions("rem").filter { it.expanding == this && it.isOperator }
 
     /**
      * Get a list of all overloads for the pow operator of this type
@@ -1649,6 +1668,12 @@ interface ShakeType {
         val clazz: ShakeClass
         override val kind: Kind get() = Kind.OBJECT
 
+        override fun childField(name: String, scope: ShakeScope): ShakeField? {
+            val field = clazz.allFields.find { it.name == name }
+            if (field != null) return field
+            return super.childField(name, scope)
+        }
+
         override fun assignOverloads(scope: ShakeScope): List<ShakeMethod> =
             clazz.methods.filter { it.name == "plus" && it.isOperator } + super.assignOverloads(scope)
 
@@ -1735,7 +1760,7 @@ interface ShakeType {
             clazz.fields.find { it.name == name }?.type
 
         override fun childFunctions(name: String, scope: ShakeScope): List<ShakeMethod> {
-            return clazz.methods.filter { it.name == name } + scope.getFunctions(name).filter { it.expanding == this }
+            return clazz.allMethods.filter { it.name == name } + scope.getFunctions(name).filter { it.expanding == this }
         }
 
         override fun castableTo(other: ShakeType): Boolean {
@@ -1743,6 +1768,7 @@ interface ShakeType {
         }
 
         override fun compatibleTo(other: ShakeType): Boolean {
+            println("Checking compatibility of $this and $other")
             return other is Object && clazz.compatibleTo(other.clazz)
         }
 
@@ -1755,7 +1781,7 @@ interface ShakeType {
         }
 
         override val qualifiedName: String
-            get() = "L${clazz.qualifiedName}"
+            get() = "L${clazz.qualifiedName};"
     }
 
     interface Array : ShakeType {
@@ -1796,7 +1822,7 @@ interface ShakeType {
         }
 
         override val qualifiedName: String
-            get() = "[${elementType.qualifiedName}"
+            get() = "[${elementType.qualifiedName};"
     }
 
     interface Lambda : ShakeType {

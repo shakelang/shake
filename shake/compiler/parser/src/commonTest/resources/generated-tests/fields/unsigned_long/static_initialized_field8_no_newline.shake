@@ -1,0 +1,2 @@
+// Field of type unsigned_long
+static final public unsigned long field = 10

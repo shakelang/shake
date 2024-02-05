@@ -5,11 +5,34 @@ import com.shakelang.util.io.streaming.input.dataStream
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.util.io.streaming.output.DataOutputStream
 
+/**
+ * A [ConstantPoolException] is thrown if an error occurs while handling the [ConstantPool]
+ * @param message The message of the exception
+ * @param cause The cause of the exception
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 open class ConstantPoolException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)
 
+/**
+ * A [ConstantPoolOverflowException] is thrown if the [ConstantPool] overflows
+ * @param message The message of the exception
+ * @param cause The cause of the exception
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 open class ConstantPoolOverflowException(message: String? = null, cause: Throwable? = null) :
     ConstantPoolException(message, cause)
 
+/**
+ * A [ConstantPoolTypeException] is thrown if the [ConstantPool] contains a wrong type
+ * @param message The message of the exception
+ * @param cause The cause of the exception
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 open class ConstantPoolTypeException(message: String? = null, cause: Throwable? = null) :
     ConstantPoolException(message, cause)
 
@@ -17,6 +40,9 @@ open class ConstantPoolTypeException(message: String? = null, cause: Throwable? 
  * A ConstantPool is a list of [ConstantPoolEntry]s
  * We store data inside the [ConstantPool]. This has the advantage that we can reference to the data
  * by an index. Double-used data will only be stored once, and we can reference to it by the index.
+ *
+ * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+ *
  * @param entries The entries of the [ConstantPool]
  *
  * @since 0.1.0
@@ -482,8 +508,26 @@ open class ConstantPool(
         }
     }
 
+    /**
+     * Get the hashCode of the [ConstantPool]
+     * @return The hashCode of the [ConstantPool]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override fun hashCode(): Int {
         return entries.hashCode()
+    }
+
+    /**
+     * Get the string representation of the [ConstantPool]
+     * @return The string representation of the [ConstantPool]
+     *
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    override fun toString(): String {
+        return "ConstantPool(entries=$entries)"
     }
 
     companion object {
@@ -526,66 +570,6 @@ open class ConstantPool(
             return ConstantPool(list)
         }
     }
-
-    fun forEach(action: (ConstantPoolEntry) -> Unit) {
-        entries.forEach(action)
-    }
-
-    fun forEachIndexed(action: (Int, ConstantPoolEntry) -> Unit) {
-        entries.forEachIndexed(action)
-    }
-
-    fun forEachUtf8(action: (ConstantPoolEntry.Utf8Constant) -> Unit) {
-        entries.forEach {
-            if (it is ConstantPoolEntry.Utf8Constant) action(it)
-        }
-    }
-
-    fun forEachByte(action: (ConstantPoolEntry.ByteConstant) -> Unit) {
-        entries.forEach {
-            if (it is ConstantPoolEntry.ByteConstant) action(it)
-        }
-    }
-
-    fun forEachShort(action: (ConstantPoolEntry.ShortConstant) -> Unit) {
-        entries.forEach {
-            if (it is ConstantPoolEntry.ShortConstant) action(it)
-        }
-    }
-
-    fun forEachInt(action: (ConstantPoolEntry.IntConstant) -> Unit) {
-        entries.forEach {
-            if (it is ConstantPoolEntry.IntConstant) action(it)
-        }
-    }
-
-    fun forEachLong(action: (ConstantPoolEntry.LongConstant) -> Unit) {
-        entries.forEach {
-            if (it is ConstantPoolEntry.LongConstant) action(it)
-        }
-    }
-
-    fun forEachFloat(action: (ConstantPoolEntry.FloatConstant) -> Unit) {
-        entries.forEach {
-            if (it is ConstantPoolEntry.FloatConstant) action(it)
-        }
-    }
-
-    fun forEachDouble(action: (ConstantPoolEntry.DoubleConstant) -> Unit) {
-        entries.forEach {
-            if (it is ConstantPoolEntry.DoubleConstant) action(it)
-        }
-    }
-
-    fun forEachClass(action: (ConstantPoolEntry.ClassConstant) -> Unit) {
-        entries.forEach {
-            if (it is ConstantPoolEntry.ClassConstant) action(it)
-        }
-    }
-
-    override fun toString(): String {
-        return "ConstantPool(entries=$entries)"
-    }
 }
 
 /**
@@ -603,9 +587,17 @@ class MutableConstantPool(
      * @since 0.1.0
      * @version 0.1.0
      */
-    override val entries: MutableList<ConstantPoolEntry> = mutableListOf(),
+    entries: MutableList<ConstantPoolEntry> = mutableListOf(),
 
 ) : ConstantPool(entries), MutableList<ConstantPoolEntry> by entries {
+
+    /**
+     * The entries of the [MutableConstantPool]
+     * @since 0.1.0
+     * @version 0.1.0
+     */
+    override val entries: MutableList<ConstantPoolEntry>
+        get() = super.entries as MutableList<ConstantPoolEntry>
 
     /**
      * Create a [ConstantPoolEntry.Utf8Constant] with the given [value]
@@ -921,4 +913,16 @@ class MutableConstantPool(
             return MutableConstantPool(pool.entries.toMutableList())
         }
     }
+
+    override fun contains(element: ConstantPoolEntry) = entries.contains(element)
+    override fun containsAll(elements: Collection<ConstantPoolEntry>) = entries.containsAll(elements)
+    override operator fun get(index: Int) = entries[index]
+    override fun indexOf(element: ConstantPoolEntry) = entries.indexOf(element)
+    override fun isEmpty() = entries.isEmpty()
+    override fun iterator() = entries.iterator()
+    override fun lastIndexOf(element: ConstantPoolEntry) = entries.lastIndexOf(element)
+    override fun listIterator() = entries.listIterator()
+    override fun listIterator(index: Int) = entries.listIterator(index)
+    override val size: Int get() = entries.size
+    override fun subList(fromIndex: Int, toIndex: Int) = entries.subList(fromIndex, toIndex)
 }

@@ -1,0 +1,2 @@
+// Field of type float
+static final float field = 10

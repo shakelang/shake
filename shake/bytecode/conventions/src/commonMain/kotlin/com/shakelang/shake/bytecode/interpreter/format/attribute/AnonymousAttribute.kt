@@ -6,26 +6,103 @@ import com.shakelang.util.io.streaming.input.DataInputStream
 import com.shakelang.util.io.streaming.output.ByteArrayOutputStream
 import com.shakelang.util.io.streaming.output.DataOutputStream
 
+/**
+ * An abstract [Attribute] implementation without any custom properties
+ * This implementation can wrap any attribute.
+ *
+ * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+ *
+ * @param pool the [ConstantPool] of the attribute
+ * @param nameConstant the name of the attribute
+ * @param value the value of the attribute
+ * @see Attribute
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 open class AnonymousAttributeImpl(
+
+    /**
+     * The [ConstantPool] of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     *
+     * @see ConstantPool
+     * @see MutableConstantPool
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override val pool: ConstantPool,
+
+    /**
+     * The name of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     *
+     * @see Attribute
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override val nameConstant: Int,
+
+    /**
+     * The value of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-info)
+     *
+     * @see Attribute
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override val value: ByteArray,
 ) : Attribute {
 
+    /**
+     * The name of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     *
+     * @see Attribute
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override val name: String get() = pool.getUtf8(nameConstant).value
 
+    /**
+     * Get the size of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-info)
+     *
+     * @see Attribute
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override fun dump(stream: DataOutputStream) {
         stream.writeInt(nameConstant)
         stream.writeInt(value.size)
         stream.write(value)
     }
 
+    /**
+     * Get the size of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-info)
+     *
+     * @see Attribute
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override fun dump(): ByteArray {
         val stream = ByteArrayOutputStream()
         dump(DataOutputStream(stream))
         return stream.toByteArray()
     }
 
+    /**
+     * Does the attribute equal the [other] object
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Attribute) return false
@@ -37,6 +114,11 @@ open class AnonymousAttributeImpl(
         return true
     }
 
+    /**
+     * Get the hash code of the attribute
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override fun hashCode(): Int {
         var result = pool.hashCode()
         result = 31 * result + nameConstant
@@ -46,6 +128,11 @@ open class AnonymousAttributeImpl(
 
     companion object {
 
+        /**
+         * Create an [AnonymousAttributeImpl] from an [Attribute]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun fromStream(pool: ConstantPool, stream: DataInputStream): Attribute {
             val name = stream.readInt()
             val size = stream.readInt()
@@ -55,6 +142,11 @@ open class AnonymousAttributeImpl(
             return AnonymousAttributeImpl(pool, name, value)
         }
 
+        /**
+         * Create an [AnonymousAttributeImpl] from an [Attribute]
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun fromStream(pool: ConstantPool, stream: DataInputStream, nameConstant: Int): Attribute {
             val size = stream.readInt()
             val value = ByteArray(size) {
@@ -65,15 +157,79 @@ open class AnonymousAttributeImpl(
     }
 }
 
+/**
+ * A mutable [AnonymousAttributeImpl] implementation without any custom properties
+ * This implementation can wrap any attribute.
+ *
+ * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+ *
+ * @param pool the [MutableConstantPool] of the attribute
+ * @param nameConstant the name of the attribute
+ * @param value the value of the attribute
+ * @see Attribute
+ *
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 class MutableAnonymousAttributeImpl(
+
+    /**
+     * The [MutableConstantPool] of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     *
+     * @see ConstantPool
+     * @see MutableConstantPool
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     pool: MutableConstantPool,
+
+    /**
+     * The name of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     *
+     * @see Attribute
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var nameConstant: Int,
+
+    /**
+     * The value of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-info)
+     *
+     * @see Attribute
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var value: ByteArray,
 ) : AnonymousAttributeImpl(pool, nameConstant, value), MutableAttribute {
 
+    /**
+     * The [MutableConstantPool] of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#constant-pool)
+     *
+     * @see ConstantPool
+     * @see MutableConstantPool
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override val pool: MutableConstantPool
         get() = super.pool as MutableConstantPool
 
+    /**
+     * The name of the attribute
+     *
+     * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attribute-name-index)
+     *
+     * @see Attribute
+     * @since 0.1.0
+     * @version 0.1.0
+     */
     override var name: String
         get() = pool.getUtf8(nameConstant).value
         set(value) {
@@ -81,6 +237,15 @@ class MutableAnonymousAttributeImpl(
         }
 
     companion object {
+
+        /**
+         * Create an [MutableAnonymousAttributeImpl] from an [Attribute]
+         *
+         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun fromAttribute(attribute: Attribute): MutableAnonymousAttributeImpl {
             return MutableAnonymousAttributeImpl(
                 attribute.pool as MutableConstantPool,
@@ -89,6 +254,14 @@ class MutableAnonymousAttributeImpl(
             )
         }
 
+        /**
+         * Create an [MutableAnonymousAttributeImpl] from an [Attribute]
+         *
+         * [Specification](https://spec.shakelang.com/bytecode/storage-format/#attributes)
+         *
+         * @since 0.1.0
+         * @version 0.1.0
+         */
         fun fromStream(pool: MutableConstantPool, stream: DataInputStream): MutableAnonymousAttributeImpl {
             val name = stream.readInt()
             val size = stream.readInt()

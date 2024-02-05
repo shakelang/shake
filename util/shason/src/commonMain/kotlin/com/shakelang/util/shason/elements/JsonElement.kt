@@ -34,6 +34,9 @@ interface JsonElement {
          */
         fun from(value: Any?) = when (value) {
             null -> JsonNullElement.INSTANCE
+            is Array<*> -> from(value.toList())
+            is Collection<*> -> from(value.toList())
+            is Map<*, *> -> from(value as Map<String, Any?>)
             is String -> from(value)
             is Float -> from(value)
             is Double -> from(value)

@@ -2,7 +2,6 @@ package com.shakelang.shake.parser
 
 import com.shakelang.shake.lexer.ShakeLexer
 import com.shakelang.shake.parser.node.*
-import com.shakelang.shake.shouldBeOfType
 import com.shakelang.util.parseutils.characters.streaming.CharacterInputStream
 import com.shakelang.util.parseutils.characters.streaming.SourceCharacterInputStream
 import io.kotest.matchers.shouldBe
@@ -14,7 +13,7 @@ object ParserTestUtil {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()
-        val parser = com.shakelang.shake.parser.ShakeParser.from(tokens)
+        val parser = ShakeParser.from(tokens)
         return parser.parse()
     }
 
@@ -22,7 +21,7 @@ object ParserTestUtil {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()
-        val parser = com.shakelang.shake.parser.ShakeParser.from(tokens)
+        val parser = ShakeParser.from(tokens)
         return parser.parseAsStatements()
     }
 
@@ -30,7 +29,7 @@ object ParserTestUtil {
         val inp: CharacterInputStream = SourceCharacterInputStream(source, input)
         val lexer = ShakeLexer(inp)
         val tokens = lexer.makeTokens()
-        val parser = com.shakelang.shake.parser.ShakeParser.from(tokens)
+        val parser = ShakeParser.from(tokens)
         return parser.expectValue()
     }
 

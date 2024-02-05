@@ -61,16 +61,21 @@ class CreationShakeMethod(
         override val parent: CreationShakeScope = parentScope
         override val project get() = prj
 
-        override fun get(name: String): CreationShakeAssignable? {
+        override fun getField(name: String): CreationShakeAssignable? {
             parameters.find { it.name == name }?.let {
                 debug("scope", "Found parameter $name in $uniqueName")
                 return it
             }
             debug("scope", "Searching for variable $name in $uniqueName (just redirecting to parent)")
-            return parentScope.get(name)
+            return parentScope.getField(name)
         }
 
-        override fun set(value: CreationShakeDeclaration) {
+        override fun getFields(name: String): List<CreationShakeAssignable> {
+            debug("scope", "Searching for variable $name in $uniqueName (just redirecting to parent)")
+            return parentScope.getFields(name)
+        }
+
+        override fun setField(value: CreationShakeDeclaration) {
             throw IllegalArgumentException("Cannot set a value in a method scope")
         }
 
@@ -86,6 +91,11 @@ class CreationShakeMethod(
         override fun getClass(name: String): CreationShakeClass? {
             debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
             return parentScope.getClass(name)
+        }
+
+        override fun getClasses(name: String): List<CreationShakeClass> {
+            debug("scope", "Searching for class $name in $uniqueName (just redirecting to parent)")
+            return parentScope.getClasses(name)
         }
 
         override fun setClass(klass: CreationShakeClass) {

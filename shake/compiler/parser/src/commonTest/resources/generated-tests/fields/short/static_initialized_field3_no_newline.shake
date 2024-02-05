@@ -1,0 +1,2 @@
+// Field of type short
+static private short field = 10

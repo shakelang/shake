@@ -1,0 +1,2 @@
+// Field of type unsigned_short
+private final unsigned short field = 42

@@ -20,13 +20,13 @@ jobs:
           persist-credentials: false
 
       - name: Setup Gradle 📦
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
 
       - name: Grant execute permission for gradlew 📜
         run: chmod +x gradlew
 
       - name: Cache Gradle packages ♻️
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
