@@ -2,7 +2,6 @@ package com.shakelang.util.shason.processing
 
 import com.shakelang.util.parseutils.characters.Characters
 import com.shakelang.util.shason.elements.JsonArray
-import com.shakelang.util.shason.elements.JsonNullElement
 import com.shakelang.util.shason.elements.JsonObject
 import com.shakelang.util.shason.elements.JsonPrimitive
 

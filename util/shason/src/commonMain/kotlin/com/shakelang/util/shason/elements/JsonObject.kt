@@ -76,9 +76,11 @@ interface JsonObject : JsonElement, MapType<String, JsonElement, JsonObject, Mut
          */
 
         @Suppress("RemoveExplicitTypeArguments")
-        fun of(value: Map<String, Any?>): JsonObject = JsonObjectImplementation(value.mapValues<String, Any?, JsonElement> {
-            JsonElement.from(it.value)
-        })
+        fun of(value: Map<String, Any?>): JsonObject = JsonObjectImplementation(
+            value.mapValues<String, Any?, JsonElement> {
+                JsonElement.from(it.value)
+            },
+        )
 
         /**
          * Create a [JsonObject] out of anonymous values
