@@ -26,6 +26,7 @@ include(":shake:bytecode:generator")
 include(":shake:bytecode:tools")
 
 include(":shake:compiler:shakelib")
+include(":shake:compiler:shaketest")
 include(":shake:compiler:lexer")
 include(":shake:compiler:parser")
 include(":shake:compiler:jsgenerator")

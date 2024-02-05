@@ -19,6 +19,12 @@ class ShakeBytecodeNative(
     override val locals: ByteArray
         get() = ByteArray(0)
 
+    fun reset(): ShakeBytecodeNative {
+        returnData = ByteArray(0)
+        finished = false
+        return this
+    }
+
     fun returnData(data: ByteArray) {
         returnData = data
         finished = true

@@ -78,8 +78,25 @@ class ShakeBytecodeGenerator {
         storeVariable(ctx, variable)
     }
 
+    private fun visitChildUsage(ctx: BytecodeGenerationContext, v: ShakeChildUsage) {
+        val parent = v.used.parent
+        val field = v.used.field
+
+        if (field.isStatic) throw IllegalStateException("Load child for static field is not allowed")
+
+        // load the parent
+        visitValue(ctx, parent, parent.type)
+
+        // load the field
+        ctx.bytecodeInstructionGenerator.load_virtual(field.qualifiedName)
+    }
+
     private fun visitUsage(ctx: BytecodeGenerationContext, v: ShakeUsage) {
-        loadVariable(ctx, v.declaration)
+        if (v is ShakeChildUsage) {
+            visitChildUsage(ctx, v)
+        } else {
+            loadVariable(ctx, v.declaration)
+        }
     }
 
     private fun visitIncrementBefore(ctx: BytecodeGenerationContext, v: ShakeIncrementBefore, keepResultOnStack: Boolean = false) {
@@ -237,10 +254,8 @@ class ShakeBytecodeGenerator {
         val type = generateTypeDescriptor(s.type)
 
         val local = ctx.localTable.createLocal(s.uniqueName, size)
-
         if (s.initialValue != null) {
             visitValue(ctx, s.initialValue!!, s.type)
-
             ctx.bytecodeInstructionGenerator.store(type, local)
         }
     }
@@ -313,11 +328,17 @@ class ShakeBytecodeGenerator {
         ctx.bytecodeInstructionGenerator.load(type, local)
     }
 
+    private fun loadVariable(ctx: BytecodeGenerationContext, v: ShakeField) {
+        if (!v.isStatic) throw IllegalStateException("Load variable for non-static field is not allowed")
+        ctx.bytecodeInstructionGenerator.load_static(v.qualifiedName)
+    }
+
     private fun loadVariable(ctx: BytecodeGenerationContext, v: ShakeAssignable) {
         when (v) {
             is ShakeVariableDeclaration -> loadVariable(ctx, v)
             is ShakeParameter -> loadVariable(ctx, v)
-            else -> TODO()
+            is ShakeField -> loadVariable(ctx, v)
+            else -> TODO("Load variable for ${v::class.simpleName} is not implemented")
         }
     }
 
@@ -334,6 +355,9 @@ class ShakeBytecodeGenerator {
 
     private fun storeVariable(ctx: BytecodeGenerationContext, v: ShakeChild) {
         val parent = v.parent
+        val field = v.field
+        visitValue(ctx, parent, parent.type)
+        ctx.bytecodeInstructionGenerator.store_virtual(field.qualifiedName)
     }
 
     private fun storeVariable(ctx: BytecodeGenerationContext, v: ShakeAssignable) {

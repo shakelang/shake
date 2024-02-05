@@ -62,23 +62,6 @@ interface JsonObject : JsonElement, MapType<String, JsonElement, JsonObject, Mut
     }
 
     companion object {
-
-        /**
-         * Create a [JsonObject] out of a [Map] of [JsonElement]s
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        @JvmName("ofElements")
-        fun of(value: Map<String, JsonElement>) = JsonObjectImplementation(value.toMutableMap())
-
-        /**
-         * Create a [JsonObject] out of [JsonElement]s
-         * @since 0.1.0
-         * @version 0.1.0
-         */
-        @JvmName("ofElements")
-        fun of(vararg values: Pair<String, JsonElement>) = JsonObjectImplementation(mutableMapOf(*values))
-
         /**
          * Create an empty [JsonObject]
          * @since 0.1.0
@@ -91,7 +74,11 @@ interface JsonObject : JsonElement, MapType<String, JsonElement, JsonObject, Mut
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun of(value: Map<String, Any?>) = JsonObjectImplementation(value.mapValues { JsonElement.from(it.value) })
+
+        @Suppress("RemoveExplicitTypeArguments")
+        fun of(value: Map<String, Any?>): JsonObject = JsonObjectImplementation(value.mapValues<String, Any?, JsonElement> {
+            JsonElement.from(it.value)
+        })
 
         /**
          * Create a [JsonObject] out of anonymous values

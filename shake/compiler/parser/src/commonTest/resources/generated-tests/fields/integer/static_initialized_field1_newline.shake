@@ -1,0 +1,2 @@
+// Field of type integer
+static public int field = 10

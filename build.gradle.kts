@@ -23,14 +23,17 @@ buildscript {
 }
 
 dependencies {
-//    kover(project(":util:changelog"))
     kover(project(":util:algo"))
     kover(project(":util:colorlib"))
     kover(project(":util:common-io"))
     kover(project(":util:commander"))
+//    kover(project(":util:changelog"))
+    kover(project(":util:embed:api"))
+//    kover(project(":util:embed:plugin"))
     kover(project(":util:environment"))
     kover(project(":util:jvmlib"))
     kover(project(":util:logger"))
+//    kover(project(":util:sarifmerge"))
     kover(project(":util:markdown"))
     kover(project(":util:parseutils"))
     kover(project(":util:pointers"))
@@ -38,21 +41,21 @@ dependencies {
     kover(project(":util:shason"))
     kover(project(":util:testlib"))
 
-    kover(project(":shake:compiler:lexer"))
-    kover(project(":shake:compiler:parser"))
-    kover(project(":shake:compiler:shakelib"))
-
     kover(project(":shake:bytecode:conventions"))
     kover(project(":shake:bytecode:utils"))
     kover(project(":shake:bytecode:interpreter"))
     kover(project(":shake:bytecode:generator"))
     kover(project(":shake:bytecode:tools"))
 
+    kover(project(":shake:compiler:shakelib"))
+    kover(project(":shake:compiler:shaketest"))
+    kover(project(":shake:compiler:lexer"))
+    kover(project(":shake:compiler:parser"))
     kover(project(":shake:compiler:jsgenerator"))
     kover(project(":shake:compiler:processor"))
+    kover(project(":shake:shasambly:shastools"))
     kover(project(":shake:shasambly:shasambly"))
     kover(project(":shake:shasambly:shasp"))
-    kover(project(":shake:shasambly:shastools"))
 //    kover(project(":shake:shasambly:java-dist"))
 }
 

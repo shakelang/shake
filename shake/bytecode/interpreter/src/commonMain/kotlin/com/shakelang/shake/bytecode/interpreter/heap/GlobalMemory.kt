@@ -26,13 +26,13 @@ class GlobalMemory {
     }
 
     operator fun get(pointer: Long): Byte {
-        if (!contains(pointer)) throw OutOfRangeException("Cannot read byte at $pointer")
+        if (!contains(pointer)) throw OutOfRangeException("Cannot read byte at 0x${pointer.toBytes().toHexString()}")
         val index = pointerToIndex(pointer)
         return get((index / innerSize).toInt(), (index % innerSize).toInt())
     }
 
     operator fun set(pointer: Long, value: Byte) {
-        if (!contains(pointer)) throw OutOfRangeException("Cannot write byte at ${pointer.toBytes().toHexString()}")
+        if (!contains(pointer)) throw OutOfRangeException("Cannot write byte at 0x${pointer.toBytes().toHexString()}")
         val index = pointerToIndex(pointer)
         set((index / innerSize).toInt(), (index % innerSize).toInt(), value)
     }

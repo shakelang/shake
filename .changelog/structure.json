@@ -40,6 +40,7 @@
         ":util:parseutils:parseutils:0.4.0",
         ":util:shason:shason:0.4.1",
         ":util:logger:logger:0.5.2",
+        ":util:embed:api:api:0.1.1",
         ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT",
         ":shake:compiler:parser:parser:0.1.6-SNAPSHOT",
         ":shake:compiler:processor:processor:0.1.0",
@@ -92,7 +93,7 @@
     {
       "path": ":util:changelog",
       "name": "com.shakelang.util.changelog:changelog",
-      "version": "0.7.3",
+      "version": "0.7.4",
       "description": "Changelog generation plugin for Shake",
       "author": "com.shakelang.util.changelog",
       "license": "",
@@ -160,7 +161,7 @@
     {
       "path": ":util:jvmlib",
       "name": "com.shakelang.util:jvmlib",
-      "version": "0.2.1-SNAPSHOT",
+      "version": "0.2.2-SNAPSHOT",
       "description": "A library for jvm stuff in java",
       "author": "com.shakelang.util",
       "license": "",
@@ -237,7 +238,7 @@
     {
       "path": ":util:sarifmerge",
       "name": "com.shakelang.util:sarifmerge",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "description": "Utility package to merged sarif files for github report",
       "author": "com.shakelang.util",
       "license": "",
@@ -249,7 +250,7 @@
     {
       "path": ":util:shason",
       "name": "com.shakelang.util:shason",
-      "version": "0.4.1",
+      "version": "0.4.2",
       "description": "A json parser implemented in kotlin (mpp)",
       "author": "com.shakelang.util",
       "license": "",
@@ -308,6 +309,7 @@
         "unspecified:path-browserify:1.0.1",
         ":util:pointers:pointers:0.2.0",
         ":util:primitives:primitives:0.5.0",
+        ":util:logger:logger:0.5.2",
         ":util:common-io:common-io:0.4.0",
         ":shake:bytecode:conventions:conventions:0.1.0-SNAPSHOT",
         ":shake:bytecode:utils:utils:0.1.0-SNAPSHOT",
@@ -391,7 +393,7 @@
     {
       "path": ":shake:compiler:parser",
       "name": "com.shakelang.shake.compiler:parser",
-      "version": "0.1.6-SNAPSHOT",
+      "version": "0.1.7-SNAPSHOT",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.compiler",
       "license": "",
@@ -399,6 +401,7 @@
         "unspecified:path-browserify:1.0.1",
         ":util:parseutils:parseutils:0.4.0",
         ":util:shason:shason:0.4.1",
+        ":util:logger:logger:0.5.2",
         ":shake:compiler:lexer:lexer:0.1.5-SNAPSHOT"
       ]
     },
@@ -425,6 +428,17 @@
       "path": ":shake:compiler:shakelib",
       "name": "com.shakelang.shake.compiler:shakelib",
       "version": "0.1.0",
+      "description": "Utilities for parsing stuff with kotlin",
+      "author": "com.shakelang.shake.compiler",
+      "license": "",
+      "dependencies": [
+        "unspecified:path-browserify:1.0.1"
+      ]
+    },
+    {
+      "path": ":shake:compiler:shaketest",
+      "name": "com.shakelang.shake.compiler:shaketest",
+      "version": "0.1.0-SNAPSHOT",
       "description": "Utilities for parsing stuff with kotlin",
       "author": "com.shakelang.shake.compiler",
       "license": "",
@@ -517,5 +531,5 @@
       ]
     }
   ],
-  "lastUpdate": 1706794793894
+  "lastUpdate": 1706918610860
 }

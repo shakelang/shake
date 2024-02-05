@@ -1,0 +1,4 @@
+// Class with a field of type integer
+class Test {
+    final static public int field
+}

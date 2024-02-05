@@ -129,3 +129,7 @@ Changelog generation plugin for Shake
 ### 0.7.3
 
 * Fix wrong release confirm dialog message
+
+### 0.7.4
+
+* Update com.shakelang.util:shason to 0.4.2

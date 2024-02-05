@@ -1,6 +1,6 @@
 import com.shakelang.util.changelog.resolveVersion
 import com.shakelang.util.embed.plugin.Embed
-import com.shakelang.util.embed.plugin.embedConfiguration
+import com.shakelang.util.embed.plugin.getEmbedExtension
 import conventions.projectGroup
 
 plugins {
@@ -22,7 +22,7 @@ val projectName = name
 
 apply<Embed>()
 
-embedConfiguration {
+getEmbedExtension(project).configuration {
     sourceSet.set("commonMain")
     distPackage.set("com.shakelang.shake.shakelib")
     distName.set("ShakeLib")

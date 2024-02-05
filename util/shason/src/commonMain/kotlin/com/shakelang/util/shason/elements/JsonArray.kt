@@ -74,7 +74,7 @@ interface JsonArray : JsonElement, ListType<JsonElement, JsonArray, MutableJsonA
          * @version 0.1.0
          */
         @JvmName("ofElements")
-        fun of(value: Collection<JsonElement>) = JsonArrayImplementation(value.toList())
+        fun of(value: Collection<JsonElement>): JsonArray = JsonArrayImplementation(value.toList())
 
         /**
          * Create a [JsonArray] out of [JsonElement]s
@@ -82,28 +82,28 @@ interface JsonArray : JsonElement, ListType<JsonElement, JsonArray, MutableJsonA
          * @version 0.1.0
          */
         @JvmName("ofElements")
-        fun of(vararg values: JsonElement) = JsonArrayImplementation(values.toList())
+        fun of(vararg values: JsonElement): JsonArray = JsonArrayImplementation(values.toList())
 
         /**
          * Create an empty [JsonArray]
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun of() = JsonArrayImplementation(listOf())
+        fun of(): JsonArray = JsonArrayImplementation(listOf())
 
         /**
          * Create a [JsonArray] out of a [Collection] of anonymous values
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun of(value: Collection<Any?>) = JsonArrayImplementation(value.map { JsonElement.from(it) })
+        fun of(value: Collection<Any?>): JsonArray = JsonArrayImplementation(value.map { JsonElement.from(it) })
 
         /**
          * Create a [JsonArray] out of anonymous values
          * @since 0.1.0
          * @version 0.1.0
          */
-        fun of(vararg values: Any?) = JsonArrayImplementation(values.map { JsonElement.from(it) })
+        fun of(vararg values: Any?): JsonArray = JsonArrayImplementation(values.map { JsonElement.from(it) })
     }
 }
 

@@ -1,14 +1,14 @@
 package com.shakelang.shake.processor
 
-import com.shakelang.shake.stdlib.CoreFiles
+import com.shakelang.shake.shakelib.ShakeLib
 
 /**
  * Create a processor with the basic apis
  */
 fun createBaseProcessor(): ShakePackageBasedProcessor {
     val processor = ShakePackageBasedProcessor()
-    processor.loadSynthetic("shake/lang/Object.shake", CoreFiles.OBJECT_SHAKE)
-    processor.loadSynthetic("shake/lang/String.shake", CoreFiles.STRING_SHAKE)
-    processor.loadSynthetic("shake/lang/Numbers.shake", CoreFiles.NUMBERS_SHAKE)
+    ShakeLib.forEachFile {
+        processor.loadSynthetic(it.path, it.contentsAsString())
+    }
     return processor
 }

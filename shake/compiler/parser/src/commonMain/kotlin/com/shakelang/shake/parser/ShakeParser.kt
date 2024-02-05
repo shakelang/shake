@@ -744,7 +744,7 @@ class ShakeParserImpl(
             input.skip()
             if (input.nextType() != ShakeTokenType.IDENTIFIER) throw ParserError("Expecting identifier")
             list.add(expectNotNull(input.actualValue))
-        } while (input.hasNext() && input.skipIgnorable().peekType() == ShakeTokenType.DOT)
+        } while (input.hasNext() && input.skipIgnorable().hasNext() && input.peekType() == ShakeTokenType.DOT)
         return ShakePackageNode(map, list.toTypedArray())
     }
 
@@ -1688,7 +1688,7 @@ class ShakeParserImpl(
             start: Position,
             end: Position?,
         ) : this(
-            "Error occurred in parser: " + name + ", " + details + " in " + start.source + ":" + start.line + ":" + start.column,
+            "Error occurred in parser: $name, $details in <${start.source.location}>:${start.line}:${start.column}",
             name,
             details,
             start,

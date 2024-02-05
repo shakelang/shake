@@ -1,0 +1,13 @@
+{
+  "name": "ShakeFileNode",
+  "children": [
+    {
+      "name": "ShakePackageNode",
+      "package": [
+        "com",
+        "shake",
+        "lang"
+      ]
+    }
+  ]
+}

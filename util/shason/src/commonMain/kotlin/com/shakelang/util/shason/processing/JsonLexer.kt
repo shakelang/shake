@@ -115,7 +115,8 @@ class JsonLexer(
         return when (identifier) {
             "false" -> JsonToken(JsonTokenType.FALSE, start, this.chars.position)
             "true" -> JsonToken(JsonTokenType.TRUE, start, this.chars.position)
-            else -> JsonToken(JsonTokenType.STRING, start, this.chars.position, identifier)
+            "null" -> JsonToken(JsonTokenType.NULL, start, this.chars.position)
+            else -> throw JsonTokenLexerError("Unknown identifier '$identifier'")
         }
     }
 

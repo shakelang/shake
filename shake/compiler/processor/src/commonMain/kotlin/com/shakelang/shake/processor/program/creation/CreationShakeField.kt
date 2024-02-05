@@ -28,8 +28,8 @@ open class CreationShakeField(
     override val expanding: CreationShakeType?,
 ) : CreationShakeDeclaration, CreationShakeAssignable, ShakeField {
 
-    override val qualifiedName: String
-        get() = (pkg?.qualifiedName?.plus(".") ?: "") + name
+    override val qualifiedName
+        get() = (if (clazz != null) clazz!!.qualifierPrefix else pkg!!.qualifierPrefix) + name
 
     override val actualValue: CreationShakeValue?
         get() = TODO("Not yet implemented")
