@@ -91,7 +91,7 @@ module.exports.Template = class Template {
 
 module.exports.baseDir = path.resolve(
   __dirname,
-  "../../src/commonTest/resources/tests/"
+  "../../src/commonTest/resources/generated-tests/"
 );
 module.exports.fromBaseDir = function fromBaseDir(...args) {
   return path.resolve(module.exports.baseDir, ...args);
