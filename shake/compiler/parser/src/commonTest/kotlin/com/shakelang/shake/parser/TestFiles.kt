@@ -48,6 +48,7 @@ class TestFiles : FreeSpec(
                         println()
                         println("Error: ${error.message}")
                         println("Expected: ${outputFile.contentsAsString()}")
+                        error.printStackTrace()
                         throw e
                     }
                 } else {
