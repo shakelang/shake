@@ -7,7 +7,6 @@ const {
   forFileName,
   Template,
   fromBaseDir,
-  relativize,
   primitiveTypes,
   generateTest,
 } = require("./api");
@@ -78,7 +77,17 @@ const {
         generateTest(
           path.resolve(
             classFieldsDirectory,
-            `class_field_${forFileName(type[1])}${entry.index}`
+            `${forFileName(type[1])}/field${entry.index}`
+          ),
+          await template.shake,
+          await template.json,
+          await template.error,
+          [...base, ...entry.value]
+        );
+        generateTest(
+          path.resolve(
+            classFieldsDirectory,
+            `${forFileName(type[1])}/initialized_field${entry.index}`
           ),
           await template.shake,
           await template.json,
