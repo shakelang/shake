@@ -1,0 +1,2 @@
+// Field of type unsigned_short
+static unsigned short field = 10

@@ -1,0 +1,2 @@
+// Field of type long
+static final protected long field = 10

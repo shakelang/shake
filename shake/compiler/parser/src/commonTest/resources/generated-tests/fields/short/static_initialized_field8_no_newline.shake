@@ -1,0 +1,2 @@
+// Field of type short
+static final public short field = 10

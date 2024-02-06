@@ -1,0 +1,2 @@
+// Field of type boolean
+final public boolean field = 42

@@ -1,0 +1,2 @@
+// Field of type integer
+final public int field = 42

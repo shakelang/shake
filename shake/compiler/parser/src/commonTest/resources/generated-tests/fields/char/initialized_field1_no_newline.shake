@@ -1,0 +1,2 @@
+// Field of type char
+public char field = 42

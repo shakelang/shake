@@ -1,0 +1,2 @@
+// Field of type float
+final public float field = 42

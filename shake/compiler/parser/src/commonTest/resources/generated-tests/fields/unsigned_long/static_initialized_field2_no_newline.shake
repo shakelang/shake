@@ -1,0 +1,2 @@
+// Field of type unsigned_long
+static protected unsigned long field = 10

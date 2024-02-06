@@ -1,0 +1,2 @@
+// Field of type boolean
+protected boolean field = 42

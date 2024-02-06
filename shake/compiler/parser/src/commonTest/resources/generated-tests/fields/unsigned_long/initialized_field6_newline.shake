@@ -1,0 +1,2 @@
+// Field of type unsigned_long
+protected final unsigned long field = 42

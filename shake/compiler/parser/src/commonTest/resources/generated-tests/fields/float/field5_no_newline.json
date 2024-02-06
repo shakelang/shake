@@ -1,0 +1,17 @@
+{
+  "name": "ShakeFileNode",
+  "children": [
+    {
+      "name": "ShakeVariableDeclarationNode",
+      "variable_name": "field",
+      "type": {
+        "name": "ShakeVariableType",
+        "type": "float"
+      },
+      "access": "public",
+      "assignment": null,
+      "is_static": false,
+      "is_final": true
+    }
+  ]
+}
