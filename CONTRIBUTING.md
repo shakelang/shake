@@ -86,3 +86,14 @@ The code will be reviewed by our team members and if we find it to be good, we w
 ## Community
 
 Discussions and help with contributions can be found on our [discord](https://discord.shakelang.com/).
+
+## Becoming a team member
+
+If you have contributed multiple times and want to get deeper into the project, you may wan't to join the shakelang team. In addition to having much fun improving shake,
+you will get a fancy `@shakelang.com` email address.
+
+Please only ask if you really mean to contribute and have done so multiple times. There is an amount of responsability and we will discuiss new people with the whole team.
+
+To become a member please contact `nicolas.schmidt@shakelang.com` directly.
+
+Thanks for reading, have a great time coding!
